@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio Project Files
+.vs
+*.aps
+*.filters
+*.user
+
+# Temporary Files
+*~
+
+# Directories
+/build
+/src/Debug
+/src/Release
+/src/gurax/Debug
+/src/gurax/Release

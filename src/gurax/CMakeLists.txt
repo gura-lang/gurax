@@ -1,0 +1,7 @@
+add_executable(gurax gurax.cpp)
+
+find_library(LIBREADLINE readline REQUIRED)
+
+target_link_libraries(gurax guraxcore ${LIBREADLINE})
+
+install(TARGETS gurax DESTINATION ${GURAX_RELDIR_BINARY})
