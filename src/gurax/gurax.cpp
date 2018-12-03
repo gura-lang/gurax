@@ -8,8 +8,8 @@ namespace Gurax {
 
 void sub()
 {
-	Tokenizer *pTokenizer = new Tokenizer();
-	Tokenizer::Delete(pTokenizer);
+	UniquePtr<Tokenizer> pTokenizer(new Tokenizer());
+	//Tokenizer::Delete(pTokenizer);
 }
 
 }
