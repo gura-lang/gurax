@@ -3,32 +3,9 @@
 //==============================================================================
 #ifndef GURAX_TOKENIZER_H
 #define GURAX_TOKENIZER_H
-#include <memory>
-#include <utility>
+#include "Common.h"
 
 namespace Gurax {
-
-//------------------------------------------------------------------------------
-// UniquePtr
-//------------------------------------------------------------------------------
-template<typename T> class UniquePtr {
-private:
-	T *_p;
-public:
-	UniquePtr(T *p = nullptr) : _p(p) {}
-	~UniquePtr() { T::Delete(_p); }
-	UniquePtr(const UniquePtr<T> &obj) = delete;
-	T &operator*() { return *_p; }
-	T &operator*() const { return *_p; }
-	T *operator->() { return _p; }
-	T *operator->() const { return _p; }
-	void reset(T *p = nullptr) { T::Delete(_p); _p = p; }
-	T *get() { return _p; }
-	T *get() const { return _p; }
-	T *release() { T *p = _p; _p = nullptr; return p; }
-	bool IsNull() const { return _p == nullptr; }
-	void operator=(const T *p) = delete;
-};
 
 //------------------------------------------------------------------------------
 // Tokenizer

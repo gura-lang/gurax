@@ -1,5 +1,6 @@
 add_executable(gurax
 	gurax.cpp
+	Common.cpp
 	Tokenizer.cpp)
 
 find_library(LIBREADLINE readline REQUIRED)
