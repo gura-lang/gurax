@@ -9,6 +9,59 @@
 #include <utility>
 #include <vector>
 
+#if defined(_MSC_VER)
+#define GURAX_ON_MSWIN
+#define GURAX_PLATFORM_NAME "mswin"
+#define GURAX_CXX11_ABI
+#define GURAX_HOST_COMPILER_NAME "msc"
+#elif defined(__linux__)
+#define GURAX_ON_LINUX
+#define GURAX_PLATFORM_NAME "linux"
+#define GURAX_CXX11_ABI __attribute__((abi_tag("cxx11")))
+#define GURAX_HOST_COMPILER_NAME "gnuc"
+#elif defined(__APPLE__)
+#define GURAX_ON_DARWIN
+#define GURAX_PLATFORM_NAME "darwin"
+#define GURAX_CXX11_ABI
+#define GURAX_HOST_COMPILER_NAME "gnuc"
+#else
+#define GURAX_ON_UNKNOWN
+#define GURAX_PLATFORM_NAME "unknown"
+#define GURAX_CXX11_ABI
+#define GURAX_HOST_COMPILER_NAME "unknown"
+#endif
+
+#if defined(GURAX_ON_MSWIN)
+#undef SetProp
+#undef GetProp
+#undef GetObject
+#pragma warning(disable:4018)
+#pragma warning(disable:4146)
+#pragma warning(disable:4244)
+#pragma warning(disable:4251)
+#pragma warning(disable:4267)
+#pragma warning(disable:4275)
+#pragma warning(disable:4355)
+#pragma warning(disable:4800)
+#pragma warning(disable:4804)
+#pragma warning(disable:4805)
+#pragma warning(disable:4996)
+#define GURAX_DLLIMPORT __declspec(dllimport)
+#define GURAX_DLLEXPORT __declspec(dllexport)
+#if defined(gurax_EXPORTS)
+#define GURAX_DLLDECLARE __declspec(dllexport)
+#else
+#define GURAX_DLLDECLARE __declspec(dllimport)
+#endif
+#define strcasecmp stricmp
+#define GURAX_USE_MSWIN_DIB 1
+#else
+#define GURAX_DLLIMPORT
+#define GURAX_DLLEXPORT
+#define GURAX_DLLDECLARE
+#define GURAX_USE_MSWIN_DIB 0
+#endif
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
