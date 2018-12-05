@@ -8,7 +8,7 @@ namespace Gurax {
 void sub()
 {
 	UniquePtr<Tokenizer> pTokenizer(new Tokenizer());
-	UniquePtr<Object> pObj(new Object());
+	UniquePtr<Object> pObj(new Object_number());
 }
 
 }
