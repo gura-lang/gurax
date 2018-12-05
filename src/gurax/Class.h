@@ -1,30 +1,30 @@
 //==============================================================================
-// Tokenizer.h
+// Class.h
 //==============================================================================
-#ifndef GURAX_TOKENIZER_H
-#define GURAX_TOKENIZER_H
+#ifndef GURAX_CLASS_H
+#define GURAX_CLASS_H
 #include "Referable.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Tokenizer
+// Object
 //------------------------------------------------------------------------------
-class Tokenizer : public Referable {
+class Object : public Referable {
 public:
 	// Default constructor
-	Tokenizer() {}
+	Object() {}
 	// Copy constructor/operator
-	Tokenizer(const Tokenizer& src) = delete;
-	Tokenizer& operator=(const Tokenizer& src) = delete;
+	Object(const Object& src) = delete;
+	Object& operator=(const Object& src) = delete;
 	// Move constructor/operator
-	Tokenizer(Tokenizer&& src) = delete;
-	Tokenizer& operator=(Tokenizer&& src) noexcept = delete;
+	Object(Object&& src) = delete;
+	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Tokenizer() = default;
+	~Object() = default;
 public:
-	Gurax_DeclareReferable(Tokenizer);
+	Gurax_DeclareReferable(Object);
 };
 
 }

@@ -1,7 +1,10 @@
 add_executable(gurax
 	gurax.cpp
+	Class.cpp
+	Class_number.cpp
 	Common.cpp
 	MemoryPool.cpp
+	Referable.cpp
 	Tokenizer.cpp)
 
 find_library(LIBREADLINE readline REQUIRED)
