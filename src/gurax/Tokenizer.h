@@ -14,12 +14,19 @@ class Tokenizer {
 protected:
 	int _cntRef;
 public:
+	// Default constructor
 	Tokenizer() : _cntRef(1) {}
-public:
-	Tokenizer *Reference() const { const_cast<Tokenizer *>(this)->_cntRef++; return const_cast<Tokenizer *>(this); }
-	static void Delete(Tokenizer *p) { if (--p->_cntRef) delete p; }
+	// Copy constructor/operator
+	Tokenizer(const Tokenizer& obj) = delete;
+	Tokenizer& operator=(const Tokenizer& obj) = delete;
+	// Move constructor/operator
+	Tokenizer(Tokenizer&& obj) = delete;
+	Tokenizer& operator=(Tokenizer&& obj) noexcept = delete;
 protected:
-	~Tokenizer() {}
+	// Destructor
+	~Tokenizer() = default;
+public:
+	Gurax_DeclareReferenceAccessor(Tokenizer)
 };
 
 }
