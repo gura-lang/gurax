@@ -9,6 +9,9 @@
 #include <utility>
 #include <vector>
 
+//------------------------------------------------------------------------------
+// Macros to handler platform differences
+//------------------------------------------------------------------------------
 #if defined(_MSC_VER)
 #define GURAX_ON_MSWIN
 #define GURAX_PLATFORM_NAME "mswin"
@@ -61,6 +64,58 @@
 #define GURAX_DLLDECLARE
 #define GURAX_USE_MSWIN_DIB 0
 #endif
+
+//------------------------------------------------------------------------------
+// Macro to create a referable class
+//------------------------------------------------------------------------------
+#define Gurax_DeclareReferenceAccessor(T) \
+static T* Reference(const T* p) { \
+	T* pCasted = const_cast<T*>(p); \
+	if (pCasted != nullptr) pCasted->_cntRef++; \
+	return pCasted; \
+} \
+T* Reference() const { \
+	T* pCasted = const_cast<T*>(this); \
+	pCasted->_cntRef++; \
+	return pCasted; \
+} \
+static void Delete(T* p) { \
+	if (p == nullptr) return; \
+	p->_cntRef--; \
+	if (p->_cntRef <= 0) delete p; \
+} \
+int GetCntRef() const { return _cntRef; }
+
+//------------------------------------------------------------------------------
+// Macros useful for automaton
+//------------------------------------------------------------------------------
+#define Gurax_BeginPushbackRegion() \
+bool gura_pushbackFlag = false; \
+do { \
+gurax_pushbackFlag = false
+
+#define Gurax_EndPushbackRegion() \
+} while (gurax_pushbackFlag)
+
+#define Gurax_Pushback() \
+gurax_pushbackFlag = true
+
+#define Gurax_PushbackCancel() \
+gurax_pushbackFlag = false
+
+#define Gurax_BeginPushbackRegionEx(T, n, var)	\
+T gurax_pushbackBuff[n] = {var};  \
+for (int gurax_pushbackLevel = 1; gurax_pushbackLevel > 0; ) { \
+var = gurax_pushbackBuff[--gurax_pushbackLevel];
+
+#define Gurax_EndPushbackRegionEx() \
+}
+
+#define Gurax_PushbackEx(value) \
+gurax_pushbackBuff[gurax_pushbackLevel++] = (value)
+
+#define Gurax_PushbackCancelEx() \
+gurax_pushbackLevel--
 
 namespace Gurax {
 
