@@ -8,7 +8,6 @@ namespace Gurax {
 void sub()
 {
 	UniquePtr<Tokenizer> pTokenizer(new Tokenizer());
-	//Tokenizer::Delete(pTokenizer);
 }
 
 }
