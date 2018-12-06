@@ -7,6 +7,7 @@
 #include "Common.h"
 #include "MemoryPool.h"
 #include "Object.h"
+#include "Object_nil.h"
 #include "Object_number.h"
 #include "Object_undefined.h"
 #include "Referable.h"

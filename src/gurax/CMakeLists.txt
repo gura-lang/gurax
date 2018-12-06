@@ -3,6 +3,7 @@ add_executable(gurax
 	Common.cpp
 	MemoryPool.cpp
 	Object.cpp
+	Object_nil.cpp
 	Object_number.cpp
 	Object_undefined.cpp
 	Referable.cpp
