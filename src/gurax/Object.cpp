@@ -8,8 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
+const Object *Object::_pObject_undefined = nullptr;
+const Object *Object::_pObject_nil = nullptr;
+const Object::TypeInfo Object::typeInfo;
+
 void Object::Bootup()
 {
+	_pObject_undefined = new Object_undefined();
+	_pObject_nil = new Object_nil();
 }
 
 //------------------------------------------------------------------------------

@@ -13,9 +13,11 @@ namespace Gurax {
 class Object : public Referable {
 public:
 	class TypeInfo {
+	protected:
+		const TypeInfo *_pTypeInfoParent;
 	public:
 		// Default constructor
-		TypeInfo() {}
+		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) : _pTypeInfoParent(pTypeInfoParent) {}
 		// Copy constructor/operator
 		TypeInfo(const TypeInfo& src) = delete;
 		TypeInfo& operator=(const TypeInfo& src) = delete;
@@ -25,8 +27,13 @@ public:
 		// Destructor
 		~TypeInfo() = default;
 	};
+private:
+	static const Object *_pObject_undefined;
+	static const Object *_pObject_nil;
 protected:
 	const TypeInfo& _typeInfo;
+public:
+	static const TypeInfo typeInfo;
 public:
 	// Default constructor
 	Object() = delete;
@@ -46,6 +53,8 @@ public:
 	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
 	static void Bootup();
 	const TypeInfo &GetTypeInfo() const { return _typeInfo; }
+	static Object *nil() { return _pObject_nil->Reference(); }
+	static Object *undefined() { return _pObject_undefined->Reference(); }
 public:
 	virtual Object *Clone() const = 0;
 };
