@@ -1,8 +1,8 @@
 //==============================================================================
-// Class.h
+// Object.h
 //==============================================================================
-#ifndef GURAX_CLASS_H
-#define GURAX_CLASS_H
+#ifndef GURAX_OBJECT_H
+#define GURAX_OBJECT_H
 #include "Referable.h"
 
 namespace Gurax {

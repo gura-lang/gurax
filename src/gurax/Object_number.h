@@ -1,9 +1,9 @@
 //==============================================================================
-// Class_number.h
+// Object_number.h
 //==============================================================================
-#ifndef GURAX_CLASS_NUMBER_H
-#define GURAX_CLASS_NUMBER_H
-#include "Class.h"
+#ifndef GURAX_OBJECT_NUMBER_H
+#define GURAX_OBJECT_NUMBER_H
+#include "Object.h"
 
 namespace Gurax {
 

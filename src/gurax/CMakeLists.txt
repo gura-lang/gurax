@@ -1,9 +1,9 @@
 add_executable(gurax
 	gurax.cpp
-	Class.cpp
-	Class_number.cpp
 	Common.cpp
 	MemoryPool.cpp
+	Object.cpp
+	Object_number.cpp
 	Referable.cpp
 	Tokenizer.cpp)
 
