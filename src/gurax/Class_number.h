@@ -8,42 +8,36 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Class_number
-//------------------------------------------------------------------------------
-class Class_number : public Class {
-protected:
-	static const Class_number _instance;
-public:
-	// Default constructor
-	Class_number() {}
-	// Copy constructor/operator
-	Class_number(const Class_number& src) = delete;
-	Class_number& operator=(const Class_number& src) = delete;
-	// Move constructor/operator
-	Class_number(Class_number&& src) = delete;
-	Class_number& operator=(Class_number&& src) noexcept = delete;
-protected:
-	// Destructor
-	~Class_number() = default;
-public:
-	static const Class& GetInstance() { return _instance; }
-};
-
-//------------------------------------------------------------------------------
 // Object_number
 //------------------------------------------------------------------------------
 class Object_number : public Object {
+public:
+	class TypeInfoEx : public TypeInfo {
+	public:
+		// Default constructor
+		TypeInfoEx() {}
+		// Copy constructor/operator
+		TypeInfoEx(const TypeInfoEx& src) = delete;
+		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
+		// Move constructor/operator
+		TypeInfoEx(TypeInfoEx&& src) = delete;
+		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
+		// Destructor
+		~TypeInfoEx() = default;
+	};
+public:
+	static const TypeInfoEx typeInfo;
 private:
 	Double _num;
 public:
 	// Default constructor
-	Object_number(Double num = 0.) : Object(Class_number::GetInstance()), _num(num) {}
+	Object_number(Double num = 0.) : Object(typeInfo), _num(num) {}
 	// Copy constructor/operator
-	Object_number(const Object_number& src) = delete;
-	Object_number& operator=(const Object_number& src) = delete;
+	Object_number(const Object_number& src) : Object(typeInfo), _num(src._num) {}
+	Object_number& operator=(const Object_number& src) { _num = src._num; return *this; }
 	// Move constructor/operator
-	Object_number(Object_number&& src) = delete;
-	Object_number& operator=(Object_number&& src) noexcept = delete;
+	Object_number(Object_number&& src) : Object(typeInfo), _num(src._num) {}
+	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
 protected:
 	// Destructor
 	~Object_number() = default;

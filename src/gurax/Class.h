@@ -8,29 +8,25 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Class
-//------------------------------------------------------------------------------
-class Class {
-public:
-	// Default constructor
-	Class() {}
-	// Copy constructor/operator
-	Class(const Class& src) = delete;
-	Class& operator=(const Class& src) = delete;
-	// Move constructor/operator
-	Class(Class&& src) = delete;
-	Class& operator=(Class&& src) noexcept = delete;
-protected:
-	// Destructor
-	~Class() = default;
-};
-
-//------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
 class Object : public Referable {
+public:
+	class TypeInfo {
+	public:
+		// Default constructor
+		TypeInfo() {}
+		// Copy constructor/operator
+		TypeInfo(const TypeInfo& src) = delete;
+		TypeInfo& operator=(const TypeInfo& src) = delete;
+		// Move constructor/operator
+		TypeInfo(TypeInfo&& src) = delete;
+		TypeInfo& operator=(TypeInfo&& src) noexcept = delete;
+		// Destructor
+		~TypeInfo() = default;
+	};
 protected:
-	const Class& _class;
+	const TypeInfo& _typeInfo;
 public:
 	// Default constructor
 	Object() = delete;
@@ -46,7 +42,8 @@ protected:
 public:
 	Gurax_DeclareReferable(Object);
 public:
-	Object(const Class& class_) : _class(class_) {}
+	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
+	const TypeInfo &GetTypeInfo() const { return _typeInfo; }
 };
 
 }
