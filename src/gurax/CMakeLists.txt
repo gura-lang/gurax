@@ -4,6 +4,7 @@ add_executable(gurax
 	Function.cpp
 	MemoryPool.cpp
 	Object.cpp
+	Object_function.cpp
 	Object_nil.cpp
 	Object_number.cpp
 	Object_undefined.cpp
