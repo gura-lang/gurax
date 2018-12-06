@@ -47,6 +47,7 @@ protected:
 	// Destructor
 	~Referable() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Referable);
 };
 

@@ -1,16 +1,16 @@
 //==============================================================================
-// Object_number.h
+// Object_nil.h
 //==============================================================================
-#ifndef GURAX_OBJECT_NUMBER_H
-#define GURAX_OBJECT_NUMBER_H
+#ifndef GURAX_OBJECT_NIL_H
+#define GURAX_OBJECT_NIL_H
 #include "Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_number
+// Object_nil
 //------------------------------------------------------------------------------
-class Object_number : public Object {
+class Object_nil : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
@@ -27,26 +27,21 @@ public:
 	};
 public:
 	static const TypeInfoEx typeInfo;
-private:
-	Double _num;
 public:
 	// Default constructor
-	Object_number(Double num = 0.) : Object(typeInfo), _num(num) {}
+	Object_nil() : Object(typeInfo) {}
 	// Copy constructor/operator
-	Object_number(const Object_number& src) : Object(typeInfo), _num(src._num) {}
-	Object_number& operator=(const Object_number& src) { _num = src._num; return *this; }
+	Object_nil(const Object_nil& src) = delete;
+	Object_nil& operator=(const Object_nil& src) = delete;
 	// Move constructor/operator
-	Object_number(Object_number&& src) : Object(typeInfo), _num(src._num) {}
-	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
-protected:
+	Object_nil(Object_nil&& src) = delete;
+	Object_nil& operator=(Object_nil&& src) noexcept = delete;
 	// Destructor
-	virtual ~Object_number() = default;
+	virtual ~Object_nil() = default;
 public:
-	Gurax_DeclareReferable(Object_number);
+	Gurax_DeclareReferable(Object_nil);
 public:
-	Double GetDouble() const { return _num; }
-public:
-	virtual Object *Clone() const { return new Object_number(*this); }
+	virtual Object *Clone() const { return new Object_nil(*this); }
 };
 
 }

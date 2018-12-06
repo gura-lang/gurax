@@ -38,12 +38,34 @@ public:
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object() = default;
+	virtual ~Object() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Object);
 public:
 	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
 	const TypeInfo &GetTypeInfo() const { return _typeInfo; }
+public:
+	virtual Object *Clone() const = 0;
+};
+
+//------------------------------------------------------------------------------
+// ObjectList
+//------------------------------------------------------------------------------
+class ObjectList : public std::vector<Object *> {
+};
+
+//------------------------------------------------------------------------------
+// ObjectOwner
+//------------------------------------------------------------------------------
+class ObjectOwner : public ObjectList, public Referable {
+protected:
+	~ObjectOwner() { Clear(); }
+public:
+	// Referable accessor
+	Gurax_DeclareReferable(ObjectOwner);
+public:
+	void Clear();
 };
 
 }
