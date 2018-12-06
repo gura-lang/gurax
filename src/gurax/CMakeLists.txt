@@ -1,12 +1,14 @@
 add_executable(gurax
 	gurax.cpp
 	Common.cpp
+	Function.cpp
 	MemoryPool.cpp
 	Object.cpp
 	Object_nil.cpp
 	Object_number.cpp
 	Object_undefined.cpp
 	Referable.cpp
+	Symbol.cpp
 	Tokenizer.cpp)
 
 find_library(LIBREADLINE readline REQUIRED)

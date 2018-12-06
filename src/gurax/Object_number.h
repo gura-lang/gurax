@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_number
 //------------------------------------------------------------------------------
-class Object_number : public Object {
+class GURAX_DLLDECLARE Object_number : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
@@ -24,6 +24,10 @@ public:
 		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
 		// Destructor
 		~TypeInfoEx() = default;
+	public:
+		virtual Object* Clone(const Object* pObj) const override {
+			return new Object_number(*reinterpret_cast<const Object_number*>(pObj));
+		}
 	};
 public:
 	static const TypeInfoEx typeInfo;
@@ -40,13 +44,11 @@ public:
 	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
 protected:
 	// Destructor
-	virtual ~Object_number() = default;
+	~Object_number() = default;
 public:
 	Gurax_DeclareReferable(Object_number);
 public:
 	Double GetDouble() const { return _num; }
-public:
-	virtual Object *Clone() const { return new Object_number(*this); }
 };
 
 }

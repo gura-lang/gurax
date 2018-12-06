@@ -8,14 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
-const Object *Object::_pObject_undefined = nullptr;
-const Object *Object::_pObject_nil = nullptr;
+const Object *Object::_pObj_undefined = nullptr;
+const Object *Object::_pObj_nil = nullptr;
 const Object::TypeInfo Object::typeInfo;
 
 void Object::Bootup()
 {
-	_pObject_undefined = new Object_undefined();
-	_pObject_nil = new Object_nil();
+	_pObj_undefined = new Object_undefined();
+	_pObj_nil = new Object_nil();
 }
 
 //------------------------------------------------------------------------------
@@ -27,7 +27,16 @@ void Object::Bootup()
 //------------------------------------------------------------------------------
 void ObjectOwner::Clear()
 {
-	for (auto pObject : *this) Object::Delete(pObject);
+	for (auto pObj : *this) Object::Delete(pObj);
+	clear();
+}
+
+//------------------------------------------------------------------------------
+// ObjectMap
+//------------------------------------------------------------------------------
+void ObjectMap::Clear()
+{
+	for (auto iter : *this) Object::Delete(iter.second);
 	clear();
 }
 

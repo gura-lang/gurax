@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_undefined
 //------------------------------------------------------------------------------
-class Object_undefined : public Object {
+class GURAX_DLLDECLARE Object_undefined : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
@@ -41,8 +41,6 @@ protected:
 	virtual ~Object_undefined() = default;
 public:
 	Gurax_DeclareReferable(Object_undefined);
-public:
-	virtual Object *Clone() const { return Reference(); }
 };
 
 }

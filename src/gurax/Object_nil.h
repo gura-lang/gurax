@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_nil
 //------------------------------------------------------------------------------
-class Object_nil : public Object {
+class GURAX_DLLDECLARE Object_nil : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
@@ -41,8 +41,6 @@ protected:
 	virtual ~Object_nil() = default;
 public:
 	Gurax_DeclareReferable(Object_nil);
-public:
-	virtual Object *Clone() const { return Reference(); }
 };
 
 }

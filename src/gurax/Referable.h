@@ -31,7 +31,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Referable
 //------------------------------------------------------------------------------
-class Referable {
+class GURAX_DLLDECLARE Referable {
 protected:
 	int _cntRef;
 public:

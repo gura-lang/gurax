@@ -3,21 +3,59 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_H
 #define GURAX_OBJECT_H
+#include "Function.h"
 #include "Referable.h"
+#include "Symbol.h"
 
 namespace Gurax {
+
+class Object;
+	
+//------------------------------------------------------------------------------
+// ObjectList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectList : public std::vector<Object*> {
+};
+
+//------------------------------------------------------------------------------
+// ObjectOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectOwner : public ObjectList, public Referable {
+protected:
+	~ObjectOwner() { Clear(); }
+public:
+	// Referable accessor
+	Gurax_DeclareReferable(ObjectOwner);
+public:
+	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// ObjectMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectMap : public std::map<const Symbol*, Object*>, public Referable {
+protected:
+	~ObjectMap() { Clear(); }
+public:
+	// Referable accessor
+	Gurax_DeclareReferable(ObjectMap);
+public:
+	void Clear();
+};
 
 //------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
-class Object : public Referable {
+class GURAX_DLLDECLARE Object : public Referable {
 public:
 	class TypeInfo {
 	protected:
-		const TypeInfo *_pTypeInfoParent;
+		const TypeInfo* _pTypeInfoParent;
+		UniquePtr<ObjectMap> _pObjMap;
 	public:
 		// Default constructor
-		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) : _pTypeInfoParent(pTypeInfoParent) {}
+		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) :
+			_pTypeInfoParent(pTypeInfoParent), _pObjMap(new ObjectMap()) {}
 		// Copy constructor/operator
 		TypeInfo(const TypeInfo& src) = delete;
 		TypeInfo& operator=(const TypeInfo& src) = delete;
@@ -26,10 +64,13 @@ public:
 		TypeInfo& operator=(TypeInfo&& src) noexcept = delete;
 		// Destructor
 		~TypeInfo() = default;
+	public:
+		bool IsType(const TypeInfo& typeInfo) const { return this == &typeInfo; }
+		virtual Object* Clone(const Object* pObj) const { return pObj->Reference(); }
 	};
 private:
-	static const Object *_pObject_undefined;
-	static const Object *_pObject_nil;
+	static const Object* _pObj_undefined;
+	static const Object* _pObj_nil;
 protected:
 	const TypeInfo& _typeInfo;
 public:
@@ -45,37 +86,21 @@ public:
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object() = default;
+	~Object() = default;
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(Object);
 public:
 	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
 	static void Bootup();
-	const TypeInfo &GetTypeInfo() const { return _typeInfo; }
-	static Object *nil() { return _pObject_nil->Reference(); }
-	static Object *undefined() { return _pObject_undefined->Reference(); }
+	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
+	static Object* nil() { return _pObj_nil->Reference(); }
+	static Object* undefined() { return _pObj_undefined->Reference(); }
 public:
-	virtual Object *Clone() const = 0;
-};
-
-//------------------------------------------------------------------------------
-// ObjectList
-//------------------------------------------------------------------------------
-class ObjectList : public std::vector<Object *> {
-};
-
-//------------------------------------------------------------------------------
-// ObjectOwner
-//------------------------------------------------------------------------------
-class ObjectOwner : public ObjectList, public Referable {
-protected:
-	~ObjectOwner() { Clear(); }
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(ObjectOwner);
-public:
-	void Clear();
+	bool IsType(const TypeInfo& typeInfo) const { return _typeInfo.IsType(typeInfo); }
+	static bool IsType(Object* pObj, const TypeInfo& typeInfo) {
+		return pObj != nullptr && pObj->IsType(typeInfo);
+	}
 };
 
 }
