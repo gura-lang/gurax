@@ -1,16 +1,16 @@
 //==============================================================================
-// Object_number.h
+// Object_undefined.h
 //==============================================================================
-#ifndef GURAX_OBJECT_NUMBER_H
-#define GURAX_OBJECT_NUMBER_H
+#ifndef GURAX_OBJECT_UNDEFINED_H
+#define GURAX_OBJECT_UNDEFINED_H
 #include "Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_number
+// Object_undefined
 //------------------------------------------------------------------------------
-class Object_number : public Object {
+class Object_undefined : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
@@ -27,26 +27,22 @@ public:
 	};
 public:
 	static const TypeInfoEx typeInfo;
-private:
-	Double _num;
 public:
 	// Default constructor
-	Object_number(Double num = 0.) : Object(typeInfo), _num(num) {}
+	Object_undefined() : Object(typeInfo) {}
 	// Copy constructor/operator
-	Object_number(const Object_number& src) : Object(typeInfo), _num(src._num) {}
-	Object_number& operator=(const Object_number& src) { _num = src._num; return *this; }
+	Object_undefined(const Object_undefined& src) = delete;
+	Object_undefined& operator=(const Object_undefined& src) = delete;
 	// Move constructor/operator
-	Object_number(Object_number&& src) : Object(typeInfo), _num(src._num) {}
-	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
+	Object_undefined(Object_undefined&& src) = delete;
+	Object_undefined& operator=(Object_undefined&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object_number() = default;
+	virtual ~Object_undefined() = default;
 public:
-	Gurax_DeclareReferable(Object_number);
+	Gurax_DeclareReferable(Object_undefined);
 public:
-	Double GetDouble() const { return _num; }
-public:
-	virtual Object *Clone() const { return new Object_number(*this); }
+	virtual Object *Clone() const { return Reference(); }
 };
 
 }

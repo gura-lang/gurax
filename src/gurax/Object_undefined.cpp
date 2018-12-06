@@ -1,13 +1,13 @@
 //==============================================================================
-// Object_number.cpp
+// Object_undefined.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_number
+// Object_undefined
 //------------------------------------------------------------------------------
-const Object_number::TypeInfoEx Object_number::typeInfo;
+const Object_undefined::TypeInfoEx Object_undefined::typeInfo;
 
 }

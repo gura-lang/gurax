@@ -4,6 +4,7 @@ add_executable(gurax
 	MemoryPool.cpp
 	Object.cpp
 	Object_number.cpp
+	Object_undefined.cpp
 	Referable.cpp
 	Tokenizer.cpp)
 

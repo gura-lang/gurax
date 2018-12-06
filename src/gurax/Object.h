@@ -44,6 +44,7 @@ public:
 	Gurax_DeclareReferable(Object);
 public:
 	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
+	static void Bootup();
 	const TypeInfo &GetTypeInfo() const { return _typeInfo; }
 public:
 	virtual Object *Clone() const = 0;
