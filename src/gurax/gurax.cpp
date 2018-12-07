@@ -9,7 +9,7 @@ void sub()
 {
 	Symbol::Bootup();
 	Object::Bootup();
-	UniquePtr<Tokenizer> pTokenizer(new Tokenizer());
+	//UniquePtr<Tokenizer> pTokenizer(new Tokenizer());
 	UniquePtr<Object> pObj(new Object_number());
 	const Symbol* pSymbol1 = Symbol::Add("hoge");
 	const Symbol* pSymbol2 = Symbol::Add("hoge");
