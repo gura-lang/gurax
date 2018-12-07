@@ -5,6 +5,7 @@
 #define GURAX_H
 
 #include "Common.h"
+#include "Expr.h"
 #include "Function.h"
 #include "MemoryPool.h"
 #include "Object.h"

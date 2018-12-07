@@ -1,6 +1,7 @@
 add_executable(gurax
 	gurax.cpp
 	Common.cpp
+	Expr.cpp
 	Function.cpp
 	MemoryPool.cpp
 	Object.cpp
