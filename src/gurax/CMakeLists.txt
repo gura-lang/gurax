@@ -9,6 +9,7 @@ add_executable(gurax
 	Object_number.cpp
 	Object_undefined.cpp
 	Referable.cpp
+	String.cpp
 	Symbol.cpp
 	Tokenizer.cpp)
 

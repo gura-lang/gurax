@@ -32,6 +32,7 @@ public:
 	~Symbol() = default;
 public:
 	int GetId() const { return _id; }
+	//static const Symbol *Add();
 };
 
 //------------------------------------------------------------------------------
