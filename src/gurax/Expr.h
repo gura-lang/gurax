@@ -22,9 +22,31 @@ public:
 	Expr& operator=(Expr&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Expr() = default;
+	virtual ~Expr() = default;
 public:
 	Gurax_DeclareReferable(Expr);
+};
+
+//------------------------------------------------------------------------------
+// ExprList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ExprList : public std::vector<Expr*> {
+};
+
+//------------------------------------------------------------------------------
+// ExprOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ExprOwner : public ExprList, public Referable {
+protected:
+	~ExprOwner() { Clear(); }
+public:
+	// Referable accessor
+	Gurax_DeclareReferable(ExprOwner);
+public:
+	void Clear() {
+		for (auto pExpr : *this) Expr::Delete(pExpr);
+		clear();
+	}
 };
 
 }
