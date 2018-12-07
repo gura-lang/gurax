@@ -12,6 +12,7 @@ class SymbolSet;
 	
 //------------------------------------------------------------------------------
 // Symbol
+// This class is assured to be a plain old data.
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Symbol {
 public:
@@ -23,6 +24,7 @@ public:
 protected:
 	size_t _uniqId;
 	char *_name;
+	char _nameBuff[0];
 private:
 	static SymbolSet *_pSymbolPool;
 public:
