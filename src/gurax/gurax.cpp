@@ -7,6 +7,7 @@ namespace Gurax {
 
 void sub()
 {
+	String s(3, 'a');
 	Object::Bootup();
 	UniquePtr<Tokenizer> pTokenizer(new Tokenizer());
 	UniquePtr<Object> pObj(new Object_number());
@@ -16,8 +17,8 @@ void sub()
 
 int main()
 {
-	Gurax::sub();
-	::printf("hello\n");
+	//Gurax::sub();
+	//::printf("hello\n");
 	return 0;
 }
 

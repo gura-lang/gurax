@@ -4,9 +4,12 @@
 #ifndef GURAX_SYMBOL_H
 #define GURAX_SYMBOL_H
 #include "Referable.h"
+#include "String.h"
 
 namespace Gurax {
 
+class SymbolSet;
+	
 //------------------------------------------------------------------------------
 // Symbol
 //------------------------------------------------------------------------------
@@ -14,14 +17,17 @@ class GURAX_DLLDECLARE Symbol {
 public:
 	struct LessThan {
 		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
-			return pSymbol1->GetId() < pSymbol2->GetId();
+			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) < 0;
 		}
 	};
 protected:
-	int _id;
+	size_t _uniqId;
+	char *_name;
+private:
+	static SymbolSet *_pSymbolPool;
 public:
 	// Default constructor
-	Symbol() {}
+	Symbol() = delete;
 	// Copy constructor/operator
 	Symbol(const Symbol& src) = delete;
 	Symbol& operator=(const Symbol& src) = delete;
@@ -31,15 +37,18 @@ public:
 	// Destructor
 	~Symbol() = default;
 public:
-	int GetId() const { return _id; }
-	//static const Symbol *Add();
+	Symbol(size_t uniqId, char* name) : _uniqId(uniqId), _name(name) {}
+	int GetUniqId() const { return _uniqId; }
+	const char *GetName() const { return _name; }
+	static void Bootup();
+	static const Symbol* Add(const char* name);
 };
 
 //------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolSet :
-	public std::set<const Symbol*, Symbol::LessThan>, public Referable {
+		public std::set<const Symbol*, Symbol::LessThan>, public Referable {
 protected:
 	~SymbolSet() = default;
 public:
