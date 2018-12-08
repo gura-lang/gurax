@@ -8,7 +8,7 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // MagicCommentParser
 //-----------------------------------------------------------------------------
-MagicCommentParser::MagicCommentParser() //: _stat(STAT_Start)
+MagicCommentParser::MagicCommentParser() : _stat(STAT_Start)
 {
 }
 
@@ -19,15 +19,13 @@ MagicCommentParser::~MagicCommentParser()
 bool MagicCommentParser::ParseChar(char ch)
 {
 	bool rtn = false;
-#if 0
 	if (_stat == STAT_Idle) {
 		// nothing to do
 	} else if (_stat == STAT_Start) {
-		if (IsAlpha(ch)) {
-			_field.push_back(ch);
+		if (String::IsAlpha(ch)) {
+			_field += ch;
 		} else if (ch == ':' || ch == '=') {
-			if (_field.size() >= 6 &&
-					::strcmp(_field.c_str() + _field.size() - 6, "coding") == 0) {
+			if (_field.size() >= 6 && ::strcmp(_field.c_str() + _field.size() - 6, "coding") == 0) {
 				_stat = STAT_SkipSpace;
 			} else {
 				_field.clear();
@@ -38,21 +36,21 @@ bool MagicCommentParser::ParseChar(char ch)
 	} else if (_stat == STAT_SkipSpace) {
 		if (ch == ' ' || ch == '\t') {
 			// nothing to do
-		} else if (IsAlpha(ch) || IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
-			_field = ch;
+		} else if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
+			_field.clear();
+			_field += ch;
 			_stat = STAT_CodingName;
 		} else {
 			_stat = STAT_Start;
 		}
 	} else if (_stat == STAT_CodingName) {
-		if (IsAlpha(ch) || IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
-			_field.push_back(ch);
+		if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
+			_field += ch;
 		} else {
 			rtn = true;
 			_stat = STAT_Idle;
 		}
 	}
-#endif
 	return rtn;
 }
 

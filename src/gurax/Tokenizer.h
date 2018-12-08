@@ -16,13 +16,13 @@ private:
 		STAT_Idle, STAT_Start, STAT_SkipSpace, STAT_CodingName,
 	};
 private:
-	//Stat _stat;
+	Stat _stat;
 	String _field;
 public:
 	MagicCommentParser();
 	~MagicCommentParser();
 	bool ParseChar(char ch);
-	const char *GetEncoding() const { return _field.c_str(); }
+	const char* GetEncoding() const { return _field.c_str(); }
 };
 
 //------------------------------------------------------------------------------

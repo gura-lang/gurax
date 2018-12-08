@@ -64,6 +64,15 @@ public:
 	static char ConvBinDigit(char ch) { return ('0' <= ch && ch <= '1')? ch - '0' : 0; }
 	static char ToUpper(char ch) { return ('a' <= ch && ch <= 'z')? ch - 'a' + 'A' : ch; }
 	static char ToLower(char ch) { return ('A' <= ch && ch <= 'Z')? ch - 'A' + 'a' : ch; }
+public:
+	String PickChar(size_t idx) const;
+	const_iterator Forward(const_iterator p) const;
+	UInt64 NextUTF8(const_iterator* pp) const;
+	static UInt64 NextUTF8(const char** pp);
+	UInt32 NextUTF32(const_iterator* pp) const;
+	static UInt32 NextUTF32(const char** pp);
+	void AppendUTF8(UInt64 codeUTF8);
+	void AppendUTF32(UInt32 codeUTF32);
 };
 
 }
