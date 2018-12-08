@@ -16,6 +16,7 @@
 #include "Referable.h"
 #include "String.h"
 #include "Symbol.h"
+#include "Token.h"
 #include "Tokenizer.h"
 
 #endif

@@ -12,6 +12,7 @@ add_executable(gurax
 	Referable.cpp
 	String.cpp
 	Symbol.cpp
+	Token.cpp
 	Tokenizer.cpp)
 
 find_library(LIBREADLINE readline REQUIRED)
