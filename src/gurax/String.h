@@ -36,7 +36,7 @@ public:
 	using std::string::string;	// inherits constructors
 public:
 	// Character operation
-	static UInt32 GetCType(char ch) { return _ctypeTbl[static_cast<UChar>(ch)]; }
+	static UInt32 GetCType(char ch)			{ return _ctypeTbl[static_cast<UChar>(ch)]; }
 	static bool IsAlpha(char ch)			{ return (GetCType(ch) & CTYPE_Alpha) != 0; }
 	static bool IsDigit(char ch)			{ return (GetCType(ch) & CTYPE_Digit) != 0; }
 	static bool IsHexDigit(char ch)			{ return (GetCType(ch) & CTYPE_HexDigit) != 0; }
