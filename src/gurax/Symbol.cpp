@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Symbol
 //------------------------------------------------------------------------------
-SymbolSet *Symbol::_pSymbolPool = nullptr;
+SymbolPool* Symbol::_pSymbolPool = nullptr;
 
 void Symbol::Bootup()
 {
-	_pSymbolPool = new SymbolSet();
+	_pSymbolPool = new SymbolPool();
 }
 
 const Symbol* Symbol::Add(const char* name)
@@ -29,5 +29,13 @@ const Symbol* Symbol::Add(const char* name)
 	_pSymbolPool->insert(pSymbol);
 	return pSymbol;
 }
+
+//------------------------------------------------------------------------------
+// SymbolSet
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// SymbolPool
+//------------------------------------------------------------------------------
 
 }
