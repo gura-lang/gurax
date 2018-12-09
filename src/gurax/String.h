@@ -12,25 +12,23 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class String : public std::string {
 private:
-	enum {
-		CTYPE_Alpha				= (1 << 0),
-		CTYPE_Digit				= (1 << 1),
-		CTYPE_HexDigit			= (1 << 2),
-		CTYPE_OctDigit			= (1 << 3),
-		CTYPE_BinDigit			= (1 << 4),
-		CTYPE_White				= (1 << 5),
-		CTYPE_Space				= (1 << 6),
-		CTYPE_SJISFirst			= (1 << 7),
-		CTYPE_SJISSecond		= (1 << 8),
-		CTYPE_UTF8First			= (1 << 9),
-		CTYPE_UTF8Follower		= (1 << 10),
-		CTYPE_SymbolExtra		= (1 << 11),
-		CTYPE_Lower				= (1 << 12),
-		CTYPE_Upper				= (1 << 13),
-		CTYPE_URIC				= (1 << 14),
-		CTYPE_SymbolFirst		= (CTYPE_Alpha | CTYPE_SymbolExtra | CTYPE_UTF8First),
-		CTYPE_SymbolFollower	= (CTYPE_SymbolFirst | CTYPE_Digit | CTYPE_UTF8Follower),
-	};
+	constexpr static UInt32 CTYPE_Alpha				= (1 << 0);
+	constexpr static UInt32 CTYPE_Digit				= (1 << 1);
+	constexpr static UInt32 CTYPE_HexDigit			= (1 << 2);
+	constexpr static UInt32 CTYPE_OctDigit			= (1 << 3);
+	constexpr static UInt32 CTYPE_BinDigit			= (1 << 4);
+	constexpr static UInt32 CTYPE_White				= (1 << 5);
+	constexpr static UInt32 CTYPE_Space				= (1 << 6);
+	constexpr static UInt32 CTYPE_SJISFirst			= (1 << 7);
+	constexpr static UInt32 CTYPE_SJISSecond		= (1 << 8);
+	constexpr static UInt32 CTYPE_UTF8First			= (1 << 9);
+	constexpr static UInt32 CTYPE_UTF8Follower		= (1 << 10);
+	constexpr static UInt32 CTYPE_SymbolExtra		= (1 << 11);
+	constexpr static UInt32 CTYPE_Lower				= (1 << 12);
+	constexpr static UInt32 CTYPE_Upper				= (1 << 13);
+	constexpr static UInt32 CTYPE_URIC				= (1 << 14);
+	constexpr static UInt32 CTYPE_SymbolFirst		= (CTYPE_Alpha | CTYPE_SymbolExtra | CTYPE_UTF8First);
+	constexpr static UInt32 CTYPE_SymbolFollower	= (CTYPE_SymbolFirst | CTYPE_Digit | CTYPE_UTF8Follower);
 	static const UInt32 _ctypeTbl[];
 public:
 	using std::string::string;	// inherits constructors
