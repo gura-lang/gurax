@@ -162,7 +162,7 @@ UInt32 String::NextUTF32(const_iterator* pp) const
 		}
 		p++;
 		for (int i = 0; p != end() && i < cntChars &&
-				 		(static_cast<UChar>(*p) & 0xc0) == 0x80; i++, p++) {
+				 (static_cast<UChar>(*p) & 0xc0) == 0x80; i++, p++) {
 			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
 		}
 	}
@@ -214,7 +214,7 @@ void String::AppendUTF8(UInt64 codeUTF8)
 	size_t i = 0;
 	char buff[8];
 	for ( ; codeUTF8 != 0 && i < 8; codeUTF8 >>= 8, i++) {
-		buff[i] = static_cast<char>(static_cast<UChar>(codeUTF8 & 0xff));
+		buff[i] = static_cast<char>(codeUTF8 & 0xff);
 	}
 	while (i > 0) push_back(buff[--i]);
 }
