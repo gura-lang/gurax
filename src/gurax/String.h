@@ -33,6 +33,11 @@ public:
 	};
 private:
 	static UInt32 _ctypeTbl[256];
+	static int _convBinDigitTbl[256];
+	static int _convOctDigitTbl[256];
+	static int _convHexDigitTbl[256];
+	static char _toUpperTbl[256];
+	static char _toLowerTbl[256];
 public:
 	using std::string::string;	// inherits constructors
 public:
@@ -57,16 +62,11 @@ public:
 	static bool IsURIC(char ch)				{ return (GetCType(ch) & CType::URIC) != 0; }
 	static bool IsSymbolFirst(char ch)		{ return (GetCType(ch) & CType::SymbolFirst) != 0; }
 	static bool IsSymbolFollower(char ch)	{ return (GetCType(ch) & CType::SymbolFollower) != 0; }
-	static char ConvHexDigit(char ch) {
-		return
-			('0' <= ch && ch <= '9')? ch - '0' :
-			('A' <= ch && ch <= 'F')? ch - 'A' + 10 :
-			('a' <= ch && ch <= 'f')? ch - 'a' + 10 : 0;
-	}
-	static char ConvOctDigit(char ch) { return ('0' <= ch && ch <= '7')? ch - '0' : 0; }
-	static char ConvBinDigit(char ch) { return ('0' <= ch && ch <= '1')? ch - '0' : 0; }
-	static char ToUpper(char ch) { return ('a' <= ch && ch <= 'z')? ch - 'a' + 'A' : ch; }
-	static char ToLower(char ch) { return ('A' <= ch && ch <= 'Z')? ch - 'A' + 'a' : ch; }
+	static int ConvBinDigit(char ch)		{ return _convBinDigitTbl[static_cast<UChar>(ch)]; }
+	static int ConvOctDigit(char ch)		{ return _convOctDigitTbl[static_cast<UChar>(ch)]; }
+	static int ConvHexDigit(char ch)		{ return _convHexDigitTbl[static_cast<UChar>(ch)]; }
+	static char ToUpper(char ch)			{ return _toUpperTbl[static_cast<UChar>(ch)]; }
+	static char ToLower(char ch)			{ return _toLowerTbl[static_cast<UChar>(ch)]; }
 public:
 	String PickChar(size_t idx) const;
 	const_iterator Forward(const_iterator p) const;

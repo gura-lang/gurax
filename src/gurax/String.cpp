@@ -9,6 +9,11 @@ namespace Gurax {
 // String
 //------------------------------------------------------------------------------
 UInt32 String::_ctypeTbl[256];
+int String::_convBinDigitTbl[256];
+int String::_convOctDigitTbl[256];
+int String::_convHexDigitTbl[256];
+char String::_toUpperTbl[256];
+char String::_toLowerTbl[256];
 
 void String::Bootup()
 {
@@ -64,6 +69,13 @@ void String::Bootup()
 			num |= String::CType::URIC;
 		}
 		_ctypeTbl[ch] = num;
+		_convBinDigitTbl[ch] = ('0' <= ch && ch <= '1')? ch - '0' : 0;
+		_convOctDigitTbl[ch] = ('0' <= ch && ch <= '7')? ch - '0' : 0;
+		_convHexDigitTbl[ch] =
+			('0' <= ch && ch <= '9')? ch - '0' :
+			('A' <= ch && ch <= 'F')? ch - 'A' + 10 : ('a' <= ch && ch <= 'f')? ch - 'a' + 10 : 0;
+		_toUpperTbl[ch] = ('a' <= ch && ch <= 'z')? ch - 'a' + 'A' : ch;
+		_toLowerTbl[ch] = ('A' <= ch && ch <= 'Z')? ch - 'A' + 'a' : ch;
 	}
 #if 0
 	for (auto ch = 0; ch < 256; ++ch) {
