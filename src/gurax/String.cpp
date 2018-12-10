@@ -2,8 +2,32 @@
 // String.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <random>
 
 namespace Gurax {
+
+template<int N> struct Table
+{
+	constexpr Table() : values(), values2() {
+		for (auto i = 0; i < N; ++i) {
+			values[i][0] = i;
+			values[i][1] = i * i * i;
+		}
+		for (int i = 0; i < N; ++i) {
+			values2[i] = i;
+		}
+    }
+    int values[N][2];
+	int values2[N];
+};
+
+constexpr auto table = Table<256>();
+
+void func()
+{
+	std::mt19937 rng;
+
+}
 
 //------------------------------------------------------------------------------
 // String

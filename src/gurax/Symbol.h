@@ -55,7 +55,7 @@ public:
 // SymbolSet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolSet :
-		public std::set<const Symbol*, Symbol::LessThan_UniqId>, public Referable {
+	public std::set<const Symbol*, Symbol::LessThan_UniqId>, public Referable {
 protected:
 	~SymbolSet() = default;
 public:

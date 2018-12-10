@@ -12,46 +12,48 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class String : public std::string {
 private:
-	constexpr static UInt32 CTYPE_Alpha				= (1 << 0);
-	constexpr static UInt32 CTYPE_Digit				= (1 << 1);
-	constexpr static UInt32 CTYPE_HexDigit			= (1 << 2);
-	constexpr static UInt32 CTYPE_OctDigit			= (1 << 3);
-	constexpr static UInt32 CTYPE_BinDigit			= (1 << 4);
-	constexpr static UInt32 CTYPE_White				= (1 << 5);
-	constexpr static UInt32 CTYPE_Space				= (1 << 6);
-	constexpr static UInt32 CTYPE_SJISFirst			= (1 << 7);
-	constexpr static UInt32 CTYPE_SJISSecond		= (1 << 8);
-	constexpr static UInt32 CTYPE_UTF8First			= (1 << 9);
-	constexpr static UInt32 CTYPE_UTF8Follower		= (1 << 10);
-	constexpr static UInt32 CTYPE_SymbolExtra		= (1 << 11);
-	constexpr static UInt32 CTYPE_Lower				= (1 << 12);
-	constexpr static UInt32 CTYPE_Upper				= (1 << 13);
-	constexpr static UInt32 CTYPE_URIC				= (1 << 14);
-	constexpr static UInt32 CTYPE_SymbolFirst		= (CTYPE_Alpha | CTYPE_SymbolExtra | CTYPE_UTF8First);
-	constexpr static UInt32 CTYPE_SymbolFollower	= (CTYPE_SymbolFirst | CTYPE_Digit | CTYPE_UTF8Follower);
+	struct CType {
+		static constexpr UInt32 Alpha			= 1 << 0;
+		static constexpr UInt32 Digit			= 1 << 1;
+		static constexpr UInt32 HexDigit		= 1 << 2;
+		static constexpr UInt32 OctDigit		= 1 << 3;
+		static constexpr UInt32 BinDigit		= 1 << 4;
+		static constexpr UInt32 White			= 1 << 5;
+		static constexpr UInt32 Space			= 1 << 6;
+		static constexpr UInt32 SJISFirst		= 1 << 7;
+		static constexpr UInt32 SJISSecond		= 1 << 8;
+		static constexpr UInt32 UTF8First		= 1 << 9;
+		static constexpr UInt32 UTF8Follower	= 1 << 10;
+		static constexpr UInt32 SymbolExtra		= 1 << 11;
+		static constexpr UInt32 Lower			= 1 << 12;
+		static constexpr UInt32 Upper			= 1 << 13;
+		static constexpr UInt32 URIC			= 1 << 14;
+		static constexpr UInt32 SymbolFirst		= Alpha | SymbolExtra | UTF8First;
+		static constexpr UInt32 SymbolFollower	= SymbolFirst | Digit | UTF8Follower;
+	};
 	static const UInt32 _ctypeTbl[];
 public:
 	using std::string::string;	// inherits constructors
 public:
 	// Character operation
 	static UInt32 GetCType(char ch)			{ return _ctypeTbl[static_cast<UChar>(ch)]; }
-	static bool IsAlpha(char ch)			{ return (GetCType(ch) & CTYPE_Alpha) != 0; }
-	static bool IsDigit(char ch)			{ return (GetCType(ch) & CTYPE_Digit) != 0; }
-	static bool IsHexDigit(char ch)			{ return (GetCType(ch) & CTYPE_HexDigit) != 0; }
-	static bool IsOctDigit(char ch)			{ return (GetCType(ch) & CTYPE_OctDigit) != 0; }
-	static bool IsBinDigit(char ch)			{ return (GetCType(ch) & CTYPE_BinDigit) != 0; }
-	static bool IsWhite(char ch)			{ return (GetCType(ch) & CTYPE_White) != 0; }
-	static bool IsSpace(char ch)			{ return (GetCType(ch) & CTYPE_Space) != 0; }
-	static bool IsSJISFirst(char ch)		{ return (GetCType(ch) & CTYPE_SJISFirst) != 0; }
-	static bool IsSJISSecond(char ch)		{ return (GetCType(ch) & CTYPE_SJISSecond) != 0; }
-	static bool IsUTF8First(char ch)		{ return (GetCType(ch) & CTYPE_UTF8First) != 0; }
-	static bool IsUTF8Follower(char ch)		{ return (GetCType(ch) & CTYPE_UTF8Follower) != 0; }
-	static bool IsSymbolExtra(char ch)		{ return (GetCType(ch) & CTYPE_SymbolExtra) != 0; }
-	static bool IsLower(char ch)			{ return (GetCType(ch) & CTYPE_Lower) != 0; }
-	static bool IsUpper(char ch)			{ return (GetCType(ch) & CTYPE_Upper) != 0; }
-	static bool IsURIC(char ch)				{ return (GetCType(ch) & CTYPE_URIC) != 0; }
-	static bool IsSymbolFirst(char ch)		{ return (GetCType(ch) & CTYPE_SymbolFirst) != 0; }
-	static bool IsSymbolFollower(char ch)	{ return (GetCType(ch) & CTYPE_SymbolFollower) != 0; }
+	static bool IsAlpha(char ch)			{ return (GetCType(ch) & CType::Alpha) != 0; }
+	static bool IsDigit(char ch)			{ return (GetCType(ch) & CType::Digit) != 0; }
+	static bool IsHexDigit(char ch)			{ return (GetCType(ch) & CType::HexDigit) != 0; }
+	static bool IsOctDigit(char ch)			{ return (GetCType(ch) & CType::OctDigit) != 0; }
+	static bool IsBinDigit(char ch)			{ return (GetCType(ch) & CType::BinDigit) != 0; }
+	static bool IsWhite(char ch)			{ return (GetCType(ch) & CType::White) != 0; }
+	static bool IsSpace(char ch)			{ return (GetCType(ch) & CType::Space) != 0; }
+	static bool IsSJISFirst(char ch)		{ return (GetCType(ch) & CType::SJISFirst) != 0; }
+	static bool IsSJISSecond(char ch)		{ return (GetCType(ch) & CType::SJISSecond) != 0; }
+	static bool IsUTF8First(char ch)		{ return (GetCType(ch) & CType::UTF8First) != 0; }
+	static bool IsUTF8Follower(char ch)		{ return (GetCType(ch) & CType::UTF8Follower) != 0; }
+	static bool IsSymbolExtra(char ch)		{ return (GetCType(ch) & CType::SymbolExtra) != 0; }
+	static bool IsLower(char ch)			{ return (GetCType(ch) & CType::Lower) != 0; }
+	static bool IsUpper(char ch)			{ return (GetCType(ch) & CType::Upper) != 0; }
+	static bool IsURIC(char ch)				{ return (GetCType(ch) & CType::URIC) != 0; }
+	static bool IsSymbolFirst(char ch)		{ return (GetCType(ch) & CType::SymbolFirst) != 0; }
+	static bool IsSymbolFollower(char ch)	{ return (GetCType(ch) & CType::SymbolFollower) != 0; }
 	static char ConvHexDigit(char ch) {
 		return
 			('0' <= ch && ch <= '9')? ch - '0' :
