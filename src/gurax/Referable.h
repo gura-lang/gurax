@@ -35,7 +35,7 @@ class GURAX_DLLDECLARE Referable {
 protected:
 	int _cntRef;
 public:
-	// Default constructor
+	// Constructor
 	Referable() : _cntRef(1) {}
 	// Copy constructor/operator
 	Referable(const Referable& src) = delete;

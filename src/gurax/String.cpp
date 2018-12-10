@@ -2,7 +2,6 @@
 // String.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <random>
 
 namespace Gurax {
 

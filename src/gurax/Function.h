@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class Function : public Referable {
 public:
-	// Default constructor
+	// Constructor
 	Function() {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
@@ -24,6 +24,7 @@ protected:
 	// Destructor
 	~Function() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Function);
 };
 

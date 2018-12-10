@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE Object_number : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
-		// Default constructor
+		// Constructor
 		TypeInfoEx() : TypeInfo(&Object::typeInfo) {}
 		// Copy constructor/operator
 		TypeInfoEx(const TypeInfoEx& src) = delete;
@@ -34,7 +34,7 @@ public:
 private:
 	Double _num;
 public:
-	// Default constructor
+	// Constructor
 	Object_number(Double num = 0.) : Object(typeInfo), _num(num) {}
 	// Copy constructor/operator
 	Object_number(const Object_number& src) : Object(typeInfo), _num(src._num) {}
@@ -46,6 +46,7 @@ protected:
 	// Destructor
 	~Object_number() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Object_number);
 public:
 	Double GetDouble() const { return _num; }

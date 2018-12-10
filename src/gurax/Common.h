@@ -3,10 +3,18 @@
 //==============================================================================
 #ifndef GURAX_COMMON_H
 #define GURAX_COMMON_H
+#include <array>
+#include <complex>
+#include <functional>
 #include <map>
 #include <memory>
+#include <random>
+#include <ratio>
+#include <regex>
 #include <set>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 

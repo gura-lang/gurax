@@ -12,7 +12,7 @@ class SymbolPool;
 	
 //------------------------------------------------------------------------------
 // Symbol
-// This class is assured to be a plain old data.
+// This class is assured to be a POD (plain old data).
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Symbol {
 public:
@@ -26,6 +26,16 @@ public:
 			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) < 0;
 		}
 	};
+	struct Hash_UniqId {
+		size_t operator()(const Symbol* pSymbol) {
+			return pSymbol->GetUniqId();
+		}
+	};
+	struct Hash_Name {
+		size_t operator()(const Symbol* pSymbol) {
+			return std::hash<std::string>()(pSymbol->GetName());
+		}
+	};
 protected:
 	size_t _uniqId;
 	char* _name;
@@ -33,8 +43,9 @@ protected:
 private:
 	static SymbolPool* _pSymbolPool;
 public:
-	// Default constructor
+	// Constructor
 	Symbol() = delete;
+	Symbol(size_t uniqId, char* name) : _uniqId(uniqId), _name(name) {}
 	// Copy constructor/operator
 	Symbol(const Symbol& src) = delete;
 	Symbol& operator=(const Symbol& src) = delete;
@@ -44,7 +55,6 @@ public:
 	// Destructor
 	~Symbol() = default;
 public:
-	Symbol(size_t uniqId, char* name) : _uniqId(uniqId), _name(name) {}
 	int GetUniqId() const { return _uniqId; }
 	const char* GetName() const { return _name; }
 	static void Bootup();
@@ -55,7 +65,7 @@ public:
 // SymbolSet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolSet :
-	public std::set<const Symbol*, Symbol::LessThan_UniqId>, public Referable {
+	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId>, public Referable {
 protected:
 	~SymbolSet() = default;
 public:
@@ -66,7 +76,8 @@ public:
 //------------------------------------------------------------------------------
 // SymbolPool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SymbolPool : public std::set<const Symbol*, Symbol::LessThan_Name> {
+class GURAX_DLLDECLARE SymbolPool :
+	public std::unordered_set<const Symbol*, Symbol::Hash_Name> {
 };
 
 }

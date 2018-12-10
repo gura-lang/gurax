@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Symbol
 //------------------------------------------------------------------------------
+static_assert(std::is_pod<Symbol>::value, "Gurax::Symbol must be a POD class");
+
 SymbolPool* Symbol::_pSymbolPool = nullptr;
 
 void Symbol::Bootup()

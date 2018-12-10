@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr : public Referable {
 public:
-	// Default constructor
+	// Constructor
 	Expr() {}
 	// Copy constructor/operator
 	Expr(const Expr& src) = delete;
@@ -24,6 +24,7 @@ protected:
 	// Destructor
 	virtual ~Expr() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Expr);
 };
 

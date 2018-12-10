@@ -53,7 +53,7 @@ public:
 		const TypeInfo* _pTypeInfoParent;
 		UniquePtr<ObjectMap> _pObjMap;
 	public:
-		// Default constructor
+		// Constructor
 		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) :
 			_pTypeInfoParent(pTypeInfoParent), _pObjMap(new ObjectMap()) {}
 		// Copy constructor/operator
@@ -76,8 +76,9 @@ protected:
 public:
 	static const TypeInfo typeInfo;
 public:
-	// Default constructor
+	// Constructor
 	Object() = delete;
+	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
 	// Copy constructor/operator
 	Object(const Object& src) = delete;
 	Object& operator=(const Object& src) = delete;
@@ -91,7 +92,6 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Object);
 public:
-	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
 	static void Bootup();
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	static Object* nil() { return _pObj_nil->Reference(); }

@@ -99,7 +99,7 @@ private:
 	//TokenWatcher *_pTokenWatcher;
 #endif
 public:
-	// Default constructor
+	// Constructor
 	Tokenizer() = delete;
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
@@ -111,6 +111,7 @@ protected:
 	// Destructor
 	~Tokenizer() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Tokenizer);
 public:
 	Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag);

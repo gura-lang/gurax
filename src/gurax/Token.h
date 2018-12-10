@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Token : public Referable {
 public:
-	// Default constructor
+	// Constructor
 	Token() {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
@@ -24,6 +24,7 @@ protected:
 	// Destructor
 	virtual ~Token() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Token);
 };
 

@@ -35,10 +35,10 @@ public:
 		Pool *_pPool;
 		Header *_pHeaderVacantHead;
 	public:
-		inline ChunkFixed(size_t bytesBlock, size_t nBlocks) :
+		ChunkFixed(size_t bytesBlock, size_t nBlocks) :
 			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
 			_pPool(nullptr), _pHeaderVacantHead(nullptr) {}
-		inline size_t GetBytesBlock() const { return _bytesBlock; }
+		size_t GetBytesBlock() const { return _bytesBlock; }
 		void Print() const;
 		void *Allocate(const char *ownerName);
 		virtual void Deallocate(void *p);
@@ -56,12 +56,22 @@ private:
 	ChunkFixed _chunkFixed2;
 	ChunkVariable _chunkVariable;
 public:
+	// Constructor
 	MemoryPool();
-	inline static void *Allocate(size_t bytes, const char *ownerName = "") {
+	// Copy constructor/operator
+	MemoryPool(const MemoryPool& src) = delete;
+	MemoryPool& operator=(const MemoryPool& src) = delete;
+	// Move constructor/operator
+	MemoryPool(MemoryPool&& src) = delete;
+	MemoryPool& operator=(MemoryPool&& src) noexcept = delete;
+	// Destructor
+	~MemoryPool() = default;
+public:
+	static void *Allocate(size_t bytes, const char *ownerName = "") {
 		return _inst.DoAllocate(bytes, ownerName);
 	}
-	inline static void Deallocate(void *p) { _inst.DoDeallocate(p); }
-	inline static void Print() { _inst.DoPrint(); }
+	static void Deallocate(void *p) { _inst.DoDeallocate(p); }
+	static void Print() { _inst.DoPrint(); }
 private:
 	void *DoAllocate(size_t bytes, const char *ownerName);
 	void DoDeallocate(void *p);
@@ -73,16 +83,26 @@ private:
 //-----------------------------------------------------------------------------
 template<typename _Tp> class Allocator : public std::allocator<_Tp> {
 public:
-	inline Allocator() {}
-	inline Allocator(const Allocator &a) throw() {}
-	template<typename _Tp1> inline Allocator(const Allocator<_Tp1> &a) throw() {}
 	template<typename _Tp1> struct rebind {
 		typedef Allocator<_Tp1> other;
 	};
-	inline _Tp *allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
+public:
+	// Constructor
+	Allocator() {}
+	template<typename _Tp1> Allocator(const Allocator<_Tp1>& a) throw() {}
+	// Copy constructor/operator
+	Allocator(const Allocator& a) throw() {}
+	Allocator& operator=(const Allocator& src) = delete;
+	// Move constructor/operator
+	Allocator(Allocator&& src) = delete;
+	Allocator& operator=(Allocator&& src) noexcept = delete;
+	// Destructor
+	~Allocator() = default;
+public:
+	_Tp *allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
 		return reinterpret_cast<_Tp *>(MemoryPool::Allocate(num * sizeof(_Tp), "Allocator"));
 	}
-	inline void deallocate(_Tp *p, size_t num) {
+	void deallocate(_Tp *p, size_t num) {
 		MemoryPool::Deallocate(p);
 	}
 };

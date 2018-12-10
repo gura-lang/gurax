@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE Object_undefined : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
-		// Default constructor
+		// Constructor
 		TypeInfoEx() : TypeInfo(&Object::typeInfo) {}
 		// Copy constructor/operator
 		TypeInfoEx(const TypeInfoEx& src) = delete;
@@ -28,7 +28,7 @@ public:
 public:
 	static const TypeInfoEx typeInfo;
 public:
-	// Default constructor
+	// Constructor
 	Object_undefined() : Object(typeInfo) {}
 	// Copy constructor/operator
 	Object_undefined(const Object_undefined& src) = delete;
@@ -40,6 +40,7 @@ protected:
 	// Destructor
 	virtual ~Object_undefined() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Object_undefined);
 };
 

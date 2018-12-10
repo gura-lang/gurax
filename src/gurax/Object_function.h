@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE Object_function : public Object {
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
-		// Default constructor
+		// Constructor
 		TypeInfoEx() : TypeInfo(&Object::typeInfo) {}
 		// Copy constructor/operator
 		TypeInfoEx(const TypeInfoEx& src) = delete;
@@ -34,8 +34,9 @@ public:
 private:
 	UniquePtr<Function> _pFunc;
 public:
-	// Default constructor
+	// Constructor
 	Object_function() = delete;
+	Object_function(Function *pFunc) : Object(typeInfo), _pFunc(pFunc) {}
 	// Copy constructor/operator
 	Object_function(const Object_function& src) : Object(typeInfo), _pFunc(src._pFunc->Reference()) {}
 	Object_function& operator=(const Object_function& src) { _pFunc.reset(src._pFunc->Reference()); return *this; }
@@ -46,9 +47,9 @@ protected:
 	// Destructor
 	~Object_function() = default;
 public:
+	// Referable accessor
 	Gurax_DeclareReferable(Object_function);
 public:
-	Object_function(Function *pFunc) : Object(typeInfo), _pFunc(pFunc) {}
 	const Function* GetFunction() const { return _pFunc.get(); }
 };
 
