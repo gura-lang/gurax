@@ -101,6 +101,7 @@ private:
 public:
 	// Constructor
 	Tokenizer() = delete;
+	Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag);
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
 	Tokenizer& operator=(const Tokenizer& src) = delete;
@@ -114,7 +115,6 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Tokenizer);
 public:
-	Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag);
 	bool ParseChar(char ch);
 };
 

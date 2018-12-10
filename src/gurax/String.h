@@ -11,7 +11,7 @@ namespace Gurax {
 // String
 //------------------------------------------------------------------------------
 class String : public std::string {
-private:
+public:
 	struct CType {
 		static constexpr UInt32 Alpha			= 1 << 0;
 		static constexpr UInt32 Digit			= 1 << 1;
@@ -31,9 +31,12 @@ private:
 		static constexpr UInt32 SymbolFirst		= Alpha | SymbolExtra | UTF8First;
 		static constexpr UInt32 SymbolFollower	= SymbolFirst | Digit | UTF8Follower;
 	};
-	static const UInt32 _ctypeTbl[];
+private:
+	static UInt32 _ctypeTbl[256];
 public:
 	using std::string::string;	// inherits constructors
+public:
+	static void Bootup();
 public:
 	// Character operation
 	static UInt32 GetCType(char ch)			{ return _ctypeTbl[static_cast<UChar>(ch)]; }
