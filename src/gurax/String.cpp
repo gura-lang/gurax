@@ -20,53 +20,53 @@ void String::Bootup()
 	for (auto ch = 0; ch < 256; ++ch) {
 		UInt32 num = 0;
 		if (('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z')) {
-			num |= String::CType::Alpha;
+			num |= CType::Alpha;
 		}
 		if ('0' <= ch && ch <= '9') {
-			num |= String::CType::Digit;
+			num |= CType::Digit;
 		}
 		if (('0' <= ch && ch <= '9') || ('A' <= ch && ch <= 'F') || ('a' <= ch && ch <= 'f')) {
-			num |= String::CType::HexDigit;
+			num |= CType::HexDigit;
 		}
 		if ('0' <= ch && ch <= '7') {
-			num |= String::CType::OctDigit;
+			num |= CType::OctDigit;
 		}
 		if ('0' <= ch && ch <= '1') {
-			num |= String::CType::BinDigit;
+			num |= CType::BinDigit;
 		}
 		if (ch == ' ' || ch == '\t') {
-			num |= String::CType::White;
+			num |= CType::White;
 		}
 		if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') {
-			num |= String::CType::Space;
+			num |= CType::Space;
 		}
 		if ((0x81 <= ch && ch <= 0x9f) || (0xe0 <= ch && ch <= 0xef) || (0xfa <= ch && ch <= 0xfc)) {
-			num |= String::CType::SJISFirst;
+			num |= CType::SJISFirst;
 		}
 		if ((0x40 <= ch && ch <= 0x7e) || (0x80 <= ch && ch <= 0xfc)) {
-			num |= String::CType::SJISSecond;
+			num |= CType::SJISSecond;
 		}
 		if ((ch & 0xc0) == 0xc0) {
-			num |= String::CType::UTF8First;
+			num |= CType::UTF8First;
 		}
 		if ((ch & 0xc0) == 0x80) {
-			num |= String::CType::UTF8Follower;
+			num |= CType::UTF8Follower;
 		}
 		if (ch == '_' || ch == '$' || ch == '@') {
-			num |= String::CType::SymbolExtra;
+			num |= CType::SymbolExtra;
 		}
 		if ('a' <= ch && ch <= 'z') {
-			num |= String::CType::Lower;
+			num |= CType::Lower;
 		}
 		if ('A' <= ch && ch <= 'Z') {
-			num |= String::CType::Upper;
+			num |= CType::Upper;
 		}
 		if (('0' <= ch && ch <= '9') || ('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z') ||
 			ch == ';' || ch ==  '/' || ch == '?' || ch == ':' || ch == '@' ||
 			ch == '&' || ch ==  '=' || ch == '+' || ch == '$' || ch == ',' ||
 			ch == '-' || ch == '_' || ch == '.' || ch == '!' || ch == '~' ||
 			ch == '*' || ch == '\'' || ch == '(' || ch == ')') {
-			num |= String::CType::URIC;
+			num |= CType::URIC;
 		}
 		_ctypeTbl[ch] = num;
 		_convBinDigitTbl[ch] = ('0' <= ch && ch <= '1')? ch - '0' : 0;
