@@ -8,6 +8,30 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// TokenType
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TokenType {
+public:
+	int category;
+	const char *typeName;
+	const char *symbol;
+	OpType opType;
+public:
+	// Constructor
+	TokenType() = default;
+	// Copy constructor/operator
+	TokenType(const TokenType& src) = default;
+	TokenType& operator=(const TokenType& src) = default;
+	// Move constructor/operator
+	TokenType(TokenType&& src) = default;
+	TokenType& operator=(TokenType&& src) noexcept = default;
+	// Destructor
+	~TokenType() = default;
+public:
+	bool IsIdentical(const TokenType &tokenType) const { return this == &tokenType; }
+};
+
+//------------------------------------------------------------------------------
 // Token
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Token : public Referable {

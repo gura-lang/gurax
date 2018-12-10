@@ -13,6 +13,7 @@
 #include "Object_nil.h"
 #include "Object_number.h"
 #include "Object_undefined.h"
+#include "Operator.h"
 #include "Referable.h"
 #include "String.h"
 #include "Symbol.h"

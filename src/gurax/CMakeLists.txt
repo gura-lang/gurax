@@ -9,6 +9,7 @@ add_executable(gurax
 	Object_nil.cpp
 	Object_number.cpp
 	Object_undefined.cpp
+	Operator.cpp
 	Referable.cpp
 	String.cpp
 	Symbol.cpp
