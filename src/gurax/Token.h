@@ -12,6 +12,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE TokenType {
 public:
+	static const TokenType Begin;
+public:
 	int category;
 	const char *typeName;
 	const char *symbol;
