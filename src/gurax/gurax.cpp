@@ -31,6 +31,16 @@ void sub()
 
 int main()
 {
+	//std::array<T, 3> arr {
+	struct {int a; int b;} arr[] = {
+		{1, 2},
+		{3, 4},
+		{5, 6},
+	};
+	//for (auto i = std::begin(arr); i != std::end(arr); ++i) {
+	for (auto i : arr) {
+		::printf("%d %d\n", i.a, i.b);
+	}
 	Gurax::sub();
 	return 0;
 }

@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class StringList;
+	
 //------------------------------------------------------------------------------
 // String
 //------------------------------------------------------------------------------
@@ -39,7 +41,8 @@ private:
 	static char _toUpperTbl[256];
 	static char _toLowerTbl[256];
 public:
-	using std::string::string;	// inherits constructors
+	// Inherits constructors
+	using std::string::string;
 public:
 	static void Bootup();
 public:
@@ -76,6 +79,15 @@ public:
 	static UInt32 NextUTF32(const char** pp);
 	void AppendUTF8(UInt64 codeUTF8);
 	void AppendUTF32(UInt32 codeUTF32);
+};
+
+//------------------------------------------------------------------------------
+// StringList
+//------------------------------------------------------------------------------
+class StringList : public std::vector<String> {
+public:
+	// Inherits constructors
+	using std::vector<String>::vector;
 };
 
 }
