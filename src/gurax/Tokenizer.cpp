@@ -3,6 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
+#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
+
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
@@ -57,16 +59,16 @@ bool MagicCommentParser::ParseChar(char ch)
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
-Tokenizer::Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag)
-	//_stat(Stat::BOF), _lineHeadFlag(true),
-	//_appearShebangFlag(false), _blockParamFlag(false),
-	//_cntLine(cntLineStart), _cntCol(0), _commentNestLevel(0),
+Tokenizer::Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag) :
+	_stat(Stat::BOF), _lineHeadFlag(true),
+	_appearShebangFlag(false), _blockParamFlag(false),
+	_cntLine(cntLineStart), _cntCol(0), _commentNestLevel(0),
 	//_pSourceName(new StringShared(sourceName)),
-	//_pExprOwner(nullptr), _pExprParent(nullptr),
-	//_pTokenInfoPrev(&TOKEN_Unknown),
-	//_lineNoTop(0), _lineNoOfTokenPrev(0),
-	//_enablePreparatorFlag(enablePreparatorFlag), _interactiveFlag(false)
-	//_pTokenWatcher(nullptr)
+	_pExprOwner(nullptr), _pExprParent(nullptr),
+	_pTokenTypePrev(&TokenType::Unknown),
+	_lineNoTop(0), _lineNoOfTokenPrev(0),
+	_enablePreparatorFlag(enablePreparatorFlag), _interactiveFlag(false),
+	_pTokenWatcher(nullptr)
 {
 }
 

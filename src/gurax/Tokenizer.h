@@ -54,12 +54,10 @@ public:
 		StringPost, StringSuffixed,
 		RecoverConsole,
 	};
-#if 0
 	class GURAX_DLLDECLARE TokenWatcher {
 	public:
 		virtual void FeedToken(const Token& token) = 0;
 	};
-#endif
 	struct StringInfo {
 		char chBorder;
 		bool rawFlag;		// prefixed by 'r' or 'R'
@@ -72,7 +70,6 @@ public:
 		String strIndentRef;
 	};
 private:
-#if 0
 	Stat _stat;
 	bool _lineHeadFlag;
 	MagicCommentParser _magicCommentParser;
@@ -87,7 +84,7 @@ private:
 	String _suffix;
 	ExprOwner *_pExprOwner;
 	const Expr *_pExprParent;
-	//const TokenInfo *_pTokenInfoPrev;
+	const TokenType *_pTokenTypePrev;
 	int _lineNoTop;
 	int _lineNoOfTokenPrev;
 	//TokenStack _tokenStack;
@@ -96,8 +93,7 @@ private:
 	String _strIndent;
 	bool _enablePreparatorFlag;
 	bool _interactiveFlag;
-	//TokenWatcher *_pTokenWatcher;
-#endif
+	TokenWatcher *_pTokenWatcher;
 public:
 	// Constructor
 	Tokenizer() = delete;
@@ -116,6 +112,7 @@ public:
 	Gurax_DeclareReferable(Tokenizer);
 public:
 	bool ParseChar(char ch);
+	bool IsTokenWatched() const { return false; }
 };
 
 }
