@@ -264,36 +264,36 @@ bool Tokenizer::ParseChar(char ch)
 		} tbl[] = {
 			{ '+', &TokenType::Add, {
 				{ '=', &TokenType::AssignAdd	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '-', &TokenType::Sub, {
 				{ '=', &TokenType::AssignSub	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '*', &TokenType::Mul, {
 				{ '=', &TokenType::AssignMul	},
 				{ '*', &TokenType::TripleChars	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '/', &TokenType::Div, {
 				{ '=', &TokenType::AssignDiv	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '%', &TokenType::Mod, {
 				{ '=', &TokenType::AssignMod	},
 				{ '%', &TokenType::ModMod		},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '=', &TokenType::Assign, {
 				{ '=', &TokenType::Eq 			},
 				{ '>', &TokenType::Pair			},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '<', &TokenType::Lt, {
 				{ '=', &TokenType::TripleChars	},
 				{ '<', &TokenType::TripleChars	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '>', &TokenType::Gt, {
 				{ '=', &TokenType::Ge			},
 				{ '>', &TokenType::TripleChars	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '!', &TokenType::Not, {
 				{ '=', &TokenType::Ne			},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '|', &TokenType::Or, {
 				{ '=', &TokenType::AssignOr 	},
 				{ '|', &TokenType::TripleChars	},
@@ -303,14 +303,14 @@ bool Tokenizer::ParseChar(char ch)
 				{ '+', &TokenType::TripleChars	},
 				{ '-', &TokenType::TripleChars	},
 				{ '&', &TokenType::TripleChars	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '&', &TokenType::And, {
 				{ '=', &TokenType::AssignAnd	},
 				{ '&', &TokenType::AndAnd		},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ '^', &TokenType::Xor, {
 				{ '=', &TokenType::AssignXor	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 		};
 		int chFirst = _field[0];
 		if (chFirst == '/' && ch == '*') {
@@ -379,37 +379,37 @@ bool Tokenizer::ParseChar(char ch)
 		} tbl[] = {
 			{ "**", &TokenType::Pow, false, {
 				{ '=', &TokenType::AssignPow	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "<=", &TokenType::Le, false, {
 				{ '>', &TokenType::Cmp			},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "<<", &TokenType::Shl, false, {
 				{ '=', &TokenType::AssignShl	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ ">>", &TokenType::Shr, false, {
 				{ '=', &TokenType::AssignShr	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "|.", &TokenType::Or, true, {
 				{ '|', &TokenType::Dot			},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "|^", &TokenType::Or, true, {
 				{ '|', &TokenType::Cross		},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "|*", &TokenType::Or, true, {
 				{ '|', &TokenType::Gear			},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "|+", &TokenType::Or, true, {
 				{ '|', &TokenType::Concat		},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "|-", &TokenType::Or, true, {
 				{ '|', &TokenType::Difference	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "|&", &TokenType::Or, true, {
 				{ '|', &TokenType::Intersection	},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 			{ "||", &TokenType::OrOr, false, {
 				{ '|', &TokenType::Union		},
-				{ '\0', &TokenType::Unknown		}, } },
+				{ '\0', &TokenType::Unknown		} } },
 		};
 		_stat = Stat::Start;
 		for (size_t i = 0; i < ArraySizeOf(tbl); i++) {
