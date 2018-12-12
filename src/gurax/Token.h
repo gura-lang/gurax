@@ -108,9 +108,10 @@ public:
 class GURAX_DLLDECLARE Token : public Referable {
 private:
 	const TokenType &_tokenType;
+	int _lineNo;
 public:
 	// Constructor
-	Token(const TokenType &tokenType) : _tokenType(tokenType) {}
+	Token(const TokenType &tokenType, int lineNo) : _tokenType(tokenType), _lineNo(lineNo) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
 	Token& operator=(const Token& src) = delete;
@@ -124,6 +125,7 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Token);
 public:
+	int GetLineNo() const { return _lineNo; }
 	int GetCategory() const { return _tokenType.category; }
 	const char *GetTypeName() const { return _tokenType.typeName; }
 	const char *GetSymbol() const { return _tokenType.symbol; }

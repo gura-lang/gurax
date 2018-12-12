@@ -56,7 +56,7 @@ public:
 	};
 	class GURAX_DLLDECLARE TokenWatcher {
 	public:
-		virtual void FeedToken(const Token& token) = 0;
+		virtual void FeedToken(Token* token) = 0;
 	};
 	struct StringInfo {
 		char chBorder;
@@ -113,6 +113,7 @@ public:
 public:
 	bool ParseChar(char ch);
 	bool IsTokenWatched() const { return false; }
+	int GetLineNo() const { return _cntLine + 1; }
 };
 
 }

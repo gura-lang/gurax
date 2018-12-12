@@ -59,7 +59,7 @@ public:
 		return _fileName == fileName && _lineNo == lineNo && _message == message;
 	}
 	String GetString() const;
-	static bool HasError() { return _errorIssuedFlag; }
+	static bool IsIssued() { return _errorIssuedFlag; }
 	static void Clear();
 	static void Issue(const ErrorType& errorType, const Expr* pExpr, const char* format, ...);
 	static void Issue(const ErrorType& errorType, const char* format, ...);
