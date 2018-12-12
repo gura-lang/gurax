@@ -5,15 +5,20 @@
 
 namespace Gurax {
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// ErrorType
+//------------------------------------------------------------------------------
+const ErrorType ErrorType::SyntaxError("syntax error");
+
+//------------------------------------------------------------------------------
 // Error
-//-----------------------------------------------------------------------------
-bool Error::_errorFlag = false;
+//------------------------------------------------------------------------------
+bool Error::_errorIssuedFlag = false;
 ErrorOwner* Error::_pErrorOwnerGlobal = nullptr;
 
 void Error::Bootup()
 {
-	_errorFlag = false;
+	_errorIssuedFlag = false;
 	_pErrorOwnerGlobal = new ErrorOwner();
 }
 
@@ -30,43 +35,45 @@ String Error::GetString() const
 			rtn += buff;
 		}
 	}
+	rtn += _errorType.GetName();
+	rtn += ": ";
 	rtn += _message;
 	return rtn;
 }
 
 void Error::Clear()
 {
-	_errorFlag = false;
+	_errorIssuedFlag = false;
 	_pErrorOwnerGlobal->Clear();
 }
 
-void Error::AddError(const Expr* pExpr, const char* format, ...)
+void Error::Issue(const ErrorType& errorType, const Expr* pExpr, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	AddErrorV(pExpr->GetPathNameSrc(), pExpr->GetLineNo(), format, ap);
+	IssueV(errorType, pExpr->GetPathNameSrc(), pExpr->GetLineNo(), format, ap);
 }
 
-void Error::AddError(const char* format, ...)
+void Error::Issue(const ErrorType& errorType, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	AddErrorV("", 0, format, ap);
+	IssueV(errorType, "", 0, format, ap);
 }
 
-void Error::AddError(const String& fileName, int lineNo, const char* format, ...)
+void Error::Issue(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	AddErrorV(fileName, lineNo, format, ap);
+	IssueV(errorType, fileName, lineNo, format, ap);
 }
 
-void Error::AddErrorV(const String& fileName, int lineNo, const char* format, va_list ap)
+void Error::IssueV(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, va_list ap)
 {
 	char message[512];
 	::vsprintf(message, format, ap);
 	if (!_pErrorOwnerGlobal->DoesExist(fileName.c_str(), lineNo, message)) {
-		_pErrorOwnerGlobal->push_back(new Error(fileName, lineNo, message));
+		_pErrorOwnerGlobal->push_back(new Error(errorType, fileName, lineNo, message));
 	}
 }
 
@@ -87,9 +94,9 @@ String Error::MakeResultText()
 	return str;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // ErrorList
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool ErrorList::DoesExist(const char* fileName, int lineNo, const char* message)
 {
 	for (auto pError : *this) {
@@ -98,8 +105,8 @@ bool ErrorList::DoesExist(const char* fileName, int lineNo, const char* message)
 	return false;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // ErrorOwner
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 }
