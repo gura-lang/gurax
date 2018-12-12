@@ -26,6 +26,9 @@ protected:
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(Expr);
+public:
+	const char* GetPathNameSrc() const { return ""; }
+	int GetLineNo() const { return 0; }
 };
 
 //------------------------------------------------------------------------------

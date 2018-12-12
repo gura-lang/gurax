@@ -26,6 +26,7 @@
 #define GURAX_PLATFORM_NAME "mswin"
 #define GURAX_CXX11_ABI
 #define GURAX_HOST_COMPILER_NAME "msc"
+#define _CRT_SECURE_NO_WARNINGS
 #elif defined(__linux__)
 #define GURAX_ON_LINUX
 #define GURAX_PLATFORM_NAME "linux"
