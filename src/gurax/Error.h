@@ -4,6 +4,7 @@
 #ifndef GURAX_ERROR_H
 #define GURAX_ERROR_H
 #include "String.h"
+#include "Expr.h"
 
 namespace Gurax {
 
@@ -29,7 +30,8 @@ public:
 class Error : public Referable {
 private:
 	const ErrorType& _errorType;
-	String _fileName;
+	UniquePtr<Expr> _pExpr;		// maybe nullptr
+	StringShared _pFileName;	// maybe nullptr
 	int _lineNo;
 	String _text;
 private:
@@ -37,10 +39,12 @@ private:
 	static ErrorOwner* _pErrorOwnerGlobal;
 public:
 	// Constructor
-	Error(const ErrorType& errorType, const String& fileName, const String& text) :
-		_errorType(errorType), _fileName(fileName), _lineNo(0), _text(text) {}
-	Error(const ErrorType& errorType, const String& fileName, int lineNo, const String& text) :
-		_errorType(errorType), _fileName(fileName), _lineNo(lineNo), _text(text) {}
+	Error(const ErrorType& errorType, const String& text) :
+		_errorType(errorType), _lineNo(0), _text(text) {}
+	Error(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const String& text) :
+		_errorType(errorType), _pFileName(pFileName), _lineNo(lineNo), _text(text) {}
+	Error(const ErrorType& errorType, Expr *pExpr, const String& text) :
+		_errorType(errorType), _pExpr(pExpr), _lineNo(0), _text(text) {}
 	// Copy constructor/operator
 	Error(const Error& src) = delete;
 	Error& operator=(const Error& src) = delete;
@@ -58,10 +62,12 @@ public:
 	String MakeMessage() const;
 	static bool IsIssued() { return _errorIssuedFlag; }
 	static void Clear();
-	static void Issue(const ErrorType& errorType, const Expr* pExpr, const char* format, ...);
 	static void Issue(const ErrorType& errorType, const char* format, ...);
-	static void Issue(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, ...);
-	static void IssueV(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, va_list ap);
+	static void Issue(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, ...);
+	static void Issue(const ErrorType& errorType, Expr* pExpr, const char* format, ...);
+	static void IssueV(const ErrorType& errorType, const char* format, va_list ap);
+	static void IssueV(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, va_list ap);
+	static void IssueV(const ErrorType& errorType, Expr* pExpr, const char* format, va_list ap);
 	static void Print(FILE* fp);
 };
 

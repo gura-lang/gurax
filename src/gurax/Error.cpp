@@ -25,8 +25,8 @@ void Error::Bootup()
 String Error::MakeMessage() const
 {
 	String rtn;
-	if (!_fileName.empty()) {
-		rtn += _fileName;
+	if (_pFileName && !_pFileName->empty()) {
+		rtn += *_pFileName;
 		if (_lineNo == 0) {
 			rtn += ": ";
 		} else {
@@ -47,32 +47,46 @@ void Error::Clear()
 	_pErrorOwnerGlobal->Clear();
 }
 
-void Error::Issue(const ErrorType& errorType, const Expr* pExpr, const char* format, ...)
+void Error::Issue(const ErrorType& errorType, Expr* pExpr, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	IssueV(errorType, pExpr->GetPathNameSrc(), pExpr->GetLineNo(), format, ap);
+	IssueV(errorType, pExpr, format, ap);
 }
 
 void Error::Issue(const ErrorType& errorType, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	IssueV(errorType, "", 0, format, ap);
+	IssueV(errorType, format, ap);
 }
 
-void Error::Issue(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, ...)
+void Error::Issue(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	IssueV(errorType, fileName, lineNo, format, ap);
+	IssueV(errorType, pFileName, lineNo, format, ap);
 }
 
-void Error::IssueV(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, va_list ap)
+void Error::IssueV(const ErrorType& errorType, const char* format, va_list ap)
 {
 	char text[512];
 	::vsprintf(text, format, ap);
-	_pErrorOwnerGlobal->push_back(new Error(errorType, fileName, lineNo, text));
+	_pErrorOwnerGlobal->push_back(new Error(errorType, text));
+}
+
+void Error::IssueV(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, va_list ap)
+{
+	char text[512];
+	::vsprintf(text, format, ap);
+	_pErrorOwnerGlobal->push_back(new Error(errorType, pFileName, lineNo, text));
+}
+
+void Error::IssueV(const ErrorType& errorType, Expr *pExpr, const char* format, va_list ap)
+{
+	char text[512];
+	::vsprintf(text, format, ap);
+	_pErrorOwnerGlobal->push_back(new Error(errorType, pExpr, text));
 }
 
 void Error::Print(FILE* fp)
