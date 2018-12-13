@@ -114,7 +114,7 @@ public:
 	bool ParseChar(char ch);
 	bool IsTokenWatched() const { return false; }
 	int GetLineNo() const { return _cntLine + 1; }
-	void IsssueError(const ErrorType& errorType, const char* format, ...);
+	void IssueError(const ErrorType& errorType, const char* format, ...);
 };
 
 }

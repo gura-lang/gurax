@@ -226,7 +226,7 @@ bool Tokenizer::ParseChar(char ch)
 				if (tbl[i].ch == ch) break;
 			}
 			if (i >= ArraySizeOf(tbl)) {
-				SetError(ERR_SyntaxError, "unexpected character '%c' (%d)", ch, ch);
+				IssueError(ErrorType::SyntaxError, "unexpected character '%c' (%d)", ch, ch);
 				_stat = Stat::Error;
 			} else if (tbl[i].pTokenType->IsIdentical(TokenType::DoubleChars)) {
 				_field.clear();
@@ -236,10 +236,10 @@ bool Tokenizer::ParseChar(char ch)
 				_field.clear();
 				_field.push_back(ch);
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
-				if (Error::IsIssued()) _stat = Stat::Error;
+				if (ErrorType::IsIssued()) _stat = Stat::Error;
 			} else {
 				_pTokenWatcher->FeedToken(new Token(*tbl[i].pTokenType, GetLineNo()));
-				if (Error::IsIssued()) _stat = Stat::Error;
+				if (ErrorType::IsIssued()) _stat = Stat::Error;
 			}
 		}
 		break;
@@ -336,7 +336,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = Stat::CommentLine;
 			}
 		} else if (chFirst == '*' && ch == '/') {
-			SetError(ERR_SyntaxError, "unmatching comment description");
+			IssueError(ErrorType::SyntaxError, "unmatching comment description");
 			_stat = Stat::Error;
 		} else {
 			_stat = Stat::Start;
@@ -357,10 +357,10 @@ bool Tokenizer::ParseChar(char ch)
 					_stat = Stat::TripleChars;
 				} else if (_tokenStack.back().IsType(TokenType::Quote)) {
 					_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
-					if (Error::IsIssued()) _stat = Stat::Error;
+					if (ErrorType::IsIssued()) _stat = Stat::Error;
 				} else {
 					_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
-					if (Error::IsIssued()) _stat = Stat::Error;
+					if (ErrorType::IsIssued()) _stat = Stat::Error;
 				}
 				if (pushbackFlag) Gurax_PushbackEx(ch);
 				break;
@@ -431,10 +431,10 @@ bool Tokenizer::ParseChar(char ch)
 			}
 			if (_tokenStack.back().IsType(TokenType::Quote)) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
-				if (Error::IsIssued()) _stat = Stat::Error;
+				if (ErrorType::IsIssued()) _stat = Stat::Error;
 			} else {
 				_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
-				if (Error::IsIssued()) _stat = Stat::Error;
+				if (ErrorType::IsIssued()) _stat = Stat::Error;
 			}
 			if (pushbackFlag) Gurax_PushbackEx(ch);
 			if (pushbackSecondFlag) Gurax_PushbackEx(_field[1]);
@@ -461,7 +461,7 @@ bool Tokenizer::ParseChar(char ch)
 				_field.push_back(ch);
 			}
 		} else {
-			SetError(ERR_SyntaxError, "invalid escape character");
+			IssueError(ErrorType::SyntaxError, "invalid escape character");
 			_stat = Stat::Error;
 		}
 		break;
@@ -469,19 +469,19 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::Colon: {
 		if (ch == ':') {
 			_pTokenWatcher->FeedToken(new Token(TokenType::ColonColon, GetLineNo()));
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		} else if (ch == '*') {
 			_pTokenWatcher->FeedToken(new Token(TokenType::ColonAsterisk, GetLineNo()));
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		} else if (ch == '&') {
 			_pTokenWatcher->FeedToken(new Token(TokenType::ColonAnd, GetLineNo()));
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		} else {
 			const TokenType *pTokenType = _tokenStack.back().IsSuffixToken()?
 									&TokenType::ColonAfterSuffix : &TokenType::Colon;
 			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -507,7 +507,7 @@ bool Tokenizer::ParseChar(char ch)
 				_pTokenWatcher->FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
 			}
 			_pTokenWatcher->FeedToken(new Token(TokenType::LBlockParam, GetLineNo()));
-			if (Error::IsIssued()) {
+			if (ErrorType::IsIssued()) {
 				_stat = Stat::Error;
 			} else {
 				_blockParamFlag = true;
@@ -544,7 +544,7 @@ bool Tokenizer::ParseChar(char ch)
 		if (String::IsHexDigit(ch)) {
 			_field.push_back(ch);
 		} else if (_field.size() <= 2) {
-			SetError(ERR_SyntaxError, "wrong format of hexadecimal number");
+			IssueError(ErrorType::SyntaxError, "wrong format of hexadecimal number");
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Error;
 		} else if (String::IsSymbolFirst(ch)) {
@@ -554,7 +554,7 @@ bool Tokenizer::ParseChar(char ch)
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -568,7 +568,7 @@ bool Tokenizer::ParseChar(char ch)
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -576,7 +576,7 @@ bool Tokenizer::ParseChar(char ch)
 		if (String::IsBinDigit(ch)) {
 			_field.push_back(ch);
 		} else if (_field.size() <= 2) {
-			SetError(ERR_SyntaxError, "wrong format of binary number");
+			IssueError(ErrorType::SyntaxError, "wrong format of binary number");
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Error;
 		} else if (String::IsSymbolFirst(ch)) {
@@ -586,7 +586,7 @@ bool Tokenizer::ParseChar(char ch)
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -598,14 +598,14 @@ bool Tokenizer::ParseChar(char ch)
 			} else {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Seq, GetLineNo()));
 			}
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		} else if (String::IsDigit(ch)) {
 			_field.push_back(ch);
 			_stat = Stat::Number;
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Period, GetLineNo()));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -617,14 +617,14 @@ bool Tokenizer::ParseChar(char ch)
 			if (pos == _field.length() - 1) {
 				_field.resize(pos);
 				_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
-				if (!Error::IsIssued()) {
+				if (!ErrorType::IsIssued()) {
 					_pTokenWatcher->FeedToken(new Token(TokenType::Seq, GetLineNo()));
 				}
-				_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+				_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 			} else if (pos == String::npos) {
 				_field.push_back(ch);
 			} else {
-				SetError(ERR_SyntaxError, "period has already been scanned");
+				IssueError(ErrorType::SyntaxError, "period has already been scanned");
 				_stat = Stat::Error;
 			}
 		} else if (ch == 'e' || ch == 'E') {
@@ -637,7 +637,7 @@ bool Tokenizer::ParseChar(char ch)
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -649,7 +649,7 @@ bool Tokenizer::ParseChar(char ch)
 			_field.push_back(ch);
 			_stat = Stat::NumberExpAfterSign;
 		} else {
-			SetError(ERR_SyntaxError, "wrong exponential expression");
+			IssueError(ErrorType::SyntaxError, "wrong exponential expression");
 			_stat = Stat::Error;
 		}
 		break;
@@ -659,7 +659,7 @@ bool Tokenizer::ParseChar(char ch)
 			_field.push_back(ch);
 			_stat = Stat::NumberExp;
 		} else {
-			SetError(ERR_SyntaxError, "wrong exponential expression");
+			IssueError(ErrorType::SyntaxError, "wrong exponential expression");
 			_stat = Stat::Error;
 		}
 		break;
@@ -674,7 +674,7 @@ bool Tokenizer::ParseChar(char ch)
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -689,7 +689,7 @@ bool Tokenizer::ParseChar(char ch)
 				_pTokenWatcher->FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(), _field, _suffix));
 			}
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -714,14 +714,14 @@ bool Tokenizer::ParseChar(char ch)
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 			}
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
 	case Stat::SymbolExclamation: {
 		if (ch == '=' || ch == '!') {
 			_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
-			if (Error::IsIssued()) {
+			if (ErrorType::IsIssued()) {
 				_stat = Stat::Error;
 			} else {
 				_field.clear();
@@ -862,7 +862,7 @@ bool Tokenizer::ParseChar(char ch)
 			const TokenType *pTokenType = GetTokenTypeForString(_stringInfo);
 			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo(), _field, "", _strSource));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -875,7 +875,7 @@ bool Tokenizer::ParseChar(char ch)
 			_stringInfo.statRtn = Stat::String;
 			_stat = Stat::StringEsc;
 		} else if (ch == '\0' || ch == '\n') {
-			SetError(ERR_SyntaxError, "string is not terminated correctly");
+			IssueError(ErrorType::SyntaxError, "string is not terminated correctly");
 			_stat = Stat::Error;
 		} else {
 			if (IsTokenWatched()) _strSource.push_back(ch);
@@ -902,7 +902,7 @@ bool Tokenizer::ParseChar(char ch)
 			_stringInfo.statRtn = Stat::MString;
 			_stat = Stat::StringEsc;
 		} else if (ch == '\0') {
-			SetError(ERR_SyntaxError, "string is not terminated correctly");
+			IssueError(ErrorType::SyntaxError, "string is not terminated correctly");
 			_stat = Stat::Error;
 		} else if (ch == '\n' && _stringInfo.wiseFlag) {
 			if (IsTokenWatched()) _strSource.push_back(ch);
@@ -975,7 +975,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = _stringInfo.statRtn;
 			}
 		} else {
-			SetError(ERR_SyntaxError, "invalid hex expression in string");
+			IssueError(ErrorType::SyntaxError, "invalid hex expression in string");
 			_stat = Stat::Error;
 		}
 		break;
@@ -990,7 +990,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = _stringInfo.statRtn;
 			}
 		} else {
-			SetError(ERR_SyntaxError, "invalid oct expression in string");
+			IssueError(ErrorType::SyntaxError, "invalid oct expression in string");
 			_stat = Stat::Error;
 		}
 		break;
@@ -1005,7 +1005,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = _stringInfo.statRtn;
 			}
 		} else {
-			SetError(ERR_SyntaxError, "invalid Unicode code point in string");
+			IssueError(ErrorType::SyntaxError, "invalid Unicode code point in string");
 			_stat = Stat::Error;
 		}
 		break;
@@ -1065,7 +1065,7 @@ bool Tokenizer::ParseChar(char ch)
 			const TokenType *pTokenType = GetTokenTypeForString(_stringInfo);
 			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo(), _field, "", _strSource));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -1076,7 +1076,7 @@ bool Tokenizer::ParseChar(char ch)
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::StringSuffixed, GetLineNo(), _field, _suffix, _strSource));
 			Gurax_PushbackEx(ch);
-			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
+			_stat = ErrorType::IsIssued()? Stat::Error : Stat::Start;
 		}
 		break;
 	}
@@ -1098,13 +1098,13 @@ bool Tokenizer::ParseChar(char ch)
 	} else {
 		_cntCol++;
 	}
-	return !Error::IsIssued();
+	return !ErrorType::IsIssued();
 #else
 	return false;
 #endif
 }
 
-void Tokenizer::IsssueError(const ErrorType& errorType, const char* format, ...)
+void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
