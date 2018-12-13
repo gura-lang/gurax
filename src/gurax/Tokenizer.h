@@ -78,7 +78,7 @@ private:
 	int _cntLine;
 	int _cntCol;
 	int _commentNestLevel;
-	//AutoPtr<StringShared> _pSourceName;
+	StringShared _pPathNameSrc;
 	String _field;
 	String _strSource;
 	String _suffix;
@@ -97,7 +97,7 @@ private:
 public:
 	// Constructor
 	Tokenizer() = delete;
-	Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag);
+	Tokenizer(const String& pathNameSrc, int cntLineStart, bool enablePreparatorFlag);
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
 	Tokenizer& operator=(const Tokenizer& src) = delete;
@@ -114,6 +114,7 @@ public:
 	bool ParseChar(char ch);
 	bool IsTokenWatched() const { return false; }
 	int GetLineNo() const { return _cntLine + 1; }
+	void IsssueError(const ErrorType& errorType, const char* format, ...);
 };
 
 }

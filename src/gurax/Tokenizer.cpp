@@ -59,11 +59,11 @@ bool MagicCommentParser::ParseChar(char ch)
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
-Tokenizer::Tokenizer(const String &sourceName, int cntLineStart, bool enablePreparatorFlag) :
+Tokenizer::Tokenizer(const String& pathNameSrc, int cntLineStart, bool enablePreparatorFlag) :
 	_stat(Stat::BOF), _lineHeadFlag(true),
 	_appearShebangFlag(false), _blockParamFlag(false),
 	_cntLine(cntLineStart), _cntCol(0), _commentNestLevel(0),
-	//_pSourceName(new StringShared(sourceName)),
+	_pPathNameSrc(new String(pathNameSrc)),
 	_pExprOwner(nullptr), _pExprParent(nullptr),
 	_pTokenTypePrev(&TokenType::Unknown),
 	_lineNoTop(0), _lineNoOfTokenPrev(0),
@@ -1102,6 +1102,13 @@ bool Tokenizer::ParseChar(char ch)
 #else
 	return false;
 #endif
+}
+
+void Tokenizer::IsssueError(const ErrorType& errorType, const char* format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	Error::IssueV(errorType, _pPathNameSrc, GetLineNo(), format, ap);
 }
 
 }
