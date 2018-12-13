@@ -22,7 +22,7 @@ void Error::Bootup()
 	_pErrorOwnerGlobal = new ErrorOwner();
 }
 
-String Error::GetString() const
+String Error::MakeMessage() const
 {
 	String rtn;
 	if (!_fileName.empty()) {
@@ -37,7 +37,7 @@ String Error::GetString() const
 	}
 	rtn += _errorType.GetName();
 	rtn += ": ";
-	rtn += _message;
+	rtn += _text;
 	return rtn;
 }
 
@@ -70,40 +70,21 @@ void Error::Issue(const ErrorType& errorType, const String& fileName, int lineNo
 
 void Error::IssueV(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, va_list ap)
 {
-	char message[512];
-	::vsprintf(message, format, ap);
-	if (!_pErrorOwnerGlobal->DoesExist(fileName.c_str(), lineNo, message)) {
-		_pErrorOwnerGlobal->push_back(new Error(errorType, fileName, lineNo, message));
-	}
+	char text[512];
+	::vsprintf(text, format, ap);
+	_pErrorOwnerGlobal->push_back(new Error(errorType, fileName, lineNo, text));
 }
 
 void Error::Print(FILE* fp)
 {
 	for (auto pError : *_pErrorOwnerGlobal) {
-		::fprintf(fp, "%s\n", pError->GetString().c_str());
+		::fprintf(fp, "%s\n", pError->MakeMessage().c_str());
 	}
-}
-
-String Error::MakeResultText()
-{
-	String str;
-	for (auto pError : *_pErrorOwnerGlobal) {
-		str += pError->GetString();
-		str += "\n";
-	}
-	return str;
 }
 
 //------------------------------------------------------------------------------
 // ErrorList
 //------------------------------------------------------------------------------
-bool ErrorList::DoesExist(const char* fileName, int lineNo, const char* message)
-{
-	for (auto pError : *this) {
-		if (pError->DoesMatch(fileName, lineNo, message)) return true;
-	}
-	return false;
-}
 
 //------------------------------------------------------------------------------
 // ErrorOwner

@@ -31,16 +31,16 @@ private:
 	const ErrorType& _errorType;
 	String _fileName;
 	int _lineNo;
-	String _message;
+	String _text;
 private:
 	static bool _errorIssuedFlag;
 	static ErrorOwner* _pErrorOwnerGlobal;
 public:
 	// Constructor
-	Error(const ErrorType& errorType, const String& fileName, const String& message) :
-		_errorType(errorType), _fileName(fileName), _lineNo(0), _message(message) {}
-	Error(const ErrorType& errorType, const String& fileName, int lineNo, const String& message) :
-		_errorType(errorType), _fileName(fileName), _lineNo(lineNo), _message(message) {}
+	Error(const ErrorType& errorType, const String& fileName, const String& text) :
+		_errorType(errorType), _fileName(fileName), _lineNo(0), _text(text) {}
+	Error(const ErrorType& errorType, const String& fileName, int lineNo, const String& text) :
+		_errorType(errorType), _fileName(fileName), _lineNo(lineNo), _text(text) {}
 	// Copy constructor/operator
 	Error(const Error& src) = delete;
 	Error& operator=(const Error& src) = delete;
@@ -55,10 +55,7 @@ public:
 	Gurax_DeclareReferable(Error);
 public:
 	static void Bootup();
-	bool DoesMatch(const char* fileName, int lineNo, const char* message) {
-		return _fileName == fileName && _lineNo == lineNo && _message == message;
-	}
-	String GetString() const;
+	String MakeMessage() const;
 	static bool IsIssued() { return _errorIssuedFlag; }
 	static void Clear();
 	static void Issue(const ErrorType& errorType, const Expr* pExpr, const char* format, ...);
@@ -66,15 +63,12 @@ public:
 	static void Issue(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, ...);
 	static void IssueV(const ErrorType& errorType, const String& fileName, int lineNo, const char* format, va_list ap);
 	static void Print(FILE* fp);
-	static String MakeResultText();
 };
 
 //------------------------------------------------------------------------------
 // ErrorList
 //------------------------------------------------------------------------------
 class ErrorList : public std::vector<Error*> {
-public:
-	bool DoesExist(const char* fileName, int lineNo, const char* message);
 };
 
 //------------------------------------------------------------------------------
