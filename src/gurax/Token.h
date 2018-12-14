@@ -154,6 +154,18 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
+// TokenStack
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE TokenStack : public TokenList {
+public:
+	~TokenStack() { Clear(); }
+	void Clear() {
+		for (auto pToken : *this) Token::Delete(pToken);
+		clear();
+	}
+};
+
 }
 
 #endif

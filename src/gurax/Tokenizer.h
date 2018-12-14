@@ -87,7 +87,7 @@ private:
 	const TokenType *_pTokenTypePrev;
 	int _lineNoTop;
 	int _lineNoOfTokenPrev;
-	//TokenStack _tokenStack;
+	TokenStack _tokenStack;
 	StringInfo _stringInfo;
 	//CharConverter _charConverter;
 	String _strIndent;
