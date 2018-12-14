@@ -15,10 +15,11 @@ void Bootup()
 class TokenWatcher : public Tokenizer::TokenWatcher {
 public:
 	virtual void FeedToken(UniquePtr<Token> pToken) override {
+		::printf("%s\n", pToken->GetSymbol());
 	}
 };
 
-void sub()
+void sub(int argc, char* argv[])
 {
 	Bootup();
 #if 0
@@ -31,25 +32,27 @@ void sub()
 		::printf("%d %d %d\n", ch, static_cast<char>(static_cast<UChar>(ch)), static_cast<char>(ch));
 	}
 #endif
-	TokenWatcher tokenWatcher;
-	UniquePtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, ""));
-}
-
-}
-
-int main()
-{
-	//std::array<T, 3> arr {
-	struct {int a; int b;} arr[] = {
-		{1, 2},
-		{3, 4},
-		{5, 6},
-	};
-	//for (auto i = std::begin(arr); i != std::end(arr); ++i) {
-	for (auto i : arr) {
-		::printf("%d %d\n", i.a, i.b);
+	if (argc < 2) {
+		return;
 	}
-	Gurax::sub();
+	const char* pathNameSrc = argv[1];
+	TokenWatcher tokenWatcher;
+	UniquePtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
+	FILE *fp = ::fopen(pathNameSrc, "rt");
+	for (;;) {
+		int chRaw = ::fgetc(fp);
+		char ch = (chRaw < 0)? '\0' : static_cast<UChar>(chRaw);
+		pTokenizer->FeedChar(ch);
+		if (chRaw < 0) break;
+	}
+	::fclose(fp);
+}
+
+}
+
+int main(int argc, char* argv[])
+{
+	Gurax::sub(argc, argv);
 	return 0;
 }
 

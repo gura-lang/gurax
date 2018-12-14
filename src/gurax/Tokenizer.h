@@ -20,7 +20,7 @@ private:
 	String _field;
 public:
 	MagicCommentParser() : _stat(Stat::Start) {}
-	bool ParseChar(char ch);
+	bool FeedChar(char ch);
 	const char* GetEncoding() const { return _field.c_str(); }
 };
 
@@ -112,7 +112,7 @@ public:
 	Gurax_DeclareReferable(Tokenizer);
 public:
 	void InitStack();
-	bool ParseChar(char ch);
+	bool FeedChar(char ch);
 	void SetCntLine(int cntLine) { _cntLine = cntLine; }
 	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }
 	int GetLineNo() const { return _cntLine + 1; }

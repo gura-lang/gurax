@@ -8,7 +8,7 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // MagicCommentParser
 //-----------------------------------------------------------------------------
-bool MagicCommentParser::ParseChar(char ch)
+bool MagicCommentParser::FeedChar(char ch)
 {
 	bool rtn = false;
 	switch (_stat) {
@@ -70,7 +70,7 @@ void Tokenizer::InitStack()
 	_tokenStack.push_back(new Token(TokenType::Begin, 0));
 }
 
-bool Tokenizer::ParseChar(char ch)
+bool Tokenizer::FeedChar(char ch)
 {
 	if (ch == '\r') return true;
 	if (_lineHeadFlag) {
@@ -745,7 +745,7 @@ bool Tokenizer::ParseChar(char ch)
 		break;
 	}
 	case Stat::MagicCommentLine: {
-		if (_magicCommentParser.ParseChar(ch)) {
+		if (_magicCommentParser.FeedChar(ch)) {
 
 			//const char *encoding = _magicCommentParser.GetEncoding();
 			//sig.SetSignal(SIGTYPE_DetectEncoding, Value(encoding));
