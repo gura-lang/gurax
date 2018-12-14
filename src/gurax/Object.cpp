@@ -27,7 +27,7 @@ void Object::Bootup()
 //------------------------------------------------------------------------------
 void ObjectOwner::Clear()
 {
-	for (auto pObj : *this) Object::Delete(pObj);
+	for (auto& pObj : *this) Object::Delete(pObj);
 	clear();
 }
 
@@ -36,7 +36,7 @@ void ObjectOwner::Clear()
 //------------------------------------------------------------------------------
 void ObjectMap::Clear()
 {
-	for (auto iter : *this) Object::Delete(iter.second);
+	for (auto& iter : *this) Object::Delete(iter.second);
 	clear();
 }
 

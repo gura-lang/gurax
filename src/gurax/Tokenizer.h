@@ -19,8 +19,7 @@ private:
 	Stat _stat;
 	String _field;
 public:
-	MagicCommentParser();
-	~MagicCommentParser();
+	MagicCommentParser() : _stat(Stat::Start) {}
 	bool ParseChar(char ch);
 	const char* GetEncoding() const { return _field.c_str(); }
 };
@@ -56,7 +55,7 @@ public:
 	};
 	class GURAX_DLLDECLARE TokenWatcher {
 	public:
-		virtual void FeedToken(Token* token) = 0;
+		virtual void FeedToken(UniquePtr<Token> pToken) = 0;
 	};
 	struct StringInfo {
 		char chBorder;
@@ -70,34 +69,35 @@ public:
 		String strIndentRef;
 	};
 private:
-	Stat _stat;
-	bool _lineHeadFlag;
-	MagicCommentParser _magicCommentParser;
-	bool _appearShebangFlag;
-	bool _blockParamFlag;
-	int _cntLine;
-	int _cntCol;
-	int _commentNestLevel;
+	TokenWatcher *_pTokenWatcher;
 	StringShared _pPathNameSrc;
+	Stat _stat = Stat::BOF;
+	bool _lineHeadFlag = true;
+	bool _appearShebangFlag = false;
+	bool _blockParamFlag = false;
+	int _cntLine = 0;
+	int _cntCol = 0;
+	int _commentNestLevel = 0;
+	int _lineNoTop = 0;
+	bool _verboseFlag = false;
 	String _field;
 	String _strSource;
 	String _suffix;
-	ExprOwner *_pExprOwner;
-	const Expr *_pExprParent;
-	const TokenType *_pTokenTypePrev;
-	int _lineNoTop;
-	int _lineNoOfTokenPrev;
 	TokenStack _tokenStack;
 	StringInfo _stringInfo;
-	//CharConverter _charConverter;
 	String _strIndent;
-	bool _enablePreparatorFlag;
-	bool _interactiveFlag;
-	TokenWatcher *_pTokenWatcher;
+	MagicCommentParser _magicCommentParser;
+	//CharConverter _charConverter;
+	//ExprOwner *_pExprOwner;
+	//const Expr *_pExprParent;
+	//const TokenType *_pTokenTypePrev;
+	//int _lineNoOfTokenPrev;
+	//bool _interactiveFlag;
+	//bool _enablePreparatorFlag;
 public:
 	// Constructor
 	Tokenizer() = delete;
-	Tokenizer(const String& pathNameSrc, int cntLineStart, bool enablePreparatorFlag);
+	Tokenizer(TokenWatcher* pTokenWatcher, String pathNameSrc);
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
 	Tokenizer& operator=(const Tokenizer& src) = delete;
@@ -113,7 +113,8 @@ public:
 public:
 	void InitStack();
 	bool ParseChar(char ch);
-	bool IsTokenWatched() const { return false; }
+	void SetCntLine(int cntLine) { _cntLine = cntLine; }
+	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }
 	int GetLineNo() const { return _cntLine + 1; }
 	void IssueError(const ErrorType& errorType, const char* format, ...);
 	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);

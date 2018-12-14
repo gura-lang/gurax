@@ -109,19 +109,19 @@ class GURAX_DLLDECLARE Token : public Referable {
 private:
 	const TokenType &_tokenType;
 	int _lineNo;
-	String _str;
+	String _value;
 	String _suffix;
 	String _strSource;
 public:
 	// Constructor
 	Token(const TokenType &tokenType, int lineNo) : _tokenType(tokenType), _lineNo(lineNo) {}
-	Token(const TokenType &tokenType, int lineNo, String str) :
-		_tokenType(tokenType), _lineNo(lineNo), _str(std::move(str)) {}
-	Token(const TokenType &tokenType, int lineNo, String str, String suffix) :
-		_tokenType(tokenType), _lineNo(lineNo), _str(std::move(str)), _suffix(std::move(suffix)) {}
-	Token(const TokenType &tokenType, int lineNo, String str, String suffix, String strSource) :
+	Token(const TokenType &tokenType, int lineNo, String value) :
+		_tokenType(tokenType), _lineNo(lineNo), _value(std::move(value)) {}
+	Token(const TokenType &tokenType, int lineNo, String value, String suffix) :
+		_tokenType(tokenType), _lineNo(lineNo), _value(std::move(value)), _suffix(std::move(suffix)) {}
+	Token(const TokenType &tokenType, int lineNo, String value, String suffix, String strSource) :
 		_tokenType(tokenType), _lineNo(lineNo),
-		_str(std::move(str)), _suffix(std::move(suffix)), _strSource(std::move(strSource)) {}
+		_value(std::move(value)), _suffix(std::move(suffix)), _strSource(std::move(strSource)) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
 	Token& operator=(const Token& src) = delete;
@@ -158,6 +158,7 @@ public:
 	const char *GetTypeName() const { return _tokenType.typeName; }
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
+	const char* GetValue() const { return _value.c_str(); }
 };
 
 //------------------------------------------------------------------------------
@@ -177,7 +178,7 @@ public:
 	Gurax_DeclareReferable(TokenOwner);
 public:
 	void Clear() {
-		for (auto pToken : *this) Token::Delete(pToken);
+		for (auto& pToken : *this) Token::Delete(pToken);
 		clear();
 	}
 };

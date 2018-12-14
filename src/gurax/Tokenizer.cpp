@@ -3,27 +3,20 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
 // MagicCommentParser
 //-----------------------------------------------------------------------------
-MagicCommentParser::MagicCommentParser() : _stat(Stat::Start)
-{
-}
-
-MagicCommentParser::~MagicCommentParser()
-{
-}
-
 bool MagicCommentParser::ParseChar(char ch)
 {
 	bool rtn = false;
-	if (_stat == Stat::Idle) {
+	switch (_stat) {
+	case Stat::Idle: {
 		// nothing to do
-	} else if (_stat == Stat::Start) {
+		break;
+	}
+	case Stat::Start: {
 		if (String::IsAlpha(ch)) {
 			_field += ch;
 		} else if (ch == ':' || ch == '=') {
@@ -35,7 +28,9 @@ bool MagicCommentParser::ParseChar(char ch)
 		} else {
 			_field.clear();
 		}
-	} else if (_stat == Stat::SkipSpace) {
+		break;
+	}
+	case Stat::SkipSpace: {
 		if (ch == ' ' || ch == '\t') {
 			// nothing to do
 		} else if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
@@ -45,13 +40,17 @@ bool MagicCommentParser::ParseChar(char ch)
 		} else {
 			_stat = Stat::Start;
 		}
-	} else if (_stat == Stat::CodingName) {
+		break;
+	}
+	case Stat::CodingName: {
 		if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
 			_field += ch;
 		} else {
 			rtn = true;
 			_stat = Stat::Idle;
 		}
+		break;
+	}
 	}
 	return rtn;
 }
@@ -59,17 +58,10 @@ bool MagicCommentParser::ParseChar(char ch)
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
-Tokenizer::Tokenizer(const String& pathNameSrc, int cntLineStart, bool enablePreparatorFlag) :
-	_stat(Stat::BOF), _lineHeadFlag(true),
-	_appearShebangFlag(false), _blockParamFlag(false),
-	_cntLine(cntLineStart), _cntCol(0), _commentNestLevel(0),
-	_pPathNameSrc(new String(pathNameSrc)),
-	_pExprOwner(nullptr), _pExprParent(nullptr),
-	_pTokenTypePrev(&TokenType::Unknown),
-	_lineNoTop(0), _lineNoOfTokenPrev(0),
-	_enablePreparatorFlag(enablePreparatorFlag), _interactiveFlag(false),
-	_pTokenWatcher(nullptr)
+Tokenizer::Tokenizer(TokenWatcher* pTokenWatcher, String pathNameSrc) :
+	_pTokenWatcher(pTokenWatcher), _pPathNameSrc(new String(std::move(pathNameSrc)))
 {
+	InitStack();
 }
 
 void Tokenizer::InitStack()
@@ -80,7 +72,6 @@ void Tokenizer::InitStack()
 
 bool Tokenizer::ParseChar(char ch)
 {
-#if 1
 	if (ch == '\r') return true;
 	if (_lineHeadFlag) {
 		if (String::IsWhite(ch)) {
@@ -135,7 +126,7 @@ bool Tokenizer::ParseChar(char ch)
 			_field.push_back(ch);
 			_stat = Stat::NumberAfterPeriod;
 		} else if (String::IsWhite(ch) || ch == '\x0c') { // code 0x0c is page-break
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.clear();
 				_field.push_back(ch);
 				_stat = Stat::White;
@@ -151,13 +142,13 @@ bool Tokenizer::ParseChar(char ch)
 			_stringInfo.wiseFlag = false;
 			_stringInfo.embedFlag = false;
 			_field.clear();
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_strSource.clear();
 				_strSource.push_back(ch);
 			}
 			_stat = Stat::StringFirst;
 		} else if (ch == '\\') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.clear();
 				_field.push_back(ch);
 			}
@@ -166,7 +157,7 @@ bool Tokenizer::ParseChar(char ch)
 			_pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '#') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.clear();
 				_field.push_back(ch);
 			}
@@ -181,7 +172,7 @@ bool Tokenizer::ParseChar(char ch)
 			}
 		} else if (ch == '{') {
 			_pTokenWatcher->FeedToken(new Token(TokenType::LBrace, GetLineNo()));
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.clear();
 				_lineNoTop = GetLineNo();
 			}
@@ -202,7 +193,6 @@ bool Tokenizer::ParseChar(char ch)
 		} else if (ch == ':') {
 			_stat = Stat::Colon;
 		} else {
-			size_t i = 0;
 			static const struct {
 				int ch;
 				const TokenType *pTokenType;
@@ -228,13 +218,12 @@ bool Tokenizer::ParseChar(char ch)
 				{ ']',	&TokenType::RBracket,		},
 				{ '\0',	&TokenType::EndOfFile,		},
 			};
-			for (i = 0; i < ArraySizeOf(tbl); i++) {
-				if (tbl[i].ch == ch) break;
-			}
-			if (i >= ArraySizeOf(tbl)) {
+			auto pEntry = std::begin(tbl);
+			for ( ; pEntry != std::end(tbl); pEntry++) if (pEntry->ch == ch) break;
+			if (pEntry == std::end(tbl)) {
 				IssueError(ErrorType::SyntaxError, "unexpected character '%c' (%d)", ch, ch);
 				_stat = Stat::Error;
-			} else if (tbl[i].pTokenType->IsIdentical(TokenType::DoubleChars)) {
+			} else if (pEntry->pTokenType->IsIdentical(TokenType::DoubleChars)) {
 				_field.clear();
 				_field.push_back(ch);
 				_stat = Stat::DoubleChars;
@@ -244,7 +233,7 @@ bool Tokenizer::ParseChar(char ch)
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			} else {
-				_pTokenWatcher->FeedToken(new Token(*tbl[i].pTokenType, GetLineNo()));
+				_pTokenWatcher->FeedToken(new Token(*pEntry->pTokenType, GetLineNo()));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			}
 		}
@@ -322,7 +311,7 @@ bool Tokenizer::ParseChar(char ch)
 		};
 		int chFirst = _field[0];
 		if (chFirst == '/' && ch == '*') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.clear();
 				_field.push_back(chFirst);
 				_field.push_back(ch);
@@ -331,7 +320,7 @@ bool Tokenizer::ParseChar(char ch)
 			_commentNestLevel = 1;
 			_stat = Stat::CommentBlock;
 		} else if (chFirst == '/' && ch == '/') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.clear();
 				_field.push_back(chFirst);
 				_field.push_back(ch);
@@ -346,15 +335,15 @@ bool Tokenizer::ParseChar(char ch)
 			_stat = Stat::Error;
 		} else {
 			_stat = Stat::Start;
-			for (size_t i = 0; i < ArraySizeOf(tbl); i++) {
-				if (tbl[i].chFirst != chFirst) continue;
-				const TokenType *pTokenType = tbl[i].pTokenType;
+			for (const auto& entry : tbl) {
+				if (entry.chFirst != chFirst) continue;
+				const TokenType *pTokenType = entry.pTokenType;
 				bool pushbackFlag = true;
-				for (size_t j = 0; j < ArraySizeOf(tbl[i].tblCand); j++) {
-					if (tbl[i].tblCand[j].chSecond == '\0') break;
-					if (tbl[i].tblCand[j].chSecond == ch) {
+				for (const auto& entryCand : entry.tblCand) {
+					if (entryCand.chSecond == '\0') break;
+					if (entryCand.chSecond == ch) {
 						_field.push_back(ch);
-						pTokenType = tbl[i].tblCand[j].pTokenType;
+						pTokenType = entryCand.pTokenType;
 						pushbackFlag = false;
 						break;
 					}
@@ -371,7 +360,7 @@ bool Tokenizer::ParseChar(char ch)
 				if (pushbackFlag) Gurax_PushbackEx(ch);
 				break;
 			}
-			// tables have a bug if i reaches at ArraySizeOf(tbl)
+			// the table has a bug if the loop reaches at the end
 		}
 		break;
 	}
@@ -420,16 +409,16 @@ bool Tokenizer::ParseChar(char ch)
 				{ '\0', &TokenType::Unknown		} } },
 		};
 		_stat = Stat::Start;
-		for (size_t i = 0; i < ArraySizeOf(tbl); i++) {
-			if (_field.compare(tbl[i].strFirst) != 0) continue;
-			const TokenType *pTokenType = tbl[i].pTokenType;
+		for (const auto& entry : tbl) {
+			if (_field.compare(entry.strFirst) != 0) continue;
+			const TokenType *pTokenType = entry.pTokenType;
 			bool pushbackFlag = true;
-			bool pushbackSecondFlag = tbl[i].pushbackSecondFlag;
-			for (size_t j = 0; j < ArraySizeOf(tbl[i].tblCand); j++) {
-				if (tbl[i].tblCand[j].chThird == '\0') break;
-				if (tbl[i].tblCand[j].chThird == ch) {
+			bool pushbackSecondFlag = entry.pushbackSecondFlag;
+			for (const auto& entryCand : entry.tblCand) {
+				if (entryCand.chThird == '\0') break;
+				if (entryCand.chThird == ch) {
 					_field.push_back(ch);
-					pTokenType = tbl[i].tblCand[j].pTokenType;
+					pTokenType = entryCand.pTokenType;
 					pushbackFlag = false;
 					pushbackSecondFlag = false;
 					break;
@@ -446,24 +435,24 @@ bool Tokenizer::ParseChar(char ch)
 			if (pushbackSecondFlag) Gurax_PushbackEx(_field[1]);
 			break;
 		}
-		// tables have a bug if i reaches at ArraySizeOf(tbl)
+		// the table has a bug if the loop reaches at the end
 		break;
 	}
 	case Stat::Escape: {
 		if (ch == '\0') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Escape, GetLineNo(), _field));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Start;
 		} else if (ch == '\n') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.push_back(ch);
 				_pTokenWatcher->FeedToken(new Token(TokenType::Escape, GetLineNo(), _field));
 			}
 			_stat = Stat::Start;
 		} else if (String::IsWhite(ch)) {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_field.push_back(ch);
 			}
 		} else {
@@ -509,7 +498,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::AfterLBrace: {
 		if (ch == '|') {
-			if (IsTokenWatched() && !_field.empty()) {
+			if (_verboseFlag && !_field.empty()) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
 			}
 			_pTokenWatcher->FeedToken(new Token(TokenType::LBlockParam, GetLineNo()));
@@ -520,9 +509,9 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = Stat::Start;
 			}
 		} else if (ch == '\n' || String::IsWhite(ch)) {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 		} else {
-			if (IsTokenWatched() && !_field.empty()) {
+			if (_verboseFlag && !_field.empty()) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
 			}
 			Gurax_PushbackEx(ch);
@@ -688,7 +677,7 @@ bool Tokenizer::ParseChar(char ch)
 		if (String::IsSymbolFollower(ch)) {
 			_suffix.push_back(ch);
 		} else {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				String strSource = _field;
 				strSource += _suffix;
 				_pTokenWatcher->FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(),
@@ -708,7 +697,7 @@ bool Tokenizer::ParseChar(char ch)
 			_stat = Stat::SymbolExclamation;
 		} else if ((ch == '"' || ch == '\'') && CheckStringPrefix(_stringInfo, _field)) {
 			_stringInfo.chBorder = ch;
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_strSource.clear();
 				_strSource += _field;
 				_strSource.push_back(ch);
@@ -746,7 +735,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::CommentLineTop: {
 		if (ch == '!') {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 			_appearShebangFlag = true;
 			_stat = Stat::ShebangLine;
 		} else {
@@ -763,60 +752,60 @@ bool Tokenizer::ParseChar(char ch)
 
 		}
 		if (ch == '\n' || ch == '\0') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
 			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 		}
 		break;
 	}
 	case Stat::ShebangLine: {
 		if (ch == '\n' || ch == '\0') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
 			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 		}
 		break;
 	}
 	case Stat::CommentLine: {
 		if (ch == '\n' || ch == '\0') {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
 			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 		}
 		break;
 	}
 	case Stat::CommentBlock: {
 		if (ch == '*') {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 			_stat = Stat::CommentBlockEnd;
 		} else if (ch == '/') {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 			_stat = Stat::CommentBlockNest;
 		} else {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 		}
 		break;
 	}
 	case Stat::CommentBlockEnd: {
 		if (ch == '/') {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 			_commentNestLevel--;
 			if (_commentNestLevel > 0) {
 				_stat = Stat::CommentBlock;
 			} else {
-				if (IsTokenWatched()) {
+				if (_verboseFlag) {
 					_pTokenWatcher->FeedToken(new Token(TokenType::CommentBlock, _lineNoTop, _field));
 				}
 				_stat = Stat::Start;
@@ -829,7 +818,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::CommentBlockNest: {
 		if (ch == '*') {
-			if (IsTokenWatched()) _field.push_back(ch);
+			if (_verboseFlag) _field.push_back(ch);
 			_commentNestLevel++;
 			_stat = Stat::CommentBlock;
 		} else {
@@ -840,7 +829,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringFirst: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::StringSecond;
 		} else {
 			Gurax_PushbackEx(ch);
@@ -850,7 +839,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringSecond: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			if (_stringInfo.wiseFlag) {
 				_stringInfo.strIndentRef = _strIndent;
 				_stat = Stat::MStringWise;
@@ -858,7 +847,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = Stat::MString;
 			}
 		} else if (String::IsSymbolFirst(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_suffix.clear();
 			_suffix.push_back(ch);
 			_stat = Stat::StringSuffixed;
@@ -872,24 +861,24 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::String: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::StringPost;
 		} else if (ch == '\\') {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stringInfo.statRtn = Stat::String;
 			_stat = Stat::StringEsc;
 		} else if (ch == '\0' || ch == '\n') {
 			IssueError(ErrorType::SyntaxError, "string is not terminated correctly");
 			_stat = Stat::Error;
 		} else {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_field.push_back(ch);
 		}
 		break;
 	}
 	case Stat::MStringWise: {
 		if (ch == '\n') {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::MStringLineHead;
 		} else {
 			Gurax_PushbackEx(ch);
@@ -899,28 +888,28 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::MString: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::MStringEndFirst;
 		} else if (ch == '\\') {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stringInfo.statRtn = Stat::MString;
 			_stat = Stat::StringEsc;
 		} else if (ch == '\0') {
 			IssueError(ErrorType::SyntaxError, "string is not terminated correctly");
 			_stat = Stat::Error;
 		} else if (ch == '\n' && _stringInfo.wiseFlag) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_field.push_back(ch);
 			_stat = Stat::MStringLineHead;
 		} else {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_field.push_back(ch);
 		}
 		break;
 	}
 	case Stat::MStringLineHead: {
 		if (String::IsWhite(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			if (_strIndent.size() == _stringInfo.strIndentRef.size()) {
 				if (_strIndent != _stringInfo.strIndentRef) {
 					_field += _strIndent;
@@ -936,14 +925,14 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringEsc: {
 		if (_stringInfo.rawFlag) {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_strSource.push_back(ch);
 			}
 			_field.push_back('\\');
 			_field.push_back(ch);
 			_stat = _stringInfo.statRtn;
 		} else {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			if (ch == '\n') {
 				_stat = _stringInfo.statRtn;
 			} else if (ch == 'x') {
@@ -971,7 +960,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringEscHex: {
 		if (String::IsHexDigit(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stringInfo.accum = (_stringInfo.accum << 4) + String::ConvHexDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
@@ -986,7 +975,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringEscOct: {
 		if (String::IsOctDigit(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stringInfo.accum = (_stringInfo.accum << 3) + String::ConvOctDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
@@ -1001,7 +990,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringEscUnicode: {
 		if (String::IsHexDigit(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stringInfo.accum = (_stringInfo.accum << 4) + String::ConvHexDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
@@ -1016,27 +1005,27 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringInCommentBlock: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::CommentBlock;
 		} else if (ch == '\\') {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::StringEscInCommentBlock;
 		} else {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 		}
 		break;
 	}
 	case Stat::StringEscInCommentBlock: {
-		if (IsTokenWatched()) _strSource.push_back(ch);
+		if (_verboseFlag) _strSource.push_back(ch);
 		_stat = Stat::StringInCommentBlock;
 		break;
 	}
 	case Stat::MStringEndFirst: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::MStringEndSecond;
 		} else {
-			if (IsTokenWatched()) _strSource.push_back(_stringInfo.chBorder);
+			if (_verboseFlag) _strSource.push_back(_stringInfo.chBorder);
 			_field.push_back(_stringInfo.chBorder);
 			Gurax_PushbackEx(ch);
 			_stat = Stat::MString;
@@ -1045,10 +1034,10 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::MStringEndSecond: {
 		if (ch == _stringInfo.chBorder) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_stat = Stat::StringPost;
 		} else {
-			if (IsTokenWatched()) {
+			if (_verboseFlag) {
 				_strSource.push_back(_stringInfo.chBorder);
 				_strSource.push_back(_stringInfo.chBorder);
 			}
@@ -1061,7 +1050,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringPost: {
 		if (String::IsSymbolFirst(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_suffix.clear();
 			_suffix.push_back(ch);
 			_stat = Stat::StringSuffixed;
@@ -1075,7 +1064,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::StringSuffixed: {
 		if (String::IsSymbolFollower(ch)) {
-			if (IsTokenWatched()) _strSource.push_back(ch);
+			if (_verboseFlag) _strSource.push_back(ch);
 			_suffix.push_back(ch);
 		} else {
 			_pTokenWatcher->FeedToken(new Token(TokenType::StringSuffixed, GetLineNo(), _field, _suffix, _strSource));
@@ -1103,9 +1092,6 @@ bool Tokenizer::ParseChar(char ch)
 		_cntCol++;
 	}
 	return !Error::IsIssued();
-#else
-	return false;
-#endif
 }
 
 void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
@@ -1127,7 +1113,7 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 	stringInfo.binaryFlag = false;
 	stringInfo.wiseFlag = false;
 	stringInfo.embedFlag = false;
-	for (auto ch : field) {
+	for (const auto& ch : field) {
 		if (ch == 'r') {
 			if (stringInfo.rawFlag) return false;
 			stringInfo.rawFlag = true;

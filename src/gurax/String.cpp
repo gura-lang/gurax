@@ -17,7 +17,7 @@ char String::_toLowerTbl[256];
 
 void String::Bootup()
 {
-	for (auto ch = 0; ch < 256; ++ch) {
+	for (int ch = 0; ch < 256; ++ch) {
 		UInt32 num = 0;
 		if (('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z')) {
 			num |= CType::Alpha;
@@ -77,17 +77,6 @@ void String::Bootup()
 		_toUpperTbl[ch] = ('a' <= ch && ch <= 'z')? ch - 'a' + 'A' : ch;
 		_toLowerTbl[ch] = ('A' <= ch && ch <= 'Z')? ch - 'A' + 'a' : ch;
 	}
-#if 0
-	for (auto ch = 0; ch < 256; ++ch) {
-		if (ch % 4 == 0) ::printf("\t");
-		::printf("0x%08x,", _ctypeTbl[ch]);
-		if ((ch + 1) % 4 == 0) {
-			::printf("\n");
-		} else {
-			::printf(" ");
-		}
-	}
-#endif
 }
 
 String String::PickChar(size_t idx) const
@@ -96,7 +85,7 @@ String String::PickChar(size_t idx) const
 	for ( ; p != end() && idx > 0; p = Forward(p), idx--) ;
 	String::const_iterator pEnd = Forward(p);
 	String rtn;
-	for ( ; p != pEnd; p++) rtn.push_back(*p);
+	for ( ; p != pEnd; ++p) rtn.push_back(*p);
 	return rtn;
 }
 
@@ -177,7 +166,7 @@ UInt32 String::NextUTF32(const_iterator* pp) const
 		}
 		p++;
 		for (int i = 0; p != end() && i < cntChars &&
-				 (static_cast<UChar>(*p) & 0xc0) == 0x80; i++, p++) {
+				 (static_cast<UChar>(*p) & 0xc0) == 0x80; ++i, ++p) {
 			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
 		}
 	}
@@ -213,7 +202,7 @@ UInt32 String::NextUTF32(const char** pp)
 		}
 		p++;
 		for (int i = 0; *p != '\0' && i < cntChars &&
-				 		(static_cast<UChar>(*p) & 0xc0) == 0x80; i++, p++) {
+				 		(static_cast<UChar>(*p) & 0xc0) == 0x80; ++i, ++p) {
 			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
 		}
 	}
@@ -228,7 +217,7 @@ void String::AppendUTF8(UInt64 codeUTF8)
 	}
 	size_t i = 0;
 	char buff[8];
-	for ( ; codeUTF8 != 0 && i < 8; codeUTF8 >>= 8, i++) {
+	for ( ; codeUTF8 != 0 && i < 8; codeUTF8 >>= 8, ++i) {
 		buff[i] = static_cast<char>(codeUTF8 & 0xff);
 	}
 	while (i > 0) push_back(buff[--i]);
@@ -289,8 +278,8 @@ char String::GetEscaped(char ch)
 		{ '\'',	'\''	},
 		{ '"',	'"'		},
 	};
-	for (auto item : tbl) {
-		if (item.ch == ch) return item.chConv;
+	for (const auto& entry : tbl) {
+		if (entry.ch == ch) return entry.chConv;
 	}
 	return ch;
 }

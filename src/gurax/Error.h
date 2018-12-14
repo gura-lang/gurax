@@ -84,7 +84,7 @@ class ErrorOwner : public ErrorList {
 public:
 	~ErrorOwner() { Clear(); }
 	void Clear() {
-		for (auto pError : *this) Error::Delete(pError);
+		for (auto& pError : *this) Error::Delete(pError);
 	}
 };
 
