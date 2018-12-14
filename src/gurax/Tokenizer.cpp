@@ -58,8 +58,8 @@ bool MagicCommentParser::ParseChar(char ch)
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
-Tokenizer::Tokenizer(TokenWatcher* pTokenWatcher, String pathNameSrc) :
-	_pTokenWatcher(pTokenWatcher), _pPathNameSrc(new String(std::move(pathNameSrc)))
+Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
+	_tokenWatcher(tokenWatcher), _pPathNameSrc(new String(std::move(pathNameSrc)))
 {
 	InitStack();
 }
@@ -154,7 +154,7 @@ bool Tokenizer::ParseChar(char ch)
 			}
 			_stat = Stat::Escape;
 		} else if (ch == '\n') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '#') {
 			if (_verboseFlag) {
@@ -171,24 +171,24 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = Stat::CommentLine;
 			}
 		} else if (ch == '{') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::LBrace, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::LBrace, GetLineNo()));
 			if (_verboseFlag) {
 				_field.clear();
 				_lineNoTop = GetLineNo();
 			}
 			_stat = Error::IsIssued()? Stat::Error : Stat::AfterLBrace;
 		} else if (ch == '(') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::LParenthesis, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::LParenthesis, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '[') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::LBracket, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::LBracket, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '|' && _blockParamFlag && _tokenStack.CheckBlockParamEnd()) {
 			_blockParamFlag = false;
-			_pTokenWatcher->FeedToken(new Token(TokenType::RBlockParam, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::RBlockParam, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '`') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Quote, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::Quote, GetLineNo()));
 			_stat = Stat::Start;
 		} else if (ch == ':') {
 			_stat = Stat::Colon;
@@ -230,10 +230,10 @@ bool Tokenizer::ParseChar(char ch)
 			} else if (_tokenStack.back()->IsType(TokenType::Quote)) {
 				_field.clear();
 				_field.push_back(ch);
-				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			} else {
-				_pTokenWatcher->FeedToken(new Token(*pEntry->pTokenType, GetLineNo()));
+				_tokenWatcher.FeedToken(new Token(*pEntry->pTokenType, GetLineNo()));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			}
 		}
@@ -243,7 +243,7 @@ bool Tokenizer::ParseChar(char ch)
 		if (String::IsWhite(ch) || ch == '\x0c') { // code 0x0c is page-break
 			_field.push_back(ch);
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Space, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Space, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Start;
 		}
@@ -351,10 +351,10 @@ bool Tokenizer::ParseChar(char ch)
 				if (pTokenType->IsIdentical(TokenType::TripleChars)) {
 					_stat = Stat::TripleChars;
 				} else if (_tokenStack.back()->IsType(TokenType::Quote)) {
-					_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
+					_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 					if (Error::IsIssued()) _stat = Stat::Error;
 				} else {
-					_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
+					_tokenWatcher.FeedToken(new Token(*pTokenType, GetLineNo()));
 					if (Error::IsIssued()) _stat = Stat::Error;
 				}
 				if (pushbackFlag) Gurax_PushbackEx(ch);
@@ -425,10 +425,10 @@ bool Tokenizer::ParseChar(char ch)
 				}
 			}
 			if (_tokenStack.back()->IsType(TokenType::Quote)) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			} else {
-				_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
+				_tokenWatcher.FeedToken(new Token(*pTokenType, GetLineNo()));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			}
 			if (pushbackFlag) Gurax_PushbackEx(ch);
@@ -441,14 +441,14 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::Escape: {
 		if (ch == '\0') {
 			if (_verboseFlag) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Escape, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Escape, GetLineNo(), _field));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Start;
 		} else if (ch == '\n') {
 			if (_verboseFlag) {
 				_field.push_back(ch);
-				_pTokenWatcher->FeedToken(new Token(TokenType::Escape, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Escape, GetLineNo(), _field));
 			}
 			_stat = Stat::Start;
 		} else if (String::IsWhite(ch)) {
@@ -463,18 +463,18 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::Colon: {
 		if (ch == ':') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::ColonColon, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::ColonColon, GetLineNo()));
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else if (ch == '*') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::ColonAsterisk, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::ColonAsterisk, GetLineNo()));
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else if (ch == '&') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::ColonAnd, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::ColonAnd, GetLineNo()));
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else {
 			const TokenType *pTokenType = _tokenStack.back()->IsSuffixToken()?
 									&TokenType::ColonAfterSuffix : &TokenType::Colon;
-			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(*pTokenType, GetLineNo()));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -499,9 +499,9 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::AfterLBrace: {
 		if (ch == '|') {
 			if (_verboseFlag && !_field.empty()) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
 			}
-			_pTokenWatcher->FeedToken(new Token(TokenType::LBlockParam, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::LBlockParam, GetLineNo()));
 			if (Error::IsIssued()) {
 				_stat = Stat::Error;
 			} else {
@@ -512,7 +512,7 @@ bool Tokenizer::ParseChar(char ch)
 			if (_verboseFlag) _field.push_back(ch);
 		} else {
 			if (_verboseFlag && !_field.empty()) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Space, _lineNoTop, _field));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Start;
@@ -547,7 +547,7 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::NumberSuffixed;
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -561,7 +561,7 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::NumberSuffixed;
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -579,7 +579,7 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::NumberSuffixed;
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -589,16 +589,16 @@ bool Tokenizer::ParseChar(char ch)
 		if (ch == '.') {
 			if (_tokenStack.back()->IsType(TokenType::Quote)) {
 				_field.push_back(ch);
-				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 			} else {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Seq, GetLineNo()));
+				_tokenWatcher.FeedToken(new Token(TokenType::Seq, GetLineNo()));
 			}
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else if (String::IsDigit(ch)) {
 			_field.push_back(ch);
 			_stat = Stat::Number;
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Period, GetLineNo()));
+			_tokenWatcher.FeedToken(new Token(TokenType::Period, GetLineNo()));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -611,9 +611,9 @@ bool Tokenizer::ParseChar(char ch)
 			size_t pos = _field.find('.');
 			if (pos == _field.length() - 1) {
 				_field.resize(pos);
-				_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 				if (!Error::IsIssued()) {
-					_pTokenWatcher->FeedToken(new Token(TokenType::Seq, GetLineNo()));
+					_tokenWatcher.FeedToken(new Token(TokenType::Seq, GetLineNo()));
 				}
 				_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 			} else if (pos == String::npos) {
@@ -630,7 +630,7 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::NumberSuffixed;
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -667,7 +667,7 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::NumberSuffixed;
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Number, GetLineNo(), _field));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -680,10 +680,10 @@ bool Tokenizer::ParseChar(char ch)
 			if (_verboseFlag) {
 				String strSource = _field;
 				strSource += _suffix;
-				_pTokenWatcher->FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(),
-													_field, _suffix, strSource));
+				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(),
+												  _field, _suffix, strSource));
 			} else {
-				_pTokenWatcher->FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(), _field, _suffix));
+				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(), _field, _suffix));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -706,9 +706,9 @@ bool Tokenizer::ParseChar(char ch)
 			_stat = Stat::StringFirst;
 		} else {
 			if (_field == "in" && !_tokenStack.back()->IsType(TokenType::Quote)) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Contains, GetLineNo()));
+				_tokenWatcher.FeedToken(new Token(TokenType::Contains, GetLineNo()));
 			} else {
-				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -717,7 +717,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::SymbolExclamation: {
 		if (ch == '=' || ch == '!') {
-			_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
+			_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 			if (Error::IsIssued()) {
 				_stat = Stat::Error;
 			} else {
@@ -753,9 +753,9 @@ bool Tokenizer::ParseChar(char ch)
 		}
 		if (ch == '\n' || ch == '\0') {
 			if (_verboseFlag) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
-			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
+			if (ch == '\n') _tokenWatcher.FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
 			if (_verboseFlag) _field.push_back(ch);
@@ -765,9 +765,9 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::ShebangLine: {
 		if (ch == '\n' || ch == '\0') {
 			if (_verboseFlag) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
-			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
+			if (ch == '\n') _tokenWatcher.FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
 			if (_verboseFlag) _field.push_back(ch);
@@ -777,9 +777,9 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::CommentLine: {
 		if (ch == '\n' || ch == '\0') {
 			if (_verboseFlag) {
-				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
+				_tokenWatcher.FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
-			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
+			if (ch == '\n') _tokenWatcher.FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
 			if (_verboseFlag) _field.push_back(ch);
@@ -806,7 +806,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = Stat::CommentBlock;
 			} else {
 				if (_verboseFlag) {
-					_pTokenWatcher->FeedToken(new Token(TokenType::CommentBlock, _lineNoTop, _field));
+					_tokenWatcher.FeedToken(new Token(TokenType::CommentBlock, _lineNoTop, _field));
 				}
 				_stat = Stat::Start;
 			}
@@ -853,7 +853,7 @@ bool Tokenizer::ParseChar(char ch)
 			_stat = Stat::StringSuffixed;
 		} else {
 			const TokenType &tokenType = GetTokenTypeForString(_stringInfo);
-			_pTokenWatcher->FeedToken(new Token(tokenType, GetLineNo(), _field, "", _strSource));
+			_tokenWatcher.FeedToken(new Token(tokenType, GetLineNo(), _field, "", _strSource));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -1056,7 +1056,7 @@ bool Tokenizer::ParseChar(char ch)
 			_stat = Stat::StringSuffixed;
 		} else {
 			const TokenType& tokenType = GetTokenTypeForString(_stringInfo);
-			_pTokenWatcher->FeedToken(new Token(tokenType, GetLineNo(), _field, "", _strSource));
+			_tokenWatcher.FeedToken(new Token(tokenType, GetLineNo(), _field, "", _strSource));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -1067,7 +1067,7 @@ bool Tokenizer::ParseChar(char ch)
 			if (_verboseFlag) _strSource.push_back(ch);
 			_suffix.push_back(ch);
 		} else {
-			_pTokenWatcher->FeedToken(new Token(TokenType::StringSuffixed, GetLineNo(), _field, _suffix, _strSource));
+			_tokenWatcher.FeedToken(new Token(TokenType::StringSuffixed, GetLineNo(), _field, _suffix, _strSource));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}

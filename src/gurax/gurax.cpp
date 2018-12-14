@@ -12,6 +12,12 @@ void Bootup()
 	Symbol::Bootup();
 }
 
+class TokenWatcher : public Tokenizer::TokenWatcher {
+public:
+	virtual void FeedToken(UniquePtr<Token> pToken) override {
+	}
+};
+
 void sub()
 {
 	Bootup();
@@ -25,6 +31,8 @@ void sub()
 		::printf("%d %d %d\n", ch, static_cast<char>(static_cast<UChar>(ch)), static_cast<char>(ch));
 	}
 #endif
+	TokenWatcher tokenWatcher;
+	UniquePtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, ""));
 }
 
 }

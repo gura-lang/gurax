@@ -69,7 +69,7 @@ public:
 		String strIndentRef;
 	};
 private:
-	TokenWatcher *_pTokenWatcher;
+	TokenWatcher& _tokenWatcher;
 	StringShared _pPathNameSrc;
 	Stat _stat = Stat::BOF;
 	bool _lineHeadFlag = true;
@@ -97,7 +97,7 @@ private:
 public:
 	// Constructor
 	Tokenizer() = delete;
-	Tokenizer(TokenWatcher* pTokenWatcher, String pathNameSrc);
+	Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc);
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
 	Tokenizer& operator=(const Tokenizer& src) = delete;
