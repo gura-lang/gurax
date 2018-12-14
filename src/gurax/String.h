@@ -79,6 +79,8 @@ public:
 	static UInt32 NextUTF32(const char** pp);
 	void AppendUTF8(UInt64 codeUTF8);
 	void AppendUTF32(UInt32 codeUTF32);
+public:
+	static char GetEscaped(char ch);
 };
 
 //------------------------------------------------------------------------------

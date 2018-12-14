@@ -72,6 +72,12 @@ Tokenizer::Tokenizer(const String& pathNameSrc, int cntLineStart, bool enablePre
 {
 }
 
+void Tokenizer::InitStack()
+{
+	_tokenStack.Clear();
+	_tokenStack.push_back(new Token(TokenType::Begin, 0));
+}
+
 bool Tokenizer::ParseChar(char ch)
 {
 #if 1
@@ -232,7 +238,7 @@ bool Tokenizer::ParseChar(char ch)
 				_field.clear();
 				_field.push_back(ch);
 				_stat = Stat::DoubleChars;
-			} else if (_tokenStack.back().IsType(TokenType::Quote)) {
+			} else if (_tokenStack.back()->IsType(TokenType::Quote)) {
 				_field.clear();
 				_field.push_back(ch);
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
@@ -355,7 +361,7 @@ bool Tokenizer::ParseChar(char ch)
 				}
 				if (pTokenType->IsIdentical(TokenType::TripleChars)) {
 					_stat = Stat::TripleChars;
-				} else if (_tokenStack.back().IsType(TokenType::Quote)) {
+				} else if (_tokenStack.back()->IsType(TokenType::Quote)) {
 					_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 					if (Error::IsIssued()) _stat = Stat::Error;
 				} else {
@@ -429,7 +435,7 @@ bool Tokenizer::ParseChar(char ch)
 					break;
 				}
 			}
-			if (_tokenStack.back().IsType(TokenType::Quote)) {
+			if (_tokenStack.back()->IsType(TokenType::Quote)) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			} else {
@@ -477,7 +483,7 @@ bool Tokenizer::ParseChar(char ch)
 			_pTokenWatcher->FeedToken(new Token(TokenType::ColonAnd, GetLineNo()));
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else {
-			const TokenType *pTokenType = _tokenStack.back().IsSuffixToken()?
+			const TokenType *pTokenType = _tokenStack.back()->IsSuffixToken()?
 									&TokenType::ColonAfterSuffix : &TokenType::Colon;
 			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo()));
 			Gurax_PushbackEx(ch);
@@ -592,7 +598,7 @@ bool Tokenizer::ParseChar(char ch)
 	}
 	case Stat::NumberAfterPeriod: {
 		if (ch == '.') {
-			if (_tokenStack.back().IsType(TokenType::Quote)) {
+			if (_tokenStack.back()->IsType(TokenType::Quote)) {
 				_field.push_back(ch);
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
 			} else {
@@ -683,8 +689,10 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 		} else {
 			if (IsTokenWatched()) {
+				String strSource = _field;
+				strSource += _suffix;
 				_pTokenWatcher->FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(),
-									 _field, _suffix, _field + _suffix));
+													_field, _suffix, strSource));
 			} else {
 				_pTokenWatcher->FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(), _field, _suffix));
 			}
@@ -708,7 +716,7 @@ bool Tokenizer::ParseChar(char ch)
 			_field.clear();
 			_stat = Stat::StringFirst;
 		} else {
-			if (_field == "in" && !_tokenStack.back().IsType(TokenType::Quote)) {
+			if (_field == "in" && !_tokenStack.back()->IsType(TokenType::Quote)) {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Contains, GetLineNo()));
 			} else {
 				_pTokenWatcher->FeedToken(new Token(TokenType::Symbol, GetLineNo(), _field));
@@ -756,10 +764,9 @@ bool Tokenizer::ParseChar(char ch)
 		}
 		if (ch == '\n' || ch == '\0') {
 			if (IsTokenWatched()) {
-				_pTokenWatcher->FeedToken(
-					env, Token(TokenType::CommentLine, GetLineNo(), _field));
+				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
-			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EOL, GetLineNo()));
+			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
 			if (IsTokenWatched()) _field.push_back(ch);
@@ -769,10 +776,9 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::ShebangLine: {
 		if (ch == '\n' || ch == '\0') {
 			if (IsTokenWatched()) {
-				_pTokenWatcher->FeedToken(
-					env, Token(TokenType::CommentLine, GetLineNo(), _field));
+				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
-			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EOL, GetLineNo()));
+			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
 			if (IsTokenWatched()) _field.push_back(ch);
@@ -782,10 +788,9 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::CommentLine: {
 		if (ch == '\n' || ch == '\0') {
 			if (IsTokenWatched()) {
-				_pTokenWatcher->FeedToken(
-					env, Token(TokenType::CommentLine, GetLineNo(), _field));
+				_pTokenWatcher->FeedToken(new Token(TokenType::CommentLine, GetLineNo(), _field));
 			}
-			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EOL, GetLineNo()));
+			if (ch == '\n') _pTokenWatcher->FeedToken(new Token(TokenType::EndOfLine, GetLineNo()));
 			_stat = Stat::Start;
 		} else {
 			if (IsTokenWatched()) _field.push_back(ch);
@@ -812,8 +817,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stat = Stat::CommentBlock;
 			} else {
 				if (IsTokenWatched()) {
-					_pTokenWatcher->FeedToken(
-						env, Token(TokenType::CommentBlock, _lineNoTop, _field));
+					_pTokenWatcher->FeedToken(new Token(TokenType::CommentBlock, _lineNoTop, _field));
 				}
 				_stat = Stat::Start;
 			}
@@ -859,8 +863,8 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::StringSuffixed;
 		} else {
-			const TokenType *pTokenType = GetTokenTypeForString(_stringInfo);
-			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo(), _field, "", _strSource));
+			const TokenType &tokenType = GetTokenTypeForString(_stringInfo);
+			_pTokenWatcher->FeedToken(new Token(tokenType, GetLineNo(), _field, "", _strSource));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -947,7 +951,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stringInfo.cntRest = 2;
 				_stat = Stat::StringEscHex;
 			} else if (String::IsOctDigit(ch)) {
-				_stringInfo.accum = ConvOctDigit(ch);
+				_stringInfo.accum = String::ConvOctDigit(ch);
 				_stringInfo.cntRest = 2;
 				_stat = Stat::StringEscOct;
 			} else if (ch == 'u') {
@@ -959,7 +963,7 @@ bool Tokenizer::ParseChar(char ch)
 				_stringInfo.cntRest = 8;
 				_stat = Stat::StringEscUnicode;
 			} else {
-				_field.push_back(GetEscaped(ch));
+				_field.push_back(String::GetEscaped(ch));
 				_stat = _stringInfo.statRtn;
 			}
 		}
@@ -968,7 +972,7 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::StringEscHex: {
 		if (String::IsHexDigit(ch)) {
 			if (IsTokenWatched()) _strSource.push_back(ch);
-			_stringInfo.accum = (_stringInfo.accum << 4) + ConvHexDigit(ch);
+			_stringInfo.accum = (_stringInfo.accum << 4) + String::ConvHexDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
 				_field.push_back(static_cast<char>(_stringInfo.accum));
@@ -983,7 +987,7 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::StringEscOct: {
 		if (String::IsOctDigit(ch)) {
 			if (IsTokenWatched()) _strSource.push_back(ch);
-			_stringInfo.accum = (_stringInfo.accum << 3) + ConvOctDigit(ch);
+			_stringInfo.accum = (_stringInfo.accum << 3) + String::ConvOctDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
 				_field.push_back(static_cast<char>(_stringInfo.accum));
@@ -998,10 +1002,10 @@ bool Tokenizer::ParseChar(char ch)
 	case Stat::StringEscUnicode: {
 		if (String::IsHexDigit(ch)) {
 			if (IsTokenWatched()) _strSource.push_back(ch);
-			_stringInfo.accum = (_stringInfo.accum << 4) + ConvHexDigit(ch);
+			_stringInfo.accum = (_stringInfo.accum << 4) + String::ConvHexDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
-				AppendUTF32(_field, _stringInfo.accum);
+				_field.AppendUTF32(_stringInfo.accum);
 				_stat = _stringInfo.statRtn;
 			}
 		} else {
@@ -1062,8 +1066,8 @@ bool Tokenizer::ParseChar(char ch)
 			_suffix.push_back(ch);
 			_stat = Stat::StringSuffixed;
 		} else {
-			const TokenType *pTokenType = GetTokenTypeForString(_stringInfo);
-			_pTokenWatcher->FeedToken(new Token(*pTokenType, GetLineNo(), _field, "", _strSource));
+			const TokenType& tokenType = GetTokenTypeForString(_stringInfo);
+			_pTokenWatcher->FeedToken(new Token(tokenType, GetLineNo(), _field, "", _strSource));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -1109,6 +1113,43 @@ void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
 	va_list ap;
 	va_start(ap, format);
 	Error::IssueV(errorType, _pPathNameSrc, GetLineNo(), format, ap);
+}
+
+const TokenType& Tokenizer::GetTokenTypeForString(const StringInfo& stringInfo)
+{
+	return stringInfo.binaryFlag? TokenType::Binary :
+		stringInfo.embedFlag? TokenType::EmbedString : TokenType::String;
+}
+
+bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
+{
+	stringInfo.rawFlag = false;
+	stringInfo.binaryFlag = false;
+	stringInfo.wiseFlag = false;
+	stringInfo.embedFlag = false;
+	for (auto ch : field) {
+		if (ch == 'r') {
+			if (stringInfo.rawFlag) return false;
+			stringInfo.rawFlag = true;
+		} else if (ch == 'R') {
+			if (stringInfo.rawFlag) return false;
+			stringInfo.rawFlag = true;
+			stringInfo.wiseFlag = true;
+		} else if (ch == 'b') {
+			if (stringInfo.binaryFlag) return false;
+			stringInfo.binaryFlag = true;
+		} else if (ch == 'B') {
+			if (stringInfo.binaryFlag) return false;
+			stringInfo.binaryFlag = true;
+			stringInfo.wiseFlag = true;
+		} else if (ch == 'e') {
+			if (stringInfo.embedFlag) return false;
+			stringInfo.embedFlag = true;
+		} else {
+			return false;
+		}
+	}
+	return true;
 }
 
 }

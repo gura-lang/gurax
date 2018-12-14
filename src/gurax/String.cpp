@@ -272,6 +272,29 @@ void String::AppendUTF32(UInt32 codeUTF32)
 	while (i > 0) push_back(buff[--i]);
 }
 
+char String::GetEscaped(char ch)
+{
+	static const struct {
+		char ch;
+		char chConv;
+	} tbl[] = {
+		{ 'a',	'\a'	},
+		{ 'b',	'\b'	},
+		{ 'f',	'\f'	},
+		{ 'n',	'\n'	},
+		{ 'r',	'\r'	},
+		{ 't',	'\t'	},
+		{ 'v',	'\v'	},
+		{ '\\',	'\\'	},
+		{ '\'',	'\''	},
+		{ '"',	'"'		},
+	};
+	for (auto item : tbl) {
+		if (item.ch == ch) return item.chConv;
+	}
+	return ch;
+}
+
 #if 0
 const UInt32 String::_ctypeTbl[] = {
 	0x00000000, 0x00000000, 0x00000000, 0x00000000,

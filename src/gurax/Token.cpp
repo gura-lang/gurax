@@ -105,5 +105,35 @@ const TokenType TokenType::Unknown			{  0, "Unknown",		"[unk]",	OpType::None	};
 //------------------------------------------------------------------------------
 // TokenStack
 //------------------------------------------------------------------------------
+TokenStack::reverse_iterator TokenStack::SeekTerminal(reverse_iterator ppToken)
+{
+	for ( ; (*ppToken)->IsType(TokenType::Expr); ppToken++) ;
+	return ppToken;
+}
+
+bool TokenStack::CheckBlockParamEnd() const
+{
+	int parLevel = 0;
+	for (auto ppToken = rbegin(); ppToken != rend(); ppToken++) {
+		const Token *pToken = *ppToken;
+		if (pToken->IsType(TokenType::LBlockParam)) break;
+		if (pToken->IsCloseToken()) parLevel++;
+		if (pToken->IsOpenToken()) {
+			parLevel--;
+			if (parLevel < 0) return false;
+		}
+	}
+	return true;
+}
+
+String TokenStack::ToString() const
+{
+	String rtn;
+	for (auto ppToken = begin(); ppToken != end(); ppToken++) {
+		if (ppToken != begin()) rtn.append(" ");
+		rtn.append((*ppToken)->GetSymbol());
+	}
+	return rtn;
+}
 
 }

@@ -109,9 +109,19 @@ class GURAX_DLLDECLARE Token : public Referable {
 private:
 	const TokenType &_tokenType;
 	int _lineNo;
+	String _str;
+	String _suffix;
+	String _strSource;
 public:
 	// Constructor
 	Token(const TokenType &tokenType, int lineNo) : _tokenType(tokenType), _lineNo(lineNo) {}
+	Token(const TokenType &tokenType, int lineNo, String str) :
+		_tokenType(tokenType), _lineNo(lineNo), _str(std::move(str)) {}
+	Token(const TokenType &tokenType, int lineNo, String str, String suffix) :
+		_tokenType(tokenType), _lineNo(lineNo), _str(std::move(str)), _suffix(std::move(suffix)) {}
+	Token(const TokenType &tokenType, int lineNo, String str, String suffix, String strSource) :
+		_tokenType(tokenType), _lineNo(lineNo),
+		_str(std::move(str)), _suffix(std::move(suffix)), _strSource(std::move(strSource)) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
 	Token& operator=(const Token& src) = delete;
@@ -124,6 +134,24 @@ protected:
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(Token);
+public:
+	bool IsType(const TokenType &tokenType) const { return _tokenType.IsIdentical(tokenType); }
+	bool IsOpenToken() const {
+		return IsType(TokenType::LParenthesis) || IsType(TokenType::LBrace) ||
+			IsType(TokenType::LBracket) || IsType(TokenType::LBlockParam);
+	}
+	bool IsCloseToken() const {
+		return IsType(TokenType::RParenthesis) || IsType(TokenType::RBrace) ||
+			IsType(TokenType::RBracket) || IsType(TokenType::RBlockParam);
+	}
+	bool IsSeparatorToken() const {
+		return IsType(TokenType::EndOfLine) || IsType(TokenType::EndOfFile) ||
+			IsType(TokenType::Comma) || IsType(TokenType::Semicolon);
+	}
+	bool IsSuffixToken() const {
+		return IsType(TokenType::Add) ||
+			IsType(TokenType::Mul) || IsType(TokenType::Question);
+	}
 public:
 	int GetLineNo() const { return _lineNo; }
 	int GetCategory() const { return _tokenType.category; }
@@ -164,6 +192,11 @@ public:
 		for (auto pToken : *this) Token::Delete(pToken);
 		clear();
 	}
+	reverse_iterator SeekTerminal(reverse_iterator ppToken);
+	Token* Peek(int offset) { return *(rbegin() + offset); }
+	bool CheckBlockParamEnd() const;
+	String ToString() const;
+	bool IsEmpty() const { return size() <= 1; }
 };
 
 }

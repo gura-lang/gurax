@@ -111,10 +111,13 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Tokenizer);
 public:
+	void InitStack();
 	bool ParseChar(char ch);
 	bool IsTokenWatched() const { return false; }
 	int GetLineNo() const { return _cntLine + 1; }
 	void IssueError(const ErrorType& errorType, const char* format, ...);
+	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);
+	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);
 };
 
 }
