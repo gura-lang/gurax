@@ -115,7 +115,7 @@ bool TokenStack::CheckBlockParamEnd() const
 {
 	int parLevel = 0;
 	for (auto ppToken = rbegin(); ppToken != rend(); ppToken++) {
-		const Token *pToken = *ppToken;
+		const Token* pToken = *ppToken;
 		if (pToken->IsType(TokenType::LBlockParam)) break;
 		if (pToken->IsCloseToken()) parLevel++;
 		if (pToken->IsOpenToken()) {

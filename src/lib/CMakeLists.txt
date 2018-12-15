@@ -11,6 +11,7 @@ add_library(guraxcore SHARED
 	Object_number.cpp
 	Object_undefined.cpp
 	Operator.cpp
+	Parser.cpp
 	Referable.cpp
 	String.cpp
 	Symbol.cpp

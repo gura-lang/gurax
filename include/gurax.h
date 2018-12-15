@@ -15,10 +15,17 @@
 #include "gurax/Object_number.h"
 #include "gurax/Object_undefined.h"
 #include "gurax/Operator.h"
+#include "gurax/Parser.h"
 #include "gurax/Referable.h"
 #include "gurax/String.h"
 #include "gurax/Symbol.h"
 #include "gurax/Token.h"
 #include "gurax/Tokenizer.h"
+
+namespace Gurax {
+
+void Bootup();
+
+}
 
 #endif

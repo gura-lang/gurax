@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_TOKENIZER_H
 #define GURAX_TOKENIZER_H
-#include "Referable.h"
+#include "Token.h"
 
 namespace Gurax {
 
@@ -17,11 +17,11 @@ private:
 	};
 private:
 	Stat _stat;
-	String _field;
+	String _value;
 public:
 	MagicCommentParser() : _stat(Stat::Start) {}
 	bool FeedChar(char ch);
-	const char* GetEncoding() const { return _field.c_str(); }
+	const char* GetEncoding() const { return _value.c_str(); }
 };
 
 //------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ private:
 	int _commentNestLevel = 0;
 	int _lineNoTop = 0;
 	bool _verboseFlag = false;
-	String _field;
+	String _value;
 	String _strSource;
 	String _suffix;
 	TokenStack _tokenStack;

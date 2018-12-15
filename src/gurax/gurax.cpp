@@ -5,13 +5,6 @@
 
 namespace Gurax {
 
-void Bootup()
-{
-	Object::Bootup();
-	String::Bootup();
-	Symbol::Bootup();
-}
-
 class TokenWatcher : public Tokenizer::TokenWatcher {
 public:
 	virtual void FeedToken(UniquePtr<Token> pToken) override {
@@ -21,7 +14,6 @@ public:
 
 void sub(int argc, char* argv[])
 {
-	Bootup();
 #if 0
 	UniquePtr<Tokenizer> pTokenizer(new Tokenizer("", 0, false));
 	UniquePtr<Object> pObj(new Object_number());
@@ -38,7 +30,7 @@ void sub(int argc, char* argv[])
 	const char* pathNameSrc = argv[1];
 	TokenWatcher tokenWatcher;
 	UniquePtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
-	FILE *fp = ::fopen(pathNameSrc, "rt");
+	FILE* fp = ::fopen(pathNameSrc, "rt");
 	for (;;) {
 		int chRaw = ::fgetc(fp);
 		char ch = (chRaw < 0)? '\0' : static_cast<UChar>(chRaw);
@@ -52,6 +44,7 @@ void sub(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+	Gurax::Bootup();
 	Gurax::sub(argc, argv);
 	return 0;
 }
