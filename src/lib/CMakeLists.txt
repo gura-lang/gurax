@@ -1,5 +1,21 @@
 add_library(guraxcore SHARED
 	guraxcore.cpp
+	Common.cpp
+	Error.cpp
+	Expr.cpp
+	Function.cpp
+	MemoryPool.cpp
+	Object.cpp
+	Object_function.cpp
+	Object_nil.cpp
+	Object_number.cpp
+	Object_undefined.cpp
+	Operator.cpp
+	Referable.cpp
+	String.cpp
+	Symbol.cpp
+	Token.cpp
+	Tokenizer.cpp
 )
 
 target_link_libraries(guraxcore dl pthread)

@@ -19,5 +19,11 @@ add_definitions("-Wall -std=c++14")
 set(GURAX_RELDIR_BINARY		bin)
 set(GURAX_RELDIR_LIBRARY	lib)
 
+set(GURAX_SRCDIR_ROOT		${PROJECT_SOURCE_DIR}/..)
+set(GURAX_SRCDIR_INCLUDE	${GURAX_SRCDIR_ROOT}/include)
+
+include_directories(
+	${GURAX_SRCDIR_INCLUDE})
+
 add_subdirectory(lib)
 add_subdirectory(gurax)

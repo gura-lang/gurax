@@ -1,6 +1,24 @@
-//=============================================================================
+//==============================================================================
 // gurax.h
-//=============================================================================
+//==============================================================================
 #ifndef GURAX_H
-#include <stdio.h>
+#define GURAX_H
+
+#include "gurax/Common.h"
+#include "gurax/Error.h"
+#include "gurax/Expr.h"
+#include "gurax/Function.h"
+#include "gurax/MemoryPool.h"
+#include "gurax/Object.h"
+#include "gurax/Object_function.h"
+#include "gurax/Object_nil.h"
+#include "gurax/Object_number.h"
+#include "gurax/Object_undefined.h"
+#include "gurax/Operator.h"
+#include "gurax/Referable.h"
+#include "gurax/String.h"
+#include "gurax/Symbol.h"
+#include "gurax/Token.h"
+#include "gurax/Tokenizer.h"
+
 #endif
