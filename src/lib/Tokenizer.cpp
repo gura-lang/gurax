@@ -5,56 +5,6 @@
 
 namespace Gurax {
 
-//-----------------------------------------------------------------------------
-// MagicCommentParser
-//-----------------------------------------------------------------------------
-bool MagicCommentParser::FeedChar(char ch)
-{
-	bool rtn = false;
-	switch (_stat) {
-	case Stat::Idle: {
-		// nothing to do
-		break;
-	}
-	case Stat::Start: {
-		if (String::IsAlpha(ch)) {
-			_value += ch;
-		} else if (ch == ':' || ch == '=') {
-			if (_value.size() >= 6 && ::strcmp(_value.c_str() + _value.size() - 6, "coding") == 0) {
-				_stat = Stat::SkipSpace;
-			} else {
-				_value.clear();
-			}
-		} else {
-			_value.clear();
-		}
-		break;
-	}
-	case Stat::SkipSpace: {
-		if (ch == ' ' || ch == '\t') {
-			// nothing to do
-		} else if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
-			_value.clear();
-			_value += ch;
-			_stat = Stat::CodingName;
-		} else {
-			_stat = Stat::Start;
-		}
-		break;
-	}
-	case Stat::CodingName: {
-		if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
-			_value += ch;
-		} else {
-			rtn = true;
-			_stat = Stat::Idle;
-		}
-		break;
-	}
-	}
-	return rtn;
-}
-
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
@@ -1134,6 +1084,56 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 		}
 	}
 	return true;
+}
+
+//-----------------------------------------------------------------------------
+// Tokenizer::MagicCommentParser
+//-----------------------------------------------------------------------------
+bool Tokenizer::MagicCommentParser::FeedChar(char ch)
+{
+	bool rtn = false;
+	switch (_stat) {
+	case Stat::Idle: {
+		// nothing to do
+		break;
+	}
+	case Stat::Start: {
+		if (String::IsAlpha(ch)) {
+			_value += ch;
+		} else if (ch == ':' || ch == '=') {
+			if (_value.size() >= 6 && ::strcmp(_value.c_str() + _value.size() - 6, "coding") == 0) {
+				_stat = Stat::SkipSpace;
+			} else {
+				_value.clear();
+			}
+		} else {
+			_value.clear();
+		}
+		break;
+	}
+	case Stat::SkipSpace: {
+		if (ch == ' ' || ch == '\t') {
+			// nothing to do
+		} else if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
+			_value.clear();
+			_value += ch;
+			_stat = Stat::CodingName;
+		} else {
+			_stat = Stat::Start;
+		}
+		break;
+	}
+	case Stat::CodingName: {
+		if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
+			_value += ch;
+		} else {
+			rtn = true;
+			_stat = Stat::Idle;
+		}
+		break;
+	}
+	}
+	return rtn;
 }
 
 }

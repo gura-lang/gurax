@@ -7,28 +7,29 @@
 
 namespace Gurax {
 
-//-----------------------------------------------------------------------------
-// MagicCommentParser
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE MagicCommentParser {
-private:
-	enum class Stat {
-		Idle, Start, SkipSpace, CodingName,
-	};
-private:
-	Stat _stat;
-	String _value;
-public:
-	MagicCommentParser() : _stat(Stat::Start) {}
-	bool FeedChar(char ch);
-	const char* GetEncoding() const { return _value.c_str(); }
-};
-
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tokenizer : public Referable {
 public:
+	class GURAX_DLLDECLARE TokenWatcher {
+	public:
+		virtual void FeedToken(UniquePtr<Token> pToken) = 0;
+	};
+private:
+	class MagicCommentParser {
+	private:
+		enum class Stat {
+			Idle, Start, SkipSpace, CodingName,
+		};
+	private:
+		Stat _stat;
+		String _value;
+	public:
+		MagicCommentParser() : _stat(Stat::Start) {}
+		bool FeedChar(char ch);
+		const char* GetEncoding() const { return _value.c_str(); }
+	};
 	enum class Stat {
 		BOF, BOF_2nd, BOF_3rd,
 		Start,
@@ -52,10 +53,6 @@ public:
 		MStringEndFirst, MStringEndSecond,
 		StringPost, StringSuffixed,
 		RecoverConsole,
-	};
-	class GURAX_DLLDECLARE TokenWatcher {
-	public:
-		virtual void FeedToken(UniquePtr<Token> pToken) = 0;
 	};
 	struct StringInfo {
 		char chBorder;
