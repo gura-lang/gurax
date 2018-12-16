@@ -114,6 +114,7 @@ public:
 	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }
 	int GetLineNo() const { return _cntLine + 1; }
 	void IssueError(const ErrorType& errorType, const char* format, ...);
+	TokenStack &GetTokenStack() { return _tokenStack; }
 	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);
 	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);
 };
