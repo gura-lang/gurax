@@ -1059,7 +1059,7 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 	stringInfo.binaryFlag = false;
 	stringInfo.wiseFlag = false;
 	stringInfo.embedFlag = false;
-	for (const auto& ch : field) {
+	for (const char ch : field) {
 		if (ch == 'r') {
 			if (stringInfo.rawFlag) return false;
 			stringInfo.rawFlag = true;

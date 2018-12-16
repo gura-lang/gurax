@@ -4,6 +4,7 @@
 #ifndef GURAX_TOKEN_H
 #define GURAX_TOKEN_H
 #include "Referable.h"
+#include "Operator.h"
 
 namespace Gurax {
 
@@ -12,9 +13,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 struct GURAX_DLLDECLARE TokenType {
 	int category;
-	const char *typeName;
-	const char *symbol;
+	const char* typeName;
+	const char* symbol;
 	OpType opType;
+public:
+	using MapByOpType = std::map<OpType, const TokenType *>;
 public:
 	static const TokenType Begin;
 	static const TokenType Assign;
@@ -97,7 +100,9 @@ public:
 	static const TokenType DoubleChars;
 	static const TokenType TripleChars;
 	static const TokenType Unknown;
+	static const TokenType *mapByOpType[static_cast<size_t>(OpType::max)];
 public:
+	TokenType(int category, const char* typeName, const char* symbol, OpType opType);
 	bool IsIdentical(const TokenType &tokenType) const { return this == &tokenType; }
 	bool HasSourceSymbol() const { return !(symbol[0] == '[' && symbol[1] != '\0'); }
 };
@@ -106,12 +111,16 @@ public:
 // Token
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Token : public Referable {
+public:
+	enum class Precedence { LT, EQ, GT, Error, };
 private:
 	const TokenType &_tokenType;
 	int _lineNo;
 	String _value;
 	String _suffix;
 	String _strSource;
+public:
+	static const Precedence _precMatrix[][31];
 public:
 	// Constructor
 	Token(const TokenType &tokenType, int lineNo) : _tokenType(tokenType), _lineNo(lineNo) {}
@@ -135,6 +144,7 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Token);
 public:
+	static void Bootup();
 	bool IsType(const TokenType &tokenType) const { return _tokenType.IsIdentical(tokenType); }
 	bool IsOpenToken() const {
 		return IsType(TokenType::LParenthesis) || IsType(TokenType::LBrace) ||
@@ -159,6 +169,10 @@ public:
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
 	const char* GetValue() const { return _value.c_str(); }
+public:
+	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {
+		return _precMatrix[tokenLeft.GetCategory()][tokenRight.GetCategory()];
+	}
 };
 
 //------------------------------------------------------------------------------

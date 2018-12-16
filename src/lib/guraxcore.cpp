@@ -10,6 +10,7 @@ void Bootup()
 	Object::Bootup();
 	String::Bootup();
 	Symbol::Bootup();
+	Token::Bootup();
 }
 
 }
