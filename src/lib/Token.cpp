@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // TokenType
 //------------------------------------------------------------------------------
-const TokenType *TokenType::mapByOpType[static_cast<size_t>(OpType::max)];
+const TokenType *TokenType::mapByOpType[static_cast<size_t>(OpType::max)] {};
 
 const TokenType TokenType::Begin			{  1, "Begin",			"[Bgn]",	OpType::None	};
 const TokenType TokenType::Assign			{  2, "Assign",			"=",		OpType::None	};	// =
