@@ -41,6 +41,7 @@ private:
 	static char _toUpperTbl[256];
 	static char _toLowerTbl[256];
 public:
+	String(std::string& src) : std::string(src) {}
 	// Inherits constructors
 	using std::string::string;
 public:
@@ -82,6 +83,10 @@ public:
 public:
 	static char GetEscaped(char ch);
 };
+
+inline String operator+(const String& v1, const String& v2) {
+	return String(static_cast<std::string>(v1) + static_cast<std::string>(v2));
+}
 
 //------------------------------------------------------------------------------
 // StringList

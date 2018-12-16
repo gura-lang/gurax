@@ -628,10 +628,8 @@ bool Tokenizer::FeedChar(char ch)
 			_suffix.push_back(ch);
 		} else {
 			if (_verboseFlag) {
-				String strSource = _value;
-				strSource += _suffix;
 				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(),
-												  _value, _suffix, strSource));
+												  _value, _suffix, _value + _suffix));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, GetLineNo(), _value, _suffix));
 			}
