@@ -11,13 +11,7 @@ namespace Gurax {
 Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
 	_tokenWatcher(tokenWatcher), _pPathNameSrc(new String(std::move(pathNameSrc)))
 {
-	InitStack();
-}
-
-void Tokenizer::InitStack()
-{
-	_tokenStack.Clear();
-	_tokenStack.push_back(new Token(TokenType::Begin, 0));
+	_tokenStack.Initialize();
 }
 
 bool Tokenizer::FeedChar(char ch)
@@ -431,7 +425,7 @@ bool Tokenizer::FeedChar(char ch)
 		break;
 	}
 	case Stat::Error: {
-		InitStack();
+		_tokenStack.Initialize();
 		_blockParamFlag = false;
 		Gurax_PushbackEx(ch);
 		_stat = Stat::ErrorRecovery;
@@ -1023,7 +1017,7 @@ bool Tokenizer::FeedChar(char ch)
 		if (ch == '\n') {
 			_stat = Stat::BOF;
 			_lineHeadFlag = true;
-			InitStack();
+			_tokenStack.Initialize();
 		}
 		break;
 	}

@@ -14,7 +14,6 @@ Parser::Parser(String pathNameSrc) : _pTokenizer(new Tokenizer(*this, std::move(
 
 void Parser::FeedToken(UniquePtr<Token> pToken)
 {
-#if 0
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
 	//::printf("FeedToken(%s)\n", token.GetSymbol());
 	for (;;) {
@@ -26,81 +25,118 @@ void Parser::FeedToken(UniquePtr<Token> pToken)
 			size_t cntToken = tokenStack.size();
 			if (cntToken == 1) {
 				// nothing to do
-			} else if (cntToken == 2 && tokenStack[1]->IsType(TokenType::Expr)) {
-				Expr *pExpr = tokenStack[1]->GetExpr();
+			} else if (cntToken == 2 && tokenStack.back()->IsType(TokenType::Expr)) {
+				UniquePtr<Token> pToken(tokenStack.Pop());
+				Expr* pExpr = pToken->GetExpr()->Reference();
+#if 0
 				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
-					InitStack();
-				} else {
-					tokenStack.pop_back();
-					if (token.IsType(TOKEN_Semicolon)) pExpr->SetSilentFlag(true);
-					if (_pExprOwner == nullptr) {
-						Expr::Delete(pExpr);
-					} else if (!EmitExpr(*_pExprOwner, _pExprParent, pExpr)) {
-						InitStack();
-					}
+					tokenStack.Initialize();
+				}
+#endif
+				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
+				if (_pExprOwner == nullptr) {
+					Expr::Delete(pExpr);
+				} else if (!EmitExpr(*_pExprOwner, _pExprParent, pExpr)) {
+					tokenStack.Initialize();
 				}
 			} else {
 				// something's wrong
-				SetError_InvalidToken(__LINE__);
-				InitStack();
+				IssueError(ErrorType::SyntaxError, "syntax error (%d)", __LINE__);
+				tokenStack.Initialize();
 			}
 			break;
-		} else if (prec == Token::PREC_LT || prec == Token::PREC_EQ) {
-			Token &tokenLast = tokenStack.back();
+		} else if (prec == Token::Precedence::LT || prec == Token::Precedence::EQ) {
+			Token *pTokenLast = tokenStack.back();
 			// concatenation of two sequences of string, binary and embed-string
-			if (tokenLast.IsType(TOKEN_String) && token.IsType(TOKEN_String)) {
-				tokenLast.AddString(token.GetStringSTL());
-			} else if (tokenLast.IsType(TOKEN_Binary) && token.IsType(TOKEN_Binary)) {
-				tokenLast.AddString(token.GetStringSTL());
-			} else if (tokenLast.IsType(TOKEN_EmbedString) && token.IsType(TOKEN_EmbedString)) {
-				tokenLast.AddString(token.GetStringSTL());
+			if (pTokenLast->IsType(TokenType::String) && pToken->IsType(TokenType::String)) {
+				pTokenLast->AppendValue(pToken->GetValueSTL());
+			} else if (pTokenLast->IsType(TokenType::Binary) && pToken->IsType(TokenType::Binary)) {
+				pTokenLast->AppendValue(pToken->GetValueSTL());
+			} else if (pTokenLast->IsType(TokenType::EmbedString) && pToken->IsType(TokenType::EmbedString)) {
+				pTokenLast->AppendValue(pToken->GetValueSTL());
 			} else {
-				tokenStack.push_back(token);
+				tokenStack.push_back(pToken->Reference());
 			}
 			break;
-		} else if (prec == Token::PREC_GT) {
-			TokenStack::reverse_iterator pTokenLeft;
-			TokenStack::reverse_iterator pTokenRight = pTokenTop;
+		} else if (prec == Token::Precedence::GT) {
+			TokenStack::reverse_iterator ppTokenLeft;
+			TokenStack::reverse_iterator ppTokenRight = ppTokenTop;
 			while (1) {
-				pTokenLeft = tokenStack.SeekTerminal(pTokenRight + 1);
-				if (Token::LookupPrec(*pTokenLeft, *pTokenRight) == Token::PREC_LT) {
-					pTokenLeft--;
+				ppTokenLeft = tokenStack.SeekTerminal(ppTokenRight + 1);
+				if (Token::LookupPrec(**ppTokenLeft, **ppTokenRight) == Token::Precedence::LT) {
+					ppTokenLeft--;
 					break;
 				}
-				pTokenRight = pTokenLeft;
+				ppTokenRight = ppTokenLeft;
 			}
-			size_t cntToken = std::distance(tokenStack.rbegin(), pTokenLeft) + 1;
+			size_t cntToken = std::distance(tokenStack.rbegin(), ppTokenLeft) + 1;
 			bool rtn;
 			if (cntToken == 1) {
-				rtn = ReduceOneToken(env);
+				rtn = ReduceOneToken();
 			} else if (cntToken == 2) {
-				rtn = ReduceTwoTokens(env);
+				rtn = ReduceTwoTokens();
 			} else if (cntToken == 3) {
-				rtn = ReduceThreeTokens(env);
+				rtn = ReduceThreeTokens();
 			} else if (cntToken == 4) {
-				rtn = ReduceFourTokens(env);
+				rtn = ReduceFourTokens();
 			} else if (cntToken == 5) {
-				rtn = ReduceFiveTokens(env);
+				rtn = ReduceFiveTokens();
 			} else {
-				SetError_InvalidToken(__LINE__);
+				IssueError(ErrorType::SyntaxError, "syntax error (%d)", __LINE__);
 				rtn = false;
 			}
 			if (!rtn) {
-				InitStack();
+				tokenStack.Initialize();
 				break;
 			}
-		} else if (token.IsCloseToken()) {
-			SetError(ERR_SyntaxError, "unmatched closing character");
-			InitStack();
+		} else if (pToken->IsCloseToken()) {
+			IssueError(ErrorType::SyntaxError, "unmatched closing character");
+			tokenStack.Initialize();
 			break;
 		} else {
-			SetError_InvalidToken(__LINE__);
-			InitStack();
+			IssueError(ErrorType::SyntaxError, "syntax error (%d)", __LINE__);
+			tokenStack.Initialize();
 			break;
 		}
 	}
 	//return env.IsNoSignalled();
-#endif
+}
+
+bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr)
+{
+	return true;
+}
+
+bool Parser::ReduceOneToken()
+{
+	return true;
+}
+
+bool Parser::ReduceTwoTokens()
+{
+	return true;
+}
+
+bool Parser::ReduceThreeTokens()
+{
+	return true;
+}
+
+bool Parser::ReduceFourTokens()
+{
+	return true;
+}
+
+bool Parser::ReduceFiveTokens()
+{
+	return true;
+}
+
+void Parser::IssueError(const ErrorType& errorType, const char* format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcShared(), _pTokenizer->GetLineNo(), format, ap);
 }
 
 }

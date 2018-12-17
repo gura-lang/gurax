@@ -113,6 +113,8 @@ public:
 	void SetCntLine(int cntLine) { _cntLine = cntLine; }
 	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }
 	int GetLineNo() const { return _cntLine + 1; }
+	const char* GetPathNameSrc() const { return _pPathNameSrc->c_str(); }
+	const StringShared& GetPathNameSrcShared() const { return _pPathNameSrc; }
 	void IssueError(const ErrorType& errorType, const char* format, ...);
 	TokenStack &GetTokenStack() { return _tokenStack; }
 	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);

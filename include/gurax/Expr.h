@@ -11,6 +11,10 @@ namespace Gurax {
 // Expr
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr : public Referable {
+protected:
+	bool _silentFlag = false;
+	StringShared _pPathNameSrc;
+	int _lineNo = 0;
 public:
 	// Constructor
 	Expr() {}
@@ -27,8 +31,10 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Expr);
 public:
-	const char* GetPathNameSrc() const { return ""; }
-	int GetLineNo() const { return 0; }
+	const char* GetPathNameSrc() const { return _pPathNameSrc->c_str(); }
+	int GetLineNo() const { return _lineNo; }
+	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
+	bool GetSilentFlag() const { return _silentFlag; }
 };
 
 //------------------------------------------------------------------------------

@@ -119,6 +119,7 @@ private:
 	String _value;
 	String _suffix;
 	String _strSource;
+	UniquePtr<Expr> _pExpr;
 public:
 	static const Precedence _precMatrix[][31];
 public:
@@ -169,6 +170,10 @@ public:
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
 	const char* GetValue() const { return _value.c_str(); }
+	const String& GetValueSTL() const { return _value; }
+	void AppendValue(const char* value) { _value.append(value); }
+	void AppendValue(const String& value) { _value.append(value); }
+	Expr* GetExpr() { return _pExpr.get(); }
 public:
 	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {
 		return _precMatrix[tokenLeft.GetCategory()][tokenRight.GetCategory()];
@@ -207,11 +212,14 @@ public:
 		for (auto pToken : *this) Token::Delete(pToken);
 		clear();
 	}
+	void Initialize();
 	reverse_iterator SeekTerminal(reverse_iterator ppToken);
 	Token* Peek(int offset) { return *(rbegin() + offset); }
 	bool CheckBlockParamEnd() const;
 	String ToString() const;
 	bool IsEmpty() const { return size() <= 1; }
+	void Push(Token* pToken) { push_back(pToken); }
+	UniquePtr<Token> Pop() { Token* pToken = back(); pop_back(); return pToken; }
 };
 
 }

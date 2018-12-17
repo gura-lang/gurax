@@ -13,6 +13,8 @@ namespace Gurax {
 class GURAX_DLLDECLARE Parser : public Referable, public Tokenizer::TokenWatcher {
 private:
 	UniquePtr<Tokenizer> _pTokenizer;
+	ExprOwner* _pExprOwner = nullptr;
+	Expr* _pExprParent = nullptr;
 public:
 	// Constructor
 	Parser() = delete;
@@ -31,6 +33,13 @@ public:
 	Gurax_DeclareReferable(Parser);
 public:
 	virtual void FeedToken(UniquePtr<Token> pToken) override;
+	bool EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr);
+	bool ReduceOneToken();
+	bool ReduceTwoTokens();
+	bool ReduceThreeTokens();
+	bool ReduceFourTokens();
+	bool ReduceFiveTokens();
+	void IssueError(const ErrorType& errorType, const char* format, ...);
 };
 
 }
