@@ -109,7 +109,7 @@ public:
 	Gurax_DeclareReferable(Tokenizer);
 public:
 	void InitStack();
-	bool FeedChar(char ch);
+	void FeedChar(char ch);
 	void SetCntLine(int cntLine) { _cntLine = cntLine; }
 	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }
 	int GetLineNo() const { return _cntLine + 1; }

@@ -71,19 +71,26 @@ void Parser::FeedToken(UniquePtr<Token> pToken)
 			}
 			size_t cntToken = std::distance(tokenStack.rbegin(), ppTokenLeft) + 1;
 			bool rtn;
-			if (cntToken == 1) {
+			switch (cntToken) {
+			case 1:
 				rtn = ReduceOneToken();
-			} else if (cntToken == 2) {
+				break;
+			case 2:
 				rtn = ReduceTwoTokens();
-			} else if (cntToken == 3) {
+				break;
+			case 3:
 				rtn = ReduceThreeTokens();
-			} else if (cntToken == 4) {
+				break;
+			case 4:
 				rtn = ReduceFourTokens();
-			} else if (cntToken == 5) {
+				break;
+			case 5:
 				rtn = ReduceFiveTokens();
-			} else {
+				break;
+			default:
 				IssueError(ErrorType::SyntaxError, "syntax error (%d)", __LINE__);
 				rtn = false;
+				break;
 			}
 			if (!rtn) {
 				tokenStack.Initialize();

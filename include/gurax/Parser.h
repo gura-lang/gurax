@@ -32,7 +32,7 @@ public:
 	// Referable accessor
 	Gurax_DeclareReferable(Parser);
 public:
-	virtual void FeedToken(UniquePtr<Token> pToken) override;
+	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
 	bool EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr);
 	bool ReduceOneToken();
 	bool ReduceTwoTokens();
@@ -40,6 +40,8 @@ public:
 	bool ReduceFourTokens();
 	bool ReduceFiveTokens();
 	void IssueError(const ErrorType& errorType, const char* format, ...);
+public:
+	virtual void FeedToken(UniquePtr<Token> pToken) override;
 };
 
 }

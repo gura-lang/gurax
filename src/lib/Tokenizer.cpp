@@ -14,9 +14,9 @@ Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
 	_tokenStack.Initialize();
 }
 
-bool Tokenizer::FeedChar(char ch)
+void Tokenizer::FeedChar(char ch)
 {
-	if (ch == '\r') return true;
+	if (ch == '\r') return;
 	if (_lineHeadFlag) {
 		if (String::IsWhite(ch)) {
 			_strIndent.push_back(ch);
@@ -1031,7 +1031,6 @@ bool Tokenizer::FeedChar(char ch)
 	} else {
 		_cntCol++;
 	}
-	return !Error::IsIssued();
 }
 
 void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
