@@ -22,7 +22,8 @@ T* Reference() const { \
 static void Delete(T* p) { \
 	if (p == nullptr) return; \
 	p->_cntRef--; \
-	if (p->_cntRef <= 0) delete p; \
+	if (p->_cntRef > 0) return; \
+	delete p; \
 } \
 int GetCntRef() const { return _cntRef; }
 
@@ -32,8 +33,39 @@ namespace Gurax {
 // Referable
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Referable {
+#if 0
+public:
+	class WeakPtr {
+	private:
+		int _cntRef;
+		Referable* _p;
+	public:
+		WeakPtr() : _cntRef(1) {}
+	public:
+		static WeakPtr* Reference(const WeakPtr* p) {
+			WeakPtr* pCasted = const_cast<WeakPtr*>(p);
+			if (pCasted != nullptr) pCasted->_cntRef++;
+			return pCasted;
+		}
+		WeakPtr* Reference() const {
+			WeakPtr* pCasted = const_cast<WeakPtr*>(this);
+			pCasted->_cntRef++;
+			return pCasted;
+		}
+		static void Delete(T* p) {
+			if (p == nullptr) return;
+			p->_cntRef--;
+			if (p->_cntRef > 0) return;
+			delete p;
+		}
+		int GetCntRef() const { return _cntRef; }
+	public:
+		friend class Referable;
+	};
+#endif
 protected:
 	int _cntRef;
+	//WeakPtr* _pWeakPtr;
 public:
 	// Constructor
 	Referable() : _cntRef(1) {}
