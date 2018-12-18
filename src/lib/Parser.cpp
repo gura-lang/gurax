@@ -26,8 +26,8 @@ void Parser::FeedToken(UniquePtr<Token> pToken)
 			if (cntToken == 1) {
 				// nothing to do
 			} else if (cntToken == 2 && tokenStack.back()->IsType(TokenType::Expr)) {
-				UniquePtr<Token> pToken(tokenStack.Pop());
-				Expr* pExpr = pToken->GetExpr()->Reference();
+				auto pTokenPrev = tokenStack.Pop();
+				Expr* pExpr = pTokenPrev->GetExpr()->Reference();
 #if 0
 				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
 					tokenStack.Initialize();
@@ -116,26 +116,46 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr
 
 bool Parser::ReduceOneToken()
 {
+	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
+	auto pToken1 = tokenStack.Pop();
 	return true;
 }
 
 bool Parser::ReduceTwoTokens()
 {
+	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
+	auto pToken2 = tokenStack.Pop();
+	auto pToken1 = tokenStack.Pop();
 	return true;
 }
 
 bool Parser::ReduceThreeTokens()
 {
+	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
+	auto pToken3 = tokenStack.Pop();
+	auto pToken2 = tokenStack.Pop();
+	auto pToken1 = tokenStack.Pop();
 	return true;
 }
 
 bool Parser::ReduceFourTokens()
 {
+	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
+	auto pToken4 = tokenStack.Pop();
+	auto pToken3 = tokenStack.Pop();
+	auto pToken2 = tokenStack.Pop();
+	auto pToken1 = tokenStack.Pop();
 	return true;
 }
 
 bool Parser::ReduceFiveTokens()
 {
+	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
+	auto pToken5 = tokenStack.Pop();
+	auto pToken4 = tokenStack.Pop();
+	auto pToken3 = tokenStack.Pop();
+	auto pToken2 = tokenStack.Pop();
+	auto pToken1 = tokenStack.Pop();
 	return true;
 }
 
