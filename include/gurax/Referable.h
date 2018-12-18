@@ -51,6 +51,40 @@ public:
 	Gurax_DeclareReferable(Referable);
 };
 
+//------------------------------------------------------------------------------
+// UniquePtr
+//------------------------------------------------------------------------------
+template<typename T> class UniquePtr {
+private:
+	T* _p;
+public:
+	// Default constructor
+	UniquePtr(T* p = nullptr) noexcept : _p(p) {}
+	// Copy constructor/operator
+	UniquePtr(const UniquePtr& obj) = delete;
+	UniquePtr& operator=(const UniquePtr& obj) = delete;
+	// Move constructor/operator
+	UniquePtr(UniquePtr&& obj) : _p(obj._p) { obj._p = nullptr; }
+	UniquePtr& operator=(UniquePtr&& obj) noexcept {
+		T::Delete(_p);
+		_p = obj._p;
+		obj._p = nullptr;
+		return *this;
+	}
+	// Destructor
+	~UniquePtr() { T::Delete(_p); }
+public:
+	T& operator*() { return *_p; }
+	T& operator*() const { return *_p; }
+	T* operator->() { return _p; }
+	T* operator->() const { return _p; }
+	void reset(T* p = nullptr) { T::Delete(_p); _p = p; }
+	T* get() { return _p; }
+	T* get() const { return _p; }
+	T* release() { T* p = _p; _p = nullptr; return p; }
+	explicit operator bool() const { return _p != nullptr; }
+};
+
 }
 
 #endif
