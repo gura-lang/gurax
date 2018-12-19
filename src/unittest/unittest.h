@@ -1,0 +1,33 @@
+//==============================================================================
+// unittest.h
+//==============================================================================
+#include <gurax.h>
+
+#define Gurax_TesterEntry(testerName) \
+class Tester_##testerName : public Tester { \
+public: \
+	Tester_##testerName() : Tester(#testerName) {} \
+	virtual void Entry(int argc, char* argv[]) const; \
+} tester_##testerName; \
+void Tester_##testerName::Entry(int argc, char* argv[]) const \
+
+namespace Gurax {
+
+class Tester;
+
+class TesterList : public std::vector<Tester*> {
+};
+
+class Tester {
+private:
+	String _name;
+	static TesterList _testerList;
+public:
+	Tester(String name) : _name(std::move(name)) { _testerList.push_back(this); }
+	const char* GetName() const { return _name.c_str(); }
+	virtual void Entry(int argc, char* argv[]) const = 0;
+public:	
+	static const TesterList& GetTesterList() { return _testerList; }
+};
+
+}

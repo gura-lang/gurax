@@ -1,5 +1,8 @@
 add_executable(unittest
-	unittest.cpp)
+	unittest.cpp
+	test-Object.cpp
+	test-Tokenizer.cpp
+)
 
 find_library(LIBREADLINE readline REQUIRED)
 

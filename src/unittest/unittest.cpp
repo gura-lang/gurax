@@ -1,38 +1,33 @@
 //==============================================================================
-// test-Tokenizer.cpp
+// unittest.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
-class TokenWatcher : public Tokenizer::TokenWatcher {
-public:
-	virtual void FeedToken(RefPtr<Token> pToken) override {
-		::printf("%s\n", pToken->GetSymbol());
-	}
-};
+TesterList Tester::_testerList;
 
 int main(int argc, char* argv[])
 {
 	if (argc < 2) {
-		::fprintf(stderr, "usage: test-Tokenizer file\n");
+		for (auto pTester : Tester::GetTesterList()) {
+			::fprintf(stderr, "%s\n", pTester->GetName());
+		}
 		return 1;
 	}
-	const char* pathNameSrc = argv[1];
-	TokenWatcher tokenWatcher;
-	RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
-	FILE* fp = ::fopen(pathNameSrc, "rt");
-	for (;;) {
-		int chRaw = ::fgetc(fp);
-		char ch = (chRaw < 0)? '\0' : static_cast<UChar>(chRaw);
-		pTokenizer->FeedChar(ch);
-		if (Error::IsIssued()) {
-			Error::Print(stdout);
+	const char* testerName = argv[1];
+	Bootup();
+	bool foundFlag = false;
+	for (auto pTester : Tester::GetTesterList()) {
+		if (::strcmp(pTester->GetName(), testerName) == 0) {
+			pTester->Entry(argc - 2, argv + 2);
+			foundFlag = true;
 			break;
 		}
-		if (chRaw < 0) break;
 	}
-	::fclose(fp);
+	if (!foundFlag) {
+		::fprintf(stderr, "unknown tester name %s\n", testerName);
+	}
 	return 0;
 }
 
@@ -40,6 +35,5 @@ int main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-	Gurax::Bootup();
 	return Gurax::main(argc, argv);
 }

@@ -1,5 +1,12 @@
 //==============================================================================
-// stdafx.h
+// test-Object.cpp
 //==============================================================================
-#include <gurax.h>
-#include "unittest.h"
+#include "stdafx.h"
+
+namespace Gurax {
+
+Gurax_TesterEntry(Object)
+{
+}
+
+}
