@@ -32,7 +32,7 @@ public:
 public:
 	static const TypeInfoEx typeInfo;
 private:
-	UniquePtr<Function> _pFunc;
+	RefPtr<Function> _pFunc;
 public:
 	// Constructor
 	Object_function() = delete;

@@ -27,3 +27,4 @@ include_directories(
 
 add_subdirectory(lib)
 add_subdirectory(gurax)
+add_subdirectory(unittest)

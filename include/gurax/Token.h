@@ -119,7 +119,7 @@ private:
 	String _value;
 	String _suffix;
 	String _strSource;
-	UniquePtr<Expr> _pExpr;
+	RefPtr<Expr> _pExpr;
 public:
 	static const Precedence _precMatrix[][31];
 public:
@@ -219,7 +219,7 @@ public:
 	String ToString() const;
 	bool IsEmpty() const { return size() <= 1; }
 	void Push(Token* pToken) { push_back(pToken); }
-	UniquePtr<Token> Pop() { Token* pToken = back(); pop_back(); return pToken; }
+	RefPtr<Token> Pop() { Token* pToken = back(); pop_back(); return pToken; }
 };
 
 }

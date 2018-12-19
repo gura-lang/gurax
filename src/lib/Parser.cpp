@@ -12,10 +12,10 @@ Parser::Parser(String pathNameSrc) : _pTokenizer(new Tokenizer(*this, std::move(
 {
 }
 
-void Parser::FeedToken(UniquePtr<Token> pToken)
+void Parser::FeedToken(RefPtr<Token> pToken)
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	//::printf("FeedToken(%s)\n", token.GetSymbol());
+	::printf("FeedToken(%s)\n", pToken->GetSymbol());
 	for (;;) {
 		TokenStack::reverse_iterator ppTokenTop = tokenStack.SeekTerminal(tokenStack.rbegin());
 		//::printf("%s  << %s\n",

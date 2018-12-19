@@ -30,7 +30,7 @@ public:
 class Error : public Referable {
 private:
 	const ErrorType& _errorType;
-	UniquePtr<Expr> _pExpr;		// maybe nullptr
+	RefPtr<Expr> _pExpr;		// maybe nullptr
 	StringShared _pFileName;	// maybe nullptr
 	int _lineNo;
 	String _text;

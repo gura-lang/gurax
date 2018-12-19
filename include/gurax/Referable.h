@@ -84,27 +84,27 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// UniquePtr
+// RefPtr
 //------------------------------------------------------------------------------
-template<typename T> class UniquePtr {
+template<typename T> class RefPtr {
 private:
 	T* _p;
 public:
 	// Default constructor
-	UniquePtr(T* p = nullptr) noexcept : _p(p) {}
+	RefPtr(T* p = nullptr) noexcept : _p(p) {}
 	// Copy constructor/operator
-	UniquePtr(const UniquePtr& obj) = delete;
-	UniquePtr& operator=(const UniquePtr& obj) = delete;
+	RefPtr(const RefPtr& obj) = delete;
+	RefPtr& operator=(const RefPtr& obj) = delete;
 	// Move constructor/operator
-	UniquePtr(UniquePtr&& obj) : _p(obj._p) { obj._p = nullptr; }
-	UniquePtr& operator=(UniquePtr&& obj) noexcept {
+	RefPtr(RefPtr&& obj) : _p(obj._p) { obj._p = nullptr; }
+	RefPtr& operator=(RefPtr&& obj) noexcept {
 		T::Delete(_p);
 		_p = obj._p;
 		obj._p = nullptr;
 		return *this;
 	}
 	// Destructor
-	~UniquePtr() { T::Delete(_p); }
+	~RefPtr() { T::Delete(_p); }
 public:
 	T& operator*() { return *_p; }
 	T& operator*() const { return *_p; }

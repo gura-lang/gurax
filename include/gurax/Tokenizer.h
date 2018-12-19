@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE Tokenizer : public Referable {
 public:
 	class GURAX_DLLDECLARE TokenWatcher {
 	public:
-		virtual void FeedToken(UniquePtr<Token> pToken) = 0;
+		virtual void FeedToken(RefPtr<Token> pToken) = 0;
 	};
 private:
 	class MagicCommentParser {

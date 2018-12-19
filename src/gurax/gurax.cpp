@@ -5,18 +5,11 @@
 
 namespace Gurax {
 
-class TokenWatcher : public Tokenizer::TokenWatcher {
-public:
-	virtual void FeedToken(UniquePtr<Token> pToken) override {
-		::printf("%s\n", pToken->GetSymbol());
-	}
-};
-
 void sub(int argc, char* argv[])
 {
 #if 0
-	UniquePtr<Tokenizer> pTokenizer(new Tokenizer("", 0, false));
-	UniquePtr<Object> pObj(new Object_number());
+	RefPtr<Tokenizer> pTokenizer(new Tokenizer("", 0, false));
+	RefPtr<Object> pObj(new Object_number());
 	const Symbol* pSymbol1 = Symbol::Add("hoge");
 	const Symbol* pSymbol2 = Symbol::Add("hoge");
 	::printf("%p %p\n", pSymbol1, pSymbol2);
@@ -28,13 +21,17 @@ void sub(int argc, char* argv[])
 		return;
 	}
 	const char* pathNameSrc = argv[1];
-	TokenWatcher tokenWatcher;
-	UniquePtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
+	//TokenWatcher tokenWatcher;
+	//RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
+	RefPtr<Parser> pParser(new Parser(pathNameSrc));
 	FILE* fp = ::fopen(pathNameSrc, "rt");
 	for (;;) {
 		int chRaw = ::fgetc(fp);
 		char ch = (chRaw < 0)? '\0' : static_cast<UChar>(chRaw);
-		pTokenizer->FeedChar(ch);
+		pParser->ParseChar(ch);
+		if (Error::IsIssued()) {
+			Error::Print(stdout);
+		}
 		if (chRaw < 0) break;
 	}
 	::fclose(fp);

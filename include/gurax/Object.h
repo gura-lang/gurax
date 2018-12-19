@@ -51,7 +51,7 @@ public:
 	class TypeInfo {
 	protected:
 		const TypeInfo* _pTypeInfoParent;
-		UniquePtr<ObjectMap> _pObjMap;
+		RefPtr<ObjectMap> _pObjMap;
 	public:
 		// Constructor
 		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) :
