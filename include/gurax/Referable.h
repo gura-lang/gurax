@@ -9,6 +9,13 @@
 // Macro
 //------------------------------------------------------------------------------
 #define Gurax_DeclareReferable(T) \
+class WeakPtr : public WeakPtrBase { \
+public: \
+	WeakPtr(T* p) : WeakPtrBase(p) {} \
+	static WeakPtr* Reference(const WeakPtr* p) { return static_cast<WeakPtr*>(WeakPtrBase::Reference(p)); } \
+	WeakPtr* Reference() const { return static_cast<WeakPtr*>(WeakPtrBase::Reference()); } \
+	RefPtr<T> Lock() { return T::Reference(static_cast<T*>(_p)); } \
+}; \
 static T* Reference(const T* p) { \
 	T* pCasted = const_cast<T*>(p); \
 	if (pCasted != nullptr) pCasted->_cntRef++; \
@@ -22,66 +29,13 @@ T* Reference() const { \
 static void Delete(T* p) { \
 	if (p == nullptr) return; \
 	p->_cntRef--; \
-	if (p->_cntRef > 0) return; \
+	if (p->_cntRef > 0 || p->_pWeakPtr == nullptr) return; \
+	WeakPtr::Delete(p->_pWeakPtr); \
 	delete p; \
 } \
 int GetCntRef() const { return _cntRef; }
 
 namespace Gurax {
-
-//------------------------------------------------------------------------------
-// Referable
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Referable {
-#if 0
-public:
-	class WeakPtr {
-	private:
-		int _cntRef;
-		Referable* _p;
-	public:
-		WeakPtr() : _cntRef(1) {}
-	public:
-		static WeakPtr* Reference(const WeakPtr* p) {
-			WeakPtr* pCasted = const_cast<WeakPtr*>(p);
-			if (pCasted != nullptr) pCasted->_cntRef++;
-			return pCasted;
-		}
-		WeakPtr* Reference() const {
-			WeakPtr* pCasted = const_cast<WeakPtr*>(this);
-			pCasted->_cntRef++;
-			return pCasted;
-		}
-		static void Delete(T* p) {
-			if (p == nullptr) return;
-			p->_cntRef--;
-			if (p->_cntRef > 0) return;
-			delete p;
-		}
-		int GetCntRef() const { return _cntRef; }
-	public:
-		friend class Referable;
-	};
-#endif
-protected:
-	int _cntRef;
-	//WeakPtr* _pWeakPtr;
-public:
-	// Constructor
-	Referable() : _cntRef(1) {}
-	// Copy constructor/operator
-	Referable(const Referable& src) = delete;
-	Referable& operator=(const Referable& src) = delete;
-	// Move constructor/operator
-	Referable(Referable&& src) = delete;
-	Referable& operator=(Referable&& src) noexcept = delete;
-protected:
-	// Destructor
-	~Referable() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Referable);
-};
 
 //------------------------------------------------------------------------------
 // RefPtr
@@ -115,6 +69,58 @@ public:
 	T* get() const { return _p; }
 	T* release() { T* p = _p; _p = nullptr; return p; }
 	explicit operator bool() const { return _p != nullptr; }
+};
+
+//------------------------------------------------------------------------------
+// Referable
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Referable {
+public:
+	class WeakPtrBase {
+	protected:
+		int _cntRef;
+		Referable* _p;
+	public:
+		WeakPtrBase(Referable* p) : _cntRef(1), _p(p) {}
+	public:
+		static WeakPtrBase* Reference(const WeakPtrBase* p) {
+			WeakPtrBase* pCasted = const_cast<WeakPtrBase*>(p);
+			if (pCasted != nullptr) pCasted->_cntRef++;
+			return pCasted;
+		}
+		WeakPtrBase* Reference() const {
+			WeakPtrBase* pCasted = const_cast<WeakPtrBase*>(this);
+			pCasted->_cntRef++;
+			return pCasted;
+		}
+		static void Delete(WeakPtrBase* p) {
+			if (p == nullptr) return;
+			p->_cntRef--;
+			if (p->_cntRef > 0) return;
+			delete p;
+		}
+		int GetCntRef() const { return _cntRef; }
+	public:
+		friend class Referable;
+	};
+protected:
+	int _cntRef;
+	WeakPtrBase* _pWeakPtr;
+public:
+	// Constructor
+	Referable() : _cntRef(1), _pWeakPtr(nullptr) {}
+	// Copy constructor/operator
+	Referable(const Referable& src) = delete;
+	Referable& operator=(const Referable& src) = delete;
+	// Move constructor/operator
+	Referable(Referable&& src) = delete;
+	Referable& operator=(Referable&& src) noexcept = delete;
+protected:
+	// Destructor
+	~Referable() = default;
+public:
+	// Referable accessor
+	Gurax_DeclareReferable(Referable);
 };
 
 }

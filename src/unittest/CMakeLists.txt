@@ -1,6 +1,7 @@
 add_executable(unittest
 	unittest.cpp
 	test-Object.cpp
+	test-Referable.cpp
 	test-Tokenizer.cpp
 )
 
