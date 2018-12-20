@@ -28,8 +28,11 @@ T* Reference() const { \
 } \
 WeakPtr* GetWeakPtr() const {\
 	T* pCasted = const_cast<T*>(this); \
-	if (pCasted->_pWeakPtr == nullptr) pCasted->_pWeakPtr = new WeakPtr(pCasted); \
-	return static_cast<WeakPtr*>(pCasted->_pWeakPtr); \
+	if (pCasted->_pWeakPtr == nullptr) { \
+		pCasted->_pWeakPtr = new WeakPtr(pCasted); \
+		return static_cast<WeakPtr*>(pCasted->_pWeakPtr); \
+	} \
+	return static_cast<WeakPtr*>(pCasted->_pWeakPtr)->Reference(); \
 } \
 static void Delete(T* p) { \
 	if (p == nullptr) return; \
