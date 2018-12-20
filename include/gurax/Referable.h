@@ -26,11 +26,16 @@ T* Reference() const { \
 	pCasted->_cntRef++; \
 	return pCasted; \
 } \
+WeakPtr* GetWeakPtr() const {\
+	T* pCasted = const_cast<T*>(this); \
+	if (pCasted->_pWeakPtr == nullptr) pCasted->_pWeakPtr = new WeakPtr(pCasted); \
+	return static_cast<WeakPtr*>(pCasted->_pWeakPtr); \
+} \
 static void Delete(T* p) { \
 	if (p == nullptr) return; \
 	p->_cntRef--; \
-	if (p->_cntRef > 0 || p->_pWeakPtr == nullptr) return; \
-	WeakPtr::Delete(p->_pWeakPtr); \
+	if (p->_cntRef > 0) return; \
+	WeakPtr::DeleteReferable(p->_pWeakPtr); \
 	delete p; \
 } \
 int GetCntRef() const { return _cntRef; }
@@ -81,7 +86,7 @@ public:
 		int _cntRef;
 		Referable* _p;
 	public:
-		WeakPtrBase(Referable* p) : _cntRef(1), _p(p) {}
+		WeakPtrBase(Referable* p) : _cntRef(2), _p(p) {}
 	public:
 		static WeakPtrBase* Reference(const WeakPtrBase* p) {
 			WeakPtrBase* pCasted = const_cast<WeakPtrBase*>(p);
@@ -96,8 +101,13 @@ public:
 		static void Delete(WeakPtrBase* p) {
 			if (p == nullptr) return;
 			p->_cntRef--;
-			if (p->_cntRef > 0) return;
-			delete p;
+			if (p->_cntRef <= 0) delete p;
+		}
+		static void DeleteReferable(WeakPtrBase* p) {
+			if (p == nullptr) return;
+			p->_cntRef--;
+			p->_p = nullptr;
+			if (p->_cntRef <= 0) delete p;
 		}
 		int GetCntRef() const { return _cntRef; }
 	public:
@@ -118,9 +128,6 @@ public:
 protected:
 	// Destructor
 	~Referable() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Referable);
 };
 
 }
