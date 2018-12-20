@@ -5,6 +5,17 @@
 
 namespace Gurax {
 
+static const char* text = R"(
+a = 3
+{}
+()
+[]
+`a
+?
+
+|+|
+)";
+
 class TokenWatcher : public Tokenizer::TokenWatcher {
 public:
 	virtual void FeedToken(RefPtr<Token> pToken) override {
@@ -14,25 +25,17 @@ public:
 
 Gurax_TesterEntry(Tokenizer)
 {
-	if (argc < 1) {
-		::fprintf(stderr, "usage: unittest Tokenizer file\n");
-		return;
-	}
-	const char* pathNameSrc = argv[0];
 	TokenWatcher tokenWatcher;
-	RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
-	FILE* fp = ::fopen(pathNameSrc, "rt");
-	for (;;) {
-		int chRaw = ::fgetc(fp);
-		char ch = (chRaw < 0)? '\0' : static_cast<UChar>(chRaw);
+	RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, "string"));
+	for (const char* p = text; ; ++p) {
+		char ch = *p;
 		pTokenizer->FeedChar(ch);
 		if (Error::IsIssued()) {
 			Error::Print(stdout);
 			break;
 		}
-		if (chRaw < 0) break;
+		if (ch == '\0') break;
 	}
-	::fclose(fp);
 }
 
 }

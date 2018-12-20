@@ -5,8 +5,9 @@
 
 namespace Gurax {
 
-void sub(int argc, char* argv[])
+int Main(int argc, char* argv[])
 {
+	Gurax::Bootup();
 #if 0
 	RefPtr<Tokenizer> pTokenizer(new Tokenizer("", 0, false));
 	RefPtr<Object> pObj(new Object_number());
@@ -17,32 +18,12 @@ void sub(int argc, char* argv[])
 		::printf("%d %d %d\n", ch, static_cast<char>(static_cast<UChar>(ch)), static_cast<char>(ch));
 	}
 #endif
-	if (argc < 2) {
-		return;
-	}
-	const char* pathNameSrc = argv[1];
-	//TokenWatcher tokenWatcher;
-	//RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, pathNameSrc));
-	RefPtr<Parser> pParser(new Parser(pathNameSrc));
-	FILE* fp = ::fopen(pathNameSrc, "rt");
-	for (;;) {
-		int chRaw = ::fgetc(fp);
-		char ch = (chRaw < 0)? '\0' : static_cast<UChar>(chRaw);
-		pParser->ParseChar(ch);
-		if (Error::IsIssued()) {
-			Error::Print(stdout);
-		}
-		if (chRaw < 0) break;
-	}
-	::fclose(fp);
+	return 0;
 }
 
 }
 
 int main(int argc, char* argv[])
 {
-	Gurax::Bootup();
-	Gurax::sub(argc, argv);
-	return 0;
+	return Gurax::Main(argc, argv);
 }
-

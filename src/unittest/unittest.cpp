@@ -7,7 +7,7 @@ namespace Gurax {
 
 TesterList Tester::_testerList;
 
-int main(int argc, char* argv[])
+int Main(int argc, char* argv[])
 {
 	if (argc < 2) {
 		for (auto pTester : Tester::GetTesterList()) {
@@ -35,5 +35,5 @@ int main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-	return Gurax::main(argc, argv);
+	return Gurax::Main(argc, argv);
 }
