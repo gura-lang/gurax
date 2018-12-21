@@ -15,6 +15,7 @@ add_library(guraxcore SHARED
 	Referable.cpp
 	String.cpp
 	Symbol.cpp
+	Symbols.cpp
 	Token.cpp
 	Tokenizer.cpp
 )

@@ -9,10 +9,10 @@
 #define Gurax_DeclareSymbol(name) \
 extern const Symbol* g_pSymbol_##name;
 
-#define Gurax_ImplementSymbolAlias(name, nameStr) \
+#define Gurax_RealizeSymbolAlias(name, nameStr) \
 const Symbol* g_pSymbol_##name = Symbol::Add(nameStr);
 
-#define Gurax_ImplementSymbol(name) Gurax_ImplementSymbolAlias(name, #name)
+#define Gurax_RealizeSymbol(name) Gurax_RealizeSymbolAlias(name, #name)
 
 #define Gurax_Symbol(name) g_pSymbol_##name
 

@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-Gurax_ImplementSymbol(hoge);
+Gurax_RealizeSymbol(hoge);
 
 Gurax_TesterEntry(Symbol)
 {
