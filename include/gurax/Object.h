@@ -99,7 +99,7 @@ public:
 public:
 	bool IsType(const TypeInfo& typeInfo) const { return _typeInfo.IsType(typeInfo); }
 	static bool IsType(Object* pObj, const TypeInfo& typeInfo) {
-		return pObj != nullptr && pObj->IsType(typeInfo);
+		return pObj && pObj->IsType(typeInfo);
 	}
 };
 

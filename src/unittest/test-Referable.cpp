@@ -59,23 +59,23 @@ Gurax_TesterEntry(Referable)
 		::printf("WeakRef\n");
 		auto pFoo1 = new Foo("A");
 		do {
-			RefPtr<Foo::WeakPtr> pFooWeak(pFoo1->GetWeakPtr());
-			if (auto pFoo = pFooWeak->Lock()) {
+			RefPtr<Foo::WeakPtr> pwFoo(pFoo1->GetWeakPtr());
+			if (auto pFoo = pwFoo->Lock()) {
 				::printf("locked:  %s %d\n", pFoo->GetName(), pFoo->GetCntRef());
 			}
 		} while (0);
 		::printf("         %s %d\n", pFoo1->GetName(), pFoo1->GetCntRef());
 		do {
-			RefPtr<Foo::WeakPtr> pFooWeak(pFoo1->GetWeakPtr());
-			if (auto pFoo = pFooWeak->Lock()) {
+			RefPtr<Foo::WeakPtr> pwFoo(pFoo1->GetWeakPtr());
+			if (auto pFoo = pwFoo->Lock()) {
 				::printf("locked:  %s %d\n", pFoo->GetName(), pFoo->GetCntRef());
 			}
 		} while (0);
 		do {
-			RefPtr<Foo::WeakPtr> pFooWeak(pFoo1->GetWeakPtr());
+			RefPtr<Foo::WeakPtr> pwFoo(pFoo1->GetWeakPtr());
 			Foo::Delete(pFoo1);
-			auto pFoo = pFooWeak->Lock();
-			if (auto pFoo = pFooWeak->Lock()) {
+			auto pFoo = pwFoo->Lock();
+			if (auto pFoo = pwFoo->Lock()) {
 				::printf("locked:  %s %d\n", pFoo->GetName(), pFoo->GetCntRef());
 			} else {
 				::printf("locked:  fail\n");
@@ -85,14 +85,14 @@ Gurax_TesterEntry(Referable)
 	do {
 		::printf("WeakRef longevity\n");
 		RefPtr<Foo> pFoo1(new Foo("A"));
-		auto pFooWeak1 = pFoo1->GetWeakPtr();
-		::printf("WeakRef: %d\n", pFooWeak1->GetCntRef());
-		auto pFooWeak2 = pFooWeak1->Reference();
-		::printf("WeakRef: %d\n", pFooWeak2->GetCntRef());
-		Foo::WeakPtr::Delete(pFooWeak1);
-		::printf("WeakRef: %d\n", pFooWeak2->GetCntRef());
-		Foo::WeakPtr::Delete(pFooWeak2); // will not die
-		::printf("WeakRef: %d\n", pFooWeak2->GetCntRef());
+		auto pwFoo1 = pFoo1->GetWeakPtr();
+		::printf("WeakRef: %d\n", pwFoo1->GetCntRef());
+		auto pwFoo2 = pwFoo1->Reference();
+		::printf("WeakRef: %d\n", pwFoo2->GetCntRef());
+		Foo::WeakPtr::Delete(pwFoo1);
+		::printf("WeakRef: %d\n", pwFoo2->GetCntRef());
+		Foo::WeakPtr::Delete(pwFoo2); // will not die
+		::printf("WeakRef: %d\n", pwFoo2->GetCntRef());
 	} while (0);
 }
 

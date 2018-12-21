@@ -12,13 +12,13 @@
 class WeakPtr : public WeakPtrBase { \
 public: \
 	WeakPtr(T* p) : WeakPtrBase(p) {} \
-	static WeakPtr* Reference(const WeakPtr* p) { return static_cast<WeakPtr*>(WeakPtrBase::Reference(p)); } \
+	static WeakPtr* Reference(const WeakPtr* pw) { return static_cast<WeakPtr*>(WeakPtrBase::Reference(pw)); } \
 	WeakPtr* Reference() const { return static_cast<WeakPtr*>(WeakPtrBase::Reference()); } \
 	RefPtr<T> Lock() { return T::Reference(static_cast<T*>(_p)); } \
 }; \
 static T* Reference(const T* p) { \
 	T* pCasted = const_cast<T*>(p); \
-	if (pCasted != nullptr) pCasted->_cntRef++; \
+	if (pCasted) pCasted->_cntRef++; \
 	return pCasted; \
 } \
 T* Reference() const { \
@@ -28,17 +28,17 @@ T* Reference() const { \
 } \
 WeakPtr* GetWeakPtr() const {\
 	T* pCasted = const_cast<T*>(this); \
-	if (pCasted->_pWeakPtr == nullptr) { \
-		pCasted->_pWeakPtr = new WeakPtr(pCasted); \
-		return static_cast<WeakPtr*>(pCasted->_pWeakPtr); \
+	if (pCasted->_pwBase) { \
+		return static_cast<WeakPtr*>(pCasted->_pwBase)->Reference(); \
 	} \
-	return static_cast<WeakPtr*>(pCasted->_pWeakPtr)->Reference(); \
+	pCasted->_pwBase = new WeakPtr(pCasted); \
+	return static_cast<WeakPtr*>(pCasted->_pwBase); \
 } \
 static void Delete(T* p) { \
-	if (p == nullptr) return; \
+	if (!p) return; \
 	p->_cntRef--; \
 	if (p->_cntRef > 0) return; \
-	WeakPtr::DeleteReferable(p->_pWeakPtr); \
+	WeakPtr::DeleteReferable(p->_pwBase); \
 	delete p; \
 } \
 int GetCntRef() const { return _cntRef; }
@@ -76,7 +76,7 @@ public:
 	T* get() { return _p; }
 	T* get() const { return _p; }
 	T* release() { T* p = _p; _p = nullptr; return p; }
-	explicit operator bool() const { return _p != nullptr; }
+	explicit operator bool() const { return static_cast<bool>(_p); }
 };
 
 //------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ public:
 	public:
 		static WeakPtrBase* Reference(const WeakPtrBase* p) {
 			WeakPtrBase* pCasted = const_cast<WeakPtrBase*>(p);
-			if (pCasted != nullptr) pCasted->_cntRef++;
+			if (pCasted) pCasted->_cntRef++;
 			return pCasted;
 		}
 		WeakPtrBase* Reference() const {
@@ -102,12 +102,12 @@ public:
 			return pCasted;
 		}
 		static void Delete(WeakPtrBase* p) {
-			if (p == nullptr) return;
+			if (!p) return;
 			p->_cntRef--;
 			if (p->_cntRef <= 0) delete p;
 		}
 		static void DeleteReferable(WeakPtrBase* p) {
-			if (p == nullptr) return;
+			if (!p) return;
 			p->_cntRef--;
 			p->_p = nullptr;
 			if (p->_cntRef <= 0) delete p;
@@ -118,10 +118,10 @@ public:
 	};
 protected:
 	int _cntRef;
-	WeakPtrBase* _pWeakPtr;
+	WeakPtrBase* _pwBase;
 public:
 	// Constructor
-	Referable() : _cntRef(1), _pWeakPtr(nullptr) {}
+	Referable() : _cntRef(1), _pwBase(nullptr) {}
 	// Copy constructor/operator
 	Referable(const Referable& src) = delete;
 	Referable& operator=(const Referable& src) = delete;
