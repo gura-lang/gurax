@@ -43,7 +43,7 @@ void Symbol::PrintList()
 {
 	SymbolList symbolList = GetList();
 	for (auto pSymbol : symbolList) {
-		::printf("%08zu %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
+		::printf("%08d %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
 	}
 }
 
