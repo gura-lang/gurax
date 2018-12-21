@@ -31,8 +31,8 @@ const Symbol* Symbol::Add(const char* name)
 
 SymbolList Symbol::GetList()
 {
-	const SymbolPool& symbolPool = SymbolPool::GetInstance();
 	SymbolList symbolList;
+	const SymbolPool& symbolPool = SymbolPool::GetInstance();
 	symbolList.reserve(symbolPool.size());
 	for (auto pSymbol : symbolPool) symbolList.push_back(pSymbol);
 	std::sort(symbolList.begin(), symbolList.end(), Symbol::LessThan_Name());
