@@ -65,7 +65,10 @@ void MemoryPool::DoPrint() const
 void *MemoryPool::ChunkFixed::Allocate(const char *ownerName)
 {
 	char *pHeaderRaw = nullptr;
-	if (_pHeaderVacantHead == nullptr) {
+	if (_pHeaderVacantHead) {
+		pHeaderRaw = reinterpret_cast<char *>(_pHeaderVacantHead);
+		_pHeaderVacantHead = _pHeaderVacantHead->u.pHeaderVacantNext;
+	} else {
 		size_t bytesFrame = sizeof(Header) + _bytesBlock;
 		if (_iBlockNext >= _nBlocks) {
 			_iBlockNext = 0;
@@ -76,9 +79,6 @@ void *MemoryPool::ChunkFixed::Allocate(const char *ownerName)
 		}
 		pHeaderRaw = _pPool->buff + bytesFrame * _iBlockNext;
 		_iBlockNext++;
-	} else {
-		pHeaderRaw = reinterpret_cast<char *>(_pHeaderVacantHead);
-		_pHeaderVacantHead = _pHeaderVacantHead->u.pHeaderVacantNext;
 	}
 	Header *pHeader = reinterpret_cast<Header *>(pHeaderRaw);
 	pHeader->u.pChunk = this;
@@ -99,11 +99,11 @@ void MemoryPool::ChunkFixed::Print() const
 {
 	::printf("[ChunkFixed:%ldbytes/block]\n", _bytesBlock);
 	size_t bytesFrame = sizeof(Header) + _bytesBlock;
-	for (const Pool *pPool = _pPool; pPool != nullptr; pPool = pPool->pPoolPrev) {
+	for (const Pool *pPool = _pPool; pPool; pPool = pPool->pPoolPrev) {
 		const char *pHeaderRaw = pPool->buff;
 		for (size_t iBlock = 0; iBlock < _iBlockNext; iBlock++, pHeaderRaw += bytesFrame) {
 			const Header *pHeader = reinterpret_cast<const Header *>(pHeaderRaw);
-			::printf("%c", (pHeader->ownerName == nullptr)? '*' : '.');
+			::printf("%c", pHeader->ownerName? '.' : '*');
 		}
 	}
 	::printf("\n");
@@ -116,7 +116,7 @@ void *MemoryPool::ChunkVariable::Allocate(size_t bytes, const char *ownerName)
 {
 	size_t bytesFrame = sizeof(Header) + bytes;
 	char *pHeaderRaw = reinterpret_cast<char *>(::malloc(bytesFrame));
-	if (pHeaderRaw == nullptr) return nullptr;
+	if (!pHeaderRaw) return nullptr;
 	Header *pHeader = reinterpret_cast<Header *>(pHeaderRaw);
 	pHeader->u.pChunk = this;
 	pHeader->ownerName = ownerName;

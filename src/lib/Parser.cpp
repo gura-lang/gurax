@@ -34,7 +34,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				}
 #endif
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
-				if (_pExprOwner == nullptr) {
+				if (!_pExprOwner) {
 					Expr::Delete(pExpr);
 				} else if (!EmitExpr(*_pExprOwner, _pExprParent, pExpr)) {
 					tokenStack.Initialize();

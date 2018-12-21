@@ -6,24 +6,21 @@
 namespace Gurax {
 
 static const char* text = R"(
+c = a + b
 )";
 
 Gurax_TesterEntry(Parser)
 {
-	do {
-		RefPtr<Parser> pParser(new Parser("string"));
-		for (const char* p = text; ; ++p) {
-			char ch = *p;
-			pParser->ParseChar(ch);
-			if (Error::IsIssued()) {
-				Error::Print(stdout);
-				break;
-			}
-			if (ch == '\0') break;
+	RefPtr<Parser> pParser(new Parser("string"));
+	for (const char* p = text; ; ++p) {
+		char ch = *p;
+		pParser->ParseChar(ch);
+		if (Error::IsIssued()) {
+			Error::Print(stdout);
+			break;
 		}
-		::printf("check\n");
-	} while (0);
-	::printf("check\n");
+		if (ch == '\0') break;
+	}
 }
 
 }
