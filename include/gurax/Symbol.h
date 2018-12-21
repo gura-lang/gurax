@@ -6,10 +6,26 @@
 #include "Referable.h"
 #include "String.h"
 
+#define Gurax_DeclareSymbol(name) \
+extern const Symbol* g_pSymbol_##name;
+
+#define Gurax_ImplementSymbolAlias(name, nameStr) \
+const Symbol* g_pSymbol_##name = Symbol::Add(nameStr);
+
+#define Gurax_ImplementSymbol(name) Gurax_ImplementSymbolAlias(name, #name)
+
+#define Gurax_Symbol(name) g_pSymbol_##name
+
 namespace Gurax {
 
-class SymbolPool;
-	
+class Symbol; 
+
+//------------------------------------------------------------------------------
+// SymbolList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
+};
+
 //------------------------------------------------------------------------------
 // Symbol
 // This class is assured to be a POD (plain old data).
@@ -26,6 +42,16 @@ public:
 			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) < 0;
 		}
 	};
+	struct EqualTo_UniqId {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+			return pSymbol1->GetUniqId() == pSymbol2->GetUniqId();
+		}
+	};
+	struct EqualTo_Name {
+		size_t operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) == 0;
+		}
+	};
 	struct Hash_UniqId {
 		size_t operator()(const Symbol* pSymbol) {
 			return pSymbol->GetUniqId();
@@ -40,8 +66,6 @@ protected:
 	size_t _uniqId;
 	char* _name;
 	char _nameBuff[0];
-private:
-	static SymbolPool* _pSymbolPool;
 public:
 	// Constructor
 	Symbol() = delete;
@@ -55,29 +79,50 @@ public:
 	// Destructor
 	~Symbol() = default;
 public:
+	void Initialize(size_t uniqId, const char* name) {
+		_uniqId = uniqId;
+		::strcpy(_nameBuff, name);
+		_name = _nameBuff;
+	}
 	int GetUniqId() const { return _uniqId; }
 	const char* GetName() const { return _name; }
+	bool IsIdentical(const Symbol* pSymbol) const { return GetUniqId() == pSymbol->GetUniqId(); }
+	static bool IsIdentical(const Symbol* pSymbol1, const Symbol *pSymbol2) {
+		return pSymbol1 && pSymbol2 && (pSymbol1->GetUniqId() == pSymbol2->GetUniqId());
+	}
 	static void Bootup();
 	static const Symbol* Add(const char* name);
+	static SymbolList GetList();
+	static void PrintList();
 };
 
 //------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolSet :
-	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId>, public Referable {
+	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 protected:
 	~SymbolSet() = default;
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(SymbolSet);
+public:
+	void Set(const Symbol* pSymbol) { insert(pSymbol); }
+	bool IsSet(const Symbol* pSymbol) { return find(pSymbol) != end(); }
 };
 
 //------------------------------------------------------------------------------
 // SymbolPool
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolPool :
-	public std::unordered_set<const Symbol*, Symbol::Hash_Name> {
+	public std::unordered_set<const Symbol*, Symbol::Hash_Name, Symbol::EqualTo_Name> {
+private:
+	static SymbolPool* _pSymbolPool;
+public:
+	static SymbolPool& GetInstance() {
+		if (!_pSymbolPool) _pSymbolPool = new SymbolPool();
+		return *_pSymbolPool;
+	}
 };
 
 }

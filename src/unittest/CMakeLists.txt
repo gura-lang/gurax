@@ -1,8 +1,10 @@
 add_executable(unittest
 	unittest.cpp
+	test-MemoryPool.cpp
 	test-Object.cpp
 	test-Parser.cpp
 	test-Referable.cpp
+	test-Symbol.cpp
 	test-Tokenizer.cpp
 )
 

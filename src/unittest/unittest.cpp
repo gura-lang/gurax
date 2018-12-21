@@ -18,8 +18,10 @@ int Main(int argc, char* argv[])
 	const char* testerName = argv[1];
 	Bootup();
 	bool foundFlag = false;
+	size_t nLen = ::strlen(testerName);
 	for (auto pTester : Tester::GetTesterList()) {
-		if (::strcmp(pTester->GetName(), testerName) == 0) {
+		if (::strncasecmp(pTester->GetName(), testerName, nLen) == 0) {
+			::printf("[%s]\n", pTester->GetName());
 			pTester->Entry(argc - 2, argv + 2);
 			foundFlag = true;
 			break;
