@@ -4,6 +4,7 @@
 #ifndef GURAX_OBJECT_H
 #define GURAX_OBJECT_H
 #include "Function.h"
+#include "Help.h"
 #include "Referable.h"
 #include "Symbol.h"
 
@@ -53,11 +54,13 @@ public:
 public:
 	class TypeInfo {
 	protected:
+		RefPtr<HelpProvider> _pHelpProvider;
 		const TypeInfo* _pTypeInfoParent;
 		RefPtr<ObjectMap> _pObjMap;
 	public:
 		// Constructor
 		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) :
+			_pHelpProvider(new HelpProvider()),
 			_pTypeInfoParent(pTypeInfoParent), _pObjMap(new ObjectMap()) {}
 		// Copy constructor/operator
 		TypeInfo(const TypeInfo& src) = delete;
@@ -68,6 +71,9 @@ public:
 		// Destructor
 		~TypeInfo() = default;
 	public:
+		void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
+			_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+		}
 		bool IsType(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 		virtual Object* Clone(const Object* pObj) const { return pObj->Reference(); }
 	};

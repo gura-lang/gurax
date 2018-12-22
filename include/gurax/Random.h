@@ -15,12 +15,13 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Random);
 private:
+	UInt32 _seed;
 	std::mt19937 _engine;
 private:
 	static RefPtr<Random> _pRandomGlobal;
 public:
 	// Constructor
-	Random(UInt32 seed) : _engine(seed) {}
+	Random(UInt32 seed) : _seed(seed), _engine(seed) {}
 	// Copy constructor/operator
 	Random(const Random& src) = delete;
 	Random& operator=(const Random& src) = delete;
@@ -34,11 +35,12 @@ public:
 	static void Bootup(UInt32 seed) { _pRandomGlobal.reset(new Random(seed)); }
 	static void Bootup() { Bootup(std::random_device()()); }
 	static Random &Global() { return *_pRandomGlobal; }
-	template<typename T> T Uniform() { return std::uniform_real_distribution<T>()(_engine); }
-	template<typename T> T Normal(T mean = 0., T stddev = 1.) {
+	void Reset() { _engine.seed(_seed); }
+	template<typename T = double> T Uniform() { return std::uniform_real_distribution<T>()(_engine); }
+	template<typename T = double> T Normal(T mean = 0., T stddev = 1.) {
 		return std::normal_distribution<T>(mean, stddev)(_engine);
 	}
-	template<typename T> T UniformInt(T range) { return static_cast<T>(Uniform<Double>() * range); }
+	template<typename T = int> T Range(T range) { return static_cast<T>(Uniform<Double>() * range); }
 };
 
 }

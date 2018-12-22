@@ -5,6 +5,14 @@
 #define GURAX_MEMORYPOOL_H
 #include "Common.h"
 
+#define Gurax_MemoryPoolAllocator(ownerName) \
+static void *operator new(size_t size) { \
+	return MemoryPool::Allocate(size, ownerName); \
+} \
+static void operator delete(void* p) { \
+	MemoryPool::Deallocate(p); \
+}
+
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
@@ -14,40 +22,40 @@ class GURAX_DLLDECLARE MemoryPool {
 public:
 	class Chunk {
 	public:
-		virtual void Deallocate(void *p) = 0;
+		virtual void Deallocate(void* p) = 0;
 	};
 	struct Pool {
-		Pool *pPoolPrev;
+		Pool* pPoolPrev;
 		char buff[1];
 	};
 	struct Header {
 		union {
-			Chunk *pChunk;
-			Header *pHeaderVacantNext;
+			Chunk* pChunk;
+			Header* pHeaderVacantNext;
 		} u;
-		const char *ownerName;
+		const char* ownerName;
 	};
 	class ChunkFixed : public Chunk {
 	private:
 		size_t _bytesBlock;
 		size_t _nBlocks;
 		size_t _iBlockNext;
-		Pool *_pPool;
-		Header *_pHeaderVacantHead;
+		Pool* _pPool;
+		Header* _pHeaderVacantHead;
 	public:
 		ChunkFixed(size_t bytesBlock, size_t nBlocks) :
 			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
 			_pPool(nullptr), _pHeaderVacantHead(nullptr) {}
 		size_t GetBytesBlock() const { return _bytesBlock; }
 		void Print() const;
-		void *Allocate(const char *ownerName);
-		virtual void Deallocate(void *p);
+		void* Allocate(const char* ownerName);
+		virtual void Deallocate(void* p);
 	};
 	class ChunkVariable : public Chunk {
 	public:
 		inline ChunkVariable() {}
-		void *Allocate(size_t bytes, const char *ownerName);
-		virtual void Deallocate(void *p);
+		void* Allocate(size_t bytes, const char* ownerName);
+		virtual void Deallocate(void* p);
 	};
 private:
 	static MemoryPool _inst;
@@ -67,14 +75,14 @@ public:
 	// Destructor
 	~MemoryPool() = default;
 public:
-	static void *Allocate(size_t bytes, const char *ownerName = "") {
+	static void* Allocate(size_t bytes, const char* ownerName = "") {
 		return _inst.DoAllocate(bytes, ownerName);
 	}
-	static void Deallocate(void *p) { _inst.DoDeallocate(p); }
+	static void Deallocate(void* p) { _inst.DoDeallocate(p); }
 	static void Print() { _inst.DoPrint(); }
 private:
-	void *DoAllocate(size_t bytes, const char *ownerName);
-	void DoDeallocate(void *p);
+	void* DoAllocate(size_t bytes, const char* ownerName);
+	void DoDeallocate(void* p);
 	void DoPrint() const;
 };
 
@@ -99,10 +107,10 @@ public:
 	// Destructor
 	~Allocator() = default;
 public:
-	_Tp *allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
-		return reinterpret_cast<_Tp *>(MemoryPool::Allocate(num * sizeof(_Tp), "Allocator"));
+	_Tp* allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
+		return reinterpret_cast<_Tp*>(MemoryPool::Allocate(num * sizeof(_Tp), "Allocator"));
 	}
-	void deallocate(_Tp *p, size_t num) {
+	void deallocate(_Tp* p, size_t num) {
 		MemoryPool::Deallocate(p);
 	}
 };
