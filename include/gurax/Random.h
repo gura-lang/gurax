@@ -1,33 +1,31 @@
 //==============================================================================
-// Function.h
+// Random.h
 //==============================================================================
-#ifndef GURAX_FUNCTION_H
-#define GURAX_FUNCTION_H
+#ifndef GURAX_RANDOM_H
+#define GURAX_RANDOM_H
 #include "Referable.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Function
+// Random
 //------------------------------------------------------------------------------
-class Function : public Referable {
+class GURAX_DLLDECLARE Random : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Function);
+	Gurax_DeclareReferable(Random);
 public:
 	// Constructor
-	Function() {}
+	Random() {}
 	// Copy constructor/operator
-	Function(const Function& src) = delete;
-	Function& operator=(const Function& src) = delete;
+	Random(const Random& src) = delete;
+	Random& operator=(const Random& src) = delete;
 	// Move constructor/operator
-	Function(Function&& src) = delete;
-	Function& operator=(Function&& src) noexcept = delete;
+	Random(Random&& src) = delete;
+	Random& operator=(Random&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Function() = default;
+	virtual ~Random() = default;
 };
 
 }
-
-#endif

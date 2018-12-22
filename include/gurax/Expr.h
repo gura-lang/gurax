@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr : public Referable {
 public:
-	// Referable accessor
+	// Referable declaration
 	Gurax_DeclareReferable(Expr);
 protected:
 	bool _silentFlag = false;

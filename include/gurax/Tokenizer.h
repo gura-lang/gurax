@@ -12,6 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Tokenizer : public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Tokenizer);
+public:
 	class GURAX_DLLDECLARE TokenWatcher {
 	public:
 		virtual void FeedToken(RefPtr<Token> pToken) = 0;
@@ -104,9 +107,6 @@ public:
 protected:
 	// Destructor
 	~Tokenizer() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Tokenizer);
 public:
 	void InitStack();
 	void FeedChar(char ch);

@@ -28,6 +28,9 @@ public:
 // Error
 //------------------------------------------------------------------------------
 class Error : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Error);
 private:
 	const ErrorType& _errorType;
 	RefPtr<Expr> _pExpr;		// maybe nullptr
@@ -54,9 +57,6 @@ public:
 protected:
 	// Destructor
 	~Error() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Error);
 public:
 	static void Bootup();
 	String MakeMessage() const;

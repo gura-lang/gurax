@@ -1,33 +1,31 @@
 //==============================================================================
-// Function.h
+// Iterator.h
 //==============================================================================
-#ifndef GURAX_FUNCTION_H
-#define GURAX_FUNCTION_H
+#ifndef GURAX_ITERATOR_H
+#define GURAX_ITERATOR_H
 #include "Referable.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Function
+// Iterator
 //------------------------------------------------------------------------------
-class Function : public Referable {
+class GURAX_DLLDECLARE Iterator : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Function);
+	Gurax_DeclareReferable(Iterator);
 public:
 	// Constructor
-	Function() {}
+	Iterator() {}
 	// Copy constructor/operator
-	Function(const Function& src) = delete;
-	Function& operator=(const Function& src) = delete;
+	Iterator(const Iterator& src) = delete;
+	Iterator& operator=(const Iterator& src) = delete;
 	// Move constructor/operator
-	Function(Function&& src) = delete;
-	Function& operator=(Function&& src) noexcept = delete;
+	Iterator(Iterator&& src) = delete;
+	Iterator& operator=(Iterator&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Function() = default;
+	virtual ~Iterator() = default;
 };
 
 }
-
-#endif

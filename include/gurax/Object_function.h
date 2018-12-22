@@ -12,6 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_function : public Object {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Object_function);
+public:
 	class TypeInfoEx : public TypeInfo {
 	public:
 		// Constructor
@@ -46,9 +49,6 @@ public:
 protected:
 	// Destructor
 	~Object_function() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Object_function);
 public:
 	const Function* GetFunction() const { return _pFunc.get(); }
 };

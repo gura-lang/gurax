@@ -12,6 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_nil : public Object {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Object_nil);
+public:
 	class TypeInfoEx : public TypeInfo {
 	public:
 		// Constructor
@@ -39,9 +42,6 @@ public:
 protected:
 	// Destructor
 	virtual ~Object_nil() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Object_nil);
 };
 
 }

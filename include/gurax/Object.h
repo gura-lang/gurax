@@ -21,11 +21,11 @@ class GURAX_DLLDECLARE ObjectList : public std::vector<Object*> {
 // ObjectOwner
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectOwner : public ObjectList, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ObjectOwner);
 protected:
 	~ObjectOwner() { Clear(); }
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(ObjectOwner);
 public:
 	void Clear();
 };
@@ -34,11 +34,11 @@ public:
 // ObjectMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectMap : public std::map<const Symbol*, Object*>, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ObjectMap);
 protected:
 	~ObjectMap() { Clear(); }
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(ObjectMap);
 public:
 	void Clear();
 };
@@ -47,6 +47,9 @@ public:
 // Object
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Object);
 public:
 	class TypeInfo {
 	protected:
@@ -88,9 +91,6 @@ public:
 protected:
 	// Destructor
 	~Object() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Object);
 public:
 	static void Bootup();
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }

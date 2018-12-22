@@ -12,6 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_number : public Object {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Object_number);
+public:
 	class TypeInfoEx : public TypeInfo {
 	public:
 		// Constructor
@@ -45,9 +48,6 @@ public:
 protected:
 	// Destructor
 	~Object_number() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Object_number);
 public:
 	Double GetDouble() const { return _num; }
 };

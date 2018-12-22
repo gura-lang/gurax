@@ -11,6 +11,9 @@ namespace Gurax {
 // Parser
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Parser : public Referable, public Tokenizer::TokenWatcher {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Parser);
 private:
 	RefPtr<Tokenizer> _pTokenizer;
 	ExprOwner* _pExprOwner = nullptr;
@@ -28,9 +31,6 @@ public:
 protected:
 	// Destructor
 	virtual ~Parser() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Parser);
 public:
 	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
 private:

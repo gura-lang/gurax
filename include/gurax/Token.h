@@ -12,6 +12,7 @@ namespace Gurax {
 // TokenType
 //------------------------------------------------------------------------------
 struct GURAX_DLLDECLARE TokenType {
+public:
 	int category;
 	const char* typeName;
 	const char* symbol;
@@ -112,6 +113,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Token : public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Token);
+public:
 	enum class Precedence { LT, EQ, GT, Error, };
 private:
 	const TokenType &_tokenType;
@@ -141,9 +145,6 @@ public:
 protected:
 	// Destructor
 	virtual ~Token() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(Token);
 public:
 	static void Bootup();
 	bool IsType(const TokenType &tokenType) const { return _tokenType.IsIdentical(tokenType); }

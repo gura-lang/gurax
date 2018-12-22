@@ -4,6 +4,8 @@ add_library(guraxcore SHARED
 	Error.cpp
 	Expr.cpp
 	Function.cpp
+	Help.cpp
+	Iterator.cpp
 	MemoryPool.cpp
 	Object.cpp
 	Object_function.cpp
@@ -12,7 +14,9 @@ add_library(guraxcore SHARED
 	Object_undefined.cpp
 	Operator.cpp
 	Parser.cpp
+	Random.cpp
 	Referable.cpp
+	Stream.cpp
 	String.cpp
 	Symbol.cpp
 	Symbols.cpp

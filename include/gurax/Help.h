@@ -1,33 +1,31 @@
 //==============================================================================
-// Function.h
+// Help.h
 //==============================================================================
-#ifndef GURAX_FUNCTION_H
-#define GURAX_FUNCTION_H
+#ifndef GURAX_HELP_H
+#define GURAX_HELP_H
 #include "Referable.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Function
+// Help
 //------------------------------------------------------------------------------
-class Function : public Referable {
+class GURAX_DLLDECLARE Help : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Function);
+	Gurax_DeclareReferable(Help);
 public:
 	// Constructor
-	Function() {}
+	Help() {}
 	// Copy constructor/operator
-	Function(const Function& src) = delete;
-	Function& operator=(const Function& src) = delete;
+	Help(const Help& src) = delete;
+	Help& operator=(const Help& src) = delete;
 	// Move constructor/operator
-	Function(Function&& src) = delete;
-	Function& operator=(Function&& src) noexcept = delete;
+	Help(Help&& src) = delete;
+	Help& operator=(Help&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Function() = default;
+	virtual ~Help() = default;
 };
 
 }
-
-#endif

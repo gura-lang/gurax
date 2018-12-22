@@ -1,33 +1,31 @@
 //==============================================================================
-// Function.h
+// Stream.h
 //==============================================================================
-#ifndef GURAX_FUNCTION_H
-#define GURAX_FUNCTION_H
+#ifndef GURAX_STREAM_H
+#define GURAX_STREAM_H
 #include "Referable.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Function
+// Stream
 //------------------------------------------------------------------------------
-class Function : public Referable {
+class GURAX_DLLDECLARE Stream : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Function);
+	Gurax_DeclareReferable(Stream);
 public:
 	// Constructor
-	Function() {}
+	Stream() {}
 	// Copy constructor/operator
-	Function(const Function& src) = delete;
-	Function& operator=(const Function& src) = delete;
+	Stream(const Stream& src) = delete;
+	Stream& operator=(const Stream& src) = delete;
 	// Move constructor/operator
-	Function(Function&& src) = delete;
-	Function& operator=(Function&& src) noexcept = delete;
+	Stream(Stream&& src) = delete;
+	Stream& operator=(Stream&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Function() = default;
+	virtual ~Stream() = default;
 };
 
 }
-
-#endif
