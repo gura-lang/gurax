@@ -1,6 +1,7 @@
 add_library(guraxcore SHARED
 	guraxcore.cpp
 	Common.cpp
+	DateTime.cpp
 	Error.cpp
 	Expr.cpp
 	Function.cpp
@@ -20,6 +21,7 @@ add_library(guraxcore SHARED
 	String.cpp
 	Symbol.cpp
 	Symbols.cpp
+	TimeDelta.cpp
 	Token.cpp
 	Tokenizer.cpp
 )

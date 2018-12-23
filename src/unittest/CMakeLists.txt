@@ -1,5 +1,6 @@
 add_executable(unittest
 	unittest.cpp
+	test-DateTime.cpp
 	test-Function.cpp
 	test-Help.cpp
 	test-Iterator.cpp

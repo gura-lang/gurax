@@ -5,6 +5,7 @@
 #define GURAX_H
 
 #include "gurax/Common.h"
+#include "gurax/DateTime.h"
 #include "gurax/Error.h"
 #include "gurax/Expr.h"
 #include "gurax/Function.h"
@@ -24,6 +25,7 @@
 #include "gurax/String.h"
 #include "gurax/Symbol.h"
 #include "gurax/Symbols.h"
+#include "gurax/TimeDelta.h"
 #include "gurax/Token.h"
 #include "gurax/Tokenizer.h"
 
