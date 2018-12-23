@@ -23,7 +23,7 @@ const Symbol* Symbol::Add(const char* name)
 		if (ppSymbol != symbolPool.end()) return *ppSymbol;
 	} while (0);
 	size_t bytes = sizeof(Symbol) + ::strlen(name) + 1;
-	Symbol* pSymbol = reinterpret_cast<Symbol*>(MemoryPool::Allocate(bytes));
+	Symbol* pSymbol = reinterpret_cast<Symbol*>(MemoryPool::Global().Allocate(bytes, "Symbol"));
 	pSymbol->Initialize(symbolPool.size(), name);
 	symbolPool.insert(pSymbol);
 	return pSymbol;

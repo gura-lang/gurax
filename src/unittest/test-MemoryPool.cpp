@@ -5,9 +5,16 @@
 
 namespace Gurax {
 
+static MemoryPool g_memoryPoolTest;
+
 class A {
 public:
-	Gurax_MemoryPoolAllocator("A");
+	static void *operator new(size_t size) {
+		return g_memoryPoolTest.Allocate(size, "A");
+	}
+	static void operator delete(void* p) {
+		g_memoryPoolTest.Deallocate(p);
+	}
 private:
 	int _x;
 public:
@@ -17,11 +24,11 @@ public:
 
 Gurax_TesterEntry(MemoryPool)
 {
-	MemoryPool::Print();
-	//for (int i = 0; i < 100; ++i) {
-	//	::printf("%p\n", MemoryPool::Allocate(16, "hoge"));
-	//}
-	MemoryPool::Print();
+	g_memoryPoolTest.Print();
+	for (int i = 0; i < 100; ++i) {
+		new A();
+	}
+	g_memoryPoolTest.Print();
 }
 
 }
