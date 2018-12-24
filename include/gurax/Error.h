@@ -33,8 +33,8 @@ public:
 	Gurax_DeclareReferable(Error);
 private:
 	const ErrorType& _errorType;
-	RefPtr<Expr> _pExpr;		// maybe nullptr
-	StringShared _pFileName;	// maybe nullptr
+	RefPtr<Expr> _pExpr;				// maybe nullptr
+	RefPtr<StringReferable> _pFileName;	// maybe nullptr
 	int _lineNo;
 	String _text;
 private:
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Error(const ErrorType& errorType, const String& text) :
 		_errorType(errorType), _lineNo(0), _text(text) {}
-	Error(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const String& text) :
+	Error(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const String& text) :
 		_errorType(errorType), _pFileName(pFileName), _lineNo(lineNo), _text(text) {}
 	Error(const ErrorType& errorType, Expr *pExpr, const String& text) :
 		_errorType(errorType), _pExpr(pExpr), _lineNo(0), _text(text) {}
@@ -63,10 +63,10 @@ public:
 	static bool IsIssued() { return _errorIssuedFlag; }
 	static void Clear();
 	static void Issue(const ErrorType& errorType, const char* format, ...);
-	static void Issue(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, ...);
+	static void Issue(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const char* format, ...);
 	static void Issue(const ErrorType& errorType, Expr* pExpr, const char* format, ...);
 	static void IssueV(const ErrorType& errorType, const char* format, va_list ap);
-	static void IssueV(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, va_list ap);
+	static void IssueV(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const char* format, va_list ap);
 	static void IssueV(const ErrorType& errorType, Expr* pExpr, const char* format, va_list ap);
 	static void Print(FILE* fp);
 };

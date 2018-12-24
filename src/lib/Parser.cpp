@@ -171,7 +171,8 @@ void Parser::IssueError(const ErrorType& errorType, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcShared(), _pTokenizer->GetLineNo(), format, ap);
+	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+				  _pTokenizer->GetLineNo(), format, ap);
 }
 
 }

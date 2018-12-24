@@ -25,8 +25,8 @@ void Error::Bootup()
 String Error::MakeMessage() const
 {
 	String rtn;
-	if (_pFileName && !_pFileName->empty()) {
-		rtn += *_pFileName;
+	if (_pFileName && !_pFileName->GetStringSTL().empty()) {
+		rtn += _pFileName->GetStringSTL();
 		if (_lineNo == 0) {
 			rtn += ": ";
 		} else {
@@ -61,7 +61,7 @@ void Error::Issue(const ErrorType& errorType, const char* format, ...)
 	IssueV(errorType, format, ap);
 }
 
-void Error::Issue(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, ...)
+void Error::Issue(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -75,7 +75,7 @@ void Error::IssueV(const ErrorType& errorType, const char* format, va_list ap)
 	_pErrorOwnerGlobal->push_back(new Error(errorType, text));
 }
 
-void Error::IssueV(const ErrorType& errorType, const StringShared& pFileName, int lineNo, const char* format, va_list ap)
+void Error::IssueV(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const char* format, va_list ap)
 {
 	char text[512];
 	::vsprintf(text, format, ap);

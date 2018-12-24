@@ -98,9 +98,31 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// StringShared
+// StringReferable
 //------------------------------------------------------------------------------
-using StringShared = std::shared_ptr<String>;
+class StringReferable : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(StringReferable);
+private:
+	String _str;
+public:
+	// Constructor
+	StringReferable() = delete;
+	StringReferable(String str) : _str(std::move(str)) {}
+	// Copy constructor/operator
+	StringReferable(const StringReferable& src) = delete;
+	StringReferable& operator=(const StringReferable& src) = delete;
+	// Move constructor/operator
+	StringReferable(StringReferable&& src) = delete;
+	StringReferable& operator=(StringReferable&& src) noexcept = delete;
+protected:
+	// Destructor
+	virtual ~StringReferable() = default;
+public:
+	const char* GetString() { return _str.c_str(); }
+	const String &GetStringSTL() const { return _str; }
+};
 
 }
 

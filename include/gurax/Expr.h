@@ -16,7 +16,7 @@ public:
 	Gurax_DeclareReferable(Expr);
 protected:
 	bool _silentFlag = false;
-	StringShared _pPathNameSrc;
+	RefPtr<StringReferable> _pPathNameSrc;
 	int _lineNo = 0;
 	RefPtr<WeakPtr> _pwExprParent;
 public:
@@ -32,7 +32,7 @@ protected:
 	// Destructor
 	virtual ~Expr() = default;
 public:
-	const char* GetPathNameSrc() const { return _pPathNameSrc->c_str(); }
+	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
 	int GetLineNo() const { return _lineNo; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }

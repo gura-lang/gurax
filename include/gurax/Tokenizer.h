@@ -70,7 +70,7 @@ private:
 	};
 private:
 	TokenWatcher& _tokenWatcher;
-	StringShared _pPathNameSrc;
+	RefPtr<StringReferable> _pPathNameSrc;
 	Stat _stat = Stat::BOF;
 	bool _lineHeadFlag = true;
 	bool _appearShebangFlag = false;
@@ -113,8 +113,9 @@ public:
 	void SetCntLine(int cntLine) { _cntLine = cntLine; }
 	void SetVerboseFlag(bool verboseFlag) { _verboseFlag = verboseFlag; }
 	int GetLineNo() const { return _cntLine + 1; }
-	const char* GetPathNameSrc() const { return _pPathNameSrc->c_str(); }
-	const StringShared& GetPathNameSrcShared() const { return _pPathNameSrc; }
+	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
+	const String& GetPathNameSrcSTL() const { return _pPathNameSrc->GetStringSTL(); }
+	const StringReferable* GetPathNameSrcReferable() const { return _pPathNameSrc.get(); }
 	void IssueError(const ErrorType& errorType, const char* format, ...);
 	TokenStack &GetTokenStack() { return _tokenStack; }
 	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);

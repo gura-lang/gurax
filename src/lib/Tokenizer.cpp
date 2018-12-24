@@ -9,7 +9,7 @@ namespace Gurax {
 // Tokenizer
 //------------------------------------------------------------------------------
 Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
-	_tokenWatcher(tokenWatcher), _pPathNameSrc(new String(std::move(pathNameSrc)))
+	_tokenWatcher(tokenWatcher), _pPathNameSrc(new StringReferable(std::move(pathNameSrc)))
 {
 	_tokenStack.Initialize();
 }
@@ -1037,7 +1037,7 @@ void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	Error::IssueV(errorType, _pPathNameSrc, GetLineNo(), format, ap);
+	Error::IssueV(errorType, _pPathNameSrc->Reference(), GetLineNo(), format, ap);
 }
 
 const TokenType& Tokenizer::GetTokenTypeForString(const StringInfo& stringInfo)
