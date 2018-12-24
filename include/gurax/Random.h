@@ -21,7 +21,7 @@ private:
 	static RefPtr<Random> _pRandomGlobal;
 public:
 	// Constructor
-	Random(UInt32 seed) : _seed(seed), _engine(seed) {}
+	explicit Random(UInt32 seed) : _seed(seed), _engine(seed) {}
 	// Copy constructor/operator
 	Random(const Random& src) = delete;
 	Random& operator=(const Random& src) = delete;

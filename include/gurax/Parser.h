@@ -21,7 +21,7 @@ private:
 public:
 	// Constructor
 	Parser() = delete;
-	Parser(String pathNameSrc);
+	explicit Parser(String pathNameSrc);
 	// Copy constructor/operator
 	Parser(const Parser& src) = delete;
 	Parser& operator=(const Parser& src) = delete;

@@ -1,24 +1,24 @@
 //==============================================================================
-// Object_number.h
+// Object_bool.h
 //==============================================================================
-#ifndef GURAX_OBJECT_NUMBER_H
-#define GURAX_OBJECT_NUMBER_H
+#ifndef GURAX_OBJECT_BOOL_H
+#define GURAX_OBJECT_BOOL_H
 #include "Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_number
+// Object_bool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_number : public Object {
+class GURAX_DLLDECLARE Object_bool : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_number);
+	Gurax_DeclareReferable(Object_bool);
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo, "number") {}
+		TypeInfoEx() : TypeInfo(&Object::typeInfo, "bool") {}
 		// Copy constructor/operator
 		TypeInfoEx(const TypeInfoEx& src) = delete;
 		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
@@ -29,27 +29,27 @@ public:
 		~TypeInfoEx() = default;
 	public:
 		virtual Object* Clone(const Object* pObj) const override {
-			return new Object_number(*reinterpret_cast<const Object_number*>(pObj));
+			return new Object_bool(*reinterpret_cast<const Object_bool*>(pObj));
 		}
 	};
 public:
 	static const TypeInfoEx typeInfo;
 private:
-	Double _num;
+	bool _flag;
 public:
 	// Constructor
-	explicit Object_number(Double num = 0.) : Object(typeInfo), _num(num) {}
+	explicit Object_bool(bool flag) : Object(typeInfo), _flag(flag) {}
 	// Copy constructor/operator
-	Object_number(const Object_number& src) : Object(typeInfo), _num(src._num) {}
-	Object_number& operator=(const Object_number& src) { _num = src._num; return *this; }
+	Object_bool(const Object_bool& src) : Object(typeInfo), _flag(src._flag) {}
+	Object_bool& operator=(const Object_bool& src) { _flag = src._flag; return *this; }
 	// Move constructor/operator
-	Object_number(Object_number&& src) : Object(typeInfo), _num(src._num) {}
-	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
+	Object_bool(Object_bool&& src) : Object(typeInfo), _flag(src._flag) {}
+	Object_bool& operator=(Object_bool&& src) noexcept { _flag = src._flag; return *this; }
 protected:
 	// Destructor
-	~Object_number() = default;
+	~Object_bool() = default;
 public:
-	Double GetDouble() const { return _num; }
+	bool GetBool() const { return _flag; }
 };
 
 }

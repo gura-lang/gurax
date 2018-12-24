@@ -120,22 +120,30 @@ public:
 private:
 	const TokenType &_tokenType;
 	int _lineNo;
-	String _value;
-	String _suffix;
-	String _strSource;
+	RefPtr<StringReferable> _pStrValue;
+	RefPtr<StringReferable> _pStrSuffix;
+	RefPtr<StringReferable> _pStrSource;
 	RefPtr<Expr> _pExpr;
 public:
 	static const Precedence _precMatrix[][31];
 public:
 	// Constructor
 	Token(const TokenType &tokenType, int lineNo) : _tokenType(tokenType), _lineNo(lineNo) {}
+	Token(const TokenType &tokenType, int lineNo, StringReferable* pStrValue) :
+		_tokenType(tokenType), _lineNo(lineNo), _pStrValue(pStrValue) {}
 	Token(const TokenType &tokenType, int lineNo, String value) :
-		_tokenType(tokenType), _lineNo(lineNo), _value(std::move(value)) {}
+		Token(tokenType, lineNo, new StringReferable(std::move(value))) {}
+	Token(const TokenType &tokenType, int lineNo, StringReferable* pStrValue, StringReferable* pStrSuffix) :
+		_tokenType(tokenType), _lineNo(lineNo), _pStrValue(pStrValue), _pStrSuffix(pStrSuffix) {}
 	Token(const TokenType &tokenType, int lineNo, String value, String suffix) :
-		_tokenType(tokenType), _lineNo(lineNo), _value(std::move(value)), _suffix(std::move(suffix)) {}
-	Token(const TokenType &tokenType, int lineNo, String value, String suffix, String strSource) :
+		Token(tokenType, lineNo, new StringReferable(std::move(value)), new StringReferable(std::move(suffix))) {}
+	Token(const TokenType &tokenType, int lineNo, StringReferable* pStrValue,
+		  StringReferable* pStrSuffix, StringReferable* pStrSource) :
 		_tokenType(tokenType), _lineNo(lineNo),
-		_value(std::move(value)), _suffix(std::move(suffix)), _strSource(std::move(strSource)) {}
+		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _pStrSource(pStrSource) {}
+	Token(const TokenType &tokenType, int lineNo, String value, String suffix, String source) :
+		Token(tokenType, lineNo, new StringReferable(std::move(value)),
+			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
 	Token& operator=(const Token& src) = delete;
@@ -170,10 +178,12 @@ public:
 	const char *GetTypeName() const { return _tokenType.typeName; }
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
-	const char* GetValue() const { return _value.c_str(); }
-	const String& GetValueSTL() const { return _value; }
-	void AppendValue(const char* value) { _value.append(value); }
-	void AppendValue(const String& value) { _value.append(value); }
+	const char* GetValue() const { return _pStrValue->GetString(); }
+	const char* GetSuffix() const { return _pStrSuffix->GetString(); }
+	const char* GetSource() const { return _pStrSource->GetString(); }
+	const String& GetValueSTL() const { return _pStrValue->GetStringSTL(); }
+	void AppendValue(const char* value) { _pStrValue->GetStringSTL().append(value); }
+	void AppendValue(const String& value) { _pStrValue->GetStringSTL().append(value); }
 	Expr* GetExpr() { return _pExpr.get(); }
 public:
 	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {

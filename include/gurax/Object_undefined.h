@@ -18,7 +18,7 @@ public:
 	class TypeInfoEx : public TypeInfo {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo) {}
+		TypeInfoEx() : TypeInfo(&Object::typeInfo, "undefined") {}
 		// Copy constructor/operator
 		TypeInfoEx(const TypeInfoEx& src) = delete;
 		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;

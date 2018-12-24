@@ -12,6 +12,9 @@ Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
 	_tokenWatcher(tokenWatcher), _pPathNameSrc(new StringReferable(std::move(pathNameSrc)))
 {
 	_tokenStack.Initialize();
+	_value.reserve(1024 * 64);
+	_suffix.reserve(128);
+	_source.reserve(1024 * 64);
 }
 
 void Tokenizer::FeedChar(char ch)
@@ -87,8 +90,8 @@ void Tokenizer::FeedChar(char ch)
 			_stringInfo.embedFlag = false;
 			_value.clear();
 			if (_verboseFlag) {
-				_strSource.clear();
-				_strSource.push_back(ch);
+				_source.clear();
+				_source.push_back(ch);
 			}
 			_stat = Stat::StringFirst;
 		} else if (ch == '\\') {
@@ -640,9 +643,9 @@ void Tokenizer::FeedChar(char ch)
 		} else if ((ch == '"' || ch == '\'') && CheckStringPrefix(_stringInfo, _value)) {
 			_stringInfo.chBorder = ch;
 			if (_verboseFlag) {
-				_strSource.clear();
-				_strSource += _value;
-				_strSource.push_back(ch);
+				_source.clear();
+				_source += _value;
+				_source.push_back(ch);
 			}
 			_value.clear();
 			_stat = Stat::StringFirst;
@@ -769,7 +772,7 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringFirst: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::StringSecond;
 		} else {
 			Gurax_PushbackEx(ch);
@@ -779,7 +782,7 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringSecond: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			if (_stringInfo.wiseFlag) {
 				_stringInfo.strIndentRef = _strIndent;
 				_stat = Stat::MStringWise;
@@ -787,13 +790,13 @@ void Tokenizer::FeedChar(char ch)
 				_stat = Stat::MString;
 			}
 		} else if (String::IsSymbolFirst(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_suffix.clear();
 			_suffix.push_back(ch);
 			_stat = Stat::StringSuffixed;
 		} else {
 			const TokenType &tokenType = GetTokenTypeForString(_stringInfo);
-			_tokenWatcher.FeedToken(new Token(tokenType, GetLineNo(), _value, "", _strSource));
+			_tokenWatcher.FeedToken(new Token(tokenType, GetLineNo(), _value, "", _source));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -801,24 +804,24 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::String: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::StringPost;
 		} else if (ch == '\\') {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stringInfo.statRtn = Stat::String;
 			_stat = Stat::StringEsc;
 		} else if (ch == '\0' || ch == '\n') {
 			IssueError(ErrorType::SyntaxError, "string is not terminated correctly");
 			_stat = Stat::Error;
 		} else {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_value.push_back(ch);
 		}
 		break;
 	}
 	case Stat::MStringWise: {
 		if (ch == '\n') {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::MStringLineHead;
 		} else {
 			Gurax_PushbackEx(ch);
@@ -828,28 +831,28 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::MString: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::MStringEndFirst;
 		} else if (ch == '\\') {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stringInfo.statRtn = Stat::MString;
 			_stat = Stat::StringEsc;
 		} else if (ch == '\0') {
 			IssueError(ErrorType::SyntaxError, "string is not terminated correctly");
 			_stat = Stat::Error;
 		} else if (ch == '\n' && _stringInfo.wiseFlag) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_value.push_back(ch);
 			_stat = Stat::MStringLineHead;
 		} else {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_value.push_back(ch);
 		}
 		break;
 	}
 	case Stat::MStringLineHead: {
 		if (String::IsWhite(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			if (_strIndent.size() == _stringInfo.strIndentRef.size()) {
 				if (_strIndent != _stringInfo.strIndentRef) {
 					_value += _strIndent;
@@ -866,13 +869,13 @@ void Tokenizer::FeedChar(char ch)
 	case Stat::StringEsc: {
 		if (_stringInfo.rawFlag) {
 			if (_verboseFlag) {
-				_strSource.push_back(ch);
+				_source.push_back(ch);
 			}
 			_value.push_back('\\');
 			_value.push_back(ch);
 			_stat = _stringInfo.statRtn;
 		} else {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			if (ch == '\n') {
 				_stat = _stringInfo.statRtn;
 			} else if (ch == 'x') {
@@ -900,7 +903,7 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringEscHex: {
 		if (String::IsHexDigit(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stringInfo.accum = (_stringInfo.accum << 4) + String::ConvHexDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
@@ -915,7 +918,7 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringEscOct: {
 		if (String::IsOctDigit(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stringInfo.accum = (_stringInfo.accum << 3) + String::ConvOctDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
@@ -930,7 +933,7 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringEscUnicode: {
 		if (String::IsHexDigit(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stringInfo.accum = (_stringInfo.accum << 4) + String::ConvHexDigit(ch);
 			_stringInfo.cntRest--;
 			if (_stringInfo.cntRest <= 0) {
@@ -945,27 +948,27 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringInCommentBlock: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::CommentBlock;
 		} else if (ch == '\\') {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::StringEscInCommentBlock;
 		} else {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 		}
 		break;
 	}
 	case Stat::StringEscInCommentBlock: {
-		if (_verboseFlag) _strSource.push_back(ch);
+		if (_verboseFlag) _source.push_back(ch);
 		_stat = Stat::StringInCommentBlock;
 		break;
 	}
 	case Stat::MStringEndFirst: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::MStringEndSecond;
 		} else {
-			if (_verboseFlag) _strSource.push_back(_stringInfo.chBorder);
+			if (_verboseFlag) _source.push_back(_stringInfo.chBorder);
 			_value.push_back(_stringInfo.chBorder);
 			Gurax_PushbackEx(ch);
 			_stat = Stat::MString;
@@ -974,12 +977,12 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::MStringEndSecond: {
 		if (ch == _stringInfo.chBorder) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_stat = Stat::StringPost;
 		} else {
 			if (_verboseFlag) {
-				_strSource.push_back(_stringInfo.chBorder);
-				_strSource.push_back(_stringInfo.chBorder);
+				_source.push_back(_stringInfo.chBorder);
+				_source.push_back(_stringInfo.chBorder);
 			}
 			_value.push_back(_stringInfo.chBorder);
 			_value.push_back(_stringInfo.chBorder);
@@ -990,13 +993,13 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringPost: {
 		if (String::IsSymbolFirst(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_suffix.clear();
 			_suffix.push_back(ch);
 			_stat = Stat::StringSuffixed;
 		} else {
 			const TokenType& tokenType = GetTokenTypeForString(_stringInfo);
-			_tokenWatcher.FeedToken(new Token(tokenType, GetLineNo(), _value, "", _strSource));
+			_tokenWatcher.FeedToken(new Token(tokenType, GetLineNo(), _value, "", _source));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -1004,10 +1007,10 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::StringSuffixed: {
 		if (String::IsSymbolFollower(ch)) {
-			if (_verboseFlag) _strSource.push_back(ch);
+			if (_verboseFlag) _source.push_back(ch);
 			_suffix.push_back(ch);
 		} else {
-			_tokenWatcher.FeedToken(new Token(TokenType::StringSuffixed, GetLineNo(), _value, _suffix, _strSource));
+			_tokenWatcher.FeedToken(new Token(TokenType::StringSuffixed, GetLineNo(), _value, _suffix, _source));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}

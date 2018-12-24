@@ -96,7 +96,7 @@ public:
 	Allocator() {}
 	template<typename _Tp1> Allocator(const Allocator<_Tp1>& a) throw() {}
 	// Copy constructor/operator
-	Allocator(const Allocator& a) throw() {}
+	Allocator(const Allocator& src) throw() {}
 	Allocator& operator=(const Allocator& src) = delete;
 	// Move constructor/operator
 	Allocator(Allocator&& src) = delete;

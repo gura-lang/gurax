@@ -56,12 +56,13 @@ public:
 	protected:
 		RefPtr<HelpProvider> _pHelpProvider;
 		const TypeInfo* _pTypeInfoParent;
+		const Symbol* _pSymbol;
 		RefPtr<ObjectMap> _pObjMap;
 	public:
 		// Constructor
-		TypeInfo(const TypeInfo* pTypeInfoParent = nullptr) :
-			_pHelpProvider(new HelpProvider()),
-			_pTypeInfoParent(pTypeInfoParent), _pObjMap(new ObjectMap()) {}
+		TypeInfo(const TypeInfo* pTypeInfoParent, const char* name) :
+			_pHelpProvider(new HelpProvider()), _pTypeInfoParent(pTypeInfoParent),
+			_pSymbol(Symbol::Add(name)), _pObjMap(new ObjectMap()) {}
 		// Copy constructor/operator
 		TypeInfo(const TypeInfo& src) = delete;
 		TypeInfo& operator=(const TypeInfo& src) = delete;
@@ -80,6 +81,10 @@ public:
 private:
 	static const Object* _pObj_undefined;
 	static const Object* _pObj_nil;
+	static const Object* _pObj_zero;
+	static const Object* _pObj_emptystr;
+	static const Object* _pObj_false_;
+	static const Object* _pObj_true_;
 protected:
 	const TypeInfo& _typeInfo;
 public:
@@ -102,6 +107,10 @@ public:
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	static Object* nil() { return _pObj_nil->Reference(); }
 	static Object* undefined() { return _pObj_undefined->Reference(); }
+	static Object* zero() { return _pObj_zero->Reference(); }
+	static Object* emptystr() { return _pObj_emptystr->Reference(); }
+	static Object* false_() { return _pObj_false_->Reference(); }
+	static Object* true_() { return _pObj_true_->Reference(); }
 public:
 	bool IsType(const TypeInfo& typeInfo) const { return _typeInfo.IsType(typeInfo); }
 	static bool IsType(Object* pObj, const TypeInfo& typeInfo) {

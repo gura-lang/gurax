@@ -18,7 +18,7 @@ public:
 	class TypeInfoEx : public TypeInfo {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo) {}
+		TypeInfoEx() : TypeInfo(&Object::typeInfo, "function") {}
 		// Copy constructor/operator
 		TypeInfoEx(const TypeInfoEx& src) = delete;
 		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
@@ -39,7 +39,7 @@ private:
 public:
 	// Constructor
 	Object_function() = delete;
-	Object_function(Function *pFunc) : Object(typeInfo), _pFunc(pFunc) {}
+	explicit Object_function(Function *pFunc) : Object(typeInfo), _pFunc(pFunc) {}
 	// Copy constructor/operator
 	Object_function(const Object_function& src) : Object(typeInfo), _pFunc(src._pFunc->Reference()) {}
 	Object_function& operator=(const Object_function& src) { _pFunc.reset(src._pFunc->Reference()); return *this; }

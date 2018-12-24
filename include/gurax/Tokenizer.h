@@ -81,7 +81,7 @@ private:
 	int _lineNoTop = 0;
 	bool _verboseFlag = false;
 	String _value;
-	String _strSource;
+	String _source;
 	String _suffix;
 	TokenStack _tokenStack;
 	StringInfo _stringInfo;

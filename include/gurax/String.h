@@ -109,7 +109,7 @@ private:
 public:
 	// Constructor
 	StringReferable() = delete;
-	StringReferable(String str) : _str(std::move(str)) {}
+	explicit StringReferable(String str) : _str(std::move(str)) {}
 	// Copy constructor/operator
 	StringReferable(const StringReferable& src) = delete;
 	StringReferable& operator=(const StringReferable& src) = delete;
@@ -121,7 +121,8 @@ protected:
 	virtual ~StringReferable() = default;
 public:
 	const char* GetString() { return _str.c_str(); }
-	const String &GetStringSTL() const { return _str; }
+	String& GetStringSTL() { return _str; }
+	const String& GetStringSTL() const { return _str; }
 };
 
 }
