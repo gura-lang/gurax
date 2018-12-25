@@ -50,6 +50,7 @@ protected:
 	~Object_bool() = default;
 public:
 	bool GetBool() const { return _flag; }
+	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

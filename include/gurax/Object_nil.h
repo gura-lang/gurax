@@ -42,6 +42,8 @@ public:
 protected:
 	// Destructor
 	virtual ~Object_nil() = default;
+public:
+	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

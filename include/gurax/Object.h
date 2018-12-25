@@ -29,12 +29,15 @@ protected:
 	~ObjectOwner() { Clear(); }
 public:
 	void Clear();
+	RefPtr<ObjectOwner> Clone() const;
+	RefPtr<ObjectOwner> CloneDeep() const;
 };
 
 //------------------------------------------------------------------------------
 // ObjectMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ObjectMap : public std::map<const Symbol*, Object*>, public Referable {
+class GURAX_DLLDECLARE ObjectMap :
+	public std::unordered_map<const Symbol*, Object*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ObjectMap);
@@ -101,16 +104,18 @@ public:
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object() = default;
+	virtual ~Object() = default;
 public:
 	static void Bootup();
-	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	static Object* nil() { return _pObj_nil->Reference(); }
 	static Object* undefined() { return _pObj_undefined->Reference(); }
 	static Object* zero() { return _pObj_zero->Reference(); }
 	static Object* emptystr() { return _pObj_emptystr->Reference(); }
 	static Object* false_() { return _pObj_false_->Reference(); }
 	static Object* true_() { return _pObj_true_->Reference(); }
+public:
+	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
+	virtual Object* Clone() const { return nullptr; }
 public:
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }

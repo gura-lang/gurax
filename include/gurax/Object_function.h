@@ -51,6 +51,7 @@ protected:
 	~Object_function() = default;
 public:
 	const Function* GetFunction() const { return _pFunc.get(); }
+	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

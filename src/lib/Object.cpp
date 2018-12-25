@@ -40,6 +40,26 @@ void ObjectOwner::Clear()
 	clear();
 }
 
+RefPtr<ObjectOwner> ObjectOwner::Clone() const
+{
+	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
+	pObjOwner->reserve(size());
+	for (auto pObj : *this) pObjOwner->push_back(pObj->Reference());
+	return pObjOwner;
+}
+
+RefPtr<ObjectOwner> ObjectOwner::CloneDeep() const
+{
+	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
+	pObjOwner->reserve(size());
+	for (auto pObj : *this) {
+		Object* pObjCloned = pObj->Clone();
+		if (!pObjCloned) return nullptr;
+		pObjOwner->push_back(pObjCloned);
+	}
+	return pObjOwner;
+}
+
 //------------------------------------------------------------------------------
 // ObjectMap
 //------------------------------------------------------------------------------

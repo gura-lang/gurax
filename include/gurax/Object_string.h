@@ -52,6 +52,7 @@ protected:
 public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

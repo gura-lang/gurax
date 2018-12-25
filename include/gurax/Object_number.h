@@ -50,6 +50,7 @@ protected:
 	~Object_number() = default;
 public:
 	Double GetDouble() const { return _num; }
+	virtual Object* Clone() const override { return Reference(); }
 };
 
 }
