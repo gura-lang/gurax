@@ -29,7 +29,7 @@ public:
 		~TypeInfoEx() = default;
 	public:
 		virtual Object* Clone(const Object* pObj) const override {
-			return new Object_string(*reinterpret_cast<const Object_string*>(pObj));
+			return static_cast<const Object_string*>(pObj)->Reference();
 		}
 	};
 public:
@@ -52,7 +52,6 @@ protected:
 public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
-	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

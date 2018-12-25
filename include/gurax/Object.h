@@ -31,6 +31,8 @@ public:
 	void Clear();
 	RefPtr<ObjectOwner> Clone() const;
 	RefPtr<ObjectOwner> CloneDeep() const;
+	void Set(size_t pos, Object* pObj);
+	Object* Get(size_t pos) const { return at(pos); }
 };
 
 //------------------------------------------------------------------------------
@@ -45,6 +47,13 @@ protected:
 	~ObjectMap() { Clear(); }
 public:
 	void Clear();
+	void Set(const Symbol* pSymbol, Object* pObj);
+	Object* Get(const Symbol* pSymbol) const {
+		auto pPair = find(pSymbol);
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	SymbolList GetKeys(SortOrder sortOrder = SortOrder::Ascend) const;
 };
 
 //------------------------------------------------------------------------------
@@ -75,10 +84,15 @@ public:
 		// Destructor
 		~TypeInfo() = default;
 	public:
+		const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
+		const TypeInfo* GetParent() const { return _pTypeInfoParent; }
+		const Symbol* GetSymbol() const { return _pSymbol; }
+		const char* GetName() const { return _pSymbol->GetName(); }
 		void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 			_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 		}
 		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
+		Object* Lookup(const Symbol* pSymbol) const { return _pObjMap->Get(pSymbol); }
 		virtual Object* Clone(const Object* pObj) const { return pObj->Reference(); }
 	};
 private:
@@ -104,7 +118,7 @@ public:
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object() = default;
+	~Object() = default;
 public:
 	static void Bootup();
 	static Object* nil() { return _pObj_nil->Reference(); }
@@ -115,7 +129,7 @@ public:
 	static Object* true_() { return _pObj_true_->Reference(); }
 public:
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
-	virtual Object* Clone() const { return nullptr; }
+	Object* Clone() const { return _typeInfo.Clone(this); }
 public:
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }

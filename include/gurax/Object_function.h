@@ -29,7 +29,7 @@ public:
 		~TypeInfoEx() = default;
 	public:
 		virtual Object* Clone(const Object* pObj) const override {
-			return new Object_function(*reinterpret_cast<const Object_function*>(pObj));
+			return static_cast<const Object_function*>(pObj)->Reference();
 		}
 	};
 public:
@@ -51,7 +51,6 @@ protected:
 	~Object_function() = default;
 public:
 	const Function* GetFunction() const { return _pFunc.get(); }
-	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

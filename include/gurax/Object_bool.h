@@ -29,7 +29,7 @@ public:
 		~TypeInfoEx() = default;
 	public:
 		virtual Object* Clone(const Object* pObj) const override {
-			return new Object_bool(*reinterpret_cast<const Object_bool*>(pObj));
+			return static_cast<const Object_bool*>(pObj)->Reference();
 		}
 	};
 public:
@@ -50,7 +50,6 @@ protected:
 	~Object_bool() = default;
 public:
 	bool GetBool() const { return _flag; }
-	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

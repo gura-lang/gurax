@@ -24,6 +24,8 @@ class Symbol;
 // SymbolList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
+public:
+	void Sort(SortOrder sortOrder = SortOrder::Ascend);
 };
 
 //------------------------------------------------------------------------------
@@ -33,32 +35,42 @@ class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
 class GURAX_DLLDECLARE Symbol {
 public:
 	struct LessThan_UniqId {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
 			return pSymbol1->GetUniqId() < pSymbol2->GetUniqId();
 		}
 	};
 	struct LessThan_Name {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
 			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) < 0;
 		}
 	};
+	struct GreaterThan_UniqId {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+			return pSymbol1->GetUniqId() > pSymbol2->GetUniqId();
+		}
+	};
+	struct GreaterThan_Name {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) > 0;
+		}
+	};
 	struct EqualTo_UniqId {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
 			return pSymbol1->GetUniqId() == pSymbol2->GetUniqId();
 		}
 	};
 	struct EqualTo_Name {
-		size_t operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+		size_t operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
 			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) == 0;
 		}
 	};
 	struct Hash_UniqId {
-		size_t operator()(const Symbol* pSymbol) {
+		size_t operator()(const Symbol* pSymbol) const {
 			return pSymbol->GetUniqId();
 		}
 	};
 	struct Hash_Name {
-		size_t operator()(const Symbol* pSymbol) {
+		size_t operator()(const Symbol* pSymbol) const {
 			return std::hash<std::string>()(pSymbol->GetName());
 		}
 	};

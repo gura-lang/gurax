@@ -29,7 +29,7 @@ public:
 		~TypeInfoEx() = default;
 	public:
 		virtual Object* Clone(const Object* pObj) const override {
-			return new Object_number(*reinterpret_cast<const Object_number*>(pObj));
+			return static_cast<const Object_number*>(pObj)->Reference();
 		}
 	};
 public:
@@ -50,7 +50,6 @@ protected:
 	~Object_number() = default;
 public:
 	Double GetDouble() const { return _num; }
-	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

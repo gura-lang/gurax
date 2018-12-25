@@ -36,7 +36,7 @@ void Object::Bootup()
 //------------------------------------------------------------------------------
 void ObjectOwner::Clear()
 {
-	for (auto& pObj : *this) Object::Delete(pObj);
+	for (Object* pObj : *this) Object::Delete(pObj);
 	clear();
 }
 
@@ -44,7 +44,7 @@ RefPtr<ObjectOwner> ObjectOwner::Clone() const
 {
 	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
 	pObjOwner->reserve(size());
-	for (auto pObj : *this) pObjOwner->push_back(pObj->Reference());
+	for (Object* pObj : *this) pObjOwner->push_back(pObj->Reference());
 	return pObjOwner;
 }
 
@@ -52,7 +52,7 @@ RefPtr<ObjectOwner> ObjectOwner::CloneDeep() const
 {
 	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
 	pObjOwner->reserve(size());
-	for (auto pObj : *this) {
+	for (Object* pObj : *this) {
 		Object* pObjCloned = pObj->Clone();
 		if (!pObjCloned) return nullptr;
 		pObjOwner->push_back(pObjCloned);
@@ -60,13 +60,40 @@ RefPtr<ObjectOwner> ObjectOwner::CloneDeep() const
 	return pObjOwner;
 }
 
+void ObjectOwner::Set(size_t pos, Object* pObj)
+{
+	iterator ppObj = begin() + pos;
+	Object::Delete(*ppObj);
+	*ppObj = pObj;
+}
+
 //------------------------------------------------------------------------------
 // ObjectMap
 //------------------------------------------------------------------------------
 void ObjectMap::Clear()
 {
-	for (auto& iter : *this) Object::Delete(iter.second);
+	for (auto& pair : *this) Object::Delete(pair.second);
 	clear();
+}
+
+void ObjectMap::Set(const Symbol* pSymbol, Object* pObj)
+{
+	iterator pPair = find(pSymbol);
+	if (pPair == end()) {
+		emplace(pSymbol, pObj);
+	} else {
+		Object::Delete(pPair->second);
+		pPair->second = pObj;
+	}
+}
+
+SymbolList ObjectMap::GetKeys(SortOrder sortOrder) const
+{
+	SymbolList keys;
+	keys.reserve(size());
+	for (auto pair : *this) keys.push_back(pair.first);
+	keys.Sort(sortOrder);
+	return keys;
 }
 
 }

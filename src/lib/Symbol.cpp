@@ -48,6 +48,18 @@ void Symbol::PrintList()
 }
 
 //------------------------------------------------------------------------------
+// SymbolList
+//------------------------------------------------------------------------------
+void SymbolList::Sort(SortOrder sortOrder)
+{
+	if (sortOrder == SortOrder::Ascend) {
+		std::sort(begin(), end(), Symbol::LessThan_Name());
+	} else if (sortOrder == SortOrder::Descend) {
+		std::sort(begin(), end(), Symbol::GreaterThan_Name());
+	}
+}
+
+//------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
 
