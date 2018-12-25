@@ -75,7 +75,7 @@ public:
 		void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 			_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 		}
-		bool IsType(const TypeInfo& typeInfo) const { return this == &typeInfo; }
+		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 		virtual Object* Clone(const Object* pObj) const { return pObj->Reference(); }
 	};
 private:
@@ -112,10 +112,8 @@ public:
 	static Object* false_() { return _pObj_false_->Reference(); }
 	static Object* true_() { return _pObj_true_->Reference(); }
 public:
-	bool IsType(const TypeInfo& typeInfo) const { return _typeInfo.IsType(typeInfo); }
-	static bool IsType(Object* pObj, const TypeInfo& typeInfo) {
-		return pObj && pObj->IsType(typeInfo);
-	}
+	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
+	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }
 };
 
 }
