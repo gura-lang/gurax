@@ -114,6 +114,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Expr_Block
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Block : public Expr_Container {
+public:
+	static const TypeInfo typeInfo;
+public:
+	Expr_Block() : Expr_Container(typeInfo) {}
+};
+
+//------------------------------------------------------------------------------
 // Expr_Lister
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Lister : public Expr_Container {
