@@ -58,6 +58,41 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Klass
+//------------------------------------------------------------------------------
+class Klass {
+protected:
+	RefPtr<HelpProvider> _pHelpProvider;
+	const Klass* _pKlassParent;
+	const Symbol* _pSymbol;
+	RefPtr<ObjectMap> _pObjMap;
+public:
+	// Constructor
+	Klass(const Klass* pKlassParent, const char* name) :
+		_pHelpProvider(new HelpProvider()), _pKlassParent(pKlassParent),
+		_pSymbol(Symbol::Add(name)), _pObjMap(new ObjectMap()) {}
+	// Copy constructor/operator
+	Klass(const Klass& src) = delete;
+	Klass& operator=(const Klass& src) = delete;
+	// Move constructor/operator
+	Klass(Klass&& src) = delete;
+	Klass& operator=(Klass&& src) noexcept = delete;
+	// Destructor
+	~Klass() = default;
+public:
+	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
+	const Klass* GetParent() const { return _pKlassParent; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const char* GetName() const { return _pSymbol->GetName(); }
+	String MakeFullName() const;
+	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+	}
+	bool IsIdentical(const Klass& klass) const { return this == &klass; }
+	Object* Lookup(const Symbol* pSymbol) const { return _pObjMap->Get(pSymbol); }
+};
+
+//------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object : public Referable {
@@ -65,36 +100,18 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
 public:
-	class Klass {
-	protected:
-		RefPtr<HelpProvider> _pHelpProvider;
-		const Klass* _pKlassParent;
-		const Symbol* _pSymbol;
-		RefPtr<ObjectMap> _pObjMap;
+	class KlassEx : public Klass {
 	public:
 		// Constructor
-		Klass(const Klass* pKlassParent, const char* name) :
-			_pHelpProvider(new HelpProvider()), _pKlassParent(pKlassParent),
-			_pSymbol(Symbol::Add(name)), _pObjMap(new ObjectMap()) {}
+		KlassEx() : Klass(nullptr, "object") {}
 		// Copy constructor/operator
-		Klass(const Klass& src) = delete;
-		Klass& operator=(const Klass& src) = delete;
+		KlassEx(const KlassEx& src) = delete;
+		KlassEx& operator=(const KlassEx& src) = delete;
 		// Move constructor/operator
-		Klass(Klass&& src) = delete;
-		Klass& operator=(Klass&& src) noexcept = delete;
+		KlassEx(KlassEx&& src) = delete;
+		KlassEx& operator=(KlassEx&& src) noexcept = delete;
 		// Destructor
-		~Klass() = default;
-	public:
-		const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-		const Klass* GetParent() const { return _pKlassParent; }
-		const Symbol* GetSymbol() const { return _pSymbol; }
-		const char* GetName() const { return _pSymbol->GetName(); }
-		String MakeFullName() const;
-		void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-			_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
-		}
-		bool IsIdentical(const Klass& klass) const { return this == &klass; }
-		Object* Lookup(const Symbol* pSymbol) const { return _pObjMap->Get(pSymbol); }
+		~KlassEx() = default;
 	};
 private:
 	static const Object* _pObj_undefined;
@@ -106,7 +123,7 @@ private:
 protected:
 	const Klass& _klass;
 public:
-	static const Klass klass;
+	static const KlassEx klass;
 public:
 	// Constructor
 	Object() = delete;

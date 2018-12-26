@@ -6,6 +6,14 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass
+//------------------------------------------------------------------------------
+String Klass::MakeFullName() const
+{
+	return GetName();
+}
+
+//------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
 const Object *Object::_pObj_undefined	= nullptr;
@@ -15,7 +23,7 @@ const Object *Object::_pObj_emptystr	= nullptr;
 const Object *Object::_pObj_false_		= nullptr;
 const Object *Object::_pObj_true_		= nullptr;
 
-const Object::Klass Object::klass(nullptr, "object");
+const Object::KlassEx Object::klass;
 
 void Object::Bootup()
 {
@@ -25,14 +33,6 @@ void Object::Bootup()
 	_pObj_emptystr	= new Object_string("");
 	_pObj_false_	= new Object_bool(false);
 	_pObj_true_		= new Object_bool(true);
-}
-
-//------------------------------------------------------------------------------
-// Object::Klass
-//------------------------------------------------------------------------------
-String Object::Klass::MakeFullName() const
-{
-	return GetName();
 }
 
 //------------------------------------------------------------------------------
