@@ -29,10 +29,6 @@ public:
 		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
 		// Destructor
 		~TypeInfoEx() = default;
-	public:
-		virtual Object* Clone(const Object* pObj) const override {
-			return static_cast<const Object_function*>(pObj)->Reference();
-		}
 	};
 public:
 	static const TypeInfoEx typeInfo;
@@ -53,6 +49,7 @@ protected:
 	~Object_function() = default;
 public:
 	const Function* GetFunction() const { return _pFunc.get(); }
+	virtual Object* Clone() const override { return Reference(); }
 };
 
 }

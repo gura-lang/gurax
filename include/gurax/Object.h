@@ -93,7 +93,6 @@ public:
 		}
 		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 		Object* Lookup(const Symbol* pSymbol) const { return _pObjMap->Get(pSymbol); }
-		virtual Object* Clone(const Object* pObj) const { return pObj->Reference(); }
 	};
 private:
 	static const Object* _pObj_undefined;
@@ -118,7 +117,13 @@ public:
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object() = default;
+	virtual ~Object() = default;
+public:
+	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
+	virtual Object* Clone() const = 0;
+public:
+	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
+	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }
 public:
 	static void Bootup();
 	static Object* nil() { return _pObj_nil->Reference(); }
@@ -127,12 +132,6 @@ public:
 	static Object* emptystr() { return _pObj_emptystr->Reference(); }
 	static Object* false_() { return _pObj_false_->Reference(); }
 	static Object* true_() { return _pObj_true_->Reference(); }
-public:
-	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
-	Object* Clone() const { return _typeInfo.Clone(this); }
-public:
-	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
-	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }
 };
 
 }
