@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Object_nil : public Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_nil);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("nil");
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:

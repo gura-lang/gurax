@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Object_function : public Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_function);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("function");
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:

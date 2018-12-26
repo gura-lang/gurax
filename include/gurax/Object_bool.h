@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Object_bool : public Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_bool);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("bool");
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:

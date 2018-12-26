@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Object_undefined : public Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_undefined);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("undefined");
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:

@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Object_string : public Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_string);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("string");
 public:
 	class TypeInfoEx : public TypeInfo {
 	public:
