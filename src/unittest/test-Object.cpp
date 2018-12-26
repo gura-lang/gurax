@@ -21,6 +21,14 @@ Gurax_TesterEntry(Object)
 		pObjMap->Set(Symbol::Add("fooA"), Object::emptystr());
 		pObjMap->Print();
 	} while (0);
+	do {
+		Object *pObj = new Object_number(1);
+		::printf("%d %d %d %d\n",
+				 pObj->IsType<Object_bool>(),
+				 pObj->IsType<Object_number>(),
+				 pObj->IsType<Object_string>(),
+				 pObj->IsInstanceOf<Object>());
+	} while (0);
 }
 
 }

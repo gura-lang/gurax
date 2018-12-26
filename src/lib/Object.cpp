@@ -95,18 +95,9 @@ void ObjectMap::Set(const Symbol* pSymbol, Object* pObj)
 	}
 }
 
-SymbolList ObjectMap::GetKeys(SortOrder sortOrder) const
-{
-	SymbolList keys;
-	keys.reserve(size());
-	for (auto pair : *this) keys.push_back(pair.first);
-	keys.Sort(sortOrder);
-	return keys;
-}
-
 void ObjectMap::Print() const
 {
-	auto keys = GetKeys();
+	auto keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
 		Object* pObj = Get(pSymbol);
 		::printf("%s:%s = %s\n", pSymbol->GetName(),
@@ -127,18 +118,9 @@ void KlassMap::Set(const Symbol* pSymbol, const Klass* pKlass)
 	}
 }
 
-SymbolList KlassMap::GetKeys(SortOrder sortOrder) const
-{
-	SymbolList keys;
-	keys.reserve(size());
-	for (auto pair : *this) keys.push_back(pair.first);
-	keys.Sort(sortOrder);
-	return keys;
-}
-
 void KlassMap::Print() const
 {
-	auto keys = GetKeys();
+	auto keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
 		const Klass* pKlass = Get(pSymbol);
 		::printf("%s = %s\n", pSymbol->GetName(), pKlass->MakeFullName().c_str());

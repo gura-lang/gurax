@@ -25,8 +25,18 @@ class Symbol;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
 public:
-	void Sort(SortOrder sortOrder = SortOrder::Ascend);
+	SymbolList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	template<typename T_Map> static SymbolList CollectKeys(const T_Map& map);
 };
+
+template<typename T_Map>
+SymbolList SymbolList::CollectKeys(const T_Map& map)
+{
+	SymbolList keys;
+	keys.reserve(map.size());
+	for (auto pair : map) keys.push_back(pair.first);
+	return keys;
+}
 
 //------------------------------------------------------------------------------
 // Symbol

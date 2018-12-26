@@ -54,7 +54,7 @@ public:
 		return (pPair == end())? nullptr : pPair->second;
 	}
 	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
-	SymbolList GetKeys(SortOrder sortOrder = SortOrder::Ascend) const;
+	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	void Print() const;
 };
 
@@ -146,6 +146,8 @@ public:
 public:
 	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
 	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }
+	template<typename T> bool IsInstanceOf() const;
+	template<typename T> static bool IsInstanceOf(const Object* pObj) { return pObj && pObj->IsInstanceOf<T>(); }
 public:
 	static void Bootup();
 	static Object* nil() { return _pObj_nil->Reference(); }
@@ -155,6 +157,14 @@ public:
 	static Object* false_() { return _pObj_false_->Reference(); }
 	static Object* true_() { return _pObj_true_->Reference(); }
 };
+
+template<typename T> bool Object::IsInstanceOf() const
+{
+	for (const Klass *pKlass = &_klass; pKlass != nullptr; pKlass = pKlass->GetParent()) {
+		if (pKlass->IsIdentical(T::klass)) return true;
+	}
+	return false;
+}
 
 //------------------------------------------------------------------------------
 // KlassMap
@@ -174,7 +184,7 @@ public:
 		return (pPair == end())? nullptr : pPair->second;
 	}
 	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
-	SymbolList GetKeys(SortOrder sortOrder = SortOrder::Ascend) const;
+	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	void Print() const;
 };
 
