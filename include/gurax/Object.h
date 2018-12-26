@@ -39,7 +39,8 @@ public:
 // ObjectMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectMap :
-	public std::unordered_map<const Symbol*, Object*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+	public std::unordered_map<const Symbol*, Object*,
+			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ObjectMap);
@@ -153,6 +154,28 @@ public:
 	static Object* emptystr() { return _pObj_emptystr->Reference(); }
 	static Object* false_() { return _pObj_false_->Reference(); }
 	static Object* true_() { return _pObj_true_->Reference(); }
+};
+
+//------------------------------------------------------------------------------
+// KlassMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE KlassMap :
+	public std::unordered_map<const Symbol*, const Klass*,
+			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(KlassMap);
+protected:
+	~KlassMap() = default;
+public:
+	void Set(const Symbol* pSymbol, const Klass* pKlass);
+	const Klass* Get(const Symbol* pSymbol) const {
+		auto pPair = find(pSymbol);
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	SymbolList GetKeys(SortOrder sortOrder = SortOrder::Ascend) const;
+	void Print() const;
 };
 
 }

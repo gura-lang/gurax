@@ -114,4 +114,35 @@ void ObjectMap::Print() const
 	}
 }
 
+//------------------------------------------------------------------------------
+// KlassMap
+//------------------------------------------------------------------------------
+void KlassMap::Set(const Symbol* pSymbol, const Klass* pKlass)
+{
+	iterator pPair = find(pSymbol);
+	if (pPair == end()) {
+		emplace(pSymbol, pKlass);
+	} else {
+		pPair->second = pKlass;
+	}
+}
+
+SymbolList KlassMap::GetKeys(SortOrder sortOrder) const
+{
+	SymbolList keys;
+	keys.reserve(size());
+	for (auto pair : *this) keys.push_back(pair.first);
+	keys.Sort(sortOrder);
+	return keys;
+}
+
+void KlassMap::Print() const
+{
+	auto keys = GetKeys();
+	for (const Symbol* pSymbol : keys) {
+		const Klass* pKlass = Get(pSymbol);
+		::printf("%s = %s\n", pSymbol->GetName(), pKlass->MakeFullName().c_str());
+	}
+}
+
 }
