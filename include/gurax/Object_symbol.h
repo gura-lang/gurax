@@ -17,31 +17,31 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("symbol");
 public:
-	class TypeInfoEx : public TypeInfo {
+	class KlassEx : public Klass {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo, "symbol") {}
+		KlassEx() : Klass(&Object::klass, "symbol") {}
 		// Copy constructor/operator
-		TypeInfoEx(const TypeInfoEx& src) = delete;
-		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
+		KlassEx(const KlassEx& src) = delete;
+		KlassEx& operator=(const KlassEx& src) = delete;
 		// Move constructor/operator
-		TypeInfoEx(TypeInfoEx&& src) = delete;
-		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
+		KlassEx(KlassEx&& src) = delete;
+		KlassEx& operator=(KlassEx&& src) noexcept = delete;
 		// Destructor
-		~TypeInfoEx() = default;
+		~KlassEx() = default;
 	};
 public:
-	static const TypeInfoEx typeInfo;
+	static const KlassEx klass;
 private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	explicit Object_symbol(const Symbol* pSymbol) : Object(typeInfo), _pSymbol(pSymbol) {}
+	explicit Object_symbol(const Symbol* pSymbol) : Object(klass), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Object_symbol(const Object_symbol& src) : Object(typeInfo), _pSymbol(src._pSymbol) {}
+	Object_symbol(const Object_symbol& src) : Object(klass), _pSymbol(src._pSymbol) {}
 	Object_symbol& operator=(const Object_symbol& src) { _pSymbol = src._pSymbol; return *this; }
 	// Move constructor/operator
-	Object_symbol(Object_symbol&& src) : Object(typeInfo), _pSymbol(src._pSymbol) {}
+	Object_symbol(Object_symbol&& src) : Object(klass), _pSymbol(src._pSymbol) {}
 	Object_symbol& operator=(Object_symbol&& src) noexcept { _pSymbol = src._pSymbol; return *this; }
 protected:
 	// Destructor

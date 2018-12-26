@@ -17,24 +17,24 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("nil");
 public:
-	class TypeInfoEx : public TypeInfo {
+	class KlassEx : public Klass {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo, "nil") {}
+		KlassEx() : Klass(&Object::klass, "nil") {}
 		// Copy constructor/operator
-		TypeInfoEx(const TypeInfoEx& src) = delete;
-		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
+		KlassEx(const KlassEx& src) = delete;
+		KlassEx& operator=(const KlassEx& src) = delete;
 		// Move constructor/operator
-		TypeInfoEx(TypeInfoEx&& src) = delete;
-		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
+		KlassEx(KlassEx&& src) = delete;
+		KlassEx& operator=(KlassEx&& src) noexcept = delete;
 		// Destructor
-		~TypeInfoEx() = default;
+		~KlassEx() = default;
 	};
 public:
-	static const TypeInfoEx typeInfo;
+	static const KlassEx klass;
 public:
 	// Constructor
-	Object_nil() : Object(typeInfo) {}
+	Object_nil() : Object(klass) {}
 	// Copy constructor/operator
 	Object_nil(const Object_nil& src) = delete;
 	Object_nil& operator=(const Object_nil& src) = delete;

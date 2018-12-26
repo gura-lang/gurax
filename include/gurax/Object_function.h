@@ -17,32 +17,32 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("function");
 public:
-	class TypeInfoEx : public TypeInfo {
+	class KlassEx : public Klass {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo, "function") {}
+		KlassEx() : Klass(&Object::klass, "function") {}
 		// Copy constructor/operator
-		TypeInfoEx(const TypeInfoEx& src) = delete;
-		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
+		KlassEx(const KlassEx& src) = delete;
+		KlassEx& operator=(const KlassEx& src) = delete;
 		// Move constructor/operator
-		TypeInfoEx(TypeInfoEx&& src) = delete;
-		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
+		KlassEx(KlassEx&& src) = delete;
+		KlassEx& operator=(KlassEx&& src) noexcept = delete;
 		// Destructor
-		~TypeInfoEx() = default;
+		~KlassEx() = default;
 	};
 public:
-	static const TypeInfoEx typeInfo;
+	static const KlassEx klass;
 private:
 	RefPtr<Function> _pFunc;
 public:
 	// Constructor
 	Object_function() = delete;
-	explicit Object_function(Function *pFunc) : Object(typeInfo), _pFunc(pFunc) {}
+	explicit Object_function(Function *pFunc) : Object(klass), _pFunc(pFunc) {}
 	// Copy constructor/operator
-	Object_function(const Object_function& src) : Object(typeInfo), _pFunc(src._pFunc->Reference()) {}
+	Object_function(const Object_function& src) : Object(klass), _pFunc(src._pFunc->Reference()) {}
 	Object_function& operator=(const Object_function& src) { _pFunc.reset(src._pFunc->Reference()); return *this; }
 	// Move constructor/operator
-	Object_function(Object_function&& src) : Object(typeInfo), _pFunc(src._pFunc.release()) {}
+	Object_function(Object_function&& src) : Object(klass), _pFunc(src._pFunc.release()) {}
 	Object_function& operator=(Object_function&& src) noexcept { _pFunc.reset(src._pFunc.release()); return *this; }
 protected:
 	// Destructor

@@ -20,12 +20,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr_Unary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Unary::typeInfo;
+const Expr::Klass Expr_Unary::klass;
 
 //------------------------------------------------------------------------------
 // Expr_Binary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Binary::typeInfo;
+const Expr::Klass Expr_Binary::klass;
 
 //------------------------------------------------------------------------------
 // Expr_Container
@@ -39,17 +39,17 @@ void Expr_Container::AddChild(Expr* pExpr)
 //------------------------------------------------------------------------------
 // Expr_Block
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Block::typeInfo;
+const Expr::Klass Expr_Block::klass;
 
 //------------------------------------------------------------------------------
 // Expr_Lister
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Lister::typeInfo;
+const Expr::Klass Expr_Lister::klass;
 
 //------------------------------------------------------------------------------
 // Expr_Composite
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Composite::typeInfo;
+const Expr::Klass Expr_Composite::klass;
 
 void Expr_Composite::AddCdr(Expr* pExpr)
 {
@@ -60,6 +60,6 @@ void Expr_Composite::AddCdr(Expr* pExpr)
 //------------------------------------------------------------------------------
 // Expr_Object
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Object::typeInfo;
+const Expr::Klass Expr_Object::klass;
 
 }

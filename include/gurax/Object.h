@@ -65,35 +65,35 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
 public:
-	class TypeInfo {
+	class Klass {
 	protected:
 		RefPtr<HelpProvider> _pHelpProvider;
-		const TypeInfo* _pTypeInfoParent;
+		const Klass* _pKlassParent;
 		const Symbol* _pSymbol;
 		RefPtr<ObjectMap> _pObjMap;
 	public:
 		// Constructor
-		TypeInfo(const TypeInfo* pTypeInfoParent, const char* name) :
-			_pHelpProvider(new HelpProvider()), _pTypeInfoParent(pTypeInfoParent),
+		Klass(const Klass* pKlassParent, const char* name) :
+			_pHelpProvider(new HelpProvider()), _pKlassParent(pKlassParent),
 			_pSymbol(Symbol::Add(name)), _pObjMap(new ObjectMap()) {}
 		// Copy constructor/operator
-		TypeInfo(const TypeInfo& src) = delete;
-		TypeInfo& operator=(const TypeInfo& src) = delete;
+		Klass(const Klass& src) = delete;
+		Klass& operator=(const Klass& src) = delete;
 		// Move constructor/operator
-		TypeInfo(TypeInfo&& src) = delete;
-		TypeInfo& operator=(TypeInfo&& src) noexcept = delete;
+		Klass(Klass&& src) = delete;
+		Klass& operator=(Klass&& src) noexcept = delete;
 		// Destructor
-		~TypeInfo() = default;
+		~Klass() = default;
 	public:
 		const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-		const TypeInfo* GetParent() const { return _pTypeInfoParent; }
+		const Klass* GetParent() const { return _pKlassParent; }
 		const Symbol* GetSymbol() const { return _pSymbol; }
 		const char* GetName() const { return _pSymbol->GetName(); }
 		String MakeFullName() const;
 		void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 			_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 		}
-		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
+		bool IsIdentical(const Klass& klass) const { return this == &klass; }
 		Object* Lookup(const Symbol* pSymbol) const { return _pObjMap->Get(pSymbol); }
 	};
 private:
@@ -104,13 +104,13 @@ private:
 	static const Object* _pObj_false_;
 	static const Object* _pObj_true_;
 protected:
-	const TypeInfo& _typeInfo;
+	const Klass& _klass;
 public:
-	static const TypeInfo typeInfo;
+	static const Klass klass;
 public:
 	// Constructor
 	Object() = delete;
-	Object(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
+	Object(const Klass& klass) : _klass(klass) {}
 	// Copy constructor/operator
 	Object(const Object& src) = delete;
 	Object& operator=(const Object& src) = delete;
@@ -121,12 +121,12 @@ protected:
 	// Destructor
 	virtual ~Object() = default;
 public:
-	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
+	const Klass& GetKlass() const { return _klass; }
 	virtual Object* Clone() const = 0;
 	virtual String ToString() const { return String::Empty; }
 	virtual String GenSource() const { return String::Empty; }
 public:
-	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
+	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
 	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }
 public:
 	static void Bootup();

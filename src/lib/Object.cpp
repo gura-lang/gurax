@@ -15,7 +15,7 @@ const Object *Object::_pObj_emptystr	= nullptr;
 const Object *Object::_pObj_false_		= nullptr;
 const Object *Object::_pObj_true_		= nullptr;
 
-const Object::TypeInfo Object::typeInfo(nullptr, "object");
+const Object::Klass Object::klass(nullptr, "object");
 
 void Object::Bootup()
 {
@@ -28,9 +28,9 @@ void Object::Bootup()
 }
 
 //------------------------------------------------------------------------------
-// Object::TypeInfo
+// Object::Klass
 //------------------------------------------------------------------------------
-String Object::TypeInfo::MakeFullName() const
+String Object::Klass::MakeFullName() const
 {
 	return GetName();
 }
@@ -110,7 +110,7 @@ void ObjectMap::Print() const
 	for (const Symbol* pSymbol : keys) {
 		Object* pObj = Get(pSymbol);
 		::printf("%s:%s = %s\n", pSymbol->GetName(),
-				 pObj->GetTypeInfo().MakeFullName().c_str(), pObj->ToString().c_str());
+				 pObj->GetKlass().MakeFullName().c_str(), pObj->ToString().c_str());
 	}
 }
 

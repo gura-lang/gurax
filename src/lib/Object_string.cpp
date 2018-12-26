@@ -8,6 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_string
 //------------------------------------------------------------------------------
-const Object_string::TypeInfoEx Object_string::typeInfo;
+const Object_string::KlassEx Object_string::klass;
 
 }

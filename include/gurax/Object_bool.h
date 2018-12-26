@@ -17,31 +17,31 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("bool");
 public:
-	class TypeInfoEx : public TypeInfo {
+	class KlassEx : public Klass {
 	public:
 		// Constructor
-		TypeInfoEx() : TypeInfo(&Object::typeInfo, "bool") {}
+		KlassEx() : Klass(&Object::klass, "bool") {}
 		// Copy constructor/operator
-		TypeInfoEx(const TypeInfoEx& src) = delete;
-		TypeInfoEx& operator=(const TypeInfoEx& src) = delete;
+		KlassEx(const KlassEx& src) = delete;
+		KlassEx& operator=(const KlassEx& src) = delete;
 		// Move constructor/operator
-		TypeInfoEx(TypeInfoEx&& src) = delete;
-		TypeInfoEx& operator=(TypeInfoEx&& src) noexcept = delete;
+		KlassEx(KlassEx&& src) = delete;
+		KlassEx& operator=(KlassEx&& src) noexcept = delete;
 		// Destructor
-		~TypeInfoEx() = default;
+		~KlassEx() = default;
 	};
 public:
-	static const TypeInfoEx typeInfo;
+	static const KlassEx klass;
 private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_bool(bool flag) : Object(typeInfo), _flag(flag) {}
+	explicit Object_bool(bool flag) : Object(klass), _flag(flag) {}
 	// Copy constructor/operator
-	Object_bool(const Object_bool& src) : Object(typeInfo), _flag(src._flag) {}
+	Object_bool(const Object_bool& src) : Object(klass), _flag(src._flag) {}
 	Object_bool& operator=(const Object_bool& src) { _flag = src._flag; return *this; }
 	// Move constructor/operator
-	Object_bool(Object_bool&& src) : Object(typeInfo), _flag(src._flag) {}
+	Object_bool(Object_bool&& src) : Object(klass), _flag(src._flag) {}
 	Object_bool& operator=(Object_bool&& src) noexcept { _flag = src._flag; return *this; }
 protected:
 	// Destructor

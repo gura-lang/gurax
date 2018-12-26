@@ -8,6 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_bool
 //------------------------------------------------------------------------------
-const Object_bool::TypeInfoEx Object_bool::typeInfo;
+const Object_bool::KlassEx Object_bool::klass;
 
 }
