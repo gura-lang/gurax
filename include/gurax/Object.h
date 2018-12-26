@@ -54,6 +54,7 @@ public:
 	}
 	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys(SortOrder sortOrder = SortOrder::Ascend) const;
+	void Print() const;
 };
 
 //------------------------------------------------------------------------------
@@ -88,6 +89,7 @@ public:
 		const TypeInfo* GetParent() const { return _pTypeInfoParent; }
 		const Symbol* GetSymbol() const { return _pSymbol; }
 		const char* GetName() const { return _pSymbol->GetName(); }
+		String MakeFullName() const;
 		void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 			_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 		}
@@ -121,6 +123,8 @@ protected:
 public:
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	virtual Object* Clone() const = 0;
+	virtual String ToString() const { return String::Empty; }
+	virtual String GenSource() const { return String::Empty; }
 public:
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }

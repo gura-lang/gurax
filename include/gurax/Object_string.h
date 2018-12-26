@@ -51,6 +51,8 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 	virtual Object* Clone() const override { return Reference(); }
+	virtual String ToString() const override { return _pStr->GetStringSTL().MakeQuoted(true); }
+	virtual String GenSource() const override { return ToString(); }
 };
 
 }

@@ -49,6 +49,8 @@ protected:
 public:
 	bool GetBool() const { return _flag; }
 	virtual Object* Clone() const override { return Reference(); }
+	virtual String ToString() const override { return _flag? "true" : "false"; }
+	virtual String GenSource() const override { return ToString(); }
 };
 
 }

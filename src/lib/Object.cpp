@@ -28,6 +28,14 @@ void Object::Bootup()
 }
 
 //------------------------------------------------------------------------------
+// Object::TypeInfo
+//------------------------------------------------------------------------------
+String Object::TypeInfo::MakeFullName() const
+{
+	return GetName();
+}
+
+//------------------------------------------------------------------------------
 // ObjectList
 //------------------------------------------------------------------------------
 
@@ -94,6 +102,16 @@ SymbolList ObjectMap::GetKeys(SortOrder sortOrder) const
 	for (auto pair : *this) keys.push_back(pair.first);
 	keys.Sort(sortOrder);
 	return keys;
+}
+
+void ObjectMap::Print() const
+{
+	auto keys = GetKeys();
+	for (const Symbol* pSymbol : keys) {
+		Object* pObj = Get(pSymbol);
+		::printf("%s:%s = %s\n", pSymbol->GetName(),
+				 pObj->GetTypeInfo().MakeFullName().c_str(), pObj->ToString().c_str());
+	}
 }
 
 }

@@ -46,6 +46,8 @@ protected:
 	virtual ~Object_undefined() = default;
 public:
 	virtual Object* Clone() const override { return Reference(); }
+	virtual String ToString() const override { return "undefined"; }
+	virtual String GenSource() const override { return ToString(); }
 };
 
 }

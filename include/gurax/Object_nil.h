@@ -46,6 +46,8 @@ protected:
 	virtual ~Object_nil() = default;
 public:
 	virtual Object* Clone() const override { return Reference(); }
+	virtual String ToString() const override { return "nil"; }
+	virtual String GenSource() const override { return ToString(); }
 };
 
 }

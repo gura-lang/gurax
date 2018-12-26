@@ -50,6 +50,8 @@ protected:
 public:
 	const Function* GetFunction() const { return _pFunc.get(); }
 	virtual Object* Clone() const override { return Reference(); }
+	virtual String ToString() const override { return _pFunc->ToString(); }
+	virtual String GenSource() const override { return ToString(); }
 };
 
 }

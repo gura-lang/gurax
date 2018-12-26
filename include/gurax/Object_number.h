@@ -49,6 +49,8 @@ protected:
 public:
 	Double GetDouble() const { return _num; }
 	virtual Object* Clone() const override { return Reference(); }
+	virtual String ToString() const override { return std::to_string(_num); }
+	virtual String GenSource() const override { return ToString(); }
 };
 
 }

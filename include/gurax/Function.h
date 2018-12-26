@@ -33,6 +33,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
+	String ToString() const { return "(func)"; }
 };
 
 }

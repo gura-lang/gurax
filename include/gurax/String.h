@@ -33,6 +33,8 @@ public:
 		static constexpr UInt32 SymbolFirst		= Alpha | SymbolExtra | UTF8First;
 		static constexpr UInt32 SymbolFollower	= SymbolFirst | Digit | UTF8Follower;
 	};
+public:
+	static const String Empty;
 private:
 	static UInt32 _ctypeTbl[256];
 	static int _convBinDigitTbl[256];
@@ -41,7 +43,8 @@ private:
 	static char _toUpperTbl[256];
 	static char _toLowerTbl[256];
 public:
-	String(std::string& src) : std::string(src) {}
+	String(const std::string& src) : std::string(src) {}
+	String(std::string&& src) : std::string(std::move(src)) {}
 	// Inherits constructors
 	using std::string::string;
 public:
@@ -80,6 +83,9 @@ public:
 	static UInt32 NextUTF32(const char** pp);
 	void AppendUTF8(UInt64 codeUTF8);
 	void AppendUTF32(UInt32 codeUTF32);
+public:
+	String MakeQuoted(bool surroundFlag = false) { return MakeQuoted(c_str(), surroundFlag); }
+	static String MakeQuoted(const char* str, bool surroundFlag = true);
 public:
 	static char GetEscaped(char ch);
 };
