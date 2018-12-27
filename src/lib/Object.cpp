@@ -23,7 +23,7 @@ const Object *Object::_pObject_emptystr	= nullptr;
 const Object *Object::_pObject_false_		= nullptr;
 const Object *Object::_pObject_true_		= nullptr;
 
-const Object::KlassEx Object::klass;
+Object::KlassEx Object::klass;
 
 void Object::Bootup()
 {
@@ -108,7 +108,7 @@ void ObjectMap::Print() const
 //------------------------------------------------------------------------------
 // KlassMap
 //------------------------------------------------------------------------------
-void KlassMap::Set(const Symbol* pSymbol, const Klass* pKlass)
+void KlassMap::Set(const Symbol* pSymbol, Klass* pKlass)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {

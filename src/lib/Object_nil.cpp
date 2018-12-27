@@ -8,6 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_nil
 //------------------------------------------------------------------------------
-const Object_nil::KlassEx Object_nil::klass;
+Object_nil::KlassEx Object_nil::klass;
 
 }

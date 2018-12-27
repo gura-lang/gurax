@@ -64,17 +64,17 @@ public:
 class Klass {
 protected:
 	RefPtr<HelpProvider> _pHelpProvider;
-	const Klass* _pKlassParent;
+	Klass* _pKlassParent;
 	const Symbol* _pSymbol;
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
-	Klass(const Klass* pKlassParent, const char* name) :
+	Klass(Klass* pKlassParent, const char* name) :
 		_pHelpProvider(new HelpProvider()), _pKlassParent(pKlassParent),
 		_pSymbol(Symbol::Add(name)), _pObjectMap(new ObjectMap()) {}
 	// Copy constructor/operator
-	Klass(const Klass& src) = delete;
-	Klass& operator=(const Klass& src) = delete;
+	Klass(Klass& src) = delete;
+	Klass& operator=(Klass& src) = delete;
 	// Move constructor/operator
 	Klass(Klass&& src) = delete;
 	Klass& operator=(Klass&& src) noexcept = delete;
@@ -82,7 +82,7 @@ public:
 	~Klass() = default;
 public:
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-	const Klass* GetParent() const { return _pKlassParent; }
+	Klass* GetParent() const { return _pKlassParent; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	String MakeFullName() const;
@@ -122,13 +122,13 @@ private:
 	static const Object* _pObject_false_;
 	static const Object* _pObject_true_;
 protected:
-	const Klass& _klass;
+	Klass& _klass;
 public:
-	static const KlassEx klass;
+	static KlassEx klass;
 public:
 	// Constructor
 	Object() = delete;
-	Object(const Klass& klass) : _klass(klass) {}
+	Object(Klass& klass) : _klass(klass) {}
 	// Copy constructor/operator
 	Object(const Object& src) = delete;
 	Object& operator=(const Object& src) = delete;
@@ -139,7 +139,7 @@ protected:
 	// Destructor
 	virtual ~Object() = default;
 public:
-	const Klass& GetKlass() const { return _klass; }
+	Klass& GetKlass() const { return _klass; }
 	virtual Object* Clone() const = 0;
 	virtual String ToString() const { return String::Empty; }
 	virtual String GenSource() const { return String::Empty; }
@@ -170,7 +170,7 @@ template<typename T> bool Object::IsInstanceOf() const
 // KlassMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE KlassMap :
-	public std::unordered_map<const Symbol*, const Klass*,
+	public std::unordered_map<const Symbol*, Klass*,
 			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 public:
 	// Referable declaration
@@ -178,8 +178,8 @@ public:
 protected:
 	~KlassMap() = default;
 public:
-	void Set(const Symbol* pSymbol, const Klass* pKlass);
-	const Klass* Get(const Symbol* pSymbol) const {
+	void Set(const Symbol* pSymbol, Klass* pKlass);
+	Klass* Get(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
 	}

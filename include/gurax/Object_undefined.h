@@ -21,17 +21,9 @@ public:
 	public:
 		// Constructor
 		KlassEx() : Klass(&Object::klass, "undefined") {}
-		// Copy constructor/operator
-		KlassEx(const KlassEx& src) = delete;
-		KlassEx& operator=(const KlassEx& src) = delete;
-		// Move constructor/operator
-		KlassEx(KlassEx&& src) = delete;
-		KlassEx& operator=(KlassEx&& src) noexcept = delete;
-		// Destructor
-		~KlassEx() = default;
 	};
 public:
-	static const KlassEx klass;
+	static KlassEx klass;
 public:
 	// Constructor
 	Object_undefined() : Object(klass) {}

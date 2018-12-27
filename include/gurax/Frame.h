@@ -44,7 +44,7 @@ protected:
 	// Destructor
 	virtual ~Frame() = default;
 public:
-	virtual const Klass* LookupKlass(const Symbol* pSymbol) const = 0;
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const = 0;
 	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
 };
 
@@ -62,7 +62,7 @@ public:
 	// Constructor
 	Frame_Item() : _pKlassMap(new KlassMap()), _pObjectMap(new ObjectMap()) {}
 public:
-	virtual const Klass* LookupKlass(const Symbol* pSymbol) const { return _pKlassMap->Get(pSymbol); }
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const { return _pKlassMap->Get(pSymbol); }
 	virtual Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
 };
 
@@ -80,8 +80,8 @@ public:
 	// Constructor
 	Frame_Binary(Frame* pFrameLeft, Frame* pFrameRight) : _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
 public:
-	virtual const Klass* LookupKlass(const Symbol* pSymbol) const {
-		if (const Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const {
+		if (Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
 		return _pFrameLeft->LookupKlass(pSymbol);
 	}
 	virtual Object* LookupObject(const Symbol* pSymbol) const {

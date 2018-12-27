@@ -15,19 +15,19 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Expr);
 public:
-	class Klass {
+	class TypeInfo {
 	public:
-		bool IsIdentical(const Klass& klass) const { return this == &klass; }
+		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 	};
 protected:
-	const Klass& _klass;
+	const TypeInfo& _typeInfo;
 	bool _silentFlag = false;
 	RefPtr<StringReferable> _pPathNameSrc;
 	int _lineNo = 0;
 	RefPtr<WeakPtr> _pwExprParent;
 public:
 	// Constructor
-	Expr(const Klass& klass) : _klass(klass) {}
+	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
 	// Copy constructor/operator
 	Expr(const Expr& src) = delete;
 	Expr& operator=(const Expr& src) = delete;
@@ -43,7 +43,7 @@ public:
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
 	void SetParent(const Expr* pExpr) { _pwExprParent.reset(pExpr->GetWeakPtr()); }
-	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
+	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 };
 
@@ -74,11 +74,11 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Unary : public Expr {
 public:
-	static const Klass klass;
+	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Expr> _pExprChild;
 public:
-	Expr_Unary(Expr* pExprChild) : Expr(klass), _pExprChild(pExprChild) {
+	Expr_Unary(Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
 		_pExprChild->SetParent(this);
 	}
 	const Expr* GetChild() const { return _pExprChild.get(); }
@@ -89,12 +89,12 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Binary : public Expr {
 public:
-	static const Klass klass;
+	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Expr> _pExprLeft;
 	RefPtr<Expr> _pExprRight;
 public:
-	Expr_Binary(Expr* pExprLeft, Expr* pExprRight) : Expr(klass), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
+	Expr_Binary(Expr* pExprLeft, Expr* pExprRight) : Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
 		_pExprLeft->SetParent(this), _pExprRight->SetParent(this);
 	}
 	const Expr* GetLeft() const { return _pExprLeft.get(); }
@@ -108,7 +108,7 @@ class GURAX_DLLDECLARE Expr_Container : public Expr {
 protected:
 	RefPtr<ExprOwner> _pExprChildren;
 public:
-	Expr_Container(const Klass& klass) : Expr(klass), _pExprChildren(new ExprOwner()) {}
+	Expr_Container(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprChildren(new ExprOwner()) {}
 	const ExprOwner& GetChildren() const { return *_pExprChildren; }
 	void AddChild(Expr* pExpr);
 };
@@ -118,9 +118,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Block : public Expr_Container {
 public:
-	static const Klass klass;
+	static const TypeInfo typeInfo;
 public:
-	Expr_Block() : Expr_Container(klass) {}
+	Expr_Block() : Expr_Container(typeInfo) {}
 };
 
 //------------------------------------------------------------------------------
@@ -128,9 +128,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Lister : public Expr_Container {
 public:
-	static const Klass klass;
+	static const TypeInfo typeInfo;
 public:
-	Expr_Lister() : Expr_Container(klass) {}
+	Expr_Lister() : Expr_Container(typeInfo) {}
 };
 
 //------------------------------------------------------------------------------
@@ -138,12 +138,12 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Composite : public Expr {
 public:
-	static const Klass klass;
+	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Expr> _pExprCar;
 	RefPtr<ExprOwner> _pExprCdr;
 public:
-	Expr_Composite(Expr* pExprCar) : Expr(klass), _pExprCar(pExprCar), _pExprCdr(new ExprOwner()) {
+	Expr_Composite(Expr* pExprCar) : Expr(typeInfo), _pExprCar(pExprCar), _pExprCdr(new ExprOwner()) {
 		_pExprCar->SetParent(this);
 	}
 	Expr* GetCar() { return _pExprCar.get(); }
@@ -157,11 +157,11 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Object : public Expr {
 public:
-	static const Klass klass;
+	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Object> _pObject;
 public:
-	Expr_Object(Object* pObject) : Expr(klass), _pObject(pObject) {}
+	Expr_Object(Object* pObject) : Expr(typeInfo), _pObject(pObject) {}
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
 };

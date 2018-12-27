@@ -8,6 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_symbol
 //------------------------------------------------------------------------------
-const Object_symbol::KlassEx Object_symbol::klass;
+Object_symbol::KlassEx Object_symbol::klass;
 
 }

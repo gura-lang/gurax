@@ -8,6 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_function
 //------------------------------------------------------------------------------
-const Object_function::KlassEx Object_function::klass;
+Object_function::KlassEx Object_function::klass;
 
 }
