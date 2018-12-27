@@ -12,8 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Class implementation
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_symbol, "symbol", Object)
+Gurax_ImplementClass(Object_symbol)
 {
+	SetAttrs("symbol", Object::klass);
 }
 
 }

@@ -18,28 +18,35 @@ String Klass::MakeFullName() const
 //------------------------------------------------------------------------------
 const Object *Object::_pObject_undefined	= nullptr;
 const Object *Object::_pObject_nil			= nullptr;
-const Object *Object::_pObject_zero		= nullptr;
-const Object *Object::_pObject_emptystr	= nullptr;
+const Object *Object::_pObject_zero			= nullptr;
+const Object *Object::_pObject_emptystr		= nullptr;
 const Object *Object::_pObject_false_		= nullptr;
 const Object *Object::_pObject_true_		= nullptr;
 
-Object::KlassEx Object::klass;
-
 void Object::Bootup()
 {
+	Object::klass.Prepare();
+	Object_bool::klass.Prepare();
+	Object_function::klass.Prepare();
+	Object_nil::klass.Prepare();
+	Object_number::klass.Prepare();
+	Object_string::klass.Prepare();
+	Object_symbol::klass.Prepare();
+	Object_undefined::klass.Prepare();
 	_pObject_undefined	= new Object_undefined();
 	_pObject_nil		= new Object_nil();
 	_pObject_zero		= new Object_number(0);
 	_pObject_emptystr	= new Object_string("");
-	_pObject_false_	= new Object_bool(false);
+	_pObject_false_		= new Object_bool(false);
 	_pObject_true_		= new Object_bool(true);
 }
 
 //------------------------------------------------------------------------------
-// Object::KlassEx
+// Class implementation
 //------------------------------------------------------------------------------
-void Object::KlassEx::DoPrepare()
+Gurax_ImplementClass(Object)
 {
+	SetAttrs("object");
 }
 
 //------------------------------------------------------------------------------

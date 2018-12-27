@@ -12,8 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Class implementation
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_string, "string", Object)
+Gurax_ImplementClass(Object_string)
 {
+	SetAttrs("string", Object::klass);
 }
 
 }

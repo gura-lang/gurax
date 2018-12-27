@@ -12,8 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Class implementation
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_nil, "nil", Object)
+Gurax_ImplementClass(Object_nil)
 {
+	SetAttrs("nil", Object::klass);
 }
 
 }

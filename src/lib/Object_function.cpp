@@ -12,8 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Class implementation
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_function, "function", Object)
+Gurax_ImplementClass(Object_function)
 {
+	SetAttrs("function", Object::klass);
 }
 
 }

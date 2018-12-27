@@ -9,16 +9,15 @@
 #include "Symbol.h"
 
 #define Gurax_DeclareClass() \
-class Klass : public Gurax::Klass { \
+class KlassEx : public Klass { \
 public: \
-	using Gurax::Klass::Klass; \
 	virtual void DoPrepare() override; \
 }; \
-static Klass klass
+static KlassEx klass
 
-#define Gurax_ImplementClass(T_Object, name, T_ObjectParent) \
-T_Object::Klass T_Object::klass(&T_ObjectParent::klass, name); \
-void T_Object::Klass::DoPrepare()
+#define Gurax_ImplementClass(T_Object) \
+T_Object::KlassEx T_Object::klass; \
+void T_Object::KlassEx::DoPrepare()
 
 namespace Gurax {
 
@@ -82,9 +81,8 @@ protected:
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
-	Klass(Klass* pKlassParent, const char* name) :
-		_pHelpProvider(new HelpProvider()), _pKlassParent(pKlassParent),
-		_pSymbol(Symbol::Add(name)), _pObjectMap(new ObjectMap()) {}
+	Klass() : _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
+		_pSymbol(nullptr), _pObjectMap(new ObjectMap()) {}
 	// Copy constructor/operator
 	Klass(Klass& src) = delete;
 	Klass& operator=(Klass& src) = delete;
@@ -94,6 +92,12 @@ public:
 	// Destructor
 	virtual ~Klass() = default;
 public:
+	void SetAttrs(const char* name) {
+		_pSymbol = Symbol::Add(name);
+	}
+	void SetAttrs(const char* name, Klass& klassParent) {
+		_pSymbol = Symbol::Add(name), _pKlassParent = &klassParent;
+	}
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	Klass* GetParent() const { return _pKlassParent; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
@@ -115,14 +119,8 @@ class GURAX_DLLDECLARE Object : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
-public:
-	class KlassEx : public Gurax::Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(nullptr, "object") {}
-	public:
-		virtual void DoPrepare() override;
-	};
+	// Class declaration
+	Gurax_DeclareClass();
 private:
 	static const Object* _pObject_undefined;
 	static const Object* _pObject_nil;
@@ -132,8 +130,6 @@ private:
 	static const Object* _pObject_true_;
 protected:
 	Klass& _klass;
-public:
-	static KlassEx klass;
 public:
 	// Constructor
 	Object() = delete;

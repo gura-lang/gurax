@@ -12,8 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Class implementation
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_bool, "bool", Object)
+Gurax_ImplementClass(Object_bool)
 {
+	SetAttrs("bool", Object::klass);
 }
 
 }

@@ -12,8 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Class implementation
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_undefined, "undefined", Object)
+Gurax_ImplementClass(Object_undefined)
 {
+	SetAttrs("undefined", Object::klass);
 }
 
 }
