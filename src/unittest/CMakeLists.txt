@@ -9,6 +9,7 @@ add_executable(unittest
 	test-Parser.cpp
 	test-Random.cpp
 	test-Referable.cpp
+	test-SizeOf.cpp
 	test-Stream.cpp
 	test-Symbol.cpp
 	test-Tokenizer.cpp

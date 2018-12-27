@@ -10,21 +10,6 @@ namespace Gurax {
 class Frame;
 
 //------------------------------------------------------------------------------
-// FrameList
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FrameList : public std::vector<Frame*> {
-};
-
-//------------------------------------------------------------------------------
-// FrameOwner
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FrameOwner : public FrameList {
-public:
-	~FrameOwner() { Clear(); }
-	void Clear();
-};
-
-//------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Frame : public Referable {
@@ -60,10 +45,14 @@ protected:
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
-	Frame_Item() : _pKlassMap(new KlassMap()), _pObjectMap(new ObjectMap()) {}
+	Frame_Item() : _pObjectMap(new ObjectMap()) {}
 public:
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const { return _pKlassMap->Get(pSymbol); }
-	virtual Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
+		return _pKlassMap? _pKlassMap->Get(pSymbol) : nullptr;
+	}
+	virtual Object* LookupObject(const Symbol* pSymbol) const override {
+		return _pObjectMap->Get(pSymbol);
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -80,11 +69,11 @@ public:
 	// Constructor
 	Frame_Binary(Frame* pFrameLeft, Frame* pFrameRight) : _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
 public:
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const {
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
 		if (Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
 		return _pFrameLeft->LookupKlass(pSymbol);
 	}
-	virtual Object* LookupObject(const Symbol* pSymbol) const {
+	virtual Object* LookupObject(const Symbol* pSymbol) const override {
 		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;
 		return _pFrameLeft->LookupObject(pSymbol);
 	}
