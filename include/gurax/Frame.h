@@ -4,6 +4,7 @@
 #ifndef GURAX_FRAME_H
 #define GURAX_FRAME_H
 #include "Object.h"
+#include "MemoryPool.h"
 
 namespace Gurax {
 
@@ -29,8 +30,11 @@ protected:
 	// Destructor
 	virtual ~Frame() = default;
 public:
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const = 0;
-	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
+	Frame* Expand() const;
+	virtual void SetKlass(const Symbol* pSymbol, Klass* pKlasss) = 0;
+	virtual void SetObject(const Symbol* pSymbol, Object* pObject) = 0;
+	virtual Klass* GetKlass(const Symbol* pSymbol) const = 0;
+	virtual Object* GetObject(const Symbol* pSymbol) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -40,6 +44,8 @@ class GURAX_DLLDECLARE Frame_Item : public Frame {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame_Item);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Item");
 protected:
 	RefPtr<KlassMap> _pKlassMap;
 	RefPtr<ObjectMap> _pObjectMap;
@@ -47,10 +53,17 @@ public:
 	// Constructor
 	Frame_Item() : _pObjectMap(new ObjectMap()) {}
 public:
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
+	virtual void SetKlass(const Symbol* pSymbol, Klass* pKlass) override {
+		if (!_pKlassMap) _pKlassMap.reset(new KlassMap());
+		_pKlassMap->Set(pSymbol, pKlass);
+	}
+	virtual void SetObject(const Symbol* pSymbol, Object* pObject) override {
+		_pObjectMap->Set(pSymbol, pObject);
+	}
+	virtual Klass* GetKlass(const Symbol* pSymbol) const override {
 		return _pKlassMap? _pKlassMap->Get(pSymbol) : nullptr;
 	}
-	virtual Object* LookupObject(const Symbol* pSymbol) const override {
+	virtual Object* GetObject(const Symbol* pSymbol) const override {
 		return _pObjectMap->Get(pSymbol);
 	}
 };
@@ -62,6 +75,8 @@ class GURAX_DLLDECLARE Frame_Binary : public Frame {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame_Binary);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Binary");
 protected:
 	RefPtr<Frame> _pFrameLeft;
 	RefPtr<Frame> _pFrameRight;
@@ -69,13 +84,19 @@ public:
 	// Constructor
 	Frame_Binary(Frame* pFrameLeft, Frame* pFrameRight) : _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
 public:
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
-		if (Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
-		return _pFrameLeft->LookupKlass(pSymbol);
+	virtual void SetKlass(const Symbol* pSymbol, Klass* pKlass) override {
+		_pFrameRight->SetKlass(pSymbol, pKlass);
 	}
-	virtual Object* LookupObject(const Symbol* pSymbol) const override {
-		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;
-		return _pFrameLeft->LookupObject(pSymbol);
+	virtual void SetObject(const Symbol* pSymbol, Object* pObject) override {
+		_pFrameRight->SetObject(pSymbol, pObject);
+	}
+	virtual Klass* GetKlass(const Symbol* pSymbol) const override {
+		if (Klass* pKlass = _pFrameRight->GetKlass(pSymbol)) return pKlass;
+		return _pFrameLeft->GetKlass(pSymbol);
+	}
+	virtual Object* GetObject(const Symbol* pSymbol) const override {
+		if (Object* pObject = _pFrameRight->GetObject(pSymbol)) return pObject;
+		return _pFrameLeft->GetObject(pSymbol);
 	}
 };
 
