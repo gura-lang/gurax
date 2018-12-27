@@ -17,7 +17,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("undefined");
 public:
-	class KlassEx : public Klass {
+	class KlassEx : public Gurax::Klass {
 	public:
 		// Constructor
 		KlassEx() : Klass(&Object::klass, "undefined") {}

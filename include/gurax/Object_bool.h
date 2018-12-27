@@ -16,16 +16,8 @@ public:
 	Gurax_DeclareReferable(Object_bool);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("bool");
-public:
-	class KlassEx : public Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(&Object::klass, "bool") {}
-	public:
-		virtual void DoPrepare() override;
-	};
-public:
-	static KlassEx klass;
+	// Class declaration
+	Gurax_DeclareClass();
 private:
 	bool _flag;
 public:
