@@ -21,6 +21,8 @@ public:
 	public:
 		// Constructor
 		KlassEx() : Klass(&Object::klass, "number") {}
+	public:
+		virtual void DoPrepare() override;
 	};
 public:
 	static KlassEx klass;

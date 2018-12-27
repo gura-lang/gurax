@@ -11,7 +11,8 @@
 namespace Gurax {
 
 class Object;
-	
+class Environment;
+
 //------------------------------------------------------------------------------
 // ObjectList
 //------------------------------------------------------------------------------
@@ -79,7 +80,7 @@ public:
 	Klass(Klass&& src) = delete;
 	Klass& operator=(Klass&& src) noexcept = delete;
 	// Destructor
-	~Klass() = default;
+	virtual ~Klass() = default;
 public:
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	Klass* GetParent() const { return _pKlassParent; }
@@ -91,6 +92,8 @@ public:
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	Object* Lookup(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
+	void Prepare() { DoPrepare(); }
+	virtual void DoPrepare() = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -105,14 +108,8 @@ public:
 	public:
 		// Constructor
 		KlassEx() : Klass(nullptr, "object") {}
-		// Copy constructor/operator
-		KlassEx(const KlassEx& src) = delete;
-		KlassEx& operator=(const KlassEx& src) = delete;
-		// Move constructor/operator
-		KlassEx(KlassEx&& src) = delete;
-		KlassEx& operator=(KlassEx&& src) noexcept = delete;
-		// Destructor
-		~KlassEx() = default;
+	public:
+		virtual void DoPrepare() override;
 	};
 private:
 	static const Object* _pObject_undefined;
