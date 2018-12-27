@@ -31,10 +31,10 @@ protected:
 	virtual ~Frame() = default;
 public:
 	Frame* Expand() const;
-	virtual void SetKlass(const Symbol* pSymbol, Klass* pKlasss) = 0;
-	virtual void SetObject(const Symbol* pSymbol, Object* pObject) = 0;
-	virtual Klass* GetKlass(const Symbol* pSymbol) const = 0;
-	virtual Object* GetObject(const Symbol* pSymbol) const = 0;
+	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlasss) = 0;
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const = 0;
+	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -53,17 +53,17 @@ public:
 	// Constructor
 	Frame_Item() : _pObjectMap(new ObjectMap()) {}
 public:
-	virtual void SetKlass(const Symbol* pSymbol, Klass* pKlass) override {
+	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
 		if (!_pKlassMap) _pKlassMap.reset(new KlassMap());
 		_pKlassMap->Set(pSymbol, pKlass);
 	}
-	virtual void SetObject(const Symbol* pSymbol, Object* pObject) override {
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
 		_pObjectMap->Set(pSymbol, pObject);
 	}
-	virtual Klass* GetKlass(const Symbol* pSymbol) const override {
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
 		return _pKlassMap? _pKlassMap->Get(pSymbol) : nullptr;
 	}
-	virtual Object* GetObject(const Symbol* pSymbol) const override {
+	virtual Object* LookupObject(const Symbol* pSymbol) const override {
 		return _pObjectMap->Get(pSymbol);
 	}
 };
@@ -84,19 +84,19 @@ public:
 	// Constructor
 	Frame_Binary(Frame* pFrameLeft, Frame* pFrameRight) : _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
 public:
-	virtual void SetKlass(const Symbol* pSymbol, Klass* pKlass) override {
-		_pFrameRight->SetKlass(pSymbol, pKlass);
+	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
+		_pFrameRight->AssignKlass(pSymbol, pKlass);
 	}
-	virtual void SetObject(const Symbol* pSymbol, Object* pObject) override {
-		_pFrameRight->SetObject(pSymbol, pObject);
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
+		_pFrameRight->AssignObject(pSymbol, pObject);
 	}
-	virtual Klass* GetKlass(const Symbol* pSymbol) const override {
-		if (Klass* pKlass = _pFrameRight->GetKlass(pSymbol)) return pKlass;
-		return _pFrameLeft->GetKlass(pSymbol);
+	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
+		if (Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
+		return _pFrameLeft->LookupKlass(pSymbol);
 	}
-	virtual Object* GetObject(const Symbol* pSymbol) const override {
-		if (Object* pObject = _pFrameRight->GetObject(pSymbol)) return pObject;
-		return _pFrameLeft->GetObject(pSymbol);
+	virtual Object* LookupObject(const Symbol* pSymbol) const override {
+		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;
+		return _pFrameLeft->LookupObject(pSymbol);
 	}
 };
 

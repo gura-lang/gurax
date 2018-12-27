@@ -91,7 +91,7 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
-	Object* Lookup(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
+	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
 	void Prepare() { DoPrepare(); }
 	virtual void DoPrepare() = 0;
 };
@@ -141,6 +141,7 @@ public:
 	virtual String ToString() const { return String::Empty; }
 	virtual String GenSource() const { return String::Empty; }
 public:
+	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
 	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
 	template<typename T> bool IsInstanceOf() const;
