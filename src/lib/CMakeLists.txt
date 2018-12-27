@@ -2,8 +2,10 @@ add_library(guraxcore SHARED
 	guraxcore.cpp
 	Common.cpp
 	DateTime.cpp
+	Environment.cpp
 	Error.cpp
 	Expr.cpp
+	Frame.cpp
 	Function.cpp
 	Help.cpp
 	Iterator.cpp

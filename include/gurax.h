@@ -6,8 +6,10 @@
 
 #include "gurax/Common.h"
 #include "gurax/DateTime.h"
+#include "gurax/Environment.h"
 #include "gurax/Error.h"
 #include "gurax/Expr.h"
+#include "gurax/Frame.h"
 #include "gurax/Function.h"
 #include "gurax/Help.h"
 #include "gurax/Iterator.h"
