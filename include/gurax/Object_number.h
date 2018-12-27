@@ -16,16 +16,8 @@ public:
 	Gurax_DeclareReferable(Object_number);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("number");
-public:
-	class KlassEx : public Gurax::Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(&Object::klass, "number") {}
-	public:
-		virtual void DoPrepare() override;
-	};
-public:
-	static KlassEx klass;
+	// Class declaration
+	Gurax_DeclareClass();
 private:
 	Double _num;
 public:

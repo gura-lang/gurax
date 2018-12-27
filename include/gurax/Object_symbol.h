@@ -16,16 +16,8 @@ public:
 	Gurax_DeclareReferable(Object_symbol);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("symbol");
-public:
-	class KlassEx : public Gurax::Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(&Object::klass, "symbol") {}
-	public:
-		virtual void DoPrepare() override;
-	};
-public:
-	static KlassEx klass;
+	// Class declaration
+	Gurax_DeclareClass();
 private:
 	const Symbol* _pSymbol;
 public:

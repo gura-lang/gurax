@@ -16,16 +16,8 @@ public:
 	Gurax_DeclareReferable(Object_function);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("function");
-public:
-	class KlassEx : public Gurax::Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(&Object::klass, "function") {}
-	public:
-		virtual void DoPrepare() override;
-	};
-public:
-	static KlassEx klass;
+	// Class declaration
+	Gurax_DeclareClass();
 private:
 	RefPtr<Function> _pFunc;
 public:

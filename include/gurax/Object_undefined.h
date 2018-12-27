@@ -16,16 +16,8 @@ public:
 	Gurax_DeclareReferable(Object_undefined);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("undefined");
-public:
-	class KlassEx : public Gurax::Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(&Object::klass, "undefined") {}
-	public:
-		virtual void DoPrepare() override;
-	};
-public:
-	static KlassEx klass;
+	// Class declaration
+	Gurax_DeclareClass();
 public:
 	// Constructor
 	Object_undefined() : Object(klass) {}

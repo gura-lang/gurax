@@ -16,16 +16,8 @@ public:
 	Gurax_DeclareReferable(Object_nil);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("nil");
-public:
-	class KlassEx : public Gurax::Klass {
-	public:
-		// Constructor
-		KlassEx() : Klass(&Object::klass, "nil") {}
-	public:
-		virtual void DoPrepare() override;
-	};
-public:
-	static KlassEx klass;
+	// Class declaration
+	Gurax_DeclareClass();
 public:
 	// Constructor
 	Object_nil() : Object(klass) {}

@@ -8,12 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_undefined
 //------------------------------------------------------------------------------
-Object_undefined::KlassEx Object_undefined::klass;
 
 //------------------------------------------------------------------------------
-// Object_undefined::KlassEx
+// Class implementation
 //------------------------------------------------------------------------------
-void Object_undefined::KlassEx::DoPrepare()
+Gurax_ImplementClass(Object_undefined, "undefined", Object)
 {
 }
 

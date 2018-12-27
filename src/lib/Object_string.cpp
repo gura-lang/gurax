@@ -8,12 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_string
 //------------------------------------------------------------------------------
-Object_string::KlassEx Object_string::klass;
 
 //------------------------------------------------------------------------------
-// Object_string::KlassEx
+// Class implementation
 //------------------------------------------------------------------------------
-void Object_string::KlassEx::DoPrepare()
+Gurax_ImplementClass(Object_string, "string", Object)
 {
 }
 
