@@ -16,23 +16,23 @@ String Klass::MakeFullName() const
 //------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
-const Object *Object::_pObj_undefined	= nullptr;
-const Object *Object::_pObj_nil			= nullptr;
-const Object *Object::_pObj_zero		= nullptr;
-const Object *Object::_pObj_emptystr	= nullptr;
-const Object *Object::_pObj_false_		= nullptr;
-const Object *Object::_pObj_true_		= nullptr;
+const Object *Object::_pObject_undefined	= nullptr;
+const Object *Object::_pObject_nil			= nullptr;
+const Object *Object::_pObject_zero		= nullptr;
+const Object *Object::_pObject_emptystr	= nullptr;
+const Object *Object::_pObject_false_		= nullptr;
+const Object *Object::_pObject_true_		= nullptr;
 
 const Object::KlassEx Object::klass;
 
 void Object::Bootup()
 {
-	_pObj_undefined	= new Object_undefined();
-	_pObj_nil		= new Object_nil();
-	_pObj_zero		= new Object_number(0);
-	_pObj_emptystr	= new Object_string("");
-	_pObj_false_	= new Object_bool(false);
-	_pObj_true_		= new Object_bool(true);
+	_pObject_undefined	= new Object_undefined();
+	_pObject_nil		= new Object_nil();
+	_pObject_zero		= new Object_number(0);
+	_pObject_emptystr	= new Object_string("");
+	_pObject_false_	= new Object_bool(false);
+	_pObject_true_		= new Object_bool(true);
 }
 
 //------------------------------------------------------------------------------
@@ -44,35 +44,35 @@ void Object::Bootup()
 //------------------------------------------------------------------------------
 void ObjectOwner::Clear()
 {
-	for (Object* pObj : *this) Object::Delete(pObj);
+	for (Object* pObject : *this) Object::Delete(pObject);
 	clear();
 }
 
 RefPtr<ObjectOwner> ObjectOwner::Clone() const
 {
-	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
-	pObjOwner->reserve(size());
-	for (Object* pObj : *this) pObjOwner->push_back(pObj->Reference());
-	return pObjOwner;
+	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	pObjectOwner->reserve(size());
+	for (Object* pObject : *this) pObjectOwner->push_back(pObject->Reference());
+	return pObjectOwner;
 }
 
 RefPtr<ObjectOwner> ObjectOwner::CloneDeep() const
 {
-	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
-	pObjOwner->reserve(size());
-	for (Object* pObj : *this) {
-		Object* pObjCloned = pObj->Clone();
-		if (!pObjCloned) return nullptr;
-		pObjOwner->push_back(pObjCloned);
+	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	pObjectOwner->reserve(size());
+	for (Object* pObject : *this) {
+		Object* pObjectCloned = pObject->Clone();
+		if (!pObjectCloned) return nullptr;
+		pObjectOwner->push_back(pObjectCloned);
 	}
-	return pObjOwner;
+	return pObjectOwner;
 }
 
-void ObjectOwner::Set(size_t pos, Object* pObj)
+void ObjectOwner::Set(size_t pos, Object* pObject)
 {
-	iterator ppObj = begin() + pos;
-	Object::Delete(*ppObj);
-	*ppObj = pObj;
+	iterator ppObject = begin() + pos;
+	Object::Delete(*ppObject);
+	*ppObject = pObject;
 }
 
 //------------------------------------------------------------------------------
@@ -84,14 +84,14 @@ void ObjectMap::Clear()
 	clear();
 }
 
-void ObjectMap::Set(const Symbol* pSymbol, Object* pObj)
+void ObjectMap::Set(const Symbol* pSymbol, Object* pObject)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {
-		emplace(pSymbol, pObj);
+		emplace(pSymbol, pObject);
 	} else {
 		Object::Delete(pPair->second);
-		pPair->second = pObj;
+		pPair->second = pObject;
 	}
 }
 
@@ -99,9 +99,9 @@ void ObjectMap::Print() const
 {
 	auto keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		Object* pObj = Get(pSymbol);
+		Object* pObject = Get(pSymbol);
 		::printf("%s:%s = %s\n", pSymbol->GetName(),
-				 pObj->GetKlass().MakeFullName().c_str(), pObj->ToString().c_str());
+				 pObject->GetKlass().MakeFullName().c_str(), pObject->ToString().c_str());
 	}
 }
 

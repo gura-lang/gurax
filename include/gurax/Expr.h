@@ -159,11 +159,11 @@ class GURAX_DLLDECLARE Expr_Object : public Expr {
 public:
 	static const Klass klass;
 protected:
-	RefPtr<Object> _pObj;
+	RefPtr<Object> _pObject;
 public:
-	Expr_Object(Object* pObj) : Expr(klass), _pObj(pObj) {}
-	Object* GetObject() { return _pObj.get(); }
-	const Object* GetObject() const { return _pObj.get(); }
+	Expr_Object(Object* pObject) : Expr(klass), _pObject(pObject) {}
+	Object* GetObject() { return _pObject.get(); }
+	const Object* GetObject() const { return _pObject.get(); }
 };
 
 }

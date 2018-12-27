@@ -3,9 +3,26 @@
 //==============================================================================
 #ifndef GURAX_FRAME_H
 #define GURAX_FRAME_H
-#include "Referable.h"
+#include "Object.h"
 
 namespace Gurax {
+
+class Frame;
+
+//------------------------------------------------------------------------------
+// FrameList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE FrameList : public std::vector<Frame*> {
+};
+
+//------------------------------------------------------------------------------
+// FrameOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE FrameOwner : public FrameList {
+public:
+	~FrameOwner() { Clear(); }
+	void Clear();
+};
 
 //------------------------------------------------------------------------------
 // Frame
@@ -26,6 +43,51 @@ public:
 protected:
 	// Destructor
 	virtual ~Frame() = default;
+public:
+	virtual const Klass* LookupKlass(const Symbol* pSymbol) const = 0;
+	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
+};
+
+//------------------------------------------------------------------------------
+// Frame_Item
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Item : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Item);
+protected:
+	RefPtr<KlassMap> _pKlassMap;
+	RefPtr<ObjectMap> _pObjectMap;
+public:
+	// Constructor
+	Frame_Item() : _pKlassMap(new KlassMap()), _pObjectMap(new ObjectMap()) {}
+public:
+	virtual const Klass* LookupKlass(const Symbol* pSymbol) const { return _pKlassMap->Get(pSymbol); }
+	virtual Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
+};
+
+//------------------------------------------------------------------------------
+// Frame_Binary
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Binary : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Binary);
+protected:
+	RefPtr<Frame> _pFrameLeft;
+	RefPtr<Frame> _pFrameRight;
+public:
+	// Constructor
+	Frame_Binary(Frame* pFrameLeft, Frame* pFrameRight) : _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
+public:
+	virtual const Klass* LookupKlass(const Symbol* pSymbol) const {
+		if (const Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
+		return _pFrameLeft->LookupKlass(pSymbol);
+	}
+	virtual Object* LookupObject(const Symbol* pSymbol) const {
+		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;
+		return _pFrameLeft->LookupObject(pSymbol);
+	}
 };
 
 }

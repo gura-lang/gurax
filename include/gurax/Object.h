@@ -31,7 +31,7 @@ public:
 	void Clear();
 	RefPtr<ObjectOwner> Clone() const;
 	RefPtr<ObjectOwner> CloneDeep() const;
-	void Set(size_t pos, Object* pObj);
+	void Set(size_t pos, Object* pObject);
 	Object* Get(size_t pos) const { return at(pos); }
 };
 
@@ -48,7 +48,7 @@ protected:
 	~ObjectMap() { Clear(); }
 public:
 	void Clear();
-	void Set(const Symbol* pSymbol, Object* pObj);
+	void Set(const Symbol* pSymbol, Object* pObject);
 	Object* Get(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
@@ -66,12 +66,12 @@ protected:
 	RefPtr<HelpProvider> _pHelpProvider;
 	const Klass* _pKlassParent;
 	const Symbol* _pSymbol;
-	RefPtr<ObjectMap> _pObjMap;
+	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
 	Klass(const Klass* pKlassParent, const char* name) :
 		_pHelpProvider(new HelpProvider()), _pKlassParent(pKlassParent),
-		_pSymbol(Symbol::Add(name)), _pObjMap(new ObjectMap()) {}
+		_pSymbol(Symbol::Add(name)), _pObjectMap(new ObjectMap()) {}
 	// Copy constructor/operator
 	Klass(const Klass& src) = delete;
 	Klass& operator=(const Klass& src) = delete;
@@ -90,7 +90,7 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
-	Object* Lookup(const Symbol* pSymbol) const { return _pObjMap->Get(pSymbol); }
+	Object* Lookup(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
 };
 
 //------------------------------------------------------------------------------
@@ -115,12 +115,12 @@ public:
 		~KlassEx() = default;
 	};
 private:
-	static const Object* _pObj_undefined;
-	static const Object* _pObj_nil;
-	static const Object* _pObj_zero;
-	static const Object* _pObj_emptystr;
-	static const Object* _pObj_false_;
-	static const Object* _pObj_true_;
+	static const Object* _pObject_undefined;
+	static const Object* _pObject_nil;
+	static const Object* _pObject_zero;
+	static const Object* _pObject_emptystr;
+	static const Object* _pObject_false_;
+	static const Object* _pObject_true_;
 protected:
 	const Klass& _klass;
 public:
@@ -145,17 +145,17 @@ public:
 	virtual String GenSource() const { return String::Empty; }
 public:
 	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
-	template<typename T> static bool IsType(const Object* pObj) { return pObj && pObj->IsType<T>(); }
+	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
 	template<typename T> bool IsInstanceOf() const;
-	template<typename T> static bool IsInstanceOf(const Object* pObj) { return pObj && pObj->IsInstanceOf<T>(); }
+	template<typename T> static bool IsInstanceOf(const Object* pObject) { return pObject && pObject->IsInstanceOf<T>(); }
 public:
 	static void Bootup();
-	static Object* nil() { return _pObj_nil->Reference(); }
-	static Object* undefined() { return _pObj_undefined->Reference(); }
-	static Object* zero() { return _pObj_zero->Reference(); }
-	static Object* emptystr() { return _pObj_emptystr->Reference(); }
-	static Object* false_() { return _pObj_false_->Reference(); }
-	static Object* true_() { return _pObj_true_->Reference(); }
+	static Object* nil()		{ return _pObject_nil->Reference(); }
+	static Object* undefined()	{ return _pObject_undefined->Reference(); }
+	static Object* zero()		{ return _pObject_zero->Reference(); }
+	static Object* emptystr()	{ return _pObject_emptystr->Reference(); }
+	static Object* false_()		{ return _pObject_false_->Reference(); }
+	static Object* true_()		{ return _pObject_true_->Reference(); }
 };
 
 template<typename T> bool Object::IsInstanceOf() const
