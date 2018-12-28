@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_undefined::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_undefined)
+Object_undefined::KlassEx Object_undefined::klass;
+
+void Object_undefined::KlassEx::DoPrepare()
 {
 	SetAttrs("undefined", Object::klass);
 }

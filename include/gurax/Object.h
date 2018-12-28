@@ -8,17 +8,6 @@
 #include "Referable.h"
 #include "Symbol.h"
 
-#define Gurax_DeclareClass() \
-class KlassEx : public Klass { \
-public: \
-	virtual void DoPrepare() override; \
-}; \
-static KlassEx klass
-
-#define Gurax_ImplementClass(T_Object) \
-T_Object::KlassEx T_Object::klass; \
-void T_Object::KlassEx::DoPrepare()
-
 namespace Gurax {
 
 class Object;
@@ -142,7 +131,11 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
 	// Class declaration
-	Gurax_DeclareClass();
+	class KlassEx : public Klass {
+	public:
+		virtual void DoPrepare() override;
+	};
+	static KlassEx klass;
 private:
 	static const Object* _pObject_undefined;
 	static const Object* _pObject_nil;

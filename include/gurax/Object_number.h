@@ -17,7 +17,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("number");
 	// Class declaration
-	Gurax_DeclareClass();
+	class KlassEx : public Klass {
+	public:
+		virtual void DoPrepare() override;
+	};
+	static KlassEx klass;
 private:
 	Double _num;
 public:

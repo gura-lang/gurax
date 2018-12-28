@@ -17,7 +17,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("undefined");
 	// Class declaration
-	Gurax_DeclareClass();
+	class KlassEx : public Klass {
+	public:
+		virtual void DoPrepare() override;
+	};
+	static KlassEx klass;
 public:
 	// Constructor
 	Object_undefined() : Object(klass) {}

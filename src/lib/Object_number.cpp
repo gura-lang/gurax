@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_number::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_number)
+Object_number::KlassEx Object_number::klass;
+
+void Object_number::KlassEx::DoPrepare()
 {
 	SetAttrs("number", Object::klass);
 }

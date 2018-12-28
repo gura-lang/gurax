@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_string::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_string)
+Object_string::KlassEx Object_string::klass;
+
+void Object_string::KlassEx::DoPrepare()
 {
 	SetAttrs("string", Object::klass);
 }

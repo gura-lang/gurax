@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_symbol::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_symbol)
+Object_symbol::KlassEx Object_symbol::klass;
+
+void Object_symbol::KlassEx::DoPrepare()
 {
 	SetAttrs("symbol", Object::klass);
 }

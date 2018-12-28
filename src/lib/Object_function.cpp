@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_function::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_function)
+Object_function::KlassEx Object_function::klass;
+
+void Object_function::KlassEx::DoPrepare()
 {
 	SetAttrs("function", Object::klass);
 }

@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_bool::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_bool)
+Object_bool::KlassEx Object_bool::klass;
+
+void Object_bool::KlassEx::DoPrepare()
 {
 	SetAttrs("bool", Object::klass);
 }

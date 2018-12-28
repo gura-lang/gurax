@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object_nil::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object_nil)
+Object_nil::KlassEx Object_nil::klass;
+
+void Object_nil::KlassEx::DoPrepare()
 {
 	SetAttrs("nil", Object::klass);
 }

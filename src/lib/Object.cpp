@@ -42,9 +42,11 @@ void Object::Bootup()
 }
 
 //------------------------------------------------------------------------------
-// Class implementation
+// Object::KlassEx
 //------------------------------------------------------------------------------
-Gurax_ImplementClass(Object)
+Object::KlassEx Object::klass;
+
+void Object::KlassEx::DoPrepare()
 {
 	SetAttrs("object");
 }
