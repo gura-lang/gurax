@@ -44,11 +44,11 @@ void Object::Bootup()
 //------------------------------------------------------------------------------
 // Object::KlassEx
 //------------------------------------------------------------------------------
-Object::KlassEx Object::klass;
+Object::KlassEx Object::klass("object");
 
 void Object::KlassEx::DoPrepare()
 {
-	SetAttrs("object");
+	SetAttrs(Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

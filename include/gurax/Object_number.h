@@ -19,6 +19,7 @@ public:
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
+		using Klass::Klass;
 		virtual void DoPrepare() override;
 	};
 	static KlassEx klass;
@@ -37,8 +38,13 @@ protected:
 	// Destructor
 	~Object_number() = default;
 public:
+	template<typename T> T Get() const { return static_cast<T>(_num); }
 	Double GetDouble() const { return _num; }
 	virtual Object* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override { return Get<size_t>(); }
+	virtual bool IsEqualTo(const Object* pObject) const override {
+		return IsSameType(pObject) && GetDouble() == dynamic_cast<const Object_number*>(pObject)->GetDouble();
+	}
 	virtual String ToString() const override { return std::to_string(_num); }
 	virtual String GenSource() const override { return ToString(); }
 };

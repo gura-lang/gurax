@@ -19,6 +19,7 @@ public:
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
+		using Klass::Klass;
 		virtual void DoPrepare() override;
 	};
 	static KlassEx klass;
@@ -39,6 +40,10 @@ protected:
 public:
 	bool GetBool() const { return _flag; }
 	virtual Object* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override { return static_cast<size_t>(GetBool()); }
+	virtual bool IsEqualTo(const Object* pObject) const override {
+		return IsSameType(pObject) && GetBool() == dynamic_cast<const Object_bool*>(pObject)->GetBool();
+	}
 	virtual String ToString() const override { return _flag? "true" : "false"; }
 	virtual String GenSource() const override { return ToString(); }
 };

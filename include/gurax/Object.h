@@ -74,15 +74,22 @@ public:
 // Klass
 //------------------------------------------------------------------------------
 class Klass {
+public:
+	struct Flag {
+		static const UInt32 None		= 0;
+		static const UInt32 Mutable		= (1 << 0);
+		static const UInt32 Immutable	= (0 << 0);
+	};
 protected:
 	RefPtr<HelpProvider> _pHelpProvider;
 	Klass* _pKlassParent;
 	const Symbol* _pSymbol;
+	UInt32 _flags;
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
-	Klass() : _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
-		_pSymbol(nullptr), _pObjectMap(new ObjectMap()) {}
+	explicit Klass(const char* name) : _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
+		_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap()) {}
 	// Copy constructor/operator
 	Klass(Klass& src) = delete;
 	Klass& operator=(Klass& src) = delete;
@@ -92,11 +99,10 @@ public:
 	// Destructor
 	virtual ~Klass() = default;
 public:
-	void SetAttrs(const char* name) {
-		_pSymbol = Symbol::Add(name);
-	}
-	void SetAttrs(const char* name, Klass& klassParent) {
-		_pSymbol = Symbol::Add(name), _pKlassParent = &klassParent;
+	void SetAttrs(UInt32 flags) { _flags = flags; }
+	void SetAttrs(Klass& klassParent, UInt32 flags) {
+		_pKlassParent = &klassParent;
+		_flags = flags;
 	}
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	Klass* GetParent() const { return _pKlassParent; }
@@ -108,8 +114,12 @@ public:
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
+public:
 	void Prepare() { DoPrepare(); }
 	virtual void DoPrepare() = 0;
+public:
+	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
+	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 };
 
 //------------------------------------------------------------------------------
@@ -123,8 +133,8 @@ public:
 		}
 	};
 	struct Hash {
-		size_t operator()(const Object* pObjectl) const {
-			return 0;
+		size_t operator()(const Object* pObject) const {
+			return pObject->CalcHash();
 		}
 	};
 public:
@@ -133,6 +143,7 @@ public:
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
+		using Klass::Klass;
 		virtual void DoPrepare() override;
 	};
 	static KlassEx klass;
@@ -161,10 +172,10 @@ protected:
 public:
 	Klass& GetKlass() { return _klass; }
 	const Klass& GetKlass() const { return _klass; }
+	size_t CalcHash() const { return DoCalcHash(); }
 	virtual Object* Clone() const = 0;
-	size_t CalcHash() { return DoCalcHash(); }
-	virtual size_t DoCalcHash() { return reinterpret_cast<size_t>(this); }
-	virtual bool IsEqualTo(const Object* pObject) const { return IsIdentical(pObject); }
+	virtual size_t DoCalcHash() const = 0;
+	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual String ToString() const { return String::Empty; }
 	virtual String GenSource() const { return String::Empty; }
 public:
@@ -172,14 +183,17 @@ public:
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
 	}
-	bool IsSameType(const Object* pObject) const { return _klass.IsIdentical(pObject->GetKlass()); }
+	bool IsSameType(const Object* pObject) const { return GetKlass().IsIdentical(pObject->GetKlass()); }
 	static bool IsSameType(const Object* pObject1, const Object* pObject2) {
 		return pObject1 && pObject1->IsSameType(pObject2);
 	}
-	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
+	template<typename T> bool IsType() const { return GetKlass().IsIdentical(T::klass); }
 	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
 	template<typename T> bool IsInstanceOf() const;
 	template<typename T> static bool IsInstanceOf(const Object* pObject) { return pObject && pObject->IsInstanceOf<T>(); }
+public:
+	bool IsMutable() const { return GetKlass().IsMutable(); }
+	bool IsImmutable() const { return GetKlass().IsImmutable(); }
 public:
 	static void Bootup();
 	static Object* nil()		{ return _pObject_nil->Reference(); }
@@ -192,7 +206,7 @@ public:
 
 template<typename T> bool Object::IsInstanceOf() const
 {
-	for (const Klass *pKlass = &_klass; pKlass != nullptr; pKlass = pKlass->GetParent()) {
+	for (const Klass *pKlass = &GetKlass(); pKlass != nullptr; pKlass = pKlass->GetParent()) {
 		if (pKlass->IsIdentical(T::klass)) return true;
 	}
 	return false;

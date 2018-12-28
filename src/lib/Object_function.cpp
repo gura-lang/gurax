@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_function::KlassEx
 //------------------------------------------------------------------------------
-Object_function::KlassEx Object_function::klass;
+Object_function::KlassEx Object_function::klass("function");
 
 void Object_function::KlassEx::DoPrepare()
 {
-	SetAttrs("function", Object::klass);
+	SetAttrs(Object::klass, Flag::Immutable);
 }
 
 }

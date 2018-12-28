@@ -107,6 +107,7 @@ public:
 		_name = _nameBuff;
 	}
 	int GetUniqId() const { return _uniqId; }
+	size_t CalcHash() const { return static_cast<size_t>(GetUniqId()); }
 	const char* GetName() const { return _name; }
 	bool IsIdentical(const Symbol* pSymbol) const { return GetUniqId() == pSymbol->GetUniqId(); }
 	static bool IsIdentical(const Symbol* pSymbol1, const Symbol *pSymbol2) {

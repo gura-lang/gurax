@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_nil::KlassEx
 //------------------------------------------------------------------------------
-Object_nil::KlassEx Object_nil::klass;
+Object_nil::KlassEx Object_nil::klass("nil");
 
 void Object_nil::KlassEx::DoPrepare()
 {
-	SetAttrs("nil", Object::klass);
+	SetAttrs(Object::klass, Flag::Immutable);
 }
 
 }

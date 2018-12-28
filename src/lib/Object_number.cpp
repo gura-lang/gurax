@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_number::KlassEx
 //------------------------------------------------------------------------------
-Object_number::KlassEx Object_number::klass;
+Object_number::KlassEx Object_number::klass("number");
 
 void Object_number::KlassEx::DoPrepare()
 {
-	SetAttrs("number", Object::klass);
+	SetAttrs(Object::klass, Flag::Immutable);
 }
 
 }

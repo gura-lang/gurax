@@ -19,6 +19,7 @@ public:
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
+		using Klass::Klass;
 		virtual void DoPrepare() override;
 	};
 	static KlassEx klass;
@@ -41,7 +42,7 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() override { return String::CalcHash(GetString()); }
+	virtual size_t DoCalcHash() const override { return String::CalcHash(GetString()); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
 			::strcmp(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString());

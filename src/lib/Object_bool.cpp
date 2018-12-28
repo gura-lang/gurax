@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_bool::KlassEx
 //------------------------------------------------------------------------------
-Object_bool::KlassEx Object_bool::klass;
+Object_bool::KlassEx Object_bool::klass("bool");
 
 void Object_bool::KlassEx::DoPrepare()
 {
-	SetAttrs("bool", Object::klass);
+	SetAttrs(Object::klass, Flag::Immutable);
 }
 
 }

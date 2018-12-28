@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Object_undefined::KlassEx
 //------------------------------------------------------------------------------
-Object_undefined::KlassEx Object_undefined::klass;
+Object_undefined::KlassEx Object_undefined::klass("undefined");
 
 void Object_undefined::KlassEx::DoPrepare()
 {
-	SetAttrs("undefined", Object::klass);
+	SetAttrs(Object::klass, Flag::Immutable);
 }
 
 }
