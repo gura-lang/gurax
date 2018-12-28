@@ -166,12 +166,23 @@ protected:
 	// Destructor
 	virtual ~Object() = default;
 public:
-	Klass& GetKlass() const { return _klass; }
+	Klass& GetKlass() { return _klass; }
+	const Klass& GetKlass() const { return _klass; }
 	virtual Object* Clone() const = 0;
+	size_t CalcHash() { return DoCalcHash(); }
+	virtual size_t DoCalcHash() { return reinterpret_cast<size_t>(this); }
+	virtual bool IsEqualTo(const Object* pObject) const { return IsIdentical(pObject); }
 	virtual String ToString() const { return String::Empty; }
 	virtual String GenSource() const { return String::Empty; }
 public:
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
+	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
+		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
+	}
+	bool IsSameType(const Object* pObject) const { return _klass.IsIdentical(pObject->GetKlass()); }
+	static bool IsSameType(const Object* pObject1, const Object* pObject2) {
+		return pObject1 && pObject1->IsSameType(pObject2);
+	}
 	template<typename T> bool IsType() const { return _klass.IsIdentical(T::klass); }
 	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
 	template<typename T> bool IsInstanceOf() const;

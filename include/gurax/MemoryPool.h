@@ -105,7 +105,7 @@ public:
 	~Allocator() = default;
 public:
 	_Tp* allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
-		return reinterpret_cast<_Tp*>(MemoryPool::Global().Allocate(num * sizeof(_Tp), "Allocator"));
+		return static_cast<_Tp*>(MemoryPool::Global().Allocate(num * sizeof(_Tp), "Allocator"));
 	}
 	void deallocate(_Tp* p, size_t num) {
 		MemoryPool::Global().Deallocate(p);
