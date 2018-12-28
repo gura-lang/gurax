@@ -895,7 +895,7 @@ void Tokenizer::FeedChar(char ch)
 				_stringInfo.cntRest = 8;
 				_stat = Stat::StringEscUnicode;
 			} else {
-				_value.push_back(String::GetEscaped(ch));
+				_value.push_back(String::ToEscaped(ch));
 				_stat = _stringInfo.statRtn;
 			}
 		}

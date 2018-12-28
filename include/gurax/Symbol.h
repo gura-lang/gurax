@@ -81,7 +81,7 @@ public:
 	};
 	struct Hash_Name {
 		size_t operator()(const Symbol* pSymbol) const {
-			return std::hash<std::string>()(pSymbol->GetName());
+			return String::CalcHash(pSymbol->GetName());
 		}
 	};
 protected:

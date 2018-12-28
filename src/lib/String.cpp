@@ -16,6 +16,7 @@ int String::_convOctDigitTbl[256];
 int String::_convHexDigitTbl[256];
 char String::_toUpperTbl[256];
 char String::_toLowerTbl[256];
+char String::_toEscapedTbl[256];
 
 void String::Bootup()
 {
@@ -78,6 +79,10 @@ void String::Bootup()
 			('A' <= ch && ch <= 'F')? ch - 'A' + 10 : ('a' <= ch && ch <= 'f')? ch - 'a' + 10 : 0;
 		_toUpperTbl[ch] = ('a' <= ch && ch <= 'z')? ch - 'a' + 'A' : ch;
 		_toLowerTbl[ch] = ('A' <= ch && ch <= 'Z')? ch - 'A' + 'a' : ch;
+		_toEscapedTbl[ch] =
+			(ch == 'a')? '\a' : (ch == 'b')? '\b' : (ch == 'f')? '\f' : (ch == 'n')? '\n' :
+			(ch == 'r')? '\r' : (ch == 't')? '\t' : (ch == 'v')? '\v' : (ch == '\\')? '\\' :
+			(ch == '\'')? '\'' : (ch == '"')?  '"' : ch;
 	}
 }
 
@@ -263,28 +268,6 @@ void String::AppendUTF32(UInt32 codeUTF32)
 	while (i > 0) push_back(buff[--i]);
 }
 
-char String::GetEscaped(char ch)
-{
-	static const struct {
-		char ch;
-		char chConv;
-	} tbl[] = {
-		{ 'a',	'\a'	},
-		{ 'b',	'\b'	},
-		{ 'f',	'\f'	},
-		{ 'n',	'\n'	},
-		{ 'r',	'\r'	},
-		{ 't',	'\t'	},
-		{ 'v',	'\v'	},
-		{ '\\',	'\\'	},
-		{ '\'',	'\''	},
-		{ '"',	'"'		},
-	};
-	for (const auto& entry : tbl) {
-		if (entry.ch == ch) return entry.chConv;
-	}
-	return ch;
-}
 
 String String::MakeQuoted(const char* str, bool surroundFlag)
 {
@@ -324,6 +307,20 @@ String String::MakeQuoted(const char* str, bool surroundFlag)
 	}
 	if (surroundFlag) strDst += chQuote;
 	return strDst;
+}
+
+size_t String::CalcHash(const char* str)
+{
+	size_t hash = 0;
+	for ( ; *str != '\0'; ++str) hash = hash * 137 + *str;
+	return hash;
+}
+
+size_t String::CalcHash(const char* str, size_t len)
+{
+	size_t hash = 0;
+	for ( ; len > 0; ++str, --len) hash = hash * 137 + *str;
+	return hash;
 }
 
 }

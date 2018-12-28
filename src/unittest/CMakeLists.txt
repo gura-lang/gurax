@@ -1,5 +1,6 @@
 add_executable(unittest
 	unittest.cpp
+	SampleRecord.cpp
 	test-DateTime.cpp
 	test-Function.cpp
 	test-Help.cpp
@@ -11,6 +12,7 @@ add_executable(unittest
 	test-Referable.cpp
 	test-SizeOf.cpp
 	test-Stream.cpp
+	test-String.cpp
 	test-Symbol.cpp
 	test-Tokenizer.cpp
 )

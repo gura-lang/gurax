@@ -24,7 +24,6 @@ int Main(int argc, char* argv[])
 			::printf("[%s]\n", pTester->GetName());
 			pTester->Entry(argc - 2, argv + 2);
 			foundFlag = true;
-			break;
 		}
 	}
 	if (!foundFlag) {

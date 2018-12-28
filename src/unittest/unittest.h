@@ -2,6 +2,7 @@
 // unittest.h
 //==============================================================================
 #include <gurax.h>
+#include "SampleRecord.h"
 
 #define Gurax_TesterEntry(testerName) \
 class Tester_##testerName : public Tester { \

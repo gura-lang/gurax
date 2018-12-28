@@ -42,6 +42,7 @@ private:
 	static int _convHexDigitTbl[256];
 	static char _toUpperTbl[256];
 	static char _toLowerTbl[256];
+	static char _toEscapedTbl[256];
 public:
 	String(const std::string& src) : std::string(src) {}
 	String(std::string&& src) : std::string(std::move(src)) {}
@@ -74,6 +75,7 @@ public:
 	static int ConvHexDigit(char ch)		{ return _convHexDigitTbl[static_cast<UChar>(ch)]; }
 	static char ToUpper(char ch)			{ return _toUpperTbl[static_cast<UChar>(ch)]; }
 	static char ToLower(char ch)			{ return _toLowerTbl[static_cast<UChar>(ch)]; }
+	static char ToEscaped(char ch)			{ return _toEscapedTbl[static_cast<UChar>(ch)]; }
 public:
 	String PickChar(size_t idx) const;
 	const_iterator Forward(const_iterator p) const;
@@ -87,7 +89,9 @@ public:
 	String MakeQuoted(bool surroundFlag = false) { return MakeQuoted(c_str(), surroundFlag); }
 	static String MakeQuoted(const char* str, bool surroundFlag = true);
 public:
-	static char GetEscaped(char ch);
+	size_t CalcHash() const { return CalcHash(c_str(), size()); }
+	static size_t CalcHash(const char* str);
+	static size_t CalcHash(const char* str, size_t len);
 };
 
 inline String operator+(const String& v1, const String& v2) {
