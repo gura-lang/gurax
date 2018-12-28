@@ -45,7 +45,18 @@ public:
 	RefPtr<ObjectOwner> CloneDeep() const;
 	void Set(size_t pos, Object* pObject);
 	Object* Get(size_t pos) const { return at(pos); }
+public:
+	template<typename T_Map> static RefPtr<ObjectOwner> CollectKeys(const T_Map& map);
 };
+
+template<typename T_Map>
+RefPtr<ObjectOwner> ObjectOwner::CollectKeys(const T_Map& map)
+{
+	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	pObjectOwner->reserve(map.size());
+	for (auto pair : map) pObjectOwner->push_back(pair.first->Reference());
+	return pObjectOwner;
+}
 
 //------------------------------------------------------------------------------
 // ObjectMap
@@ -117,6 +128,17 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object : public Referable {
 public:
+	struct EqualTo {
+		size_t operator()(const Object* pObject1, const Object* pObject2) const {
+			return pObject1->IsIdentical(pObject2);
+		}
+	};
+	struct Hash {
+		size_t operator()(const Object* pObjectl) const {
+			return 0;
+		}
+	};
+public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
 	// Class declaration
@@ -171,6 +193,28 @@ template<typename T> bool Object::IsInstanceOf() const
 	}
 	return false;
 }
+
+//------------------------------------------------------------------------------
+// ObjectDict
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectDict :
+	public std::unordered_map<Object*, Object*, Object::Hash, Object::EqualTo>, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ObjectDict);
+protected:
+	~ObjectDict() { Clear(); }
+public:
+	void Clear();
+	void Set(Object* pObjectKey, Object* pObject);
+	Object* Get(const Object* pObjectKey) const {
+		auto pPair = find(const_cast<Object*>(pObjectKey));
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	bool IsSet(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
+	RefPtr<ObjectOwner> GetKeys() const { return ObjectOwner::CollectKeys(*this); }
+	void Print() const;
+};
 
 //------------------------------------------------------------------------------
 // KlassMap

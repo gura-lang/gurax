@@ -70,7 +70,7 @@ public:
 		}
 	};
 	struct EqualTo_Name {
-		size_t operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
 			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) == 0;
 		}
 	};

@@ -120,6 +120,39 @@ void ObjectMap::Print() const
 }
 
 //------------------------------------------------------------------------------
+// ObjectDict
+//------------------------------------------------------------------------------
+void ObjectDict::Clear()
+{
+	for (auto& pair : *this) {
+		Object::Delete(pair.first);
+		Object::Delete(pair.second);
+	}
+	clear();
+}
+
+void ObjectDict::Set(Object* pObjectKey, Object* pObject)
+{
+	iterator pPair = find(pObjectKey);
+	if (pPair == end()) {
+		emplace(pObjectKey, pObject);
+	} else {
+		Object::Delete(pPair->second);
+		pPair->second = pObject;
+	}
+}
+
+void ObjectDict::Print() const
+{
+	auto pKeys = GetKeys();
+	//pKeys->Sort();
+	for (const Object* pObjectKey : *pKeys) {
+		Object* pObject = Get(pObjectKey);
+		::printf("%s = %s\n", pObjectKey->ToString().c_str(), pObject->ToString().c_str());
+	}
+}
+
+//------------------------------------------------------------------------------
 // KlassMap
 //------------------------------------------------------------------------------
 void KlassMap::Set(const Symbol* pSymbol, Klass* pKlass)
