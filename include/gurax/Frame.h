@@ -55,16 +55,16 @@ public:
 public:
 	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
 		if (!_pKlassMap) _pKlassMap.reset(new KlassMap());
-		_pKlassMap->Set(pSymbol, pKlass);
+		_pKlassMap->Assign(pSymbol, pKlass);
 	}
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
-		_pObjectMap->Set(pSymbol, pObject);
+		_pObjectMap->Assign(pSymbol, pObject);
 	}
 	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
-		return _pKlassMap? _pKlassMap->Get(pSymbol) : nullptr;
+		return _pKlassMap? _pKlassMap->Lookup(pSymbol) : nullptr;
 	}
 	virtual Object* LookupObject(const Symbol* pSymbol) const override {
-		return _pObjectMap->Get(pSymbol);
+		return _pObjectMap->Lookup(pSymbol);
 	}
 };
 

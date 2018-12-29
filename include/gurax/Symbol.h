@@ -44,14 +44,15 @@ SymbolList SymbolList::CollectKeys(const T_Map& map)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Symbol {
 public:
+	// Algorithm operators with UniqId
+	struct EqualTo_UniqId {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+			return pSymbol1->GetUniqId() == pSymbol2->GetUniqId();
+		}
+	};
 	struct LessThan_UniqId {
 		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
 			return pSymbol1->GetUniqId() < pSymbol2->GetUniqId();
-		}
-	};
-	struct LessThan_Name {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
-			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) < 0;
 		}
 	};
 	struct GreaterThan_UniqId {
@@ -59,24 +60,25 @@ public:
 			return pSymbol1->GetUniqId() > pSymbol2->GetUniqId();
 		}
 	};
-	struct GreaterThan_Name {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
-			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) > 0;
-		}
-	};
-	struct EqualTo_UniqId {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
-			return pSymbol1->GetUniqId() == pSymbol2->GetUniqId();
-		}
-	};
-	struct EqualTo_Name {
-		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
-			return ::strcmp(pSymbol1->GetName(), pSymbol2->GetName()) == 0;
-		}
-	};
 	struct Hash_UniqId {
 		size_t operator()(const Symbol* pSymbol) const {
 			return pSymbol->GetUniqId();
+		}
+	};
+	// Algorithm operators with Name
+	struct EqualTo_Name {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+			return String::IsEqualTo(pSymbol1->GetName(), pSymbol2->GetName());
+		}
+	};
+	struct LessThan_Name {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+			return String::IsLessThan(pSymbol1->GetName(), pSymbol2->GetName());
+		}
+	};
+	struct GreaterThan_Name {
+		bool operator()(const Symbol* pSymbol1, const Symbol* pSymbol2) const {
+			return String::IsGreaterThan(pSymbol1->GetName(), pSymbol2->GetName());
 		}
 	};
 	struct Hash_Name {
@@ -115,6 +117,7 @@ public:
 	}
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
 	bool IsLessThan(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
+	bool IsGreaterThan(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) > 0; }
 	static void Bootup();
 	static const Symbol* Add(const char* name);
 	static SymbolList GetList();
@@ -133,7 +136,7 @@ public:
 	Gurax_DeclareReferable(SymbolSet);
 public:
 	void Set(const Symbol* pSymbol) { insert(pSymbol); }
-	bool IsSet(const Symbol* pSymbol) { return find(pSymbol) != end(); }
+	bool DoesExist(const Symbol* pSymbol) { return find(pSymbol) != end(); }
 };
 
 //------------------------------------------------------------------------------

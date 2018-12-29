@@ -58,7 +58,13 @@ public:
 			GetKlass().IsLessThan(pObject->GetKlass());
 		
 	}
-	virtual String ToString() const override { return GetObjectDict().ToString(); }
+	virtual bool IsGreaterThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			dynamic_cast<const Object_dict*>(pObject)->GetObjectDict().IsLessThan(GetObjectDict()) :
+			GetKlass().IsGreaterThan(pObject->GetKlass());
+		
+	}
+	virtual String ToString(const StringStyle&) const override { return GetObjectDict().ToString(); }
 };
 
 }

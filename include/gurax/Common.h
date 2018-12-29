@@ -118,6 +118,23 @@ enum class SortOrder {
 };
 
 //------------------------------------------------------------------------------
+// Sorter
+//------------------------------------------------------------------------------
+class Sorter {
+public:
+	enum Order { None, Ascend, Descend, };
+public:
+	template<typename T_List, typename LessThan, typename GreaterThan>
+	static void Sort(T_List& list, Order order) {
+		if (order == Ascend) {
+			std::sort(list.begin(), list.end(), LessThan());
+		} else if (order == Descend) {
+			std::sort(list.begin(), list.end(), GreaterThan());
+		}
+	}
+};
+
+//------------------------------------------------------------------------------
 // Number types
 //------------------------------------------------------------------------------
 using Bool		= bool;				// boolean

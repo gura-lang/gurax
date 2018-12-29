@@ -323,4 +323,17 @@ size_t String::CalcHash(const char* str, size_t len)
 	return hash;
 }
 
+//------------------------------------------------------------------------------
+// StringList
+//------------------------------------------------------------------------------
+StringList& StringList::Sort(Sorter::Order order)
+{
+	Sorter::Sort<StringList, String::LessThan, String::GreaterThan>(*this, order);
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+// StringReferable
+//------------------------------------------------------------------------------
+
 }

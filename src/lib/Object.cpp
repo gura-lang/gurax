@@ -42,6 +42,11 @@ void Object::Bootup()
 }
 
 //------------------------------------------------------------------------------
+// Object::StringStyle
+//------------------------------------------------------------------------------
+const Object::StringStyle Object::StringStyle::Empty;
+
+//------------------------------------------------------------------------------
 // Object::KlassEx
 //------------------------------------------------------------------------------
 Object::KlassEx Object::klass("object");
@@ -54,6 +59,11 @@ void Object::KlassEx::DoPrepare()
 //------------------------------------------------------------------------------
 // ObjectList
 //------------------------------------------------------------------------------
+ObjectList& ObjectList::Sort(Sorter::Order order)
+{
+	Sorter::Sort<ObjectList, Object::LessThan, Object::GreaterThan>(*this, order);
+	return *this;
+}
 
 //------------------------------------------------------------------------------
 // ObjectOwner
@@ -100,7 +110,7 @@ void ObjectMap::Clear()
 	clear();
 }
 
-void ObjectMap::Set(const Symbol* pSymbol, Object* pObject)
+void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {
@@ -115,7 +125,7 @@ void ObjectMap::Print() const
 {
 	auto keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		Object* pObject = Get(pSymbol);
+		Object* pObject = Lookup(pSymbol);
 		::printf("%s:%s = %s\n", pSymbol->GetName(),
 				 pObject->GetKlass().MakeFullName().c_str(), pObject->ToString().c_str());
 	}
@@ -133,7 +143,7 @@ void ObjectDict::Clear()
 	clear();
 }
 
-void ObjectDict::Set(Object* pObjectKey, Object* pObject)
+void ObjectDict::Assign(Object* pObjectKey, Object* pObject)
 {
 	iterator pPair = find(pObjectKey);
 	if (pPair == end()) {
@@ -154,7 +164,7 @@ void ObjectDict::Print() const
 	auto pKeys = GetKeys();
 	//pKeys->Sort();
 	for (const Object* pObjectKey : *pKeys) {
-		Object* pObject = Get(pObjectKey);
+		Object* pObject = Lookup(pObjectKey);
 		::printf("%s = %s\n", pObjectKey->ToString().c_str(), pObject->ToString().c_str());
 	}
 }
@@ -162,7 +172,7 @@ void ObjectDict::Print() const
 //------------------------------------------------------------------------------
 // KlassMap
 //------------------------------------------------------------------------------
-void KlassMap::Set(const Symbol* pSymbol, Klass* pKlass)
+void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {
@@ -176,7 +186,7 @@ void KlassMap::Print() const
 {
 	auto keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		const Klass* pKlass = Get(pSymbol);
+		const Klass* pKlass = Lookup(pSymbol);
 		::printf("%s = %s\n", pSymbol->GetName(), pKlass->MakeFullName().c_str());
 	}
 }

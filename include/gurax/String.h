@@ -14,6 +14,28 @@ class StringList;
 //------------------------------------------------------------------------------
 class String : public std::string {
 public:
+	// Algorithm operators
+	struct EqualTo {
+		bool operator()(const String& str1, const String& str2) const {
+			return str1.IsEqualTo(str2);
+		}
+	};
+	struct LessThan {
+		bool operator()(const String& str1, const String& str2) const {
+			return str1.IsLessThan(str2);
+		}
+	};
+	struct GreaterThan {
+		bool operator()(const String& str1, const String& str2) const {
+			return str1.IsGreaterThan(str2);
+		}
+	};
+	struct Hash {
+		bool operator()(const String& str) const {
+			return str.CalcHash();
+		}
+	};
+public:
 	struct CType {
 		static constexpr UInt32 Alpha			= 1 << 0;
 		static constexpr UInt32 Digit			= 1 << 1;
@@ -98,6 +120,9 @@ public:
 	static bool IsLessThan(const char* str1, const char* str2) { return ::strcmp(str1, str2) < 0; }
 	bool IsLessThan(const char* str) const { return IsLessThan(c_str(), str); }
 	bool IsLessThan(const String& str) const { return *this < str; }
+	static bool IsGreaterThan(const char* str1, const char* str2) { return ::strcmp(str1, str2) > 0; }
+	bool IsGreaterThan(const char* str) const { return IsLessThan(c_str(), str); }
+	bool IsGreaterThan(const String& str) const { return *this > str; }
 };
 
 inline String operator+(const String& v1, const String& v2) {
@@ -109,8 +134,7 @@ inline String operator+(const String& v1, const String& v2) {
 //------------------------------------------------------------------------------
 class StringList : public std::vector<String> {
 public:
-	// Inherits constructors
-	using std::vector<String>::vector;
+	StringList& Sort(Sorter::Order order = Sorter::Ascend);
 };
 
 //------------------------------------------------------------------------------

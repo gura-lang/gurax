@@ -17,6 +17,8 @@ class Environment;
 // ObjectList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectList : public std::vector<Object*> {
+public:
+	ObjectList& Sort(Sorter::Order order = Sorter::Ascend);
 };
 
 //------------------------------------------------------------------------------
@@ -60,12 +62,12 @@ protected:
 	~ObjectMap() { Clear(); }
 public:
 	void Clear();
-	void Set(const Symbol* pSymbol, Object* pObject);
-	Object* Get(const Symbol* pSymbol) const {
+	void Assign(const Symbol* pSymbol, Object* pObject);
+	Object* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
 	}
-	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	void Print() const;
 };
@@ -114,7 +116,8 @@ public:
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	bool IsLessThan(const Klass& klass) const { return this < &klass; }
-	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
+	bool IsGreaterThan(const Klass& klass) const { return this > &klass; }
+	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
 public:
 	void Prepare() { DoPrepare(); }
 	virtual void DoPrepare() = 0;
@@ -128,15 +131,37 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object : public Referable {
 public:
+	// Algorithm operators
 	struct EqualTo {
 		size_t operator()(const Object* pObject1, const Object* pObject2) const {
-			return pObject1->IsIdentical(pObject2);
+			return pObject1->IsEqualTo(pObject2);
+		}
+	};
+	struct LessThan {
+		size_t operator()(const Object* pObject1, const Object* pObject2) const {
+			return pObject1->IsLessThan(pObject2);
+		}
+	};
+	struct GreaterThan {
+		size_t operator()(const Object* pObject1, const Object* pObject2) const {
+			return pObject1->IsGreaterThan(pObject2);
 		}
 	};
 	struct Hash {
 		size_t operator()(const Object* pObject) const {
 			return pObject->CalcHash();
 		}
+	};
+public:
+	class StringStyle {
+	private:
+		bool _asSourceFlag;
+	public:
+		static const StringStyle Empty;
+	public:
+		StringStyle() : _asSourceFlag(false) {}
+		StringStyle& AsSource(bool asSourceFlag) { _asSourceFlag = asSourceFlag; return *this; }
+		bool IsAsSource() const { return _asSourceFlag; }
 	};
 public:
 	// Referable declaration
@@ -174,6 +199,7 @@ public:
 	Klass& GetKlass() { return _klass; }
 	const Klass& GetKlass() const { return _klass; }
 	size_t CalcHash() const { return DoCalcHash(); }
+	String ToString() const { return ToString(StringStyle::Empty); }
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
@@ -192,7 +218,8 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual bool IsLessThan(const Object* pObject) const = 0;
-	virtual String ToString() const { return String::Empty; }
+	virtual bool IsGreaterThan(const Object* pObject) const = 0;
+	virtual String ToString(const StringStyle&) const { return String::Empty; }
 public:
 	bool IsMutable() const { return GetKlass().IsMutable(); }
 	bool IsImmutable() const { return GetKlass().IsImmutable(); }
@@ -226,12 +253,12 @@ protected:
 	~ObjectDict() { Clear(); }
 public:
 	void Clear();
-	void Set(Object* pObjectKey, Object* pObject);
-	Object* Get(const Object* pObjectKey) const {
+	void Assign(Object* pObjectKey, Object* pObject);
+	Object* Lookup(const Object* pObjectKey) const {
 		auto pPair = find(const_cast<Object*>(pObjectKey));
 		return (pPair == end())? nullptr : pPair->second;
 	}
-	bool IsSet(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
+	bool DoesExist(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
 	RefPtr<ObjectOwner> GetKeys() const { return ObjectOwner::CollectKeys(*this); }
 	void Print() const;
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -253,12 +280,12 @@ public:
 protected:
 	~KlassMap() = default;
 public:
-	void Set(const Symbol* pSymbol, Klass* pKlass);
-	Klass* Get(const Symbol* pSymbol) const {
+	void Assign(const Symbol* pSymbol, Klass* pKlass);
+	Klass* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
 	}
-	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	void Print() const;
 };

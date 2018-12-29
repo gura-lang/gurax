@@ -52,7 +52,12 @@ public:
 			GetDouble() < dynamic_cast<const Object_number*>(pObject)->GetDouble() :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString() const override { return std::to_string(_num); }
+	virtual bool IsGreaterThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			GetDouble() > dynamic_cast<const Object_number*>(pObject)->GetDouble() :
+			GetKlass().IsGreaterThan(pObject->GetKlass());
+	}
+	virtual String ToString(const StringStyle&) const override { return std::to_string(_num); }
 };
 
 }
