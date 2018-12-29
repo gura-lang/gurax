@@ -178,7 +178,6 @@ public:
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual String ToString() const { return String::Empty; }
 	virtual String GenSource() const { return String::Empty; }
-public:
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
@@ -232,6 +231,11 @@ public:
 	bool IsSet(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
 	RefPtr<ObjectOwner> GetKeys() const { return ObjectOwner::CollectKeys(*this); }
 	void Print() const;
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }
+	bool IsEqualTo(const ObjectDict& objectDict) const { return IsIdentical(objectDict); }
+	bool IsLessThan(const ObjectDict& objectDict) const { return this < &objectDict; }
+	String ToString() const;
 };
 
 //------------------------------------------------------------------------------

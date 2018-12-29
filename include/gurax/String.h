@@ -92,6 +92,8 @@ public:
 	size_t CalcHash() const { return CalcHash(c_str(), size()); }
 	static size_t CalcHash(const char* str);
 	static size_t CalcHash(const char* str, size_t len);
+	bool IsEqualTo(const String& str) const { return *this == str; }
+	bool IsLessThan(const String& str) const { return *this < str; }
 };
 
 inline String operator+(const String& v1, const String& v2) {

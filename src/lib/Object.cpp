@@ -144,6 +144,11 @@ void ObjectDict::Set(Object* pObjectKey, Object* pObject)
 	}
 }
 
+String ObjectDict::ToString() const
+{
+	return String::Empty;
+}
+
 void ObjectDict::Print() const
 {
 	auto pKeys = GetKeys();
