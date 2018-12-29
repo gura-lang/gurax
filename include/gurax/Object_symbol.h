@@ -39,14 +39,20 @@ protected:
 	~Object_symbol() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
+public:
+	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetSymbol()->CalcHash(); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetSymbol()->IsIdentical(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol());
+			GetSymbol()->IsEqualTo(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol());
+	}
+	virtual bool IsLessThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			GetSymbol()->IsLessThan(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
+			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString() const override { return String("`").append(_pSymbol->GetName()); }
-	virtual String GenSource() const override { return ToString(); }
 };
 
 }

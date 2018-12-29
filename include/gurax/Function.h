@@ -33,6 +33,10 @@ public:
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Function* pFunction) const { return this == pFunction; }
+	bool IsEqualTo(const Function* pFunction) const { return IsIdentical(pFunction); }
+	bool IsLessThan(const Function* pFunction) const { return this < pFunction; }
 	String ToString() const { return "(func)"; }
 };
 

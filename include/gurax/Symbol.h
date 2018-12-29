@@ -113,6 +113,8 @@ public:
 	static bool IsIdentical(const Symbol* pSymbol1, const Symbol *pSymbol2) {
 		return pSymbol1 && pSymbol2 && (pSymbol1->GetUniqId() == pSymbol2->GetUniqId());
 	}
+	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
+	bool IsLessThan(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
 	static void Bootup();
 	static const Symbol* Add(const char* name);
 	static SymbolList GetList();

@@ -44,14 +44,21 @@ protected:
 public:
 	ObjectDict& GetObjectDict() { return *_pObjectDict; }
 	const ObjectDict& GetObjectDict() const { return *_pObjectDict; }
+public:
+	// Virtual functions of Object
 	virtual Object* Clone() const override { return new Object_dict(*this); }
 	virtual size_t DoCalcHash() const override { return GetObjectDict().CalcHash(); }
 	virtual dict IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
 			GetObjectDict().IsIdentical(dynamic_cast<const Object_dict*>(pObject)->GetObjectDict());
 	}
+	virtual bool IsLessThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			GetObjectDict().IsLessThan(dynamic_cast<const Object_dict*>(pObject)->GetObjectDict()) :
+			GetKlass().IsLessThan(pObject->GetKlass());
+		
+	}
 	virtual String ToString() const override { return GetObjectDict().ToString(); }
-	virtual String GenSource() const override { return ToString(); }
 };
 
 }

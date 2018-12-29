@@ -113,6 +113,7 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
+	bool IsLessThan(const Klass& klass) const { return this < &klass; }
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Get(pSymbol); }
 public:
 	void Prepare() { DoPrepare(); }
@@ -173,11 +174,6 @@ public:
 	Klass& GetKlass() { return _klass; }
 	const Klass& GetKlass() const { return _klass; }
 	size_t CalcHash() const { return DoCalcHash(); }
-	virtual Object* Clone() const = 0;
-	virtual size_t DoCalcHash() const = 0;
-	virtual bool IsEqualTo(const Object* pObject) const = 0;
-	virtual String ToString() const { return String::Empty; }
-	virtual String GenSource() const { return String::Empty; }
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
@@ -190,6 +186,13 @@ public:
 	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
 	template<typename T> bool IsInstanceOf() const;
 	template<typename T> static bool IsInstanceOf(const Object* pObject) { return pObject && pObject->IsInstanceOf<T>(); }
+public:
+	// Virtual functions
+	virtual Object* Clone() const = 0;
+	virtual size_t DoCalcHash() const = 0;
+	virtual bool IsEqualTo(const Object* pObject) const = 0;
+	virtual bool IsLessThan(const Object* pObject) const = 0;
+	virtual String ToString() const { return String::Empty; }
 public:
 	bool IsMutable() const { return GetKlass().IsMutable(); }
 	bool IsImmutable() const { return GetKlass().IsImmutable(); }

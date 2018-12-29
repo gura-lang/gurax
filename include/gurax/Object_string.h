@@ -41,14 +41,20 @@ protected:
 public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+public:
+	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return String::CalcHash(GetString()); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			::strcmp(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString());
+			String::IsEqualTo(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString());
+	}
+	virtual bool IsLessThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			String::IsLessThan(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString()) :
+			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString() const override { return _pStr->GetStringSTL().MakeQuoted(true); }
-	virtual String GenSource() const override { return ToString(); }
 };
 
 }

@@ -40,13 +40,19 @@ protected:
 public:
 	template<typename T> T Get() const { return static_cast<T>(_num); }
 	Double GetDouble() const { return _num; }
+public:
+	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return Get<size_t>(); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) && GetDouble() == dynamic_cast<const Object_number*>(pObject)->GetDouble();
 	}
+	virtual bool IsLessThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			GetDouble() < dynamic_cast<const Object_number*>(pObject)->GetDouble() :
+			GetKlass().IsLessThan(pObject->GetKlass());
+	}
 	virtual String ToString() const override { return std::to_string(_num); }
-	virtual String GenSource() const override { return ToString(); }
 };
 
 }

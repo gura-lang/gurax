@@ -36,11 +36,14 @@ protected:
 	// Destructor
 	virtual ~Object_undefined() = default;
 public:
+	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Object* pObject) const override { return IsSameType(pObject); }
+	virtual bool IsLessThan(const Object* pObject) const override {
+		return IsSameType(pObject)? false : GetKlass().IsLessThan(pObject->GetKlass());
+	}
 	virtual String ToString() const override { return "undefined"; }
-	virtual String GenSource() const override { return ToString(); }
 };
 
 }

@@ -40,11 +40,18 @@ protected:
 	~Object_function() = default;
 public:
 	const Function* GetFunction() const { return _pFunc.get(); }
+public:
+	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return reinterpret_cast<size_t>(this); }
 	virtual bool IsEqualTo(const Object* pObject) const override { return IsIdentical(pObject); }
+	virtual bool IsLessThan(const Object* pObject) const override {
+		return IsSameType(pObject)?
+			GetFunction()->IsLessThan(dynamic_cast<const Object_function*>(pObject)->GetFunction()) :
+			GetKlass().IsLessThan(pObject->GetKlass());
+		
+	}
 	virtual String ToString() const override { return _pFunc->ToString(); }
-	virtual String GenSource() const override { return ToString(); }
 };
 
 }
