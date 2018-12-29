@@ -5,30 +5,72 @@
 
 namespace Gurax {
 
-Gurax_TesterEntry(Object)
+void Test_ObjectMap()
 {
-	do {
-		RefPtr<ObjectMap> pObjMap(new ObjectMap());
-		pObjMap->Assign(Symbol::Add("foo1"), new Object_number(1));
-		pObjMap->Assign(Symbol::Add("foo2"), new Object_number(2));
-		pObjMap->Assign(Symbol::Add("foo3"), Object::nil());
-		pObjMap->Assign(Symbol::Add("foo4"), Object::true_());
-		pObjMap->Assign(Symbol::Add("foo5"), Object::false_());
-		pObjMap->Assign(Symbol::Add("foo6"), new Object_string("6"));
-		pObjMap->Assign(Symbol::Add("foo7"), new Object_number(7));
-		pObjMap->Assign(Symbol::Add("foo8"), Object::undefined());
-		pObjMap->Assign(Symbol::Add("foo9"), Object::zero());
-		pObjMap->Assign(Symbol::Add("fooA"), Object::emptystr());
-		pObjMap->Print();
-	} while (0);
-	do {
-		Object *pObj = new Object_number(1);
-		::printf("%d %d %d %d\n",
+	RefPtr<ObjectMap> pObjMap(new ObjectMap());
+	pObjMap->Assign(Symbol::Add("foo1"), new Object_number(1));
+	pObjMap->Assign(Symbol::Add("foo2"), new Object_number(2));
+	pObjMap->Assign(Symbol::Add("foo3"), Object::nil());
+	pObjMap->Assign(Symbol::Add("foo4"), Object::true_());
+	pObjMap->Assign(Symbol::Add("foo5"), Object::false_());
+	pObjMap->Assign(Symbol::Add("foo6"), new Object_string("6"));
+	pObjMap->Assign(Symbol::Add("foo7"), new Object_number(7));
+	pObjMap->Assign(Symbol::Add("foo8"), Object::undefined());
+	pObjMap->Assign(Symbol::Add("foo9"), Object::zero());
+	pObjMap->Assign(Symbol::Add("fooA"), Object::emptystr());
+	pObjMap->Print();
+}
+
+void Test_IsType()
+{
+	auto func = [](const Object* pObj) {
+		::printf("%-12s %d %d %d %d\n",
+				 pObj->GetKlass().GetName(),
+				 pObj->IsInstanceOf<Object>(),
 				 pObj->IsType<Object_bool>(),
 				 pObj->IsType<Object_number>(),
-				 pObj->IsType<Object_string>(),
-				 pObj->IsInstanceOf<Object>());
-	} while (0);
+				 pObj->IsType<Object_string>());
+	};
+	func(new Object_bool(true));
+	func(new Object_number(1));
+	func(new Object_string(""));
+}
+
+void Test_Sort()
+{
+	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	for (const SampleRecord* pSampleRecord = SampleRecord::tbl;
+								 pSampleRecord->name; ++pSampleRecord) {
+		pObjectOwner->push_back(new Object_string(pSampleRecord->name));
+	}
+	for (auto pObject : *pObjectOwner) ::printf("%s\n", pObject->ToString().c_str());
+	pObjectOwner->Sort();
+	for (auto pObject : *pObjectOwner) ::printf("%s\n", pObject->ToString().c_str());
+	pObjectOwner->Sort(Sorter::Descend);
+	for (auto pObject : *pObjectOwner) ::printf("%s\n", pObject->ToString().c_str());
+}
+
+void Test_Dict()
+{
+	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
+	for (const SampleRecord* pSampleRecord = SampleRecord::tbl;
+								 pSampleRecord->name; ++pSampleRecord) {
+		pObjectDict->Assign(new Object_string(pSampleRecord->name), new Object_string(pSampleRecord->email));
+	}
+	for (const SampleRecord* pSampleRecord = SampleRecord::tbl;
+								 pSampleRecord->name; ++pSampleRecord) {
+		RefPtr<Object> pObjectKey(new Object_string(pSampleRecord->name));
+		Object* pObject = pObjectDict->Lookup(pObjectKey.get());
+		::printf("%s: %s\n", pObjectKey->ToString().c_str(), pObject->ToString().c_str());
+	}
+}
+
+Gurax_TesterEntry(Object)
+{
+	Test_ObjectMap();
+	Test_IsType();
+	Test_Sort();
+	Test_Dict();
 }
 
 }
