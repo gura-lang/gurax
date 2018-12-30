@@ -60,9 +60,17 @@ ObjectList& ObjectList::Sort(Sorter::Order order)
 	return *this;
 }
 
-String ObjectList::ToString(const StringStyle&) const
+String ObjectList::ToString(const StringStyle& stringStyle) const
 {
-	return String::Empty;
+	const char* strComma = stringStyle.IsCram()? "," : ", ";
+	String str;
+	str += "[";
+	for (auto ppObject = begin(); ppObject != end(); ++ppObject) {
+		if (ppObject != begin()) str += strComma;
+		str += (*ppObject)->ToString(stringStyle);
+	}
+	str += "]";
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -121,14 +129,20 @@ void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
 	}
 }
 
-void ObjectMap::Print() const
+String ObjectMap::ToString(const StringStyle& stringStyle) const
 {
+	String str;
 	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
 		Object* pObject = Lookup(pSymbol);
-		::printf("%s:%s = %s\n", pSymbol->GetName(),
-				 pObject->GetKlass().MakeFullName().c_str(), pObject->ToString().c_str());
+		str += pSymbol->GetName();
+		str += ":";
+		str += pObject->GetKlass().MakeFullName().c_str();
+		str += " = ";
+		str += pObject->ToString();
+		str += "\n";
 	}
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -178,19 +192,24 @@ void ObjectDict::Assign(Object* pObjectKey, Object* pObject)
 	}
 }
 
-String ObjectDict::ToString(const StringStyle&) const
+String ObjectDict::ToString(const StringStyle& stringStyle) const
 {
-	return String::Empty;
-}
-
-void ObjectDict::Print() const
-{
+	const char* strComma = stringStyle.IsCram()? "," : ", ";
+	const char* strPair = stringStyle.IsCram()? "=>" : " => ";
 	RefPtr<ObjectOwner> pKeys = GetKeys();
-	//pKeys->Sort();
-	for (const Object* pObjectKey : *pKeys) {
+	pKeys->Sort();
+	String str;
+	str += "{";
+	for (auto ppObjectKey = pKeys->begin(); ppObjectKey != pKeys->end(); ppObjectKey++) {
+		const Object* pObjectKey = *ppObjectKey;
 		Object* pObject = Lookup(pObjectKey);
-		::printf("%s = %s\n", pObjectKey->ToString().c_str(), pObject->ToString().c_str());
+		if (ppObjectKey != pKeys->begin()) str += strComma;
+		str += pObjectKey->ToString(stringStyle);
+		str += strPair;
+		str += pObject->ToString(stringStyle);
 	}
+	str += "}";
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -206,13 +225,18 @@ void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
 	}
 }
 
-void KlassMap::Print() const
+String KlassMap::ToString(const StringStyle &stringStyle) const
 {
+	String str;
 	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
 		const Klass* pKlass = Lookup(pSymbol);
-		::printf("%s = %s\n", pSymbol->GetName(), pKlass->MakeFullName().c_str());
+		str += pSymbol->GetName();
+		str += " = ";
+		str += pKlass->MakeFullName();
+		str += "\n";
 	}
+	return str;
 }
 
 }

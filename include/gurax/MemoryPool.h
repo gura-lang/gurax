@@ -49,9 +49,9 @@ public:
 			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
 			_pPool(nullptr), _pHeaderVacantHead(nullptr) {}
 		size_t GetBytesBlock() const { return _bytesBlock; }
-		void Print() const;
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
+		String ToString(const StringStyle& stringStyle) const;
 	};
 	class ChunkVariable : public Chunk {
 	public:
@@ -80,7 +80,8 @@ public:
 	static MemoryPool& Global() { return _memoryPool; }
 	void* Allocate(size_t bytes, const char* ownerName);
 	void Deallocate(void* p);
-	void Print() const;
+	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& stringStyle) const;
 };
 
 //-----------------------------------------------------------------------------

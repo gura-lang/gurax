@@ -34,10 +34,11 @@ void MemoryPool::Deallocate(void* p)
 	pHeader->u.pChunk->Deallocate(p);
 }
 
-void MemoryPool::Print() const
+String MemoryPool::ToString(const StringStyle& stringStyle) const
 {
-	_chunkFixed1.Print();
-	//_chunkFixed2.Print();
+	String str;
+	str += _chunkFixed1.ToString(stringStyle);
+	return str;
 }
 
 //-----------------------------------------------------------------------------
@@ -76,9 +77,12 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 	_pHeaderVacantHead = pHeader;
 }
 
-void MemoryPool::ChunkFixed::Print() const
+String MemoryPool::ChunkFixed::ToString(const StringStyle& stringStyle) const
 {
-	::printf("[ChunkFixed:%ldbytes/block]\n", _bytesBlock);
+	String str;
+	char buff[128];
+	::sprintf(buff, "[ChunkFixed:%ldbytes/block]\n", _bytesBlock);
+	str += buff;
 	size_t bytesFrame = sizeof(Header) + _bytesBlock;
 	PoolList poolList;
 	for (Pool* pPool = _pPool; pPool; pPool = pPool->pPoolPrev) poolList.push_back(pPool);
@@ -88,11 +92,12 @@ void MemoryPool::ChunkFixed::Print() const
 		const char* pHeaderRaw = pPool->buff;
 		for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pHeaderRaw += bytesFrame) {
 			const Header* pHeader = reinterpret_cast<const Header*>(pHeaderRaw);
-			::printf("%c", pHeader->ownerName? '*' : '.');
+			str += pHeader->ownerName? '*' : '.';
 		}
-		::printf("\n");
+		str += "\n";
 	}
 	//::printf("\n");
+	return str;
 }
 
 //-----------------------------------------------------------------------------

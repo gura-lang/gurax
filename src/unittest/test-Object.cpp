@@ -18,7 +18,7 @@ void Test_ObjectMap()
 	pObjMap->Assign(Symbol::Add("foo8"), Object::undefined());
 	pObjMap->Assign(Symbol::Add("foo9"), Object::zero());
 	pObjMap->Assign(Symbol::Add("fooA"), Object::emptystr());
-	pObjMap->Print();
+	std::cout << pObjMap->ToString();
 }
 
 void Test_IsType()
@@ -43,11 +43,11 @@ void Test_Sort()
 								 pSampleRecord->name; ++pSampleRecord) {
 		pObjectOwner->push_back(new Object_string(pSampleRecord->name));
 	}
-	for (auto pObject : *pObjectOwner) ::printf("%s\n", pObject->ToString().c_str());
+	std::cout << pObjectOwner->ToString();
 	pObjectOwner->Sort();
-	for (auto pObject : *pObjectOwner) ::printf("%s\n", pObject->ToString().c_str());
+	for (auto pObject : *pObjectOwner) std::cout << pObject->ToString();
 	pObjectOwner->Sort(Sorter::Descend);
-	for (auto pObject : *pObjectOwner) ::printf("%s\n", pObject->ToString().c_str());
+	for (auto pObject : *pObjectOwner) std::cout << pObject->ToString();
 }
 
 void Test_Dict()
@@ -57,6 +57,7 @@ void Test_Dict()
 								 pSampleRecord->name; ++pSampleRecord) {
 		pObjectDict->Assign(new Object_string(pSampleRecord->name), new Object_string(pSampleRecord->email));
 	}
+	std::cout << pObjectDict->ToString();
 	for (const SampleRecord* pSampleRecord = SampleRecord::tbl;
 								 pSampleRecord->name; ++pSampleRecord) {
 		RefPtr<Object> pObjectKey(new Object_string(pSampleRecord->name));

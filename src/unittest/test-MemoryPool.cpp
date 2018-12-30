@@ -34,22 +34,22 @@ public:
 Gurax_TesterEntry(MemoryPool)
 {
 	AList aList;
-	g_memoryPoolTest.Print();
+	std::cout << g_memoryPoolTest.ToString();
 	for (int i = 0; i < 100; ++i) {
 		aList.push_back(new A());
 	}
-	g_memoryPoolTest.Print();
+	std::cout << g_memoryPoolTest.ToString();
 	for (int j = 0; j < 10000; ++j) {
 		int n = Random::Global().Range(30) + 1;
 		for (int i = 0; i < n; ++i) {
 			size_t idx = Random::Global().Range(aList.size());
 			aList.Delete(idx);
 		}
-		g_memoryPoolTest.Print();
+		std::cout << g_memoryPoolTest.ToString();
 		for (int i = 0; i < n; ++i) {
 			aList.push_back(new A());
 		}
-		g_memoryPoolTest.Print();
+		std::cout << g_memoryPoolTest.ToString();
 	}
 }
 

@@ -76,7 +76,8 @@ public:
 	}
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
-	void Print() const;
+	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& stringStyle) const;
 };
 
 //------------------------------------------------------------------------------
@@ -256,7 +257,6 @@ public:
 	}
 	bool DoesExist(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
 	ObjectOwner* GetKeys() const { return ObjectOwner::CollectKeys(*this); }
-	void Print() const;
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }
 	bool IsEqualTo(const ObjectDict& objectDict) const { return IsIdentical(objectDict); }
@@ -284,7 +284,8 @@ public:
 	}
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
-	void Print() const;
+	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& stringStyle) const;
 };
 
 }

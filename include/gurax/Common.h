@@ -6,6 +6,7 @@
 #include <array>
 #include <complex>
 #include <functional>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <random>
@@ -140,12 +141,18 @@ public:
 class StringStyle {
 private:
 	bool _asSourceFlag;
+	bool _cramFlag;
+	bool _multiLineFlag;
 public:
 	static const StringStyle Empty;
 public:
-StringStyle() : _asSourceFlag(false) {}
+StringStyle() : _asSourceFlag(false) , _cramFlag(false), _multiLineFlag(false) {}
 	StringStyle& AsSource(bool asSourceFlag) { _asSourceFlag = asSourceFlag; return *this; }
+	StringStyle& Cram(bool cramFlag) { _cramFlag = cramFlag; return *this; }
+	StringStyle& MultiLine(bool multiLineFlag) { _multiLineFlag = multiLineFlag; return *this; }
 	bool IsAsSource() const { return _asSourceFlag; }
+	bool IsCram() const { return _cramFlag; }
+	bool IsMultiLine() const { return _multiLineFlag; }
 };
 
 //------------------------------------------------------------------------------
