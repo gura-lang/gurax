@@ -51,11 +51,6 @@ public:
 			GetBool() < dynamic_cast<const Object_bool*>(pObject)->GetBool() :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual bool IsGreaterThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetBool() > dynamic_cast<const Object_bool*>(pObject)->GetBool() :
-			GetKlass().IsGreaterThan(pObject->GetKlass());
-	}
 	virtual String ToString(const StringStyle&) const override { return _flag? "true" : "false"; }
 };
 

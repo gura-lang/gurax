@@ -27,7 +27,7 @@ public:
 	};
 	struct GreaterThan {
 		bool operator()(const String& str1, const String& str2) const {
-			return str1.IsGreaterThan(str2);
+			return str2.IsLessThan(str1);
 		}
 	};
 	struct Hash {
@@ -120,9 +120,6 @@ public:
 	static bool IsLessThan(const char* str1, const char* str2) { return ::strcmp(str1, str2) < 0; }
 	bool IsLessThan(const char* str) const { return IsLessThan(c_str(), str); }
 	bool IsLessThan(const String& str) const { return *this < str; }
-	static bool IsGreaterThan(const char* str1, const char* str2) { return ::strcmp(str1, str2) > 0; }
-	bool IsGreaterThan(const char* str) const { return IsLessThan(c_str(), str); }
-	bool IsGreaterThan(const String& str) const { return *this > str; }
 };
 
 inline String operator+(const String& v1, const String& v2) {

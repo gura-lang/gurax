@@ -50,18 +50,12 @@ public:
 	virtual size_t DoCalcHash() const override { return GetObjectDict().CalcHash(); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetObjectDict().IsIdentical(dynamic_cast<const Object_dict*>(pObject)->GetObjectDict());
+			GetObjectDict().IsEqualTo(dynamic_cast<const Object_dict*>(pObject)->GetObjectDict());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetObjectDict().IsLessThan(dynamic_cast<const Object_dict*>(pObject)->GetObjectDict()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
-		
-	}
-	virtual bool IsGreaterThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			dynamic_cast<const Object_dict*>(pObject)->GetObjectDict().IsLessThan(GetObjectDict()) :
-			GetKlass().IsGreaterThan(pObject->GetKlass());
 		
 	}
 	virtual String ToString(const StringStyle&) const override { return GetObjectDict().ToString(); }

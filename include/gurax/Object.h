@@ -121,7 +121,6 @@ public:
 	}
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	bool IsLessThan(const Klass& klass) const { return this < &klass; }
-	bool IsGreaterThan(const Klass& klass) const { return this > &klass; }
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
 public:
 	void Prepare() { DoPrepare(); }
@@ -149,7 +148,7 @@ public:
 	};
 	struct GreaterThan {
 		size_t operator()(const Object* pObject1, const Object* pObject2) const {
-			return pObject1->IsGreaterThan(pObject2);
+			return pObject2->IsLessThan(pObject1);
 		}
 	};
 	struct Hash {
@@ -223,7 +222,6 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual bool IsLessThan(const Object* pObject) const = 0;
-	virtual bool IsGreaterThan(const Object* pObject) const = 0;
 	virtual String ToString(const StringStyle&) const { return String::Empty; }
 public:
 	bool IsMutable() const { return GetKlass().IsMutable(); }

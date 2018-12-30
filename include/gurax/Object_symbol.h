@@ -52,11 +52,6 @@ public:
 			GetSymbol()->IsLessThan(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual bool IsGreaterThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetSymbol()->IsGreaterThan(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
-			GetKlass().IsGreaterThan(pObject->GetKlass());
-	}
 	virtual String ToString(const StringStyle&) const override { return String("`").append(_pSymbol->GetName()); }
 };
 

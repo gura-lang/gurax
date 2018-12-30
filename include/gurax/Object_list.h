@@ -50,18 +50,12 @@ public:
 	virtual size_t DoCalcHash() const override { return GetObjectOwner().CalcHash(); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetObjectOwner().IsIdentical(dynamic_cast<const Object_list*>(pObject)->GetObjectOwner());
+			GetObjectOwner().IsEqualTo(dynamic_cast<const Object_list*>(pObject)->GetObjectOwner());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetObjectOwner().IsLessThan(dynamic_cast<const Object_list*>(pObject)->GetObjectOwner()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
-		
-	}
-	virtual bool IsGreaterThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			dynamic_cast<const Object_list*>(pObject)->GetObjectOwner().IsLessThan(GetObjectOwner()) :
-			GetKlass().IsGreaterThan(pObject->GetKlass());
 		
 	}
 	virtual String ToString(const StringStyle&) const override { return GetObjectOwner().ToString(); }

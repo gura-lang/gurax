@@ -54,11 +54,6 @@ public:
 			String::IsLessThan(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual bool IsGreaterThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			String::IsGreaterThan(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString()) :
-			GetKlass().IsGreaterThan(pObject->GetKlass());
-	}
 	virtual String ToString(const StringStyle&) const override { return _pStr->GetStringSTL().MakeQuoted(true); }
 };
 
