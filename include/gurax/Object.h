@@ -12,6 +12,7 @@ namespace Gurax {
 
 class Object;
 class Environment;
+class StringStyle;
 
 //------------------------------------------------------------------------------
 // ObjectList
@@ -23,7 +24,8 @@ public:
 	bool IsIdentical(const ObjectList& objectList) const { return this == &objectList; }
 	bool IsEqualTo(const ObjectList& objectList) const { return IsIdentical(objectList); }
 	bool IsLessThan(const ObjectList& objectList) const { return this < &objectList; }
-	String ToString() const;
+	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& stringStyle) const;
 };
 
 //------------------------------------------------------------------------------
@@ -157,17 +159,6 @@ public:
 		}
 	};
 public:
-	class StringStyle {
-	private:
-		bool _asSourceFlag;
-	public:
-		static const StringStyle Empty;
-	public:
-		StringStyle() : _asSourceFlag(false) {}
-		StringStyle& AsSource(bool asSourceFlag) { _asSourceFlag = asSourceFlag; return *this; }
-		bool IsAsSource() const { return _asSourceFlag; }
-	};
-public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
 	// Class declaration
@@ -270,7 +261,8 @@ public:
 	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }
 	bool IsEqualTo(const ObjectDict& objectDict) const { return IsIdentical(objectDict); }
 	bool IsLessThan(const ObjectDict& objectDict) const { return this < &objectDict; }
-	String ToString() const;
+	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& stringStyle) const;
 };
 
 //------------------------------------------------------------------------------

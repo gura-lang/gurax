@@ -135,6 +135,20 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// StringStyle
+//------------------------------------------------------------------------------
+class StringStyle {
+private:
+	bool _asSourceFlag;
+public:
+	static const StringStyle Empty;
+public:
+StringStyle() : _asSourceFlag(false) {}
+	StringStyle& AsSource(bool asSourceFlag) { _asSourceFlag = asSourceFlag; return *this; }
+	bool IsAsSource() const { return _asSourceFlag; }
+};
+
+//------------------------------------------------------------------------------
 // Number types
 //------------------------------------------------------------------------------
 using Bool		= bool;				// boolean

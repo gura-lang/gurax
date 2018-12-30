@@ -42,11 +42,6 @@ void Object::Bootup()
 }
 
 //------------------------------------------------------------------------------
-// Object::StringStyle
-//------------------------------------------------------------------------------
-const Object::StringStyle Object::StringStyle::Empty;
-
-//------------------------------------------------------------------------------
 // Object::KlassEx
 //------------------------------------------------------------------------------
 Object::KlassEx Object::klass("object");
@@ -65,7 +60,7 @@ ObjectList& ObjectList::Sort(Sorter::Order order)
 	return *this;
 }
 
-String ObjectList::ToString() const
+String ObjectList::ToString(const StringStyle&) const
 {
 	return String::Empty;
 }
@@ -183,7 +178,7 @@ void ObjectDict::Assign(Object* pObjectKey, Object* pObject)
 	}
 }
 
-String ObjectDict::ToString() const
+String ObjectDict::ToString(const StringStyle&) const
 {
 	return String::Empty;
 }
