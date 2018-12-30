@@ -32,21 +32,21 @@ protected:
 	~ObjectOwner() { Clear(); }
 public:
 	void Clear();
-	RefPtr<ObjectOwner> Clone() const;
-	RefPtr<ObjectOwner> CloneDeep() const;
+	ObjectOwner* Clone() const;
+	ObjectOwner* CloneDeep() const;
 	void Set(size_t pos, Object* pObject);
 	Object* Get(size_t pos) const { return at(pos); }
 public:
-	template<typename T_Map> static RefPtr<ObjectOwner> CollectKeys(const T_Map& map);
+	template<typename T_Map> static ObjectOwner* CollectKeys(const T_Map& map);
 };
 
 template<typename T_Map>
-RefPtr<ObjectOwner> ObjectOwner::CollectKeys(const T_Map& map)
+ObjectOwner* ObjectOwner::CollectKeys(const T_Map& map)
 {
 	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
 	pObjectOwner->reserve(map.size());
-	for (auto pair : map) pObjectOwner->push_back(pair.first->Reference());
-	return pObjectOwner;
+	for (auto& pair : map) pObjectOwner->push_back(pair.first->Reference());
+	return pObjectOwner.release();
 }
 
 //------------------------------------------------------------------------------
@@ -253,13 +253,15 @@ protected:
 	~ObjectDict() { Clear(); }
 public:
 	void Clear();
+	ObjectDict* Clone() const;
+	ObjectDict* CloneDeep() const;
 	void Assign(Object* pObjectKey, Object* pObject);
 	Object* Lookup(const Object* pObjectKey) const {
 		auto pPair = find(const_cast<Object*>(pObjectKey));
 		return (pPair == end())? nullptr : pPair->second;
 	}
 	bool DoesExist(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
-	RefPtr<ObjectOwner> GetKeys() const { return ObjectOwner::CollectKeys(*this); }
+	ObjectOwner* GetKeys() const { return ObjectOwner::CollectKeys(*this); }
 	void Print() const;
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }

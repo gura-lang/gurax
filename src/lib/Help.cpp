@@ -18,7 +18,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void HelpOwner::Clear()
 {
-	for (auto pHelp : *this) Help::Delete(pHelp);
+	for (Help* pHelp : *this) Help::Delete(pHelp);
 	clear();
 }
 

@@ -74,15 +74,15 @@ void ObjectOwner::Clear()
 	clear();
 }
 
-RefPtr<ObjectOwner> ObjectOwner::Clone() const
+ObjectOwner* ObjectOwner::Clone() const
 {
 	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
 	pObjectOwner->reserve(size());
 	for (Object* pObject : *this) pObjectOwner->push_back(pObject->Reference());
-	return pObjectOwner;
+	return pObjectOwner.release();
 }
 
-RefPtr<ObjectOwner> ObjectOwner::CloneDeep() const
+ObjectOwner* ObjectOwner::CloneDeep() const
 {
 	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
 	pObjectOwner->reserve(size());
@@ -91,7 +91,7 @@ RefPtr<ObjectOwner> ObjectOwner::CloneDeep() const
 		if (!pObjectCloned) return nullptr;
 		pObjectOwner->push_back(pObjectCloned);
 	}
-	return pObjectOwner;
+	return pObjectOwner.release();
 }
 
 void ObjectOwner::Set(size_t pos, Object* pObject)
@@ -123,7 +123,7 @@ void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
 
 void ObjectMap::Print() const
 {
-	auto keys = GetKeys().Sort();
+	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
 		Object* pObject = Lookup(pSymbol);
 		::printf("%s:%s = %s\n", pSymbol->GetName(),
@@ -141,6 +141,30 @@ void ObjectDict::Clear()
 		Object::Delete(pair.second);
 	}
 	clear();
+}
+
+ObjectDict* ObjectDict::Clone() const
+{
+	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
+	pObjectDict->reserve(size());
+	for (auto pair : *this) {
+		pObjectDict->emplace(pair.first->Reference(), pair.second->Reference());
+	}
+	return pObjectDict.release();
+}
+
+ObjectDict* ObjectDict::CloneDeep() const
+{
+	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
+	pObjectDict->reserve(size());
+	for (auto pair : *this) {
+		Object* pObjectKeyCloned = pair.first->Clone();
+		if (!pObjectKeyCloned) return nullptr;
+		Object* pObjectCloned = pair.second->Clone();
+		if (!pObjectCloned) return nullptr;
+		pObjectDict->emplace(pObjectKeyCloned, pObjectCloned);
+	}
+	return pObjectDict.release();
 }
 
 void ObjectDict::Assign(Object* pObjectKey, Object* pObject)
@@ -161,7 +185,7 @@ String ObjectDict::ToString() const
 
 void ObjectDict::Print() const
 {
-	auto pKeys = GetKeys();
+	RefPtr<ObjectOwner> pKeys = GetKeys();
 	//pKeys->Sort();
 	for (const Object* pObjectKey : *pKeys) {
 		Object* pObject = Lookup(pObjectKey);
@@ -184,7 +208,7 @@ void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
 
 void KlassMap::Print() const
 {
-	auto keys = GetKeys().Sort();
+	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
 		const Klass* pKlass = Lookup(pSymbol);
 		::printf("%s = %s\n", pSymbol->GetName(), pKlass->MakeFullName().c_str());

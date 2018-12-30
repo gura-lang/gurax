@@ -26,7 +26,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			if (cntToken == 1) {
 				// nothing to do
 			} else if (cntToken == 2 && tokenStack.back()->IsType(TokenType::Expr)) {
-				auto pTokenPrev = tokenStack.Pop();
+				RefPtr<Token> pTokenPrev = tokenStack.Pop();
 				Expr* pExpr = pTokenPrev->GetExpr()->Reference();
 #if 0
 				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
@@ -117,7 +117,7 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr
 bool Parser::ReduceOneToken()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	auto pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s\n", pToken1->GetSymbol());
 	return true;
 }
@@ -125,8 +125,8 @@ bool Parser::ReduceOneToken()
 bool Parser::ReduceTwoTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	auto pToken2 = tokenStack.Pop();
-	auto pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken2 = tokenStack.Pop();
+	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s %s\n", pToken1->GetSymbol(), pToken2->GetSymbol());
 	return true;
 }
@@ -134,9 +134,9 @@ bool Parser::ReduceTwoTokens()
 bool Parser::ReduceThreeTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	auto pToken3 = tokenStack.Pop();
-	auto pToken2 = tokenStack.Pop();
-	auto pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken3 = tokenStack.Pop();
+	RefPtr<Token> pToken2 = tokenStack.Pop();
+	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s %s %s\n", pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol());
 	return true;
 }
@@ -144,10 +144,10 @@ bool Parser::ReduceThreeTokens()
 bool Parser::ReduceFourTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	auto pToken4 = tokenStack.Pop();
-	auto pToken3 = tokenStack.Pop();
-	auto pToken2 = tokenStack.Pop();
-	auto pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken4 = tokenStack.Pop();
+	RefPtr<Token> pToken3 = tokenStack.Pop();
+	RefPtr<Token> pToken2 = tokenStack.Pop();
+	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s %s %s %s\n",
 			 pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol(), pToken4->GetSymbol());
 	return true;
@@ -156,11 +156,11 @@ bool Parser::ReduceFourTokens()
 bool Parser::ReduceFiveTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	auto pToken5 = tokenStack.Pop();
-	auto pToken4 = tokenStack.Pop();
-	auto pToken3 = tokenStack.Pop();
-	auto pToken2 = tokenStack.Pop();
-	auto pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken5 = tokenStack.Pop();
+	RefPtr<Token> pToken4 = tokenStack.Pop();
+	RefPtr<Token> pToken3 = tokenStack.Pop();
+	RefPtr<Token> pToken2 = tokenStack.Pop();
+	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s %s %s %s %s\n",
 			 pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol(),
 			 pToken4->GetSymbol(), pToken5->GetSymbol());

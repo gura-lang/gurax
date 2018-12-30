@@ -208,7 +208,7 @@ public:
 	Gurax_DeclareReferable(TokenOwner);
 public:
 	void Clear() {
-		for (auto& pToken : *this) Token::Delete(pToken);
+		for (Token* pToken : *this) Token::Delete(pToken);
 		clear();
 	}
 };
@@ -220,7 +220,7 @@ class GURAX_DLLDECLARE TokenStack : public TokenList {
 public:
 	~TokenStack() { Clear(); }
 	void Clear() {
-		for (auto pToken : *this) Token::Delete(pToken);
+		for (Token* pToken : *this) Token::Delete(pToken);
 		clear();
 	}
 	void Initialize();
@@ -230,7 +230,7 @@ public:
 	String ToString() const;
 	bool IsEmpty() const { return size() <= 1; }
 	void Push(Token* pToken) { push_back(pToken); }
-	RefPtr<Token> Pop() { Token* pToken = back(); pop_back(); return pToken; }
+	Token* Pop() { Token* pToken = back(); pop_back(); return pToken; }
 };
 
 }

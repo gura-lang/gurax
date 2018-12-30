@@ -44,9 +44,9 @@ Gurax_TesterEntry(Referable)
 	} while (0);
 	do {
 		::printf("RefPtr\n");
-		RefPtr<Foo> pFoo1(new Foo("A"));
-		RefPtr<Foo> pFoo2(new Foo("B"));
-		RefPtr<Foo> pFoo3(new Foo("C"));
+		RefPtr<Foo> pFoo1 = new Foo("A");
+		RefPtr<Foo> pFoo2 = new Foo("B");
+		RefPtr<Foo> pFoo3 = new Foo("C");
 	} while (0);
 	do {
 		::printf("Owner\n");
@@ -59,23 +59,23 @@ Gurax_TesterEntry(Referable)
 		::printf("WeakRef\n");
 		auto pFoo1 = new Foo("A");
 		do {
-			RefPtr<Foo::WeakPtr> pwFoo(pFoo1->GetWeakPtr());
+			RefPtr<Foo::WeakPtr> pwFoo = pFoo1->GetWeakPtr();
 			if (auto pFoo = pwFoo->Lock()) {
 				::printf("locked:  %s %d\n", pFoo->GetName(), pFoo->GetCntRef());
 			}
 		} while (0);
 		::printf("         %s %d\n", pFoo1->GetName(), pFoo1->GetCntRef());
 		do {
-			RefPtr<Foo::WeakPtr> pwFoo(pFoo1->GetWeakPtr());
+			RefPtr<Foo::WeakPtr> pwFoo = pFoo1->GetWeakPtr();
 			if (auto pFoo = pwFoo->Lock()) {
 				::printf("locked:  %s %d\n", pFoo->GetName(), pFoo->GetCntRef());
 			}
 		} while (0);
 		do {
-			RefPtr<Foo::WeakPtr> pwFoo(pFoo1->GetWeakPtr());
+			RefPtr<Foo::WeakPtr> pwFoo = pFoo1->GetWeakPtr();
 			Foo::Delete(pFoo1);
-			auto pFoo = pwFoo->Lock();
-			if (auto pFoo = pwFoo->Lock()) {
+			RefPtr<Foo> pFoo = pwFoo->Lock();
+			if (RefPtr<Foo> pFoo = pwFoo->Lock()) {
 				::printf("locked:  %s %d\n", pFoo->GetName(), pFoo->GetCntRef());
 			} else {
 				::printf("locked:  fail\n");
@@ -84,7 +84,7 @@ Gurax_TesterEntry(Referable)
 	} while (0);
 	do {
 		::printf("WeakRef longevity\n");
-		RefPtr<Foo> pFoo1(new Foo("A"));
+		RefPtr<Foo> pFoo1 = new Foo("A");
 		auto pwFoo1 = pFoo1->GetWeakPtr();
 		::printf("WeakRef: %d\n", pwFoo1->GetCntRef());
 		auto pwFoo2 = pwFoo1->Reference();

@@ -64,7 +64,7 @@ public:
 	Gurax_DeclareReferable(ExprOwner);
 public:
 	void Clear() {
-		for (auto& pExpr : *this) Expr::Delete(pExpr);
+		for (Expr* pExpr : *this) Expr::Delete(pExpr);
 		clear();
 	}
 };

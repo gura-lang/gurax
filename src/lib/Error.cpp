@@ -91,7 +91,7 @@ void Error::IssueV(const ErrorType& errorType, Expr *pExpr, const char* format, 
 
 void Error::Print(FILE* fp)
 {
-	for (auto& pError : *_pErrorOwnerGlobal) {
+	for (Error* pError : *_pErrorOwnerGlobal) {
 		::fprintf(fp, "%s\n", pError->MakeMessage().c_str());
 	}
 }

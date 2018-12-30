@@ -48,7 +48,7 @@ public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return new Object_dict(*this); }
 	virtual size_t DoCalcHash() const override { return GetObjectDict().CalcHash(); }
-	virtual dict IsEqualTo(const Object* pObject) const override {
+	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
 			GetObjectDict().IsIdentical(dynamic_cast<const Object_dict*>(pObject)->GetObjectDict());
 	}
