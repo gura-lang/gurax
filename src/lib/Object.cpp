@@ -65,6 +65,11 @@ ObjectList& ObjectList::Sort(Sorter::Order order)
 	return *this;
 }
 
+String ObjectList::ToString() const
+{
+	return String::Empty;
+}
+
 //------------------------------------------------------------------------------
 // ObjectOwner
 //------------------------------------------------------------------------------

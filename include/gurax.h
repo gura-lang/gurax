@@ -18,6 +18,7 @@
 #include "gurax/Object_bool.h"
 #include "gurax/Object_dict.h"
 #include "gurax/Object_function.h"
+#include "gurax/Object_list.h"
 #include "gurax/Object_nil.h"
 #include "gurax/Object_number.h"
 #include "gurax/Object_string.h"
