@@ -76,7 +76,7 @@ void ObjectOwner::Clear()
 
 ObjectOwner* ObjectOwner::Clone() const
 {
-	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	RefPtr<ObjectOwner> pObjectOwner = new ObjectOwner();
 	pObjectOwner->reserve(size());
 	for (Object* pObject : *this) pObjectOwner->push_back(pObject->Reference());
 	return pObjectOwner.release();
@@ -84,7 +84,7 @@ ObjectOwner* ObjectOwner::Clone() const
 
 ObjectOwner* ObjectOwner::CloneDeep() const
 {
-	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	RefPtr<ObjectOwner> pObjectOwner = new ObjectOwner();
 	pObjectOwner->reserve(size());
 	for (Object* pObject : *this) {
 		Object* pObjectCloned = pObject->Clone();
@@ -145,7 +145,7 @@ void ObjectDict::Clear()
 
 ObjectDict* ObjectDict::Clone() const
 {
-	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
+	RefPtr<ObjectDict> pObjectDict = new ObjectDict();
 	pObjectDict->reserve(size());
 	for (auto pair : *this) {
 		pObjectDict->emplace(pair.first->Reference(), pair.second->Reference());
@@ -155,7 +155,7 @@ ObjectDict* ObjectDict::Clone() const
 
 ObjectDict* ObjectDict::CloneDeep() const
 {
-	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
+	RefPtr<ObjectDict> pObjectDict = new ObjectDict();
 	pObjectDict->reserve(size());
 	for (auto pair : *this) {
 		Object* pObjectKeyCloned = pair.first->Clone();

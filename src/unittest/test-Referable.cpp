@@ -85,9 +85,9 @@ Gurax_TesterEntry(Referable)
 	do {
 		::printf("WeakRef longevity\n");
 		RefPtr<Foo> pFoo1 = new Foo("A");
-		auto pwFoo1 = pFoo1->GetWeakPtr();
+		Foo::WeakPtr* pwFoo1 = pFoo1->GetWeakPtr();
 		::printf("WeakRef: %d\n", pwFoo1->GetCntRef());
-		auto pwFoo2 = pwFoo1->Reference();
+		Foo::WeakPtr* pwFoo2 = pwFoo1->Reference();
 		::printf("WeakRef: %d\n", pwFoo2->GetCntRef());
 		Foo::WeakPtr::Delete(pwFoo1);
 		::printf("WeakRef: %d\n", pwFoo2->GetCntRef());
