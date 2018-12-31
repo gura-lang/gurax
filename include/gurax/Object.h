@@ -57,6 +57,16 @@ ObjectOwner* ObjectOwner::CollectKeys(const T_Map& map)
 }
 
 //------------------------------------------------------------------------------
+// ObjectStack
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectStack : public ObjectOwner {
+public:
+	Object* Peek(int offset) { return *(rbegin() + offset); }
+	void Push(Object* pObject) { push_back(pObject); }
+	Object* Pop() { Object* pObject = back(); pop_back(); return pObject; }
+};
+
+//------------------------------------------------------------------------------
 // ObjectMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectMap :
