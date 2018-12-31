@@ -71,6 +71,7 @@ private:
 private:
 	TokenWatcher& _tokenWatcher;
 	RefPtr<StringReferable> _pPathNameSrc;
+	RefPtr<TokenStack> _pTokenStack;
 	Stat _stat = Stat::BOF;
 	bool _lineHeadFlag = true;
 	bool _appearShebangFlag = false;
@@ -83,7 +84,6 @@ private:
 	String _value;
 	String _source;
 	String _suffix;
-	TokenStack _tokenStack;
 	StringInfo _stringInfo;
 	String _strIndent;
 	MagicCommentParser _magicCommentParser;
@@ -117,7 +117,7 @@ public:
 	const String& GetPathNameSrcSTL() const { return _pPathNameSrc->GetStringSTL(); }
 	const StringReferable* GetPathNameSrcReferable() const { return _pPathNameSrc.get(); }
 	void IssueError(const ErrorType& errorType, const char* format, ...);
-	TokenStack &GetTokenStack() { return _tokenStack; }
+	TokenStack& GetTokenStack() { return *_pTokenStack; }
 	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);
 	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);
 };

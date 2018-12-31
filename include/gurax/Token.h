@@ -216,19 +216,14 @@ public:
 //------------------------------------------------------------------------------
 // TokenStack
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE TokenStack : public TokenList {
+class GURAX_DLLDECLARE TokenStack : public TokenOwner {
 public:
-	~TokenStack() { Clear(); }
-	void Clear() {
-		for (Token* pToken : *this) Token::Delete(pToken);
-		clear();
-	}
 	void Initialize();
 	reverse_iterator SeekTerminal(reverse_iterator ppToken);
-	Token* Peek(int offset) { return *(rbegin() + offset); }
 	bool CheckBlockParamEnd() const;
 	String ToString() const;
 	bool IsEmpty() const { return size() <= 1; }
+	Token* Peek(int offset) { return *(rbegin() + offset); }
 	void Push(Token* pToken) { push_back(pToken); }
 	Token* Pop() { Token* pToken = back(); pop_back(); return pToken; }
 };

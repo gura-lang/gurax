@@ -9,9 +9,10 @@ namespace Gurax {
 // Tokenizer
 //------------------------------------------------------------------------------
 Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
-	_tokenWatcher(tokenWatcher), _pPathNameSrc(new StringReferable(std::move(pathNameSrc)))
+	_tokenWatcher(tokenWatcher), _pPathNameSrc(new StringReferable(std::move(pathNameSrc))),
+	_pTokenStack(new TokenStack())
 {
-	_tokenStack.Initialize();
+	_pTokenStack->Initialize();
 	_value.reserve(1024 * 64);
 	_suffix.reserve(128);
 	_source.reserve(1024 * 64);
@@ -130,7 +131,7 @@ void Tokenizer::FeedChar(char ch)
 		} else if (ch == '[') {
 			_tokenWatcher.FeedToken(new Token(TokenType::LBracket, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
-		} else if (ch == '|' && _blockParamFlag && _tokenStack.CheckBlockParamEnd()) {
+		} else if (ch == '|' && _blockParamFlag && GetTokenStack().CheckBlockParamEnd()) {
 			_blockParamFlag = false;
 			_tokenWatcher.FeedToken(new Token(TokenType::RBlockParam, GetLineNo()));
 			if (Error::IsIssued()) _stat = Stat::Error;
@@ -174,7 +175,7 @@ void Tokenizer::FeedChar(char ch)
 				_value.clear();
 				_value.push_back(ch);
 				_stat = Stat::DoubleChars;
-			} else if (_tokenStack.back()->IsType(TokenType::Quote)) {
+			} else if (GetTokenStack().back()->IsType(TokenType::Quote)) {
 				_value.clear();
 				_value.push_back(ch);
 				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _value));
@@ -297,7 +298,7 @@ void Tokenizer::FeedChar(char ch)
 				}
 				if (pTokenType->IsIdentical(TokenType::TripleChars)) {
 					_stat = Stat::TripleChars;
-				} else if (_tokenStack.back()->IsType(TokenType::Quote)) {
+				} else if (GetTokenStack().back()->IsType(TokenType::Quote)) {
 					_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _value));
 					if (Error::IsIssued()) _stat = Stat::Error;
 				} else {
@@ -371,7 +372,7 @@ void Tokenizer::FeedChar(char ch)
 					break;
 				}
 			}
-			if (_tokenStack.back()->IsType(TokenType::Quote)) {
+			if (GetTokenStack().back()->IsType(TokenType::Quote)) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _value));
 				if (Error::IsIssued()) _stat = Stat::Error;
 			} else {
@@ -419,7 +420,7 @@ void Tokenizer::FeedChar(char ch)
 			_tokenWatcher.FeedToken(new Token(TokenType::ColonAnd, GetLineNo()));
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		} else {
-			const TokenType *pTokenType = _tokenStack.back()->IsSuffixToken()?
+			const TokenType *pTokenType = GetTokenStack().back()->IsSuffixToken()?
 									&TokenType::ColonAfterSuffix : &TokenType::Colon;
 			_tokenWatcher.FeedToken(new Token(*pTokenType, GetLineNo()));
 			Gurax_PushbackEx(ch);
@@ -428,7 +429,7 @@ void Tokenizer::FeedChar(char ch)
 		break;
 	}
 	case Stat::Error: {
-		_tokenStack.Initialize();
+		GetTokenStack().Initialize();
 		_blockParamFlag = false;
 		Gurax_PushbackEx(ch);
 		_stat = Stat::ErrorRecovery;
@@ -534,7 +535,7 @@ void Tokenizer::FeedChar(char ch)
 	}
 	case Stat::NumberAfterPeriod: {
 		if (ch == '.') {
-			if (_tokenStack.back()->IsType(TokenType::Quote)) {
+			if (GetTokenStack().back()->IsType(TokenType::Quote)) {
 				_value.push_back(ch);
 				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _value));
 			} else {
@@ -650,7 +651,7 @@ void Tokenizer::FeedChar(char ch)
 			_value.clear();
 			_stat = Stat::StringFirst;
 		} else {
-			if (_value == "in" && !_tokenStack.back()->IsType(TokenType::Quote)) {
+			if (_value == "in" && !GetTokenStack().back()->IsType(TokenType::Quote)) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Contains, GetLineNo()));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::Symbol, GetLineNo(), _value));
@@ -1020,7 +1021,7 @@ void Tokenizer::FeedChar(char ch)
 		if (ch == '\n') {
 			_stat = Stat::BOF;
 			_lineHeadFlag = true;
-			_tokenStack.Initialize();
+			GetTokenStack().Initialize();
 		}
 		break;
 	}
