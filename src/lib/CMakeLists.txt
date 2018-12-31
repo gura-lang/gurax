@@ -1,6 +1,7 @@
 add_library(guraxcore SHARED
 	guraxcore.cpp
 	Common.cpp
+	Context.cpp
 	DateTime.cpp
 	Environment.cpp
 	Error.cpp

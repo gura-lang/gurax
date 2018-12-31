@@ -5,6 +5,7 @@
 #define GURAX_H
 
 #include "gurax/Common.h"
+#include "gurax/Context.h"
 #include "gurax/DateTime.h"
 #include "gurax/Environment.h"
 #include "gurax/Error.h"
