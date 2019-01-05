@@ -12,6 +12,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
+void ExprList::Exec() const
+{
+	for (const Expr* pExpr : *this) {
+		pExpr->Exec();
+		if (Error::IsIssued()) return;
+	}
+}
 
 //------------------------------------------------------------------------------
 // ExprOwner
@@ -22,10 +29,18 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Unary::typeInfo;
 
+void Expr_Unary::Exec() const
+{
+}
+
 //------------------------------------------------------------------------------
 // Expr_Binary
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Binary::typeInfo;
+
+void Expr_Binary::Exec() const
+{
+}
 
 //------------------------------------------------------------------------------
 // Expr_Container
@@ -41,10 +56,18 @@ void Expr_Container::AddChild(Expr* pExpr)
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Block::typeInfo;
 
+void Expr_Block::Exec() const
+{
+}
+
 //------------------------------------------------------------------------------
 // Expr_Lister
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Lister::typeInfo;
+
+void Expr_Lister::Exec() const
+{
+}
 
 //------------------------------------------------------------------------------
 // Expr_Composite
@@ -54,12 +77,20 @@ const Expr::TypeInfo Expr_Composite::typeInfo;
 void Expr_Composite::AddCdr(Expr* pExpr)
 {
 	pExpr->SetParent(this);
-	_pExprCdr->push_back(pExpr);
+	_pExprCdrs->push_back(pExpr);
+}
+
+void Expr_Composite::Exec() const
+{
 }
 
 //------------------------------------------------------------------------------
 // Expr_Object
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Object::typeInfo;
+
+void Expr_Object::Exec() const
+{
+}
 
 }

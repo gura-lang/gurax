@@ -45,12 +45,16 @@ public:
 	void SetParent(const Expr* pExpr) { _pwExprParent.reset(pExpr->GetWeakPtr()); }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
+public:
+	virtual void Exec() const = 0;
 };
 
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ExprList : public std::vector<Expr*> {
+public:
+	void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -82,6 +86,8 @@ public:
 		_pExprChild->SetParent(this);
 	}
 	const Expr* GetChild() const { return _pExprChild.get(); }
+public:
+	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -99,6 +105,8 @@ public:
 	}
 	const Expr* GetLeft() const { return _pExprLeft.get(); }
 	const Expr* GetRight() const { return _pExprRight.get(); }
+public:
+	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -121,6 +129,8 @@ public:
 	static const TypeInfo typeInfo;
 public:
 	Expr_Block() : Expr_Container(typeInfo) {}
+public:
+	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -131,6 +141,8 @@ public:
 	static const TypeInfo typeInfo;
 public:
 	Expr_Lister() : Expr_Container(typeInfo) {}
+public:
+	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -141,15 +153,17 @@ public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Expr> _pExprCar;
-	RefPtr<ExprOwner> _pExprCdr;
+	RefPtr<ExprOwner> _pExprCdrs;
 public:
-	Expr_Composite(Expr* pExprCar) : Expr(typeInfo), _pExprCar(pExprCar), _pExprCdr(new ExprOwner()) {
+	Expr_Composite(Expr* pExprCar) : Expr(typeInfo), _pExprCar(pExprCar), _pExprCdrs(new ExprOwner()) {
 		_pExprCar->SetParent(this);
 	}
 	Expr* GetCar() { return _pExprCar.get(); }
 	const Expr* GetCar() const { return _pExprCar.get(); }
-	const ExprOwner& GetCdr() const { return *_pExprCdr; }
+	const ExprOwner& GetCdr() const { return *_pExprCdrs; }
 	void AddCdr(Expr* pExpr);
+public:
+	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -164,6 +178,8 @@ public:
 	Expr_Object(Object* pObject) : Expr(typeInfo), _pObject(pObject) {}
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
+public:
+	virtual void Exec() const;
 };
 
 }
