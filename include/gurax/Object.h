@@ -132,9 +132,11 @@ public:
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	bool IsLessThan(const Klass& klass) const { return this < &klass; }
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
+	String ToString() const { return "(klass)"; }
 public:
 	void Prepare() { DoPrepare(); }
 	virtual void DoPrepare() = 0;

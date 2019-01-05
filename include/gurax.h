@@ -20,6 +20,7 @@
 #include "gurax/Object_dict.h"
 #include "gurax/Object_function.h"
 #include "gurax/Object_iterator.h"
+#include "gurax/Object_klass.h"
 #include "gurax/Object_list.h"
 #include "gurax/Object_module.h"
 #include "gurax/Object_nil.h"

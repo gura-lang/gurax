@@ -17,6 +17,7 @@ add_library(guraxcore SHARED
 	Object_dict.cpp
 	Object_function.cpp
 	Object_iterator.cpp
+	Object_klass.cpp
 	Object_list.cpp
 	Object_module.cpp
 	Object_nil.cpp
