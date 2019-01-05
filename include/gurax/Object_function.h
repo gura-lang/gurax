@@ -24,22 +24,22 @@ public:
 	};
 	static KlassEx klass;
 private:
-	RefPtr<Function> _pFunc;
+	RefPtr<Function> _pFunction;
 public:
 	// Constructor
 	Object_function() = delete;
-	explicit Object_function(Function *pFunc) : Object(klass), _pFunc(pFunc) {}
+	explicit Object_function(Function *pFunction) : Object(klass), _pFunction(pFunction) {}
 	// Copy constructor/operator
-	Object_function(const Object_function& src) : Object(klass), _pFunc(src._pFunc->Reference()) {}
-	Object_function& operator=(const Object_function& src) { _pFunc.reset(src._pFunc->Reference()); return *this; }
+	Object_function(const Object_function& src) : Object(klass), _pFunction(src._pFunction->Reference()) {}
+	Object_function& operator=(const Object_function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }
 	// Move constructor/operator
-	Object_function(Object_function&& src) : Object(klass), _pFunc(src._pFunc.release()) {}
-	Object_function& operator=(Object_function&& src) noexcept { _pFunc.reset(src._pFunc.release()); return *this; }
+	Object_function(Object_function&& src) : Object(klass), _pFunction(src._pFunction.release()) {}
+	Object_function& operator=(Object_function&& src) noexcept { _pFunction.reset(src._pFunction.release()); return *this; }
 protected:
 	// Destructor
 	~Object_function() = default;
 public:
-	const Function* GetFunction() const { return _pFunc.get(); }
+	const Function* GetFunction() const { return _pFunction.get(); }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
@@ -49,9 +49,8 @@ public:
 		return IsSameType(pObject)?
 			GetFunction()->IsLessThan(dynamic_cast<const Object_function*>(pObject)->GetFunction()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
-		
 	}
-	virtual String ToString(const StringStyle&) const override { return _pFunc->ToString(); }
+	virtual String ToString(const StringStyle&) const override { return _pFunction->ToString(); }
 };
 
 }

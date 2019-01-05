@@ -37,7 +37,7 @@ public:
 	bool IsIdentical(const Function* pFunction) const { return this == pFunction; }
 	bool IsEqualTo(const Function* pFunction) const { return IsIdentical(pFunction); }
 	bool IsLessThan(const Function* pFunction) const { return this < pFunction; }
-	String ToString() const { return "(func)"; }
+	String ToString() const { return "(function)"; }
 };
 
 }

@@ -11,11 +11,14 @@ add_library(guraxcore SHARED
 	Help.cpp
 	Iterator.cpp
 	MemoryPool.cpp
+	Module.cpp
 	Object.cpp
 	Object_bool.cpp
 	Object_dict.cpp
 	Object_function.cpp
+	Object_iterator.cpp
 	Object_list.cpp
+	Object_module.cpp
 	Object_nil.cpp
 	Object_number.cpp
 	Object_string.cpp
