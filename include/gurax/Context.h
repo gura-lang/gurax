@@ -4,6 +4,7 @@
 #ifndef GURAX_CONTEXT_H
 #define GURAX_CONTEXT_H
 #include "Object.h"
+#include "Frame.h"
 
 namespace Gurax {
 
@@ -13,6 +14,7 @@ namespace Gurax {
 class GURAX_DLLDECLARE Context {
 private:
 	RefPtr<ObjectStack> _pObjectStack;
+	RefPtr<Frame> _pFrame;
 	static Context _context;
 public:
 	// Constructor

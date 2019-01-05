@@ -18,8 +18,12 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame);
 public:
+	enum class Type { Node, Branch };
+private:
+	Type _type;
+public:
 	// Constructor
-	Frame() {}
+	explicit Frame(Type type) : _type(type) {}
 	// Copy constructor/operator
 	Frame(const Frame& src) = delete;
 	Frame& operator=(const Frame& src) = delete;
@@ -30,7 +34,10 @@ protected:
 	// Destructor
 	virtual ~Frame() = default;
 public:
+	bool IsNode() const { return _type == Type::Node; }
+	bool IsBranch() const { return _type == Type::Branch; }
 	Frame* Expand() const;
+	static Frame* Shrink(Frame* pFrame);
 	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlasss) = 0;
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
 	virtual Klass* LookupKlass(const Symbol* pSymbol) const = 0;
@@ -38,20 +45,20 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Item
+// Frame_Node
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Item : public Frame {
+class GURAX_DLLDECLARE Frame_Node : public Frame {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Item);
+	Gurax_DeclareReferable(Frame_Node);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Item");
+	Gurax_MemoryPoolAllocator("Frame_Node");
 protected:
 	RefPtr<KlassMap> _pKlassMap;
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
-	Frame_Item() : _pObjectMap(new ObjectMap()) {}
+	Frame_Node() : Frame(Type::Node), _pObjectMap(new ObjectMap()) {}
 public:
 	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
 		if (!_pKlassMap) _pKlassMap.reset(new KlassMap());
@@ -69,20 +76,24 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Binary
+// Frame_Branch
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Binary : public Frame {
+class GURAX_DLLDECLARE Frame_Branch : public Frame {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Binary);
+	Gurax_DeclareReferable(Frame_Branch);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Binary");
+	Gurax_MemoryPoolAllocator("Frame_Branch");
 protected:
 	RefPtr<Frame> _pFrameLeft;
 	RefPtr<Frame> _pFrameRight;
 public:
 	// Constructor
-	Frame_Binary(Frame* pFrameLeft, Frame* pFrameRight) : _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
+	Frame_Branch(Frame* pFrameLeft, Frame* pFrameRight) : Frame(Type::Branch),
+		_pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
+public:
+	const Frame* GetLeft() const { return _pFrameLeft.get(); }
+	const Frame* GetRight() const { return _pFrameRight.get(); }
 public:
 	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
 		_pFrameRight->AssignKlass(pSymbol, pKlass);

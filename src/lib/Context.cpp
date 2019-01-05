@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Context Context::_context;
 
-Context::Context() : _pObjectStack(new ObjectStack())
+Context::Context() : _pObjectStack(new ObjectStack()), _pFrame(new Frame_Node())
 {
 	_pObjectStack->reserve(8192);
 }

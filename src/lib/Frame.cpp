@@ -10,15 +10,23 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Frame* Frame::Expand() const
 {
-	return new Frame_Binary(Reference(), new Frame_Item());
+	return new Frame_Branch(Reference(), new Frame_Node());
+}
+
+Frame* Frame::Shrink(Frame* pFrame)
+{
+	if (!pFrame->IsBranch()) return pFrame;
+	Frame* pFrameRtn = dynamic_cast<Frame_Branch*>(pFrame)->GetLeft()->Reference();
+	Frame::Delete(pFrame);
+	return pFrameRtn;
 }
 
 //------------------------------------------------------------------------------
-// Frame_Item
+// Frame_Node
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Frame_Binary
+// Frame_Branch
 //------------------------------------------------------------------------------
 
 }

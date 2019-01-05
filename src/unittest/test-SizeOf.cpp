@@ -9,8 +9,8 @@ namespace Gurax {
 
 Gurax_TesterEntry(SizeOf)
 {
-	Gurax_PrintSizeOf(Frame_Item);
-	Gurax_PrintSizeOf(Frame_Binary);
+	Gurax_PrintSizeOf(Frame_Node);
+	Gurax_PrintSizeOf(Frame_Branch);
 	Gurax_PrintSizeOf(ObjectOwner);
 	Gurax_PrintSizeOf(ObjectStack);
 	Gurax_PrintSizeOf(Object_bool);
