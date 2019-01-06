@@ -20,9 +20,19 @@ public:
 			return str1.IsEqualTo(str2);
 		}
 	};
+	struct EqualToICase {
+		bool operator()(const String& str1, const String& str2) const {
+			return str1.IsEqualToICase(str2);
+		}
+	};
 	struct LessThan {
 		bool operator()(const String& str1, const String& str2) const {
 			return str1.IsLessThan(str2);
+		}
+	};
+	struct LessThanICase {
+		bool operator()(const String& str1, const String& str2) const {
+			return str1.IsLessThanICase(str2);
 		}
 	};
 	struct GreaterThan {
@@ -30,9 +40,24 @@ public:
 			return str2.IsLessThan(str1);
 		}
 	};
+	struct GreaterThanICase {
+		bool operator()(const String& str1, const String& str2) const {
+			return str2.IsLessThanICase(str1);
+		}
+	};
 	struct Hash {
 		bool operator()(const String& str) const {
 			return str.CalcHash();
+		}
+	};
+	struct CmpChar {
+		int operator()(char ch1, char ch2) const {
+			return static_cast<int>(ch1) - ch2;
+		}
+	};
+	struct CmpCharICase {
+		int operator()(char ch1, char ch2) const {
+			return static_cast<int>(ToUpper(ch1)) - ToUpper(ch2);
 		}
 	};
 public:
@@ -59,12 +84,12 @@ public:
 	static const String Empty;
 private:
 	static UInt32 _ctypeTbl[256];
-	static int _convBinDigitTbl[256];
-	static int _convOctDigitTbl[256];
-	static int _convHexDigitTbl[256];
-	static char _toUpperTbl[256];
-	static char _toLowerTbl[256];
-	static char _toEscapedTbl[256];
+	static int    _convBinDigitTbl[256];
+	static int    _convOctDigitTbl[256];
+	static int    _convHexDigitTbl[256];
+	static char   _toUpperTbl[256];
+	static char   _toLowerTbl[256];
+	static char   _toEscapedTbl[256];
 public:
 	String(const std::string& src) : std::string(src) {}
 	String(std::string&& src) : std::string(std::move(src)) {}
@@ -100,7 +125,8 @@ public:
 	static char ToEscaped(char ch)			{ return _toEscapedTbl[static_cast<UChar>(ch)]; }
 public:
 	String PickChar(size_t idx) const;
-	const_iterator Forward(const_iterator p) const;
+	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const;
+	static const char* Forward(const char* p, size_t nChars = 1, size_t *pnCharsActual = nullptr);
 	UInt64 NextUTF8(const_iterator* pp) const;
 	static UInt64 NextUTF8(const char** pp);
 	UInt32 NextUTF32(const_iterator* pp) const;
@@ -114,16 +140,152 @@ public:
 	size_t CalcHash() const { return CalcHash(c_str(), size()); }
 	static size_t CalcHash(const char* str);
 	static size_t CalcHash(const char* str, size_t len);
-	static bool IsEqualTo(const char* str1, const char* str2) { return ::strcmp(str1, str2) == 0; }
-	bool IsEqualTo(const char* str) const { return IsEqualTo(c_str(), str); }
-	bool IsEqualTo(const String& str) const { return *this == str; }
-	static bool IsLessThan(const char* str1, const char* str2) { return ::strcmp(str1, str2) < 0; }
-	bool IsLessThan(const char* str) const { return IsLessThan(c_str(), str); }
-	bool IsLessThan(const String& str) const { return *this < str; }
+	static bool IsEqualTo(const char* str1, const char* str2)		{ return ::strcmp(str1, str2) == 0; }
+	bool IsEqualTo(const char* str) const							{ return IsEqualTo(c_str(), str); }
+	bool IsEqualTo(const String& str) const							{ return IsEqualTo(c_str(), str.c_str()); }
+	static bool IsEqualToICase(const char* str1, const char* str2)	{ return ::strcasecmp(str1, str2) == 0; }
+	bool IsEqualToICase(const char* str) const						{ return IsEqualToICase(c_str(), str); }
+	bool IsEqualToICase(const String& str) const					{ return IsEqualToICase(c_str(), str.c_str()); }
+	static bool IsLessThan(const char* str1, const char* str2)		{ return ::strcmp(str1, str2) < 0; }
+	bool IsLessThan(const char* str) const							{ return IsLessThan(c_str(), str); }
+	bool IsLessThan(const String& str) const						{ return IsLessThan(c_str(), str.c_str()); }
+	static bool IsLessThanICase(const char* str1, const char* str2)	{ return ::strcasecmp(str1, str2) < 0; }
+	bool IsLessThanICase(const char* str) const						{ return IsLessThanICase(c_str(), str); }
+	bool IsLessThanICase(const String& str) const					{ return IsLessThanICase(c_str(), str.c_str()); }
+public:
+	static const char* Find(const char* str, const char* sub) {
+		return Find_Tmpl<CmpChar>(str, sub);
+	}
+	static const_iterator Find(const_iterator pStr, const_iterator pStrEnd, const char* sub) {
+		return Find_Tmpl<CmpChar>(pStr, pStrEnd, sub);
+	}
+	const_iterator Find(const_iterator pStr, const char* sub) const {
+		return Find_Tmpl<CmpChar>(pStr, end(), sub);
+	}
+	const_iterator Find(const char* sub) const {
+		return Find_Tmpl<CmpChar>(begin(), end(), sub);
+	}
+	static const char* FindICase(const char* str, const char* sub) {
+		return Find_Tmpl<CmpCharICase>(str, sub);
+	}
+	static const_iterator FindICase(const_iterator pStr, const_iterator pStrEnd, const char* sub) {
+		return Find_Tmpl<CmpCharICase>(pStr, pStrEnd, sub);
+	}
+	const_iterator FindICase(const_iterator pStr, const char* sub) const {
+		return Find_Tmpl<CmpCharICase>(pStr, end(), sub);
+	}
+	const_iterator FindICase(const char* sub) const {
+		return Find_Tmpl<CmpCharICase>(begin(), end(), sub);
+	}
+	static const char* StartsWith(const char* str, const char* sub) {
+		return StartsWith_Tmpl<CmpChar>(str, sub);
+	}
+	const_iterator StartsWith(const_iterator pStr, const char* sub) const {
+		return StartsWith_Tmpl<CmpChar>(pStr, end(), sub);
+	}
+	static const char* StartsWithICase(const char* str, const char* sub) {
+		return StartsWith_Tmpl<CmpCharICase>(str, sub);
+	}
+	const_iterator StartsWithICase(const_iterator pStr, const char* sub) const {
+		return StartsWith_Tmpl<CmpCharICase>(pStr, end(), sub);
+	}
+	static const char* EndsWith(const char* str, const char* sub) {
+		return EndsWith_Tmpl<CmpChar>(str, sub);
+	}
+	static const char* EndsWith(const char* str, size_t posEnd, const char* sub) {
+		return EndsWith_Tmpl<CmpChar>(str, posEnd, sub);
+	}
+	static const char* EndsWithICase(const char* str, const char* sub) {
+		return EndsWith_Tmpl<CmpCharICase>(str, sub);
+	}
+	static const char* EndsWithICase(const char* str, size_t posEnd, const char* sub) {
+		return EndsWith_Tmpl<CmpCharICase>(str, posEnd, sub);
+	}
+private:
+	template<typename CmpChar>
+	static const char* Find_Tmpl(const char* str, const char* sub);
+	template<typename CmpChar>
+	static const_iterator Find_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub);
+	template<typename CmpChar>
+	static const char* StartsWith_Tmpl(const char* str, const char* sub);
+	template<typename CmpChar>
+	static const_iterator StartsWith_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub);
+	template<typename CmpChar>
+	static const char* EndsWith_Tmpl(const char* str, const char* sub);
+	template<typename CmpChar>
+	static const char* EndsWith_Tmpl(const char* str, size_t posEnd, const char* sub);
 };
 
 inline String operator+(const String& v1, const String& v2) {
 	return String(static_cast<std::string>(v1) + static_cast<std::string>(v2));
+}
+
+template<typename CmpChar>
+const char* String::Find_Tmpl(const char* str, const char* sub)
+{
+	for ( ; *str != '\0'; str++) {
+		const char* p1 = str;
+		const char* p2 = sub;
+		for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) break;
+		if (*p2 == '\0') return str;
+	}
+	return nullptr;
+}
+
+template<typename CmpChar>
+String::const_iterator String::Find_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub)
+{
+	for ( ; pStr != pStrEnd; pStr++) {
+		String::const_iterator p1 = pStr;
+		const char* p2 = sub;
+		for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) break;
+		if (*p2 == '\0') return pStr;
+	}
+	return pStrEnd;
+}
+
+template<typename CmpChar>
+const char* String::StartsWith_Tmpl(const char* str, const char* sub)
+{
+	const char* p1 = str;
+	const char* p2 = sub;
+	for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return nullptr;
+	return p1;
+}
+
+template<typename CmpChar>
+String::const_iterator String::StartsWith_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub)
+{
+	const_iterator p1 = pStr;
+	const char* p2 = sub;
+	for ( ; p1 != pStrEnd && *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return pStrEnd;
+	return p1;
+}
+
+template<typename CmpChar>
+const char* String::EndsWith_Tmpl(const char* str, const char* sub)
+{
+	size_t len = ::strlen(sub);
+	const char* p = str + ::strlen(str);
+	if (str + len > p) return nullptr;
+	p -= len;
+	const char* p1 = p;
+	const char* p2 = sub;
+	for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return nullptr;
+	return p;
+}
+
+template<typename CmpChar>
+const char* String::EndsWith_Tmpl(const char* str, size_t posEnd, const char* sub)
+{
+	size_t len = ::strlen(sub);
+	const char* p = String::Forward(str, posEnd);
+	if (str + len > p) return nullptr;
+	p -= len;
+	const char* p1 = p;
+	const char* p2 = sub;
+	for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return nullptr;
+	return p;
 }
 
 //------------------------------------------------------------------------------

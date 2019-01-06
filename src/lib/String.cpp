@@ -96,15 +96,31 @@ String String::PickChar(size_t idx) const
 	return rtn;
 }
 
-String::const_iterator String::Forward(const_iterator p) const
+String::const_iterator String::Forward(const_iterator p, size_t nChars, size_t *pnCharsActual) const
 {
-	if (p != end()) {
+	size_t nCharsActual = 0;
+	for ( ; p != end() && nCharsActual < nChars; nCharsActual++) {
 		char ch = *p;
 		p++;
 		if (IsUTF8First(ch)) {
 			while (p != end() && IsUTF8Follower(*p)) p++;
 		}
 	}
+	if (pnCharsActual != nullptr) *pnCharsActual = nCharsActual;
+	return p;
+}
+
+const char* String::Forward(const char* p, size_t nChars, size_t *pnCharsActual)
+{
+	size_t nCharsActual = 0;
+	for ( ; *p != '\0' && nCharsActual < nChars; nCharsActual++) {
+		char ch = *p;
+		p++;
+		if (IsUTF8First(ch)) {
+			while (*p != '\0' && IsUTF8Follower(*p)) p++;
+		}
+	}
+	if (pnCharsActual != nullptr) *pnCharsActual = nCharsActual;
 	return p;
 }
 
