@@ -98,7 +98,6 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			break;
 		}
 	}
-	//return env.IsNoSignalled();
 }
 
 bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr)
@@ -110,8 +109,8 @@ bool Parser::ReduceOneToken()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
-#if 0
 	::printf("%s\n", pToken1->GetSymbol());
+#if 0
 	int lineNoTop = pToken1->GetLineNo();
 	int lineNoBtm = pToken1->GetLineNo();
 	if (pToken1->IsType(TOKEN_Number)) {
@@ -219,7 +218,7 @@ void Parser::IssueError(const ErrorType& errorType, const Token* pToken, const c
 				  pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, ap);
 }
 
-void Parser::IssueError(const ErrorType& errorType, RefPtr<Token>& pToken, const char* format, ...)
+void Parser::IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
