@@ -7,6 +7,7 @@ namespace Gurax {
 
 void Bootup()
 {
+	Binary::Bootup();
 	Object::Bootup();
 	Random::Bootup();
 	String::Bootup();
