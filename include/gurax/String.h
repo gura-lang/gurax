@@ -134,7 +134,7 @@ public:
 	void AppendUTF8(UInt64 codeUTF8);
 	void AppendUTF32(UInt32 codeUTF32);
 public:
-	String MakeQuoted(bool surroundFlag = false) { return MakeQuoted(c_str(), surroundFlag); }
+	String MakeQuoted(bool surroundFlag = false) const { return MakeQuoted(c_str(), surroundFlag); }
 	static String MakeQuoted(const char* str, bool surroundFlag = true);
 public:
 	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }

@@ -21,6 +21,20 @@ size_t Binary::CalcHash(const UInt8* binary, size_t len)
 	return hash;
 }
 
+String Binary::MakeQuoted(bool surroundFlag) const
+{
+	String strRtn;
+	char chQuote = '\'';
+	if (surroundFlag) strRtn += chQuote;
+	for (char ch : *this) {
+		char tmp[16];
+		::sprintf(tmp, "\\x%02x", ch);
+		strRtn += tmp;
+	}
+	if (surroundFlag) strRtn += chQuote;
+	return strRtn;
+}
+
 //------------------------------------------------------------------------------
 // BinaryList
 //------------------------------------------------------------------------------

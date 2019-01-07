@@ -284,45 +284,44 @@ void String::AppendUTF32(UInt32 codeUTF32)
 	while (i > 0) push_back(buff[--i]);
 }
 
-
 String String::MakeQuoted(const char* str, bool surroundFlag)
 {
-	String strDst;
+	String strRtn;
 	char chQuote = (::strchr(str, '\'') && !::strchr(str, '"'))? '"' : '\'';
-	if (surroundFlag) strDst += chQuote;
+	if (surroundFlag) strRtn += chQuote;
 	for (const char* p = str; *p != '\0'; p++) {
 		char ch = *p;
 		if (ch == '\a') {
-			strDst += "\\a";
+			strRtn += "\\a";
 		} else if (ch == '\b') {
-			strDst += "\\b";
+			strRtn += "\\b";
 		} else if (ch == '\f') {
-			strDst += "\\f";
+			strRtn += "\\f";
 		} else if (ch == '\n') {
-			strDst += "\\n";
+			strRtn += "\\n";
 		} else if (ch == '\r') {
-			strDst += "\\r";
+			strRtn += "\\r";
 		} else if (ch == '\t') {
-			strDst += "\\t";
+			strRtn += "\\t";
 		} else if (ch == '\v') {
-			strDst += "\\v";
+			strRtn += "\\v";
 		} else if (ch == chQuote) {
-			strDst += '\\';
-			strDst += chQuote;
+			strRtn += '\\';
+			strRtn += chQuote;
 		} else if (ch == '\\') {
-			strDst += "\\\\";
+			strRtn += "\\\\";
 		} else if (IsUTF8First(ch) || IsUTF8Follower(ch)) {
-			strDst += ch;
+			strRtn += ch;
 		} else if (ch < 0x20 || ch >= 0x7f) {
 			char tmp[16];
 			::sprintf(tmp, "\\x%02x", static_cast<UChar>(ch));
-			strDst += tmp;
+			strRtn += tmp;
 		} else {
-			strDst += ch;
+			strRtn += ch;
 		}
 	}
-	if (surroundFlag) strDst += chQuote;
-	return strDst;
+	if (surroundFlag) strRtn += chQuote;
+	return strRtn;
 }
 
 Double String::ToNumber(const char* str, bool* pSuccessFlag)

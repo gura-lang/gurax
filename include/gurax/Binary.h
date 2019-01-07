@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_BINARY_H
 #define GURAX_BINARY_H
-#include "Referable.h"
+#include "String.h"
 
 namespace Gurax {
 
@@ -45,6 +45,8 @@ public:
 	using std::basic_string<UInt8>::basic_string;
 public:
 	static void Bootup();
+public:
+	String MakeQuoted(bool surroundFlag = false) const;
 public:
 	size_t CalcHash() const { return CalcHash(data(), size()); }
 	static size_t CalcHash(const UInt8* binary, size_t len);
