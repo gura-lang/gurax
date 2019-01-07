@@ -119,7 +119,8 @@ public:
 	enum class Precedence { LT, EQ, GT, Error, };
 private:
 	const TokenType &_tokenType;
-	int _lineNo;
+	int _lineNoTop;
+	int _lineNoBtm;
 	RefPtr<StringReferable> _pStrValue;
 	RefPtr<StringReferable> _pStrSuffix;
 	RefPtr<StringReferable> _pStrSource;
@@ -128,21 +129,23 @@ public:
 	static const Precedence _precMatrix[][31];
 public:
 	// Constructor
-	Token(const TokenType &tokenType, int lineNo) : _tokenType(tokenType), _lineNo(lineNo) {}
-	Token(const TokenType &tokenType, int lineNo, StringReferable* pStrValue) :
-		_tokenType(tokenType), _lineNo(lineNo), _pStrValue(pStrValue) {}
-	Token(const TokenType &tokenType, int lineNo, String value) :
-		Token(tokenType, lineNo, new StringReferable(std::move(value))) {}
-	Token(const TokenType &tokenType, int lineNo, StringReferable* pStrValue, StringReferable* pStrSuffix) :
-		_tokenType(tokenType), _lineNo(lineNo), _pStrValue(pStrValue), _pStrSuffix(pStrSuffix) {}
-	Token(const TokenType &tokenType, int lineNo, String value, String suffix) :
-		Token(tokenType, lineNo, new StringReferable(std::move(value)), new StringReferable(std::move(suffix))) {}
-	Token(const TokenType &tokenType, int lineNo, StringReferable* pStrValue,
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm) {}
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _pStrValue(pStrValue) {}
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm, String value) :
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value))) {}
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue, StringReferable* pStrSuffix) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
+		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix) {}
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm, String value, String suffix) :
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)), new StringReferable(std::move(suffix))) {}
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue,
 		  StringReferable* pStrSuffix, StringReferable* pStrSource) :
-		_tokenType(tokenType), _lineNo(lineNo),
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _pStrSource(pStrSource) {}
-	Token(const TokenType &tokenType, int lineNo, String value, String suffix, String source) :
-		Token(tokenType, lineNo, new StringReferable(std::move(value)),
+	Token(const TokenType &tokenType, int lineNoTop, int lineNoBtm, String value, String suffix, String source) :
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
 			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
@@ -173,7 +176,8 @@ public:
 			IsType(TokenType::Mul) || IsType(TokenType::Question);
 	}
 public:
-	int GetLineNo() const { return _lineNo; }
+	int GetLineNoTop() const { return _lineNoTop; }
+	int GetLineNoBtm() const { return _lineNoBtm; }
 	int GetCategory() const { return _tokenType.category; }
 	const char *GetTypeName() const { return _tokenType.typeName; }
 	const char *GetSymbol() const { return _tokenType.symbol; }

@@ -27,11 +27,15 @@ String Error::MakeMessage() const
 	String rtn;
 	if (_pFileName && !_pFileName->GetStringSTL().empty()) {
 		rtn += _pFileName->GetStringSTL();
-		if (_lineNo == 0) {
+		if (_lineNoTop == 0) {
 			rtn += ": ";
+		} else if (_lineNoTop == _lineNoBtm) {
+			char buff[128];
+			::sprintf(buff, ":%d: ", _lineNoTop);
+			rtn += buff;
 		} else {
-			char buff[64];
-			::sprintf(buff, ":%d: ", _lineNo);
+			char buff[128];
+			::sprintf(buff, ":%d:%d: ", _lineNoTop, _lineNoBtm);
 			rtn += buff;
 		}
 	}
@@ -61,11 +65,11 @@ void Error::Issue(const ErrorType& errorType, const char* format, ...)
 	IssueV(errorType, format, ap);
 }
 
-void Error::Issue(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const char* format, ...)
+void Error::Issue(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	IssueV(errorType, pFileName, lineNo, format, ap);
+	IssueV(errorType, pFileName, lineNoTop, lineNoBtm, format, ap);
 }
 
 void Error::IssueV(const ErrorType& errorType, const char* format, va_list ap)
@@ -75,11 +79,11 @@ void Error::IssueV(const ErrorType& errorType, const char* format, va_list ap)
 	_pErrorOwnerGlobal->push_back(new Error(errorType, text));
 }
 
-void Error::IssueV(const ErrorType& errorType, StringReferable* pFileName, int lineNo, const char* format, va_list ap)
+void Error::IssueV(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* format, va_list ap)
 {
 	char text[512];
 	::vsprintf(text, format, ap);
-	_pErrorOwnerGlobal->push_back(new Error(errorType, pFileName, lineNo, text));
+	_pErrorOwnerGlobal->push_back(new Error(errorType, pFileName, lineNoTop, lineNoBtm, text));
 }
 
 void Error::IssueV(const ErrorType& errorType, Expr *pExpr, const char* format, va_list ap)
