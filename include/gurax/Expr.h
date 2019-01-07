@@ -23,7 +23,8 @@ protected:
 	const TypeInfo& _typeInfo;
 	bool _silentFlag = false;
 	RefPtr<StringReferable> _pPathNameSrc;
-	int _lineNo = 0;
+	int _lineNoTop = 0;
+	int _lineNoBtm = 0;
 	RefPtr<WeakPtr> _pwExprParent;
 public:
 	// Constructor
@@ -38,8 +39,13 @@ protected:
 	// Destructor
 	virtual ~Expr() = default;
 public:
+	void SetSourceInfo(StringReferable *pPathNameSrc, int lineNoTop, int lineNoBtm) {
+		_pPathNameSrc.reset(pPathNameSrc);
+		_lineNoTop = lineNoTop, _lineNoBtm = lineNoBtm;
+	}
 	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
-	int GetLineNo() const { return _lineNo; }
+	int GetLineNoTop() const { return _lineNoTop; }
+	int GetLineNoBtm() const { return _lineNoBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
 	void SetParent(const Expr* pExpr) { _pwExprParent.reset(pExpr->GetWeakPtr()); }
@@ -178,6 +184,21 @@ public:
 	Expr_Object(Object* pObject) : Expr(typeInfo), _pObject(pObject) {}
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_Identifier
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Identifier : public Expr {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	const Symbol* _pSymbol;
+public:
+	Expr_Identifier(const Symbol* pSymbol) : Expr(typeInfo), _pSymbol(pSymbol) {}
+	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	virtual void Exec() const;
 };

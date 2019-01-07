@@ -3,7 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define DBGPARSER(x)
+//#define DBGPARSER(x)
+#define DBGPARSER(x) x
 
 namespace Gurax {
 
@@ -107,25 +108,25 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr
 
 bool Parser::ReduceOneToken()
 {
-	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
+	TokenStack& tokenStack = _pTokenizer->GetTokenStack();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s\n", pToken1->GetSymbol());
+	int lineNoTop = pToken1->GetLineNoTop();
+	int lineNoBtm = pToken1->GetLineNoBtm();
+	Expr* pExpr = nullptr;
+	if (pToken1->IsType(TokenType::Number)) {
+		DBGPARSER(::printf("Reduce: Expr -> Object(number)\n"));
+		pExpr = new Expr_Object(new Object_number(String::ToNumber(pToken1->GetValue())));
+		//pExprEx->SetScript(pToken1->GetStringSTL());
+	} else if (pToken1->IsType(TokenType::String)) {
+		DBGPARSER(::printf("Reduce: Expr -> Object(string)\n"));
+		pExpr = new Expr_Object(new Object_string(pToken1->GetValueReferable()->Reference()));
 #if 0
-	int lineNoTop = pToken1->GetLineNo();
-	int lineNoBtm = pToken1->GetLineNo();
-	if (pToken1->IsType(TOKEN_Number)) {
-		DBGPARSER(::printf("Reduce: Expr -> Number\n"));
-		pExpr = new Expr_Value(Value(ToNumber(pToken1->GetString())));
-		pExprEx->SetScript(pToken1->GetStringSTL());
-		pExpr = pExprEx;
-	} else if (pToken1->IsType(TOKEN_String)) {
-		DBGPARSER(::printf("Reduce: Expr -> String\n"));
-		pExpr = new Expr_Value(Value(pToken1->GetStringSTL()));
-	} else if (pToken1->IsType(TOKEN_Binary)) {
+	} else if (pToken1->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr -> Binary\n"));
 		pExpr = new Expr_Value(Value(new Object_binary(env,
 						   Binary(pToken1->GetString(), pToken1->GetStringSize()), false)));
-	} else if (pToken1->IsType(TOKEN_EmbedString)) {
+	} else if (pToken1->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
 		AutoPtr<Template> pTemplate(new Template());
 		bool autoIndentFlag = true;
@@ -133,35 +134,36 @@ bool Parser::ReduceOneToken()
 		if (!pTemplate->Parse(env, pToken1->GetString(), nullptr,
 							  autoIndentFlag, appendLastEOLFlag)) goto error_done;
 		pExpr = new Expr_EmbedString(pTemplate.release(), pToken1->GetStringSTL());
-	} else if (pToken1->IsType(TOKEN_Symbol)) {
+#endif
+	} else if (pToken1->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr -> Symbol\n"));
-		const Symbol *pSymbol = Symbol::Add(pToken1->GetString());
-		pExpr = new Expr_Identifier(pSymbol);
-	} else if (pToken1->IsType(TOKEN_NumberSuffixed)) {
+		pExpr = new Expr_Identifier(Symbol::Add(pToken1->GetValue()));
+#if 0
+	} else if (pToken1->IsType(TokenType::NumberSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr -> Suffixed\n"));
 		pExpr = new Expr_Suffixed(pToken1->GetStringSTL(), true, Symbol::Add(pToken1->GetSuffix()));
-	} else if (pToken1->IsType(TOKEN_StringSuffixed)) {
+	} else if (pToken1->IsType(TokenType::StringSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr -> Suffixed\n"));
 		pExpr = new Expr_Suffixed(pToken1->GetStringSTL(), false, Symbol::Add(pToken1->GetSuffix()));
-	} else if (pToken1->IsType(TOKEN_Add)) {
+	} else if (pToken1->IsType(TokenType::Add)) {
 		DBGPARSER(::printf("Reduce: Expr -> '+'\n"));
 		pExpr = new Expr_Identifier(Symbol::Plus);
-	} else if (pToken1->IsType(TOKEN_Mul)) {
+	} else if (pToken1->IsType(TokenType::Mul)) {
 		DBGPARSER(::printf("Reduce: Expr -> '*'\n"));
 		pExpr = new Expr_Identifier(Symbol::Ast);
-	} else if (pToken1->IsType(TOKEN_Question)) {
+	} else if (pToken1->IsType(TokenType::Question)) {
 		DBGPARSER(::printf("Reduce: Expr -> '?'\n"));
 		pExpr = new Expr_Identifier(Symbol::Quest);
-	} else if (pToken1->IsType(TOKEN_Sub)) {
+	} else if (pToken1->IsType(TokenType::Sub)) {
 		DBGPARSER(::printf("Reduce: Expr -> '-'\n"));
 		pExpr = new Expr_Identifier(Symbol::Hyphen);
-	} else {
-		SetError_InvalidToken(__LINE__);
-		goto error_done;
-	}
-	pExpr->SetSourceInfo(_pSourceName->Reference(), lineNoTop, lineNoBtm);
-	_tokenStack.push_back(Token(TOKEN_Expr, pExpr));
 #endif
+	} else {
+		IssueError(ErrorType::SyntaxError, pToken1, "unexpected token: %s", pToken1->GetSymbol());
+		return false;
+	}
+	pExpr->SetSourceInfo(_pTokenizer->GetPathNameSrcReferable()->Reference(), lineNoTop, lineNoBtm);
+	tokenStack.push_back(new Token(pExpr));
 	return true;
 }
 

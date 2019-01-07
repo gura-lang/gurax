@@ -137,6 +137,9 @@ public:
 	String MakeQuoted(bool surroundFlag = false) { return MakeQuoted(c_str(), surroundFlag); }
 	static String MakeQuoted(const char* str, bool surroundFlag = true);
 public:
+	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }
+	static Double ToNumber(const char* str, bool* pSuccessFlag = nullptr);
+public:
 	size_t CalcHash() const { return CalcHash(c_str(), size()); }
 	static size_t CalcHash(const char* str);
 	static size_t CalcHash(const char* str, size_t len);

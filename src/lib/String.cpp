@@ -325,6 +325,21 @@ String String::MakeQuoted(const char* str, bool surroundFlag)
 	return strDst;
 }
 
+Double String::ToNumber(const char* str, bool* pSuccessFlag)
+{
+	Double num;
+	char* next = nullptr;
+	if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X' || IsOctDigit(str[1]))) {
+		num = static_cast<Double>(::strtoull(str, &next, 0));
+	} else if (str[0] == '0' && (str[1] == 'b' || str[1] == 'B')) {
+		num = static_cast<Double>(::strtoull(str + 2, &next, 2));
+	} else {
+		num = ::strtod(str, &next);
+	}
+	if (pSuccessFlag != nullptr) *pSuccessFlag = (*next == '\0');
+	return num;
+}
+
 size_t String::CalcHash(const char* str)
 {
 	size_t hash = 0;

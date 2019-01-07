@@ -93,4 +93,13 @@ void Expr_Object::Exec() const
 {
 }
 
+//------------------------------------------------------------------------------
+// Expr_Identifier
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_Identifier::typeInfo;
+
+void Expr_Identifier::Exec() const
+{
+}
+
 }
