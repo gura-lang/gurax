@@ -7,6 +7,9 @@
 
 namespace Gurax {
 
+//------------------------------------------------------------------------------
+// Predefined Symbols
+//------------------------------------------------------------------------------
 Gurax_DeclareSymbol(__arg__);
 Gurax_DeclareSymbol(__del__);
 Gurax_DeclareSymbol(__doc__);
@@ -528,6 +531,73 @@ Gurax_DeclareSymbol(z);
 Gurax_DeclareSymbol(Z);
 Gurax_DeclareSymbol(zero);
 Gurax_DeclareSymbol(zh);
+
+//------------------------------------------------------------------------------
+// Predefined Symbol Marks
+//------------------------------------------------------------------------------
+Gurax_DeclareSymbolMark(Assign);
+Gurax_DeclareSymbolMark(AssignAdd);
+Gurax_DeclareSymbolMark(AssignSub);
+Gurax_DeclareSymbolMark(AssignMul);
+Gurax_DeclareSymbolMark(AssignDiv);
+Gurax_DeclareSymbolMark(AssignMod);
+Gurax_DeclareSymbolMark(AssignPow);
+Gurax_DeclareSymbolMark(AssignOr);
+Gurax_DeclareSymbolMark(AssignAnd);
+Gurax_DeclareSymbolMark(AssignXor);
+Gurax_DeclareSymbolMark(AssignShl);
+Gurax_DeclareSymbolMark(AssignShr);
+Gurax_DeclareSymbolMark(Pair);
+Gurax_DeclareSymbolMark(OrOr);
+Gurax_DeclareSymbolMark(AndAnd);
+Gurax_DeclareSymbolMark(Not);
+Gurax_DeclareSymbolMark(Contains);
+Gurax_DeclareSymbolMark(Lt);
+Gurax_DeclareSymbolMark(Gt);
+Gurax_DeclareSymbolMark(Le);
+Gurax_DeclareSymbolMark(Ge);
+Gurax_DeclareSymbolMark(Cmp);
+Gurax_DeclareSymbolMark(Eq);
+Gurax_DeclareSymbolMark(Ne);
+Gurax_DeclareSymbolMark(Seq);
+Gurax_DeclareSymbolMark(Or);
+Gurax_DeclareSymbolMark(Xor);
+Gurax_DeclareSymbolMark(And);
+Gurax_DeclareSymbolMark(Shl);
+Gurax_DeclareSymbolMark(Shr);
+Gurax_DeclareSymbolMark(Add);
+Gurax_DeclareSymbolMark(Sub);
+Gurax_DeclareSymbolMark(Mul);
+Gurax_DeclareSymbolMark(Div);
+Gurax_DeclareSymbolMark(Mod);
+Gurax_DeclareSymbolMark(ModMod);
+Gurax_DeclareSymbolMark(Dot);
+Gurax_DeclareSymbolMark(Cross);
+Gurax_DeclareSymbolMark(Gear);
+Gurax_DeclareSymbolMark(Concat);
+Gurax_DeclareSymbolMark(Difference);
+Gurax_DeclareSymbolMark(Intersection);
+Gurax_DeclareSymbolMark(Union);
+Gurax_DeclareSymbolMark(Question);
+Gurax_DeclareSymbolMark(Inv);
+Gurax_DeclareSymbolMark(Pow);
+Gurax_DeclareSymbolMark(Quote);
+Gurax_DeclareSymbolMark(Colon);
+Gurax_DeclareSymbolMark(ColonAfterSuffix);
+Gurax_DeclareSymbolMark(Period);
+Gurax_DeclareSymbolMark(ColonColon);
+Gurax_DeclareSymbolMark(ColonAsterisk);
+Gurax_DeclareSymbolMark(ColonAnd);
+Gurax_DeclareSymbolMark(LParenthesis);
+Gurax_DeclareSymbolMark(RParenthesis);
+Gurax_DeclareSymbolMark(LBrace);
+Gurax_DeclareSymbolMark(RBrace);
+Gurax_DeclareSymbolMark(LBlockParam);
+Gurax_DeclareSymbolMark(RBlockParam);
+Gurax_DeclareSymbolMark(LBracket);
+Gurax_DeclareSymbolMark(RBracket);
+Gurax_DeclareSymbolMark(Comma);
+Gurax_DeclareSymbolMark(Semicolon);
 
 }
 
