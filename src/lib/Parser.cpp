@@ -58,7 +58,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			} else if (pTokenLast->IsType(TokenType::EmbedString) && pToken->IsType(TokenType::EmbedString)) {
 				pTokenLast->AppendValue(pToken->GetValueSTL());
 			} else {
-				tokenStack.push_back(pToken->Reference());
+				tokenStack.Push(pToken->Reference());
 			}
 			break;
 		} else if (prec == Token::Precedence::GT) {
@@ -163,7 +163,7 @@ bool Parser::ReduceOneToken()
 		return false;
 	}
 	SetSourceInfo(pExpr, lineNoTop, lineNoBtm);
-	tokenStack.push_back(new Token(pExpr.release()));
+	tokenStack.Push(new Token(pExpr.release()));
 	return true;
 }
 
@@ -184,6 +184,7 @@ bool Parser::ReduceTwoTokens()
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '(' -> '(' EndOfLine\n"));
+			tokenStack.Push(pToken1.release());
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, "syntax error (%d)", __LINE__);
@@ -270,7 +271,7 @@ bool Parser::ReduceTwoTokens()
 		int lineNoTop = _tokenStack.Peek(0).GetLineNo();
 		_tokenStack.pop_back();
 		pExpr->SetSourceInfo(_pSourceName->Reference(), lineNoTop, lineNoBtm);
-		_tokenStack.push_back(Token(TokenType::Expr, pExpr));
+		_tokenStack.Push(Token(TokenType::Expr, pExpr));
 		return true;
 	} else if (pToken2->IsType(TokenType::Expr)) {
 		if (pToken1->IsType(TokenType::Quote)) {
@@ -821,7 +822,7 @@ bool Parser::ReduceThreeTokens()
 	}
 #endif
 	SetSourceInfo(pExpr, lineNoTop, lineNoBtm);
-	tokenStack.push_back(new Token(pExpr.release()));
+	tokenStack.Push(new Token(pExpr.release()));
 	return true;
 }
 
