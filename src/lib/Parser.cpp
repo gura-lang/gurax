@@ -376,7 +376,7 @@ bool Parser::ReduceThreeTokens()
 		RefPtr<Expr> pExprRight = pToken3->GetExpr()->Reference();
 		if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr + Expr\n"));
-			pExpr.reset(new Expr_Binary(Operator::Add, pExprLeft.release(), pExprRight.release()));
+			pExpr.reset(new Expr_BinaryOp(Operator::Add, pExprLeft.release(), pExprRight.release()));
 #if 0
 		} else if (pToken2->IsType(TokenType::Sub)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr - Expr\n"));

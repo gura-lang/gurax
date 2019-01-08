@@ -84,18 +84,28 @@ public:
 // Expr_Unary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Unary : public Expr {
-public:
-	static const TypeInfo typeInfo;
 protected:
 	const Operator* _pOperator;
 	RefPtr<Expr> _pExprChild;
 public:
-	Expr_Unary(const Operator* pOperator, Expr* pExprChild) :
-			Expr(typeInfo), _pOperator(pOperator), _pExprChild(pExprChild) {
+	Expr_Unary(const TypeInfo& typeInfo, Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
 		_pExprChild->SetParent(this);
 	}
-	const Operator* GetOperator() const { return _pOperator; }
 	const Expr* GetChild() const { return _pExprChild.get(); }
+};
+
+//------------------------------------------------------------------------------
+// Expr_UnaryOp
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_UnaryOp : public Expr_Unary {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	const Operator* _pOperator;
+public:
+	Expr_UnaryOp(const Operator* pOperator, Expr* pExprChild) :
+			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
+	const Operator* GetOperator() const { return _pOperator; }
 public:
 	virtual void Exec() const;
 };
@@ -104,20 +114,30 @@ public:
 // Expr_Binary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Binary : public Expr {
+protected:
+	RefPtr<Expr> _pExprLeft;
+	RefPtr<Expr> _pExprRight;
+public:
+	Expr_Binary(const TypeInfo& typeInfo, Expr* pExprLeft, Expr* pExprRight) :
+			Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
+		_pExprLeft->SetParent(this), _pExprRight->SetParent(this);
+	}
+	const Expr* GetLeft() const { return _pExprLeft.get(); }
+	const Expr* GetRight() const { return _pExprRight.get(); }
+};
+
+//------------------------------------------------------------------------------
+// Expr_BinaryOp
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_BinaryOp : public Expr_Binary {
 public:
 	static const TypeInfo typeInfo;
 protected:
 	const Operator* _pOperator;
-	RefPtr<Expr> _pExprLeft;
-	RefPtr<Expr> _pExprRight;
 public:
-	Expr_Binary(const Operator* pOperator, Expr* pExprLeft, Expr* pExprRight) :
-			Expr(typeInfo), _pOperator(pOperator), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
-		_pExprLeft->SetParent(this), _pExprRight->SetParent(this);
-	}
+	Expr_BinaryOp(const Operator* pOperator, Expr* pExprLeft, Expr* pExprRight) :
+			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
-	const Expr* GetLeft() const { return _pExprLeft.get(); }
-	const Expr* GetRight() const { return _pExprRight.get(); }
 public:
 	virtual void Exec() const;
 };
