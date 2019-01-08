@@ -4,6 +4,7 @@
 #ifndef GURAX_EXPR_H
 #define GURAX_EXPR_H
 #include "Object.h"
+#include "Operator.h"
 
 namespace Gurax {
 
@@ -86,11 +87,14 @@ class GURAX_DLLDECLARE Expr_Unary : public Expr {
 public:
 	static const TypeInfo typeInfo;
 protected:
+	const Operator* _pOperator;
 	RefPtr<Expr> _pExprChild;
 public:
-	Expr_Unary(Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
+	Expr_Unary(const Operator* pOperator, Expr* pExprChild) :
+			Expr(typeInfo), _pOperator(pOperator), _pExprChild(pExprChild) {
 		_pExprChild->SetParent(this);
 	}
+	const Operator* GetOperator() const { return _pOperator; }
 	const Expr* GetChild() const { return _pExprChild.get(); }
 public:
 	virtual void Exec() const;
@@ -103,12 +107,15 @@ class GURAX_DLLDECLARE Expr_Binary : public Expr {
 public:
 	static const TypeInfo typeInfo;
 protected:
+	const Operator* _pOperator;
 	RefPtr<Expr> _pExprLeft;
 	RefPtr<Expr> _pExprRight;
 public:
-	Expr_Binary(Expr* pExprLeft, Expr* pExprRight) : Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
+	Expr_Binary(const Operator* pOperator, Expr* pExprLeft, Expr* pExprRight) :
+			Expr(typeInfo), _pOperator(pOperator), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
 		_pExprLeft->SetParent(this), _pExprRight->SetParent(this);
 	}
+	const Operator* GetOperator() const { return _pOperator; }
 	const Expr* GetLeft() const { return _pExprLeft.get(); }
 	const Expr* GetRight() const { return _pExprRight.get(); }
 public:
