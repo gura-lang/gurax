@@ -103,7 +103,7 @@ public:
 protected:
 	const Operator* _pOperator;
 public:
-	Expr_UnaryOp(const Operator* pOperator, Expr* pExprChild) :
+	Expr_UnaryOp(Expr* pExprChild, const Operator* pOperator) :
 			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -135,7 +135,23 @@ public:
 protected:
 	const Operator* _pOperator;
 public:
-	Expr_BinaryOp(const Operator* pOperator, Expr* pExprLeft, Expr* pExprRight) :
+	Expr_BinaryOp(Expr* pExprLeft, Expr* pExprRight, const Operator* pOperator) :
+			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
+	const Operator* GetOperator() const { return _pOperator; }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_Assign
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Assign : public Expr_Binary {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	const Operator* _pOperator;	// this may be nullptr
+public:
+	Expr_Assign(Expr* pExprLeft, Expr* pExprRight, const Operator* pOperator) :
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:

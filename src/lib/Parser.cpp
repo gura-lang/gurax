@@ -376,110 +376,110 @@ bool Parser::ReduceThreeTokens()
 		RefPtr<Expr> pExprRight = pToken3->GetExpr()->Reference();
 		if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr + Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(Operator::Add, pExprLeft.release(), pExprRight.release()));
-#if 0
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Add));
 		} else if (pToken2->IsType(TokenType::Sub)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr - Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Sub), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Sub));
 		} else if (pToken2->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr * Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Mul), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Mul));
 		} else if (pToken2->IsType(TokenType::Div)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr / Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Div), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Div));
 		} else if (pToken2->IsType(TokenType::Mod)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr %% Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Mod), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Mod));
 		} else if (pToken2->IsType(TokenType::ModMod)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr %%%% Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_ModMod), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::ModMod));
 		} else if (pToken2->IsType(TokenType::Dot)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr |.| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Dot), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Dot));
 		} else if (pToken2->IsType(TokenType::Cross)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr |^| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Cross), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cross));
 		} else if (pToken2->IsType(TokenType::Gear)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr |*| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Gear), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Gear));
 		} else if (pToken2->IsType(TokenType::Concat)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr |+| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Concat), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Concat));
 		} else if (pToken2->IsType(TokenType::Difference)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr |-| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Difference), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Difference));
 		} else if (pToken2->IsType(TokenType::Intersection)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr |&| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Intersection), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Intersection));
 		} else if (pToken2->IsType(TokenType::Union)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr ||| Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Union), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Union));
 		} else if (pToken2->IsType(TokenType::Pow)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr ** Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Pow), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pow));
 		} else if (pToken2->IsType(TokenType::Eq)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr == Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Eq), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Eq));
 		} else if (pToken2->IsType(TokenType::Ne)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr != Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Ne), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Ne));
 		} else if (pToken2->IsType(TokenType::Lt)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr < Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Lt), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Lt));
 		} else if (pToken2->IsType(TokenType::Gt)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr > Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Gt), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Gt));
 		} else if (pToken2->IsType(TokenType::Le)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr <= Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Le), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Le));
 		} else if (pToken2->IsType(TokenType::Ge)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr >= Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Ge), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Ge));
 		} else if (pToken2->IsType(TokenType::Cmp)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr <=> Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Cmp), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cmp));
 		} else if (pToken2->IsType(TokenType::Contains)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr in Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Contains), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::Assign)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr = Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, nullptr);
-		} else if (pToken2->IsType(TokenType::AssignAdd)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr += Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Add));
-		} else if (pToken2->IsType(TokenType::AssignSub)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr -= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Sub));
-		} else if (pToken2->IsType(TokenType::AssignMul)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr *= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Mul));
-		} else if (pToken2->IsType(TokenType::AssignDiv)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr /= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Div));
-		} else if (pToken2->IsType(TokenType::AssignMod)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr %%= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Mod));
-		} else if (pToken2->IsType(TokenType::AssignPow)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr **= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Pow));
-		} else if (pToken2->IsType(TokenType::AssignOr)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr |= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Or));
-		} else if (pToken2->IsType(TokenType::AssignAnd)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr &= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_And));
-		} else if (pToken2->IsType(TokenType::AssignXor)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr ^= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Xor));
-		} else if (pToken2->IsType(TokenType::AssignShl)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr <<= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Shl));
-		} else if (pToken2->IsType(TokenType::AssignShr)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr >>= Expr\n"));
-			pExpr = new Expr_Assign(pExprLeft, pExprRight, env.GetOperator(OPTYPE_Shr));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Contains));
 		} else if (pToken2->IsType(TokenType::Pair)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr => Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Pair), pExprLeft, pExprRight);
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pair));
+		} else if (pToken2->IsType(TokenType::Assign)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr = Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), nullptr));
+		} else if (pToken2->IsType(TokenType::AssignAdd)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr += Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Add));
+		} else if (pToken2->IsType(TokenType::AssignSub)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr -= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Sub));
+		} else if (pToken2->IsType(TokenType::AssignMul)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr *= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Mul));
+		} else if (pToken2->IsType(TokenType::AssignDiv)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr /= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Div));
+		} else if (pToken2->IsType(TokenType::AssignMod)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr %%= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Mod));
+		} else if (pToken2->IsType(TokenType::AssignPow)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr **= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Pow));
+		} else if (pToken2->IsType(TokenType::AssignOr)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr |= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Or));
+		} else if (pToken2->IsType(TokenType::AssignAnd)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr &= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::And));
+		} else if (pToken2->IsType(TokenType::AssignXor)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr ^= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Xor));
+		} else if (pToken2->IsType(TokenType::AssignShl)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr <<= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shl));
+		} else if (pToken2->IsType(TokenType::AssignShr)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr >>= Expr\n"));
+			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shr));
+#if 0
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr : Expr\n"));
 			Expr *pExprDst = pExprLeft;
