@@ -44,6 +44,13 @@ private:
 	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...);
 public:
 	virtual void FeedToken(RefPtr<Token> pToken) override;
+private:
+	void SetSourceInfo(Expr* pExpr, int lineNoTop, int lineNoBtm) const {
+		pExpr->SetSourceInfo(_pTokenizer->GetPathNameSrcReferable()->Reference(), lineNoTop, lineNoBtm);
+	}
+	void SetSourceInfo(RefPtr<Expr>& pExpr, int lineNoTop, int lineNoBtm) const {
+		SetSourceInfo(pExpr.get(), lineNoTop, lineNoBtm);
+	}
 };
 
 }
