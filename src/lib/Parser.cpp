@@ -443,6 +443,30 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::Pair)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr => Expr\n"));
 			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pair));
+		} else if (pToken2->IsType(TokenType::OrOr)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr || Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::OrOr));
+		} else if (pToken2->IsType(TokenType::AndAnd)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr && Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::AndAnd));
+		} else if (pToken2->IsType(TokenType::Or)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr | Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Or));
+		} else if (pToken2->IsType(TokenType::And)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr & Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::And));
+		} else if (pToken2->IsType(TokenType::Xor)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr ^ Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Xor));
+		} else if (pToken2->IsType(TokenType::Shl)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr << Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Shl));
+		} else if (pToken2->IsType(TokenType::Shr)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr >> Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Shr));
+		} else if (pToken2->IsType(TokenType::Seq)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr .. Expr\n"));
+			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Seq));
 		} else if (pToken2->IsType(TokenType::Assign)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr = Expr\n"));
 			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), nullptr));
@@ -543,11 +567,9 @@ bool Parser::ReduceThreeTokens()
 				pExpr = pExprLeft;
 				Expr::Delete(pExprRight);
 			} else if (pExprRight->IsLister()) {
-				ExprList &exprList =
-							dynamic_cast<Expr_Lister *>(pExprRight)->GetExprOwner();
+				ExprList &exprList = dynamic_cast<Expr_Lister *>(pExprRight)->GetExprOwner();
 				if (pExprDst->IsIdentifier()) {
-					sig.SetError(ERR_TypeError,
-									"identifiers cannot declare optional attributes");
+					sig.SetError(ERR_TypeError, "identifiers cannot declare optional attributes");
 					goto error_done;
 				} else if (pExprDst->IsCaller()) {
 					Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pExprDst);
@@ -558,8 +580,7 @@ bool Parser::ReduceThreeTokens()
 							SetError_InvalidToken(__LINE__);
 							goto error_done;
 						}
-						const Symbol *pSymbol =
-								dynamic_cast<Expr_Identifier *>(pExpr)->GetSymbol();
+						const Symbol *pSymbol = dynamic_cast<Expr_Identifier *>(pExpr)->GetSymbol();
 						pExprCaller->AddAttrOpt(pSymbol);
 					}
 				} else {
@@ -604,30 +625,6 @@ bool Parser::ReduceThreeTokens()
 			}
 			pExpr = new Expr_Member(pExprLeft, dynamic_cast<Expr_Identifier *>(pExprRight),
 									Expr_Member::MODE_MapAlong);
-		} else if (pToken2->IsType(TokenType::OrOr)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr || Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_OrOr), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::AndAnd)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr && Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_AndAnd), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::Or)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr | Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Or), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::And)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr & Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_And), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::Xor)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr ^ Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Xor), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::Shl)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr << Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Shl), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::Shr)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr >> Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Shr), pExprLeft, pExprRight);
-		} else if (pToken2->IsType(TokenType::Seq)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr .. Expr\n"));
-			pExpr = new Expr_BinaryOp(env.GetOperator(OPTYPE_Seq), pExprLeft, pExprRight);
 #endif
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken2,
