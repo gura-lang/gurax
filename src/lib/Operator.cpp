@@ -14,9 +14,9 @@ const Operator* Operator::Neg			= new Operator_Neg();
 const Operator* Operator::Inv			= new Operator_Inv();
 const Operator* Operator::Not			= new Operator_Not();
 // suffixed unary operators
-const Operator* Operator::SeqInf		= new Operator_SeqInf();
+const Operator* Operator::PostSeq		= new Operator_PostSeq();
 const Operator* Operator::Question		= new Operator_Question();
-const Operator* Operator::Each			= new Operator_Each();
+const Operator* Operator::PostMul		= new Operator_PostMul();
 const Operator* Operator::PostPos		= new Operator_PostPos();
 const Operator* Operator::PostMod		= new Operator_PostMod();
 // binary operators

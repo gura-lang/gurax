@@ -22,9 +22,9 @@ enum class OpType {
 	Not,
 	// suffixed unary operators
 	suffixed_unary,
-	SeqInf			= suffixed_unary,
+	PostSeq			= suffixed_unary,
 	Question,
-	Each,
+	PostMul,
 	PostPos,
 	PostMod,
 	// binary operators
@@ -108,9 +108,9 @@ public:
 	static const Operator* Inv;
 	static const Operator* Not;
 	// suffixed unary operators
-	static const Operator* SeqInf;
+	static const Operator* PostSeq;
 	static const Operator* Question;
-	static const Operator* Each;
+	static const Operator* PostMul;
 	static const Operator* PostPos;
 	static const Operator* PostMod;
 	// binary operators
@@ -209,9 +209,9 @@ Gurax_DeclareOperator(Neg);
 Gurax_DeclareOperator(Inv);
 Gurax_DeclareOperator(Not);
 // suffixed unary operators
-Gurax_DeclareOperator(SeqInf);
+Gurax_DeclareOperator(PostSeq);
 Gurax_DeclareOperator(Question);
-Gurax_DeclareOperator(Each);
+Gurax_DeclareOperator(PostMul);
 Gurax_DeclareOperator(PostPos);
 Gurax_DeclareOperator(PostMod);
 // binary operators
