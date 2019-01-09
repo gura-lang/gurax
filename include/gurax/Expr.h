@@ -8,8 +8,22 @@
 
 namespace Gurax {
 
+
 //------------------------------------------------------------------------------
 // Expr
+// [class hierarchy under Expr]
+// Expr <-+- Expr_Node <------+- Expr_Object
+//        |                   +- Expr_Identifier
+//        |                   +- Expr_Suffixed
+//        |                   `- Expr_Embedded
+//        +- Expr_Unary <------- Expr_UnaryOp
+//        +- Expr_Binary <----+- Expr_BinaryOp
+//        |                   `- Expr_Assign
+//        +- Expr_Collector <-+- Expr_Block
+//        |                   +- Expr_Lister
+//        |                   `- Expr_Iterer
+//        `- Expr_Composite <-+- Expr_Indexer
+//                            `- Expr_Caller
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr : public Referable {
 public:
@@ -81,6 +95,14 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Node : public Expr {
+public:
+	Expr_Node(const TypeInfo& typeInfo) : Expr(typeInfo) {}
+};
+
+//------------------------------------------------------------------------------
 // Expr_Unary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Unary : public Expr {
@@ -92,22 +114,6 @@ public:
 		_pExprChild->SetParent(this);
 	}
 	const Expr* GetChild() const { return _pExprChild.get(); }
-};
-
-//------------------------------------------------------------------------------
-// Expr_UnaryOp
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_UnaryOp : public Expr_Unary {
-public:
-	static const TypeInfo typeInfo;
-protected:
-	const Operator* _pOperator;
-public:
-	Expr_UnaryOp(Expr* pExprChild, const Operator* pOperator) :
-			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
-	const Operator* GetOperator() const { return _pOperator; }
-public:
-	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
@@ -127,7 +133,118 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Expr_BinaryOp
+// Expr_Collector
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Collector : public Expr {
+protected:
+	RefPtr<ExprOwner> _pExprChildren;
+public:
+	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprChildren(new ExprOwner()) {}
+	const ExprOwner& GetChildren() const { return *_pExprChildren; }
+	void AddChild(Expr* pExpr);
+};
+
+//------------------------------------------------------------------------------
+// Expr_Composite
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Composite : public Expr {
+protected:
+	RefPtr<Expr> _pExprCar;
+	RefPtr<ExprOwner> _pExprCdrs;
+public:
+	Expr_Composite(const TypeInfo& typeInfo, Expr* pExprCar) :
+			Expr(typeInfo), _pExprCar(pExprCar), _pExprCdrs(new ExprOwner()) {
+		_pExprCar->SetParent(this);
+	}
+	Expr* GetCar() { return _pExprCar.get(); }
+	const Expr* GetCar() const { return _pExprCar.get(); }
+	const ExprOwner& GetCdr() const { return *_pExprCdrs; }
+	void AddCdr(Expr* pExpr);
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_Object : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Object : public Expr_Node {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<Object> _pObject;
+public:
+	Expr_Object(Object* pObject) : Expr_Node(typeInfo), _pObject(pObject) {}
+	Object* GetObject() { return _pObject.get(); }
+	const Object* GetObject() const { return _pObject.get(); }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_Identifier : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Identifier : public Expr_Node {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	const Symbol* _pSymbol;
+public:
+	Expr_Identifier(const Symbol* pSymbol) : Expr_Node(typeInfo), _pSymbol(pSymbol) {}
+	const Symbol* GetSymbol() const { return _pSymbol; }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_Suffixed : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Suffixed : public Expr_Node {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<StringReferable> _pStr;
+public:
+	Expr_Suffixed(StringReferable* pStr) : Expr_Node(typeInfo), _pStr(pStr) {}
+	const char* GetString() const { return _pStr->GetString(); }
+	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_Embedded : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Embedded : public Expr_Node {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<StringReferable> _pStr;
+public:
+	Expr_Embedded(StringReferable* pStr) : Expr_Node(typeInfo), _pStr(pStr) {}
+	const char* GetString() const { return _pStr->GetString(); }
+	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_UnaryOp : Expr_Unary
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_UnaryOp : public Expr_Unary {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	const Operator* _pOperator;
+public:
+	Expr_UnaryOp(Expr* pExprChild, const Operator* pOperator) :
+			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
+	const Operator* GetOperator() const { return _pOperator; }
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
+// Expr_BinaryOp : Expr_Binary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_BinaryOp : public Expr_Binary {
 public:
@@ -143,7 +260,7 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Expr_Assign
+// Expr_Assign : Expr_Binary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Assign : public Expr_Binary {
 public:
@@ -158,90 +275,63 @@ public:
 	virtual void Exec() const;
 };
 
-//------------------------------------------------------------------------------
-// Expr_Container
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Container : public Expr {
-protected:
-	RefPtr<ExprOwner> _pExprChildren;
-public:
-	Expr_Container(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprChildren(new ExprOwner()) {}
-	const ExprOwner& GetChildren() const { return *_pExprChildren; }
-	void AddChild(Expr* pExpr);
-};
 
 //------------------------------------------------------------------------------
-// Expr_Block
+// Expr_Block : Expr_Collector
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Block : public Expr_Container {
+class GURAX_DLLDECLARE Expr_Block : public Expr_Collector {
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Block() : Expr_Container(typeInfo) {}
+	Expr_Block() : Expr_Collector(typeInfo) {}
 public:
 	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
-// Expr_Lister
+// Expr_Lister : Expr_Collector
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Lister : public Expr_Container {
+class GURAX_DLLDECLARE Expr_Lister : public Expr_Collector {
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Lister() : Expr_Container(typeInfo) {}
+	Expr_Lister() : Expr_Collector(typeInfo) {}
 public:
 	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
-// Expr_Composite
+// Expr_Iterer : Expr_Collector
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Composite : public Expr {
+class GURAX_DLLDECLARE Expr_Iterer : public Expr_Collector {
 public:
 	static const TypeInfo typeInfo;
-protected:
-	RefPtr<Expr> _pExprCar;
-	RefPtr<ExprOwner> _pExprCdrs;
 public:
-	Expr_Composite(Expr* pExprCar) : Expr(typeInfo), _pExprCar(pExprCar), _pExprCdrs(new ExprOwner()) {
-		_pExprCar->SetParent(this);
-	}
-	Expr* GetCar() { return _pExprCar.get(); }
-	const Expr* GetCar() const { return _pExprCar.get(); }
-	const ExprOwner& GetCdr() const { return *_pExprCdrs; }
-	void AddCdr(Expr* pExpr);
+	Expr_Iterer() : Expr_Collector(typeInfo) {}
 public:
 	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
-// Expr_Object
+// Expr_Indexer : Expr_Composite
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Object : public Expr {
+class GURAX_DLLDECLARE Expr_Indexer : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
-protected:
-	RefPtr<Object> _pObject;
 public:
-	Expr_Object(Object* pObject) : Expr(typeInfo), _pObject(pObject) {}
-	Object* GetObject() { return _pObject.get(); }
-	const Object* GetObject() const { return _pObject.get(); }
+	Expr_Indexer(Expr* pExprCar) : Expr_Composite(typeInfo, pExprCar) {}
 public:
 	virtual void Exec() const;
 };
 
 //------------------------------------------------------------------------------
-// Expr_Identifier
+// Expr_Caller : Expr_Composite
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Identifier : public Expr {
+class GURAX_DLLDECLARE Expr_Caller : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
-protected:
-	const Symbol* _pSymbol;
 public:
-	Expr_Identifier(const Symbol* pSymbol) : Expr(typeInfo), _pSymbol(pSymbol) {}
-	const Symbol* GetSymbol() const { return _pSymbol; }
+Expr_Caller(Expr* pExprCar) : Expr_Composite(typeInfo, pExprCar) {}
 public:
 	virtual void Exec() const;
 };
