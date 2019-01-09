@@ -8,50 +8,50 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Operator
 //------------------------------------------------------------------------------
-// unary operators
-const Operator* Operator::Pos			= new Operator_Pos();
-const Operator* Operator::Neg			= new Operator_Neg();
+// Unary operators
 const Operator* Operator::Inv			= new Operator_Inv();
+const Operator* Operator::Neg			= new Operator_Neg();
 const Operator* Operator::Not			= new Operator_Not();
-// suffixed unary operators
-const Operator* Operator::PostSeq		= new Operator_PostSeq();
-const Operator* Operator::Question		= new Operator_Question();
+const Operator* Operator::Pos			= new Operator_Pos();
+// Post-unary operators
+const Operator* Operator::PostMod		= new Operator_PostMod();
 const Operator* Operator::PostMul		= new Operator_PostMul();
 const Operator* Operator::PostPos		= new Operator_PostPos();
-const Operator* Operator::PostMod		= new Operator_PostMod();
-// binary operators
+const Operator* Operator::PostQuestion	= new Operator_PostQuestion();
+const Operator* Operator::PostSeq		= new Operator_PostSeq();
+// Binary operators
 const Operator* Operator::Add			= new Operator_Add();
-const Operator* Operator::Sub			= new Operator_Sub();
-const Operator* Operator::Mul			= new Operator_Mul();
+const Operator* Operator::And			= new Operator_And();
+const Operator* Operator::AndAnd		= new Operator_AndAnd();
+const Operator* Operator::Cmp			= new Operator_Cmp();
+const Operator* Operator::Concat		= new Operator_Concat();
+const Operator* Operator::Contains		= new Operator_Contains();
+const Operator* Operator::Cross			= new Operator_Cross();
+const Operator* Operator::Difference	= new Operator_Difference();
 const Operator* Operator::Div			= new Operator_Div();
+const Operator* Operator::Dot			= new Operator_Dot();
+const Operator* Operator::Eq			= new Operator_Eq();
+const Operator* Operator::Gear			= new Operator_Gear();
+const Operator* Operator::Ge			= new Operator_Ge();
+const Operator* Operator::Gt			= new Operator_Gt();
+const Operator* Operator::Intersection	= new Operator_Intersection();
+const Operator* Operator::Le			= new Operator_Le();
+const Operator* Operator::Lt			= new Operator_Lt();
 const Operator* Operator::Mod			= new Operator_Mod();
 const Operator* Operator::ModMod		= new Operator_ModMod();
-const Operator* Operator::Dot			= new Operator_Dot();
-const Operator* Operator::Cross			= new Operator_Cross();
-const Operator* Operator::Gear			= new Operator_Gear();
-const Operator* Operator::Concat		= new Operator_Concat();
-const Operator* Operator::Difference	= new Operator_Difference();
-const Operator* Operator::Intersection	= new Operator_Intersection();
-const Operator* Operator::Union			= new Operator_Union();
-const Operator* Operator::Pow			= new Operator_Pow();
-const Operator* Operator::Eq			= new Operator_Eq();
+const Operator* Operator::Mul			= new Operator_Mul();
 const Operator* Operator::Ne			= new Operator_Ne();
-const Operator* Operator::Gt			= new Operator_Gt();
-const Operator* Operator::Lt			= new Operator_Lt();
-const Operator* Operator::Ge			= new Operator_Ge();
-const Operator* Operator::Le			= new Operator_Le();
-const Operator* Operator::Cmp			= new Operator_Cmp();
-const Operator* Operator::Contains		= new Operator_Contains();
-const Operator* Operator::And			= new Operator_And();
 const Operator* Operator::Or			= new Operator_Or();
-const Operator* Operator::Xor			= new Operator_Xor();
+const Operator* Operator::OrOr			= new Operator_OrOr();
+const Operator* Operator::Pair			= new Operator_Pair();
+const Operator* Operator::Pow			= new Operator_Pow();
+const Operator* Operator::Seq			= new Operator_Seq();
 const Operator* Operator::Shl			= new Operator_Shl();
 const Operator* Operator::Shr			= new Operator_Shr();
-const Operator* Operator::OrOr			= new Operator_OrOr();
-const Operator* Operator::AndAnd		= new Operator_AndAnd();
-const Operator* Operator::Seq			= new Operator_Seq();
-const Operator* Operator::Pair			= new Operator_Pair();
-// mathematical functions
+const Operator* Operator::Sub			= new Operator_Sub();
+const Operator* Operator::Union			= new Operator_Union();
+const Operator* Operator::Xor			= new Operator_Xor();
+// Mathematical functions
 const Operator* Operator::math_abs		= new Operator_math_abs();
 const Operator* Operator::math_acos		= new Operator_math_acos();
 const Operator* Operator::math_arg		= new Operator_math_arg();

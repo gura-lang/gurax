@@ -355,6 +355,8 @@ bool Parser::ReduceTwoTokens()
 		IssueError(ErrorType::SyntaxError, pToken1, "syntax error (%d)", __LINE__);
 		return false;
 	}
+	SetSourceInfo(pExpr, lineNoTop, lineNoBtm);
+	tokenStack.Push(new Token(pExpr.release()));
 	return true;
 }
 

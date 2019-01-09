@@ -139,4 +139,13 @@ void Expr_Indexer::Exec() const
 {
 }
 
+//------------------------------------------------------------------------------
+// Expr_Caller : Expr_Compound
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_Caller::typeInfo;
+
+void Expr_Caller::Exec() const
+{
+}
+
 }

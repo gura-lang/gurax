@@ -68,6 +68,12 @@ public:
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:
 	virtual void Exec() const = 0;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Expr* pExpr) const { return this == pExpr; }
+	bool IsEqualTo(const Expr* pExpr) const { return IsIdentical(pExpr); }
+	bool IsLessThan(const Expr* pExpr) const { return this < pExpr; }
+	String ToString() const { return "(expr)"; }
 };
 
 //------------------------------------------------------------------------------

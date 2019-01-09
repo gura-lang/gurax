@@ -20,6 +20,7 @@
 #include "gurax/Object_binary.h"
 #include "gurax/Object_bool.h"
 #include "gurax/Object_dict.h"
+#include "gurax/Object_expr.h"
 #include "gurax/Object_function.h"
 #include "gurax/Object_iterator.h"
 #include "gurax/Object_klass.h"
