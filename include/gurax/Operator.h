@@ -103,6 +103,21 @@ enum class OpType {
 };
 
 //------------------------------------------------------------------------------
+// OpEntry
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE OpEntry {
+public:
+	virtual Object* EvalUnary(const Object* pObject);
+	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR);
+};
+
+//------------------------------------------------------------------------------
+// OpEntryMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE OpEntryMap : public std::unordered_map<UInt64, OpEntry*> {
+};
+
+//------------------------------------------------------------------------------
 // Operator
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator {
@@ -110,6 +125,7 @@ private:
 	OpStyle _opStyle;
 	OpType _opType;
 	bool _binaryFlag;
+	OpEntryMap _opEntryMap;
 private:
 	static Operator* _operatorTbl[static_cast<size_t>(OpType::max)];
 public:

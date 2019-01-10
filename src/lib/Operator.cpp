@@ -103,4 +103,17 @@ Object* Operator::EvalBinary(const Object* pObjectL, const Object* pObjectR)
 	return Object::nil();
 }
 
+//------------------------------------------------------------------------------
+// OpEntry
+//------------------------------------------------------------------------------
+Object* OpEntry::EvalUnary(const Object* pObject)
+{
+	return Object::nil();
+}
+
+Object* OpEntry::EvalBinary(const Object* pObjectL, const Object* pObjectR)
+{
+	return Object::nil();
+}
+
 }
