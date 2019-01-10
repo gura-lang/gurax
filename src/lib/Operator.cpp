@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Operator
 //------------------------------------------------------------------------------
+Operator* Operator::_operatorTbl[static_cast<size_t>(OpType::max)] = {};
+
 // Unary operators
 Operator* Operator::Inv				= new Operator(OpStyle::OpUnary,	OpType::Inv);
 Operator* Operator::Neg				= new Operator(OpStyle::OpUnary,	OpType::Neg);
@@ -82,6 +84,14 @@ Operator* Operator::math_sqrt		= new Operator(OpStyle::OpUnary,	OpType::math_sqr
 Operator* Operator::math_tan		= new Operator(OpStyle::OpUnary,	OpType::math_tan);
 Operator* Operator::math_tanh		= new Operator(OpStyle::OpUnary,	OpType::math_tanh);
 Operator* Operator::math_unitstep	= new Operator(OpStyle::OpUnary,	OpType::math_unitstep);
+
+
+Operator::Operator(OpStyle opStyle, OpType opType) :
+	_opStyle(opStyle), _opType(opType),
+	_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary)
+{
+	_operatorTbl[static_cast<size_t>(opType)] = this;
+}
 
 Object* Operator::EvalUnary(const Object* pObject)
 {

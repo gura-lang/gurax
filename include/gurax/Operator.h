@@ -110,6 +110,8 @@ private:
 	OpStyle _opStyle;
 	OpType _opType;
 	bool _binaryFlag;
+private:
+	static Operator* _operatorTbl[static_cast<size_t>(OpType::max)];
 public:
 	// Unary operators
 	static Operator* Inv;
@@ -187,9 +189,7 @@ public:
 	static Operator* math_unitstep;
 public:
 	// Constructor
-	Operator(OpStyle opStyle, OpType opType) :
-			_opStyle(opStyle), _opType(opType),
-			_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary) {}
+	Operator(OpStyle opStyle, OpType opType);
 	// Copy constructor/operator
 	Operator(const Operator& src) = delete;
 	Operator& operator=(const Operator& src) = delete;
