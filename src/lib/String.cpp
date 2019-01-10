@@ -106,7 +106,7 @@ String::const_iterator String::Forward(const_iterator p, size_t nChars, size_t *
 			while (p != end() && IsUTF8Follower(*p)) p++;
 		}
 	}
-	if (pnCharsActual != nullptr) *pnCharsActual = nCharsActual;
+	if (pnCharsActual) *pnCharsActual = nCharsActual;
 	return p;
 }
 
@@ -120,7 +120,7 @@ const char* String::Forward(const char* p, size_t nChars, size_t *pnCharsActual)
 			while (*p != '\0' && IsUTF8Follower(*p)) p++;
 		}
 	}
-	if (pnCharsActual != nullptr) *pnCharsActual = nCharsActual;
+	if (pnCharsActual) *pnCharsActual = nCharsActual;
 	return p;
 }
 
@@ -335,7 +335,7 @@ Double String::ToNumber(const char* str, bool* pSuccessFlag)
 	} else {
 		num = ::strtod(str, &next);
 	}
-	if (pSuccessFlag != nullptr) *pSuccessFlag = (*next == '\0');
+	if (pSuccessFlag) *pSuccessFlag = (*next == '\0');
 	return num;
 }
 

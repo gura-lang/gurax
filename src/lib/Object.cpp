@@ -8,6 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Klass
 //------------------------------------------------------------------------------
+Klass::SeqId Klass::_seqIdNext = 1;
+
+Klass::Klass(const char* name) :
+	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
+	_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap())
+{
+}
+
 String Klass::MakeFullName() const
 {
 	return GetName();

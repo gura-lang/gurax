@@ -100,16 +100,20 @@ public:
 		static const UInt32 Mutable		= (1 << 0);
 		static const UInt32 Immutable	= (0 << 0);
 	};
+	using SeqId = UInt32;
 protected:
+	SeqId _seqId;
 	RefPtr<HelpProvider> _pHelpProvider;
 	Klass* _pKlassParent;
 	const Symbol* _pSymbol;
 	UInt32 _flags;
 	RefPtr<ObjectMap> _pObjectMap;
+private:
+	static SeqId _seqIdNext;
+	static const SeqId SeqId_Invalid = 0;
 public:
 	// Constructor
-	explicit Klass(const char* name) : _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
-		_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap()) {}
+	explicit Klass(const char* name);
 	// Copy constructor/operator
 	Klass(Klass& src) = delete;
 	Klass& operator=(Klass& src) = delete;
@@ -119,6 +123,7 @@ public:
 	// Destructor
 	virtual ~Klass() = default;
 public:
+	SeqId GetSeqId() const { return _seqId; }
 	void SetAttrs(UInt32 flags) { _flags = flags; }
 	void SetAttrs(Klass& klassParent, UInt32 flags) {
 		_pKlassParent = &klassParent;

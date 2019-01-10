@@ -85,7 +85,6 @@ Operator* Operator::math_tan		= new Operator(OpStyle::OpUnary,	OpType::math_tan)
 Operator* Operator::math_tanh		= new Operator(OpStyle::OpUnary,	OpType::math_tanh);
 Operator* Operator::math_unitstep	= new Operator(OpStyle::OpUnary,	OpType::math_unitstep);
 
-
 Operator::Operator(OpStyle opStyle, OpType opType) :
 	_opStyle(opStyle), _opType(opType),
 	_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary)
@@ -93,25 +92,15 @@ Operator::Operator(OpStyle opStyle, OpType opType) :
 	_operatorTbl[static_cast<size_t>(opType)] = this;
 }
 
-Object* Operator::EvalUnary(const Object* pObject)
-{
-	return Object::nil();
-}
-
-Object* Operator::EvalBinary(const Object* pObjectL, const Object* pObjectR)
-{
-	return Object::nil();
-}
-
 //------------------------------------------------------------------------------
 // OpEntry
 //------------------------------------------------------------------------------
-Object* OpEntry::EvalUnary(const Object* pObject)
+Object* OpEntry::EvalUnary(const Object* pObject) const
 {
 	return Object::nil();
 }
 
-Object* OpEntry::EvalBinary(const Object* pObjectL, const Object* pObjectR)
+Object* OpEntry::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
 {
 	return Object::nil();
 }

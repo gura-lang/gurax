@@ -196,7 +196,7 @@ bool Parser::ReduceTwoTokens()
 			DBGPARSER(::printf("Reduce: Expr -> '[' ']'\n"));
 			Expr_Lister *pExprLister =
 						dynamic_cast<Expr_Lister *>(pToken1->GetExpr());
-			if (pExprLister == nullptr) {
+			if (!pExprLister) {
 				pExprLister = new Expr_Lister();
 			}
 			pExpr = pExprLister;
@@ -214,7 +214,7 @@ bool Parser::ReduceTwoTokens()
 			DBGPARSER(::printf("Reduce: Expr -> '{' '}'\n"));
 			Expr_Block *pExprBlock =
 						dynamic_cast<Expr_Block *>(pToken1->GetExpr());
-			if (pExprBlock == nullptr) {
+			if (!pExprBlock) {
 				pExprBlock = new Expr_Block();
 			}
 			pExpr = pExprBlock;
@@ -233,7 +233,7 @@ bool Parser::ReduceTwoTokens()
 			DBGPARSER(::printf("do (Reduce: Expr -> '|' '|') "
 					"and then attach the Expr to the preceeding LBrace\n"));
 			Expr_Lister *pExprBlockParam = dynamic_cast<Expr_Lister *>(pToken1->GetExpr());
-			if (pExprBlockParam == nullptr) {
+			if (!pExprBlockParam) {
 				pExprBlockParam = new Expr_Lister();
 			}
 			_tokenStack.pop_back();
@@ -242,7 +242,7 @@ bool Parser::ReduceTwoTokens()
 			if (tokenPrev.IsType(TokenType::LBrace)) {
 				Expr_Block *pExprBlock =
 							dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
-				if (pExprBlock == nullptr) {
+				if (!pExprBlock) {
 					pExprBlock = new Expr_Block();
 					tokenPrev.SetExpr(pExprBlock);
 				}
@@ -296,7 +296,7 @@ bool Parser::ReduceTwoTokens()
 				Expr *pExprCar = new Expr_Identifier(Symbol::Percnt);
 				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
 				pExpr = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (pExpr == nullptr) goto error_done;
+				if (!pExpr) goto error_done;
 			} else {
 				pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mod), pToken2->GetExpr());
 			}
@@ -307,7 +307,7 @@ bool Parser::ReduceTwoTokens()
 				Expr *pExprCar = new Expr_Identifier(Symbol::PercntPercnt);
 				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
 				pExpr = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (pExpr == nullptr) goto error_done;
+				if (!pExpr) goto error_done;
 			} else {
 				IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);
 				goto error_done;
@@ -319,7 +319,7 @@ bool Parser::ReduceTwoTokens()
 				Expr *pExprCar = new Expr_Identifier(Symbol::Amp);
 				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
 				pExpr = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (pExpr == nullptr) goto error_done;
+				if (!pExpr) goto error_done;
 			} else {
 				pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_And), pToken2->GetExpr());
 			}
@@ -636,7 +636,7 @@ bool Parser::ReduceThreeTokens()
 		Expr_Iterer *pExprIterer = dynamic_cast<Expr_Iterer *>(pToken1->GetExpr());
 		if (pToken3->IsType(TokenType::RParenthesis)) {
 			DBGPARSER(::printf("Reduce: Expr -> '(' Expr ')'\n"));
-			if (pExprIterer == nullptr) {
+			if (!pExprIterer) {
 				pExpr = pToken2->GetExpr();	// treat expr as non-list
 			} else {
 				if (!EmitExpr(pExprIterer->GetExprOwner(), pExprIterer, pToken2->GetExpr())) return false;
@@ -645,7 +645,7 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '(' -> '(' Expr ','\n"));
-			if (pExprIterer == nullptr) {
+			if (!pExprIterer) {
 				pExprIterer = new Expr_Iterer();
 				pToken1->SetExpr(pExprIterer);
 			}
@@ -661,7 +661,7 @@ bool Parser::ReduceThreeTokens()
 		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken1->GetExpr());
 		if (pToken3->IsType(TokenType::RBracket)) {
 			DBGPARSER(::printf("Reduce: Expr -> '[' Expr ']'\n"));
-			if (pExprLister == nullptr) {
+			if (!pExprLister) {
 				pExprLister = new Expr_Lister();
 			}
 			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken2->GetExpr())) return false;
@@ -669,7 +669,7 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '[' -> '[' Expr ','\n"));
-			if (pExprLister == nullptr) {
+			if (!pExprLister) {
 				pExprLister = new Expr_Lister();
 				pToken1->SetExpr(pExprLister);
 			}
@@ -685,12 +685,12 @@ bool Parser::ReduceThreeTokens()
 		if (pToken3->IsType(TokenType::RParenthesis)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr '(' ')'\n"));
 			Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
-			if (pExprLister == nullptr) {
+			if (!pExprLister) {
 				pExprLister = new Expr_Lister();
 			}
 			Expr_Caller *pExprCaller =
 				CreateCaller(env, pToken1->GetExpr(), pExprLister, nullptr, nullptr);
-			if (pExprCaller == nullptr) goto error_done;
+			if (!pExprCaller) goto error_done;
 			pExpr = pExprCaller;
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
@@ -707,18 +707,18 @@ bool Parser::ReduceThreeTokens()
 			Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
 			if (pToken1->GetExpr()->IsCaller()) {
 				Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
-				if (pExprBlock == nullptr) {
+				if (!pExprBlock) {
 					pExprBlock = new Expr_Block();
 				}
 				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
 				pExpr = pExprCaller;
 			} else {
-				if (pExprBlock == nullptr) {
+				if (!pExprBlock) {
 					pExprBlock = new Expr_Block();
 				}
 				Expr_Caller *pExprCaller =
 					CreateCaller(env, pToken1->GetExpr(), nullptr, pExprBlock, nullptr);
-				if (pExprCaller == nullptr) goto error_done;
+				if (!pExprCaller) goto error_done;
 				pExpr = pExprCaller;
 			}
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
@@ -735,7 +735,7 @@ bool Parser::ReduceThreeTokens()
 			DBGPARSER(::printf("Reduce: Expr -> Expr '[' ']'\n"));
 			Expr *pExprTgt = pToken1->GetExpr();
 			Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
-			if (pExprLister == nullptr) {
+			if (!pExprLister) {
 				pExprLister = new Expr_Lister();
 			}
 			pExpr = new Expr_Indexer(pExprTgt, pExprLister);
@@ -752,7 +752,7 @@ bool Parser::ReduceThreeTokens()
 		Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken1->GetExpr());
 		if (pToken3->IsType(TokenType::RBrace)) {
 			DBGPARSER(::printf("Reduce: Expr -> '{' Expr '}'\n"));
-			if (pExprBlock == nullptr) {
+			if (!pExprBlock) {
 				pExprBlock = new Expr_Block();
 			}
 			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, pToken2->GetExpr())) return false;
@@ -761,7 +761,7 @@ bool Parser::ReduceThreeTokens()
 					pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '{' -> '{' Expr ','\n"));
-			if (pExprBlock == nullptr) {
+			if (!pExprBlock) {
 				pExprBlock = new Expr_Block();
 				pToken1->SetExpr(pExprBlock);
 			}
@@ -779,7 +779,7 @@ bool Parser::ReduceThreeTokens()
 			// this is a special case of reducing
 			DBGPARSER(::printf("do (Reduce: Expr -> '|' Expr '|') "
 					"and then attach the Expr to the preceeding LBrace\n"));
-			if (pExprBlockParam == nullptr) {
+			if (!pExprBlockParam) {
 				pExprBlockParam = new Expr_Lister();
 			}
 			if (!EmitExpr(pExprBlockParam->GetExprOwner(), pExprBlockParam, pToken2->GetExpr())) return false;
@@ -790,7 +790,7 @@ bool Parser::ReduceThreeTokens()
 			if (tokenPrev.IsType(TokenType::LBrace)) {
 				Expr_Block *pExprBlock =
 							dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
-				if (pExprBlock == nullptr) {
+				if (!pExprBlock) {
 					pExprBlock = new Expr_Block();
 					tokenPrev.SetExpr(pExprBlock);
 				}
@@ -806,7 +806,7 @@ bool Parser::ReduceThreeTokens()
 					pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '|' -> '|' Expr ','\n"));
-			if (pExprBlockParam == nullptr) {
+			if (!pExprBlockParam) {
 				pExprBlockParam = new Expr_Lister();
 				pToken1->SetExpr(pExprBlockParam);
 			}

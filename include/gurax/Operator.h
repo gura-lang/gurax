@@ -107,14 +107,34 @@ enum class OpType {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OpEntry {
 public:
-	virtual Object* EvalUnary(const Object* pObject);
-	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR);
+	virtual Object* EvalUnary(const Object* pObject) const ;
+	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const;
 };
 
 //------------------------------------------------------------------------------
 // OpEntryMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OpEntryMap : public std::unordered_map<UInt64, OpEntry*> {
+public:
+	void Assign(const Klass& klass, OpEntry* pOpEntry) {
+		(*this)[GenKey(klass)] = pOpEntry;
+	}
+	void Assign(const Klass& klassL, const Klass& klassR, OpEntry* pOpEntry) {
+		(*this)[GenKey(klassL, klassR)] = pOpEntry;
+	}
+	OpEntry* Lookup(const Klass& klass) const {
+		auto pPair = find(GenKey(klass));
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	OpEntry* Lookup(const Klass& klassL, const Klass& klassR) const {
+		auto pPair = find(GenKey(klassL, klassR));
+		return (pPair == end())? nullptr : pPair->second;
+	}
+public:
+	static UInt64 GenKey(const Klass& klass) { return klass.GetSeqId(); }
+	static UInt64 GenKey(const Klass& klassL, const Klass& klassR) {
+		return (static_cast<UInt64>(klassL.GetSeqId()) << 32) + klassR.GetSeqId();
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -226,8 +246,27 @@ public:
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
 public:
-	virtual Object* EvalUnary(const Object* pObject);
-	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR);
+	void AssignEntry(const Klass& klass, OpEntry* pOpEntry) {
+		_opEntryMap.Assign(klass, pOpEntry);
+	}
+	void AssignEntry(const Klass& klassL, const Klass& klassR, OpEntry* pOpEntry) {
+		_opEntryMap.Assign(klassL, klassR, pOpEntry);
+	}
+	OpEntry* LookupEntry(const Klass& klass) {
+		return _opEntryMap.Lookup(klass);
+	}
+	OpEntry* LookupEntry(const Klass& klassL, const Klass& klassR) {
+		return _opEntryMap.Lookup(klassL, klassR);
+	}
+public:
+	Object* EvalUnary(const Object* pObject) {
+		const OpEntry* pOpEntry = LookupEntry(pObject->GetKlass());
+		return pOpEntry? pOpEntry->EvalUnary(pObject) : nullptr;
+	}
+	Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) {
+		const OpEntry* pOpEntry = LookupEntry(pObjectL->GetKlass(), pObjectR->GetKlass());
+		return pOpEntry? pOpEntry->EvalBinary(pObjectL, pObjectR) : nullptr;
+	}
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 };
