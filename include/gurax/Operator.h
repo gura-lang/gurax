@@ -49,8 +49,8 @@ enum class OpType {
 	Not,
 	Pos,
 	// Post-unary operators
-	PostMul,
 	PostMod,
+	PostMul,
 	PostPos,
 	PostQuestion,
 	PostSeq,
