@@ -212,6 +212,8 @@ public:
 public:
 	virtual Object* EvalUnary(const Object* pObject);
 	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR);
+public:
+	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 };
 
 };
