@@ -296,10 +296,12 @@ public:
 	}
 public:
 	Object* EvalUnary(const Object* pObject) {
+		if (!pObject) return nullptr;
 		const OpEntry* pOpEntry = LookupEntry(pObject->GetKlass());
 		return pOpEntry? pOpEntry->EvalUnary(pObject) : nullptr;
 	}
 	Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) {
+		if (!pObjectL || !pObjectR) return nullptr;
 		const OpEntry* pOpEntry = LookupEntry(pObjectL->GetKlass(), pObjectR->GetKlass());
 		return pOpEntry? pOpEntry->EvalBinary(pObjectL, pObjectR) : nullptr;
 	}
