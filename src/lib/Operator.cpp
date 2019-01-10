@@ -105,4 +105,18 @@ Object* OpEntry::EvalBinary(const Object* pObjectL, const Object* pObjectR) cons
 	return Object::nil();
 }
 
+//------------------------------------------------------------------------------
+// OpEntryMap
+//------------------------------------------------------------------------------
+void OpEntryMap::Assign(UInt64 key, OpEntry* pOpEntry)
+{
+	auto pPair = find(key);
+	if (pPair == end()) {
+		(*this)[key] = pOpEntry;
+	} else {
+		delete pPair->second;
+		pPair->second = pOpEntry;
+	}
+}
+
 }

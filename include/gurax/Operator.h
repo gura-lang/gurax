@@ -3,12 +3,30 @@
 //==============================================================================
 #ifndef GURAX_OPERATOR_H
 #define GURAX_OPERATOR_H
-#include "Common.h"
+#include "Object.h"
+
+#define Gurax_ImplementOpUnary(opType, typeName) \
+class OpEntry_##opType##_##typeName : public OpEntry { \
+public: \
+	virtual Object* EvalUnary(const Object* pObject) const; \
+}; \
+Object* OpEntry_##opType##_##typeName::EvalUnary(const Object* pObject) const
+
+#define Gurax_AssignOpUnary(opType, typeName) \
+Operator::opType->AssignEntry(Object_##typeName::klass, new OpEntry_##opType##_##typeName())
+
+#define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
+class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
+public: \
+	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const; \
+}; \
+Object* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
+
+#define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
+Operator::opType->AssignEntry(Object_##typeNameL::klass, Object_##typeNameR::klass, new OpEntry_##opType##_##typeNameL##_##typeNameR())
 
 namespace Gurax {
 
-class Object;
-	
 //------------------------------------------------------------------------------
 // OpStyle
 //------------------------------------------------------------------------------
@@ -107,6 +125,17 @@ enum class OpType {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OpEntry {
 public:
+	// Constructor
+	OpEntry() = default;
+	// Copy constructor/operator
+	OpEntry(const OpEntry& src) = delete;
+	OpEntry& operator=(const OpEntry& src) = delete;
+	// Move constructor/operator
+	OpEntry(OpEntry&& src) = delete;
+	OpEntry& operator=(OpEntry&& src) noexcept = delete;
+	// Destructor
+	virtual ~OpEntry() = default;
+public:
 	virtual Object* EvalUnary(const Object* pObject) const ;
 	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const;
 };
@@ -116,19 +145,26 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OpEntryMap : public std::unordered_map<UInt64, OpEntry*> {
 public:
+	~OpEntryMap() {
+		for (auto pair : *this) delete pair.second;
+	}
+public:
+	void Assign(UInt64 key, OpEntry *pOpEntry);
 	void Assign(const Klass& klass, OpEntry* pOpEntry) {
-		(*this)[GenKey(klass)] = pOpEntry;
+		Assign(GenKey(klass), pOpEntry);
 	}
 	void Assign(const Klass& klassL, const Klass& klassR, OpEntry* pOpEntry) {
-		(*this)[GenKey(klassL, klassR)] = pOpEntry;
+		Assign(GenKey(klassL, klassR), pOpEntry);
+	}
+	OpEntry* Lookup(UInt64 key) const {
+		auto pPair = find(key);
+		return (pPair == end())? nullptr : pPair->second;
 	}
 	OpEntry* Lookup(const Klass& klass) const {
-		auto pPair = find(GenKey(klass));
-		return (pPair == end())? nullptr : pPair->second;
+		return Lookup(GenKey(klass));
 	}
-	OpEntry* Lookup(const Klass& klassL, const Klass& klassR) const {
-		auto pPair = find(GenKey(klassL, klassR));
-		return (pPair == end())? nullptr : pPair->second;
+	OpEntry* Lookup(const Klass& klassL, const Klass& klassR) const { 
+		return Lookup(GenKey(klassL, klassR));
 	}
 public:
 	static UInt64 GenKey(const Klass& klass) { return klass.GetSeqId(); }

@@ -32,6 +32,7 @@
 #include "gurax/Object_symbol.h"
 #include "gurax/Object_undefined.h"
 #include "gurax/Operator.h"
+#include "gurax/Operators.h"
 #include "gurax/Parser.h"
 #include "gurax/Random.h"
 #include "gurax/Referable.h"
