@@ -42,6 +42,10 @@ private:
 	bool ReduceFiveTokens();
 	void IssueError(const ErrorType& errorType, const Token* pToken, const char* format, ...);
 	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...);
+	void IssueError(const ErrorType& errorType, const Token* pTokenTop, const Token* pTokenBtm,
+					const char* format, ...);
+	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pTokenTop, const RefPtr<Token>& pTokenBtm,
+					const char* format, ...);
 public:
 	virtual void FeedToken(RefPtr<Token> pToken) override;
 private:

@@ -109,6 +109,21 @@ gurax_pushbackLevel--
 
 namespace Gurax {
 
+class Symbol;
+
+//------------------------------------------------------------------------------
+// MemberMode
+//------------------------------------------------------------------------------
+enum class MemberMode {
+	None,
+	Normal,		// foo.bar
+	MapToList,	// foo::bar .. map-to-list
+	MapToIter,	// foo:*bar .. map-to-iterator
+	MapAlong,	// foo:&bar .. map-along
+};
+
+MemberMode SymbolToMemberMode(const Symbol* pSymbol);
+
 //------------------------------------------------------------------------------
 // SortOrder
 //------------------------------------------------------------------------------
@@ -118,27 +133,20 @@ enum class SortOrder {
 	Descend,
 };
 
-//------------------------------------------------------------------------------
-// Sorter
-//------------------------------------------------------------------------------
-class Sorter {
-public:
-	enum Order { None, Ascend, Descend, };
-public:
-	template<typename T_List, typename LessThan, typename GreaterThan>
-	static void Sort(T_List& list, Order order) {
-		if (order == Ascend) {
-			std::sort(list.begin(), list.end(), LessThan());
-		} else if (order == Descend) {
-			std::sort(list.begin(), list.end(), GreaterThan());
-		}
+template<typename T_List, typename LessThan, typename GreaterThan>
+void SortListByOrder(T_List& list, SortOrder sortOrder)
+{
+	if (sortOrder == SortOrder::Ascend) {
+		std::sort(list.begin(), list.end(), LessThan());
+	} else if (sortOrder == SortOrder::Descend) {
+		std::sort(list.begin(), list.end(), GreaterThan());
 	}
-};
+}
 
 //------------------------------------------------------------------------------
 // StringStyle
 //------------------------------------------------------------------------------
-class StringStyle {
+class GURAX_DLLDECLARE StringStyle {
 private:
 	bool _asSourceFlag;
 	bool _cramFlag;
@@ -146,7 +154,7 @@ private:
 public:
 	static const StringStyle Empty;
 public:
-StringStyle() : _asSourceFlag(false) , _cramFlag(false), _multiLineFlag(false) {}
+	StringStyle() : _asSourceFlag(false) , _cramFlag(false), _multiLineFlag(false) {}
 	StringStyle& AsSource(bool asSourceFlag) { _asSourceFlag = asSourceFlag; return *this; }
 	StringStyle& Cram(bool cramFlag) { _cramFlag = cramFlag; return *this; }
 	StringStyle& MultiLine(bool multiLineFlag) { _multiLineFlag = multiLineFlag; return *this; }

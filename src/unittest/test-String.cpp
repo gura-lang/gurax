@@ -18,7 +18,7 @@ Gurax_TesterEntry(String)
 	names.Sort();
 	for (auto name : names) ::printf("%s\n", name.c_str());
 	::printf("[Sort in descending order]\n");
-	names.Sort(Sorter::Descend);
+	names.Sort(SortOrder::Descend);
 	for (auto name : names) ::printf("%s\n", name.c_str());
 }
 

@@ -62,9 +62,9 @@ void Object::KlassEx::DoPrepare()
 //------------------------------------------------------------------------------
 // ObjectList
 //------------------------------------------------------------------------------
-ObjectList& ObjectList::Sort(Sorter::Order order)
+ObjectList& ObjectList::Sort(SortOrder sortOrder)
 {
-	Sorter::Sort<ObjectList, Object::LessThan, Object::GreaterThan>(*this, order);
+	SortListByOrder<ObjectList, Object::LessThan, Object::GreaterThan>(*this, sortOrder);
 	return *this;
 }
 

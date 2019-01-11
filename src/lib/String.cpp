@@ -356,9 +356,9 @@ size_t String::CalcHash(const char* str, size_t len)
 //------------------------------------------------------------------------------
 // StringList
 //------------------------------------------------------------------------------
-StringList& StringList::Sort(Sorter::Order order)
+StringList& StringList::Sort(SortOrder sortOrder)
 {
-	Sorter::Sort<StringList, String::LessThan, String::GreaterThan>(*this, order);
+	SortListByOrder<StringList, String::LessThan, String::GreaterThan>(*this, sortOrder);
 	return *this;
 }
 

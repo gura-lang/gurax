@@ -296,7 +296,7 @@ const char* String::EndsWith_Tmpl(const char* str, size_t posEnd, const char* su
 //------------------------------------------------------------------------------
 class StringList : public std::vector<String> {
 public:
-	StringList& Sort(Sorter::Order order = Sorter::Ascend);
+	StringList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 };
 
 //------------------------------------------------------------------------------

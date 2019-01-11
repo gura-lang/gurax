@@ -280,6 +280,21 @@ public:
 	virtual void Exec() const;
 };
 
+//------------------------------------------------------------------------------
+// Expr_Member : Expr_Binary
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Member : public Expr_Binary {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	MemberMode _memberMode;
+public:
+	Expr_Member(Expr* pExprLeft, Expr* pExprRight, MemberMode memberMode) :
+		Expr_Binary(typeInfo, pExprLeft, pExprRight), _memberMode(memberMode) {}
+public:
+	MemberMode GetMemberMode() const { return _memberMode; }
+	virtual void Exec() const;
+};
 
 //------------------------------------------------------------------------------
 // Expr_Block : Expr_Collector

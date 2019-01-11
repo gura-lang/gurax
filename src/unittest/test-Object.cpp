@@ -46,7 +46,7 @@ void Test_Sort()
 	std::cout << pObjectOwner->ToString();
 	pObjectOwner->Sort();
 	for (auto pObject : *pObjectOwner) std::cout << pObject->ToString();
-	pObjectOwner->Sort(Sorter::Descend);
+	pObjectOwner->Sort(SortOrder::Descend);
 	for (auto pObject : *pObjectOwner) std::cout << pObject->ToString();
 }
 

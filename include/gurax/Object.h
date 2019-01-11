@@ -19,7 +19,7 @@ class StringStyle;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectList : public std::vector<Object*> {
 public:
-	ObjectList& Sort(Sorter::Order order = Sorter::Ascend);
+	ObjectList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ObjectList& objectList) const { return this == &objectList; }
 	bool IsEqualTo(const ObjectList& objectList) const { return IsIdentical(objectList); }
