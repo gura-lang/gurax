@@ -15,6 +15,7 @@ Operator* Operator::Inv				= new Operator(OpStyle::OpUnary,		OpType::Inv);
 Operator* Operator::Neg				= new Operator(OpStyle::OpUnary,		OpType::Neg);
 Operator* Operator::Not				= new Operator(OpStyle::OpUnary,		OpType::Not);
 Operator* Operator::Pos				= new Operator(OpStyle::OpUnary,		OpType::Pos);
+Operator* Operator::Quote			= new Operator(OpStyle::OpUnary,		OpType::Quote);
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::OpPostUnary,	OpType::PostMod);
 Operator* Operator::PostMul			= new Operator(OpStyle::OpPostUnary,	OpType::PostMul);

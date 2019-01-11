@@ -203,25 +203,20 @@ bool Parser::ReduceTwoTokens()
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 			return false;
 		}
-#if 0
 	} else if (pToken1->IsType(TokenType::LBrace)) {
 		if (pToken2->IsType(TokenType::RBrace)) {
 			DBGPARSER(::printf("Reduce: Expr -> '{' '}'\n"));
-			Expr_Block *pExprBlock =
-						dynamic_cast<Expr_Block *>(pToken1->GetExpr());
-			if (!pExprBlock) {
-				pExprBlock = new Expr_Block();
-			}
-			pExpr = pExprBlock;
+			pExpr.reset(Expr::Reference(pToken1->GetExpr()));
+			if (!pExpr) pExpr.reset(new Expr_Block());
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '{' -> '{' EndOfLine\n"));
-			_tokenStack.pop_back();
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
-			goto error_done;
+			return false;
 		}
+#if 0
 	} else if (pToken1->IsType(TokenType::LBlockParam)) {
 		if (pToken2->IsType(TokenType::RBlockParam)) {
 			// this is a special case of reducing
@@ -268,24 +263,26 @@ bool Parser::ReduceTwoTokens()
 		pExpr->SetSourceInfo(_pSourceName->Reference(), lineNoTop, lineNoBtm);
 		_tokenStack.Push(Token(TokenType::Expr, pExpr));
 		return true;
+#endif
 	} else if (pToken2->IsType(TokenType::Expr)) {
-		if (pToken1->IsType(TokenType::Quote)) {
-			DBGPARSER(::printf("Reduce: Expr -> '`' Expr\n"));
-			pExpr = new Expr_Quote(pToken2->GetExpr());
-		} else if (pToken1->IsType(TokenType::Add)) {
-			DBGPARSER(::printf("Reduce: Expr -> '+' Expr\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Pos), pToken2->GetExpr());
+		if (pToken1->IsType(TokenType::Inv)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '~' Expr\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Inv));
 		} else if (pToken1->IsType(TokenType::Sub)) {
-			DBGPARSER(::printf("Reduce: Expr -> '-' Expr\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Neg), pToken2->GetExpr());
-		} else if (pToken1->IsType(TokenType::Inv)) {
-			DBGPARSER(::printf("Reduce: Expr -> '~' Expr\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Inv), pToken2->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '-' Expr\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Neg));
 		} else if (pToken1->IsType(TokenType::Not)) {
-			DBGPARSER(::printf("Reduce: Expr -> '!' Expr\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Not), pToken2->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '!' Expr\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Not));
+		} else if (pToken1->IsType(TokenType::Add)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '+' Expr\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Pos));
+		} else if (pToken1->IsType(TokenType::Quote)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '`' Expr\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Quote));
+#if 0
 		} else if (pToken1->IsType(TokenType::Mod)) {
-			DBGPARSER(::printf("Reduce: Expr -> '%%%%' Expr\n"));
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
 			if (pToken2->GetExpr()->IsBlock()) {
 				// %{..}
 				Expr *pExprCar = new Expr_Identifier(Symbol::Percnt);
@@ -296,7 +293,7 @@ bool Parser::ReduceTwoTokens()
 				pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mod), pToken2->GetExpr());
 			}
 		} else if (pToken1->IsType(TokenType::ModMod)) {
-			DBGPARSER(::printf("Reduce: Expr -> '%%%%' Expr\n"));
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
 			if (pToken2->GetExpr()->IsBlock()) {
 				// %%{..}
 				Expr *pExprCar = new Expr_Identifier(Symbol::PercntPercnt);
@@ -308,7 +305,7 @@ bool Parser::ReduceTwoTokens()
 				goto error_done;
 			}
 		} else if (pToken1->IsType(TokenType::And)) {
-			DBGPARSER(::printf("Reduce: Expr -> '&' Expr\n"));
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
 			if (pToken2->GetExpr()->IsBlock()) {
 				// &{..}
 				Expr *pExprCar = new Expr_Identifier(Symbol::Amp);
@@ -319,33 +316,33 @@ bool Parser::ReduceTwoTokens()
 				pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_And), pToken2->GetExpr());
 			}
 		} else if (pToken1->IsType(TokenType::Mul)) {
-			DBGPARSER(::printf("Reduce: Expr -> '*' Expr\n"));
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '*' Expr\n"));
 			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mul), pToken2->GetExpr());
+#endif
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
-			goto error_done;
+			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr)) {
 		if (pToken2->IsType(TokenType::Add)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '+'\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_PostPos), pToken1->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '+'\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostPos));
 		} else if (pToken2->IsType(TokenType::Mul)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '*'\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Each), pToken1->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '*'\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMul));
 		} else if (pToken2->IsType(TokenType::Question)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '?'\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Question), pToken1->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '?'\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostQuestion));
 		} else if (pToken2->IsType(TokenType::Mod)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '%%'\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_PostMod), pToken1->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '%%'\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMod));
 		} else if (pToken2->IsType(TokenType::Seq)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr ..\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_SeqInf), pToken1->GetExpr());
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr ..\n"));
+			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostSeq));
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
-			goto error_done;
+			return false;
 		}
-#endif
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 		return false;
