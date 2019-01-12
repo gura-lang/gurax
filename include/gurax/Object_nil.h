@@ -15,7 +15,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_nil);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("nil");
+	Gurax_MemoryPoolAllocator("Object_nil");
 	// Class declaration
 	class KlassEx : public Klass {
 	public:

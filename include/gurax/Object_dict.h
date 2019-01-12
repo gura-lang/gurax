@@ -15,7 +15,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_dict);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("dict");
+	Gurax_MemoryPoolAllocator("Object_dict");
 	// Class declaration
 	class KlassEx : public Klass {
 	public:

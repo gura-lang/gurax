@@ -15,7 +15,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_bool);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("bool");
+	Gurax_MemoryPoolAllocator("Object_bool");
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
