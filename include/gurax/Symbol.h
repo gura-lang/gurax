@@ -27,6 +27,8 @@ const Symbol* g_pSymbolMark_##name = Symbol::Add(str);
 namespace Gurax {
 
 class Symbol; 
+class Expr;
+class ExprList;
 
 //------------------------------------------------------------------------------
 // SymbolList
@@ -158,6 +160,23 @@ public:
 		if (!_pSymbolPool) _pSymbolPool = new SymbolPool();
 		return *_pSymbolPool;
 	}
+};
+
+//------------------------------------------------------------------------------
+// DottedSymbol
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE DottedSymbol : public Referable {
+private:
+	SymbolList _symbols;
+protected:
+	~DottedSymbol() = default;
+public:
+	// Referable accessor
+	Gurax_DeclareReferable(DottedSymbol);
+public:
+	bool ComposeFromExprList(const ExprList& exprList);
+	bool ComposeFromString(const char* str);
+	bool ComposeFromExpr(const Expr* pExpr);
 };
 
 }

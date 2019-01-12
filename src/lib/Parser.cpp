@@ -497,7 +497,8 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::Period)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr\n"));
 			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
 			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
@@ -505,7 +506,8 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::ColonColon)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :: Expr\n"));
 			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
 			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
@@ -513,7 +515,8 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::ColonAsterisk)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :* Expr\n"));
 			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
 			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
@@ -521,7 +524,8 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::ColonAnd)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :& Expr\n"));
 			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
 			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
