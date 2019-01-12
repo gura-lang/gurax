@@ -528,50 +528,50 @@ bool Parser::ReduceThreeTokens()
 										MemberMode::MapAlong));
 #if 0
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr : Expr\n"));
-			Expr *pExprDst = pExprLeft;
-			if (pExprDst->IsUnaryOpSuffix()) {
-				pExprDst = dynamic_cast<Expr_UnaryOp *>(pExprDst)->GetChild();
+			Expr* pExprDst = pExprLeft.get();
+			if (pExprDst->IsType<Expr_UnaryOp>()) {
+				Expr* pExprEx = dynamic_cast<Expr_UnaryOp*>(pExprDst);
+				if (pExprEx->GetOperator()->IsOpPostUnary()) pExprDst = pExprEx->GetChild();
 			}
-			if (pExprDst->IsIndexer()) {
-				pExprDst = dynamic_cast<Expr_Indexer *>(pExprDst)->GetCar();
+			if (pExprDst->IsType<Expr_Indexer>()) {
+				pExprDst = dynamic_cast<Expr_Indexer*>(pExprDst)->GetCar();
 			}
 			if (pExprRight->IsIdentifier()) {
-				const Symbol *pSymbol = dynamic_cast<Expr_Identifier *>(pExprRight)->GetSymbol();
+				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Identifier)\n"));
+				const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExprRight)->GetSymbol();
 				bool optAttrFlag = false;
-				SymbolList *pAttrFront = nullptr;
+				SymbolList* pAttrFront = nullptr;
 				if (pExprDst->IsIdentifier()) {
-					Expr_Identifier *pExprIdentifier =
-									dynamic_cast<Expr_Identifier *>(pExprDst);
+					Expr_Identifier* pExprIdentifier = dynamic_cast<Expr_Identifier*>(pExprDst);
 					optAttrFlag = pExprIdentifier->AddAttr(pSymbol);
 					pAttrFront = &pExprIdentifier->GetAttrFront();
 				} else if (pExprDst->IsCaller()) {
-					Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pExprDst);
-					Expr_Caller *pExprTrailer = pExprCaller->GetLastTrailer();
+					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst);
+					Expr_Caller* pExprTrailer = pExprCaller->GetLastTrailer();
 					optAttrFlag = pExprTrailer->AddAttr(pSymbol);
 					pAttrFront = &pExprTrailer->GetAttrFront();
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-					goto error_done;
+					return false;
 				}
 				if (optAttrFlag && pAttrFront->empty()) pAttrFront->push_back(pSymbol);
 				pExpr = pExprLeft;
-				Expr::Delete(pExprRight);
 			} else if (pExprRight->IsMember()) {
-				Expr_Member *pExprMember = dynamic_cast<Expr_Member *>(pExprRight);
-				SymbolList *pAttrFront = nullptr;
+				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
+				Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight);
+				SymbolList* pAttrFront = nullptr;
 				if (pExprDst->IsIdentifier()) {
-					Expr_Identifier *pExprIdentifierDst =
-									dynamic_cast<Expr_Identifier *>(pExprDst);
+					Expr_Identifier* pExprIdentifierDst =
+									dynamic_cast<Expr_Identifier*>(pExprDst);
 					pAttrFront = &pExprIdentifierDst->GetAttrFront();
 					const Expr_Identifier *pExprIdentifier = pExprMember->GetSelector();
 					pExprIdentifierDst->AddAttrs(pExprIdentifier->GetAttrs());
 					pExprIdentifierDst->AddAttrsOpt(pExprIdentifier->GetAttrsOpt());
 				} else if (pExprDst->IsCaller()) {
-					Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pExprDst);
-					Expr_Caller *pExprTrailer = pExprCaller->GetLastTrailer();
+					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst);
+					Expr_Caller* pExprTrailer = pExprCaller->GetLastTrailer();
 					pAttrFront = &pExprTrailer->GetAttrFront();
-					const Expr_Identifier *pExprIdentifier = pExprMember->GetSelector();
+					const Expr_Identifier* pExprIdentifier = pExprMember->GetSelector();
 					pExprTrailer->AddAttrs(pExprIdentifier->GetAttrs());
 					pExprTrailer->AddAttrsOpt(pExprIdentifier->GetAttrsOpt());
 				} else {
@@ -579,31 +579,33 @@ bool Parser::ReduceThreeTokens()
 					goto error_done;
 				}
 				if (!pAttrFront->empty()) {
-					sig.SetError(ERR_SyntaxError,
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							"value type must be specified as a first attribute");
 					goto error_done;
 				}
 				if (!pAttrFront->AddFromExpr(pExprRight)) {
-					sig.SetError(ERR_SyntaxError, "invalid declaration of value type");
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+							   "invalid declaration of value type");
 					goto error_done;
 				}
 				pExpr = pExprLeft;
-				Expr::Delete(pExprRight);
 			} else if (pExprRight->IsLister()) {
-				ExprList &exprList = dynamic_cast<Expr_Lister *>(pExprRight)->GetExprOwner();
+				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
+				ExprList& exprList = dynamic_cast<Expr_Lister*>(pExprRight)->GetExprOwner();
 				if (pExprDst->IsIdentifier()) {
-					sig.SetError(ERR_TypeError, "identifiers cannot declare optional attributes");
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+							   "identifiers cannot declare optional attributes");
 					goto error_done;
 				} else if (pExprDst->IsCaller()) {
 					Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pExprDst);
 					pExprCaller = pExprCaller->GetLastTrailer();
-					foreach (ExprList, ppExpr, exprList) {
-						Expr *pExpr = *ppExpr;
+					for (Expr* pExpr : exprList) {
 						if (!pExpr->IsIdentifier()) {
-							IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-							goto error_done;
+							IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+									   "a list of optional attributes can only contain identifiers");
+							return false;
 						}
-						const Symbol *pSymbol = dynamic_cast<Expr_Identifier *>(pExpr)->GetSymbol();
+						const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExpr)->GetSymbol();
 						pExprCaller->AddAttrOpt(pSymbol);
 					}
 				} else {
@@ -611,7 +613,6 @@ bool Parser::ReduceThreeTokens()
 					goto error_done;
 				}
 				pExpr = pExprLeft;
-				Expr::Delete(pExprRight);
 			} else {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 				goto error_done;
