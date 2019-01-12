@@ -207,11 +207,17 @@ class GURAX_DLLDECLARE Expr_Suffixed : public Expr_Node {
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<StringReferable> _pStr;
+	RefPtr<StringReferable> _pStrValue;
+	const Symbol* _pSymbolSuffix;
+	bool _numberFlag;
 public:
-	Expr_Suffixed(StringReferable* pStr) : Expr_Node(typeInfo), _pStr(pStr) {}
-	const char* GetString() const { return _pStr->GetString(); }
-	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+	Expr_Suffixed(StringReferable* pStrValue, const Symbol* pSymbolSuffix, bool numberFlag) :
+		Expr_Node(typeInfo), _pStrValue(pStrValue), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	const char* GetValue() const { return _pStrValue->GetString(); }
+	const String& GetValueSTL() const { return _pStrValue->GetStringSTL(); }
+	const Symbol* GetSuffix() const { return _pSymbolSuffix; }
+	bool IsNumber() const { return _numberFlag; }
+	bool IsString() const { return !_numberFlag; }
 public:
 	virtual void Exec() const;
 };

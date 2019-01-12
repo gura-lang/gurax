@@ -150,14 +150,14 @@ bool Parser::ReduceOneToken()
 	} else if (pToken->IsType(TokenType::Sub)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> '-'\n"));
 		pExpr.reset(new Expr_Identifier(Gurax_SymbolMark(Sub)));
-#if 0
 	} else if (pToken->IsType(TokenType::NumberSuffixed)) {
-		DBGPARSER(::printf("Reduce: Expr -> Suffixed\n"));
-		pExpr.reset(new Expr_Suffixed(pToken->GetStringSTL(), true, Symbol::Add(pToken->GetSuffix())));
+		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> NumberSuffixed\n"));
+		pExpr.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
+									  Symbol::Add(pToken->GetSuffix()), true));
 	} else if (pToken->IsType(TokenType::StringSuffixed)) {
-		DBGPARSER(::printf("Reduce: Expr -> Suffixed\n"));
-		pExpr.reset(new Expr_Suffixed(pToken->GetStringSTL(), false, Symbol::Add(pToken->GetSuffix())));
-#endif
+		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> SuffixedSuffixed\n"));
+		pExpr.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
+									  Symbol::Add(pToken->GetSuffix()), false));
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken, "unexpected token: %s", pToken->GetSymbol());
 		return false;

@@ -77,6 +77,15 @@ void Expr_Identifier::Exec() const
 }
 
 //------------------------------------------------------------------------------
+// Expr_Suffixed : Expr_Node
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_Suffixed::typeInfo;
+
+void Expr_Suffixed::Exec() const
+{
+}
+
+//------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_UnaryOp::typeInfo;
