@@ -108,18 +108,39 @@ bool DottedSymbol::FromExprList(const ExprList& exprList)
 // Add symbols from a string.
 bool DottedSymbol::FromString(const char* str)
 {
+	enum class Stat {
+		SymbolFirst,
+		SymbolFollower,
+	} stat = Stat::SymbolFirst;
 	String field;
 	for (const char* p = str; *p != '\0'; p++) {
 		char ch = *p;
-		if (ch == '.') {
-			_symbolList.push_back(Symbol::Add(field.c_str()));
-			field.clear();
-		} else {
-			field += ch;
+		switch (stat) {
+		case Stat::SymbolFirst: {
+			if (String::IsSymbolFirst(ch)) {
+				field.clear();
+				field += ch;
+				stat = Stat::SymbolFollower;
+			} else {
+				return false;
+			}
+			break;
+		}
+		case Stat::SymbolFollower: {
+			if (ch == '.') {
+				_symbolList.push_back(Symbol::Add(field));
+				stat = Stat::SymbolFirst;
+			} else if (String::IsSymbolFollower(ch)) {
+				field += ch;
+			} else {
+				return false;
+			}
+			break;
+		}
 		}
 	}
 	if (!field.empty()) {
-		_symbolList.push_back(Symbol::Add(field.c_str()));
+		_symbolList.push_back(Symbol::Add(field));
 	}
 	return true;
 }

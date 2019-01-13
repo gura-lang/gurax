@@ -145,6 +145,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	static void Bootup();
 	static const Symbol* Add(const char* name);
+	static const Symbol* Add(const String& name) { return Add(name.c_str()); }
 	static SymbolList GetAllSymbols();
 	static void PrintAllSymbols();
 };
