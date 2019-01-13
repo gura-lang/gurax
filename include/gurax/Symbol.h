@@ -190,6 +190,7 @@ public:
 public:
 	// Constructor
 	DottedSymbol() = default;
+	DottedSymbol(std::initializer_list<const Symbol*> initList) : _symbolList(initList) {}
 	// Copy constructor/operator
 	DottedSymbol(const DottedSymbol& src) = delete;
 	DottedSymbol& operator=(const DottedSymbol& src) = delete;
@@ -204,8 +205,8 @@ public:
 	bool FromExprList(const ExprList& exprList);
 	bool FromString(const char* str);
 	bool FromExpr(const Expr* pExpr);
-	String ToString(const StringStyle& ss) const;
-	bool IsEqualTo(const DottedSymbol& dottedSymbol) {
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	bool IsEqualTo(const DottedSymbol& dottedSymbol) const {
 		return GetSymbolList().IsEqualTo(dottedSymbol.GetSymbolList());
 	}		
 };
