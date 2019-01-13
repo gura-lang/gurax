@@ -68,14 +68,13 @@ ObjectList& ObjectList::Sort(SortOrder sortOrder)
 	return *this;
 }
 
-String ObjectList::ToString(const StringStyle& stringStyle) const
+String ObjectList::ToString(const StringStyle& ss) const
 {
-	const char* strComma = stringStyle.IsCram()? "," : ", ";
 	String str;
 	str += "[";
 	for (auto ppObject = begin(); ppObject != end(); ++ppObject) {
-		if (ppObject != begin()) str += strComma;
-		str += (*ppObject)->ToString(stringStyle);
+		if (ppObject != begin()) str += ss.GetComma();
+		str += (*ppObject)->ToString(ss);
 	}
 	str += "]";
 	return str;
@@ -137,7 +136,7 @@ void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
 	}
 }
 
-String ObjectMap::ToString(const StringStyle& stringStyle) const
+String ObjectMap::ToString(const StringStyle& ss) const
 {
 	String str;
 	SymbolList keys = GetKeys().Sort();
@@ -200,10 +199,9 @@ void ObjectDict::Assign(Object* pObjectKey, Object* pObject)
 	}
 }
 
-String ObjectDict::ToString(const StringStyle& stringStyle) const
+String ObjectDict::ToString(const StringStyle& ss) const
 {
-	const char* strComma = stringStyle.IsCram()? "," : ", ";
-	const char* strPair = stringStyle.IsCram()? "=>" : " => ";
+	const char* strPair = ss.IsCram()? "=>" : " => ";
 	RefPtr<ObjectOwner> pKeys = GetKeys();
 	pKeys->Sort();
 	String str;
@@ -211,10 +209,10 @@ String ObjectDict::ToString(const StringStyle& stringStyle) const
 	for (auto ppObjectKey = pKeys->begin(); ppObjectKey != pKeys->end(); ppObjectKey++) {
 		const Object* pObjectKey = *ppObjectKey;
 		Object* pObject = Lookup(pObjectKey);
-		if (ppObjectKey != pKeys->begin()) str += strComma;
-		str += pObjectKey->ToString(stringStyle);
+		if (ppObjectKey != pKeys->begin()) str += ss.GetComma();
+		str += pObjectKey->ToString(ss);
 		str += strPair;
-		str += pObject->ToString(stringStyle);
+		str += pObject->ToString(ss);
 	}
 	str += "}";
 	return str;
@@ -233,7 +231,7 @@ void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
 	}
 }
 
-String KlassMap::ToString(const StringStyle &stringStyle) const
+String KlassMap::ToString(const StringStyle& ss) const
 {
 	String str;
 	SymbolList keys = GetKeys().Sort();

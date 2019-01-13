@@ -14,6 +14,14 @@ void Symbol::Bootup()
 {
 }
 
+String Symbol::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	if (ss.IsAsSource()) rtn += '`';
+	rtn += GetName();
+	return rtn;
+}
+
 const Symbol* Symbol::Add(const char* name)
 {
 	SymbolPool& symbolPool = SymbolPool::GetInstance();
@@ -29,19 +37,18 @@ const Symbol* Symbol::Add(const char* name)
 	return pSymbol;
 }
 
-SymbolList Symbol::GetList()
+SymbolList Symbol::GetAllSymbols()
 {
-	SymbolList symbolList;
 	const SymbolPool& symbolPool = SymbolPool::GetInstance();
-	symbolList.reserve(symbolPool.size());
-	for (auto pSymbol : symbolPool) symbolList.push_back(pSymbol);
-	std::sort(symbolList.begin(), symbolList.end(), Symbol::LessThan_Name());
+	SymbolList symbolList;
+	std::copy(symbolPool.begin(), symbolPool.end(), std::back_inserter(symbolList));
+	symbolList.Sort();
 	return symbolList;
 }
 
-void Symbol::PrintList()
+void Symbol::PrintAllSymbols()
 {
-	SymbolList symbolList = GetList();
+	SymbolList symbolList = GetAllSymbols();
 	for (auto pSymbol : symbolList) {
 		::printf("%08d %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
 	}
@@ -60,6 +67,21 @@ SymbolList& SymbolList::Sort(SortOrder sortOrder)
 	return *this;
 }
 
+bool SymbolList::IsEqualTo(const SymbolList& symbolList) const
+{
+	return std::equal(begin(), end(), symbolList.begin(), symbolList.end(), Symbol::EqualTo_UniqId());
+}
+
+String SymbolList::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	for (const Symbol* pSymbol : *this) {
+		if (!rtn.empty()) rtn += ss.GetComma();
+		rtn += pSymbol->ToString(ss);
+	}
+	return rtn;
+}
+
 //------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
@@ -75,10 +97,10 @@ SymbolPool* SymbolPool::_pSymbolPool = nullptr;
 // Compose from a list of Exprs.
 bool DottedSymbol::ComposeFromExprList(const ExprList& exprList)
 {
-	_symbols.reserve(exprList.size());
+	_symbolList.reserve(exprList.size());
 	for (const Expr* pExpr : exprList) {
 		if (!pExpr->IsType<Expr_Identifier>()) return false;
-		_symbols.push_back(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+		_symbolList.push_back(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
 	}
 	return true;
 }
@@ -90,14 +112,14 @@ bool DottedSymbol::ComposeFromString(const char* str)
 	for (const char* p = str; *p != '\0'; p++) {
 		char ch = *p;
 		if (ch == '.') {
-			_symbols.push_back(Symbol::Add(field.c_str()));
+			_symbolList.push_back(Symbol::Add(field.c_str()));
 			field.clear();
 		} else {
 			field += ch;
 		}
 	}
 	if (!field.empty()) {
-		_symbols.push_back(Symbol::Add(field.c_str()));
+		_symbolList.push_back(Symbol::Add(field.c_str()));
 	}
 	return true;
 }
@@ -109,11 +131,11 @@ bool DottedSymbol::ComposeFromExpr(const Expr* pExpr)
 		if (pExpr->IsType<Expr_Member>()) {
 			const Expr_Member* pExprMember = dynamic_cast<const Expr_Member*>(pExpr);
 			if (!pExprMember->GetRight()->IsType<Expr_Identifier>()) return false;
-			_symbols.insert(_symbols.begin(),
+			_symbolList.insert(_symbolList.begin(),
 							dynamic_cast<const Expr_Identifier*>(pExprMember->GetRight())->GetSymbol());
 			pExpr = pExprMember->GetLeft();
 		} else if (pExpr->IsType<Expr_Identifier>()) {
-			_symbols.insert(_symbols.begin(),
+			_symbolList.insert(_symbolList.begin(),
 							dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
 			break;
 		} else {

@@ -35,8 +35,23 @@ class ExprList;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
 public:
+	// Constructor
+	SymbolList() = default;
+	SymbolList(std::initializer_list<const Symbol*> initList) :
+		std::vector<const Symbol*>(initList) {}
+	// Copy constructor/operator
+	SymbolList(const SymbolList& src) = default;
+	SymbolList& operator=(const SymbolList& src) = default;
+	// Move constructor/operator
+	SymbolList(SymbolList&& src) = default;
+	SymbolList& operator=(SymbolList&& src) noexcept = default;
+	// Destructor
+	~SymbolList() = default;
+public:
 	SymbolList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	template<typename T_Map> static SymbolList CollectKeys(const T_Map& map);
+	bool IsEqualTo(const SymbolList& symbolList) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 template<typename T_Map>
@@ -123,14 +138,15 @@ public:
 	const char* GetName() const { return _name; }
 	bool IsIdentical(const Symbol* pSymbol) const { return GetUniqId() == pSymbol->GetUniqId(); }
 	static bool IsIdentical(const Symbol* pSymbol1, const Symbol *pSymbol2) {
-		return pSymbol1 && pSymbol2 && (pSymbol1->GetUniqId() == pSymbol2->GetUniqId());
+		return pSymbol1 && pSymbol2 && pSymbol1->IsIdentical(pSymbol2);
 	}
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
-	bool IsLessThan(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
+	bool IsLessThan_UniqId(const Symbol* pSymbol) const { return GetUniqId() < pSymbol->GetUniqId(); }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	static void Bootup();
 	static const Symbol* Add(const char* name);
-	static SymbolList GetList();
-	static void PrintList();
+	static SymbolList GetAllSymbols();
+	static void PrintAllSymbols();
 };
 
 //------------------------------------------------------------------------------
@@ -167,16 +183,30 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE DottedSymbol : public Referable {
 private:
-	SymbolList _symbols;
-protected:
-	~DottedSymbol() = default;
+	SymbolList _symbolList;
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(DottedSymbol);
 public:
+	// Constructor
+	DottedSymbol() = default;
+	// Copy constructor/operator
+	DottedSymbol(const DottedSymbol& src) = delete;
+	DottedSymbol& operator=(const DottedSymbol& src) = delete;
+	// Move constructor/operator
+	DottedSymbol(DottedSymbol&& src) = delete;
+	DottedSymbol& operator=(DottedSymbol&& src) noexcept = delete;
+protected:
+	// Destructor
+	~DottedSymbol() = default;
+public:
+	const SymbolList& GetSymbolList() const { return _symbolList; }
 	bool ComposeFromExprList(const ExprList& exprList);
 	bool ComposeFromString(const char* str);
 	bool ComposeFromExpr(const Expr* pExpr);
+	bool IsEqualTo(const DottedSymbol& dottedSymbol) {
+		return GetSymbolList().IsEqualTo(dottedSymbol.GetSymbolList());
+	}		
 };
 
 }

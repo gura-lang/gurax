@@ -49,7 +49,7 @@ public:
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetSymbol()->IsLessThan(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
+			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle&) const override { return String("`").append(_pSymbol->GetName()); }

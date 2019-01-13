@@ -25,7 +25,7 @@ public:
 	bool IsEqualTo(const ObjectList& objectList) const { return IsIdentical(objectList); }
 	bool IsLessThan(const ObjectList& objectList) const { return this < &objectList; }
 	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& stringStyle) const;
+	String ToString(const StringStyle& ss) const;
 };
 
 //------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ public:
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& stringStyle) const;
+	String ToString(const StringStyle& ss) const;
 };
 
 //------------------------------------------------------------------------------
@@ -279,7 +279,7 @@ public:
 	bool IsEqualTo(const ObjectDict& objectDict) const { return IsIdentical(objectDict); }
 	bool IsLessThan(const ObjectDict& objectDict) const { return this < &objectDict; }
 	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& stringStyle) const;
+	String ToString(const StringStyle& ss) const;
 };
 
 //------------------------------------------------------------------------------
@@ -302,7 +302,7 @@ public:
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& stringStyle) const;
+	String ToString(const StringStyle& ss) const;
 };
 
 }

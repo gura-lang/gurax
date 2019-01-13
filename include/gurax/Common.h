@@ -151,6 +151,9 @@ private:
 	bool _asSourceFlag;
 	bool _cramFlag;
 	bool _multiLineFlag;
+	static const char* _strsComma[2];
+	static const char* _strsColon[2];
+	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
 public:
@@ -161,6 +164,9 @@ public:
 	bool IsAsSource() const { return _asSourceFlag; }
 	bool IsCram() const { return _cramFlag; }
 	bool IsMultiLine() const { return _multiLineFlag; }
+	const char* GetComma() const { return _strsComma[_cramFlag]; }
+	const char* GetColon() const { return _strsColon[_cramFlag]; }
+	const char* GetSemicolon() const { return _strsSemicolon[_cramFlag]; }
 };
 
 //------------------------------------------------------------------------------

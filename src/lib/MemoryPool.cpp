@@ -34,10 +34,10 @@ void MemoryPool::Deallocate(void* p)
 	pHeader->u.pChunk->Deallocate(p);
 }
 
-String MemoryPool::ToString(const StringStyle& stringStyle) const
+String MemoryPool::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += _chunkFixed1.ToString(stringStyle);
+	str += _chunkFixed1.ToString(ss);
 	return str;
 }
 
@@ -77,7 +77,7 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 	_pHeaderVacantHead = pHeader;
 }
 
-String MemoryPool::ChunkFixed::ToString(const StringStyle& stringStyle) const
+String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[128];

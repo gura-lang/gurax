@@ -51,7 +51,7 @@ public:
 		size_t GetBytesBlock() const { return _bytesBlock; }
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
-		String ToString(const StringStyle& stringStyle) const;
+		String ToString(const StringStyle& ss) const;
 	};
 	class ChunkVariable : public Chunk {
 	public:
@@ -81,7 +81,7 @@ public:
 	void* Allocate(size_t bytes, const char* ownerName);
 	void Deallocate(void* p);
 	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& stringStyle) const;
+	String ToString(const StringStyle& ss) const;
 };
 
 //-----------------------------------------------------------------------------

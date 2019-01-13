@@ -9,6 +9,7 @@ namespace Gurax {
 
 Gurax_TesterEntry(SizeOf)
 {
+	Gurax_PrintSizeOf(DateTime);
 	Gurax_PrintSizeOf(Frame_Node);
 	Gurax_PrintSizeOf(Frame_Branch);
 	Gurax_PrintSizeOf(ObjectOwner);
@@ -28,6 +29,7 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(Object_symbol);
 	Gurax_PrintSizeOf(Object_undefined);
 	Gurax_PrintSizeOf(Symbol);
+	Gurax_PrintSizeOf(TimeDelta);
 }
 
 }
