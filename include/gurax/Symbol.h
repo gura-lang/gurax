@@ -209,7 +209,8 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	bool IsEqualTo(const DottedSymbol& dottedSymbol) const {
 		return GetSymbolList().IsEqualTo(dottedSymbol.GetSymbolList());
-	}		
+	}
+	void Append(const Symbol* pSymbol) { _symbolList.push_back(pSymbol); }
 };
 
 }
