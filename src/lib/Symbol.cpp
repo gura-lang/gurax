@@ -94,19 +94,19 @@ SymbolPool* SymbolPool::_pSymbolPool = nullptr;
 //------------------------------------------------------------------------------
 // DottedSymbol
 //------------------------------------------------------------------------------
-// Add symbols from a list of Exprs.
-bool DottedSymbol::FromExprList(const ExprList& exprList)
+// Append symbols from a list of Exprs.
+bool DottedSymbol::AppendFromExprList(const ExprList& exprList)
 {
 	_symbolList.reserve(exprList.size());
 	for (const Expr* pExpr : exprList) {
 		if (!pExpr->IsType<Expr_Identifier>()) return false;
-		_symbolList.push_back(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+		Append(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
 	}
 	return true;
 }
 
-// Add symbols from a string.
-bool DottedSymbol::FromString(const char* str)
+// Append symbols from a string.
+bool DottedSymbol::AppendFromString(const char* str)
 {
 	enum class Stat {
 		SymbolFirst,
@@ -128,7 +128,7 @@ bool DottedSymbol::FromString(const char* str)
 		}
 		case Stat::SymbolFollower: {
 			if (ch == '.') {
-				_symbolList.push_back(Symbol::Add(field));
+				Append(Symbol::Add(field));
 				stat = Stat::SymbolFirst;
 			} else if (String::IsSymbolFollower(ch)) {
 				field += ch;
@@ -140,24 +140,24 @@ bool DottedSymbol::FromString(const char* str)
 		}
 	}
 	if (!field.empty()) {
-		_symbolList.push_back(Symbol::Add(field));
+		Append(Symbol::Add(field));
 	}
 	return true;
 }
 
-// Add symbols from Exprs that are chained by member operator ".".
-bool DottedSymbol::FromExpr(const Expr* pExpr)
+// Append symbols from Exprs that are chained by member operator ".".
+bool DottedSymbol::AppendFromExpr(const Expr* pExpr)
 {
 	for (;;) {
 		if (pExpr->IsType<Expr_Member>()) {
 			const Expr_Member* pExprMember = dynamic_cast<const Expr_Member*>(pExpr);
 			if (!pExprMember->GetRight()->IsType<Expr_Identifier>()) return false;
 			_symbolList.insert(_symbolList.begin(),
-							dynamic_cast<const Expr_Identifier*>(pExprMember->GetRight())->GetSymbol());
+							   dynamic_cast<const Expr_Identifier*>(pExprMember->GetRight())->GetSymbol());
 			pExpr = pExprMember->GetLeft();
 		} else if (pExpr->IsType<Expr_Identifier>()) {
 			_symbolList.insert(_symbolList.begin(),
-							dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+							   dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
 			break;
 		} else {
 			return false;

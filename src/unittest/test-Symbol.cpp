@@ -7,6 +7,11 @@ namespace Gurax {
 
 Gurax_RealizeSymbol(hoge);
 
+void Test_PrintAllSymbols()
+{
+	Symbol::PrintAllSymbols();
+}
+
 void Test_Add()
 {
 	const Symbol* Sym_foo1 = Symbol::Add("foo");
@@ -14,7 +19,6 @@ void Test_Add()
 	const Symbol* Sym_foo3 = Symbol::Add("foo");
 	::printf("%d %d %d\n", Sym_foo1->GetUniqId(), Sym_foo2->GetUniqId(), Sym_foo3->GetUniqId());
 	::printf("%d\n", Sym_foo1->IsIdentical(Sym_foo2));
-	Symbol::PrintAllSymbols();
 }
 
 void Test_SymbolList()
@@ -49,7 +53,7 @@ void Test_DottedSymbol_IsEqualTo()
 	TestFunc(*pDottedSymbol1, *pDottedSymbol4);
 }
 
-void Test_DottedSymbol_FromString()
+void Test_DottedSymbol_AppendFromString()
 {
 	const char* strs[] = {
 		"aaaa",
@@ -66,7 +70,7 @@ void Test_DottedSymbol_FromString()
 	};
 	for (const char* str : strs) {
 		RefPtr<DottedSymbol> pDottedSymbol = new DottedSymbol();
-		if (pDottedSymbol->FromString(str)) {
+		if (pDottedSymbol->AppendFromString(str)) {
 			::printf("\"%s\" -> %s\n", str, pDottedSymbol->ToString().c_str());
 		} else {
 			::printf("\"%s\" -> ** error **\n", str);
@@ -76,10 +80,11 @@ void Test_DottedSymbol_FromString()
 
 Gurax_TesterEntry(Symbol)
 {
+	Test_PrintAllSymbols();
 	Test_Add();
 	Test_SymbolList();
 	Test_DottedSymbol_IsEqualTo();
-	Test_DottedSymbol_FromString();
+	Test_DottedSymbol_AppendFromString();
 }
 
 }

@@ -203,14 +203,14 @@ protected:
 	~DottedSymbol() = default;
 public:
 	const SymbolList& GetSymbolList() const { return _symbolList; }
-	bool FromExprList(const ExprList& exprList);
-	bool FromString(const char* str);
-	bool FromExpr(const Expr* pExpr);
+	void Append(const Symbol* pSymbol) { _symbolList.push_back(pSymbol); }
+	bool AppendFromExprList(const ExprList& exprList);
+	bool AppendFromString(const char* str);
+	bool AppendFromExpr(const Expr* pExpr);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	bool IsEqualTo(const DottedSymbol& dottedSymbol) const {
 		return GetSymbolList().IsEqualTo(dottedSymbol.GetSymbolList());
 	}
-	void Append(const Symbol* pSymbol) { _symbolList.push_back(pSymbol); }
 };
 
 }
