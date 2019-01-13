@@ -201,9 +201,10 @@ protected:
 	~DottedSymbol() = default;
 public:
 	const SymbolList& GetSymbolList() const { return _symbolList; }
-	bool ComposeFromExprList(const ExprList& exprList);
-	bool ComposeFromString(const char* str);
-	bool ComposeFromExpr(const Expr* pExpr);
+	bool FromExprList(const ExprList& exprList);
+	bool FromString(const char* str);
+	bool FromExpr(const Expr* pExpr);
+	String ToString(const StringStyle& ss) const;
 	bool IsEqualTo(const DottedSymbol& dottedSymbol) {
 		return GetSymbolList().IsEqualTo(dottedSymbol.GetSymbolList());
 	}		

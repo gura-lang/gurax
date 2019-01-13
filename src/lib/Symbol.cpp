@@ -94,8 +94,8 @@ SymbolPool* SymbolPool::_pSymbolPool = nullptr;
 //------------------------------------------------------------------------------
 // DottedSymbol
 //------------------------------------------------------------------------------
-// Compose from a list of Exprs.
-bool DottedSymbol::ComposeFromExprList(const ExprList& exprList)
+// Add symbols from a list of Exprs.
+bool DottedSymbol::FromExprList(const ExprList& exprList)
 {
 	_symbolList.reserve(exprList.size());
 	for (const Expr* pExpr : exprList) {
@@ -105,8 +105,8 @@ bool DottedSymbol::ComposeFromExprList(const ExprList& exprList)
 	return true;
 }
 
-// Compose from a string.
-bool DottedSymbol::ComposeFromString(const char* str)
+// Add symbols from a string.
+bool DottedSymbol::FromString(const char* str)
 {
 	String field;
 	for (const char* p = str; *p != '\0'; p++) {
@@ -124,8 +124,8 @@ bool DottedSymbol::ComposeFromString(const char* str)
 	return true;
 }
 
-// Compose from Exprs that are chained by member operator ".".
-bool DottedSymbol::ComposeFromExpr(const Expr* pExpr)
+// Add symbols from Exprs that are chained by member operator ".".
+bool DottedSymbol::FromExpr(const Expr* pExpr)
 {
 	for (;;) {
 		if (pExpr->IsType<Expr_Member>()) {
@@ -143,6 +143,16 @@ bool DottedSymbol::ComposeFromExpr(const Expr* pExpr)
 		}
 	}
 	return true;
+}
+
+String DottedSymbol::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	for (const Symbol* pSymbol : _symbolList) {
+		if (!rtn.empty()) rtn += '.';
+		rtn += pSymbol->ToString();
+	}
+	return rtn;
 }
 
 }
