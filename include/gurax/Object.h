@@ -11,8 +11,8 @@
 namespace Gurax {
 
 class Object;
-class Environment;
 class StringStyle;
+class Frame;
 
 //------------------------------------------------------------------------------
 // ObjectList

@@ -38,9 +38,9 @@ public:
 	bool IsBranch() const { return _type == Type::Branch; }
 	Frame* Expand() const;
 	static Frame* Shrink(Frame* pFrame);
-	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlasss) = 0;
+	bool AssignObject(const DottedSymbol& dottedSymbol, Object* pObject);
+	Object* LookupObject(const DottedSymbol& dottedSymbol) const;
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const = 0;
 	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
 };
 
@@ -54,21 +54,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Node");
 protected:
-	RefPtr<KlassMap> _pKlassMap;
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
 	Frame_Node() : Frame(Type::Node), _pObjectMap(new ObjectMap()) {}
 public:
-	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
-		if (!_pKlassMap) _pKlassMap.reset(new KlassMap());
-		_pKlassMap->Assign(pSymbol, pKlass);
-	}
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
 		_pObjectMap->Assign(pSymbol, pObject);
-	}
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
-		return _pKlassMap? _pKlassMap->Lookup(pSymbol) : nullptr;
 	}
 	virtual Object* LookupObject(const Symbol* pSymbol) const override {
 		return _pObjectMap->Lookup(pSymbol);
@@ -95,15 +87,8 @@ public:
 	const Frame* GetLeft() const { return _pFrameLeft.get(); }
 	const Frame* GetRight() const { return _pFrameRight.get(); }
 public:
-	virtual void AssignKlass(const Symbol* pSymbol, Klass* pKlass) override {
-		_pFrameRight->AssignKlass(pSymbol, pKlass);
-	}
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
 		_pFrameRight->AssignObject(pSymbol, pObject);
-	}
-	virtual Klass* LookupKlass(const Symbol* pSymbol) const override {
-		if (Klass* pKlass = _pFrameRight->LookupKlass(pSymbol)) return pKlass;
-		return _pFrameLeft->LookupKlass(pSymbol);
 	}
 	virtual Object* LookupObject(const Symbol* pSymbol) const override {
 		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;

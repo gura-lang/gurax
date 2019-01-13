@@ -5,6 +5,7 @@
 #define GURAX_MODULE_H
 #include "Referable.h"
 #include "Help.h"
+#include "Frame.h"
 
 namespace Gurax {
 
@@ -17,9 +18,10 @@ public:
 	Gurax_DeclareReferable(Module);
 protected:
 	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<Frame> _pFrame;
 public:
 	// Constructor
-	Module() : _pHelpProvider(new HelpProvider()) {}
+	Module() : _pHelpProvider(new HelpProvider()), _pFrame(new Frame_Node()) {}
 	// Copy constructor/operator
 	Module(const Module& src) = delete;
 	Module& operator=(const Module& src) = delete;
