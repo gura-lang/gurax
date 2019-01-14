@@ -208,8 +208,9 @@ public:
 	bool AppendFromString(const char* str);
 	bool AppendFromExpr(const Expr* pExpr);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	bool IsEmpty() const { return _symbolList.empty(); }
 	bool IsEqualTo(const DottedSymbol& dottedSymbol) const {
-		return GetSymbolList().IsEqualTo(dottedSymbol.GetSymbolList());
+		return _symbolList.IsEqualTo(dottedSymbol.GetSymbolList());
 	}
 };
 
