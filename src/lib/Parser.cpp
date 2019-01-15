@@ -113,18 +113,18 @@ bool Parser::ReduceOneToken()
 	::printf("%s\n", pToken->GetSymbol());
 	int lineNoTop = pToken->GetLineNoTop();
 	int lineNoBtm = pToken->GetLineNoBtm();
-	RefPtr<Expr> pExpr;
+	RefPtr<Expr> pExprGen;
 	if (pToken->IsType(TokenType::Number)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Object(number)\n"));
-		pExpr.reset(new Expr_Object(new Object_number(String::ToNumber(pToken->GetValue()))));
+		pExprGen.reset(new Expr_Object(new Object_number(String::ToNumber(pToken->GetValue()))));
 		//pExprEx->SetScript(pToken->GetStringSTL());
 	} else if (pToken->IsType(TokenType::String)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Object(string)\n"));
-		pExpr.reset(new Expr_Object(new Object_string(pToken->GetValueReferable()->Reference())));
+		pExprGen.reset(new Expr_Object(new Object_string(pToken->GetValueReferable()->Reference())));
 #if 0
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Binary\n"));
-		pExpr.reset(new Expr_Value(Value(new Object_binary(env,
+		pExprGen.reset(new Expr_Value(Value(new Object_binary(env,
 						   Binary(pToken->GetString(), pToken->GetStringSize()), false)));
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
@@ -133,37 +133,37 @@ bool Parser::ReduceOneToken()
 		bool appendLastEOLFlag = false;
 		if (!pTemplate->Parse(env, pToken->GetString(), nullptr,
 							  autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		pExpr.reset(new Expr_EmbedString(pTemplate.release(), pToken->GetStringSTL()));
+		pExprGen.reset(new Expr_EmbedString(pTemplate.release(), pToken->GetStringSTL()));
 #endif
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
-		pExpr.reset(new Expr_Identifier(Symbol::Add(pToken->GetValue())));
+		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetValue())));
 	} else if (pToken->IsType(TokenType::Add)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> '+'\n"));
-		pExpr.reset(new Expr_Identifier(Gurax_SymbolMark(Add)));
+		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Add)));
 	} else if (pToken->IsType(TokenType::Mul)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> '*'\n"));
-		pExpr.reset(new Expr_Identifier(Gurax_SymbolMark(Mul)));
+		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Mul)));
 	} else if (pToken->IsType(TokenType::Question)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> '?'\n"));
-		pExpr.reset(new Expr_Identifier(Gurax_SymbolMark(Question)));
+		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Question)));
 	} else if (pToken->IsType(TokenType::Sub)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> '-'\n"));
-		pExpr.reset(new Expr_Identifier(Gurax_SymbolMark(Sub)));
+		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Sub)));
 	} else if (pToken->IsType(TokenType::NumberSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> NumberSuffixed\n"));
-		pExpr.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
+		pExprGen.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
 									  Symbol::Add(pToken->GetSuffix()), true));
 	} else if (pToken->IsType(TokenType::StringSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> SuffixedSuffixed\n"));
-		pExpr.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
+		pExprGen.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
 									  Symbol::Add(pToken->GetSuffix()), false));
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken, "unexpected token: %s", pToken->GetSymbol());
 		return false;
 	}
-	SetSourceInfo(pExpr, lineNoTop, lineNoBtm);
-	tokenStack.Push(new Token(pExpr.release()));
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
 
@@ -173,14 +173,14 @@ bool Parser::ReduceTwoTokens()
 	RefPtr<Token> pToken2 = tokenStack.Pop();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s %s\n", pToken1->GetSymbol(), pToken2->GetSymbol());
-	RefPtr<Expr> pExpr;
+	RefPtr<Expr> pExprGen;
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken2->GetLineNoBtm();
 	if (pToken1->IsType(TokenType::LParenthesis)) {
 		if (pToken2->IsType(TokenType::RParenthesis)) {
 			DBGPARSER(::printf("Reduce: Expr(Iterer) -> '(' ')'\n"));
-			pExpr.reset(Expr::Reference(pToken1->GetExpr()));
-			if (!pExpr) pExpr.reset(new Expr_Iterer());
+			pExprGen.reset(Expr::Reference(pToken1->GetExpr()));
+			if (!pExprGen) pExprGen.reset(new Expr_Iterer());
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '(' -> '(' EndOfLine\n"));
@@ -193,8 +193,8 @@ bool Parser::ReduceTwoTokens()
 	} else if (pToken1->IsType(TokenType::LBracket)) {
 		if (pToken2->IsType(TokenType::RBracket)) {
 			DBGPARSER(::printf("Reduce: Expr(Lister) -> '[' ']'\n"));
-			pExpr.reset(Expr::Reference(pToken1->GetExpr()));
-			if (!pExpr) pExpr.reset(new Expr_Lister());
+			pExprGen.reset(Expr::Reference(pToken1->GetExpr()));
+			if (!pExprGen) pExprGen.reset(new Expr_Lister());
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '[' -> '[' EndOfLine\n"));
@@ -206,8 +206,8 @@ bool Parser::ReduceTwoTokens()
 	} else if (pToken1->IsType(TokenType::LBrace)) {
 		if (pToken2->IsType(TokenType::RBrace)) {
 			DBGPARSER(::printf("Reduce: Expr -> '{' '}'\n"));
-			pExpr.reset(Expr::Reference(pToken1->GetExpr()));
-			if (!pExpr) pExpr.reset(new Expr_Block());
+			pExprGen.reset(Expr::Reference(pToken1->GetExpr()));
+			if (!pExprGen) pExprGen.reset(new Expr_Block());
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '{' -> '{' EndOfLine\n"));
@@ -257,29 +257,29 @@ bool Parser::ReduceTwoTokens()
 		// this is a special case of reducing
 		DBGPARSER(::printf("Reduce: Expr Expr -> Expr Symbol\n"));
 		const Symbol *pSymbol = Symbol::Add(pToken2->GetString());
-		pExpr = new Expr_Identifier(pSymbol);
+		pExprGen = new Expr_Identifier(pSymbol);
 		int lineNoTop = _tokenStack.Peek(0).GetLineNo();
 		_tokenStack.pop_back();
-		pExpr->SetSourceInfo(_pSourceName->Reference(), lineNoTop, lineNoBtm);
-		_tokenStack.Push(Token(TokenType::Expr, pExpr));
+		pExprGen->SetSourceInfo(_pSourceName->Reference(), lineNoTop, lineNoBtm);
+		_tokenStack.Push(Token(TokenType::Expr, pExprGen));
 		return true;
 #endif
 	} else if (pToken2->IsType(TokenType::Expr)) {
 		if (pToken1->IsType(TokenType::Inv)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '~' Expr\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Inv));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Inv));
 		} else if (pToken1->IsType(TokenType::Sub)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '-' Expr\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Neg));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Neg));
 		} else if (pToken1->IsType(TokenType::Not)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '!' Expr\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Not));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Not));
 		} else if (pToken1->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '+' Expr\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Pos));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Pos));
 		} else if (pToken1->IsType(TokenType::Quote)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '`' Expr\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Quote));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Quote));
 #if 0
 		} else if (pToken1->IsType(TokenType::Mod)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
@@ -287,10 +287,10 @@ bool Parser::ReduceTwoTokens()
 				// %{..}
 				Expr *pExprCar = new Expr_Identifier(Symbol::Percnt);
 				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
-				pExpr = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (!pExpr) goto error_done;
+				pExprGen = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
+				if (!pExprGen) goto error_done;
 			} else {
-				pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mod), pToken2->GetExpr());
+				pExprGen = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mod), pToken2->GetExpr());
 			}
 		} else if (pToken1->IsType(TokenType::ModMod)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
@@ -298,8 +298,8 @@ bool Parser::ReduceTwoTokens()
 				// %%{..}
 				Expr *pExprCar = new Expr_Identifier(Symbol::PercntPercnt);
 				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
-				pExpr = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (!pExpr) goto error_done;
+				pExprGen = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
+				if (!pExprGen) goto error_done;
 			} else {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 				goto error_done;
@@ -310,14 +310,14 @@ bool Parser::ReduceTwoTokens()
 				// &{..}
 				Expr *pExprCar = new Expr_Identifier(Symbol::Amp);
 				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
-				pExpr = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (!pExpr) goto error_done;
+				pExprGen = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
+				if (!pExprGen) goto error_done;
 			} else {
-				pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_And), pToken2->GetExpr());
+				pExprGen = new Expr_UnaryOp(env.GetOperator(OPTYPE_And), pToken2->GetExpr());
 			}
 		} else if (pToken1->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '*' Expr\n"));
-			pExpr = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mul), pToken2->GetExpr());
+			pExprGen = new Expr_UnaryOp(env.GetOperator(OPTYPE_Mul), pToken2->GetExpr());
 #endif
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
@@ -326,19 +326,19 @@ bool Parser::ReduceTwoTokens()
 	} else if (pToken1->IsType(TokenType::Expr)) {
 		if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '+'\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostPos));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostPos));
 		} else if (pToken2->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '*'\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMul));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMul));
 		} else if (pToken2->IsType(TokenType::Question)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '?'\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostQuestion));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostQuestion));
 		} else if (pToken2->IsType(TokenType::Mod)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '%%'\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMod));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMod));
 		} else if (pToken2->IsType(TokenType::Seq)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr ..\n"));
-			pExpr.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostSeq));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostSeq));
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 			return false;
@@ -347,8 +347,8 @@ bool Parser::ReduceTwoTokens()
 		IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 		return false;
 	}
-	SetSourceInfo(pExpr, lineNoTop, lineNoBtm);
-	tokenStack.Push(new Token(pExpr.release()));
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
 
@@ -361,139 +361,139 @@ bool Parser::ReduceThreeTokens()
 	::printf("%s %s %s\n", pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken3->GetLineNoBtm();
-	RefPtr<Expr> pExpr;
+	RefPtr<Expr> pExprGen;
 	if (pToken1->IsType(TokenType::Expr) && pToken3->IsType(TokenType::Expr)) {
 		RefPtr<Expr> pExprLeft = pToken1->GetExpr()->Reference();
 		RefPtr<Expr> pExprRight = pToken3->GetExpr()->Reference();
 		if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr + Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Add));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Add));
 		} else if (pToken2->IsType(TokenType::Sub)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr - Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Sub));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Sub));
 		} else if (pToken2->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr * Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Mul));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Mul));
 		} else if (pToken2->IsType(TokenType::Div)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr / Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Div));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Div));
 		} else if (pToken2->IsType(TokenType::Mod)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr %% Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Mod));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Mod));
 		} else if (pToken2->IsType(TokenType::ModMod)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr %%%% Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::ModMod));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::ModMod));
 		} else if (pToken2->IsType(TokenType::Dot)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr |.| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Dot));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Dot));
 		} else if (pToken2->IsType(TokenType::Cross)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr |^| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cross));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cross));
 		} else if (pToken2->IsType(TokenType::Gear)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr |*| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Gear));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Gear));
 		} else if (pToken2->IsType(TokenType::Concat)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr |+| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Concat));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Concat));
 		} else if (pToken2->IsType(TokenType::Difference)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr |-| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Difference));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Difference));
 		} else if (pToken2->IsType(TokenType::Intersection)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr |&| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Intersection));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Intersection));
 		} else if (pToken2->IsType(TokenType::Union)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr ||| Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Union));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Union));
 		} else if (pToken2->IsType(TokenType::Pow)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr ** Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pow));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pow));
 		} else if (pToken2->IsType(TokenType::Eq)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr == Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Eq));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Eq));
 		} else if (pToken2->IsType(TokenType::Ne)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr != Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Ne));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Ne));
 		} else if (pToken2->IsType(TokenType::Lt)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr < Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Lt));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Lt));
 		} else if (pToken2->IsType(TokenType::Gt)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr > Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Gt));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Gt));
 		} else if (pToken2->IsType(TokenType::Le)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr <= Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Le));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Le));
 		} else if (pToken2->IsType(TokenType::Ge)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr >= Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Ge));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Ge));
 		} else if (pToken2->IsType(TokenType::Cmp)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr <=> Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cmp));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Cmp));
 		} else if (pToken2->IsType(TokenType::Contains)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr in Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Contains));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Contains));
 		} else if (pToken2->IsType(TokenType::Pair)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr => Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pair));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Pair));
 		} else if (pToken2->IsType(TokenType::OrOr)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr || Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::OrOr));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::OrOr));
 		} else if (pToken2->IsType(TokenType::AndAnd)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr && Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::AndAnd));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::AndAnd));
 		} else if (pToken2->IsType(TokenType::Or)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr | Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Or));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Or));
 		} else if (pToken2->IsType(TokenType::And)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr & Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::And));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::And));
 		} else if (pToken2->IsType(TokenType::Xor)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr ^ Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Xor));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Xor));
 		} else if (pToken2->IsType(TokenType::Shl)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr << Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Shl));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Shl));
 		} else if (pToken2->IsType(TokenType::Shr)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr >> Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Shr));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Shr));
 		} else if (pToken2->IsType(TokenType::Seq)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr .. Expr\n"));
-			pExpr.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Seq));
+			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Seq));
 		} else if (pToken2->IsType(TokenType::Assign)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr = Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), nullptr));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), nullptr));
 		} else if (pToken2->IsType(TokenType::AssignAdd)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr += Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Add));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Add));
 		} else if (pToken2->IsType(TokenType::AssignSub)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr -= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Sub));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Sub));
 		} else if (pToken2->IsType(TokenType::AssignMul)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr *= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Mul));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Mul));
 		} else if (pToken2->IsType(TokenType::AssignDiv)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr /= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Div));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Div));
 		} else if (pToken2->IsType(TokenType::AssignMod)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr %%= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Mod));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Mod));
 		} else if (pToken2->IsType(TokenType::AssignPow)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr **= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Pow));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Pow));
 		} else if (pToken2->IsType(TokenType::AssignOr)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr |= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Or));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Or));
 		} else if (pToken2->IsType(TokenType::AssignAnd)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr &= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::And));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::And));
 		} else if (pToken2->IsType(TokenType::AssignXor)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr ^= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Xor));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Xor));
 		} else if (pToken2->IsType(TokenType::AssignShl)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr <<= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shl));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shl));
 		} else if (pToken2->IsType(TokenType::AssignShr)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr >>= Expr\n"));
-			pExpr.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shr));
+			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shr));
 		} else if (pToken2->IsType(TokenType::Period)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr\n"));
 			if (!pExprRight->IsType<Expr_Identifier>()) {
@@ -501,7 +501,7 @@ bool Parser::ReduceThreeTokens()
 						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
-			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
+			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
 										MemberMode::Normal));
 		} else if (pToken2->IsType(TokenType::ColonColon)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :: Expr\n"));
@@ -510,7 +510,7 @@ bool Parser::ReduceThreeTokens()
 						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
-			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
+			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
 										MemberMode::MapToList));
 		} else if (pToken2->IsType(TokenType::ColonAsterisk)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :* Expr\n"));
@@ -519,7 +519,7 @@ bool Parser::ReduceThreeTokens()
 						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
-			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
+			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
 										MemberMode::MapToIter));
 		} else if (pToken2->IsType(TokenType::ColonAnd)) {
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :& Expr\n"));
@@ -528,7 +528,7 @@ bool Parser::ReduceThreeTokens()
 						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
-			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
+			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
 										MemberMode::MapAlong));
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
@@ -555,7 +555,7 @@ bool Parser::ReduceThreeTokens()
 							   "attribute can be specified only for identifier and caller", __LINE__);
 					return false;
 				}
-				pExpr.reset(pExprLeft->Reference());
+				pExprGen.reset(pExprLeft->Reference());
 #if 0
 			} else if (pExprRight->IsMember()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
@@ -589,7 +589,7 @@ bool Parser::ReduceThreeTokens()
 							   "invalid declaration of value type");
 					goto error_done;
 				}
-				pExpr = pExprLeft;
+				pExprGen = pExprLeft;
 			} else if (pExprRight->IsLister()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
 				ExprList& exprList = dynamic_cast<Expr_Lister*>(pExprRight)->GetExprOwner();
@@ -613,7 +613,7 @@ bool Parser::ReduceThreeTokens()
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 					goto error_done;
 				}
-				pExpr = pExprLeft;
+				pExprGen = pExprLeft;
 #endif
 			} else {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
@@ -631,10 +631,10 @@ bool Parser::ReduceThreeTokens()
 		if (pToken3->IsType(TokenType::RParenthesis)) {
 			DBGPARSER(::printf("Reduce: Expr -> '(' Expr ')'\n"));
 			if (!pExprIterer) {
-				pExpr = pToken2->GetExpr();	// treat expr as non-list
+				pExprGen = pToken2->GetExpr();	// treat expr as non-list
 			} else {
 				if (!EmitExpr(pExprIterer->GetExprOwner(), pExprIterer, pToken2->GetExpr())) return false;
-				pExpr = pExprIterer;
+				pExprGen = pExprIterer;
 			}
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
@@ -659,7 +659,7 @@ bool Parser::ReduceThreeTokens()
 				pExprLister = new Expr_Lister();
 			}
 			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken2->GetExpr())) return false;
-			pExpr = pExprLister;
+			pExprGen = pExprLister;
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '[' -> '[' Expr ','\n"));
@@ -685,7 +685,7 @@ bool Parser::ReduceThreeTokens()
 			Expr_Caller *pExprCaller =
 				CreateCaller(env, pToken1->GetExpr(), pExprLister, nullptr, nullptr);
 			if (!pExprCaller) goto error_done;
-			pExpr = pExprCaller;
+			pExprGen = pExprCaller;
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' EndOfLine\n"));
@@ -705,7 +705,7 @@ bool Parser::ReduceThreeTokens()
 					pExprBlock = new Expr_Block();
 				}
 				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
-				pExpr = pExprCaller;
+				pExprGen = pExprCaller;
 			} else {
 				if (!pExprBlock) {
 					pExprBlock = new Expr_Block();
@@ -713,7 +713,7 @@ bool Parser::ReduceThreeTokens()
 				Expr_Caller *pExprCaller =
 					CreateCaller(env, pToken1->GetExpr(), nullptr, pExprBlock, nullptr);
 				if (!pExprCaller) goto error_done;
-				pExpr = pExprCaller;
+				pExprGen = pExprCaller;
 			}
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
@@ -732,7 +732,7 @@ bool Parser::ReduceThreeTokens()
 			if (!pExprLister) {
 				pExprLister = new Expr_Lister();
 			}
-			pExpr = new Expr_Indexer(pExprTgt, pExprLister);
+			pExprGen = new Expr_Indexer(pExprTgt, pExprLister);
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: Expr '[' -> Expr '[' EndOfLine\n"));
@@ -750,7 +750,7 @@ bool Parser::ReduceThreeTokens()
 				pExprBlock = new Expr_Block();
 			}
 			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, pToken2->GetExpr())) return false;
-			pExpr = pExprBlock;
+			pExprGen = pExprBlock;
 		} else if (pToken3->IsType(TokenType::Comma) ||
 					pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
 			// this is a special case of reducing
@@ -817,8 +817,8 @@ bool Parser::ReduceThreeTokens()
 		goto error_done;
 	}
 #endif
-	SetSourceInfo(pExpr, lineNoTop, lineNoBtm);
-	tokenStack.Push(new Token(pExpr.release()));
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
 
