@@ -1,5 +1,6 @@
 add_library(guraxcore SHARED
 	guraxcore.cpp
+	Attribute.cpp
 	Binary.cpp
 	Common.cpp
 	Context.cpp

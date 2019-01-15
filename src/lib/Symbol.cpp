@@ -57,6 +57,8 @@ void Symbol::PrintAllSymbols()
 //------------------------------------------------------------------------------
 // SymbolList
 //------------------------------------------------------------------------------
+const SymbolList SymbolList::Empty;
+
 SymbolList& SymbolList::Sort(SortOrder sortOrder)
 {
 	if (sortOrder == SortOrder::Ascend) {
@@ -94,6 +96,8 @@ SymbolPool* SymbolPool::_pSymbolPool = nullptr;
 //------------------------------------------------------------------------------
 // DottedSymbol
 //------------------------------------------------------------------------------
+const DottedSymbol DottedSymbol::Empty;
+
 // Append symbols from a list of Exprs.
 bool DottedSymbol::AppendFromExprList(const ExprList& exprList)
 {

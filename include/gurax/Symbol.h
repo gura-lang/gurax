@@ -35,6 +35,8 @@ class ExprList;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolList : public std::vector<const Symbol*> {
 public:
+	static const SymbolList Empty;
+public:
 	// Constructor
 	SymbolList() = default;
 	SymbolList(std::initializer_list<const Symbol*> initList) :
@@ -154,15 +156,10 @@ public:
 // SymbolSet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolSet :
-	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
-protected:
-	~SymbolSet() = default;
-public:
-	// Referable accessor
-	Gurax_DeclareReferable(SymbolSet);
+	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
 public:
 	void Set(const Symbol* pSymbol) { insert(pSymbol); }
-	bool DoesExist(const Symbol* pSymbol) { return find(pSymbol) != end(); }
+	bool IsSet(const Symbol* pSymbol) { return find(pSymbol) != end(); }
 };
 
 //------------------------------------------------------------------------------
@@ -185,6 +182,8 @@ public:
 class GURAX_DLLDECLARE DottedSymbol : public Referable {
 private:
 	SymbolList _symbolList;
+public:
+	static const DottedSymbol Empty;
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(DottedSymbol);

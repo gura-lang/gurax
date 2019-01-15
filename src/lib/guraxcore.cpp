@@ -7,6 +7,7 @@ namespace Gurax {
 
 void Bootup()
 {
+	Attribute::Bootup();
 	Binary::Bootup();
 	Error::Bootup();
 	Object::Bootup();

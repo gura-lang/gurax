@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_EXPR_H
 #define GURAX_EXPR_H
+#include "Attribute.h"
 #include "Object.h"
 #include "Operator.h"
 
@@ -197,19 +198,15 @@ public:
 protected:
 	const Symbol* _pSymbol;
 protected:
-	SymbolList _symbols;
-	SymbolList _symbolsOpt;
-	RefPtr<DottedSymbol> _pDottedSymbol;
+	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Identifier(const Symbol* pSymbol) :
-		Expr_Node(typeInfo), _pSymbol(pSymbol), _pDottedSymbol(new DottedSymbol()) {}
+		Expr_Node(typeInfo), _pSymbol(pSymbol), _pAttr(new Attribute()) {}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	virtual void Exec() const;
-	void AppendAttrSymbolFirst(const Symbol* pSymbol) { _pDottedSymbol->Append(pSymbol); }
-	void AddAttrSymbol(const Symbol* pSymbol) { _symbols.push_back(pSymbol); }
-	void AddAttrSymbolOpt(const Symbol* pSymbol) { _symbolsOpt.push_back(pSymbol); }
-	const DottedSymbol& GetAttrSymbolFirst() const { return *_pDottedSymbol; }
+	Attribute& GetAttr() { return *_pAttr; }
+	const Attribute& GetAttr() const { return *_pAttr; }
 };
 
 //------------------------------------------------------------------------------
@@ -369,18 +366,14 @@ class GURAX_DLLDECLARE Expr_Caller : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
 protected:
-	SymbolList _attrs;
-	SymbolList _attrsOpt;
-	RefPtr<DottedSymbol> _pAttrFirst;
+	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Caller(Expr* pExprCar) :
-		Expr_Composite(typeInfo, pExprCar), _pAttrFirst(new DottedSymbol()) {}
+		Expr_Composite(typeInfo, pExprCar), _pAttr(new Attribute()) {}
 public:
 	virtual void Exec() const;
-	void AppendAttrSymbolFirst(const Symbol* pSymbol) { _pAttrFirst->Append(pSymbol); }
-	void AddAttrSymbol(const Symbol* pSymbol);
-	void AddAttrSymbolOpt(const Symbol* pSymbol) { _attrsOpt.push_back(pSymbol); }
-	const DottedSymbol& GetAttrSymbolFirst() const { return *_pAttrFirst; }
+	Attribute& GetAttr() { return *_pAttr; }
+	const Attribute& GetAttr() const { return *_pAttr; }
 	Expr_Caller* GetLastTrailer() { return this; }
 };
 

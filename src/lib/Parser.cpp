@@ -8,12 +8,6 @@
 
 namespace Gurax {
 
-struct Attr {
-	SymbolList _attrs;
-	SymbolList _attrsOpt;
-	RefPtr<DottedSymbol> _pAttrFirst;
-};
-
 //------------------------------------------------------------------------------
 // Parser
 //------------------------------------------------------------------------------
@@ -551,11 +545,11 @@ bool Parser::ReduceThreeTokens()
 				if (pExprDst->IsType<Expr_Identifier>()) {
 					DBGPARSER(::printf("Reduce: Expr(Identifier) -> Expr(Identifier) : Expr(Identifier)\n"));
 					Expr_Identifier* pExprIdentifier = dynamic_cast<Expr_Identifier*>(pExprDst);
-					pExprIdentifier->AddAttrSymbol(pSymbol);
+					pExprIdentifier->GetAttr().AddSymbol(pSymbol);
 				} else if (pExprDst->IsType<Expr_Caller>()) {
 					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Identifier)\n"));
 					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst)->GetLastTrailer();
-					pExprCaller->AddAttrSymbol(pSymbol);
+					pExprCaller->GetAttr().AddSymbol(pSymbol);
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							   "attribute can be specified only for identifier and caller", __LINE__);
