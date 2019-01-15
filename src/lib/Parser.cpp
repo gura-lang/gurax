@@ -530,36 +530,33 @@ bool Parser::ReduceThreeTokens()
 			}
 			pExpr.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
 										MemberMode::MapAlong));
-#if 0
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
-				Expr* pExprEx = dynamic_cast<Expr_UnaryOp*>(pExprDst);
-				if (pExprEx->GetOperator()->IsOpPostUnary()) pExprDst = pExprEx->GetChild();
+				Expr_UnaryOp* pExprEx = dynamic_cast<Expr_UnaryOp*>(pExprDst);
+				//if (!pExprEx->GetOperator()->IsOpPostUnary()) {}
+				pExprDst = pExprEx->GetChild();
 			}
 			if (pExprDst->IsType<Expr_Indexer>()) {
 				pExprDst = dynamic_cast<Expr_Indexer*>(pExprDst)->GetCar();
 			}
-			if (pExprRight->IsIdentifier()) {
-				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Identifier)\n"));
-				const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExprRight)->GetSymbol();
-				bool optAttrFlag = false;
-				SymbolList* pAttrFront = nullptr;
-				if (pExprDst->IsIdentifier()) {
+			if (pExprRight->IsType<Expr_Identifier>()) {
+				const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExprRight.get())->GetSymbol();
+				if (pExprDst->IsType<Expr_Identifier>()) {
+					DBGPARSER(::printf("Reduce: Expr(Identifier) -> Expr(Identifier) : Expr(Identifier)\n"));
 					Expr_Identifier* pExprIdentifier = dynamic_cast<Expr_Identifier*>(pExprDst);
-					optAttrFlag = pExprIdentifier->AddAttr(pSymbol);
-					pAttrFront = &pExprIdentifier->GetAttrFront();
-				} else if (pExprDst->IsCaller()) {
-					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst);
-					Expr_Caller* pExprTrailer = pExprCaller->GetLastTrailer();
-					optAttrFlag = pExprTrailer->AddAttr(pSymbol);
-					pAttrFront = &pExprTrailer->GetAttrFront();
+					//pExprIdentifier->AddAttr(pSymbol);
+				} else if (pExprDst->IsType<Expr_Caller>()) {
+					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Identifier)\n"));
+					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst)->GetLastTrailer();
+					pExprCaller->AddAttr(pSymbol);
 				} else {
-					IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+							   "attribute can be specified only for identifier and caller", __LINE__);
 					return false;
 				}
-				if (optAttrFlag && pAttrFront->empty()) pAttrFront->push_back(pSymbol);
-				pExpr = pExprLeft;
+				pExpr.reset(pExprLeft->Reference());
+#if 0
 			} else if (pExprRight->IsMember()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
 				Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight);
@@ -617,11 +614,11 @@ bool Parser::ReduceThreeTokens()
 					goto error_done;
 				}
 				pExpr = pExprLeft;
+#endif
 			} else {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-				goto error_done;
+				return false;
 			}
-#endif
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 					   "unexpected token for binary operator: %s", pToken2->GetSymbol());

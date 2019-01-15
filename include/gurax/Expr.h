@@ -118,6 +118,7 @@ public:
 	Expr_Unary(const TypeInfo& typeInfo, Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
 		_pExprChild->SetParent(this);
 	}
+	Expr* GetChild() { return _pExprChild.get(); }
 	const Expr* GetChild() const { return _pExprChild.get(); }
 };
 
@@ -133,6 +134,8 @@ public:
 			Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
 		_pExprLeft->SetParent(this), _pExprRight->SetParent(this);
 	}
+	Expr* GetLeft() { return _pExprLeft.get(); }
+	Expr* GetRight() { return _pExprRight.get(); }
 	const Expr* GetLeft() const { return _pExprLeft.get(); }
 	const Expr* GetRight() const { return _pExprRight.get(); }
 };
@@ -366,18 +369,19 @@ class GURAX_DLLDECLARE Expr_Caller : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
 protected:
-	SymbolList _symbols;
-	SymbolList _symbolsOpt;
-	RefPtr<DottedSymbol> _pDottedSymbol;
+	SymbolList _attrs;
+	SymbolList _attrsOpt;
+	RefPtr<DottedSymbol> _pAttrFirst;
 public:
 	Expr_Caller(Expr* pExprCar) :
-		Expr_Composite(typeInfo, pExprCar), _pDottedSymbol(new DottedSymbol()) {}
+		Expr_Composite(typeInfo, pExprCar), _pAttrFirst(new DottedSymbol()) {}
 public:
 	virtual void Exec() const;
-	void AppendDottedSymbol(const Symbol* pSymbol) { _pDottedSymbol->Append(pSymbol); }
-	void AddSymbol(const Symbol* pSymbol) { _symbols.push_back(pSymbol); }
-	void AddSymbolOpt(const Symbol* pSymbol) { _symbolsOpt.push_back(pSymbol); }
-	const DottedSymbol* GetDottedSymbol() const { return _pDottedSymbol.get(); }
+	void AppendAttrFirst(const Symbol* pSymbol) { _pAttrFirst->Append(pSymbol); }
+	void AddAttr(const Symbol* pSymbol);
+	void AddAttrOpt(const Symbol* pSymbol) { _attrsOpt.push_back(pSymbol); }
+	const DottedSymbol& GetAttrFirst() const { return *_pAttrFirst; }
+	Expr_Caller* GetLastTrailer() { return this; }
 };
 
 }
