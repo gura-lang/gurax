@@ -162,7 +162,7 @@ void Expr_Indexer::Exec() const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Caller::typeInfo;
 
-void Expr_Caller::AddAttr(const Symbol* pSymbol)
+void Expr_Caller::AddAttrSymbol(const Symbol* pSymbol)
 {
 	// check if the attribute is reserved one
 

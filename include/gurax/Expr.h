@@ -206,10 +206,10 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	virtual void Exec() const;
-	void AppendDottedSymbol(const Symbol* pSymbol) { _pDottedSymbol->Append(pSymbol); }
-	void AddSymbol(const Symbol* pSymbol) { _symbols.push_back(pSymbol); }
-	void AddSymbolOpt(const Symbol* pSymbol) { _symbolsOpt.push_back(pSymbol); }
-	const DottedSymbol* GetDottedSymbol() const { return _pDottedSymbol.get(); }
+	void AppendAttrSymbolFirst(const Symbol* pSymbol) { _pDottedSymbol->Append(pSymbol); }
+	void AddAttrSymbol(const Symbol* pSymbol) { _symbols.push_back(pSymbol); }
+	void AddAttrSymbolOpt(const Symbol* pSymbol) { _symbolsOpt.push_back(pSymbol); }
+	const DottedSymbol& GetAttrSymbolFirst() const { return *_pDottedSymbol; }
 };
 
 //------------------------------------------------------------------------------
@@ -377,10 +377,10 @@ public:
 		Expr_Composite(typeInfo, pExprCar), _pAttrFirst(new DottedSymbol()) {}
 public:
 	virtual void Exec() const;
-	void AppendAttrFirst(const Symbol* pSymbol) { _pAttrFirst->Append(pSymbol); }
-	void AddAttr(const Symbol* pSymbol);
-	void AddAttrOpt(const Symbol* pSymbol) { _attrsOpt.push_back(pSymbol); }
-	const DottedSymbol& GetAttrFirst() const { return *_pAttrFirst; }
+	void AppendAttrSymbolFirst(const Symbol* pSymbol) { _pAttrFirst->Append(pSymbol); }
+	void AddAttrSymbol(const Symbol* pSymbol);
+	void AddAttrSymbolOpt(const Symbol* pSymbol) { _attrsOpt.push_back(pSymbol); }
+	const DottedSymbol& GetAttrSymbolFirst() const { return *_pAttrFirst; }
 	Expr_Caller* GetLastTrailer() { return this; }
 };
 
