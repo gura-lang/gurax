@@ -590,8 +590,8 @@ bool Parser::ReduceThreeTokens()
 							"value type must be specified as a first attribute");
 					goto error_done;
 				}
-				pExprGen.reset(pExprLeft->Reference());
 #endif
+				pExprGen.reset(pExprLeft->Reference());
 #if 0
 			} else if (pExprRight->IsLister()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
