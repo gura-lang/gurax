@@ -18,8 +18,6 @@ public:
 	const char* symbol;
 	OpType opType;
 public:
-	using MapByOpType = std::map<OpType, const TokenType *>;
-public:
 	static const TokenType Begin;
 	static const TokenType Assign;
 	static const TokenType AssignAdd;
@@ -101,7 +99,7 @@ public:
 	static const TokenType DoubleChars;
 	static const TokenType TripleChars;
 	static const TokenType Unknown;
-	static const TokenType *mapByOpType[static_cast<size_t>(OpType::max)];
+	static const TokenType *opTypeToTokenTypeMap[static_cast<size_t>(OpType::max)];
 public:
 	TokenType(int category, const char* typeName, const char* symbol, OpType opType);
 	bool IsIdentical(const TokenType &tokenType) const { return this == &tokenType; }
