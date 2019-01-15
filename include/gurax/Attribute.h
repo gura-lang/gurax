@@ -27,18 +27,26 @@ public:
 protected:
 	~Attribute() = default;
 public:
-	void AddSymbol(const Symbol* pSymbol);
-	void AddSymbolOpt(const Symbol* pSymbol) {
-		_symbolListOpt.push_back(pSymbol);
-		_symbolSetOpt.insert(pSymbol);
-	}
 	bool IsDottedSymbolSet() const { return _pDottedSymbol.get() != nullptr; }
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 	const DottedSymbol& GetDottedSymbol() {
 		return _pDottedSymbol? *_pDottedSymbol : DottedSymbol::Empty;
 	}
+	void AddSymbol(const Symbol* pSymbol);
+	void AddSymbolOpt(const Symbol* pSymbol) {
+		_symbolListOpt.push_back(pSymbol);
+		_symbolSetOpt.insert(pSymbol);
+	}
+	void AddSymbols(const SymbolList& symbolList) {
+		for (const Symbol* pSymbol : symbolList) AddSymbol(pSymbol);
+	}
+	void AddSymbolsOpt(const SymbolList& symbolList) {
+		for (const Symbol* pSymbol : symbolList) AddSymbolOpt(pSymbol);
+	}
 	bool IsSet(const Symbol* pSymbol) { return _symbolSet.IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) { return _symbolSetOpt.IsSet(pSymbol); }
+	const SymbolList& GetSymbols() const { return _symbolList; }
+	const SymbolList& GetSymbolsOpt() const { return _symbolListOpt; }
 };
 
 }

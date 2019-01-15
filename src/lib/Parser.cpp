@@ -552,23 +552,28 @@ bool Parser::ReduceThreeTokens()
 					pExprCaller->GetAttr().AddSymbol(pSymbol);
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "attribute can be specified only for identifier and caller", __LINE__);
+							   "attribute can only be specified for identifier and caller", __LINE__);
 					return false;
 				}
 				pExprGen.reset(pExprLeft->Reference());
+			} else if (pExprRight->IsType<Expr_Member>()) {
+				//Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight);
+				RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+				if (!pDottedSymbol->AppendFromExpr(pExprRight.get())) {
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+							   "invalid format of attribute");
+					return false;
+				}
 #if 0
-			} else if (pExprRight->IsMember()) {
-				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
-				Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight);
-				SymbolList* pAttrFront = nullptr;
 				if (pExprDst->IsIdentifier()) {
-					Expr_Identifier* pExprIdentifierDst =
-									dynamic_cast<Expr_Identifier*>(pExprDst);
+					DBGPARSER(::printf("Reduce: Expr(Identifier) -> Expr(Identifier) : Expr(Member)\n"));
+					Expr_Identifier* pExprIdentifierDst = dynamic_cast<Expr_Identifier*>(pExprDst);
 					pAttrFront = &pExprIdentifierDst->GetAttrFront();
 					const Expr_Identifier *pExprIdentifier = pExprMember->GetSelector();
 					pExprIdentifierDst->AddAttrs(pExprIdentifier->GetAttrs());
 					pExprIdentifierDst->AddAttrsOpt(pExprIdentifier->GetAttrsOpt());
 				} else if (pExprDst->IsCaller()) {
+					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Member)\n"));
 					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst);
 					Expr_Caller* pExprTrailer = pExprCaller->GetLastTrailer();
 					pAttrFront = &pExprTrailer->GetAttrFront();
@@ -576,7 +581,8 @@ bool Parser::ReduceThreeTokens()
 					pExprTrailer->AddAttrs(pExprIdentifier->GetAttrs());
 					pExprTrailer->AddAttrsOpt(pExprIdentifier->GetAttrsOpt());
 				} else {
-					IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+							   "attribute can only be specified for identifier and caller", __LINE__);
 					goto error_done;
 				}
 				if (!pAttrFront->empty()) {
@@ -584,12 +590,9 @@ bool Parser::ReduceThreeTokens()
 							"value type must be specified as a first attribute");
 					goto error_done;
 				}
-				if (!pAttrFront->AddFromExpr(pExprRight)) {
-					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "invalid declaration of value type");
-					goto error_done;
-				}
-				pExprGen = pExprLeft;
+				pExprGen.reset(pExprLeft->Reference());
+#endif
+#if 0
 			} else if (pExprRight->IsLister()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
 				ExprList& exprList = dynamic_cast<Expr_Lister*>(pExprRight)->GetExprOwner();
