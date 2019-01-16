@@ -34,12 +34,17 @@ protected:
 public:
 	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
 private:
-	bool EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr);
 	bool ReduceOneToken();
 	bool ReduceTwoTokens();
 	bool ReduceThreeTokens();
 	bool ReduceFourTokens();
 	bool ReduceFiveTokens();
+	bool EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr,
+				  const Token* pTokenTop, const Token* pTokenBtm);
+	bool EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr,
+				  const RefPtr<Token>& pTokenTop, const RefPtr<Token>& pTokenBtm) {
+		return EmitExpr(exprOwner, pExprParent, pExpr, pTokenTop.get(), pTokenBtm.get());
+	}
 	void IssueError(const ErrorType& errorType, const Token* pToken, const char* format, ...);
 	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...);
 	void IssueError(const ErrorType& errorType, const Token* pTokenTop, const Token* pTokenBtm,

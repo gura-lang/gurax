@@ -122,6 +122,12 @@ private:
 	RefPtr<StringReferable> _pStrValue;
 	RefPtr<StringReferable> _pStrSuffix;
 	RefPtr<StringReferable> _pStrSource;
+	// _pExpr is only available for the following token types.
+	// TokenType::Expr          (Expr)
+	// TokenType::LParenthesis  (Expr_Lister)
+	// TokenType::LBrace        (Expr_Block)
+	// TokenType::LBracket      (Expr_Lister)
+	// TokenType::LBlockParam   (Expr_BlockParam)
 	RefPtr<Expr> _pExpr;
 public:
 	static const Precedence _precMatrix[][31];
@@ -194,6 +200,7 @@ public:
 	const StringReferable* GetSourceReferable() const { return _pStrSource.get(); }
 	void AppendValue(const char* value) { _pStrValue->GetStringSTL().append(value); }
 	void AppendValue(const String& value) { _pStrValue->GetStringSTL().append(value); }
+	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	Expr* GetExpr() { return _pExpr.get(); }
 public:
 	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {

@@ -375,6 +375,8 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	Expr_Caller* GetLastTrailer() { return this; }
+	bool IsTrailer() const { return false; }
+	void SetTrailer(Expr_Caller* pExprTrailer) {}
 };
 
 }
