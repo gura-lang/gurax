@@ -15,6 +15,15 @@ void Attribute::Bootup()
 {
 }
 
+void Attribute::AddAttribute(const Attribute& attribute)
+{
+	if (!IsDottedSymbolSet() && attribute.IsDottedSymbolSet()) {
+		SetDottedSymbol(attribute.GetDottedSymbol().Reference());
+	}
+	AddSymbols(attribute.GetSymbols());
+	AddSymbolsOpt(attribute.GetSymbolsOpt());
+}
+
 void Attribute::AddSymbol(const Symbol* pSymbol)
 {
 	_symbolList.push_back(pSymbol);

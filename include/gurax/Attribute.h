@@ -29,9 +29,10 @@ protected:
 public:
 	bool IsDottedSymbolSet() const { return _pDottedSymbol.get() != nullptr; }
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
-	const DottedSymbol& GetDottedSymbol() {
+	const DottedSymbol& GetDottedSymbol() const {
 		return _pDottedSymbol? *_pDottedSymbol : DottedSymbol::Empty;
 	}
+	void AddAttribute(const Attribute& attribute);
 	void AddSymbol(const Symbol* pSymbol);
 	void AddSymbolOpt(const Symbol* pSymbol) {
 		_symbolListOpt.push_back(pSymbol);
