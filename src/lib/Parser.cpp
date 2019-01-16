@@ -620,7 +620,7 @@ bool Parser::ReduceThreeTokens()
 			if (!pExprIterer) {
 				pExprGen.reset(pToken2->GetExpr()->Reference());	// treat expr as non-list
 			} else {
-				//if (!EmitExpr(pExprIterer->GetExprOwner(), pExprIterer, pToken2->GetExpr())) return false;
+				if (!EmitExpr(pExprIterer, pToken2->GetExpr(), pToken1, pToken3)) return false;
 				pExprGen = pExprIterer;
 			}
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
@@ -630,7 +630,7 @@ bool Parser::ReduceThreeTokens()
 				pExprIterer = new Expr_Iterer();
 				pToken1->SetExpr(pExprIterer);
 			}
-			//if (!EmitExpr(pExprIterer->GetExprOwner(), pExprIterer, pToken2->GetExpr())) return false;
+			if (!EmitExpr(pExprIterer, pToken2->GetExpr(), pToken1, pToken3)) return false;
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);

@@ -45,6 +45,13 @@ private:
 				  const RefPtr<Token>& pTokenTop, const RefPtr<Token>& pTokenBtm) {
 		return EmitExpr(exprOwner, pExprParent, pExpr, pTokenTop.get(), pTokenBtm.get());
 	}
+	bool EmitExpr(Expr_Collector* pExprParent, Expr* pExpr, const Token* pTokenTop, const Token* pTokenBtm) {
+		return EmitExpr(pExprParent->GetChildren(), pExprParent, pExpr, pTokenTop, pTokenBtm);
+	}
+	bool EmitExpr(Expr_Collector* pExprParent, Expr* pExpr,
+				  const RefPtr<Token>& pTokenTop, const RefPtr<Token>& pTokenBtm) {
+		return EmitExpr(pExprParent->GetChildren(), pExprParent, pExpr, pTokenTop.get(), pTokenBtm.get());
+	}
 	void IssueError(const ErrorType& errorType, const Token* pToken, const char* format, ...);
 	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...);
 	void IssueError(const ErrorType& errorType, const Token* pTokenTop, const Token* pTokenBtm,

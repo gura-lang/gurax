@@ -149,6 +149,7 @@ protected:
 	RefPtr<ExprOwner> _pExprChildren;
 public:
 	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprChildren(new ExprOwner()) {}
+	ExprOwner& GetChildren() { return *_pExprChildren; }
 	const ExprOwner& GetChildren() const { return *_pExprChildren; }
 	void AddChild(Expr* pExpr);
 };
