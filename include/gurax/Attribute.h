@@ -48,6 +48,12 @@ public:
 	bool IsSetOpt(const Symbol* pSymbol) { return _symbolSetOpt.IsSet(pSymbol); }
 	const SymbolList& GetSymbols() const { return _symbolList; }
 	const SymbolList& GetSymbolsOpt() const { return _symbolListOpt; }
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Attribute* pAttr) const { return this == pAttr; }
+	bool IsEqualTo(const Attribute* pAttr) const { return IsIdentical(pAttr); }
+	bool IsLessThan(const Attribute* pAttr) const { return this < pAttr; }
+	String ToString() const { return "(attribute)"; }
 };
 
 }

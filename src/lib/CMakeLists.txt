@@ -15,6 +15,7 @@ add_library(guraxcore SHARED
 	MemoryPool.cpp
 	Module.cpp
 	Object.cpp
+	Object_attribute.cpp
 	Object_binary.cpp
 	Object_bool.cpp
 	Object_dict.cpp

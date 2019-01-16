@@ -18,6 +18,7 @@
 #include "gurax/Iterator.h"
 #include "gurax/MemoryPool.h"
 #include "gurax/Object.h"
+#include "gurax/Object_attribute.h"
 #include "gurax/Object_binary.h"
 #include "gurax/Object_bool.h"
 #include "gurax/Object_dict.h"
