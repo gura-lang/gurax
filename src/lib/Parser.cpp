@@ -621,16 +621,16 @@ bool Parser::ReduceThreeTokens()
 				pExprGen.reset(pToken2->GetExpr()->Reference());	// treat expr as non-list
 			} else {
 				if (!EmitExpr(pExprIterer, pToken2->GetExpr(), pToken1, pToken3)) return false;
-				pExprGen = pExprIterer;
+				pExprGen.reset(pExprIterer->Reference());
 			}
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: '(' -> '(' Expr ','\n"));
 			if (!pExprIterer) {
 				pExprIterer = new Expr_Iterer();
 				pToken1->SetExpr(pExprIterer);
 			}
 			if (!EmitExpr(pExprIterer, pToken2->GetExpr(), pToken1, pToken3)) return false;
+			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
