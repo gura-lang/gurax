@@ -152,8 +152,9 @@ protected:
 	RefPtr<ExprOwner> _pExprsElem;
 public:
 	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprsElem(new ExprOwner()) {}
-	ExprOwner& GetExprsElem() { return *_pExprsElem; }
-	const ExprOwner& GetExprsElem() const { return *_pExprsElem; }
+	ExprOwner& GetExprOwnerElem() { return *_pExprsElem; }
+	const ExprList& GetExprsElem() const { return *_pExprsElem; }
+	ExprOwner* ReleaseExprsElem() { return _pExprsElem.release(); }
 	void AddExprElem(Expr* pExprElem);
 };
 
@@ -178,7 +179,7 @@ public:
 		_pExprsCdr.reset(pExprsCdr);
 		_pExprsCdr->SetExprParent(this);
 	}
-	const ExprOwner& GetExprsCdr() const { return *_pExprsCdr; }
+	const ExprList& GetExprsCdr() const { return *_pExprsCdr; }
 	void AddExprCdr(Expr* pExprCdr);
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -388,7 +389,7 @@ public:
 		_pExprsElemBlock.reset(pExprsElemBlock);
 		_pExprsElemBlock->SetExprParent(this);
 	}
-	const ExprOwner& GetExprsElemBlock() const { return *_pExprsElemBlock; }
+	const ExprList& GetExprsElemBlock() const { return *_pExprsElemBlock; }
 	void AddExprElemBlock(Expr* pExprElem);
 	Expr_Caller* GetLastTrailer() { return this; }
 	bool IsTrailer() const { return false; }

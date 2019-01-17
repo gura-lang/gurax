@@ -279,7 +279,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(Mod)));
-				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetExprsElem().Reference());
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->ReleaseExprsElem());
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
@@ -290,7 +290,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%%%' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(ModMod)));
-				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetExprsElem().Reference());
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->ReleaseExprsElem());
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
@@ -301,7 +301,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(And)));
-				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetExprsElem().Reference());
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->ReleaseExprsElem());
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
