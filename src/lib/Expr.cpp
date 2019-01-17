@@ -55,10 +55,10 @@ void Expr_Collector::AddExprElem(Expr* pExprElem)
 //------------------------------------------------------------------------------
 // Expr_Composite
 //------------------------------------------------------------------------------
-void Expr_Composite::AddExprCdr(Expr* pExpr)
+void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 {
-	pExpr->SetExprParent(this);
-	_pExprsCdr->push_back(pExpr);
+	pExprCdr->SetExprParent(this);
+	_pExprsCdr->push_back(pExprCdr);
 }
 
 void Expr_Composite::Exec() const
@@ -171,6 +171,12 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 
 void Expr_Caller::Exec() const
 {
+}
+
+void Expr_Caller::AddExprElemBlock(Expr* pExprElem)
+{
+	pExprElem->SetExprParent(this);
+	_pExprsElemBlock->push_back(pExprElem);
 }
 
 }
