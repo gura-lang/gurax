@@ -46,10 +46,10 @@ void ExprList::SetExprParent(const Expr* pExprParent)
 //------------------------------------------------------------------------------
 // Expr_Collector
 //------------------------------------------------------------------------------
-void Expr_Collector::AddChild(Expr* pExpr)
+void Expr_Collector::AddExprElem(Expr* pExprElem)
 {
-	pExpr->SetExprParent(this);
-	_pExprChildren->push_back(pExpr);
+	pExprElem->SetExprParent(this);
+	_pExprsElem->push_back(pExprElem);
 }
 
 //------------------------------------------------------------------------------

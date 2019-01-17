@@ -279,7 +279,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(Mod)));
-				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetChildren().Reference());
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetExprsElem().Reference());
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
@@ -527,7 +527,7 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
-				pExprDst = dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetChild();
+				pExprDst = dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetExprChild();
 			}
 			if (pExprDst->IsType<Expr_Indexer>()) {
 				pExprDst = dynamic_cast<Expr_Indexer*>(pExprDst)->GetExprCar();
@@ -576,8 +576,8 @@ bool Parser::ReduceThreeTokens()
 					pAttrDst->SetDottedSymbol(pDottedSymbol.release());
 				} while (0);
 				Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight.get());
-				if (pExprMember->GetRight()->IsType<Expr_Identifier>()) {
-					pAttrDst->AddAttribute(dynamic_cast<Expr_Identifier*>(pExprMember->GetRight())->GetAttr());
+				if (pExprMember->GetExprRight()->IsType<Expr_Identifier>()) {
+					pAttrDst->AddAttribute(dynamic_cast<Expr_Identifier*>(pExprMember->GetExprRight())->GetAttr());
 				}
 				pExprGen.reset(pExprLeft->Reference());
 			} else if (pExprRight->IsType<Expr_Lister>()) {
@@ -593,14 +593,14 @@ bool Parser::ReduceThreeTokens()
 							   "optional attributes can only be specified for identifier and caller", __LINE__);
 					return false;
 				}
-				const ExprList& exprList = dynamic_cast<Expr_Lister*>(pExprRight.get())->GetChildren();
-				for (const Expr* pExpr : exprList) {
-					if (!pExpr->IsType<Expr_Identifier>()) {
+				const ExprList& exprsElem = dynamic_cast<Expr_Lister*>(pExprRight.get())->GetExprsElem();
+				for (const Expr* pExprElem : exprsElem) {
+					if (!pExprElem->IsType<Expr_Identifier>()) {
 						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 								   "list of optional attributes can only contain identifiers");
 						return false;
 					}
-					pAttrDst->AddSymbolOpt(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+					pAttrDst->AddSymbolOpt(dynamic_cast<const Expr_Identifier*>(pExprElem)->GetSymbol());
 				}
 				pExprGen.reset(pExprLeft->Reference());
 			} else {

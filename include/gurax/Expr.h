@@ -122,8 +122,8 @@ public:
 	Expr_Unary(const TypeInfo& typeInfo, Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
 		_pExprChild->SetExprParent(this);
 	}
-	Expr* GetChild() { return _pExprChild.get(); }
-	const Expr* GetChild() const { return _pExprChild.get(); }
+	Expr* GetExprChild() { return _pExprChild.get(); }
+	const Expr* GetExprChild() const { return _pExprChild.get(); }
 };
 
 //------------------------------------------------------------------------------
@@ -138,10 +138,10 @@ public:
 			Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
 		_pExprLeft->SetExprParent(this), _pExprRight->SetExprParent(this);
 	}
-	Expr* GetLeft() { return _pExprLeft.get(); }
-	Expr* GetRight() { return _pExprRight.get(); }
-	const Expr* GetLeft() const { return _pExprLeft.get(); }
-	const Expr* GetRight() const { return _pExprRight.get(); }
+	Expr* GetExprLeft() { return _pExprLeft.get(); }
+	Expr* GetExprRight() { return _pExprRight.get(); }
+	const Expr* GetExprLeft() const { return _pExprLeft.get(); }
+	const Expr* GetExprRight() const { return _pExprRight.get(); }
 };
 
 //------------------------------------------------------------------------------
@@ -149,12 +149,12 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Collector : public Expr {
 protected:
-	RefPtr<ExprOwner> _pExprChildren;
+	RefPtr<ExprOwner> _pExprsElem;
 public:
-	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprChildren(new ExprOwner()) {}
-	ExprOwner& GetChildren() { return *_pExprChildren; }
-	const ExprOwner& GetChildren() const { return *_pExprChildren; }
-	void AddChild(Expr* pExpr);
+	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprsElem(new ExprOwner()) {}
+	ExprOwner& GetExprsElem() { return *_pExprsElem; }
+	const ExprOwner& GetExprsElem() const { return *_pExprsElem; }
+	void AddExprElem(Expr* pExprElem);
 };
 
 //------------------------------------------------------------------------------
