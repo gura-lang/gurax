@@ -250,14 +250,6 @@ bool Parser::ReduceTwoTokens()
 			return false;
 		}
 #endif
-	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Symbol)) {
-		DBGPARSER(::printf("Reduce: Expr Expr -> Expr Symbol\n"));
-		tokenStack.Push(pToken1->Reference());
-		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken2->GetValue())));
-		lineNoTop = pToken2->GetLineNoTop();
-		//SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
-		//tokenStack.Push(new Token(pExprGen.release()));
-		//return true;
 	} else if (pToken2->IsType(TokenType::Expr)) {
 		if (pToken1->IsType(TokenType::Inv)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '~' Expr\n"));
@@ -315,7 +307,12 @@ bool Parser::ReduceTwoTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr)) {
-		if (pToken2->IsType(TokenType::Add)) {
+		if (pToken2->IsType(TokenType::Symbol)) {
+			DBGPARSER(::printf("Reduce: Expr Expr(Identifier) -> Expr Symbol\n"));
+			tokenStack.Push(pToken1->Reference());
+			pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken2->GetValue())));
+			lineNoTop = pToken2->GetLineNoTop();
+		} else if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '+'\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostPos));
 		} else if (pToken2->IsType(TokenType::Mul)) {
