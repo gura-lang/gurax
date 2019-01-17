@@ -615,12 +615,13 @@ bool Parser::ReduceThreeTokens()
 	} else if (pToken1->IsType(TokenType::LParenthesis) && pToken2->IsType(TokenType::Expr)) {
 		Expr_Iterer* pExprIterer = dynamic_cast<Expr_Iterer*>(pToken1->GetExpr());
 		if (pToken3->IsType(TokenType::RParenthesis)) {
-			DBGPARSER(::printf("Reduce: Expr -> '(' Expr ')'\n"));
-			if (!pExprIterer) {
-				pExprGen.reset(pToken2->GetExpr()->Reference());	// treat expr as non-list
-			} else {
-				if (!EmitExpr(pExprIterer, pToken2->GetExpr(), pToken1, pToken3)) return false;
+			if (pExprIterer) {
+				DBGPARSER(::printf("Reduce: Expr(Iterer) -> '(' Expr ')'\n"));
+				if (!EmitExpr(pExprIterer, pToken2->GetExpr()->Reference(), pToken1, pToken3)) return false;
 				pExprGen.reset(pExprIterer->Reference());
+			} else {
+				DBGPARSER(::printf("Reduce: Expr -> '(' Expr ')'\n"));
+				pExprGen.reset(pToken2->GetExpr()->Reference());	// treat expr as non-list
 			}
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '(' -> '(' Expr ','\n"));
