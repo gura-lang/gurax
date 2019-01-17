@@ -63,7 +63,7 @@ public:
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
-	void SetParent(const Expr* pExpr) { _pwExprParent.reset(pExpr->GetWeakPtr()); }
+	void SetParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:
@@ -81,7 +81,10 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ExprList : public std::vector<Expr*> {
 public:
+	static const ExprList Empty;
+public:
 	void Exec() const;
+	void SetParent(const Expr* pExprParent);
 };
 
 //------------------------------------------------------------------------------
@@ -160,16 +163,24 @@ public:
 class GURAX_DLLDECLARE Expr_Composite : public Expr {
 protected:
 	RefPtr<Expr> _pExprCar;
-	RefPtr<ExprOwner> _pExprCdrs;
+	RefPtr<ExprOwner> _pExprsCdr;
+	RefPtr<Attribute> _pAttr;
 public:
-	Expr_Composite(const TypeInfo& typeInfo, Expr* pExprCar) :
-			Expr(typeInfo), _pExprCar(pExprCar), _pExprCdrs(new ExprOwner()) {
+	Expr_Composite(const TypeInfo& typeInfo) : Expr(typeInfo), _pAttr(new Attribute()) {}
+	void SetCar(Expr* pExprCar) {
+		_pExprCar.reset(pExprCar);
 		_pExprCar->SetParent(this);
+	}
+	void SetCdrs(ExprOwner* pExprsCdr) {
+		_pExprsCdr.reset(pExprsCdr);
+		_pExprsCdr->SetParent(this);
 	}
 	Expr* GetCar() { return _pExprCar.get(); }
 	const Expr* GetCar() const { return _pExprCar.get(); }
-	const ExprOwner& GetCdr() const { return *_pExprCdrs; }
+	const ExprList& GetCdrs() const { return _pExprsCdr? *_pExprsCdr : ExprList::Empty; }
 	void AddCdr(Expr* pExpr);
+	Attribute& GetAttr() { return *_pAttr; }
+	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	virtual void Exec() const;
 };
@@ -355,7 +366,7 @@ class GURAX_DLLDECLARE Expr_Indexer : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Indexer(Expr* pExprCar) : Expr_Composite(typeInfo, pExprCar) {}
+	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
 	virtual void Exec() const;
 };
@@ -366,15 +377,10 @@ public:
 class GURAX_DLLDECLARE Expr_Caller : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
-protected:
-	RefPtr<Attribute> _pAttr;
 public:
-	Expr_Caller(Expr* pExprCar) :
-		Expr_Composite(typeInfo, pExprCar), _pAttr(new Attribute()) {}
+	Expr_Caller() : Expr_Composite(typeInfo) {}
 public:
 	virtual void Exec() const;
-	Attribute& GetAttr() { return *_pAttr; }
-	const Attribute& GetAttr() const { return *_pAttr; }
 	Expr_Caller* GetLastTrailer() { return this; }
 	bool IsTrailer() const { return false; }
 	void SetTrailer(Expr_Caller* pExprTrailer) {}

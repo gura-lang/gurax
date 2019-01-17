@@ -12,12 +12,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
+const ExprList ExprList::Empty;
+
 void ExprList::Exec() const
 {
 	for (const Expr* pExpr : *this) {
 		pExpr->Exec();
 		if (Error::IsIssued()) return;
 	}
+}
+
+void ExprList::SetParent(const Expr* pExprParent)
+{
+	for (Expr* pExpr : *this) pExpr->SetParent(pExprParent);
 }
 
 //------------------------------------------------------------------------------
@@ -51,7 +58,7 @@ void Expr_Collector::AddChild(Expr* pExpr)
 void Expr_Composite::AddCdr(Expr* pExpr)
 {
 	pExpr->SetParent(this);
-	_pExprCdrs->push_back(pExpr);
+	_pExprsCdr->push_back(pExpr);
 }
 
 void Expr_Composite::Exec() const
