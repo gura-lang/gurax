@@ -285,31 +285,28 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
 				pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Mod));
 			}
-#if 0
 		} else if (pToken1->IsType(TokenType::ModMod)) {
-			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
-			if (pToken2->GetExpr()->IsBlock()) {
-				// %%{..}
-				Expr *pExprCar = new Expr_Identifier(Symbol::PercntPercnt);
-				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
-				pExprGen = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (!pExprGen) goto error_done;
+			if (pToken2->GetExpr()->IsType<Expr_Block>()) {
+				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%%%' Expr(Block)\n"));
+				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
+				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(ModMod)));
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetExprsElem().Reference());
+				pExprGen.reset(pExprCaller.release());
 			} else {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
-				goto error_done;
+				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
+				pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::ModMod));
 			}
 		} else if (pToken1->IsType(TokenType::And)) {
-			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
-			if (pToken2->GetExpr()->IsBlock()) {
-				// &{..}
-				Expr *pExprCar = new Expr_Identifier(Symbol::Amp);
-				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
-				pExprGen = CreateCaller(env, pExprCar, nullptr, pExprBlock, nullptr);
-				if (!pExprGen) goto error_done;
+			if (pToken2->GetExpr()->IsType<Expr_Block>()) {
+				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr(Block)\n"));
+				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
+				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(And)));
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetExprsElem().Reference());
+				pExprGen.reset(pExprCaller.release());
 			} else {
-				pExprGen = new Expr_UnaryOp(env.GetOperator(OPTYPE_And), pToken2->GetExpr());
+				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
+				pExprGen = new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::And);
 			}
-#endif
 		} else if (pToken1->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '*' Expr\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Mul));
