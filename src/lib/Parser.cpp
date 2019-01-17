@@ -278,8 +278,8 @@ bool Parser::ReduceTwoTokens()
 			if (pToken2->GetExpr()->IsType<Expr_Block>()) {
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
-				pExprCaller->SetCar(new Expr_Identifier(Gurax_SymbolMark(Mod)));
-				pExprCaller->SetCdrs(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetChildren().Reference());
+				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(Mod)));
+				pExprCaller->SetExprsCdr(dynamic_cast<Expr_Block *>(pToken2->GetExpr())->GetChildren().Reference());
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
@@ -530,7 +530,7 @@ bool Parser::ReduceThreeTokens()
 				pExprDst = dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetChild();
 			}
 			if (pExprDst->IsType<Expr_Indexer>()) {
-				pExprDst = dynamic_cast<Expr_Indexer*>(pExprDst)->GetCar();
+				pExprDst = dynamic_cast<Expr_Indexer*>(pExprDst)->GetExprCar();
 			}
 			if (pExprRight->IsType<Expr_Identifier>()) {
 				const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExprRight.get())->GetSymbol();

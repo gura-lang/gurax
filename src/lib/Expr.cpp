@@ -55,7 +55,7 @@ void Expr_Collector::AddChild(Expr* pExpr)
 //------------------------------------------------------------------------------
 // Expr_Composite
 //------------------------------------------------------------------------------
-void Expr_Composite::AddCdr(Expr* pExpr)
+void Expr_Composite::AddExprCdr(Expr* pExpr)
 {
 	pExpr->SetExprParent(this);
 	_pExprsCdr->push_back(pExpr);

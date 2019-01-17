@@ -167,18 +167,18 @@ protected:
 	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Composite(const TypeInfo& typeInfo) : Expr(typeInfo), _pAttr(new Attribute()) {}
-	void SetCar(Expr* pExprCar) {
+	void SetExprCar(Expr* pExprCar) {
 		_pExprCar.reset(pExprCar);
 		_pExprCar->SetExprParent(this);
 	}
-	void SetCdrs(ExprOwner* pExprsCdr) {
+	void SetExprsCdr(ExprOwner* pExprsCdr) {
 		_pExprsCdr.reset(pExprsCdr);
 		_pExprsCdr->SetExprParent(this);
 	}
-	Expr* GetCar() { return _pExprCar.get(); }
-	const Expr* GetCar() const { return _pExprCar.get(); }
-	const ExprList& GetCdrs() const { return _pExprsCdr? *_pExprsCdr : ExprList::Empty; }
-	void AddCdr(Expr* pExpr);
+	Expr* GetExprCar() { return _pExprCar.get(); }
+	const Expr* GetExprCar() const { return _pExprCar.get(); }
+	const ExprList& GetExprsCdr() const { return _pExprsCdr? *_pExprsCdr : ExprList::Empty; }
+	void AddExprCdr(Expr* pExpr);
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
