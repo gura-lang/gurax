@@ -63,7 +63,7 @@ public:
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
-	void SetParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
+	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:
@@ -84,7 +84,7 @@ public:
 	static const ExprList Empty;
 public:
 	void Exec() const;
-	void SetParent(const Expr* pExprParent);
+	void SetExprParent(const Expr* pExprParent);
 };
 
 //------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ protected:
 	RefPtr<Expr> _pExprChild;
 public:
 	Expr_Unary(const TypeInfo& typeInfo, Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
-		_pExprChild->SetParent(this);
+		_pExprChild->SetExprParent(this);
 	}
 	Expr* GetChild() { return _pExprChild.get(); }
 	const Expr* GetChild() const { return _pExprChild.get(); }
@@ -136,7 +136,7 @@ protected:
 public:
 	Expr_Binary(const TypeInfo& typeInfo, Expr* pExprLeft, Expr* pExprRight) :
 			Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
-		_pExprLeft->SetParent(this), _pExprRight->SetParent(this);
+		_pExprLeft->SetExprParent(this), _pExprRight->SetExprParent(this);
 	}
 	Expr* GetLeft() { return _pExprLeft.get(); }
 	Expr* GetRight() { return _pExprRight.get(); }
@@ -169,11 +169,11 @@ public:
 	Expr_Composite(const TypeInfo& typeInfo) : Expr(typeInfo), _pAttr(new Attribute()) {}
 	void SetCar(Expr* pExprCar) {
 		_pExprCar.reset(pExprCar);
-		_pExprCar->SetParent(this);
+		_pExprCar->SetExprParent(this);
 	}
 	void SetCdrs(ExprOwner* pExprsCdr) {
 		_pExprsCdr.reset(pExprsCdr);
-		_pExprsCdr->SetParent(this);
+		_pExprsCdr->SetExprParent(this);
 	}
 	Expr* GetCar() { return _pExprCar.get(); }
 	const Expr* GetCar() const { return _pExprCar.get(); }

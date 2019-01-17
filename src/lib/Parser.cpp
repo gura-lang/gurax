@@ -851,7 +851,7 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr
 			return false;
 		}
 	}
-	pExpr->SetParent(pExprParent);
+	pExpr->SetExprParent(pExprParent);
 	exprOwner.push_back(pExpr);
 	return true;
 }

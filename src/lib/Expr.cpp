@@ -22,9 +22,9 @@ void ExprList::Exec() const
 	}
 }
 
-void ExprList::SetParent(const Expr* pExprParent)
+void ExprList::SetExprParent(const Expr* pExprParent)
 {
-	for (Expr* pExpr : *this) pExpr->SetParent(pExprParent);
+	for (Expr* pExpr : *this) pExpr->SetExprParent(pExprParent);
 }
 
 //------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ void ExprList::SetParent(const Expr* pExprParent)
 //------------------------------------------------------------------------------
 void Expr_Collector::AddChild(Expr* pExpr)
 {
-	pExpr->SetParent(this);
+	pExpr->SetExprParent(this);
 	_pExprChildren->push_back(pExpr);
 }
 
@@ -57,7 +57,7 @@ void Expr_Collector::AddChild(Expr* pExpr)
 //------------------------------------------------------------------------------
 void Expr_Composite::AddCdr(Expr* pExpr)
 {
-	pExpr->SetParent(this);
+	pExpr->SetExprParent(this);
 	_pExprsCdr->push_back(pExpr);
 }
 
