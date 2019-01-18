@@ -738,6 +738,164 @@ bool Parser::ReduceFourTokens()
 	RefPtr<Token> pToken1 = tokenStack.Pop();
 	::printf("%s %s %s %s\n",
 			 pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol(), pToken4->GetSymbol());
+#if 0
+	int lineNoTop = pToken1->GetLineNo();
+	int lineNoBtm = pToken4->GetLineNo();
+	if (pToken1->IsType(TOKEN_Expr) && pToken2->IsType(TOKEN_Expr) &&
+											pToken3->IsType(TOKEN_LParenthesis)) {
+		if (pToken4->IsType(TOKEN_RParenthesis)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr Expr '(' ')'\n"));
+			Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken3->GetExpr());
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+			}
+			if (!pToken1->GetExpr()->IsCaller()) {
+				SetError_InvalidToken(__LINE__);
+				goto error_done;
+			}
+			Expr_Caller *pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+			Expr_Caller *pExprCaller =
+				CreateCaller(env, pToken2->GetExpr(), pExprLister, nullptr, pExprLeader);
+			if (pExprCaller == nullptr) goto error_done;
+			pExprLeader->AddTrailingExpr(pExprCaller);
+			pExpr = pExprLeader;
+		} else if (pToken4->IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr Expr '(' -> Expr Expr '(' EOL\n"));
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else if (pToken1->IsType(TOKEN_Expr) && pToken2->IsType(TOKEN_Expr) &&
+												pToken3->IsType(TOKEN_LBrace)) {
+		if (pToken4->IsType(TOKEN_RBrace)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr Expr '{' '}'\n"));
+			Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken3->GetExpr());
+			if (pExprBlock == nullptr) {
+				pExprBlock = new Expr_Block();
+			}
+			if (!pToken1->GetExpr()->IsCaller()) {
+				SetError_InvalidToken(__LINE__);
+				goto error_done;
+			}
+			Expr_Caller *pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+			Expr_Caller *pExprCaller = nullptr;
+			if (pToken2->GetExpr()->IsCaller()) {
+				pExprCaller = dynamic_cast<Expr_Caller *>(pToken2->GetExpr());
+				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
+			} else {
+				pExprCaller = CreateCaller(env, pToken2->GetExpr(), nullptr, pExprBlock, pExprLeader);
+				if (pExprCaller == nullptr) goto error_done;
+			}
+			pExprLeader->AddTrailingExpr(pExprCaller);
+			pExpr = pExprLeader;
+		} else if (pToken4->IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr Expr '{' -> Expr Expr '{' EOL\n"));
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else if (pToken1->IsType(TOKEN_Expr) &&
+				pToken2->IsType(TOKEN_LParenthesis) && pToken3->IsType(TOKEN_Expr)) {
+		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
+		if (pToken4->IsType(TOKEN_RParenthesis)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr '(' Expr ')'\n"));
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+			}
+			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken3->GetExpr())) return false;
+			Expr_Caller *pExprCaller =
+				CreateCaller(env, pToken1->GetExpr(), pExprLister, nullptr, nullptr);
+			if (pExprCaller == nullptr) goto error_done;
+			pExpr = pExprCaller;
+		} else if (pToken4->IsType(TOKEN_Comma) || pToken4->IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' Expr ','\n"));
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+				pToken2->SetExpr(pExprLister);
+			}
+			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken3->GetExpr())) return false;
+			_tokenStack.pop_back();
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else if (pToken1->IsType(TOKEN_Expr) &&
+				pToken2->IsType(TOKEN_LBrace) && pToken3->IsType(TOKEN_Expr)) {
+		Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken2->GetExpr());
+		if (pToken4->IsType(TOKEN_RBrace)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr '{' Expr '}'\n"));
+			if (pExprBlock == nullptr) {
+				pExprBlock = new Expr_Block();
+			}
+			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, pToken3->GetExpr())) return false;
+			if (pToken1->GetExpr()->IsCaller()) {
+				Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
+				pExpr = pExprCaller;
+			} else {
+				Expr_Caller *pExprCaller =
+					CreateCaller(env, pToken1->GetExpr(), nullptr, pExprBlock, nullptr);
+				if (pExprCaller == nullptr) goto error_done;
+				pExpr = pExprCaller;
+			}
+		} else if (pToken4->IsType(TOKEN_Comma) ||
+					pToken4->IsType(TOKEN_Semicolon) || pToken4->IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr '{' -> Expr '{' Expr ','\n"));
+			if (pExprBlock == nullptr) {
+				pExprBlock = new Expr_Block();
+				pToken2->SetExpr(pExprBlock);
+			}
+			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, pToken3->GetExpr())) return false;
+			_tokenStack.pop_back();
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else if (pToken1->IsType(TOKEN_Expr) &&
+				pToken2->IsType(TOKEN_LBracket) && pToken3->IsType(TOKEN_Expr)) {
+		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
+		if (pToken4->IsType(TOKEN_RBracket)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr '[' Expr ']'\n"));
+			Expr *pExprTgt = pToken1->GetExpr();
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+			}
+			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken3->GetExpr())) return false;
+			pExpr = new Expr_Indexer(pExprTgt, pExprLister);
+		} else if (pToken4->IsType(TOKEN_Comma) || pToken4->IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr '[' -> Expr '[' Expr ','\n"));
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+				pToken2->SetExpr(pExprLister);
+			}
+			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken3->GetExpr())) return false;
+			_tokenStack.pop_back();
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else {
+		SetError_InvalidToken(__LINE__);
+		goto error_done;
+	}
+	pExpr->SetSourceInfo(_pSourceName->Reference(), lineNoTop, lineNoBtm);
+	_tokenStack.push_back(Token(TOKEN_Expr, pExpr));
+#endif
 	return true;
 }
 
