@@ -131,6 +131,9 @@ private:
 	// - TokenType::LBracket
 	// - TokenType::LParenthesis
 	RefPtr<ExprOwner> _pExprOwner;
+	// _pExprOwner is only available for the following token types.
+	// - TokenType::LBrace
+	RefPtr<ExprOwner> _pExprOwnerEx;
 	bool _itererFlag;	// used for TokenType::LParenthesis
 public:
 	static const Precedence _precMatrix[][31];
@@ -210,8 +213,14 @@ public:
 	void AppendValue(const char* value) { _pStrValue->GetStringSTL().append(value); }
 	void AppendValue(const String& value) { _pStrValue->GetStringSTL().append(value); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
+	void SetExprOwner(ExprOwner* pExprOwner) { _pExprOwner.reset(pExprOwner); }
+	void SetExprOwnerEx(ExprOwner* pExprOwnerEx) { _pExprOwnerEx.reset(pExprOwnerEx); }
 	Expr* GetExpr() { return _pExpr.get(); }
 	ExprOwner& GetExprOwner() { return *_pExprOwner; }
+	ExprOwner& GetExprOwnerEx() { return *_pExprOwnerEx; }
+	bool HasExpr() { return _pExpr.get() != nullptr; }
+	bool HasExprOwner() const { return _pExprOwner.get() != nullptr; }
+	bool HasExprOwnerEx() const { return _pExprOwnerEx.get() != nullptr; }
 	void SetItererFlag(bool itererFlag) { _itererFlag = itererFlag; }
 	bool GetItererFlag() const { return _itererFlag; }
 public:

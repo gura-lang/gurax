@@ -210,34 +210,22 @@ bool Parser::ReduceTwoTokens()
 	} else if (pToken1->IsType(TokenType::LBlockParam)) {
 		ExprOwner& exprOwner = pToken1->GetExprOwner();
 		if (pToken2->IsType(TokenType::RBlockParam)) {
-			DBGPARSER(::printf("do (Reduce: Expr -> '|' '|') "
-							   "and then attach the Expr to the preceeding LBrace\n"));
-#if 0
-			//Expr_Lister* pExprBlockParam = dynamic_cast<Expr_Lister*>(pToken1->GetExpr());
-			//if (!pExprBlockParam) {
-			//	pExprBlockParam = new Expr_Lister();
-			//}
+			DBGPARSER(::printf("do (Reduce: (none) -> '|' '|') "
+							   "and then attach the Expr owner to the preceeding LBrace\n"));
 			Token* pTokenPrev = tokenStack.Peek(0);
 			if (pTokenPrev->IsType(TokenType::LBrace)) {
-				Expr_Block* pExprBlock = dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
-				if (!pExprBlock) {
-					pExprBlock = new Expr_Block();
-					tokenPrev.SetExpr(pExprBlock);
-				}
-				pExprBlock->SetExprOwnerParam(pExprBlockParam->GetExprOwner().Reference());
-				Expr::Delete(pExprBlockParam);
+				pTokenPrev->SetExprOwnerEx(exprOwner.Reference());
 			} else {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken2, "invalid placement of block parameter");
 				return false;
 			}
-#endif
 			return true;
 		} else if (pToken2->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '|' -> '|' EndOfLine\n"));
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
+			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "unclosed block parameter");
 			return false;
 		}
 	} else if (pToken2->IsType(TokenType::Expr)) {
@@ -614,7 +602,7 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced parenthesis");
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unclosed parenthesis");
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::LBracket) && pToken2->IsType(TokenType::Expr)) {
@@ -629,7 +617,7 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced bracket");
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unclosed bracket");
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LParenthesis)) {
@@ -646,7 +634,7 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken2->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced parenthesis");
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unclosed parenthesis");
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LBrace)) {
@@ -671,7 +659,7 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken2->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced bracket");
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unclosed bracket");
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LBracket)) {
@@ -688,7 +676,7 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken2->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced bracket");
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unclosed bracket");
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::LBrace) && pToken2->IsType(TokenType::Expr)) {
@@ -705,49 +693,33 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced brace");
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unclosed brace");
 			return false;
 		}
-#if 0
 	} else if (pToken1->IsType(TokenType::LBlockParam) && pToken2->IsType(TokenType::Expr)) {
 		ExprOwner& exprOwner = pToken1->GetExprOwner();
 		if (pToken3->IsType(TokenType::RBlockParam)) {
-			DBGPARSER(::printf("do (Reduce: Expr -> '|' Expr '|') "
-					"and then attach the Expr to the preceeding LBrace\n"));
+			DBGPARSER(::printf("do (Reduce: (none) -> '|' Expr '|') "
+					"and then attach the Expr owner to the preceeding LBrace\n"));
 			exprOwner.push_back(pToken2->GetExpr()->Reference());
-			Token &tokenPrev = tokenStack.Peek(0);
-			if (tokenPrev.IsType(TokenType::LBrace)) {
-				Expr_Block *pExprBlock =
-							dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
-				if (!pExprBlock) {
-					pExprBlock = new Expr_Block();
-					tokenPrev.SetExpr(pExprBlock);
-				}
-				pExprBlock->SetExprOwnerParam(pExprBlockParam->GetExprOwner().Reference());
-				Expr::Delete(pExprBlockParam);
+			Token* pTokenPrev = tokenStack.Peek(0);
+			if (pTokenPrev->IsType(TokenType::LBrace)) {
+				pTokenPrev->SetExprOwnerEx(exprOwner.Reference());
 			} else {
-				Expr::Delete(pExprBlockParam);
-				SetError(ERR_SyntaxError, "invalid placement of block parameter");
-				goto error_done;
+				IssueError(ErrorType::SyntaxError, pToken1, pToken3, "invalid placement of block parameter");
+				return false;
 			}
 			return true;
 		} else if (pToken3->IsType(TokenType::Comma) ||
-					pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
+				   pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '|' -> '|' Expr ','\n"));
-			if (!pExprBlockParam) {
-				pExprBlockParam = new Expr_Lister();
-				pToken1->SetExpr(pExprBlockParam);
-			}
-			if (!EmitExpr(pExprBlockParam->GetExprOwner(), pExprBlockParam, pToken2->GetExpr())) return false;
-			_tokenStack.pop_back();
-			_tokenStack.pop_back();
+			exprOwner.push_back(pToken2->GetExpr()->Reference());
+			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-			goto error_done;
+			return false;
 		}
-#endif
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 		return false;
