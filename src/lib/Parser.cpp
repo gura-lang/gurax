@@ -613,54 +613,42 @@ bool Parser::ReduceThreeTokens()
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else {
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced parenthesis");
+			return false;
+		}
+	} else if (pToken1->IsType(TokenType::LBracket) && pToken2->IsType(TokenType::Expr)) {
+		ExprOwner& exprOwner = pToken1->GetExprOwner();
+		if (pToken3->IsType(TokenType::RBracket)) {
+			DBGPARSER(::printf("Reduce: Expr -> '[' Expr ']'\n"));
+			exprOwner.push_back(pToken2->GetExpr()->Reference());
+			pExprGen.reset(new Expr_Lister(exprOwner.Reference()));
+		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
+			DBGPARSER(::printf("Reduce: '[' -> '[' Expr ','\n"));
+			exprOwner.push_back(pToken2->GetExpr()->Reference());
+			tokenStack.Push(pToken1->Reference());
+			return true;
+		} else {
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced bracket");
+			return false;
+		}
+	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LParenthesis)) {
+		ExprOwner& exprOwner = pToken2->GetExprOwner();
+		if (pToken3->IsType(TokenType::RParenthesis)) {
+			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '(' ')'\n"));
+			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
+			pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
+			pExprCaller->SetExprOwnerCdr(exprOwner.Reference());
+			pExprGen.reset(pExprCaller.release());
+		} else if (pToken3->IsType(TokenType::EndOfLine)) {
+			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' EndOfLine\n"));
+			tokenStack.Push(pToken1->Reference());
+			tokenStack.Push(pToken2->Reference());
+			return true;
+		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 			return false;
 		}
 #if 0
-	} else if (pToken1->IsType(TokenType::LBracket) && pToken2->IsType(TokenType::Expr)) {
-		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken1->GetExpr());
-		if (pToken3->IsType(TokenType::RBracket)) {
-			DBGPARSER(::printf("Reduce: Expr -> '[' Expr ']'\n"));
-			if (!pExprLister) {
-				pExprLister = new Expr_Lister();
-			}
-			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken2->GetExpr())) return false;
-			pExprGen = pExprLister;
-		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
-			DBGPARSER(::printf("Reduce: '[' -> '[' Expr ','\n"));
-			if (!pExprLister) {
-				pExprLister = new Expr_Lister();
-				pToken1->SetExpr(pExprLister);
-			}
-			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken2->GetExpr())) return false;
-			_tokenStack.pop_back();
-			_tokenStack.pop_back();
-			return true;
-		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-			goto error_done;
-		}
-	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LParenthesis)) {
-		if (pToken3->IsType(TokenType::RParenthesis)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '(' ')'\n"));
-			Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
-			if (!pExprLister) {
-				pExprLister = new Expr_Lister();
-			}
-			Expr_Caller *pExprCaller =
-				CreateCaller(env, pToken1->GetExpr(), pExprLister, nullptr, nullptr);
-			if (!pExprCaller) goto error_done;
-			pExprGen = pExprCaller;
-		} else if (pToken3->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
-			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' EndOfLine\n"));
-			_tokenStack.pop_back();
-			return true;
-		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-			goto error_done;
-		}
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LBrace)) {
 		if (pToken3->IsType(TokenType::RBrace)) {
 			DBGPARSER(::printf("Reduce: Expr -> Expr '{' '}'\n"));
