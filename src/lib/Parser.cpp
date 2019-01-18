@@ -709,19 +709,12 @@ bool Parser::ReduceThreeTokens()
 		}
 #if 0
 	} else if (pToken1->IsType(TokenType::LBlockParam) && pToken2->IsType(TokenType::Expr)) {
-		Expr_Lister *pExprBlockParam = dynamic_cast<Expr_Lister *>(pToken1->GetExpr());
+		ExprOwner& exprOwner = pToken1->GetExprOwner();
 		if (pToken3->IsType(TokenType::RBlockParam)) {
-			// this is a special case of reducing
 			DBGPARSER(::printf("do (Reduce: Expr -> '|' Expr '|') "
 					"and then attach the Expr to the preceeding LBrace\n"));
-			if (!pExprBlockParam) {
-				pExprBlockParam = new Expr_Lister();
-			}
-			if (!EmitExpr(pExprBlockParam->GetExprOwner(), pExprBlockParam, pToken2->GetExpr())) return false;
-			_tokenStack.pop_back();
-			_tokenStack.pop_back();
-			_tokenStack.pop_back();
-			Token &tokenPrev = _tokenStack.Peek(0);
+			exprOwner.push_back(pToken2->GetExpr()->Reference());
+			Token &tokenPrev = tokenStack.Peek(0);
 			if (tokenPrev.IsType(TokenType::LBrace)) {
 				Expr_Block *pExprBlock =
 							dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
