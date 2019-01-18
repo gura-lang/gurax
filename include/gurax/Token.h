@@ -131,30 +131,35 @@ private:
 	// - TokenType::LBracket
 	// - TokenType::LParenthesis
 	RefPtr<ExprOwner> _pExprOwner;
+	bool _itererFlag;	// used for TokenType::LParenthesis
 public:
 	static const Precedence _precMatrix[][31];
 public:
 	// Constructor
 	explicit Token(Expr* pExpr) :
 		_tokenType(TokenType::Expr), _lineNoTop(pExpr->GetLineNoTop()), _lineNoBtm(pExpr->GetLineNoBtm()),
-		_pExpr(pExpr) {}
+		_pExpr(pExpr), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm) {}
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprOwner* pExprOwner) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _pExprOwner(pExprOwner) {}
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
+		_pExprOwner(pExprOwner), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue) :
-		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _pStrValue(pStrValue) {}
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
+		_pStrValue(pStrValue), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value))) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue, StringReferable* pStrSuffix) :
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
+		  StringReferable* pStrValue, StringReferable* pStrSuffix) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix) {}
+		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)), new StringReferable(std::move(suffix))) {}
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
+			  new StringReferable(std::move(suffix))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue,
 		  StringReferable* pStrSuffix, StringReferable* pStrSource) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _pStrSource(pStrSource) {}
+		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _pStrSource(pStrSource), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix, String source) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
 			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
@@ -207,6 +212,8 @@ public:
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	Expr* GetExpr() { return _pExpr.get(); }
 	ExprOwner& GetExprOwner() { return *_pExprOwner; }
+	void SetItererFlag(bool itererFlag) { _itererFlag = itererFlag; }
+	bool GetItererFlag() const { return _itererFlag; }
 public:
 	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {
 		return _precMatrix[tokenLeft.GetCategory()][tokenRight.GetCategory()];

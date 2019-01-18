@@ -151,7 +151,10 @@ class GURAX_DLLDECLARE Expr_Collector : public Expr {
 protected:
 	RefPtr<ExprOwner> _pExprOwnerElem;
 public:
-	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprOwnerElem(new ExprOwner()) {}
+	Expr_Collector(const TypeInfo& typeInfo, ExprOwner* pExprOwnerElem) :
+		Expr(typeInfo), _pExprOwnerElem(pExprOwnerElem) {
+		_pExprOwnerElem->SetExprParent(this);
+	}
 	ExprOwner& GetExprOwnerElem() { return *_pExprOwnerElem; }
 	const ExprList& GetExprsElem() const { return *_pExprOwnerElem; }
 	ExprOwner* ReleaseExprOwnerElem() { return _pExprOwnerElem.release(); }
@@ -334,10 +337,14 @@ public:
 protected:
 	RefPtr<ExprOwner> _pExprOwnerParam;
 public:
-	Expr_Block() : Expr_Collector(typeInfo), _pExprOwnerParam(new ExprOwner()) {}
+	explicit Expr_Block(ExprOwner* pExprOwnerElem) :
+		Expr_Collector(typeInfo, pExprOwnerElem), _pExprOwnerParam(new ExprOwner()) {}
 public:
 	virtual void Exec() const;
-	void SetExprOwnerParam(ExprOwner* pExprOwnerParam) { _pExprOwnerParam.reset(pExprOwnerParam); }
+	void SetExprOwnerParam(ExprOwner* pExprOwnerParam) {
+		_pExprOwnerParam.reset(pExprOwnerParam);
+		_pExprOwnerParam->SetExprParent(this);
+	}
 	const ExprList& GetExprsParam() const { return *_pExprOwnerParam; }
 };
 
@@ -348,7 +355,7 @@ class GURAX_DLLDECLARE Expr_Lister : public Expr_Collector {
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Lister() : Expr_Collector(typeInfo) {}
+	Expr_Lister(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
 	virtual void Exec() const;
 };
@@ -360,7 +367,7 @@ class GURAX_DLLDECLARE Expr_Iterer : public Expr_Collector {
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Iterer() : Expr_Collector(typeInfo) {}
+	Expr_Iterer(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
 	virtual void Exec() const;
 };
