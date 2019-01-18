@@ -123,12 +123,14 @@ private:
 	RefPtr<StringReferable> _pStrSuffix;
 	RefPtr<StringReferable> _pStrSource;
 	// _pExpr is only available for the following token types.
-	// TokenType::Expr          (Expr)
-	// TokenType::LParenthesis  (Expr_Lister)
-	// TokenType::LBrace        (Expr_Block)
-	// TokenType::LBracket      (Expr_Lister)
-	// TokenType::LBlockParam   (Expr_BlockParam)
+	// - TokenType::Expr
 	RefPtr<Expr> _pExpr;
+	// _pExprOwner is only available for the following token types.
+	// - TokenType::LBlockParam
+	// - TokenType::LBrace
+	// - TokenType::LBracket
+	// - TokenType::LParenthesis
+	RefPtr<ExprOwner> _pExprOwner;
 public:
 	static const Precedence _precMatrix[][31];
 public:
@@ -138,6 +140,8 @@ public:
 		_pExpr(pExpr) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprOwner* pExprOwner) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _pExprOwner(pExprOwner) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _pStrValue(pStrValue) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value) :
@@ -202,6 +206,7 @@ public:
 	void AppendValue(const String& value) { _pStrValue->GetStringSTL().append(value); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	Expr* GetExpr() { return _pExpr.get(); }
+	ExprOwner& GetExprOwner() { return *_pExprOwner; }
 public:
 	static Precedence LookupPrec(const Token& tokenLeft, const Token& tokenRight) {
 		return _precMatrix[tokenLeft.GetCategory()][tokenRight.GetCategory()];

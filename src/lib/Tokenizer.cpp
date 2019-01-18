@@ -122,18 +122,18 @@ void Tokenizer::FeedChar(char ch)
 			}
 		} else if (ch == '{') {
 			int lineNo = GetLineNo();
-			_tokenWatcher.FeedToken(new Token(TokenType::LBrace, _lineNoTop, lineNo));
+			_tokenWatcher.FeedToken(new Token(TokenType::LBrace, _lineNoTop, lineNo, new ExprOwner()));
 			if (_verboseFlag) {
 				_value.clear();
 			}
 			_stat = Error::IsIssued()? Stat::Error : Stat::AfterLBrace;
 		} else if (ch == '(') {
 			int lineNo = GetLineNo();
-			_tokenWatcher.FeedToken(new Token(TokenType::LParenthesis, _lineNoTop, lineNo));
+			_tokenWatcher.FeedToken(new Token(TokenType::LParenthesis, _lineNoTop, lineNo, new ExprOwner()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '[') {
 			int lineNo = GetLineNo();
-			_tokenWatcher.FeedToken(new Token(TokenType::LBracket, _lineNoTop, lineNo));
+			_tokenWatcher.FeedToken(new Token(TokenType::LBracket, _lineNoTop, lineNo, new ExprOwner()));
 			if (Error::IsIssued()) _stat = Stat::Error;
 		} else if (ch == '|' && _blockParamFlag && GetTokenStack().CheckBlockParamEnd()) {
 			int lineNo = GetLineNo();
@@ -468,7 +468,7 @@ void Tokenizer::FeedChar(char ch)
 			if (_verboseFlag && !_value.empty()) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Space, _lineNoTop, lineNo, _value));
 			}
-			_tokenWatcher.FeedToken(new Token(TokenType::LBlockParam, _lineNoTop, lineNo));
+			_tokenWatcher.FeedToken(new Token(TokenType::LBlockParam, _lineNoTop, lineNo, new ExprOwner()));
 			if (Error::IsIssued()) {
 				_stat = Stat::Error;
 			} else {

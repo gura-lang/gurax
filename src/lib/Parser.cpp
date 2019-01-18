@@ -217,13 +217,13 @@ bool Parser::ReduceTwoTokens()
 			DBGPARSER(::printf("do (Reduce: Expr -> '|' '|') "
 							   "and then attach the Expr to the preceeding LBrace\n"));
 #if 0
-			Expr_Lister* pExprBlockParam = dynamic_cast<Expr_Lister*>(pToken1->GetExpr());
-			if (!pExprBlockParam) {
-				pExprBlockParam = new Expr_Lister();
-			}
-			Token &tokenPrev = _tokenStack.Peek(0);
-			if (tokenPrev.IsType(TokenType::LBrace)) {
-				Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
+			//Expr_Lister* pExprBlockParam = dynamic_cast<Expr_Lister*>(pToken1->GetExpr());
+			//if (!pExprBlockParam) {
+			//	pExprBlockParam = new Expr_Lister();
+			//}
+			Token* pTokenPrev = tokenStack.Peek(0);
+			if (pTokenPrev->IsType(TokenType::LBrace)) {
+				Expr_Block* pExprBlock = dynamic_cast<Expr_Block *>(tokenPrev.GetExpr());
 				if (!pExprBlock) {
 					pExprBlock = new Expr_Block();
 					tokenPrev.SetExpr(pExprBlock);
@@ -231,7 +231,6 @@ bool Parser::ReduceTwoTokens()
 				pExprBlock->SetExprOwnerParam(pExprBlockParam->GetExprOwner().Reference());
 				Expr::Delete(pExprBlockParam);
 			} else {
-				Expr::Delete(pExprBlockParam);
 				IssueError(ErrorType::SyntaxError, pToken1, pToken2, "invalid placement of block parameter");
 				return false;
 			}
