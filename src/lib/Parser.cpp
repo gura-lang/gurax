@@ -208,6 +208,7 @@ bool Parser::ReduceTwoTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::LBlockParam)) {
+		ExprOwner& exprOwner = pToken1->GetExprOwner();
 		if (pToken2->IsType(TokenType::RBlockParam)) {
 			DBGPARSER(::printf("do (Reduce: Expr -> '|' '|') "
 							   "and then attach the Expr to the preceeding LBrace\n"));
