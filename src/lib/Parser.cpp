@@ -673,25 +673,24 @@ bool Parser::ReduceThreeTokens()
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced bracket");
 			return false;
 		}
-#if 0
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::LBracket)) {
+		ExprOwner& exprOwner = pToken2->GetExprOwner();
 		if (pToken3->IsType(TokenType::RBracket)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '[' ']'\n"));
-			Expr *pExprTgt = pToken1->GetExpr();
-			Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
-			if (!pExprLister) {
-				pExprLister = new Expr_Lister();
-			}
-			pExprGen = new Expr_Indexer(pExprTgt, pExprLister);
+			DBGPARSER(::printf("Reduce: Expr(Indexer) -> Expr '[' ']'\n"));
+			RefPtr<Expr_Indexer> pExprIndexer(new Expr_Indexer());
+			pExprIndexer->SetExprCar(pToken1->GetExpr()->Reference());
+			pExprIndexer->SetExprOwnerCdr(exprOwner.Reference());
+			pExprGen.reset(pExprIndexer.release());
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: Expr '[' -> Expr '[' EndOfLine\n"));
-			_tokenStack.pop_back();
+			tokenStack.Push(pToken1->Reference());
+			tokenStack.Push(pToken2->Reference());
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
-			goto error_done;
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "unbalanced bracket");
+			return false;
 		}
+#if 0
 	} else if (pToken1->IsType(TokenType::LBrace) && pToken2->IsType(TokenType::Expr)) {
 		Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken1->GetExpr());
 		if (pToken3->IsType(TokenType::RBrace)) {
