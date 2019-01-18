@@ -49,7 +49,7 @@ void ExprList::SetExprParent(const Expr* pExprParent)
 void Expr_Collector::AddExprElem(Expr* pExprElem)
 {
 	pExprElem->SetExprParent(this);
-	_pExprsElem->push_back(pExprElem);
+	_pExprOwnerElem->push_back(pExprElem);
 }
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ void Expr_Collector::AddExprElem(Expr* pExprElem)
 void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 {
 	pExprCdr->SetExprParent(this);
-	_pExprsCdr->push_back(pExprCdr);
+	_pExprOwnerCdr->push_back(pExprCdr);
 }
 
 void Expr_Composite::Exec() const
@@ -176,7 +176,7 @@ void Expr_Caller::Exec() const
 void Expr_Caller::AddExprElemBlock(Expr* pExprElem)
 {
 	pExprElem->SetExprParent(this);
-	_pExprsElemBlock->push_back(pExprElem);
+	_pExprOwnerElemBlock->push_back(pExprElem);
 }
 
 }

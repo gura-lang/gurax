@@ -149,12 +149,12 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Collector : public Expr {
 protected:
-	RefPtr<ExprOwner> _pExprsElem;
+	RefPtr<ExprOwner> _pExprOwnerElem;
 public:
-	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprsElem(new ExprOwner()) {}
-	ExprOwner& GetExprOwnerElem() { return *_pExprsElem; }
-	const ExprList& GetExprsElem() const { return *_pExprsElem; }
-	ExprOwner* ReleaseExprsElem() { return _pExprsElem.release(); }
+	Expr_Collector(const TypeInfo& typeInfo) : Expr(typeInfo), _pExprOwnerElem(new ExprOwner()) {}
+	ExprOwner& GetExprOwnerElem() { return *_pExprOwnerElem; }
+	const ExprList& GetExprsElem() const { return *_pExprOwnerElem; }
+	ExprOwner* ReleaseExprOwnerElem() { return _pExprOwnerElem.release(); }
 	void AddExprElem(Expr* pExprElem);
 };
 
@@ -164,22 +164,22 @@ public:
 class GURAX_DLLDECLARE Expr_Composite : public Expr {
 protected:
 	RefPtr<Expr> _pExprCar;
-	RefPtr<ExprOwner> _pExprsCdr;
+	RefPtr<ExprOwner> _pExprOwnerCdr;
 	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Composite(const TypeInfo& typeInfo) :
-		Expr(typeInfo), _pExprsCdr(new ExprOwner()), _pAttr(new Attribute()) {}
+		Expr(typeInfo), _pExprOwnerCdr(new ExprOwner()), _pAttr(new Attribute()) {}
 	void SetExprCar(Expr* pExprCar) {
 		_pExprCar.reset(pExprCar);
 		_pExprCar->SetExprParent(this);
 	}
 	Expr* GetExprCar() { return _pExprCar.get(); }
 	const Expr* GetExprCar() const { return _pExprCar.get(); }
-	void SetExprsCdr(ExprOwner* pExprsCdr) {
-		_pExprsCdr.reset(pExprsCdr);
-		_pExprsCdr->SetExprParent(this);
+	void SetExprOwnerCdr(ExprOwner* pExprOwnerCdr) {
+		_pExprOwnerCdr.reset(pExprOwnerCdr);
+		_pExprOwnerCdr->SetExprParent(this);
 	}
-	const ExprList& GetExprsCdr() const { return *_pExprsCdr; }
+	const ExprList& GetExprsCdr() const { return *_pExprOwnerCdr; }
 	void AddExprCdr(Expr* pExprCdr);
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -331,10 +331,14 @@ public:
 class GURAX_DLLDECLARE Expr_Block : public Expr_Collector {
 public:
 	static const TypeInfo typeInfo;
+protected:
+	RefPtr<ExprOwner> _pExprOwnerParam;
 public:
-	Expr_Block() : Expr_Collector(typeInfo) {}
+	Expr_Block() : Expr_Collector(typeInfo), _pExprOwnerParam(new ExprOwner()) {}
 public:
 	virtual void Exec() const;
+	void SetExprOwnerParam(ExprOwner* pExprOwnerParam) { _pExprOwnerParam.reset(pExprOwnerParam); }
+	const ExprList& GetExprsParam() const { return *_pExprOwnerParam; }
 };
 
 //------------------------------------------------------------------------------
@@ -380,16 +384,16 @@ class GURAX_DLLDECLARE Expr_Caller : public Expr_Composite {
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<ExprOwner> _pExprsElemBlock;
+	RefPtr<ExprOwner> _pExprOwnerElemBlock;
 public:
-	Expr_Caller() : Expr_Composite(typeInfo), _pExprsElemBlock(new ExprOwner()) {}
+	Expr_Caller() : Expr_Composite(typeInfo), _pExprOwnerElemBlock(new ExprOwner()) {}
 public:
 	virtual void Exec() const;
-	void SetExprsElemBlock(ExprOwner* pExprsElemBlock) {
-		_pExprsElemBlock.reset(pExprsElemBlock);
-		_pExprsElemBlock->SetExprParent(this);
+	void SetExprOwnerElemBlock(ExprOwner* pExprOwnerElemBlock) {
+		_pExprOwnerElemBlock.reset(pExprOwnerElemBlock);
+		_pExprOwnerElemBlock->SetExprParent(this);
 	}
-	const ExprList& GetExprsElemBlock() const { return *_pExprsElemBlock; }
+	const ExprList& GetExprsElemBlock() const { return *_pExprOwnerElemBlock; }
 	void AddExprElemBlock(Expr* pExprElem);
 	Expr_Caller* GetLastTrailer() { return this; }
 	bool IsTrailer() const { return false; }
