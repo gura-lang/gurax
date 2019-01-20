@@ -775,39 +775,37 @@ bool Parser::ReduceFourTokens()
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 			return false;
 		}
-#if 0
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Expr) &&
 			   pToken3->IsType(TokenType::LBrace)) {
+		ExprOwner& exprOwner = pToken3->GetExprOwner();
 		if (pToken4->IsType(TokenType::RBrace)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr Expr '{' '}'\n"));
-			Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(pToken3->GetExpr());
-			if (pExprBlock == nullptr) {
-				pExprBlock = new Expr_Block();
+			if (!pToken1->GetExpr()->IsType<Expr_Caller>()) {
+				IssueError(ErrorType::SyntaxError, pToken1, pToken4, "trailer must follow after caller");
+				return false;
 			}
-			if (!pToken1->GetExpr()->IsCaller()) {
-				SetError_InvalidToken(__LINE__);
-				goto error_done;
-			}
-			Expr_Caller *pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
-			Expr_Caller *pExprCaller = nullptr;
-			if (pToken2->GetExpr()->IsCaller()) {
-				pExprCaller = dynamic_cast<Expr_Caller *>(pToken2->GetExpr());
-				pExprCaller->GetExprTrailerLast()->SetBlock(pExprBlock);
+			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) Expr '{' '}'\n"));
+			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+			RefPtr<Expr_Caller> pExprCaller;
+			if (pToken2->GetExpr()->IsType<Expr_Caller>()) {
+				pExprCaller.reset(dynamic_cast<Expr_Caller *>(pToken2->GetExpr()->Reference()));
 			} else {
-				pExprCaller = CreateCaller(env, pToken2->GetExpr(), nullptr, pExprBlock, pExprLeader);
-				if (pExprCaller == nullptr) goto error_done;
+				pExprCaller.reset(new Expr_Caller());
+				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			}
-			pExprLeader->AddTrailingExpr(pExprCaller);
-			pExpr = pExprLeader;
+			pExprCaller->GetExprTrailerLast()->SetExprOwnerElemBlock(exprOwner.Reference());
+			pExprLeader->AppendExprTrailer(pExprCaller.release());
+			tokenStack.Push(pToken1->Reference());
 		} else if (pToken4->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: Expr Expr '{' -> Expr Expr '{' EndOfLine\n"));
-			_tokenStack.pop_back();
+			tokenStack.Push(pToken1->Reference());
+			tokenStack.Push(pToken2->Reference());
+			tokenStack.Push(pToken3->Reference());
 			return true;
 		} else {
-			SetError_InvalidToken(__LINE__);
-			goto error_done;
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+			return false;
 		}
+#if 0
 	} else if (pToken1->IsType(TokenType::Expr) &&
 				pToken2->IsType(TokenType::LParenthesis) && pToken3->IsType(TokenType::Expr)) {
 		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
