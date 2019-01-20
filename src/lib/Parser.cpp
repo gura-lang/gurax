@@ -37,10 +37,12 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				}
 #endif
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
-				if (!_pExprOwner) {
+				if (_pExprOwner) {
+					//if (!EmitExpr(*_pExprOwner, _pExprParent, pExpr, pToken, pToken)) {
+					//	tokenStack.Initialize();
+					//}
+				} else {
 					Expr::Delete(pExpr);
-				} else if (!EmitExpr(*_pExprOwner, _pExprParent, pExpr, pToken, pToken)) {
-					tokenStack.Initialize();
 				}
 			} else {
 				// something's wrong
@@ -888,11 +890,95 @@ bool Parser::ReduceFiveTokens()
 	::printf("%s %s %s %s %s\n",
 			 pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol(),
 			 pToken4->GetSymbol(), pToken5->GetSymbol());
+	int lineNoTop = pToken1->GetLineNoTop();
+	int lineNoBtm = pToken4->GetLineNoBtm();
+	RefPtr<Expr> pExprGen;
+#if 0
+	if (token1.IsType(TOKEN_Expr) && token2.IsType(TOKEN_Expr) &&
+				token3.IsType(TOKEN_LParenthesis) && token4.IsType(TOKEN_Expr)) {
+		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(token3.GetExpr());
+		if (token5.IsType(TOKEN_RParenthesis)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr Expr '(' Expr ')'\n"));
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+			}
+			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, token4.GetExpr())) return false;
+			if (!token1.GetExpr()->IsCaller()) {
+				SetError_InvalidToken(__LINE__);
+				goto error_done;
+			}
+			Expr_Caller *pExprLeader = dynamic_cast<Expr_Caller *>(token1.GetExpr());
+			Expr_Caller *pExprCaller =
+				CreateCaller(env, token2.GetExpr(), pExprLister, nullptr, pExprLeader);
+			if (pExprCaller == nullptr) goto error_done;
+			pExprLeader->AddTrailingExpr(pExprCaller);
+			pExpr = pExprLeader;
+		} else if (token5.IsType(TOKEN_Comma) || token5.IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr Expr '(' -> Expr Expr '(' Expr ','\n"));
+			if (pExprLister == nullptr) {
+				pExprLister = new Expr_Lister();
+				token3.SetExpr(pExprLister);
+			}
+			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, token4.GetExpr())) return false;
+			_tokenStack.pop_back();
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else if (token1.IsType(TOKEN_Expr) && token2.IsType(TOKEN_Expr) &&
+				token3.IsType(TOKEN_LBrace) && token4.IsType(TOKEN_Expr)) {
+		Expr_Block *pExprBlock = dynamic_cast<Expr_Block *>(token3.GetExpr());
+		if (token5.IsType(TOKEN_RBrace)) {
+			DBGPARSER(::printf("Reduce: Expr -> Expr Expr '{' Expr '}'\n"));
+			if (pExprBlock == nullptr) {
+				pExprBlock = new Expr_Block();
+			}
+			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, token4.GetExpr())) return false;
+			if (!token1.GetExpr()->IsCaller()) {
+				SetError_InvalidToken(__LINE__);
+				goto error_done;
+			}
+			Expr_Caller *pExprLeader = dynamic_cast<Expr_Caller *>(token1.GetExpr());
+			Expr_Caller *pExprCaller = nullptr;
+			if (token2.GetExpr()->IsCaller()) {
+				pExprCaller = dynamic_cast<Expr_Caller *>(token2.GetExpr());
+				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
+			} else {
+				pExprCaller = CreateCaller(env, token2.GetExpr(), nullptr, pExprBlock, pExprLeader);
+				if (pExprCaller == nullptr) goto error_done;
+			}
+			pExprLeader->AddTrailingExpr(pExprCaller);
+			pExpr = pExprLeader;
+		} else if (token5.IsType(TOKEN_Comma) ||
+					token5.IsType(TOKEN_Semicolon) || token5.IsType(TOKEN_EOL)) {
+			// this is a special case of reducing
+			DBGPARSER(::printf("Reduce: Expr Expr '{' -> Expr Expr '{' Expr ','\n"));
+			if (pExprBlock == nullptr) {
+				pExprBlock = new Expr_Block();
+				token3.SetExpr(pExprBlock);
+			}
+			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, token4.GetExpr())) return false;
+			_tokenStack.pop_back();
+			_tokenStack.pop_back();
+			return true;
+		} else {
+			SetError_InvalidToken(__LINE__);
+			goto error_done;
+		}
+	} else {
+		SetError_InvalidToken(__LINE__);
+		goto error_done;
+	}
+#endif
+	SetSourceInfo(pExprGen, lineNoTop, lineNoBtm);
+	tokenStack.Push(new Token(pExprGen.release()));
 	return true;
 }
 
-bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr,
-					  const Token* pTokenTop, const Token* pTokenBtm)
+bool Parser::EmitExpr(ExprOwner& exprOwner, Expr* pExpr)
 {
 	if (pExpr->IsType<Expr_Caller>()) {
 		Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExpr);
@@ -904,12 +990,12 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr
 			dynamic_cast<Expr_Caller *>(exprOwner.back())->GetExprTrailerLast()->SetExprTrailer(pExprCaller);
 			return true;
 		} else {
-			IssueError(ErrorType::SyntaxError, pTokenTop, pTokenBtm,
-					   "trailer must be placed after a caller expression");
+			Error::Issue(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+						 pExpr->GetLineNoTop(), pExpr->GetLineNoBtm(),
+						 "trailer must be placed after a caller expression");
 			return false;
 		}
 	}
-	pExpr->SetExprParent(pExprParent);
 	exprOwner.push_back(pExpr);
 	return true;
 }
