@@ -849,34 +849,25 @@ bool Parser::ReduceFourTokens()
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
 			return false;
 		}
-#if 0
 	} else if (pToken1->IsType(TokenType::Expr) &&
-				pToken2->IsType(TokenType::LBracket) && pToken3->IsType(TokenType::Expr)) {
-		Expr_Lister *pExprLister = dynamic_cast<Expr_Lister *>(pToken2->GetExpr());
+			   pToken2->IsType(TokenType::LBracket) && pToken3->IsType(TokenType::Expr)) {
+		ExprOwner& exprOwner = pToken2->GetExprOwner();
+		exprOwner.push_back(pToken3->GetExpr()->Reference());
 		if (pToken4->IsType(TokenType::RBracket)) {
-			DBGPARSER(::printf("Reduce: Expr -> Expr '[' Expr ']'\n"));
-			Expr *pExprTgt = pToken1->GetExpr();
-			if (pExprLister == nullptr) {
-				pExprLister = new Expr_Lister();
-			}
-			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken3->GetExpr())) return false;
-			pExpr = new Expr_Indexer(pExprTgt, pExprLister);
+			DBGPARSER(::printf("Reduce: Expr(Indexer) -> Expr '[' Expr ']'\n"));
+			RefPtr<Expr_Indexer> pExprIndexer(new Expr_Indexer());
+			pExprIndexer->SetExprCar(pToken1->GetExpr()->Reference());
+			pExprIndexer->SetExprOwnerCdr(exprOwner.Reference());
+			pExprGen.reset(pExprIndexer.release());
 		} else if (pToken4->IsType(TokenType::Comma) || pToken4->IsType(TokenType::EndOfLine)) {
-			// this is a special case of reducing
 			DBGPARSER(::printf("Reduce: Expr '[' -> Expr '[' Expr ','\n"));
-			if (pExprLister == nullptr) {
-				pExprLister = new Expr_Lister();
-				pToken2->SetExpr(pExprLister);
-			}
-			if (!EmitExpr(pExprLister->GetExprOwner(), pExprLister, pToken3->GetExpr())) return false;
-			_tokenStack.pop_back();
-			_tokenStack.pop_back();
+			tokenStack.Push(pToken1->Reference());
+			tokenStack.Push(pToken2->Reference());
 			return true;
 		} else {
-			SetError_InvalidToken(__LINE__);
-			goto error_done;
+			IssueError(ErrorType::SyntaxError, pToken1, pToken3, "syntax error (%d)", __LINE__);
+			return false;
 		}
-#endif
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken1, pToken4, "syntax error (%d)", __LINE__);
 		return false;
