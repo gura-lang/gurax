@@ -30,20 +30,14 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				// nothing to do
 			} else if (cntToken == 2 && tokenStack.back()->IsType(TokenType::Expr)) {
 				RefPtr<Token> pTokenPrev = tokenStack.Pop();
-				Expr* pExpr = pTokenPrev->GetExpr()->Reference();
+				RefPtr<Expr> pExpr(pTokenPrev->GetExpr()->Reference());
 #if 0
 				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
 					tokenStack.Initialize();
 				}
 #endif
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
-				if (_pExprOwner) {
-					//if (!EmitExpr(*_pExprOwner, _pExprParent, pExpr, pToken, pToken)) {
-					//	tokenStack.Initialize();
-					//}
-				} else {
-					Expr::Delete(pExpr);
-				}
+				if (_pExprOwner) _pExprOwner->push_back(pExpr.release());
 			} else {
 				// something's wrong
 				IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);
@@ -107,7 +101,6 @@ bool Parser::ReduceOneToken()
 {
 	TokenStack& tokenStack = _pTokenizer->GetTokenStack();
 	RefPtr<Token> pToken = tokenStack.Pop();
-	::printf("%s\n", pToken->GetSymbol());
 	int lineNoTop = pToken->GetLineNoTop();
 	int lineNoBtm = pToken->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
@@ -169,7 +162,6 @@ bool Parser::ReduceTwoTokens()
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
 	RefPtr<Token> pToken2 = tokenStack.Pop();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
-	::printf("%s %s\n", pToken1->GetSymbol(), pToken2->GetSymbol());
 	RefPtr<Expr> pExprGen;
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken2->GetLineNoBtm();
@@ -331,7 +323,6 @@ bool Parser::ReduceThreeTokens()
 	RefPtr<Token> pToken3 = tokenStack.Pop();
 	RefPtr<Token> pToken2 = tokenStack.Pop();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
-	::printf("%s %s %s\n", pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken3->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
@@ -746,8 +737,6 @@ bool Parser::ReduceFourTokens()
 	RefPtr<Token> pToken3 = tokenStack.Pop();
 	RefPtr<Token> pToken2 = tokenStack.Pop();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
-	::printf("%s %s %s %s\n",
-			 pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol(), pToken4->GetSymbol());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken4->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
@@ -887,9 +876,6 @@ bool Parser::ReduceFiveTokens()
 	RefPtr<Token> pToken3 = tokenStack.Pop();
 	RefPtr<Token> pToken2 = tokenStack.Pop();
 	RefPtr<Token> pToken1 = tokenStack.Pop();
-	::printf("%s %s %s %s %s\n",
-			 pToken1->GetSymbol(), pToken2->GetSymbol(), pToken3->GetSymbol(),
-			 pToken4->GetSymbol(), pToken5->GetSymbol());
 	if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Expr) &&
 		pToken3->IsType(TokenType::LParenthesis) && pToken4->IsType(TokenType::Expr)) {
 		ExprOwner& exprOwner = pToken3->GetExprOwner();
