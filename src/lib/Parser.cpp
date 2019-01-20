@@ -960,14 +960,13 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, Expr* pExpr)
 {
 	if (pExpr->IsType<Expr_Caller>()) {
 		Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExpr);
-		if (!pExprCaller->IsTrailer()) {
-			// nothing to do
-		} else if (exprOwner.empty()) {
+		if (!pExprCaller->IsTrailer() || exprOwner.empty()) {
 			// nothing to do
 		} else if (exprOwner.back()->IsType<Expr_Caller>()) {
 			dynamic_cast<Expr_Caller *>(exprOwner.back())->GetExprTrailerLast()->SetExprTrailer(pExprCaller);
 			return true;
 		} else {
+			Expr::Delete(pExpr);
 			Error::Issue(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable()->Reference(),
 						 pExpr->GetLineNoTop(), pExpr->GetLineNoBtm(),
 						 "trailer must be placed after a caller expression");
