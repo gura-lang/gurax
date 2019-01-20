@@ -215,7 +215,7 @@ bool Parser::ReduceTwoTokens()
 			if (pTokenPrev->IsType(TokenType::LBrace)) {
 				pTokenPrev->SetExprOwnerEx(exprOwner.Reference());
 			} else {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken2, "invalid placement of block parameter");
+				IssueError(ErrorType::SyntaxError, pToken1, pToken2, "block parameter should be placed in a block");
 				return false;
 			}
 			return true;
@@ -325,6 +325,7 @@ bool Parser::ReduceThreeTokens()
 	RefPtr<Token> pToken1 = tokenStack.Pop();
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken3->GetLineNoBtm();
+	MemberMode memberMode;
 	RefPtr<Expr> pExprGen;
 	if (pToken1->IsType(TokenType::Expr) && pToken3->IsType(TokenType::Expr)) {
 		RefPtr<Expr> pExprLeft = pToken1->GetExpr()->Reference();
@@ -458,42 +459,21 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::AssignShr)) {
 			DBGPARSER(::printf("Reduce: Expr(Assign) -> Expr >>= Expr\n"));
 			pExprGen.reset(new Expr_Assign(pExprLeft.release(), pExprRight.release(), Operator::Shr));
-		} else if (pToken2->IsType(TokenType::Period)) {
-			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr\n"));
+		} else if ((memberMode =
+					pToken2->IsType(TokenType::Period)?			MemberMode::Normal :
+					pToken2->IsType(TokenType::ColonColon)?		MemberMode::MapToList :
+					pToken2->IsType(TokenType::ColonAsterisk)?	MemberMode::MapToIter :
+					pToken2->IsType(TokenType::ColonAnd)?		MemberMode::MapAlong :
+					MemberMode::None) != MemberMode::None) {
 			if (!pExprRight->IsType<Expr_Identifier>()) {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 						   "identifier is expected as a member selector", __LINE__);
 				return false;
 			}
-			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
-										   MemberMode::Normal));
-		} else if (pToken2->IsType(TokenType::ColonColon)) {
-			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :: Expr\n"));
-			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-						   "identifier is expected as a member selector", __LINE__);
-				return false;
-			}
-			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
-										   MemberMode::MapToList));
-		} else if (pToken2->IsType(TokenType::ColonAsterisk)) {
-			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :* Expr\n"));
-			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-						   "identifier is expected as a member selector", __LINE__);
-				return false;
-			}
-			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
-										   MemberMode::MapToIter));
-		} else if (pToken2->IsType(TokenType::ColonAnd)) {
-			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr :& Expr\n"));
-			if (!pExprRight->IsType<Expr_Identifier>()) {
-				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-						   "identifier is expected as a member selector", __LINE__);
-				return false;
-			}
-			pExprGen.reset(new Expr_Member(pExprLeft.release(), dynamic_cast<Expr_Identifier *>(pExprRight.release()),
-										MemberMode::MapAlong));
+			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr(Identifier)\n"));
+			pExprGen.reset(new Expr_Member(pExprLeft.release(),
+										   dynamic_cast<Expr_Identifier *>(pExprRight.release()),
+										   memberMode));
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
