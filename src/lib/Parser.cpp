@@ -114,7 +114,7 @@ bool Parser::ReduceOneToken()
 #if 0
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Binary\n"));
-		pExprGen.reset(new Expr_Value(Value(new Object_binary(env,
+		pExprGen.reset(new Expr_Object(new Object_binary(
 						   Binary(pToken->GetString(), pToken->GetStringSize()), false)));
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
