@@ -517,7 +517,7 @@ bool Parser::ReduceThreeTokens()
 					pExprIdentifier->GetAttr().AddSymbol(pSymbol);
 				} else if (pExprDst->IsType<Expr_Caller>()) {
 					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Identifier)\n"));
-					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst)->GetLastTrailer();
+					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast();
 					pExprCaller->GetAttr().AddSymbol(pSymbol);
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
@@ -532,7 +532,7 @@ bool Parser::ReduceThreeTokens()
 					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
 				} else if (pExprDst->IsType<Expr_Caller>()) {
 					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Member)\n"));
-					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetLastTrailer()->GetAttr();
+					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							   "attribute can only be specified for identifier and caller", __LINE__);
@@ -564,7 +564,7 @@ bool Parser::ReduceThreeTokens()
 					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
 				} else if (pExprDst->IsType<Expr_Caller>()) {
 					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Lister)\n"));
-					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetLastTrailer()->GetAttr();
+					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							   "optional attributes can only be specified for identifier and caller", __LINE__);
@@ -648,7 +648,7 @@ bool Parser::ReduceThreeTokens()
 			if (pToken1->GetExpr()->IsType<Expr_Caller>()) {
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) '{' '}'\n"));
 				Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
-				pExprCaller->GetLastTrailer()->SetExprOwnerElemBlock(exprOwner.Reference());
+				pExprCaller->GetExprTrailerLast()->SetExprOwnerElemBlock(exprOwner.Reference());
 				tokenStack.Push(pToken1->Reference());
 				return true;
 			} else {
@@ -762,8 +762,7 @@ bool Parser::ReduceFourTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			pExprCaller->SetExprOwnerCdr(exprOwner.Reference());
-			//	CreateCaller(env, pToken2->GetExpr(), pExprLister, nullptr, pExprLeader);
-			//pExprLeader->AddTrailingExpr(pExprCaller.release());
+			pExprLeader->AppendExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else if (pToken4->IsType(TokenType::EndOfLine)) {
@@ -793,7 +792,7 @@ bool Parser::ReduceFourTokens()
 			Expr_Caller *pExprCaller = nullptr;
 			if (pToken2->GetExpr()->IsCaller()) {
 				pExprCaller = dynamic_cast<Expr_Caller *>(pToken2->GetExpr());
-				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
+				pExprCaller->GetExprTrailerLast()->SetBlock(pExprBlock);
 			} else {
 				pExprCaller = CreateCaller(env, pToken2->GetExpr(), nullptr, pExprBlock, pExprLeader);
 				if (pExprCaller == nullptr) goto error_done;
@@ -848,7 +847,7 @@ bool Parser::ReduceFourTokens()
 			if (!EmitExpr(pExprBlock->GetExprOwner(), pExprBlock, pToken3->GetExpr())) return false;
 			if (pToken1->GetExpr()->IsCaller()) {
 				Expr_Caller *pExprCaller = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
-				pExprCaller->GetLastTrailer()->SetBlock(pExprBlock);
+				pExprCaller->GetExprTrailerLast()->SetBlock(pExprBlock);
 				pExpr = pExprCaller;
 			} else {
 				Expr_Caller *pExprCaller =
@@ -932,7 +931,7 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, const Expr* pExprParent, Expr* pExpr
 		} else if (exprOwner.empty()) {
 			// nothing to do
 		} else if (exprOwner.back()->IsType<Expr_Caller>()) {
-			dynamic_cast<Expr_Caller *>(exprOwner.back())->GetLastTrailer()->SetTrailer(pExprCaller);
+			dynamic_cast<Expr_Caller *>(exprOwner.back())->GetExprTrailerLast()->SetExprTrailer(pExprCaller);
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pTokenTop, pTokenBtm,

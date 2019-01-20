@@ -392,6 +392,7 @@ public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<ExprOwner> _pExprOwnerElemBlock;
+	RefPtr<Expr_Caller> _pExprTrailer;
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pExprOwnerElemBlock(new ExprOwner()) {}
 public:
@@ -402,9 +403,11 @@ public:
 	}
 	const ExprList& GetExprsElemBlock() const { return *_pExprOwnerElemBlock; }
 	void AddExprElemBlock(Expr* pExprElem);
-	Expr_Caller* GetLastTrailer() { return this; }
+	void SetExprTrailer(Expr_Caller* _pExprTrailer);
+	void AppendExprTrailer(Expr_Caller* pExprTrailer);
+	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
+	Expr_Caller* GetExprTrailerLast();
 	bool IsTrailer() const { return false; }
-	void SetTrailer(Expr_Caller* pExprTrailer) {}
 };
 
 }

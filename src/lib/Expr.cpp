@@ -179,4 +179,33 @@ void Expr_Caller::AddExprElemBlock(Expr* pExprElem)
 	_pExprOwnerElemBlock->push_back(pExprElem);
 }
 
+void Expr_Caller::SetExprTrailer(Expr_Caller* pExprTrailer)
+{
+	_pExprTrailer.reset(pExprTrailer);
+	if (_pExprTrailer) _pExprTrailer->SetExprParent(this);
+}
+
+void Expr_Caller::AppendExprTrailer(Expr_Caller* pExprTrailer)
+{
+#if 0
+	if (_pExprBlock.IsNull()) {
+		SetBlock(new Expr_Block());
+		_implicitBlockFlag = true;
+	}
+	if (_implicitBlockFlag) {
+		_pExprBlock->AddExpr(pExprCaller);
+	} else {
+		GetLastTrailer()->SetTrailer(pExprCaller);
+	}
+#endif
+	GetExprTrailerLast()->SetExprTrailer(pExprTrailer);
+}
+
+Expr_Caller* Expr_Caller::GetExprTrailerLast()
+{
+	Expr_Caller* pExpr = this;
+	for ( ; pExpr->GetExprTrailer() != nullptr; pExpr = pExpr->GetExprTrailer()) ;
+	return pExpr;
+}
+
 }
