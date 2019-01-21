@@ -232,6 +232,18 @@ public:
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual bool IsLessThan(const Object* pObject) const = 0;
 	virtual String ToString(const StringStyle&) const { return String::Empty; }
+#if 0
+	virtual bool Format_d(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_u(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_b(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_o(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_x(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_e(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_f(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_g(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_s(Formatter* pFormatter, Formatter::Flags& flags) const;
+	virtual bool Format_c(Formatter* pFormatter, Formatter::Flags& flags) const;
+#endif
 public:
 	bool IsMutable() const { return GetKlass().IsMutable(); }
 	bool IsImmutable() const { return GetKlass().IsImmutable(); }

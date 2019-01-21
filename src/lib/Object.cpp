@@ -49,6 +49,86 @@ void Object::Bootup()
 	_pObject_true_		= new Object_bool(true);
 }
 
+#if 0
+bool Object::Format_d(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%d qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_u(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%u qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_b(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%b qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_o(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%o qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_x(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%x qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_e(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%e qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_f(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%f qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_g(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%g qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+
+bool Object::Format_s(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	return pFormatter->PutAlignedString(GetSignal(), flags,
+							value.ToString(false).c_str(), flags.precision);
+}
+
+bool Object::Format_c(Formatter *pFormatter, Formatter::Flags &flags) const
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be formatted with %%c qualifier",
+				 GetKlass().MakeFullName().c_str());
+	return false;
+}
+#endif
+
 //------------------------------------------------------------------------------
 // Object::KlassEx
 //------------------------------------------------------------------------------

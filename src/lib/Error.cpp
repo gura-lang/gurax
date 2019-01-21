@@ -51,58 +51,6 @@ void Error::Clear()
 	_pErrorOwnerGlobal->Clear();
 }
 
-#if 0
-template <typename... Args>
-void Print(const char* format, const Args&... args)
-{
-	::printf(format, args...);
-}
-#endif
-
-#if 0
-void Error::Issue(const ErrorType& errorType, Expr* pExpr, const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	IssueV(errorType, pExpr, format, ap);
-}
-
-void Error::Issue(const ErrorType& errorType, const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	IssueV(errorType, format, ap);
-}
-
-void Error::Issue(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	IssueV(errorType, pFileName, lineNoTop, lineNoBtm, format, ap);
-}
-
-void Error::IssueV(const ErrorType& errorType, const char* format, va_list ap)
-{
-	char text[512];
-	::vsprintf(text, format, ap);
-	_pErrorOwnerGlobal->push_back(new Error(errorType, text));
-}
-
-void Error::IssueV(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* format, va_list ap)
-{
-	char text[512];
-	::vsprintf(text, format, ap);
-	_pErrorOwnerGlobal->push_back(new Error(errorType, pFileName, lineNoTop, lineNoBtm, text));
-}
-
-void Error::IssueV(const ErrorType& errorType, Expr *pExpr, const char* format, va_list ap)
-{
-	char text[512];
-	::vsprintf(text, format, ap);
-	_pErrorOwnerGlobal->push_back(new Error(errorType, pExpr, text));
-}
-#endif
-
 void Error::Print(FILE* fp)
 {
 	for (Error* pError : *_pErrorOwnerGlobal) {
