@@ -8,9 +8,9 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // Formatter
 //-----------------------------------------------------------------------------
-bool Formatter::DoFormat(const char* format, const ValueList& valList)
+bool Formatter::DoFormat(const char* format, const ObjectList& objectList)
 {
-	Source_ValueList source(valList);
+	Source_ObjectList source(objectList);
 	return DoFormat(sig, format, source);
 }
 
@@ -84,12 +84,12 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			} else if (ch == '+') {
 				flags.plusMode = PLUSMODE_Plus;
 			} else if (ch == '*') {
-				Value value = source.GetInt();
-				if (!value.Is_number()) {
+				RefPtr<Object> pObject = source.GetInt();
+				if (!pObject->Is_number()) {
 					sig.SetError(ERR_ValueError, "number is expected for * specifier");
 					break;
 				}
-				flags.fieldMinWidth = static_cast<int>(value.GetNumber());
+				flags.fieldMinWidth = static_cast<int>(pObject->GetNumber());
 				if (flags.fieldMinWidth < 0) {
 					flags.leftAlignFlag = true;
 					flags.fieldMinWidth = -flags.fieldMinWidth;
@@ -108,46 +108,46 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			} else if (ch == 'z') {
 				// just ignore it
 			} else if (ch == 'd' || ch == 'i') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				if (!value.GetClass()->Format_d(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'u') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				if (!value.GetClass()->Format_u(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'b') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				if (!value.GetClass()->Format_b(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'o') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				if (!value.GetClass()->Format_o(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'x' || ch == 'X') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				flags.upperCaseFlag = (ch == 'X');
 				if (!value.GetClass()->Format_x(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'e' || ch == 'E') {
-				Value value = source.GetDouble();
+				RefPtr<Object> pObject = source.GetDouble();
 				flags.upperCaseFlag = (ch == 'E');
 				if (!value.GetClass()->Format_e(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'f' || ch == 'F') {
-				Value value = source.GetDouble();
+				RefPtr<Object> pObject = source.GetDouble();
 				if (!value.GetClass()->Format_f(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'g' || ch == 'G') {
-				Value value = source.GetDouble();
+				RefPtr<Object> pObject = source.GetDouble();
 				flags.upperCaseFlag = (ch == 'G');
 				if (!value.GetClass()->Format_g(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 's') {
-				Value value = source.GetString();
+				RefPtr<Object> pObject = source.GetString();
 				if (!value.GetClass()->Format_s(this, flags, value)) break;
 				stat = STAT_Start;
 			} else if (ch == 'c') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				if (!value.GetClass()->Format_c(this, flags, value)) break;
 				stat = STAT_Start;
 			} else {
@@ -171,7 +171,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			}
 		} else if (stat == STAT_PrecisionPre) {
 			if (ch == '*') {
-				Value value = source.GetInt();
+				RefPtr<Object> pObject = source.GetInt();
 				if (!value.Is_number()) {
 					sig.SetError(ERR_ValueError, "number is expected for * specifier");
 					break;
@@ -248,25 +248,25 @@ String Formatter::FormatV(const char* format, va_list ap)
 	return formatter.GetStringSTL();
 }
 
-String Formatter::FormatValueList(const char* format, const ValueList& valList)
+String Formatter::FormatObjectList(const char* format, const ObjectList& objectList)
 {
 	FormatterString formatter;
-	formatter.DoFormat(sig, format, valList);
+	formatter.DoFormat(sig, format, objectList);
 	return formatter.GetStringSTL();
 }
 
-Value Formatter::FormatIterator(Environment& env,
+const Object* Formatter::FormatIterator(Environment& env,
 						const char* format, IteratorOwner& iterOwner)
 {
-	Value result;
+	const Object* pObject;
 	Object_list* pObjListResult = result.InitAsList(env);
-	ValueList valList;
-	while (iterOwner.Next(env, valList)) {
-		String str = FormatValueList(sig, format, valList);
-		if (sig.IsSignalled()) return Value::Nil;
+	ObjectList objectList;
+	while (iterOwner.Next(env, objectList)) {
+		String str = FormatObjectList(sig, format, objectList);
+		if (sig.IsSignalled()) return Object::nil();
 		pObjListResult->Add(Value(str));
 	}
-	if (sig.IsSignalled()) return Value::Nil;
+	if (sig.IsSignalled()) return Object::nil();
 	return result;
 }
 
@@ -541,26 +541,26 @@ void Formatter::SetError_NotEnoughArguments()
 }
 
 //-----------------------------------------------------------------------------
-// Formatter::Source_ValueList
+// Formatter::Source_ObjectList
 //-----------------------------------------------------------------------------
-bool Formatter::Source_ValueList::IsEnd()
+bool Formatter::Source_ObjectList::IsEnd()
 {
-	return _pValue == _valList.end();
+	return _ppObject == _objectList.end();
 }
 
-Value Formatter::Source_ValueList::GetInt()
+Object* Formatter::Source_ObjectList::GetInt()
 {
-	return *_pValue++;
+	return (*_ppObject++)->Reference();
 }
 
-Value Formatter::Source_ValueList::GetDouble()
+Object* Formatter::Source_ObjectList::GetDouble()
 {
-	return *_pValue++;
+	return (*_ppObject++)->Reference();
 }
 
-Value Formatter::Source_ValueList::GetString()
+Object* Formatter::Source_ObjectList::GetString()
 {
-	return *_pValue++;
+	return (*_ppObject++)->Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -571,22 +571,22 @@ bool Formatter::Source_va_list::IsEnd()
 	return false;
 }
 
-Value Formatter::Source_va_list::GetInt()
+Object* Formatter::Source_va_list::GetInt()
 {
 	int value = va_arg(_ap, int);
-	return Value(value);
+	return new Object_number(value);
 }
 
-Value Formatter::Source_va_list::GetDouble()
+Object* Formatter::Source_va_list::GetDouble()
 {
 	double value = va_arg(_ap, double);
-	return Value(value);
+	return new Object_number(value);
 }
 
-Value Formatter::Source_va_list::GetString()
+Object* Formatter::Source_va_list::GetString()
 {
 	char* value = va_arg(_ap, char*);
-	return Value(value);
+	return new Object_number(value);
 }
 
 //-----------------------------------------------------------------------------

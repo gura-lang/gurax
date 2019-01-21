@@ -8,7 +8,7 @@
 namespace Gurax {
 
 class IteratorOwner;
-class Value;
+class Object;
 
 //-----------------------------------------------------------------------------
 // Formatter
@@ -35,22 +35,22 @@ public:
 	class Source {
 	public:
 		virtual bool IsEnd() = 0;
-		virtual Value GetInt() = 0;
-		virtual Value GetDouble() = 0;
-		virtual Value GetString() = 0;
+		virtual Object* GetInt() = 0;
+		virtual Object* GetDouble() = 0;
+		virtual Object* GetString() = 0;
 	};
-	class Source_ValueList : public Source {
+	class Source_ObjectList : public Source {
 	private:
-		const ValueList& _valList;
-		ValueList::const_iterator _pValue;
+		const ObjectList& _objectList;
+		ObjectList::const_iterator _ppObject;
 	public:
-		inline Source_ValueList(const ValueList& valList) : _valList(valList) {
-			_pValue = _valList.begin();
+		inline Source_ObjectList(const ObjectList& objectList) : _objectList(objectList) {
+			_ppObject = _objectList.begin();
 		}
 		virtual bool IsEnd();
-		virtual Value GetInt();
-		virtual Value GetDouble();
-		virtual Value GetString();
+		virtual Object* GetInt();
+		virtual Object* GetDouble();
+		virtual Object* GetString();
 	};
 	class Source_va_list : public Source {
 	private:
@@ -62,9 +62,9 @@ public:
 		inline Source_va_list(va_list ap) { _ap = ap; }
 #endif
 		virtual bool IsEnd();
-		virtual Value GetInt();
-		virtual Value GetDouble();
-		virtual Value GetString();
+		virtual Object* GetInt();
+		virtual Object* GetDouble();
+		virtual Object* GetString();
 	};
 private:
 	bool _nilVisibleFlag;
@@ -72,7 +72,7 @@ private:
 public:
 	inline Formatter(bool nilVisibleFlag = true) :
 					_nilVisibleFlag(nilVisibleFlag), _lineSep("\n") {}
-	bool DoFormat(const char* format, const ValueList& valList);
+	bool DoFormat(const char* format, const ObjectList& objectList);
 	bool DoFormat(const char* format, va_list ap);
 	bool DoFormat(const char* format, Source& source);
 	bool PutString(const char* p);
@@ -81,8 +81,8 @@ public:
 	virtual bool PutChar(char ch) = 0;
 	static String Format(const char* format, ...);
 	static String FormatV(const char* format, va_list ap);
-	static String FormatValueList(const char* format, const ValueList& valList);
-	static Value FormatIterator(const char* format, IteratorOwner& iterOwner);
+	static String FormatObjectList(const char* format, const ObjectList& objectList);
+	static const Object* FormatIterator(const char* format, IteratorOwner& iterOwner);
 	static const char* Format_d(const Flags& flags, Int64 value, char* buff, size_t size);
 	static const char* Format_u(const Flags& flags, UInt64 value, char* buff, size_t size);
 	static const char* Format_b(const Flags& flags, UInt64 value, char* buff, size_t size);
