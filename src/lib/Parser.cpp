@@ -3,8 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
-//#define DBGPARSER(x)
-#define DBGPARSER(x) x
+#define DBGPARSER(x)
+//#define DBGPARSER(x) x
 
 namespace Gurax {
 
@@ -18,11 +18,10 @@ Parser::Parser(String pathNameSrc) : _pTokenizer(new Tokenizer(*this, std::move(
 void Parser::FeedToken(RefPtr<Token> pToken)
 {
 	TokenStack& tokenStack = _pTokenizer->GetTokenStack();
-	::printf("FeedToken(%s)\n", pToken->GetSymbol());
+	//::printf("FeedToken(%s)\n", pToken->GetSymbol());
 	for (;;) {
 		TokenStack::reverse_iterator ppTokenTop = tokenStack.SeekTerminal(tokenStack.rbegin());
-		//::printf("%s  << %s\n",
-		//				_tokenStack.ToString().c_str(), token.GetTypeSymbol());
+		DBGPARSER(::printf("%s  << %s\n", tokenStack.ToString().c_str(), token.GetTypeSymbol()));
 		Token::Precedence prec = Token::LookupPrec(**ppTokenTop, *pToken);
 		if ((*ppTokenTop)->IsType(TokenType::Begin) && pToken->IsSeparatorToken()) {
 			size_t cntToken = tokenStack.size();
@@ -933,48 +932,14 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, Expr* pExpr)
 			return true;
 		} else {
 			Expr::Delete(pExpr);
-			Error::Issue(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable()->Reference(),
-						 pExpr->GetLineNoTop(), pExpr->GetLineNoBtm(),
-						 "trailer must be placed after a caller expression");
+			Error::IssueAt(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+						   pExpr->GetLineNoTop(), pExpr->GetLineNoBtm(),
+						   "trailer must be placed after a caller expression");
 			return false;
 		}
 	}
 	exprOwner.push_back(pExpr);
 	return true;
-}
-
-void Parser::IssueError(const ErrorType& errorType, const Token* pToken, const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
-				  pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, ap);
-}
-
-void Parser::IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
-				  pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, ap);
-}
-
-void Parser::IssueError(const ErrorType& errorType, const Token* pTokenTop, const Token* pTokenBtm,
-						const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
-				  pTokenTop->GetLineNoTop(), pTokenBtm->GetLineNoBtm(), format, ap);
-}
-
-void Parser::IssueError(const ErrorType& errorType, const RefPtr<Token>& pTokenTop, const RefPtr<Token>& pTokenBtm,
-						const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	Error::IssueV(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
-				  pTokenTop->GetLineNoTop(), pTokenBtm->GetLineNoBtm(), format, ap);
 }
 
 }

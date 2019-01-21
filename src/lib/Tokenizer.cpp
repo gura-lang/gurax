@@ -1077,12 +1077,14 @@ void Tokenizer::FeedChar(char ch)
 	}
 }
 
+#if 0
 void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
 	Error::IssueV(errorType, _pPathNameSrc->Reference(), _lineNoTop, GetLineNo(), format, ap);
 }
+#endif
 
 const TokenType& Tokenizer::GetTokenTypeForString(const StringInfo& stringInfo)
 {

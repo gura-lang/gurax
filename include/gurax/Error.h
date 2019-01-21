@@ -9,7 +9,7 @@
 namespace Gurax {
 
 class Expr;
-class ErrorOwner;
+class Error;
 
 //------------------------------------------------------------------------------
 // ErrorType
@@ -22,6 +22,21 @@ public:
 public:
 	ErrorType(const String& name) : _name(name) {}
 	const char* GetName() const { return _name.c_str(); }
+};
+
+//------------------------------------------------------------------------------
+// ErrorList
+//------------------------------------------------------------------------------
+class ErrorList : public std::vector<Error*> {
+};
+
+//------------------------------------------------------------------------------
+// ErrorOwner
+//------------------------------------------------------------------------------
+class ErrorOwner : public ErrorList {
+public:
+	~ErrorOwner() { Clear(); }
+	void Clear();
 };
 
 //------------------------------------------------------------------------------
@@ -63,31 +78,28 @@ public:
 	String MakeMessage() const;
 	static bool IsIssued() { return _errorIssuedFlag; }
 	static void Clear();
-	static void Issue(const ErrorType& errorType, const char* format, ...);
-	static void Issue(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* format, ...);
-	static void Issue(const ErrorType& errorType, Expr* pExpr, const char* format, ...);
-	static void IssueV(const ErrorType& errorType, const char* format, va_list ap);
-	static void IssueV(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* format, va_list ap);
-	static void IssueV(const ErrorType& errorType, Expr* pExpr, const char* format, va_list ap);
+	template<typename... Args>
+	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {
+		char text[512];
+		::sprintf(text, format, args...);
+		_pErrorOwnerGlobal->push_back(new Error(errorType, text));
+	}
+	template<typename... Args>
+	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
+		char text[512];
+		::sprintf(text, format, args...);
+		_pErrorOwnerGlobal->push_back(new Error(errorType, pFileName, lineNoTop, lineNoBtm, text));
+		
+	}
+	template<typename... Args>
+	static void IssueWith(const ErrorType& errorType, Expr* pExpr, const char* format, const Args&... args) {
+		char text[512];
+		::sprintf(text, format, args...);
+		_pErrorOwnerGlobal->push_back(new Error(errorType, pExpr, text));
+	}
 	static void Print(FILE* fp);
 };
 
-//------------------------------------------------------------------------------
-// ErrorList
-//------------------------------------------------------------------------------
-class ErrorList : public std::vector<Error*> {
-};
-
-//------------------------------------------------------------------------------
-// ErrorOwner
-//------------------------------------------------------------------------------
-class ErrorOwner : public ErrorList {
-public:
-	~ErrorOwner() { Clear(); }
-	void Clear() {
-		for (Error* pError : *this) Error::Delete(pError);
-	}
-};
 
 }
 

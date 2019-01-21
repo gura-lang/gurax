@@ -40,12 +40,17 @@ private:
 	bool ReduceFourTokens();
 	bool ReduceFiveTokens();
 	bool EmitExpr(ExprOwner& exprOwner, Expr* pExpr);
-	void IssueError(const ErrorType& errorType, const Token* pToken, const char* format, ...);
-	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pToken, const char* format, ...);
-	void IssueError(const ErrorType& errorType, const Token* pTokenTop, const Token* pTokenBtm,
-					const char* format, ...);
-	void IssueError(const ErrorType& errorType, const RefPtr<Token>& pTokenTop, const RefPtr<Token>& pTokenBtm,
-					const char* format, ...);
+	template<typename T_TokenP, typename... Args>
+	void IssueError(const ErrorType& errorType, T_TokenP& pToken, const char* format, const Args&... args) {
+		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+					   pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, args...);
+	}
+	template<typename T_TokenP, typename... Args>
+	void IssueError(const ErrorType& errorType, T_TokenP& pTokenTop, T_TokenP& pTokenBtm,
+					const char* format, const Args&... args) {
+		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+					   pTokenTop->GetLineNoTop(), pTokenBtm->GetLineNoBtm(), format, args...);
+	}
 public:
 	virtual void FeedToken(RefPtr<Token> pToken) override;
 private:

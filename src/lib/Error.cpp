@@ -51,6 +51,15 @@ void Error::Clear()
 	_pErrorOwnerGlobal->Clear();
 }
 
+#if 0
+template <typename... Args>
+void Print(const char* format, const Args&... args)
+{
+	::printf(format, args...);
+}
+#endif
+
+#if 0
 void Error::Issue(const ErrorType& errorType, Expr* pExpr, const char* format, ...)
 {
 	va_list ap;
@@ -92,6 +101,7 @@ void Error::IssueV(const ErrorType& errorType, Expr *pExpr, const char* format, 
 	::vsprintf(text, format, ap);
 	_pErrorOwnerGlobal->push_back(new Error(errorType, pExpr, text));
 }
+#endif
 
 void Error::Print(FILE* fp)
 {
@@ -107,5 +117,9 @@ void Error::Print(FILE* fp)
 //------------------------------------------------------------------------------
 // ErrorOwner
 //------------------------------------------------------------------------------
+void ErrorOwner::Clear()
+{
+	for (Error* pError : *this) Error::Delete(pError);
+}
 
 }

@@ -116,7 +116,10 @@ public:
 	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
 	const String& GetPathNameSrcSTL() const { return _pPathNameSrc->GetStringSTL(); }
 	const StringReferable* GetPathNameSrcReferable() const { return _pPathNameSrc.get(); }
-	void IssueError(const ErrorType& errorType, const char* format, ...);
+	template<typename... Args>
+	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) {
+		Error::Issue(errorType, format, args...);
+	}
 	TokenStack& GetTokenStack() { return *_pTokenStack; }
 	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);
 	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);
