@@ -19,6 +19,8 @@ private:
 	String _name;
 public:
 	static const ErrorType SyntaxError;
+	static const ErrorType TypeError;
+	static const ErrorType ValueError;
 public:
 	ErrorType(const String& name) : _name(name) {}
 	const char* GetName() const { return _name.c_str(); }

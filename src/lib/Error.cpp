@@ -9,6 +9,8 @@ namespace Gurax {
 // ErrorType
 //------------------------------------------------------------------------------
 const ErrorType ErrorType::SyntaxError("syntax error");
+const ErrorType ErrorType::TypeError("type error");
+const ErrorType ErrorType::ValueError("value error");
 
 //------------------------------------------------------------------------------
 // Error

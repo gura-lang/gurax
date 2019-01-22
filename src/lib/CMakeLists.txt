@@ -8,6 +8,7 @@ add_library(guraxcore SHARED
 	Environment.cpp
 	Error.cpp
 	Expr.cpp
+	Formatter.cpp
 	Frame.cpp
 	Function.cpp
 	Help.cpp

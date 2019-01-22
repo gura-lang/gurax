@@ -12,6 +12,7 @@
 #include "gurax/Environment.h"
 #include "gurax/Error.h"
 #include "gurax/Expr.h"
+#include "gurax/Formatter.h"
 #include "gurax/Frame.h"
 #include "gurax/Function.h"
 #include "gurax/Help.h"

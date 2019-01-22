@@ -38,12 +38,30 @@ protected:
 	// Destructor
 	~Object_number() = default;
 public:
-	template<typename T> T Get() const { return static_cast<T>(_num); }
-	Double GetDouble() const { return _num; }
+	size_t GetSizeT() const		{ return static_cast<size_t>(_num); }
+	Bool GetBool() const		{ return static_cast<Bool>(_num); }
+	Char GetChar() const		{ return static_cast<Char>(_num); }
+	UChar GetUChar() const		{ return static_cast<UChar>(_num); }
+	Short GetShort() const		{ return static_cast<Short>(_num); }
+	UShort GetUShort() const	{ return static_cast<UShort>(_num); }
+	Int GetInt() const			{ return static_cast<Int>(_num); }
+	UInt GetUInt() const		{ return static_cast<UInt>(_num); }
+	Long GetLong() const		{ return static_cast<Long>(_num); }
+	ULong GetULong() const		{ return static_cast<ULong>(_num); }
+	Int8 GetInt8() const		{ return static_cast<Int8>(_num); }
+	UInt8 GetUInt8() const		{ return static_cast<UInt8>(_num); }
+	Int16 GetInt16() const		{ return static_cast<Int16>(_num); }
+	UInt16 GetUInt16() const	{ return static_cast<UInt16>(_num); }
+	Int32 GetInt32() const		{ return static_cast<Int32>(_num); }
+	UInt32 GetUInt32() const	{ return static_cast<UInt32>(_num); }
+	Int64 GetInt64() const		{ return static_cast<Int64>(_num); }
+	UInt64 GetUInt64() const	{ return static_cast<UInt64>(_num); }
+	Float GetFloat() const		{ return static_cast<Float>(_num); }
+	Double GetDouble() const	{ return _num; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return Get<size_t>(); }
+	virtual size_t DoCalcHash() const override { return GetSizeT(); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) && GetDouble() == dynamic_cast<const Object_number*>(pObject)->GetDouble();
 	}

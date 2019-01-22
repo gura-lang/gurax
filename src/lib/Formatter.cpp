@@ -11,20 +11,20 @@ namespace Gurax {
 bool Formatter::DoFormat(const char* format, const ObjectList& objectList)
 {
 	Source_ObjectList source(objectList);
-	return DoFormat(sig, format, source);
+	return DoFormat(format, source);
 }
 
 bool Formatter::DoFormat(const char* format, va_list ap)
 {
 	Source_va_list source(ap);
-	return DoFormat(sig, format, source);
+	return DoFormat(format, source);
 }
 
 bool Formatter::DoFormat(const char* format, Source& source)
 {
 	bool eatNextFlag;
 	const char* formatp = format;
-	Flags flags;
+	FormatterFlags formatterFlags;
 	enum {
 		STAT_Start,
 		STAT_FlagsPre, STAT_Flags, STAT_FlagsAfterWhite,
@@ -41,61 +41,55 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				stat = STAT_FlagsPre;
 			} else if (ch == '\n') {
 				for (const char* p = _lineSep; *p != '\0'; p++) {
-					if (!PutChar(sig, *p)) return false;
+					if (!PutChar(*p)) return false;
 				}
 			} else {
-				if (!PutChar(sig, ch)) return false;
+				if (!PutChar(ch)) return false;
 			}
 		} else if (stat == STAT_FlagsPre) {
 			if (ch == '%') {
-				if (!PutChar(sig, ch)) return false;
+				if (!PutChar(ch)) return false;
 				stat = STAT_Start;
 			} else {
 				if (source.IsEnd()) {
-					SetError_NotEnoughArguments(sig);
+					IssueError_NotEnoughArguments();
 					break;
 				}
-				// initialize flags
-				flags.upperCaseFlag = false;
-				flags.leftAlignFlag = false;
-				flags.sharpFlag = false;
-				flags.fieldMinWidth = 0;
-				flags.precision = PREC_Default;
-				flags.plusMode = PLUSMODE_None;
-				flags.charPadding = ' ';
+				// initialize formatterFlags
+				formatterFlags.Initialize();
 				eatNextFlag = false;
 				stat = STAT_Flags;
 			}
 		} else if (stat == STAT_Flags) {
 			if (ch == '#') {
-				flags.sharpFlag = true;
+				formatterFlags.sharpFlag = true;
 			} else if (ch == '0') {
-				if (!flags.leftAlignFlag) {
-					flags.charPadding = '0';
+				if (!formatterFlags.leftAlignFlag) {
+					formatterFlags.charPadding = '0';
 				}
 			} else if (ch == '-') {
-				flags.leftAlignFlag = true;
-				flags.charPadding = ' ';
+				formatterFlags.leftAlignFlag = true;
+				formatterFlags.charPadding = ' ';
 			} else if (ch == ' ') {
-				if (flags.plusMode == PLUSMODE_None) {
-					flags.plusMode = PLUSMODE_Space;
+				if (formatterFlags.plusMode == FormatterFlags::PlusMode::None) {
+					formatterFlags.plusMode = FormatterFlags::PlusMode::Space;
 				}
 				stat = STAT_FlagsAfterWhite;
 			} else if (ch == '+') {
-				flags.plusMode = PLUSMODE_Plus;
+				formatterFlags.plusMode = FormatterFlags::PlusMode::Plus;
 			} else if (ch == '*') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!pObject->Is_number()) {
-					sig.SetError(ERR_ValueError, "number is expected for * specifier");
+				if (!pObject->IsType<Object_number>()) {
+					Error::Issue(ErrorType::ValueError, "number is expected for * specifier");
 					break;
 				}
-				flags.fieldMinWidth = static_cast<int>(pObject->GetNumber());
-				if (flags.fieldMinWidth < 0) {
-					flags.leftAlignFlag = true;
-					flags.fieldMinWidth = -flags.fieldMinWidth;
+				formatterFlags.fieldMinWidth = dynamic_cast<Object_number*>(pObject.get())->GetInt();
+				if (formatterFlags.fieldMinWidth < 0) {
+					formatterFlags.leftAlignFlag = true;
+					formatterFlags.fieldMinWidth = -formatterFlags.fieldMinWidth;
 				}
 				if (source.IsEnd()) {
-					SetError_NotEnoughArguments(sig);
+					IssueError_NotEnoughArguments();
 					break;
 				}
 			} else if ('0' < ch && ch <= '9') {
@@ -109,54 +103,54 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				// just ignore it
 			} else if (ch == 'd' || ch == 'i') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!value.GetClass()->Format_d(this, flags, value)) break;
+				if (!pObject->Format_d(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'u') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!value.GetClass()->Format_u(this, flags, value)) break;
+				if (!pObject->Format_u(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'b') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!value.GetClass()->Format_b(this, flags, value)) break;
+				if (!pObject->Format_b(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'o') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!value.GetClass()->Format_o(this, flags, value)) break;
+				if (!pObject->Format_o(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'x' || ch == 'X') {
 				RefPtr<Object> pObject = source.GetInt();
-				flags.upperCaseFlag = (ch == 'X');
-				if (!value.GetClass()->Format_x(this, flags, value)) break;
+				formatterFlags.upperCaseFlag = (ch == 'X');
+				if (!pObject->Format_x(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'e' || ch == 'E') {
 				RefPtr<Object> pObject = source.GetDouble();
-				flags.upperCaseFlag = (ch == 'E');
-				if (!value.GetClass()->Format_e(this, flags, value)) break;
+				formatterFlags.upperCaseFlag = (ch == 'E');
+				if (!pObject->Format_e(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'f' || ch == 'F') {
 				RefPtr<Object> pObject = source.GetDouble();
-				if (!value.GetClass()->Format_f(this, flags, value)) break;
+				if (!pObject->Format_f(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'g' || ch == 'G') {
 				RefPtr<Object> pObject = source.GetDouble();
-				flags.upperCaseFlag = (ch == 'G');
-				if (!value.GetClass()->Format_g(this, flags, value)) break;
+				formatterFlags.upperCaseFlag = (ch == 'G');
+				if (!pObject->Format_g(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 's') {
 				RefPtr<Object> pObject = source.GetString();
-				if (!value.GetClass()->Format_s(this, flags, value)) break;
+				if (!pObject->Format_s(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'c') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!value.GetClass()->Format_c(this, flags, value)) break;
+				if (!pObject->Format_c(this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else {
-				SetError_WrongFormat(sig);
+				IssueError_WrongFormat();
 				break;
 			}
 		} else if (stat == STAT_FlagsAfterWhite) {
 			if (ch == ' ') {
-				SetError_WrongFormat(sig);
+				IssueError_WrongFormat();
 				break;
 			} else {
 				eatNextFlag = false;
@@ -164,7 +158,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			}
 		} else if (stat == STAT_Padding) {
 			if ('0' <= ch && ch <= '9') {
-				flags.fieldMinWidth = flags.fieldMinWidth * 10 + (ch - '0');
+				formatterFlags.fieldMinWidth = formatterFlags.fieldMinWidth * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
 				stat = STAT_Flags;
@@ -172,29 +166,29 @@ bool Formatter::DoFormat(const char* format, Source& source)
 		} else if (stat == STAT_PrecisionPre) {
 			if (ch == '*') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!value.Is_number()) {
-					sig.SetError(ERR_ValueError, "number is expected for * specifier");
+				if (!pObject->IsType<Object_number>()) {
+					Error::Issue(ErrorType::ValueError, "number is expected for * specifier");
 					break;
 				}
-				flags.precision = static_cast<int>(value.GetNumber());
-				if (flags.precision < 0) flags.precision = PREC_Default;
+				formatterFlags.precision = dynamic_cast<Object_number*>(pObject.get())->GetInt();
+				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::PREC_Default;
 				if (source.IsEnd()) {
-					SetError_NotEnoughArguments(sig);
+					IssueError_NotEnoughArguments();
 					break;
 				}
 				stat = STAT_Flags;
 			} else if ('0' <= ch && ch <= '9') {
-				flags.precision = 0;
+				formatterFlags.precision = 0;
 				eatNextFlag = false;
 				stat = STAT_Precision;
 			} else {
-				flags.precision = PREC_Null;
+				formatterFlags.precision = FormatterFlags::PREC_Null;
 				eatNextFlag = false;
 				stat = STAT_Flags;
 			}
 		} else if (stat == STAT_Precision) {
 			if ('0' <= ch && ch <= '9') {
-				flags.precision = flags.precision * 10 + (ch - '0');
+				formatterFlags.precision = formatterFlags.precision * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
 				stat = STAT_Flags;
@@ -202,303 +196,75 @@ bool Formatter::DoFormat(const char* format, Source& source)
 		}
 		if (eatNextFlag) formatp++;
 	}
-	return !sig.IsSignalled();
+	return !Error::IsIssued();
 }
 
 bool Formatter::PutString(const char* p)
 {
-	for ( ; *p != '\0'; p++) if (!PutChar(sig, *p)) return false;
+	for ( ; *p != '\0'; p++) if (!PutChar(*p)) return false;
 	return true;
 }
 
-bool Formatter::PutAlignedString(const Flags& flags, const char* p, int cntMax)
+bool Formatter::PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax)
 {
 	int cnt = static_cast<int>(::strlen(p));
 	if (cntMax >= 0 && cnt > cntMax) cnt = cntMax;
-	int cntPadding = flags.fieldMinWidth - static_cast<int>(Width(p));
-	if (flags.leftAlignFlag) {
-		for ( ; cnt > 0; p++, cnt--) if (!PutChar(sig, *p)) return false;
-		while (cntPadding-- > 0) if (!PutChar(sig, flags.charPadding)) return false;
+	//int cntPadding = formatterFlags.fieldMinWidth - static_cast<int>(String::Width(p));
+	int cntPadding = formatterFlags.fieldMinWidth - static_cast<int>(0);
+	if (formatterFlags.leftAlignFlag) {
+		for ( ; cnt > 0; p++, cnt--) if (!PutChar(*p)) return false;
+		while (cntPadding-- > 0) if (!PutChar(formatterFlags.charPadding)) return false;
 	} else {
-		while (cntPadding-- > 0) if (!PutChar(sig, flags.charPadding)) return false;
-		for ( ; cnt > 0; p++, cnt--) if (!PutChar(sig, *p)) return false;
+		while (cntPadding-- > 0) if (!PutChar(formatterFlags.charPadding)) return false;
+		for ( ; cnt > 0; p++, cnt--) if (!PutChar(*p)) return false;
 	}
 	return true;
 }
 
-bool Formatter::PutInvalid(const Flags& flags)
+bool Formatter::PutInvalid(const FormatterFlags& formatterFlags)
 {
 	if (!_nilVisibleFlag) return true;
 	std::string str;
 	str += Gurax_Symbol(nil)->GetName();
-	return PutAlignedString(sig, flags, str.c_str());
+	return PutAlignedString(formatterFlags, str.c_str());
 }
 
 String Formatter::Format(const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	return Formatter::FormatV(sig, format, ap);
+	return Formatter::FormatV(format, ap);
 }
 
 String Formatter::FormatV(const char* format, va_list ap)
 {
 	FormatterString formatter;
-	formatter.DoFormat(sig, format, ap);
+	formatter.DoFormat(format, ap);
 	return formatter.GetStringSTL();
 }
 
 String Formatter::FormatObjectList(const char* format, const ObjectList& objectList)
 {
 	FormatterString formatter;
-	formatter.DoFormat(sig, format, objectList);
+	formatter.DoFormat(format, objectList);
 	return formatter.GetStringSTL();
 }
 
-const Object* Formatter::FormatIterator(Environment& env,
-						const char* format, IteratorOwner& iterOwner)
+#if 0
+const Object* Formatter::FormatIterator(const char* format, IteratorOwner& iterOwner)
 {
 	const Object* pObject;
 	Object_list* pObjListResult = result.InitAsList(env);
 	ObjectList objectList;
-	while (iterOwner.Next(env, objectList)) {
-		String str = FormatObjectList(sig, format, objectList);
-		if (sig.IsSignalled()) return Object::nil();
+	while (iterOwner.Next(objectList)) {
+		String str = FormatObjectList(format, objectList);
+		if (Error::IsIssued()) return Object::nil();
 		pObjListResult->Add(Value(str));
 	}
-	if (sig.IsSignalled()) return Object::nil();
+	if (Error::IsIssued()) return Object::nil();
 	return result;
 }
-
-const char* Formatter::Format_d(const Flags& flags, Int64 value, char* buff, size_t size)
-{
-	char* p = buff + size - 1;
-	*p = '\0';
-	if (value == 0) {
-		if (flags.precision == 0) {
-			// empty string
-		} else {
-			p--;
-			*p = '0';
-		}
-	} else if (value > 0) {
-		int nCols = 0;
-		for ( ; value != 0; value /= 10, nCols++) {
-			p--;
-			*p = (value % 10) + '0';
-		}
-		if (nCols < flags.precision) {
-			int precision = ChooseMin(flags.precision, static_cast<int>(size) - 2);
-			int cnt = precision - nCols;
-			while (cnt-- > 0) {
-				p--;
-				*p = '0';
-			}
-		}
-		if (flags.plusMode == PLUSMODE_Space) {
-			p--;
-			*p = ' ';
-		} else if (flags.plusMode == PLUSMODE_Plus) {
-			p--;
-			*p = '+';
-		}
-	} else {
-		int nCols = 0;
-		UInt64 valueNeg = -value;
-		for ( ; valueNeg != 0; valueNeg /= 10, nCols++) {
-			p--;
-			*p = (valueNeg % 10) + '0';
-		}
-		if (nCols < flags.precision) {
-			int precision = ChooseMin(flags.precision, static_cast<int>(size) - 2);
-			int cnt = precision - nCols;
-			while (cnt-- > 0) {
-				p--;
-				*p = '0';
-			}
-		}
-		p--;
-		*p = '-';
-	}
-	return p;
-}
-
-const char* Formatter::Format_u(const Flags& flags, UInt64 value, char* buff, size_t size)
-{
-	char* p = buff + size - 1;
-	*p = '\0';
-	if (value == 0) {
-		if (flags.precision == 0) {
-			// empty string
-		} else {
-			p--;
-			*p = '0';
-		}
-	} else {
-		int nCols = 0;
-		for ( ; value != 0; value /= 10, nCols++) {
-			p--;
-			*p = (value % 10) + '0';
-		}
-		if (nCols < flags.precision) {
-			int precision = ChooseMin(flags.precision, static_cast<int>(size) - 1);
-			int cnt = precision - nCols;
-			while (cnt-- > 0) {
-				p--;
-				*p = '0';
-			}
-		}
-	}
-	return p;
-}
-
-const char* Formatter::Format_b(const Flags& flags, UInt64 value, char* buff, size_t size)
-{
-	char* p = buff + size - 1;
-	*p = '\0';
-	if (value == 0) {
-		if (flags.precision == 0) {
-			// empty string
-		} else {
-			p--;
-			*p = '0';
-		}
-	} else {
-		int nCols = 0;
-		for ( ; value != 0; value >>= 1, nCols++) {
-			p--;
-			*p = '0' + (value & 0x1);
-		}
-		if (nCols < flags.precision) {
-			int precision = ChooseMin(flags.precision, static_cast<int>(size) - 1);
-			int cnt = precision - nCols;
-			while (cnt-- > 0) {
-				p--;
-				*p = '0';
-			}
-		} else if (flags.sharpFlag) {
-			p--;
-			*p = 'b';
-			p--;
-			*p = '0';
-		}
-	}
-	return p;
-}
-
-const char* Formatter::Format_o(const Flags& flags, UInt64 value, char* buff, size_t size)
-{
-	char* p = buff + size - 1;
-	*p = '\0';
-	if (value == 0) {
-		if (flags.precision == 0) {
-			// empty string
-		} else {
-			p--;
-			*p = '0';
-		}
-	} else {
-		int nCols = 0;
-		for ( ; value != 0; value >>= 3, nCols++) {
-			p--;
-			*p = '0' + (value & 0x7);
-		}
-		if (nCols < flags.precision) {
-			int precision = ChooseMin(flags.precision, static_cast<int>(size) - 1);
-			int cnt = precision - nCols;
-			while (cnt-- > 0) {
-				p--;
-				*p = '0';
-			}
-		} else if (flags.sharpFlag) {
-			p--;
-			*p = '0';
-		}
-	}
-	return p;
-}
-
-const char* Formatter::Format_x(const Flags& flags, UInt64 value, char* buff, size_t size)
-{
-	char* p = buff + size - 1;
-	*p = '\0';
-	const char* convTbl = flags.upperCaseFlag?
-						"0123456789ABCDEF" : "0123456789abcdef";
-	if (value == 0) {
-		if (flags.precision == 0) {
-			// empty string
-		} else {
-			p--;
-			*p = '0';
-		}
-	} else {
-		int nCols = 0;
-		for ( ; value != 0; value >>= 4, nCols++) {
-			p--;
-			*p = convTbl[value & 0xf];
-		}
-		if (nCols < flags.precision) {
-			int precision = ChooseMin(flags.precision, static_cast<int>(size) - 3);
-			int cnt = precision - nCols;
-			while (cnt-- > 0) {
-				p--;
-				*p = '0';
-			}
-		}
-		if (flags.sharpFlag) {
-			p--;
-			*p = flags.upperCaseFlag? 'X' : 'x';
-			p--;
-			*p = '0';
-		}
-	}
-	return p;
-}
-
-const char* Formatter::Format_e(const Flags& flags, double value, char* buff, size_t size)
-{
-	::snprintf(buff, size, ComposeFlags(flags, flags.upperCaseFlag? "E" : "e").c_str(), value);
-	return buff;
-}
-
-const char* Formatter::Format_f(const Flags& flags, double value, char* buff, size_t size)
-{
-	::snprintf(buff, size, ComposeFlags(flags, "f").c_str(), value);
-	return buff;
-}
-
-const char* Formatter::Format_g(const Flags& flags, double value, char* buff, size_t size)
-{
-	::snprintf(buff, size, ComposeFlags(flags, flags.upperCaseFlag? "G" : "g").c_str(), value);
-	return buff;
-}
-
-String Formatter::ComposeFlags(const Formatter::Flags& flags, const char* qualifier)
-{
-	String fmt = "%";
-	if (flags.leftAlignFlag) fmt += "-";
-	if (flags.sharpFlag) fmt += "#";
-	if (flags.charPadding == '0') fmt += '0';
-	if (flags.plusMode == Formatter::PLUSMODE_Space) {
-		fmt += " ";
-	} else if (flags.plusMode == Formatter::PLUSMODE_Plus) {
-		fmt += "+";
-	}
-	if (flags.fieldMinWidth > 0) {
-		char buff[64];
-		::sprintf(buff, "%d", flags.fieldMinWidth);
-		fmt += buff;
-	}
-	if (flags.precision == PREC_Null) {
-		fmt += '.';
-	} else if (flags.precision >= 0) {
-		char buff[64];
-		::sprintf(buff, ".%d", flags.precision);
-		fmt += buff;
-	}
-	fmt += qualifier;
-	return fmt;
-}
+#endif
 
 char* Formatter::FillZeroDigit(char* dstp, char* dstpEnd, int cnt)
 {
@@ -530,14 +296,14 @@ char* Formatter::CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt
 	return dstp;
 }
 
-void Formatter::SetError_WrongFormat()
+void Formatter::IssueError_WrongFormat()
 {
-	sig.SetError(ERR_ValueError, "wrong format for formatter");
+	Error::Issue(ErrorType::ValueError, "wrong format for formatter");
 }
 
-void Formatter::SetError_NotEnoughArguments()
+void Formatter::IssueError_NotEnoughArguments()
 {
-	sig.SetError(ERR_TypeError, "not enough arguments for formatter");
+	Error::Issue(ErrorType::TypeError, "not enough arguments for formatter");
 }
 
 //-----------------------------------------------------------------------------
@@ -586,7 +352,250 @@ Object* Formatter::Source_va_list::GetDouble()
 Object* Formatter::Source_va_list::GetString()
 {
 	char* value = va_arg(_ap, char*);
-	return new Object_number(value);
+	return new Object_string(value);
+}
+
+//-----------------------------------------------------------------------------
+// FormatterFlags
+//-----------------------------------------------------------------------------
+void FormatterFlags::Initialize()
+{
+	upperCaseFlag = false;
+	leftAlignFlag = false;
+	sharpFlag = false;
+	fieldMinWidth = 0;
+	precision = PREC_Default;
+	plusMode = PlusMode::None;
+	charPadding = ' ';
+}
+
+const char* FormatterFlags::FormatNumber_d(Int64 num, char* buff, size_t size) const
+{
+	char* p = buff + size - 1;
+	*p = '\0';
+	if (num == 0) {
+		if (precision == 0) {
+			// empty string
+		} else {
+			p--;
+			*p = '0';
+		}
+	} else if (num > 0) {
+		int nCols = 0;
+		for ( ; num != 0; num /= 10, nCols++) {
+			p--;
+			*p = (num % 10) + '0';
+		}
+		if (nCols < precision) {
+			int precision = std::min(precision, static_cast<int>(size) - 2);
+			int cnt = precision - nCols;
+			while (cnt-- > 0) {
+				p--;
+				*p = '0';
+			}
+		}
+		if (plusMode == PlusMode::Space) {
+			p--;
+			*p = ' ';
+		} else if (plusMode == PlusMode::Plus) {
+			p--;
+			*p = '+';
+		}
+	} else {
+		int nCols = 0;
+		UInt64 numNeg = -num;
+		for ( ; numNeg != 0; numNeg /= 10, nCols++) {
+			p--;
+			*p = (numNeg % 10) + '0';
+		}
+		if (nCols < precision) {
+			int precision = std::min(precision, static_cast<int>(size) - 2);
+			int cnt = precision - nCols;
+			while (cnt-- > 0) {
+				p--;
+				*p = '0';
+			}
+		}
+		p--;
+		*p = '-';
+	}
+	return p;
+}
+
+const char* FormatterFlags::FormatNumber_u(UInt64 num, char* buff, size_t size) const
+{
+	char* p = buff + size - 1;
+	*p = '\0';
+	if (num == 0) {
+		if (precision == 0) {
+			// empty string
+		} else {
+			p--;
+			*p = '0';
+		}
+	} else {
+		int nCols = 0;
+		for ( ; num != 0; num /= 10, nCols++) {
+			p--;
+			*p = (num % 10) + '0';
+		}
+		if (nCols < precision) {
+			int precision = std::min(precision, static_cast<int>(size) - 1);
+			int cnt = precision - nCols;
+			while (cnt-- > 0) {
+				p--;
+				*p = '0';
+			}
+		}
+	}
+	return p;
+}
+
+const char* FormatterFlags::FormatNumber_b(UInt64 num, char* buff, size_t size) const
+{
+	char* p = buff + size - 1;
+	*p = '\0';
+	if (num == 0) {
+		if (precision == 0) {
+			// empty string
+		} else {
+			p--;
+			*p = '0';
+		}
+	} else {
+		int nCols = 0;
+		for ( ; num != 0; num >>= 1, nCols++) {
+			p--;
+			*p = '0' + (num & 0x1);
+		}
+		if (nCols < precision) {
+			int precision = std::min(precision, static_cast<int>(size) - 1);
+			int cnt = precision - nCols;
+			while (cnt-- > 0) {
+				p--;
+				*p = '0';
+			}
+		} else if (sharpFlag) {
+			p--;
+			*p = 'b';
+			p--;
+			*p = '0';
+		}
+	}
+	return p;
+}
+
+const char* FormatterFlags::FormatNumber_o(UInt64 num, char* buff, size_t size) const
+{
+	char* p = buff + size - 1;
+	*p = '\0';
+	if (num == 0) {
+		if (precision == 0) {
+			// empty string
+		} else {
+			p--;
+			*p = '0';
+		}
+	} else {
+		int nCols = 0;
+		for ( ; num != 0; num >>= 3, nCols++) {
+			p--;
+			*p = '0' + (num & 0x7);
+		}
+		if (nCols < precision) {
+			int precision = std::min(precision, static_cast<int>(size) - 1);
+			int cnt = precision - nCols;
+			while (cnt-- > 0) {
+				p--;
+				*p = '0';
+			}
+		} else if (sharpFlag) {
+			p--;
+			*p = '0';
+		}
+	}
+	return p;
+}
+
+const char* FormatterFlags::FormatNumber_x(UInt64 num, char* buff, size_t size) const
+{
+	char* p = buff + size - 1;
+	*p = '\0';
+	const char* convTbl = upperCaseFlag? "0123456789ABCDEF" : "0123456789abcdef";
+	if (num == 0) {
+		if (precision == 0) {
+			// empty string
+		} else {
+			p--;
+			*p = '0';
+		}
+	} else {
+		int nCols = 0;
+		for ( ; num != 0; num >>= 4, nCols++) {
+			p--;
+			*p = convTbl[num & 0xf];
+		}
+		if (nCols < precision) {
+			int precision = std::min(precision, static_cast<int>(size) - 3);
+			int cnt = precision - nCols;
+			while (cnt-- > 0) {
+				p--;
+				*p = '0';
+			}
+		}
+		if (sharpFlag) {
+			p--;
+			*p = upperCaseFlag? 'X' : 'x';
+			p--;
+			*p = '0';
+		}
+	}
+	return p;
+}
+
+const char* FormatterFlags::FormatNumber_e(double num, char* buff, size_t size) const
+{
+	::snprintf(buff, size, ToString(upperCaseFlag? "E" : "e").c_str(), num);
+	return buff;
+}
+
+const char* FormatterFlags::FormatNumber_f(double num, char* buff, size_t size) const
+{
+	::snprintf(buff, size, ToString("f").c_str(), num);
+	return buff;
+}
+
+const char* FormatterFlags::FormatNumber_g(double num, char* buff, size_t size) const
+{
+	::snprintf(buff, size, ToString(upperCaseFlag? "G" : "g").c_str(), num);
+	return buff;
+}
+
+String FormatterFlags::ToString(const char* qualifier) const
+{
+	String fmt = "%";
+	if (leftAlignFlag) fmt += "-";
+	if (sharpFlag) fmt += "#";
+	if (charPadding == '0') fmt += '0';
+	if (plusMode == PlusMode::Space) {
+		fmt += " ";
+	} else if (plusMode == PlusMode::Plus) {
+		fmt += "+";
+	}
+	if (fieldMinWidth > 0) {
+		char buff[64];
+		::sprintf(buff, "%d", fieldMinWidth);
+		fmt += buff;
+	}
+	if (precision == PREC_Null) {
+		fmt += '.';
+	} else if (precision >= 0) {
+		char buff[64];
+		::sprintf(buff, ".%d", precision);
+		fmt += buff;
+	}
+	fmt += qualifier;
+	return fmt;
 }
 
 //-----------------------------------------------------------------------------
