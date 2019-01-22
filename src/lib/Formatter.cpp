@@ -233,7 +233,7 @@ String Formatter::Format(const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	return Formatter::FormatV(format, ap);
+	return FormatV(format, ap);
 }
 
 String Formatter::FormatV(const char* format, va_list ap)
@@ -601,10 +601,5 @@ String FormatterFlags::ToString(const char* qualifier) const
 //-----------------------------------------------------------------------------
 // FormatterString
 //-----------------------------------------------------------------------------
-bool FormatterString::PutChar(char ch)
-{
-	_str += ch;
-	return true;
-}
 
 }

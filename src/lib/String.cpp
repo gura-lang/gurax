@@ -6,6 +6,23 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Formatter_String
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Formatter_String : public Formatter {
+private:
+	String& _str;
+public:
+	// Constructor
+	Formatter_String(String& str) : _str(str) {}
+public:
+	// Virtual functions of Formatter
+	virtual bool PutChar(char ch) override {
+		_str += ch;
+		return true;
+	}
+};
+
+//------------------------------------------------------------------------------
 // String
 //------------------------------------------------------------------------------
 const String String::Empty("");
@@ -282,6 +299,27 @@ void String::AppendUTF32(UInt32 codeUTF32)
 		}
 	}
 	while (i > 0) push_back(buff[--i]);
+}
+
+String& String::PrintfV(const char* format, va_list ap)
+{
+	Formatter_String formatter(*this);
+	formatter.DoFormat(format, ap);
+	return *this;
+}
+
+String& String::Printf(const char* format, ...)
+{
+	va_list ap;
+	va_start(ap, format);
+	return PrintfV(format, ap);
+}
+
+String& String::PrintFmt(const char* format, const ObjectList& objectList)
+{
+	Formatter_String formatter(*this);
+	formatter.DoFormat(format, objectList);
+	return *this;
 }
 
 String String::MakeQuoted(const char* str, bool surroundFlag)

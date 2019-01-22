@@ -114,7 +114,10 @@ public:
 	const String& GetStringSTL() const { return _str; }
 public:
 	// Virtual functions
-	virtual bool PutChar(char ch) override;
+	virtual bool PutChar(char ch) override {
+		_str += ch;
+		return true;
+	}
 };
 
 }
