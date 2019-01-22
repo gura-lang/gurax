@@ -89,11 +89,13 @@ public:
 	bool PutString(const char* p);
 	bool PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax = -1);
 	bool PutInvalid(const FormatterFlags& formatterFlags);
-	virtual bool PutChar(char ch) = 0;
 	static String Format(const char* format, ...);
 	static String FormatV(const char* format, va_list ap);
 	static String FormatObjectList(const char* format, const ObjectList& objectList);
 	//static const Object* FormatIterator(const char* format, IteratorOwner& iterOwner);
+public:
+	// Virtual functions
+	virtual bool PutChar(char ch) = 0;
 private:
 	static void IssueError_WrongFormat();
 	static void IssueError_NotEnoughArguments();
@@ -109,8 +111,10 @@ class GURAX_DLLDECLARE FormatterString : public Formatter {
 private:
 	String _str;
 public:
-	virtual bool PutChar(char ch);
 	const String& GetStringSTL() const { return _str; }
+public:
+	// Virtual functions
+	virtual bool PutChar(char ch) override;
 };
 
 }
