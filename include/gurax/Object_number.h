@@ -71,6 +71,15 @@ public:
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle&) const override { return std::to_string(_num); }
+	virtual bool Format_d(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_u(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_b(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_o(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_x(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_e(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_f(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_g(Formatter& formatter, FormatterFlags& flags) const override;
+	virtual bool Format_c(Formatter& formatter, FormatterFlags& flags) const override;
 };
 
 }

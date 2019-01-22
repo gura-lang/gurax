@@ -234,16 +234,16 @@ public:
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual bool IsLessThan(const Object* pObject) const = 0;
 	virtual String ToString(const StringStyle&) const { return String::Empty; }
-	virtual bool Format_d(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_u(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_b(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_o(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_x(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_e(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_f(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_g(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_s(Formatter* pFormatter, FormatterFlags& flags) const;
-	virtual bool Format_c(Formatter* pFormatter, FormatterFlags& flags) const;
+	virtual bool Format_d(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_u(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_b(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_o(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_x(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_e(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_f(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_g(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_s(Formatter& formatter, FormatterFlags& flags) const;
+	virtual bool Format_c(Formatter& formatter, FormatterFlags& flags) const;
 public:
 	bool IsMutable() const { return GetKlass().IsMutable(); }
 	bool IsImmutable() const { return GetKlass().IsImmutable(); }

@@ -49,8 +49,7 @@ void Object::Bootup()
 	_pObject_true_		= new Object_bool(true);
 }
 
-#if 1
-bool Object::Format_d(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%d qualifier",
@@ -58,7 +57,7 @@ bool Object::Format_d(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_u(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%u qualifier",
@@ -66,7 +65,7 @@ bool Object::Format_u(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_b(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%b qualifier",
@@ -74,7 +73,7 @@ bool Object::Format_b(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_o(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%o qualifier",
@@ -82,7 +81,7 @@ bool Object::Format_o(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_x(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%x qualifier",
@@ -90,7 +89,7 @@ bool Object::Format_x(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_e(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%e qualifier",
@@ -98,7 +97,7 @@ bool Object::Format_e(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_f(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%f qualifier",
@@ -106,7 +105,7 @@ bool Object::Format_f(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_g(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%g qualifier",
@@ -114,20 +113,18 @@ bool Object::Format_g(Formatter *pFormatter, FormatterFlags &formatterFlags) con
 	return false;
 }
 
-bool Object::Format_s(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
-	return pFormatter->PutAlignedString(formatterFlags,
-										ToString().c_str(), formatterFlags.precision);
+	return formatter.PutAlignedString(formatterFlags, ToString().c_str(), formatterFlags.precision);
 }
 
-bool Object::Format_c(Formatter *pFormatter, FormatterFlags &formatterFlags) const
+bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%c qualifier",
 				 GetKlass().MakeFullName().c_str());
 	return false;
 }
-#endif
 
 //------------------------------------------------------------------------------
 // Object::KlassEx

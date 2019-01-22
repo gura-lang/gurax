@@ -103,46 +103,46 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				// just ignore it
 			} else if (ch == 'd' || ch == 'i') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!pObject->Format_d(this, formatterFlags)) break;
+				if (!pObject->Format_d(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'u') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!pObject->Format_u(this, formatterFlags)) break;
+				if (!pObject->Format_u(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'b') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!pObject->Format_b(this, formatterFlags)) break;
+				if (!pObject->Format_b(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'o') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!pObject->Format_o(this, formatterFlags)) break;
+				if (!pObject->Format_o(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'x' || ch == 'X') {
 				RefPtr<Object> pObject = source.GetInt();
 				formatterFlags.upperCaseFlag = (ch == 'X');
-				if (!pObject->Format_x(this, formatterFlags)) break;
+				if (!pObject->Format_x(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'e' || ch == 'E') {
 				RefPtr<Object> pObject = source.GetDouble();
 				formatterFlags.upperCaseFlag = (ch == 'E');
-				if (!pObject->Format_e(this, formatterFlags)) break;
+				if (!pObject->Format_e(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'f' || ch == 'F') {
 				RefPtr<Object> pObject = source.GetDouble();
-				if (!pObject->Format_f(this, formatterFlags)) break;
+				if (!pObject->Format_f(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'g' || ch == 'G') {
 				RefPtr<Object> pObject = source.GetDouble();
 				formatterFlags.upperCaseFlag = (ch == 'G');
-				if (!pObject->Format_g(this, formatterFlags)) break;
+				if (!pObject->Format_g(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 's') {
 				RefPtr<Object> pObject = source.GetString();
-				if (!pObject->Format_s(this, formatterFlags)) break;
+				if (!pObject->Format_s(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else if (ch == 'c') {
 				RefPtr<Object> pObject = source.GetInt();
-				if (!pObject->Format_c(this, formatterFlags)) break;
+				if (!pObject->Format_c(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else {
 				IssueError_WrongFormat();
