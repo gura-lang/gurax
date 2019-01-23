@@ -19,7 +19,7 @@ const char* Codec::BOM_UTF32BE = "\x00\x00\xfe\xff";
 const char* Codec::BOM_UTF32LE = "\xff\xfe\x00\x00";
 
 Codec::Codec(CodecFactory* pFactory, Decoder* pDecoder, Encoder* pEncoder) :
-	_cntRef(1), _pFactory(pFactory), _pDecoder(pDecoder), _pEncoder(pEncoder)
+	_pFactory(pFactory), _pDecoder(pDecoder), _pEncoder(pEncoder)
 {
 }
 
@@ -33,12 +33,12 @@ Codec* Codec::CreateCodecNone(bool delcrFlag, bool addcrFlag)
 	return _pFactory_None->CreateCodec(delcrFlag, addcrFlag);
 }
 
-Codec* Codec::CreateCodec(Signal& sig, const char* encoding, bool delcrFlag, bool addcrFlag)
+Codec* Codec::CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag)
 {
 	if (encoding == nullptr) encoding = "none";
 	CodecFactory* pFactory = CodecFactory::Lookup(encoding);
 	if (pFactory == nullptr) {
-		sig.SetError(ERR_CodecError, "unsupported encoding %s", encoding);
+		Error::Issue(ErrorType::CodecError, "unsupported encoding %s", encoding);
 		return nullptr;
 	}
 	return pFactory->CreateCodec(delcrFlag, addcrFlag);
@@ -142,8 +142,7 @@ void CodecFactory::Register(CodecFactory* pFactory)
 CodecFactory* CodecFactory::Lookup(const char* encoding)
 {
 	if (encoding == nullptr || _pList == nullptr) return nullptr;
-	foreach (List, ppFactory, *_pList) {
-		CodecFactory* pFactory = *ppFactory;
+	for (CodecFactory* pFactory : *_pList) {
 		if (::strcasecmp(pFactory->GetEncoding(), encoding) == 0) {
 			return pFactory;
 		}
@@ -154,16 +153,16 @@ CodecFactory* CodecFactory::Lookup(const char* encoding)
 //-----------------------------------------------------------------------------
 // Codec::Decoder
 //-----------------------------------------------------------------------------
-bool Codec::Decoder::Decode(Signal& sig, String& dst, const char* buff, size_t bytes)
+bool Codec::Decoder::Decode(String& dst, const UInt8* buff, size_t bytes)
 {
 	char ch;
-	for (const char* p = buff; bytes > 0; p++, bytes--) {
+	for (const UInt8* p = buff; bytes > 0; p++, bytes--) {
 		Codec::Result rtn = FeedChar(*p, ch);
 		if (rtn == Codec::RESULT_Complete) {
 			dst.push_back(ch);
 			while (FollowChar(ch)) dst.push_back(ch);
 		} else if (rtn == Codec::RESULT_Error) {
-			sig.SetError(ERR_CodecError, "failed to decode a binary");
+			Error::Issue(ErrorType::CodecError, "failed to decode a binary");
 			return false;
 		}
 	}
@@ -174,15 +173,15 @@ bool Codec::Decoder::Decode(Signal& sig, String& dst, const char* buff, size_t b
 	return true;
 }
 
-bool Codec::Decoder::Decode(Signal& sig, String& dst, const Binary& src)
+bool Codec::Decoder::Decode(String& dst, const Binary& src)
 {
-	return Decode(sig, dst, src.data(), src.size());
+	return Decode(dst, src.data(), src.size());
 }
 
 //-----------------------------------------------------------------------------
 // Codec::Encoder
 //-----------------------------------------------------------------------------
-bool Codec::Encoder::Encode(Signal& sig, Binary& dst, const char* str)
+bool Codec::Encoder::Encode(Binary& dst, const char* str)
 {
 	char ch;
 	for (const char* p = str; *p != '\0'; p++) {
@@ -191,7 +190,7 @@ bool Codec::Encoder::Encode(Signal& sig, Binary& dst, const char* str)
 			dst.push_back(ch);
 			while (FollowChar(ch)) dst.push_back(ch);
 		} else if (rtn == Codec::RESULT_Error) {
-			sig.SetError(ERR_CodecError, "failed to encode a string");
+			Error::Issue(ErrorType::CodecError, "failed to encode a string");
 			return false;
 		}
 	}

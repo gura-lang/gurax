@@ -18,6 +18,7 @@ class ErrorType {
 private:
 	String _name;
 public:
+	static const ErrorType CodecError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
 	static const ErrorType ValueError;

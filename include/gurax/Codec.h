@@ -21,17 +21,20 @@ private:
 	static List* _pList;
 public:
 	CodecFactory(const char* encoding);
-	inline const char* GetEncoding() const { return _encoding.c_str(); }
+	const char* GetEncoding() const { return _encoding.c_str(); }
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) = 0;
 	static void Register(CodecFactory* pFactory);
 	static CodecFactory* Lookup(const char* name);
-	static inline const List* GetList() { return _pList; }
+	static const List* GetList() { return _pList; }
 };
 
 //-----------------------------------------------------------------------------
 // Codec
 //-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Codec {
+class GURAX_DLLDECLARE Codec : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Codec);
 public:
 	enum Result {
 		RESULT_None,
@@ -61,21 +64,21 @@ public:
 		int _idxBuff;
 		char _buffOut[8];
 	public:
-		inline DecEncBase() : _idxBuff(0) {}
+		DecEncBase() : _idxBuff(0) {}
 		bool FollowChar(char& chConv);
 		virtual Result FeedChar(char ch, char& chConv) = 0;
 		virtual Result Flush(char& chConv);
 	protected:
-		inline void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
+		void StoreChar(char ch) { _buffOut[_idxBuff++] = ch; }
 	};
 	class GURAX_DLLDECLARE Decoder : public DecEncBase {
 	private:
 		bool _delcrFlag;
 	public:
-		inline Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
-		inline void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
-		inline bool GetDelcrFlag() const { return _delcrFlag; }
-		bool Decode(String& dst, const char* buff, size_t bytes);
+		Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
+		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
+		bool GetDelcrFlag() const { return _delcrFlag; }
+		bool Decode(String& dst, const UInt8* buff, size_t bytes);
 		bool Decode(String& dst, const Binary& src);
 		Decoder* Duplicate() const;
 	};
@@ -83,17 +86,16 @@ public:
 	private:
 		bool _addcrFlag;
 	public:
-		inline Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
+		Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
 		bool Encode(Binary& dst, const char* str);
-		inline void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
-		inline bool GetAddcrFlag() const { return _addcrFlag; }
-		inline bool Encode(Binary& dst, const String& src) {
-			return Encode(sig, dst, src.c_str());
+		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
+		bool GetAddcrFlag() const { return _addcrFlag; }
+		bool Encode(Binary& dst, const String& src) {
+			return Encode(dst, src.c_str());
 		}
 		Encoder* Duplicate() const;
 	};
 private:
-	int _cntRef;
 	CodecFactory* _pFactory;
 	std::unique_ptr<Decoder> _pDecoder;
 	std::unique_ptr<Encoder> _pEncoder;
@@ -106,17 +108,23 @@ public:
 	static const char* BOM_UTF32BE;
 	static const char* BOM_UTF32LE;
 public:
-	Gurax_DeclareReferenceAccessor(Codec);
-public:
+	// Constructor
 	Codec(CodecFactory* pFactory, Decoder* pDecoder, Encoder* pEncoder);
-private:
-	inline Codec(const Codec& codec) {}
+	// Copy constructor/operator
+	Codec(const Codec& src) = delete;
+	Codec& operator=(const Codec& src) = delete;
+	// Move constructor/operator
+	Codec(Codec&& src) = delete;
+	Codec& operator=(Codec&& src) noexcept = delete;
+protected:
+	// Destructor
+	virtual ~Codec() = default;
 public:
-	inline const char* GetEncoding() const { return _pFactory->GetEncoding(); }
-	inline CodecFactory* GetFactory() { return _pFactory; }
-	inline const CodecFactory* GetFactory() const { return _pFactory; }
-	inline Decoder* GetDecoder() { return _pDecoder.get(); }
-	inline Encoder* GetEncoder() { return _pEncoder.get(); }
+	const char* GetEncoding() const { return _pFactory->GetEncoding(); }
+	CodecFactory* GetFactory() { return _pFactory; }
+	const CodecFactory* GetFactory() const { return _pFactory; }
+	Decoder* GetDecoder() { return _pDecoder.get(); }
+	Encoder* GetEncoder() { return _pEncoder.get(); }
 	Codec* Duplicate() const;
 	static Codec* CreateCodecNone(bool delcrFlag, bool addcrFlag);
 	static Codec* CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag);
@@ -134,10 +142,10 @@ public:
 template<typename T>
 class CodecFactoryTmpl : public CodecFactory {
 public:
-	inline CodecFactoryTmpl(const char* encoding) : CodecFactory(encoding) {}
+	CodecFactoryTmpl(const char* encoding) : CodecFactory(encoding) {}
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
 		return new Codec(this, new typename T::Decoder(delcrFlag),
-								new typename T::Encoder(addcrFlag));
+						 new typename T::Encoder(addcrFlag));
 	}
 };
 
@@ -148,12 +156,12 @@ class GURAX_DLLDECLARE Codec_None : public Codec {
 public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
-		inline Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
+		Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	public:
-		inline Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
+		Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 };
@@ -165,7 +173,7 @@ class GURAX_DLLDECLARE Codec_UTF : public Codec {
 public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
-		inline Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
+		Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
 		Result FeedUTF32(UInt32 codeUTF32, char& chConv);
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
@@ -173,9 +181,9 @@ public:
 		int _cntChars;
 		UInt32 _codeUTF32;
 	public:
-		inline Encoder(bool addcrFlag) :
+		Encoder(bool addcrFlag) :
 				Codec::Encoder(addcrFlag), _cntChars(0), _codeUTF32(0x00000000) {}
-		inline UInt32 GetUTF32() const { return _codeUTF32; }
+		UInt32 GetUTF32() const { return _codeUTF32; }
 		virtual Result FeedChar(char ch, char& chConv) override;
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) = 0;
 	};
@@ -190,7 +198,7 @@ public:
 	private:
 		const UShort* _codeTbl;
 	public:
-		inline Decoder(bool delcrFlag, const UShort* codeTbl) :
+		Decoder(bool delcrFlag, const UShort* codeTbl) :
 						Codec_UTF::Decoder(delcrFlag), _codeTbl(codeTbl) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
@@ -199,7 +207,7 @@ public:
 		const UShort* _codeTbl;
 		Map*& _pMap;
 	public:
-		inline Encoder(bool addcrFlag, const UShort* codeTbl, Map*& pMap) :
+		Encoder(bool addcrFlag, const UShort* codeTbl, Map*& pMap) :
 						Codec_UTF::Encoder(addcrFlag), _codeTbl(codeTbl), _pMap(pMap) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 	};
@@ -214,16 +222,14 @@ public:
 	private:
 		UShort _codeDBCS;
 	public:
-		inline Decoder(bool delcrFlag) :
-					Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
+		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 		virtual bool IsLeadByte(UChar ch);
 		virtual UShort DBCSToUTF16(UShort codeDBCS) = 0;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
-		inline Encoder(bool addcrFlag) :
-					Codec_UTF::Encoder(addcrFlag) {}
+		Encoder(bool addcrFlag) : Codec_UTF::Encoder(addcrFlag) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 		virtual UShort UTF16ToDBCS(UShort codeUTF16) = 0;
 	};

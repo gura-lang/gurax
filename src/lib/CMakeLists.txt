@@ -2,6 +2,7 @@ add_library(guraxcore SHARED
 	guraxcore.cpp
 	Attribute.cpp
 	Binary.cpp
+	Codec.cpp
 	Common.cpp
 	Context.cpp
 	DateTime.cpp
@@ -45,6 +46,7 @@ add_library(guraxcore SHARED
 	TimeDelta.cpp
 	Token.cpp
 	Tokenizer.cpp
+	Unicode-EastAsianWidth.cpp
 )
 
 target_link_libraries(guraxcore dl pthread)

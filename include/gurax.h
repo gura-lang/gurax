@@ -6,6 +6,7 @@
 
 #include "gurax/Attribute.h"
 #include "gurax/Binary.h"
+#include "gurax/Codec.h"
 #include "gurax/Common.h"
 #include "gurax/Context.h"
 #include "gurax/DateTime.h"
