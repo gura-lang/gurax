@@ -8,20 +8,35 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Stream
 //------------------------------------------------------------------------------
-void Stream::Print(const char* str)
+Stream& Stream::Print(const char* str)
 {
+	return *this;
 }
 	
-void Stream::Println(const char* str)
+Stream& Stream::Println(const char* str)
 {
+	return *this;
 }
 
-void Stream::Printf(const char* format, ...)
+Stream& Stream::PrintfV(const char* format, va_list ap)
 {
+	FormatterEx formatter(*this);
+	formatter.DoFormat(format, ap);
+	return *this;
 }
 
-void Stream::PrintFmt(const char* format, const ObjectList& objectList)
+Stream& Stream::Printf(const char* format, ...)
 {
+	va_list ap;
+	va_start(ap, format);
+	return PrintfV(format, ap);
+}
+
+Stream& Stream::PrintFmt(const char* format, const ObjectList& objectList)
+{
+	FormatterEx formatter(*this);
+	formatter.DoFormat(format, objectList);
+	return *this;
 }
 
 bool Stream::ReadLine(String& str, bool includeEOLFlag)

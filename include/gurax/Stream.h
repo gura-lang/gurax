@@ -38,10 +38,11 @@ protected:
 	// Destructor
 	virtual ~Stream() = default;
 public:
-	void Print(const char* str);
-	void Println(const char* str);
-	void Printf(const char* format, ...);
-	void PrintFmt(const char* format, const ObjectList& objectList);
+	Stream& Print(const char* str);
+	Stream& Println(const char* str);
+	Stream& PrintfV(const char* format, va_list ap);
+	Stream& Printf(const char* format, ...);
+	Stream& PrintFmt(const char* format, const ObjectList& objectList);
 	bool ReadLine(String& str, bool includeEOLFlag);
 	bool ReadLines(StringList& strList, bool includeEOLFlag);
 	void Dump(const void* buff, size_t bytes, bool upperFlag = false);
