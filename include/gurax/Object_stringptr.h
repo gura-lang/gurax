@@ -45,11 +45,11 @@ public:
 	virtual size_t DoCalcHash() const override { return String::CalcHash(GetString()); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			String::IsEqualTo(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString());
+			String::IsEqualTo(GetString(), dynamic_cast<const Object_stringptr*>(pObject)->GetString());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			String::IsLessThan(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString()) :
+			String::IsLessThan(GetString(), dynamic_cast<const Object_stringptr*>(pObject)->GetString()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle&) const override { return _str; }

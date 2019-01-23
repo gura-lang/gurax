@@ -237,36 +237,13 @@ bool Formatter::PutAlignedString(const FormatterFlags& formatterFlags, const cha
 bool Formatter::PutInvalid(const FormatterFlags& formatterFlags)
 {
 	if (!_nilVisibleFlag) return true;
-	std::string str;
+	String str;
 	str += Gurax_Symbol(nil)->GetName();
 	return PutAlignedString(formatterFlags, str.c_str());
 }
 
 #if 0
-String Formatter::Format(const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	return FormatV(format, ap);
-}
-
-String Formatter::FormatV(const char* format, va_list ap)
-{
-	FormatterString formatter;
-	formatter.DoFormat(format, ap);
-	return formatter.GetStringSTL();
-}
-
-String Formatter::FormatObjectList(const char* format, const ObjectList& objectList)
-{
-	FormatterString formatter;
-	formatter.DoFormat(format, objectList);
-	return formatter.GetStringSTL();
-}
-#endif
-
-#if 0
-const Object* Formatter::FormatIterator(const char* format, IteratorOwner& iterOwner)
+Object_list* Formatter::FormatIterator(const char* format, IteratorOwner& iterOwner)
 {
 	const Object* pObject;
 	Object_list* pObjListResult = result.InitAsList(env);
@@ -553,9 +530,5 @@ String FormatterFlags::ToString(const char* qualifier) const
 	fmt += qualifier;
 	return fmt;
 }
-
-//-----------------------------------------------------------------------------
-// FormatterString
-//-----------------------------------------------------------------------------
 
 }

@@ -28,6 +28,7 @@ private:
 public:
 	// Constructor
 	Object_list() : Object(klass), _pObjectOwner(new ObjectOwner()) {}
+	explicit Object_list(ObjectOwner* pObjectOwner) : Object(klass), _pObjectOwner(pObjectOwner) {}
 	// Copy constructor/operator
 	Object_list(const Object_list& src) : Object(klass), _pObjectOwner(src._pObjectOwner->Clone()) {}
 	Object_list& operator=(const Object_list& src) {

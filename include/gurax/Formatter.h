@@ -4,7 +4,7 @@
 #ifndef GURAX_FORMATTER_H
 #define GURAX_FORMATTER_H
 #include "Object_number.h"
-#include "Object_string.h"
+#include "Object_stringptr.h"
 
 namespace Gurax {
 
@@ -85,7 +85,7 @@ public:
 		}
 		virtual Object* FetchString() override {
 			char* str = va_arg(_ap, char*);
-			return new Object_string(str);
+			return new Object_stringptr(str);
 		}
 	};
 private:
@@ -100,9 +100,6 @@ public:
 	bool PutString(const char* p);
 	bool PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax = -1);
 	bool PutInvalid(const FormatterFlags& formatterFlags);
-	//static String Format(const char* format, ...);
-	//static String FormatV(const char* format, va_list ap);
-	//static String FormatObjectList(const char* format, const ObjectList& objectList);
 	//static const Object* FormatIterator(const char* format, IteratorOwner& iterOwner);
 public:
 	// Virtual functions
@@ -122,22 +119,6 @@ private:
 	static char* FillZeroDigit(char* dstp, char* dstpEnd, int cnt);
 	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp);
 	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt);
-};
-
-//-----------------------------------------------------------------------------
-// FormatterString
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE FormatterString : public Formatter {
-private:
-	String _str;
-public:
-	const String& GetStringSTL() const { return _str; }
-public:
-	// Virtual functions
-	virtual bool PutChar(char ch) override {
-		_str += ch;
-		return true;
-	}
 };
 
 }
