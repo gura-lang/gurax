@@ -23,7 +23,6 @@ bool Formatter::DoFormat(const char* format, va_list ap)
 bool Formatter::DoFormat(const char* format, Source& source)
 {
 	bool eatNextFlag;
-	const char* formatp = format;
 	FormatterFlags formatterFlags;
 	enum {
 		STAT_Start,
@@ -31,7 +30,8 @@ bool Formatter::DoFormat(const char* format, Source& source)
 		STAT_PrecisionPre, STAT_Precision,
 		STAT_Padding,
 	} stat = STAT_Start;
-	for (;;) {
+	_strErr.clear();
+	for (const char* formatp = format; ; ) {
 		char ch = *formatp;
 		eatNextFlag = true;
 		if (ch == '\0') {
@@ -52,7 +52,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				stat = STAT_Start;
 			} else {
 				if (source.IsEnd()) {
-					IssueError_NotEnoughArguments();
+					SetError_NotEnoughArguments();
 					break;
 				}
 				// initialize formatterFlags
@@ -80,7 +80,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			} else if (ch == '*') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->IsType<Object_number>()) {
-					Error::Issue(ErrorType::ValueError, "number is expected for * specifier");
+					SetError_NumberIsExpectedForAsterisk();
 					break;
 				}
 				formatterFlags.fieldMinWidth = dynamic_cast<Object_number*>(pObject.get())->GetInt();
@@ -89,7 +89,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 					formatterFlags.fieldMinWidth = -formatterFlags.fieldMinWidth;
 				}
 				if (source.IsEnd()) {
-					IssueError_NotEnoughArguments();
+					SetError_NotEnoughArguments();
 					break;
 				}
 			} else if ('0' < ch && ch <= '9') {
@@ -145,12 +145,12 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				if (!pObject->Format_c(*this, formatterFlags)) break;
 				stat = STAT_Start;
 			} else {
-				IssueError_WrongFormat();
+				SetError_WrongFormat();
 				break;
 			}
 		} else if (stat == STAT_FlagsAfterWhite) {
 			if (ch == ' ') {
-				IssueError_WrongFormat();
+				SetError_WrongFormat();
 				break;
 			} else {
 				eatNextFlag = false;
@@ -167,13 +167,13 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			if (ch == '*') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->IsType<Object_number>()) {
-					Error::Issue(ErrorType::ValueError, "number is expected for * specifier");
+					SetError_NumberIsExpectedForAsterisk();
 					break;
 				}
 				formatterFlags.precision = dynamic_cast<Object_number*>(pObject.get())->GetInt();
 				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::PREC_Default;
 				if (source.IsEnd()) {
-					IssueError_NotEnoughArguments();
+					SetError_NotEnoughArguments();
 					break;
 				}
 				stat = STAT_Flags;
@@ -196,7 +196,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 		}
 		if (eatNextFlag) formatp++;
 	}
-	return !Error::IsIssued();
+	return !HasError();
 }
 
 bool Formatter::PutString(const char* p)
@@ -229,6 +229,7 @@ bool Formatter::PutInvalid(const FormatterFlags& formatterFlags)
 	return PutAlignedString(formatterFlags, str.c_str());
 }
 
+#if 0
 String Formatter::Format(const char* format, ...)
 {
 	va_list ap;
@@ -249,6 +250,7 @@ String Formatter::FormatObjectList(const char* format, const ObjectList& objectL
 	formatter.DoFormat(format, objectList);
 	return formatter.GetStringSTL();
 }
+#endif
 
 #if 0
 const Object* Formatter::FormatIterator(const char* format, IteratorOwner& iterOwner)
@@ -294,65 +296,6 @@ char* Formatter::CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt
 	}
 	*dstp = '\0';
 	return dstp;
-}
-
-void Formatter::IssueError_WrongFormat()
-{
-	Error::Issue(ErrorType::ValueError, "wrong format for formatter");
-}
-
-void Formatter::IssueError_NotEnoughArguments()
-{
-	Error::Issue(ErrorType::TypeError, "not enough arguments for formatter");
-}
-
-//-----------------------------------------------------------------------------
-// Formatter::Source_ObjectList
-//-----------------------------------------------------------------------------
-bool Formatter::Source_ObjectList::IsEnd()
-{
-	return _ppObject == _objectList.end();
-}
-
-Object* Formatter::Source_ObjectList::GetInt()
-{
-	return (*_ppObject++)->Reference();
-}
-
-Object* Formatter::Source_ObjectList::GetDouble()
-{
-	return (*_ppObject++)->Reference();
-}
-
-Object* Formatter::Source_ObjectList::GetString()
-{
-	return (*_ppObject++)->Reference();
-}
-
-//-----------------------------------------------------------------------------
-// Formatter::Source_va_list
-//-----------------------------------------------------------------------------
-bool Formatter::Source_va_list::IsEnd()
-{
-	return false;
-}
-
-Object* Formatter::Source_va_list::GetInt()
-{
-	int value = va_arg(_ap, int);
-	return new Object_number(value);
-}
-
-Object* Formatter::Source_va_list::GetDouble()
-{
-	double value = va_arg(_ap, double);
-	return new Object_number(value);
-}
-
-Object* Formatter::Source_va_list::GetString()
-{
-	char* value = va_arg(_ap, char*);
-	return new Object_string(value);
 }
 
 //-----------------------------------------------------------------------------

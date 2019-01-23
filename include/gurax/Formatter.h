@@ -3,7 +3,8 @@
 //=============================================================================
 #ifndef GURAX_FORMATTER_H
 #define GURAX_FORMATTER_H
-#include "Object.h"
+#include "Object_number.h"
+#include "Object_string.h"
 
 namespace Gurax {
 
@@ -59,10 +60,10 @@ public:
 		Source_ObjectList(const ObjectList& objectList) : _objectList(objectList) {
 			_ppObject = _objectList.begin();
 		}
-		virtual bool IsEnd();
-		virtual Object* GetInt();
-		virtual Object* GetDouble();
-		virtual Object* GetString();
+		virtual bool IsEnd() override { return _ppObject == _objectList.end(); }
+		virtual Object* GetInt() override { return (*_ppObject++)->Reference(); }
+		virtual Object* GetDouble() override { return (*_ppObject++)->Reference(); }
+		virtual Object* GetString() override { return (*_ppObject++)->Reference(); }
 	};
 	class Source_va_list : public Source {
 	private:
@@ -73,14 +74,24 @@ public:
 #else
 		Source_va_list(va_list ap) { _ap = ap; }
 #endif
-		virtual bool IsEnd();
-		virtual Object* GetInt();
-		virtual Object* GetDouble();
-		virtual Object* GetString();
+		virtual bool IsEnd() override { return false; }
+		virtual Object* GetInt() override {
+			Int num = va_arg(_ap, Int);
+			return new Object_number(num);
+		}
+		virtual Object* GetDouble() override {
+			Double num = va_arg(_ap, Double);
+			return new Object_number(num);
+		}
+		virtual Object* GetString() override {
+			char* str = va_arg(_ap, char*);
+			return new Object_string(str);
+		}
 	};
 private:
 	bool _nilVisibleFlag;
 	const char* _lineSep;
+	String _strErr;
 public:
 	Formatter(bool nilVisibleFlag = true) : _nilVisibleFlag(nilVisibleFlag), _lineSep("\n") {}
 	bool DoFormat(const char* format, const ObjectList& objectList);
@@ -89,16 +100,25 @@ public:
 	bool PutString(const char* p);
 	bool PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax = -1);
 	bool PutInvalid(const FormatterFlags& formatterFlags);
-	static String Format(const char* format, ...);
-	static String FormatV(const char* format, va_list ap);
-	static String FormatObjectList(const char* format, const ObjectList& objectList);
+	//static String Format(const char* format, ...);
+	//static String FormatV(const char* format, va_list ap);
+	//static String FormatObjectList(const char* format, const ObjectList& objectList);
 	//static const Object* FormatIterator(const char* format, IteratorOwner& iterOwner);
 public:
 	// Virtual functions
 	virtual bool PutChar(char ch) = 0;
 private:
-	static void IssueError_WrongFormat();
-	static void IssueError_NotEnoughArguments();
+	bool HasError() const { return !_strErr.empty(); }
+	const char* GetError() const { return _strErr.c_str(); }
+	void SetError_NumberIsExpectedForAsterisk() {
+		_strErr = "number is expected for * specifier";
+	}
+	void SetError_WrongFormat() {
+		_strErr = "wrong format for formatter";
+	}
+	void SetError_NotEnoughArguments() {
+		_strErr = "not enough arguments for formatter";
+	}
 	static char* FillZeroDigit(char* dstp, char* dstpEnd, int cnt);
 	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp);
 	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt);
