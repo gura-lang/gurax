@@ -408,16 +408,14 @@ size_t String::Width(const char* str)
 	size_t width = 0;
 	for (const char* p = str; *p != '\0'; ) {
 		UInt32 codeUTF32 = NextUTF32(&p);
-#if 0
 		Codec::WidthProp widthProp = Codec::GetWidthProp(codeUTF32);
-		if (widthProp == Codec::WIDTHPROP_A ||
-			widthProp == Codec::WIDTHPROP_W ||
-			widthProp == Codec::WIDTHPROP_F) {
+		if (widthProp == Codec::WidthProp::A ||
+			widthProp == Codec::WidthProp::W ||
+			widthProp == Codec::WidthProp::F) {
 			width += 2;
 		} else {
 			width += 1;
 		}
-#endif
 	}
 	return width;
 }

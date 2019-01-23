@@ -9,6 +9,7 @@ void Bootup()
 {
 	Attribute::Bootup();
 	Binary::Bootup();
+	Codec::Bootup();
 	Error::Bootup();
 	Object::Bootup();
 	Operators::Bootup();
