@@ -24,21 +24,18 @@ bool Formatter::DoFormat(const char* format, Source& source)
 {
 	bool eatNextFlag;
 	FormatterFlags formatterFlags;
-	enum {
-		STAT_Start,
-		STAT_FlagsPre, STAT_Flags, STAT_FlagsAfterWhite,
-		STAT_PrecisionPre, STAT_Precision,
-		STAT_Padding,
-	} stat = STAT_Start;
+	enum class Stat {
+		Start, FlagsPre, Flags, FlagsAfterWhite, PrecisionPre, Precision, Padding,
+	} stat = Stat::Start;
 	_strErr.clear();
 	for (const char* formatp = format; ; ) {
 		char ch = *formatp;
 		eatNextFlag = true;
 		if (ch == '\0') {
 			break;
-		} else if (stat == STAT_Start) {
+		} else if (stat == Stat::Start) {
 			if (ch == '%') {
-				stat = STAT_FlagsPre;
+				stat = Stat::FlagsPre;
 			} else if (ch == '\n') {
 				for (const char* p = _lineSep; *p != '\0'; p++) {
 					if (!PutChar(*p)) return false;
@@ -46,10 +43,10 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			} else {
 				if (!PutChar(ch)) return false;
 			}
-		} else if (stat == STAT_FlagsPre) {
+		} else if (stat == Stat::FlagsPre) {
 			if (ch == '%') {
 				if (!PutChar(ch)) return false;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else {
 				if (source.IsEnd()) {
 					SetError_NotEnoughArguments();
@@ -58,9 +55,9 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				// initialize formatterFlags
 				formatterFlags.Initialize();
 				eatNextFlag = false;
-				stat = STAT_Flags;
+				stat = Stat::Flags;
 			}
-		} else if (stat == STAT_Flags) {
+		} else if (stat == Stat::Flags) {
 			if (ch == '#') {
 				formatterFlags.sharpFlag = true;
 			} else if (ch == '0') {
@@ -74,7 +71,7 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				if (formatterFlags.plusMode == FormatterFlags::PlusMode::None) {
 					formatterFlags.plusMode = FormatterFlags::PlusMode::Space;
 				}
-				stat = STAT_FlagsAfterWhite;
+				stat = Stat::FlagsAfterWhite;
 			} else if (ch == '+') {
 				formatterFlags.plusMode = FormatterFlags::PlusMode::Plus;
 			} else if (ch == '*') {
@@ -94,9 +91,9 @@ bool Formatter::DoFormat(const char* format, Source& source)
 				}
 			} else if ('0' < ch && ch <= '9') {
 				eatNextFlag = false;
-				stat = STAT_Padding;
+				stat = Stat::Padding;
 			} else if (ch == '.') {
-				stat = STAT_PrecisionPre;
+				stat = Stat::PrecisionPre;
 			} else if (ch == 'l') {
 				// just ignore it
 			} else if (ch == 'z') {
@@ -104,66 +101,66 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			} else if (ch == 'd' || ch == 'i') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->Format_d(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'u') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->Format_u(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'b') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->Format_b(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'o') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->Format_o(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'x' || ch == 'X') {
 				RefPtr<Object> pObject = source.GetInt();
 				formatterFlags.upperCaseFlag = (ch == 'X');
 				if (!pObject->Format_x(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'e' || ch == 'E') {
 				RefPtr<Object> pObject = source.GetDouble();
 				formatterFlags.upperCaseFlag = (ch == 'E');
 				if (!pObject->Format_e(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'f' || ch == 'F') {
 				RefPtr<Object> pObject = source.GetDouble();
 				if (!pObject->Format_f(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'g' || ch == 'G') {
 				RefPtr<Object> pObject = source.GetDouble();
 				formatterFlags.upperCaseFlag = (ch == 'G');
 				if (!pObject->Format_g(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 's') {
 				RefPtr<Object> pObject = source.GetString();
 				if (!pObject->Format_s(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else if (ch == 'c') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->Format_c(*this, formatterFlags)) break;
-				stat = STAT_Start;
+				stat = Stat::Start;
 			} else {
 				SetError_WrongFormat();
 				break;
 			}
-		} else if (stat == STAT_FlagsAfterWhite) {
+		} else if (stat == Stat::FlagsAfterWhite) {
 			if (ch == ' ') {
 				SetError_WrongFormat();
 				break;
 			} else {
 				eatNextFlag = false;
-				stat = STAT_Flags;
+				stat = Stat::Flags;
 			}
-		} else if (stat == STAT_Padding) {
+		} else if (stat == Stat::Padding) {
 			if ('0' <= ch && ch <= '9') {
 				formatterFlags.fieldMinWidth = formatterFlags.fieldMinWidth * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
-				stat = STAT_Flags;
+				stat = Stat::Flags;
 			}
-		} else if (stat == STAT_PrecisionPre) {
+		} else if (stat == Stat::PrecisionPre) {
 			if (ch == '*') {
 				RefPtr<Object> pObject = source.GetInt();
 				if (!pObject->IsType<Object_number>()) {
@@ -176,22 +173,22 @@ bool Formatter::DoFormat(const char* format, Source& source)
 					SetError_NotEnoughArguments();
 					break;
 				}
-				stat = STAT_Flags;
+				stat = Stat::Flags;
 			} else if ('0' <= ch && ch <= '9') {
 				formatterFlags.precision = 0;
 				eatNextFlag = false;
-				stat = STAT_Precision;
+				stat = Stat::Precision;
 			} else {
 				formatterFlags.precision = FormatterFlags::PREC_Null;
 				eatNextFlag = false;
-				stat = STAT_Flags;
+				stat = Stat::Flags;
 			}
-		} else if (stat == STAT_Precision) {
+		} else if (stat == Stat::Precision) {
 			if ('0' <= ch && ch <= '9') {
 				formatterFlags.precision = formatterFlags.precision * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
-				stat = STAT_Flags;
+				stat = Stat::Flags;
 			}
 		}
 		if (eatNextFlag) formatp++;
