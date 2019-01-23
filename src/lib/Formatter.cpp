@@ -223,7 +223,7 @@ bool Formatter::PutAlignedString(const FormatterFlags& formatterFlags, const cha
 	int cnt = static_cast<int>(::strlen(p));
 	if (cntMax >= 0 && cnt > cntMax) cnt = cntMax;
 	//int cntPadding = formatterFlags.fieldMinWidth - static_cast<int>(String::Width(p));
-	int cntPadding = formatterFlags.fieldMinWidth - static_cast<int>(0);
+	int cntPadding = formatterFlags.fieldMinWidth - static_cast<int>(String::Length(p));
 	if (formatterFlags.leftAlignFlag) {
 		for ( ; cnt > 0; p++, cnt--) if (!PutChar(*p)) return false;
 		while (cntPadding-- > 0) if (!PutChar(formatterFlags.charPadding)) return false;
