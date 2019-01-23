@@ -34,11 +34,21 @@ const Object *Object::_pObject_true_		= nullptr;
 void Object::Bootup()
 {
 	Object::klass.Prepare();
+	Object_attribute::klass.Prepare();
+	Object_binary::klass.Prepare();
 	Object_bool::klass.Prepare();
+	Object_dict::klass.Prepare();
+	Object_expr::klass.Prepare();
 	Object_function::klass.Prepare();
+	Object_iterator::klass.Prepare();
+	Object_klass::klass.Prepare();
+	Object_list::klass.Prepare();
+	Object_module::klass.Prepare();
 	Object_nil::klass.Prepare();
 	Object_number::klass.Prepare();
+	Object_stream::klass.Prepare();
 	Object_string::klass.Prepare();
+	Object_stringptr::klass.Prepare();
 	Object_symbol::klass.Prepare();
 	Object_undefined::klass.Prepare();
 	_pObject_undefined	= new Object_undefined();
