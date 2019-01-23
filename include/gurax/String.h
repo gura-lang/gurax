@@ -132,6 +132,7 @@ public:
 	static UInt64 NextUTF8(const char** pp);
 	UInt32 NextUTF32(const_iterator* pp) const;
 	static UInt32 NextUTF32(const char** pp);
+public:
 	void AppendUTF8(UInt64 codeUTF8);
 	void AppendUTF32(UInt32 codeUTF32);
 	String& PrintfV(const char* format, va_list ap);
@@ -221,6 +222,11 @@ private:
 	static const char* EndsWith_Tmpl(const char* str, const char* sub);
 	template<typename CmpChar>
 	static const char* EndsWith_Tmpl(const char* str, size_t posEnd, const char* sub);
+public:
+	static size_t Length(const char* str);
+	size_t Length() const { return Length(c_str()); }
+	static size_t Width(const char* str);
+	size_t Width() const { return Width(c_str()); }
 };
 
 inline String operator+(const String& v1, const String& v2) {

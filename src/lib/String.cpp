@@ -391,6 +391,37 @@ size_t String::CalcHash(const char* str, size_t len)
 	return hash;
 }
 
+size_t String::Length(const char* str)
+{
+	size_t len = 0;
+	for (const char* p = str ; *p != '\0'; len++) {
+		char ch = *p++;
+		if (IsUTF8First(ch)) {
+			while (IsUTF8Follower(*p)) p++;
+		}
+	}
+	return len;
+}
+
+size_t String::Width(const char* str)
+{
+	size_t width = 0;
+	for (const char* p = str; *p != '\0'; ) {
+		UInt32 codeUTF32 = NextUTF32(&p);
+#if 0
+		Codec::WidthProp widthProp = Codec::GetWidthProp(codeUTF32);
+		if (widthProp == Codec::WIDTHPROP_A ||
+			widthProp == Codec::WIDTHPROP_W ||
+			widthProp == Codec::WIDTHPROP_F) {
+			width += 2;
+		} else {
+			width += 1;
+		}
+#endif
+	}
+	return width;
+}
+
 //------------------------------------------------------------------------------
 // StringList
 //------------------------------------------------------------------------------
