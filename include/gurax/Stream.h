@@ -51,6 +51,12 @@ public:
 	virtual bool PutChar(char ch) = 0;
 	virtual size_t Read(void* buff, size_t len) = 0;
 	virtual size_t Write(const void* buff, size_t len) = 0;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Stream* pStream) const { return this == pStream; }
+	bool IsEqualTo(const Stream* pStream) const { return IsIdentical(pStream); }
+	bool IsLessThan(const Stream* pStream) const { return this < pStream; }
+	String ToString() const { return "(stream)"; }
 };
 
 }

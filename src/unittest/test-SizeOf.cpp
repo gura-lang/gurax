@@ -26,6 +26,7 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(Object_module);
 	Gurax_PrintSizeOf(Object_nil);
 	Gurax_PrintSizeOf(Object_number);
+	Gurax_PrintSizeOf(Object_stream);
 	Gurax_PrintSizeOf(Object_string);
 	Gurax_PrintSizeOf(Object_symbol);
 	Gurax_PrintSizeOf(Object_undefined);
