@@ -1,21 +1,21 @@
 //==============================================================================
-// Object_string.h
+// Object_stringptr.h
 //==============================================================================
-#ifndef GURAX_OBJECT_STRING_H
-#define GURAX_OBJECT_STRING_H
+#ifndef GURAX_OBJECT_STRINGPTR_H
+#define GURAX_OBJECT_STRINGPTR_H
 #include "Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_string
+// Object_stringptr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_string : public Object {
+class GURAX_DLLDECLARE Object_stringptr : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_string);
+	Gurax_DeclareReferable(Object_stringptr);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_string");
+	Gurax_MemoryPoolAllocator("Object_stringptr");
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
@@ -24,23 +24,21 @@ public:
 	};
 	static KlassEx klass;
 private:
-	RefPtr<StringReferable> _pStr;
+	const char* _str;
 public:
 	// Constructor
-	explicit Object_string(StringReferable* pStr) : Object(klass), _pStr(pStr) {}
-	explicit Object_string(String str) : Object(klass), _pStr(new StringReferable(std::move(str))) {}
+	explicit Object_stringptr(const char* str) : Object(klass), _str(str) {}
 	// Copy constructor/operator
-	Object_string(const Object_string& src) : Object(klass), _pStr(src._pStr->Reference()) {}
-	Object_string& operator=(const Object_string& src) { _pStr.reset(src._pStr->Reference()); return *this; }
+	Object_stringptr(const Object_stringptr& src) : Object(klass), _str(src._str) {}
+	Object_stringptr& operator=(const Object_stringptr& src) { _str = src._str; return *this; }
 	// Move constructor/operator
-	Object_string(Object_string&& src) : Object(klass), _pStr(src._pStr->Reference()) {}
-	Object_string& operator=(Object_string&& src) noexcept { _pStr.reset(src._pStr->Reference()); return *this; }
+	Object_stringptr(Object_stringptr&& src) : Object(klass), _str(src._str) {}
+	Object_stringptr& operator=(Object_stringptr&& src) noexcept { _str = src._str; return *this; }
 protected:
 	// Destructor
-	~Object_string() = default;
+	~Object_stringptr() = default;
 public:
-	const char* GetString() const { return _pStr->GetString(); }
-	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+	const char* GetString() const { return _str; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
@@ -54,7 +52,7 @@ public:
 			String::IsLessThan(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return _pStr->GetStringSTL().MakeQuoted(true); }
+	virtual String ToString(const StringStyle&) const override { return _str; }
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };
 

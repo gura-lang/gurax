@@ -1,25 +1,25 @@
 //==============================================================================
-// Object_string.cpp
+// Object_stringptr.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_string
+// Object_stringptr
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_string::KlassEx
+// Object_stringptr::KlassEx
 //------------------------------------------------------------------------------
-Object_string::KlassEx Object_string::klass("string");
+Object_stringptr::KlassEx Object_stringptr::klass("stringptr");
 
-void Object_string::KlassEx::DoPrepare()
+void Object_stringptr::KlassEx::DoPrepare()
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }
 
-bool Object_string::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Object_stringptr::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }

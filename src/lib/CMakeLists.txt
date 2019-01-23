@@ -30,6 +30,7 @@ add_library(guraxcore SHARED
 	Object_number.cpp
 	Object_stream.cpp
 	Object_string.cpp
+	Object_stringptr.cpp
 	Object_symbol.cpp
 	Object_undefined.cpp
 	Operator.cpp
