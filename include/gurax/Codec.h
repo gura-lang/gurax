@@ -36,19 +36,8 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Codec);
 public:
-	enum Result {
-		RESULT_None,
-		RESULT_Complete,
-		RESULT_Error,
-	};
-	enum WidthProp {
-		WIDTHPROP_N,
-		WIDTHPROP_A,
-		WIDTHPROP_H,
-		WIDTHPROP_W,
-		WIDTHPROP_F,
-		WIDTHPROP_Na,
-	};
+	enum class Result { None, Complete, Error };
+	enum class WidthProp { N, A, H, W, F, Na };
 	typedef std::map<UShort, UShort> Map;
 	struct CodeRow {
 		int nCols;
