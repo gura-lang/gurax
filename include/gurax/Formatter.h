@@ -48,9 +48,9 @@ public:
 	class Source {
 	public:
 		virtual bool IsEnd() = 0;
-		virtual Object* GetInt() = 0;
-		virtual Object* GetDouble() = 0;
-		virtual Object* GetString() = 0;
+		virtual Object* FetchInt() = 0;
+		virtual Object* FetchDouble() = 0;
+		virtual Object* FetchString() = 0;
 	};
 	class Source_ObjectList : public Source {
 	private:
@@ -61,9 +61,9 @@ public:
 			_ppObject = _objectList.begin();
 		}
 		virtual bool IsEnd() override { return _ppObject == _objectList.end(); }
-		virtual Object* GetInt() override { return (*_ppObject++)->Reference(); }
-		virtual Object* GetDouble() override { return (*_ppObject++)->Reference(); }
-		virtual Object* GetString() override { return (*_ppObject++)->Reference(); }
+		virtual Object* FetchInt() override { return (*_ppObject++)->Reference(); }
+		virtual Object* FetchDouble() override { return (*_ppObject++)->Reference(); }
+		virtual Object* FetchString() override { return (*_ppObject++)->Reference(); }
 	};
 	class Source_va_list : public Source {
 	private:
@@ -75,15 +75,15 @@ public:
 		Source_va_list(va_list ap) { _ap = ap; }
 #endif
 		virtual bool IsEnd() override { return false; }
-		virtual Object* GetInt() override {
+		virtual Object* FetchInt() override {
 			Int num = va_arg(_ap, Int);
 			return new Object_number(num);
 		}
-		virtual Object* GetDouble() override {
+		virtual Object* FetchDouble() override {
 			Double num = va_arg(_ap, Double);
 			return new Object_number(num);
 		}
-		virtual Object* GetString() override {
+		virtual Object* FetchString() override {
 			char* str = va_arg(_ap, char*);
 			return new Object_string(str);
 		}
@@ -110,14 +110,14 @@ public:
 private:
 	bool HasError() const { return !_strErr.empty(); }
 	const char* GetError() const { return _strErr.c_str(); }
-	void SetError_NumberIsExpectedForAsterisk() {
-		_strErr = "number is expected for * specifier";
+	void IssueError_NumberIsExpectedForAsterisk() {
+		Error::Issue(ErrorType::ValueError, "number is expected for * specifier");
 	}
-	void SetError_WrongFormat() {
-		_strErr = "wrong format for formatter";
+	void IssueError_WrongFormat() {
+		Error::Issue(ErrorType::ValueError, "wrong format for formatter");
 	}
-	void SetError_NotEnoughArguments() {
-		_strErr = "not enough arguments for formatter";
+	void IssueError_NotEnoughArguments() {
+		Error::Issue(ErrorType::ValueError, "not enough arguments for formatter");
 	}
 	static char* FillZeroDigit(char* dstp, char* dstpEnd, int cnt);
 	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp);

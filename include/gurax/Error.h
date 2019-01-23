@@ -36,9 +36,15 @@ class ErrorList : public std::vector<Error*> {
 // ErrorOwner
 //------------------------------------------------------------------------------
 class ErrorOwner : public ErrorList {
+private:
+	bool _silentFlag;
 public:
+	ErrorOwner() : _silentFlag(false) {}
 	~ErrorOwner() { Clear(); }
 	void Clear();
+	void SetSilentFlag() { _silentFlag = true; }
+	void ClearSilentFlag() { _silentFlag = false; }
+	bool GetSilentFlag() const { return _silentFlag; }
 };
 
 //------------------------------------------------------------------------------
@@ -60,12 +66,13 @@ private:
 	static ErrorOwner* _pErrorOwnerGlobal;
 public:
 	// Constructor
-	Error(const ErrorType& errorType, const String& text) :
-		_errorType(errorType), _lineNoTop(0), _lineNoBtm(0), _text(text) {}
-	Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const String& text) :
-		_errorType(errorType), _pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _text(text) {}
-	Error(const ErrorType& errorType, Expr *pExpr, const String& text) :
-		_errorType(errorType), _pExpr(pExpr), _lineNoTop(0), _lineNoBtm(0), _text(text) {}
+	Error(const ErrorType& errorType, String text) :
+		_errorType(errorType), _lineNoTop(0), _lineNoBtm(0), _text(std::move(text)) {}
+	Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text) :
+		_errorType(errorType), _pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
+		_text(std::move(text)) {}
+	Error(const ErrorType& errorType, Expr *pExpr, String text) :
+		_errorType(errorType), _pExpr(pExpr), _lineNoTop(0), _lineNoBtm(0), _text(std::move(text)) {}
 	// Copy constructor/operator
 	Error(const Error& src) = delete;
 	Error& operator=(const Error& src) = delete;
@@ -82,26 +89,30 @@ public:
 	static void Clear();
 	template<typename... Args>
 	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {
-		char text[512];
-		::sprintf(text, format, args...);
-		_pErrorOwnerGlobal->push_back(new Error(errorType, text));
+		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
+		_pErrorOwnerGlobal->SetSilentFlag();
+		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
+		_pErrorOwnerGlobal->ClearSilentFlag();
 	}
 	template<typename... Args>
-	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
-		char text[512];
-		::sprintf(text, format, args...);
-		_pErrorOwnerGlobal->push_back(new Error(errorType, pFileName, lineNoTop, lineNoBtm, text));
-		
+	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName,
+						int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
+		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
+		_pErrorOwnerGlobal->SetSilentFlag();
+		_pErrorOwnerGlobal->push_back(
+			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Printf(format, args...)));
+		_pErrorOwnerGlobal->ClearSilentFlag();
 	}
 	template<typename... Args>
 	static void IssueWith(const ErrorType& errorType, Expr* pExpr, const char* format, const Args&... args) {
-		char text[512];
-		::sprintf(text, format, args...);
-		_pErrorOwnerGlobal->push_back(new Error(errorType, pExpr, text));
+		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
+		_pErrorOwnerGlobal->SetSilentFlag();
+		_pErrorOwnerGlobal->push_back(
+			new Error(errorType, pExpr, String().Printf(format, args...)));
+		_pErrorOwnerGlobal->ClearSilentFlag();
 	}
 	static void Print(FILE* fp);
 };
-
 
 }
 
