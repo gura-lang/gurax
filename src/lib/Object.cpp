@@ -37,6 +37,7 @@ void Object::Bootup()
 	Object_attribute::klass.Prepare();
 	Object_binary::klass.Prepare();
 	Object_bool::klass.Prepare();
+	Object_datetime::klass.Prepare();
 	Object_dict::klass.Prepare();
 	Object_expr::klass.Prepare();
 	Object_function::klass.Prepare();
@@ -50,6 +51,7 @@ void Object::Bootup()
 	Object_string::klass.Prepare();
 	Object_stringptr::klass.Prepare();
 	Object_symbol::klass.Prepare();
+	Object_timedelta::klass.Prepare();
 	Object_undefined::klass.Prepare();
 	_pObject_undefined	= new Object_undefined();
 	_pObject_nil		= new Object_nil();
