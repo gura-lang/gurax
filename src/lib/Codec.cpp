@@ -129,6 +129,16 @@ Codec::WidthProp Codec::GetWidthProp(UInt32 codeUTF32)
 }
 
 //-----------------------------------------------------------------------------
+// Codec::BOM
+//-----------------------------------------------------------------------------
+// Byte Order Mark of Unicode
+const char* const Codec::BOM::UTF8		= "\xef\xbb\xbf";
+const char* const Codec::BOM::UTF16BE	= "\xfe\xff";
+const char* const Codec::BOM::UTF16LE	= "\xff\xfe";
+const char* const Codec::BOM::UTF32BE	= "\x00\x00\xfe\xff";
+const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
+
+//-----------------------------------------------------------------------------
 // Codec::DecEncBase
 //-----------------------------------------------------------------------------
 bool Codec::DecEncBase::FollowChar(char& chConv)
@@ -165,16 +175,6 @@ bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 	}
 	return true;
 }
-
-//-----------------------------------------------------------------------------
-// Codec::BOM
-//-----------------------------------------------------------------------------
-// Byte Order Mark of Unicode
-const char* const Codec::BOM::UTF8		= "\xef\xbb\xbf";
-const char* const Codec::BOM::UTF16BE	= "\xfe\xff";
-const char* const Codec::BOM::UTF16LE	= "\xff\xfe";
-const char* const Codec::BOM::UTF32BE	= "\x00\x00\xfe\xff";
-const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
 
 //-----------------------------------------------------------------------------
 // Codec::Encoder

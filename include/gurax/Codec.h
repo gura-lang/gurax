@@ -76,10 +76,7 @@ public:
 		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
 		bool GetDelcrFlag() const { return _delcrFlag; }
 		bool Decode(String& dst, const UInt8* src, size_t bytes);
-		bool Decode(String& dst, const Binary& src) {
-			return Decode(dst, src.data(), src.size());
-		}
-		Decoder* Duplicate() const;
+		bool Decode(String& dst, const Binary& src) { return Decode(dst, src.data(), src.size()); }
 	};
 	class GURAX_DLLDECLARE Encoder : public DecEncBase {
 	private:
@@ -89,10 +86,7 @@ public:
 		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
 		bool GetAddcrFlag() const { return _addcrFlag; }
 		bool Encode(Binary& dst, const char* src);
-		bool Encode(Binary& dst, const String& src) {
-			return Encode(dst, src.c_str());
-		}
-		Encoder* Duplicate() const;
+		bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	};
 private:
 	CodecFactory* _pFactory;
