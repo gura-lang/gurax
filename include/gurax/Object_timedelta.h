@@ -44,15 +44,19 @@ public:
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return reinterpret_cast<size_t>(this); }
-	virtual bool IsEqualTo(const Object* pObject) const override { return IsIdentical(pObject); }
+	virtual size_t DoCalcHash() const override {
+		return GetTimeDelta()->CalcHash();
+	}
+	virtual bool IsEqualTo(const Object* pObject) const override {
+		return GetTimeDelta()->IsIdentical(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta());
+	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetTimeDelta()->IsLessThan(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pTimeDelta->ToString(ss);
+		return GetTimeDelta()->ToString(ss);
 	}
 };
 
