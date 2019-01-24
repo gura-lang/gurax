@@ -43,6 +43,7 @@
 #include "gurax/Random.h"
 #include "gurax/Referable.h"
 #include "gurax/Stream.h"
+#include "gurax/Streams.h"
 #include "gurax/String.h"
 #include "gurax/Symbol.h"
 #include "gurax/Symbols.h"

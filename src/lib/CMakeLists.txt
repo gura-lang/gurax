@@ -40,6 +40,7 @@ add_library(guraxcore SHARED
 	Random.cpp
 	Referable.cpp
 	Stream.cpp
+	Streams.cpp
 	String.cpp
 	Symbol.cpp
 	Symbols.cpp
