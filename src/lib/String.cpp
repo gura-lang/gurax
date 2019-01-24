@@ -161,7 +161,7 @@ UInt64 String::NextUTF8(const_iterator* pp) const
 
 UInt64 String::NextUTF8(const char** pp)
 {
-	const char* p = *pp;
+	const char*& p = *pp;
 	UInt64 codeUTF8 = 0x000000000000;
 	if (*p != '\0') {
 		char ch = *p;
@@ -215,7 +215,7 @@ UInt32 String::NextUTF32(const_iterator* pp) const
 
 UInt32 String::NextUTF32(const char** pp)
 {
-	const char* p = *pp;
+	const char*& p = *pp;
 	UInt32 codeUTF32 = 0x00000000;
 	if (*p == '\0') {
 		// nothing to do
