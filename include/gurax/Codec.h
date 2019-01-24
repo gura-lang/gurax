@@ -38,6 +38,14 @@ public:
 public:
 	enum class Result { None, Complete, Error };
 	enum class WidthProp { N, A, H, W, F, Na };
+	struct BOM {
+		// Byte Order Mark of Unicode
+		static const char* const UTF8;
+		static const char* const UTF16BE;
+		static const char* const UTF16LE;
+		static const char* const UTF32BE;
+		static const char* const UTF32LE;
+	};
 	typedef std::map<UShort, UShort> Map;
 	struct CodeRow {
 		int nCols;
@@ -64,21 +72,23 @@ public:
 	private:
 		bool _delcrFlag;
 	public:
-		Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
+		explicit Decoder(bool delcrFlag) : _delcrFlag(delcrFlag) {}
 		void SetDelcrFlag(bool delcrFlag) { _delcrFlag = delcrFlag; }
 		bool GetDelcrFlag() const { return _delcrFlag; }
-		bool Decode(String& dst, const UInt8* buff, size_t bytes);
-		bool Decode(String& dst, const Binary& src);
+		bool Decode(String& dst, const UInt8* src, size_t bytes);
+		bool Decode(String& dst, const Binary& src) {
+			return Decode(dst, src.data(), src.size());
+		}
 		Decoder* Duplicate() const;
 	};
 	class GURAX_DLLDECLARE Encoder : public DecEncBase {
 	private:
 		bool _addcrFlag;
 	public:
-		Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
-		bool Encode(Binary& dst, const char* str);
+		explicit Encoder(bool addcrFlag) : _addcrFlag(addcrFlag) {}
 		void SetAddcrFlag(bool addcrFlag) { _addcrFlag = addcrFlag; }
 		bool GetAddcrFlag() const { return _addcrFlag; }
+		bool Encode(Binary& dst, const char* src);
 		bool Encode(Binary& dst, const String& src) {
 			return Encode(dst, src.c_str());
 		}
@@ -90,12 +100,6 @@ private:
 	std::unique_ptr<Encoder> _pEncoder;
 	static CodecFactory* _pFactory_None;
 	static const WidthInfo _widthInfoTbl[];
-public:
-	static const char* BOM_UTF8;
-	static const char* BOM_UTF16BE;
-	static const char* BOM_UTF16LE;
-	static const char* BOM_UTF32BE;
-	static const char* BOM_UTF32LE;
 public:
 	// Constructor
 	Codec(CodecFactory* pFactory, Decoder* pDecoder, Encoder* pEncoder);
@@ -131,7 +135,7 @@ public:
 template<typename T>
 class CodecFactoryTmpl : public CodecFactory {
 public:
-	CodecFactoryTmpl(const char* encoding) : CodecFactory(encoding) {}
+	explicit CodecFactoryTmpl(const char* encoding) : CodecFactory(encoding) {}
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
 		return new Codec(this, new typename T::Decoder(delcrFlag),
 						 new typename T::Encoder(addcrFlag));
@@ -145,24 +149,25 @@ class GURAX_DLLDECLARE Codec_None : public Codec {
 public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
-		Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
+		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
 	public:
-		Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
+		explicit Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 };
 
 //-----------------------------------------------------------------------------
 // Codec_UTF
+// Base class for handling characters in UTF code.
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Codec_UTF : public Codec {
 public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
-		Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
+		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
 		Result FeedUTF32(UInt32 codeUTF32, char& chConv);
 	};
 	class GURAX_DLLDECLARE Encoder : public Codec::Encoder {
@@ -170,8 +175,8 @@ public:
 		int _cntChars;
 		UInt32 _codeUTF32;
 	public:
-		Encoder(bool addcrFlag) :
-				Codec::Encoder(addcrFlag), _cntChars(0), _codeUTF32(0x00000000) {}
+		explicit Encoder(bool addcrFlag) :
+			Codec::Encoder(addcrFlag), _cntChars(0), _codeUTF32(0x00000000) {}
 		UInt32 GetUTF32() const { return _codeUTF32; }
 		virtual Result FeedChar(char ch, char& chConv) override;
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) = 0;
@@ -180,6 +185,7 @@ public:
 
 //-----------------------------------------------------------------------------
 // Codec_SBCS
+// Base class for handling characters in SBCS, Single Byte Character Set.
 //-----------------------------------------------------------------------------
 class Codec_SBCS : public Codec_UTF {
 public:
@@ -188,7 +194,7 @@ public:
 		const UShort* _codeTbl;
 	public:
 		Decoder(bool delcrFlag, const UShort* codeTbl) :
-						Codec_UTF::Decoder(delcrFlag), _codeTbl(codeTbl) {}
+			Codec_UTF::Decoder(delcrFlag), _codeTbl(codeTbl) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
@@ -197,13 +203,14 @@ public:
 		Map*& _pMap;
 	public:
 		Encoder(bool addcrFlag, const UShort* codeTbl, Map*& pMap) :
-						Codec_UTF::Encoder(addcrFlag), _codeTbl(codeTbl), _pMap(pMap) {}
+			Codec_UTF::Encoder(addcrFlag), _codeTbl(codeTbl), _pMap(pMap) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 	};
 };
 
 //-----------------------------------------------------------------------------
 // Codec_DBCS
+// Base class for handling characters in DBCS, Double Byte Character Set.
 //-----------------------------------------------------------------------------
 class Codec_DBCS : public Codec_UTF {
 public:
@@ -211,14 +218,14 @@ public:
 	private:
 		UShort _codeDBCS;
 	public:
-		Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
+		explicit Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 		virtual bool IsLeadByte(UChar ch);
 		virtual UShort DBCSToUTF16(UShort codeDBCS) = 0;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
-		Encoder(bool addcrFlag) : Codec_UTF::Encoder(addcrFlag) {}
+		explicit Encoder(bool addcrFlag) : Codec_UTF::Encoder(addcrFlag) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 		virtual UShort UTF16ToDBCS(UShort codeUTF16) = 0;
 	};

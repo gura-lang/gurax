@@ -7,16 +7,37 @@
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
+// CodecFactory
+//-----------------------------------------------------------------------------
+CodecFactory::List* CodecFactory::_pList = nullptr;
+
+CodecFactory::CodecFactory(const char* encoding) : _encoding(encoding)
+{
+}
+
+void CodecFactory::Register(CodecFactory* pFactory)
+{
+	if (_pList == nullptr) {
+		_pList = new List();
+	}
+	_pList->push_back(pFactory);
+}
+
+CodecFactory* CodecFactory::Lookup(const char* encoding)
+{
+	if (encoding == nullptr || _pList == nullptr) return nullptr;
+	for (CodecFactory* pFactory : *_pList) {
+		if (::strcasecmp(pFactory->GetEncoding(), encoding) == 0) {
+			return pFactory;
+		}
+	}
+	return nullptr;
+}
+
+//-----------------------------------------------------------------------------
 // Codec
 //-----------------------------------------------------------------------------
 CodecFactory* Codec::_pFactory_None = nullptr;
-
-// Byte Order Mark of Unicode
-const char* Codec::BOM_UTF8 = "\xef\xbb\xbf";
-const char* Codec::BOM_UTF16BE = "\xfe\xff";
-const char* Codec::BOM_UTF16LE = "\xff\xfe";
-const char* Codec::BOM_UTF32BE = "\x00\x00\xfe\xff";
-const char* Codec::BOM_UTF32LE = "\xff\xfe\x00\x00";
 
 Codec::Codec(CodecFactory* pFactory, Decoder* pDecoder, Encoder* pEncoder) :
 	_pFactory(pFactory), _pDecoder(pDecoder), _pEncoder(pEncoder)
@@ -123,40 +144,12 @@ Codec::Result Codec::DecEncBase::Flush(char& chConv)
 }
 
 //-----------------------------------------------------------------------------
-// CodecFactory
-//-----------------------------------------------------------------------------
-CodecFactory::List* CodecFactory::_pList = nullptr;
-
-CodecFactory::CodecFactory(const char* encoding) : _encoding(encoding)
-{
-}
-
-void CodecFactory::Register(CodecFactory* pFactory)
-{
-	if (_pList == nullptr) {
-		_pList = new List();
-	}
-	_pList->push_back(pFactory);
-}
-
-CodecFactory* CodecFactory::Lookup(const char* encoding)
-{
-	if (encoding == nullptr || _pList == nullptr) return nullptr;
-	for (CodecFactory* pFactory : *_pList) {
-		if (::strcasecmp(pFactory->GetEncoding(), encoding) == 0) {
-			return pFactory;
-		}
-	}
-	return nullptr;
-}
-
-//-----------------------------------------------------------------------------
 // Codec::Decoder
 //-----------------------------------------------------------------------------
-bool Codec::Decoder::Decode(String& dst, const UInt8* buff, size_t bytes)
+bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 {
 	char ch;
-	for (const UInt8* p = buff; bytes > 0; p++, bytes--) {
+	for (const UInt8* p = src; bytes > 0; p++, bytes--) {
 		Codec::Result rtn = FeedChar(*p, ch);
 		if (rtn == Codec::Result::Complete) {
 			dst.push_back(ch);
@@ -173,18 +166,23 @@ bool Codec::Decoder::Decode(String& dst, const UInt8* buff, size_t bytes)
 	return true;
 }
 
-bool Codec::Decoder::Decode(String& dst, const Binary& src)
-{
-	return Decode(dst, src.data(), src.size());
-}
+//-----------------------------------------------------------------------------
+// Codec::BOM
+//-----------------------------------------------------------------------------
+// Byte Order Mark of Unicode
+const char* const Codec::BOM::UTF8		= "\xef\xbb\xbf";
+const char* const Codec::BOM::UTF16BE	= "\xfe\xff";
+const char* const Codec::BOM::UTF16LE	= "\xff\xfe";
+const char* const Codec::BOM::UTF32BE	= "\x00\x00\xfe\xff";
+const char* const Codec::BOM::UTF32LE	= "\xff\xfe\x00\x00";
 
 //-----------------------------------------------------------------------------
 // Codec::Encoder
 //-----------------------------------------------------------------------------
-bool Codec::Encoder::Encode(Binary& dst, const char* str)
+bool Codec::Encoder::Encode(Binary& dst, const char* src)
 {
 	char ch;
-	for (const char* p = str; *p != '\0'; p++) {
+	for (const char* p = src; *p != '\0'; p++) {
 		Codec::Result rtn = FeedChar(*p, ch);
 		if (rtn == Codec::Result::Complete) {
 			dst.push_back(ch);
@@ -224,6 +222,7 @@ Codec::Result Codec_None::Encoder::FeedChar(char ch, char& chConv)
 
 //-----------------------------------------------------------------------------
 // Codec_UTF
+// Base class for handling characters in UTF code.
 //-----------------------------------------------------------------------------
 Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 {
@@ -297,6 +296,7 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 
 //-----------------------------------------------------------------------------
 // Codec_SBCS
+// Base class for handling characters in SBCS, Single Byte Character Set.
 //-----------------------------------------------------------------------------
 Codec::Result Codec_SBCS::Decoder::FeedChar(char ch, char& chConv)
 {
@@ -323,6 +323,7 @@ Codec::Result Codec_SBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 
 //-----------------------------------------------------------------------------
 // Codec_DBCS
+// Base class for handling characters in DBCS, Double Byte Character Set.
 //-----------------------------------------------------------------------------
 bool Codec_DBCS::Decoder::IsLeadByte(UChar ch)
 {
