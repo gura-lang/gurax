@@ -7,10 +7,13 @@ namespace Gurax {
 
 Gurax_TesterEntry(Stream)
 {
-	Stream::COut->Printf("Hello World\n");
+	const char *str = "Gura";
+	int n = 123456;
+	Stream::COut->Printf("Hello %s World %d\n", str, n);
 	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
-	pObjOwner->push_back(new Object_number(3));
-	Stream::COut->PrintFmt("Hello World %d\n", *pObjOwner);
+	pObjOwner->push_back(new Object_string(str));
+	pObjOwner->push_back(new Object_number(n));
+	Stream::COut->PrintFmt("Hello %s World %d\n", *pObjOwner);
 }
 
 }
