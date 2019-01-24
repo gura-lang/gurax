@@ -151,19 +151,22 @@ private:
 	bool _asSourceFlag;
 	bool _cramFlag;
 	bool _multiLineFlag;
+	bool _upperCaseFlag;
 	static const char* _strsComma[2];
 	static const char* _strsColon[2];
 	static const char* _strsSemicolon[2];
 public:
 	static const StringStyle Empty;
 public:
-	StringStyle() : _asSourceFlag(false) , _cramFlag(false), _multiLineFlag(false) {}
-	StringStyle& AsSource(bool asSourceFlag) { _asSourceFlag = asSourceFlag; return *this; }
-	StringStyle& Cram(bool cramFlag) { _cramFlag = cramFlag; return *this; }
-	StringStyle& MultiLine(bool multiLineFlag) { _multiLineFlag = multiLineFlag; return *this; }
+	StringStyle() : _asSourceFlag(false) , _cramFlag(false), _multiLineFlag(false), _upperCaseFlag(false) {}
+	StringStyle& AsSource(bool asSourceFlag = true) { _asSourceFlag = asSourceFlag; return *this; }
+	StringStyle& Cram(bool cramFlag = true) { _cramFlag = cramFlag; return *this; }
+	StringStyle& MultiLine(bool multiLineFlag = true) { _multiLineFlag = multiLineFlag; return *this; }
+	StringStyle& UpperCase(bool upperCaseFlag = true) { _upperCaseFlag = upperCaseFlag; return *this; }
 	bool IsAsSource() const { return _asSourceFlag; }
 	bool IsCram() const { return _cramFlag; }
 	bool IsMultiLine() const { return _multiLineFlag; }
+	bool IsUpperCase() const { return _upperCaseFlag; }
 	const char* GetComma() const { return _strsComma[_cramFlag]; }
 	const char* GetColon() const { return _strsColon[_cramFlag]; }
 	const char* GetSemicolon() const { return _strsSemicolon[_cramFlag]; }

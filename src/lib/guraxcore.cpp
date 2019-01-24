@@ -15,6 +15,7 @@ void Bootup()
 	Operators::Bootup();
 	Random::Bootup();
 	String::Bootup();
+	Stream::Bootup();
 	Symbol::Bootup();
 	Token::Bootup();
 }

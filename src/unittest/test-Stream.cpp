@@ -7,6 +7,7 @@ namespace Gurax {
 
 Gurax_TesterEntry(Stream)
 {
+	Stream::COut->Printf("Hello World\n");
 }
 
 }
