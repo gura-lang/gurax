@@ -43,8 +43,13 @@ public:
 public:
 	// Virtual iterators of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return reinterpret_cast<size_t>(this); }
-	virtual bool IsEqualTo(const Object* pObject) const override { return IsIdentical(pObject); }
+	virtual size_t DoCalcHash() const override {
+		return GetIterator()->CalcHash();
+	}
+	virtual bool IsEqualTo(const Object* pObject) const override {
+		return IsSameType(pObject) &&
+			GetIterator()->IsEqualTo(dynamic_cast<const Object_iterator*>(pObject)->GetIterator());
+	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetIterator()->IsLessThan(dynamic_cast<const Object_iterator*>(pObject)->GetIterator()) :

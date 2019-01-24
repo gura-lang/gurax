@@ -42,7 +42,9 @@ public:
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return GetSymbol()->CalcHash(); }
+	virtual size_t DoCalcHash() const override {
+		return GetSymbol()->CalcHash();
+	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
 			GetSymbol()->IsEqualTo(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol());

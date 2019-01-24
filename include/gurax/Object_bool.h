@@ -42,7 +42,9 @@ public:
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return static_cast<size_t>(GetBool()); }
+	virtual size_t DoCalcHash() const override {
+		return static_cast<size_t>(GetBool());
+	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) && GetBool() == dynamic_cast<const Object_bool*>(pObject)->GetBool();
 	}

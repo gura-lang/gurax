@@ -48,7 +48,7 @@ public:
 		return GetTimeDelta()->CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
-		return GetTimeDelta()->IsIdentical(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta());
+		return GetTimeDelta()->IsEqualTo(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?

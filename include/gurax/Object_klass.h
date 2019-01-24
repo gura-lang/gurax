@@ -43,8 +43,13 @@ public:
 public:
 	// Virtual klasss of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return reinterpret_cast<size_t>(this); }
-	virtual bool IsEqualTo(const Object* pObject) const override { return IsIdentical(pObject); }
+	virtual size_t DoCalcHash() const override {
+		return GetKlassThis().CalcHash();
+	}
+	virtual bool IsEqualTo(const Object* pObject) const override {
+		return IsSameType(pObject) &&
+			GetKlassThis().IsEqualTo(dynamic_cast<const Object_klass*>(pObject)->GetKlassThis());
+	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetKlassThis().IsLessThan(dynamic_cast<const Object_klass*>(pObject)->GetKlassThis()) :

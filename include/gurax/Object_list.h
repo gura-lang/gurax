@@ -48,7 +48,9 @@ public:
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return new Object_list(*this); }
-	virtual size_t DoCalcHash() const override { return GetObjectOwner().CalcHash(); }
+	virtual size_t DoCalcHash() const override {
+		return GetObjectOwner().CalcHash();
+	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
 			GetObjectOwner().IsEqualTo(dynamic_cast<const Object_list*>(pObject)->GetObjectOwner());

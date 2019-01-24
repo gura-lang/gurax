@@ -48,7 +48,8 @@ public:
 		return GetDateTime()->CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
-		return GetDateTime()->IsIdentical(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime());
+		return IsSameType(pObject) &&
+			GetDateTime()->IsEqualTo(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?

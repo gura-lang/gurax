@@ -139,6 +139,7 @@ public:
 	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
+	bool IsEqualTo(const Klass& klass) const { return IsIdentical(klass); }
 	bool IsLessThan(const Klass& klass) const { return this < &klass; }
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }

@@ -44,8 +44,13 @@ public:
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return reinterpret_cast<size_t>(this); }
-	virtual bool IsEqualTo(const Object* pObject) const override { return IsIdentical(pObject); }
+	virtual size_t DoCalcHash() const override {
+		return GetModule()->CalcHash();
+	}
+	virtual bool IsEqualTo(const Object* pObject) const override {
+		return IsSameType(pObject) &&
+			GetModule()->IsEqualTo(dynamic_cast<const Object_module*>(pObject)->GetModule());
+	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetModule()->IsLessThan(dynamic_cast<const Object_module*>(pObject)->GetModule()) :

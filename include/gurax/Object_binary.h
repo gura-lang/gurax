@@ -43,7 +43,9 @@ public:
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return GetBinary().CalcHash(); }
+	virtual size_t DoCalcHash() const override {
+		return GetBinary().CalcHash();
+	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
 			GetBinary().IsEqualTo(dynamic_cast<const Object_binary*>(pObject)->GetBinary());
