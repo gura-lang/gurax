@@ -37,7 +37,7 @@ public:
 	bool IsIdentical(const Iterator* pIterator) const { return this == pIterator; }
 	bool IsEqualTo(const Iterator* pIterator) const { return IsIdentical(pIterator); }
 	bool IsLessThan(const Iterator* pIterator) const { return this < pIterator; }
-	String ToString() const { return "(iterator)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(iterator)"; }
 };
 
 }

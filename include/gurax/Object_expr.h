@@ -51,7 +51,9 @@ public:
 			GetExpr()->IsLessThan(dynamic_cast<const Object_expr*>(pObject)->GetExpr()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return _pExpr->ToString(); }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+		return _pExpr->ToString(ss);
+	}
 };
 
 }

@@ -50,7 +50,9 @@ public:
 			GetIterator()->IsLessThan(dynamic_cast<const Object_iterator*>(pObject)->GetIterator()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return _pIterator->ToString(); }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+		return _pIterator->ToString(ss);
+	}
 };
 
 }

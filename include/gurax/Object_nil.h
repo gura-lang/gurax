@@ -43,7 +43,9 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)? false : GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return "nil"; }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+		return "nil";
+	}
 };
 
 }

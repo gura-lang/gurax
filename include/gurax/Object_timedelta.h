@@ -1,21 +1,22 @@
 //==============================================================================
-// Object_function.h
+// Object_timedelta.h
 //==============================================================================
-#ifndef GURAX_OBJECT_FUNCTION_H
-#define GURAX_OBJECT_FUNCTION_H
+#ifndef GURAX_OBJECT_TIMEDELTA_H
+#define GURAX_OBJECT_TIMEDELTA_H
 #include "Object.h"
+#include "TimeDelta.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_function
+// Object_timedelta
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_function : public Object {
+class GURAX_DLLDECLARE Object_timedelta : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_function);
+	Gurax_DeclareReferable(Object_timedelta);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_function");
+	Gurax_MemoryPoolAllocator("Object_timedelta");
 	// Class declaration
 	class KlassEx : public Klass {
 	public:
@@ -24,22 +25,22 @@ public:
 	};
 	static KlassEx klass;
 private:
-	RefPtr<Function> _pFunction;
+	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor
-	Object_function() = delete;
-	explicit Object_function(Function *pFunction) : Object(klass), _pFunction(pFunction) {}
+	Object_timedelta() = delete;
+	explicit Object_timedelta(TimeDelta *pTimeDelta) : Object(klass), _pTimeDelta(pTimeDelta) {}
 	// Copy constructor/operator
-	Object_function(const Object_function& src) : Object(klass), _pFunction(src._pFunction->Reference()) {}
-	Object_function& operator=(const Object_function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }
+	Object_timedelta(const Object_timedelta& src) : Object(klass), _pTimeDelta(src._pTimeDelta->Reference()) {}
+	Object_timedelta& operator=(const Object_timedelta& src) { _pTimeDelta.reset(src._pTimeDelta->Reference()); return *this; }
 	// Move constructor/operator
-	Object_function(Object_function&& src) : Object(klass), _pFunction(src._pFunction.release()) {}
-	Object_function& operator=(Object_function&& src) noexcept { _pFunction.reset(src._pFunction.release()); return *this; }
+	Object_timedelta(Object_timedelta&& src) : Object(klass), _pTimeDelta(src._pTimeDelta.release()) {}
+	Object_timedelta& operator=(Object_timedelta&& src) noexcept { _pTimeDelta.reset(src._pTimeDelta.release()); return *this; }
 protected:
 	// Destructor
-	~Object_function() = default;
+	~Object_timedelta() = default;
 public:
-	const Function* GetFunction() const { return _pFunction.get(); }
+	const TimeDelta* GetTimeDelta() const { return _pTimeDelta.get(); }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
@@ -47,11 +48,11 @@ public:
 	virtual bool IsEqualTo(const Object* pObject) const override { return IsIdentical(pObject); }
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetFunction()->IsLessThan(dynamic_cast<const Object_function*>(pObject)->GetFunction()) :
+			GetTimeDelta()->IsLessThan(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pFunction->ToString(ss);
+		return _pTimeDelta->ToString(ss);
 	}
 };
 

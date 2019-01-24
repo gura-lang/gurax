@@ -73,7 +73,7 @@ public:
 	Stream& PrintFmt(const char* format, const ObjectList& objectList);
 	bool ReadLine(String& str, bool includeEOLFlag);
 	bool ReadLines(StringList& strList, bool includeEOLFlag);
-	void Dump(const void* buff, size_t bytes, const StringStyle& stringStyle = StringStyle::Empty);
+	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
 	virtual int GetChar() = 0;
@@ -85,7 +85,7 @@ public:
 	bool IsIdentical(const Stream* pStream) const { return this == pStream; }
 	bool IsEqualTo(const Stream* pStream) const { return IsIdentical(pStream); }
 	bool IsLessThan(const Stream* pStream) const { return this < pStream; }
-	String ToString() const { return "(stream)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(stream)"; }
 };
 
 }

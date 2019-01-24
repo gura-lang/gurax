@@ -73,7 +73,7 @@ public:
 	bool IsIdentical(const Expr* pExpr) const { return this == pExpr; }
 	bool IsEqualTo(const Expr* pExpr) const { return IsIdentical(pExpr); }
 	bool IsLessThan(const Expr* pExpr) const { return this < pExpr; }
-	String ToString() const { return "(expr)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(expr)"; }
 };
 
 //------------------------------------------------------------------------------

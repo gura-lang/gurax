@@ -26,6 +26,12 @@ public:
 protected:
 	// Destructor
 	virtual ~TimeDelta() = default;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const TimeDelta* pTimeDelta) const { return this == pTimeDelta; }
+	bool IsEqualTo(const TimeDelta* pTimeDelta) const { return IsIdentical(pTimeDelta); }
+	bool IsLessThan(const TimeDelta* pTimeDelta) const { return this < pTimeDelta; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(timedelta)"; }
 };
 
 }

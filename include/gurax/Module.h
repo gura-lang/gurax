@@ -39,7 +39,7 @@ public:
 	bool IsIdentical(const Module* pModule) const { return this == pModule; }
 	bool IsEqualTo(const Module* pModule) const { return IsIdentical(pModule); }
 	bool IsLessThan(const Module* pModule) const { return this < pModule; }
-	String ToString() const { return "(module)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(module)"; }
 };
 
 }

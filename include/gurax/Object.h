@@ -26,8 +26,7 @@ public:
 	bool IsIdentical(const ObjectList& objectList) const { return this == &objectList; }
 	bool IsEqualTo(const ObjectList& objectList) const { return IsIdentical(objectList); }
 	bool IsLessThan(const ObjectList& objectList) const { return this < &objectList; }
-	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
@@ -88,8 +87,7 @@ public:
 	}
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
-	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
@@ -143,7 +141,7 @@ public:
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	bool IsLessThan(const Klass& klass) const { return this < &klass; }
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
-	String ToString() const { return "(klass)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }
 public:
 	void Prepare() { DoPrepare(); }
 	virtual void DoPrepare() = 0;
@@ -214,7 +212,6 @@ public:
 	Klass& GetKlass() { return _klass; }
 	const Klass& GetKlass() const { return _klass; }
 	size_t CalcHash() const { return DoCalcHash(); }
-	String ToString() const { return ToString(StringStyle::Empty); }
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
@@ -233,7 +230,7 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual bool IsLessThan(const Object* pObject) const = 0;
-	virtual String ToString(const StringStyle&) const { return String::Empty; }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const { return String::Empty; }
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;
@@ -290,8 +287,7 @@ public:
 	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }
 	bool IsEqualTo(const ObjectDict& objectDict) const { return IsIdentical(objectDict); }
 	bool IsLessThan(const ObjectDict& objectDict) const { return this < &objectDict; }
-	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
@@ -313,8 +309,7 @@ public:
 	}
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
-	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 }

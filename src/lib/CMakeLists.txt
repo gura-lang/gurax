@@ -20,6 +20,7 @@ add_library(guraxcore SHARED
 	Object_attribute.cpp
 	Object_binary.cpp
 	Object_bool.cpp
+	Object_datetime.cpp
 	Object_dict.cpp
 	Object_expr.cpp
 	Object_function.cpp
@@ -33,6 +34,7 @@ add_library(guraxcore SHARED
 	Object_string.cpp
 	Object_stringptr.cpp
 	Object_symbol.cpp
+	Object_timedelta.cpp
 	Object_undefined.cpp
 	Operator.cpp
 	Operators.cpp

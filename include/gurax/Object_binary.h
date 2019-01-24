@@ -53,7 +53,9 @@ public:
 			GetBinary().IsLessThan(dynamic_cast<const Object_binary*>(pObject)->GetBinary()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return _pBinary->GetBinary().MakeQuoted(true); }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+		return _pBinary->GetBinary().MakeQuoted(true);
+	}
 };
 
 }

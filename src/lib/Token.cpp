@@ -183,7 +183,7 @@ bool TokenStack::CheckBlockParamEnd() const
 	return true;
 }
 
-String TokenStack::ToString() const
+String TokenStack::ToString(const StringStyle&) const
 {
 	String rtn;
 	for (auto ppToken = begin(); ppToken != end(); ppToken++) {

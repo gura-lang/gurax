@@ -80,8 +80,7 @@ public:
 	static MemoryPool& Global() { return _memoryPool; }
 	void* Allocate(size_t bytes, const char* ownerName);
 	void Deallocate(void* p);
-	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //-----------------------------------------------------------------------------

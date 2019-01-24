@@ -56,6 +56,12 @@ public:
 protected:
 	// Destructor
 	virtual ~DateTime() = default;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const DateTime* pDateTime) const { return this == pDateTime; }
+	bool IsEqualTo(const DateTime* pDateTime) const { return IsIdentical(pDateTime); }
+	bool IsLessThan(const DateTime* pDateTime) const { return this < pDateTime; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(datetime)"; }
 };
 
 }

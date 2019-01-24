@@ -52,7 +52,9 @@ public:
 			String::IsLessThan(GetString(), dynamic_cast<const Object_stringptr*>(pObject)->GetString()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return _str; }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+		return _str;
+	}
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };
 

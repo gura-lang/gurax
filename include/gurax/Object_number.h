@@ -70,7 +70,9 @@ public:
 			GetDouble() < dynamic_cast<const Object_number*>(pObject)->GetDouble() :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle&) const override { return std::to_string(_num); }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+		return std::to_string(_num);
+	}
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& flags) const override;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& flags) const override;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& flags) const override;

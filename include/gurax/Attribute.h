@@ -53,7 +53,7 @@ public:
 	bool IsIdentical(const Attribute* pAttr) const { return this == pAttr; }
 	bool IsEqualTo(const Attribute* pAttr) const { return IsIdentical(pAttr); }
 	bool IsLessThan(const Attribute* pAttr) const { return this < pAttr; }
-	String ToString() const { return "(attribute)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(attribute)"; }
 };
 
 }
