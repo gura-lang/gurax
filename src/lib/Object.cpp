@@ -6,6 +6,42 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// ObjectMap
+//------------------------------------------------------------------------------
+void ObjectMap::Clear()
+{
+	for (auto& pair : *this) Object::Delete(pair.second);
+	clear();
+}
+
+void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
+{
+	iterator pPair = find(pSymbol);
+	if (pPair == end()) {
+		emplace(pSymbol, pObject);
+	} else {
+		Object::Delete(pPair->second);
+		pPair->second = pObject;
+	}
+}
+
+String ObjectMap::ToString(const StringStyle& ss) const
+{
+	String str;
+	SymbolList keys = GetKeys().Sort();
+	for (const Symbol* pSymbol : keys) {
+		Object* pObject = Lookup(pSymbol);
+		str += pSymbol->GetName();
+		str += ":";
+		str += pObject->GetKlass().MakeFullName().c_str();
+		str += " = ";
+		str += pObject->ToString();
+		str += "\n";
+	}
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Klass
 //------------------------------------------------------------------------------
 Klass::SeqId Klass::_seqIdNext = 1;
@@ -203,42 +239,6 @@ void ObjectOwner::Set(size_t pos, Object* pObject)
 	iterator ppObject = begin() + pos;
 	Object::Delete(*ppObject);
 	*ppObject = pObject;
-}
-
-//------------------------------------------------------------------------------
-// ObjectMap
-//------------------------------------------------------------------------------
-void ObjectMap::Clear()
-{
-	for (auto& pair : *this) Object::Delete(pair.second);
-	clear();
-}
-
-void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
-{
-	iterator pPair = find(pSymbol);
-	if (pPair == end()) {
-		emplace(pSymbol, pObject);
-	} else {
-		Object::Delete(pPair->second);
-		pPair->second = pObject;
-	}
-}
-
-String ObjectMap::ToString(const StringStyle& ss) const
-{
-	String str;
-	SymbolList keys = GetKeys().Sort();
-	for (const Symbol* pSymbol : keys) {
-		Object* pObject = Lookup(pSymbol);
-		str += pSymbol->GetName();
-		str += ":";
-		str += pObject->GetKlass().MakeFullName().c_str();
-		str += " = ";
-		str += pObject->ToString();
-		str += "\n";
-	}
-	return str;
 }
 
 //------------------------------------------------------------------------------

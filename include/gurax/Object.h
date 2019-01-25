@@ -17,57 +17,6 @@ class Object;
 class StringStyle;
 
 //------------------------------------------------------------------------------
-// ObjectList
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ObjectList : public std::vector<Object*> {
-public:
-	ObjectList& Sort(SortOrder sortOrder = SortOrder::Ascend);
-	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const ObjectList& objectList) const { return this == &objectList; }
-	bool IsEqualTo(const ObjectList& objectList) const { return IsIdentical(objectList); }
-	bool IsLessThan(const ObjectList& objectList) const { return this < &objectList; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
-};
-
-//------------------------------------------------------------------------------
-// ObjectOwner
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ObjectOwner : public ObjectList, public Referable {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(ObjectOwner);
-protected:
-	~ObjectOwner() { Clear(); }
-public:
-	void Clear();
-	ObjectOwner* Clone() const;
-	ObjectOwner* CloneDeep() const;
-	void Set(size_t pos, Object* pObject);
-	Object* Get(size_t pos) const { return at(pos); }
-public:
-	template<typename T_Map> static ObjectOwner* CollectKeys(const T_Map& map);
-};
-
-template<typename T_Map>
-ObjectOwner* ObjectOwner::CollectKeys(const T_Map& map)
-{
-	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
-	pObjectOwner->reserve(map.size());
-	for (auto& pair : map) pObjectOwner->push_back(pair.first->Reference());
-	return pObjectOwner.release();
-}
-
-//------------------------------------------------------------------------------
-// ObjectStack
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ObjectStack : public ObjectOwner {
-public:
-	Object* Peek(int offset) { return *(rbegin() + offset); }
-	void Push(Object* pObject) { push_back(pObject); }
-	Object* Pop() { Object* pObject = back(); pop_back(); return pObject; }
-};
-
-//------------------------------------------------------------------------------
 // ObjectMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ObjectMap :
@@ -262,6 +211,57 @@ template<typename T> bool Object::IsInstanceOf() const
 	}
 	return false;
 }
+
+//------------------------------------------------------------------------------
+// ObjectList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectList : public std::vector<Object*> {
+public:
+	ObjectList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ObjectList& objectList) const { return this == &objectList; }
+	bool IsEqualTo(const ObjectList& objectList) const { return IsIdentical(objectList); }
+	bool IsLessThan(const ObjectList& objectList) const { return this < &objectList; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// ObjectOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectOwner : public ObjectList, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ObjectOwner);
+protected:
+	~ObjectOwner() { Clear(); }
+public:
+	void Clear();
+	ObjectOwner* Clone() const;
+	ObjectOwner* CloneDeep() const;
+	void Set(size_t pos, Object* pObject);
+	Object* Get(size_t pos) const { return at(pos); }
+public:
+	template<typename T_Map> static ObjectOwner* CollectKeys(const T_Map& map);
+};
+
+template<typename T_Map>
+ObjectOwner* ObjectOwner::CollectKeys(const T_Map& map)
+{
+	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
+	pObjectOwner->reserve(map.size());
+	for (auto& pair : map) pObjectOwner->push_back(pair.first->Reference());
+	return pObjectOwner.release();
+}
+
+//------------------------------------------------------------------------------
+// ObjectStack
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectStack : public ObjectOwner {
+public:
+	Object* Peek(int offset) { return *(rbegin() + offset); }
+	void Push(Object* pObject) { push_back(pObject); }
+	Object* Pop() { Object* pObject = back(); pop_back(); return pObject; }
+};
 
 //------------------------------------------------------------------------------
 // ObjectDict
