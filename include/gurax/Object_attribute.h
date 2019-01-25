@@ -40,24 +40,24 @@ protected:
 	// Destructor
 	~Object_attribute() = default;
 public:
-	const Attribute* GetAttribute() const { return _pAttribute.get(); }
+	const Attribute& GetAttribute() const { return *_pAttribute; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetAttribute()->CalcHash();
+		return GetAttribute().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetAttribute()->IsEqualTo(dynamic_cast<const Object_attribute*>(pObject)->GetAttribute());
+			GetAttribute().IsEqualTo(dynamic_cast<const Object_attribute*>(pObject)->GetAttribute());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetAttribute()->IsLessThan(dynamic_cast<const Object_attribute*>(pObject)->GetAttribute()) :
+			GetAttribute().IsLessThan(dynamic_cast<const Object_attribute*>(pObject)->GetAttribute()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pAttribute->ToString(ss);
+		return GetAttribute().ToString(ss);
 	}
 };
 

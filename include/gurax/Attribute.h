@@ -50,9 +50,9 @@ public:
 	const SymbolList& GetSymbolsOpt() const { return _symbolListOpt; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Attribute* pAttr) const { return this == pAttr; }
-	bool IsEqualTo(const Attribute* pAttr) const { return IsIdentical(pAttr); }
-	bool IsLessThan(const Attribute* pAttr) const { return this < pAttr; }
+	bool IsIdentical(const Attribute& attr) const { return this == &attr; }
+	bool IsEqualTo(const Attribute& attr) const { return IsIdentical(attr); }
+	bool IsLessThan(const Attribute& attr) const { return this < &attr; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
