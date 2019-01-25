@@ -49,6 +49,7 @@
 #include "gurax/String.h"
 #include "gurax/Symbol.h"
 #include "gurax/Symbols.h"
+#include "gurax/Template.h"
 #include "gurax/TimeDelta.h"
 #include "gurax/Token.h"
 #include "gurax/Tokenizer.h"

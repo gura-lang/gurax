@@ -46,6 +46,7 @@ add_library(guraxcore SHARED
 	String.cpp
 	Symbol.cpp
 	Symbols.cpp
+	Template.cpp
 	TimeDelta.cpp
 	Token.cpp
 	Tokenizer.cpp

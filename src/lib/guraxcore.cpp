@@ -17,6 +17,7 @@ void Bootup()
 	String::Bootup();
 	Stream::Bootup();
 	Symbol::Bootup();
+	Template::Bootup();
 	Token::Bootup();
 }
 
