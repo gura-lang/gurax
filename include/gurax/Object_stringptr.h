@@ -1,5 +1,6 @@
 //==============================================================================
 // Object_stringptr.h
+// This object type is designed to be used with Formatter.
 //==============================================================================
 #ifndef GURAX_OBJECT_STRINGPTR_H
 #define GURAX_OBJECT_STRINGPTR_H

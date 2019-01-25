@@ -8,26 +8,11 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // Formatter
 //-----------------------------------------------------------------------------
-bool Formatter::DoFormat(const char* format, const ObjectList& objectList)
-{
-	Source_ObjectList source(objectList);
-	return DoFormat(format, source);
-}
-
-bool Formatter::DoFormat(const char* format, va_list ap)
-{
-	Source_va_list source(ap);
-	return DoFormat(format, source);
-}
-
-bool Formatter::DoFormat(const char* format, Source& source)
+bool Formatter::Format(const char* format, Source&& source)
 {
 	bool eatNextFlag;
 	FormatterFlags formatterFlags;
-	enum class Stat {
-		Start, FlagsPre, Flags, FlagsAfterWhite, PrecisionPre, Precision, Padding,
-	} stat = Stat::Start;
-	_strErr.clear();
+	Stat stat = Stat::Start;
 	for (const char* formatp = format; ; ) {
 		char ch = *formatp;
 		eatNextFlag = true;
@@ -37,9 +22,10 @@ bool Formatter::DoFormat(const char* format, Source& source)
 			if (ch == '%') {
 				stat = Stat::FlagsPre;
 			} else if (ch == '\n') {
-				for (const char* p = _lineSep; *p != '\0'; p++) {
-					if (!PutChar(*p)) return false;
-				}
+				if (!PutString(_lineSep)) return false;
+				//for (const char* p = _lineSep; *p != '\0'; p++) {
+				//	if (!PutChar(*p)) return false;
+				//}
 			} else {
 				if (!PutChar(ch)) return false;
 			}
@@ -54,7 +40,6 @@ bool Formatter::DoFormat(const char* format, Source& source)
 					IssueError_NotEnoughArguments();
 					return false;
 				}
-				// initialize formatterFlags
 				formatterFlags.Initialize();
 				eatNextFlag = false;
 				stat = Stat::Flags;

@@ -45,6 +45,9 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Formatter {
 public:
+	enum class Stat {
+		Start, FlagsPre, Flags, FlagsAfterWhite, PrecisionPre, Precision, Padding,
+	};
 	class Source {
 	public:
 		virtual bool IsEnd() = 0;
@@ -91,22 +94,23 @@ public:
 private:
 	bool _nilVisibleFlag;
 	const char* _lineSep;
-	String _strErr;
 public:
 	Formatter(bool nilVisibleFlag = true) : _nilVisibleFlag(nilVisibleFlag), _lineSep("\n") {}
-	bool DoFormat(const char* format, const ObjectList& objectList);
-	bool DoFormat(const char* format, va_list ap);
-	bool DoFormat(const char* format, Source& source);
+	bool Format(const char* format, const ObjectList& objectList) {
+		return Format(format, Source_ObjectList(objectList));
+	}
+	bool Format(const char* format, va_list ap) {
+		return Format(format, Source_va_list(ap));
+	}
+	bool Format(const char* format, Source&& source);
 	bool PutString(const char* p);
 	bool PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax = -1);
 	bool PutInvalid(const FormatterFlags& formatterFlags);
 	//static const Object* FormatIterator(const char* format, IteratorOwner& iterOwner);
-public:
-	// Virtual functions
-	virtual bool PutChar(char ch) = 0;
 private:
-	bool HasError() const { return !_strErr.empty(); }
-	const char* GetError() const { return _strErr.c_str(); }
+	static char* FillZeroDigit(char* dstp, char* dstpEnd, int cnt);
+	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp);
+	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt);
 	void IssueError_NumberIsExpectedForAsterisk() {
 		Error::Issue(ErrorType::ValueError, "number is expected for * specifier");
 	}
@@ -116,9 +120,9 @@ private:
 	void IssueError_NotEnoughArguments() {
 		Error::Issue(ErrorType::ValueError, "not enough arguments for formatter");
 	}
-	static char* FillZeroDigit(char* dstp, char* dstpEnd, int cnt);
-	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp);
-	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt);
+public:
+	// Virtual functions
+	virtual bool PutChar(char ch) = 0;
 };
 
 }

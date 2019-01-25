@@ -34,8 +34,7 @@ Stream& Stream::Println(const char* str)
 
 Stream& Stream::PrintfV(const char* format, va_list ap)
 {
-	FormatterEx formatter(*this);
-	formatter.DoFormat(format, ap);
+	FormatterEx(*this).Format(format, ap);
 	return *this;
 }
 
@@ -48,8 +47,7 @@ Stream& Stream::Printf(const char* format, ...)
 
 Stream& Stream::PrintFmt(const char* format, const ObjectList& objectList)
 {
-	FormatterEx formatter(*this);
-	formatter.DoFormat(format, objectList);
+	FormatterEx(*this).Format(format, objectList);
 	return *this;
 }
 

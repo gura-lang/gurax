@@ -303,8 +303,7 @@ void String::AppendUTF32(UInt32 codeUTF32)
 
 String& String::PrintfV(const char* format, va_list ap)
 {
-	Formatter_String formatter(*this);
-	formatter.DoFormat(format, ap);
+	Formatter_String(*this).Format(format, ap);
 	return *this;
 }
 
@@ -317,8 +316,7 @@ String& String::Printf(const char* format, ...)
 
 String& String::PrintFmt(const char* format, const ObjectList& objectList)
 {
-	Formatter_String formatter(*this);
-	formatter.DoFormat(format, objectList);
+	Formatter_String(*this).Format(format, objectList);
 	return *this;
 }
 
