@@ -39,8 +39,8 @@ public:
 	static const Binary Empty;
 public:
 	Binary(const char* src) : basic_string(reinterpret_cast<const UInt8*>(src)) {}
-	//Binary(const std::string& src) : std::string(src) {}
-	//String(std::string&& src) : std::string(std::move(src)) {}
+	Binary(const char* src, size_t len) : basic_string(reinterpret_cast<const UInt8*>(src), len) {}
+	Binary(const String& src) : Binary(src.data(), src.size()) {}
 	// Inherits constructors
 	using std::basic_string<UInt8>::basic_string;
 public:

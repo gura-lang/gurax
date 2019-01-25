@@ -119,9 +119,9 @@ private:
 	const TokenType& _tokenType;
 	int _lineNoTop;
 	int _lineNoBtm;
-	RefPtr<StringReferable> _pValue;	// for Symbol, Space, Escape, Number, NumberSuffixed,
-										//     CommentLine, CommentBlock, String, StringSuffixed
-										//     Binary and EmbedString
+	RefPtr<StringReferable> _pValue;	// for Symbol, Space, Escape, Number, NumberSuffixed, EmbedString
+										//     CommentLine, CommentBlock, String and StringSuffixed
+	RefPtr<BinaryReferable> _pBinary;	// for Binary
 	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed
 	RefPtr<StringReferable> _pSource;	// for NumberSuffixed, StringSuffixed
 	RefPtr<Expr> _pExpr;				// for Expr
@@ -159,6 +159,9 @@ public:
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix, String source) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
 			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,  BinaryReferable* pBinary, String source) :
+		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
+		_pBinary(pBinary), _pSource(new StringReferable(std::move(source))), _itererFlag(false) {}
 	// Copy constructor/operator
 	Token(const Token& src) = delete;
 	Token& operator=(const Token& src) = delete;
@@ -195,12 +198,14 @@ public:
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
 	const char* GetValue() const { return _pValue->GetString(); }
+	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
 	const char* GetSuffix() const { return _pSuffix->GetString(); }
 	const char* GetSource() const { return _pSource->GetString(); }
 	const String& GetValueSTL() const { return _pValue->GetStringSTL(); }
 	const String& GetSuffixSTL() const { return _pSuffix->GetStringSTL(); }
 	const String& GetSourceSTL() const { return _pSource->GetStringSTL(); }
 	const StringReferable* GetValueReferable() const { return _pValue.get(); }
+	const BinaryReferable* GetBinaryReferable() const { return _pBinary.get(); }
 	const StringReferable* GetSuffixReferable() const { return _pSuffix.get(); }
 	const StringReferable* GetSourceReferable() const { return _pSource.get(); }
 	void AppendValue(const char* value) { _pValue->GetStringSTL().append(value); }

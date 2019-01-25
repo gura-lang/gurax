@@ -659,7 +659,8 @@ void Tokenizer::FeedChar(char ch)
 				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, _lineNoTop, lineNo,
 												  _value, _suffix, _value + _suffix));
 			} else {
-				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, _lineNoTop, lineNo, _value, _suffix));
+				_tokenWatcher.FeedToken(new Token(TokenType::NumberSuffixed, _lineNoTop, lineNo,
+												  _value, _suffix));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -835,11 +836,14 @@ void Tokenizer::FeedChar(char ch)
 		} else {
 			int lineNo = GetLineNo();
 			if (_stringInfo.binaryFlag) {
-				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo, _value, "", _source));
+				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
+												  new BinaryReferable(_value), _source));
 			} else if (_stringInfo.embedFlag) {
-				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo, _value, "", _source));
+				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo,
+												  _value, "", _source));
 			} else {
-				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo, _value, "", _source));
+				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo,
+												  _value, "", _source));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -1044,11 +1048,14 @@ void Tokenizer::FeedChar(char ch)
 		} else {
 			int lineNo = GetLineNo();
 			if (_stringInfo.binaryFlag) {
-				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo, _value, "", _source));
+				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
+												  new BinaryReferable(_value), _source));
 			} else if (_stringInfo.embedFlag) {
-				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo, _value, "", _source));
+				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo,
+												  _value, "", _source));
 			} else {
-				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo, _value, "", _source));
+				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo,
+												  _value, "", _source));
 			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
@@ -1059,9 +1066,16 @@ void Tokenizer::FeedChar(char ch)
 		if (String::IsSymbolFollower(ch)) {
 			if (_verboseFlag) _source.push_back(ch);
 			_suffix.push_back(ch);
+		} else if (_stringInfo.binaryFlag) {
+			IssueError(ErrorType::SyntaxError, "binary literal can not be specified with suffix");
+			_stat = Stat::Error;
+		} else if (_stringInfo.embedFlag) {
+			IssueError(ErrorType::SyntaxError, "embedded literal can not be specified with suffix");
+			_stat = Stat::Error;
 		} else {
 			int lineNo = GetLineNo();
-			_tokenWatcher.FeedToken(new Token(TokenType::StringSuffixed, _lineNoTop, lineNo, _value, _suffix, _source));
+			_tokenWatcher.FeedToken(new Token(TokenType::StringSuffixed, _lineNoTop, lineNo,
+											  _value, _suffix, _source));
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
