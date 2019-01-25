@@ -87,6 +87,7 @@ void Object::Bootup()
 	Object_string::klass.Prepare();
 	Object_stringptr::klass.Prepare();
 	Object_symbol::klass.Prepare();
+	Object_template::klass.Prepare();
 	Object_timedelta::klass.Prepare();
 	Object_undefined::klass.Prepare();
 	_pObject_undefined	= new Object_undefined();

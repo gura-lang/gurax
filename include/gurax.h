@@ -37,6 +37,7 @@
 #include "gurax/Object_string.h"
 #include "gurax/Object_stringptr.h"
 #include "gurax/Object_symbol.h"
+#include "gurax/Object_template.h"
 #include "gurax/Object_timedelta.h"
 #include "gurax/Object_undefined.h"
 #include "gurax/Operator.h"

@@ -113,16 +113,14 @@ bool Parser::ReduceOneToken()
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Binary\n"));
 		pExprGen.reset(new Expr_Object(new Object_binary(pToken->GetBinaryReferable()->Reference())));
-#if 0
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
-		AutoPtr<Template> pTemplate(new Template());
-		bool autoIndentFlag = true;
-		bool appendLastEOLFlag = false;
-		if (!pTemplate->Parse(env, pToken->GetString(), nullptr,
-							  autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		pExprGen.reset(new Expr_EmbedString(pTemplate.release(), pToken->GetStringSTL()));
-#endif
+		RefPtr<Template> pTempl(new Template());
+		//bool autoIndentFlag = true;
+		//bool appendLastEOLFlag = false;
+		//if (!pTempl->Parse(env, pToken->GetString(), nullptr,
+		//				   autoIndentFlag, appendLastEOLFlag)) goto error_done;
+		pExprGen.reset(new Expr_Object(new Object_template(pTempl.release())));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
 		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetValue())));

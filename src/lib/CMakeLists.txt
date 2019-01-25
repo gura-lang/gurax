@@ -34,6 +34,7 @@ add_library(guraxcore SHARED
 	Object_string.cpp
 	Object_stringptr.cpp
 	Object_symbol.cpp
+	Object_template.cpp
 	Object_timedelta.cpp
 	Object_undefined.cpp
 	Operator.cpp
