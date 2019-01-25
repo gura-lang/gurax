@@ -28,9 +28,9 @@ protected:
 	virtual ~TimeDelta() = default;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const TimeDelta* pTimeDelta) const { return this == pTimeDelta; }
-	bool IsEqualTo(const TimeDelta* pTimeDelta) const { return IsIdentical(pTimeDelta); }
-	bool IsLessThan(const TimeDelta* pTimeDelta) const { return this < pTimeDelta; }
+	bool IsIdentical(const TimeDelta& timeDelta) const { return this == &timeDelta; }
+	bool IsEqualTo(const TimeDelta& timeDelta) const { return IsIdentical(timeDelta); }
+	bool IsLessThan(const TimeDelta& timeDelta) const { return this < &timeDelta; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(timedelta)"; }
 };
 

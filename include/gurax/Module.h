@@ -36,9 +36,9 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Module* pModule) const { return this == pModule; }
-	bool IsEqualTo(const Module* pModule) const { return IsIdentical(pModule); }
-	bool IsLessThan(const Module* pModule) const { return this < pModule; }
+	bool IsIdentical(const Module& module) const { return this == &module; }
+	bool IsEqualTo(const Module& module) const { return IsIdentical(module); }
+	bool IsLessThan(const Module& module) const { return this < &module; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(module)"; }
 };
 

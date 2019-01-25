@@ -40,24 +40,25 @@ protected:
 	// Destructor
 	~Object_module() = default;
 public:
-	const Module* GetModule() const { return _pModule.get(); }
+	Module& GetModule() { return *_pModule; }
+	const Module& GetModule() const { return *_pModule; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetModule()->CalcHash();
+		return GetModule().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetModule()->IsEqualTo(dynamic_cast<const Object_module*>(pObject)->GetModule());
+			GetModule().IsEqualTo(dynamic_cast<const Object_module*>(pObject)->GetModule());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetModule()->IsLessThan(dynamic_cast<const Object_module*>(pObject)->GetModule()) :
+			GetModule().IsLessThan(dynamic_cast<const Object_module*>(pObject)->GetModule()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pModule->ToString(ss);
+		return GetModule().ToString(ss);
 	}
 };
 

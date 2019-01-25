@@ -40,24 +40,25 @@ protected:
 	// Destructor
 	~Object_stream() = default;
 public:
-	const Stream* GetStream() const { return _pStream.get(); }
+	Stream& GetStream() { return *_pStream; }
+	const Stream& GetStream() const { return *_pStream; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetStream()->CalcHash();
+		return GetStream().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetStream()->IsEqualTo(dynamic_cast<const Object_stream*>(pObject)->GetStream());
+			GetStream().IsEqualTo(dynamic_cast<const Object_stream*>(pObject)->GetStream());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetStream()->IsLessThan(dynamic_cast<const Object_stream*>(pObject)->GetStream()) :
+			GetStream().IsLessThan(dynamic_cast<const Object_stream*>(pObject)->GetStream()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pStream->ToString(ss);
+		return GetStream().ToString(ss);
 	}
 };
 

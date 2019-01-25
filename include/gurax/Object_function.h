@@ -39,24 +39,25 @@ protected:
 	// Destructor
 	~Object_function() = default;
 public:
-	const Function* GetFunction() const { return _pFunction.get(); }
+	Function& GetFunction() { return *_pFunction; }
+	const Function& GetFunction() const { return *_pFunction; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetFunction()->CalcHash();
+		return GetFunction().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetFunction()->IsEqualTo(dynamic_cast<const Object_function*>(pObject)->GetFunction());
+			GetFunction().IsEqualTo(dynamic_cast<const Object_function*>(pObject)->GetFunction());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetFunction()->IsLessThan(dynamic_cast<const Object_function*>(pObject)->GetFunction()) :
+			GetFunction().IsLessThan(dynamic_cast<const Object_function*>(pObject)->GetFunction()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pFunction->ToString(ss);
+		return GetFunction().ToString(ss);
 	}
 };
 

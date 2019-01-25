@@ -39,6 +39,7 @@ protected:
 	// Destructor
 	~Object_binary() = default;
 public:
+	Binary& GetBinary() { return _pBinary->GetBinary(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
 public:
 	// Virtual functions of Object

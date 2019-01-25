@@ -82,9 +82,9 @@ public:
 	virtual size_t Write(const void* buff, size_t len) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Stream* pStream) const { return this == pStream; }
-	bool IsEqualTo(const Stream* pStream) const { return IsIdentical(pStream); }
-	bool IsLessThan(const Stream* pStream) const { return this < pStream; }
+	bool IsIdentical(const Stream& stream) const { return this == &stream; }
+	bool IsEqualTo(const Stream& stream) const { return IsIdentical(stream); }
+	bool IsLessThan(const Stream& stream) const { return this < &stream; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(stream)"; }
 };
 

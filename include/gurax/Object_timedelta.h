@@ -40,23 +40,24 @@ protected:
 	// Destructor
 	~Object_timedelta() = default;
 public:
-	const TimeDelta* GetTimeDelta() const { return _pTimeDelta.get(); }
+	TimeDelta& GetTimeDelta() { return *_pTimeDelta; }
+	const TimeDelta& GetTimeDelta() const { return *_pTimeDelta; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetTimeDelta()->CalcHash();
+		return GetTimeDelta().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
-		return GetTimeDelta()->IsEqualTo(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta());
+		return GetTimeDelta().IsEqualTo(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetTimeDelta()->IsLessThan(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta()) :
+			GetTimeDelta().IsLessThan(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return GetTimeDelta()->ToString(ss);
+		return GetTimeDelta().ToString(ss);
 	}
 };
 

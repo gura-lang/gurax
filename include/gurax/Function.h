@@ -34,9 +34,9 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Function* pFunction) const { return this == pFunction; }
-	bool IsEqualTo(const Function* pFunction) const { return IsIdentical(pFunction); }
-	bool IsLessThan(const Function* pFunction) const { return this < pFunction; }
+	bool IsIdentical(const Function& function) const { return this == &function; }
+	bool IsEqualTo(const Function& function) const { return IsIdentical(function); }
+	bool IsLessThan(const Function& function) const { return this < &function; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(function)"; }
 };
 

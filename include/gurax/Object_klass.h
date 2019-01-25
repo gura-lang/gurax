@@ -39,6 +39,7 @@ protected:
 	// Destructor
 	~Object_klass() = default;
 public:
+	Klass& GetKlassThis() { return *_pKlassThis; }
 	const Klass& GetKlassThis() const { return *_pKlassThis; }
 public:
 	// Virtual klasss of Object
@@ -56,7 +57,7 @@ public:
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pKlassThis->ToString(ss);
+		return GetKlassThis().ToString(ss);
 	}
 };
 

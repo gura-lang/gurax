@@ -40,24 +40,25 @@ protected:
 	// Destructor
 	~Object_datetime() = default;
 public:
-	const DateTime* GetDateTime() const { return _pDateTime.get(); }
+	DateTime& GetDateTime() { return *_pDateTime; }
+	const DateTime& GetDateTime() const { return *_pDateTime; }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetDateTime()->CalcHash();
+		return GetDateTime().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetDateTime()->IsEqualTo(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime());
+			GetDateTime().IsEqualTo(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetDateTime()->IsLessThan(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime()) :
+			GetDateTime().IsLessThan(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return GetDateTime()->ToString(ss);
+		return GetDateTime().ToString(ss);
 	}
 };
 

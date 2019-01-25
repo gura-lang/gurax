@@ -39,24 +39,25 @@ protected:
 	// Destructor
 	~Object_iterator() = default;
 public:
-	const Iterator* GetIterator() const { return _pIterator.get(); }
+	Iterator& GetIterator() { return *_pIterator; }
+	const Iterator& GetIterator() const { return *_pIterator; }
 public:
 	// Virtual iterators of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetIterator()->CalcHash();
+		return GetIterator().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetIterator()->IsEqualTo(dynamic_cast<const Object_iterator*>(pObject)->GetIterator());
+			GetIterator().IsEqualTo(dynamic_cast<const Object_iterator*>(pObject)->GetIterator());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetIterator()->IsLessThan(dynamic_cast<const Object_iterator*>(pObject)->GetIterator()) :
+			GetIterator().IsLessThan(dynamic_cast<const Object_iterator*>(pObject)->GetIterator()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
-		return _pIterator->ToString(ss);
+		return GetIterator().ToString(ss);
 	}
 };
 

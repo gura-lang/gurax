@@ -40,6 +40,7 @@ protected:
 	// Destructor
 	~Object_attribute() = default;
 public:
+	Attribute& GetAttribute() { return *_pAttribute; }
 	const Attribute& GetAttribute() const { return *_pAttribute; }
 public:
 	// Virtual functions of Object

@@ -70,9 +70,9 @@ public:
 	virtual void Exec() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Expr* pExpr) const { return this == pExpr; }
-	bool IsEqualTo(const Expr* pExpr) const { return IsIdentical(pExpr); }
-	bool IsLessThan(const Expr* pExpr) const { return this < pExpr; }
+	bool IsIdentical(const Expr& expr) const { return this == &expr; }
+	bool IsEqualTo(const Expr& expr) const { return IsIdentical(expr); }
+	bool IsLessThan(const Expr& expr) const { return this < &expr; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(expr)"; }
 };
 
