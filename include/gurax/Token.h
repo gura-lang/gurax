@@ -119,22 +119,15 @@ private:
 	const TokenType& _tokenType;
 	int _lineNoTop;
 	int _lineNoBtm;
-	RefPtr<StringReferable> _pStrValue;
-	RefPtr<StringReferable> _pStrSuffix;
-	RefPtr<StringReferable> _pStrSource;
-	// _pExpr is only available for the following token types.
-	// - TokenType::Expr
-	RefPtr<Expr> _pExpr;
-	// _pExprOwner is only available for the following token types.
-	// - TokenType::LBlockParam
-	// - TokenType::LBrace
-	// - TokenType::LBracket
-	// - TokenType::LParenthesis
-	RefPtr<ExprOwner> _pExprOwner;
-	// _pExprOwner is only available for the following token types.
-	// - TokenType::LBrace
-	RefPtr<ExprOwner> _pExprOwnerEx;
-	bool _itererFlag;	// used for TokenType::LParenthesis
+	RefPtr<StringReferable> _pValue;	// for Symbol, Space, Escape, Number, NumberSuffixed,
+										//     CommentLine, CommentBlock, String, StringSuffixed
+										//     Binary and EmbedString
+	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed
+	RefPtr<StringReferable> _pSource;	// for NumberSuffixed, StringSuffixed
+	RefPtr<Expr> _pExpr;				// for Expr
+	RefPtr<ExprOwner> _pExprOwner;		// for LBrace, LBlockParam, LBracket and LParenthesis
+	RefPtr<ExprOwner> _pExprOwnerEx;	// for LBrace
+	bool _itererFlag;					// for LParenthesis
 public:
 	static const Precedence _precMatrix[][31];
 public:
@@ -147,22 +140,22 @@ public:
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprOwner* pExprOwner) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pExprOwner(pExprOwner), _itererFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue) :
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pValue) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pStrValue(pStrValue), _itererFlag(false) {}
+		_pValue(pValue), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
-		  StringReferable* pStrValue, StringReferable* pStrSuffix) :
+		  StringReferable* pValue, StringReferable* pSuffix) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _itererFlag(false) {}
+		_pValue(pValue), _pSuffix(pSuffix), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
 			  new StringReferable(std::move(suffix))) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pStrValue,
-		  StringReferable* pStrSuffix, StringReferable* pStrSource) :
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
+		  StringReferable* pValue, StringReferable* pSuffix, StringReferable* pSource) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pStrValue(pStrValue), _pStrSuffix(pStrSuffix), _pStrSource(pStrSource), _itererFlag(false) {}
+		_pValue(pValue), _pSuffix(pSuffix), _pSource(pSource), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix, String source) :
 		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
 			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
@@ -201,17 +194,17 @@ public:
 	const char *GetTypeName() const { return _tokenType.typeName; }
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
-	const char* GetValue() const { return _pStrValue->GetString(); }
-	const char* GetSuffix() const { return _pStrSuffix->GetString(); }
-	const char* GetSource() const { return _pStrSource->GetString(); }
-	const String& GetValueSTL() const { return _pStrValue->GetStringSTL(); }
-	const String& GetSuffixSTL() const { return _pStrSuffix->GetStringSTL(); }
-	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
-	const StringReferable* GetValueReferable() const { return _pStrValue.get(); }
-	const StringReferable* GetSuffixReferable() const { return _pStrSuffix.get(); }
-	const StringReferable* GetSourceReferable() const { return _pStrSource.get(); }
-	void AppendValue(const char* value) { _pStrValue->GetStringSTL().append(value); }
-	void AppendValue(const String& value) { _pStrValue->GetStringSTL().append(value); }
+	const char* GetValue() const { return _pValue->GetString(); }
+	const char* GetSuffix() const { return _pSuffix->GetString(); }
+	const char* GetSource() const { return _pSource->GetString(); }
+	const String& GetValueSTL() const { return _pValue->GetStringSTL(); }
+	const String& GetSuffixSTL() const { return _pSuffix->GetStringSTL(); }
+	const String& GetSourceSTL() const { return _pSource->GetStringSTL(); }
+	const StringReferable* GetValueReferable() const { return _pValue.get(); }
+	const StringReferable* GetSuffixReferable() const { return _pSuffix.get(); }
+	const StringReferable* GetSourceReferable() const { return _pSource.get(); }
+	void AppendValue(const char* value) { _pValue->GetStringSTL().append(value); }
+	void AppendValue(const String& value) { _pValue->GetStringSTL().append(value); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	void SetExprOwner(ExprOwner* pExprOwner) { _pExprOwner.reset(pExprOwner); }
 	void SetExprOwnerEx(ExprOwner* pExprOwnerEx) { _pExprOwnerEx.reset(pExprOwnerEx); }

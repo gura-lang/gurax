@@ -104,11 +104,11 @@ bool Parser::ReduceOneToken()
 	int lineNoBtm = pToken->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
 	if (pToken->IsType(TokenType::Number)) {
-		DBGPARSER(::printf("Reduce: Expr(Object) -> Object(number)\n"));
+		DBGPARSER(::printf("Reduce: Expr(Object) -> Number\n"));
 		pExprGen.reset(new Expr_Object(new Object_number(String::ToNumber(pToken->GetValue()))));
 		//pExprEx->SetScript(pToken->GetStringSTL());
 	} else if (pToken->IsType(TokenType::String)) {
-		DBGPARSER(::printf("Reduce: Expr(Object) -> Object(string)\n"));
+		DBGPARSER(::printf("Reduce: Expr(Object) -> String\n"));
 		pExprGen.reset(new Expr_Object(new Object_string(pToken->GetValueReferable()->Reference())));
 #if 0
 	} else if (pToken->IsType(TokenType::Binary)) {

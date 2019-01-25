@@ -834,8 +834,13 @@ void Tokenizer::FeedChar(char ch)
 			_stat = Stat::StringSuffixed;
 		} else {
 			int lineNo = GetLineNo();
-			const TokenType &tokenType = GetTokenTypeForString(_stringInfo);
-			_tokenWatcher.FeedToken(new Token(tokenType, _lineNoTop, lineNo, _value, "", _source));
+			if (_stringInfo.binaryFlag) {
+				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo, _value, "", _source));
+			} else if (_stringInfo.embedFlag) {
+				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo, _value, "", _source));
+			} else {
+				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo, _value, "", _source));
+			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -1038,8 +1043,13 @@ void Tokenizer::FeedChar(char ch)
 			_stat = Stat::StringSuffixed;
 		} else {
 			int lineNo = GetLineNo();
-			const TokenType& tokenType = GetTokenTypeForString(_stringInfo);
-			_tokenWatcher.FeedToken(new Token(tokenType, _lineNoTop, lineNo, _value, "", _source));
+			if (_stringInfo.binaryFlag) {
+				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo, _value, "", _source));
+			} else if (_stringInfo.embedFlag) {
+				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo, _value, "", _source));
+			} else {
+				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo, _value, "", _source));
+			}
 			Gurax_PushbackEx(ch);
 			_stat = Error::IsIssued()? Stat::Error : Stat::Start;
 		}
@@ -1075,21 +1085,6 @@ void Tokenizer::FeedChar(char ch)
 	} else {
 		_cntCol++;
 	}
-}
-
-#if 0
-void Tokenizer::IssueError(const ErrorType& errorType, const char* format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	Error::IssueV(errorType, _pPathNameSrc->Reference(), _lineNoTop, GetLineNo(), format, ap);
-}
-#endif
-
-const TokenType& Tokenizer::GetTokenTypeForString(const StringInfo& stringInfo)
-{
-	return stringInfo.binaryFlag? TokenType::Binary :
-		stringInfo.embedFlag? TokenType::EmbedString : TokenType::String;
 }
 
 bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)

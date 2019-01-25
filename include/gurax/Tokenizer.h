@@ -121,7 +121,6 @@ public:
 		Error::Issue(errorType, format, args...);
 	}
 	TokenStack& GetTokenStack() { return *_pTokenStack; }
-	static const TokenType& GetTokenTypeForString(const StringInfo& stringInfo);
 	static bool CheckStringPrefix(StringInfo& stringInfo, const String& field);
 };
 
