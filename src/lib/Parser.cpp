@@ -110,11 +110,10 @@ bool Parser::ReduceOneToken()
 	} else if (pToken->IsType(TokenType::String)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> String\n"));
 		pExprGen.reset(new Expr_Object(new Object_string(pToken->GetValueReferable()->Reference())));
-#if 0
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Binary\n"));
-		pExprGen.reset(new Expr_Object(new Object_binary(
-						   Binary(pToken->GetString(), pToken->GetStringSize()), false)));
+		pExprGen.reset(new Expr_Object(new Object_binary(pToken->GetBinaryReferable()->Reference())));
+#if 0
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
 		AutoPtr<Template> pTemplate(new Template());
