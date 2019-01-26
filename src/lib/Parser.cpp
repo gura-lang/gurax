@@ -11,8 +11,22 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Parser
 //------------------------------------------------------------------------------
-Parser::Parser(String pathNameSrc) : _pTokenizer(new Tokenizer(*this, std::move(pathNameSrc)))
+Parser::Parser(String pathNameSrc) :
+	_pTokenizer(new Tokenizer(*this, std::move(pathNameSrc))),
+	_pExprRoot(new Expr_Root(new ExprOwner()))
 {
+}
+
+Expr_Root* Parser::ParseString(const char* text)
+{
+	RefPtr<Parser> pParser(new Parser("*string*"));
+	for (const char* p = text; ; ++p) {
+		char ch = *p;
+		pParser->ParseChar(ch);
+		if (Error::IsIssued()) return nullptr;
+		if (ch == '\0') break;
+	}
+	return pParser->GetExprRoot().Reference();
 }
 
 void Parser::FeedToken(RefPtr<Token> pToken)
@@ -36,7 +50,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				}
 #endif
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
-				if (_pExprOwner) _pExprOwner->push_back(pExpr.release());
+				GetExprRoot().GetExprOwnerElem().push_back(pExpr.release());
 			} else {
 				// something's wrong
 				IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);

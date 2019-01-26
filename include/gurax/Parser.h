@@ -16,8 +16,7 @@ public:
 	Gurax_DeclareReferable(Parser);
 private:
 	RefPtr<Tokenizer> _pTokenizer;
-	ExprOwner* _pExprOwner = nullptr;
-	//Expr* _pExprParent = nullptr;
+	RefPtr<Expr_Root> _pExprRoot;
 public:
 	// Constructor
 	Parser() = delete;
@@ -32,6 +31,9 @@ protected:
 	// Destructor
 	virtual ~Parser() = default;
 public:
+	Expr_Root& GetExprRoot() { return *_pExprRoot; }
+	const Expr_Root& GetExprRoot() const { return *_pExprRoot; }
+	static Expr_Root* ParseString(const char* text);
 	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
 private:
 	bool ReduceOneToken();

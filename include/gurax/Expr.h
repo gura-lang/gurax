@@ -19,7 +19,8 @@ namespace Gurax {
 //        +- Expr_Unary <------- Expr_UnaryOp
 //        +- Expr_Binary <----+- Expr_BinaryOp
 //        |                   `- Expr_Assign
-//        +- Expr_Collector <-+- Expr_Block
+//        +- Expr_Collector <-+- Expr_Root
+//        |                   +- Expr_Block
 //        |                   +- Expr_Lister
 //        |                   `- Expr_Iterer
 //        `- Expr_Composite <-+- Expr_Indexer
@@ -195,6 +196,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Object : public Expr_Node {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Object);
+public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Object> _pObject;
@@ -210,6 +214,9 @@ public:
 // Expr_Identifier : Expr_Node
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Identifier : public Expr_Node {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Identifier);
 public:
 	static const TypeInfo typeInfo;
 protected:
@@ -230,6 +237,9 @@ public:
 // Expr_Suffixed : Expr_Node
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Suffixed : public Expr_Node {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Suffixed);
 public:
 	static const TypeInfo typeInfo;
 protected:
@@ -253,6 +263,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Embedded : public Expr_Node {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Embedded);
+public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<StringReferable> _pStr;
@@ -268,6 +281,9 @@ public:
 // Expr_UnaryOp : Expr_Unary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_UnaryOp : public Expr_Unary {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_UnaryOp);
 public:
 	static const TypeInfo typeInfo;
 protected:
@@ -285,6 +301,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_BinaryOp : public Expr_Binary {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_BinaryOp);
+public:
 	static const TypeInfo typeInfo;
 protected:
 	const Operator* _pOperator;
@@ -300,6 +319,9 @@ public:
 // Expr_Assign : Expr_Binary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Assign : public Expr_Binary {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Assign);
 public:
 	static const TypeInfo typeInfo;
 protected:
@@ -317,6 +339,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Member : public Expr_Binary {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Member);
+public:
 	static const TypeInfo typeInfo;
 protected:
 	MemberMode _memberMode;
@@ -329,9 +354,27 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Expr_Root : Expr_Collector
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Root : public Expr_Collector {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Root);
+public:
+	static const TypeInfo typeInfo;
+public:
+	Expr_Root(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
+public:
+	virtual void Exec() const;
+};
+
+//------------------------------------------------------------------------------
 // Expr_Block : Expr_Collector
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Block : public Expr_Collector {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Block);
 public:
 	static const TypeInfo typeInfo;
 protected:
@@ -353,6 +396,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Lister : public Expr_Collector {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Lister);
+public:
 	static const TypeInfo typeInfo;
 public:
 	Expr_Lister(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
@@ -364,6 +410,9 @@ public:
 // Expr_Iterer : Expr_Collector
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Iterer : public Expr_Collector {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Iterer);
 public:
 	static const TypeInfo typeInfo;
 public:
@@ -377,6 +426,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Indexer : public Expr_Composite {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Indexer);
+public:
 	static const TypeInfo typeInfo;
 public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
@@ -388,6 +440,9 @@ public:
 // Expr_Caller : Expr_Composite
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Caller : public Expr_Composite {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Caller);
 public:
 	static const TypeInfo typeInfo;
 protected:

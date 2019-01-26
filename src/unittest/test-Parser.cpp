@@ -12,15 +12,9 @@ a:b.m.n:c:d
 
 Gurax_TesterEntry(Parser)
 {
-	RefPtr<Parser> pParser(new Parser("string"));
-	for (const char* p = text; ; ++p) {
-		char ch = *p;
-		pParser->ParseChar(ch);
-		if (Error::IsIssued()) {
-			Error::Print(stdout);
-			break;
-		}
-		if (ch == '\0') break;
+	RefPtr<Expr_Root> pExprRoot = Parser::ParseString(text);
+	for (const Expr* pExpr : pExprRoot->GetExprsElem()) {
+		::printf("%s\n", pExpr->ToString().c_str());
 	}
 }
 
