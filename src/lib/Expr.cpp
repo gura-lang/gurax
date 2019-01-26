@@ -76,7 +76,7 @@ void Expr_Object::Exec() const
 
 String Expr_Object::ToString(const StringStyle& ss) const
 {
-	return "";
+	return _pObject->ToString();
 }
 
 //------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void Expr_Identifier::Exec() const
 
 String Expr_Identifier::ToString(const StringStyle& ss) const
 {
-	return "";
+	return _pSymbol->ToString();
 }
 
 //------------------------------------------------------------------------------
