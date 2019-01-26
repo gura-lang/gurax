@@ -74,7 +74,8 @@ public:
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
 	bool IsEqualTo(const Expr& expr) const { return IsIdentical(expr); }
 	bool IsLessThan(const Expr& expr) const { return this < &expr; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(expr)"; }
+	String ToString() const { return ToString(StringStyle::Empty); }
+	virtual String ToString(const StringStyle& ss) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -207,7 +208,8 @@ public:
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -228,7 +230,8 @@ public:
 		Expr_Node(typeInfo), _pSymbol(pSymbol), _pAttr(new Attribute()) {}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 };
@@ -255,7 +258,8 @@ public:
 	bool IsNumber() const { return _numberFlag; }
 	bool IsString() const { return !_numberFlag; }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -274,7 +278,8 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -293,7 +298,8 @@ public:
 			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -312,7 +318,8 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -331,7 +338,8 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -350,7 +358,8 @@ public:
 		Expr_Binary(typeInfo, pExprLeft, pExprRight), _memberMode(memberMode) {}
 public:
 	MemberMode GetMemberMode() const { return _memberMode; }
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -365,7 +374,8 @@ public:
 public:
 	Expr_Root(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -383,7 +393,8 @@ public:
 	explicit Expr_Block(ExprOwner* pExprOwnerElem) :
 		Expr_Collector(typeInfo, pExprOwnerElem), _pExprOwnerParam(new ExprOwner()) {}
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprOwnerParam(ExprOwner* pExprOwnerParam) {
 		_pExprOwnerParam.reset(pExprOwnerParam);
 		_pExprOwnerParam->SetExprParent(this);
@@ -403,7 +414,8 @@ public:
 public:
 	Expr_Lister(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -418,7 +430,8 @@ public:
 public:
 	Expr_Iterer(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -433,7 +446,8 @@ public:
 public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -451,7 +465,8 @@ protected:
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pExprOwnerElemBlock(new ExprOwner()) {}
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprOwnerElemBlock(ExprOwner* pExprOwnerElemBlock) {
 		_pExprOwnerElemBlock.reset(pExprOwnerElemBlock);
 		_pExprOwnerElemBlock->SetExprParent(this);
