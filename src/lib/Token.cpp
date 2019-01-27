@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // TokenType
 //------------------------------------------------------------------------------
-const TokenType *TokenType::opTypeToTokenTypeMap[static_cast<size_t>(OpType::max)] {};
+const TokenType *TokenType::_opTypeToTokenTypeMap[static_cast<size_t>(OpType::max)] {};
 
 const TokenType TokenType::Begin			{  1, "Begin",			"[Bgn]",	OpType::None	};
 const TokenType TokenType::Assign			{  2, "Assign",			"=",		OpType::None	};	// =
@@ -95,7 +95,7 @@ const TokenType TokenType::Unknown			{  0, "Unknown",		"[unk]",	OpType::None	};
 TokenType::TokenType(int category_, const char* typeName_, const char* symbol_, OpType opType_) :
 	category(category_), typeName(typeName_), symbol(symbol_), opType(opType_)
 {
-	opTypeToTokenTypeMap[static_cast<size_t>(opType)] = this;
+	_opTypeToTokenTypeMap[static_cast<size_t>(opType)] = this;
 }
 
 //------------------------------------------------------------------------------

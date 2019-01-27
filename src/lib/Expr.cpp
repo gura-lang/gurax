@@ -8,6 +8,20 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
+int Expr::CalcIndentLevel() const
+{
+	int indentLevel = 0;
+	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), indentLevel++) ;
+	return indentLevel;
+}
+
+String Expr::ComposeIndent(size_t cntAppend, const char* indentUnit) const
+{
+	String rtn;
+	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += indentUnit) ;
+	for ( ; cntAppend > 0; --cntAppend) rtn += indentUnit;
+	return rtn;
+}
 
 //------------------------------------------------------------------------------
 // ExprList
@@ -104,7 +118,10 @@ void Expr_Suffixed::Exec() const
 
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	rtn += IsNumber()? GetValueSTL() : GetValueSTL().MakeQuoted(true);
+	rtn += GetSuffix()->GetName();
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -118,7 +135,33 @@ void Expr_UnaryOp::Exec() const
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	switch (GetOperator()->GetStyle()) {
+	case OpStyle::OpUnary: {
+		rtn += GetOperator()->GetSymbol();
+		rtn += '(';
+		rtn += GetExprChild()->ToString(ss);
+		rtn += ')';
+		break;
+	}
+	case OpStyle::OpPostUnary: {
+		rtn += '(';
+		rtn += GetExprChild()->ToString(ss);
+		rtn += ')';
+		rtn += GetOperator()->GetSymbol();
+		break;
+	}
+	case OpStyle::MathUnary: {
+		rtn += GetOperator()->GetSymbol();
+		rtn += '(';
+		rtn += GetExprChild()->ToString(ss);
+		rtn += ')';
+		break;
+	}
+	default:
+		break;
+	}
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -132,7 +175,31 @@ void Expr_BinaryOp::Exec() const
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	switch (GetOperator()->GetStyle()) {
+	case OpStyle::OpBinary: {
+		rtn += '(';
+		rtn += GetExprLeft()->ToString(ss);
+		rtn += ')';
+		rtn += GetOperator()->GetSymbol();
+		rtn += '(';
+		rtn += GetExprRight()->ToString(ss);
+		rtn += ')';
+		break;
+	}
+	case OpStyle::MathBinary: {
+		rtn += GetOperator()->GetSymbol();
+		rtn += '(';
+		rtn += GetExprLeft()->ToString(ss);
+		rtn += ss.GetComma();
+		rtn += GetExprRight()->ToString(ss);
+		rtn += ')';
+		break;
+	}
+	default:
+		break;
+	}
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -146,7 +213,14 @@ void Expr_Assign::Exec() const
 
 String Expr_Assign::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	rtn += GetExprLeft()->ToString(ss);
+	if (!ss.IsCram()) rtn += ' ';
+	if (_pOperator) rtn += _pOperator->GetSymbol();
+	rtn += '=';
+	if (!ss.IsCram()) rtn += ' ';
+	rtn += GetExprRight()->ToString(ss);
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -160,7 +234,11 @@ void Expr_Member::Exec() const
 
 String Expr_Member::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	rtn += GetExprLeft()->ToString(ss);
+	rtn += '.';
+	rtn += GetExprRight()->ToString(ss);
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -174,7 +252,20 @@ void Expr_Root::Exec() const
 
 String Expr_Root::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	bool firstFlag = true;
+	for (const Expr* pExpr : GetExprsElem()) {
+		if (firstFlag) {
+			firstFlag = false;
+		} else if (ss.IsMultiLine()) {
+			rtn += '\n';
+		} else if (!ss.IsCram()) {
+			rtn += ' ';
+		}
+		rtn += pExpr->ToString(ss);
+		rtn += ';';
+	}
+	return rtn;
 }
 
 //------------------------------------------------------------------------------

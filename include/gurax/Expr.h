@@ -65,6 +65,9 @@ public:
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
+	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
+	int CalcIndentLevel() const;
+	String ComposeIndent(size_t cntAppend = 0, const char* indentUnit = "  ") const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:

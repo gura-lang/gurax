@@ -123,6 +123,7 @@ enum class MemberMode {
 };
 
 MemberMode SymbolToMemberMode(const Symbol* pSymbol);
+const Symbol* MemberModeToSymbol(MemberMode memberMode);
 
 //------------------------------------------------------------------------------
 // SortOrder
@@ -211,49 +212,6 @@ typedef std::deque<Double,	Allocator<Double> >	DoubleDeque;
 typedef std::deque<Number,	Allocator<Number> >	NumberDeque;
 typedef std::deque<size_t,	Allocator<size_t> >	SizeTDeque;
 #endif
-
-//------------------------------------------------------------------------------
-// StringStyle
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE StringStyle {
-public:
-	struct Flag {
-		static const UInt32 AsSource	= (1 << 0);
-		static const UInt32 Cram		= (1 << 1);
-		static const UInt32 MultiLine	= (1 << 2);
-		static const UInt32 UpperCase	= (1 << 3);
-	};
-private:
-	UInt32 _flags;
-	static const char* _strsComma[2];
-	static const char* _strsColon[2];
-	static const char* _strsSemicolon[2];
-public:
-	static const StringStyle Empty;
-public:
-	// Constructor
-	StringStyle() : _flags(0) {}
-	// Copy constructor/operator
-	StringStyle(const StringStyle& src) : _flags(src._flags) {}
-	StringStyle& operator=(const StringStyle& src) { _flags = src._flags; return *this; }
-	// Move constructor/operator
-	StringStyle(StringStyle&& src) = delete;
-	StringStyle& operator=(StringStyle&& src) noexcept = delete;
-	// Destructor
-	virtual ~StringStyle() = default;
-public:	
-	StringStyle& AsSource()		{ _flags |= Flag::AsSource; return *this; }
-	StringStyle& Cram()			{ _flags |= Flag::Cram; return *this; }
-	StringStyle& MultiLine()	{ _flags |= Flag::MultiLine; return *this; }
-	StringStyle& UpperCase()	{ _flags |= Flag::UpperCase; return *this; }
-	bool IsAsSource() const		{ return (_flags & Flag::AsSource) != 0; }
-	bool IsCram() const			{ return (_flags & Flag::Cram) != 0; }
-	bool IsMultiLine() const	{ return (_flags & Flag::MultiLine) != 0; }
-	bool IsUpperCase() const	{ return (_flags & Flag::UpperCase) != 0; }
-	const char* GetComma() const { return _strsComma[IsCram()]; }
-	const char* GetColon() const { return _strsColon[IsCram()]; }
-	const char* GetSemicolon() const	{ return _strsSemicolon[IsCram()]; }
-};
 
 }
 

@@ -99,11 +99,15 @@ public:
 	static const TokenType DoubleChars;
 	static const TokenType TripleChars;
 	static const TokenType Unknown;
-	static const TokenType *opTypeToTokenTypeMap[static_cast<size_t>(OpType::max)];
+private:
+	static const TokenType* _opTypeToTokenTypeMap[static_cast<size_t>(OpType::max)];
 public:
 	TokenType(int category, const char* typeName, const char* symbol, OpType opType);
 	bool IsIdentical(const TokenType &tokenType) const { return this == &tokenType; }
 	bool HasSourceSymbol() const { return !(symbol[0] == '[' && symbol[1] != '\0'); }
+	static const TokenType& OpTypeToTokenType(OpType opType) {
+		return *_opTypeToTokenTypeMap[static_cast<size_t>(opType)];
+	}
 };
 
 //------------------------------------------------------------------------------

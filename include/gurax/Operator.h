@@ -27,6 +27,8 @@ Operator::opType->AssignEntry(Object_##typeNameL::klass, Object_##typeNameR::kla
 
 namespace Gurax {
 
+struct TokenType;
+
 //------------------------------------------------------------------------------
 // OpStyle
 //------------------------------------------------------------------------------
@@ -180,6 +182,7 @@ public:
 class GURAX_DLLDECLARE Operator {
 private:
 	OpStyle _opStyle;
+	const char* _symbol;
 	OpType _opType;
 	bool _binaryFlag;
 	OpEntryMap _opEntryMap;
@@ -263,7 +266,7 @@ public:
 	static Operator* math_unitstep;
 public:
 	// Constructor
-	Operator(OpStyle opStyle, OpType opType);
+	Operator(OpStyle opStyle, const char* symbol, OpType opType);
 	// Copy constructor/operator
 	Operator(const Operator& src) = delete;
 	Operator& operator=(const Operator& src) = delete;
@@ -274,6 +277,7 @@ public:
 	virtual ~Operator() = default;
 public:
 	OpStyle GetStyle() const			{ return _opStyle; }
+	const char* GetSymbol() const		{ return _symbol; }
 	OpType GetType() const				{ return _opType; }
 	bool IsType(OpType opType) const	{ return _opType == opType; }
 	bool IsUnary() const				{ return !_binaryFlag; }
@@ -283,6 +287,7 @@ public:
 	bool IsOpBinary() const				{ return _opStyle == OpStyle::OpBinary; }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
+	const TokenType& GetTokenType() const;
 public:
 	void AssignEntry(const Klass& klass, OpEntry* pOpEntry) {
 		_opEntryMap.Assign(klass, pOpEntry);
