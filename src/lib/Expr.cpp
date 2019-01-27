@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
+const char* Expr::_indentUnitDefault = "  ";
+
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -15,11 +17,10 @@ int Expr::CalcIndentLevel() const
 	return indentLevel;
 }
 
-String Expr::ComposeIndent(size_t cntAppend, const char* indentUnit) const
+String Expr::ComposeIndent(const char* indentUnit) const
 {
 	String rtn;
 	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += indentUnit) ;
-	for ( ; cntAppend > 0; --cntAppend) rtn += indentUnit;
 	return rtn;
 }
 
@@ -252,18 +253,25 @@ void Expr_Root::Exec() const
 
 String Expr_Root::ToString(const StringStyle& ss) const
 {
+	String indent = ComposeIndent();
 	String rtn;
-	bool firstFlag = true;
-	for (const Expr* pExpr : GetExprsElem()) {
-		if (firstFlag) {
-			firstFlag = false;
-		} else if (ss.IsMultiLine()) {
+	if (ss.IsMultiLine()) {
+		for (const Expr* pExpr : GetExprsElem()) {
+			rtn += indent;
+			rtn += pExpr->ToString(ss);
 			rtn += '\n';
-		} else if (!ss.IsCram()) {
-			rtn += ' ';
 		}
-		rtn += pExpr->ToString(ss);
-		rtn += ';';
+	} else {
+		bool firstFlag = true;
+		for (const Expr* pExpr : GetExprsElem()) {
+			if (firstFlag) {
+				firstFlag = false;
+			} else if (!ss.IsCram()) {
+				rtn += ' ';
+			}
+			rtn += pExpr->ToString(ss);
+			rtn += ';';
+		}
 	}
 	return rtn;
 }
@@ -279,7 +287,8 @@ void Expr_Block::Exec() const
 
 String Expr_Block::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
