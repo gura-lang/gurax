@@ -174,13 +174,14 @@ public:
 	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
 	template<typename T> bool IsInstanceOf() const;
 	template<typename T> static bool IsInstanceOf(const Object* pObject) { return pObject && pObject->IsInstanceOf<T>(); }
+	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	// Virtual functions
 	virtual Object* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
 	virtual bool IsLessThan(const Object* pObject) const = 0;
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const { return String::Empty; }
+	virtual String ToString(const StringStyle& ss) const { return String::Empty; }
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;

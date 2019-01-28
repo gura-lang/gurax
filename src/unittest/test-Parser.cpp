@@ -6,6 +6,9 @@
 namespace Gurax {
 
 static const char* text = R"(
+123456
+'foo'
+b'\x12\x34\x56'
 a
 a + b
 a:b.m.n:c:d

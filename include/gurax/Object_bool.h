@@ -53,7 +53,7 @@ public:
 			GetBool() < dynamic_cast<const Object_bool*>(pObject)->GetBool() :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+	virtual String ToString(const StringStyle& ss) const override {
 		return _flag? "true" : "false";
 	}
 };

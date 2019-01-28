@@ -54,7 +54,7 @@ public:
 			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+	virtual String ToString(const StringStyle& ss) const override {
 		return String("`").append(_pSymbol->GetName());
 	}
 };

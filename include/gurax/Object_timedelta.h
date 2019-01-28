@@ -56,7 +56,7 @@ public:
 			GetTimeDelta().IsLessThan(dynamic_cast<const Object_timedelta*>(pObject)->GetTimeDelta()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+	virtual String ToString(const StringStyle& ss) const override {
 		return GetTimeDelta().ToString(ss);
 	}
 };

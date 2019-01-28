@@ -58,7 +58,7 @@ public:
 			GetKlass().IsLessThan(pObject->GetKlass());
 		
 	}
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+	virtual String ToString(const StringStyle& ss) const override {
 		return GetObjectDict().ToString(ss);
 	}
 };

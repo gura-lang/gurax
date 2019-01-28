@@ -56,7 +56,7 @@ public:
 			String::IsLessThan(GetString(), dynamic_cast<const Object_string*>(pObject)->GetString()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+	virtual String ToString(const StringStyle& ss) const override {
 		return _pStr->GetStringSTL().MakeQuoted(true);
 	}
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;

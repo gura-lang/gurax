@@ -56,7 +56,7 @@ public:
 			GetKlassThis().IsLessThan(dynamic_cast<const Object_klass*>(pObject)->GetKlassThis()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
-	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override {
+	virtual String ToString(const StringStyle& ss) const override {
 		return GetKlassThis().ToString(ss);
 	}
 };
