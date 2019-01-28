@@ -28,6 +28,7 @@ static const char* src2 = R"(
 !123456
 +123456
 `123456
+*123456
 %{}
 %{elem1, elem2, elem3}
 %{|a| elem1, elem2, elem3}
@@ -40,12 +41,64 @@ static const char* src2 = R"(
 &{elem1, elem2, elem3}
 &{|a| elem1, elem2, elem3}
 &{|a, b, c| elem1, elem2, elem3}
-*foo
+123456+
+123456*
+123456?
+123456%
+123456..
 )";
 
 static const char* src3 = R"(
-a:b.m.n:c:d
-f[]
+a + b
+a - b
+a * b
+a / b
+a % b
+a %% b
+a |.| b
+a |^| b
+a |*| b
+a |+| b
+a |-| b
+a |&| b
+a ||| b
+a ** b
+a == b
+a != b
+a < b
+a > b
+a <= b
+a >= b
+a <=> b
+a in b
+a => b
+a || b
+a && b
+a | b
+a & b
+a ^ b
+a <<  b
+a >>  b
+a ..  b
+a = b
+a += b
+a -= b
+a *= b
+a /= b
+a %= b
+a **= b
+a |= b
+a &= b
+a ^= b
+a <<= b
+a >>= b
+a.b
+a::b
+a:*b
+a:&b
+a:b
+
+
 f[a]
 f[a, b, c, d, e]
 f()
@@ -57,12 +110,17 @@ Gurax_TesterEntry(Parser)
 {
 	auto TestFunc = [](const char* src) {
 		RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
+		if (Error::IsIssued()) {
+			Error::Print(stderr);
+			return;
+		}
 		for (const Expr* pExpr : pExprRoot->GetExprsElem()) {
 			::printf("%s\n", pExpr->ToString().c_str());
 		}
 	};
 	TestFunc(src1);
 	TestFunc(src2);
+	TestFunc(src3);
 }
 
 }

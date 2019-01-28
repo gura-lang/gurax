@@ -241,7 +241,7 @@ String Expr_Member::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += GetExprLeft()->ToString(ss);
-	rtn += '.';
+	rtn += MemberModeToSymbol(GetMemberMode())->GetName();
 	rtn += GetExprRight()->ToString(ss);
 	return rtn;
 }

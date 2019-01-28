@@ -254,6 +254,9 @@ bool Parser::ReduceTwoTokens()
 		} else if (pToken1->IsType(TokenType::Quote)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '`' Expr\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Quote));
+		} else if (pToken1->IsType(TokenType::Mul)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '*' Expr\n"));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Mul));
 		} else if (pToken1->IsType(TokenType::Mod)) {
 			if (pToken2->GetExpr()->IsType<Expr_Block>()) {
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%' Expr(Block)\n"));
@@ -287,9 +290,6 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
 				pExprGen = new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::And);
 			}
-		} else if (pToken1->IsType(TokenType::Mul)) {
-			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '*' Expr\n"));
-			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Mul));
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);
 			return false;
