@@ -5,9 +5,11 @@
 
 namespace Gurax {
 
-//c = a + b
 static const char* text = R"(
+a
+a + b
 a:b.m.n:c:d
+f(a, b, c, d, e)
 )";
 
 Gurax_TesterEntry(Parser)

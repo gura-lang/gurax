@@ -183,7 +183,9 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 		rtn += '(';
 		rtn += GetExprLeft()->ToString(ss);
 		rtn += ')';
+		if (!ss.IsCram()) rtn += ' ';
 		rtn += GetOperator()->GetSymbol();
+		if (!ss.IsCram()) rtn += ' ';
 		rtn += '(';
 		rtn += GetExprRight()->ToString(ss);
 		rtn += ')';
@@ -194,6 +196,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 		rtn += '(';
 		rtn += GetExprLeft()->ToString(ss);
 		rtn += ss.GetComma();
+		if (!ss.IsCram()) rtn += ' ';
 		rtn += GetExprRight()->ToString(ss);
 		rtn += ')';
 		break;
