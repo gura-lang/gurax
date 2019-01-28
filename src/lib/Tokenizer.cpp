@@ -468,6 +468,7 @@ void Tokenizer::FeedChar(char ch)
 			if (_verboseFlag && !_value.empty()) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Space, _lineNoTop, lineNo, _value));
 			}
+			//::printf("check\n");
 			_tokenWatcher.FeedToken(new Token(TokenType::LBlockParam, _lineNoTop, lineNo, new ExprOwner()));
 			if (Error::IsIssued()) {
 				_stat = Stat::Error;

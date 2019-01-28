@@ -35,7 +35,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 	//::printf("FeedToken(%s)\n", pToken->GetSymbol());
 	for (;;) {
 		TokenStack::reverse_iterator ppTokenTop = tokenStack.SeekTerminal(tokenStack.rbegin());
-		DBGPARSER(::printf("%s  << %s\n", tokenStack.ToString().c_str(), token.GetTypeSymbol()));
+		DBGPARSER(::printf("%s  << %s\n", tokenStack.ToString().c_str(), pToken->GetSymbol()));
 		Token::Precedence prec = Token::LookupPrec(**ppTokenTop, *pToken);
 		if ((*ppTokenTop)->IsType(TokenType::Begin) && pToken->IsSeparatorToken()) {
 			size_t cntToken = tokenStack.size();
@@ -119,8 +119,9 @@ bool Parser::ReduceOneToken()
 	RefPtr<Expr> pExprGen;
 	if (pToken->IsType(TokenType::Number)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Number\n"));
-		pExprGen.reset(new Expr_Object(new Object_number(String::ToNumber(pToken->GetValue()))));
-		//pExprEx->SetScript(pToken->GetStringSTL());
+		pExprGen.reset(
+			new Expr_Object(new Object_number(
+								String::ToNumber(pToken->GetValue())), pToken->GetValueReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::String)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> String\n"));
 		pExprGen.reset(new Expr_Object(new Object_string(pToken->GetValueReferable()->Reference())));
@@ -672,11 +673,14 @@ bool Parser::ReduceThreeTokens()
 		if (pToken3->IsType(TokenType::RBrace)) {
 			DBGPARSER(::printf("Reduce: Expr(Block) -> '{' Expr '}'\n"));
 			exprOwner.push_back(pToken2->GetExpr()->Reference());
+#if 0
 			RefPtr<Expr_Block> pExprBlock(new Expr_Block(exprOwner.Reference()));
 			if (pToken1->HasExprOwnerEx()) {
 				pExprBlock->SetExprOwnerParam(pToken1->GetExprOwnerEx().Reference());
 			}
 			pExprGen.reset(pExprBlock.release());
+#endif
+			pExprGen.reset(CreateExprBlock(pToken1));
 		} else if (pToken3->IsType(TokenType::Comma) ||
 					pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '{' -> '{' Expr ','\n"));
@@ -951,6 +955,15 @@ bool Parser::EmitExpr(ExprOwner& exprOwner, Expr* pExpr)
 	}
 	exprOwner.push_back(pExpr);
 	return true;
+}
+
+Expr_Block* Parser::CreateExprBlock(RefPtr<Token>& pToken)
+{
+	RefPtr<Expr_Block> pExprBlock(new Expr_Block(pToken->GetExprOwner().Reference()));
+	if (pToken->HasExprOwnerEx()) {
+		pExprBlock->SetExprOwnerParam(pToken->GetExprOwnerEx().Reference());
+	}
+	return pExprBlock.release();
 }
 
 }

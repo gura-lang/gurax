@@ -206,8 +206,11 @@ public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Object> _pObject;
+	RefPtr<StringReferable> _pStrSource;
 public:
 	Expr_Object(Object* pObject) : Expr_Node(typeInfo), _pObject(pObject) {}
+	Expr_Object(Object* pObject, StringReferable* pStrSource) :
+		Expr_Node(typeInfo), _pObject(pObject), _pStrSource(pStrSource) {}
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
 public:
@@ -391,10 +394,9 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<ExprOwner> _pExprOwnerParam;
+	RefPtr<ExprOwner> _pExprOwnerParam;	// this may be nullptr
 public:
-	explicit Expr_Block(ExprOwner* pExprOwnerElem) :
-		Expr_Collector(typeInfo, pExprOwnerElem), _pExprOwnerParam(new ExprOwner()) {}
+	explicit Expr_Block(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
 	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -402,6 +404,7 @@ public:
 		_pExprOwnerParam.reset(pExprOwnerParam);
 		_pExprOwnerParam->SetExprParent(this);
 	}
+	bool HasExprsParam() const { return _pExprOwnerParam.get() != nullptr; }
 	const ExprList& GetExprsParam() const { return *_pExprOwnerParam; }
 };
 

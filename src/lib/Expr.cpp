@@ -89,7 +89,7 @@ void Expr_Object::Exec() const
 
 String Expr_Object::ToString(const StringStyle& ss) const
 {
-	return _pObject->ToString();
+	return _pStrSource? _pStrSource->GetStringSTL() : _pObject->ToString();
 }
 
 //------------------------------------------------------------------------------
@@ -297,7 +297,22 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
-		rtn += "{\n";
+		rtn += '{';
+		if (HasExprsParam()) {
+			rtn += '|';
+			bool firstFlag = true;
+			for (const Expr* pExpr : GetExprsParam()) {
+				if (firstFlag) {
+					firstFlag = false;
+				} else {
+					rtn += ',';
+					if (!ss.IsCram()) rtn += ' ';
+				}
+				rtn += pExpr->ToString(ss);
+			}
+			rtn += '|';
+		}
+		rtn += '\n';
 		for (const Expr* pExpr : GetExprsElem()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
@@ -307,6 +322,20 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		rtn += "}\n";
 	} else {
 		rtn += '{';
+		if (HasExprsParam()) {
+			rtn += '|';
+			bool firstFlag = true;
+			for (const Expr* pExpr : GetExprsParam()) {
+				if (firstFlag) {
+					firstFlag = false;
+				} else {
+					rtn += ',';
+					if (!ss.IsCram()) rtn += ' ';
+				}
+				rtn += pExpr->ToString(ss);
+			}
+			rtn += '|';
+		}
 		bool firstFlag = true;
 		for (const Expr* pExpr : GetExprsElem()) {
 			if (firstFlag) {

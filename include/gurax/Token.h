@@ -261,7 +261,7 @@ public:
 	void Initialize();
 	reverse_iterator SeekTerminal(reverse_iterator ppToken);
 	bool CheckBlockParamEnd() const;
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	bool IsEmpty() const { return size() <= 1; }
 	Token* Peek(int offset) { return *(rbegin() + offset); }
 	void Push(Token* pToken) { push_back(pToken); }
