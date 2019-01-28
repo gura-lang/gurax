@@ -9,6 +9,11 @@ static const char* text = R"(
 a
 a + b
 a:b.m.n:c:d
+f[]
+f[a]
+f[a, b, c, d, e]
+f()
+f(a)
 f(a, b, c, d, e)
 )";
 
