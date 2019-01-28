@@ -372,9 +372,13 @@ public:
 	virtual ~StringStyle() = default;
 public:	
 	StringStyle& AsSource()		{ _flags |= Flag::AsSource; return *this; }
+	StringStyle& NoAsSource()	{ _flags &= ~Flag::AsSource; return *this; }
 	StringStyle& Cram()			{ _flags |= Flag::Cram; return *this; }
+	StringStyle& NoCram()		{ _flags &= ~Flag::Cram; return *this; }
 	StringStyle& MultiLine()	{ _flags |= Flag::MultiLine; return *this; }
+	StringStyle& NoMultiLine()	{ _flags &= ~Flag::MultiLine; return *this; }
 	StringStyle& UpperCase()	{ _flags |= Flag::UpperCase; return *this; }
+	StringStyle& NoUpperCase()	{ _flags &= ~Flag::UpperCase; return *this; }
 	bool IsAsSource() const		{ return (_flags & Flag::AsSource) != 0; }
 	bool IsCram() const			{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const	{ return (_flags & Flag::MultiLine) != 0; }

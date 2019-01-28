@@ -103,7 +103,10 @@ void Expr_Identifier::Exec() const
 
 String Expr_Identifier::ToString(const StringStyle& ss) const
 {
-	return _pSymbol->ToString();
+	String rtn;
+	rtn += _pSymbol->ToString();
+	rtn += GetAttr().ToString(ss);
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -251,9 +254,9 @@ void Expr_Root::Exec() const
 
 String Expr_Root::ToString(const StringStyle& ss) const
 {
-	String indent = ComposeIndent(ss);
 	String rtn;
 	if (ss.IsMultiLine()) {
+		String indent = ComposeIndent(ss);
 		for (const Expr* pExpr : GetExprsElem()) {
 			rtn += indent;
 			rtn += pExpr->ToString(ss);
@@ -264,11 +267,11 @@ String Expr_Root::ToString(const StringStyle& ss) const
 		for (const Expr* pExpr : GetExprsElem()) {
 			if (firstFlag) {
 				firstFlag = false;
-			} else if (!ss.IsCram()) {
-				rtn += ' ';
+			} else {
+				rtn += ';';
+				if (!ss.IsCram()) rtn += ' ';
 			}
 			rtn += pExpr->ToString(ss);
-			rtn += ';';
 		}
 	}
 	return rtn;
@@ -286,6 +289,33 @@ void Expr_Block::Exec() const
 String Expr_Block::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	if (ss.IsMultiLine()) {
+		String indent = ComposeIndent(ss);
+		String indentDown = indent;
+		indentDown += ss.GetIndentUnit();
+		rtn += indent;
+		rtn += "{\n";
+		for (const Expr* pExpr : GetExprsElem()) {
+			rtn += indentDown;
+			rtn += pExpr->ToString(ss);
+			rtn += '\n';
+		}
+		rtn += indent;
+		rtn += "}\n";
+	} else {
+		rtn += '{';
+		bool firstFlag = true;
+		for (const Expr* pExpr : GetExprsElem()) {
+			if (firstFlag) {
+				firstFlag = false;
+			} else {
+				rtn += ';';
+				if (!ss.IsCram()) rtn += ' ';
+			}
+			rtn += pExpr->ToString(ss);
+		}
+		rtn += '}';
+	}
 	return rtn;
 }
 
@@ -300,7 +330,39 @@ void Expr_Iterer::Exec() const
 
 String Expr_Iterer::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	if (GetExprsElem().size() == 1) {
+		rtn += '(';
+		rtn += GetExprsElem().front()->ToString(ss);
+		rtn += ",)";
+	} else if (ss.IsMultiLine()) {
+		String indent = ComposeIndent(ss);
+		String indentDown = indent;
+		indentDown += ss.GetIndentUnit();
+		rtn += indent;
+		rtn += "(\n";
+		for (const Expr* pExpr : GetExprsElem()) {
+			rtn += indentDown;
+			rtn += pExpr->ToString(ss);
+			rtn += '\n';
+		}
+		rtn += indent;
+		rtn += ")\n";
+	} else {
+		rtn += '(';
+		bool firstFlag = true;
+		for (const Expr* pExpr : GetExprsElem()) {
+			if (firstFlag) {
+				firstFlag = false;
+			} else {
+				rtn += ',';
+				if (!ss.IsCram()) rtn += ' ';
+			}
+			rtn += pExpr->ToString(ss);
+		}
+		rtn += ')';
+	}
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -314,7 +376,35 @@ void Expr_Lister::Exec() const
 
 String Expr_Lister::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	if (ss.IsMultiLine()) {
+		String indent = ComposeIndent(ss);
+		String indentDown = indent;
+		indentDown += ss.GetIndentUnit();
+		rtn += indent;
+		rtn += "[\n";
+		for (const Expr* pExpr : GetExprsElem()) {
+			rtn += indentDown;
+			rtn += pExpr->ToString(ss);
+			rtn += '\n';
+		}
+		rtn += indent;
+		rtn += "]\n";
+	} else {
+		rtn += '[';
+		bool firstFlag = true;
+		for (const Expr* pExpr : GetExprsElem()) {
+			if (firstFlag) {
+				firstFlag = false;
+			} else {
+				rtn += ',';
+				if (!ss.IsCram()) rtn += ' ';
+			}
+			rtn += pExpr->ToString(ss);
+		}
+		rtn += ']';
+	}
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -328,7 +418,22 @@ void Expr_Indexer::Exec() const
 
 String Expr_Indexer::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	rtn += _pExprCar->ToString(ss);
+	rtn += '[';
+	bool firstFlag = true;
+	for (const Expr* pExpr : GetExprsCdr()) {
+		if (firstFlag) {
+			firstFlag = false;
+		} else {
+			rtn += ',';
+			if (!ss.IsCram()) rtn += ' ';
+		}
+		rtn += pExpr->ToString(ss);
+	}
+	rtn += ']';
+	rtn += GetAttr().ToString(ss);
+	return rtn;
 }
 
 //------------------------------------------------------------------------------
@@ -342,7 +447,22 @@ void Expr_Caller::Exec() const
 
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
-	return "";
+	String rtn;
+	rtn += _pExprCar->ToString(ss);
+	rtn += '(';
+	bool firstFlag = true;
+	for (const Expr* pExpr : GetExprsCdr()) {
+		if (firstFlag) {
+			firstFlag = false;
+		} else {
+			rtn += ',';
+			if (!ss.IsCram()) rtn += ' ';
+		}
+		rtn += pExpr->ToString(ss);
+	}
+	rtn += ')';
+	rtn += GetAttr().ToString(ss);
+	return rtn;
 }
 
 void Expr_Caller::AddExprElemBlock(Expr* pExprElem)
