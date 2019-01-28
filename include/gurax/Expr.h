@@ -466,21 +466,22 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<ExprOwner> _pExprOwnerElemBlock;
-	RefPtr<Expr_Caller> _pExprTrailer;
+	RefPtr<Expr_Block> _pExprBlock;		// this may be nullptr
+	RefPtr<Expr_Caller> _pExprTrailer;	// this may be nullptr
 public:
-	Expr_Caller() : Expr_Composite(typeInfo), _pExprOwnerElemBlock(new ExprOwner()) {}
+	Expr_Caller() : Expr_Composite(typeInfo) {}
 public:
 	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
-	void SetExprOwnerElemBlock(ExprOwner* pExprOwnerElemBlock) {
-		_pExprOwnerElemBlock.reset(pExprOwnerElemBlock);
-		_pExprOwnerElemBlock->SetExprParent(this);
+	void SetExprBlock(Expr_Block* pExprBlock) {
+		_pExprBlock.reset(pExprBlock);
+		_pExprBlock->SetExprParent(this);
 	}
-	const ExprList& GetExprsElemBlock() const { return *_pExprOwnerElemBlock; }
-	void AddExprElemBlock(Expr* pExprElem);
-	void SetExprTrailer(Expr_Caller* _pExprTrailer);
+	bool HasExprBlock() const { return _pExprBlock.get() != nullptr; }
+	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
+	void SetExprTrailer(Expr_Caller* pExprTrailer);
 	void AppendExprTrailer(Expr_Caller* pExprTrailer);
+	bool HasExprTrailer() { return _pExprTrailer.get() != nullptr; }
 	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
 	Expr_Caller* GetExprTrailerLast();
 	bool IsTrailer() const { return false; }

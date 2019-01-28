@@ -494,13 +494,11 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 	}
 	rtn += ')';
 	rtn += GetAttr().ToString(ss);
+	if (HasExprBlock()) {
+		if (!ss.IsCram()) rtn += ' ';
+		rtn += GetExprBlock()->ToString(ss);
+	}
 	return rtn;
-}
-
-void Expr_Caller::AddExprElemBlock(Expr* pExprElem)
-{
-	pExprElem->SetExprParent(this);
-	_pExprOwnerElemBlock->push_back(pExprElem);
 }
 
 void Expr_Caller::SetExprTrailer(Expr_Caller* pExprTrailer)
