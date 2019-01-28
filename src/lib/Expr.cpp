@@ -8,8 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
-const char* Expr::_indentUnitDefault = "  ";
-
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -17,10 +15,10 @@ int Expr::CalcIndentLevel() const
 	return indentLevel;
 }
 
-String Expr::ComposeIndent(const char* indentUnit) const
+String Expr::ComposeIndent(const StringStyle& ss) const
 {
 	String rtn;
-	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += indentUnit) ;
+	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += ss.GetIndentUnit()) ;
 	return rtn;
 }
 
@@ -253,7 +251,7 @@ void Expr_Root::Exec() const
 
 String Expr_Root::ToString(const StringStyle& ss) const
 {
-	String indent = ComposeIndent();
+	String indent = ComposeIndent(ss);
 	String rtn;
 	if (ss.IsMultiLine()) {
 		for (const Expr* pExpr : GetExprsElem()) {

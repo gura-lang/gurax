@@ -249,11 +249,17 @@ UInt32 String::NextUTF32(const char** pp)
 	return codeUTF32;
 }
 
-void String::AppendUTF8(UInt64 codeUTF8)
+String& String::AppendN(const char* str, size_t n)
+{
+	while (n-- > 0) append(str);
+	return *this;
+}
+
+String& String::AppendUTF8(UInt64 codeUTF8)
 {
 	if (codeUTF8 == 0) {
 		push_back('\0');
-		return;
+		return *this;
 	}
 	size_t i = 0;
 	char buff[8];
@@ -261,9 +267,10 @@ void String::AppendUTF8(UInt64 codeUTF8)
 		buff[i] = static_cast<char>(codeUTF8 & 0xff);
 	}
 	while (i > 0) push_back(buff[--i]);
+	return *this;
 }
 
-void String::AppendUTF32(UInt32 codeUTF32)
+String& String::AppendUTF32(UInt32 codeUTF32)
 {
 	int i = 0;
 	char buff[8];
@@ -299,6 +306,7 @@ void String::AppendUTF32(UInt32 codeUTF32)
 		}
 	}
 	while (i > 0) push_back(buff[--i]);
+	return *this;
 }
 
 String& String::PrintfV(const char* format, va_list ap)

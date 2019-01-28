@@ -42,7 +42,6 @@ protected:
 	int _lineNoTop = 0;
 	int _lineNoBtm = 0;
 	RefPtr<WeakPtr> _pwExprParent;
-	static const char* _indentUnitDefault;
 public:
 	// Constructor
 	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
@@ -68,8 +67,7 @@ public:
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
 	int CalcIndentLevel() const;
-	String ComposeIndent(const char* indentUnit = _indentUnitDefault) const;
-	const char* GetIndentUnitDefault() { return _indentUnitDefault; }
+	String ComposeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:

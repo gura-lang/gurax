@@ -133,8 +133,9 @@ public:
 	UInt32 NextUTF32(const_iterator* pp) const;
 	static UInt32 NextUTF32(const char** pp);
 public:
-	void AppendUTF8(UInt64 codeUTF8);
-	void AppendUTF32(UInt32 codeUTF32);
+	String& AppendN(const char* str, size_t n);
+	String& AppendUTF8(UInt64 codeUTF8);
+	String& AppendUTF32(UInt32 codeUTF32);
 	String& PrintfV(const char* format, va_list ap);
 	String& Printf(const char* format, ...);
 	String& PrintFmt(const char* format, const ObjectList& objectList);
@@ -350,6 +351,7 @@ public:
 	};
 private:
 	UInt32 _flags;
+	String _indentUnit;
 	static const char* _strsComma[2];
 	static const char* _strsColon[2];
 	static const char* _strsSemicolon[2];
@@ -357,10 +359,12 @@ public:
 	static const StringStyle Empty;
 public:
 	// Constructor
-	StringStyle() : _flags(0) {}
+	explicit StringStyle(const char* indentUnit = "  ") : _flags(0), _indentUnit(indentUnit) {}
 	// Copy constructor/operator
-	StringStyle(const StringStyle& src) : _flags(src._flags) {}
-	StringStyle& operator=(const StringStyle& src) { _flags = src._flags; return *this; }
+	StringStyle(const StringStyle& src) : _flags(src._flags), _indentUnit(src._indentUnit) {}
+	StringStyle& operator=(const StringStyle& src) {
+		_flags = src._flags; _indentUnit = src._indentUnit; return *this;
+	}
 	// Move constructor/operator
 	StringStyle(StringStyle&& src) = delete;
 	StringStyle& operator=(StringStyle&& src) noexcept = delete;
@@ -375,6 +379,8 @@ public:
 	bool IsCram() const			{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const	{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsUpperCase() const	{ return (_flags & Flag::UpperCase) != 0; }
+	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
+	const char* GetIndentUnit() const { return _indentUnit.c_str(); }
 	const char* GetComma() const { return _strsComma[IsCram()]; }
 	const char* GetColon() const { return _strsColon[IsCram()]; }
 	const char* GetSemicolon() const	{ return _strsSemicolon[IsCram()]; }
