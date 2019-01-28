@@ -335,6 +335,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 				rtn += pExpr->ToString(ss);
 			}
 			rtn += '|';
+			if (!ss.IsCram() && !GetExprsElem().empty()) rtn += ' ';
 		}
 		bool firstFlag = true;
 		for (const Expr* pExpr : GetExprsElem()) {
@@ -479,20 +480,23 @@ void Expr_Caller::Exec() const
 
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
+	bool argListFlag = !GetExprsCdr().empty() || !GetAttr().IsEmpty() || !HasExprBlock();
 	String rtn;
 	rtn += _pExprCar->ToString(ss);
-	rtn += '(';
-	bool firstFlag = true;
-	for (const Expr* pExpr : GetExprsCdr()) {
-		if (firstFlag) {
-			firstFlag = false;
-		} else {
-			rtn += ',';
-			if (!ss.IsCram()) rtn += ' ';
+	if (argListFlag) {
+		rtn += '(';
+		bool firstFlag = true;
+		for (const Expr* pExpr : GetExprsCdr()) {
+			if (firstFlag) {
+				firstFlag = false;
+			} else {
+				rtn += ',';
+				if (!ss.IsCram()) rtn += ' ';
+			}
+			rtn += pExpr->ToString(ss);
 		}
-		rtn += pExpr->ToString(ss);
+		rtn += ')';
 	}
-	rtn += ')';
 	rtn += GetAttr().ToString(ss);
 	if (HasExprBlock()) {
 		if (!ss.IsCram()) rtn += ' ';

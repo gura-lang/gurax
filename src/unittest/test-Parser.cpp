@@ -22,15 +22,24 @@ static const char* src2 = R"(
 ()
 []
 {}
-{|a|}
+{|a| elem1, elem2, elem3}
 ~123456
 -123456
 !123456
 +123456
 `123456
 %{}
+%{elem1, elem2, elem3}
+%{|a| elem1, elem2, elem3}
+%{|a, b, c| elem1, elem2, elem3}
 %%{}
+%%{elem1, elem2, elem3}
+%%{|a| elem1, elem2, elem3}
+%%{|a, b, c| elem1, elem2, elem3}
 &{}
+&{elem1, elem2, elem3}
+&{|a| elem1, elem2, elem3}
+&{|a, b, c| elem1, elem2, elem3}
 *foo
 )";
 

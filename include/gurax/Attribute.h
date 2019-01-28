@@ -44,6 +44,7 @@ public:
 	void AddSymbolsOpt(const SymbolList& symbolList) {
 		for (const Symbol* pSymbol : symbolList) AddSymbolOpt(pSymbol);
 	}
+	bool IsEmpty() const { return !IsDottedSymbolSet() && GetSymbols().empty() && GetSymbolsOpt().empty(); }
 	bool IsSet(const Symbol* pSymbol) { return _symbolSet.IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) { return _symbolSetOpt.IsSet(pSymbol); }
 	const SymbolList& GetSymbols() const { return _symbolList; }
