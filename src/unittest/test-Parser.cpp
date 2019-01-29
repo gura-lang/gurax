@@ -163,17 +163,26 @@ f[
 ]
 )";
 
-static const char* src_ReduceFourTokens = R"(
+static const char* src_ReduceFourAndFiveTokens = R"(
 f() g()
+f() g() h() k() l() m()
 f() g(a)
 f() g(a, b, c)
 f(a, b, c) g()
 f(a, b, c) g(a, b, c)
 f(a, b, c) {elem1, elem2} g(a, b, c) {}
 f(a, b, c) {elem1, elem2} g(a, b, c) {elem1, elem2}
-)";
-
-static const char* src_ReduceFiveTokens = R"(
+f(a, b, c) {|a, b, c| elem1, elem2, elem3} g(a, b, c) {|a, b, c| elem1, elem2, elem3}
+f(a, b, c) {|a, b, c|
+  elem1, elem2, elem3
+} g(a, b, c) {|a, b, c|
+  elem1, elem2, elem3
+} h(a, b, c) {|a, b, c|
+  elem1, elem2, elem3
+} k(a, b, c) {|a, b, c|
+  elem1, elem2, elem3
+}
+if (a == b) {foo}
 )";
 
 Gurax_TesterEntry(Parser)
@@ -195,10 +204,8 @@ Gurax_TesterEntry(Parser)
 	TestFunc(src_ReduceTwoTokens);
 	PrintTitle("ReduceThreeTokens");
 	TestFunc(src_ReduceThreeTokens);
-	PrintTitle("ReduceFourTokens");
-	TestFunc(src_ReduceFourTokens);
-	PrintTitle("ReduceFiveTokens");
-	TestFunc(src_ReduceFiveTokens);
+	PrintTitle("ReduceFourAndFiveTokens");
+	TestFunc(src_ReduceFourAndFiveTokens);
 }
 
 }

@@ -12,6 +12,7 @@ static_assert(std::is_pod<Symbol>::value, "Gurax::Symbol must be a POD class");
 
 void Symbol::Bootup()
 {
+	SymbolSet::Bootup();
 }
 
 String Symbol::ToString(const StringStyle& ss) const
@@ -87,6 +88,17 @@ String SymbolList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
+SymbolSet SymbolSet::_setFlowControl;
+
+void SymbolSet::Bootup()
+{
+	_setFlowControl.Set(Gurax_Symbol(if_));
+	_setFlowControl.Set(Gurax_Symbol(elsif));
+	_setFlowControl.Set(Gurax_Symbol(repeat));
+	_setFlowControl.Set(Gurax_Symbol(while_));
+	_setFlowControl.Set(Gurax_Symbol(for_));
+	_setFlowControl.Set(Gurax_Symbol(cross));
+}
 
 //------------------------------------------------------------------------------
 // SymbolPool

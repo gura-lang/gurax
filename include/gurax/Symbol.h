@@ -145,6 +145,7 @@ public:
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
 	bool IsLessThan_UniqId(const Symbol* pSymbol) const { return GetUniqId() < pSymbol->GetUniqId(); }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	bool IsFlowControl() const;
 	static void Bootup();
 	static const Symbol* Add(const char* name);
 	static const Symbol* Add(const String& name) { return Add(name.c_str()); }
@@ -158,9 +159,14 @@ public:
 class GURAX_DLLDECLARE SymbolSet :
 	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
 public:
+	static SymbolSet _setFlowControl;
+public:
+	static void Bootup();
 	void Set(const Symbol* pSymbol) { insert(pSymbol); }
 	bool IsSet(const Symbol* pSymbol) { return find(pSymbol) != end(); }
 };
+
+inline bool Symbol::IsFlowControl() const { return SymbolSet::_setFlowControl.IsSet(this); }
 
 //------------------------------------------------------------------------------
 // SymbolPool

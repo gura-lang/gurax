@@ -484,6 +484,10 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += _pExprCar->ToString(ss);
 	if (argListFlag) {
+		if (!ss.IsCram() && _pExprCar->IsType<Expr_Identifier>() &&
+			dynamic_cast<Expr_Identifier*>(_pExprCar.get())->GetSymbol()->IsFlowControl()) {
+			rtn += ' ';
+		}
 		rtn += '(';
 		bool firstFlag = true;
 		for (const Expr* pExpr : GetExprsCdr()) {
