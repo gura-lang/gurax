@@ -134,8 +134,33 @@ f() {|a| elem1, elem2, elem3}
 f() {|a, b, c| elem1, elem2, elem3}
 f(a, b, c) {}
 f(a, b, c) {elem1, elem2, elem3}
+f(a, b, c) {
+elem1
+elem2
+elem3}
+f(a, b, c) {|| elem1, elem2, elem3}
 f(a, b, c) {|a| elem1, elem2, elem3}
+f(a, b, c) {|a|
+elem1
+elem2
+elem3}
 f(a, b, c) {|a, b, c| elem1, elem2, elem3}
+f(a, b, c) {|a
+b
+c| elem1, elem2, elem3}
+f[]
+f[elem1]
+f[elem1, elem2, elem3]
+f[
+]
+f[
+  elem1
+]
+f[
+  elem1
+  elem2
+  elem3
+]
 )";
 /*
 )";
