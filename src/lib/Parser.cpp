@@ -678,13 +678,6 @@ bool Parser::ReduceThreeTokens()
 		if (pToken3->IsType(TokenType::RBrace)) {
 			DBGPARSER(::printf("Reduce: Expr(Block) -> '{' Expr '}'\n"));
 			exprOwner.push_back(pToken2->GetExpr()->Reference());
-#if 0
-			RefPtr<Expr_Block> pExprBlock(new Expr_Block(exprOwner.Reference()));
-			if (pToken1->HasExprOwnerEx()) {
-				pExprBlock->SetExprOwnerParam(pToken1->GetExprOwnerEx().Reference());
-			}
-			pExprGen.reset(pExprBlock.release());
-#endif
 			pExprGen.reset(CreateExprBlock(pToken1));
 		} else if (pToken3->IsType(TokenType::Comma) ||
 					pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {

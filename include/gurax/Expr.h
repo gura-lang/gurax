@@ -162,7 +162,6 @@ public:
 	}
 	ExprOwner& GetExprOwnerElem() { return *_pExprOwnerElem; }
 	const ExprList& GetExprsElem() const { return *_pExprOwnerElem; }
-	ExprOwner* ReleaseExprOwnerElem() { return _pExprOwnerElem.release(); }
 	void AddExprElem(Expr* pExprElem);
 };
 
