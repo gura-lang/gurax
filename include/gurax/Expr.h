@@ -481,8 +481,9 @@ public:
 	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);
 	void AppendExprTrailer(Expr_Caller* pExprTrailer);
-	bool HasExprTrailer() { return _pExprTrailer.get() != nullptr; }
+	bool HasExprTrailer() const { return _pExprTrailer.get() != nullptr; }
 	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
+	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
 	Expr_Caller* GetExprTrailerLast();
 	bool IsTrailer() const { return false; }
 };

@@ -162,13 +162,24 @@ f[
   elem3
 ]
 )";
-/*
+
+static const char* src_ReduceFourTokens = R"(
+f() g()
+f(a, b, c) g()
 )";
+/*
+f(a, b, c) g(a, b, c)
+f(a, b, c) {elem1, elem2} g(a, b, c) {}
+f(a, b, c) {elem1, elem2} g(a, b, c) {elem1, elem2}
 */
+
+static const char* src_ReduceFiveTokens = R"(
+)";
 
 Gurax_TesterEntry(Parser)
 {
 	auto TestFunc = [](const char* src) {
+		Error::Clear();
 		RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
 		if (Error::IsIssued()) {
 			Error::Print(stderr);
@@ -184,6 +195,10 @@ Gurax_TesterEntry(Parser)
 	TestFunc(src_ReduceTwoTokens);
 	PrintTitle("ReduceThreeTokens");
 	TestFunc(src_ReduceThreeTokens);
+	PrintTitle("ReduceFourTokens");
+	TestFunc(src_ReduceFourTokens);
+	PrintTitle("ReduceFiveTokens");
+	TestFunc(src_ReduceFiveTokens);
 }
 
 }

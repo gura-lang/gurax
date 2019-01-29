@@ -502,6 +502,10 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 		if (!ss.IsCram()) rtn += ' ';
 		rtn += GetExprBlock()->ToString(ss);
 	}
+	if (HasExprTrailer()) {
+		if (!ss.IsCram()) rtn += ' ';
+		rtn += GetExprTrailer()->ToString(ss);
+	}
 	return rtn;
 }
 
