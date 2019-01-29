@@ -588,7 +588,7 @@ bool Parser::ReduceThreeTokens()
 				pExprGen.reset(new Expr_Iterer(exprOwner.Reference()));
 			} else {
 				DBGPARSER(::printf("Reduce: Expr -> '(' Expr ')'\n"));
-				pExprGen.reset(exprOwner.front()->Reference());	// simply removes parenthesis
+				pExprGen.reset(pToken2->GetExpr()->Reference());	// simply removes parenthesis
 			}
 		} else if (pToken3->IsType(TokenType::Comma) || pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '(' -> '(' Expr ','\n"));
@@ -821,7 +821,7 @@ bool Parser::ReduceFourTokens()
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '{' Expr '}'\n"));
 			RefPtr<Expr_Caller> pExprCaller;
 			if (pToken1->GetExpr()->IsType<Expr_Caller>()) {
-				pExprCaller.reset(dynamic_cast<Expr_Caller *>(pToken2->GetExpr()->Reference()));
+				pExprCaller.reset(dynamic_cast<Expr_Caller *>(pToken1->GetExpr()->Reference()));
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());

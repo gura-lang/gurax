@@ -103,12 +103,43 @@ a:[b,c,d]
 a:[b,c,d]:e:f:g
 a:e:f:g:[b,c,d]
 a:e:f:g:[b,c,d]:[h,i,k]
-f[a]
-f[a, b, c, d, e]
+()
+(a)
+((a))
+(((a)))
+(a,)
+(a,b,c)
+[]
+[a]
+[a,b,c]
 f()
 f(a)
-f(a, b, c, d, e)
+f(a, b, c)
+f() {}
+f(a) {}
+f(a, b, c) {}
+f() {
+}
+f(a) {
+}
+f(a, b, c) {
+}
+f {}
+f {elem1, elem2, elem3}
+f {|a| elem1, elem2, elem3}
+f {|a, b, c| elem1, elem2, elem3}
+f() {}
+f() {elem1, elem2, elem3}
+f() {|a| elem1, elem2, elem3}
+f() {|a, b, c| elem1, elem2, elem3}
+f(a, b, c) {}
+f(a, b, c) {elem1, elem2, elem3}
+f(a, b, c) {|a| elem1, elem2, elem3}
+f(a, b, c) {|a, b, c| elem1, elem2, elem3}
 )";
+/*
+)";
+*/
 
 Gurax_TesterEntry(Parser)
 {
