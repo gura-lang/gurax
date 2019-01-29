@@ -39,6 +39,7 @@
 
 # Temporary Files
 *~
+*.result.txt
 
 # Directories
 /build

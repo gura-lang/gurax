@@ -1,0 +1,35 @@
+[Referable]
+new/Delete
+created: A
+created: B
+created: C
+deleted: A
+deleted: B
+deleted: C
+RefPtr
+created: A
+created: B
+created: C
+deleted: C
+deleted: B
+deleted: A
+Owner
+created: A
+created: B
+created: C
+deleted: A
+deleted: B
+deleted: C
+WeakRef
+created: A
+locked:  A 2
+         A 2
+locked:  A 3
+locked:  A 4
+WeakRef longevity
+created: A
+WeakRef: 2
+WeakRef: 3
+WeakRef: 2
+WeakRef: 1
+deleted: A

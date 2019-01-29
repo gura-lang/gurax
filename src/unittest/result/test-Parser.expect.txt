@@ -1,0 +1,91 @@
+[Parser]
+123456
+'foo'
+b'\x12\x34\x56'
+foo
++
+*
+?
+-
+123456S
+'foo'S
+()
+[]
+{}
+{|a| elem1; elem2; elem3}
+~(123456)
+-(123456)
+!(123456)
++(123456)
+`(123456)
+
+% {}
+% {elem1; elem2; elem3}
+% {|a| elem1; elem2; elem3}
+% {|a, b, c| elem1; elem2; elem3}
+%% {}
+%% {elem1; elem2; elem3}
+%% {|a| elem1; elem2; elem3}
+%% {|a, b, c| elem1; elem2; elem3}
+& {}
+& {elem1; elem2; elem3}
+& {|a| elem1; elem2; elem3}
+& {|a, b, c| elem1; elem2; elem3}
+(123456)+
+(123456)*
+(123456)?
+(123456)%
+(123456)..
+(a) + (b)
+(a) - (b)
+(a) * (b)
+(a) / (b)
+(a) % (b)
+(a) %% (b)
+(a) |.| (b)
+(a) |^| (b)
+(a) |*| (b)
+(a) |+| (b)
+(a) |-| (b)
+(a) |&| (b)
+(a) ||| (b)
+(a) ** (b)
+(a) == (b)
+(a) != (b)
+(a) < (b)
+(a) > (b)
+(a) <= (b)
+(a) >= (b)
+(a) <=> (b)
+(a) in (b)
+(a) => (b)
+(a) || (b)
+(a) && (b)
+(a) | (b)
+(a) & (b)
+(a) ^ (b)
+(a) << (b)
+(a) >> (b)
+(a) .. (b)
+a = b
+a += b
+a -= b
+a *= b
+a /= b
+a %= b
+a **= b
+a |= b
+a &= b
+a ^= b
+a <<= b
+a >>= b
+a.b
+a::b
+a:*b
+a:&b
+a:b
+f[a]
+f[a, b, c, d, e]
+f()
+f(a)
+f(a, b, c, d, e)

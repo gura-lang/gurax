@@ -1,0 +1,59 @@
+#!/usr/bin/gura
+import(diff)
+import(conio)
+import(argopt)
+
+PrintEdits(edits[]:diff.edit@line) = {
+	edits.each {|edit|
+		if (edit.type == `copy) {
+			println(' ', edit.source)
+		} else {
+			clr = cond(edit.type == `add, `green, `red)
+			conio.setcolor(`white, clr) {
+				print(edit.mark@unified)
+			}
+			conio.setcolor(clr) {
+				println(edit.source)
+			}
+		}
+	}
+}
+
+main() = {
+	argopt.Parser {|p|
+		p.addFlag('detail', 'd')
+		errorFlag = false
+		try {
+			[cfg, argv] = p.parse(sys.argv)
+		} catch {
+			errorFlag = true
+		}
+		if (errorFlag || argv.len() < 2) {
+			sys.stderr.println('usage: diff-result.gura [--detail] file1 file2')
+			sys.exit(1)
+		}
+		detailFlag = cfg['detail']
+	}
+	[fileNameSample, fileNameResult] = argv[0, 1]
+	edits = []
+	diffFlag = false
+	result = diff.compose(stream(fileNameSample), stream(fileNameResult))
+	if (!detailFlag && result.distance > 20) {
+		conio.setcolor(`red) {
+			println('******** too much difference ********')
+		}
+	} elsif (result.distance != 0) {
+		result.edits.each {|edit|
+			if (edit.source.startswith('========')) {
+				(!edits.isempty() && diffFlag) && PrintEdits(edits)
+				edits.clear()
+				diffFlag = false
+			}
+			(detailFlag || edit.type != `copy) && edits.add(edit)
+			if (edit.type != `copy) { diffFlag = true }
+		}
+		(!edits.isempty() && diffFlag) && PrintEdits(edits)
+	}
+}
+
+main()

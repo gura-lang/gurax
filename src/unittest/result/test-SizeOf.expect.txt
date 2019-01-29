@@ -1,0 +1,24 @@
+[SizeOf]
+DateTime                 48
+Frame_Node               40
+Frame_Branch             48
+ObjectOwner              40
+ObjectStack              40
+Object_attribute         40
+Object_binary            40
+Object_bool              40
+Object_dict              40
+Object_expr              40
+Object_function          40
+Object_iterator          40
+Object_klass             40
+Object_list              40
+Object_module            40
+Object_nil               32
+Object_number            40
+Object_stream            40
+Object_string            40
+Object_symbol            40
+Object_undefined         32
+Symbol                   16
+TimeDelta                24
