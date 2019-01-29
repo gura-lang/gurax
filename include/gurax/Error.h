@@ -94,6 +94,7 @@ public:
 		_pErrorOwnerGlobal->SetSilentFlag();
 		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
+		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
 	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName,
@@ -103,6 +104,7 @@ public:
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
+		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
 	static void IssueWith(const ErrorType& errorType, Expr* pExpr, const char* format, const Args&... args) {
@@ -111,6 +113,7 @@ public:
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, pExpr, String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
+		_errorIssuedFlag = true;
 	}
 	static void Print(FILE* fp);
 };

@@ -31,4 +31,7 @@ public:
 	static const TesterList& GetTesterList() { return _testerList; }
 };
 
+int Main(int argc, char* argv[]);
+void PrintTitle(const char* title);
+
 }

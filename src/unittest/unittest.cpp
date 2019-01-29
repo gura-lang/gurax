@@ -32,6 +32,11 @@ int Main(int argc, char* argv[])
 	return 0;
 }
 
+void PrintTitle(const char* title)
+{
+	::printf("======== %s ========\n", title);
+}
+
 }
 
 int main(int argc, char* argv[])

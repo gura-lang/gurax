@@ -561,7 +561,13 @@ bool Parser::ReduceThreeTokens()
 								   "list of optional attributes can only contain identifiers");
 						return false;
 					}
-					pAttrDst->AddSymbolOpt(dynamic_cast<const Expr_Identifier*>(pExprElem)->GetSymbol());
+					const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExprElem);
+					if (!pExprIdentifier->GetAttr().IsEmpty()) {
+						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+								   "optional attributes must be separated with comma");
+						return false;
+					}
+					pAttrDst->AddSymbolOpt(pExprIdentifier->GetSymbol());
 				}
 				pExprGen.reset(pExprLeft->Reference());
 			} else {

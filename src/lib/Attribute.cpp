@@ -46,12 +46,13 @@ String Attribute::ToString(const StringStyle& ss) const
 		rtn += pSymbol->GetName();
 	}
 	if (!_symbolListOpt.empty()) {
-		rtn += '[';
+		rtn += ":[";
 		bool firstFlag = true;
 		for (const Symbol* pSymbol : _symbolListOpt) {
 			if (firstFlag) {
-				rtn += ',';
 				firstFlag = false;
+			} else {
+				rtn += ',';
 			}
 			rtn += pSymbol->GetName();
 		}

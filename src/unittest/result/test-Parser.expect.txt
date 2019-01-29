@@ -1,4 +1,5 @@
 [Parser]
+======== ReduceOneToken ========
 123456
 'foo'
 b'\x12\x34\x56'
@@ -9,6 +10,7 @@ foo
 -
 123456S
 'foo'S
+======== ReduceTwoTokens ========
 ()
 []
 {}
@@ -36,6 +38,7 @@ foo
 (123456)?
 (123456)%
 (123456)..
+======== ReduceThreeTokens ========
 (a) + (b)
 (a) - (b)
 (a) * (b)
@@ -84,6 +87,8 @@ a::b
 a:*b
 a:&b
 a:b
+a:b:c:d
+a:b.c.d:e:f
 f[a]
 f[a, b, c, d, e]
 f()

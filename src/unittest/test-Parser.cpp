@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-static const char* src1 = R"(
+static const char* src_ReduceOneToken = R"(
 123456
 'foo'
 b'\x12\x34\x56'
@@ -18,7 +18,7 @@ foo
 'foo'S
 )";
 
-static const char* src2 = R"(
+static const char* src_ReduceTwoTokens = R"(
 ()
 []
 {}
@@ -48,7 +48,7 @@ static const char* src2 = R"(
 123456..
 )";
 
-static const char* src3 = R"(
+static const char* src_ReduceThreeTokens = R"(
 a + b
 a - b
 a * b
@@ -97,8 +97,12 @@ a::b
 a:*b
 a:&b
 a:b
-
-
+a:b:c:d
+a:b.c.d:e:f
+a:[b,c,d]
+a:[b,c,d]:e:f:g
+a:e:f:g:[b,c,d]
+a:e:f:g:[b,c,d]:[h,i,k]
 f[a]
 f[a, b, c, d, e]
 f()
@@ -118,9 +122,12 @@ Gurax_TesterEntry(Parser)
 			::printf("%s\n", pExpr->ToString().c_str());
 		}
 	};
-	TestFunc(src1);
-	TestFunc(src2);
-	TestFunc(src3);
+	PrintTitle("ReduceOneToken");
+	TestFunc(src_ReduceOneToken);
+	PrintTitle("ReduceTwoTokens");
+	TestFunc(src_ReduceTwoTokens);
+	PrintTitle("ReduceThreeTokens");
+	TestFunc(src_ReduceThreeTokens);
 }
 
 }
