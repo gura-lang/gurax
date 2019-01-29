@@ -165,13 +165,13 @@ f[
 
 static const char* src_ReduceFourTokens = R"(
 f() g()
+f() g(a)
+f() g(a, b, c)
 f(a, b, c) g()
-)";
-/*
 f(a, b, c) g(a, b, c)
 f(a, b, c) {elem1, elem2} g(a, b, c) {}
 f(a, b, c) {elem1, elem2} g(a, b, c) {elem1, elem2}
-*/
+)";
 
 static const char* src_ReduceFiveTokens = R"(
 )";

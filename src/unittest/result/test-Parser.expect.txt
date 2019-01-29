@@ -133,3 +133,12 @@ f[elem1, elem2, elem3]
 f[]
 f[elem1]
 f[elem1, elem2, elem3]
+======== ReduceFourTokens ========
+f() g()
+f() g(a)
+f() g(a, b, c)
+f(a, b, c) g()
+f(a, b, c) g(a, b, c)
+f(a, b, c) {elem1; elem2} g(a, b, c) {}
+f(a, b, c) {elem1; elem2} g(a, b, c) {elem1; elem2}
+======== ReduceFiveTokens ========

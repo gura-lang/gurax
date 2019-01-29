@@ -895,6 +895,7 @@ bool Parser::ReduceFiveTokens()
 			DBGPARSER(::printf("Reduce: Expr Expr '(' -> Expr Expr '(' Expr ','\n"));
 			tokenStack.Push(pToken1->Reference());
 			tokenStack.Push(pToken2->Reference());
+			tokenStack.Push(pToken3->Reference());
 			return true;
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken5, "syntax error (%d)", __LINE__);
