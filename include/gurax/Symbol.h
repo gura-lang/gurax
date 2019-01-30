@@ -159,14 +159,9 @@ public:
 class GURAX_DLLDECLARE SymbolSet :
 	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
 public:
-	static SymbolSet _setFlowControl;
-public:
-	static void Bootup();
 	void Set(const Symbol* pSymbol) { insert(pSymbol); }
 	bool IsSet(const Symbol* pSymbol) { return find(pSymbol) != end(); }
 };
-
-inline bool Symbol::IsFlowControl() const { return SymbolSet::_setFlowControl.IsSet(this); }
 
 //------------------------------------------------------------------------------
 // SymbolPool

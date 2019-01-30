@@ -12,7 +12,6 @@ static_assert(std::is_pod<Symbol>::value, "Gurax::Symbol must be a POD class");
 
 void Symbol::Bootup()
 {
-	SymbolSet::Bootup();
 }
 
 String Symbol::ToString(const StringStyle& ss) const
@@ -21,6 +20,21 @@ String Symbol::ToString(const StringStyle& ss) const
 	if (ss.IsAsSource()) rtn += '`';
 	rtn += GetName();
 	return rtn;
+}
+
+bool Symbol::IsFlowControl() const
+{
+	static SymbolSet *pSymbolSet = nullptr;
+	if (!pSymbolSet) {
+		pSymbolSet = new SymbolSet();
+		pSymbolSet->Set(Gurax_Symbol(if_));
+		pSymbolSet->Set(Gurax_Symbol(elsif));
+		pSymbolSet->Set(Gurax_Symbol(repeat));
+		pSymbolSet->Set(Gurax_Symbol(while_));
+		pSymbolSet->Set(Gurax_Symbol(for_));
+		pSymbolSet->Set(Gurax_Symbol(cross));
+	}
+	return pSymbolSet->IsSet(this);
 }
 
 const Symbol* Symbol::Add(const char* name)
@@ -88,17 +102,6 @@ String SymbolList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // SymbolSet
 //------------------------------------------------------------------------------
-SymbolSet SymbolSet::_setFlowControl;
-
-void SymbolSet::Bootup()
-{
-	_setFlowControl.Set(Gurax_Symbol(if_));
-	_setFlowControl.Set(Gurax_Symbol(elsif));
-	_setFlowControl.Set(Gurax_Symbol(repeat));
-	_setFlowControl.Set(Gurax_Symbol(while_));
-	_setFlowControl.Set(Gurax_Symbol(for_));
-	_setFlowControl.Set(Gurax_Symbol(cross));
-}
 
 //------------------------------------------------------------------------------
 // SymbolPool
