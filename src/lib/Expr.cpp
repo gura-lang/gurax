@@ -127,6 +127,23 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Expr_Embedded : Expr_Node
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_Embedded::typeInfo;
+
+void Expr_Embedded::Exec() const
+{
+}
+
+String Expr_Embedded::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += 'e';
+	rtn += GetStringSTL().MakeQuoted(true);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_UnaryOp::typeInfo;

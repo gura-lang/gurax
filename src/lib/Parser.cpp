@@ -135,7 +135,7 @@ bool Parser::ReduceOneToken()
 		//bool appendLastEOLFlag = false;
 		//if (!pTempl->Parse(env, pToken->GetString(), nullptr,
 		//				   autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		pExprGen.reset(new Expr_Object(new Object_template(pTempl.release())));
+		pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetValueReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
 		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetValue())));

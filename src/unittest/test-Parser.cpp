@@ -9,6 +9,7 @@ static const char* src_ReduceOneToken = R"(
 123456
 'foo'
 b'\x12\x34\x56'
+e'<html></html>'
 foo
 +
 *

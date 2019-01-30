@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "Object.h"
 #include "Operator.h"
+#include "Template.h"
 
 namespace Gurax {
 
@@ -122,7 +123,6 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Unary : public Expr {
 protected:
-	const Operator* _pOperator;
 	RefPtr<Expr> _pExprChild;
 public:
 	Expr_Unary(const TypeInfo& typeInfo, Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
@@ -230,7 +230,6 @@ public:
 	static const TypeInfo typeInfo;
 protected:
 	const Symbol* _pSymbol;
-protected:
 	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Identifier(const Symbol* pSymbol) :
@@ -280,9 +279,11 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
+	RefPtr<Template> _pTempl;
 	RefPtr<StringReferable> _pStr;
 public:
-	Expr_Embedded(StringReferable* pStr) : Expr_Node(typeInfo), _pStr(pStr) {}
+	Expr_Embedded(Template* pTempl, StringReferable* pStr) : Expr_Node(typeInfo), _pTempl(pTempl), _pStr(pStr) {}
+	const Template& GetTemplate() const { return *_pTempl; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
