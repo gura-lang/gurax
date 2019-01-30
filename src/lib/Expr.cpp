@@ -27,10 +27,10 @@ String Expr::ComposeIndent(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const ExprList ExprList::Empty;
 
-void ExprList::Exec() const
+void ExprList::Exec(Frame& frame) const
 {
 	for (const Expr* pExpr : *this) {
-		pExpr->Exec();
+		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;
 	}
 }
@@ -74,7 +74,7 @@ void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 	_pExprOwnerCdr->push_back(pExprCdr);
 }
 
-void Expr_Composite::Exec() const
+void Expr_Composite::Exec(Frame& frame) const
 {
 }
 
@@ -83,7 +83,7 @@ void Expr_Composite::Exec() const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Object::typeInfo;
 
-void Expr_Object::Exec() const
+void Expr_Object::Exec(Frame& frame) const
 {
 }
 
@@ -97,7 +97,7 @@ String Expr_Object::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Identifier::typeInfo;
 
-void Expr_Identifier::Exec() const
+void Expr_Identifier::Exec(Frame& frame) const
 {
 }
 
@@ -114,7 +114,7 @@ String Expr_Identifier::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Suffixed::typeInfo;
 
-void Expr_Suffixed::Exec() const
+void Expr_Suffixed::Exec(Frame& frame) const
 {
 }
 
@@ -131,7 +131,7 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Embedded::typeInfo;
 
-void Expr_Embedded::Exec() const
+void Expr_Embedded::Exec(Frame& frame) const
 {
 }
 
@@ -148,7 +148,7 @@ String Expr_Embedded::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 
-void Expr_UnaryOp::Exec() const
+void Expr_UnaryOp::Exec(Frame& frame) const
 {
 }
 
@@ -188,7 +188,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 
-void Expr_BinaryOp::Exec() const
+void Expr_BinaryOp::Exec(Frame& frame) const
 {
 }
 
@@ -229,7 +229,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Assign::typeInfo;
 
-void Expr_Assign::Exec() const
+void Expr_Assign::Exec(Frame& frame) const
 {
 }
 
@@ -250,7 +250,7 @@ String Expr_Assign::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Member::typeInfo;
 
-void Expr_Member::Exec() const
+void Expr_Member::Exec(Frame& frame) const
 {
 }
 
@@ -268,7 +268,7 @@ String Expr_Member::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Root::typeInfo;
 
-void Expr_Root::Exec() const
+void Expr_Root::Exec(Frame& frame) const
 {
 }
 
@@ -302,7 +302,7 @@ String Expr_Root::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Block::typeInfo;
 
-void Expr_Block::Exec() const
+void Expr_Block::Exec(Frame& frame) const
 {
 }
 
@@ -374,7 +374,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Iterer::typeInfo;
 
-void Expr_Iterer::Exec() const
+void Expr_Iterer::Exec(Frame& frame) const
 {
 }
 
@@ -420,7 +420,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Lister::typeInfo;
 
-void Expr_Lister::Exec() const
+void Expr_Lister::Exec(Frame& frame) const
 {
 }
 
@@ -462,7 +462,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Indexer::typeInfo;
 
-void Expr_Indexer::Exec() const
+void Expr_Indexer::Exec(Frame& frame) const
 {
 }
 
@@ -491,7 +491,7 @@ String Expr_Indexer::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Caller::typeInfo;
 
-void Expr_Caller::Exec() const
+void Expr_Caller::Exec(Frame& frame) const
 {
 }
 

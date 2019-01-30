@@ -10,6 +10,9 @@
 
 namespace Gurax {
 
+
+class Frame;
+
 //------------------------------------------------------------------------------
 // Expr
 // [class hierarchy under Expr]
@@ -72,7 +75,7 @@ public:
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:
-	virtual void Exec() const = 0;
+	virtual void Exec(Frame& frame) const = 0;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -90,7 +93,7 @@ class GURAX_DLLDECLARE ExprList : public std::vector<Expr*> {
 public:
 	static const ExprList Empty;
 public:
-	void Exec() const;
+	void Exec(Frame& frame) const;
 	void SetExprParent(const Expr* pExprParent);
 };
 
@@ -192,7 +195,7 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
@@ -215,7 +218,7 @@ public:
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -236,7 +239,7 @@ public:
 		Expr_Node(typeInfo), _pSymbol(pSymbol), _pAttr(new Attribute()) {}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -265,7 +268,7 @@ public:
 	bool IsNumber() const { return _numberFlag; }
 	bool IsString() const { return !_numberFlag; }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -287,7 +290,7 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -307,7 +310,7 @@ public:
 			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -327,7 +330,7 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -347,7 +350,7 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -367,7 +370,7 @@ public:
 		Expr_Binary(typeInfo, pExprLeft, pExprRight), _memberMode(memberMode) {}
 public:
 	MemberMode GetMemberMode() const { return _memberMode; }
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -383,7 +386,7 @@ public:
 public:
 	Expr_Root(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -401,7 +404,7 @@ protected:
 public:
 	explicit Expr_Block(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprOwnerParam(ExprOwner* pExprOwnerParam) {
 		_pExprOwnerParam.reset(pExprOwnerParam);
@@ -423,7 +426,7 @@ public:
 public:
 	Expr_Lister(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -439,7 +442,7 @@ public:
 public:
 	Expr_Iterer(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -455,7 +458,7 @@ public:
 public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -475,7 +478,7 @@ protected:
 public:
 	Expr_Caller() : Expr_Composite(typeInfo) {}
 public:
-	virtual void Exec() const override;
+	virtual void Exec(Frame& frame) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprBlock(Expr_Block* pExprBlock) {
