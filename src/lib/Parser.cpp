@@ -492,14 +492,8 @@ bool Parser::ReduceThreeTokens()
 			}
 			if (pExprRight->IsType<Expr_Identifier>()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Identifier)\n"));
-				Attribute* pAttrDst = nullptr; // GetAttrToAppend();
-				if (pExprDst->IsType<Expr_Identifier>()) {
-					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
-				} else if (pExprDst->IsType<Expr_Caller>()) {
-					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
-				} else if (pExprDst->IsType<Expr_Indexer>()) {
-					pAttrDst = &dynamic_cast<Expr_Indexer*>(pExprDst)->GetAttr();
-				} else {
+				Attribute* pAttrDst = pExprDst->GetAttrToAppend();
+				if (!pAttrDst) {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							   "attributes can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
@@ -508,14 +502,8 @@ bool Parser::ReduceThreeTokens()
 				pExprGen.reset(pExprLeft->Reference());
 			} else if (pExprRight->IsType<Expr_Member>()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
-				Attribute* pAttrDst = nullptr;
-				if (pExprDst->IsType<Expr_Identifier>()) {
-					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
-				} else if (pExprDst->IsType<Expr_Caller>()) {
-					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
-				} else if (pExprDst->IsType<Expr_Indexer>()) {
-					pAttrDst = &dynamic_cast<Expr_Indexer*>(pExprDst)->GetAttr();
-				} else {
+				Attribute* pAttrDst = pExprDst->GetAttrToAppend();
+				if (!pAttrDst) {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							   "attribute can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
@@ -541,14 +529,8 @@ bool Parser::ReduceThreeTokens()
 				pExprGen.reset(pExprLeft->Reference());
 			} else if (pExprRight->IsType<Expr_Lister>()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
-				Attribute* pAttrDst = nullptr;
-				if (pExprDst->IsType<Expr_Identifier>()) {
-					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
-				} else if (pExprDst->IsType<Expr_Caller>()) {
-					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
-				} else if (pExprDst->IsType<Expr_Indexer>()) {
-					pAttrDst = &dynamic_cast<Expr_Indexer*>(pExprDst)->GetAttr();
-				} else {
+				Attribute* pAttrDst = pExprDst->GetAttrToAppend();
+				if (!pAttrDst) {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 							   "optional attributes can only be specified for identifier, caller and indexer", __LINE__);
 					return false;

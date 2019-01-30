@@ -186,8 +186,35 @@ if (a == b) {foo}
 f(a:number, b:string, c:symbol) = {}
 )";
 
-static const char* src = R"(
-a[]:b
+static const char* src_Attribute = R"(
+a:b
+a:b:c:d
+a:b.c.d:e:f
+a:[b,c,d]
+a:[b,c,d]:e:f:g
+a:e:f:g:[b,c,d]
+a:e:f:g:[b,c,d]:[h,i,k]
+f(elem1,elem2,elem3):b
+f(elem1,elem2,elem3):b:c:d
+f(elem1,elem2,elem3):b.c.d:e:f
+f(elem1,elem2,elem3):[b,c,d]
+f(elem1,elem2,elem3):[b,c,d]:e:f:g
+f(elem1,elem2,elem3):e:f:g:[b,c,d]
+f(elem1,elem2,elem3):e:f:g:[b,c,d]:[h,i,k]
+f:B(elem1,elem2,elem3):b
+f:B:C:D(elem1,elem2,elem3):b:c:d
+f:B.C.D:E:F(elem1,elem2,elem3):b.c.d:e:f
+f:[B,C,D](elem1,elem2,elem3):[b,c,d]
+f:[B,C,D]:E:F:G(elem1,elem2,elem3):[b,c,d]:e:f:g
+f:E:F:G:[B,C,D](elem1,elem2,elem3):e:f:g:[b,c,d]
+f:E:F:G:[B,C,D]:[H,I,K](elem1,elem2,elem3):e:f:g:[b,c,d]:[h,i,k]
+v[elem1,elem2,elem3]:b
+v[elem1,elem2,elem3]:b:c:d
+v[elem1,elem2,elem3]:b.c.d:e:f
+v[elem1,elem2,elem3]:[b,c,d]
+v[elem1,elem2,elem3]:[b,c,d]:e:f:g
+v[elem1,elem2,elem3]:e:f:g:[b,c,d]
+v[elem1,elem2,elem3]:e:f:g:[b,c,d]:[h,i,k]
 )";
 
 Gurax_TesterEntry(Parser)
@@ -212,8 +239,10 @@ Gurax_TesterEntry(Parser)
 	TestFunc(src_ReduceThreeTokens);
 	PrintTitle("ReduceFourAndFiveTokens");
 	TestFunc(src_ReduceFourAndFiveTokens);
+	PrintTitle("Attribute");
+	TestFunc(src_Attribute);
 #else
-	TestFunc(src);
+	TestFunc(src_Attribute);
 #endif
 }
 

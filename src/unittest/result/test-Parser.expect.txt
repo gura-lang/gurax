@@ -146,3 +146,32 @@ f(a, b, c) {|a, b, c| elem1; elem2; elem3} g(a, b, c) {|a, b, c| elem1; elem2; e
 f(a, b, c) {|a, b, c| elem1; elem2; elem3} g(a, b, c) {|a, b, c| elem1; elem2; elem3} h(a, b, c) {|a, b, c| elem1; elem2; elem3} k(a, b, c) {|a, b, c| elem1; elem2; elem3}
 if ((a) == (b)) {foo}
 f(a:number, b:string, c:symbol) = {}
+======== Attribute ========
+a:b
+a:b:c:d
+a:b.c.d:e:f
+a:[b,c,d]
+a:e:f:g:[b,c,d]
+a:e:f:g:[b,c,d]
+a:e:f:g:[b,c,d,h,i,k]
+f(elem1, elem2, elem3):b
+f(elem1, elem2, elem3):b:c:d
+f(elem1, elem2, elem3):b.c.d:e:f
+f(elem1, elem2, elem3):[b,c,d]
+f(elem1, elem2, elem3):e:f:g:[b,c,d]
+f(elem1, elem2, elem3):e:f:g:[b,c,d]
+f(elem1, elem2, elem3):e:f:g:[b,c,d,h,i,k]
+f:B(elem1, elem2, elem3):b
+f:B:C:D(elem1, elem2, elem3):b:c:d
+f:B.C.D:E:F(elem1, elem2, elem3):b.c.d:e:f
+f:[B,C,D](elem1, elem2, elem3):[b,c,d]
+f:E:F:G:[B,C,D](elem1, elem2, elem3):e:f:g:[b,c,d]
+f:E:F:G:[B,C,D](elem1, elem2, elem3):e:f:g:[b,c,d]
+f:E:F:G:[B,C,D,H,I,K](elem1, elem2, elem3):e:f:g:[b,c,d,h,i,k]
+v[elem1, elem2, elem3]:b
+v[elem1, elem2, elem3]:b:c:d
+v[elem1, elem2, elem3]:b.c.d:e:f
+v[elem1, elem2, elem3]:[b,c,d]
+v[elem1, elem2, elem3]:e:f:g:[b,c,d]
+v[elem1, elem2, elem3]:e:f:g:[b,c,d]
+v[elem1, elem2, elem3]:e:f:g:[b,c,d,h,i,k]
