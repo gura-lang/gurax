@@ -183,6 +183,11 @@ f(a, b, c) {|a, b, c|
   elem1, elem2, elem3
 }
 if (a == b) {foo}
+f(a:number, b:string, c:symbol) = {}
+)";
+
+static const char* src = R"(
+a[]:b
 )";
 
 Gurax_TesterEntry(Parser)
@@ -198,6 +203,7 @@ Gurax_TesterEntry(Parser)
 			::printf("%s\n", pExpr->ToString().c_str());
 		}
 	};
+#if 1
 	PrintTitle("ReduceOneToken");
 	TestFunc(src_ReduceOneToken);
 	PrintTitle("ReduceTwoTokens");
@@ -206,6 +212,9 @@ Gurax_TesterEntry(Parser)
 	TestFunc(src_ReduceThreeTokens);
 	PrintTitle("ReduceFourAndFiveTokens");
 	TestFunc(src_ReduceFourAndFiveTokens);
+#else
+	TestFunc(src);
+#endif
 }
 
 }

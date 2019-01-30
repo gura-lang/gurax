@@ -72,6 +72,7 @@ public:
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:
 	virtual void Exec() const = 0;
+	virtual Attribute* GetAttrToAppend() { return nullptr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
@@ -191,7 +192,8 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
-	virtual void Exec() const;
+	virtual void Exec() const override;
+	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
 //------------------------------------------------------------------------------
@@ -239,6 +241,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
 //------------------------------------------------------------------------------
@@ -453,6 +456,7 @@ public:
 public:
 	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
+	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
 //------------------------------------------------------------------------------
@@ -471,6 +475,7 @@ public:
 	Expr_Caller() : Expr_Composite(typeInfo) {}
 public:
 	virtual void Exec() const override;
+	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);

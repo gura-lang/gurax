@@ -490,36 +490,34 @@ bool Parser::ReduceThreeTokens()
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
 				pExprDst = dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetExprChild();
 			}
-			if (pExprDst->IsType<Expr_Indexer>()) {
-				pExprDst = dynamic_cast<Expr_Indexer*>(pExprDst)->GetExprCar();
-			}
 			if (pExprRight->IsType<Expr_Identifier>()) {
-				const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExprRight.get())->GetSymbol();
+				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Identifier)\n"));
+				Attribute* pAttrDst = nullptr; // GetAttrToAppend();
 				if (pExprDst->IsType<Expr_Identifier>()) {
-					DBGPARSER(::printf("Reduce: Expr(Identifier) -> Expr(Identifier) : Expr(Identifier)\n"));
-					Expr_Identifier* pExprIdentifier = dynamic_cast<Expr_Identifier*>(pExprDst);
-					pExprIdentifier->GetAttr().AddSymbol(pSymbol);
-				} else if (pExprDst->IsType<Expr_Caller>()) {
-					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Identifier)\n"));
-					Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast();
-					pExprCaller->GetAttr().AddSymbol(pSymbol);
-				} else {
-					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "attributes can only be specified for identifier and caller", __LINE__);
-					return false;
-				}
-				pExprGen.reset(pExprLeft->Reference());
-			} else if (pExprRight->IsType<Expr_Member>()) {
-				Attribute* pAttrDst = nullptr;
-				if (pExprDst->IsType<Expr_Identifier>()) {
-					DBGPARSER(::printf("Reduce: Expr(Identifier) -> Expr(Identifier) : Expr(Member)\n"));
 					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
 				} else if (pExprDst->IsType<Expr_Caller>()) {
-					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Member)\n"));
 					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
+				} else if (pExprDst->IsType<Expr_Indexer>()) {
+					pAttrDst = &dynamic_cast<Expr_Indexer*>(pExprDst)->GetAttr();
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "attribute can only be specified for identifier and caller", __LINE__);
+							   "attributes can only be specified for identifier, caller and indexer", __LINE__);
+					return false;
+				}
+				pAttrDst->AddSymbol(dynamic_cast<Expr_Identifier*>(pExprRight.get())->GetSymbol());
+				pExprGen.reset(pExprLeft->Reference());
+			} else if (pExprRight->IsType<Expr_Member>()) {
+				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Member)\n"));
+				Attribute* pAttrDst = nullptr;
+				if (pExprDst->IsType<Expr_Identifier>()) {
+					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
+				} else if (pExprDst->IsType<Expr_Caller>()) {
+					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
+				} else if (pExprDst->IsType<Expr_Indexer>()) {
+					pAttrDst = &dynamic_cast<Expr_Indexer*>(pExprDst)->GetAttr();
+				} else {
+					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
+							   "attribute can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
 				}
 				if (pAttrDst->IsDottedSymbolSet()) {
@@ -542,16 +540,17 @@ bool Parser::ReduceThreeTokens()
 				}
 				pExprGen.reset(pExprLeft->Reference());
 			} else if (pExprRight->IsType<Expr_Lister>()) {
+				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));
 				Attribute* pAttrDst = nullptr;
 				if (pExprDst->IsType<Expr_Identifier>()) {
-					DBGPARSER(::printf("Reduce: Expr(Identifier) -> Expr(Identifier) : Expr(Lister)\n"));
 					pAttrDst = &dynamic_cast<Expr_Identifier*>(pExprDst)->GetAttr();
 				} else if (pExprDst->IsType<Expr_Caller>()) {
-					DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) : Expr(Lister)\n"));
 					pAttrDst = &dynamic_cast<Expr_Caller*>(pExprDst)->GetExprTrailerLast()->GetAttr();
+				} else if (pExprDst->IsType<Expr_Indexer>()) {
+					pAttrDst = &dynamic_cast<Expr_Indexer*>(pExprDst)->GetAttr();
 				} else {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "optional attributes can only be specified for identifier and caller", __LINE__);
+							   "optional attributes can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
 				}
 				const ExprList& exprsElem = dynamic_cast<Expr_Lister*>(pExprRight.get())->GetExprsElem();
