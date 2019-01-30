@@ -295,23 +295,15 @@ public:
 	void AssignEntry(const Klass& klassL, const Klass& klassR, OpEntry* pOpEntry) {
 		_opEntryMap.Assign(klassL, klassR, pOpEntry);
 	}
-	OpEntry* LookupEntry(const Klass& klass) {
+	OpEntry* LookupEntry(const Klass& klass) const {
 		return _opEntryMap.Lookup(klass);
 	}
-	OpEntry* LookupEntry(const Klass& klassL, const Klass& klassR) {
+	OpEntry* LookupEntry(const Klass& klassL, const Klass& klassR) const {
 		return _opEntryMap.Lookup(klassL, klassR);
 	}
 public:
-	Object* EvalUnary(const Object* pObject) {
-		if (!pObject) return nullptr;
-		const OpEntry* pOpEntry = LookupEntry(pObject->GetKlass());
-		return pOpEntry? pOpEntry->EvalUnary(pObject) : nullptr;
-	}
-	Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) {
-		if (!pObjectL || !pObjectR) return nullptr;
-		const OpEntry* pOpEntry = LookupEntry(pObjectL->GetKlass(), pObjectR->GetKlass());
-		return pOpEntry? pOpEntry->EvalBinary(pObjectL, pObjectR) : nullptr;
-	}
+	Object* EvalUnary(const Object* pObject) const;
+	Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const;
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 };

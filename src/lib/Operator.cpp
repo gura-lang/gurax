@@ -98,6 +98,24 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
+Object* Operator::EvalUnary(const Object* pObject) const
+{
+	if (!pObject) return nullptr;
+	const OpEntry* pOpEntry = LookupEntry(pObject->GetKlass());
+	if (pOpEntry) return pOpEntry->EvalUnary(pObject);
+	Error::Issue(ErrorType::TypeError, "");
+	return nullptr;
+}
+
+Object* Operator::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
+{
+	if (!pObjectL || !pObjectR) return nullptr;
+	const OpEntry* pOpEntry = LookupEntry(pObjectL->GetKlass(), pObjectR->GetKlass());
+	if (pOpEntry) pOpEntry->EvalBinary(pObjectL, pObjectR);
+	Error::Issue(ErrorType::TypeError, "");
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // OpEntry
 //------------------------------------------------------------------------------
