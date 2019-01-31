@@ -496,6 +496,10 @@ const Expr::TypeInfo Expr_Indexer::typeInfo;
 
 void Expr_Indexer::Exec(Frame& frame) const
 {
+	for (const Expr* pExpr : GetExprsCdr()) {
+		pExpr->Exec(frame);
+		if (Error::IsIssued()) return;
+	}
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss) const
@@ -525,6 +529,10 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 
 void Expr_Caller::Exec(Frame& frame) const
 {
+	for (const Expr* pExpr : GetExprsCdr()) {
+		pExpr->Exec(frame);
+		if (Error::IsIssued()) return;
+	}
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

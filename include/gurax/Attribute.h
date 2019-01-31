@@ -23,7 +23,14 @@ public:
 public:
 	static void Bootup();
 public:
+	// Constructor
 	Attribute() {}
+	// Copy constructor/operator
+	Attribute(const Attribute& src) = delete;
+	Attribute& operator=(const Attribute& src) = delete;
+	// Move constructor/operator
+	Attribute(Attribute&& src) = delete;
+	Attribute& operator=(Attribute&& src) noexcept = delete;
 protected:
 	~Attribute() = default;
 public:

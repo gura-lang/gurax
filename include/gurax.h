@@ -4,6 +4,7 @@
 #ifndef GURAX_H
 #define GURAX_H
 
+#include "gurax/Argument.h"
 #include "gurax/Attribute.h"
 #include "gurax/Binary.h"
 #include "gurax/Codec.h"
