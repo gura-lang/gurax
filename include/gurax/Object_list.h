@@ -24,27 +24,28 @@ public:
 	};
 	static KlassEx klass;
 private:
-	RefPtr<ObjectOwner> _pObjectOwner;
+	RefPtr<ObjectTypedOwner> _pObjectTypedOwner;
 public:
 	// Constructor
-	Object_list() : Object(klass), _pObjectOwner(new ObjectOwner()) {}
-	explicit Object_list(ObjectOwner* pObjectOwner) : Object(klass), _pObjectOwner(pObjectOwner) {}
+	Object_list() : Object(klass), _pObjectTypedOwner(new ObjectTypedOwner()) {}
+	explicit Object_list(ObjectTypedOwner* pObjectTypedOwner) : Object(klass), _pObjectTypedOwner(pObjectTypedOwner) {}
 	// Copy constructor/operator
-	Object_list(const Object_list& src) : Object(klass), _pObjectOwner(src._pObjectOwner->CloneDeep()) {}
+	Object_list(const Object_list& src) : Object(klass), _pObjectTypedOwner(src._pObjectTypedOwner->CloneDeep()) {}
 	Object_list& operator=(const Object_list& src) {
-		_pObjectOwner.reset(src._pObjectOwner->CloneDeep()); return *this;
+		_pObjectTypedOwner.reset(src._pObjectTypedOwner->CloneDeep()); return *this;
 	}
 	// Move constructor/operator
-	Object_list(Object_list&& src) : Object(klass), _pObjectOwner(src._pObjectOwner.release()) {}
+	Object_list(Object_list&& src) : Object(klass), _pObjectTypedOwner(src._pObjectTypedOwner.release()) {}
 	Object_list& operator=(Object_list&& src) noexcept {
-		_pObjectOwner.reset(src._pObjectOwner.release()); return *this;
+		_pObjectTypedOwner.reset(src._pObjectTypedOwner.release()); return *this;
 	}
 protected:
 	// Destructor
 	~Object_list() = default;
 public:
-	ObjectOwner& GetObjectOwner() { return *_pObjectOwner; }
-	const ObjectOwner& GetObjectOwner() const { return *_pObjectOwner; }
+	ObjectTypedOwner& GetObjectTypedOwner() { return *_pObjectTypedOwner; }
+	const ObjectTypedOwner& GetObjectTypedOwner() const { return *_pObjectTypedOwner; }
+	const ObjectOwner& GetObjectOwner() const { return _pObjectTypedOwner->GetObjectOwner(); }
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return new Object_list(*this); }
@@ -59,7 +60,6 @@ public:
 		return IsSameType(pObject)?
 			GetObjectOwner().IsLessThan(dynamic_cast<const Object_list*>(pObject)->GetObjectOwner()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
-		
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetObjectOwner().ToString(ss);

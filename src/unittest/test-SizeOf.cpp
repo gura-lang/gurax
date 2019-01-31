@@ -14,6 +14,7 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(Frame_Branch);
 	Gurax_PrintSizeOf(ObjectOwner);
 	Gurax_PrintSizeOf(ObjectStack);
+	Gurax_PrintSizeOf(Object_any);
 	Gurax_PrintSizeOf(Object_attribute);
 	Gurax_PrintSizeOf(Object_binary);
 	Gurax_PrintSizeOf(Object_bool);

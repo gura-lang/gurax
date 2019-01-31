@@ -287,6 +287,7 @@ public:
 	ObjectTypedOwner* CloneDeep() const {
 		return new ObjectTypedOwner(_pKlassOfElems, _pObjectOwner->CloneDeep());
 	}
+	void Reserve(size_t size) { _pObjectOwner->reserve(size); }
 	void Set(size_t pos, Object* pObject) {
 		UpdateKlassOfElems(pObject->GetKlass());
 		_pObjectOwner->Set(pos, pObject);

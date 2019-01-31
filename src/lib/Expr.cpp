@@ -446,7 +446,14 @@ const Expr::TypeInfo Expr_Lister::typeInfo;
 
 void Expr_Lister::Exec(Frame& frame) const
 {
-	
+	RefPtr<ObjectTypedOwner> pObjectTypedOwner(new ObjectTypedOwner());
+	pObjectTypedOwner->Reserve(GetExprsElem().size());
+	for (const Expr* pExpr : GetExprsElem()) {
+		pExpr->Exec(frame);
+		if (Error::IsIssued()) return;
+		pObjectTypedOwner->Add(Context::PopStack());
+	}
+	Context::PushStack(new Object_list(pObjectTypedOwner.release()));
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const
