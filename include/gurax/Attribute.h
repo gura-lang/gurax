@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_ATTRIBUTE_H
 #define GURAX_ATTRIBUTE_H
+#include "MemoryPool.h"
 #include "Referable.h"
 #include "Symbol.h"
 
@@ -12,14 +13,15 @@ namespace Gurax {
 // Attribute
 //------------------------------------------------------------------------------
 class Attribute : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Attribute);
 private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	SymbolList _symbolList;
 	SymbolList _symbolListOpt;
 	SymbolSet _symbolSet;
 	SymbolSet _symbolSetOpt;
-public:
-	Gurax_DeclareReferable(Attribute);
 public:
 	static void Bootup();
 public:

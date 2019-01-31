@@ -529,6 +529,7 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 
 void Expr_Caller::Exec(Frame& frame) const
 {
+	std::unique_ptr<Argument> pArg(new Argument(GetAttr().Reference()));
 	for (const Expr* pExpr : GetExprsCdr()) {
 		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;

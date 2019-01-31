@@ -71,6 +71,7 @@ void Object::Bootup()
 {
 	Object::klass.Prepare();
 	Object_any::klass.Prepare();
+	Object_argument::klass.Prepare();
 	Object_attribute::klass.Prepare();
 	Object_binary::klass.Prepare();
 	Object_bool::klass.Prepare();

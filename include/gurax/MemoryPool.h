@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_MEMORYPOOL_H
 #define GURAX_MEMORYPOOL_H
-#include "Common.h"
+#include "String.h"
 
 #define Gurax_MemoryPoolAllocator(ownerName) \
 static void *operator new(size_t size) { \

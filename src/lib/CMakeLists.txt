@@ -19,6 +19,7 @@ add_library(guraxcore SHARED
 	Module.cpp
 	Object.cpp
 	Object_any.cpp
+	Object_argument.cpp
 	Object_attribute.cpp
 	Object_binary.cpp
 	Object_bool.cpp

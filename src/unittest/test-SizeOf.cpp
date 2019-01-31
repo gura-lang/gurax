@@ -9,6 +9,8 @@ namespace Gurax {
 
 Gurax_TesterEntry(SizeOf)
 {
+	Gurax_PrintSizeOf(Argument);
+	Gurax_PrintSizeOf(Attribute);
 	Gurax_PrintSizeOf(DateTime);
 	Gurax_PrintSizeOf(Frame_Node);
 	Gurax_PrintSizeOf(Frame_Branch);

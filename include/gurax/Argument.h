@@ -4,26 +4,32 @@
 #ifndef GURAX_ARGUMENT_H
 #define GURAX_ARGUMENT_H
 #include "Attribute.h"
+#include "Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-class Argument : public Referable {
+class Argument {
 public:
-	Gurax_DeclareReferable(Argument);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Argument");
+private:
+	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	Argument() {}
+	Argument(Attribute* pAttr) : _pAttr(pAttr) {}
 	// Copy constructor/operator
-	Argument(const Argument& src) = delete;
+	Argument(const Argument& src);
 	Argument& operator=(const Argument& src) = delete;
 	// Move constructor/operator
 	Argument(Argument&& src) = delete;
 	Argument& operator=(Argument&& src) noexcept = delete;
-protected:
 	~Argument() = default;
+public:
+	const Attribute& GetAttr() const { return *_pAttr; }
+	Argument* Clone() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& attr) const { return this == &attr; }
