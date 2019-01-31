@@ -243,6 +243,28 @@ void ObjectOwner::Set(size_t pos, Object* pObject)
 }
 
 //------------------------------------------------------------------------------
+// ObjectTypedOwner
+//------------------------------------------------------------------------------
+ObjectTypedOwner::ObjectTypedOwner() :
+	_pKlassOfElems(&Object_undefined::klass), _pObjectOwner(new ObjectOwner())
+{}
+
+void ObjectTypedOwner::Clear()
+{
+	_pKlassOfElems = &Object_undefined::klass;
+	_pObjectOwner->Clear();
+}
+
+void ObjectTypedOwner::UpdateKlassOfElems(Klass& klassAdded)
+{
+	if (_pKlassOfElems->IsIdentical(Object_undefined::klass)) {
+		_pKlassOfElems = &klassAdded;
+	} else if (!_pKlassOfElems->IsIdentical(klassAdded)) {
+		_pKlassOfElems = &Object_any::klass;
+	}
+}
+
+//------------------------------------------------------------------------------
 // ObjectDict
 //------------------------------------------------------------------------------
 void ObjectDict::Clear()

@@ -5,6 +5,7 @@
 #define GURAX_OBJECT_H
 #include "Function.h"
 #include "Help.h"
+#include "MemoryPool.h"
 #include "Referable.h"
 #include "Symbol.h"
 
@@ -233,6 +234,8 @@ class GURAX_DLLDECLARE ObjectOwner : public ObjectList, public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ObjectOwner);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("ObjectOwner");
 protected:
 	~ObjectOwner() { Clear(); }
 public:
@@ -253,6 +256,49 @@ ObjectOwner* ObjectOwner::CollectKeys(const T_Map& map)
 	for (auto& pair : map) pObjectOwner->push_back(pair.first->Reference());
 	return pObjectOwner.release();
 }
+
+//------------------------------------------------------------------------------
+// ObjectTypedOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectTypedOwner : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ObjectTypedOwner);
+private:
+	Klass* _pKlassOfElems;	// set to "undefined", "any" or the other specific class
+	RefPtr<ObjectOwner> _pObjectOwner;
+public:
+	// Constructor
+	ObjectTypedOwner();
+	ObjectTypedOwner(Klass *pKlassOfElems, ObjectOwner* pObjectOwner) :
+		_pKlassOfElems(pKlassOfElems), _pObjectOwner(pObjectOwner) {}
+	// Copy constructor/operator
+	ObjectTypedOwner(const ObjectTypedOwner& src) = delete;
+	ObjectTypedOwner& operator=(const ObjectTypedOwner& src) = delete;
+	// Move constructor/operator
+	ObjectTypedOwner(ObjectTypedOwner&& src) = delete;
+	ObjectTypedOwner& operator=(ObjectTypedOwner&& src) noexcept = delete;
+protected:
+	// Destructor
+	virtual ~ObjectTypedOwner() = default;
+public:
+	void Clear();
+	ObjectTypedOwner* Clone() const;
+	ObjectTypedOwner* CloneDeep() const {
+		return new ObjectTypedOwner(_pKlassOfElems, _pObjectOwner->CloneDeep());
+	}
+	void Set(size_t pos, Object* pObject) {
+		UpdateKlassOfElems(pObject->GetKlass());
+		_pObjectOwner->Set(pos, pObject);
+	}
+	Object* Get(size_t pos) const { return _pObjectOwner->Get(pos); }
+	void Add(Object* pObject) {
+		UpdateKlassOfElems(pObject->GetKlass());
+		_pObjectOwner->push_back(pObject);
+	}
+	void UpdateKlassOfElems(Klass& klassAdded);
+	const ObjectOwner& GetObjectOwner() const { return *_pObjectOwner; }
+};
 
 //------------------------------------------------------------------------------
 // ObjectStack

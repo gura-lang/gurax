@@ -29,9 +29,9 @@ public:
 	// Constructor
 	Object_dict() : Object(klass), _pObjectDict(new ObjectDict()) {}
 	// Copy constructor/operator
-	Object_dict(const Object_dict& src) : Object(klass), _pObjectDict(src._pObjectDict->Clone()) {}
+	Object_dict(const Object_dict& src) : Object(klass), _pObjectDict(src._pObjectDict->CloneDeep()) {}
 	Object_dict& operator=(const Object_dict& src) {
-		_pObjectDict.reset(src._pObjectDict->Clone()); return *this;
+		_pObjectDict.reset(src._pObjectDict->CloneDeep()); return *this;
 	}
 	// Move constructor/operator
 	Object_dict(Object_dict&& src) : Object(klass), _pObjectDict(src._pObjectDict.release()) {}
