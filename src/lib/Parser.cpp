@@ -50,7 +50,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				}
 #endif
 				if (pToken->IsType(TokenType::Semicolon)) pExpr->SetSilentFlag(true);
-				GetExprRoot().GetExprOwnerElem().push_back(pExpr.release());
+				GetExprRoot().AddExprElem(pExpr.release());
 			} else {
 				// something's wrong
 				IssueError(ErrorType::SyntaxError, pToken, "syntax error (%d)", __LINE__);

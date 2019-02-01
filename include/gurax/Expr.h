@@ -164,7 +164,7 @@ public:
 		Expr(typeInfo), _pExprOwnerElem(pExprOwnerElem) {
 		_pExprOwnerElem->SetExprParent(this);
 	}
-	ExprOwner& GetExprOwnerElem() { return *_pExprOwnerElem; }
+	//ExprOwner& GetExprOwnerElem() { return *_pExprOwnerElem; }
 	const ExprList& GetExprsElem() const { return *_pExprOwnerElem; }
 	void AddExprElem(Expr* pExprElem);
 };
