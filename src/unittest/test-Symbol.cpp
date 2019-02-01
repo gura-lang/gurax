@@ -80,7 +80,7 @@ void Test_DottedSymbol_AppendFromString()
 
 Gurax_TesterEntry(Symbol)
 {
-	Test_PrintAllSymbols();
+	//Test_PrintAllSymbols();
 	Test_Add();
 	Test_SymbolList();
 	Test_DottedSymbol_IsEqualTo();

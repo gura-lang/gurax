@@ -42,7 +42,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			if (cntToken == 1) {
 				// nothing to do
 			} else if (cntToken == 2 && tokenStack.back()->IsType(TokenType::Expr)) {
-				RefPtr<Token> pTokenPrev = tokenStack.Pop();
+				RefPtr<Token> pTokenPrev(tokenStack.Pop());
 				RefPtr<Expr> pExpr(pTokenPrev->GetExpr()->Reference());
 #if 0
 				if (_enablePreparatorFlag && !pExpr->Prepare(env)) {
@@ -113,7 +113,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 bool Parser::ReduceOneToken()
 {
 	TokenStack& tokenStack = _pTokenizer->GetTokenStack();
-	RefPtr<Token> pToken = tokenStack.Pop();
+	RefPtr<Token> pToken(tokenStack.Pop());
 	int lineNoTop = pToken->GetLineNoTop();
 	int lineNoBtm = pToken->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
@@ -171,8 +171,8 @@ bool Parser::ReduceOneToken()
 bool Parser::ReduceTwoTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	RefPtr<Token> pToken2 = tokenStack.Pop();
-	RefPtr<Token> pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken2(tokenStack.Pop());
+	RefPtr<Token> pToken1(tokenStack.Pop());
 	RefPtr<Expr> pExprGen;
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken2->GetLineNoBtm();
@@ -331,16 +331,16 @@ bool Parser::ReduceTwoTokens()
 bool Parser::ReduceThreeTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	RefPtr<Token> pToken3 = tokenStack.Pop();
-	RefPtr<Token> pToken2 = tokenStack.Pop();
-	RefPtr<Token> pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken3(tokenStack.Pop());
+	RefPtr<Token> pToken2(tokenStack.Pop());
+	RefPtr<Token> pToken1(tokenStack.Pop());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken3->GetLineNoBtm();
 	MemberMode memberMode;
 	RefPtr<Expr> pExprGen;
 	if (pToken1->IsType(TokenType::Expr) && pToken3->IsType(TokenType::Expr)) {
-		RefPtr<Expr> pExprLeft = pToken1->GetExpr()->Reference();
-		RefPtr<Expr> pExprRight = pToken3->GetExpr()->Reference();
+		RefPtr<Expr> pExprLeft(pToken1->GetExpr()->Reference());
+		RefPtr<Expr> pExprRight(pToken3->GetExpr()->Reference());
 		if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(BinaryOp) -> Expr + Expr\n"));
 			pExprGen.reset(new Expr_BinaryOp(pExprLeft.release(), pExprRight.release(), Operator::Add));
@@ -706,10 +706,10 @@ bool Parser::ReduceThreeTokens()
 bool Parser::ReduceFourTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	RefPtr<Token> pToken4 = tokenStack.Pop();
-	RefPtr<Token> pToken3 = tokenStack.Pop();
-	RefPtr<Token> pToken2 = tokenStack.Pop();
-	RefPtr<Token> pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken4(tokenStack.Pop());
+	RefPtr<Token> pToken3(tokenStack.Pop());
+	RefPtr<Token> pToken2(tokenStack.Pop());
+	RefPtr<Token> pToken1(tokenStack.Pop());
 	int lineNoTop = pToken1->GetLineNoTop();
 	int lineNoBtm = pToken4->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
@@ -843,11 +843,11 @@ bool Parser::ReduceFourTokens()
 bool Parser::ReduceFiveTokens()
 {
 	TokenStack &tokenStack = _pTokenizer->GetTokenStack();
-	RefPtr<Token> pToken5 = tokenStack.Pop();
-	RefPtr<Token> pToken4 = tokenStack.Pop();
-	RefPtr<Token> pToken3 = tokenStack.Pop();
-	RefPtr<Token> pToken2 = tokenStack.Pop();
-	RefPtr<Token> pToken1 = tokenStack.Pop();
+	RefPtr<Token> pToken5(tokenStack.Pop());
+	RefPtr<Token> pToken4(tokenStack.Pop());
+	RefPtr<Token> pToken3(tokenStack.Pop());
+	RefPtr<Token> pToken2(tokenStack.Pop());
+	RefPtr<Token> pToken1(tokenStack.Pop());
 	if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Expr) &&
 		pToken3->IsType(TokenType::LParenthesis) && pToken4->IsType(TokenType::Expr)) {
 		ExprOwner& exprOwner = pToken3->GetExprOwner();

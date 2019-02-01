@@ -11,14 +11,14 @@ namespace Gurax {
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
-	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), indentLevel++) ;
+	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), indentLevel++) ;
 	return indentLevel;
 }
 
 String Expr::ComposeIndent(const StringStyle& ss) const
 {
 	String rtn;
-	for (RefPtr<Expr> pExpr = Reference(); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += ss.GetIndentUnit()) ;
+	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += ss.GetIndentUnit()) ;
 	return rtn;
 }
 
@@ -99,7 +99,7 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 
 void Expr_Identifier::Exec(Frame& frame) const
 {
-	RefPtr<Object> pObject = frame.LookupObject(GetSymbol())->Reference();
+	RefPtr<Object> pObject(frame.LookupObject(GetSymbol())->Reference());
 	if (!pObject) {
 		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return;
@@ -159,9 +159,9 @@ void Expr_UnaryOp::Exec(Frame& frame) const
 {
 	GetExprChild()->Exec(frame);
 	if (Error::IsIssued()) return;
-	RefPtr<Object> pObjectChild = Context::PopStack();
+	RefPtr<Object> pObjectChild(Context::PopStack());
 	if (!pObjectChild) return;
-	RefPtr<Object> pObject = GetOperator()->EvalUnary(pObjectChild.release());
+	RefPtr<Object> pObject(GetOperator()->EvalUnary(pObjectChild.release()));
 	if (!pObject) return;
 	Context::PushStack(pObject.release());
 }
@@ -208,10 +208,10 @@ void Expr_BinaryOp::Exec(Frame& frame) const
 	if (Error::IsIssued()) return;
 	GetExprRight()->Exec(frame);
 	if (Error::IsIssued()) return;
-	RefPtr<Object> pObjectRight = Context::PopStack();
-	RefPtr<Object> pObjectLeft = Context::PopStack();
+	RefPtr<Object> pObjectRight(Context::PopStack());
+	RefPtr<Object> pObjectLeft(Context::PopStack());
 	if (!pObjectLeft || !pObjectRight) return;
-	RefPtr<Object> pObject = GetOperator()->EvalBinary(pObjectLeft.release(), pObjectRight.release());
+	RefPtr<Object> pObject(GetOperator()->EvalBinary(pObjectLeft.release(), pObjectRight.release()));
 	if (!pObject) return;
 	Context::PushStack(pObject.release());
 }
