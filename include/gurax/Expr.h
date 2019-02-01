@@ -74,6 +74,8 @@ public:
 		_pExprNext.reset(pExprNext);
 		pExprNext->_pwExprPrev.reset(GetWeakPtr());
 	}
+	Expr* GetExprNext() { return _pExprNext.get(); }
+	Expr* LockExprPrev() const { return _pwExprPrev? _pwExprPrev->Lock() : nullptr; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
 	int CalcIndentLevel() const;
@@ -154,6 +156,7 @@ public:
 		}
 		_pExprTail = pExpr;
 	}
+	void SetExprParent(const Expr* pExprParent);
 };
 
 //------------------------------------------------------------------------------
@@ -207,7 +210,6 @@ public:
 		Expr(typeInfo), _pExprOwnerElem(pExprOwnerElem) {
 		_pExprOwnerElem->SetExprParent(this);
 	}
-	//ExprOwner& GetExprOwnerElem() { return *_pExprOwnerElem; }
 	const ExprList& GetExprsElem() const { return *_pExprOwnerElem; }
 	void AddExprElem(Expr* pExprElem);
 };
