@@ -227,7 +227,7 @@ Gurax_TesterEntry(Parser)
 			Error::Print(stderr);
 			return;
 		}
-		for (const Expr* pExpr : pExprRoot->GetExprsElem()) {
+		for (const Expr* pExpr = pExprRoot->GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			::printf("%s\n", pExpr->ToString().c_str());
 		}
 	};

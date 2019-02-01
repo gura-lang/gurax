@@ -75,6 +75,7 @@ public:
 		pExprNext->_pwExprPrev.reset(GetWeakPtr());
 	}
 	Expr* GetExprNext() { return _pExprNext.get(); }
+	const Expr* GetExprNext() const { return _pExprNext.get(); }
 	Expr* LockExprPrev() const { return _pwExprPrev? _pwExprPrev->Lock() : nullptr; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
@@ -144,6 +145,7 @@ protected:
 	// Destructor
 	virtual ~ExprLink() = default;
 public:	
+	bool IsEmpty() const { return _pExprHead.get() == nullptr; }
 	Expr* GetExprHead() { return _pExprHead.get(); }
 	const Expr* GetExprHead() const { return _pExprHead.get(); }
 	Expr* GetExprTail() { return _pExprTail; }
@@ -156,6 +158,7 @@ public:
 		}
 		_pExprTail = pExpr;
 	}
+	size_t GetSize() const;
 	void SetExprParent(const Expr* pExprParent);
 };
 
@@ -204,13 +207,15 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Collector : public Expr {
 protected:
-	RefPtr<ExprOwner> _pExprOwnerElem;
+	RefPtr<ExprLink> _pExprLinkElem;
 public:
-	Expr_Collector(const TypeInfo& typeInfo, ExprOwner* pExprOwnerElem) :
-		Expr(typeInfo), _pExprOwnerElem(pExprOwnerElem) {
-		_pExprOwnerElem->SetExprParent(this);
+	Expr_Collector(const TypeInfo& typeInfo, ExprLink* pExprLinkElem) :
+		Expr(typeInfo), _pExprLinkElem(pExprLinkElem) {
+		_pExprLinkElem->SetExprParent(this);
 	}
-	const ExprList& GetExprsElem() const { return *_pExprOwnerElem; }
+	const ExprLink& GetExprLinkElem() const { return *_pExprLinkElem; }
+	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
+	const Expr* GetExprElemHead() const { return _pExprLinkElem->GetExprHead(); }
 	void AddExprElem(Expr* pExprElem);
 };
 
@@ -220,22 +225,24 @@ public:
 class GURAX_DLLDECLARE Expr_Composite : public Expr {
 protected:
 	RefPtr<Expr> _pExprCar;
-	RefPtr<ExprOwner> _pExprOwnerCdr;
+	RefPtr<ExprLink> _pExprLinkCdr;
 	RefPtr<Attribute> _pAttr;
 public:
 	Expr_Composite(const TypeInfo& typeInfo) :
-		Expr(typeInfo), _pExprOwnerCdr(new ExprOwner()), _pAttr(new Attribute()) {}
+		Expr(typeInfo), _pExprLinkCdr(new ExprLink()), _pAttr(new Attribute()) {}
 	void SetExprCar(Expr* pExprCar) {
 		_pExprCar.reset(pExprCar);
 		_pExprCar->SetExprParent(this);
 	}
 	Expr* GetExprCar() { return _pExprCar.get(); }
 	const Expr* GetExprCar() const { return _pExprCar.get(); }
-	void SetExprOwnerCdr(ExprOwner* pExprOwnerCdr) {
-		_pExprOwnerCdr.reset(pExprOwnerCdr);
-		_pExprOwnerCdr->SetExprParent(this);
+	void SetExprLinkCdr(ExprLink* pExprLinkCdr) {
+		_pExprLinkCdr.reset(pExprLinkCdr);
+		_pExprLinkCdr->SetExprParent(this);
 	}
-	const ExprList& GetExprsCdr() const { return *_pExprOwnerCdr; }
+	const ExprLink& GetExprLinkCdr() const { return *_pExprLinkCdr; }
+	bool HasExprCdr() const { return !_pExprLinkCdr->IsEmpty(); }
+	const Expr* GetExprCdrHead() const { return _pExprLinkCdr->GetExprHead(); }
 	void AddExprCdr(Expr* pExprCdr);
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -429,7 +436,7 @@ public:
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Root(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
+	Expr_Root(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -445,18 +452,21 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<ExprOwner> _pExprOwnerParam;	// this may be nullptr
+	RefPtr<ExprLink> _pExprLinkParam;	// this may be nullptr
 public:
-	explicit Expr_Block(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
+	explicit Expr_Block(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
-	void SetExprOwnerParam(ExprOwner* pExprOwnerParam) {
-		_pExprOwnerParam.reset(pExprOwnerParam);
-		_pExprOwnerParam->SetExprParent(this);
+	void SetExprLinkParam(ExprLink* pExprLinkParam) {
+		_pExprLinkParam.reset(pExprLinkParam);
+		_pExprLinkParam->SetExprParent(this);
 	}
-	bool HasExprsParam() const { return _pExprOwnerParam.get() != nullptr; }
-	const ExprList& GetExprsParam() const { return *_pExprOwnerParam; }
+	bool HasExprParam() const { return _pExprLinkParam && !_pExprLinkParam->IsEmpty(); }
+	const ExprLink& GetExprLinkParam() const { return *_pExprLinkParam; }
+	const Expr* GetExprParamHead() const {
+		return _pExprLinkParam? _pExprLinkParam->GetExprHead() : nullptr;
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -469,7 +479,7 @@ public:
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Lister(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
+	Expr_Lister(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -485,7 +495,7 @@ public:
 public:
 	static const TypeInfo typeInfo;
 public:
-	Expr_Iterer(ExprOwner* pExprOwnerElem) : Expr_Collector(typeInfo, pExprOwnerElem) {}
+	Expr_Iterer(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;

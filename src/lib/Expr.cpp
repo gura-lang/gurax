@@ -47,6 +47,13 @@ void ExprList::SetExprParent(const Expr* pExprParent)
 //------------------------------------------------------------------------------
 // ExprLink
 //------------------------------------------------------------------------------
+size_t ExprLink::GetSize() const
+{
+	size_t cnt = 0;
+	for (const Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext(), cnt++) ;
+	return cnt;
+}
+
 void ExprLink::SetExprParent(const Expr* pExprParent)
 {
 	for (Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -72,7 +79,7 @@ void ExprLink::SetExprParent(const Expr* pExprParent)
 void Expr_Collector::AddExprElem(Expr* pExprElem)
 {
 	pExprElem->SetExprParent(this);
-	_pExprOwnerElem->push_back(pExprElem);
+	_pExprLinkElem->AddExpr(pExprElem);
 }
 
 //------------------------------------------------------------------------------
@@ -81,7 +88,7 @@ void Expr_Collector::AddExprElem(Expr* pExprElem)
 void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 {
 	pExprCdr->SetExprParent(this);
-	_pExprOwnerCdr->push_back(pExprCdr);
+	_pExprLinkCdr->AddExpr(pExprCdr);
 }
 
 void Expr_Composite::Exec(Frame& frame) const
@@ -311,14 +318,14 @@ String Expr_Root::ToString(const StringStyle& ss) const
 	String rtn;
 	if (ss.IsMultiLine()) {
 		String indent = ComposeIndent(ss);
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indent;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
 		}
 	} else {
 		bool firstFlag = true;
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -349,10 +356,10 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
 		rtn += '{';
-		if (HasExprsParam()) {
+		if (HasExprParam()) {
 			rtn += '|';
 			bool firstFlag = true;
-			for (const Expr* pExpr : GetExprsParam()) {
+			for (const Expr* pExpr = GetExprParamHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 				if (firstFlag) {
 					firstFlag = false;
 				} else {
@@ -364,7 +371,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 			rtn += '|';
 		}
 		rtn += '\n';
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
@@ -373,10 +380,10 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		rtn += "}\n";
 	} else {
 		rtn += '{';
-		if (HasExprsParam()) {
+		if (HasExprParam()) {
 			rtn += '|';
 			bool firstFlag = true;
-			for (const Expr* pExpr : GetExprsParam()) {
+			for (const Expr* pExpr = GetExprParamHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 				if (firstFlag) {
 					firstFlag = false;
 				} else {
@@ -386,10 +393,10 @@ String Expr_Block::ToString(const StringStyle& ss) const
 				rtn += pExpr->ToString(ss);
 			}
 			rtn += '|';
-			if (!ss.IsCram() && !GetExprsElem().empty()) rtn += ' ';
+			if (!ss.IsCram() && HasExprElem()) rtn += ' ';
 		}
 		bool firstFlag = true;
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -415,9 +422,9 @@ void Expr_Iterer::Exec(Frame& frame) const
 String Expr_Iterer::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	if (GetExprsElem().size() == 1) {
+	if (GetExprLinkElem().GetSize() == 1) {
 		rtn += '(';
-		rtn += GetExprsElem().front()->ToString(ss);
+		rtn += GetExprLinkElem().GetExprHead()->ToString(ss);
 		rtn += ",)";
 	} else if (ss.IsMultiLine()) {
 		String indent = ComposeIndent(ss);
@@ -425,7 +432,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
 		rtn += "(\n";
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
@@ -435,7 +442,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 	} else {
 		rtn += '(';
 		bool firstFlag = true;
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -457,8 +464,8 @@ const Expr::TypeInfo Expr_Lister::typeInfo;
 void Expr_Lister::Exec(Frame& frame) const
 {
 	RefPtr<ObjectTypedOwner> pObjectTypedOwner(new ObjectTypedOwner());
-	pObjectTypedOwner->Reserve(GetExprsElem().size());
-	for (const Expr* pExpr : GetExprsElem()) {
+	pObjectTypedOwner->Reserve(GetExprLinkElem().GetSize());
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;
 		pObjectTypedOwner->Add(Context::PopStack());
@@ -475,7 +482,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
 		rtn += "[\n";
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
@@ -485,7 +492,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 	} else {
 		rtn += '[';
 		bool firstFlag = true;
-		for (const Expr* pExpr : GetExprsElem()) {
+		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -506,7 +513,7 @@ const Expr::TypeInfo Expr_Indexer::typeInfo;
 
 void Expr_Indexer::Exec(Frame& frame) const
 {
-	for (const Expr* pExpr : GetExprsCdr()) {
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;
 	}
@@ -518,7 +525,7 @@ String Expr_Indexer::ToString(const StringStyle& ss) const
 	rtn += _pExprCar->ToString(ss);
 	rtn += '[';
 	bool firstFlag = true;
-	for (const Expr* pExpr : GetExprsCdr()) {
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (firstFlag) {
 			firstFlag = false;
 		} else {
@@ -540,7 +547,7 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 void Expr_Caller::Exec(Frame& frame) const
 {
 	std::unique_ptr<Argument> pArg(new Argument(GetAttr().Reference()));
-	for (const Expr* pExpr : GetExprsCdr()) {
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;
 	}
@@ -548,7 +555,7 @@ void Expr_Caller::Exec(Frame& frame) const
 
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
-	bool argListFlag = !GetExprsCdr().empty() || !GetAttr().IsEmpty() || !HasExprBlock();
+	bool argListFlag = HasExprCdr() || !GetAttr().IsEmpty() || !HasExprBlock();
 	String rtn;
 	rtn += _pExprCar->ToString(ss);
 	if (argListFlag) {
@@ -558,7 +565,7 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 		}
 		rtn += '(';
 		bool firstFlag = true;
-		for (const Expr* pExpr : GetExprsCdr()) {
+		for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {

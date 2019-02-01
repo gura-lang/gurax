@@ -129,8 +129,8 @@ private:
 	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed
 	RefPtr<StringReferable> _pSource;	// for NumberSuffixed, StringSuffixed
 	RefPtr<Expr> _pExpr;				// for Expr
-	RefPtr<ExprOwner> _pExprOwner;		// for LBrace, LBlockParam, LBracket and LParenthesis
-	RefPtr<ExprOwner> _pExprOwnerEx;	// for LBrace
+	RefPtr<ExprLink> _pExprLink;		// for LBrace, LBlockParam, LBracket and LParenthesis
+	RefPtr<ExprLink> _pExprLinkEx;		// for LBrace
 	bool _itererFlag;					// for LParenthesis
 public:
 	static const Precedence _precMatrix[][31];
@@ -141,9 +141,9 @@ public:
 		_pExpr(pExpr), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _itererFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprOwner* pExprOwner) :
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprLink* pExprLink) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pExprOwner(pExprOwner), _itererFlag(false) {}
+		_pExprLink(pExprLink), _itererFlag(false) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pValue) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pValue(pValue), _itererFlag(false) {}
@@ -215,14 +215,14 @@ public:
 	void AppendValue(const char* value) { _pValue->GetStringSTL().append(value); }
 	void AppendValue(const String& value) { _pValue->GetStringSTL().append(value); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
-	void SetExprOwner(ExprOwner* pExprOwner) { _pExprOwner.reset(pExprOwner); }
-	void SetExprOwnerEx(ExprOwner* pExprOwnerEx) { _pExprOwnerEx.reset(pExprOwnerEx); }
+	void SetExprLink(ExprLink* pExprLink) { _pExprLink.reset(pExprLink); }
+	void SetExprLinkEx(ExprLink* pExprLinkEx) { _pExprLinkEx.reset(pExprLinkEx); }
 	Expr* GetExpr() { return _pExpr.get(); }
-	ExprOwner& GetExprOwner() { return *_pExprOwner; }
-	ExprOwner& GetExprOwnerEx() { return *_pExprOwnerEx; }
+	ExprLink& GetExprLink() { return *_pExprLink; }
+	ExprLink& GetExprLinkEx() { return *_pExprLinkEx; }
 	bool HasExpr() { return _pExpr.get() != nullptr; }
-	bool HasExprOwner() const { return _pExprOwner.get() != nullptr; }
-	bool HasExprOwnerEx() const { return _pExprOwnerEx.get() != nullptr; }
+	bool HasExprLink() const { return _pExprLink.get() != nullptr; }
+	bool HasExprLinkEx() const { return _pExprLinkEx.get() != nullptr; }
 	void SetItererFlag(bool itererFlag) { _itererFlag = itererFlag; }
 	bool GetItererFlag() const { return _itererFlag; }
 public:

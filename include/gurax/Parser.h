@@ -41,7 +41,7 @@ private:
 	bool ReduceThreeTokens();
 	bool ReduceFourTokens();
 	bool ReduceFiveTokens();
-	bool EmitExpr(ExprOwner& exprOwner, Expr* pExpr);
+	bool EmitExpr(ExprLink& exprLink, Expr* pExpr);
 	Expr_Block* CreateExprBlock(RefPtr<Token>& pToken);
 	template<typename T_TokenP, typename... Args>
 	void IssueError(const ErrorType& errorType, T_TokenP& pToken, const char* format, const Args&... args) {
