@@ -45,6 +45,8 @@ protected:
 	RefPtr<StringReferable> _pPathNameSrc;
 	int _lineNoTop = 0;
 	int _lineNoBtm = 0;
+	RefPtr<Expr> _pExprNext;
+	RefPtr<WeakPtr> _pwExprPrev;
 	RefPtr<WeakPtr> _pwExprParent;
 public:
 	// Constructor
@@ -68,6 +70,10 @@ public:
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
 	bool GetSilentFlag() const { return _silentFlag; }
+	void SetExprNext(Expr* pExprNext) {
+		_pExprNext.reset(pExprNext);
+		pExprNext->_pwExprPrev.reset(GetWeakPtr());
+	}
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
 	int CalcIndentLevel() const;
@@ -101,15 +107,52 @@ public:
 // ExprOwner
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ExprOwner : public ExprList, public Referable {
-protected:
-	~ExprOwner() { Clear(); }
 public:
 	// Referable accessor
 	Gurax_DeclareReferable(ExprOwner);
+protected:
+	~ExprOwner() { Clear(); }
 public:
 	void Clear() {
 		for (Expr* pExpr : *this) Expr::Delete(pExpr);
 		clear();
+	}
+};
+
+//------------------------------------------------------------------------------
+// ExprLink
+//------------------------------------------------------------------------------
+class ExprLink : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ExprLink);
+private:
+	RefPtr<Expr> _pExprHead;
+	Expr* _pExprTail;
+public:
+	// Constructor
+	ExprLink() : _pExprTail(nullptr) {}
+	// Copy constructor/operator
+	ExprLink(const ExprLink& src) = delete;
+	ExprLink& operator=(const ExprLink& src) = delete;
+	// Move constructor/operator
+	ExprLink(ExprLink&& src) = delete;
+	ExprLink& operator=(ExprLink&& src) noexcept = delete;
+protected:
+	// Destructor
+	virtual ~ExprLink() = default;
+public:	
+	Expr* GetExprHead() { return _pExprHead.get(); }
+	const Expr* GetExprHead() const { return _pExprHead.get(); }
+	Expr* GetExprTail() { return _pExprTail; }
+	const Expr* GetExprTail() const { return _pExprTail; }
+	void AddExpr(Expr* pExpr) {
+		if (_pExprTail) {
+			_pExprTail->SetExprNext(pExpr);
+		} else {
+			_pExprHead.reset(pExpr);
+		}
+		_pExprTail = pExpr;
 	}
 };
 
