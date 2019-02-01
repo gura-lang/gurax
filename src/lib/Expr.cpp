@@ -102,11 +102,12 @@ const Expr::TypeInfo Expr_Object::typeInfo;
 
 void Expr_Object::Exec(Frame& frame) const
 {
+	Context::PushStack(GetObject()->Clone());
 }
 
 String Expr_Object::ToString(const StringStyle& ss) const
 {
-	return _pStrSource? _pStrSource->GetStringSTL() : _pObject->ToString();
+	return HasSource()? GetSourceSTL() : GetObject()->ToString();
 }
 
 //------------------------------------------------------------------------------

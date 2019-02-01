@@ -269,6 +269,9 @@ public:
 		Expr_Node(typeInfo), _pObject(pObject), _pStrSource(pStrSource) {}
 	Object* GetObject() { return _pObject.get(); }
 	const Object* GetObject() const { return _pObject.get(); }
+	bool HasSource() const { return _pStrSource.get() != nullptr; }
+	const char* GetSource() const { return _pStrSource->GetString(); }
+	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
 public:
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
