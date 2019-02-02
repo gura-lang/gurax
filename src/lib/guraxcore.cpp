@@ -10,6 +10,7 @@ void Bootup()
 	Attribute::Bootup();
 	Binary::Bootup();
 	Codec::Bootup();
+	Declaration::Bootup();
 	Error::Bootup();
 	Object::Bootup();
 	Operators::Bootup();

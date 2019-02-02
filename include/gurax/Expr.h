@@ -4,6 +4,7 @@
 #ifndef GURAX_EXPR_H
 #define GURAX_EXPR_H
 #include "Attribute.h"
+#include "Declaration.h"
 #include "Object.h"
 #include "Operator.h"
 #include "Template.h"
@@ -531,18 +532,23 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
+	RefPtr<Declaration> _pDeclaration;
 	RefPtr<Expr_Block> _pExprBlock;		// this may be nullptr
 	RefPtr<Expr_Caller> _pExprTrailer;	// this may be nullptr
 public:
-	Expr_Caller() : Expr_Composite(typeInfo) {}
+	Expr_Caller() : Expr_Composite(typeInfo), _pDeclaration(new Declaration()) {}
 public:
 	virtual void Exec(Frame& frame) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
+	bool PrepareDeclaration(bool issueErrorFlag = false) {
+		return _pDeclaration->Prepare(this, issueErrorFlag);
+	}
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
 		_pExprBlock->SetExprParent(this);
 	}
+	const Declaration& GetDeclaration() const { return *_pDeclaration; }
 	bool HasExprBlock() const { return _pExprBlock.get() != nullptr; }
 	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);

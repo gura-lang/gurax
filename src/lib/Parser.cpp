@@ -263,6 +263,7 @@ bool Parser::ReduceTwoTokens()
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(Mod)));
 				pExprCaller->SetExprBlock(dynamic_cast<Expr_Block *>(pToken2->GetExpr()->Reference()));
+				pExprCaller->PrepareDeclaration();
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
@@ -274,6 +275,7 @@ bool Parser::ReduceTwoTokens()
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(ModMod)));
 				pExprCaller->SetExprBlock(dynamic_cast<Expr_Block *>(pToken2->GetExpr()->Reference()));
+				pExprCaller->PrepareDeclaration();
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
@@ -285,6 +287,7 @@ bool Parser::ReduceTwoTokens()
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(And)));
 				pExprCaller->SetExprBlock(dynamic_cast<Expr_Block *>(pToken2->GetExpr()->Reference()));
+				pExprCaller->PrepareDeclaration();
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
@@ -603,6 +606,7 @@ bool Parser::ReduceThreeTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
 			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->PrepareDeclaration();
 			pExprGen.reset(pExprCaller.release());
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' EndOfLine\n"));
@@ -626,6 +630,7 @@ bool Parser::ReduceThreeTokens()
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
 				pExprCaller->SetExprBlock(CreateExprBlock(pToken2));
+				pExprCaller->PrepareDeclaration();
 				pExprGen.reset(pExprCaller.release());
 			}
 		} else if (pToken3->IsType(TokenType::EndOfLine)) {
@@ -726,6 +731,7 @@ bool Parser::ReduceFourTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->PrepareDeclaration();
 			pExprLeader->AppendExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
@@ -754,6 +760,7 @@ bool Parser::ReduceFourTokens()
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
+				pExprCaller->PrepareDeclaration();
 			}
 			pExprCaller->GetExprTrailerLast()->SetExprBlock(CreateExprBlock(pToken3));
 			pExprLeader->AppendExprTrailer(pExprCaller.release());
@@ -777,6 +784,7 @@ bool Parser::ReduceFourTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
 			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->PrepareDeclaration();
 			pExprGen.reset(pExprCaller.release());
 		} else if (pToken4->IsType(TokenType::Comma) || pToken4->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr '(' -> Expr '(' Expr ','\n"));
@@ -799,6 +807,7 @@ bool Parser::ReduceFourTokens()
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
+				pExprCaller->PrepareDeclaration();
 			}
 			pExprCaller->GetExprTrailerLast()->SetExprBlock(CreateExprBlock(pToken2));
 			pExprGen.reset(pExprCaller.release());
@@ -862,6 +871,7 @@ bool Parser::ReduceFiveTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			pExprCaller->SetExprLinkCdr(exprLink.Reference());
+			pExprCaller->PrepareDeclaration();
 			pExprLeader->AppendExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
@@ -892,6 +902,7 @@ bool Parser::ReduceFiveTokens()
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
+				pExprCaller->PrepareDeclaration();
 			}
 			pExprCaller->SetExprBlock(CreateExprBlock(pToken3));
 			pExprLeader->AppendExprTrailer(pExprCaller.release());

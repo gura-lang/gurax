@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class Expr_Caller;
+
 //------------------------------------------------------------------------------
 // Declaration
 //------------------------------------------------------------------------------
@@ -20,10 +22,13 @@ public:
 		// Referable declaration
 		Gurax_DeclareReferable(ArgInfo);
 	private:
-		RefPtr<Attribute> _pAttr;	
+		const Symbol* _pSymbol;
+		UInt32 _flags;
+		RefPtr<Attribute> _pAttribute;
 	public:
 		// Constructor
-		ArgInfo() {}
+		ArgInfo(const Symbol* pSymbol, UInt32 flags, Attribute* pAttribute) :
+			_pSymbol(pSymbol), _flags(flags), _pAttribute(pAttribute) {}
 		// Copy constructor/operator
 		ArgInfo(const ArgInfo& src) = delete;
 		ArgInfo& operator=(const ArgInfo& src) = delete;
@@ -33,6 +38,10 @@ public:
 	protected:
 		// Destructor
 		~ArgInfo() = default;
+	public:
+		const Symbol* GetSymbol() const { return _pSymbol; }
+		const UInt32 GetFlags() const { return _flags; }
+		const Attribute& GetAttribute() const { return *_pAttribute; }
 	public:
 		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 		bool IsIdentical(const ArgInfo& argInfo) const { return this == &argInfo; }
@@ -51,11 +60,14 @@ public:
 		}
 	};
 private:
+	bool _validFlag;
 	ArgInfoOwner _argInfoOwner;
-	RefPtr<Attribute> _pAttr;
+	RefPtr<Attribute> _pAttribute;
+public:
+	static void Bootup();
 public:
 	// Constructor
-	Declaration() {}
+	Declaration() : _validFlag(false) {}
 	// Copy constructor/operator
 	Declaration(const Declaration& src) = delete;
 	Declaration& operator=(const Declaration& src) = delete;
@@ -65,6 +77,11 @@ public:
 protected:
 	// Destructor
 	~Declaration() = default;
+public:
+	bool Prepare(const Expr_Caller* pExprCaller, bool issueErrorFlag);
+	bool IsValid() const { return _validFlag; }
+	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
+	const Attribute& GetAttribute() const { return *_pAttribute; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Declaration& declaration) const { return this == &declaration; }
