@@ -12,13 +12,13 @@ void Attribute::Bootup()
 {
 }
 
-void Attribute::AddAttribute(const Attribute& attribute)
+void Attribute::AddAttribute(const Attribute& attr)
 {
-	if (!IsDottedSymbolSet() && attribute.IsDottedSymbolSet()) {
-		SetDottedSymbol(attribute.GetDottedSymbol().Reference());
+	if (!IsDottedSymbolSet() && attr.IsDottedSymbolSet()) {
+		SetDottedSymbol(attr.GetDottedSymbol().Reference());
 	}
-	AddSymbols(attribute.GetSymbols());
-	AddSymbolsOpt(attribute.GetSymbolsOpt());
+	AddSymbols(attr.GetSymbols());
+	AddSymbolsOpt(attr.GetSymbolsOpt());
 }
 
 void Attribute::AddSymbol(const Symbol* pSymbol)

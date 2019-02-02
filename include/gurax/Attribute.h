@@ -41,7 +41,7 @@ public:
 	const DottedSymbol& GetDottedSymbol() const {
 		return _pDottedSymbol? *_pDottedSymbol : DottedSymbol::Empty;
 	}
-	void AddAttribute(const Attribute& attribute);
+	void AddAttribute(const Attribute& attr);
 	void AddSymbol(const Symbol* pSymbol);
 	void AddSymbolOpt(const Symbol* pSymbol) {
 		_symbolListOpt.push_back(pSymbol);

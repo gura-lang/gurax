@@ -24,11 +24,11 @@ public:
 	private:
 		const Symbol* _pSymbol;
 		UInt32 _flags;
-		RefPtr<Attribute> _pAttribute;
+		RefPtr<Attribute> _pAttr;
 	public:
 		// Constructor
-		ArgInfo(const Symbol* pSymbol, UInt32 flags, Attribute* pAttribute) :
-			_pSymbol(pSymbol), _flags(flags), _pAttribute(pAttribute) {}
+		ArgInfo(const Symbol* pSymbol, UInt32 flags, Attribute* pAttr) :
+			_pSymbol(pSymbol), _flags(flags), _pAttr(pAttr) {}
 		// Copy constructor/operator
 		ArgInfo(const ArgInfo& src) = delete;
 		ArgInfo& operator=(const ArgInfo& src) = delete;
@@ -41,7 +41,7 @@ public:
 	public:
 		const Symbol* GetSymbol() const { return _pSymbol; }
 		const UInt32 GetFlags() const { return _flags; }
-		const Attribute& GetAttribute() const { return *_pAttribute; }
+		const Attribute& GetAttr() const { return *_pAttr; }
 	public:
 		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 		bool IsIdentical(const ArgInfo& argInfo) const { return this == &argInfo; }
@@ -62,7 +62,7 @@ public:
 private:
 	bool _validFlag;
 	ArgInfoOwner _argInfoOwner;
-	RefPtr<Attribute> _pAttribute;
+	RefPtr<Attribute> _pAttr;
 public:
 	static void Bootup();
 public:
@@ -81,7 +81,7 @@ public:
 	bool Prepare(const Expr_Caller* pExprCaller, bool issueErrorFlag);
 	bool IsValid() const { return _validFlag; }
 	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
-	const Attribute& GetAttribute() const { return *_pAttribute; }
+	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Declaration& declaration) const { return this == &declaration; }
