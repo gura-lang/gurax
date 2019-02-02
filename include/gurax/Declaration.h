@@ -18,6 +18,31 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Declaration);
 public:
+	struct Flag {
+		static const UInt32 None			= 0;
+		static const UInt32 Closure			= 1 << 0;
+		static const UInt32 CutExtraArgs	= 1 << 1;
+		static const UInt32 DynamicScope	= 1 << 2;
+		static const UInt32 EndMarker		= 1 << 3;
+		static const UInt32 Finalizer		= 1 << 4;
+		static const UInt32 Flat			= 1 << 5;
+		static const UInt32 Fork			= 1 << 6;
+		static const UInt32 Leader			= 1 << 7;
+		static const UInt32 ListVar			= 1 << 8;
+		static const UInt32 Map				= 1 << 9;
+		static const UInt32 Nil				= 1 << 10;
+		static const UInt32 NoCast			= 1 << 11;
+		static const UInt32 NoMap			= 1 << 12;
+		static const UInt32 NoNamed			= 1 << 13;
+		static const UInt32 Private			= 1 << 14;
+		static const UInt32 Privileged		= 1 << 15;
+		static const UInt32 Public			= 1 << 16;
+		static const UInt32 Read			= 1 << 17;
+		static const UInt32 SymbolFunc		= 1 << 18;
+		static const UInt32 Trailer			= 1 << 19;
+		static const UInt32 Write			= 1 << 29;
+	};
+public:
 	class ArgInfo : public Referable {
 	public:
 		// Referable declaration
