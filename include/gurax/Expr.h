@@ -542,7 +542,7 @@ public:
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 	bool PrepareDeclaration(bool issueErrorFlag = false) {
-		return _pDeclaration->Prepare(this, issueErrorFlag);
+		return _pDeclaration->Prepare(GetExprLinkCdr(), GetAttr(), issueErrorFlag);
 	}
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);

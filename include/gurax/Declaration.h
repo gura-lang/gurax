@@ -7,6 +7,7 @@
 
 namespace Gurax {
 
+class ExprLink;
 class Expr_Caller;
 
 //------------------------------------------------------------------------------
@@ -78,7 +79,7 @@ protected:
 	// Destructor
 	~Declaration() = default;
 public:
-	bool Prepare(const Expr_Caller* pExprCaller, bool issueErrorFlag);
+	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
 	bool IsValid() const { return _validFlag; }
 	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
 	const Attribute& GetAttr() const { return *_pAttr; }
