@@ -71,6 +71,7 @@ void Error::Print(FILE* fp)
 void ErrorOwner::Clear()
 {
 	for (Error* pError : *this) Error::Delete(pError);
+	clear();
 }
 
 }
