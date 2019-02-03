@@ -63,10 +63,10 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
 			if (pSymbol->IsIdentical(Gurax_Symbol(map))) {
 				flags |= Flag::Map;
-			} else if (pSymbol->IsIdentical(Gurax_Symbol(nomap))) {
-				flags |= Flag::NoMap;
 			} else if (pSymbol->IsIdentical(Gurax_Symbol(nil))) {
 				flags |= Flag::Nil;
+			} else if (pSymbol->IsIdentical(Gurax_Symbol(nomap))) {
+				flags |= Flag::NoMap;
 			} else if (pSymbol->IsIdentical(Gurax_Symbol(r))) {
 				flags |= Flag::Read;
 			} else if (pSymbol->IsIdentical(Gurax_Symbol(w))) {
