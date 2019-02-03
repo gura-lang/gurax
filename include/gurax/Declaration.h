@@ -49,12 +49,13 @@ public:
 		Gurax_DeclareReferable(ArgInfo);
 	private:
 		const Symbol* _pSymbol;
+		RefPtr<DottedSymbol> _pDottedSymbol;
 		UInt32 _flags;
-		RefPtr<Attribute> _pAttr;
+		RefPtr<Expr> _pExprDefault;	// this may be nullptr
 	public:
 		// Constructor
-		ArgInfo(const Symbol* pSymbol, UInt32 flags, Attribute* pAttr) :
-			_pSymbol(pSymbol), _flags(flags), _pAttr(pAttr) {}
+		ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, UInt32 flags, Expr* pExprDefault) :
+			_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags), _pExprDefault(pExprDefault) {}
 		// Copy constructor/operator
 		ArgInfo(const ArgInfo& src) = delete;
 		ArgInfo& operator=(const ArgInfo& src) = delete;
@@ -66,8 +67,9 @@ public:
 		~ArgInfo() = default;
 	public:
 		const Symbol* GetSymbol() const { return _pSymbol; }
+		const DottedSymbol* GetDottedSymbol() const { return _pDottedSymbol.get(); }
 		const UInt32 GetFlags() const { return _flags; }
-		const Attribute& GetAttr() const { return *_pAttr; }
+		const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	public:
 		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 		bool IsIdentical(const ArgInfo& argInfo) const { return this == &argInfo; }
