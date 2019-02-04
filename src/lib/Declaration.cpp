@@ -14,6 +14,7 @@ void Declaration::Bootup()
 
 bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
 {
+	const UInt32 flagAcceptable = Flag::Map | Flag::Nil | Flag::NoMap | Flag::Read | Flag::Write;
 	_argInfoOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		RefPtr<DottedSymbol> pDottedSymbol;
@@ -91,17 +92,8 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 		}
 		pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
 		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
-			if (pSymbol->IsIdentical(Gurax_Symbol(map))) {
-				flags |= Flag::Map;
-			} else if (pSymbol->IsIdentical(Gurax_Symbol(nil))) {
-				flags |= Flag::Nil;
-			} else if (pSymbol->IsIdentical(Gurax_Symbol(nomap))) {
-				flags |= Flag::NoMap;
-			} else if (pSymbol->IsIdentical(Gurax_Symbol(r))) {
-				flags |= Flag::Read;
-			} else if (pSymbol->IsIdentical(Gurax_Symbol(w))) {
-				flags |= Flag::Write;
-			} else {
+			UInt32 flag = SymbolToFlag(pSymbol) & flagAcceptable;
+			if (!flag) {
 				if (issueErrorFlag) {
 					Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
 				}
@@ -133,6 +125,12 @@ String Declaration::ToString(const StringStyle& ss) const
 String Declaration::FlagsToString(UInt32 flags)
 {
 	String rtn;
+	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
+		if (flags & 1) {
+			rtn += ':';
+			rtn += FlagToSymbol(flag)->GetName();
+		}
+	}
 	return rtn;
 }
 
