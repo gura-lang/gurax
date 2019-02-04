@@ -535,7 +535,6 @@ Gurax_DeclareSymbol(zh);
 //------------------------------------------------------------------------------
 // Predefined Symbol Marks
 //------------------------------------------------------------------------------
-Gurax_DeclareSymbolMark(Empty);
 Gurax_DeclareSymbolMark(Assign);
 Gurax_DeclareSymbolMark(AssignAdd);
 Gurax_DeclareSymbolMark(AssignSub);

@@ -112,20 +112,6 @@ namespace Gurax {
 class Symbol;
 
 //------------------------------------------------------------------------------
-// MemberMode
-//------------------------------------------------------------------------------
-enum class MemberMode {
-	None,
-	Normal,		// foo.bar
-	MapToList,	// foo::bar .. map-to-list
-	MapToIter,	// foo:*bar .. map-to-iterator
-	MapAlong,	// foo:&bar .. map-along
-};
-
-MemberMode SymbolToMemberMode(const Symbol* pSymbol);
-const Symbol* MemberModeToSymbol(MemberMode memberMode);
-
-//------------------------------------------------------------------------------
 // SortOrder
 //------------------------------------------------------------------------------
 enum class SortOrder {

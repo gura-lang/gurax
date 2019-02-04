@@ -439,4 +439,13 @@ StringList& StringList::Sort(SortOrder sortOrder)
 // StringReferable
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+// StringStyle
+//------------------------------------------------------------------------------
+const StringStyle StringStyle::Empty;
+
+const char* StringStyle::_strsComma[2]		{ ", ", "," };
+const char* StringStyle::_strsColon[2]		{ ": ", ":" };
+const char* StringStyle::_strsSemicolon[2]	{ "; ", ";" };
+
 }

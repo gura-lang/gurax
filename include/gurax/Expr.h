@@ -11,8 +11,41 @@
 
 namespace Gurax {
 
-
 class Frame;
+
+//------------------------------------------------------------------------------
+// MemberMode
+//------------------------------------------------------------------------------
+enum class MemberMode {
+	None,
+	Normal,		// foo.bar
+	MapAlong,	// foo:&bar .. map-along
+	MapToIter,	// foo:*bar .. map-to-iterator
+	MapToList,	// foo::bar .. map-to-list
+};
+
+class SymbolAssoc_MemberMode : public SymbolAssoc<MemberMode, MemberMode::None> {
+public:
+	SymbolAssoc_MemberMode() {
+		Assoc(Gurax_SymbolMark(Period),			MemberMode::Normal);
+		Assoc(Gurax_SymbolMark(ColonAnd),		MemberMode::MapAlong);
+		Assoc(Gurax_SymbolMark(ColonAsterisk),	MemberMode::MapToIter);
+		Assoc(Gurax_SymbolMark(ColonColon),		MemberMode::MapToList);
+	}
+	static SymbolAssoc* GetInstance() {
+		return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_MemberMode());
+	}
+};
+
+inline MemberMode SymbolToMemberMode(const Symbol* pSymbol)
+{
+	return SymbolAssoc_MemberMode::GetInstance()->ToValue(pSymbol);
+}
+
+inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
+{
+	return SymbolAssoc_MemberMode::GetInstance()->ToSymbol(memberMode);
+}
 
 //------------------------------------------------------------------------------
 // Expr

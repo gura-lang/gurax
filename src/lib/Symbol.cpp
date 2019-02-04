@@ -10,8 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 static_assert(std::is_pod<Symbol>::value, "Gurax::Symbol must be a POD class");
 
+const Symbol* Symbol::Empty = nullptr;
+
 void Symbol::Bootup()
 {
+	Empty = Add("");
 }
 
 String Symbol::ToString(const StringStyle& ss) const
