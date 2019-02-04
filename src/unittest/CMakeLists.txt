@@ -2,6 +2,7 @@ add_executable(unittest
 	unittest.cpp
 	SampleRecord.cpp
 	test-DateTime.cpp
+	test-Declaration.cpp
 	test-Function.cpp
 	test-Help.cpp
 	test-Iterator.cpp

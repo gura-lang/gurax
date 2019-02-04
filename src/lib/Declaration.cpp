@@ -14,7 +14,12 @@ void Declaration::Bootup()
 
 bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
 {
-	const UInt32 flagAcceptable = Flag::Map | Flag::Nil | Flag::NoMap | Flag::Read | Flag::Write;
+	const UInt32 flagsAcceptable =
+		Flag::Closure | Flag::CutExtraArgs | Flag::DynamicScope | Flag::EndMarker |
+		Flag::Finalizer | Flag::Flat | Flag::Fork | 	Flag::Leader | Flag::ListVar |
+		Flag::Map | Flag::Nil | Flag::NoCast | Flag::NoMap | Flag::NoNamed | Flag::Private |
+		Flag::Privileged | Flag::Public | Flag::SymbolFunc | Flag::Trailer;
+	const UInt32 flagArgAcceptable = Flag::Map | Flag::Nil | Flag::NoMap | Flag::Read | Flag::Write;
 	_argInfoOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		RefPtr<DottedSymbol> pDottedSymbol;
@@ -28,6 +33,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 				if (issueErrorFlag) {
 					Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
 				}
+				Clear();
 				return false;
 			}
 			// f(x => value)
@@ -40,13 +46,15 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 				if (issueErrorFlag) {
 					Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
 				}
+				Clear();
 				return false;
 			}
 			// f(x[])
 			pExpr = pExprEx->GetExprCar();
 			pAttrSrc = &pExprEx->GetAttr();
 			flags |= Flag::ListVar;
-		} else if (pExpr->IsType<Expr_UnaryOp>()) {
+		}
+		if (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			const Operator* pOperator = pExprEx->GetOperator();
 			pExpr = pExprEx->GetExprChild();
@@ -65,6 +73,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 				if (issueErrorFlag) {
 					Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
 				}
+				Clear();
 				return false;
 			}
 		}
@@ -72,6 +81,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 			if (issueErrorFlag) {
 				Error::Issue(ErrorType::SyntaxError, "declaration must be an indentifier");
 			}
+			Clear();
 			return false;
 		}
 		const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExpr);
@@ -82,30 +92,49 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 			if (issueErrorFlag) {
 				Error::Issue(ErrorType::SyntaxError, "invalid attribute");
 			}
+			Clear();
 			return false;
 		}
 		if (!pAttrSrc->GetSymbolsOpt().empty()) {
 			if (issueErrorFlag) {
 				Error::Issue(ErrorType::SyntaxError, "optional attribute can not be declared");
 			}
+			Clear();
 			return false;
 		}
 		pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
 		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
-			UInt32 flag = SymbolToFlag(pSymbol) & flagAcceptable;
+			UInt32 flag = SymbolToFlag(pSymbol) & flagArgAcceptable;
+			flags |= flag;
 			if (!flag) {
 				if (issueErrorFlag) {
 					Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
 				}
+				Clear();
 				return false;
 			}
 		}
 		_argInfoOwner.push_back(new ArgInfo(
 									pSymbol, occurPattern, pDottedSymbol.release(), flags, pExprDefault.release()));
 	}
-	_pAttr.reset(attr.Reference());
+	_pAttr.reset(new Attribute());
+	_pAttr->SetDottedSymbol(attr.GetDottedSymbol().Reference());
+	for (const Symbol* pSymbol : attr.GetSymbols()) {
+		UInt32 flag = SymbolToFlag(pSymbol) & flagsAcceptable;
+		_flags |= flag;
+		if (!flag) _pAttr->AddSymbol(pSymbol);
+	}
+	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	_validFlag = true;
 	return true;
+}
+
+void Declaration::Clear()
+{
+	_validFlag = false;
+	_argInfoOwner.Clear();
+	_flags = 0;
+	_pAttr.reset(nullptr);
 }
 
 String Declaration::ToString(const StringStyle& ss) const
@@ -134,10 +163,12 @@ String Declaration::FlagsToString(UInt32 flags)
 	return rtn;
 }
 
-String Declaration::OccurPatternToString(OccurPattern occurPattern)
+const char* Declaration::OccurPatternToString(OccurPattern occurPattern)
 {
-	String rtn;
-	return rtn;
+	return
+		(occurPattern == OccurPattern::ZeroOrOnce)? "?" :
+		(occurPattern == OccurPattern::ZeroOrMore)? "*" :
+		(occurPattern == OccurPattern::OnceOrMore)? "+" : "";
 }
 
 //------------------------------------------------------------------------------
@@ -146,6 +177,18 @@ String Declaration::OccurPatternToString(OccurPattern occurPattern)
 String Declaration::ArgInfo::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += _pSymbol->GetName();
+	if (GetFlags() & Flag::ListVar) rtn += "[]";
+	rtn += OccurPatternToString(_occurPattern);
+	if (!_pDottedSymbol->IsEmpty()) {
+		rtn += ':';
+		rtn += _pDottedSymbol->ToString();
+	}
+	rtn += FlagsToString(_flags);
+	if (_pExprDefault) {
+		rtn += ss.IsCram()? "=>" : " => ";
+		rtn += _pExprDefault->ToString(ss);
+	}
 	return rtn;
 }
 

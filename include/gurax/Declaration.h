@@ -135,12 +135,13 @@ public:
 private:
 	bool _validFlag;
 	ArgInfoOwner _argInfoOwner;
+	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	Declaration() : _validFlag(false) {}
+	Declaration() : _validFlag(false), _flags(0) {}
 	// Copy constructor/operator
 	Declaration(const Declaration& src) = delete;
 	Declaration& operator=(const Declaration& src) = delete;
@@ -152,6 +153,7 @@ protected:
 	~Declaration() = default;
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
+	void Clear();
 	bool IsValid() const { return _validFlag; }
 	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -169,7 +171,7 @@ public:
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
 	static String FlagsToString(UInt32 flags);
-	static String OccurPatternToString(OccurPattern occurPattern);
+	static const char* OccurPatternToString(OccurPattern occurPattern);
 };
 
 }
