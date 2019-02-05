@@ -141,7 +141,7 @@ public:
 	static void Bootup();
 public:
 	// Constructor
-	Declaration() : _validFlag(false), _flags(0) {}
+	Declaration() : _validFlag(false), _flags(0), _pAttr(new Attribute()) {}
 	// Copy constructor/operator
 	Declaration(const Declaration& src) = delete;
 	Declaration& operator=(const Declaration& src) = delete;

@@ -16,7 +16,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 {
 	const UInt32 flagsAcceptable =
 		Flag::Closure | Flag::CutExtraArgs | Flag::DynamicScope | Flag::EndMarker |
-		Flag::Finalizer | Flag::Flat | Flag::Fork | 	Flag::Leader | Flag::ListVar |
+		Flag::Finalizer | Flag::Flat | Flag::Fork | Flag::Leader | Flag::ListVar |
 		Flag::Map | Flag::Nil | Flag::NoCast | Flag::NoMap | Flag::NoNamed | Flag::Private |
 		Flag::Privileged | Flag::Public | Flag::SymbolFunc | Flag::Trailer;
 	const UInt32 flagArgAcceptable = Flag::Map | Flag::Nil | Flag::NoMap | Flag::Read | Flag::Write;
@@ -103,21 +103,26 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 			return false;
 		}
 		pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
+		bool firstFlag = true;
 		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
 			UInt32 flag = SymbolToFlag(pSymbol) & flagArgAcceptable;
 			flags |= flag;
-			if (!flag) {
-				if (issueErrorFlag) {
-					Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+			if (flag) {
+				if (firstFlag) pDottedSymbol.reset(nullptr);
+			} else {
+				if (!firstFlag) {
+					if (issueErrorFlag) {
+						Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
+					}
+					Clear();
+					return false;
 				}
-				Clear();
-				return false;
 			}
+			firstFlag = false;
 		}
 		_argInfoOwner.push_back(new ArgInfo(
 									pSymbol, occurPattern, pDottedSymbol.release(), flags, pExprDefault.release()));
 	}
-	_pAttr.reset(new Attribute());
 	_pAttr->SetDottedSymbol(attr.GetDottedSymbol().Reference());
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		UInt32 flag = SymbolToFlag(pSymbol) & flagsAcceptable;
@@ -134,7 +139,7 @@ void Declaration::Clear()
 	_validFlag = false;
 	_argInfoOwner.Clear();
 	_flags = 0;
-	_pAttr.reset(nullptr);
+	_pAttr.reset(new Attribute());
 }
 
 String Declaration::ToString(const StringStyle& ss) const
