@@ -10,6 +10,8 @@ namespace Gurax {
 
 static const char* src = R"(
 f(a:number)
+f(a:number, b:string, c:array)
+f(a:map, b:nomap, c:nil, d:r, e:w)
 )";
 
 Gurax_TesterEntry(Declaration)
@@ -23,7 +25,7 @@ Gurax_TesterEntry(Declaration)
 		const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
 		//::printf("%s\n", pExpr->ToString().c_str());
 		::printf("%s .. %s\n", pExpr->ToString().c_str(),
-				 pExprEx->GetDeclaration().ToString().c_str());
+				 pExprEx->GetDeclaration().ToString(StringStyle().Verbose()).c_str());
 	}
 }
 

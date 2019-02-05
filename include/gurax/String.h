@@ -348,6 +348,7 @@ public:
 		static const UInt32 Cram		= (1 << 1);
 		static const UInt32 MultiLine	= (1 << 2);
 		static const UInt32 UpperCase	= (1 << 3);
+		static const UInt32 Verbose		= (1 << 4);
 	};
 private:
 	UInt32 _flags;
@@ -379,10 +380,13 @@ public:
 	StringStyle& NoMultiLine()	{ _flags &= ~Flag::MultiLine; return *this; }
 	StringStyle& UpperCase()	{ _flags |= Flag::UpperCase; return *this; }
 	StringStyle& NoUpperCase()	{ _flags &= ~Flag::UpperCase; return *this; }
+	StringStyle& Verbose()		{ _flags |= Flag::Verbose; return *this; }
+	StringStyle& NoVerbose()	{ _flags &= ~Flag::Verbose; return *this; }
 	bool IsAsSource() const		{ return (_flags & Flag::AsSource) != 0; }
 	bool IsCram() const			{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const	{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsUpperCase() const	{ return (_flags & Flag::UpperCase) != 0; }
+	bool IsVerbose() const		{ return (_flags & Flag::Verbose) != 0; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
 	const char* GetIndentUnit() const { return _indentUnit.c_str(); }
 	const char* GetComma() const { return _strsComma[IsCram()]; }

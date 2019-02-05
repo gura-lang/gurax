@@ -14,17 +14,11 @@ void Declaration::Bootup()
 
 bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
 {
-	const UInt32 flagsAcceptable =
-		Flag::Closure | Flag::CutExtraArgs | Flag::DynamicScope | Flag::EndMarker |
-		Flag::Finalizer | Flag::Flat | Flag::Fork | Flag::Leader | Flag::ListVar |
-		Flag::Map | Flag::Nil | Flag::NoCast | Flag::NoMap | Flag::NoNamed | Flag::Private |
-		Flag::Privileged | Flag::Public | Flag::SymbolFunc | Flag::Trailer;
-	const UInt32 flagArgAcceptable = Flag::Map | Flag::Nil | Flag::NoMap | Flag::Read | Flag::Write;
 	_argInfoOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		RefPtr<DottedSymbol> pDottedSymbol;
 		OccurPattern occurPattern = OccurPattern::Once;
-		UInt32 flags = 0;
+		UInt32 flagsArg = 0;
 		RefPtr<Expr> pExprDefault;
 		const Attribute* pAttrSrc = nullptr;
 		if (pExpr->IsType<Expr_BinaryOp>()) {
@@ -52,7 +46,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 			// f(x[])
 			pExpr = pExprEx->GetExprCar();
 			pAttrSrc = &pExprEx->GetAttr();
-			flags |= Flag::ListVar;
+			flagsArg |= FlagArg::ListVar;
 		}
 		if (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
@@ -105,10 +99,10 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 		pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
 		bool firstFlag = true;
 		for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
-			UInt32 flag = SymbolToFlag(pSymbol) & flagArgAcceptable;
-			flags |= flag;
-			if (flag) {
-				if (firstFlag) pDottedSymbol.reset(nullptr);
+			UInt32 flagArg = SymbolToFlagArg(pSymbol);
+			flagsArg |= flagArg;
+			if (flagArg) {
+				if (firstFlag) pDottedSymbol.reset(DottedSymbol::Empty.Reference());
 			} else {
 				if (!firstFlag) {
 					if (issueErrorFlag) {
@@ -121,13 +115,13 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 			firstFlag = false;
 		}
 		_argInfoOwner.push_back(new ArgInfo(
-									pSymbol, occurPattern, pDottedSymbol.release(), flags, pExprDefault.release()));
+									pSymbol, occurPattern, pDottedSymbol.release(), flagsArg, pExprDefault.release()));
 	}
 	_pAttr->SetDottedSymbol(attr.GetDottedSymbol().Reference());
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
-		UInt32 flag = SymbolToFlag(pSymbol) & flagsAcceptable;
-		_flags |= flag;
-		if (!flag) _pAttr->AddSymbol(pSymbol);
+		UInt32 flagFunc = SymbolToFlagFunc(pSymbol);
+		_flagsFunc |= flagFunc;
+		if (!flagFunc) _pAttr->AddSymbol(pSymbol);
 	}
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	_validFlag = true;
@@ -138,7 +132,7 @@ void Declaration::Clear()
 {
 	_validFlag = false;
 	_argInfoOwner.Clear();
-	_flags = 0;
+	_flagsFunc = 0;
 	_pAttr.reset(new Attribute());
 }
 
@@ -156,13 +150,25 @@ String Declaration::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
-String Declaration::FlagsToString(UInt32 flags)
+String Declaration::FlagsArgToString(UInt32 flagsArg)
 {
 	String rtn;
-	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
-		if (flags & 1) {
+	for (UInt32 flagArg = 1; flagsArg; flagArg <<= 1, flagsArg >>= 1) {
+		if (flagsArg & 1) {
 			rtn += ':';
-			rtn += FlagToSymbol(flag)->GetName();
+			rtn += FlagArgToSymbol(flagArg)->GetName();
+		}
+	}
+	return rtn;
+}
+
+String Declaration::FlagsFuncToString(UInt32 flagsFunc)
+{
+	String rtn;
+	for (UInt32 flagFunc = 1; flagsFunc; flagFunc <<= 1, flagsFunc >>= 1) {
+		if (flagsFunc & 1) {
+			rtn += ':';
+			rtn += FlagFuncToSymbol(flagFunc)->GetName();
 		}
 	}
 	return rtn;
@@ -182,17 +188,19 @@ const char* Declaration::OccurPatternToString(OccurPattern occurPattern)
 String Declaration::ArgInfo::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += _pSymbol->GetName();
-	if (GetFlags() & Flag::ListVar) rtn += "[]";
-	rtn += OccurPatternToString(_occurPattern);
-	if (!_pDottedSymbol->IsEmpty()) {
+	rtn += GetSymbol()->GetName();
+	if (GetFlagsArg() & FlagArg::ListVar) rtn += "[]";
+	rtn += GetOccurPatternString();
+	if (!GetDottedSymbol().IsEmpty()) {
 		rtn += ':';
-		rtn += _pDottedSymbol->ToString();
+		rtn += GetDottedSymbol().ToString();
+	} else if (ss.IsVerbose()) {
+		rtn += ":any";
 	}
-	rtn += FlagsToString(_flags);
-	if (_pExprDefault) {
+	rtn += FlagsArgToString(_flagsArg);
+	if (GetExprDefault()) {
 		rtn += ss.IsCram()? "=>" : " => ";
-		rtn += _pExprDefault->ToString(ss);
+		rtn += GetExprDefault()->ToString(ss);
 	}
 	return rtn;
 }
