@@ -27,6 +27,14 @@ String Expr::ComposeIndent(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const ExprList ExprList::Empty;
 
+bool ExprList::Traverse(Expr::Visitor& visitor)
+{
+	for (Expr* pExpr : *this) {
+		if (!pExpr->Traverse(visitor)) return false;
+	}
+	return true;
+}
+
 void ExprList::Exec(Frame& frame) const
 {
 	for (const Expr* pExpr : *this) {
@@ -59,6 +67,14 @@ void ExprLink::SetExprParent(const Expr* pExprParent)
 	for (Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->SetExprParent(pExprParent);
 	}
+}
+
+bool ExprLink::Traverse(Expr::Visitor& visitor)
+{
+	for (Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		if (!pExpr->Traverse(visitor)) return false;
+	}
+	return true;
 }
 
 //------------------------------------------------------------------------------

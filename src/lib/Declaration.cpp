@@ -117,7 +117,6 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 		_argInfoOwner.push_back(new ArgInfo(
 									pSymbol, occurPattern, pDottedSymbol.release(), flagsArg, pExprDefault.release()));
 	}
-	_pAttr->SetDottedSymbol(attr.GetDottedSymbol().Reference());
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		UInt32 flagFunc = SymbolToFlagFunc(pSymbol);
 		_flagsFunc |= flagFunc;
@@ -146,6 +145,7 @@ String Declaration::ToString(const StringStyle& ss) const
 		rtn += pArgInfo->ToString(ss);
 	}
 	rtn += ')';
+	rtn += FlagsFuncToString(_flagsFunc);
 	rtn += _pAttr->ToString(ss);
 	return rtn;
 }

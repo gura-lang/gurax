@@ -73,6 +73,14 @@ public:
 	public:
 		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 	};
+	class Visitor {
+	public:
+		virtual bool Visit(Expr* pExpr) = 0;
+	};
+	class Visitor_Prepare : public Visitor {
+	public:
+		virtual bool Visit(Expr* pExpr) override { return pExpr->DoPrepare(); }
+	};
 protected:
 	const TypeInfo& _typeInfo;
 	bool _silentFlag = false;
@@ -118,8 +126,14 @@ public:
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 public:
+	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Exec(Frame& frame) const = 0;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
+	bool Prepare() {
+		Visitor_Prepare visitor;
+		return Traverse(visitor);
+	}
+	virtual bool DoPrepare() { return true; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
@@ -136,6 +150,7 @@ class GURAX_DLLDECLARE ExprList : public std::vector<Expr*> {
 public:
 	static const ExprList Empty;
 public:
+	bool Traverse(Expr::Visitor& visitor);
 	void Exec(Frame& frame) const;
 	void SetExprParent(const Expr* pExprParent);
 };
@@ -194,6 +209,7 @@ public:
 	}
 	size_t GetSize() const;
 	void SetExprParent(const Expr* pExprParent);
+	bool Traverse(Expr::Visitor& visitor);
 };
 
 //------------------------------------------------------------------------------
@@ -202,6 +218,9 @@ public:
 class GURAX_DLLDECLARE Expr_Node : public Expr {
 public:
 	Expr_Node(const TypeInfo& typeInfo) : Expr(typeInfo) {}
+	virtual bool Traverse(Visitor& visitor) override {
+		return visitor.Visit(this);
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -216,6 +235,11 @@ public:
 	}
 	Expr* GetExprChild() { return _pExprChild.get(); }
 	const Expr* GetExprChild() const { return _pExprChild.get(); }
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!visitor.Visit(this)) return false;
+		if (_pExprChild && !_pExprChild->Traverse(visitor)) return false;
+		return true;
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -234,6 +258,12 @@ public:
 	Expr* GetExprRight() { return _pExprRight.get(); }
 	const Expr* GetExprLeft() const { return _pExprLeft.get(); }
 	const Expr* GetExprRight() const { return _pExprRight.get(); }
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!visitor.Visit(this)) return false;
+		if (_pExprLeft && !_pExprLeft->Traverse(visitor)) return false;
+		if (_pExprRight && !_pExprRight->Traverse(visitor)) return false;
+		return true;
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -251,6 +281,11 @@ public:
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
 	const Expr* GetExprElemHead() const { return _pExprLinkElem->GetExprHead(); }
 	void AddExprElem(Expr* pExprElem);
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!visitor.Visit(this)) return false;
+		if (!_pExprLinkElem->Traverse(visitor)) return false;
+		return true;
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -281,6 +316,12 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!visitor.Visit(this)) return false;
+		if (_pExprCar && !_pExprCar->Traverse(visitor)) return false;
+		if (!_pExprLinkCdr->Traverse(visitor)) return false;
+		return true;
+	}
 	virtual void Exec(Frame& frame) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -493,6 +534,11 @@ protected:
 public:
 	explicit Expr_Block(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!Expr_Collector::Traverse(visitor)) return false;
+		if (_pExprLinkParam && !_pExprLinkParam->Traverse(visitor)) return false;
+		return true;
+	}
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprLinkParam(ExprLink* pExprLinkParam) {
@@ -571,11 +617,18 @@ protected:
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclaration(new Declaration()) {}
 public:
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!Expr_Composite::Traverse(visitor)) return false;
+		if (_pExprBlock && !_pExprBlock->Traverse(visitor)) return false;
+		if (_pExprTrailer && !_pExprTrailer->Traverse(visitor)) return false;
+		return true;
+	}
 	virtual void Exec(Frame& frame) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
-	bool PrepareDeclaration(bool issueErrorFlag = false) {
-		return _pDeclaration->Prepare(GetExprLinkCdr(), GetAttr(), issueErrorFlag);
+	virtual bool DoPrepare() override {
+		_pDeclaration->Prepare(GetExprLinkCdr(), GetAttr(), false);
+		return true;
 	}
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
