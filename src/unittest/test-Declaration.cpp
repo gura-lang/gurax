@@ -12,6 +12,7 @@ static const char* src = R"(
 f(a:number)
 f(a:number, b:string, c:array)
 f(a:map, b:nomap, c:nil, d:r, e:w)
+f(a:map:nomap:nil:r:w)
 )";
 
 Gurax_TesterEntry(Declaration)
