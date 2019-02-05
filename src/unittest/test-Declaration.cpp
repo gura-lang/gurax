@@ -13,7 +13,7 @@ f(a:number)
 f(a:number, b:string, c:array)
 f(a:map, b:nomap, c:nil, d:r, e:w)
 f(a:map:nomap:nil:r:w)
-f():map:attr1:[a,b]
+f():map:attr1:attr2:[a,b]
 )";
 
 Gurax_TesterEntry(Declaration)
