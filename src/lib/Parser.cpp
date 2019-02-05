@@ -26,6 +26,7 @@ Expr_Root* Parser::ParseString(const char* text)
 		if (Error::IsIssued()) return nullptr;
 		if (ch == '\0') break;
 	}
+	pParser->GetExprRoot().Prepare();
 	return pParser->GetExprRoot().Reference();
 }
 
@@ -108,7 +109,6 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			break;
 		}
 	}
-	GetExprRoot().Prepare();
 }
 
 bool Parser::ReduceOneToken()
