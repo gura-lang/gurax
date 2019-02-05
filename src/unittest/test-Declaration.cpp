@@ -4,16 +4,26 @@
 #include "stdafx.h"
 
 namespace Gurax {
-//f()
-//f(a)
-//f(a,b,c)
 
 static const char* src = R"(
+f()
+f(a)
+f(a, b, c)
 f(a:number)
+f(a:g1.type, b:g1.g2.type, c:g1.g2.g3.type)
 f(a:number, b:string, c:array)
 f(a:map, b:nomap, c:nil, d:r, e:w)
 f(a:map:nomap:nil:r:w)
 f():map:attr1:attr2:[a,b]
+f(a[])
+f(a[]:number)
+f(a[]:number:map)
+f(a?)
+f(a+)
+f(c*)
+f(a?:number)
+f(b+:number)
+f(c*:number)
 )";
 
 Gurax_TesterEntry(Declaration)

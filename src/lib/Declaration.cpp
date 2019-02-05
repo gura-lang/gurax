@@ -197,7 +197,7 @@ String Declaration::ArgInfo::ToString(const StringStyle& ss) const
 	} else if (ss.IsVerbose()) {
 		rtn += ":any";
 	}
-	rtn += FlagsArgToString(_flagsArg);
+	rtn += FlagsArgToString(GetFlagsArg() & ~FlagArg::ListVar);
 	if (GetExprDefault()) {
 		rtn += ss.IsCram()? "=>" : " => ";
 		rtn += GetExprDefault()->ToString(ss);

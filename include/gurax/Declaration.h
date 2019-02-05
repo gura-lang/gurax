@@ -20,11 +20,11 @@ public:
 	Gurax_DeclareReferable(Declaration);
 public:
 	struct FlagArg {
-		static const UInt32 Map				= 1 << 0;	// :map
-		static const UInt32 NoMap			= 1 << 1;	// :nomap
-		static const UInt32 NoCast			= 1 << 2;	// :nocast
-		static const UInt32 Nil				= 1 << 3;	// :nil
-		static const UInt32 ListVar			= 1 << 4;	// :listvar
+		static const UInt32 ListVar			= 1 << 0;	// :listvar
+		static const UInt32 Map				= 1 << 1;	// :map
+		static const UInt32 NoMap			= 1 << 2;	// :nomap
+		static const UInt32 NoCast			= 1 << 3;	// :nocast
+		static const UInt32 Nil				= 1 << 4;	// :nil
 		static const UInt32 Read			= 1 << 5;	// :r
 		static const UInt32 Write			= 1 << 6;	// :w
 	};
@@ -57,11 +57,11 @@ public:
 	class SymbolAssoc_FlagArg : public SymbolAssoc<UInt32, 0> {
 	public:
 		SymbolAssoc_FlagArg() {
+			Assoc(Gurax_Symbol(listvar),		FlagArg::ListVar);
 			Assoc(Gurax_Symbol(map),			FlagArg::Map);
 			Assoc(Gurax_Symbol(nomap),			FlagArg::NoMap);
 			Assoc(Gurax_Symbol(nocast),			FlagArg::NoCast);
 			Assoc(Gurax_Symbol(nil),			FlagArg::Nil);
-			Assoc(Gurax_Symbol(listvar),		FlagArg::ListVar);
 			Assoc(Gurax_Symbol(r),				FlagArg::Read);
 			Assoc(Gurax_Symbol(w),				FlagArg::Write);
 		}
