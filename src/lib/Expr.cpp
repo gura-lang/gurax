@@ -212,10 +212,17 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 		break;
 	}
 	case OpStyle::OpPostUnary: {
-		rtn += '(';
-		rtn += GetExprChild()->ToString(ss);
-		rtn += ')';
-		rtn += GetOperator()->GetSymbol();
+		if (GetExprChild()->IsType<Expr_Identifier>()) {
+			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(GetExprChild());
+			rtn += pExprEx->GetSymbol()->ToString();
+			rtn += GetOperator()->GetSymbol();
+			rtn += pExprEx->GetAttr().ToString(ss);
+		} else {
+			rtn += '(';
+			rtn += GetExprChild()->ToString(ss);
+			rtn += ')';
+			rtn += GetOperator()->GetSymbol();
+		}
 		break;
 	}
 	case OpStyle::MathUnary: {
