@@ -57,6 +57,13 @@ String Klass::MakeFullName() const
 	return GetName();
 }
 
+DottedSymbol* Klass::MakeDottedSymbol() const
+{
+	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+	pDottedSymbol->Append(GetSymbol());
+	return pDottedSymbol.release();
+}
+
 //------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------

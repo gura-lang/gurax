@@ -5,6 +5,7 @@
 #define GURAX_DECLARATION_H
 #include "Attribute.h"
 #include "Symbols.h"
+#include "Object_undefined.h"
 
 namespace Gurax {
 
@@ -100,16 +101,21 @@ public:
 		Gurax_DeclareReferable(ArgInfo);
 	private:
 		const Symbol* _pSymbol;
-		OccurPattern _occurPattern;
 		RefPtr<DottedSymbol> _pDottedSymbol;
+		const Klass* _pKlass;
+		OccurPattern _occurPattern;
 		UInt32 _flagsArg;
 		RefPtr<Expr> _pExprDefault;	// this may be nullptr
 	public:
 		// Constructor
-		ArgInfo(const Symbol* pSymbol, OccurPattern occurPattern,
-				DottedSymbol* pDottedSymbol, UInt32 flagsArg, Expr* pExprDefault) :
-			_pSymbol(pSymbol), _occurPattern(occurPattern), _pDottedSymbol(pDottedSymbol),
-			_flagsArg(flagsArg), _pExprDefault(pExprDefault) {}
+		ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
+				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
+			_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _pKlass(&Object_undefined::klass),
+			_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault) {}
+		ArgInfo(const Symbol* pSymbol, const Klass& klass,
+				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
+			_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
+			_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault) {}
 		// Copy constructor/operator
 		ArgInfo(const ArgInfo& src) = delete;
 		ArgInfo& operator=(const ArgInfo& src) = delete;
@@ -122,6 +128,8 @@ public:
 	public:
 		const Symbol* GetSymbol() const { return _pSymbol; }
 		const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+		const Klass& GetKlass() const { return *_pKlass; }
+		void SetKlass(const Klass* pKlass) { _pKlass = pKlass; }
 		const char* GetOccurPatternString() const { return OccurPatternToString(_occurPattern); }
 		bool IsOccurOnce() const { return _occurPattern == OccurPattern::Once; }
 		bool IsOccurZeroOrOnce() const { return _occurPattern == OccurPattern::ZeroOrOnce; }
@@ -168,6 +176,7 @@ protected:
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
 	void Clear();
+	static ArgInfo* CreateArgInfo(const Expr* pExpr, bool issueErrorFlag);
 	bool IsValid() const { return _validFlag; }
 	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
 	const Attribute& GetAttr() const { return *_pAttr; }
