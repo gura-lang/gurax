@@ -18,7 +18,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclArg);
 public:
-	struct FlagArg {
+	struct Flag {
 		static const UInt32 ListVar			= 1 << 0;	// :listvar
 		static const UInt32 Map				= 1 << 1;	// :map
 		static const UInt32 NoMap			= 1 << 2;	// :nomap
@@ -35,19 +35,19 @@ public:
 		ZeroOrMore,	// *
 		OnceOrMore,	// +
 	};
-	class SymbolAssoc_FlagArg : public SymbolAssoc<UInt32, 0> {
+	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
 	public:
-		SymbolAssoc_FlagArg() {
-			Assoc(Gurax_Symbol(listvar),		FlagArg::ListVar);
-			Assoc(Gurax_Symbol(map),			FlagArg::Map);
-			Assoc(Gurax_Symbol(nomap),			FlagArg::NoMap);
-			Assoc(Gurax_Symbol(nocast),			FlagArg::NoCast);
-			Assoc(Gurax_Symbol(nil),			FlagArg::Nil);
-			Assoc(Gurax_Symbol(r),				FlagArg::Read);
-			Assoc(Gurax_Symbol(w),				FlagArg::Write);
+		SymbolAssoc_Flag() {
+			Assoc(Gurax_Symbol(listvar),		Flag::ListVar);
+			Assoc(Gurax_Symbol(map),			Flag::Map);
+			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
+			Assoc(Gurax_Symbol(nocast),			Flag::NoCast);
+			Assoc(Gurax_Symbol(nil),			Flag::Nil);
+			Assoc(Gurax_Symbol(r),				Flag::Read);
+			Assoc(Gurax_Symbol(w),				Flag::Write);
 		}
 		static SymbolAssoc* GetInstance() {
-			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagArg());
+			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_Flag());
 		}
 	};
 private:
@@ -55,14 +55,14 @@ private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	const Klass* _pKlass;
 	OccurPattern _occurPattern;
-	UInt32 _flagsArg;
+	UInt32 _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-			OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
+			OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault);
 	DeclArg(const Symbol* pSymbol, const Klass& klass,
-			OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
+			OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault);
 	// Copy constructor/operator
 	DeclArg(const DeclArg& src) = delete;
 	DeclArg& operator=(const DeclArg& src) = delete;
@@ -82,16 +82,16 @@ public:
 	bool IsOccurZeroOrOnce() const { return _occurPattern == OccurPattern::ZeroOrOnce; }
 	bool IsOccurZeroOrMore() const { return _occurPattern == OccurPattern::ZeroOrMore; }
 	bool IsOccurOnceOrMore() const { return _occurPattern == OccurPattern::OnceOrMore; }
-	UInt32 GetFlagsArg() const { return _flagsArg; }
+	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* Create(const Expr* pExpr, bool issueErrorFlag);
-	static UInt32 SymbolToFlagArg(const Symbol* pSymbol) {
-		return SymbolAssoc_FlagArg::GetInstance()->ToValue(pSymbol);
+	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
+		return SymbolAssoc_Flag::GetInstance()->ToValue(pSymbol);
 	}
-	static const Symbol* FlagArgToSymbol(UInt32 flagArg) {
-		return SymbolAssoc_FlagArg::GetInstance()->ToSymbol(flagArg);
+	static const Symbol* FlagToSymbol(UInt32 flag) {
+		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
-	static String FlagsArgToString(UInt32 flags);
+	static String FlagsToString(UInt32 flags);
 	static const char* OccurPatternToString(OccurPattern occurPattern);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
