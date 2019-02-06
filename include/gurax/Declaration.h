@@ -5,10 +5,10 @@
 #define GURAX_DECLARATION_H
 #include "Attribute.h"
 #include "Symbols.h"
-#include "Object_undefined.h"
 
 namespace Gurax {
 
+class Klass;
 class ExprLink;
 class Expr_Caller;
 
@@ -29,7 +29,7 @@ public:
 		static const UInt32 Read			= 1 << 5;	// :r
 		static const UInt32 Write			= 1 << 6;	// :w
 	};
-	struct FlagFunc {
+	struct FlagCaller {
 		static const UInt32 Map				= 1 << 0;	// :map
 		static const UInt32 NoMap			= 1 << 1;	// :nomap
 		static const UInt32 Closure			= 1 << 2;	// :closure
@@ -70,28 +70,28 @@ public:
 			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagArg());
 		}
 	};
-	class SymbolAssoc_FlagFunc : public SymbolAssoc<UInt32, 0> {
+	class SymbolAssoc_FlagCaller : public SymbolAssoc<UInt32, 0> {
 	public:
-		SymbolAssoc_FlagFunc() {
-			Assoc(Gurax_Symbol(map),			FlagFunc::Map);
-			Assoc(Gurax_Symbol(nomap),			FlagFunc::NoMap);
-			Assoc(Gurax_Symbol(closure),		FlagFunc::Closure);
-			Assoc(Gurax_Symbol(cut_extra_args),	FlagFunc::CutExtraArgs);
-			Assoc(Gurax_Symbol(dynamic_scope),	FlagFunc::DynamicScope);
-			Assoc(Gurax_Symbol(end_marker),		FlagFunc::EndMarker);
-			Assoc(Gurax_Symbol(flat),			FlagFunc::Flat);
-			Assoc(Gurax_Symbol(fork),			FlagFunc::Fork);
-			Assoc(Gurax_Symbol(finalizer),		FlagFunc::Finalizer);
-			Assoc(Gurax_Symbol(leader),			FlagFunc::Leader);
-			Assoc(Gurax_Symbol(trailer),		FlagFunc::Trailer);
-			Assoc(Gurax_Symbol(symbol_func),	FlagFunc::SymbolFunc);
-			Assoc(Gurax_Symbol(nonamed),		FlagFunc::NoNamed);
-			Assoc(Gurax_Symbol(public_),		FlagFunc::Public);
-			Assoc(Gurax_Symbol(private_),		FlagFunc::Private);
-			Assoc(Gurax_Symbol(privileged),		FlagFunc::Privileged);
+		SymbolAssoc_FlagCaller() {
+			Assoc(Gurax_Symbol(map),			FlagCaller::Map);
+			Assoc(Gurax_Symbol(nomap),			FlagCaller::NoMap);
+			Assoc(Gurax_Symbol(closure),		FlagCaller::Closure);
+			Assoc(Gurax_Symbol(cut_extra_args),	FlagCaller::CutExtraArgs);
+			Assoc(Gurax_Symbol(dynamic_scope),	FlagCaller::DynamicScope);
+			Assoc(Gurax_Symbol(end_marker),		FlagCaller::EndMarker);
+			Assoc(Gurax_Symbol(flat),			FlagCaller::Flat);
+			Assoc(Gurax_Symbol(fork),			FlagCaller::Fork);
+			Assoc(Gurax_Symbol(finalizer),		FlagCaller::Finalizer);
+			Assoc(Gurax_Symbol(leader),			FlagCaller::Leader);
+			Assoc(Gurax_Symbol(trailer),		FlagCaller::Trailer);
+			Assoc(Gurax_Symbol(symbol_func),	FlagCaller::SymbolFunc);
+			Assoc(Gurax_Symbol(nonamed),		FlagCaller::NoNamed);
+			Assoc(Gurax_Symbol(public_),		FlagCaller::Public);
+			Assoc(Gurax_Symbol(private_),		FlagCaller::Private);
+			Assoc(Gurax_Symbol(privileged),		FlagCaller::Privileged);
 		}
 		static SymbolAssoc* GetInstance() {
-			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagFunc());
+			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagCaller());
 		}
 	};
 public:
@@ -109,13 +109,9 @@ public:
 	public:
 		// Constructor
 		ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
-			_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _pKlass(&Object_undefined::klass),
-			_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault) {}
+				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
 		ArgInfo(const Symbol* pSymbol, const Klass& klass,
-				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
-			_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
-			_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault) {}
+				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
 		// Copy constructor/operator
 		ArgInfo(const ArgInfo& src) = delete;
 		ArgInfo& operator=(const ArgInfo& src) = delete;
@@ -157,13 +153,13 @@ public:
 private:
 	bool _validFlag;
 	ArgInfoOwner _argInfoOwner;
-	UInt32 _flagsFunc;
+	UInt32 _flagsCaller;
 	RefPtr<Attribute> _pAttr;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	Declaration() : _validFlag(false), _flagsFunc(0), _pAttr(new Attribute()) {}
+	Declaration() : _validFlag(false), _flagsCaller(0), _pAttr(new Attribute()) {}
 	// Copy constructor/operator
 	Declaration(const Declaration& src) = delete;
 	Declaration& operator=(const Declaration& src) = delete;
@@ -190,17 +186,17 @@ public:
 	static UInt32 SymbolToFlagArg(const Symbol* pSymbol) {
 		return SymbolAssoc_FlagArg::GetInstance()->ToValue(pSymbol);
 	}
-	static UInt32 SymbolToFlagFunc(const Symbol* pSymbol) {
-		return SymbolAssoc_FlagFunc::GetInstance()->ToValue(pSymbol);
+	static UInt32 SymbolToFlagCaller(const Symbol* pSymbol) {
+		return SymbolAssoc_FlagCaller::GetInstance()->ToValue(pSymbol);
 	}
 	static const Symbol* FlagArgToSymbol(UInt32 flagArg) {
 		return SymbolAssoc_FlagArg::GetInstance()->ToSymbol(flagArg);
 	}
-	static const Symbol* FlagFuncToSymbol(UInt32 flagFunc) {
-		return SymbolAssoc_FlagFunc::GetInstance()->ToSymbol(flagFunc);
+	static const Symbol* FlagCallerToSymbol(UInt32 flagCaller) {
+		return SymbolAssoc_FlagCaller::GetInstance()->ToSymbol(flagCaller);
 	}
 	static String FlagsArgToString(UInt32 flags);
-	static String FlagsFuncToString(UInt32 flags);
+	static String FlagsCallerToString(UInt32 flags);
 	static const char* OccurPatternToString(OccurPattern occurPattern);
 };
 

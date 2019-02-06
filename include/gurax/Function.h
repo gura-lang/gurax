@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_FUNCTION_H
 #define GURAX_FUNCTION_H
-#include "Referable.h"
+#include "Declaration.h"
 #include "Help.h"
 
 namespace Gurax {
@@ -16,10 +16,13 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
 protected:
+	RefPtr<Declaration> _pDeclaration;
 	RefPtr<HelpProvider> _pHelpProvider;
 public:
 	// Constructor
-	Function() : _pHelpProvider(new HelpProvider()) {}
+	Function() : Function(new Declaration(), new HelpProvider()) {}
+	Function(Declaration* pDeclaration, HelpProvider* pHelpProvider) :
+		_pDeclaration(pDeclaration), _pHelpProvider(pHelpProvider) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;

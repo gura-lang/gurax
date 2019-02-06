@@ -24,9 +24,9 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 		_argInfoOwner.push_back(pArgInfo.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
-		UInt32 flagFunc = SymbolToFlagFunc(pSymbol);
-		_flagsFunc |= flagFunc;
-		if (!flagFunc) _pAttr->AddSymbol(pSymbol);
+		UInt32 flagCaller = SymbolToFlagCaller(pSymbol);
+		_flagsCaller |= flagCaller;
+		if (!flagCaller) _pAttr->AddSymbol(pSymbol);
 	}
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	_validFlag = true;
@@ -37,7 +37,7 @@ void Declaration::Clear()
 {
 	_validFlag = false;
 	_argInfoOwner.Clear();
-	_flagsFunc = 0;
+	_flagsCaller = 0;
 	_pAttr.reset(new Attribute());
 }
 
@@ -147,7 +147,7 @@ String Declaration::ToString(const StringStyle& ss) const
 		rtn += pArgInfo->ToString(ss);
 	}
 	rtn += ')';
-	rtn += FlagsFuncToString(_flagsFunc);
+	rtn += FlagsCallerToString(_flagsCaller);
 	rtn += _pAttr->ToString(ss);
 	return rtn;
 }
@@ -164,13 +164,13 @@ String Declaration::FlagsArgToString(UInt32 flagsArg)
 	return rtn;
 }
 
-String Declaration::FlagsFuncToString(UInt32 flagsFunc)
+String Declaration::FlagsCallerToString(UInt32 flagsCaller)
 {
 	String rtn;
-	for (UInt32 flagFunc = 1; flagsFunc; flagFunc <<= 1, flagsFunc >>= 1) {
-		if (flagsFunc & 1) {
+	for (UInt32 flagCaller = 1; flagsCaller; flagCaller <<= 1, flagsCaller >>= 1) {
+		if (flagsCaller & 1) {
 			rtn += ':';
-			rtn += FlagFuncToSymbol(flagFunc)->GetName();
+			rtn += FlagCallerToSymbol(flagCaller)->GetName();
 		}
 	}
 	return rtn;
@@ -187,6 +187,20 @@ const char* Declaration::OccurPatternToString(OccurPattern occurPattern)
 //------------------------------------------------------------------------------
 // Declaration::ArgInfo
 //------------------------------------------------------------------------------
+Declaration::ArgInfo::ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
+							  OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
+	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _pKlass(&Object_undefined::klass),
+	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
+{
+}
+
+Declaration::ArgInfo::ArgInfo(const Symbol* pSymbol, const Klass& klass,
+							  OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
+	_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
+	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
+{
+}
+
 String Declaration::ArgInfo::ToString(const StringStyle& ss) const
 {
 	String rtn;
