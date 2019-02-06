@@ -205,10 +205,11 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	String rtn;
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::OpPreUnary: {
+		bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
 		rtn += GetOperator()->GetSymbol();
-		rtn += '(';
+		if (requireParFlag) rtn += '(';
 		rtn += GetExprChild()->ToString(ss);
-		rtn += ')';
+		if (requireParFlag) rtn += ')';
 		break;
 	}
 	case OpStyle::OpPostUnary: {
@@ -218,9 +219,10 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 			rtn += GetOperator()->GetSymbol();
 			rtn += pExprEx->GetAttr().ToString(ss);
 		} else {
-			rtn += '(';
+			bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
+			if (requireParFlag) rtn += '(';
 			rtn += GetExprChild()->ToString(ss);
-			rtn += ')';
+			if (requireParFlag) rtn += ')';
 			rtn += GetOperator()->GetSymbol();
 		}
 		break;

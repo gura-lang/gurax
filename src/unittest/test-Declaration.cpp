@@ -18,6 +18,7 @@ f():map:attr1:attr2:[a,b]
 f(a[])
 f(a[]:number)
 f(a[]:number:map)
+f(a[]?)
 f(a?)
 f(a+)
 f(c*)
