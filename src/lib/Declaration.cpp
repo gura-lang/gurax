@@ -16,7 +16,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 {
 	_argInfoOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		RefPtr<ArgInfo> pArgInfo(CreateArgInfo(pExpr, issueErrorFlag));
+		RefPtr<ArgInfo> pArgInfo(ArgInfo::Create(pExpr, issueErrorFlag));
 		if (!pArgInfo) {
 			Clear();
 			return false;
@@ -41,7 +41,51 @@ void Declaration::Clear()
 	_pAttr.reset(new Attribute());
 }
 
-Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueErrorFlag)
+String Declaration::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += '(';
+	for (auto ppArgInfo = _argInfoOwner.begin(); ppArgInfo != _argInfoOwner.end(); ppArgInfo++) {
+		const ArgInfo* pArgInfo = *ppArgInfo;
+		if (ppArgInfo != _argInfoOwner.begin()) rtn += ss.GetComma();
+		rtn += pArgInfo->ToString(ss);
+	}
+	rtn += ')';
+	rtn += FlagsCallerToString(_flagsCaller);
+	rtn += _pAttr->ToString(ss);
+	return rtn;
+}
+
+String Declaration::FlagsCallerToString(UInt32 flagsCaller)
+{
+	String rtn;
+	for (UInt32 flagCaller = 1; flagsCaller; flagCaller <<= 1, flagsCaller >>= 1) {
+		if (flagsCaller & 1) {
+			rtn += ':';
+			rtn += FlagCallerToSymbol(flagCaller)->GetName();
+		}
+	}
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// ArgInfo
+//------------------------------------------------------------------------------
+ArgInfo::ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
+				 OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
+	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _pKlass(&Object_undefined::klass),
+	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
+{
+}
+
+ArgInfo::ArgInfo(const Symbol* pSymbol, const Klass& klass,
+				 OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
+	_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
+	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
+{
+}
+
+ArgInfo* ArgInfo::Create(const Expr* pExpr, bool issueErrorFlag)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	OccurPattern occurPattern = OccurPattern::Once;
@@ -137,22 +181,7 @@ Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueEr
 	return new ArgInfo(pSymbol, pDottedSymbol.release(), occurPattern, flagsArg, pExprDefault.release());
 }
 
-String Declaration::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += '(';
-	for (auto ppArgInfo = _argInfoOwner.begin(); ppArgInfo != _argInfoOwner.end(); ppArgInfo++) {
-		const ArgInfo* pArgInfo = *ppArgInfo;
-		if (ppArgInfo != _argInfoOwner.begin()) rtn += ss.GetComma();
-		rtn += pArgInfo->ToString(ss);
-	}
-	rtn += ')';
-	rtn += FlagsCallerToString(_flagsCaller);
-	rtn += _pAttr->ToString(ss);
-	return rtn;
-}
-
-String Declaration::FlagsArgToString(UInt32 flagsArg)
+String ArgInfo::FlagsArgToString(UInt32 flagsArg)
 {
 	String rtn;
 	for (UInt32 flagArg = 1; flagsArg; flagArg <<= 1, flagsArg >>= 1) {
@@ -164,19 +193,7 @@ String Declaration::FlagsArgToString(UInt32 flagsArg)
 	return rtn;
 }
 
-String Declaration::FlagsCallerToString(UInt32 flagsCaller)
-{
-	String rtn;
-	for (UInt32 flagCaller = 1; flagsCaller; flagCaller <<= 1, flagsCaller >>= 1) {
-		if (flagsCaller & 1) {
-			rtn += ':';
-			rtn += FlagCallerToSymbol(flagCaller)->GetName();
-		}
-	}
-	return rtn;
-}
-
-const char* Declaration::OccurPatternToString(OccurPattern occurPattern)
+const char* ArgInfo::OccurPatternToString(OccurPattern occurPattern)
 {
 	return
 		(occurPattern == OccurPattern::ZeroOrOnce)? "?" :
@@ -184,24 +201,7 @@ const char* Declaration::OccurPatternToString(OccurPattern occurPattern)
 		(occurPattern == OccurPattern::OnceOrMore)? "+" : "";
 }
 
-//------------------------------------------------------------------------------
-// Declaration::ArgInfo
-//------------------------------------------------------------------------------
-Declaration::ArgInfo::ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-							  OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
-	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _pKlass(&Object_undefined::klass),
-	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
-{
-}
-
-Declaration::ArgInfo::ArgInfo(const Symbol* pSymbol, const Klass& klass,
-							  OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
-	_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
-	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
-{
-}
-
-String Declaration::ArgInfo::ToString(const StringStyle& ss) const
+String ArgInfo::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += GetSymbol()->GetName();

@@ -13,12 +13,12 @@ class ExprLink;
 class Expr_Caller;
 
 //------------------------------------------------------------------------------
-// Declaration
+// ArgInfo
 //------------------------------------------------------------------------------
-class Declaration : public Referable {
+class ArgInfo : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Declaration);
+	Gurax_DeclareReferable(ArgInfo);
 public:
 	struct FlagArg {
 		static const UInt32 ListVar			= 1 << 0;	// :listvar
@@ -28,24 +28,6 @@ public:
 		static const UInt32 Nil				= 1 << 4;	// :nil
 		static const UInt32 Read			= 1 << 5;	// :r
 		static const UInt32 Write			= 1 << 6;	// :w
-	};
-	struct FlagCaller {
-		static const UInt32 Map				= 1 << 0;	// :map
-		static const UInt32 NoMap			= 1 << 1;	// :nomap
-		static const UInt32 Closure			= 1 << 2;	// :closure
-		static const UInt32 CutExtraArgs	= 1 << 3;	// :cut_extra_args
-		static const UInt32 DynamicScope	= 1 << 4;	// :dynamic_scope
-		static const UInt32 EndMarker		= 1 << 5;	// :end_marker
-		static const UInt32 Flat			= 1 << 6;	// :flat
-		static const UInt32 Fork			= 1 << 7;	// :fork
-		static const UInt32 Finalizer		= 1 << 8;	// :finalizer
-		static const UInt32 Leader			= 1 << 9;	// :leader
-		static const UInt32 Trailer			= 1 << 10;	// :trailer
-		static const UInt32 SymbolFunc		= 1 << 11;	// :symbol_func
-		static const UInt32 NoNamed			= 1 << 12;	// :nonamed
-		static const UInt32 Public			= 1 << 13;	// :public
-		static const UInt32 Private			= 1 << 14;	// :private
-		static const UInt32 Privileged		= 1 << 15;	// :privileged
 	};
 	enum class OccurPattern {
 		Invalid,
@@ -69,6 +51,101 @@ public:
 		static SymbolAssoc* GetInstance() {
 			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagArg());
 		}
+	};
+private:
+	const Symbol* _pSymbol;
+	RefPtr<DottedSymbol> _pDottedSymbol;
+	const Klass* _pKlass;
+	OccurPattern _occurPattern;
+	UInt32 _flagsArg;
+	RefPtr<Expr> _pExprDefault;	// this may be nullptr
+public:
+	// Constructor
+	ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
+			OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
+	ArgInfo(const Symbol* pSymbol, const Klass& klass,
+			OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
+	// Copy constructor/operator
+	ArgInfo(const ArgInfo& src) = delete;
+	ArgInfo& operator=(const ArgInfo& src) = delete;
+	// Move constructor/operator
+	ArgInfo(ArgInfo&& src) = delete;
+	ArgInfo& operator=(ArgInfo&& src) noexcept = delete;
+protected:
+	// Destructor
+	~ArgInfo() = default;
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	const Klass& GetKlass() const { return *_pKlass; }
+	void SetKlass(const Klass* pKlass) { _pKlass = pKlass; }
+	const char* GetOccurPatternString() const { return OccurPatternToString(_occurPattern); }
+	bool IsOccurOnce() const { return _occurPattern == OccurPattern::Once; }
+	bool IsOccurZeroOrOnce() const { return _occurPattern == OccurPattern::ZeroOrOnce; }
+	bool IsOccurZeroOrMore() const { return _occurPattern == OccurPattern::ZeroOrMore; }
+	bool IsOccurOnceOrMore() const { return _occurPattern == OccurPattern::OnceOrMore; }
+	UInt32 GetFlagsArg() const { return _flagsArg; }
+	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
+	static ArgInfo* Create(const Expr* pExpr, bool issueErrorFlag);
+	static UInt32 SymbolToFlagArg(const Symbol* pSymbol) {
+		return SymbolAssoc_FlagArg::GetInstance()->ToValue(pSymbol);
+	}
+	static const Symbol* FlagArgToSymbol(UInt32 flagArg) {
+		return SymbolAssoc_FlagArg::GetInstance()->ToSymbol(flagArg);
+	}
+	static String FlagsArgToString(UInt32 flags);
+	static const char* OccurPatternToString(OccurPattern occurPattern);
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ArgInfo& argInfo) const { return this == &argInfo; }
+	bool IsEqualTo(const ArgInfo& argInfo) const { return IsIdentical(argInfo); }
+	bool IsLessThan(const ArgInfo& argInfo) const { return this < &argInfo; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// ArgInfoList
+//------------------------------------------------------------------------------
+class ArgInfoList : public std::vector<ArgInfo*> {
+};
+
+//------------------------------------------------------------------------------
+// ArgInfoOwner
+//------------------------------------------------------------------------------
+class ArgInfoOwner: public ArgInfoList {
+public:
+	~ArgInfoOwner() { Clear(); }
+	void Clear() {
+		for (ArgInfo* pArgInfo : *this) ArgInfo::Delete(pArgInfo);
+		clear();
+	}
+};
+
+//------------------------------------------------------------------------------
+// Declaration
+//------------------------------------------------------------------------------
+class Declaration : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Declaration);
+public:
+	struct FlagCaller {
+		static const UInt32 Map				= 1 << 0;	// :map
+		static const UInt32 NoMap			= 1 << 1;	// :nomap
+		static const UInt32 Closure			= 1 << 2;	// :closure
+		static const UInt32 CutExtraArgs	= 1 << 3;	// :cut_extra_args
+		static const UInt32 DynamicScope	= 1 << 4;	// :dynamic_scope
+		static const UInt32 EndMarker		= 1 << 5;	// :end_marker
+		static const UInt32 Flat			= 1 << 6;	// :flat
+		static const UInt32 Fork			= 1 << 7;	// :fork
+		static const UInt32 Finalizer		= 1 << 8;	// :finalizer
+		static const UInt32 Leader			= 1 << 9;	// :leader
+		static const UInt32 Trailer			= 1 << 10;	// :trailer
+		static const UInt32 SymbolFunc		= 1 << 11;	// :symbol_func
+		static const UInt32 NoNamed			= 1 << 12;	// :nonamed
+		static const UInt32 Public			= 1 << 13;	// :public
+		static const UInt32 Private			= 1 << 14;	// :private
+		static const UInt32 Privileged		= 1 << 15;	// :privileged
 	};
 	class SymbolAssoc_FlagCaller : public SymbolAssoc<UInt32, 0> {
 	public:
@@ -94,62 +171,6 @@ public:
 			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagCaller());
 		}
 	};
-public:
-	class ArgInfo : public Referable {
-	public:
-		// Referable declaration
-		Gurax_DeclareReferable(ArgInfo);
-	private:
-		const Symbol* _pSymbol;
-		RefPtr<DottedSymbol> _pDottedSymbol;
-		const Klass* _pKlass;
-		OccurPattern _occurPattern;
-		UInt32 _flagsArg;
-		RefPtr<Expr> _pExprDefault;	// this may be nullptr
-	public:
-		// Constructor
-		ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
-		ArgInfo(const Symbol* pSymbol, const Klass& klass,
-				OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
-		// Copy constructor/operator
-		ArgInfo(const ArgInfo& src) = delete;
-		ArgInfo& operator=(const ArgInfo& src) = delete;
-		// Move constructor/operator
-		ArgInfo(ArgInfo&& src) = delete;
-		ArgInfo& operator=(ArgInfo&& src) noexcept = delete;
-	protected:
-		// Destructor
-		~ArgInfo() = default;
-	public:
-		const Symbol* GetSymbol() const { return _pSymbol; }
-		const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
-		const Klass& GetKlass() const { return *_pKlass; }
-		void SetKlass(const Klass* pKlass) { _pKlass = pKlass; }
-		const char* GetOccurPatternString() const { return OccurPatternToString(_occurPattern); }
-		bool IsOccurOnce() const { return _occurPattern == OccurPattern::Once; }
-		bool IsOccurZeroOrOnce() const { return _occurPattern == OccurPattern::ZeroOrOnce; }
-		bool IsOccurZeroOrMore() const { return _occurPattern == OccurPattern::ZeroOrMore; }
-		bool IsOccurOnceOrMore() const { return _occurPattern == OccurPattern::OnceOrMore; }
-		UInt32 GetFlagsArg() const { return _flagsArg; }
-		const Expr* GetExprDefault() const { return _pExprDefault.get(); }
-	public:
-		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-		bool IsIdentical(const ArgInfo& argInfo) const { return this == &argInfo; }
-		bool IsEqualTo(const ArgInfo& argInfo) const { return IsIdentical(argInfo); }
-		bool IsLessThan(const ArgInfo& argInfo) const { return this < &argInfo; }
-		String ToString(const StringStyle& ss = StringStyle::Empty) const;
-	};
-	class ArgInfoList : public std::vector<ArgInfo*> {
-	};
-	class ArgInfoOwner: public ArgInfoList {
-	public:
-		~ArgInfoOwner() { Clear(); }
-		void Clear() {
-			for (ArgInfo* pArgInfo : *this) ArgInfo::Delete(pArgInfo);
-			clear();
-		}
-	};
 private:
 	bool _validFlag;
 	ArgInfoOwner _argInfoOwner;
@@ -172,7 +193,6 @@ protected:
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
 	void Clear();
-	static ArgInfo* CreateArgInfo(const Expr* pExpr, bool issueErrorFlag);
 	bool IsValid() const { return _validFlag; }
 	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -183,21 +203,13 @@ public:
 	bool IsLessThan(const Declaration& declaration) const { return this < &declaration; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
-	static UInt32 SymbolToFlagArg(const Symbol* pSymbol) {
-		return SymbolAssoc_FlagArg::GetInstance()->ToValue(pSymbol);
-	}
 	static UInt32 SymbolToFlagCaller(const Symbol* pSymbol) {
 		return SymbolAssoc_FlagCaller::GetInstance()->ToValue(pSymbol);
-	}
-	static const Symbol* FlagArgToSymbol(UInt32 flagArg) {
-		return SymbolAssoc_FlagArg::GetInstance()->ToSymbol(flagArg);
 	}
 	static const Symbol* FlagCallerToSymbol(UInt32 flagCaller) {
 		return SymbolAssoc_FlagCaller::GetInstance()->ToSymbol(flagCaller);
 	}
-	static String FlagsArgToString(UInt32 flags);
 	static String FlagsCallerToString(UInt32 flags);
-	static const char* OccurPatternToString(OccurPattern occurPattern);
 };
 
 }
