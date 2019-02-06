@@ -141,10 +141,11 @@ void Expr_Identifier::Exec(Frame& frame) const
 	Context::PushStack(pObject.release());
 }
 
-String Expr_Identifier::ToString(const StringStyle& ss) const
+String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
 {
 	String rtn;
 	rtn += GetSymbol()->ToString();
+	rtn += strInsert;
 	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
@@ -215,9 +216,10 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::OpPostUnary: {
 		if (GetExprChild()->IsType<Expr_Identifier>()) {
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(GetExprChild());
-			rtn += pExprEx->GetSymbol()->ToString();
-			rtn += GetOperator()->GetSymbol();
-			rtn += pExprEx->GetAttr().ToString(ss);
+			rtn += pExprEx->ToString(ss, GetOperator()->GetSymbol());
+		} else if (GetExprChild()->IsType<Expr_Indexer>()) {
+			const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(GetExprChild());
+			rtn += pExprEx->ToString(ss, GetOperator()->GetSymbol());
 		} else {
 			bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
 			if (requireParFlag) rtn += '(';
@@ -545,7 +547,7 @@ void Expr_Indexer::Exec(Frame& frame) const
 	}
 }
 
-String Expr_Indexer::ToString(const StringStyle& ss) const
+String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
 {
 	String rtn;
 	rtn += _pExprCar->ToString(ss);
@@ -561,6 +563,7 @@ String Expr_Indexer::ToString(const StringStyle& ss) const
 		rtn += pExpr->ToString(ss);
 	}
 	rtn += ']';
+	rtn += strInsert;
 	rtn += GetAttr().ToString(ss);
 	return rtn;
 }

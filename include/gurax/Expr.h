@@ -370,7 +370,8 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	virtual void Exec(Frame& frame) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
+	String ToString(const StringStyle& ss, const char* strInsert) const;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -597,7 +598,8 @@ public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
 	virtual void Exec(Frame& frame) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
+	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 

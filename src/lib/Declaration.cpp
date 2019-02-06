@@ -60,19 +60,6 @@ Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueEr
 		pExpr = pExprEx->GetExprLeft();
 		pExprDefault.reset(pExprEx->GetExprRight()->Reference());
 	}
-	if (pExpr->IsType<Expr_Indexer>()) {
-		const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(pExpr);
-		if (!pExprEx->GetExprLinkCdr().IsEmpty()) {
-			if (issueErrorFlag) {
-				Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
-			}
-			return nullptr;
-		}
-		// x[]
-		pExpr = pExprEx->GetExprCar();
-		pAttrSrc = &pExprEx->GetAttr();
-		flagsArg |= FlagArg::ListVar;
-	}
 	if (pExpr->IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 		const Operator* pOperator = pExprEx->GetOperator();
@@ -94,6 +81,19 @@ Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueEr
 			}
 			return nullptr;
 		}
+	}
+	if (pExpr->IsType<Expr_Indexer>()) {
+		const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(pExpr);
+		if (!pExprEx->GetExprLinkCdr().IsEmpty()) {
+			if (issueErrorFlag) {
+				Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
+			}
+			return nullptr;
+		}
+		// x[]
+		pExpr = pExprEx->GetExprCar();
+		pAttrSrc = &pExprEx->GetAttr();
+		flagsArg |= FlagArg::ListVar;
 	}
 	if (!pExpr->IsType<Expr_Identifier>()) {
 		if (issueErrorFlag) {
