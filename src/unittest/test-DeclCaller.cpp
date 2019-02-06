@@ -1,5 +1,5 @@
 //==============================================================================
-// test-Declaration.cpp
+// test-DeclCaller.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -53,7 +53,7 @@ f(v[]+:g1.g2.g3.type)
 f(v[]*:g1.g3.g3.type)
 )";
 
-Gurax_TesterEntry(Declaration)
+Gurax_TesterEntry(DeclCaller)
 {
 	RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
 	if (Error::IsIssued()) {
