@@ -613,11 +613,11 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<Declaration> _pDeclaration;
+	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<Expr_Block> _pExprBlock;		// this may be nullptr
 	RefPtr<Expr_Caller> _pExprTrailer;	// this may be nullptr
 public:
-	Expr_Caller() : Expr_Composite(typeInfo), _pDeclaration(new Declaration()) {}
+	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCaller(new DeclCaller()) {}
 public:
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;
@@ -629,14 +629,14 @@ public:
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool DoPrepare() override {
-		_pDeclaration->Prepare(GetExprLinkCdr(), GetAttr(), false);
+		_pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), false);
 		return true;
 	}
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
 		_pExprBlock->SetExprParent(this);
 	}
-	const Declaration& GetDeclaration() const { return *_pDeclaration; }
+	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
 	bool HasExprBlock() const { return _pExprBlock.get() != nullptr; }
 	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);

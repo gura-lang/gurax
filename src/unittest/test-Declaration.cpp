@@ -64,7 +64,7 @@ Gurax_TesterEntry(Declaration)
 		const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
 		//::printf("%s .. %s\n", pExpr->ToString().c_str(), pExprEx->GetAttr().ToString().c_str());
 		::printf("%s .. %s\n", pExpr->ToString().c_str(),
-				 pExprEx->GetDeclaration().ToString(StringStyle().Verbose()).c_str());
+				 pExprEx->GetDeclCaller().ToString(StringStyle().Verbose()).c_str());
 	}
 }
 

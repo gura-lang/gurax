@@ -1,18 +1,18 @@
 //==============================================================================
-// Declaration.cpp
+// DeclCaller.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Declaration
+// DeclCaller
 //------------------------------------------------------------------------------
-void Declaration::Bootup()
+void DeclCaller::Bootup()
 {
 }
 
-bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
+bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
 {
 	_declArgOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -33,7 +33,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 	return true;
 }
 
-void Declaration::Clear()
+void DeclCaller::Clear()
 {
 	_validFlag = false;
 	_declArgOwner.Clear();
@@ -41,7 +41,7 @@ void Declaration::Clear()
 	_pAttr.reset(new Attribute());
 }
 
-String Declaration::ToString(const StringStyle& ss) const
+String DeclCaller::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += '(';
@@ -56,7 +56,7 @@ String Declaration::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
-String Declaration::FlagsCallerToString(UInt32 flagsCaller)
+String DeclCaller::FlagsCallerToString(UInt32 flagsCaller)
 {
 	String rtn;
 	for (UInt32 flagCaller = 1; flagsCaller; flagCaller <<= 1, flagsCaller >>= 1) {

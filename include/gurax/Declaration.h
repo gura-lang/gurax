@@ -1,8 +1,8 @@
 //==============================================================================
-// Declaration.h
+// DeclCaller.h
 //==============================================================================
-#ifndef GURAX_DECLARATION_H
-#define GURAX_DECLARATION_H
+#ifndef GURAX_DECLCALLER_H
+#define GURAX_DECLCALLER_H
 #include "Attribute.h"
 #include "Symbols.h"
 
@@ -122,12 +122,12 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Declaration
+// DeclCaller
 //------------------------------------------------------------------------------
-class Declaration : public Referable {
+class DeclCaller : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Declaration);
+	Gurax_DeclareReferable(DeclCaller);
 public:
 	struct FlagCaller {
 		static const UInt32 Map				= 1 << 0;	// :map
@@ -180,16 +180,16 @@ public:
 	static void Bootup();
 public:
 	// Constructor
-	Declaration() : _validFlag(false), _flagsCaller(0), _pAttr(new Attribute()) {}
+	DeclCaller() : _validFlag(false), _flagsCaller(0), _pAttr(new Attribute()) {}
 	// Copy constructor/operator
-	Declaration(const Declaration& src) = delete;
-	Declaration& operator=(const Declaration& src) = delete;
+	DeclCaller(const DeclCaller& src) = delete;
+	DeclCaller& operator=(const DeclCaller& src) = delete;
 	// Move constructor/operator
-	Declaration(Declaration&& src) = delete;
-	Declaration& operator=(Declaration&& src) noexcept = delete;
+	DeclCaller(DeclCaller&& src) = delete;
+	DeclCaller& operator=(DeclCaller&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Declaration() = default;
+	~DeclCaller() = default;
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
 	void Clear();
@@ -198,9 +198,9 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Declaration& declaration) const { return this == &declaration; }
-	bool IsEqualTo(const Declaration& declaration) const { return IsIdentical(declaration); }
-	bool IsLessThan(const Declaration& declaration) const { return this < &declaration; }
+	bool IsIdentical(const DeclCaller& declCaller) const { return this == &declCaller; }
+	bool IsEqualTo(const DeclCaller& declCaller) const { return IsIdentical(declCaller); }
+	bool IsLessThan(const DeclCaller& declCaller) const { return this < &declCaller; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	static UInt32 SymbolToFlagCaller(const Symbol* pSymbol) {

@@ -16,14 +16,14 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
 protected:
-	RefPtr<Declaration> _pDeclaration;
+	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<HelpProvider> _pHelpProvider;
 public:
 	// Constructor
-	Function() : Function(new Declaration(), new HelpProvider()) {}
-	Function(Declaration* pDeclaration) : Function(pDeclaration, new HelpProvider()) {}
-	Function(Declaration* pDeclaration, HelpProvider* pHelpProvider) :
-		_pDeclaration(pDeclaration), _pHelpProvider(pHelpProvider) {}
+	Function() : Function(new DeclCaller(), new HelpProvider()) {}
+	Function(DeclCaller* pDeclCaller) : Function(pDeclCaller, new HelpProvider()) {}
+	Function(DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
+		_pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;
