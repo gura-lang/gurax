@@ -13,12 +13,12 @@ class ExprLink;
 class Expr_Caller;
 
 //------------------------------------------------------------------------------
-// ArgInfo
+// DeclArg
 //------------------------------------------------------------------------------
-class ArgInfo : public Referable {
+class DeclArg : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(ArgInfo);
+	Gurax_DeclareReferable(DeclArg);
 public:
 	struct FlagArg {
 		static const UInt32 ListVar			= 1 << 0;	// :listvar
@@ -61,19 +61,19 @@ private:
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
 	// Constructor
-	ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
+	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 			OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
-	ArgInfo(const Symbol* pSymbol, const Klass& klass,
+	DeclArg(const Symbol* pSymbol, const Klass& klass,
 			OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault);
 	// Copy constructor/operator
-	ArgInfo(const ArgInfo& src) = delete;
-	ArgInfo& operator=(const ArgInfo& src) = delete;
+	DeclArg(const DeclArg& src) = delete;
+	DeclArg& operator=(const DeclArg& src) = delete;
 	// Move constructor/operator
-	ArgInfo(ArgInfo&& src) = delete;
-	ArgInfo& operator=(ArgInfo&& src) noexcept = delete;
+	DeclArg(DeclArg&& src) = delete;
+	DeclArg& operator=(DeclArg&& src) noexcept = delete;
 protected:
 	// Destructor
-	~ArgInfo() = default;
+	~DeclArg() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
@@ -86,7 +86,7 @@ public:
 	bool IsOccurOnceOrMore() const { return _occurPattern == OccurPattern::OnceOrMore; }
 	UInt32 GetFlagsArg() const { return _flagsArg; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
-	static ArgInfo* Create(const Expr* pExpr, bool issueErrorFlag);
+	static DeclArg* Create(const Expr* pExpr, bool issueErrorFlag);
 	static UInt32 SymbolToFlagArg(const Symbol* pSymbol) {
 		return SymbolAssoc_FlagArg::GetInstance()->ToValue(pSymbol);
 	}
@@ -97,26 +97,26 @@ public:
 	static const char* OccurPatternToString(OccurPattern occurPattern);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const ArgInfo& argInfo) const { return this == &argInfo; }
-	bool IsEqualTo(const ArgInfo& argInfo) const { return IsIdentical(argInfo); }
-	bool IsLessThan(const ArgInfo& argInfo) const { return this < &argInfo; }
+	bool IsIdentical(const DeclArg& declArg) const { return this == &declArg; }
+	bool IsEqualTo(const DeclArg& declArg) const { return IsIdentical(declArg); }
+	bool IsLessThan(const DeclArg& declArg) const { return this < &declArg; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// ArgInfoList
+// DeclArgList
 //------------------------------------------------------------------------------
-class ArgInfoList : public std::vector<ArgInfo*> {
+class DeclArgList : public std::vector<DeclArg*> {
 };
 
 //------------------------------------------------------------------------------
-// ArgInfoOwner
+// DeclArgOwner
 //------------------------------------------------------------------------------
-class ArgInfoOwner: public ArgInfoList {
+class DeclArgOwner: public DeclArgList {
 public:
-	~ArgInfoOwner() { Clear(); }
+	~DeclArgOwner() { Clear(); }
 	void Clear() {
-		for (ArgInfo* pArgInfo : *this) ArgInfo::Delete(pArgInfo);
+		for (DeclArg* pDeclArg : *this) DeclArg::Delete(pDeclArg);
 		clear();
 	}
 };
@@ -173,7 +173,7 @@ public:
 	};
 private:
 	bool _validFlag;
-	ArgInfoOwner _argInfoOwner;
+	DeclArgOwner _declArgOwner;
 	UInt32 _flagsCaller;
 	RefPtr<Attribute> _pAttr;
 public:
@@ -194,7 +194,7 @@ public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
 	void Clear();
 	bool IsValid() const { return _validFlag; }
-	const ArgInfoOwner& GetArgInfoOwner() const { return _argInfoOwner; }
+	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -14,14 +14,14 @@ void Declaration::Bootup()
 
 bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
 {
-	_argInfoOwner.reserve(exprLinkCdr.GetSize());
+	_declArgOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		RefPtr<ArgInfo> pArgInfo(ArgInfo::Create(pExpr, issueErrorFlag));
-		if (!pArgInfo) {
+		RefPtr<DeclArg> pDeclArg(DeclArg::Create(pExpr, issueErrorFlag));
+		if (!pDeclArg) {
 			Clear();
 			return false;
 		}
-		_argInfoOwner.push_back(pArgInfo.release());
+		_declArgOwner.push_back(pDeclArg.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		UInt32 flagCaller = SymbolToFlagCaller(pSymbol);
@@ -36,7 +36,7 @@ bool Declaration::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bo
 void Declaration::Clear()
 {
 	_validFlag = false;
-	_argInfoOwner.Clear();
+	_declArgOwner.Clear();
 	_flagsCaller = 0;
 	_pAttr.reset(new Attribute());
 }
@@ -45,10 +45,10 @@ String Declaration::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += '(';
-	for (auto ppArgInfo = _argInfoOwner.begin(); ppArgInfo != _argInfoOwner.end(); ppArgInfo++) {
-		const ArgInfo* pArgInfo = *ppArgInfo;
-		if (ppArgInfo != _argInfoOwner.begin()) rtn += ss.GetComma();
-		rtn += pArgInfo->ToString(ss);
+	for (auto ppDeclArg = _declArgOwner.begin(); ppDeclArg != _declArgOwner.end(); ppDeclArg++) {
+		const DeclArg* pDeclArg = *ppDeclArg;
+		if (ppDeclArg != _declArgOwner.begin()) rtn += ss.GetComma();
+		rtn += pDeclArg->ToString(ss);
 	}
 	rtn += ')';
 	rtn += FlagsCallerToString(_flagsCaller);
@@ -69,23 +69,23 @@ String Declaration::FlagsCallerToString(UInt32 flagsCaller)
 }
 
 //------------------------------------------------------------------------------
-// ArgInfo
+// DeclArg
 //------------------------------------------------------------------------------
-ArgInfo::ArgInfo(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
+DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 				 OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _pKlass(&Object_undefined::klass),
 	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
 {
 }
 
-ArgInfo::ArgInfo(const Symbol* pSymbol, const Klass& klass,
+DeclArg::DeclArg(const Symbol* pSymbol, const Klass& klass,
 				 OccurPattern occurPattern, UInt32 flagsArg, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
 	_occurPattern(occurPattern), _flagsArg(flagsArg), _pExprDefault(pExprDefault)
 {
 }
 
-ArgInfo* ArgInfo::Create(const Expr* pExpr, bool issueErrorFlag)
+DeclArg* DeclArg::Create(const Expr* pExpr, bool issueErrorFlag)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	OccurPattern occurPattern = OccurPattern::Once;
@@ -178,10 +178,10 @@ ArgInfo* ArgInfo::Create(const Expr* pExpr, bool issueErrorFlag)
 		}
 		firstFlag = false;
 	}
-	return new ArgInfo(pSymbol, pDottedSymbol.release(), occurPattern, flagsArg, pExprDefault.release());
+	return new DeclArg(pSymbol, pDottedSymbol.release(), occurPattern, flagsArg, pExprDefault.release());
 }
 
-String ArgInfo::FlagsArgToString(UInt32 flagsArg)
+String DeclArg::FlagsArgToString(UInt32 flagsArg)
 {
 	String rtn;
 	for (UInt32 flagArg = 1; flagsArg; flagArg <<= 1, flagsArg >>= 1) {
@@ -193,7 +193,7 @@ String ArgInfo::FlagsArgToString(UInt32 flagsArg)
 	return rtn;
 }
 
-const char* ArgInfo::OccurPatternToString(OccurPattern occurPattern)
+const char* DeclArg::OccurPatternToString(OccurPattern occurPattern)
 {
 	return
 		(occurPattern == OccurPattern::ZeroOrOnce)? "?" :
@@ -201,7 +201,7 @@ const char* ArgInfo::OccurPatternToString(OccurPattern occurPattern)
 		(occurPattern == OccurPattern::OnceOrMore)? "+" : "";
 }
 
-String ArgInfo::ToString(const StringStyle& ss) const
+String DeclArg::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += GetSymbol()->GetName();
