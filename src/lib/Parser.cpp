@@ -489,6 +489,8 @@ bool Parser::ReduceThreeTokens()
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
+				// In thc case that an identifier has an operator applied like "x+:attr",
+				// the attribute should be appended to the identifier.
 				pExprDst = dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetExprChild();
 			}
 			if (pExprRight->IsType<Expr_Identifier>()) {

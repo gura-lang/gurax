@@ -56,7 +56,7 @@ Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueEr
 			}
 			return nullptr;
 		}
-		// f(x => value)
+		// x => value
 		pExpr = pExprEx->GetExprLeft();
 		pExprDefault.reset(pExprEx->GetExprRight()->Reference());
 	}
@@ -68,7 +68,7 @@ Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueEr
 			}
 			return nullptr;
 		}
-		// f(x[])
+		// x[]
 		pExpr = pExprEx->GetExprCar();
 		pAttrSrc = &pExprEx->GetAttr();
 		flagsArg |= FlagArg::ListVar;
@@ -78,15 +78,15 @@ Declaration::ArgInfo* Declaration::CreateArgInfo(const Expr* pExpr, bool issueEr
 		const Operator* pOperator = pExprEx->GetOperator();
 		pExpr = pExprEx->GetExprChild();
 		if (pOperator->IsType(OpType::PostMod)) {
-			// f(x%)
+			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
-			// f(x*)
+			// x*
 			occurPattern = OccurPattern::ZeroOrMore;
 		} else if (pOperator->IsType(OpType::PostPos)) {
-			// f(x+)
+			// x+
 			occurPattern = OccurPattern::OnceOrMore;
 		} else if (pOperator->IsType(OpType::PostQuestion)) {
-			// f(x?)
+			// x?
 			occurPattern = OccurPattern::ZeroOrOnce;
 		} else {
 			if (issueErrorFlag) {
