@@ -1,6 +1,7 @@
 #!/bin/bash
 cases=
 cases="$cases DateTime"
+cases="$cases DeclCaller"
 cases="$cases Function"
 cases="$cases Help"
 cases="$cases Iterator"
