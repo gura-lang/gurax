@@ -7,7 +7,8 @@ add_library(guraxcore SHARED
 	Common.cpp
 	Context.cpp
 	DateTime.cpp
-	Declaration.cpp
+	DeclArg.cpp
+	DeclCaller.cpp
 	Environment.cpp
 	Error.cpp
 	Expr.cpp

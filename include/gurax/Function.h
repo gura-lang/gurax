@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_FUNCTION_H
 #define GURAX_FUNCTION_H
-#include "Declaration.h"
+#include "DeclCaller.h"
 #include "Help.h"
 
 namespace Gurax {

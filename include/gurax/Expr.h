@@ -4,7 +4,7 @@
 #ifndef GURAX_EXPR_H
 #define GURAX_EXPR_H
 #include "Attribute.h"
-#include "Declaration.h"
+#include "DeclCaller.h"
 #include "Object.h"
 #include "Operator.h"
 #include "Template.h"
