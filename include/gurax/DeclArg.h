@@ -84,7 +84,7 @@ public:
 	bool IsOccurOnceOrMore() const { return _occurPattern == OccurPattern::OnceOrMore; }
 	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
-	static DeclArg* Create(const Expr* pExpr, bool issueErrorFlag);
+	static DeclArg* CreateFromExpr(const Expr* pExpr, bool issueErrorFlag);
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToValue(pSymbol);
 	}

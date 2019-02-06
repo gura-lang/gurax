@@ -24,7 +24,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, const Klass& klass,
 {
 }
 
-DeclArg* DeclArg::Create(const Expr* pExpr, bool issueErrorFlag)
+DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	OccurPattern occurPattern = OccurPattern::Once;
@@ -106,7 +106,9 @@ DeclArg* DeclArg::Create(const Expr* pExpr, bool issueErrorFlag)
 		UInt32 flag = SymbolToFlag(pSymbol);
 		flags |= flag;
 		if (flag) {
-			if (firstFlag) pDottedSymbol.reset(DottedSymbol::Empty.Reference());
+			if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
+				pDottedSymbol.reset(DottedSymbol::Empty.Reference());
+			}
 		} else {
 			if (!firstFlag) {
 				if (issueErrorFlag) {

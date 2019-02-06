@@ -16,7 +16,7 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, boo
 {
 	_declArgOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		RefPtr<DeclArg> pDeclArg(DeclArg::Create(pExpr, issueErrorFlag));
+		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr, issueErrorFlag));
 		if (!pDeclArg) {
 			Clear();
 			return false;

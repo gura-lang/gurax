@@ -278,6 +278,9 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	bool IsDotted() const { return _symbolList.size() > 1; }
 	bool IsEmpty() const { return _symbolList.empty(); }
+	bool IsEqualTo(const Symbol* pSymbol) const {
+		return _symbolList.size() == 1 && _symbolList.front()->IsEqualTo(pSymbol);
+	}
 	bool IsEqualTo(const DottedSymbol& dottedSymbol) const {
 		return _symbolList.IsEqualTo(dottedSymbol.GetSymbolList());
 	}
