@@ -151,10 +151,14 @@ const char* DeclArg::OccurPatternToString(OccurPattern occurPattern)
 String DeclArg::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	bool quoteFlag = GetKlass().IsIdentical(Object_quote::klass);
+	if (quoteFlag) rtn += '`';
 	rtn += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) rtn += "[]";
 	rtn += GetOccurPatternString();
-	if (!GetDottedSymbol().IsEmpty()) {
+	if (quoteFlag) {
+		// nothing to do 
+	} else if (!GetDottedSymbol().IsEmpty()) {
 		rtn += ':';
 		rtn += GetDottedSymbol().ToString();
 	} else if (ss.IsVerbose()) {
