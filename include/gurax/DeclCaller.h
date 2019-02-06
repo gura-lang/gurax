@@ -19,7 +19,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclCaller);
 public:
-	struct FlagCaller {
+	struct Flag {
 		static const UInt32 Map				= 1 << 0;	// :map
 		static const UInt32 NoMap			= 1 << 1;	// :nomap
 		static const UInt32 Closure			= 1 << 2;	// :closure
@@ -37,40 +37,40 @@ public:
 		static const UInt32 Private			= 1 << 14;	// :private
 		static const UInt32 Privileged		= 1 << 15;	// :privileged
 	};
-	class SymbolAssoc_FlagCaller : public SymbolAssoc<UInt32, 0> {
+	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
 	public:
-		SymbolAssoc_FlagCaller() {
-			Assoc(Gurax_Symbol(map),			FlagCaller::Map);
-			Assoc(Gurax_Symbol(nomap),			FlagCaller::NoMap);
-			Assoc(Gurax_Symbol(closure),		FlagCaller::Closure);
-			Assoc(Gurax_Symbol(cut_extra_args),	FlagCaller::CutExtraArgs);
-			Assoc(Gurax_Symbol(dynamic_scope),	FlagCaller::DynamicScope);
-			Assoc(Gurax_Symbol(end_marker),		FlagCaller::EndMarker);
-			Assoc(Gurax_Symbol(flat),			FlagCaller::Flat);
-			Assoc(Gurax_Symbol(fork),			FlagCaller::Fork);
-			Assoc(Gurax_Symbol(finalizer),		FlagCaller::Finalizer);
-			Assoc(Gurax_Symbol(leader),			FlagCaller::Leader);
-			Assoc(Gurax_Symbol(trailer),		FlagCaller::Trailer);
-			Assoc(Gurax_Symbol(symbol_func),	FlagCaller::SymbolFunc);
-			Assoc(Gurax_Symbol(nonamed),		FlagCaller::NoNamed);
-			Assoc(Gurax_Symbol(public_),		FlagCaller::Public);
-			Assoc(Gurax_Symbol(private_),		FlagCaller::Private);
-			Assoc(Gurax_Symbol(privileged),		FlagCaller::Privileged);
+		SymbolAssoc_Flag() {
+			Assoc(Gurax_Symbol(map),			Flag::Map);
+			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
+			Assoc(Gurax_Symbol(closure),		Flag::Closure);
+			Assoc(Gurax_Symbol(cut_extra_args),	Flag::CutExtraArgs);
+			Assoc(Gurax_Symbol(dynamic_scope),	Flag::DynamicScope);
+			Assoc(Gurax_Symbol(end_marker),		Flag::EndMarker);
+			Assoc(Gurax_Symbol(flat),			Flag::Flat);
+			Assoc(Gurax_Symbol(fork),			Flag::Fork);
+			Assoc(Gurax_Symbol(finalizer),		Flag::Finalizer);
+			Assoc(Gurax_Symbol(leader),			Flag::Leader);
+			Assoc(Gurax_Symbol(trailer),		Flag::Trailer);
+			Assoc(Gurax_Symbol(symbol_func),	Flag::SymbolFunc);
+			Assoc(Gurax_Symbol(nonamed),		Flag::NoNamed);
+			Assoc(Gurax_Symbol(public_),		Flag::Public);
+			Assoc(Gurax_Symbol(private_),		Flag::Private);
+			Assoc(Gurax_Symbol(privileged),		Flag::Privileged);
 		}
 		static SymbolAssoc* GetInstance() {
-			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_FlagCaller());
+			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_Flag());
 		}
 	};
 private:
 	bool _validFlag;
 	DeclArgOwner _declArgOwner;
-	UInt32 _flagsCaller;
+	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	DeclCaller() : _validFlag(false), _flagsCaller(0), _pAttr(new Attribute()) {}
+	DeclCaller() : _validFlag(false), _flags(0), _pAttr(new Attribute()) {}
 	// Copy constructor/operator
 	DeclCaller(const DeclCaller& src) = delete;
 	DeclCaller& operator=(const DeclCaller& src) = delete;
@@ -93,13 +93,13 @@ public:
 	bool IsLessThan(const DeclCaller& declCaller) const { return this < &declCaller; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
-	static UInt32 SymbolToFlagCaller(const Symbol* pSymbol) {
-		return SymbolAssoc_FlagCaller::GetInstance()->ToValue(pSymbol);
+	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
+		return SymbolAssoc_Flag::GetInstance()->ToValue(pSymbol);
 	}
-	static const Symbol* FlagCallerToSymbol(UInt32 flagCaller) {
-		return SymbolAssoc_FlagCaller::GetInstance()->ToSymbol(flagCaller);
+	static const Symbol* FlagToSymbol(UInt32 flag) {
+		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
-	static String FlagsCallerToString(UInt32 flags);
+	static String FlagsToString(UInt32 flags);
 };
 
 }

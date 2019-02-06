@@ -24,9 +24,9 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, boo
 		_declArgOwner.push_back(pDeclArg.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
-		UInt32 flagCaller = SymbolToFlagCaller(pSymbol);
-		_flagsCaller |= flagCaller;
-		if (!flagCaller) _pAttr->AddSymbol(pSymbol);
+		UInt32 flag = SymbolToFlag(pSymbol);
+		_flags |= flag;
+		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	_validFlag = true;
@@ -37,7 +37,7 @@ void DeclCaller::Clear()
 {
 	_validFlag = false;
 	_declArgOwner.Clear();
-	_flagsCaller = 0;
+	_flags = 0;
 	_pAttr.reset(new Attribute());
 }
 
@@ -51,18 +51,18 @@ String DeclCaller::ToString(const StringStyle& ss) const
 		rtn += pDeclArg->ToString(ss);
 	}
 	rtn += ')';
-	rtn += FlagsCallerToString(_flagsCaller);
+	rtn += FlagsToString(_flags);
 	rtn += _pAttr->ToString(ss);
 	return rtn;
 }
 
-String DeclCaller::FlagsCallerToString(UInt32 flagsCaller)
+String DeclCaller::FlagsToString(UInt32 flags)
 {
 	String rtn;
-	for (UInt32 flagCaller = 1; flagsCaller; flagCaller <<= 1, flagsCaller >>= 1) {
-		if (flagsCaller & 1) {
+	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
+		if (flags & 1) {
 			rtn += ':';
-			rtn += FlagCallerToSymbol(flagCaller)->GetName();
+			rtn += FlagToSymbol(flag)->GetName();
 		}
 	}
 	return rtn;
