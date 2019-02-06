@@ -204,7 +204,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	switch (GetOperator()->GetStyle()) {
-	case OpStyle::OpUnary: {
+	case OpStyle::OpPreUnary: {
 		rtn += GetOperator()->GetSymbol();
 		rtn += '(';
 		rtn += GetExprChild()->ToString(ss);

@@ -5,14 +5,14 @@
 #define GURAX_OPERATOR_H
 #include "Object.h"
 
-#define Gurax_ImplementOpUnary(opType, typeName) \
+#define Gurax_ImplementOpPreUnary(opType, typeName) \
 class OpEntry_##opType##_##typeName : public OpEntry { \
 public: \
 	virtual Object* EvalUnary(const Object* pObject) const; \
 }; \
 Object* OpEntry_##opType##_##typeName::EvalUnary(const Object* pObject) const
 
-#define Gurax_AssignOpUnary(opType, typeName) \
+#define Gurax_AssignOpPreUnary(opType, typeName) \
 Operator::opType->AssignEntry(Object_##typeName::klass, new OpEntry_##opType##_##typeName())
 
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
@@ -33,7 +33,7 @@ struct TokenType;
 // OpStyle
 //------------------------------------------------------------------------------
 enum class OpStyle {
-	OpUnary,
+	OpPreUnary,
 	OpPostUnary,
 	OpBinary,
 	MathUnary,
@@ -282,7 +282,7 @@ public:
 	bool IsType(OpType opType) const	{ return _opType == opType; }
 	bool IsUnary() const				{ return !_binaryFlag; }
 	bool IsBinary() const				{ return _binaryFlag; }
-	bool IsOpUnary() const				{ return _opStyle == OpStyle::OpUnary; }
+	bool IsOpPreUnary() const			{ return _opStyle == OpStyle::OpPreUnary; }
 	bool IsOpPostUnary() const			{ return _opStyle == OpStyle::OpPostUnary; }
 	bool IsOpBinary() const				{ return _opStyle == OpStyle::OpBinary; }
 	bool IsMathUnary() const			{ return _opStyle == OpStyle::MathUnary; }

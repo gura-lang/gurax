@@ -11,11 +11,11 @@ namespace Gurax {
 Operator* Operator::_operatorTbl[static_cast<size_t>(OpType::max)] = {};
 
 // Unary operators
-Operator* Operator::Inv				= new Operator(OpStyle::OpUnary,		"~",			OpType::Inv);
-Operator* Operator::Neg				= new Operator(OpStyle::OpUnary,		"-",			OpType::Neg);
-Operator* Operator::Not				= new Operator(OpStyle::OpUnary,		"!",			OpType::Not);
-Operator* Operator::Pos				= new Operator(OpStyle::OpUnary,		"+",			OpType::Pos);
-Operator* Operator::Quote			= new Operator(OpStyle::OpUnary,		"`",			OpType::Quote);
+Operator* Operator::Inv				= new Operator(OpStyle::OpPreUnary,		"~",			OpType::Inv);
+Operator* Operator::Neg				= new Operator(OpStyle::OpPreUnary,		"-",			OpType::Neg);
+Operator* Operator::Not				= new Operator(OpStyle::OpPreUnary,		"!",			OpType::Not);
+Operator* Operator::Pos				= new Operator(OpStyle::OpPreUnary,		"+",			OpType::Pos);
+Operator* Operator::Quote			= new Operator(OpStyle::OpPreUnary,		"`",			OpType::Quote);
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::OpPostUnary,	"%",			OpType::PostMod);
 Operator* Operator::PostMul			= new Operator(OpStyle::OpPostUnary,	"*",			OpType::PostMul);

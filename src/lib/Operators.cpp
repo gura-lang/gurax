@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-Gurax_ImplementOpUnary(Pos, number)
+Gurax_ImplementOpPreUnary(Pos, number)
 {
 	return pObject->Clone();
 }
@@ -19,7 +19,7 @@ Gurax_ImplementOpBinary(Add, number, number)
 
 void Operators::Bootup()
 {
-	Gurax_AssignOpUnary(Pos, number);
+	Gurax_AssignOpPreUnary(Pos, number);
 	Gurax_AssignOpBinary(Add, number, number);
 }
 
