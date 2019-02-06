@@ -21,6 +21,7 @@ protected:
 public:
 	// Constructor
 	Function() : Function(new Declaration(), new HelpProvider()) {}
+	Function(Declaration* pDeclaration) : Function(pDeclaration, new HelpProvider()) {}
 	Function(Declaration* pDeclaration, HelpProvider* pHelpProvider) :
 		_pDeclaration(pDeclaration), _pHelpProvider(pHelpProvider) {}
 	// Copy constructor/operator

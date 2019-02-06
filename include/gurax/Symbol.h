@@ -39,7 +39,7 @@ public:
 public:
 	// Constructor
 	SymbolList() = default;
-	SymbolList(std::initializer_list<const Symbol*> initList) :
+	explicit SymbolList(std::initializer_list<const Symbol*> initList) :
 		std::vector<const Symbol*>(initList) {}
 	// Copy constructor/operator
 	SymbolList(const SymbolList& src) = default;
@@ -227,10 +227,41 @@ public:
 public:
 	// Constructor
 	DottedSymbol() = default;
-	DottedSymbol(std::initializer_list<const Symbol*> initList) : _symbolList(initList) {}
+	explicit DottedSymbol(const Symbol* pSymbol) {
+		_symbolList.reserve(1);
+		_symbolList.push_back(pSymbol); 
+	}
+	DottedSymbol(const Symbol* pSymbol1, const Symbol* pSymbol2) {
+		_symbolList.reserve(2);
+		_symbolList.push_back(pSymbol1); _symbolList.push_back(pSymbol2);
+	}
+	DottedSymbol(const Symbol* pSymbol1, const Symbol* pSymbol2, const Symbol* pSymbol3) {
+		_symbolList.reserve(3);
+		_symbolList.push_back(pSymbol1); _symbolList.push_back(pSymbol2); _symbolList.push_back(pSymbol3);
+	}
+	DottedSymbol(const Symbol* pSymbol1, const Symbol* pSymbol2, const Symbol* pSymbol3, const Symbol* pSymbol4) {
+		_symbolList.reserve(4);
+		_symbolList.push_back(pSymbol1); _symbolList.push_back(pSymbol2);
+		_symbolList.push_back(pSymbol3); _symbolList.push_back(pSymbol4);
+	}
+	DottedSymbol(const Symbol* pSymbol1, const Symbol* pSymbol2, const Symbol* pSymbol3,
+				 const Symbol* pSymbol4, const Symbol* pSymbol5) {
+		_symbolList.reserve(5);
+		_symbolList.push_back(pSymbol1); _symbolList.push_back(pSymbol2);
+		_symbolList.push_back(pSymbol3); _symbolList.push_back(pSymbol4);
+		_symbolList.push_back(pSymbol5);
+	}
+	DottedSymbol(const Symbol* pSymbol1, const Symbol* pSymbol2, const Symbol* pSymbol3,
+				 const Symbol* pSymbol4, const Symbol* pSymbol5, const Symbol* pSymbol6) {
+		_symbolList.reserve(6);
+		_symbolList.push_back(pSymbol1); _symbolList.push_back(pSymbol2);
+		_symbolList.push_back(pSymbol3); _symbolList.push_back(pSymbol4);
+		_symbolList.push_back(pSymbol5); _symbolList.push_back(pSymbol6);
+	}
+	explicit DottedSymbol(std::initializer_list<const Symbol*> initList) : _symbolList(initList) {}
 	// Copy constructor/operator
-	DottedSymbol(const DottedSymbol& src) = delete;
-	DottedSymbol& operator=(const DottedSymbol& src) = delete;
+	DottedSymbol(const DottedSymbol& src) : _symbolList(src._symbolList) {}
+	DottedSymbol& operator=(const DottedSymbol& src) { _symbolList = src._symbolList; return *this; }
 	// Move constructor/operator
 	DottedSymbol(DottedSymbol&& src) = delete;
 	DottedSymbol& operator=(DottedSymbol&& src) noexcept = delete;
@@ -249,6 +280,7 @@ public:
 	bool IsEqualTo(const DottedSymbol& dottedSymbol) const {
 		return _symbolList.IsEqualTo(dottedSymbol.GetSymbolList());
 	}
+	DottedSymbol* Clone() const { return new DottedSymbol(*this); }
 };
 
 }

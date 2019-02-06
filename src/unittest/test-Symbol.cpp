@@ -39,10 +39,10 @@ void Test_SymbolList()
 
 void Test_DottedSymbol_IsEqualTo()
 {
-	RefPtr<DottedSymbol> pDottedSymbol1 = new DottedSymbol { Gurax_Symbol(a), Gurax_Symbol(b), Gurax_Symbol(c) };
-	RefPtr<DottedSymbol> pDottedSymbol2 = new DottedSymbol { Gurax_Symbol(a), Gurax_Symbol(b), Gurax_Symbol(c) };
-	RefPtr<DottedSymbol> pDottedSymbol3 = new DottedSymbol { Gurax_Symbol(a), Gurax_Symbol(b), Gurax_Symbol(c), Gurax_Symbol(d), Gurax_Symbol(e), Gurax_Symbol(f) };
-	RefPtr<DottedSymbol> pDottedSymbol4 = new DottedSymbol { Gurax_Symbol(b), Gurax_Symbol(c), Gurax_Symbol(d) };
+	RefPtr<DottedSymbol> pDottedSymbol1 = new DottedSymbol(Gurax_Symbol(a), Gurax_Symbol(b), Gurax_Symbol(c));
+	RefPtr<DottedSymbol> pDottedSymbol2 = new DottedSymbol(Gurax_Symbol(a), Gurax_Symbol(b), Gurax_Symbol(c));
+	RefPtr<DottedSymbol> pDottedSymbol3 = new DottedSymbol(Gurax_Symbol(a), Gurax_Symbol(b), Gurax_Symbol(c), Gurax_Symbol(d), Gurax_Symbol(e), Gurax_Symbol(f));
+	RefPtr<DottedSymbol> pDottedSymbol4 = new DottedSymbol(Gurax_Symbol(b), Gurax_Symbol(c), Gurax_Symbol(d));
 	auto TestFunc = [](const DottedSymbol& dottedSymbol1, const DottedSymbol& dottedSymbol2) {
 		::printf("%s == %s  .. %s\n", dottedSymbol1.ToString().c_str(), dottedSymbol2.ToString().c_str(),
 				 dottedSymbol1.IsEqualTo(dottedSymbol2)? "true" : "false");
