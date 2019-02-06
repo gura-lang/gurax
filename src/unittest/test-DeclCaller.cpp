@@ -7,6 +7,7 @@ namespace Gurax {
 
 static const char* src = R"(
 f()
+f(`v)
 f(v)
 f(v1, v2, v3)
 f(v:type)
@@ -51,6 +52,15 @@ f(v[]*:g1.type)
 f(v[]?:g1.b2.g3.type)
 f(v[]+:g1.g2.g3.type)
 f(v[]*:g1.g3.g3.type)
+f(v[]?:type:map)
+f(v[]+:type:map)
+f(v[]*:type:map)
+f(v[]?:g1.type:map)
+f(v[]+:g1.type:map)
+f(v[]*:g1.type:map)
+f(v[]?:g1.b2.g3.type:map)
+f(v[]+:g1.g2.g3.type:map)
+f(v[]*:g1.g3.g3.type:map)
 )";
 
 Gurax_TesterEntry(DeclCaller)

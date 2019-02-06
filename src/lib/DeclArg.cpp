@@ -27,6 +27,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, const Klass& klass,
 DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
+	const Klass* pKlass = nullptr;
 	OccurPattern occurPattern = OccurPattern::Once;
 	UInt32 flags = 0;
 	RefPtr<Expr> pExprDefault;
@@ -47,7 +48,10 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 		const Operator* pOperator = pExprEx->GetOperator();
 		pExpr = pExprEx->GetExprChild();
-		if (pOperator->IsType(OpType::PostMod)) {
+		if (pOperator->IsType(OpType::Quote)) {
+			// `x
+			pKlass = &Object_quote::klass;
+		} else if (pOperator->IsType(OpType::PostMod)) {
 			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
 			// x*
@@ -119,7 +123,9 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		}
 		firstFlag = false;
 	}
-	return new DeclArg(pSymbol, pDottedSymbol.release(), occurPattern, flags, pExprDefault.release());
+	return pKlass?
+		new DeclArg(pSymbol, *pKlass, occurPattern, flags, pExprDefault.release()) :
+		new DeclArg(pSymbol, pDottedSymbol.release(), occurPattern, flags, pExprDefault.release());
 }
 
 String DeclArg::FlagsToString(UInt32 flags)

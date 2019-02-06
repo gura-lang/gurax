@@ -45,7 +45,7 @@ enum class OpStyle {
 //------------------------------------------------------------------------------
 enum class OpType {
 	None,
-	// Unary operators
+	// Pre-unary operators
 	Inv,
 	Neg,
 	Not,
