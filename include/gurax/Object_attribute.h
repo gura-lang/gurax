@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_attribute
+//------------------------------------------------------------------------------
+class KlassT_attribute : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_attribute Klass_attribute;
+
+//------------------------------------------------------------------------------
 // Object_attribute
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_attribute : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_attribute);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_attribute");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
 	Object_attribute() = delete;
-	explicit Object_attribute(Attribute *pAttr) : Object(klass), _pAttr(pAttr) {}
+	explicit Object_attribute(Attribute *pAttr) : Object(Klass_attribute), _pAttr(pAttr) {}
 	// Copy constructor/operator
-	Object_attribute(const Object_attribute& src) : Object(klass), _pAttr(src._pAttr->Reference()) {}
+	Object_attribute(const Object_attribute& src) : Object(Klass_attribute), _pAttr(src._pAttr->Reference()) {}
 	Object_attribute& operator=(const Object_attribute& src) { _pAttr.reset(src._pAttr->Reference()); return *this; }
 	// Move constructor/operator
-	Object_attribute(Object_attribute&& src) : Object(klass), _pAttr(src._pAttr.release()) {}
+	Object_attribute(Object_attribute&& src) : Object(Klass_attribute), _pAttr(src._pAttr.release()) {}
 	Object_attribute& operator=(Object_attribute&& src) noexcept { _pAttr.reset(src._pAttr.release()); return *this; }
 protected:
 	// Destructor

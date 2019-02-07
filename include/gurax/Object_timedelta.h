@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_timedelta
+//------------------------------------------------------------------------------
+class KlassT_timedelta : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_timedelta Klass_timedelta;
+
+//------------------------------------------------------------------------------
 // Object_timedelta
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_timedelta : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_timedelta);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_timedelta");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor
 	Object_timedelta() = delete;
-	explicit Object_timedelta(TimeDelta *pTimeDelta) : Object(klass), _pTimeDelta(pTimeDelta) {}
+	explicit Object_timedelta(TimeDelta *pTimeDelta) : Object(Klass_timedelta), _pTimeDelta(pTimeDelta) {}
 	// Copy constructor/operator
-	Object_timedelta(const Object_timedelta& src) : Object(klass), _pTimeDelta(src._pTimeDelta->Reference()) {}
+	Object_timedelta(const Object_timedelta& src) : Object(Klass_timedelta), _pTimeDelta(src._pTimeDelta->Reference()) {}
 	Object_timedelta& operator=(const Object_timedelta& src) { _pTimeDelta.reset(src._pTimeDelta->Reference()); return *this; }
 	// Move constructor/operator
-	Object_timedelta(Object_timedelta&& src) : Object(klass), _pTimeDelta(src._pTimeDelta.release()) {}
+	Object_timedelta(Object_timedelta&& src) : Object(Klass_timedelta), _pTimeDelta(src._pTimeDelta.release()) {}
 	Object_timedelta& operator=(Object_timedelta&& src) noexcept { _pTimeDelta.reset(src._pTimeDelta.release()); return *this; }
 protected:
 	// Destructor

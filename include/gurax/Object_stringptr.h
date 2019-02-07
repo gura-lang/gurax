@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_stringptr
+//------------------------------------------------------------------------------
+class KlassT_stringptr : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_stringptr Klass_stringptr;
+
+//------------------------------------------------------------------------------
 // Object_stringptr
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_stringptr : public Object {
@@ -17,23 +28,16 @@ public:
 	Gurax_DeclareReferable(Object_stringptr);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_stringptr");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	const char* _str;
 public:
 	// Constructor
-	explicit Object_stringptr(const char* str) : Object(klass), _str(str) {}
+	explicit Object_stringptr(const char* str) : Object(Klass_stringptr), _str(str) {}
 	// Copy constructor/operator
-	Object_stringptr(const Object_stringptr& src) : Object(klass), _str(src._str) {}
+	Object_stringptr(const Object_stringptr& src) : Object(Klass_stringptr), _str(src._str) {}
 	Object_stringptr& operator=(const Object_stringptr& src) { _str = src._str; return *this; }
 	// Move constructor/operator
-	Object_stringptr(Object_stringptr&& src) : Object(klass), _str(src._str) {}
+	Object_stringptr(Object_stringptr&& src) : Object(Klass_stringptr), _str(src._str) {}
 	Object_stringptr& operator=(Object_stringptr&& src) noexcept { _str = src._str; return *this; }
 protected:
 	// Destructor

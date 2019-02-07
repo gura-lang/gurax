@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_iterator
+//------------------------------------------------------------------------------
+class KlassT_iterator : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_iterator Klass_iterator;
+
+//------------------------------------------------------------------------------
 // Object_iterator
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_iterator : public Object {
@@ -16,24 +27,17 @@ public:
 	Gurax_DeclareReferable(Object_iterator);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_iterator");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Iterator> _pIterator;
 public:
 	// Constructor
 	Object_iterator() = delete;
-	explicit Object_iterator(Iterator *pIterator) : Object(klass), _pIterator(pIterator) {}
+	explicit Object_iterator(Iterator *pIterator) : Object(Klass_iterator), _pIterator(pIterator) {}
 	// Copy constructor/operator
-	Object_iterator(const Object_iterator& src) : Object(klass), _pIterator(src._pIterator->Reference()) {}
+	Object_iterator(const Object_iterator& src) : Object(Klass_iterator), _pIterator(src._pIterator->Reference()) {}
 	Object_iterator& operator=(const Object_iterator& src) { _pIterator.reset(src._pIterator->Reference()); return *this; }
 	// Move constructor/operator
-	Object_iterator(Object_iterator&& src) : Object(klass), _pIterator(src._pIterator.release()) {}
+	Object_iterator(Object_iterator&& src) : Object(Klass_iterator), _pIterator(src._pIterator.release()) {}
 	Object_iterator& operator=(Object_iterator&& src) noexcept { _pIterator.reset(src._pIterator.release()); return *this; }
 protected:
 	// Destructor

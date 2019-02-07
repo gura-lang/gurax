@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_bool
+//------------------------------------------------------------------------------
+class KlassT_bool : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_bool Klass_bool;
+
+//------------------------------------------------------------------------------
 // Object_bool
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_bool : public Object {
@@ -16,23 +27,16 @@ public:
 	Gurax_DeclareReferable(Object_bool);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_bool");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_bool(bool flag) : Object(klass), _flag(flag) {}
+	explicit Object_bool(bool flag) : Object(Klass_bool), _flag(flag) {}
 	// Copy constructor/operator
-	Object_bool(const Object_bool& src) : Object(klass), _flag(src._flag) {}
+	Object_bool(const Object_bool& src) : Object(Klass_bool), _flag(src._flag) {}
 	Object_bool& operator=(const Object_bool& src) { _flag = src._flag; return *this; }
 	// Move constructor/operator
-	Object_bool(Object_bool&& src) : Object(klass), _flag(src._flag) {}
+	Object_bool(Object_bool&& src) : Object(Klass_bool), _flag(src._flag) {}
 	Object_bool& operator=(Object_bool&& src) noexcept { _flag = src._flag; return *this; }
 protected:
 	// Destructor

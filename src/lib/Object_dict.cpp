@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_dict::KlassEx
+// Klass_dict
 //------------------------------------------------------------------------------
-Object_dict::KlassEx Object_dict::klass("dict");
+KlassT_dict Klass_dict("dict");
 
-void Object_dict::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_dict::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Mutable);
+	SetAttrs(Klass_object, Flag::Mutable);
 	pFrame->AssignKlass(*this);
 }
 

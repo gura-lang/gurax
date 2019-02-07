@@ -73,13 +73,13 @@ bool Object_number::Format_c(Formatter& formatter, FormatterFlags& formatterFlag
 }
 
 //------------------------------------------------------------------------------
-// Object_number::KlassEx
+// Klass_number
 //------------------------------------------------------------------------------
-Object_number::KlassEx Object_number::klass("number");
+KlassT_number Klass_number("number");
 
-void Object_number::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_number::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

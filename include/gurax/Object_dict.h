@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_dict
+//------------------------------------------------------------------------------
+class KlassT_dict : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_dict Klass_dict;
+
+//------------------------------------------------------------------------------
 // Object_dict
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_dict : public Object {
@@ -16,25 +27,18 @@ public:
 	Gurax_DeclareReferable(Object_dict);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_dict");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<ObjectDict> _pObjectDict;
 public:
 	// Constructor
-	Object_dict() : Object(klass), _pObjectDict(new ObjectDict()) {}
+	Object_dict() : Object(Klass_dict), _pObjectDict(new ObjectDict()) {}
 	// Copy constructor/operator
-	Object_dict(const Object_dict& src) : Object(klass), _pObjectDict(src._pObjectDict->CloneDeep()) {}
+	Object_dict(const Object_dict& src) : Object(Klass_dict), _pObjectDict(src._pObjectDict->CloneDeep()) {}
 	Object_dict& operator=(const Object_dict& src) {
 		_pObjectDict.reset(src._pObjectDict->CloneDeep()); return *this;
 	}
 	// Move constructor/operator
-	Object_dict(Object_dict&& src) : Object(klass), _pObjectDict(src._pObjectDict.release()) {}
+	Object_dict(Object_dict&& src) : Object(Klass_dict), _pObjectDict(src._pObjectDict.release()) {}
 	Object_dict& operator=(Object_dict&& src) noexcept {
 		_pObjectDict.reset(src._pObjectDict.release()); return *this;
 	}

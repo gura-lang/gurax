@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_iterator::KlassEx
+// Klass_iterator
 //------------------------------------------------------------------------------
-Object_iterator::KlassEx Object_iterator::klass("iterator");
+KlassT_iterator Klass_iterator("iterator");
 
-void Object_iterator::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_iterator::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

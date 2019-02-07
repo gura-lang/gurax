@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_datetime
+//------------------------------------------------------------------------------
+class KlassT_datetime : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_datetime Klass_datetime;
+
+//------------------------------------------------------------------------------
 // Object_datetime
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_datetime : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_datetime);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_datetime");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor
 	Object_datetime() = delete;
-	explicit Object_datetime(DateTime *pDateTime) : Object(klass), _pDateTime(pDateTime) {}
+	explicit Object_datetime(DateTime *pDateTime) : Object(Klass_datetime), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
-	Object_datetime(const Object_datetime& src) : Object(klass), _pDateTime(src._pDateTime->Reference()) {}
+	Object_datetime(const Object_datetime& src) : Object(Klass_datetime), _pDateTime(src._pDateTime->Reference()) {}
 	Object_datetime& operator=(const Object_datetime& src) { _pDateTime.reset(src._pDateTime->Reference()); return *this; }
 	// Move constructor/operator
-	Object_datetime(Object_datetime&& src) : Object(klass), _pDateTime(src._pDateTime.release()) {}
+	Object_datetime(Object_datetime&& src) : Object(Klass_datetime), _pDateTime(src._pDateTime.release()) {}
 	Object_datetime& operator=(Object_datetime&& src) noexcept { _pDateTime.reset(src._pDateTime.release()); return *this; }
 protected:
 	// Destructor

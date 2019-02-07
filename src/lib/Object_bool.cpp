@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_bool::KlassEx
+// Klass_bool
 //------------------------------------------------------------------------------
-Object_bool::KlassEx Object_bool::klass("bool");
+KlassT_bool Klass_bool("bool");
 
-void Object_bool::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_bool::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

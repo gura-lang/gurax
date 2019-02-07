@@ -102,6 +102,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Klass_object
+//------------------------------------------------------------------------------
+class KlassT_object : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_object Klass_object;
+
+//------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object : public Referable {
@@ -130,13 +141,6 @@ public:
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	static const Object* _pObject_undefined;
 	static const Object* _pObject_nil;
@@ -171,10 +175,10 @@ public:
 	static bool IsSameType(const Object* pObject1, const Object* pObject2) {
 		return pObject1 && pObject1->IsSameType(pObject2);
 	}
-	template<typename T> bool IsType() const { return GetKlass().IsIdentical(T::klass); }
-	template<typename T> static bool IsType(const Object* pObject) { return pObject && pObject->IsType<T>(); }
-	template<typename T> bool IsInstanceOf() const;
-	template<typename T> static bool IsInstanceOf(const Object* pObject) { return pObject && pObject->IsInstanceOf<T>(); }
+	bool IsType(const Klass& klass) const { return GetKlass().IsIdentical(klass); }
+	static bool IsType(const Object* pObject, const Klass& klass) { return pObject && pObject->IsType(klass); }
+	bool IsInstanceOf(const Klass& klass) const;
+	static bool IsInstanceOf(const Object* pObject, const Klass& klass) { return pObject && pObject->IsInstanceOf(klass); }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	// Virtual functions
@@ -205,14 +209,6 @@ public:
 	static Object* false_()		{ return _pObject_false_->Reference(); }
 	static Object* true_()		{ return _pObject_true_->Reference(); }
 };
-
-template<typename T> bool Object::IsInstanceOf() const
-{
-	for (const Klass *pKlass = &GetKlass(); pKlass != nullptr; pKlass = pKlass->GetParent()) {
-		if (pKlass->IsIdentical(T::klass)) return true;
-	}
-	return false;
-}
 
 //------------------------------------------------------------------------------
 // ObjectList

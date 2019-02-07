@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_binary
+//------------------------------------------------------------------------------
+class KlassT_binary : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_binary Klass_binary;
+
+//------------------------------------------------------------------------------
 // Object_binary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_binary : public Object {
@@ -16,24 +27,17 @@ public:
 	Gurax_DeclareReferable(Object_binary);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_binary");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
-	explicit Object_binary(BinaryReferable* pBinary) : Object(klass), _pBinary(pBinary) {}
-	explicit Object_binary(Binary str) : Object(klass), _pBinary(new BinaryReferable(std::move(str))) {}
+	explicit Object_binary(BinaryReferable* pBinary) : Object(Klass_binary), _pBinary(pBinary) {}
+	explicit Object_binary(Binary str) : Object(Klass_binary), _pBinary(new BinaryReferable(std::move(str))) {}
 	// Copy constructor/operator
-	Object_binary(const Object_binary& src) : Object(klass), _pBinary(src._pBinary->Reference()) {}
+	Object_binary(const Object_binary& src) : Object(Klass_binary), _pBinary(src._pBinary->Reference()) {}
 	Object_binary& operator=(const Object_binary& src) { _pBinary.reset(src._pBinary->Reference()); return *this; }
 	// Move constructor/operator
-	Object_binary(Object_binary&& src) : Object(klass), _pBinary(src._pBinary->Reference()) {}
+	Object_binary(Object_binary&& src) : Object(Klass_binary), _pBinary(src._pBinary->Reference()) {}
 	Object_binary& operator=(Object_binary&& src) noexcept { _pBinary.reset(src._pBinary->Reference()); return *this; }
 protected:
 	// Destructor

@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_quote
+//------------------------------------------------------------------------------
+class KlassT_quote : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_quote Klass_quote;
+
+//------------------------------------------------------------------------------
 // Object_quote
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_quote : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_quote);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_quote");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Expr> _pExpr;
 public:
 	// Constructor
 	Object_quote() = delete;
-	explicit Object_quote(Expr *pExpr) : Object(klass), _pExpr(pExpr) {}
+	explicit Object_quote(Expr *pExpr) : Object(Klass_quote), _pExpr(pExpr) {}
 	// Copy constructor/operator
-	Object_quote(const Object_quote& src) : Object(klass), _pExpr(src._pExpr->Reference()) {}
+	Object_quote(const Object_quote& src) : Object(Klass_quote), _pExpr(src._pExpr->Reference()) {}
 	Object_quote& operator=(const Object_quote& src) { _pExpr.reset(src._pExpr->Reference()); return *this; }
 	// Move constructor/operator
-	Object_quote(Object_quote&& src) : Object(klass), _pExpr(src._pExpr.release()) {}
+	Object_quote(Object_quote&& src) : Object(Klass_quote), _pExpr(src._pExpr.release()) {}
 	Object_quote& operator=(Object_quote&& src) noexcept { _pExpr.reset(src._pExpr.release()); return *this; }
 protected:
 	// Destructor

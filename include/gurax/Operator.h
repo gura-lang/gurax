@@ -13,7 +13,7 @@ public: \
 Object* OpEntry_##opType##_##typeName::EvalUnary(const Object* pObject) const
 
 #define Gurax_AssignOpPreUnary(opType, typeName) \
-Operator::opType->AssignEntry(Object_##typeName::klass, new OpEntry_##opType##_##typeName())
+Operator::opType->AssignEntry(Klass_##typeName, new OpEntry_##opType##_##typeName())
 
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
@@ -23,7 +23,7 @@ public: \
 Object* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
 
 #define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
-Operator::opType->AssignEntry(Object_##typeNameL::klass, Object_##typeNameR::klass, new OpEntry_##opType##_##typeNameL##_##typeNameR())
+Operator::opType->AssignEntry(Klass_##typeNameL, Klass_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
 
 namespace Gurax {
 

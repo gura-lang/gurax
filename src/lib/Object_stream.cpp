@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_stream::KlassEx
+// Klass_stream
 //------------------------------------------------------------------------------
-Object_stream::KlassEx Object_stream::klass("stream");
+KlassT_stream Klass_stream("stream");
 
-void Object_stream::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_stream::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

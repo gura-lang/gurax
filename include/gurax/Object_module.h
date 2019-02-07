@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_module
+//------------------------------------------------------------------------------
+class KlassT_module : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_module Klass_module;
+
+//------------------------------------------------------------------------------
 // Object_module
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_module : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_module);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_module");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Module> _pModule;
 public:
 	// Constructor
 	Object_module() = delete;
-	explicit Object_module(Module *pModule) : Object(klass), _pModule(pModule) {}
+	explicit Object_module(Module *pModule) : Object(Klass_module), _pModule(pModule) {}
 	// Copy constructor/operator
-	Object_module(const Object_module& src) : Object(klass), _pModule(src._pModule->Reference()) {}
+	Object_module(const Object_module& src) : Object(Klass_module), _pModule(src._pModule->Reference()) {}
 	Object_module& operator=(const Object_module& src) { _pModule.reset(src._pModule->Reference()); return *this; }
 	// Move constructor/operator
-	Object_module(Object_module&& src) : Object(klass), _pModule(src._pModule.release()) {}
+	Object_module(Object_module&& src) : Object(Klass_module), _pModule(src._pModule.release()) {}
 	Object_module& operator=(Object_module&& src) noexcept { _pModule.reset(src._pModule.release()); return *this; }
 protected:
 	// Destructor

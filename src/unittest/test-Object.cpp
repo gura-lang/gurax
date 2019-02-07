@@ -26,10 +26,10 @@ void Test_IsType()
 	auto func = [](const Object* pObj) {
 		::printf("%-12s %d %d %d %d\n",
 				 pObj->GetKlass().GetName(),
-				 pObj->IsInstanceOf<Object>(),
-				 pObj->IsType<Object_bool>(),
-				 pObj->IsType<Object_number>(),
-				 pObj->IsType<Object_string>());
+				 pObj->IsInstanceOf(Klass_object),
+				 pObj->IsType(Klass_bool),
+				 pObj->IsType(Klass_number),
+				 pObj->IsType(Klass_string));
 	};
 	func(new Object_bool(true));
 	func(new Object_number(1));

@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_nil
+//------------------------------------------------------------------------------
+class KlassT_nil : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_nil Klass_nil;
+
+//------------------------------------------------------------------------------
 // Object_nil
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_nil : public Object {
@@ -16,16 +27,9 @@ public:
 	Gurax_DeclareReferable(Object_nil);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_nil");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 public:
 	// Constructor
-	Object_nil() : Object(klass) {}
+	Object_nil() : Object(Klass_nil) {}
 	// Copy constructor/operator
 	Object_nil(const Object_nil& src) = delete;
 	Object_nil& operator=(const Object_nil& src) = delete;

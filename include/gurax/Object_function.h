@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_function
+//------------------------------------------------------------------------------
+class KlassT_function : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_function Klass_function;
+
+//------------------------------------------------------------------------------
 // Object_function
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_function : public Object {
@@ -16,24 +27,17 @@ public:
 	Gurax_DeclareReferable(Object_function);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_function");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Function> _pFunction;
 public:
 	// Constructor
 	Object_function() = delete;
-	explicit Object_function(Function* pFunction) : Object(klass), _pFunction(pFunction) {}
+	explicit Object_function(Function* pFunction) : Object(Klass_function), _pFunction(pFunction) {}
 	// Copy constructor/operator
-	Object_function(const Object_function& src) : Object(klass), _pFunction(src._pFunction->Reference()) {}
+	Object_function(const Object_function& src) : Object(Klass_function), _pFunction(src._pFunction->Reference()) {}
 	Object_function& operator=(const Object_function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }
 	// Move constructor/operator
-	Object_function(Object_function&& src) : Object(klass), _pFunction(src._pFunction.release()) {}
+	Object_function(Object_function&& src) : Object(Klass_function), _pFunction(src._pFunction.release()) {}
 	Object_function& operator=(Object_function&& src) noexcept { _pFunction.reset(src._pFunction.release()); return *this; }
 protected:
 	// Destructor

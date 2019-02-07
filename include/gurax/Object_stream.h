@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_stream
+//------------------------------------------------------------------------------
+class KlassT_stream : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_stream Klass_stream;
+
+//------------------------------------------------------------------------------
 // Object_stream
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_stream : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_stream);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_stream");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Stream> _pStream;
 public:
 	// Constructor
 	Object_stream() = delete;
-	explicit Object_stream(Stream *pStream) : Object(klass), _pStream(pStream) {}
+	explicit Object_stream(Stream *pStream) : Object(Klass_stream), _pStream(pStream) {}
 	// Copy constructor/operator
-	Object_stream(const Object_stream& src) : Object(klass), _pStream(src._pStream->Reference()) {}
+	Object_stream(const Object_stream& src) : Object(Klass_stream), _pStream(src._pStream->Reference()) {}
 	Object_stream& operator=(const Object_stream& src) { _pStream.reset(src._pStream->Reference()); return *this; }
 	// Move constructor/operator
-	Object_stream(Object_stream&& src) : Object(klass), _pStream(src._pStream.release()) {}
+	Object_stream(Object_stream&& src) : Object(Klass_stream), _pStream(src._pStream.release()) {}
 	Object_stream& operator=(Object_stream&& src) noexcept { _pStream.reset(src._pStream.release()); return *this; }
 protected:
 	// Destructor

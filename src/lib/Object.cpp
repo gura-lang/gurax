@@ -77,35 +77,43 @@ const Object *Object::_pObject_true_		= nullptr;
 void Object::Bootup()
 {
 	Frame* pFrame = Context::GetFrame();
-	Object::klass.Prepare(pFrame);
-	Object_any::klass.Prepare(pFrame);
-	Object_argument::klass.Prepare(pFrame);
-	Object_attribute::klass.Prepare(pFrame);
-	Object_binary::klass.Prepare(pFrame);
-	Object_bool::klass.Prepare(pFrame);
-	Object_datetime::klass.Prepare(pFrame);
-	Object_dict::klass.Prepare(pFrame);
-	Object_expr::klass.Prepare(pFrame);
-	Object_function::klass.Prepare(pFrame);
-	Object_iterator::klass.Prepare(pFrame);
-	Object_klass::klass.Prepare(pFrame);
-	Object_list::klass.Prepare(pFrame);
-	Object_module::klass.Prepare(pFrame);
-	Object_nil::klass.Prepare(pFrame);
-	Object_number::klass.Prepare(pFrame);
-	Object_stream::klass.Prepare(pFrame);
-	Object_string::klass.Prepare(pFrame);
-	Object_stringptr::klass.Prepare(pFrame);
-	Object_symbol::klass.Prepare(pFrame);
-	Object_template::klass.Prepare(pFrame);
-	Object_timedelta::klass.Prepare(pFrame);
-	Object_undefined::klass.Prepare(pFrame);
+	Klass_object.Prepare(pFrame);
+	Klass_any.Prepare(pFrame);
+	Klass_argument.Prepare(pFrame);
+	Klass_attribute.Prepare(pFrame);
+	Klass_binary.Prepare(pFrame);
+	Klass_bool.Prepare(pFrame);
+	Klass_datetime.Prepare(pFrame);
+	Klass_dict.Prepare(pFrame);
+	Klass_expr.Prepare(pFrame);
+	Klass_function.Prepare(pFrame);
+	Klass_iterator.Prepare(pFrame);
+	Klass_klass.Prepare(pFrame);
+	Klass_list.Prepare(pFrame);
+	Klass_module.Prepare(pFrame);
+	Klass_nil.Prepare(pFrame);
+	Klass_number.Prepare(pFrame);
+	Klass_stream.Prepare(pFrame);
+	Klass_string.Prepare(pFrame);
+	Klass_stringptr.Prepare(pFrame);
+	Klass_symbol.Prepare(pFrame);
+	Klass_template.Prepare(pFrame);
+	Klass_timedelta.Prepare(pFrame);
+	Klass_undefined.Prepare(pFrame);
 	_pObject_undefined	= new Object_undefined();
 	_pObject_nil		= new Object_nil();
 	_pObject_zero		= new Object_number(0);
 	_pObject_emptystr	= new Object_string("");
 	_pObject_false_		= new Object_bool(false);
 	_pObject_true_		= new Object_bool(true);
+}
+
+bool Object::IsInstanceOf(const Klass& klass) const
+{
+	for (const Klass *pKlass = &GetKlass(); pKlass != nullptr; pKlass = pKlass->GetParent()) {
+		if (pKlass->IsIdentical(klass)) return true;
+	}
+	return false;
 }
 
 bool Object::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
@@ -186,11 +194,11 @@ bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) cons
 }
 
 //------------------------------------------------------------------------------
-// Object::KlassEx
+// Klass_object
 //------------------------------------------------------------------------------
-Object::KlassEx Object::klass("object");
+KlassT_object Klass_object("object");
 
-void Object::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_object::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Flag::Immutable);
 	pFrame->AssignKlass(*this);
@@ -257,21 +265,21 @@ void ObjectOwner::Set(size_t pos, Object* pObject)
 // ObjectTypedOwner
 //------------------------------------------------------------------------------
 ObjectTypedOwner::ObjectTypedOwner() :
-	_pKlassOfElems(&Object_undefined::klass), _pObjectOwner(new ObjectOwner())
+	_pKlassOfElems(&Klass_undefined), _pObjectOwner(new ObjectOwner())
 {}
 
 void ObjectTypedOwner::Clear()
 {
-	_pKlassOfElems = &Object_undefined::klass;
+	_pKlassOfElems = &Klass_undefined;
 	_pObjectOwner->Clear();
 }
 
 void ObjectTypedOwner::UpdateKlassOfElems(Klass& klassAdded)
 {
-	if (_pKlassOfElems->IsIdentical(Object_undefined::klass)) {
+	if (_pKlassOfElems->IsIdentical(Klass_undefined)) {
 		_pKlassOfElems = &klassAdded;
 	} else if (!_pKlassOfElems->IsIdentical(klassAdded)) {
-		_pKlassOfElems = &Object_any::klass;
+		_pKlassOfElems = &Klass_any;
 	}
 }
 

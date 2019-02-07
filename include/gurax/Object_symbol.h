@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_symbol
+//------------------------------------------------------------------------------
+class KlassT_symbol : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_symbol Klass_symbol;
+
+//------------------------------------------------------------------------------
 // Object_symbol
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_symbol : public Object {
@@ -16,23 +27,16 @@ public:
 	Gurax_DeclareReferable(Object_symbol);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_symbol");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	explicit Object_symbol(const Symbol* pSymbol) : Object(klass), _pSymbol(pSymbol) {}
+	explicit Object_symbol(const Symbol* pSymbol) : Object(Klass_symbol), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Object_symbol(const Object_symbol& src) : Object(klass), _pSymbol(src._pSymbol) {}
+	Object_symbol(const Object_symbol& src) : Object(Klass_symbol), _pSymbol(src._pSymbol) {}
 	Object_symbol& operator=(const Object_symbol& src) { _pSymbol = src._pSymbol; return *this; }
 	// Move constructor/operator
-	Object_symbol(Object_symbol&& src) : Object(klass), _pSymbol(src._pSymbol) {}
+	Object_symbol(Object_symbol&& src) : Object(Klass_symbol), _pSymbol(src._pSymbol) {}
 	Object_symbol& operator=(Object_symbol&& src) noexcept { _pSymbol = src._pSymbol; return *this; }
 protected:
 	// Destructor

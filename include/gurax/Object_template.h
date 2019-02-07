@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_template
+//------------------------------------------------------------------------------
+class KlassT_template : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_template Klass_template;
+
+//------------------------------------------------------------------------------
 // Object_template
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_template : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_template);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_template");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor
 	Object_template() = delete;
-	explicit Object_template(Template *pTempl) : Object(klass), _pTempl(pTempl) {}
+	explicit Object_template(Template *pTempl) : Object(Klass_template), _pTempl(pTempl) {}
 	// Copy constructor/operator
-	Object_template(const Object_template& src) : Object(klass), _pTempl(src._pTempl->Reference()) {}
+	Object_template(const Object_template& src) : Object(Klass_template), _pTempl(src._pTempl->Reference()) {}
 	Object_template& operator=(const Object_template& src) { _pTempl.reset(src._pTempl->Reference()); return *this; }
 	// Move constructor/operator
-	Object_template(Object_template&& src) : Object(klass), _pTempl(src._pTempl.release()) {}
+	Object_template(Object_template&& src) : Object(Klass_template), _pTempl(src._pTempl.release()) {}
 	Object_template& operator=(Object_template&& src) noexcept { _pTempl.reset(src._pTempl.release()); return *this; }
 protected:
 	// Destructor

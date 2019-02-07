@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_timedelta::KlassEx
+// Klass_timedelta
 //------------------------------------------------------------------------------
-Object_timedelta::KlassEx Object_timedelta::klass("timedelta");
+KlassT_timedelta Klass_timedelta("timedelta");
 
-void Object_timedelta::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_timedelta::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

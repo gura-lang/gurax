@@ -9,6 +9,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_argument
+//------------------------------------------------------------------------------
+class KlassT_argument : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_argument Klass_argument;
+
+//------------------------------------------------------------------------------
 // Object_argument
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_argument : public Object {
@@ -17,24 +28,17 @@ public:
 	Gurax_DeclareReferable(Object_argument);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_argument");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	std::unique_ptr<Argument> _pArgument;
 public:
 	// Constructor
 	Object_argument() = delete;
-	explicit Object_argument(Argument *pArgument) : Object(klass), _pArgument(pArgument) {}
+	explicit Object_argument(Argument *pArgument) : Object(Klass_argument), _pArgument(pArgument) {}
 	// Copy constructor/operator
-	Object_argument(const Object_argument& src) : Object(klass), _pArgument(src._pArgument->Clone()) {}
+	Object_argument(const Object_argument& src) : Object(Klass_argument), _pArgument(src._pArgument->Clone()) {}
 	Object_argument& operator=(const Object_argument& src) { _pArgument.reset(src._pArgument->Clone()); return *this; }
 	// Move constructor/operator
-	Object_argument(Object_argument&& src) : Object(klass), _pArgument(src._pArgument.release()) {}
+	Object_argument(Object_argument&& src) : Object(Klass_argument), _pArgument(src._pArgument.release()) {}
 	Object_argument& operator=(Object_argument&& src) noexcept { _pArgument.reset(src._pArgument.release()); return *this; }
 protected:
 	// Destructor

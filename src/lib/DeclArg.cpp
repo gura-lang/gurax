@@ -12,7 +12,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 				 OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
 	_pKlass(pDottedSymbol->IsEmpty()?
-			dynamic_cast<Klass*>(&Object_any::klass) : dynamic_cast<Klass*>(&Object_undefined::klass)),
+			dynamic_cast<Klass*>(&Klass_any) : dynamic_cast<Klass*>(&Klass_undefined)),
 	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
 {
 }
@@ -50,7 +50,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		pExpr = pExprEx->GetExprChild();
 		if (pOperator->IsType(OpType::Quote)) {
 			// `x
-			pKlass = &Object_quote::klass;
+			pKlass = &Klass_quote;
 		} else if (pOperator->IsType(OpType::PostMod)) {
 			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
@@ -151,7 +151,7 @@ const char* DeclArg::OccurPatternToString(OccurPattern occurPattern)
 String DeclArg::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	bool quoteFlag = GetKlass().IsIdentical(Object_quote::klass);
+	bool quoteFlag = GetKlass().IsIdentical(Klass_quote);
 	if (quoteFlag) rtn += '`';
 	rtn += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) rtn += "[]";
@@ -163,7 +163,7 @@ String DeclArg::ToString(const StringStyle& ss) const
 		rtn += GetDottedSymbol().ToString();
 	} else if (ss.IsVerbose()) {
 		rtn += ':';
-		rtn += Object_any::klass.GetName();
+		rtn += Klass_any.GetName();
 	}
 	rtn += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (GetExprDefault()) {

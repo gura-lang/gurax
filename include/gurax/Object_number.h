@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_number
+//------------------------------------------------------------------------------
+class KlassT_number : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_number Klass_number;
+
+//------------------------------------------------------------------------------
 // Object_number
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_number : public Object {
@@ -16,23 +27,16 @@ public:
 	Gurax_DeclareReferable(Object_number);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_number");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	Double _num;
 public:
 	// Constructor
-	explicit Object_number(Double num = 0.) : Object(klass), _num(num) {}
+	explicit Object_number(Double num = 0.) : Object(Klass_number), _num(num) {}
 	// Copy constructor/operator
-	Object_number(const Object_number& src) : Object(klass), _num(src._num) {}
+	Object_number(const Object_number& src) : Object(Klass_number), _num(src._num) {}
 	Object_number& operator=(const Object_number& src) { _num = src._num; return *this; }
 	// Move constructor/operator
-	Object_number(Object_number&& src) : Object(klass), _num(src._num) {}
+	Object_number(Object_number&& src) : Object(Klass_number), _num(src._num) {}
 	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
 protected:
 	// Destructor

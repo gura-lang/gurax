@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_undefined
+//------------------------------------------------------------------------------
+class KlassT_undefined : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_undefined Klass_undefined;
+
+//------------------------------------------------------------------------------
 // Object_undefined
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_undefined : public Object {
@@ -16,16 +27,9 @@ public:
 	Gurax_DeclareReferable(Object_undefined);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_undefined");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 public:
 	// Constructor
-	Object_undefined() : Object(klass) {}
+	Object_undefined() : Object(Klass_undefined) {}
 	// Copy constructor/operator
 	Object_undefined(const Object_undefined& src) = delete;
 	Object_undefined& operator=(const Object_undefined& src) = delete;

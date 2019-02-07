@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_datetime::KlassEx
+// Klass_datetime
 //------------------------------------------------------------------------------
-Object_datetime::KlassEx Object_datetime::klass("datetime");
+KlassT_datetime Klass_datetime("datetime");
 
-void Object_datetime::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_datetime::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

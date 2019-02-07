@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_klass
+//------------------------------------------------------------------------------
+class KlassT_klass : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_klass Klass_klass;
+
+//------------------------------------------------------------------------------
 // Object_klass
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_klass : public Object {
@@ -16,24 +27,17 @@ public:
 	Gurax_DeclareReferable(Object_klass);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_klass");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	Klass* _pKlassThis;
 public:
 	// Constructor
 	Object_klass() = delete;
-	explicit Object_klass(Klass& klassThis) : Object(klass), _pKlassThis(&klassThis) {}
+	explicit Object_klass(Klass& klassThis) : Object(Klass_klass), _pKlassThis(&klassThis) {}
 	// Copy constructor/operator
-	Object_klass(const Object_klass& src) : Object(klass), _pKlassThis(src._pKlassThis) {}
+	Object_klass(const Object_klass& src) : Object(Klass_klass), _pKlassThis(src._pKlassThis) {}
 	Object_klass& operator=(const Object_klass& src) { _pKlassThis = src._pKlassThis; return *this; }
 	// Move constructor/operator
-	Object_klass(Object_klass&& src) : Object(klass), _pKlassThis(src._pKlassThis) {}
+	Object_klass(Object_klass&& src) : Object(Klass_klass), _pKlassThis(src._pKlassThis) {}
 	Object_klass& operator=(Object_klass&& src) noexcept { _pKlassThis = src._pKlassThis; return *this; }
 protected:
 	// Destructor

@@ -8,6 +8,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass_list
+//------------------------------------------------------------------------------
+class KlassT_list : public Klass {
+public:
+	using Klass::Klass;
+	virtual void DoPrepare(Frame* pFrame) override;
+};
+
+extern KlassT_list Klass_list;
+
+//------------------------------------------------------------------------------
 // Object_list
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Object_list : public Object {
@@ -16,26 +27,19 @@ public:
 	Gurax_DeclareReferable(Object_list);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Object_list");
-	// Class declaration
-	class KlassEx : public Klass {
-	public:
-		using Klass::Klass;
-		virtual void DoPrepare(Frame* pFrame) override;
-	};
-	static KlassEx klass;
 private:
 	RefPtr<ObjectTypedOwner> _pObjectTypedOwner;
 public:
 	// Constructor
-	Object_list() : Object(klass), _pObjectTypedOwner(new ObjectTypedOwner()) {}
-	explicit Object_list(ObjectTypedOwner* pObjectTypedOwner) : Object(klass), _pObjectTypedOwner(pObjectTypedOwner) {}
+	Object_list() : Object(Klass_list), _pObjectTypedOwner(new ObjectTypedOwner()) {}
+	explicit Object_list(ObjectTypedOwner* pObjectTypedOwner) : Object(Klass_list), _pObjectTypedOwner(pObjectTypedOwner) {}
 	// Copy constructor/operator
-	Object_list(const Object_list& src) : Object(klass), _pObjectTypedOwner(src._pObjectTypedOwner->CloneDeep()) {}
+	Object_list(const Object_list& src) : Object(Klass_list), _pObjectTypedOwner(src._pObjectTypedOwner->CloneDeep()) {}
 	Object_list& operator=(const Object_list& src) {
 		_pObjectTypedOwner.reset(src._pObjectTypedOwner->CloneDeep()); return *this;
 	}
 	// Move constructor/operator
-	Object_list(Object_list&& src) : Object(klass), _pObjectTypedOwner(src._pObjectTypedOwner.release()) {}
+	Object_list(Object_list&& src) : Object(Klass_list), _pObjectTypedOwner(src._pObjectTypedOwner.release()) {}
 	Object_list& operator=(Object_list&& src) noexcept {
 		_pObjectTypedOwner.reset(src._pObjectTypedOwner.release()); return *this;
 	}

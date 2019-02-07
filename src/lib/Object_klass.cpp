@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Object_klass::KlassEx
+// Klass_klass
 //------------------------------------------------------------------------------
-Object_klass::KlassEx Object_klass::klass("klass");
+KlassT_klass Klass_klass("klass");
 
-void Object_klass::KlassEx::DoPrepare(Frame* pFrame)
+void KlassT_klass::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Object::klass, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 
