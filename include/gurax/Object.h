@@ -7,6 +7,7 @@
 #include "MemoryPool.h"
 #include "Referable.h"
 #include "Symbol.h"
+#include "Frame.h"
 
 namespace Gurax {
 
@@ -57,6 +58,7 @@ protected:
 	const Symbol* _pSymbol;
 	UInt32 _flags;
 	RefPtr<ObjectMap> _pObjectMap;
+	RefPtr<Frame::WeakPtr> _pwFrame;
 private:
 	static SeqId _seqIdNext;
 	static const SeqId SeqId_Invalid = 0;
@@ -82,6 +84,7 @@ public:
 	Klass* GetParent() const { return _pKlassParent; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
+	void SetFrame(Frame* pFrame) { _pwFrame.reset(pFrame->GetWeakPtr()); }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {

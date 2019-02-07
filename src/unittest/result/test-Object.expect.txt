@@ -1,17 +1,17 @@
 [Object]
-foo1:number = 1.000000
-foo2:number = 2.000000
-foo3:nil = nil
-foo4:bool = true
-foo5:bool = false
-foo6:string = '6'
-foo7:number = 7.000000
-foo8:undefined = undefined
-foo9:number = 0.000000
-fooA:string = ''
-bool         1 1 0 0
-number       1 0 1 0
-string       1 0 0 1
+foo1:Number = 1.000000
+foo2:Number = 2.000000
+foo3:Nil = nil
+foo4:Bool = true
+foo5:Bool = false
+foo6:String = '6'
+foo7:Number = 7.000000
+foo8:Undefined = undefined
+foo9:Number = 0.000000
+fooA:String = ''
+Bool         1 1 0 0
+Number       1 0 1 0
+String       1 0 0 1
 ['Hayasaka Hiroko', 'Hannda Yumiko', 'Honma Chise', 'Kawahata Nana', 'Kikuchi Takao', 'Iwai Michiko', 'Kasai Satoshi', 'Shima Masashi', 'Suenaga Rena', 'Yokokawa Fumiyo', 'Yamanaka Mayuko', 'Aoi Tatsuya', 'Tachikawa Hiroaki', 'Tsutsumi Manami', 'Sugimura Shunsuke', 'Wakabayashi Mitsuru', 'Maehara Tatsuhito', 'Chiba Hiroyuki', 'Yoshioka Stmaria', 'Kameyama Mitsunori', 'Tamura Meisa', 'Taue Takashi', 'Yanagiya Yuujirou', 'Inagaki Ouga', 'Kasahara Shidou', 'Nakayama Yoshiki', 'Takaya Masahiko', 'Nagao Erika', 'Fujisawa Haruomi', 'Kasai Ayaka', 'Kishimoto Natsumi', 'Umezawa Yukiya', 'Kawahara Suzuka', 'Suwa Takashi', 'Nakao Haruka', 'Ikegami Yui', 'Miki Seiji', 'Oochi Noriko', 'Katahira Hideki', 'Yokoyama Yuuji', 'Fujii Airi', 'Obata Ikuko', 'Mifune Yuu', 'Kadotani Takao', 'Ishida Ayame', 'Honma Noriko', 'Ochiai Kikuo', 'Harada Misako']'Aoi Tatsuya''Chiba Hiroyuki''Fujii Airi''Fujisawa Haruomi''Hannda Yumiko''Harada Misako''Hayasaka Hiroko''Honma Chise''Honma Noriko''Ikegami Yui''Inagaki Ouga''Ishida Ayame''Iwai Michiko''Kadotani Takao''Kameyama Mitsunori''Kasahara Shidou''Kasai Ayaka''Kasai Satoshi''Katahira Hideki''Kawahara Suzuka''Kawahata Nana''Kikuchi Takao''Kishimoto Natsumi''Maehara Tatsuhito''Mifune Yuu''Miki Seiji''Nagao Erika''Nakao Haruka''Nakayama Yoshiki''Obata Ikuko''Ochiai Kikuo''Oochi Noriko''Shima Masashi''Suenaga Rena''Sugimura Shunsuke''Suwa Takashi''Tachikawa Hiroaki''Takaya Masahiko''Tamura Meisa''Taue Takashi''Tsutsumi Manami''Umezawa Yukiya''Wakabayashi Mitsuru''Yamanaka Mayuko''Yanagiya Yuujirou''Yokokawa Fumiyo''Yokoyama Yuuji''Yoshioka Stmaria''Yoshioka Stmaria''Yokoyama Yuuji''Yokokawa Fumiyo''Yanagiya Yuujirou''Yamanaka Mayuko''Wakabayashi Mitsuru''Umezawa Yukiya''Tsutsumi Manami''Taue Takashi''Tamura Meisa''Takaya Masahiko''Tachikawa Hiroaki''Suwa Takashi''Sugimura Shunsuke''Suenaga Rena''Shima Masashi''Oochi Noriko''Ochiai Kikuo''Obata Ikuko''Nakayama Yoshiki''Nakao Haruka''Nagao Erika''Miki Seiji''Mifune Yuu''Maehara Tatsuhito''Kishimoto Natsumi''Kikuchi Takao''Kawahata Nana''Kawahara Suzuka''Katahira Hideki''Kasai Satoshi''Kasai Ayaka''Kasahara Shidou''Kameyama Mitsunori''Kadotani Takao''Iwai Michiko''Ishida Ayame''Inagaki Ouga''Ikegami Yui''Honma Noriko''Honma Chise''Hayasaka Hiroko''Harada Misako''Hannda Yumiko''Fujisawa Haruomi''Fujii Airi''Chiba Hiroyuki''Aoi Tatsuya'{'Aoi Tatsuya' => 'aoi_tatsuya@example.com', 'Chiba Hiroyuki' => 'chiba_hiroyuki@example.com', 'Fujii Airi' => 'fujii_airi@example.com', 'Fujisawa Haruomi' => 'fujisawa_haruomi@example.com', 'Hannda Yumiko' => 'hannda_yumiko@example.com', 'Harada Misako' => 'harada_misako@example.com', 'Hayasaka Hiroko' => 'hayasaka_hiroko@example.com', 'Honma Chise' => 'honma_chise@example.com', 'Honma Noriko' => 'honma_noriko@example.com', 'Ikegami Yui' => 'ikegami_yui@example.com', 'Inagaki Ouga' => 'inagaki_ouga@example.com', 'Ishida Ayame' => 'ishida_ayame@example.com', 'Iwai Michiko' => 'iwai_michiko@example.com', 'Kadotani Takao' => 'kadotani_takao@example.com', 'Kameyama Mitsunori' => 'kameyama_mitsunori@example.com', 'Kasahara Shidou' => 'kasahara_shidou@example.com', 'Kasai Ayaka' => 'kasai_ayaka@example.com', 'Kasai Satoshi' => 'kasai_satoshi@example.com', 'Katahira Hideki' => 'katahira_hideki@example.com', 'Kawahara Suzuka' => 'kawahara_suzuka@example.com', 'Kawahata Nana' => 'kawahata_nana@example.com', 'Kikuchi Takao' => 'kikuchi_takao@example.com', 'Kishimoto Natsumi' => 'kishimoto_natsumi@example.com', 'Maehara Tatsuhito' => 'maehara_tatsuhito@example.com', 'Mifune Yuu' => 'mifune_yuu@example.com', 'Miki Seiji' => 'miki_seiji@example.com', 'Nagao Erika' => 'nagao_erika@example.com', 'Nakao Haruka' => 'nakao_haruka@example.com', 'Nakayama Yoshiki' => 'nakayama_yoshiki@example.com', 'Obata Ikuko' => 'obata_ikuko@example.com', 'Ochiai Kikuo' => 'ochiai_kikuo@example.com', 'Oochi Noriko' => 'oochi_noriko@example.com', 'Shima Masashi' => 'shima_masashi@example.com', 'Suenaga Rena' => 'suenaga_rena@example.com', 'Sugimura Shunsuke' => 'sugimura_shunsuke@example.com', 'Suwa Takashi' => 'suwa_takashi@example.com', 'Tachikawa Hiroaki' => 'tachikawa_hiroaki@example.com', 'Takaya Masahiko' => 'takaya_masahiko@example.com', 'Tamura Meisa' => 'tamura_meisa@example.com', 'Taue Takashi' => 'taue_takashi@example.com', 'Tsutsumi Manami' => 'tsutsumi_manami@example.com', 'Umezawa Yukiya' => 'umezawa_yukiya@example.com', 'Wakabayashi Mitsuru' => 'wakabayashi_mitsuru@example.com', 'Yamanaka Mayuko' => 'yamanaka_mayuko@example.com', 'Yanagiya Yuujirou' => 'yanagiya_yuujirou@example.com', 'Yokokawa Fumiyo' => 'yokokawa_fumiyo@example.com', 'Yokoyama Yuuji' => 'yokoyama_yuuji@example.com', 'Yoshioka Stmaria' => 'yoshioka_stmaria@example.com'}'Hayasaka Hiroko': 'hayasaka_hiroko@example.com'
 'Hannda Yumiko': 'hannda_yumiko@example.com'
 'Honma Chise': 'honma_chise@example.com'

@@ -21,7 +21,7 @@ protected:
 	RefPtr<Frame> _pFrame;
 public:
 	// Constructor
-	Module() : _pHelpProvider(new HelpProvider()), _pFrame(new Frame_Node()) {}
+	Module() : _pHelpProvider(new HelpProvider()), _pFrame(Frame::CreateNode()) {}
 	// Copy constructor/operator
 	Module(const Module& src) = delete;
 	Module& operator=(const Module& src) = delete;

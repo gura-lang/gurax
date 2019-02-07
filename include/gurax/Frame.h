@@ -3,12 +3,13 @@
 //==============================================================================
 #ifndef GURAX_FRAME_H
 #define GURAX_FRAME_H
-#include "Object.h"
 #include "MemoryPool.h"
 
 namespace Gurax {
 
 class Function;
+class Klass;
+class Object;
 
 //------------------------------------------------------------------------------
 // Frame
@@ -34,6 +35,7 @@ protected:
 	// Destructor
 	virtual ~Frame() = default;
 public:
+	static Frame* CreateNode();
 	bool IsNode() const { return _type == Type::Node; }
 	bool IsBranch() const { return _type == Type::Branch; }
 	Frame* Expand() const;
@@ -45,29 +47,6 @@ public:
 	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
 	void AssignKlass(Klass& klass);
 	void AssignFunction(Function* pFunction);
-};
-
-//------------------------------------------------------------------------------
-// Frame_Node
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Node : public Frame {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Frame_Node);
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Node");
-protected:
-	RefPtr<ObjectMap> _pObjectMap;
-public:
-	// Constructor
-	Frame_Node() : Frame(Type::Node), _pObjectMap(new ObjectMap()) {}
-public:
-	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
-		_pObjectMap->Assign(pSymbol, pObject);
-	}
-	virtual Object* LookupObject(const Symbol* pSymbol) const override {
-		return _pObjectMap->Lookup(pSymbol);
-	}
 };
 
 //------------------------------------------------------------------------------

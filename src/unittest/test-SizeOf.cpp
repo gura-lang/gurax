@@ -12,8 +12,6 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(Argument);
 	Gurax_PrintSizeOf(Attribute);
 	Gurax_PrintSizeOf(DateTime);
-	Gurax_PrintSizeOf(Frame_Node);
-	Gurax_PrintSizeOf(Frame_Branch);
 	Gurax_PrintSizeOf(ObjectOwner);
 	Gurax_PrintSizeOf(ObjectStack);
 	Gurax_PrintSizeOf(Object_Any);

@@ -6,8 +6,36 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Frame_Node
+//------------------------------------------------------------------------------
+class Frame_Node : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Node);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Node");
+protected:
+	RefPtr<ObjectMap> _pObjectMap;
+public:
+	// Constructor
+	Frame_Node() : Frame(Type::Node), _pObjectMap(new ObjectMap()) {}
+public:
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
+		_pObjectMap->Assign(pSymbol, pObject);
+	}
+	virtual Object* LookupObject(const Symbol* pSymbol) const override {
+		return _pObjectMap->Lookup(pSymbol);
+	}
+};
+
+//------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
+Frame* Frame::CreateNode()
+{
+	return new Frame_Node();
+}
+
 Frame* Frame::Expand() const
 {
 	return new Frame_Branch(Reference(), new Frame_Node());
@@ -55,6 +83,7 @@ Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
 
 void Frame::AssignKlass(Klass& klass)
 {
+	klass.SetFrame(this);
 	AssignObject(klass.GetSymbol(), new Object_Klass(klass));
 }
 
@@ -63,10 +92,6 @@ void Frame::AssignFunction(Function* pFunction)
 	pFunction->SetFrame(this);
 	AssignObject(pFunction->GetSymbol(), new Object_Function(pFunction));
 }
-
-//------------------------------------------------------------------------------
-// Frame_Node
-//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Frame_Branch
