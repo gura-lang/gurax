@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_module.cpp
+// Object_Module.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_module
+// Object_Module
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_module
+// Klass_Module
 //------------------------------------------------------------------------------
-KlassT_module Klass_module("module");
+KlassT_Module Klass_Module("module");
 
-void KlassT_module::DoPrepare(Frame* pFrame)
+void KlassT_Module::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

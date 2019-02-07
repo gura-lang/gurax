@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_bool.cpp
+// Object_Bool.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_bool
+// Object_Bool
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_bool
+// Klass_Bool
 //------------------------------------------------------------------------------
-KlassT_bool Klass_bool("bool");
+KlassT_Bool Klass_Bool("bool");
 
-void KlassT_bool::DoPrepare(Frame* pFrame)
+void KlassT_Bool::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

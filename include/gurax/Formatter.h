@@ -80,15 +80,15 @@ public:
 		virtual bool IsEnd() override { return false; }
 		virtual Object* FetchInt() override {
 			Int num = va_arg(_ap, Int);
-			return new Object_number(num);
+			return new Object_Number(num);
 		}
 		virtual Object* FetchDouble() override {
 			Double num = va_arg(_ap, Double);
-			return new Object_number(num);
+			return new Object_Number(num);
 		}
 		virtual Object* FetchString() override {
 			char* str = va_arg(_ap, char*);
-			return new Object_stringptr(str);
+			return new Object_StringPtr(str);
 		}
 	};
 private:

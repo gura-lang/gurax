@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_number.h
+// Object_Number.h
 //==============================================================================
 #ifndef GURAX_OBJECT_NUMBER_H
 #define GURAX_OBJECT_NUMBER_H
@@ -8,39 +8,39 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_number
+// Klass_Number
 //------------------------------------------------------------------------------
-class KlassT_number : public Klass {
+class KlassT_Number : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_number Klass_number;
+extern KlassT_Number Klass_Number;
 
 //------------------------------------------------------------------------------
-// Object_number
+// Object_Number
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_number : public Object {
+class GURAX_DLLDECLARE Object_Number : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_number);
+	Gurax_DeclareReferable(Object_Number);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_number");
+	Gurax_MemoryPoolAllocator("Object_Number");
 private:
 	Double _num;
 public:
 	// Constructor
-	explicit Object_number(Double num = 0.) : Object(Klass_number), _num(num) {}
+	explicit Object_Number(Double num = 0.) : Object(Klass_Number), _num(num) {}
 	// Copy constructor/operator
-	Object_number(const Object_number& src) : Object(Klass_number), _num(src._num) {}
-	Object_number& operator=(const Object_number& src) { _num = src._num; return *this; }
+	Object_Number(const Object_Number& src) : Object(Klass_Number), _num(src._num) {}
+	Object_Number& operator=(const Object_Number& src) { _num = src._num; return *this; }
 	// Move constructor/operator
-	Object_number(Object_number&& src) : Object(Klass_number), _num(src._num) {}
-	Object_number& operator=(Object_number&& src) noexcept { _num = src._num; return *this; }
+	Object_Number(Object_Number&& src) : Object(Klass_Number), _num(src._num) {}
+	Object_Number& operator=(Object_Number&& src) noexcept { _num = src._num; return *this; }
 protected:
 	// Destructor
-	~Object_number() = default;
+	~Object_Number() = default;
 public:
 	size_t GetSizeT() const		{ return static_cast<size_t>(_num); }
 	Bool GetBool() const		{ return static_cast<Bool>(_num); }
@@ -67,11 +67,11 @@ public:
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetSizeT(); }
 	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) && GetDouble() == dynamic_cast<const Object_number*>(pObject)->GetDouble();
+		return IsSameType(pObject) && GetDouble() == dynamic_cast<const Object_Number*>(pObject)->GetDouble();
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetDouble() < dynamic_cast<const Object_number*>(pObject)->GetDouble() :
+			GetDouble() < dynamic_cast<const Object_Number*>(pObject)->GetDouble() :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

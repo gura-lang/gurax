@@ -65,11 +65,11 @@ bool Formatter::Format(const char* format, Source&& source)
 				formatterFlags.plusMode = FormatterFlags::PlusMode::Plus;
 			} else if (ch == '*') {
 				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->IsType(Klass_number)) {
+				if (!pObject->IsType(Klass_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
-				formatterFlags.fieldMinWidth = dynamic_cast<Object_number*>(pObject.get())->GetInt();
+				formatterFlags.fieldMinWidth = dynamic_cast<Object_Number*>(pObject.get())->GetInt();
 				if (formatterFlags.fieldMinWidth < 0) {
 					formatterFlags.leftAlignFlag = true;
 					formatterFlags.fieldMinWidth = -formatterFlags.fieldMinWidth;
@@ -158,11 +158,11 @@ bool Formatter::Format(const char* format, Source&& source)
 		case Stat::PrecisionPre: {
 			if (ch == '*') {
 				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->IsType(Klass_number)) {
+				if (!pObject->IsType(Klass_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
-				formatterFlags.precision = dynamic_cast<Object_number*>(pObject.get())->GetInt();
+				formatterFlags.precision = dynamic_cast<Object_Number*>(pObject.get())->GetInt();
 				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::PREC_Default;
 				if (source.IsEnd()) {
 					IssueError_NotEnoughArguments();

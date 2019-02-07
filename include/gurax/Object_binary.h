@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_binary.h
+// Object_Binary.h
 //==============================================================================
 #ifndef GURAX_OBJECT_BINARY_H
 #define GURAX_OBJECT_BINARY_H
@@ -8,40 +8,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_binary
+// Klass_Binary
 //------------------------------------------------------------------------------
-class KlassT_binary : public Klass {
+class KlassT_Binary : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_binary Klass_binary;
+extern KlassT_Binary Klass_Binary;
 
 //------------------------------------------------------------------------------
-// Object_binary
+// Object_Binary
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_binary : public Object {
+class GURAX_DLLDECLARE Object_Binary : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_binary);
+	Gurax_DeclareReferable(Object_Binary);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_binary");
+	Gurax_MemoryPoolAllocator("Object_Binary");
 private:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
-	explicit Object_binary(BinaryReferable* pBinary) : Object(Klass_binary), _pBinary(pBinary) {}
-	explicit Object_binary(Binary str) : Object(Klass_binary), _pBinary(new BinaryReferable(std::move(str))) {}
+	explicit Object_Binary(BinaryReferable* pBinary) : Object(Klass_Binary), _pBinary(pBinary) {}
+	explicit Object_Binary(Binary str) : Object(Klass_Binary), _pBinary(new BinaryReferable(std::move(str))) {}
 	// Copy constructor/operator
-	Object_binary(const Object_binary& src) : Object(Klass_binary), _pBinary(src._pBinary->Reference()) {}
-	Object_binary& operator=(const Object_binary& src) { _pBinary.reset(src._pBinary->Reference()); return *this; }
+	Object_Binary(const Object_Binary& src) : Object(Klass_Binary), _pBinary(src._pBinary->Reference()) {}
+	Object_Binary& operator=(const Object_Binary& src) { _pBinary.reset(src._pBinary->Reference()); return *this; }
 	// Move constructor/operator
-	Object_binary(Object_binary&& src) : Object(Klass_binary), _pBinary(src._pBinary->Reference()) {}
-	Object_binary& operator=(Object_binary&& src) noexcept { _pBinary.reset(src._pBinary->Reference()); return *this; }
+	Object_Binary(Object_Binary&& src) : Object(Klass_Binary), _pBinary(src._pBinary->Reference()) {}
+	Object_Binary& operator=(Object_Binary&& src) noexcept { _pBinary.reset(src._pBinary->Reference()); return *this; }
 protected:
 	// Destructor
-	~Object_binary() = default;
+	~Object_Binary() = default;
 public:
 	Binary& GetBinary() { return _pBinary->GetBinary(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
@@ -53,11 +53,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetBinary().IsEqualTo(dynamic_cast<const Object_binary*>(pObject)->GetBinary());
+			GetBinary().IsEqualTo(dynamic_cast<const Object_Binary*>(pObject)->GetBinary());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetBinary().IsLessThan(dynamic_cast<const Object_binary*>(pObject)->GetBinary()) :
+			GetBinary().IsLessThan(dynamic_cast<const Object_Binary*>(pObject)->GetBinary()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

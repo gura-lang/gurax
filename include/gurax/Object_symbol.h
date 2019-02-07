@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_symbol.h
+// Object_Symbol.h
 //==============================================================================
 #ifndef GURAX_OBJECT_SYMBOL_H
 #define GURAX_OBJECT_SYMBOL_H
@@ -8,39 +8,39 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_symbol
+// Klass_Symbol
 //------------------------------------------------------------------------------
-class KlassT_symbol : public Klass {
+class KlassT_Symbol : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_symbol Klass_symbol;
+extern KlassT_Symbol Klass_Symbol;
 
 //------------------------------------------------------------------------------
-// Object_symbol
+// Object_Symbol
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_symbol : public Object {
+class GURAX_DLLDECLARE Object_Symbol : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_symbol);
+	Gurax_DeclareReferable(Object_Symbol);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_symbol");
+	Gurax_MemoryPoolAllocator("Object_Symbol");
 private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	explicit Object_symbol(const Symbol* pSymbol) : Object(Klass_symbol), _pSymbol(pSymbol) {}
+	explicit Object_Symbol(const Symbol* pSymbol) : Object(Klass_Symbol), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Object_symbol(const Object_symbol& src) : Object(Klass_symbol), _pSymbol(src._pSymbol) {}
-	Object_symbol& operator=(const Object_symbol& src) { _pSymbol = src._pSymbol; return *this; }
+	Object_Symbol(const Object_Symbol& src) : Object(Klass_Symbol), _pSymbol(src._pSymbol) {}
+	Object_Symbol& operator=(const Object_Symbol& src) { _pSymbol = src._pSymbol; return *this; }
 	// Move constructor/operator
-	Object_symbol(Object_symbol&& src) : Object(Klass_symbol), _pSymbol(src._pSymbol) {}
-	Object_symbol& operator=(Object_symbol&& src) noexcept { _pSymbol = src._pSymbol; return *this; }
+	Object_Symbol(Object_Symbol&& src) : Object(Klass_Symbol), _pSymbol(src._pSymbol) {}
+	Object_Symbol& operator=(Object_Symbol&& src) noexcept { _pSymbol = src._pSymbol; return *this; }
 protected:
 	// Destructor
-	~Object_symbol() = default;
+	~Object_Symbol() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -51,11 +51,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetSymbol()->IsEqualTo(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol());
+			GetSymbol()->IsEqualTo(dynamic_cast<const Object_Symbol*>(pObject)->GetSymbol());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Object_symbol*>(pObject)->GetSymbol()) :
+			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Object_Symbol*>(pObject)->GetSymbol()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

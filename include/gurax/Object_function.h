@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_function.h
+// Object_Function.h
 //==============================================================================
 #ifndef GURAX_OBJECT_FUNCTION_H
 #define GURAX_OBJECT_FUNCTION_H
@@ -8,40 +8,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_function
+// Klass_Function
 //------------------------------------------------------------------------------
-class KlassT_function : public Klass {
+class KlassT_Function : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_function Klass_function;
+extern KlassT_Function Klass_Function;
 
 //------------------------------------------------------------------------------
-// Object_function
+// Object_Function
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_function : public Object {
+class GURAX_DLLDECLARE Object_Function : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_function);
+	Gurax_DeclareReferable(Object_Function);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_function");
+	Gurax_MemoryPoolAllocator("Object_Function");
 private:
 	RefPtr<Function> _pFunction;
 public:
 	// Constructor
-	Object_function() = delete;
-	explicit Object_function(Function* pFunction) : Object(Klass_function), _pFunction(pFunction) {}
+	Object_Function() = delete;
+	explicit Object_Function(Function* pFunction) : Object(Klass_Function), _pFunction(pFunction) {}
 	// Copy constructor/operator
-	Object_function(const Object_function& src) : Object(Klass_function), _pFunction(src._pFunction->Reference()) {}
-	Object_function& operator=(const Object_function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }
+	Object_Function(const Object_Function& src) : Object(Klass_Function), _pFunction(src._pFunction->Reference()) {}
+	Object_Function& operator=(const Object_Function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }
 	// Move constructor/operator
-	Object_function(Object_function&& src) : Object(Klass_function), _pFunction(src._pFunction.release()) {}
-	Object_function& operator=(Object_function&& src) noexcept { _pFunction.reset(src._pFunction.release()); return *this; }
+	Object_Function(Object_Function&& src) : Object(Klass_Function), _pFunction(src._pFunction.release()) {}
+	Object_Function& operator=(Object_Function&& src) noexcept { _pFunction.reset(src._pFunction.release()); return *this; }
 protected:
 	// Destructor
-	~Object_function() = default;
+	~Object_Function() = default;
 public:
 	Function& GetFunction() { return *_pFunction; }
 	const Function& GetFunction() const { return *_pFunction; }
@@ -53,11 +53,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetFunction().IsEqualTo(dynamic_cast<const Object_function*>(pObject)->GetFunction());
+			GetFunction().IsEqualTo(dynamic_cast<const Object_Function*>(pObject)->GetFunction());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetFunction().IsLessThan(dynamic_cast<const Object_function*>(pObject)->GetFunction()) :
+			GetFunction().IsLessThan(dynamic_cast<const Object_Function*>(pObject)->GetFunction()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

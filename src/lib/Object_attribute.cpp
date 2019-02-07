@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_attribute.cpp
+// Object_Attribute.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_attribute
+// Object_Attribute
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_attribute
+// Klass_Attribute
 //------------------------------------------------------------------------------
-KlassT_attribute Klass_attribute("attribute");
+KlassT_Attribute Klass_Attribute("attribute");
 
-void KlassT_attribute::DoPrepare(Frame* pFrame)
+void KlassT_Attribute::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_symbol.cpp
+// Object_Symbol.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_symbol
+// Object_Symbol
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_symbol
+// Klass_Symbol
 //------------------------------------------------------------------------------
-KlassT_symbol Klass_symbol("symbol");
+KlassT_Symbol Klass_Symbol("symbol");
 
-void KlassT_symbol::DoPrepare(Frame* pFrame)
+void KlassT_Symbol::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

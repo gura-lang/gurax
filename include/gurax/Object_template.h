@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_template.h
+// Object_Template.h
 //==============================================================================
 #ifndef GURAX_OBJECT_TEMPLATE_H
 #define GURAX_OBJECT_TEMPLATE_H
@@ -9,40 +9,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_template
+// Klass_Template
 //------------------------------------------------------------------------------
-class KlassT_template : public Klass {
+class KlassT_Template : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_template Klass_template;
+extern KlassT_Template Klass_Template;
 
 //------------------------------------------------------------------------------
-// Object_template
+// Object_Template
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_template : public Object {
+class GURAX_DLLDECLARE Object_Template : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_template);
+	Gurax_DeclareReferable(Object_Template);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_template");
+	Gurax_MemoryPoolAllocator("Object_Template");
 private:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor
-	Object_template() = delete;
-	explicit Object_template(Template *pTempl) : Object(Klass_template), _pTempl(pTempl) {}
+	Object_Template() = delete;
+	explicit Object_Template(Template *pTempl) : Object(Klass_Template), _pTempl(pTempl) {}
 	// Copy constructor/operator
-	Object_template(const Object_template& src) : Object(Klass_template), _pTempl(src._pTempl->Reference()) {}
-	Object_template& operator=(const Object_template& src) { _pTempl.reset(src._pTempl->Reference()); return *this; }
+	Object_Template(const Object_Template& src) : Object(Klass_Template), _pTempl(src._pTempl->Reference()) {}
+	Object_Template& operator=(const Object_Template& src) { _pTempl.reset(src._pTempl->Reference()); return *this; }
 	// Move constructor/operator
-	Object_template(Object_template&& src) : Object(Klass_template), _pTempl(src._pTempl.release()) {}
-	Object_template& operator=(Object_template&& src) noexcept { _pTempl.reset(src._pTempl.release()); return *this; }
+	Object_Template(Object_Template&& src) : Object(Klass_Template), _pTempl(src._pTempl.release()) {}
+	Object_Template& operator=(Object_Template&& src) noexcept { _pTempl.reset(src._pTempl.release()); return *this; }
 protected:
 	// Destructor
-	~Object_template() = default;
+	~Object_Template() = default;
 public:
 	Template& GetTemplate() { return *_pTempl; }
 	const Template& GetTemplate() const { return *_pTempl; }
@@ -54,11 +54,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetTemplate().IsEqualTo(dynamic_cast<const Object_template*>(pObject)->GetTemplate());
+			GetTemplate().IsEqualTo(dynamic_cast<const Object_Template*>(pObject)->GetTemplate());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetTemplate().IsLessThan(dynamic_cast<const Object_template*>(pObject)->GetTemplate()) :
+			GetTemplate().IsLessThan(dynamic_cast<const Object_Template*>(pObject)->GetTemplate()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

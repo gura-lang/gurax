@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_iterator.cpp
+// Object_Iterator.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_iterator
+// Object_Iterator
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_iterator
+// Klass_Iterator
 //------------------------------------------------------------------------------
-KlassT_iterator Klass_iterator("iterator");
+KlassT_Iterator Klass_Iterator("iterator");
 
-void KlassT_iterator::DoPrepare(Frame* pFrame)
+void KlassT_Iterator::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

@@ -11,8 +11,8 @@ Gurax_TesterEntry(Stream)
 	int n = 123456;
 	Stream::COut->Printf("Hello %s World %d\n", str, n);
 	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
-	pObjOwner->push_back(new Object_string(str));
-	pObjOwner->push_back(new Object_number(n));
+	pObjOwner->push_back(new Object_String(str));
+	pObjOwner->push_back(new Object_Number(n));
 	Stream::COut->PrintFmt("Hello %s World %d\n", *pObjOwner);
 }
 

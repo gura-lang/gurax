@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_binary.cpp
+// Object_Binary.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_binary
+// Object_Binary
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_binary
+// Klass_Binary
 //------------------------------------------------------------------------------
-KlassT_binary Klass_binary("binary");
+KlassT_Binary Klass_Binary("binary");
 
-void KlassT_binary::DoPrepare(Frame* pFrame)
+void KlassT_Binary::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

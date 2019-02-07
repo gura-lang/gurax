@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_bool.h
+// Object_Bool.h
 //==============================================================================
 #ifndef GURAX_OBJECT_BOOL_H
 #define GURAX_OBJECT_BOOL_H
@@ -8,39 +8,39 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_bool
+// Klass_Bool
 //------------------------------------------------------------------------------
-class KlassT_bool : public Klass {
+class KlassT_Bool : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_bool Klass_bool;
+extern KlassT_Bool Klass_Bool;
 
 //------------------------------------------------------------------------------
-// Object_bool
+// Object_Bool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_bool : public Object {
+class GURAX_DLLDECLARE Object_Bool : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_bool);
+	Gurax_DeclareReferable(Object_Bool);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_bool");
+	Gurax_MemoryPoolAllocator("Object_Bool");
 private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_bool(bool flag) : Object(Klass_bool), _flag(flag) {}
+	explicit Object_Bool(bool flag) : Object(Klass_Bool), _flag(flag) {}
 	// Copy constructor/operator
-	Object_bool(const Object_bool& src) : Object(Klass_bool), _flag(src._flag) {}
-	Object_bool& operator=(const Object_bool& src) { _flag = src._flag; return *this; }
+	Object_Bool(const Object_Bool& src) : Object(Klass_Bool), _flag(src._flag) {}
+	Object_Bool& operator=(const Object_Bool& src) { _flag = src._flag; return *this; }
 	// Move constructor/operator
-	Object_bool(Object_bool&& src) : Object(Klass_bool), _flag(src._flag) {}
-	Object_bool& operator=(Object_bool&& src) noexcept { _flag = src._flag; return *this; }
+	Object_Bool(Object_Bool&& src) : Object(Klass_Bool), _flag(src._flag) {}
+	Object_Bool& operator=(Object_Bool&& src) noexcept { _flag = src._flag; return *this; }
 protected:
 	// Destructor
-	~Object_bool() = default;
+	~Object_Bool() = default;
 public:
 	bool GetBool() const { return _flag; }
 public:
@@ -50,11 +50,11 @@ public:
 		return static_cast<size_t>(GetBool());
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) && GetBool() == dynamic_cast<const Object_bool*>(pObject)->GetBool();
+		return IsSameType(pObject) && GetBool() == dynamic_cast<const Object_Bool*>(pObject)->GetBool();
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetBool() < dynamic_cast<const Object_bool*>(pObject)->GetBool() :
+			GetBool() < dynamic_cast<const Object_Bool*>(pObject)->GetBool() :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

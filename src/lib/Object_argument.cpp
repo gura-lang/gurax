@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_argument.cpp
+// Object_Argument.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_argument
+// Object_Argument
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_argument
+// Klass_Argument
 //------------------------------------------------------------------------------
-KlassT_argument Klass_argument("argument");
+KlassT_Argument Klass_Argument("argument");
 
-void KlassT_argument::DoPrepare(Frame* pFrame)
+void KlassT_Argument::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

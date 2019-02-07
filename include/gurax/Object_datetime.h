@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_datetime.h
+// Object_DateTime.h
 //==============================================================================
 #ifndef GURAX_OBJECT_DATETIME_H
 #define GURAX_OBJECT_DATETIME_H
@@ -9,40 +9,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_datetime
+// Klass_DateTime
 //------------------------------------------------------------------------------
-class KlassT_datetime : public Klass {
+class KlassT_DateTime : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_datetime Klass_datetime;
+extern KlassT_DateTime Klass_DateTime;
 
 //------------------------------------------------------------------------------
-// Object_datetime
+// Object_DateTime
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_datetime : public Object {
+class GURAX_DLLDECLARE Object_DateTime : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_datetime);
+	Gurax_DeclareReferable(Object_DateTime);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_datetime");
+	Gurax_MemoryPoolAllocator("Object_DateTime");
 private:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor
-	Object_datetime() = delete;
-	explicit Object_datetime(DateTime *pDateTime) : Object(Klass_datetime), _pDateTime(pDateTime) {}
+	Object_DateTime() = delete;
+	explicit Object_DateTime(DateTime *pDateTime) : Object(Klass_DateTime), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
-	Object_datetime(const Object_datetime& src) : Object(Klass_datetime), _pDateTime(src._pDateTime->Reference()) {}
-	Object_datetime& operator=(const Object_datetime& src) { _pDateTime.reset(src._pDateTime->Reference()); return *this; }
+	Object_DateTime(const Object_DateTime& src) : Object(Klass_DateTime), _pDateTime(src._pDateTime->Reference()) {}
+	Object_DateTime& operator=(const Object_DateTime& src) { _pDateTime.reset(src._pDateTime->Reference()); return *this; }
 	// Move constructor/operator
-	Object_datetime(Object_datetime&& src) : Object(Klass_datetime), _pDateTime(src._pDateTime.release()) {}
-	Object_datetime& operator=(Object_datetime&& src) noexcept { _pDateTime.reset(src._pDateTime.release()); return *this; }
+	Object_DateTime(Object_DateTime&& src) : Object(Klass_DateTime), _pDateTime(src._pDateTime.release()) {}
+	Object_DateTime& operator=(Object_DateTime&& src) noexcept { _pDateTime.reset(src._pDateTime.release()); return *this; }
 protected:
 	// Destructor
-	~Object_datetime() = default;
+	~Object_DateTime() = default;
 public:
 	DateTime& GetDateTime() { return *_pDateTime; }
 	const DateTime& GetDateTime() const { return *_pDateTime; }
@@ -54,11 +54,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetDateTime().IsEqualTo(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime());
+			GetDateTime().IsEqualTo(dynamic_cast<const Object_DateTime*>(pObject)->GetDateTime());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetDateTime().IsLessThan(dynamic_cast<const Object_datetime*>(pObject)->GetDateTime()) :
+			GetDateTime().IsLessThan(dynamic_cast<const Object_DateTime*>(pObject)->GetDateTime()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

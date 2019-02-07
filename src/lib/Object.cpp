@@ -78,34 +78,34 @@ void Object::Bootup()
 {
 	Frame* pFrame = Context::GetFrame();
 	Klass_object.Prepare(pFrame);
-	Klass_any.Prepare(pFrame);
-	Klass_argument.Prepare(pFrame);
-	Klass_attribute.Prepare(pFrame);
-	Klass_binary.Prepare(pFrame);
-	Klass_bool.Prepare(pFrame);
-	Klass_datetime.Prepare(pFrame);
-	Klass_dict.Prepare(pFrame);
-	Klass_expr.Prepare(pFrame);
-	Klass_function.Prepare(pFrame);
-	Klass_iterator.Prepare(pFrame);
-	Klass_klass.Prepare(pFrame);
-	Klass_list.Prepare(pFrame);
-	Klass_module.Prepare(pFrame);
-	Klass_nil.Prepare(pFrame);
-	Klass_number.Prepare(pFrame);
-	Klass_stream.Prepare(pFrame);
-	Klass_string.Prepare(pFrame);
-	Klass_stringptr.Prepare(pFrame);
-	Klass_symbol.Prepare(pFrame);
-	Klass_template.Prepare(pFrame);
-	Klass_timedelta.Prepare(pFrame);
-	Klass_undefined.Prepare(pFrame);
-	_pObject_undefined	= new Object_undefined();
-	_pObject_nil		= new Object_nil();
-	_pObject_zero		= new Object_number(0);
-	_pObject_emptystr	= new Object_string("");
-	_pObject_false_		= new Object_bool(false);
-	_pObject_true_		= new Object_bool(true);
+	Klass_Any.Prepare(pFrame);
+	Klass_Argument.Prepare(pFrame);
+	Klass_Attribute.Prepare(pFrame);
+	Klass_Binary.Prepare(pFrame);
+	Klass_Bool.Prepare(pFrame);
+	Klass_DateTime.Prepare(pFrame);
+	Klass_Dict.Prepare(pFrame);
+	Klass_Expr.Prepare(pFrame);
+	Klass_Function.Prepare(pFrame);
+	Klass_Iterator.Prepare(pFrame);
+	Klass_Klass.Prepare(pFrame);
+	Klass_List.Prepare(pFrame);
+	Klass_Module.Prepare(pFrame);
+	Klass_Nil.Prepare(pFrame);
+	Klass_Number.Prepare(pFrame);
+	Klass_Stream.Prepare(pFrame);
+	Klass_String.Prepare(pFrame);
+	Klass_StringPtr.Prepare(pFrame);
+	Klass_Symbol.Prepare(pFrame);
+	Klass_Template.Prepare(pFrame);
+	Klass_TimeDelta.Prepare(pFrame);
+	Klass_Undefined.Prepare(pFrame);
+	_pObject_undefined	= new Object_Undefined();
+	_pObject_nil		= new Object_Nil();
+	_pObject_zero		= new Object_Number(0);
+	_pObject_emptystr	= new Object_String("");
+	_pObject_false_		= new Object_Bool(false);
+	_pObject_true_		= new Object_Bool(true);
 }
 
 bool Object::IsInstanceOf(const Klass& klass) const
@@ -265,21 +265,21 @@ void ObjectOwner::Set(size_t pos, Object* pObject)
 // ObjectTypedOwner
 //------------------------------------------------------------------------------
 ObjectTypedOwner::ObjectTypedOwner() :
-	_pKlassOfElems(&Klass_undefined), _pObjectOwner(new ObjectOwner())
+	_pKlassOfElems(&Klass_Undefined), _pObjectOwner(new ObjectOwner())
 {}
 
 void ObjectTypedOwner::Clear()
 {
-	_pKlassOfElems = &Klass_undefined;
+	_pKlassOfElems = &Klass_Undefined;
 	_pObjectOwner->Clear();
 }
 
 void ObjectTypedOwner::UpdateKlassOfElems(Klass& klassAdded)
 {
-	if (_pKlassOfElems->IsIdentical(Klass_undefined)) {
+	if (_pKlassOfElems->IsIdentical(Klass_Undefined)) {
 		_pKlassOfElems = &klassAdded;
 	} else if (!_pKlassOfElems->IsIdentical(klassAdded)) {
-		_pKlassOfElems = &Klass_any;
+		_pKlassOfElems = &Klass_Any;
 	}
 }
 

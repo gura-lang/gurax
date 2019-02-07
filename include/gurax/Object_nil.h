@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_nil.h
+// Object_Nil.h
 //==============================================================================
 #ifndef GURAX_OBJECT_NIL_H
 #define GURAX_OBJECT_NIL_H
@@ -8,37 +8,37 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_nil
+// Klass_Nil
 //------------------------------------------------------------------------------
-class KlassT_nil : public Klass {
+class KlassT_Nil : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_nil Klass_nil;
+extern KlassT_Nil Klass_Nil;
 
 //------------------------------------------------------------------------------
-// Object_nil
+// Object_Nil
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_nil : public Object {
+class GURAX_DLLDECLARE Object_Nil : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_nil);
+	Gurax_DeclareReferable(Object_Nil);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_nil");
+	Gurax_MemoryPoolAllocator("Object_Nil");
 public:
 	// Constructor
-	Object_nil() : Object(Klass_nil) {}
+	Object_Nil() : Object(Klass_Nil) {}
 	// Copy constructor/operator
-	Object_nil(const Object_nil& src) = delete;
-	Object_nil& operator=(const Object_nil& src) = delete;
+	Object_Nil(const Object_Nil& src) = delete;
+	Object_Nil& operator=(const Object_Nil& src) = delete;
 	// Move constructor/operator
-	Object_nil(Object_nil&& src) = delete;
-	Object_nil& operator=(Object_nil&& src) noexcept = delete;
+	Object_Nil(Object_Nil&& src) = delete;
+	Object_Nil& operator=(Object_Nil&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object_nil() = default;
+	virtual ~Object_Nil() = default;
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }

@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_undefined.cpp
+// Object_Undefined.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_undefined
+// Object_Undefined
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_undefined
+// Klass_Undefined
 //------------------------------------------------------------------------------
-KlassT_undefined Klass_undefined("undefined");
+KlassT_Undefined Klass_Undefined("undefined");
 
-void KlassT_undefined::DoPrepare(Frame* pFrame)
+void KlassT_Undefined::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

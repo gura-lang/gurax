@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_nil.cpp
+// Object_Nil.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_nil
+// Object_Nil
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_nil
+// Klass_Nil
 //------------------------------------------------------------------------------
-KlassT_nil Klass_nil("nil");
+KlassT_Nil Klass_Nil("nil");
 
-void KlassT_nil::DoPrepare(Frame* pFrame)
+void KlassT_Nil::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

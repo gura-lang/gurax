@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_any.cpp
+// Object_Any.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_any
+// Object_Any
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_any
+// Klass_Any
 //------------------------------------------------------------------------------
-KlassT_any Klass_any("any");
+KlassT_Any Klass_Any("any");
 
-void KlassT_any::DoPrepare(Frame* pFrame)
+void KlassT_Any::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

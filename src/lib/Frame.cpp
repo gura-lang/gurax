@@ -55,13 +55,13 @@ Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
 
 void Frame::AssignKlass(Klass& klass)
 {
-	AssignObject(klass.GetSymbol(), new Object_klass(klass));
+	AssignObject(klass.GetSymbol(), new Object_Klass(klass));
 }
 
 void Frame::AssignFunction(Function* pFunction)
 {
 	pFunction->SetFrame(this);
-	AssignObject(pFunction->GetSymbol(), new Object_function(pFunction));
+	AssignObject(pFunction->GetSymbol(), new Object_Function(pFunction));
 }
 
 //------------------------------------------------------------------------------

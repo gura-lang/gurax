@@ -507,7 +507,7 @@ void Expr_Lister::Exec(Frame& frame) const
 		if (Error::IsIssued()) return;
 		pObjectTypedOwner->Add(Context::PopStack());
 	}
-	Context::PushStack(new Object_list(pObjectTypedOwner.release()));
+	Context::PushStack(new Object_List(pObjectTypedOwner.release()));
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const

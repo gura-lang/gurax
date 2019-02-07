@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_list.cpp
+// Object_List.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_list
+// Object_List
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_list
+// Klass_List
 //------------------------------------------------------------------------------
-KlassT_list Klass_list("list");
+KlassT_List Klass_List("list");
 
-void KlassT_list::DoPrepare(Frame* pFrame)
+void KlassT_List::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Mutable);
 	pFrame->AssignKlass(*this);

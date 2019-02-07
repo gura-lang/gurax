@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_undefined.h
+// Object_Undefined.h
 //==============================================================================
 #ifndef GURAX_OBJECT_UNDEFINED_H
 #define GURAX_OBJECT_UNDEFINED_H
@@ -8,37 +8,37 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_undefined
+// Klass_Undefined
 //------------------------------------------------------------------------------
-class KlassT_undefined : public Klass {
+class KlassT_Undefined : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_undefined Klass_undefined;
+extern KlassT_Undefined Klass_Undefined;
 
 //------------------------------------------------------------------------------
-// Object_undefined
+// Object_Undefined
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_undefined : public Object {
+class GURAX_DLLDECLARE Object_Undefined : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_undefined);
+	Gurax_DeclareReferable(Object_Undefined);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_undefined");
+	Gurax_MemoryPoolAllocator("Object_Undefined");
 public:
 	// Constructor
-	Object_undefined() : Object(Klass_undefined) {}
+	Object_Undefined() : Object(Klass_Undefined) {}
 	// Copy constructor/operator
-	Object_undefined(const Object_undefined& src) = delete;
-	Object_undefined& operator=(const Object_undefined& src) = delete;
+	Object_Undefined(const Object_Undefined& src) = delete;
+	Object_Undefined& operator=(const Object_Undefined& src) = delete;
 	// Move constructor/operator
-	Object_undefined(Object_undefined&& src) = delete;
-	Object_undefined& operator=(Object_undefined&& src) noexcept = delete;
+	Object_Undefined(Object_Undefined&& src) = delete;
+	Object_Undefined& operator=(Object_Undefined&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object_undefined() = default;
+	virtual ~Object_Undefined() = default;
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }

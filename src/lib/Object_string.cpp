@@ -1,26 +1,26 @@
 //==============================================================================
-// Object_string.cpp
+// Object_String.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_string
+// Object_String
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_string
+// Klass_String
 //------------------------------------------------------------------------------
-KlassT_string Klass_string("string");
+KlassT_String Klass_String("string");
 
-void KlassT_string::DoPrepare(Frame* pFrame)
+void KlassT_String::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 
-bool Object_string::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Object_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }

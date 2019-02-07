@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_quote.h
+// Object_Quote.h
 //==============================================================================
 #ifndef GURAX_OBJECT_QUOTE_H
 #define GURAX_OBJECT_QUOTE_H
@@ -9,40 +9,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_quote
+// Klass_Quote
 //------------------------------------------------------------------------------
-class KlassT_quote : public Klass {
+class KlassT_Quote : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_quote Klass_quote;
+extern KlassT_Quote Klass_Quote;
 
 //------------------------------------------------------------------------------
-// Object_quote
+// Object_Quote
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_quote : public Object {
+class GURAX_DLLDECLARE Object_Quote : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_quote);
+	Gurax_DeclareReferable(Object_Quote);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_quote");
+	Gurax_MemoryPoolAllocator("Object_Quote");
 private:
 	RefPtr<Expr> _pExpr;
 public:
 	// Constructor
-	Object_quote() = delete;
-	explicit Object_quote(Expr *pExpr) : Object(Klass_quote), _pExpr(pExpr) {}
+	Object_Quote() = delete;
+	explicit Object_Quote(Expr *pExpr) : Object(Klass_Quote), _pExpr(pExpr) {}
 	// Copy constructor/operator
-	Object_quote(const Object_quote& src) : Object(Klass_quote), _pExpr(src._pExpr->Reference()) {}
-	Object_quote& operator=(const Object_quote& src) { _pExpr.reset(src._pExpr->Reference()); return *this; }
+	Object_Quote(const Object_Quote& src) : Object(Klass_Quote), _pExpr(src._pExpr->Reference()) {}
+	Object_Quote& operator=(const Object_Quote& src) { _pExpr.reset(src._pExpr->Reference()); return *this; }
 	// Move constructor/operator
-	Object_quote(Object_quote&& src) : Object(Klass_quote), _pExpr(src._pExpr.release()) {}
-	Object_quote& operator=(Object_quote&& src) noexcept { _pExpr.reset(src._pExpr.release()); return *this; }
+	Object_Quote(Object_Quote&& src) : Object(Klass_Quote), _pExpr(src._pExpr.release()) {}
+	Object_Quote& operator=(Object_Quote&& src) noexcept { _pExpr.reset(src._pExpr.release()); return *this; }
 protected:
 	// Destructor
-	~Object_quote() = default;
+	~Object_Quote() = default;
 public:
 	Expr& GetExpr() { return *_pExpr; }
 	const Expr& GetExpr() const { return *_pExpr; }
@@ -54,11 +54,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetExpr().IsEqualTo(dynamic_cast<const Object_quote*>(pObject)->GetExpr());
+			GetExpr().IsEqualTo(dynamic_cast<const Object_Quote*>(pObject)->GetExpr());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetExpr().IsLessThan(dynamic_cast<const Object_quote*>(pObject)->GetExpr()) :
+			GetExpr().IsLessThan(dynamic_cast<const Object_Quote*>(pObject)->GetExpr()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

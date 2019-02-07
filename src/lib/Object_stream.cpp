@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_stream.cpp
+// Object_Stream.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_stream
+// Object_Stream
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_stream
+// Klass_Stream
 //------------------------------------------------------------------------------
-KlassT_stream Klass_stream("stream");
+KlassT_Stream Klass_Stream("stream");
 
-void KlassT_stream::DoPrepare(Frame* pFrame)
+void KlassT_Stream::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

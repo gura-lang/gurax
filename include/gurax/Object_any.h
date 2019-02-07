@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_any.h
+// Object_Any.h
 //==============================================================================
 #ifndef GURAX_OBJECT_ANY_H
 #define GURAX_OBJECT_ANY_H
@@ -8,37 +8,37 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_any
+// Klass_Any
 //------------------------------------------------------------------------------
-class KlassT_any : public Klass {
+class KlassT_Any : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_any Klass_any;
+extern KlassT_Any Klass_Any;
 
 //------------------------------------------------------------------------------
-// Object_any
+// Object_Any
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_any : public Object {
+class GURAX_DLLDECLARE Object_Any : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_any);
+	Gurax_DeclareReferable(Object_Any);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_any");
+	Gurax_MemoryPoolAllocator("Object_Any");
 public:
 	// Constructor
-	Object_any() : Object(Klass_any) {}
+	Object_Any() : Object(Klass_Any) {}
 	// Copy constructor/operator
-	Object_any(const Object_any& src) = delete;
-	Object_any& operator=(const Object_any& src) = delete;
+	Object_Any(const Object_Any& src) = delete;
+	Object_Any& operator=(const Object_Any& src) = delete;
 	// Move constructor/operator
-	Object_any(Object_any&& src) = delete;
-	Object_any& operator=(Object_any&& src) noexcept = delete;
+	Object_Any(Object_Any&& src) = delete;
+	Object_Any& operator=(Object_Any&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object_any() = default;
+	virtual ~Object_Any() = default;
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }

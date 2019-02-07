@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_stringptr.h
+// Object_StringPtr.h
 // This object type is designed to be used with Formatter.
 //==============================================================================
 #ifndef GURAX_OBJECT_STRINGPTR_H
@@ -9,39 +9,39 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_stringptr
+// Klass_StringPtr
 //------------------------------------------------------------------------------
-class KlassT_stringptr : public Klass {
+class KlassT_StringPtr : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_stringptr Klass_stringptr;
+extern KlassT_StringPtr Klass_StringPtr;
 
 //------------------------------------------------------------------------------
-// Object_stringptr
+// Object_StringPtr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_stringptr : public Object {
+class GURAX_DLLDECLARE Object_StringPtr : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_stringptr);
+	Gurax_DeclareReferable(Object_StringPtr);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_stringptr");
+	Gurax_MemoryPoolAllocator("Object_StringPtr");
 private:
 	const char* _str;
 public:
 	// Constructor
-	explicit Object_stringptr(const char* str) : Object(Klass_stringptr), _str(str) {}
+	explicit Object_StringPtr(const char* str) : Object(Klass_StringPtr), _str(str) {}
 	// Copy constructor/operator
-	Object_stringptr(const Object_stringptr& src) : Object(Klass_stringptr), _str(src._str) {}
-	Object_stringptr& operator=(const Object_stringptr& src) { _str = src._str; return *this; }
+	Object_StringPtr(const Object_StringPtr& src) : Object(Klass_StringPtr), _str(src._str) {}
+	Object_StringPtr& operator=(const Object_StringPtr& src) { _str = src._str; return *this; }
 	// Move constructor/operator
-	Object_stringptr(Object_stringptr&& src) : Object(Klass_stringptr), _str(src._str) {}
-	Object_stringptr& operator=(Object_stringptr&& src) noexcept { _str = src._str; return *this; }
+	Object_StringPtr(Object_StringPtr&& src) : Object(Klass_StringPtr), _str(src._str) {}
+	Object_StringPtr& operator=(Object_StringPtr&& src) noexcept { _str = src._str; return *this; }
 protected:
 	// Destructor
-	~Object_stringptr() = default;
+	~Object_StringPtr() = default;
 public:
 	const char* GetString() const { return _str; }
 public:
@@ -52,11 +52,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			String::IsEqualTo(GetString(), dynamic_cast<const Object_stringptr*>(pObject)->GetString());
+			String::IsEqualTo(GetString(), dynamic_cast<const Object_StringPtr*>(pObject)->GetString());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			String::IsLessThan(GetString(), dynamic_cast<const Object_stringptr*>(pObject)->GetString()) :
+			String::IsLessThan(GetString(), dynamic_cast<const Object_StringPtr*>(pObject)->GetString()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

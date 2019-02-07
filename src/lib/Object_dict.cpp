@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_dict.cpp
+// Object_Dict.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_dict
+// Object_Dict
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_dict
+// Klass_Dict
 //------------------------------------------------------------------------------
-KlassT_dict Klass_dict("dict");
+KlassT_Dict Klass_Dict("dict");
 
-void KlassT_dict::DoPrepare(Frame* pFrame)
+void KlassT_Dict::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Mutable);
 	pFrame->AssignKlass(*this);

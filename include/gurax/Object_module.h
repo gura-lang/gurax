@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_module.h
+// Object_Module.h
 //==============================================================================
 #ifndef GURAX_OBJECT_MODULE_H
 #define GURAX_OBJECT_MODULE_H
@@ -9,40 +9,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_module
+// Klass_Module
 //------------------------------------------------------------------------------
-class KlassT_module : public Klass {
+class KlassT_Module : public Klass {
 public:
 	using Klass::Klass;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_module Klass_module;
+extern KlassT_Module Klass_Module;
 
 //------------------------------------------------------------------------------
-// Object_module
+// Object_Module
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_module : public Object {
+class GURAX_DLLDECLARE Object_Module : public Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_module);
+	Gurax_DeclareReferable(Object_Module);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_module");
+	Gurax_MemoryPoolAllocator("Object_Module");
 private:
 	RefPtr<Module> _pModule;
 public:
 	// Constructor
-	Object_module() = delete;
-	explicit Object_module(Module *pModule) : Object(Klass_module), _pModule(pModule) {}
+	Object_Module() = delete;
+	explicit Object_Module(Module *pModule) : Object(Klass_Module), _pModule(pModule) {}
 	// Copy constructor/operator
-	Object_module(const Object_module& src) : Object(Klass_module), _pModule(src._pModule->Reference()) {}
-	Object_module& operator=(const Object_module& src) { _pModule.reset(src._pModule->Reference()); return *this; }
+	Object_Module(const Object_Module& src) : Object(Klass_Module), _pModule(src._pModule->Reference()) {}
+	Object_Module& operator=(const Object_Module& src) { _pModule.reset(src._pModule->Reference()); return *this; }
 	// Move constructor/operator
-	Object_module(Object_module&& src) : Object(Klass_module), _pModule(src._pModule.release()) {}
-	Object_module& operator=(Object_module&& src) noexcept { _pModule.reset(src._pModule.release()); return *this; }
+	Object_Module(Object_Module&& src) : Object(Klass_Module), _pModule(src._pModule.release()) {}
+	Object_Module& operator=(Object_Module&& src) noexcept { _pModule.reset(src._pModule.release()); return *this; }
 protected:
 	// Destructor
-	~Object_module() = default;
+	~Object_Module() = default;
 public:
 	Module& GetModule() { return *_pModule; }
 	const Module& GetModule() const { return *_pModule; }
@@ -54,11 +54,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetModule().IsEqualTo(dynamic_cast<const Object_module*>(pObject)->GetModule());
+			GetModule().IsEqualTo(dynamic_cast<const Object_Module*>(pObject)->GetModule());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetModule().IsLessThan(dynamic_cast<const Object_module*>(pObject)->GetModule()) :
+			GetModule().IsLessThan(dynamic_cast<const Object_Module*>(pObject)->GetModule()) :
 			GetKlass().IsLessThan(pObject->GetKlass());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
