@@ -14,7 +14,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Object_module::KlassEx Object_module::klass("module");
 
-void Object_module::KlassEx::DoPrepare()
+void Object_module::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }

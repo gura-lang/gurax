@@ -76,29 +76,30 @@ const Object *Object::_pObject_true_		= nullptr;
 
 void Object::Bootup()
 {
-	Object::klass.Prepare();
-	Object_any::klass.Prepare();
-	Object_argument::klass.Prepare();
-	Object_attribute::klass.Prepare();
-	Object_binary::klass.Prepare();
-	Object_bool::klass.Prepare();
-	Object_datetime::klass.Prepare();
-	Object_dict::klass.Prepare();
-	Object_expr::klass.Prepare();
-	Object_function::klass.Prepare();
-	Object_iterator::klass.Prepare();
-	Object_klass::klass.Prepare();
-	Object_list::klass.Prepare();
-	Object_module::klass.Prepare();
-	Object_nil::klass.Prepare();
-	Object_number::klass.Prepare();
-	Object_stream::klass.Prepare();
-	Object_string::klass.Prepare();
-	Object_stringptr::klass.Prepare();
-	Object_symbol::klass.Prepare();
-	Object_template::klass.Prepare();
-	Object_timedelta::klass.Prepare();
-	Object_undefined::klass.Prepare();
+	Frame* pFrame = Context::GetFrame();
+	Object::klass.Prepare(pFrame);
+	Object_any::klass.Prepare(pFrame);
+	Object_argument::klass.Prepare(pFrame);
+	Object_attribute::klass.Prepare(pFrame);
+	Object_binary::klass.Prepare(pFrame);
+	Object_bool::klass.Prepare(pFrame);
+	Object_datetime::klass.Prepare(pFrame);
+	Object_dict::klass.Prepare(pFrame);
+	Object_expr::klass.Prepare(pFrame);
+	Object_function::klass.Prepare(pFrame);
+	Object_iterator::klass.Prepare(pFrame);
+	Object_klass::klass.Prepare(pFrame);
+	Object_list::klass.Prepare(pFrame);
+	Object_module::klass.Prepare(pFrame);
+	Object_nil::klass.Prepare(pFrame);
+	Object_number::klass.Prepare(pFrame);
+	Object_stream::klass.Prepare(pFrame);
+	Object_string::klass.Prepare(pFrame);
+	Object_stringptr::klass.Prepare(pFrame);
+	Object_symbol::klass.Prepare(pFrame);
+	Object_template::klass.Prepare(pFrame);
+	Object_timedelta::klass.Prepare(pFrame);
+	Object_undefined::klass.Prepare(pFrame);
 	_pObject_undefined	= new Object_undefined();
 	_pObject_nil		= new Object_nil();
 	_pObject_zero		= new Object_number(0);
@@ -189,7 +190,7 @@ bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) cons
 //------------------------------------------------------------------------------
 Object::KlassEx Object::klass("object");
 
-void Object::KlassEx::DoPrepare()
+void Object::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Flag::Immutable);
 }

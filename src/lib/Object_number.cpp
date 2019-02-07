@@ -77,7 +77,7 @@ bool Object_number::Format_c(Formatter& formatter, FormatterFlags& formatterFlag
 //------------------------------------------------------------------------------
 Object_number::KlassEx Object_number::klass("number");
 
-void Object_number::KlassEx::DoPrepare()
+void Object_number::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }

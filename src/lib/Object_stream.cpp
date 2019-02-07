@@ -14,7 +14,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Object_stream::KlassEx Object_stream::klass("stream");
 
-void Object_stream::KlassEx::DoPrepare()
+void Object_stream::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }

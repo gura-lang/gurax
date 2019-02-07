@@ -14,7 +14,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Object_datetime::KlassEx Object_datetime::klass("datetime");
 
-void Object_datetime::KlassEx::DoPrepare()
+void Object_datetime::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }

@@ -29,6 +29,7 @@ public:
 	~Context() = default;
 public:
 	static Context& GetGlobal() { return _context; }
+	static Frame* GetFrame() { return GetGlobal()._pFrame.get(); }
 	static void PushStack(Object* pObject) { GetGlobal().GetObjectStack().Push(pObject); }
 	static Object* PopStack() { return GetGlobal().GetObjectStack().Pop(); }
 	static Object* PeekStack(size_t offset) { return GetGlobal().GetObjectStack().Peek(offset); }

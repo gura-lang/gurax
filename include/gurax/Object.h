@@ -3,7 +3,6 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_H
 #define GURAX_OBJECT_H
-#include "Function.h"
 #include "Help.h"
 #include "MemoryPool.h"
 #include "Referable.h"
@@ -95,8 +94,8 @@ public:
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }
 public:
-	void Prepare() { DoPrepare(); }
-	virtual void DoPrepare() = 0;
+	void Prepare(Frame* pFrame) { DoPrepare(pFrame); }
+	virtual void DoPrepare(Frame* pFrame) = 0;
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
@@ -135,7 +134,7 @@ public:
 	class KlassEx : public Klass {
 	public:
 		using Klass::Klass;
-		virtual void DoPrepare() override;
+		virtual void DoPrepare(Frame* pFrame) override;
 	};
 	static KlassEx klass;
 private:

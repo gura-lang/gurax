@@ -21,27 +21,9 @@ Frame* Frame::Shrink(Frame* pFrame)
 	return pFrameRtn;
 }
 
-bool Frame::AssignObject(const DottedSymbol& dottedSymbol, Object* pObject)
+Frame* Frame::SeekTarget(const DottedSymbol& dottedSymbol)
 {
 	Frame* pFrame = this;
-	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
-	if (symbolList.empty()) return false;
-	const Symbol* pSymbol = nullptr;
-	for (auto ppSymbol = symbolList.begin(); ; ppSymbol++) {
-		pSymbol = *ppSymbol;
-		if (ppSymbol + 1 == symbolList.end()) break;
-		Object* pObject = pFrame->LookupObject(pSymbol);
-		if (!pObject) return false;
-		//pFrame = pObject->ProvideFrame();
-		if (!pFrame) return false;
-	}
-	pFrame->AssignObject(pSymbol, pObject);
-	return true;
-}
-
-Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
-{
-	const Frame* pFrame = this;
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
 	if (symbolList.empty()) return nullptr;
 	const Symbol* pSymbol = nullptr;
@@ -53,7 +35,46 @@ Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
 		//pFrame = pObject->ProvideFrame();
 		if (!pFrame) return nullptr;
 	}
-	return pFrame->LookupObject(pSymbol);
+	return pFrame;
+}
+
+bool Frame::AssignObject(const DottedSymbol& dottedSymbol, Object* pObject)
+{
+	Frame* pFrame = SeekTarget(dottedSymbol);
+	if (!pFrame) return false;
+	pFrame->AssignObject(dottedSymbol.GetSymbolLast(), pObject);
+	return true;
+}
+
+Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
+{
+	const Frame* pFrame = const_cast<Frame*>(this)->SeekTarget(dottedSymbol);
+	if (!pFrame) return nullptr;
+	return pFrame->LookupObject(dottedSymbol.GetSymbolLast());
+}
+
+void Frame::AssignKlass(const Symbol* pSymbol, Klass& klass)
+{
+	AssignObject(pSymbol, new Object_klass(klass));
+}
+
+bool Frame::AssignKlass(const DottedSymbol& dottedSymbol, Klass& klass)
+{
+	return AssignObject(dottedSymbol, new Object_klass(klass));
+}
+
+void Frame::AssignFunction(const Symbol* pSymbol, Function* pFunction)
+{
+	pFunction->SetFrame(this);
+	AssignObject(pSymbol, new Object_function(pFunction));
+}
+
+bool Frame::AssignFunction(const DottedSymbol& dottedSymbol, Function* pFunction)
+{
+	Frame* pFrame = SeekTarget(dottedSymbol);
+	if (!pFrame) return false;
+	pFrame->AssignFunction(dottedSymbol.GetSymbolLast(), pFunction);
+	return true;
 }
 
 //------------------------------------------------------------------------------

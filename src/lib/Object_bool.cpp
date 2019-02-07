@@ -14,7 +14,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Object_bool::KlassEx Object_bool::klass("bool");
 
-void Object_bool::KlassEx::DoPrepare()
+void Object_bool::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }

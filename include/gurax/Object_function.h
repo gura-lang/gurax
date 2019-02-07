@@ -20,7 +20,7 @@ public:
 	class KlassEx : public Klass {
 	public:
 		using Klass::Klass;
-		virtual void DoPrepare() override;
+		virtual void DoPrepare(Frame* pFrame) override;
 	};
 	static KlassEx klass;
 private:
@@ -28,7 +28,7 @@ private:
 public:
 	// Constructor
 	Object_function() = delete;
-	explicit Object_function(Function *pFunction) : Object(klass), _pFunction(pFunction) {}
+	explicit Object_function(Function* pFunction) : Object(klass), _pFunction(pFunction) {}
 	// Copy constructor/operator
 	Object_function(const Object_function& src) : Object(klass), _pFunction(src._pFunction->Reference()) {}
 	Object_function& operator=(const Object_function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }

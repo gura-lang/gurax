@@ -270,6 +270,8 @@ protected:
 	~DottedSymbol() = default;
 public:
 	const SymbolList& GetSymbolList() const { return _symbolList; }
+	const Symbol* GetSymbolFirst() const { return _symbolList.front(); }
+	const Symbol* GetSymbolLast() const { return _symbolList.back(); }
 	void Reserve(size_t n) { _symbolList.reserve(n); }
 	void Append(const Symbol* pSymbol) { _symbolList.push_back(pSymbol); }
 	bool AppendFromExprList(const ExprList& exprList);

@@ -21,7 +21,7 @@ public:
 	class KlassEx : public Klass {
 	public:
 		using Klass::Klass;
-		virtual void DoPrepare() override;
+		virtual void DoPrepare(Frame* pFrame) override;
 	};
 	static KlassEx klass;
 private:

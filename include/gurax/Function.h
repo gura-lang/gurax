@@ -5,6 +5,7 @@
 #define GURAX_FUNCTION_H
 #include "DeclCaller.h"
 #include "Help.h"
+#include "Frame.h"
 
 namespace Gurax {
 
@@ -16,6 +17,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
 protected:
+	RefPtr<Frame::WeakPtr> _pwFrame;
 	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<HelpProvider> _pHelpProvider;
 public:
@@ -34,6 +36,7 @@ protected:
 	// Destructor
 	~Function() = default;
 public:
+	void SetFrame(Frame* pFrame) { _pwFrame.reset(pFrame->GetWeakPtr()); }
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

@@ -8,7 +8,7 @@
 
 namespace Gurax {
 
-class Frame;
+class Function;
 
 //------------------------------------------------------------------------------
 // Frame
@@ -38,10 +38,15 @@ public:
 	bool IsBranch() const { return _type == Type::Branch; }
 	Frame* Expand() const;
 	static Frame* Shrink(Frame* pFrame);
+	Frame* SeekTarget(const DottedSymbol& dottedSymbol);
 	bool AssignObject(const DottedSymbol& dottedSymbol, Object* pObject);
 	Object* LookupObject(const DottedSymbol& dottedSymbol) const;
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
 	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
+	void AssignKlass(const Symbol* pSymbol, Klass& klass);
+	bool AssignKlass(const DottedSymbol& dottedSymbol, Klass& klass);
+	void AssignFunction(const Symbol* pSymbol, Function* pFunction);
+	bool AssignFunction(const DottedSymbol& dottedSymbol, Function* pFunction);
 };
 
 //------------------------------------------------------------------------------

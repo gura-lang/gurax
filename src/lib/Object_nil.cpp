@@ -14,7 +14,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Object_nil::KlassEx Object_nil::klass("nil");
 
-void Object_nil::KlassEx::DoPrepare()
+void Object_nil::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
 }
