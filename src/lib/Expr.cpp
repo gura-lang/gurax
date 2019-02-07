@@ -298,6 +298,15 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Assign::typeInfo;
 
+bool Expr_Assign::DoPrepare()
+{
+	if (GetExprLeft()->IsType<Expr_Caller>()) {
+		Expr_Caller*pExprEx = dynamic_cast<Expr_Caller*>(GetExprLeft());
+		return pExprEx->PrepareDeclCaller();
+	}
+	return true;
+}
+
 void Expr_Assign::Exec(Frame& frame) const
 {
 }
@@ -307,7 +316,7 @@ String Expr_Assign::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += GetExprLeft()->ToString(ss);
 	if (!ss.IsCram()) rtn += ' ';
-	if (_pOperator) rtn += _pOperator->GetSymbol();
+	if (GetOperator()) rtn += GetOperator()->GetSymbol();
 	rtn += '=';
 	if (!ss.IsCram()) rtn += ' ';
 	rtn += GetExprRight()->ToString(ss);

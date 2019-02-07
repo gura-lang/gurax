@@ -481,6 +481,7 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
+	virtual bool DoPrepare() override;
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -628,10 +629,7 @@ public:
 	virtual void Exec(Frame& frame) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
-	virtual bool DoPrepare() override {
-		_pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), false);
-		return true;
-	}
+	bool PrepareDeclCaller() { return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), true); }
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
 		_pExprBlock->SetExprParent(this);

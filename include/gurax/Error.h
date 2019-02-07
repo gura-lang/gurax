@@ -86,6 +86,14 @@ protected:
 public:
 	static void Bootup();
 	String MakeMessage() const;
+	const ErrorType& GetErrorType() const { return _errorType; }
+	int GetLineNoTop() const { return _lineNoTop; }
+	int GetLineNoBtm() const { return _lineNoBtm; }
+	const char* GetText() const { return _text.c_str(); }
+	static const Error* GetLastError() {
+		return _pErrorOwnerGlobal->empty()? nullptr : _pErrorOwnerGlobal->back();
+	}
+	static ErrorOwner& GetErrorOwner() { return *_pErrorOwnerGlobal; }
 	static bool IsIssued() { return _errorIssuedFlag; }
 	static void Clear();
 	template<typename... Args>
