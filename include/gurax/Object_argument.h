@@ -36,10 +36,14 @@ public:
 	explicit Object_argument(Argument *pArgument) : Object(Klass_argument), _pArgument(pArgument) {}
 	// Copy constructor/operator
 	Object_argument(const Object_argument& src) : Object(Klass_argument), _pArgument(src._pArgument->Clone()) {}
-	Object_argument& operator=(const Object_argument& src) { _pArgument.reset(src._pArgument->Clone()); return *this; }
+	Object_argument& operator=(const Object_argument& src) {
+		_pArgument.reset(src._pArgument->Clone()); return *this;
+	}
 	// Move constructor/operator
 	Object_argument(Object_argument&& src) : Object(Klass_argument), _pArgument(src._pArgument.release()) {}
-	Object_argument& operator=(Object_argument&& src) noexcept { _pArgument.reset(src._pArgument.release()); return *this; }
+	Object_argument& operator=(Object_argument&& src) noexcept {
+		_pArgument.reset(src._pArgument.release()); return *this;
+	}
 protected:
 	// Destructor
 	~Object_argument() = default;
