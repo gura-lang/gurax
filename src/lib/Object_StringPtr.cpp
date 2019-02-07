@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Klass_StringPtr
 //------------------------------------------------------------------------------
-KlassT_StringPtr Klass_StringPtr("stringptr");
+KlassT_StringPtr Klass_StringPtr("StringPtr");
 
 void KlassT_StringPtr::DoPrepare(Frame* pFrame)
 {

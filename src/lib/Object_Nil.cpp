@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_TimeDelta.cpp
+// Object_Nil.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_TimeDelta
+// Object_Nil
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_TimeDelta
+// Klass_Nil
 //------------------------------------------------------------------------------
-KlassT_TimeDelta Klass_TimeDelta("timedelta");
+KlassT_Nil Klass_Nil("Nil");
 
-void KlassT_TimeDelta::DoPrepare(Frame* pFrame)
+void KlassT_Nil::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_Undefined.cpp
+// Object_TimeDelta.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Undefined
+// Object_TimeDelta
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Undefined
+// Klass_TimeDelta
 //------------------------------------------------------------------------------
-KlassT_Undefined Klass_Undefined("undefined");
+KlassT_TimeDelta Klass_TimeDelta("Timedelta");
 
-void KlassT_Undefined::DoPrepare(Frame* pFrame)
+void KlassT_TimeDelta::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

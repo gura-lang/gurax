@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_DateTime.cpp
+// Object_Bool.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_DateTime
+// Object_Bool
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_DateTime
+// Klass_Bool
 //------------------------------------------------------------------------------
-KlassT_DateTime Klass_DateTime("datetime");
+KlassT_Bool Klass_Bool("Bool");
 
-void KlassT_DateTime::DoPrepare(Frame* pFrame)
+void KlassT_Bool::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

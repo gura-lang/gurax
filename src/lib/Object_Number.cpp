@@ -75,7 +75,7 @@ bool Object_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlag
 //------------------------------------------------------------------------------
 // Klass_Number
 //------------------------------------------------------------------------------
-KlassT_Number Klass_Number("number");
+KlassT_Number Klass_Number("Number");
 
 void KlassT_Number::DoPrepare(Frame* pFrame)
 {

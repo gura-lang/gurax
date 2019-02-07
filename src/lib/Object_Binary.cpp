@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Klass_Binary
 //------------------------------------------------------------------------------
-KlassT_Binary Klass_Binary("binary");
+KlassT_Binary Klass_Binary("Binary");
 
 void KlassT_Binary::DoPrepare(Frame* pFrame)
 {

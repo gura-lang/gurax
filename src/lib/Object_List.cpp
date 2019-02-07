@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Klass_List
 //------------------------------------------------------------------------------
-KlassT_List Klass_List("list");
+KlassT_List Klass_List("List");
 
 void KlassT_List::DoPrepare(Frame* pFrame)
 {

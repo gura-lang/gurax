@@ -1,22 +1,22 @@
 //==============================================================================
-// Object_Dict.cpp
+// Object_Iterator.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Dict
+// Object_Iterator
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Dict
+// Klass_Iterator
 //------------------------------------------------------------------------------
-KlassT_Dict Klass_Dict("dict");
+KlassT_Iterator Klass_Iterator("Iterator");
 
-void KlassT_Dict::DoPrepare(Frame* pFrame)
+void KlassT_Iterator::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Mutable);
+	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

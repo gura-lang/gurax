@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_Expr.cpp
+// Object_Module.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Expr
+// Object_Module
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Expr
+// Klass_Module
 //------------------------------------------------------------------------------
-KlassT_Expr Klass_Expr("expr");
+KlassT_Module Klass_Module("Module");
 
-void KlassT_Expr::DoPrepare(Frame* pFrame)
+void KlassT_Module::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

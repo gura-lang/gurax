@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_Nil.cpp
+// Object_DateTime.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Nil
+// Object_DateTime
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Nil
+// Klass_DateTime
 //------------------------------------------------------------------------------
-KlassT_Nil Klass_Nil("nil");
+KlassT_DateTime Klass_DateTime("Datetime");
 
-void KlassT_Nil::DoPrepare(Frame* pFrame)
+void KlassT_DateTime::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

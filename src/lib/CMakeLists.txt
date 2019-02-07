@@ -20,29 +20,29 @@ add_library(guraxcore SHARED
 	MemoryPool.cpp
 	Module.cpp
 	Object.cpp
-	Object_any.cpp
-	Object_argument.cpp
-	Object_attribute.cpp
-	Object_binary.cpp
-	Object_bool.cpp
-	Object_datetime.cpp
-	Object_dict.cpp
-	Object_expr.cpp
-	Object_function.cpp
-	Object_iterator.cpp
-	Object_klass.cpp
-	Object_list.cpp
-	Object_module.cpp
-	Object_nil.cpp
-	Object_number.cpp
-	Object_quote.cpp
-	Object_stream.cpp
-	Object_string.cpp
-	Object_stringptr.cpp
-	Object_symbol.cpp
-	Object_template.cpp
-	Object_timedelta.cpp
-	Object_undefined.cpp
+	Object_Any.cpp
+	Object_Argument.cpp
+	Object_Attribute.cpp
+	Object_Binary.cpp
+	Object_Bool.cpp
+	Object_DateTime.cpp
+	Object_Dict.cpp
+	Object_Expr.cpp
+	Object_Function.cpp
+	Object_Iterator.cpp
+	Object_Klass.cpp
+	Object_List.cpp
+	Object_Module.cpp
+	Object_Nil.cpp
+	Object_Number.cpp
+	Object_Quote.cpp
+	Object_Stream.cpp
+	Object_String.cpp
+	Object_StringPtr.cpp
+	Object_Symbol.cpp
+	Object_Template.cpp
+	Object_TimeDelta.cpp
+	Object_Undefined.cpp
 	Operator.cpp
 	Operators.cpp
 	Parser.cpp

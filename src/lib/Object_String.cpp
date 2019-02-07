@@ -1,23 +1,28 @@
 //==============================================================================
-// Object_Bool.cpp
+// Object_String.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Bool
+// Object_String
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Bool
+// Klass_String
 //------------------------------------------------------------------------------
-KlassT_Bool Klass_Bool("bool");
+KlassT_String Klass_String("String");
 
-void KlassT_Bool::DoPrepare(Frame* pFrame)
+void KlassT_String::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
+}
+
+bool Object_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }
 
 }

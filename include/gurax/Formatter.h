@@ -3,8 +3,8 @@
 //=============================================================================
 #ifndef GURAX_FORMATTER_H
 #define GURAX_FORMATTER_H
-#include "Object_number.h"
-#include "Object_stringptr.h"
+#include "Object_Number.h"
+#include "Object_StringPtr.h"
 
 namespace Gurax {
 

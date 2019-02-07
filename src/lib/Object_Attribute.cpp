@@ -1,20 +1,20 @@
 //==============================================================================
-// Object_Quote.cpp
+// Object_Attribute.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Quote
+// Object_Attribute
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Quote
+// Klass_Attribute
 //------------------------------------------------------------------------------
-KlassT_Quote Klass_Quote("quote");
+KlassT_Attribute Klass_Attribute("Attribute");
 
-void KlassT_Quote::DoPrepare(Frame* pFrame)
+void KlassT_Attribute::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Klass_object, Flag::Immutable);
 	pFrame->AssignKlass(*this);

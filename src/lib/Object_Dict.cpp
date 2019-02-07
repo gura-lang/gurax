@@ -1,22 +1,22 @@
 //==============================================================================
-// Object_Symbol.cpp
+// Object_Dict.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Symbol
+// Object_Dict
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Symbol
+// Klass_Dict
 //------------------------------------------------------------------------------
-KlassT_Symbol Klass_Symbol("symbol");
+KlassT_Dict Klass_Dict("Dict");
 
-void KlassT_Symbol::DoPrepare(Frame* pFrame)
+void KlassT_Dict::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_object, Flag::Mutable);
 	pFrame->AssignKlass(*this);
 }
 
