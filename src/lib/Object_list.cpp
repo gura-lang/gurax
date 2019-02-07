@@ -17,6 +17,7 @@ Object_list::KlassEx Object_list::klass("list");
 void Object_list::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Mutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

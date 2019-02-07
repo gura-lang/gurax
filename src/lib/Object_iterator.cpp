@@ -17,6 +17,7 @@ Object_iterator::KlassEx Object_iterator::klass("iterator");
 void Object_iterator::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

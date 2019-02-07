@@ -17,6 +17,7 @@ Object_function::KlassEx Object_function::klass("function");
 void Object_function::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

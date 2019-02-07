@@ -53,28 +53,15 @@ Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
 	return pFrame->LookupObject(dottedSymbol.GetSymbolLast());
 }
 
-void Frame::AssignKlass(const Symbol* pSymbol, Klass& klass)
+void Frame::AssignKlass(Klass& klass)
 {
-	AssignObject(pSymbol, new Object_klass(klass));
+	AssignObject(klass.GetSymbol(), new Object_klass(klass));
 }
 
-bool Frame::AssignKlass(const DottedSymbol& dottedSymbol, Klass& klass)
-{
-	return AssignObject(dottedSymbol, new Object_klass(klass));
-}
-
-void Frame::AssignFunction(const Symbol* pSymbol, Function* pFunction)
+void Frame::AssignFunction(Function* pFunction)
 {
 	pFunction->SetFrame(this);
-	AssignObject(pSymbol, new Object_function(pFunction));
-}
-
-bool Frame::AssignFunction(const DottedSymbol& dottedSymbol, Function* pFunction)
-{
-	Frame* pFrame = SeekTarget(dottedSymbol);
-	if (!pFrame) return false;
-	pFrame->AssignFunction(dottedSymbol.GetSymbolLast(), pFunction);
-	return true;
+	AssignObject(pFunction->GetSymbol(), new Object_function(pFunction));
 }
 
 //------------------------------------------------------------------------------

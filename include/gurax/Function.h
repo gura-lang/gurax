@@ -17,15 +17,16 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
 protected:
-	RefPtr<Frame::WeakPtr> _pwFrame;
+	const Symbol* _pSymbol;
 	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<Frame::WeakPtr> _pwFrame;
 public:
 	// Constructor
-	Function() : Function(new DeclCaller(), new HelpProvider()) {}
-	Function(DeclCaller* pDeclCaller) : Function(pDeclCaller, new HelpProvider()) {}
-	Function(DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
-		_pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
+	Function() : Function(Symbol::Empty, new DeclCaller(), new HelpProvider()) {}
+	Function(const Symbol* pSymbol, DeclCaller* pDeclCaller) : Function(pSymbol, pDeclCaller, new HelpProvider()) {}
+	Function(const Symbol* pSymbol, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
+		_pSymbol(pSymbol), _pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;
@@ -36,10 +37,12 @@ protected:
 	// Destructor
 	~Function() = default;
 public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
 	void SetFrame(Frame* pFrame) { _pwFrame.reset(pFrame->GetWeakPtr()); }
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Function& function) const { return this == &function; }
 	bool IsEqualTo(const Function& function) const { return IsIdentical(function); }

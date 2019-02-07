@@ -17,6 +17,7 @@ Object_symbol::KlassEx Object_symbol::klass("symbol");
 void Object_symbol::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

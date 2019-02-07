@@ -43,10 +43,8 @@ public:
 	Object* LookupObject(const DottedSymbol& dottedSymbol) const;
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
 	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
-	void AssignKlass(const Symbol* pSymbol, Klass& klass);
-	bool AssignKlass(const DottedSymbol& dottedSymbol, Klass& klass);
-	void AssignFunction(const Symbol* pSymbol, Function* pFunction);
-	bool AssignFunction(const DottedSymbol& dottedSymbol, Function* pFunction);
+	void AssignKlass(Klass& klass);
+	void AssignFunction(Function* pFunction);
 };
 
 //------------------------------------------------------------------------------

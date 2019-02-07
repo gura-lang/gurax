@@ -17,6 +17,7 @@ Object_template::KlassEx Object_template::klass("template");
 void Object_template::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

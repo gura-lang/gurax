@@ -17,6 +17,7 @@ Object_binary::KlassEx Object_binary::klass("binary");
 void Object_binary::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

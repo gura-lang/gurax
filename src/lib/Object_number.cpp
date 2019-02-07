@@ -80,6 +80,7 @@ Object_number::KlassEx Object_number::klass("number");
 void Object_number::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

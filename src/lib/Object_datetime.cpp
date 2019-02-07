@@ -17,6 +17,7 @@ Object_datetime::KlassEx Object_datetime::klass("datetime");
 void Object_datetime::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

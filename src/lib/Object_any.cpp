@@ -17,6 +17,7 @@ Object_any::KlassEx Object_any::klass("any");
 void Object_any::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Object::klass, Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 }

@@ -193,6 +193,7 @@ Object::KlassEx Object::klass("object");
 void Object::KlassEx::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(Flag::Immutable);
+	pFrame->AssignKlass(*this);
 }
 
 //------------------------------------------------------------------------------
