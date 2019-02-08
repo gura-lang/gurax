@@ -20,6 +20,7 @@ public:
 	// Constructor
 	Frame_Source() : Frame(Type::Source), _pObjectMap(new ObjectMap()) {}
 public:
+	// Virtual functions of Frame
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
 		_pObjectMap->Assign(pSymbol, pObject);
 	}
@@ -48,6 +49,7 @@ public:
 	const Frame* GetLeft() const { return _pFrameLeft.get(); }
 	const Frame* GetRight() const { return _pFrameRight.get(); }
 public:
+	// Virtual functions of Frame
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
 		_pFrameRight->AssignObject(pSymbol, pObject);
 	}
@@ -109,6 +111,15 @@ Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
 	return pFrame->LookupObject(dottedSymbol.GetSymbolLast());
 }
 
+bool Frame::AssignModule(Module* pModule)
+{
+	const DottedSymbol& dottedSymbol = pModule->GetDottedSymbol();
+	Frame* pFrame = SeekTarget(dottedSymbol, 1);
+	if (pFrame == nullptr) return false;
+	pFrame->AssignObject(dottedSymbol.GetSymbolLast(), new Object_Module(pModule));
+	return true;
+}
+
 void Frame::AssignKlass(Klass& klass)
 {
 	klass.SetFrameParent(this);
@@ -120,14 +131,5 @@ void Frame::AssignFunction(Function* pFunction)
 	pFunction->SetFrameParent(this);
 	AssignObject(pFunction->GetSymbol(), new Object_Function(pFunction));
 }
-
-bool Frame::AssignModule(Module* pModule)
-{
-	return false;
-}
-
-//------------------------------------------------------------------------------
-// Frame_Branch
-//------------------------------------------------------------------------------
 
 }

@@ -44,11 +44,13 @@ public:
 	Frame* SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail = 0);
 	bool AssignObject(const DottedSymbol& dottedSymbol, Object* pObject);
 	Object* LookupObject(const DottedSymbol& dottedSymbol) const;
-	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
-	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
+	bool AssignModule(Module* pModule);
 	void AssignKlass(Klass& klass);
 	void AssignFunction(Function* pFunction);
-	bool AssignModule(Module* pModule);
+public:
+	// Virtual functions
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
+	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
 };
 
 }
