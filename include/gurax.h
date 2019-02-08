@@ -38,6 +38,7 @@
 #include "gurax/Object_Module.h"
 #include "gurax/Object_Nil.h"
 #include "gurax/Object_Number.h"
+#include "gurax/Object_Object.h"
 #include "gurax/Object_Quote.h"
 #include "gurax/Object_Stream.h"
 #include "gurax/Object_String.h"

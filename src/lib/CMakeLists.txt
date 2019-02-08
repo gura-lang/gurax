@@ -35,6 +35,7 @@ add_library(guraxcore SHARED
 	Object_Module.cpp
 	Object_Nil.cpp
 	Object_Number.cpp
+	Object_Object.cpp
 	Object_Quote.cpp
 	Object_Stream.cpp
 	Object_String.cpp
