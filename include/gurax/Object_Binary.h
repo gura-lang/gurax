@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_BINARY_H
 #define GURAX_OBJECT_BINARY_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 

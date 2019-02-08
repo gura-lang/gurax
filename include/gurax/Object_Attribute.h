@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_ATTRIBUTE_H
 #define GURAX_OBJECT_ATTRIBUTE_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "Attribute.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_Attribute Klass_Attribute;
 //------------------------------------------------------------------------------
 // Object_Attribute
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Attribute : public Object {
+class GURAX_DLLDECLARE Object_Attribute : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Attribute);
@@ -33,13 +33,14 @@ private:
 public:
 	// Constructor
 	Object_Attribute() = delete;
-	explicit Object_Attribute(Attribute *pAttr) : Object(Klass_Attribute), _pAttr(pAttr) {}
+	explicit Object_Attribute(Attribute* pAttr, Klass& klass = Klass_Attribute) :
+		Object_Object(klass), _pAttr(pAttr) {}
 	// Copy constructor/operator
-	Object_Attribute(const Object_Attribute& src) : Object(Klass_Attribute), _pAttr(src._pAttr->Reference()) {}
-	Object_Attribute& operator=(const Object_Attribute& src) { _pAttr.reset(src._pAttr->Reference()); return *this; }
+	Object_Attribute(const Object_Attribute& src) : Object_Object(src), _pAttr(src._pAttr->Reference()) {}
+	Object_Attribute& operator=(const Object_Attribute& src) = delete;
 	// Move constructor/operator
-	Object_Attribute(Object_Attribute&& src) : Object(Klass_Attribute), _pAttr(src._pAttr.release()) {}
-	Object_Attribute& operator=(Object_Attribute&& src) noexcept { _pAttr.reset(src._pAttr.release()); return *this; }
+	Object_Attribute(Object_Attribute&& src) = delete;
+	Object_Attribute& operator=(Object_Attribute&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Attribute() = default;

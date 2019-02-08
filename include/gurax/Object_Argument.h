@@ -33,8 +33,8 @@ private:
 public:
 	// Constructor
 	Object_Argument() = delete;
-	Object_Argument(Klass& klass, Argument* pArgument) : Object_Object(klass), _pArgument(pArgument) {}
-	explicit Object_Argument(Argument* pArgument) : Object_Argument(Klass_Argument, pArgument) {}
+	Object_Argument(Argument* pArgument, Klass& klass = Klass_Argument) :
+		Object_Object(klass), _pArgument(pArgument) {}
 	// Copy constructor/operator
 	Object_Argument(const Object_Argument& src) : Object_Object(src), _pArgument(src._pArgument->Clone()) {}
 	Object_Argument& operator=(const Object_Argument& src) = delete;
