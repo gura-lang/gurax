@@ -258,6 +258,38 @@ public:
 		_symbolList.push_back(pSymbol3); _symbolList.push_back(pSymbol4);
 		_symbolList.push_back(pSymbol5); _symbolList.push_back(pSymbol6);
 	}
+	explicit DottedSymbol(const char* str) {
+		_symbolList.reserve(1);
+		_symbolList.push_back(Symbol::Add(str)); 
+	}
+	DottedSymbol(const char* str1, const char* str2) {
+		_symbolList.reserve(2);
+		_symbolList.push_back(Symbol::Add(str1)); _symbolList.push_back(Symbol::Add(str2));
+	}
+	DottedSymbol(const char* str1, const char* str2, const char* str3) {
+		_symbolList.reserve(3);
+		_symbolList.push_back(Symbol::Add(str1)); _symbolList.push_back(Symbol::Add(str2));
+		_symbolList.push_back(Symbol::Add(str3));
+	}
+	DottedSymbol(const char* str1, const char* str2, const char* str3, const char* str4) {
+		_symbolList.reserve(4);
+		_symbolList.push_back(Symbol::Add(str1)); _symbolList.push_back(Symbol::Add(str2));
+		_symbolList.push_back(Symbol::Add(str3)); _symbolList.push_back(Symbol::Add(str4));
+	}
+	DottedSymbol(const char* str1, const char* str2, const char* str3,
+				 const char* str4, const char* str5) {
+		_symbolList.reserve(5);
+		_symbolList.push_back(Symbol::Add(str1)); _symbolList.push_back(Symbol::Add(str2));
+		_symbolList.push_back(Symbol::Add(str3)); _symbolList.push_back(Symbol::Add(str4));
+		_symbolList.push_back(Symbol::Add(str5));
+	}
+	DottedSymbol(const char* str1, const char* str2, const char* str3,
+				 const char* str4, const char* str5, const char* str6) {
+		_symbolList.reserve(6);
+		_symbolList.push_back(Symbol::Add(str1)); _symbolList.push_back(Symbol::Add(str2));
+		_symbolList.push_back(Symbol::Add(str3)); _symbolList.push_back(Symbol::Add(str4));
+		_symbolList.push_back(Symbol::Add(str5)); _symbolList.push_back(Symbol::Add(str6));
+	}
 	explicit DottedSymbol(std::initializer_list<const Symbol*> initList) : _symbolList(initList) {}
 	// Copy constructor/operator
 	DottedSymbol(const DottedSymbol& src) : _symbolList(src._symbolList) {}
@@ -274,6 +306,7 @@ public:
 	const Symbol* GetSymbolLast() const { return _symbolList.back(); }
 	void Reserve(size_t n) { _symbolList.reserve(n); }
 	void Append(const Symbol* pSymbol) { _symbolList.push_back(pSymbol); }
+	void Append(const char* str) { _symbolList.push_back(Symbol::Add(str)); }
 	bool AppendFromExprList(const ExprList& exprList);
 	bool AppendFromString(const char* str);
 	bool AppendFromExpr(const Expr* pExpr);
