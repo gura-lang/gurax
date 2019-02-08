@@ -20,7 +20,7 @@ protected:
 	const Symbol* _pSymbol;
 	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<HelpProvider> _pHelpProvider;
-	RefPtr<Frame::WeakPtr> _pwFrame;
+	RefPtr<Frame::WeakPtr> _pwFrameParent;
 public:
 	// Constructor
 	Function() : Function(Symbol::Empty, new DeclCaller(), new HelpProvider()) {}
@@ -38,7 +38,8 @@ protected:
 	~Function() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	void SetFrame(Frame* pFrame) { _pwFrame.reset(pFrame->GetWeakPtr()); }
+	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
+	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

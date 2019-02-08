@@ -12,7 +12,7 @@ Klass::SeqId Klass::_seqIdNext = 1;
 Klass Klass::Empty("");
 
 Klass::Klass(const char* name) :
-	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
+	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap())
 {
 }
@@ -138,7 +138,7 @@ void Object::Bootup()
 
 bool Object::IsInstanceOf(const Klass& klass) const
 {
-	for (const Klass *pKlass = &GetKlass(); pKlass != nullptr; pKlass = pKlass->GetParent()) {
+	for (const Klass *pKlass = &GetKlass(); pKlass != nullptr; pKlass = &pKlass->GetKlassInherited()) {
 		if (pKlass->IsIdentical(klass)) return true;
 	}
 	return false;

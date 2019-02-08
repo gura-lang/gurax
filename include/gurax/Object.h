@@ -54,11 +54,11 @@ public:
 protected:
 	SeqId _seqId;
 	RefPtr<HelpProvider> _pHelpProvider;
-	Klass* _pKlassParent;
+	Klass* _pKlassInherited;
 	const Symbol* _pSymbol;
 	UInt32 _flags;
 	RefPtr<ObjectMap> _pObjectMap;
-	RefPtr<Frame::WeakPtr> _pwFrame;
+	RefPtr<Frame::WeakPtr> _pwFrameParent;
 private:
 	static SeqId _seqIdNext;
 	static const SeqId SeqId_Invalid = 0;
@@ -78,15 +78,16 @@ public:
 public:
 	SeqId GetSeqId() const { return _seqId; }
 	void SetAttrs(UInt32 flags) { _flags = flags; }
-	void SetAttrs(Klass& klassParent, UInt32 flags) {
-		_pKlassParent = &klassParent;
+	void SetAttrs(Klass& klassInherited, UInt32 flags) {
+		_pKlassInherited = &klassInherited;
 		_flags = flags;
 	}
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-	Klass* GetParent() const { return _pKlassParent; }
+	Klass& GetKlassInherited() const { return *_pKlassInherited; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
-	void SetFrame(Frame* pFrame) { _pwFrame.reset(pFrame->GetWeakPtr()); }
+	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
+	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
@@ -99,7 +100,7 @@ public:
 	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }
 public:
-	void Prepare(Frame* pFrame) { DoPrepare(pFrame); }
+	void Prepare(Frame* pFrameParent) { DoPrepare(pFrameParent); }
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
