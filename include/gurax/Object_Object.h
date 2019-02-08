@@ -29,8 +29,8 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Object");
 public:
 	// Constructor
-	explicit Object_Object(Klass& klass) : Object(klass) {}
 	Object_Object() : Object_Object(Klass_Object) {}
+	explicit Object_Object(Klass& klass) : Object(klass) {}
 	// Copy constructor/operator
 	Object_Object(const Object_Object& src) : Object(src) {}
 	Object_Object& operator=(const Object_Object& src) = delete;

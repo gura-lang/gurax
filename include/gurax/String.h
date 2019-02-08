@@ -321,7 +321,7 @@ private:
 	String _str;
 public:
 	// Constructor
-	StringReferable() = delete;
+	StringReferable() {}
 	explicit StringReferable(String str) : _str(std::move(str)) {}
 	// Copy constructor/operator
 	StringReferable(const StringReferable& src) = delete;

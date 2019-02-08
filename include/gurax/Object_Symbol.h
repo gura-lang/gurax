@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_SYMBOL_H
 #define GURAX_OBJECT_SYMBOL_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Symbol Klass_Symbol;
 //------------------------------------------------------------------------------
 // Object_Symbol
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Symbol : public Object {
+class GURAX_DLLDECLARE Object_Symbol : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Symbol);
@@ -31,13 +31,16 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	explicit Object_Symbol(const Symbol* pSymbol) : Object(Klass_Symbol), _pSymbol(pSymbol) {}
+	explicit Object_Symbol(Klass& klass = Klass_Symbol) = delete;
+	explicit Object_Symbol(const Symbol* pSymbol, Klass& klass = Klass_Symbol) :
+		Object_Object(klass), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Object_Symbol(const Object_Symbol& src) : Object(Klass_Symbol), _pSymbol(src._pSymbol) {}
-	Object_Symbol& operator=(const Object_Symbol& src) { _pSymbol = src._pSymbol; return *this; }
+	Object_Symbol(const Object_Symbol& src) :
+		Object_Object(src), _pSymbol(src._pSymbol) {}
+	Object_Symbol& operator=(const Object_Symbol& src) = delete;
 	// Move constructor/operator
-	Object_Symbol(Object_Symbol&& src) : Object(Klass_Symbol), _pSymbol(src._pSymbol) {}
-	Object_Symbol& operator=(Object_Symbol&& src) noexcept { _pSymbol = src._pSymbol; return *this; }
+	Object_Symbol(Object_Symbol&& src) = delete;
+	Object_Symbol& operator=(Object_Symbol&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Symbol() = default;

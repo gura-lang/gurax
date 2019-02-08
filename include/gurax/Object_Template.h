@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_TEMPLATE_H
 #define GURAX_OBJECT_TEMPLATE_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "Template.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_Template Klass_Template;
 //------------------------------------------------------------------------------
 // Object_Template
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Template : public Object {
+class GURAX_DLLDECLARE Object_Template : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Template);
@@ -32,14 +32,16 @@ private:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor
-	Object_Template() = delete;
-	explicit Object_Template(Template *pTempl) : Object(Klass_Template), _pTempl(pTempl) {}
+	Object_Template(Klass& klass = Klass_Template) = delete;
+	explicit Object_Template(Template* pTempl, Klass& klass = Klass_Template) :
+		Object_Object(klass), _pTempl(pTempl) {}
 	// Copy constructor/operator
-	Object_Template(const Object_Template& src) : Object(Klass_Template), _pTempl(src._pTempl->Reference()) {}
-	Object_Template& operator=(const Object_Template& src) { _pTempl.reset(src._pTempl->Reference()); return *this; }
+	Object_Template(const Object_Template& src) :
+		Object_Object(src), _pTempl(src._pTempl->Reference()) {}
+	Object_Template& operator=(const Object_Template& src) = delete;
 	// Move constructor/operator
-	Object_Template(Object_Template&& src) : Object(Klass_Template), _pTempl(src._pTempl.release()) {}
-	Object_Template& operator=(Object_Template&& src) noexcept { _pTempl.reset(src._pTempl.release()); return *this; }
+	Object_Template(Object_Template&& src) = delete;
+	Object_Template& operator=(Object_Template&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Template() = default;

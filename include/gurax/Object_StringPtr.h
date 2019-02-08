@@ -4,7 +4,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_STRINGPTR_H
 #define GURAX_OBJECT_STRINGPTR_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -22,7 +22,7 @@ extern KlassT_StringPtr Klass_StringPtr;
 //------------------------------------------------------------------------------
 // Object_StringPtr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_StringPtr : public Object {
+class GURAX_DLLDECLARE Object_StringPtr : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_StringPtr);
@@ -32,13 +32,17 @@ private:
 	const char* _str;
 public:
 	// Constructor
-	explicit Object_StringPtr(const char* str) : Object(Klass_StringPtr), _str(str) {}
+	explicit Object_StringPtr(Klass& klass = Klass_StringPtr) :
+		Object_StringPtr("", klass) {}
+	explicit Object_StringPtr(const char* str, Klass& klass = Klass_StringPtr) :
+		Object_Object(klass), _str(str) {}
 	// Copy constructor/operator
-	Object_StringPtr(const Object_StringPtr& src) : Object(Klass_StringPtr), _str(src._str) {}
-	Object_StringPtr& operator=(const Object_StringPtr& src) { _str = src._str; return *this; }
+	Object_StringPtr(const Object_StringPtr& src) :
+		Object_Object(src), _str(src._str) {}
+	Object_StringPtr& operator=(const Object_StringPtr& src) = delete;
 	// Move constructor/operator
-	Object_StringPtr(Object_StringPtr&& src) : Object(Klass_StringPtr), _str(src._str) {}
-	Object_StringPtr& operator=(Object_StringPtr&& src) noexcept { _str = src._str; return *this; }
+	Object_StringPtr(Object_StringPtr&& src) = delete;
+	Object_StringPtr& operator=(Object_StringPtr&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_StringPtr() = default;

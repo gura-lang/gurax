@@ -33,12 +33,12 @@ private:
 public:
 	// Constructor
 	Object_Quote() = delete;
-	explicit Object_Quote(Expr *pExpr) : Object(Klass_Quote), _pExpr(pExpr) {}
+	explicit Object_Quote(Expr* pExpr) : Object(Klass_Quote), _pExpr(pExpr) {}
 	// Copy constructor/operator
 	Object_Quote(const Object_Quote& src) : Object(src), _pExpr(src._pExpr->Reference()) {}
 	Object_Quote& operator=(const Object_Quote& src) = delete;
 	// Move constructor/operator
-	Object_Quote(Object_Quote&& src) : Object(src), _pExpr(src._pExpr.release()) {}
+	Object_Quote(Object_Quote&& src) = delete;
 	Object_Quote& operator=(Object_Quote&& src) noexcept = delete;
 protected:
 	// Destructor

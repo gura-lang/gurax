@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_TIMEDELTA_H
 #define GURAX_OBJECT_TIMEDELTA_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "TimeDelta.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_TimeDelta Klass_TimeDelta;
 //------------------------------------------------------------------------------
 // Object_TimeDelta
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_TimeDelta : public Object {
+class GURAX_DLLDECLARE Object_TimeDelta : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_TimeDelta);
@@ -32,14 +32,17 @@ private:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor
-	Object_TimeDelta() = delete;
-	explicit Object_TimeDelta(TimeDelta *pTimeDelta) : Object(Klass_TimeDelta), _pTimeDelta(pTimeDelta) {}
+	explicit Object_TimeDelta(Klass& klass = Klass_TimeDelta) :
+		Object_TimeDelta(new TimeDelta(), klass) {}
+	explicit Object_TimeDelta(TimeDelta *pTimeDelta, Klass& klass = Klass_TimeDelta) :
+		Object_Object(klass), _pTimeDelta(pTimeDelta) {}
 	// Copy constructor/operator
-	Object_TimeDelta(const Object_TimeDelta& src) : Object(Klass_TimeDelta), _pTimeDelta(src._pTimeDelta->Reference()) {}
-	Object_TimeDelta& operator=(const Object_TimeDelta& src) { _pTimeDelta.reset(src._pTimeDelta->Reference()); return *this; }
+	Object_TimeDelta(const Object_TimeDelta& src) :
+		Object_Object(src), _pTimeDelta(src._pTimeDelta->Reference()) {}
+	Object_TimeDelta& operator=(const Object_TimeDelta& src) = delete;
 	// Move constructor/operator
-	Object_TimeDelta(Object_TimeDelta&& src) : Object(Klass_TimeDelta), _pTimeDelta(src._pTimeDelta.release()) {}
-	Object_TimeDelta& operator=(Object_TimeDelta&& src) noexcept { _pTimeDelta.reset(src._pTimeDelta.release()); return *this; }
+	Object_TimeDelta(Object_TimeDelta&& src) = delete;
+	Object_TimeDelta& operator=(Object_TimeDelta&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_TimeDelta() = default;

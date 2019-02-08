@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_STRING_H
 #define GURAX_OBJECT_STRING_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_String Klass_String;
 //------------------------------------------------------------------------------
 // Object_String
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_String : public Object {
+class GURAX_DLLDECLARE Object_String : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_String);
@@ -31,14 +31,19 @@ private:
 	RefPtr<StringReferable> _pStr;
 public:
 	// Constructor
-	explicit Object_String(StringReferable* pStr) : Object(Klass_String), _pStr(pStr) {}
-	explicit Object_String(String str) : Object(Klass_String), _pStr(new StringReferable(std::move(str))) {}
+	explicit Object_String(Klass& klass = Klass_String) :
+		Object_String(new StringReferable(), klass) {}
+	explicit Object_String(String str, Klass& klass = Klass_String) :
+		Object_String(new StringReferable(std::move(str)), klass) {}
+	explicit Object_String(StringReferable* pStr, Klass& klass = Klass_String) :
+		Object_Object(klass), _pStr(pStr) {}
 	// Copy constructor/operator
-	Object_String(const Object_String& src) : Object(Klass_String), _pStr(src._pStr->Reference()) {}
-	Object_String& operator=(const Object_String& src) { _pStr.reset(src._pStr->Reference()); return *this; }
+	Object_String(const Object_String& src) :
+		Object_Object(src), _pStr(src._pStr->Reference()) {}
+	Object_String& operator=(const Object_String& src) = delete;
 	// Move constructor/operator
-	Object_String(Object_String&& src) : Object(Klass_String), _pStr(src._pStr->Reference()) {}
-	Object_String& operator=(Object_String&& src) noexcept { _pStr.reset(src._pStr->Reference()); return *this; }
+	Object_String(Object_String&& src) = delete;
+	Object_String& operator=(Object_String&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_String() = default;

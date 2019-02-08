@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_STREAM_H
 #define GURAX_OBJECT_STREAM_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "Stream.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_Stream Klass_Stream;
 //------------------------------------------------------------------------------
 // Object_Stream
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Stream : public Object {
+class GURAX_DLLDECLARE Object_Stream : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Stream);
@@ -33,13 +33,15 @@ private:
 public:
 	// Constructor
 	Object_Stream() = delete;
-	explicit Object_Stream(Stream *pStream) : Object(Klass_Stream), _pStream(pStream) {}
+	explicit Object_Stream(Stream *pStream, Klass& klass = Klass_Stream) :
+		Object_Object(klass), _pStream(pStream) {}
 	// Copy constructor/operator
-	Object_Stream(const Object_Stream& src) : Object(Klass_Stream), _pStream(src._pStream->Reference()) {}
-	Object_Stream& operator=(const Object_Stream& src) { _pStream.reset(src._pStream->Reference()); return *this; }
+	Object_Stream(const Object_Stream& src) :
+		Object_Object(src), _pStream(src._pStream->Reference()) {}
+	Object_Stream& operator=(const Object_Stream& src) = delete;
 	// Move constructor/operator
-	Object_Stream(Object_Stream&& src) : Object(Klass_Stream), _pStream(src._pStream.release()) {}
-	Object_Stream& operator=(Object_Stream&& src) noexcept { _pStream.reset(src._pStream.release()); return *this; }
+	Object_Stream(Object_Stream&& src) = delete;
+	Object_Stream& operator=(Object_Stream&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Stream() = default;
