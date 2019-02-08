@@ -16,7 +16,7 @@ KlassT_Iterator Klass_Iterator("Iterator");
 
 void KlassT_Iterator::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

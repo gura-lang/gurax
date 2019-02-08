@@ -63,6 +63,8 @@ private:
 	static SeqId _seqIdNext;
 	static const SeqId SeqId_Invalid = 0;
 public:
+	static Klass Empty;
+public:
 	// Constructor
 	explicit Klass(const char* name);
 	// Copy constructor/operator
@@ -98,22 +100,35 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }
 public:
 	void Prepare(Frame* pFrame) { DoPrepare(pFrame); }
-	virtual void DoPrepare(Frame* pFrame) = 0;
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
-};
-
-//------------------------------------------------------------------------------
-// Klass_object
-//------------------------------------------------------------------------------
-class KlassT_object : public Klass {
 public:
-	using Klass::Klass;
-	virtual void DoPrepare(Frame* pFrame) override;
+	// Virtual functions
+	virtual void DoPrepare(Frame* pFrame) {};
 };
 
-extern KlassT_object Klass_object;
+//------------------------------------------------------------------------------
+// KlassMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE KlassMap :
+	public std::unordered_map<const Symbol*, Klass*,
+			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(KlassMap);
+protected:
+	~KlassMap() = default;
+public:
+	void Assign(const Symbol* pSymbol, Klass* pKlass);
+	Klass* Lookup(const Symbol* pSymbol) const {
+		auto pPair = find(pSymbol);
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
 
 //------------------------------------------------------------------------------
 // Object
@@ -335,28 +350,6 @@ public:
 	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }
 	bool IsEqualTo(const ObjectDict& objectDict) const { return IsIdentical(objectDict); }
 	bool IsLessThan(const ObjectDict& objectDict) const { return this < &objectDict; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
-};
-
-//------------------------------------------------------------------------------
-// KlassMap
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE KlassMap :
-	public std::unordered_map<const Symbol*, Klass*,
-			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(KlassMap);
-protected:
-	~KlassMap() = default;
-public:
-	void Assign(const Symbol* pSymbol, Klass* pKlass);
-	Klass* Lookup(const Symbol* pSymbol) const {
-		auto pPair = find(pSymbol);
-		return (pPair == end())? nullptr : pPair->second;
-	}
-	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
-	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

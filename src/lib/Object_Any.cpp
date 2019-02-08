@@ -16,7 +16,7 @@ KlassT_Any Klass_Any("Any");
 
 void KlassT_Any::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass::Empty, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

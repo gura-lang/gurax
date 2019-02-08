@@ -79,7 +79,7 @@ KlassT_Number Klass_Number("Number");
 
 void KlassT_Number::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

@@ -16,7 +16,7 @@ KlassT_TimeDelta Klass_TimeDelta("Timedelta");
 
 void KlassT_TimeDelta::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

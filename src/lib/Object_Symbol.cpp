@@ -16,7 +16,7 @@ KlassT_Symbol Klass_Symbol("Symbol");
 
 void KlassT_Symbol::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

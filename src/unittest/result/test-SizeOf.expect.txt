@@ -2,8 +2,6 @@
 Argument                 8
 Attribute                152
 DateTime                 48
-Frame_Node               40
-Frame_Branch             48
 ObjectOwner              40
 ObjectStack              40
 Object_Any               32

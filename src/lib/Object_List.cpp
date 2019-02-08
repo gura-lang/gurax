@@ -16,7 +16,7 @@ KlassT_List Klass_List("List");
 
 void KlassT_List::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Mutable);
+	SetAttrs(Klass_Object, Flag::Mutable);
 	pFrame->AssignKlass(*this);
 }
 

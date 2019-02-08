@@ -16,7 +16,7 @@ KlassT_Stream Klass_Stream("Stream");
 
 void KlassT_Stream::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

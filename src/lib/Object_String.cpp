@@ -16,7 +16,7 @@ KlassT_String Klass_String("String");
 
 void KlassT_String::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

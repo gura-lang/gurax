@@ -16,7 +16,7 @@ KlassT_Expr Klass_Expr("Expr");
 
 void KlassT_Expr::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

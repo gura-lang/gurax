@@ -16,7 +16,7 @@ KlassT_Quote Klass_Quote("Quote");
 
 void KlassT_Quote::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass::Empty, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

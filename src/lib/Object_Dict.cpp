@@ -16,7 +16,7 @@ KlassT_Dict Klass_Dict("Dict");
 
 void KlassT_Dict::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Mutable);
+	SetAttrs(Klass_Object, Flag::Mutable);
 	pFrame->AssignKlass(*this);
 }
 

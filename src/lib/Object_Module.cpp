@@ -16,7 +16,7 @@ KlassT_Module Klass_Module("Module");
 
 void KlassT_Module::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

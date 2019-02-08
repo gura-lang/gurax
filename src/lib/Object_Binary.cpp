@@ -16,7 +16,7 @@ KlassT_Binary Klass_Binary("Binary");
 
 void KlassT_Binary::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

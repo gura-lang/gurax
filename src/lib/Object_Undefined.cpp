@@ -16,7 +16,7 @@ KlassT_Undefined Klass_Undefined("Undefined");
 
 void KlassT_Undefined::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass::Empty, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

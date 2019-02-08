@@ -16,7 +16,7 @@ KlassT_Bool Klass_Bool("Bool");
 
 void KlassT_Bool::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

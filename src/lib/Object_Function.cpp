@@ -16,7 +16,7 @@ KlassT_Function Klass_Function("Function");
 
 void KlassT_Function::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_object, Flag::Immutable);
+	SetAttrs(Klass_Object, Flag::Immutable);
 	pFrame->AssignKlass(*this);
 }
 

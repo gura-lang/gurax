@@ -6,6 +6,57 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Klass
+//------------------------------------------------------------------------------
+Klass::SeqId Klass::_seqIdNext = 1;
+Klass Klass::Empty("");
+
+Klass::Klass(const char* name) :
+	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
+	_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap())
+{
+}
+
+String Klass::MakeFullName() const
+{
+	return GetName();
+}
+
+DottedSymbol* Klass::MakeDottedSymbol() const
+{
+	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+	pDottedSymbol->Append(GetSymbol());
+	return pDottedSymbol.release();
+}
+
+//------------------------------------------------------------------------------
+// KlassMap
+//------------------------------------------------------------------------------
+void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
+{
+	iterator pPair = find(pSymbol);
+	if (pPair == end()) {
+		emplace(pSymbol, pKlass);
+	} else {
+		pPair->second = pKlass;
+	}
+}
+
+String KlassMap::ToString(const StringStyle& ss) const
+{
+	String str;
+	SymbolList keys = GetKeys().Sort();
+	for (const Symbol* pSymbol : keys) {
+		const Klass* pKlass = Lookup(pSymbol);
+		str += pSymbol->GetName();
+		str += " = ";
+		str += pKlass->MakeFullName();
+		str += "\n";
+	}
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // ObjectMap
 //------------------------------------------------------------------------------
 void ObjectMap::Clear()
@@ -42,29 +93,6 @@ String ObjectMap::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Klass
-//------------------------------------------------------------------------------
-Klass::SeqId Klass::_seqIdNext = 1;
-
-Klass::Klass(const char* name) :
-	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassParent(nullptr),
-	_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap())
-{
-}
-
-String Klass::MakeFullName() const
-{
-	return GetName();
-}
-
-DottedSymbol* Klass::MakeDottedSymbol() const
-{
-	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
-	pDottedSymbol->Append(GetSymbol());
-	return pDottedSymbol.release();
-}
-
-//------------------------------------------------------------------------------
 // Object
 //------------------------------------------------------------------------------
 const Object *Object::_pObject_undefined	= nullptr;
@@ -77,7 +105,7 @@ const Object *Object::_pObject_true_		= nullptr;
 void Object::Bootup()
 {
 	Frame* pFrame = Context::GetFrame();
-	Klass_object.Prepare(pFrame);
+	Klass_Object.Prepare(pFrame);
 	Klass_Any.Prepare(pFrame);
 	Klass_Argument.Prepare(pFrame);
 	Klass_Attribute.Prepare(pFrame);
@@ -191,17 +219,6 @@ bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) cons
 				 "value type %s can not be formatted with %%c qualifier",
 				 GetKlass().MakeFullName().c_str());
 	return false;
-}
-
-//------------------------------------------------------------------------------
-// Klass_object
-//------------------------------------------------------------------------------
-KlassT_object Klass_object("object");
-
-void KlassT_object::DoPrepare(Frame* pFrame)
-{
-	SetAttrs(Flag::Immutable);
-	pFrame->AssignKlass(*this);
 }
 
 //------------------------------------------------------------------------------
@@ -346,33 +363,6 @@ String ObjectDict::ToString(const StringStyle& ss) const
 		str += pObject->ToString(ss);
 	}
 	str += "}";
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// KlassMap
-//------------------------------------------------------------------------------
-void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
-{
-	iterator pPair = find(pSymbol);
-	if (pPair == end()) {
-		emplace(pSymbol, pKlass);
-	} else {
-		pPair->second = pKlass;
-	}
-}
-
-String KlassMap::ToString(const StringStyle& ss) const
-{
-	String str;
-	SymbolList keys = GetKeys().Sort();
-	for (const Symbol* pSymbol : keys) {
-		const Klass* pKlass = Lookup(pSymbol);
-		str += pSymbol->GetName();
-		str += " = ";
-		str += pKlass->MakeFullName();
-		str += "\n";
-	}
 	return str;
 }
 

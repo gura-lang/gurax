@@ -1,5 +1,5 @@
 [Symbol]
-590 590 590
+607 607 607
 1
 [a, b, c] == [a, b, c]  .. true
 [a, b, c] == [a, b, c, d, e, f]  .. false
