@@ -5,7 +5,7 @@
 #define GURAX_ATTRIBUTE_H
 #include "MemoryPool.h"
 #include "Referable.h"
-#include "Symbol.h"
+#include "DottedSymbol.h"
 
 namespace Gurax {
 

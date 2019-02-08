@@ -4,7 +4,7 @@
 #ifndef GURAX_HELP_H
 #define GURAX_HELP_H
 #include "Referable.h"
-#include "Symbol.h"
+#include "DottedSymbol.h"
 
 namespace Gurax {
 

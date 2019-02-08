@@ -6,7 +6,7 @@
 #include "Help.h"
 #include "MemoryPool.h"
 #include "Referable.h"
-#include "Symbol.h"
+#include "DottedSymbol.h"
 #include "Frame.h"
 
 namespace Gurax {
