@@ -42,10 +42,10 @@ public:
 private:
 	static const Object* _pObject_undefined;
 	static const Object* _pObject_nil;
-	static const Object* _pObject_zero;
-	static const Object* _pObject_emptystr;
 	static const Object* _pObject_false_;
 	static const Object* _pObject_true_;
+	static const Object* _pObject_zero;
+	static const Object* _pObject_emptystr;
 protected:
 	Klass* _pKlass;
 public:
@@ -66,6 +66,9 @@ public:
 	const Klass& GetKlass() const { return *_pKlass; }
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
+	bool IsUndefined() const { return IsIdentical(_pObject_undefined); }
+	bool IsNil() const { return IsIdentical(_pObject_nil); }
+	bool GetBool() const;
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
 	}
@@ -101,12 +104,12 @@ public:
 	bool IsImmutable() const { return GetKlass().IsImmutable(); }
 public:
 	static void Bootup();
-	static Object* nil()		{ return _pObject_nil->Reference(); }
 	static Object* undefined()	{ return _pObject_undefined->Reference(); }
-	static Object* zero()		{ return _pObject_zero->Reference(); }
-	static Object* emptystr()	{ return _pObject_emptystr->Reference(); }
+	static Object* nil()		{ return _pObject_nil->Reference(); }
 	static Object* false_()		{ return _pObject_false_->Reference(); }
 	static Object* true_()		{ return _pObject_true_->Reference(); }
+	static Object* zero()		{ return _pObject_zero->Reference(); }
+	static Object* emptystr()	{ return _pObject_emptystr->Reference(); }
 };
 
 //------------------------------------------------------------------------------

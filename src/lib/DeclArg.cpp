@@ -128,6 +128,16 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		new DeclArg(pSymbol, pDottedSymbol.release(), occurPattern, flags, pExprDefault.release());
 }
 
+bool DeclArg::FixKlass(Frame* pFrame)
+{
+	Object* pObject = pFrame->LookupObject(GetDottedSymbol());
+	if (pObject && pObject->IsType(Klass_Klass)) {
+		_pKlass = &dynamic_cast<Object_Klass*>(pObject)->GetKlass();
+		return true;
+	}
+	return false;
+}
+
 String DeclArg::FlagsToString(UInt32 flags)
 {
 	String rtn;

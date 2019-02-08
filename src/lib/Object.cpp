@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 const Object *Object::_pObject_undefined	= nullptr;
 const Object *Object::_pObject_nil			= nullptr;
-const Object *Object::_pObject_zero			= nullptr;
-const Object *Object::_pObject_emptystr		= nullptr;
 const Object *Object::_pObject_false_		= nullptr;
 const Object *Object::_pObject_true_		= nullptr;
+const Object *Object::_pObject_zero			= nullptr;
+const Object *Object::_pObject_emptystr		= nullptr;
 
 void Object::Bootup()
 {
@@ -43,10 +43,16 @@ void Object::Bootup()
 	Klass_Undefined.Prepare(pFrame);
 	_pObject_undefined	= new Object_Undefined();
 	_pObject_nil		= new Object_Nil();
-	_pObject_zero		= new Object_Number(0);
-	_pObject_emptystr	= new Object_String("");
 	_pObject_false_		= new Object_Bool(false);
 	_pObject_true_		= new Object_Bool(true);
+	_pObject_zero		= new Object_Number(0);
+	_pObject_emptystr	= new Object_String("");
+}
+
+bool Object::GetBool() const
+{
+	return !(IsUndefined() || IsNil() ||
+			 (IsType(Klass_Bool) && !dynamic_cast<const Object_Bool*>(this)->GetBool()));
 }
 
 bool Object::IsInstanceOf(const Klass& klass) const
