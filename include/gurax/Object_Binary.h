@@ -21,7 +21,7 @@ extern KlassT_Binary Klass_Binary;
 //------------------------------------------------------------------------------
 // Object_Binary
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Binary : public Object {
+class GURAX_DLLDECLARE Object_Binary : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Binary);
@@ -31,14 +31,16 @@ private:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
-	explicit Object_Binary(BinaryReferable* pBinary) : Object(Klass_Binary), _pBinary(pBinary) {}
-	explicit Object_Binary(Binary str) : Object(Klass_Binary), _pBinary(new BinaryReferable(std::move(str))) {}
+	explicit Object_Binary(BinaryReferable* pBinary, Klass& klass = Klass_Binary) :
+		Object_Object(klass), _pBinary(pBinary) {}
+	explicit Object_Binary(Binary str, Klass& klass = Klass_Binary) :
+		Object_Object(klass), _pBinary(new BinaryReferable(std::move(str))) {}
 	// Copy constructor/operator
-	Object_Binary(const Object_Binary& src) : Object(Klass_Binary), _pBinary(src._pBinary->Reference()) {}
-	Object_Binary& operator=(const Object_Binary& src) { _pBinary.reset(src._pBinary->Reference()); return *this; }
+	Object_Binary(const Object_Binary& src) = delete;
+	Object_Binary& operator=(const Object_Binary& src) = delete;
 	// Move constructor/operator
-	Object_Binary(Object_Binary&& src) : Object(Klass_Binary), _pBinary(src._pBinary->Reference()) {}
-	Object_Binary& operator=(Object_Binary&& src) noexcept { _pBinary.reset(src._pBinary->Reference()); return *this; }
+	Object_Binary(Object_Binary&& src) = delete;
+	Object_Binary& operator=(Object_Binary&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Binary() = default;

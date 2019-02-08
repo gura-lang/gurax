@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_BOOL_H
 #define GURAX_OBJECT_BOOL_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Bool Klass_Bool;
 //------------------------------------------------------------------------------
 // Object_Bool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Bool : public Object {
+class GURAX_DLLDECLARE Object_Bool : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Bool);
@@ -31,13 +31,13 @@ private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_Bool(bool flag) : Object(Klass_Bool), _flag(flag) {}
+	explicit Object_Bool(bool flag, Klass& klass = Klass_Bool) : Object_Object(klass), _flag(flag) {}
 	// Copy constructor/operator
-	Object_Bool(const Object_Bool& src) : Object(Klass_Bool), _flag(src._flag) {}
-	Object_Bool& operator=(const Object_Bool& src) { _flag = src._flag; return *this; }
+	Object_Bool(const Object_Bool& src) : Object_Object(src), _flag(src._flag) {}
+	Object_Bool& operator=(const Object_Bool& src) = delete;
 	// Move constructor/operator
-	Object_Bool(Object_Bool&& src) : Object(Klass_Bool), _flag(src._flag) {}
-	Object_Bool& operator=(Object_Bool&& src) noexcept { _flag = src._flag; return *this; }
+	Object_Bool(Object_Bool&& src) = delete;
+	Object_Bool& operator=(Object_Bool&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Bool() = default;
