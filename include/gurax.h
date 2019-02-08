@@ -21,6 +21,7 @@
 #include "gurax/Function.h"
 #include "gurax/Help.h"
 #include "gurax/Iterator.h"
+#include "gurax/Klass.h"
 #include "gurax/MemoryPool.h"
 #include "gurax/Object.h"
 #include "gurax/Object_Any.h"

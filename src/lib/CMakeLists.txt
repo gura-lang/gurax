@@ -17,6 +17,7 @@ add_library(guraxcore SHARED
 	Function.cpp
 	Help.cpp
 	Iterator.cpp
+	Klass.cpp
 	MemoryPool.cpp
 	Module.cpp
 	Object.cpp
