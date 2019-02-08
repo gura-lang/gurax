@@ -167,23 +167,23 @@ private:
 	static const Object* _pObject_false_;
 	static const Object* _pObject_true_;
 protected:
-	Klass& _klass;
+	Klass* _pKlass;
 public:
 	// Constructor
 	Object() = delete;
-	Object(Klass& klass) : _klass(klass) {}
+	explicit Object(Klass& klass) : _pKlass(&klass) {}
 	// Copy constructor/operator
-	Object(const Object& src) = delete;
+	Object(const Object& src) : _pKlass(src._pKlass) {}
 	Object& operator=(const Object& src) = delete;
 	// Move constructor/operator
-	Object(Object&& src) = delete;
+	Object(Object&& src) : _pKlass(src._pKlass) {}
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
 	virtual ~Object() = default;
 public:
-	Klass& GetKlass() { return _klass; }
-	const Klass& GetKlass() const { return _klass; }
+	Klass& GetKlass() { return *_pKlass; }
+	const Klass& GetKlass() const { return *_pKlass; }
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
