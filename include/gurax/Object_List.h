@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_LIST_H
 #define GURAX_OBJECT_LIST_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_List Klass_List;
 //------------------------------------------------------------------------------
 // Object_List
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_List : public Object {
+class GURAX_DLLDECLARE Object_List : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_List);
@@ -31,18 +31,17 @@ private:
 	RefPtr<ObjectTypedOwner> _pObjectTypedOwner;
 public:
 	// Constructor
-	Object_List() : Object(Klass_List), _pObjectTypedOwner(new ObjectTypedOwner()) {}
-	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner) : Object(Klass_List), _pObjectTypedOwner(pObjectTypedOwner) {}
+	Object_List(Klass& klass = Klass_List) :
+		Object_Object(klass), _pObjectTypedOwner(new ObjectTypedOwner()) {}
+	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner, Klass& klass = Klass_List) :
+		Object_Object(klass), _pObjectTypedOwner(pObjectTypedOwner) {}
 	// Copy constructor/operator
-	Object_List(const Object_List& src) : Object(Klass_List), _pObjectTypedOwner(src._pObjectTypedOwner->CloneDeep()) {}
-	Object_List& operator=(const Object_List& src) {
-		_pObjectTypedOwner.reset(src._pObjectTypedOwner->CloneDeep()); return *this;
-	}
+	Object_List(const Object_List& src) :
+		Object_Object(src), _pObjectTypedOwner(src._pObjectTypedOwner->Reference()) {}
+	Object_List& operator=(const Object_List& src) = delete;
 	// Move constructor/operator
-	Object_List(Object_List&& src) : Object(Klass_List), _pObjectTypedOwner(src._pObjectTypedOwner.release()) {}
-	Object_List& operator=(Object_List&& src) noexcept {
-		_pObjectTypedOwner.reset(src._pObjectTypedOwner.release()); return *this;
-	}
+	Object_List(Object_List&& src) = delete;
+	Object_List& operator=(Object_List&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_List() = default;
