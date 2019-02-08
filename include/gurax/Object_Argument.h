@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_ARGUMENT_H
 #define GURAX_OBJECT_ARGUMENT_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "Argument.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_Argument Klass_Argument;
 //------------------------------------------------------------------------------
 // Object_Argument
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Argument : public Object {
+class GURAX_DLLDECLARE Object_Argument : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Argument);
@@ -33,17 +33,14 @@ private:
 public:
 	// Constructor
 	Object_Argument() = delete;
-	explicit Object_Argument(Argument *pArgument) : Object(Klass_Argument), _pArgument(pArgument) {}
+	Object_Argument(Klass& klass, Argument* pArgument) : Object_Object(klass), _pArgument(pArgument) {}
+	explicit Object_Argument(Argument* pArgument) : Object_Argument(Klass_Argument, pArgument) {}
 	// Copy constructor/operator
-	Object_Argument(const Object_Argument& src) : Object(Klass_Argument), _pArgument(src._pArgument->Clone()) {}
-	Object_Argument& operator=(const Object_Argument& src) {
-		_pArgument.reset(src._pArgument->Clone()); return *this;
-	}
+	Object_Argument(const Object_Argument& src) : Object_Object(src), _pArgument(src._pArgument->Clone()) {}
+	Object_Argument& operator=(const Object_Argument& src) = delete;
 	// Move constructor/operator
-	Object_Argument(Object_Argument&& src) : Object(Klass_Argument), _pArgument(src._pArgument.release()) {}
-	Object_Argument& operator=(Object_Argument&& src) noexcept {
-		_pArgument.reset(src._pArgument.release()); return *this;
-	}
+	Object_Argument(Object_Argument&& src) = delete;
+	Object_Argument& operator=(Object_Argument&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Argument() = default;
