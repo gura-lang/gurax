@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_KLASS_H
 #define GURAX_OBJECT_KLASS_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Klass Klass_Klass;
 //------------------------------------------------------------------------------
 // Object_Klass
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Klass : public Object {
+class GURAX_DLLDECLARE Object_Klass : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Klass);
@@ -32,13 +32,15 @@ private:
 public:
 	// Constructor
 	Object_Klass() = delete;
-	explicit Object_Klass(Klass& klassThis) : Object(Klass_Klass), _pKlassThis(&klassThis) {}
+	explicit Object_Klass(Klass& klassThis, Klass& klass = Klass_Klass) :
+		Object_Object(klass), _pKlassThis(&klassThis) {}
 	// Copy constructor/operator
-	Object_Klass(const Object_Klass& src) : Object(Klass_Klass), _pKlassThis(src._pKlassThis) {}
-	Object_Klass& operator=(const Object_Klass& src) { _pKlassThis = src._pKlassThis; return *this; }
+	Object_Klass(const Object_Klass& src) :
+		Object_Object(src), _pKlassThis(src._pKlassThis) {}
+	Object_Klass& operator=(const Object_Klass& src) = delete;
 	// Move constructor/operator
-	Object_Klass(Object_Klass&& src) : Object(Klass_Klass), _pKlassThis(src._pKlassThis) {}
-	Object_Klass& operator=(Object_Klass&& src) noexcept { _pKlassThis = src._pKlassThis; return *this; }
+	Object_Klass(Object_Klass&& src) = delete;
+	Object_Klass& operator=(Object_Klass&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Klass() = default;

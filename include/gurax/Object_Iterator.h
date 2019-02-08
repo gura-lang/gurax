@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_ITERATOR_H
 #define GURAX_OBJECT_ITERATOR_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Iterator Klass_Iterator;
 //------------------------------------------------------------------------------
 // Object_Iterator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Iterator : public Object {
+class GURAX_DLLDECLARE Object_Iterator : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Iterator);
@@ -32,13 +32,15 @@ private:
 public:
 	// Constructor
 	Object_Iterator() = delete;
-	explicit Object_Iterator(Iterator *pIterator) : Object(Klass_Iterator), _pIterator(pIterator) {}
+	explicit Object_Iterator(Iterator *pIterator, Klass& klass = Klass_Iterator) :
+		Object_Object(klass), _pIterator(pIterator) {}
 	// Copy constructor/operator
-	Object_Iterator(const Object_Iterator& src) : Object(Klass_Iterator), _pIterator(src._pIterator->Reference()) {}
-	Object_Iterator& operator=(const Object_Iterator& src) { _pIterator.reset(src._pIterator->Reference()); return *this; }
+	Object_Iterator(const Object_Iterator& src) :
+		Object_Object(src), _pIterator(src._pIterator->Reference()) {}
+		Object_Iterator& operator=(const Object_Iterator& src) = delete;
 	// Move constructor/operator
-	Object_Iterator(Object_Iterator&& src) : Object(Klass_Iterator), _pIterator(src._pIterator.release()) {}
-	Object_Iterator& operator=(Object_Iterator&& src) noexcept { _pIterator.reset(src._pIterator.release()); return *this; }
+	Object_Iterator(Object_Iterator&& src) = delete;
+	Object_Iterator& operator=(Object_Iterator&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Iterator() = default;
