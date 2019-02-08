@@ -31,6 +31,8 @@ private:
 	bool _flag;
 public:
 	// Constructor
+	explicit Object_Bool(Klass& klass = Klass_Bool) :
+		Object_Bool(false, klass) {}
 	explicit Object_Bool(bool flag, Klass& klass = Klass_Bool) :
 		Object_Object(klass), _flag(flag) {}
 	// Copy constructor/operator

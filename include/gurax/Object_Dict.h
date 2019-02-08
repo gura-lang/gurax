@@ -31,8 +31,10 @@ private:
 	RefPtr<ObjectDict> _pObjectDict;
 public:
 	// Constructor
-	Object_Dict(Klass& klass = Klass_Dict) :
-		Object_Object(klass), _pObjectDict(new ObjectDict()) {}
+	explicit Object_Dict(Klass& klass = Klass_Dict) :
+		Object_Dict(new ObjectDict(), klass) {}
+	explicit Object_Dict(ObjectDict* pObjectDict, Klass& klass = Klass_Dict) :
+		Object_Object(klass), _pObjectDict(pObjectDict) {}
 	// Copy constructor/operator
 	Object_Dict(const Object_Dict& src) :
 		Object_Object(src), _pObjectDict(src._pObjectDict->CloneDeep()) {}

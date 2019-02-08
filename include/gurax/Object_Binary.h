@@ -31,10 +31,12 @@ private:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
+	explicit Object_Binary(Klass& klass = Klass_Binary) :
+		Object_Binary(new BinaryReferable(), klass) {}
 	explicit Object_Binary(BinaryReferable* pBinary, Klass& klass = Klass_Binary) :
 		Object_Object(klass), _pBinary(pBinary) {}
 	explicit Object_Binary(Binary str, Klass& klass = Klass_Binary) :
-		Object_Object(klass), _pBinary(new BinaryReferable(std::move(str))) {}
+		Object_Binary(new BinaryReferable(std::move(str)), klass) {}
 	// Copy constructor/operator
 	Object_Binary(const Object_Binary& src) = delete;
 	Object_Binary& operator=(const Object_Binary& src) = delete;

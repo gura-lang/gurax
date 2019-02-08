@@ -32,7 +32,7 @@ private:
 public:
 	// Constructor
 	Object_List(Klass& klass = Klass_List) :
-		Object_Object(klass), _pObjectTypedOwner(new ObjectTypedOwner()) {}
+		Object_List(new ObjectTypedOwner(), klass) {}
 	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner, Klass& klass = Klass_List) :
 		Object_Object(klass), _pObjectTypedOwner(pObjectTypedOwner) {}
 	// Copy constructor/operator

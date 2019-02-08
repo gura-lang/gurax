@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_MODULE_H
 #define GURAX_OBJECT_MODULE_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "Module.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_Module Klass_Module;
 //------------------------------------------------------------------------------
 // Object_Module
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Module : public Object {
+class GURAX_DLLDECLARE Object_Module : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Module);
@@ -33,13 +33,15 @@ private:
 public:
 	// Constructor
 	Object_Module() = delete;
-	explicit Object_Module(Module *pModule) : Object(Klass_Module), _pModule(pModule) {}
+	explicit Object_Module(Module* pModule, Klass& klass = Klass_Module) :
+		Object_Object(klass), _pModule(pModule) {}
 	// Copy constructor/operator
-	Object_Module(const Object_Module& src) : Object(Klass_Module), _pModule(src._pModule->Reference()) {}
-	Object_Module& operator=(const Object_Module& src) { _pModule.reset(src._pModule->Reference()); return *this; }
+	Object_Module(const Object_Module& src) :
+		Object_Object(src), _pModule(src._pModule->Reference()) {}
+	Object_Module& operator=(const Object_Module& src) = delete;
 	// Move constructor/operator
-	Object_Module(Object_Module&& src) : Object(Klass_Module), _pModule(src._pModule.release()) {}
-	Object_Module& operator=(Object_Module&& src) noexcept { _pModule.reset(src._pModule.release()); return *this; }
+	Object_Module(Object_Module&& src) = delete;
+	Object_Module& operator=(Object_Module&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Module() = default;

@@ -32,8 +32,9 @@ private:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor
-	Object_DateTime() = delete;
-	explicit Object_DateTime(DateTime *pDateTime, Klass& klass) :
+	explicit Object_DateTime(Klass& klass = Klass_DateTime) :
+		Object_DateTime(new DateTime(), klass) {}
+	explicit Object_DateTime(DateTime *pDateTime, Klass& klass = Klass_DateTime) :
 		Object_Object(klass), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
 	Object_DateTime(const Object_DateTime& src) :

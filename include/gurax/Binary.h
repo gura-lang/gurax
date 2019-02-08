@@ -81,7 +81,7 @@ private:
 	Binary _binary;
 public:
 	// Constructor
-	BinaryReferable() = delete;
+	BinaryReferable() {}
 	explicit BinaryReferable(Binary binary) : _binary(std::move(binary)) {}
 	// Copy constructor/operator
 	BinaryReferable(const BinaryReferable& src) = delete;

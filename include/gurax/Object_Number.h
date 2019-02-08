@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_NUMBER_H
 #define GURAX_OBJECT_NUMBER_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Number Klass_Number;
 //------------------------------------------------------------------------------
 // Object_Number
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Number : public Object {
+class GURAX_DLLDECLARE Object_Number : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Number);
@@ -31,13 +31,17 @@ private:
 	Double _num;
 public:
 	// Constructor
-	explicit Object_Number(Double num = 0.) : Object(Klass_Number), _num(num) {}
+	explicit Object_Number(Klass& klass = Klass_Number) :
+		Object_Number(0., klass) {}
+	explicit Object_Number(Double num, Klass& klass = Klass_Number) :
+		Object_Object(klass), _num(num) {}
 	// Copy constructor/operator
-	Object_Number(const Object_Number& src) : Object(Klass_Number), _num(src._num) {}
-	Object_Number& operator=(const Object_Number& src) { _num = src._num; return *this; }
+	Object_Number(const Object_Number& src) :
+		Object_Object(src), _num(src._num) {}
+	Object_Number& operator=(const Object_Number& src) = delete;
 	// Move constructor/operator
-	Object_Number(Object_Number&& src) : Object(Klass_Number), _num(src._num) {}
-	Object_Number& operator=(Object_Number&& src) noexcept { _num = src._num; return *this; }
+	Object_Number(Object_Number&& src) = delete;
+	Object_Number& operator=(Object_Number&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Number() = default;
