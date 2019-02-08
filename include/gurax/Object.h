@@ -18,29 +18,6 @@ class Object;
 class StringStyle;
 
 //------------------------------------------------------------------------------
-// ObjectMap
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ObjectMap :
-	public std::unordered_map<const Symbol*, Object*,
-			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(ObjectMap);
-protected:
-	~ObjectMap() { Clear(); }
-public:
-	void Clear();
-	void Assign(const Symbol* pSymbol, Object* pObject);
-	Object* Lookup(const Symbol* pSymbol) const {
-		auto pPair = find(pSymbol);
-		return (pPair == end())? nullptr : pPair->second;
-	}
-	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
-	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
-};
-
-//------------------------------------------------------------------------------
 // Klass
 //------------------------------------------------------------------------------
 class Klass {
@@ -57,7 +34,7 @@ protected:
 	Klass* _pKlassInherited;
 	const Symbol* _pSymbol;
 	UInt32 _flags;
-	RefPtr<ObjectMap> _pObjectMap;
+	RefPtr<Frame> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
 private:
 	static SeqId _seqIdNext;
@@ -97,7 +74,8 @@ public:
 	bool IsIdentical(const Klass& klass) const { return this == &klass; }
 	bool IsEqualTo(const Klass& klass) const { return IsIdentical(klass); }
 	bool IsLessThan(const Klass& klass) const { return this < &klass; }
-	Object* LookupObject(const Symbol* pSymbol) const { return _pObjectMap->Lookup(pSymbol); }
+	Frame& GetFrame() { return *_pFrame; }
+	const Frame& GetFrame() const { return *_pFrame; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }
 public:
 	void Prepare(Frame* pFrameParent) { DoPrepare(pFrameParent); }
@@ -201,6 +179,7 @@ public:
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	// Virtual functions
+	virtual Frame* ProvideFrame() { return nullptr; }
 	virtual Object* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Object* pObject) const = 0;
@@ -324,6 +303,29 @@ public:
 	Object* Peek(int offset) { return *(rbegin() + offset); }
 	void Push(Object* pObject) { push_back(pObject); }
 	Object* Pop() { Object* pObject = back(); pop_back(); return pObject; }
+};
+
+//------------------------------------------------------------------------------
+// ObjectMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ObjectMap :
+	public std::unordered_map<const Symbol*, Object*,
+			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ObjectMap);
+protected:
+	~ObjectMap() { Clear(); }
+public:
+	void Clear();
+	void Assign(const Symbol* pSymbol, Object* pObject);
+	Object* Lookup(const Symbol* pSymbol) const {
+		auto pPair = find(pSymbol);
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------

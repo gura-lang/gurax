@@ -49,6 +49,7 @@ public:
 	const Klass& GetKlassThis() const { return *_pKlassThis; }
 public:
 	// Virtual klasss of Object
+	virtual Frame* ProvideFrame() override { return &GetKlassThis().GetFrame(); }
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetKlassThis().CalcHash();

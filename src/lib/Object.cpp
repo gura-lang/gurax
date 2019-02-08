@@ -13,7 +13,7 @@ Klass Klass::Empty("");
 
 Klass::Klass(const char* name) :
 	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassInherited(nullptr),
-	_pSymbol(Symbol::Add(name)), _flags(0), _pObjectMap(new ObjectMap())
+	_pSymbol(Symbol::Add(name)), _flags(0), _pFrame(Frame::CreateSource())
 {
 }
 
@@ -51,42 +51,6 @@ String KlassMap::ToString(const StringStyle& ss) const
 		str += pSymbol->GetName();
 		str += " = ";
 		str += pKlass->MakeFullName();
-		str += "\n";
-	}
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ObjectMap
-//------------------------------------------------------------------------------
-void ObjectMap::Clear()
-{
-	for (auto& pair : *this) Object::Delete(pair.second);
-	clear();
-}
-
-void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
-{
-	iterator pPair = find(pSymbol);
-	if (pPair == end()) {
-		emplace(pSymbol, pObject);
-	} else {
-		Object::Delete(pPair->second);
-		pPair->second = pObject;
-	}
-}
-
-String ObjectMap::ToString(const StringStyle& ss) const
-{
-	String str;
-	SymbolList keys = GetKeys().Sort();
-	for (const Symbol* pSymbol : keys) {
-		Object* pObject = Lookup(pSymbol);
-		str += pSymbol->GetName();
-		str += ":";
-		str += pObject->GetKlass().MakeFullName().c_str();
-		str += " = ";
-		str += pObject->ToString();
 		str += "\n";
 	}
 	return str;
@@ -298,6 +262,42 @@ void ObjectTypedOwner::UpdateKlassOfElems(Klass& klassAdded)
 	} else if (!_pKlassOfElems->IsIdentical(klassAdded)) {
 		_pKlassOfElems = &Klass_Any;
 	}
+}
+
+//------------------------------------------------------------------------------
+// ObjectMap
+//------------------------------------------------------------------------------
+void ObjectMap::Clear()
+{
+	for (auto& pair : *this) Object::Delete(pair.second);
+	clear();
+}
+
+void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
+{
+	iterator pPair = find(pSymbol);
+	if (pPair == end()) {
+		emplace(pSymbol, pObject);
+	} else {
+		Object::Delete(pPair->second);
+		pPair->second = pObject;
+	}
+}
+
+String ObjectMap::ToString(const StringStyle& ss) const
+{
+	String str;
+	SymbolList keys = GetKeys().Sort();
+	for (const Symbol* pSymbol : keys) {
+		Object* pObject = Lookup(pSymbol);
+		str += pSymbol->GetName();
+		str += ":";
+		str += pObject->GetKlass().MakeFullName().c_str();
+		str += " = ";
+		str += pObject->ToString();
+		str += "\n";
+	}
+	return str;
 }
 
 //------------------------------------------------------------------------------

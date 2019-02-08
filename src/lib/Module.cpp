@@ -8,5 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Module
 //------------------------------------------------------------------------------
+String Module::ToString(const StringStyle& ss) const
+{
+	return GetDottedSymbol().ToString(ss);
+}
 
 }

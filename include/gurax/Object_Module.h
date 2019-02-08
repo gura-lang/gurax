@@ -50,6 +50,7 @@ public:
 	const Module& GetModule() const { return *_pModule; }
 public:
 	// Virtual functions of Object
+	virtual Frame* ProvideFrame() override { return &GetModule().GetFrame(); }
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetModule().CalcHash();

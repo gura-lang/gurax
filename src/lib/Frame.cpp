@@ -6,19 +6,19 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Frame_Node
+// Frame_Source
 //------------------------------------------------------------------------------
-class Frame_Node : public Frame {
+class Frame_Source : public Frame {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Node);
+	Gurax_DeclareReferable(Frame_Source);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Node");
+	Gurax_MemoryPoolAllocator("Frame_Source");
 protected:
 	RefPtr<ObjectMap> _pObjectMap;
 public:
 	// Constructor
-	Frame_Node() : Frame(Type::Node), _pObjectMap(new ObjectMap()) {}
+	Frame_Source() : Frame(Type::Source), _pObjectMap(new ObjectMap()) {}
 public:
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
 		_pObjectMap->Assign(pSymbol, pObject);
@@ -29,16 +29,45 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Frame_Branch
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Branch : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Branch);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Branch");
+protected:
+	RefPtr<Frame> _pFrameLeft;
+	RefPtr<Frame> _pFrameRight;
+public:
+	// Constructor
+	Frame_Branch(Frame* pFrameLeft, Frame* pFrameRight) : Frame(Type::Branch),
+		_pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
+public:
+	const Frame* GetLeft() const { return _pFrameLeft.get(); }
+	const Frame* GetRight() const { return _pFrameRight.get(); }
+public:
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
+		_pFrameRight->AssignObject(pSymbol, pObject);
+	}
+	virtual Object* LookupObject(const Symbol* pSymbol) const override {
+		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;
+		return _pFrameLeft->LookupObject(pSymbol);
+	}
+};
+
+//------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
-Frame* Frame::CreateNode()
+Frame* Frame::CreateSource()
 {
-	return new Frame_Node();
+	return new Frame_Source();
 }
 
 Frame* Frame::Expand() const
 {
-	return new Frame_Branch(Reference(), new Frame_Node());
+	return new Frame_Branch(Reference(), new Frame_Source());
 }
 
 Frame* Frame::Shrink(Frame* pFrame)
@@ -49,18 +78,17 @@ Frame* Frame::Shrink(Frame* pFrame)
 	return pFrameRtn;
 }
 
-Frame* Frame::SeekTarget(const DottedSymbol& dottedSymbol)
+Frame* Frame::SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail)
 {
 	Frame* pFrame = this;
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
-	if (symbolList.empty()) return nullptr;
-	const Symbol* pSymbol = nullptr;
-	for (auto ppSymbol = symbolList.begin(); ; ppSymbol++) {
-		pSymbol = *ppSymbol;
-		if (ppSymbol + 1 == symbolList.end()) break;
+	if (symbolList.size() <= nTail) return pFrame;
+	for (auto ppSymbol = symbolList.begin(); ; ) {
+		const Symbol* pSymbol = *ppSymbol++;
+		if (ppSymbol + nTail == symbolList.end()) break;
 		Object* pObject = pFrame->LookupObject(pSymbol);
 		if (!pObject) return nullptr;
-		//pFrame = pObject->ProvideFrame();
+		pFrame = pObject->ProvideFrame();
 		if (!pFrame) return nullptr;
 	}
 	return pFrame;
@@ -91,6 +119,11 @@ void Frame::AssignFunction(Function* pFunction)
 {
 	pFunction->SetFrameParent(this);
 	AssignObject(pFunction->GetSymbol(), new Object_Function(pFunction));
+}
+
+bool Frame::AssignModule(Module* pModule)
+{
+	return false;
 }
 
 //------------------------------------------------------------------------------
