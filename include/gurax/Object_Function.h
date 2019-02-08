@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_FUNCTION_H
 #define GURAX_OBJECT_FUNCTION_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Function Klass_Function;
 //------------------------------------------------------------------------------
 // Object_Function
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Function : public Object {
+class GURAX_DLLDECLARE Object_Function : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Function);
@@ -32,13 +32,15 @@ private:
 public:
 	// Constructor
 	Object_Function() = delete;
-	explicit Object_Function(Function* pFunction) : Object(Klass_Function), _pFunction(pFunction) {}
+	explicit Object_Function(Function* pFunction, Klass& klass = Klass_Function) :
+		Object_Object(klass), _pFunction(pFunction) {}
 	// Copy constructor/operator
-	Object_Function(const Object_Function& src) : Object(Klass_Function), _pFunction(src._pFunction->Reference()) {}
-	Object_Function& operator=(const Object_Function& src) { _pFunction.reset(src._pFunction->Reference()); return *this; }
+	Object_Function(const Object_Function& src) :
+		Object_Object(src), _pFunction(src._pFunction->Reference()) {}
+	Object_Function& operator=(const Object_Function& src) = delete;
 	// Move constructor/operator
-	Object_Function(Object_Function&& src) : Object(Klass_Function), _pFunction(src._pFunction.release()) {}
-	Object_Function& operator=(Object_Function&& src) noexcept { _pFunction.reset(src._pFunction.release()); return *this; }
+	Object_Function(Object_Function&& src) = delete;
+	Object_Function& operator=(Object_Function&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Function() = default;

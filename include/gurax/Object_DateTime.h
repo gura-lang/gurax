@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_DATETIME_H
 #define GURAX_OBJECT_DATETIME_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "DateTime.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_DateTime Klass_DateTime;
 //------------------------------------------------------------------------------
 // Object_DateTime
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_DateTime : public Object {
+class GURAX_DLLDECLARE Object_DateTime : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_DateTime);
@@ -33,13 +33,15 @@ private:
 public:
 	// Constructor
 	Object_DateTime() = delete;
-	explicit Object_DateTime(DateTime *pDateTime) : Object(Klass_DateTime), _pDateTime(pDateTime) {}
+	explicit Object_DateTime(DateTime *pDateTime, Klass& klass) :
+		Object_Object(klass), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
-	Object_DateTime(const Object_DateTime& src) : Object(Klass_DateTime), _pDateTime(src._pDateTime->Reference()) {}
-	Object_DateTime& operator=(const Object_DateTime& src) { _pDateTime.reset(src._pDateTime->Reference()); return *this; }
+	Object_DateTime(const Object_DateTime& src) :
+		Object_Object(src), _pDateTime(src._pDateTime->Reference()) {}
+	Object_DateTime& operator=(const Object_DateTime& src) = delete;
 	// Move constructor/operator
-	Object_DateTime(Object_DateTime&& src) : Object(Klass_DateTime), _pDateTime(src._pDateTime.release()) {}
-	Object_DateTime& operator=(Object_DateTime&& src) noexcept { _pDateTime.reset(src._pDateTime.release()); return *this; }
+	Object_DateTime(Object_DateTime&& src) = delete;
+	Object_DateTime& operator=(Object_DateTime&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_DateTime() = default;

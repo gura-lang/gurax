@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_DICT_H
 #define GURAX_OBJECT_DICT_H
-#include "Object.h"
+#include "Object_Object.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern KlassT_Dict Klass_Dict;
 //------------------------------------------------------------------------------
 // Object_Dict
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Dict : public Object {
+class GURAX_DLLDECLARE Object_Dict : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Dict);
@@ -31,17 +31,15 @@ private:
 	RefPtr<ObjectDict> _pObjectDict;
 public:
 	// Constructor
-	Object_Dict() : Object(Klass_Dict), _pObjectDict(new ObjectDict()) {}
+	Object_Dict(Klass& klass = Klass_Dict) :
+		Object_Object(klass), _pObjectDict(new ObjectDict()) {}
 	// Copy constructor/operator
-	Object_Dict(const Object_Dict& src) : Object(Klass_Dict), _pObjectDict(src._pObjectDict->CloneDeep()) {}
-	Object_Dict& operator=(const Object_Dict& src) {
-		_pObjectDict.reset(src._pObjectDict->CloneDeep()); return *this;
-	}
+	Object_Dict(const Object_Dict& src) :
+		Object_Object(src), _pObjectDict(src._pObjectDict->CloneDeep()) {}
+	Object_Dict& operator=(const Object_Dict& src) = delete;
 	// Move constructor/operator
-	Object_Dict(Object_Dict&& src) : Object(Klass_Dict), _pObjectDict(src._pObjectDict.release()) {}
-	Object_Dict& operator=(Object_Dict&& src) noexcept {
-		_pObjectDict.reset(src._pObjectDict.release()); return *this;
-	}
+	Object_Dict(Object_Dict&& src) = delete;
+	Object_Dict& operator=(Object_Dict&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Dict() = default;

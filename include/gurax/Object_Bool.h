@@ -31,9 +31,11 @@ private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_Bool(bool flag, Klass& klass = Klass_Bool) : Object_Object(klass), _flag(flag) {}
+	explicit Object_Bool(bool flag, Klass& klass = Klass_Bool) :
+		Object_Object(klass), _flag(flag) {}
 	// Copy constructor/operator
-	Object_Bool(const Object_Bool& src) : Object_Object(src), _flag(src._flag) {}
+	Object_Bool(const Object_Bool& src) :
+		Object_Object(src), _flag(src._flag) {}
 	Object_Bool& operator=(const Object_Bool& src) = delete;
 	// Move constructor/operator
 	Object_Bool(Object_Bool&& src) = delete;

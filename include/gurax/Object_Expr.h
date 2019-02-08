@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_OBJECT_EXPR_H
 #define GURAX_OBJECT_EXPR_H
-#include "Object.h"
+#include "Object_Object.h"
 #include "Expr.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern KlassT_Expr Klass_Expr;
 //------------------------------------------------------------------------------
 // Object_Expr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Expr : public Object {
+class GURAX_DLLDECLARE Object_Expr : public Object_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object_Expr);
@@ -33,13 +33,15 @@ private:
 public:
 	// Constructor
 	Object_Expr() = delete;
-	explicit Object_Expr(Expr *pExpr) : Object(Klass_Expr), _pExpr(pExpr) {}
+	explicit Object_Expr(Expr *pExpr, Klass& klass = Klass_Expr) :
+		Object_Object(klass), _pExpr(pExpr) {}
 	// Copy constructor/operator
-	Object_Expr(const Object_Expr& src) : Object(Klass_Expr), _pExpr(src._pExpr->Reference()) {}
-	Object_Expr& operator=(const Object_Expr& src) { _pExpr.reset(src._pExpr->Reference()); return *this; }
+	Object_Expr(const Object_Expr& src) :
+		Object_Object(src), _pExpr(src._pExpr->Reference()) {}
+	Object_Expr& operator=(const Object_Expr& src) = delete;
 	// Move constructor/operator
-	Object_Expr(Object_Expr&& src) : Object(Klass_Expr), _pExpr(src._pExpr.release()) {}
-	Object_Expr& operator=(Object_Expr&& src) noexcept { _pExpr.reset(src._pExpr.release()); return *this; }
+	Object_Expr(Object_Expr&& src) = delete;
+	Object_Expr& operator=(Object_Expr&& src) noexcept = delete;
 protected:
 	// Destructor
 	~Object_Expr() = default;
