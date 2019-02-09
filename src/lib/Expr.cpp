@@ -22,6 +22,11 @@ String Expr::ComposeIndent(const StringStyle& ss) const
 	return rtn;
 }
 
+void Expr::Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+	Error::Issue(ErrorType::InvalidOperation, "invalid assignment");
+}
+
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
@@ -133,12 +138,21 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 
 void Expr_Identifier::Exec(Frame& frame) const
 {
-	RefPtr<Value> pValue(frame.LookupValue(GetSymbol())->Reference());
+	Value* pValue = frame.LookupValue(GetSymbol());
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return;
 	}
-	Context::PushStack(pValue.release());
+	Context::PushStack(pValue->Reference());
+}
+
+void Expr_Identifier::Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+	pExprAssigned->Exec(frame);
+	if (Error::IsIssued()) return;
+	//RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
+	RefPtr<Value> pValueAssigned(Context::PopStack());
+	frame.AssignValue(GetSymbol(), pValueAssigned.release());
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -309,6 +323,7 @@ bool Expr_Assign::DoPrepare()
 
 void Expr_Assign::Exec(Frame& frame) const
 {
+	GetExprLeft()->Assign(frame, GetExprRight(), GetOperator());
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const

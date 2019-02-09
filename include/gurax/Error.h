@@ -22,6 +22,7 @@ public:
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
 	static const ErrorType ValueError;
+	static const ErrorType InvalidOperation;
 public:
 	ErrorType(const String& name) : _name(name) {}
 	const char* GetName() const { return _name.c_str(); }

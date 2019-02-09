@@ -125,14 +125,16 @@ public:
 	String ComposeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
-public:
-	virtual bool Traverse(Visitor& visitor) = 0;
-	virtual void Exec(Frame& frame) const = 0;
-	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	bool Prepare() {
 		Visitor_Prepare visitor;
 		return Traverse(visitor);
 	}
+public:
+	// Virtual functions
+	virtual bool Traverse(Visitor& visitor) = 0;
+	virtual void Exec(Frame& frame) const = 0;
+	virtual void Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const;
+	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -218,6 +220,8 @@ public:
 class GURAX_DLLDECLARE Expr_Node : public Expr {
 public:
 	Expr_Node(const TypeInfo& typeInfo) : Expr(typeInfo) {}
+public:
+	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
 		return visitor.Visit(this);
 	}
@@ -235,6 +239,8 @@ public:
 	}
 	Expr* GetExprChild() { return _pExprChild.get(); }
 	const Expr* GetExprChild() const { return _pExprChild.get(); }
+public:
+	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!visitor.Visit(this)) return false;
 		if (_pExprChild && !_pExprChild->Traverse(visitor)) return false;
@@ -258,6 +264,8 @@ public:
 	Expr* GetExprRight() { return _pExprRight.get(); }
 	const Expr* GetExprLeft() const { return _pExprLeft.get(); }
 	const Expr* GetExprRight() const { return _pExprRight.get(); }
+public:
+	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!visitor.Visit(this)) return false;
 		if (_pExprLeft && !_pExprLeft->Traverse(visitor)) return false;
@@ -281,6 +289,8 @@ public:
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
 	const Expr* GetExprElemHead() const { return _pExprLinkElem->GetExprHead(); }
 	void AddExprElem(Expr* pExprElem);
+public:
+	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!visitor.Visit(this)) return false;
 		if (!_pExprLinkElem->Traverse(visitor)) return false;
@@ -316,6 +326,7 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
+	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!visitor.Visit(this)) return false;
 		if (_pExprCar && !_pExprCar->Traverse(visitor)) return false;
@@ -369,11 +380,14 @@ public:
 		Expr_Node(typeInfo), _pSymbol(pSymbol), _pAttr(new Attribute()) {}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
-	virtual void Exec(Frame& frame) const override;
-	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of Expr
+	virtual void Exec(Frame& frame) const override;
+	virtual void Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
@@ -399,6 +413,7 @@ public:
 	bool IsNumber() const { return _numberFlag; }
 	bool IsString() const { return !_numberFlag; }
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -421,6 +436,7 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -441,6 +457,7 @@ public:
 			Expr_Unary(typeInfo, pExprChild), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -461,6 +478,7 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -481,6 +499,7 @@ public:
 			Expr_Binary(typeInfo, pExprLeft, pExprRight), _pOperator(pOperator) {}
 	const Operator* GetOperator() const { return _pOperator; }
 public:
+	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -502,6 +521,8 @@ public:
 		Expr_Binary(typeInfo, pExprLeft, pExprRight), _memberMode(memberMode) {}
 public:
 	MemberMode GetMemberMode() const { return _memberMode; }
+public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -518,6 +539,7 @@ public:
 public:
 	Expr_Root(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -535,14 +557,6 @@ protected:
 	RefPtr<ExprLink> _pExprLinkParam;	// this may be nullptr
 public:
 	explicit Expr_Block(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
-public:
-	virtual bool Traverse(Visitor& visitor) override {
-		if (!Expr_Collector::Traverse(visitor)) return false;
-		if (_pExprLinkParam && !_pExprLinkParam->Traverse(visitor)) return false;
-		return true;
-	}
-	virtual void Exec(Frame& frame) const override;
-	virtual String ToString(const StringStyle& ss) const override;
 	void SetExprLinkParam(ExprLink* pExprLinkParam) {
 		_pExprLinkParam.reset(pExprLinkParam);
 		_pExprLinkParam->SetExprParent(this);
@@ -552,6 +566,15 @@ public:
 	const Expr* GetExprParamHead() const {
 		return _pExprLinkParam? _pExprLinkParam->GetExprHead() : nullptr;
 	}
+public:
+	// Virtual functions of Expr
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!Expr_Collector::Traverse(visitor)) return false;
+		if (_pExprLinkParam && !_pExprLinkParam->Traverse(visitor)) return false;
+		return true;
+	}
+	virtual void Exec(Frame& frame) const override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -566,6 +589,7 @@ public:
 public:
 	Expr_Lister(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -582,6 +606,7 @@ public:
 public:
 	Expr_Iterer(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -598,6 +623,7 @@ public:
 public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
+	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
@@ -620,15 +646,6 @@ protected:
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCaller(new DeclCaller()) {}
 public:
-	virtual bool Traverse(Visitor& visitor) override {
-		if (!Expr_Composite::Traverse(visitor)) return false;
-		if (_pExprBlock && !_pExprBlock->Traverse(visitor)) return false;
-		if (_pExprTrailer && !_pExprTrailer->Traverse(visitor)) return false;
-		return true;
-	}
-	virtual void Exec(Frame& frame) const override;
-	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
-	virtual String ToString(const StringStyle& ss) const override;
 	bool PrepareDeclCaller() { return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), true); }
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
@@ -644,6 +661,17 @@ public:
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
 	Expr_Caller* GetExprTrailerLast();
 	bool IsTrailer() const { return false; }
+public:
+	// Virtual functions of Expr
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!Expr_Composite::Traverse(visitor)) return false;
+		if (_pExprBlock && !_pExprBlock->Traverse(visitor)) return false;
+		if (_pExprTrailer && !_pExprTrailer->Traverse(visitor)) return false;
+		return true;
+	}
+	virtual void Exec(Frame& frame) const override;
+	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }
