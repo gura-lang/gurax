@@ -11,6 +11,7 @@ class Function;
 class Klass;
 class Object;
 class Module;
+class Frame_Branch;
 
 //------------------------------------------------------------------------------
 // Frame
@@ -37,6 +38,7 @@ protected:
 	virtual ~Frame() = default;
 public:
 	static Frame* CreateSource();
+	static Frame_Branch* CreateBranch(Frame* pFrameLeft, Frame* pFrameRight);
 	bool IsSource() const { return _type == Type::Source; }
 	bool IsBranch() const { return _type == Type::Branch; }
 	Frame* Expand() const;
@@ -51,6 +53,33 @@ public:
 	// Virtual functions
 	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) = 0;
 	virtual Object* LookupObject(const Symbol* pSymbol) const = 0;
+};
+
+//------------------------------------------------------------------------------
+// Frame_Branch
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Branch : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Branch);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Branch");
+protected:
+	RefPtr<Frame> _pFrameLeft;
+	RefPtr<Frame> _pFrameRight;
+public:
+	// Constructor
+	Frame_Branch(Frame* pFrameLeft, Frame* pFrameRight) :
+		Frame(Type::Branch), _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
+public:
+	void SetLeft(Frame* pFrame) { _pFrameLeft.reset(pFrame); }
+	void SetRight(Frame* pFrame) { _pFrameRight.reset(pFrame); }
+	const Frame* GetLeft() const { return _pFrameLeft.get(); }
+	const Frame* GetRight() const { return _pFrameRight.get(); }
+public:
+	// Virtual functions of Frame
+	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override;
+	virtual Object* LookupObject(const Symbol* pSymbol) const override;
 };
 
 }

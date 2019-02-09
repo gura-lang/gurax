@@ -30,41 +30,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Branch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Branch : public Frame {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Frame_Branch);
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Branch");
-protected:
-	RefPtr<Frame> _pFrameLeft;
-	RefPtr<Frame> _pFrameRight;
-public:
-	// Constructor
-	Frame_Branch(Frame* pFrameLeft, Frame* pFrameRight) : Frame(Type::Branch),
-		_pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
-public:
-	const Frame* GetLeft() const { return _pFrameLeft.get(); }
-	const Frame* GetRight() const { return _pFrameRight.get(); }
-public:
-	// Virtual functions of Frame
-	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
-		_pFrameRight->AssignObject(pSymbol, pObject);
-	}
-	virtual Object* LookupObject(const Symbol* pSymbol) const override {
-		if (Object* pObject = _pFrameRight->LookupObject(pSymbol)) return pObject;
-		return _pFrameLeft->LookupObject(pSymbol);
-	}
-};
-
-//------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
 Frame* Frame::CreateSource()
 {
 	return new Frame_Source();
+}
+
+Frame_Branch* Frame::CreateBranch(Frame* pFrameLeft, Frame* pFrameRight)
+{
+	return new Frame_Branch(pFrameLeft, pFrameRight);
 }
 
 Frame* Frame::Expand() const
@@ -130,6 +105,22 @@ void Frame::AssignFunction(Function* pFunction)
 {
 	pFunction->SetFrameParent(this);
 	AssignObject(pFunction->GetSymbol(), new Object_Function(pFunction));
+}
+
+//------------------------------------------------------------------------------
+// Frame_Branch
+//------------------------------------------------------------------------------
+void Frame_Branch::AssignObject(const Symbol* pSymbol, Object* pObject)
+{
+	if (_pFrameRight) _pFrameRight->AssignObject(pSymbol, pObject);
+}
+
+Object* Frame_Branch::LookupObject(const Symbol* pSymbol) const
+{
+	Object* pObject = _pFrameRight? _pFrameRight->LookupObject(pSymbol) : nullptr;
+	if (pObject) return pObject;
+	pObject = _pFrameLeft? _pFrameLeft->LookupObject(pSymbol) : nullptr;
+	return pObject;
 }
 
 }

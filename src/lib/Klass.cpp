@@ -13,8 +13,16 @@ Klass Klass::Empty("");
 
 Klass::Klass(const char* name) :
 	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassInherited(nullptr),
-	_pSymbol(Symbol::Add(name)), _flags(0), _pFrame(Frame::CreateSource())
+	_pSymbol(Symbol::Add(name)), _flags(0),
+	_pFrame(Frame::CreateBranch(nullptr, Frame::CreateSource()))
 {
+}
+
+void Klass::SetAttrs(Klass& klassInherited, UInt32 flags)
+{
+	_pKlassInherited = &klassInherited;
+	_pFrame->SetLeft(_pKlassInherited->GetFrame().Reference());
+	_flags = flags;
 }
 
 String Klass::MakeFullName() const

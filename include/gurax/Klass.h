@@ -28,7 +28,7 @@ protected:
 	Klass* _pKlassInherited;
 	const Symbol* _pSymbol;
 	UInt32 _flags;
-	RefPtr<Frame> _pFrame;
+	RefPtr<Frame_Branch> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
 private:
 	static SeqId _seqIdNext;
@@ -48,11 +48,7 @@ public:
 	virtual ~Klass() = default;
 public:
 	SeqId GetSeqId() const { return _seqId; }
-	void SetAttrs(UInt32 flags) { _flags = flags; }
-	void SetAttrs(Klass& klassInherited, UInt32 flags) {
-		_pKlassInherited = &klassInherited;
-		_flags = flags;
-	}
+	void SetAttrs(Klass& klassInherited, UInt32 flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	Klass& GetKlassInherited() const { return *_pKlassInherited; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
