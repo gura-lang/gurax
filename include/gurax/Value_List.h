@@ -28,12 +28,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_List");
 private:
-	RefPtr<ObjectTypedOwner> _pValueTypedOwner;
+	RefPtr<ValueTypedOwner> _pValueTypedOwner;
 public:
 	// Constructor
 	Value_List(VType& vtype = VTYPE_List) :
-		Value_List(new ObjectTypedOwner(), vtype) {}
-	explicit Value_List(ObjectTypedOwner* pValueTypedOwner, VType& vtype = VTYPE_List) :
+		Value_List(new ValueTypedOwner(), vtype) {}
+	explicit Value_List(ValueTypedOwner* pValueTypedOwner, VType& vtype = VTYPE_List) :
 		Value_Object(vtype), _pValueTypedOwner(pValueTypedOwner) {}
 	// Copy constructor/operator
 	Value_List(const Value_List& src) :
@@ -46,26 +46,26 @@ protected:
 	// Destructor
 	~Value_List() = default;
 public:
-	ObjectTypedOwner& GetObjectTypedOwner() { return *_pValueTypedOwner; }
-	const ObjectTypedOwner& GetObjectTypedOwner() const { return *_pValueTypedOwner; }
-	const ObjectOwner& GetObjectOwner() const { return _pValueTypedOwner->GetObjectOwner(); }
+	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
+	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
+	const ValueOwner& GetValueOwner() const { return _pValueTypedOwner->GetValueOwner(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return new Value_List(*this); }
 	virtual size_t DoCalcHash() const override {
-		return GetObjectOwner().CalcHash();
+		return GetValueOwner().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetObjectOwner().IsEqualTo(dynamic_cast<const Value_List*>(pValue)->GetObjectOwner());
+			GetValueOwner().IsEqualTo(dynamic_cast<const Value_List*>(pValue)->GetValueOwner());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetObjectOwner().IsLessThan(dynamic_cast<const Value_List*>(pValue)->GetObjectOwner()) :
+			GetValueOwner().IsLessThan(dynamic_cast<const Value_List*>(pValue)->GetValueOwner()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
-		return GetObjectOwner().ToString(ss);
+		return GetValueOwner().ToString(ss);
 	}
 };
 

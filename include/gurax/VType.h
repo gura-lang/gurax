@@ -1,8 +1,8 @@
 //==============================================================================
 // VType.h
 //==============================================================================
-#ifndef GURAX_KLASS_H
-#define GURAX_KLASS_H
+#ifndef GURAX_VTYPE_H
+#define GURAX_VTYPE_H
 #include "Help.h"
 #include "MemoryPool.h"
 #include "Referable.h"

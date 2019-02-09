@@ -1,4 +1,4 @@
-[Object]
+[Value]
 foo1:Number = 1.000000
 foo2:Number = 2.000000
 foo3:Nil = nil

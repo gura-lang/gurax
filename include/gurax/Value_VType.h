@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_VType.h
 //==============================================================================
-#ifndef GURAX_VALUE_KLASS_H
-#define GURAX_VALUE_KLASS_H
+#ifndef GURAX_VALUE_VTYPE_H
+#define GURAX_VALUE_VTYPE_H
 #include "Value_Object.h"
 
 namespace Gurax {

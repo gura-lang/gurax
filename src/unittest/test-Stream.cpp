@@ -10,10 +10,10 @@ Gurax_TesterEntry(Stream)
 	const char *str = "Gura";
 	int n = 123456;
 	Stream::COut->Printf("Hello %s World %d\n", str, n);
-	RefPtr<ObjectOwner> pObjOwner(new ObjectOwner());
-	pObjOwner->push_back(new Object_String(str));
-	pObjOwner->push_back(new Object_Number(n));
-	Stream::COut->PrintFmt("Hello %s World %d\n", *pObjOwner);
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->push_back(new Value_String(str));
+	pValueOwner->push_back(new Value_Number(n));
+	Stream::COut->PrintFmt("Hello %s World %d\n", *pValueOwner);
 }
 
 }

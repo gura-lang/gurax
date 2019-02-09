@@ -7,7 +7,6 @@ add_executable(unittest
 	test-Help.cpp
 	test-Iterator.cpp
 	test-MemoryPool.cpp
-	test-Object.cpp
 	test-Parser.cpp
 	test-Random.cpp
 	test-Referable.cpp
@@ -16,6 +15,7 @@ add_executable(unittest
 	test-String.cpp
 	test-Symbol.cpp
 	test-Tokenizer.cpp
+	test-Value.cpp
 )
 
 find_library(LIBREADLINE readline REQUIRED)

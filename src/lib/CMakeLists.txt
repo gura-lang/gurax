@@ -18,34 +18,8 @@ add_library(guraxcore SHARED
 	Function.cpp
 	Help.cpp
 	Iterator.cpp
-	Klass.cpp
 	MemoryPool.cpp
 	Module.cpp
-	Object.cpp
-	Object_Any.cpp
-	Object_Argument.cpp
-	Object_Attribute.cpp
-	Object_Binary.cpp
-	Object_Bool.cpp
-	Object_DateTime.cpp
-	Object_Dict.cpp
-	Object_Expr.cpp
-	Object_Function.cpp
-	Object_Iterator.cpp
-	Object_Klass.cpp
-	Object_List.cpp
-	Object_Module.cpp
-	Object_Nil.cpp
-	Object_Number.cpp
-	Object_Object.cpp
-	Object_Quote.cpp
-	Object_Stream.cpp
-	Object_String.cpp
-	Object_StringPtr.cpp
-	Object_Symbol.cpp
-	Object_Template.cpp
-	Object_TimeDelta.cpp
-	Object_Undefined.cpp
 	Operator.cpp
 	Operators.cpp
 	Parser.cpp
@@ -61,6 +35,32 @@ add_library(guraxcore SHARED
 	Token.cpp
 	Tokenizer.cpp
 	Unicode-EastAsianWidth.cpp
+	Value.cpp
+	Value_Any.cpp
+	Value_Argument.cpp
+	Value_Attribute.cpp
+	Value_Binary.cpp
+	Value_Bool.cpp
+	Value_DateTime.cpp
+	Value_Dict.cpp
+	Value_Expr.cpp
+	Value_Function.cpp
+	Value_Iterator.cpp
+	Value_List.cpp
+	Value_Module.cpp
+	Value_Nil.cpp
+	Value_Number.cpp
+	Value_Object.cpp
+	Value_Quote.cpp
+	Value_Stream.cpp
+	Value_String.cpp
+	Value_StringPtr.cpp
+	Value_Symbol.cpp
+	Value_Template.cpp
+	Value_TimeDelta.cpp
+	Value_Undefined.cpp
+	Value_VType.cpp
+	VType.cpp
 )
 
 target_link_libraries(guraxcore dl pthread)

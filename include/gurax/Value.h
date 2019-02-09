@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_VALUE_H
 #define GURAX_VALUE_H
-#include "Klass.h"
+#include "VType.h"
 
 namespace Gurax {
 
