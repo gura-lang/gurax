@@ -87,7 +87,7 @@ public:
 	static DeclArg* CreateFromExpr(const Expr* pExpr, bool issueErrorFlag);
 	bool FixKlass(Frame* pFrame);
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
-		return SymbolAssoc_Flag::GetInstance()->ToValue(pSymbol);
+		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}
 	static const Symbol* FlagToSymbol(UInt32 flag) {
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);

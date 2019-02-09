@@ -101,8 +101,8 @@ var = gurax_pushbackBuff[--gurax_pushbackLevel];
 #define Gurax_EndPushbackRegionEx() \
 }
 
-#define Gurax_PushbackEx(value) \
-gurax_pushbackBuff[gurax_pushbackLevel++] = (value)
+#define Gurax_PushbackEx(val) \
+gurax_pushbackBuff[gurax_pushbackLevel++] = (val)
 
 #define Gurax_PushbackCancelEx() \
 gurax_pushbackLevel--

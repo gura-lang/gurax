@@ -163,7 +163,7 @@ void Expr_Suffixed::Exec(Frame& frame) const
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += IsNumber()? GetValueSTL() : GetValueSTL().MakeQuoted(true);
+	rtn += IsNumber()? GetSegmentSTL() : GetSegmentSTL().MakeQuoted(true);
 	rtn += GetSuffix()->GetName();
 	return rtn;
 }

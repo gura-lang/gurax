@@ -27,11 +27,11 @@ private:
 		};
 	private:
 		Stat _stat;
-		String _value;
+		String _segment;
 	public:
 		MagicCommentParser() : _stat(Stat::Start) {}
 		bool FeedChar(char ch);
-		const char* GetEncoding() const { return _value.c_str(); }
+		const char* GetEncoding() const { return _segment.c_str(); }
 	};
 	enum class Stat {
 		BOF, BOF_2nd, BOF_3rd,
@@ -81,7 +81,7 @@ private:
 	int _commentNestLevel = 0;
 	int _lineNoTop = 0;
 	bool _verboseFlag = false;
-	String _value;
+	String _segment;
 	String _source;
 	String _suffix;
 	StringInfo _stringInfo;

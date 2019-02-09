@@ -39,7 +39,7 @@ public:
 
 inline MemberMode SymbolToMemberMode(const Symbol* pSymbol)
 {
-	return SymbolAssoc_MemberMode::GetInstance()->ToValue(pSymbol);
+	return SymbolAssoc_MemberMode::GetInstance()->ToAssociated(pSymbol);
 }
 
 inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
@@ -387,14 +387,14 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<StringReferable> _pStrValue;
+	RefPtr<StringReferable> _pStrSegment;
 	const Symbol* _pSymbolSuffix;
 	bool _numberFlag;
 public:
-	Expr_Suffixed(StringReferable* pStrValue, const Symbol* pSymbolSuffix, bool numberFlag) :
-		Expr_Node(typeInfo), _pStrValue(pStrValue), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
-	const char* GetValue() const { return _pStrValue->GetString(); }
-	const String& GetValueSTL() const { return _pStrValue->GetStringSTL(); }
+	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag) :
+		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	const char* GetSegment() const { return _pStrSegment->GetString(); }
+	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
 	const Symbol* GetSuffix() const { return _pSymbolSuffix; }
 	bool IsNumber() const { return _numberFlag; }
 	bool IsString() const { return !_numberFlag; }

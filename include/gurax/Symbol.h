@@ -185,33 +185,33 @@ public:
 //------------------------------------------------------------------------------
 // SymbolAssoc
 //------------------------------------------------------------------------------
-template<typename T_Value, T_Value valueInvalid>
+template<typename T_Associated, T_Associated associatedInvalid>
 class SymbolAssoc {
 public:
-	using MapToValue = std::unordered_map<const Symbol*, T_Value, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
-	using MapToSymbol = std::unordered_map<T_Value, const Symbol*>;
+	using MapToAssociated = std::unordered_map<const Symbol*, T_Associated, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+	using MapToSymbol = std::unordered_map<T_Associated, const Symbol*>;
 private:
-	MapToValue _mapToValue;
+	MapToAssociated _mapToAssociated;
 	MapToSymbol _mapToSymbol;
 protected:
 	static SymbolAssoc* _pInstance;
 public:
-	void Assoc(const Symbol* pSymbol, T_Value value) {
-		_mapToValue[pSymbol] = value;
-		_mapToSymbol[value] = pSymbol;
+	void Assoc(const Symbol* pSymbol, T_Associated associated) {
+		_mapToAssociated[pSymbol] = associated;
+		_mapToSymbol[associated] = pSymbol;
 	}
-	T_Value ToValue(const Symbol* pSymbol) const {
-		auto pPair = _mapToValue.find(pSymbol);
-		return (pPair == _mapToValue.end())? valueInvalid : pPair->second;
+	T_Associated ToAssociated(const Symbol* pSymbol) const {
+		auto pPair = _mapToAssociated.find(pSymbol);
+		return (pPair == _mapToAssociated.end())? associatedInvalid : pPair->second;
 	}
-	const Symbol* ToSymbol(T_Value value) const {
-		auto pPair = _mapToSymbol.find(value);
+	const Symbol* ToSymbol(T_Associated associated) const {
+		auto pPair = _mapToSymbol.find(associated);
 		return (pPair == _mapToSymbol.end())? Symbol::Empty : pPair->second;
 	}
 };
 
-template<typename T_Value, T_Value valueInvalid>
-SymbolAssoc<T_Value, valueInvalid>* SymbolAssoc<T_Value, valueInvalid>::_pInstance = nullptr;
+template<typename T_Associated, T_Associated associatedInvalid>
+SymbolAssoc<T_Associated, associatedInvalid>* SymbolAssoc<T_Associated, associatedInvalid>::_pInstance = nullptr;
 
 }
 

@@ -123,7 +123,7 @@ private:
 	const TokenType& _tokenType;
 	int _lineNoTop;
 	int _lineNoBtm;
-	RefPtr<StringReferable> _pValue;	// for Symbol, Space, Escape, Number, NumberSuffixed, EmbedString
+	RefPtr<StringReferable> _pSegment;	// for Symbol, Space, Escape, Number, NumberSuffixed, EmbedString
 										//     CommentLine, CommentBlock, String and StringSuffixed
 	RefPtr<BinaryReferable> _pBinary;	// for Binary
 	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed
@@ -144,24 +144,24 @@ public:
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, ExprLink* pExprLink) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
 		_pExprLink(pExprLink), _itererFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pValue) :
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, StringReferable* pSegment) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pValue(pValue), _itererFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value))) {}
+		_pSegment(pSegment), _itererFlag(false) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment) :
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
-		  StringReferable* pValue, StringReferable* pSuffix) :
+		  StringReferable* pSegment, StringReferable* pSuffix) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pValue(pValue), _pSuffix(pSuffix), _itererFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
+		_pSegment(pSegment), _pSuffix(pSuffix), _itererFlag(false) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment, String suffix) :
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment)),
 			  new StringReferable(std::move(suffix))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,
-		  StringReferable* pValue, StringReferable* pSuffix, StringReferable* pSource) :
+		  StringReferable* pSegment, StringReferable* pSuffix, StringReferable* pSource) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_pValue(pValue), _pSuffix(pSuffix), _pSource(pSource), _itererFlag(false) {}
-	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String value, String suffix, String source) :
-		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(value)),
+		_pSegment(pSegment), _pSuffix(pSuffix), _pSource(pSource), _itererFlag(false) {}
+	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm, String segment, String suffix, String source) :
+		Token(tokenType, lineNoTop, lineNoBtm, new StringReferable(std::move(segment)),
 			  new StringReferable(std::move(suffix)), new StringReferable(std::move(source))) {}
 	Token(const TokenType& tokenType, int lineNoTop, int lineNoBtm,  BinaryReferable* pBinary, String source) :
 		_tokenType(tokenType), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
@@ -201,19 +201,19 @@ public:
 	const char *GetTypeName() const { return _tokenType.typeName; }
 	const char *GetSymbol() const { return _tokenType.symbol; }
 	OpType GetOpType() const { return _tokenType.opType; }
-	const char* GetValue() const { return _pValue->GetString(); }
+	const char* GetSegment() const { return _pSegment->GetString(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
 	const char* GetSuffix() const { return _pSuffix->GetString(); }
 	const char* GetSource() const { return _pSource->GetString(); }
-	const String& GetValueSTL() const { return _pValue->GetStringSTL(); }
+	const String& GetSegmentSTL() const { return _pSegment->GetStringSTL(); }
 	const String& GetSuffixSTL() const { return _pSuffix->GetStringSTL(); }
 	const String& GetSourceSTL() const { return _pSource->GetStringSTL(); }
-	const StringReferable* GetValueReferable() const { return _pValue.get(); }
+	const StringReferable* GetSegmentReferable() const { return _pSegment.get(); }
 	const BinaryReferable* GetBinaryReferable() const { return _pBinary.get(); }
 	const StringReferable* GetSuffixReferable() const { return _pSuffix.get(); }
 	const StringReferable* GetSourceReferable() const { return _pSource.get(); }
-	void AppendValue(const char* value) { _pValue->GetStringSTL().append(value); }
-	void AppendValue(const String& value) { _pValue->GetStringSTL().append(value); }
+	void AppendSegment(const char* segment) { _pSegment->GetStringSTL().append(segment); }
+	void AppendSegment(const String& segment) { _pSegment->GetStringSTL().append(segment); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	void SetExprLink(ExprLink* pExprLink) { _pExprLink.reset(pExprLink); }
 	void SetExprLinkEx(ExprLink* pExprLinkEx) { _pExprLinkEx.reset(pExprLinkEx); }

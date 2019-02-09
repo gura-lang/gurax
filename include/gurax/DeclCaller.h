@@ -94,7 +94,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
-		return SymbolAssoc_Flag::GetInstance()->ToValue(pSymbol);
+		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}
 	static const Symbol* FlagToSymbol(UInt32 flag) {
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);

@@ -62,11 +62,11 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 			Token *pTokenLast = tokenStack.back();
 			// concatenation of two sequences of string, binary and embed-string
 			if (pTokenLast->IsType(TokenType::String) && pToken->IsType(TokenType::String)) {
-				pTokenLast->AppendValue(pToken->GetValueSTL());
+				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else if (pTokenLast->IsType(TokenType::Binary) && pToken->IsType(TokenType::Binary)) {
-				pTokenLast->AppendValue(pToken->GetValueSTL());
+				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else if (pTokenLast->IsType(TokenType::EmbedString) && pToken->IsType(TokenType::EmbedString)) {
-				pTokenLast->AppendValue(pToken->GetValueSTL());
+				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else {
 				tokenStack.Push(pToken->Reference());
 			}
@@ -122,10 +122,10 @@ bool Parser::ReduceOneToken()
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Number\n"));
 		pExprGen.reset(
 			new Expr_Object(new Object_Number(
-								String::ToNumber(pToken->GetValue())), pToken->GetValueReferable()->Reference()));
+								String::ToNumber(pToken->GetSegment())), pToken->GetSegmentReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::String)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> String\n"));
-		pExprGen.reset(new Expr_Object(new Object_String(pToken->GetValueReferable()->Reference())));
+		pExprGen.reset(new Expr_Object(new Object_String(pToken->GetSegmentReferable()->Reference())));
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Object) -> Binary\n"));
 		pExprGen.reset(new Expr_Object(new Object_Binary(pToken->GetBinaryReferable()->Reference())));
@@ -136,10 +136,10 @@ bool Parser::ReduceOneToken()
 		//bool appendLastEOLFlag = false;
 		//if (!pTempl->Parse(env, pToken->GetString(), nullptr,
 		//				   autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetValueReferable()->Reference()));
+		pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetSegmentReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
-		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetValue())));
+		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetSegment())));
 	} else if (pToken->IsType(TokenType::Add)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> '+'\n"));
 		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Add)));
@@ -154,11 +154,11 @@ bool Parser::ReduceOneToken()
 		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Sub)));
 	} else if (pToken->IsType(TokenType::NumberSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> NumberSuffixed\n"));
-		pExprGen.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
+		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable()->Reference(),
 									  Symbol::Add(pToken->GetSuffix()), true));
 	} else if (pToken->IsType(TokenType::StringSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> SuffixedSuffixed\n"));
-		pExprGen.reset(new Expr_Suffixed(pToken->GetValueReferable()->Reference(),
+		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable()->Reference(),
 									  Symbol::Add(pToken->GetSuffix()), false));
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken, "unexpected token: %s", pToken->GetSymbol());
@@ -299,7 +299,7 @@ bool Parser::ReduceTwoTokens()
 		if (pToken2->IsType(TokenType::Symbol)) {
 			DBGPARSER(::printf("Reduce: Expr Expr(Identifier) -> Expr Symbol\n"));
 			tokenStack.Push(pToken1->Reference());
-			pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken2->GetValue())));
+			pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken2->GetSegment())));
 			lineNoTop = pToken2->GetLineNoTop();
 		} else if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '+'\n"));
