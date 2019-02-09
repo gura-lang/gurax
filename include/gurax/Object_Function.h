@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Function
 //------------------------------------------------------------------------------
-class VTypeT_Function : public VType {
+class VType_Function : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Function VType_Function;
+extern VType_Function VTYPE_Function;
 
 //------------------------------------------------------------------------------
 // Object_Function
@@ -32,7 +32,7 @@ private:
 public:
 	// Constructor
 	Object_Function() = delete;
-	explicit Object_Function(Function* pFunction, VType& vtype = VType_Function) :
+	explicit Object_Function(Function* pFunction, VType& vtype = VTYPE_Function) :
 		Object_Object(vtype), _pFunction(pFunction) {}
 	// Copy constructor/operator
 	Object_Function(const Object_Function& src) :

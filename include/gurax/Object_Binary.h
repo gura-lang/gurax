@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
-class VTypeT_Binary : public VType {
+class VType_Binary : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Binary VType_Binary;
+extern VType_Binary VTYPE_Binary;
 
 //------------------------------------------------------------------------------
 // Object_Binary
@@ -31,11 +31,11 @@ private:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
-	explicit Object_Binary(VType& vtype = VType_Binary) :
+	explicit Object_Binary(VType& vtype = VTYPE_Binary) :
 		Object_Binary(new BinaryReferable(), vtype) {}
-	explicit Object_Binary(BinaryReferable* pBinary, VType& vtype = VType_Binary) :
+	explicit Object_Binary(BinaryReferable* pBinary, VType& vtype = VTYPE_Binary) :
 		Object_Object(vtype), _pBinary(pBinary) {}
-	explicit Object_Binary(Binary str, VType& vtype = VType_Binary) :
+	explicit Object_Binary(Binary str, VType& vtype = VTYPE_Binary) :
 		Object_Binary(new BinaryReferable(std::move(str)), vtype) {}
 	// Copy constructor/operator
 	Object_Binary(const Object_Binary& src) = delete;

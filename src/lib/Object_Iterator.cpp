@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Iterator
 //------------------------------------------------------------------------------
-VTypeT_Iterator VType_Iterator("Iterator");
+VType_Iterator VTYPE_Iterator("Iterator");
 
-void VTypeT_Iterator::DoPrepare(Frame* pFrame)
+void VType_Iterator::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

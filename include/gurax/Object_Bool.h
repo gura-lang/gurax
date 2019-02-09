@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Bool
 //------------------------------------------------------------------------------
-class VTypeT_Bool : public VType {
+class VType_Bool : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Bool VType_Bool;
+extern VType_Bool VTYPE_Bool;
 
 //------------------------------------------------------------------------------
 // Object_Bool
@@ -31,9 +31,9 @@ private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_Bool(VType& vtype = VType_Bool) :
+	explicit Object_Bool(VType& vtype = VTYPE_Bool) :
 		Object_Bool(false, vtype) {}
-	explicit Object_Bool(bool flag, VType& vtype = VType_Bool) :
+	explicit Object_Bool(bool flag, VType& vtype = VTYPE_Bool) :
 		Object_Object(vtype), _flag(flag) {}
 	// Copy constructor/operator
 	Object_Bool(const Object_Bool& src) :

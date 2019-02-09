@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Undefined
 //------------------------------------------------------------------------------
-class VTypeT_Undefined : public VType {
+class VType_Undefined : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Undefined VType_Undefined;
+extern VType_Undefined VTYPE_Undefined;
 
 //------------------------------------------------------------------------------
 // Object_Undefined
@@ -29,7 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Undefined");
 public:
 	// Constructor
-	Object_Undefined() : Object(VType_Undefined) {}
+	Object_Undefined() : Object(VTYPE_Undefined) {}
 	// Copy constructor/operator
 	Object_Undefined(const Object_Undefined& src) = delete;
 	Object_Undefined& operator=(const Object_Undefined& src) = delete;

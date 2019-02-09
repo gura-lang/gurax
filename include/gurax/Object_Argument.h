@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Argument
 //------------------------------------------------------------------------------
-class VTypeT_Argument : public VType {
+class VType_Argument : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Argument VType_Argument;
+extern VType_Argument VTYPE_Argument;
 
 //------------------------------------------------------------------------------
 // Object_Argument
@@ -33,7 +33,7 @@ private:
 public:
 	// Constructor
 	Object_Argument() = delete;
-	Object_Argument(Argument* pArgument, VType& vtype = VType_Argument) :
+	Object_Argument(Argument* pArgument, VType& vtype = VTYPE_Argument) :
 		Object_Object(vtype), _pArgument(pArgument) {}
 	// Copy constructor/operator
 	Object_Argument(const Object_Argument& src) : Object_Object(src), _pArgument(src._pArgument->Clone()) {}

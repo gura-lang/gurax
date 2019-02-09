@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
-VTypeT_Binary VType_Binary("Binary");
+VType_Binary VTYPE_Binary("Binary");
 
-void VTypeT_Binary::DoPrepare(Frame* pFrame)
+void VType_Binary::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

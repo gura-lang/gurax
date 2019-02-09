@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Number
 //------------------------------------------------------------------------------
-class VTypeT_Number : public VType {
+class VType_Number : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Number VType_Number;
+extern VType_Number VTYPE_Number;
 
 //------------------------------------------------------------------------------
 // Object_Number
@@ -31,9 +31,9 @@ private:
 	Double _num;
 public:
 	// Constructor
-	explicit Object_Number(VType& vtype = VType_Number) :
+	explicit Object_Number(VType& vtype = VTYPE_Number) :
 		Object_Number(0., vtype) {}
-	explicit Object_Number(Double num, VType& vtype = VType_Number) :
+	explicit Object_Number(Double num, VType& vtype = VTYPE_Number) :
 		Object_Object(vtype), _num(num) {}
 	// Copy constructor/operator
 	Object_Number(const Object_Number& src) :

@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Quote
 //------------------------------------------------------------------------------
-class VTypeT_Quote : public VType {
+class VType_Quote : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Quote VType_Quote;
+extern VType_Quote VTYPE_Quote;
 
 //------------------------------------------------------------------------------
 // Object_Quote
@@ -33,7 +33,7 @@ private:
 public:
 	// Constructor
 	Object_Quote() = delete;
-	explicit Object_Quote(Expr* pExpr) : Object(VType_Quote), _pExpr(pExpr) {}
+	explicit Object_Quote(Expr* pExpr) : Object(VTYPE_Quote), _pExpr(pExpr) {}
 	// Copy constructor/operator
 	Object_Quote(const Object_Quote& src) : Object(src), _pExpr(src._pExpr->Reference()) {}
 	Object_Quote& operator=(const Object_Quote& src) = delete;

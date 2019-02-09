@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Stream
 //------------------------------------------------------------------------------
-class VTypeT_Stream : public VType {
+class VType_Stream : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Stream VType_Stream;
+extern VType_Stream VTYPE_Stream;
 
 //------------------------------------------------------------------------------
 // Object_Stream
@@ -33,7 +33,7 @@ private:
 public:
 	// Constructor
 	Object_Stream() = delete;
-	explicit Object_Stream(Stream *pStream, VType& vtype = VType_Stream) :
+	explicit Object_Stream(Stream *pStream, VType& vtype = VTYPE_Stream) :
 		Object_Object(vtype), _pStream(pStream) {}
 	// Copy constructor/operator
 	Object_Stream(const Object_Stream& src) :

@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Any
 //------------------------------------------------------------------------------
-class VTypeT_Any : public VType {
+class VType_Any : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Any VType_Any;
+extern VType_Any VTYPE_Any;
 
 //------------------------------------------------------------------------------
 // Object_Any
@@ -29,7 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Any");
 public:
 	// Constructor
-	Object_Any() : Object(VType_Any) {}
+	Object_Any() : Object(VTYPE_Any) {}
 	// Copy constructor/operator
 	Object_Any(const Object_Any& src) = delete;
 	Object_Any& operator=(const Object_Any& src) = delete;

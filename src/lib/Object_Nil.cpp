@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Nil
 //------------------------------------------------------------------------------
-VTypeT_Nil VType_Nil("Nil");
+VType_Nil VTYPE_Nil("Nil");
 
-void VTypeT_Nil::DoPrepare(Frame* pFrame)
+void VType_Nil::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

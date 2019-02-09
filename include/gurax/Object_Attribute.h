@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Attribute
 //------------------------------------------------------------------------------
-class VTypeT_Attribute : public VType {
+class VType_Attribute : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Attribute VType_Attribute;
+extern VType_Attribute VTYPE_Attribute;
 
 //------------------------------------------------------------------------------
 // Object_Attribute
@@ -33,7 +33,7 @@ private:
 public:
 	// Constructor
 	Object_Attribute() = delete;
-	explicit Object_Attribute(Attribute* pAttr, VType& vtype = VType_Attribute) :
+	explicit Object_Attribute(Attribute* pAttr, VType& vtype = VTYPE_Attribute) :
 		Object_Object(vtype), _pAttr(pAttr) {}
 	// Copy constructor/operator
 	Object_Attribute(const Object_Attribute& src) : Object_Object(src), _pAttr(src._pAttr->Reference()) {}

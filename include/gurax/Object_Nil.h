@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Nil
 //------------------------------------------------------------------------------
-class VTypeT_Nil : public VType {
+class VType_Nil : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Nil VType_Nil;
+extern VType_Nil VTYPE_Nil;
 
 //------------------------------------------------------------------------------
 // Object_Nil
@@ -29,7 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Nil");
 public:
 	// Constructor
-	explicit Object_Nil(VType& vtype = VType_Nil) : Object_Object(vtype) {}
+	explicit Object_Nil(VType& vtype = VTYPE_Nil) : Object_Object(vtype) {}
 	// Copy constructor/operator
 	Object_Nil(const Object_Nil& src) : Object_Object(src) {}
 	Object_Nil& operator=(const Object_Nil& src) = delete;

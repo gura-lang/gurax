@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Iterator
 //------------------------------------------------------------------------------
-class VTypeT_Iterator : public VType {
+class VType_Iterator : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Iterator VType_Iterator;
+extern VType_Iterator VTYPE_Iterator;
 
 //------------------------------------------------------------------------------
 // Object_Iterator
@@ -32,7 +32,7 @@ private:
 public:
 	// Constructor
 	Object_Iterator() = delete;
-	explicit Object_Iterator(Iterator *pIterator, VType& vtype = VType_Iterator) :
+	explicit Object_Iterator(Iterator *pIterator, VType& vtype = VTYPE_Iterator) :
 		Object_Object(vtype), _pIterator(pIterator) {}
 	// Copy constructor/operator
 	Object_Iterator(const Object_Iterator& src) :

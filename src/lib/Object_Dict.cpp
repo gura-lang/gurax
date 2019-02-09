@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Dict
 //------------------------------------------------------------------------------
-VTypeT_Dict VType_Dict("Dict");
+VType_Dict VTYPE_Dict("Dict");
 
-void VTypeT_Dict::DoPrepare(Frame* pFrame)
+void VType_Dict::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Mutable);
+	SetAttrs(VTYPE_Object, Flag::Mutable);
 	pFrame->AssignVType(*this);
 }
 

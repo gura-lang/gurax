@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_StringPtr
 //------------------------------------------------------------------------------
-class VTypeT_StringPtr : public VType {
+class VType_StringPtr : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_StringPtr VType_StringPtr;
+extern VType_StringPtr VTYPE_StringPtr;
 
 //------------------------------------------------------------------------------
 // Object_StringPtr
@@ -32,9 +32,9 @@ private:
 	const char* _str;
 public:
 	// Constructor
-	explicit Object_StringPtr(VType& vtype = VType_StringPtr) :
+	explicit Object_StringPtr(VType& vtype = VTYPE_StringPtr) :
 		Object_StringPtr("", vtype) {}
-	explicit Object_StringPtr(const char* str, VType& vtype = VType_StringPtr) :
+	explicit Object_StringPtr(const char* str, VType& vtype = VTYPE_StringPtr) :
 		Object_Object(vtype), _str(str) {}
 	// Copy constructor/operator
 	Object_StringPtr(const Object_StringPtr& src) :

@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Symbol
 //------------------------------------------------------------------------------
-class VTypeT_Symbol : public VType {
+class VType_Symbol : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Symbol VType_Symbol;
+extern VType_Symbol VTYPE_Symbol;
 
 //------------------------------------------------------------------------------
 // Object_Symbol
@@ -31,8 +31,8 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	explicit Object_Symbol(VType& vtype = VType_Symbol) = delete;
-	explicit Object_Symbol(const Symbol* pSymbol, VType& vtype = VType_Symbol) :
+	explicit Object_Symbol(VType& vtype = VTYPE_Symbol) = delete;
+	explicit Object_Symbol(const Symbol* pSymbol, VType& vtype = VTYPE_Symbol) :
 		Object_Object(vtype), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
 	Object_Symbol(const Object_Symbol& src) :

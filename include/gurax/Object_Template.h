@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Template
 //------------------------------------------------------------------------------
-class VTypeT_Template : public VType {
+class VType_Template : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Template VType_Template;
+extern VType_Template VTYPE_Template;
 
 //------------------------------------------------------------------------------
 // Object_Template
@@ -32,8 +32,8 @@ private:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor
-	Object_Template(VType& vtype = VType_Template) = delete;
-	explicit Object_Template(Template* pTempl, VType& vtype = VType_Template) :
+	Object_Template(VType& vtype = VTYPE_Template) = delete;
+	explicit Object_Template(Template* pTempl, VType& vtype = VTYPE_Template) :
 		Object_Object(vtype), _pTempl(pTempl) {}
 	// Copy constructor/operator
 	Object_Template(const Object_Template& src) :

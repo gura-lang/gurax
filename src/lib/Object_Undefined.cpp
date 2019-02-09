@@ -12,9 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Undefined
 //------------------------------------------------------------------------------
-VTypeT_Undefined VType_Undefined("Undefined");
+VType_Undefined VTYPE_Undefined("Undefined");
 
-void VTypeT_Undefined::DoPrepare(Frame* pFrame)
+void VType_Undefined::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
 	pFrame->AssignVType(*this);

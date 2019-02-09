@@ -12,9 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Object
 //------------------------------------------------------------------------------
-VTypeT_Object VType_Object("Object");
+VType_Object VTYPE_Object("Object");
 
-void VTypeT_Object::DoPrepare(Frame* pFrame)
+void VType_Object::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
 	pFrame->AssignVType(*this);

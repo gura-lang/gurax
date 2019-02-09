@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_String
 //------------------------------------------------------------------------------
-class VTypeT_String : public VType {
+class VType_String : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_String VType_String;
+extern VType_String VTYPE_String;
 
 //------------------------------------------------------------------------------
 // Object_String
@@ -31,11 +31,11 @@ private:
 	RefPtr<StringReferable> _pStr;
 public:
 	// Constructor
-	explicit Object_String(VType& vtype = VType_String) :
+	explicit Object_String(VType& vtype = VTYPE_String) :
 		Object_String(new StringReferable(), vtype) {}
-	explicit Object_String(String str, VType& vtype = VType_String) :
+	explicit Object_String(String str, VType& vtype = VTYPE_String) :
 		Object_String(new StringReferable(std::move(str)), vtype) {}
-	explicit Object_String(StringReferable* pStr, VType& vtype = VType_String) :
+	explicit Object_String(StringReferable* pStr, VType& vtype = VTYPE_String) :
 		Object_Object(vtype), _pStr(pStr) {}
 	// Copy constructor/operator
 	Object_String(const Object_String& src) :

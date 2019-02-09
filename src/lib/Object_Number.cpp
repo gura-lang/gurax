@@ -75,11 +75,11 @@ bool Object_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlag
 //------------------------------------------------------------------------------
 // VType_Number
 //------------------------------------------------------------------------------
-VTypeT_Number VType_Number("Number");
+VType_Number VTYPE_Number("Number");
 
-void VTypeT_Number::DoPrepare(Frame* pFrame)
+void VType_Number::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Stream
 //------------------------------------------------------------------------------
-VTypeT_Stream VType_Stream("Stream");
+VType_Stream VTYPE_Stream("Stream");
 
-void VTypeT_Stream::DoPrepare(Frame* pFrame)
+void VType_Stream::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Bool
 //------------------------------------------------------------------------------
-VTypeT_Bool VType_Bool("Bool");
+VType_Bool VTYPE_Bool("Bool");
 
-void VTypeT_Bool::DoPrepare(Frame* pFrame)
+void VType_Bool::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

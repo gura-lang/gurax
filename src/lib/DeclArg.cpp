@@ -12,7 +12,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 				 OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
 	_pVType(pDottedSymbol->IsEmpty()?
-			dynamic_cast<VType*>(&VType_Any) : dynamic_cast<VType*>(&VType_Undefined)),
+			dynamic_cast<VType*>(&VTYPE_Any) : dynamic_cast<VType*>(&VTYPE_Undefined)),
 	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
 {
 }
@@ -50,7 +50,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		pExpr = pExprEx->GetExprChild();
 		if (pOperator->IsType(OpType::Quote)) {
 			// `x
-			pVType = &VType_Quote;
+			pVType = &VTYPE_Quote;
 		} else if (pOperator->IsType(OpType::PostMod)) {
 			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
@@ -131,7 +131,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 bool DeclArg::FixVType(Frame* pFrame)
 {
 	Object* pObject = pFrame->LookupObject(GetDottedSymbol());
-	if (pObject && pObject->IsType(VType_VType)) {
+	if (pObject && pObject->IsType(VTYPE_VType)) {
 		_pVType = &dynamic_cast<Object_VType*>(pObject)->GetVType();
 		return true;
 	}
@@ -161,7 +161,7 @@ const char* DeclArg::OccurPatternToString(OccurPattern occurPattern)
 String DeclArg::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	bool quoteFlag = GetVType().IsIdentical(VType_Quote);
+	bool quoteFlag = GetVType().IsIdentical(VTYPE_Quote);
 	if (quoteFlag) rtn += '`';
 	rtn += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) rtn += "[]";
@@ -173,7 +173,7 @@ String DeclArg::ToString(const StringStyle& ss) const
 		rtn += GetDottedSymbol().ToString();
 	} else if (ss.IsVerbose()) {
 		rtn += ':';
-		rtn += VType_Any.GetName();
+		rtn += VTYPE_Any.GetName();
 	}
 	rtn += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (GetExprDefault()) {

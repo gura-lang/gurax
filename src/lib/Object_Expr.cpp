@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Expr
 //------------------------------------------------------------------------------
-VTypeT_Expr VType_Expr("Expr");
+VType_Expr VTYPE_Expr("Expr");
 
-void VTypeT_Expr::DoPrepare(Frame* pFrame)
+void VType_Expr::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

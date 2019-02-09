@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_DateTime
 //------------------------------------------------------------------------------
-class VTypeT_DateTime : public VType {
+class VType_DateTime : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_DateTime VType_DateTime;
+extern VType_DateTime VTYPE_DateTime;
 
 //------------------------------------------------------------------------------
 // Object_DateTime
@@ -32,9 +32,9 @@ private:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor
-	explicit Object_DateTime(VType& vtype = VType_DateTime) :
+	explicit Object_DateTime(VType& vtype = VTYPE_DateTime) :
 		Object_DateTime(new DateTime(), vtype) {}
-	explicit Object_DateTime(DateTime *pDateTime, VType& vtype = VType_DateTime) :
+	explicit Object_DateTime(DateTime *pDateTime, VType& vtype = VTYPE_DateTime) :
 		Object_Object(vtype), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
 	Object_DateTime(const Object_DateTime& src) :

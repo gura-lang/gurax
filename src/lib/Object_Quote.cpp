@@ -12,9 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Quote
 //------------------------------------------------------------------------------
-VTypeT_Quote VType_Quote("Quote");
+VType_Quote VTYPE_Quote("Quote");
 
-void VTypeT_Quote::DoPrepare(Frame* pFrame)
+void VType_Quote::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
 	pFrame->AssignVType(*this);

@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Dict
 //------------------------------------------------------------------------------
-class VTypeT_Dict : public VType {
+class VType_Dict : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Dict VType_Dict;
+extern VType_Dict VTYPE_Dict;
 
 //------------------------------------------------------------------------------
 // Object_Dict
@@ -31,9 +31,9 @@ private:
 	RefPtr<ObjectDict> _pObjectDict;
 public:
 	// Constructor
-	explicit Object_Dict(VType& vtype = VType_Dict) :
+	explicit Object_Dict(VType& vtype = VTYPE_Dict) :
 		Object_Dict(new ObjectDict(), vtype) {}
-	explicit Object_Dict(ObjectDict* pObjectDict, VType& vtype = VType_Dict) :
+	explicit Object_Dict(ObjectDict* pObjectDict, VType& vtype = VTYPE_Dict) :
 		Object_Object(vtype), _pObjectDict(pObjectDict) {}
 	// Copy constructor/operator
 	Object_Dict(const Object_Dict& src) :

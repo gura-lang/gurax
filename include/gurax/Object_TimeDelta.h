@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_TimeDelta
 //------------------------------------------------------------------------------
-class VTypeT_TimeDelta : public VType {
+class VType_TimeDelta : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_TimeDelta VType_TimeDelta;
+extern VType_TimeDelta VTYPE_TimeDelta;
 
 //------------------------------------------------------------------------------
 // Object_TimeDelta
@@ -32,9 +32,9 @@ private:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor
-	explicit Object_TimeDelta(VType& vtype = VType_TimeDelta) :
+	explicit Object_TimeDelta(VType& vtype = VTYPE_TimeDelta) :
 		Object_TimeDelta(new TimeDelta(), vtype) {}
-	explicit Object_TimeDelta(TimeDelta *pTimeDelta, VType& vtype = VType_TimeDelta) :
+	explicit Object_TimeDelta(TimeDelta *pTimeDelta, VType& vtype = VTYPE_TimeDelta) :
 		Object_Object(vtype), _pTimeDelta(pTimeDelta) {}
 	// Copy constructor/operator
 	Object_TimeDelta(const Object_TimeDelta& src) :

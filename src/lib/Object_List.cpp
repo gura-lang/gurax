@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
-VTypeT_List VType_List("List");
+VType_List VTYPE_List("List");
 
-void VTypeT_List::DoPrepare(Frame* pFrame)
+void VType_List::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Mutable);
+	SetAttrs(VTYPE_Object, Flag::Mutable);
 	pFrame->AssignVType(*this);
 }
 

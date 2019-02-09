@@ -11,13 +11,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Module
 //------------------------------------------------------------------------------
-class VTypeT_Module : public VType {
+class VType_Module : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_Module VType_Module;
+extern VType_Module VTYPE_Module;
 
 //------------------------------------------------------------------------------
 // Object_Module
@@ -33,7 +33,7 @@ private:
 public:
 	// Constructor
 	Object_Module() = delete;
-	explicit Object_Module(Module* pModule, VType& vtype = VType_Module) :
+	explicit Object_Module(Module* pModule, VType& vtype = VTYPE_Module) :
 		Object_Object(vtype), _pModule(pModule) {}
 	// Copy constructor/operator
 	Object_Module(const Object_Module& src) :

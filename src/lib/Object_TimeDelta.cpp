@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_TimeDelta
 //------------------------------------------------------------------------------
-VTypeT_TimeDelta VType_TimeDelta("Timedelta");
+VType_TimeDelta VTYPE_TimeDelta("Timedelta");
 
-void VTypeT_TimeDelta::DoPrepare(Frame* pFrame)
+void VType_TimeDelta::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

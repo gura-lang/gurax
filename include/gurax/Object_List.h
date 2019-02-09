@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
-class VTypeT_List : public VType {
+class VType_List : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern VTypeT_List VType_List;
+extern VType_List VTYPE_List;
 
 //------------------------------------------------------------------------------
 // Object_List
@@ -31,9 +31,9 @@ private:
 	RefPtr<ObjectTypedOwner> _pObjectTypedOwner;
 public:
 	// Constructor
-	Object_List(VType& vtype = VType_List) :
+	Object_List(VType& vtype = VTYPE_List) :
 		Object_List(new ObjectTypedOwner(), vtype) {}
-	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner, VType& vtype = VType_List) :
+	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner, VType& vtype = VTYPE_List) :
 		Object_Object(vtype), _pObjectTypedOwner(pObjectTypedOwner) {}
 	// Copy constructor/operator
 	Object_List(const Object_List& src) :

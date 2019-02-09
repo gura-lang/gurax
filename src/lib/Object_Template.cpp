@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Template
 //------------------------------------------------------------------------------
-VTypeT_Template VType_Template("Template");
+VType_Template VTYPE_Template("Template");
 
-void VTypeT_Template::DoPrepare(Frame* pFrame)
+void VType_Template::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 

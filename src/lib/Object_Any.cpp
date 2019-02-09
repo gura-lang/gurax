@@ -12,9 +12,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Any
 //------------------------------------------------------------------------------
-VTypeT_Any VType_Any("Any");
+VType_Any VTYPE_Any("Any");
 
-void VTypeT_Any::DoPrepare(Frame* pFrame)
+void VType_Any::DoPrepare(Frame* pFrame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
 	pFrame->AssignVType(*this);

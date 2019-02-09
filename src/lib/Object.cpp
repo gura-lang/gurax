@@ -18,29 +18,29 @@ const Object *Object::_pObject_emptystr		= nullptr;
 void Object::Bootup()
 {
 	Frame* pFrame = Context::GetFrame();
-	VType_Object.Prepare(pFrame);
-	VType_Any.Prepare(pFrame);
-	VType_Argument.Prepare(pFrame);
-	VType_Attribute.Prepare(pFrame);
-	VType_Binary.Prepare(pFrame);
-	VType_Bool.Prepare(pFrame);
-	VType_DateTime.Prepare(pFrame);
-	VType_Dict.Prepare(pFrame);
-	VType_Expr.Prepare(pFrame);
-	VType_Function.Prepare(pFrame);
-	VType_Iterator.Prepare(pFrame);
-	VType_VType.Prepare(pFrame);
-	VType_List.Prepare(pFrame);
-	VType_Module.Prepare(pFrame);
-	VType_Nil.Prepare(pFrame);
-	VType_Number.Prepare(pFrame);
-	VType_Stream.Prepare(pFrame);
-	VType_String.Prepare(pFrame);
-	VType_StringPtr.Prepare(pFrame);
-	VType_Symbol.Prepare(pFrame);
-	VType_Template.Prepare(pFrame);
-	VType_TimeDelta.Prepare(pFrame);
-	VType_Undefined.Prepare(pFrame);
+	VTYPE_Object.Prepare(pFrame);
+	VTYPE_Any.Prepare(pFrame);
+	VTYPE_Argument.Prepare(pFrame);
+	VTYPE_Attribute.Prepare(pFrame);
+	VTYPE_Binary.Prepare(pFrame);
+	VTYPE_Bool.Prepare(pFrame);
+	VTYPE_DateTime.Prepare(pFrame);
+	VTYPE_Dict.Prepare(pFrame);
+	VTYPE_Expr.Prepare(pFrame);
+	VTYPE_Function.Prepare(pFrame);
+	VTYPE_Iterator.Prepare(pFrame);
+	VTYPE_VType.Prepare(pFrame);
+	VTYPE_List.Prepare(pFrame);
+	VTYPE_Module.Prepare(pFrame);
+	VTYPE_Nil.Prepare(pFrame);
+	VTYPE_Number.Prepare(pFrame);
+	VTYPE_Stream.Prepare(pFrame);
+	VTYPE_String.Prepare(pFrame);
+	VTYPE_StringPtr.Prepare(pFrame);
+	VTYPE_Symbol.Prepare(pFrame);
+	VTYPE_Template.Prepare(pFrame);
+	VTYPE_TimeDelta.Prepare(pFrame);
+	VTYPE_Undefined.Prepare(pFrame);
 	_pObject_undefined	= new Object_Undefined();
 	_pObject_nil		= new Object_Nil();
 	_pObject_false_		= new Object_Bool(false);
@@ -52,7 +52,7 @@ void Object::Bootup()
 bool Object::GetBool() const
 {
 	return !(IsUndefined() || IsNil() ||
-			 (IsType(VType_Bool) && !dynamic_cast<const Object_Bool*>(this)->GetBool()));
+			 (IsType(VTYPE_Bool) && !dynamic_cast<const Object_Bool*>(this)->GetBool()));
 }
 
 bool Object::IsInstanceOf(const VType& vtype) const
@@ -201,21 +201,21 @@ void ObjectOwner::Set(size_t pos, Object* pObject)
 // ObjectTypedOwner
 //------------------------------------------------------------------------------
 ObjectTypedOwner::ObjectTypedOwner() :
-	_pVTypeOfElems(&VType_Undefined), _pObjectOwner(new ObjectOwner())
+	_pVTypeOfElems(&VTYPE_Undefined), _pObjectOwner(new ObjectOwner())
 {}
 
 void ObjectTypedOwner::Clear()
 {
-	_pVTypeOfElems = &VType_Undefined;
+	_pVTypeOfElems = &VTYPE_Undefined;
 	_pObjectOwner->Clear();
 }
 
 void ObjectTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 {
-	if (_pVTypeOfElems->IsIdentical(VType_Undefined)) {
+	if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
 		_pVTypeOfElems = &vtypeAdded;
 	} else if (!_pVTypeOfElems->IsIdentical(vtypeAdded)) {
-		_pVTypeOfElems = &VType_Any;
+		_pVTypeOfElems = &VTYPE_Any;
 	}
 }
 

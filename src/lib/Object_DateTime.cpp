@@ -12,11 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_DateTime
 //------------------------------------------------------------------------------
-VTypeT_DateTime VType_DateTime("Datetime");
+VType_DateTime VTYPE_DateTime("Datetime");
 
-void VTypeT_DateTime::DoPrepare(Frame* pFrame)
+void VType_DateTime::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(VType_Object, Flag::Immutable);
+	SetAttrs(VTYPE_Object, Flag::Immutable);
 	pFrame->AssignVType(*this);
 }
 
