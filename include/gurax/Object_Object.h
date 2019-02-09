@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Object
+// VType_Object
 //------------------------------------------------------------------------------
-class KlassT_Object : public Klass {
+class VTypeT_Object : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Object Klass_Object;
+extern VTypeT_Object VType_Object;
 
 //------------------------------------------------------------------------------
 // Object_Object
@@ -29,8 +29,8 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Object");
 public:
 	// Constructor
-	Object_Object() : Object_Object(Klass_Object) {}
-	explicit Object_Object(Klass& klass) : Object(klass) {}
+	Object_Object() : Object_Object(VType_Object) {}
+	explicit Object_Object(VType& vtype) : Object(vtype) {}
 	// Copy constructor/operator
 	Object_Object(const Object_Object& src) : Object(src) {}
 	Object_Object& operator=(const Object_Object& src) = delete;
@@ -46,7 +46,7 @@ public:
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Object* pObject) const override { return IsSameType(pObject); }
 	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)? false : GetKlass().IsLessThan(pObject->GetKlass());
+		return IsSameType(pObject)? false : GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return "Object";

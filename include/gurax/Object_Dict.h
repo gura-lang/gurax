@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Dict
+// VType_Dict
 //------------------------------------------------------------------------------
-class KlassT_Dict : public Klass {
+class VTypeT_Dict : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Dict Klass_Dict;
+extern VTypeT_Dict VType_Dict;
 
 //------------------------------------------------------------------------------
 // Object_Dict
@@ -31,10 +31,10 @@ private:
 	RefPtr<ObjectDict> _pObjectDict;
 public:
 	// Constructor
-	explicit Object_Dict(Klass& klass = Klass_Dict) :
-		Object_Dict(new ObjectDict(), klass) {}
-	explicit Object_Dict(ObjectDict* pObjectDict, Klass& klass = Klass_Dict) :
-		Object_Object(klass), _pObjectDict(pObjectDict) {}
+	explicit Object_Dict(VType& vtype = VType_Dict) :
+		Object_Dict(new ObjectDict(), vtype) {}
+	explicit Object_Dict(ObjectDict* pObjectDict, VType& vtype = VType_Dict) :
+		Object_Object(vtype), _pObjectDict(pObjectDict) {}
 	// Copy constructor/operator
 	Object_Dict(const Object_Dict& src) :
 		Object_Object(src), _pObjectDict(src._pObjectDict->CloneDeep()) {}
@@ -59,7 +59,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetObjectDict().IsLessThan(dynamic_cast<const Object_Dict*>(pObject)->GetObjectDict()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 		
 	}
 	virtual String ToString(const StringStyle& ss) const override {

@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_DateTime
+// VType_DateTime
 //------------------------------------------------------------------------------
-KlassT_DateTime Klass_DateTime("Datetime");
+VTypeT_DateTime VType_DateTime("Datetime");
 
-void KlassT_DateTime::DoPrepare(Frame* pFrame)
+void VTypeT_DateTime::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

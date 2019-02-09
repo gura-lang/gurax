@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_String
+// VType_String
 //------------------------------------------------------------------------------
-class KlassT_String : public Klass {
+class VTypeT_String : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_String Klass_String;
+extern VTypeT_String VType_String;
 
 //------------------------------------------------------------------------------
 // Object_String
@@ -31,12 +31,12 @@ private:
 	RefPtr<StringReferable> _pStr;
 public:
 	// Constructor
-	explicit Object_String(Klass& klass = Klass_String) :
-		Object_String(new StringReferable(), klass) {}
-	explicit Object_String(String str, Klass& klass = Klass_String) :
-		Object_String(new StringReferable(std::move(str)), klass) {}
-	explicit Object_String(StringReferable* pStr, Klass& klass = Klass_String) :
-		Object_Object(klass), _pStr(pStr) {}
+	explicit Object_String(VType& vtype = VType_String) :
+		Object_String(new StringReferable(), vtype) {}
+	explicit Object_String(String str, VType& vtype = VType_String) :
+		Object_String(new StringReferable(std::move(str)), vtype) {}
+	explicit Object_String(StringReferable* pStr, VType& vtype = VType_String) :
+		Object_Object(vtype), _pStr(pStr) {}
 	// Copy constructor/operator
 	Object_String(const Object_String& src) :
 		Object_Object(src), _pStr(src._pStr->Reference()) {}
@@ -63,7 +63,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			String::IsLessThan(GetString(), dynamic_cast<const Object_String*>(pObject)->GetString()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return _pStr->GetStringSTL().MakeQuoted(true);

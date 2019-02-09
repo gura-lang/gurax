@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Function
+// VType_Function
 //------------------------------------------------------------------------------
-class KlassT_Function : public Klass {
+class VTypeT_Function : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Function Klass_Function;
+extern VTypeT_Function VType_Function;
 
 //------------------------------------------------------------------------------
 // Object_Function
@@ -32,8 +32,8 @@ private:
 public:
 	// Constructor
 	Object_Function() = delete;
-	explicit Object_Function(Function* pFunction, Klass& klass = Klass_Function) :
-		Object_Object(klass), _pFunction(pFunction) {}
+	explicit Object_Function(Function* pFunction, VType& vtype = VType_Function) :
+		Object_Object(vtype), _pFunction(pFunction) {}
 	// Copy constructor/operator
 	Object_Function(const Object_Function& src) :
 		Object_Object(src), _pFunction(src._pFunction->Reference()) {}
@@ -60,7 +60,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetFunction().IsLessThan(dynamic_cast<const Object_Function*>(pObject)->GetFunction()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetFunction().ToString(ss);

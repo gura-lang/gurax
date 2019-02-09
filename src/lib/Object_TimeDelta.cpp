@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_TimeDelta
+// VType_TimeDelta
 //------------------------------------------------------------------------------
-KlassT_TimeDelta Klass_TimeDelta("Timedelta");
+VTypeT_TimeDelta VType_TimeDelta("Timedelta");
 
-void KlassT_TimeDelta::DoPrepare(Frame* pFrame)
+void VTypeT_TimeDelta::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

@@ -95,10 +95,10 @@ bool Frame::AssignModule(Module* pModule)
 	return true;
 }
 
-void Frame::AssignKlass(Klass& klass)
+void Frame::AssignVType(VType& vtype)
 {
-	klass.SetFrameParent(this);
-	AssignObject(klass.GetSymbol(), new Object_Klass(klass));
+	vtype.SetFrameParent(this);
+	AssignObject(vtype.GetSymbol(), new Object_VType(vtype));
 }
 
 void Frame::AssignFunction(Function* pFunction)

@@ -65,7 +65,7 @@ bool Formatter::Format(const char* format, Source&& source)
 				formatterFlags.plusMode = FormatterFlags::PlusMode::Plus;
 			} else if (ch == '*') {
 				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->IsType(Klass_Number)) {
+				if (!pObject->IsType(VType_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
@@ -158,7 +158,7 @@ bool Formatter::Format(const char* format, Source&& source)
 		case Stat::PrecisionPre: {
 			if (ch == '*') {
 				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->IsType(Klass_Number)) {
+				if (!pObject->IsType(VType_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}

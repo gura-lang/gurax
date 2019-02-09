@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Undefined
+// VType_Undefined
 //------------------------------------------------------------------------------
-class KlassT_Undefined : public Klass {
+class VTypeT_Undefined : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Undefined Klass_Undefined;
+extern VTypeT_Undefined VType_Undefined;
 
 //------------------------------------------------------------------------------
 // Object_Undefined
@@ -29,7 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Undefined");
 public:
 	// Constructor
-	Object_Undefined() : Object(Klass_Undefined) {}
+	Object_Undefined() : Object(VType_Undefined) {}
 	// Copy constructor/operator
 	Object_Undefined(const Object_Undefined& src) = delete;
 	Object_Undefined& operator=(const Object_Undefined& src) = delete;
@@ -45,7 +45,7 @@ public:
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Object* pObject) const override { return IsSameType(pObject); }
 	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)? false : GetKlass().IsLessThan(pObject->GetKlass());
+		return IsSameType(pObject)? false : GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return "undefined";

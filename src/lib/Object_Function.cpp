@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Function
+// VType_Function
 //------------------------------------------------------------------------------
-KlassT_Function Klass_Function("Function");
+VTypeT_Function VType_Function("Function");
 
-void KlassT_Function::DoPrepare(Frame* pFrame)
+void VTypeT_Function::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

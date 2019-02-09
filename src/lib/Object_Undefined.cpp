@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Undefined
+// VType_Undefined
 //------------------------------------------------------------------------------
-KlassT_Undefined Klass_Undefined("Undefined");
+VTypeT_Undefined VType_Undefined("Undefined");
 
-void KlassT_Undefined::DoPrepare(Frame* pFrame)
+void VTypeT_Undefined::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass::Empty, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType::Empty, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

@@ -1,5 +1,5 @@
 //==============================================================================
-// Klass.h
+// VType.h
 //==============================================================================
 #ifndef GURAX_KLASS_H
 #define GURAX_KLASS_H
@@ -12,9 +12,9 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass
+// VType
 //------------------------------------------------------------------------------
-class Klass {
+class VType {
 public:
 	struct Flag {
 		static const UInt32 None		= 0;
@@ -25,7 +25,7 @@ public:
 protected:
 	SeqId _seqId;
 	RefPtr<HelpProvider> _pHelpProvider;
-	Klass* _pKlassInherited;
+	VType* _pVTypeInherited;
 	const Symbol* _pSymbol;
 	UInt32 _flags;
 	RefPtr<Frame_Branch> _pFrame;
@@ -34,23 +34,23 @@ private:
 	static SeqId _seqIdNext;
 	static const SeqId SeqId_Invalid = 0;
 public:
-	static Klass Empty;
+	static VType Empty;
 public:
 	// Constructor
-	explicit Klass(const char* name);
+	explicit VType(const char* name);
 	// Copy constructor/operator
-	Klass(Klass& src) = delete;
-	Klass& operator=(Klass& src) = delete;
+	VType(VType& src) = delete;
+	VType& operator=(VType& src) = delete;
 	// Move constructor/operator
-	Klass(Klass&& src) = delete;
-	Klass& operator=(Klass&& src) noexcept = delete;
+	VType(VType&& src) = delete;
+	VType& operator=(VType&& src) noexcept = delete;
 	// Destructor
-	virtual ~Klass() = default;
+	virtual ~VType() = default;
 public:
 	SeqId GetSeqId() const { return _seqId; }
-	void SetAttrs(Klass& klassInherited, UInt32 flags);
+	void SetAttrs(VType& vtypeInherited, UInt32 flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-	Klass& GetKlassInherited() const { return *_pKlassInherited; }
+	VType& GetVTypeInherited() const { return *_pVTypeInherited; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
@@ -61,12 +61,12 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Klass& klass) const { return this == &klass; }
-	bool IsEqualTo(const Klass& klass) const { return IsIdentical(klass); }
-	bool IsLessThan(const Klass& klass) const { return this < &klass; }
+	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
+	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
+	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(klass)"; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 public:
 	void Prepare(Frame* pFrameParent) { DoPrepare(pFrameParent); }
 public:
@@ -78,19 +78,19 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// KlassMap
+// VTypeMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE KlassMap :
-	public std::unordered_map<const Symbol*, Klass*,
+class GURAX_DLLDECLARE VTypeMap :
+	public std::unordered_map<const Symbol*, VType*,
 			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(KlassMap);
+	Gurax_DeclareReferable(VTypeMap);
 protected:
-	~KlassMap() = default;
+	~VTypeMap() = default;
 public:
-	void Assign(const Symbol* pSymbol, Klass* pKlass);
-	Klass* Lookup(const Symbol* pSymbol) const {
+	void Assign(const Symbol* pSymbol, VType* pVType);
+	VType* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
 	}

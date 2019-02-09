@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Expr
+// VType_Expr
 //------------------------------------------------------------------------------
-class KlassT_Expr : public Klass {
+class VTypeT_Expr : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Expr Klass_Expr;
+extern VTypeT_Expr VType_Expr;
 
 //------------------------------------------------------------------------------
 // Object_Expr
@@ -33,8 +33,8 @@ private:
 public:
 	// Constructor
 	Object_Expr() = delete;
-	explicit Object_Expr(Expr *pExpr, Klass& klass = Klass_Expr) :
-		Object_Object(klass), _pExpr(pExpr) {}
+	explicit Object_Expr(Expr *pExpr, VType& vtype = VType_Expr) :
+		Object_Object(vtype), _pExpr(pExpr) {}
 	// Copy constructor/operator
 	Object_Expr(const Object_Expr& src) :
 		Object_Object(src), _pExpr(src._pExpr->Reference()) {}
@@ -61,7 +61,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetExpr().IsLessThan(dynamic_cast<const Object_Expr*>(pObject)->GetExpr()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetExpr().ToString(ss);

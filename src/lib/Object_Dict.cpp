@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Dict
+// VType_Dict
 //------------------------------------------------------------------------------
-KlassT_Dict Klass_Dict("Dict");
+VTypeT_Dict VType_Dict("Dict");
 
-void KlassT_Dict::DoPrepare(Frame* pFrame)
+void VTypeT_Dict::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Mutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Mutable);
+	pFrame->AssignVType(*this);
 }
 
 }

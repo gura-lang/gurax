@@ -101,7 +101,7 @@ const TokenType& Operator::GetTokenType() const
 Object* Operator::EvalUnary(const Object* pObject) const
 {
 	if (!pObject) return nullptr;
-	const OpEntry* pOpEntry = LookupEntry(pObject->GetKlass());
+	const OpEntry* pOpEntry = LookupEntry(pObject->GetVType());
 	if (pOpEntry) return pOpEntry->EvalUnary(pObject);
 	Error::Issue(ErrorType::TypeError, "");
 	return nullptr;
@@ -110,7 +110,7 @@ Object* Operator::EvalUnary(const Object* pObject) const
 Object* Operator::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
 {
 	if (!pObjectL || !pObjectR) return nullptr;
-	const OpEntry* pOpEntry = LookupEntry(pObjectL->GetKlass(), pObjectR->GetKlass());
+	const OpEntry* pOpEntry = LookupEntry(pObjectL->GetVType(), pObjectR->GetVType());
 	if (pOpEntry) pOpEntry->EvalBinary(pObjectL, pObjectR);
 	Error::Issue(ErrorType::TypeError, "");
 	return nullptr;

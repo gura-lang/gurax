@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Argument
+// VType_Argument
 //------------------------------------------------------------------------------
-KlassT_Argument Klass_Argument("Argument");
+VTypeT_Argument VType_Argument("Argument");
 
-void KlassT_Argument::DoPrepare(Frame* pFrame)
+void VTypeT_Argument::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

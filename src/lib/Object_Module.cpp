@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Module
+// VType_Module
 //------------------------------------------------------------------------------
-KlassT_Module Klass_Module("Module");
+VTypeT_Module VType_Module("Module");
 
-void KlassT_Module::DoPrepare(Frame* pFrame)
+void VTypeT_Module::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

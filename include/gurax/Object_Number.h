@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Number
+// VType_Number
 //------------------------------------------------------------------------------
-class KlassT_Number : public Klass {
+class VTypeT_Number : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Number Klass_Number;
+extern VTypeT_Number VType_Number;
 
 //------------------------------------------------------------------------------
 // Object_Number
@@ -31,10 +31,10 @@ private:
 	Double _num;
 public:
 	// Constructor
-	explicit Object_Number(Klass& klass = Klass_Number) :
-		Object_Number(0., klass) {}
-	explicit Object_Number(Double num, Klass& klass = Klass_Number) :
-		Object_Object(klass), _num(num) {}
+	explicit Object_Number(VType& vtype = VType_Number) :
+		Object_Number(0., vtype) {}
+	explicit Object_Number(Double num, VType& vtype = VType_Number) :
+		Object_Object(vtype), _num(num) {}
 	// Copy constructor/operator
 	Object_Number(const Object_Number& src) :
 		Object_Object(src), _num(src._num) {}
@@ -76,7 +76,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetDouble() < dynamic_cast<const Object_Number*>(pObject)->GetDouble() :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return std::to_string(_num);

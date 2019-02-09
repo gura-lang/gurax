@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Attribute
+// VType_Attribute
 //------------------------------------------------------------------------------
-class KlassT_Attribute : public Klass {
+class VTypeT_Attribute : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Attribute Klass_Attribute;
+extern VTypeT_Attribute VType_Attribute;
 
 //------------------------------------------------------------------------------
 // Object_Attribute
@@ -33,8 +33,8 @@ private:
 public:
 	// Constructor
 	Object_Attribute() = delete;
-	explicit Object_Attribute(Attribute* pAttr, Klass& klass = Klass_Attribute) :
-		Object_Object(klass), _pAttr(pAttr) {}
+	explicit Object_Attribute(Attribute* pAttr, VType& vtype = VType_Attribute) :
+		Object_Object(vtype), _pAttr(pAttr) {}
 	// Copy constructor/operator
 	Object_Attribute(const Object_Attribute& src) : Object_Object(src), _pAttr(src._pAttr->Reference()) {}
 	Object_Attribute& operator=(const Object_Attribute& src) = delete;
@@ -60,7 +60,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetAttr().IsLessThan(dynamic_cast<const Object_Attribute*>(pObject)->GetAttr()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetAttr().ToString(ss);

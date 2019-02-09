@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Quote
+// VType_Quote
 //------------------------------------------------------------------------------
-KlassT_Quote Klass_Quote("Quote");
+VTypeT_Quote VType_Quote("Quote");
 
-void KlassT_Quote::DoPrepare(Frame* pFrame)
+void VTypeT_Quote::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass::Empty, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType::Empty, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

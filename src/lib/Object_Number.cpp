@@ -73,14 +73,14 @@ bool Object_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlag
 }
 
 //------------------------------------------------------------------------------
-// Klass_Number
+// VType_Number
 //------------------------------------------------------------------------------
-KlassT_Number Klass_Number("Number");
+VTypeT_Number VType_Number("Number");
 
-void KlassT_Number::DoPrepare(Frame* pFrame)
+void VTypeT_Number::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

@@ -8,7 +8,7 @@
 namespace Gurax {
 
 class Function;
-class Klass;
+class VType;
 class Object;
 class Module;
 class Frame_Branch;
@@ -47,7 +47,7 @@ public:
 	bool AssignObject(const DottedSymbol& dottedSymbol, Object* pObject);
 	Object* LookupObject(const DottedSymbol& dottedSymbol) const;
 	bool AssignModule(Module* pModule);
-	void AssignKlass(Klass& klass);
+	void AssignVType(VType& vtype);
 	void AssignFunction(Function* pFunction);
 public:
 	// Virtual functions

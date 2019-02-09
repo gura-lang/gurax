@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_TimeDelta
+// VType_TimeDelta
 //------------------------------------------------------------------------------
-class KlassT_TimeDelta : public Klass {
+class VTypeT_TimeDelta : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_TimeDelta Klass_TimeDelta;
+extern VTypeT_TimeDelta VType_TimeDelta;
 
 //------------------------------------------------------------------------------
 // Object_TimeDelta
@@ -32,10 +32,10 @@ private:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor
-	explicit Object_TimeDelta(Klass& klass = Klass_TimeDelta) :
-		Object_TimeDelta(new TimeDelta(), klass) {}
-	explicit Object_TimeDelta(TimeDelta *pTimeDelta, Klass& klass = Klass_TimeDelta) :
-		Object_Object(klass), _pTimeDelta(pTimeDelta) {}
+	explicit Object_TimeDelta(VType& vtype = VType_TimeDelta) :
+		Object_TimeDelta(new TimeDelta(), vtype) {}
+	explicit Object_TimeDelta(TimeDelta *pTimeDelta, VType& vtype = VType_TimeDelta) :
+		Object_Object(vtype), _pTimeDelta(pTimeDelta) {}
 	// Copy constructor/operator
 	Object_TimeDelta(const Object_TimeDelta& src) :
 		Object_Object(src), _pTimeDelta(src._pTimeDelta->Reference()) {}
@@ -61,7 +61,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetTimeDelta().IsLessThan(dynamic_cast<const Object_TimeDelta*>(pObject)->GetTimeDelta()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetTimeDelta().ToString(ss);

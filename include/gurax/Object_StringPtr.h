@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_StringPtr
+// VType_StringPtr
 //------------------------------------------------------------------------------
-class KlassT_StringPtr : public Klass {
+class VTypeT_StringPtr : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_StringPtr Klass_StringPtr;
+extern VTypeT_StringPtr VType_StringPtr;
 
 //------------------------------------------------------------------------------
 // Object_StringPtr
@@ -32,10 +32,10 @@ private:
 	const char* _str;
 public:
 	// Constructor
-	explicit Object_StringPtr(Klass& klass = Klass_StringPtr) :
-		Object_StringPtr("", klass) {}
-	explicit Object_StringPtr(const char* str, Klass& klass = Klass_StringPtr) :
-		Object_Object(klass), _str(str) {}
+	explicit Object_StringPtr(VType& vtype = VType_StringPtr) :
+		Object_StringPtr("", vtype) {}
+	explicit Object_StringPtr(const char* str, VType& vtype = VType_StringPtr) :
+		Object_Object(vtype), _str(str) {}
 	// Copy constructor/operator
 	Object_StringPtr(const Object_StringPtr& src) :
 		Object_Object(src), _str(src._str) {}
@@ -61,7 +61,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			String::IsLessThan(GetString(), dynamic_cast<const Object_StringPtr*>(pObject)->GetString()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return _str;

@@ -8,7 +8,7 @@
 
 namespace Gurax {
 
-class Klass;
+class VType;
 
 //------------------------------------------------------------------------------
 // DeclArg
@@ -53,7 +53,7 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
-	const Klass* _pKlass;
+	const VType* _pVType;
 	OccurPattern _occurPattern;
 	UInt32 _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
@@ -61,7 +61,7 @@ public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 			OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault);
-	DeclArg(const Symbol* pSymbol, const Klass& klass,
+	DeclArg(const Symbol* pSymbol, const VType& vtype,
 			OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault);
 	// Copy constructor/operator
 	DeclArg(const DeclArg& src) = delete;
@@ -75,8 +75,8 @@ protected:
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
-	const Klass& GetKlass() const { return *_pKlass; }
-	void SetKlass(const Klass* pKlass) { _pKlass = pKlass; }
+	const VType& GetVType() const { return *_pVType; }
+	void SetVType(const VType* pVType) { _pVType = pVType; }
 	const char* GetOccurPatternString() const { return OccurPatternToString(_occurPattern); }
 	bool IsOccurOnce() const { return _occurPattern == OccurPattern::Once; }
 	bool IsOccurZeroOrOnce() const { return _occurPattern == OccurPattern::ZeroOrOnce; }
@@ -85,7 +85,7 @@ public:
 	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr* pExpr, bool issueErrorFlag);
-	bool FixKlass(Frame* pFrame);
+	bool FixVType(Frame* pFrame);
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}

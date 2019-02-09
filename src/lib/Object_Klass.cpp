@@ -1,23 +1,23 @@
 //==============================================================================
-// Object_Klass.cpp
+// Object_VType.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_Klass
+// Object_VType
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Klass
+// VType_VType
 //------------------------------------------------------------------------------
-KlassT_Klass Klass_Klass("Klass");
+VTypeT_VType VType_VType("VType");
 
-void KlassT_Klass::DoPrepare(Frame* pFrame)
+void VTypeT_VType::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

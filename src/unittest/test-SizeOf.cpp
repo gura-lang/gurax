@@ -22,7 +22,6 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(Object_Expr);
 	Gurax_PrintSizeOf(Object_Function);
 	Gurax_PrintSizeOf(Object_Iterator);
-	Gurax_PrintSizeOf(Object_Klass);
 	Gurax_PrintSizeOf(Object_List);
 	Gurax_PrintSizeOf(Object_Module);
 	Gurax_PrintSizeOf(Object_Nil);
@@ -31,6 +30,7 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(Object_String);
 	Gurax_PrintSizeOf(Object_Symbol);
 	Gurax_PrintSizeOf(Object_Undefined);
+	Gurax_PrintSizeOf(Object_VType);
 	Gurax_PrintSizeOf(Symbol);
 	Gurax_PrintSizeOf(TimeDelta);
 }

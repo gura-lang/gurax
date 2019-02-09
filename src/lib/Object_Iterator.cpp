@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Iterator
+// VType_Iterator
 //------------------------------------------------------------------------------
-KlassT_Iterator Klass_Iterator("Iterator");
+VTypeT_Iterator VType_Iterator("Iterator");
 
-void KlassT_Iterator::DoPrepare(Frame* pFrame)
+void VTypeT_Iterator::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

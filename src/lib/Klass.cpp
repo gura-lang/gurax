@@ -1,36 +1,36 @@
 //==============================================================================
-// Klass.cpp
+// VType.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass
+// VType
 //------------------------------------------------------------------------------
-Klass::SeqId Klass::_seqIdNext = 1;
-Klass Klass::Empty("");
+VType::SeqId VType::_seqIdNext = 1;
+VType VType::Empty("");
 
-Klass::Klass(const char* name) :
-	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pKlassInherited(nullptr),
+VType::VType(const char* name) :
+	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0),
 	_pFrame(Frame::CreateBranch(nullptr, Frame::CreateSource()))
 {
 }
 
-void Klass::SetAttrs(Klass& klassInherited, UInt32 flags)
+void VType::SetAttrs(VType& vtypeInherited, UInt32 flags)
 {
-	_pKlassInherited = &klassInherited;
-	_pFrame->SetLeft(_pKlassInherited->GetFrame().Reference());
+	_pVTypeInherited = &vtypeInherited;
+	_pFrame->SetLeft(_pVTypeInherited->GetFrame().Reference());
 	_flags = flags;
 }
 
-String Klass::MakeFullName() const
+String VType::MakeFullName() const
 {
 	return GetName();
 }
 
-DottedSymbol* Klass::MakeDottedSymbol() const
+DottedSymbol* VType::MakeDottedSymbol() const
 {
 	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
 	pDottedSymbol->Append(GetSymbol());
@@ -38,27 +38,27 @@ DottedSymbol* Klass::MakeDottedSymbol() const
 }
 
 //------------------------------------------------------------------------------
-// KlassMap
+// VTypeMap
 //------------------------------------------------------------------------------
-void KlassMap::Assign(const Symbol* pSymbol, Klass* pKlass)
+void VTypeMap::Assign(const Symbol* pSymbol, VType* pVType)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {
-		emplace(pSymbol, pKlass);
+		emplace(pSymbol, pVType);
 	} else {
-		pPair->second = pKlass;
+		pPair->second = pVType;
 	}
 }
 
-String KlassMap::ToString(const StringStyle& ss) const
+String VTypeMap::ToString(const StringStyle& ss) const
 {
 	String str;
 	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		const Klass* pKlass = Lookup(pSymbol);
+		const VType* pVType = Lookup(pSymbol);
 		str += pSymbol->GetName();
 		str += " = ";
-		str += pKlass->MakeFullName();
+		str += pVType->MakeFullName();
 		str += "\n";
 	}
 	return str;

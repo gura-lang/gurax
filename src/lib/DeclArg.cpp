@@ -11,15 +11,15 @@ namespace Gurax {
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 				 OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
-	_pKlass(pDottedSymbol->IsEmpty()?
-			dynamic_cast<Klass*>(&Klass_Any) : dynamic_cast<Klass*>(&Klass_Undefined)),
+	_pVType(pDottedSymbol->IsEmpty()?
+			dynamic_cast<VType*>(&VType_Any) : dynamic_cast<VType*>(&VType_Undefined)),
 	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
 {
 }
 
-DeclArg::DeclArg(const Symbol* pSymbol, const Klass& klass,
+DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
 				 OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault) :
-	_pSymbol(pSymbol), _pDottedSymbol(klass.MakeDottedSymbol()), _pKlass(&klass),
+	_pSymbol(pSymbol), _pDottedSymbol(vtype.MakeDottedSymbol()), _pVType(&vtype),
 	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
 {
 }
@@ -27,7 +27,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, const Klass& klass,
 DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
-	const Klass* pKlass = nullptr;
+	const VType* pVType = nullptr;
 	OccurPattern occurPattern = OccurPattern::Once;
 	UInt32 flags = 0;
 	RefPtr<Expr> pExprDefault;
@@ -50,7 +50,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		pExpr = pExprEx->GetExprChild();
 		if (pOperator->IsType(OpType::Quote)) {
 			// `x
-			pKlass = &Klass_Quote;
+			pVType = &VType_Quote;
 		} else if (pOperator->IsType(OpType::PostMod)) {
 			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
@@ -123,16 +123,16 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		}
 		firstFlag = false;
 	}
-	return pKlass?
-		new DeclArg(pSymbol, *pKlass, occurPattern, flags, pExprDefault.release()) :
+	return pVType?
+		new DeclArg(pSymbol, *pVType, occurPattern, flags, pExprDefault.release()) :
 		new DeclArg(pSymbol, pDottedSymbol.release(), occurPattern, flags, pExprDefault.release());
 }
 
-bool DeclArg::FixKlass(Frame* pFrame)
+bool DeclArg::FixVType(Frame* pFrame)
 {
 	Object* pObject = pFrame->LookupObject(GetDottedSymbol());
-	if (pObject && pObject->IsType(Klass_Klass)) {
-		_pKlass = &dynamic_cast<Object_Klass*>(pObject)->GetKlass();
+	if (pObject && pObject->IsType(VType_VType)) {
+		_pVType = &dynamic_cast<Object_VType*>(pObject)->GetVType();
 		return true;
 	}
 	return false;
@@ -161,7 +161,7 @@ const char* DeclArg::OccurPatternToString(OccurPattern occurPattern)
 String DeclArg::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	bool quoteFlag = GetKlass().IsIdentical(Klass_Quote);
+	bool quoteFlag = GetVType().IsIdentical(VType_Quote);
 	if (quoteFlag) rtn += '`';
 	rtn += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) rtn += "[]";
@@ -173,7 +173,7 @@ String DeclArg::ToString(const StringStyle& ss) const
 		rtn += GetDottedSymbol().ToString();
 	} else if (ss.IsVerbose()) {
 		rtn += ':';
-		rtn += Klass_Any.GetName();
+		rtn += VType_Any.GetName();
 	}
 	rtn += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (GetExprDefault()) {

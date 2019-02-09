@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Argument
+// VType_Argument
 //------------------------------------------------------------------------------
-class KlassT_Argument : public Klass {
+class VTypeT_Argument : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Argument Klass_Argument;
+extern VTypeT_Argument VType_Argument;
 
 //------------------------------------------------------------------------------
 // Object_Argument
@@ -33,8 +33,8 @@ private:
 public:
 	// Constructor
 	Object_Argument() = delete;
-	Object_Argument(Argument* pArgument, Klass& klass = Klass_Argument) :
-		Object_Object(klass), _pArgument(pArgument) {}
+	Object_Argument(Argument* pArgument, VType& vtype = VType_Argument) :
+		Object_Object(vtype), _pArgument(pArgument) {}
 	// Copy constructor/operator
 	Object_Argument(const Object_Argument& src) : Object_Object(src), _pArgument(src._pArgument->Clone()) {}
 	Object_Argument& operator=(const Object_Argument& src) = delete;
@@ -60,7 +60,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetArgument().IsLessThan(dynamic_cast<const Object_Argument*>(pObject)->GetArgument()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetArgument().ToString(ss);

@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Iterator
+// VType_Iterator
 //------------------------------------------------------------------------------
-class KlassT_Iterator : public Klass {
+class VTypeT_Iterator : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Iterator Klass_Iterator;
+extern VTypeT_Iterator VType_Iterator;
 
 //------------------------------------------------------------------------------
 // Object_Iterator
@@ -32,8 +32,8 @@ private:
 public:
 	// Constructor
 	Object_Iterator() = delete;
-	explicit Object_Iterator(Iterator *pIterator, Klass& klass = Klass_Iterator) :
-		Object_Object(klass), _pIterator(pIterator) {}
+	explicit Object_Iterator(Iterator *pIterator, VType& vtype = VType_Iterator) :
+		Object_Object(vtype), _pIterator(pIterator) {}
 	// Copy constructor/operator
 	Object_Iterator(const Object_Iterator& src) :
 		Object_Object(src), _pIterator(src._pIterator->Reference()) {}
@@ -60,7 +60,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetIterator().IsLessThan(dynamic_cast<const Object_Iterator*>(pObject)->GetIterator()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetIterator().ToString(ss);

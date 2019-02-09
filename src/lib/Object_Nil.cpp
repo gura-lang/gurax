@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Nil
+// VType_Nil
 //------------------------------------------------------------------------------
-KlassT_Nil Klass_Nil("Nil");
+VTypeT_Nil VType_Nil("Nil");
 
-void KlassT_Nil::DoPrepare(Frame* pFrame)
+void VTypeT_Nil::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

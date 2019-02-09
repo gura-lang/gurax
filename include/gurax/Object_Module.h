@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Module
+// VType_Module
 //------------------------------------------------------------------------------
-class KlassT_Module : public Klass {
+class VTypeT_Module : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Module Klass_Module;
+extern VTypeT_Module VType_Module;
 
 //------------------------------------------------------------------------------
 // Object_Module
@@ -33,8 +33,8 @@ private:
 public:
 	// Constructor
 	Object_Module() = delete;
-	explicit Object_Module(Module* pModule, Klass& klass = Klass_Module) :
-		Object_Object(klass), _pModule(pModule) {}
+	explicit Object_Module(Module* pModule, VType& vtype = VType_Module) :
+		Object_Object(vtype), _pModule(pModule) {}
 	// Copy constructor/operator
 	Object_Module(const Object_Module& src) :
 		Object_Object(src), _pModule(src._pModule->Reference()) {}
@@ -62,7 +62,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetModule().IsLessThan(dynamic_cast<const Object_Module*>(pObject)->GetModule()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetModule().ToString(ss);

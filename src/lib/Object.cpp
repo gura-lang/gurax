@@ -18,29 +18,29 @@ const Object *Object::_pObject_emptystr		= nullptr;
 void Object::Bootup()
 {
 	Frame* pFrame = Context::GetFrame();
-	Klass_Object.Prepare(pFrame);
-	Klass_Any.Prepare(pFrame);
-	Klass_Argument.Prepare(pFrame);
-	Klass_Attribute.Prepare(pFrame);
-	Klass_Binary.Prepare(pFrame);
-	Klass_Bool.Prepare(pFrame);
-	Klass_DateTime.Prepare(pFrame);
-	Klass_Dict.Prepare(pFrame);
-	Klass_Expr.Prepare(pFrame);
-	Klass_Function.Prepare(pFrame);
-	Klass_Iterator.Prepare(pFrame);
-	Klass_Klass.Prepare(pFrame);
-	Klass_List.Prepare(pFrame);
-	Klass_Module.Prepare(pFrame);
-	Klass_Nil.Prepare(pFrame);
-	Klass_Number.Prepare(pFrame);
-	Klass_Stream.Prepare(pFrame);
-	Klass_String.Prepare(pFrame);
-	Klass_StringPtr.Prepare(pFrame);
-	Klass_Symbol.Prepare(pFrame);
-	Klass_Template.Prepare(pFrame);
-	Klass_TimeDelta.Prepare(pFrame);
-	Klass_Undefined.Prepare(pFrame);
+	VType_Object.Prepare(pFrame);
+	VType_Any.Prepare(pFrame);
+	VType_Argument.Prepare(pFrame);
+	VType_Attribute.Prepare(pFrame);
+	VType_Binary.Prepare(pFrame);
+	VType_Bool.Prepare(pFrame);
+	VType_DateTime.Prepare(pFrame);
+	VType_Dict.Prepare(pFrame);
+	VType_Expr.Prepare(pFrame);
+	VType_Function.Prepare(pFrame);
+	VType_Iterator.Prepare(pFrame);
+	VType_VType.Prepare(pFrame);
+	VType_List.Prepare(pFrame);
+	VType_Module.Prepare(pFrame);
+	VType_Nil.Prepare(pFrame);
+	VType_Number.Prepare(pFrame);
+	VType_Stream.Prepare(pFrame);
+	VType_String.Prepare(pFrame);
+	VType_StringPtr.Prepare(pFrame);
+	VType_Symbol.Prepare(pFrame);
+	VType_Template.Prepare(pFrame);
+	VType_TimeDelta.Prepare(pFrame);
+	VType_Undefined.Prepare(pFrame);
 	_pObject_undefined	= new Object_Undefined();
 	_pObject_nil		= new Object_Nil();
 	_pObject_false_		= new Object_Bool(false);
@@ -52,13 +52,13 @@ void Object::Bootup()
 bool Object::GetBool() const
 {
 	return !(IsUndefined() || IsNil() ||
-			 (IsType(Klass_Bool) && !dynamic_cast<const Object_Bool*>(this)->GetBool()));
+			 (IsType(VType_Bool) && !dynamic_cast<const Object_Bool*>(this)->GetBool()));
 }
 
-bool Object::IsInstanceOf(const Klass& klass) const
+bool Object::IsInstanceOf(const VType& vtype) const
 {
-	for (const Klass *pKlass = &GetKlass(); pKlass != nullptr; pKlass = &pKlass->GetKlassInherited()) {
-		if (pKlass->IsIdentical(klass)) return true;
+	for (const VType *pVType = &GetVType(); pVType != nullptr; pVType = &pVType->GetVTypeInherited()) {
+		if (pVType->IsIdentical(vtype)) return true;
 	}
 	return false;
 }
@@ -67,7 +67,7 @@ bool Object::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%d qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -75,7 +75,7 @@ bool Object::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%u qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -83,7 +83,7 @@ bool Object::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%b qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -91,7 +91,7 @@ bool Object::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%o qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -99,7 +99,7 @@ bool Object::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%x qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -107,7 +107,7 @@ bool Object::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%e qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -115,7 +115,7 @@ bool Object::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%f qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -123,7 +123,7 @@ bool Object::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%g qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -136,7 +136,7 @@ bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) cons
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%c qualifier",
-				 GetKlass().MakeFullName().c_str());
+				 GetVType().MakeFullName().c_str());
 	return false;
 }
 
@@ -201,21 +201,21 @@ void ObjectOwner::Set(size_t pos, Object* pObject)
 // ObjectTypedOwner
 //------------------------------------------------------------------------------
 ObjectTypedOwner::ObjectTypedOwner() :
-	_pKlassOfElems(&Klass_Undefined), _pObjectOwner(new ObjectOwner())
+	_pVTypeOfElems(&VType_Undefined), _pObjectOwner(new ObjectOwner())
 {}
 
 void ObjectTypedOwner::Clear()
 {
-	_pKlassOfElems = &Klass_Undefined;
+	_pVTypeOfElems = &VType_Undefined;
 	_pObjectOwner->Clear();
 }
 
-void ObjectTypedOwner::UpdateKlassOfElems(Klass& klassAdded)
+void ObjectTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 {
-	if (_pKlassOfElems->IsIdentical(Klass_Undefined)) {
-		_pKlassOfElems = &klassAdded;
-	} else if (!_pKlassOfElems->IsIdentical(klassAdded)) {
-		_pKlassOfElems = &Klass_Any;
+	if (_pVTypeOfElems->IsIdentical(VType_Undefined)) {
+		_pVTypeOfElems = &vtypeAdded;
+	} else if (!_pVTypeOfElems->IsIdentical(vtypeAdded)) {
+		_pVTypeOfElems = &VType_Any;
 	}
 }
 
@@ -247,7 +247,7 @@ String ObjectMap::ToString(const StringStyle& ss) const
 		Object* pObject = Lookup(pSymbol);
 		str += pSymbol->GetName();
 		str += ":";
-		str += pObject->GetKlass().MakeFullName().c_str();
+		str += pObject->GetVType().MakeFullName().c_str();
 		str += " = ";
 		str += pObject->ToString();
 		str += "\n";

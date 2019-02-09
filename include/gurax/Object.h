@@ -47,23 +47,23 @@ private:
 	static const Object* _pObject_zero;
 	static const Object* _pObject_emptystr;
 protected:
-	Klass* _pKlass;
+	VType* _pVType;
 public:
 	// Constructor
 	Object() = delete;
-	explicit Object(Klass& klass) : _pKlass(&klass) {}
+	explicit Object(VType& vtype) : _pVType(&vtype) {}
 	// Copy constructor/operator
-	Object(const Object& src) : _pKlass(src._pKlass) {}
+	Object(const Object& src) : _pVType(src._pVType) {}
 	Object& operator=(const Object& src) = delete;
 	// Move constructor/operator
-	Object(Object&& src) : _pKlass(src._pKlass) {}
+	Object(Object&& src) : _pVType(src._pVType) {}
 	Object& operator=(Object&& src) noexcept = delete;
 protected:
 	// Destructor
 	virtual ~Object() = default;
 public:
-	Klass& GetKlass() { return *_pKlass; }
-	const Klass& GetKlass() const { return *_pKlass; }
+	VType& GetVType() { return *_pVType; }
+	const VType& GetVType() const { return *_pVType; }
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Object* pObject) const { return this == pObject; }
 	bool IsUndefined() const { return IsIdentical(_pObject_undefined); }
@@ -72,14 +72,14 @@ public:
 	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
 		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
 	}
-	bool IsSameType(const Object* pObject) const { return GetKlass().IsIdentical(pObject->GetKlass()); }
+	bool IsSameType(const Object* pObject) const { return GetVType().IsIdentical(pObject->GetVType()); }
 	static bool IsSameType(const Object* pObject1, const Object* pObject2) {
 		return pObject1 && pObject1->IsSameType(pObject2);
 	}
-	bool IsType(const Klass& klass) const { return GetKlass().IsIdentical(klass); }
-	static bool IsType(const Object* pObject, const Klass& klass) { return pObject && pObject->IsType(klass); }
-	bool IsInstanceOf(const Klass& klass) const;
-	static bool IsInstanceOf(const Object* pObject, const Klass& klass) { return pObject && pObject->IsInstanceOf(klass); }
+	bool IsType(const VType& vtype) const { return GetVType().IsIdentical(vtype); }
+	static bool IsType(const Object* pObject, const VType& vtype) { return pObject && pObject->IsType(vtype); }
+	bool IsInstanceOf(const VType& vtype) const;
+	static bool IsInstanceOf(const Object* pObject, const VType& vtype) { return pObject && pObject->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	// Virtual functions
@@ -100,8 +100,8 @@ public:
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const;
 public:
-	bool IsMutable() const { return GetKlass().IsMutable(); }
-	bool IsImmutable() const { return GetKlass().IsImmutable(); }
+	bool IsMutable() const { return GetVType().IsMutable(); }
+	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
 	static void Bootup();
 	static Object* undefined()	{ return _pObject_undefined->Reference(); }
@@ -163,13 +163,13 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(ObjectTypedOwner);
 private:
-	Klass* _pKlassOfElems;	// set to "undefined", "any" or the other specific class
+	VType* _pVTypeOfElems;	// set to "undefined", "any" or the other specific class
 	RefPtr<ObjectOwner> _pObjectOwner;
 public:
 	// Constructor
 	ObjectTypedOwner();
-	ObjectTypedOwner(Klass *pKlassOfElems, ObjectOwner* pObjectOwner) :
-		_pKlassOfElems(pKlassOfElems), _pObjectOwner(pObjectOwner) {}
+	ObjectTypedOwner(VType *pVTypeOfElems, ObjectOwner* pObjectOwner) :
+		_pVTypeOfElems(pVTypeOfElems), _pObjectOwner(pObjectOwner) {}
 	// Copy constructor/operator
 	ObjectTypedOwner(const ObjectTypedOwner& src) = delete;
 	ObjectTypedOwner& operator=(const ObjectTypedOwner& src) = delete;
@@ -183,19 +183,19 @@ public:
 	void Clear();
 	ObjectTypedOwner* Clone() const;
 	ObjectTypedOwner* CloneDeep() const {
-		return new ObjectTypedOwner(_pKlassOfElems, _pObjectOwner->CloneDeep());
+		return new ObjectTypedOwner(_pVTypeOfElems, _pObjectOwner->CloneDeep());
 	}
 	void Reserve(size_t size) { _pObjectOwner->reserve(size); }
 	void Set(size_t pos, Object* pObject) {
-		UpdateKlassOfElems(pObject->GetKlass());
+		UpdateVTypeOfElems(pObject->GetVType());
 		_pObjectOwner->Set(pos, pObject);
 	}
 	Object* Get(size_t pos) const { return _pObjectOwner->Get(pos); }
 	void Add(Object* pObject) {
-		UpdateKlassOfElems(pObject->GetKlass());
+		UpdateVTypeOfElems(pObject->GetVType());
 		_pObjectOwner->push_back(pObject);
 	}
-	void UpdateKlassOfElems(Klass& klassAdded);
+	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ObjectOwner& GetObjectOwner() const { return *_pObjectOwner; }
 };
 

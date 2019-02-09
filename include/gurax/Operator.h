@@ -13,7 +13,7 @@ public: \
 Object* OpEntry_##opType##_##typeName::EvalUnary(const Object* pObject) const
 
 #define Gurax_AssignOpPreUnary(opType, typeName) \
-Operator::opType->AssignEntry(Klass_##typeName, new OpEntry_##opType##_##typeName())
+Operator::opType->AssignEntry(VType_##typeName, new OpEntry_##opType##_##typeName())
 
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
@@ -23,7 +23,7 @@ public: \
 Object* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
 
 #define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
-Operator::opType->AssignEntry(Klass_##typeNameL, Klass_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
+Operator::opType->AssignEntry(VType_##typeNameL, VType_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
 
 namespace Gurax {
 
@@ -153,26 +153,26 @@ public:
 	}
 public:
 	void Assign(UInt64 key, OpEntry *pOpEntry);
-	void Assign(const Klass& klass, OpEntry* pOpEntry) {
-		Assign(GenKey(klass), pOpEntry);
+	void Assign(const VType& vtype, OpEntry* pOpEntry) {
+		Assign(GenKey(vtype), pOpEntry);
 	}
-	void Assign(const Klass& klassL, const Klass& klassR, OpEntry* pOpEntry) {
-		Assign(GenKey(klassL, klassR), pOpEntry);
+	void Assign(const VType& vtypeL, const VType& vtypeR, OpEntry* pOpEntry) {
+		Assign(GenKey(vtypeL, vtypeR), pOpEntry);
 	}
 	OpEntry* Lookup(UInt64 key) const {
 		auto pPair = find(key);
 		return (pPair == end())? nullptr : pPair->second;
 	}
-	OpEntry* Lookup(const Klass& klass) const {
-		return Lookup(GenKey(klass));
+	OpEntry* Lookup(const VType& vtype) const {
+		return Lookup(GenKey(vtype));
 	}
-	OpEntry* Lookup(const Klass& klassL, const Klass& klassR) const { 
-		return Lookup(GenKey(klassL, klassR));
+	OpEntry* Lookup(const VType& vtypeL, const VType& vtypeR) const { 
+		return Lookup(GenKey(vtypeL, vtypeR));
 	}
 public:
-	static UInt64 GenKey(const Klass& klass) { return klass.GetSeqId(); }
-	static UInt64 GenKey(const Klass& klassL, const Klass& klassR) {
-		return (static_cast<UInt64>(klassL.GetSeqId()) << 32) + klassR.GetSeqId();
+	static UInt64 GenKey(const VType& vtype) { return vtype.GetSeqId(); }
+	static UInt64 GenKey(const VType& vtypeL, const VType& vtypeR) {
+		return (static_cast<UInt64>(vtypeL.GetSeqId()) << 32) + vtypeR.GetSeqId();
 	}
 };
 
@@ -289,17 +289,17 @@ public:
 	bool IsMathBinary() const			{ return _opStyle == OpStyle::MathBinary; }
 	const TokenType& GetTokenType() const;
 public:
-	void AssignEntry(const Klass& klass, OpEntry* pOpEntry) {
-		_opEntryMap.Assign(klass, pOpEntry);
+	void AssignEntry(const VType& vtype, OpEntry* pOpEntry) {
+		_opEntryMap.Assign(vtype, pOpEntry);
 	}
-	void AssignEntry(const Klass& klassL, const Klass& klassR, OpEntry* pOpEntry) {
-		_opEntryMap.Assign(klassL, klassR, pOpEntry);
+	void AssignEntry(const VType& vtypeL, const VType& vtypeR, OpEntry* pOpEntry) {
+		_opEntryMap.Assign(vtypeL, vtypeR, pOpEntry);
 	}
-	OpEntry* LookupEntry(const Klass& klass) const {
-		return _opEntryMap.Lookup(klass);
+	OpEntry* LookupEntry(const VType& vtype) const {
+		return _opEntryMap.Lookup(vtype);
 	}
-	OpEntry* LookupEntry(const Klass& klassL, const Klass& klassR) const {
-		return _opEntryMap.Lookup(klassL, klassR);
+	OpEntry* LookupEntry(const VType& vtypeL, const VType& vtypeR) const {
+		return _opEntryMap.Lookup(vtypeL, vtypeR);
 	}
 public:
 	Object* EvalUnary(const Object* pObject) const;

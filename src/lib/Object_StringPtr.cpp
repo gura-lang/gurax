@@ -11,14 +11,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_StringPtr
+// VType_StringPtr
 //------------------------------------------------------------------------------
-KlassT_StringPtr Klass_StringPtr("StringPtr");
+VTypeT_StringPtr VType_StringPtr("StringPtr");
 
-void KlassT_StringPtr::DoPrepare(Frame* pFrame)
+void VTypeT_StringPtr::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 bool Object_StringPtr::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const

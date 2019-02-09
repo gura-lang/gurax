@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Symbol
+// VType_Symbol
 //------------------------------------------------------------------------------
-class KlassT_Symbol : public Klass {
+class VTypeT_Symbol : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Symbol Klass_Symbol;
+extern VTypeT_Symbol VType_Symbol;
 
 //------------------------------------------------------------------------------
 // Object_Symbol
@@ -31,9 +31,9 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	explicit Object_Symbol(Klass& klass = Klass_Symbol) = delete;
-	explicit Object_Symbol(const Symbol* pSymbol, Klass& klass = Klass_Symbol) :
-		Object_Object(klass), _pSymbol(pSymbol) {}
+	explicit Object_Symbol(VType& vtype = VType_Symbol) = delete;
+	explicit Object_Symbol(const Symbol* pSymbol, VType& vtype = VType_Symbol) :
+		Object_Object(vtype), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
 	Object_Symbol(const Object_Symbol& src) :
 		Object_Object(src), _pSymbol(src._pSymbol) {}
@@ -59,7 +59,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Object_Symbol*>(pObject)->GetSymbol()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return String("`").append(_pSymbol->GetName());

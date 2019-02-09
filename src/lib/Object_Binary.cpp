@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Binary
+// VType_Binary
 //------------------------------------------------------------------------------
-KlassT_Binary Klass_Binary("Binary");
+VTypeT_Binary VType_Binary("Binary");
 
-void KlassT_Binary::DoPrepare(Frame* pFrame)
+void VTypeT_Binary::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

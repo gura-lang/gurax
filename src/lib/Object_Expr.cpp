@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Expr
+// VType_Expr
 //------------------------------------------------------------------------------
-KlassT_Expr Klass_Expr("Expr");
+VTypeT_Expr VType_Expr("Expr");
 
-void KlassT_Expr::DoPrepare(Frame* pFrame)
+void VTypeT_Expr::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }

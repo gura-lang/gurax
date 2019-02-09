@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_String
+// VType_String
 //------------------------------------------------------------------------------
-KlassT_String Klass_String("String");
+VTypeT_String VType_String("String");
 
-void KlassT_String::DoPrepare(Frame* pFrame)
+void VTypeT_String::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 bool Object_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const

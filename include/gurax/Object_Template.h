@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Template
+// VType_Template
 //------------------------------------------------------------------------------
-class KlassT_Template : public Klass {
+class VTypeT_Template : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Template Klass_Template;
+extern VTypeT_Template VType_Template;
 
 //------------------------------------------------------------------------------
 // Object_Template
@@ -32,9 +32,9 @@ private:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor
-	Object_Template(Klass& klass = Klass_Template) = delete;
-	explicit Object_Template(Template* pTempl, Klass& klass = Klass_Template) :
-		Object_Object(klass), _pTempl(pTempl) {}
+	Object_Template(VType& vtype = VType_Template) = delete;
+	explicit Object_Template(Template* pTempl, VType& vtype = VType_Template) :
+		Object_Object(vtype), _pTempl(pTempl) {}
 	// Copy constructor/operator
 	Object_Template(const Object_Template& src) :
 		Object_Object(src), _pTempl(src._pTempl->Reference()) {}
@@ -61,7 +61,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetTemplate().IsLessThan(dynamic_cast<const Object_Template*>(pObject)->GetTemplate()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetTemplate().ToString(ss);

@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Bool
+// VType_Bool
 //------------------------------------------------------------------------------
-class KlassT_Bool : public Klass {
+class VTypeT_Bool : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Bool Klass_Bool;
+extern VTypeT_Bool VType_Bool;
 
 //------------------------------------------------------------------------------
 // Object_Bool
@@ -31,10 +31,10 @@ private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_Bool(Klass& klass = Klass_Bool) :
-		Object_Bool(false, klass) {}
-	explicit Object_Bool(bool flag, Klass& klass = Klass_Bool) :
-		Object_Object(klass), _flag(flag) {}
+	explicit Object_Bool(VType& vtype = VType_Bool) :
+		Object_Bool(false, vtype) {}
+	explicit Object_Bool(bool flag, VType& vtype = VType_Bool) :
+		Object_Object(vtype), _flag(flag) {}
 	// Copy constructor/operator
 	Object_Bool(const Object_Bool& src) :
 		Object_Object(src), _flag(src._flag) {}
@@ -59,7 +59,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetBool() < dynamic_cast<const Object_Bool*>(pObject)->GetBool() :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return _flag? "true" : "false";

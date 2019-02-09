@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Nil
+// VType_Nil
 //------------------------------------------------------------------------------
-class KlassT_Nil : public Klass {
+class VTypeT_Nil : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Nil Klass_Nil;
+extern VTypeT_Nil VType_Nil;
 
 //------------------------------------------------------------------------------
 // Object_Nil
@@ -29,7 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Object_Nil");
 public:
 	// Constructor
-	explicit Object_Nil(Klass& klass = Klass_Nil) : Object_Object(klass) {}
+	explicit Object_Nil(VType& vtype = VType_Nil) : Object_Object(vtype) {}
 	// Copy constructor/operator
 	Object_Nil(const Object_Nil& src) : Object_Object(src) {}
 	Object_Nil& operator=(const Object_Nil& src) = delete;
@@ -45,7 +45,7 @@ public:
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Object* pObject) const override { return IsSameType(pObject); }
 	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)? false : GetKlass().IsLessThan(pObject->GetKlass());
+		return IsSameType(pObject)? false : GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return "nil";

@@ -1,5 +1,5 @@
 //==============================================================================
-// Object_Klass.h
+// Object_VType.h
 //==============================================================================
 #ifndef GURAX_OBJECT_KLASS_H
 #define GURAX_OBJECT_KLASS_H
@@ -8,63 +8,63 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Klass
+// VType_VType
 //------------------------------------------------------------------------------
-class KlassT_Klass : public Klass {
+class VTypeT_VType : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Klass Klass_Klass;
+extern VTypeT_VType VType_VType;
 
 //------------------------------------------------------------------------------
-// Object_Klass
+// Object_VType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Klass : public Object_Object {
+class GURAX_DLLDECLARE Object_VType : public Object_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Klass);
+	Gurax_DeclareReferable(Object_VType);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Klass");
+	Gurax_MemoryPoolAllocator("Object_VType");
 private:
-	Klass* _pKlassThis;
+	VType* _pVTypeThis;
 public:
 	// Constructor
-	Object_Klass() = delete;
-	explicit Object_Klass(Klass& klassThis, Klass& klass = Klass_Klass) :
-		Object_Object(klass), _pKlassThis(&klassThis) {}
+	Object_VType() = delete;
+	explicit Object_VType(VType& vtypeThis, VType& vtype = VType_VType) :
+		Object_Object(vtype), _pVTypeThis(&vtypeThis) {}
 	// Copy constructor/operator
-	Object_Klass(const Object_Klass& src) :
-		Object_Object(src), _pKlassThis(src._pKlassThis) {}
-	Object_Klass& operator=(const Object_Klass& src) = delete;
+	Object_VType(const Object_VType& src) :
+		Object_Object(src), _pVTypeThis(src._pVTypeThis) {}
+	Object_VType& operator=(const Object_VType& src) = delete;
 	// Move constructor/operator
-	Object_Klass(Object_Klass&& src) = delete;
-	Object_Klass& operator=(Object_Klass&& src) noexcept = delete;
+	Object_VType(Object_VType&& src) = delete;
+	Object_VType& operator=(Object_VType&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Klass() = default;
+	~Object_VType() = default;
 public:
-	Klass& GetKlassThis() { return *_pKlassThis; }
-	const Klass& GetKlassThis() const { return *_pKlassThis; }
+	VType& GetVTypeThis() { return *_pVTypeThis; }
+	const VType& GetVTypeThis() const { return *_pVTypeThis; }
 public:
-	// Virtual klasss of Object
-	virtual Frame* ProvideFrame() override { return &GetKlassThis().GetFrame(); }
+	// Virtual vtypes of Object
+	virtual Frame* ProvideFrame() override { return &GetVTypeThis().GetFrame(); }
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetKlassThis().CalcHash();
+		return GetVTypeThis().CalcHash();
 	}
 	virtual bool IsEqualTo(const Object* pObject) const override {
 		return IsSameType(pObject) &&
-			GetKlassThis().IsEqualTo(dynamic_cast<const Object_Klass*>(pObject)->GetKlassThis());
+			GetVTypeThis().IsEqualTo(dynamic_cast<const Object_VType*>(pObject)->GetVTypeThis());
 	}
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
-			GetKlassThis().IsLessThan(dynamic_cast<const Object_Klass*>(pObject)->GetKlassThis()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVTypeThis().IsLessThan(dynamic_cast<const Object_VType*>(pObject)->GetVTypeThis()) :
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
-		return GetKlassThis().ToString(ss);
+		return GetVTypeThis().ToString(ss);
 	}
 };
 

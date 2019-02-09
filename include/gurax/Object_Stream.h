@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_Stream
+// VType_Stream
 //------------------------------------------------------------------------------
-class KlassT_Stream : public Klass {
+class VTypeT_Stream : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_Stream Klass_Stream;
+extern VTypeT_Stream VType_Stream;
 
 //------------------------------------------------------------------------------
 // Object_Stream
@@ -33,8 +33,8 @@ private:
 public:
 	// Constructor
 	Object_Stream() = delete;
-	explicit Object_Stream(Stream *pStream, Klass& klass = Klass_Stream) :
-		Object_Object(klass), _pStream(pStream) {}
+	explicit Object_Stream(Stream *pStream, VType& vtype = VType_Stream) :
+		Object_Object(vtype), _pStream(pStream) {}
 	// Copy constructor/operator
 	Object_Stream(const Object_Stream& src) :
 		Object_Object(src), _pStream(src._pStream->Reference()) {}
@@ -61,7 +61,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetStream().IsLessThan(dynamic_cast<const Object_Stream*>(pObject)->GetStream()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetStream().ToString(ss);

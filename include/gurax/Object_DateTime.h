@@ -9,15 +9,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_DateTime
+// VType_DateTime
 //------------------------------------------------------------------------------
-class KlassT_DateTime : public Klass {
+class VTypeT_DateTime : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_DateTime Klass_DateTime;
+extern VTypeT_DateTime VType_DateTime;
 
 //------------------------------------------------------------------------------
 // Object_DateTime
@@ -32,10 +32,10 @@ private:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor
-	explicit Object_DateTime(Klass& klass = Klass_DateTime) :
-		Object_DateTime(new DateTime(), klass) {}
-	explicit Object_DateTime(DateTime *pDateTime, Klass& klass = Klass_DateTime) :
-		Object_Object(klass), _pDateTime(pDateTime) {}
+	explicit Object_DateTime(VType& vtype = VType_DateTime) :
+		Object_DateTime(new DateTime(), vtype) {}
+	explicit Object_DateTime(DateTime *pDateTime, VType& vtype = VType_DateTime) :
+		Object_Object(vtype), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
 	Object_DateTime(const Object_DateTime& src) :
 		Object_Object(src), _pDateTime(src._pDateTime->Reference()) {}
@@ -62,7 +62,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetDateTime().IsLessThan(dynamic_cast<const Object_DateTime*>(pObject)->GetDateTime()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetDateTime().ToString(ss);

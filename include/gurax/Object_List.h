@@ -8,15 +8,15 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Klass_List
+// VType_List
 //------------------------------------------------------------------------------
-class KlassT_List : public Klass {
+class VTypeT_List : public VType {
 public:
-	using Klass::Klass;
+	using VType::VType;
 	virtual void DoPrepare(Frame* pFrame) override;
 };
 
-extern KlassT_List Klass_List;
+extern VTypeT_List VType_List;
 
 //------------------------------------------------------------------------------
 // Object_List
@@ -31,10 +31,10 @@ private:
 	RefPtr<ObjectTypedOwner> _pObjectTypedOwner;
 public:
 	// Constructor
-	Object_List(Klass& klass = Klass_List) :
-		Object_List(new ObjectTypedOwner(), klass) {}
-	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner, Klass& klass = Klass_List) :
-		Object_Object(klass), _pObjectTypedOwner(pObjectTypedOwner) {}
+	Object_List(VType& vtype = VType_List) :
+		Object_List(new ObjectTypedOwner(), vtype) {}
+	explicit Object_List(ObjectTypedOwner* pObjectTypedOwner, VType& vtype = VType_List) :
+		Object_Object(vtype), _pObjectTypedOwner(pObjectTypedOwner) {}
 	// Copy constructor/operator
 	Object_List(const Object_List& src) :
 		Object_Object(src), _pObjectTypedOwner(src._pObjectTypedOwner->Reference()) {}
@@ -62,7 +62,7 @@ public:
 	virtual bool IsLessThan(const Object* pObject) const override {
 		return IsSameType(pObject)?
 			GetObjectOwner().IsLessThan(dynamic_cast<const Object_List*>(pObject)->GetObjectOwner()) :
-			GetKlass().IsLessThan(pObject->GetKlass());
+			GetVType().IsLessThan(pObject->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetObjectOwner().ToString(ss);

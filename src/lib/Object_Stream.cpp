@@ -10,14 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Klass_Stream
+// VType_Stream
 //------------------------------------------------------------------------------
-KlassT_Stream Klass_Stream("Stream");
+VTypeT_Stream VType_Stream("Stream");
 
-void KlassT_Stream::DoPrepare(Frame* pFrame)
+void VTypeT_Stream::DoPrepare(Frame* pFrame)
 {
-	SetAttrs(Klass_Object, Flag::Immutable);
-	pFrame->AssignKlass(*this);
+	SetAttrs(VType_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
 }
 
 }
