@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Template.h
+// Value_Template.h
 //==============================================================================
 #ifndef GURAX_OBJECT_TEMPLATE_H
 #define GURAX_OBJECT_TEMPLATE_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 #include "Template.h"
 
 namespace Gurax {
@@ -20,31 +20,31 @@ public:
 extern VType_Template VTYPE_Template;
 
 //------------------------------------------------------------------------------
-// Object_Template
+// Value_Template
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Template : public Object_Object {
+class GURAX_DLLDECLARE Value_Template : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Template);
+	Gurax_DeclareReferable(Value_Template);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Template");
+	Gurax_MemoryPoolAllocator("Value_Template");
 private:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor
-	Object_Template(VType& vtype = VTYPE_Template) = delete;
-	explicit Object_Template(Template* pTempl, VType& vtype = VTYPE_Template) :
-		Object_Object(vtype), _pTempl(pTempl) {}
+	Value_Template(VType& vtype = VTYPE_Template) = delete;
+	explicit Value_Template(Template* pTempl, VType& vtype = VTYPE_Template) :
+		Value_Object(vtype), _pTempl(pTempl) {}
 	// Copy constructor/operator
-	Object_Template(const Object_Template& src) :
-		Object_Object(src), _pTempl(src._pTempl->Reference()) {}
-	Object_Template& operator=(const Object_Template& src) = delete;
+	Value_Template(const Value_Template& src) :
+		Value_Object(src), _pTempl(src._pTempl->Reference()) {}
+	Value_Template& operator=(const Value_Template& src) = delete;
 	// Move constructor/operator
-	Object_Template(Object_Template&& src) = delete;
-	Object_Template& operator=(Object_Template&& src) noexcept = delete;
+	Value_Template(Value_Template&& src) = delete;
+	Value_Template& operator=(Value_Template&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Template() = default;
+	~Value_Template() = default;
 public:
 	Template& GetTemplate() { return *_pTempl; }
 	const Template& GetTemplate() const { return *_pTempl; }
@@ -54,14 +54,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetTemplate().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetTemplate().IsEqualTo(dynamic_cast<const Object_Template*>(pObject)->GetTemplate());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetTemplate().IsEqualTo(dynamic_cast<const Value_Template*>(pValue)->GetTemplate());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetTemplate().IsLessThan(dynamic_cast<const Object_Template*>(pObject)->GetTemplate()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetTemplate().IsLessThan(dynamic_cast<const Value_Template*>(pValue)->GetTemplate()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetTemplate().ToString(ss);

@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Function.h
+// Value_Function.h
 //==============================================================================
 #ifndef GURAX_OBJECT_FUNCTION_H
 #define GURAX_OBJECT_FUNCTION_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,31 +19,31 @@ public:
 extern VType_Function VTYPE_Function;
 
 //------------------------------------------------------------------------------
-// Object_Function
+// Value_Function
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Function : public Object_Object {
+class GURAX_DLLDECLARE Value_Function : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Function);
+	Gurax_DeclareReferable(Value_Function);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Function");
+	Gurax_MemoryPoolAllocator("Value_Function");
 private:
 	RefPtr<Function> _pFunction;
 public:
 	// Constructor
-	Object_Function() = delete;
-	explicit Object_Function(Function* pFunction, VType& vtype = VTYPE_Function) :
-		Object_Object(vtype), _pFunction(pFunction) {}
+	Value_Function() = delete;
+	explicit Value_Function(Function* pFunction, VType& vtype = VTYPE_Function) :
+		Value_Object(vtype), _pFunction(pFunction) {}
 	// Copy constructor/operator
-	Object_Function(const Object_Function& src) :
-		Object_Object(src), _pFunction(src._pFunction->Reference()) {}
-	Object_Function& operator=(const Object_Function& src) = delete;
+	Value_Function(const Value_Function& src) :
+		Value_Object(src), _pFunction(src._pFunction->Reference()) {}
+	Value_Function& operator=(const Value_Function& src) = delete;
 	// Move constructor/operator
-	Object_Function(Object_Function&& src) = delete;
-	Object_Function& operator=(Object_Function&& src) noexcept = delete;
+	Value_Function(Value_Function&& src) = delete;
+	Value_Function& operator=(Value_Function&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Function() = default;
+	~Value_Function() = default;
 public:
 	Function& GetFunction() { return *_pFunction; }
 	const Function& GetFunction() const { return *_pFunction; }
@@ -53,14 +53,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetFunction().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetFunction().IsEqualTo(dynamic_cast<const Object_Function*>(pObject)->GetFunction());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetFunction().IsEqualTo(dynamic_cast<const Value_Function*>(pValue)->GetFunction());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetFunction().IsLessThan(dynamic_cast<const Object_Function*>(pObject)->GetFunction()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetFunction().IsLessThan(dynamic_cast<const Value_Function*>(pValue)->GetFunction()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetFunction().ToString(ss);

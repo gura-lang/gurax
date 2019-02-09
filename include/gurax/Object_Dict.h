@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Dict.h
+// Value_Dict.h
 //==============================================================================
 #ifndef GURAX_OBJECT_DICT_H
 #define GURAX_OBJECT_DICT_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,47 +19,47 @@ public:
 extern VType_Dict VTYPE_Dict;
 
 //------------------------------------------------------------------------------
-// Object_Dict
+// Value_Dict
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Dict : public Object_Object {
+class GURAX_DLLDECLARE Value_Dict : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Dict);
+	Gurax_DeclareReferable(Value_Dict);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Dict");
+	Gurax_MemoryPoolAllocator("Value_Dict");
 private:
-	RefPtr<ObjectDict> _pObjectDict;
+	RefPtr<ObjectDict> _pValueDict;
 public:
 	// Constructor
-	explicit Object_Dict(VType& vtype = VTYPE_Dict) :
-		Object_Dict(new ObjectDict(), vtype) {}
-	explicit Object_Dict(ObjectDict* pObjectDict, VType& vtype = VTYPE_Dict) :
-		Object_Object(vtype), _pObjectDict(pObjectDict) {}
+	explicit Value_Dict(VType& vtype = VTYPE_Dict) :
+		Value_Dict(new ObjectDict(), vtype) {}
+	explicit Value_Dict(ObjectDict* pValueDict, VType& vtype = VTYPE_Dict) :
+		Value_Object(vtype), _pValueDict(pValueDict) {}
 	// Copy constructor/operator
-	Object_Dict(const Object_Dict& src) :
-		Object_Object(src), _pObjectDict(src._pObjectDict->CloneDeep()) {}
-	Object_Dict& operator=(const Object_Dict& src) = delete;
+	Value_Dict(const Value_Dict& src) :
+		Value_Object(src), _pValueDict(src._pValueDict->CloneDeep()) {}
+	Value_Dict& operator=(const Value_Dict& src) = delete;
 	// Move constructor/operator
-	Object_Dict(Object_Dict&& src) = delete;
-	Object_Dict& operator=(Object_Dict&& src) noexcept = delete;
+	Value_Dict(Value_Dict&& src) = delete;
+	Value_Dict& operator=(Value_Dict&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Dict() = default;
+	~Value_Dict() = default;
 public:
-	ObjectDict& GetObjectDict() { return *_pObjectDict; }
-	const ObjectDict& GetObjectDict() const { return *_pObjectDict; }
+	ObjectDict& GetObjectDict() { return *_pValueDict; }
+	const ObjectDict& GetObjectDict() const { return *_pValueDict; }
 public:
 	// Virtual functions of Object
-	virtual Object* Clone() const override { return new Object_Dict(*this); }
+	virtual Object* Clone() const override { return new Value_Dict(*this); }
 	virtual size_t DoCalcHash() const override { return GetObjectDict().CalcHash(); }
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetObjectDict().IsEqualTo(dynamic_cast<const Object_Dict*>(pObject)->GetObjectDict());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetObjectDict().IsEqualTo(dynamic_cast<const Value_Dict*>(pValue)->GetObjectDict());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetObjectDict().IsLessThan(dynamic_cast<const Object_Dict*>(pObject)->GetObjectDict()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetObjectDict().IsLessThan(dynamic_cast<const Value_Dict*>(pValue)->GetObjectDict()) :
+			GetVType().IsLessThan(pValue->GetVType());
 		
 	}
 	virtual String ToString(const StringStyle& ss) const override {

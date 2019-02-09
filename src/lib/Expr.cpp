@@ -112,18 +112,18 @@ void Expr_Composite::Exec(Frame& frame) const
 }
 
 //------------------------------------------------------------------------------
-// Expr_Object : Expr_Node
+// Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Object::typeInfo;
+const Expr::TypeInfo Expr_Value::typeInfo;
 
-void Expr_Object::Exec(Frame& frame) const
+void Expr_Value::Exec(Frame& frame) const
 {
-	Context::PushStack(GetObject()->Clone());
+	Context::PushStack(GetValue()->Clone());
 }
 
-String Expr_Object::ToString(const StringStyle& ss) const
+String Expr_Value::ToString(const StringStyle& ss) const
 {
-	return HasSource()? GetSourceSTL() : GetObject()->ToString();
+	return HasSource()? GetSourceSTL() : GetValue()->ToString();
 }
 
 //------------------------------------------------------------------------------
@@ -133,12 +133,12 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 
 void Expr_Identifier::Exec(Frame& frame) const
 {
-	RefPtr<Object> pObject(frame.LookupObject(GetSymbol())->Reference());
-	if (!pObject) {
+	RefPtr<Value> pValue(frame.LookupValue(GetSymbol())->Reference());
+	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return;
 	}
-	Context::PushStack(pObject.release());
+	Context::PushStack(pValue.release());
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -194,11 +194,11 @@ void Expr_UnaryOp::Exec(Frame& frame) const
 {
 	GetExprChild()->Exec(frame);
 	if (Error::IsIssued()) return;
-	RefPtr<Object> pObjectChild(Context::PopStack());
-	if (!pObjectChild) return;
-	RefPtr<Object> pObject(GetOperator()->EvalUnary(pObjectChild.release()));
-	if (!pObject) return;
-	Context::PushStack(pObject.release());
+	RefPtr<Value> pValueChild(Context::PopStack());
+	if (!pValueChild) return;
+	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
+	if (!pValue) return;
+	Context::PushStack(pValue.release());
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -253,12 +253,12 @@ void Expr_BinaryOp::Exec(Frame& frame) const
 	if (Error::IsIssued()) return;
 	GetExprRight()->Exec(frame);
 	if (Error::IsIssued()) return;
-	RefPtr<Object> pObjectRight(Context::PopStack());
-	RefPtr<Object> pObjectLeft(Context::PopStack());
-	if (!pObjectLeft || !pObjectRight) return;
-	RefPtr<Object> pObject(GetOperator()->EvalBinary(pObjectLeft.release(), pObjectRight.release()));
-	if (!pObject) return;
-	Context::PushStack(pObject.release());
+	RefPtr<Value> pValueRight(Context::PopStack());
+	RefPtr<Value> pValueLeft(Context::PopStack());
+	if (!pValueLeft || !pValueRight) return;
+	RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
+	if (!pValue) return;
+	Context::PushStack(pValue.release());
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -500,14 +500,14 @@ const Expr::TypeInfo Expr_Lister::typeInfo;
 
 void Expr_Lister::Exec(Frame& frame) const
 {
-	RefPtr<ObjectTypedOwner> pObjectTypedOwner(new ObjectTypedOwner());
-	pObjectTypedOwner->Reserve(GetExprLinkElem().GetSize());
+	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
+	pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;
-		pObjectTypedOwner->Add(Context::PopStack());
+		pValueTypedOwner->Add(Context::PopStack());
 	}
-	Context::PushStack(new Object_List(pObjectTypedOwner.release()));
+	Context::PushStack(new Value_List(pValueTypedOwner.release()));
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const

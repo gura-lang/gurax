@@ -130,9 +130,9 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 
 bool DeclArg::FixVType(Frame* pFrame)
 {
-	Object* pObject = pFrame->LookupObject(GetDottedSymbol());
-	if (pObject && pObject->IsType(VTYPE_VType)) {
-		_pVType = &dynamic_cast<Object_VType*>(pObject)->GetVType();
+	Value* pValue = pFrame->LookupValue(GetDottedSymbol());
+	if (pValue && pValue->IsType(VTYPE_VType)) {
+		_pVType = &dynamic_cast<Value_VType*>(pValue)->GetVType();
 		return true;
 	}
 	return false;

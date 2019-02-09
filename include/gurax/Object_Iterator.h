@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Iterator.h
+// Value_Iterator.h
 //==============================================================================
 #ifndef GURAX_OBJECT_ITERATOR_H
 #define GURAX_OBJECT_ITERATOR_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,31 +19,31 @@ public:
 extern VType_Iterator VTYPE_Iterator;
 
 //------------------------------------------------------------------------------
-// Object_Iterator
+// Value_Iterator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Iterator : public Object_Object {
+class GURAX_DLLDECLARE Value_Iterator : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Iterator);
+	Gurax_DeclareReferable(Value_Iterator);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Iterator");
+	Gurax_MemoryPoolAllocator("Value_Iterator");
 private:
 	RefPtr<Iterator> _pIterator;
 public:
 	// Constructor
-	Object_Iterator() = delete;
-	explicit Object_Iterator(Iterator *pIterator, VType& vtype = VTYPE_Iterator) :
-		Object_Object(vtype), _pIterator(pIterator) {}
+	Value_Iterator() = delete;
+	explicit Value_Iterator(Iterator *pIterator, VType& vtype = VTYPE_Iterator) :
+		Value_Object(vtype), _pIterator(pIterator) {}
 	// Copy constructor/operator
-	Object_Iterator(const Object_Iterator& src) :
-		Object_Object(src), _pIterator(src._pIterator->Reference()) {}
-		Object_Iterator& operator=(const Object_Iterator& src) = delete;
+	Value_Iterator(const Value_Iterator& src) :
+		Value_Object(src), _pIterator(src._pIterator->Reference()) {}
+		Value_Iterator& operator=(const Value_Iterator& src) = delete;
 	// Move constructor/operator
-	Object_Iterator(Object_Iterator&& src) = delete;
-	Object_Iterator& operator=(Object_Iterator&& src) noexcept = delete;
+	Value_Iterator(Value_Iterator&& src) = delete;
+	Value_Iterator& operator=(Value_Iterator&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Iterator() = default;
+	~Value_Iterator() = default;
 public:
 	Iterator& GetIterator() { return *_pIterator; }
 	const Iterator& GetIterator() const { return *_pIterator; }
@@ -53,14 +53,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetIterator().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetIterator().IsEqualTo(dynamic_cast<const Object_Iterator*>(pObject)->GetIterator());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetIterator().IsEqualTo(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetIterator().IsLessThan(dynamic_cast<const Object_Iterator*>(pObject)->GetIterator()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetIterator().IsLessThan(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetIterator().ToString(ss);

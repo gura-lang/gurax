@@ -1,21 +1,21 @@
 //==============================================================================
-// Object.cpp
+// Value.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object
+// Value
 //------------------------------------------------------------------------------
-const Object *Object::_pObject_undefined	= nullptr;
-const Object *Object::_pObject_nil			= nullptr;
-const Object *Object::_pObject_false_		= nullptr;
-const Object *Object::_pObject_true_		= nullptr;
-const Object *Object::_pObject_zero			= nullptr;
-const Object *Object::_pObject_emptystr		= nullptr;
+const Value *Value::_pValue_undefined	= nullptr;
+const Value *Value::_pValue_nil			= nullptr;
+const Value *Value::_pValue_false_		= nullptr;
+const Value *Value::_pValue_true_		= nullptr;
+const Value *Value::_pValue_zero			= nullptr;
+const Value *Value::_pValue_emptystr		= nullptr;
 
-void Object::Bootup()
+void Value::Bootup()
 {
 	Frame* pFrame = Context::GetFrame();
 	VTYPE_Object.Prepare(pFrame);
@@ -41,21 +41,21 @@ void Object::Bootup()
 	VTYPE_Template.Prepare(pFrame);
 	VTYPE_TimeDelta.Prepare(pFrame);
 	VTYPE_Undefined.Prepare(pFrame);
-	_pObject_undefined	= new Object_Undefined();
-	_pObject_nil		= new Object_Nil();
-	_pObject_false_		= new Object_Bool(false);
-	_pObject_true_		= new Object_Bool(true);
-	_pObject_zero		= new Object_Number(0);
-	_pObject_emptystr	= new Object_String("");
+	_pValue_undefined	= new Value_Undefined();
+	_pValue_nil		= new Value_Nil();
+	_pValue_false_		= new Value_Bool(false);
+	_pValue_true_		= new Value_Bool(true);
+	_pValue_zero		= new Value_Number(0);
+	_pValue_emptystr	= new Value_String("");
 }
 
-bool Object::GetBool() const
+bool Value::GetBool() const
 {
 	return !(IsUndefined() || IsNil() ||
-			 (IsType(VTYPE_Bool) && !dynamic_cast<const Object_Bool*>(this)->GetBool()));
+			 (IsType(VTYPE_Bool) && !dynamic_cast<const Value_Bool*>(this)->GetBool()));
 }
 
-bool Object::IsInstanceOf(const VType& vtype) const
+bool Value::IsInstanceOf(const VType& vtype) const
 {
 	for (const VType *pVType = &GetVType(); pVType != nullptr; pVType = &pVType->GetVTypeInherited()) {
 		if (pVType->IsIdentical(vtype)) return true;
@@ -63,7 +63,7 @@ bool Object::IsInstanceOf(const VType& vtype) const
 	return false;
 }
 
-bool Object::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%d qualifier",
@@ -71,7 +71,7 @@ bool Object::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%u qualifier",
@@ -79,7 +79,7 @@ bool Object::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%b qualifier",
@@ -87,7 +87,7 @@ bool Object::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%o qualifier",
@@ -95,7 +95,7 @@ bool Object::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%x qualifier",
@@ -103,7 +103,7 @@ bool Object::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%e qualifier",
@@ -111,7 +111,7 @@ bool Object::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%f qualifier",
@@ -119,7 +119,7 @@ bool Object::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%g qualifier",
@@ -127,12 +127,12 @@ bool Object::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) cons
 	return false;
 }
 
-bool Object::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, ToString().c_str(), formatterFlags.precision);
 }
 
-bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be formatted with %%c qualifier",
@@ -141,76 +141,76 @@ bool Object::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) cons
 }
 
 //------------------------------------------------------------------------------
-// ObjectList
+// ValueList
 //------------------------------------------------------------------------------
-ObjectList& ObjectList::Sort(SortOrder sortOrder)
+ValueList& ValueList::Sort(SortOrder sortOrder)
 {
-	SortListByOrder<ObjectList, Object::LessThan, Object::GreaterThan>(*this, sortOrder);
+	SortListByOrder<ValueList, Value::LessThan, Value::GreaterThan>(*this, sortOrder);
 	return *this;
 }
 
-String ObjectList::ToString(const StringStyle& ss) const
+String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "[";
-	for (auto ppObject = begin(); ppObject != end(); ++ppObject) {
-		if (ppObject != begin()) str += ss.GetComma();
-		str += (*ppObject)->ToString(ss);
+	for (auto ppValue = begin(); ppValue != end(); ++ppValue) {
+		if (ppValue != begin()) str += ss.GetComma();
+		str += (*ppValue)->ToString(ss);
 	}
 	str += "]";
 	return str;
 }
 
 //------------------------------------------------------------------------------
-// ObjectOwner
+// ValueOwner
 //------------------------------------------------------------------------------
-void ObjectOwner::Clear()
+void ValueOwner::Clear()
 {
-	for (Object* pObject : *this) Object::Delete(pObject);
+	for (Value* pValue : *this) Value::Delete(pValue);
 	clear();
 }
 
-ObjectOwner* ObjectOwner::Clone() const
+ValueOwner* ValueOwner::Clone() const
 {
-	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
-	pObjectOwner->reserve(size());
-	for (Object* pObject : *this) pObjectOwner->push_back(pObject->Reference());
-	return pObjectOwner.release();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(size());
+	for (Value* pValue : *this) pValueOwner->push_back(pValue->Reference());
+	return pValueOwner.release();
 }
 
-ObjectOwner* ObjectOwner::CloneDeep() const
+ValueOwner* ValueOwner::CloneDeep() const
 {
-	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
-	pObjectOwner->reserve(size());
-	for (Object* pObject : *this) {
-		Object* pObjectCloned = pObject->Clone();
-		if (!pObjectCloned) return nullptr;
-		pObjectOwner->push_back(pObjectCloned);
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(size());
+	for (Value* pValue : *this) {
+		Value* pValueCloned = pValue->Clone();
+		if (!pValueCloned) return nullptr;
+		pValueOwner->push_back(pValueCloned);
 	}
-	return pObjectOwner.release();
+	return pValueOwner.release();
 }
 
-void ObjectOwner::Set(size_t pos, Object* pObject)
+void ValueOwner::Set(size_t pos, Value* pValue)
 {
-	iterator ppObject = begin() + pos;
-	Object::Delete(*ppObject);
-	*ppObject = pObject;
+	iterator ppValue = begin() + pos;
+	Value::Delete(*ppValue);
+	*ppValue = pValue;
 }
 
 //------------------------------------------------------------------------------
-// ObjectTypedOwner
+// ValueTypedOwner
 //------------------------------------------------------------------------------
-ObjectTypedOwner::ObjectTypedOwner() :
-	_pVTypeOfElems(&VTYPE_Undefined), _pObjectOwner(new ObjectOwner())
+ValueTypedOwner::ValueTypedOwner() :
+	_pVTypeOfElems(&VTYPE_Undefined), _pValueOwner(new ValueOwner())
 {}
 
-void ObjectTypedOwner::Clear()
+void ValueTypedOwner::Clear()
 {
 	_pVTypeOfElems = &VTYPE_Undefined;
-	_pObjectOwner->Clear();
+	_pValueOwner->Clear();
 }
 
-void ObjectTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
+void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 {
 	if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
 		_pVTypeOfElems = &vtypeAdded;
@@ -220,102 +220,102 @@ void ObjectTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 }
 
 //------------------------------------------------------------------------------
-// ObjectMap
+// ValueMap
 //------------------------------------------------------------------------------
-void ObjectMap::Clear()
+void ValueMap::Clear()
 {
-	for (auto& pair : *this) Object::Delete(pair.second);
+	for (auto& pair : *this) Value::Delete(pair.second);
 	clear();
 }
 
-void ObjectMap::Assign(const Symbol* pSymbol, Object* pObject)
+void ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {
-		emplace(pSymbol, pObject);
+		emplace(pSymbol, pValue);
 	} else {
-		Object::Delete(pPair->second);
-		pPair->second = pObject;
+		Value::Delete(pPair->second);
+		pPair->second = pValue;
 	}
 }
 
-String ObjectMap::ToString(const StringStyle& ss) const
+String ValueMap::ToString(const StringStyle& ss) const
 {
 	String str;
 	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		Object* pObject = Lookup(pSymbol);
+		Value* pValue = Lookup(pSymbol);
 		str += pSymbol->GetName();
 		str += ":";
-		str += pObject->GetVType().MakeFullName().c_str();
+		str += pValue->GetVType().MakeFullName().c_str();
 		str += " = ";
-		str += pObject->ToString();
+		str += pValue->ToString();
 		str += "\n";
 	}
 	return str;
 }
 
 //------------------------------------------------------------------------------
-// ObjectDict
+// ValueDict
 //------------------------------------------------------------------------------
-void ObjectDict::Clear()
+void ValueDict::Clear()
 {
 	for (auto& pair : *this) {
-		Object::Delete(pair.first);
-		Object::Delete(pair.second);
+		Value::Delete(pair.first);
+		Value::Delete(pair.second);
 	}
 	clear();
 }
 
-ObjectDict* ObjectDict::Clone() const
+ValueDict* ValueDict::Clone() const
 {
-	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
-	pObjectDict->reserve(size());
+	RefPtr<ValueDict> pValueDict(new ValueDict());
+	pValueDict->reserve(size());
 	for (auto pair : *this) {
-		pObjectDict->emplace(pair.first->Reference(), pair.second->Reference());
+		pValueDict->emplace(pair.first->Reference(), pair.second->Reference());
 	}
-	return pObjectDict.release();
+	return pValueDict.release();
 }
 
-ObjectDict* ObjectDict::CloneDeep() const
+ValueDict* ValueDict::CloneDeep() const
 {
-	RefPtr<ObjectDict> pObjectDict(new ObjectDict());
-	pObjectDict->reserve(size());
+	RefPtr<ValueDict> pValueDict(new ValueDict());
+	pValueDict->reserve(size());
 	for (auto pair : *this) {
-		Object* pObjectKeyCloned = pair.first->Clone();
-		if (!pObjectKeyCloned) return nullptr;
-		Object* pObjectCloned = pair.second->Clone();
-		if (!pObjectCloned) return nullptr;
-		pObjectDict->emplace(pObjectKeyCloned, pObjectCloned);
+		Value* pValueKeyCloned = pair.first->Clone();
+		if (!pValueKeyCloned) return nullptr;
+		Value* pValueCloned = pair.second->Clone();
+		if (!pValueCloned) return nullptr;
+		pValueDict->emplace(pValueKeyCloned, pValueCloned);
 	}
-	return pObjectDict.release();
+	return pValueDict.release();
 }
 
-void ObjectDict::Assign(Object* pObjectKey, Object* pObject)
+void ValueDict::Assign(Value* pValueKey, Value* pValue)
 {
-	iterator pPair = find(pObjectKey);
+	iterator pPair = find(pValueKey);
 	if (pPair == end()) {
-		emplace(pObjectKey, pObject);
+		emplace(pValueKey, pValue);
 	} else {
-		Object::Delete(pPair->second);
-		pPair->second = pObject;
+		Value::Delete(pPair->second);
+		pPair->second = pValue;
 	}
 }
 
-String ObjectDict::ToString(const StringStyle& ss) const
+String ValueDict::ToString(const StringStyle& ss) const
 {
 	const char* strPair = ss.IsCram()? "=>" : " => ";
-	RefPtr<ObjectOwner> pKeys(GetKeys());
+	RefPtr<ValueOwner> pKeys(GetKeys());
 	pKeys->Sort();
 	String str;
 	str += "{";
-	for (auto ppObjectKey = pKeys->begin(); ppObjectKey != pKeys->end(); ppObjectKey++) {
-		const Object* pObjectKey = *ppObjectKey;
-		Object* pObject = Lookup(pObjectKey);
-		if (ppObjectKey != pKeys->begin()) str += ss.GetComma();
-		str += pObjectKey->ToString(ss);
+	for (auto ppValueKey = pKeys->begin(); ppValueKey != pKeys->end(); ppValueKey++) {
+		const Value* pValueKey = *ppValueKey;
+		Value* pValue = Lookup(pValueKey);
+		if (ppValueKey != pKeys->begin()) str += ss.GetComma();
+		str += pValueKey->ToString(ss);
 		str += strPair;
-		str += pObject->ToString(ss);
+		str += pValue->ToString(ss);
 	}
 	str += "}";
 	return str;

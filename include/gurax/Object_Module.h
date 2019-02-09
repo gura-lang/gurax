@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Module.h
+// Value_Module.h
 //==============================================================================
 #ifndef GURAX_OBJECT_MODULE_H
 #define GURAX_OBJECT_MODULE_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 #include "Module.h"
 
 namespace Gurax {
@@ -20,31 +20,31 @@ public:
 extern VType_Module VTYPE_Module;
 
 //------------------------------------------------------------------------------
-// Object_Module
+// Value_Module
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Module : public Object_Object {
+class GURAX_DLLDECLARE Value_Module : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Module);
+	Gurax_DeclareReferable(Value_Module);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Module");
+	Gurax_MemoryPoolAllocator("Value_Module");
 private:
 	RefPtr<Module> _pModule;
 public:
 	// Constructor
-	Object_Module() = delete;
-	explicit Object_Module(Module* pModule, VType& vtype = VTYPE_Module) :
-		Object_Object(vtype), _pModule(pModule) {}
+	Value_Module() = delete;
+	explicit Value_Module(Module* pModule, VType& vtype = VTYPE_Module) :
+		Value_Object(vtype), _pModule(pModule) {}
 	// Copy constructor/operator
-	Object_Module(const Object_Module& src) :
-		Object_Object(src), _pModule(src._pModule->Reference()) {}
-	Object_Module& operator=(const Object_Module& src) = delete;
+	Value_Module(const Value_Module& src) :
+		Value_Object(src), _pModule(src._pModule->Reference()) {}
+	Value_Module& operator=(const Value_Module& src) = delete;
 	// Move constructor/operator
-	Object_Module(Object_Module&& src) = delete;
-	Object_Module& operator=(Object_Module&& src) noexcept = delete;
+	Value_Module(Value_Module&& src) = delete;
+	Value_Module& operator=(Value_Module&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Module() = default;
+	~Value_Module() = default;
 public:
 	Module& GetModule() { return *_pModule; }
 	const Module& GetModule() const { return *_pModule; }
@@ -55,14 +55,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetModule().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetModule().IsEqualTo(dynamic_cast<const Object_Module*>(pObject)->GetModule());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetModule().IsEqualTo(dynamic_cast<const Value_Module*>(pValue)->GetModule());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetModule().IsLessThan(dynamic_cast<const Object_Module*>(pObject)->GetModule()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetModule().IsLessThan(dynamic_cast<const Value_Module*>(pValue)->GetModule()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetModule().ToString(ss);

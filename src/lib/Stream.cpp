@@ -45,9 +45,9 @@ Stream& Stream::Printf(const char* format, ...)
 	return PrintfV(format, ap);
 }
 
-Stream& Stream::PrintFmt(const char* format, const ObjectList& objectList)
+Stream& Stream::PrintFmt(const char* format, const ValueList& valueList)
 {
-	FormatterEx(*this).Format(format, objectList);
+	FormatterEx(*this).Format(format, valueList);
 	return *this;
 }
 

@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_TimeDelta.h
+// Value_TimeDelta.h
 //==============================================================================
 #ifndef GURAX_OBJECT_TIMEDELTA_H
 #define GURAX_OBJECT_TIMEDELTA_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 #include "TimeDelta.h"
 
 namespace Gurax {
@@ -20,32 +20,32 @@ public:
 extern VType_TimeDelta VTYPE_TimeDelta;
 
 //------------------------------------------------------------------------------
-// Object_TimeDelta
+// Value_TimeDelta
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_TimeDelta : public Object_Object {
+class GURAX_DLLDECLARE Value_TimeDelta : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_TimeDelta);
+	Gurax_DeclareReferable(Value_TimeDelta);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_TimeDelta");
+	Gurax_MemoryPoolAllocator("Value_TimeDelta");
 private:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor
-	explicit Object_TimeDelta(VType& vtype = VTYPE_TimeDelta) :
-		Object_TimeDelta(new TimeDelta(), vtype) {}
-	explicit Object_TimeDelta(TimeDelta *pTimeDelta, VType& vtype = VTYPE_TimeDelta) :
-		Object_Object(vtype), _pTimeDelta(pTimeDelta) {}
+	explicit Value_TimeDelta(VType& vtype = VTYPE_TimeDelta) :
+		Value_TimeDelta(new TimeDelta(), vtype) {}
+	explicit Value_TimeDelta(TimeDelta *pTimeDelta, VType& vtype = VTYPE_TimeDelta) :
+		Value_Object(vtype), _pTimeDelta(pTimeDelta) {}
 	// Copy constructor/operator
-	Object_TimeDelta(const Object_TimeDelta& src) :
-		Object_Object(src), _pTimeDelta(src._pTimeDelta->Reference()) {}
-	Object_TimeDelta& operator=(const Object_TimeDelta& src) = delete;
+	Value_TimeDelta(const Value_TimeDelta& src) :
+		Value_Object(src), _pTimeDelta(src._pTimeDelta->Reference()) {}
+	Value_TimeDelta& operator=(const Value_TimeDelta& src) = delete;
 	// Move constructor/operator
-	Object_TimeDelta(Object_TimeDelta&& src) = delete;
-	Object_TimeDelta& operator=(Object_TimeDelta&& src) noexcept = delete;
+	Value_TimeDelta(Value_TimeDelta&& src) = delete;
+	Value_TimeDelta& operator=(Value_TimeDelta&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_TimeDelta() = default;
+	~Value_TimeDelta() = default;
 public:
 	TimeDelta& GetTimeDelta() { return *_pTimeDelta; }
 	const TimeDelta& GetTimeDelta() const { return *_pTimeDelta; }
@@ -55,13 +55,13 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetTimeDelta().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return GetTimeDelta().IsEqualTo(dynamic_cast<const Object_TimeDelta*>(pObject)->GetTimeDelta());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return GetTimeDelta().IsEqualTo(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetTimeDelta().IsLessThan(dynamic_cast<const Object_TimeDelta*>(pObject)->GetTimeDelta()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetTimeDelta().IsLessThan(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetTimeDelta().ToString(ss);

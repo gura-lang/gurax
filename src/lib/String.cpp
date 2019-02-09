@@ -322,9 +322,9 @@ String& String::Printf(const char* format, ...)
 	return PrintfV(format, ap);
 }
 
-String& String::PrintFmt(const char* format, const ObjectList& objectList)
+String& String::PrintFmt(const char* format, const ValueList& valueList)
 {
-	Formatter_String(*this).Format(format, objectList);
+	Formatter_String(*this).Format(format, valueList);
 	return *this;
 }
 

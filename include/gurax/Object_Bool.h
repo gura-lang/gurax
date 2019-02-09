@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Bool.h
+// Value_Bool.h
 //==============================================================================
 #ifndef GURAX_OBJECT_BOOL_H
 #define GURAX_OBJECT_BOOL_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,32 +19,32 @@ public:
 extern VType_Bool VTYPE_Bool;
 
 //------------------------------------------------------------------------------
-// Object_Bool
+// Value_Bool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Bool : public Object_Object {
+class GURAX_DLLDECLARE Value_Bool : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Bool);
+	Gurax_DeclareReferable(Value_Bool);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Bool");
+	Gurax_MemoryPoolAllocator("Value_Bool");
 private:
 	bool _flag;
 public:
 	// Constructor
-	explicit Object_Bool(VType& vtype = VTYPE_Bool) :
-		Object_Bool(false, vtype) {}
-	explicit Object_Bool(bool flag, VType& vtype = VTYPE_Bool) :
-		Object_Object(vtype), _flag(flag) {}
+	explicit Value_Bool(VType& vtype = VTYPE_Bool) :
+		Value_Bool(false, vtype) {}
+	explicit Value_Bool(bool flag, VType& vtype = VTYPE_Bool) :
+		Value_Object(vtype), _flag(flag) {}
 	// Copy constructor/operator
-	Object_Bool(const Object_Bool& src) :
-		Object_Object(src), _flag(src._flag) {}
-	Object_Bool& operator=(const Object_Bool& src) = delete;
+	Value_Bool(const Value_Bool& src) :
+		Value_Object(src), _flag(src._flag) {}
+	Value_Bool& operator=(const Value_Bool& src) = delete;
 	// Move constructor/operator
-	Object_Bool(Object_Bool&& src) = delete;
-	Object_Bool& operator=(Object_Bool&& src) noexcept = delete;
+	Value_Bool(Value_Bool&& src) = delete;
+	Value_Bool& operator=(Value_Bool&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Bool() = default;
+	~Value_Bool() = default;
 public:
 	bool GetBool() const { return _flag; } // override Object::GetBool()
 public:
@@ -53,13 +53,13 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return static_cast<size_t>(GetBool());
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) && GetBool() == dynamic_cast<const Object_Bool*>(pObject)->GetBool();
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) && GetBool() == dynamic_cast<const Value_Bool*>(pValue)->GetBool();
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetBool() < dynamic_cast<const Object_Bool*>(pObject)->GetBool() :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetBool() < dynamic_cast<const Value_Bool*>(pValue)->GetBool() :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return _flag? "true" : "false";

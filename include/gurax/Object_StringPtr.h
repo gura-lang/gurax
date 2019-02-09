@@ -1,10 +1,10 @@
 //==============================================================================
-// Object_StringPtr.h
+// Value_StringPtr.h
 // This object type is designed to be used with Formatter.
 //==============================================================================
 #ifndef GURAX_OBJECT_STRINGPTR_H
 #define GURAX_OBJECT_STRINGPTR_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -20,32 +20,32 @@ public:
 extern VType_StringPtr VTYPE_StringPtr;
 
 //------------------------------------------------------------------------------
-// Object_StringPtr
+// Value_StringPtr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_StringPtr : public Object_Object {
+class GURAX_DLLDECLARE Value_StringPtr : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_StringPtr);
+	Gurax_DeclareReferable(Value_StringPtr);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_StringPtr");
+	Gurax_MemoryPoolAllocator("Value_StringPtr");
 private:
 	const char* _str;
 public:
 	// Constructor
-	explicit Object_StringPtr(VType& vtype = VTYPE_StringPtr) :
-		Object_StringPtr("", vtype) {}
-	explicit Object_StringPtr(const char* str, VType& vtype = VTYPE_StringPtr) :
-		Object_Object(vtype), _str(str) {}
+	explicit Value_StringPtr(VType& vtype = VTYPE_StringPtr) :
+		Value_StringPtr("", vtype) {}
+	explicit Value_StringPtr(const char* str, VType& vtype = VTYPE_StringPtr) :
+		Value_Object(vtype), _str(str) {}
 	// Copy constructor/operator
-	Object_StringPtr(const Object_StringPtr& src) :
-		Object_Object(src), _str(src._str) {}
-	Object_StringPtr& operator=(const Object_StringPtr& src) = delete;
+	Value_StringPtr(const Value_StringPtr& src) :
+		Value_Object(src), _str(src._str) {}
+	Value_StringPtr& operator=(const Value_StringPtr& src) = delete;
 	// Move constructor/operator
-	Object_StringPtr(Object_StringPtr&& src) = delete;
-	Object_StringPtr& operator=(Object_StringPtr&& src) noexcept = delete;
+	Value_StringPtr(Value_StringPtr&& src) = delete;
+	Value_StringPtr& operator=(Value_StringPtr&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_StringPtr() = default;
+	~Value_StringPtr() = default;
 public:
 	const char* GetString() const { return _str; }
 public:
@@ -54,14 +54,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return String::CalcHash(GetString());
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			String::IsEqualTo(GetString(), dynamic_cast<const Object_StringPtr*>(pObject)->GetString());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			String::IsEqualTo(GetString(), dynamic_cast<const Value_StringPtr*>(pValue)->GetString());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			String::IsLessThan(GetString(), dynamic_cast<const Object_StringPtr*>(pObject)->GetString()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			String::IsLessThan(GetString(), dynamic_cast<const Value_StringPtr*>(pValue)->GetString()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return _str;

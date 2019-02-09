@@ -8,9 +8,9 @@
 #define Gurax_ImplementOpPreUnary(opType, typeName) \
 class OpEntry_##opType##_##typeName : public OpEntry { \
 public: \
-	virtual Object* EvalUnary(const Object* pObject) const; \
+	virtual Object* EvalUnary(const Object* pValue) const; \
 }; \
-Object* OpEntry_##opType##_##typeName::EvalUnary(const Object* pObject) const
+Object* OpEntry_##opType##_##typeName::EvalUnary(const Object* pValue) const
 
 #define Gurax_AssignOpPreUnary(opType, typeName) \
 Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeName())
@@ -18,9 +18,9 @@ Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeNam
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
 public: \
-	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const; \
+	virtual Object* EvalBinary(const Object* pValueL, const Object* pValueR) const; \
 }; \
-Object* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
+Object* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(const Object* pValueL, const Object* pValueR) const
 
 #define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
 Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
@@ -139,8 +139,8 @@ public:
 	// Destructor
 	virtual ~OpEntry() = default;
 public:
-	virtual Object* EvalUnary(const Object* pObject) const ;
-	virtual Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const;
+	virtual Object* EvalUnary(const Object* pValue) const ;
+	virtual Object* EvalBinary(const Object* pValueL, const Object* pValueR) const;
 };
 
 //------------------------------------------------------------------------------
@@ -302,8 +302,8 @@ public:
 		return _opEntryMap.Lookup(vtypeL, vtypeR);
 	}
 public:
-	Object* EvalUnary(const Object* pObject) const;
-	Object* EvalBinary(const Object* pObjectL, const Object* pObjectR) const;
+	Object* EvalUnary(const Object* pValue) const;
+	Object* EvalBinary(const Object* pValueL, const Object* pValueR) const;
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 };

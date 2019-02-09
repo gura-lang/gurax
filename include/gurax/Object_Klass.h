@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_VType.h
+// Value_VType.h
 //==============================================================================
 #ifndef GURAX_OBJECT_KLASS_H
 #define GURAX_OBJECT_KLASS_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,31 +19,31 @@ public:
 extern VType_VType VTYPE_VType;
 
 //------------------------------------------------------------------------------
-// Object_VType
+// Value_VType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_VType : public Object_Object {
+class GURAX_DLLDECLARE Value_VType : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_VType);
+	Gurax_DeclareReferable(Value_VType);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_VType");
+	Gurax_MemoryPoolAllocator("Value_VType");
 private:
 	VType* _pVTypeThis;
 public:
 	// Constructor
-	Object_VType() = delete;
-	explicit Object_VType(VType& vtypeThis, VType& vtype = VTYPE_VType) :
-		Object_Object(vtype), _pVTypeThis(&vtypeThis) {}
+	Value_VType() = delete;
+	explicit Value_VType(VType& vtypeThis, VType& vtype = VTYPE_VType) :
+		Value_Object(vtype), _pVTypeThis(&vtypeThis) {}
 	// Copy constructor/operator
-	Object_VType(const Object_VType& src) :
-		Object_Object(src), _pVTypeThis(src._pVTypeThis) {}
-	Object_VType& operator=(const Object_VType& src) = delete;
+	Value_VType(const Value_VType& src) :
+		Value_Object(src), _pVTypeThis(src._pVTypeThis) {}
+	Value_VType& operator=(const Value_VType& src) = delete;
 	// Move constructor/operator
-	Object_VType(Object_VType&& src) = delete;
-	Object_VType& operator=(Object_VType&& src) noexcept = delete;
+	Value_VType(Value_VType&& src) = delete;
+	Value_VType& operator=(Value_VType&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_VType() = default;
+	~Value_VType() = default;
 public:
 	VType& GetVTypeThis() { return *_pVTypeThis; }
 	const VType& GetVTypeThis() const { return *_pVTypeThis; }
@@ -54,14 +54,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetVTypeThis().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetVTypeThis().IsEqualTo(dynamic_cast<const Object_VType*>(pObject)->GetVTypeThis());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetVTypeThis().IsEqualTo(dynamic_cast<const Value_VType*>(pValue)->GetVTypeThis());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetVTypeThis().IsLessThan(dynamic_cast<const Object_VType*>(pObject)->GetVTypeThis()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetVTypeThis().IsLessThan(dynamic_cast<const Value_VType*>(pValue)->GetVTypeThis()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetVTypeThis().ToString(ss);

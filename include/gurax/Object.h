@@ -17,35 +17,35 @@ class GURAX_DLLDECLARE Object : public Referable {
 public:
 	// Algorithm operators
 	struct EqualTo {
-		size_t operator()(const Object* pObject1, const Object* pObject2) const {
-			return pObject1->IsEqualTo(pObject2);
+		size_t operator()(const Object* pValue1, const Object* pValue2) const {
+			return pValue1->IsEqualTo(pValue2);
 		}
 	};
 	struct LessThan {
-		size_t operator()(const Object* pObject1, const Object* pObject2) const {
-			return pObject1->IsLessThan(pObject2);
+		size_t operator()(const Object* pValue1, const Object* pValue2) const {
+			return pValue1->IsLessThan(pValue2);
 		}
 	};
 	struct GreaterThan {
-		size_t operator()(const Object* pObject1, const Object* pObject2) const {
-			return pObject2->IsLessThan(pObject1);
+		size_t operator()(const Object* pValue1, const Object* pValue2) const {
+			return pValue2->IsLessThan(pValue1);
 		}
 	};
 	struct Hash {
-		size_t operator()(const Object* pObject) const {
-			return pObject->CalcHash();
+		size_t operator()(const Object* pValue) const {
+			return pValue->CalcHash();
 		}
 	};
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Object);
 private:
-	static const Object* _pObject_undefined;
-	static const Object* _pObject_nil;
-	static const Object* _pObject_false_;
-	static const Object* _pObject_true_;
-	static const Object* _pObject_zero;
-	static const Object* _pObject_emptystr;
+	static const Object* _pValue_undefined;
+	static const Object* _pValue_nil;
+	static const Object* _pValue_false_;
+	static const Object* _pValue_true_;
+	static const Object* _pValue_zero;
+	static const Object* _pValue_emptystr;
 protected:
 	VType* _pVType;
 public:
@@ -65,29 +65,29 @@ public:
 	VType& GetVType() { return *_pVType; }
 	const VType& GetVType() const { return *_pVType; }
 	size_t CalcHash() const { return DoCalcHash(); }
-	bool IsIdentical(const Object* pObject) const { return this == pObject; }
-	bool IsUndefined() const { return IsIdentical(_pObject_undefined); }
-	bool IsNil() const { return IsIdentical(_pObject_nil); }
+	bool IsIdentical(const Object* pValue) const { return this == pValue; }
+	bool IsUndefined() const { return IsIdentical(_pValue_undefined); }
+	bool IsNil() const { return IsIdentical(_pValue_nil); }
 	bool GetBool() const;
-	static bool IsIdentical(const Object* pObject1, const Object* pObject2) {
-		return pObject1? pObject1->IsIdentical(pObject2) : (!pObject1 && !pObject2);
+	static bool IsIdentical(const Object* pValue1, const Object* pValue2) {
+		return pValue1? pValue1->IsIdentical(pValue2) : (!pValue1 && !pValue2);
 	}
-	bool IsSameType(const Object* pObject) const { return GetVType().IsIdentical(pObject->GetVType()); }
-	static bool IsSameType(const Object* pObject1, const Object* pObject2) {
-		return pObject1 && pObject1->IsSameType(pObject2);
+	bool IsSameType(const Object* pValue) const { return GetVType().IsIdentical(pValue->GetVType()); }
+	static bool IsSameType(const Object* pValue1, const Object* pValue2) {
+		return pValue1 && pValue1->IsSameType(pValue2);
 	}
 	bool IsType(const VType& vtype) const { return GetVType().IsIdentical(vtype); }
-	static bool IsType(const Object* pObject, const VType& vtype) { return pObject && pObject->IsType(vtype); }
+	static bool IsType(const Object* pValue, const VType& vtype) { return pValue && pValue->IsType(vtype); }
 	bool IsInstanceOf(const VType& vtype) const;
-	static bool IsInstanceOf(const Object* pObject, const VType& vtype) { return pObject && pObject->IsInstanceOf(vtype); }
+	static bool IsInstanceOf(const Object* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	// Virtual functions
 	virtual Frame* ProvideFrame() { return nullptr; }
 	virtual Object* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
-	virtual bool IsEqualTo(const Object* pObject) const = 0;
-	virtual bool IsLessThan(const Object* pObject) const = 0;
+	virtual bool IsEqualTo(const Object* pValue) const = 0;
+	virtual bool IsLessThan(const Object* pValue) const = 0;
 	virtual String ToString(const StringStyle& ss) const { return String::Empty; }
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
@@ -104,12 +104,12 @@ public:
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
 	static void Bootup();
-	static Object* undefined()	{ return _pObject_undefined->Reference(); }
-	static Object* nil()		{ return _pObject_nil->Reference(); }
-	static Object* false_()		{ return _pObject_false_->Reference(); }
-	static Object* true_()		{ return _pObject_true_->Reference(); }
-	static Object* zero()		{ return _pObject_zero->Reference(); }
-	static Object* emptystr()	{ return _pObject_emptystr->Reference(); }
+	static Object* undefined()	{ return _pValue_undefined->Reference(); }
+	static Object* nil()		{ return _pValue_nil->Reference(); }
+	static Object* false_()		{ return _pValue_false_->Reference(); }
+	static Object* true_()		{ return _pValue_true_->Reference(); }
+	static Object* zero()		{ return _pValue_zero->Reference(); }
+	static Object* emptystr()	{ return _pValue_emptystr->Reference(); }
 };
 
 //------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ public:
 	void Clear();
 	ObjectOwner* Clone() const;
 	ObjectOwner* CloneDeep() const;
-	void Set(size_t pos, Object* pObject);
+	void Set(size_t pos, Object* pValue);
 	Object* Get(size_t pos) const { return at(pos); }
 public:
 	template<typename T_Map> static ObjectOwner* CollectKeys(const T_Map& map);
@@ -149,10 +149,10 @@ public:
 template<typename T_Map>
 ObjectOwner* ObjectOwner::CollectKeys(const T_Map& map)
 {
-	RefPtr<ObjectOwner> pObjectOwner(new ObjectOwner());
-	pObjectOwner->reserve(map.size());
-	for (auto& pair : map) pObjectOwner->push_back(pair.first->Reference());
-	return pObjectOwner.release();
+	RefPtr<ObjectOwner> pValueOwner(new ObjectOwner());
+	pValueOwner->reserve(map.size());
+	for (auto& pair : map) pValueOwner->push_back(pair.first->Reference());
+	return pValueOwner.release();
 }
 
 //------------------------------------------------------------------------------
@@ -164,12 +164,12 @@ public:
 	Gurax_DeclareReferable(ObjectTypedOwner);
 private:
 	VType* _pVTypeOfElems;	// set to "undefined", "any" or the other specific class
-	RefPtr<ObjectOwner> _pObjectOwner;
+	RefPtr<ObjectOwner> _pValueOwner;
 public:
 	// Constructor
 	ObjectTypedOwner();
-	ObjectTypedOwner(VType *pVTypeOfElems, ObjectOwner* pObjectOwner) :
-		_pVTypeOfElems(pVTypeOfElems), _pObjectOwner(pObjectOwner) {}
+	ObjectTypedOwner(VType *pVTypeOfElems, ObjectOwner* pValueOwner) :
+		_pVTypeOfElems(pVTypeOfElems), _pValueOwner(pValueOwner) {}
 	// Copy constructor/operator
 	ObjectTypedOwner(const ObjectTypedOwner& src) = delete;
 	ObjectTypedOwner& operator=(const ObjectTypedOwner& src) = delete;
@@ -183,20 +183,20 @@ public:
 	void Clear();
 	ObjectTypedOwner* Clone() const;
 	ObjectTypedOwner* CloneDeep() const {
-		return new ObjectTypedOwner(_pVTypeOfElems, _pObjectOwner->CloneDeep());
+		return new ObjectTypedOwner(_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}
-	void Reserve(size_t size) { _pObjectOwner->reserve(size); }
-	void Set(size_t pos, Object* pObject) {
-		UpdateVTypeOfElems(pObject->GetVType());
-		_pObjectOwner->Set(pos, pObject);
+	void Reserve(size_t size) { _pValueOwner->reserve(size); }
+	void Set(size_t pos, Object* pValue) {
+		UpdateVTypeOfElems(pValue->GetVType());
+		_pValueOwner->Set(pos, pValue);
 	}
-	Object* Get(size_t pos) const { return _pObjectOwner->Get(pos); }
-	void Add(Object* pObject) {
-		UpdateVTypeOfElems(pObject->GetVType());
-		_pObjectOwner->push_back(pObject);
+	Object* Get(size_t pos) const { return _pValueOwner->Get(pos); }
+	void Add(Object* pValue) {
+		UpdateVTypeOfElems(pValue->GetVType());
+		_pValueOwner->push_back(pValue);
 	}
 	void UpdateVTypeOfElems(VType& vtypeAdded);
-	const ObjectOwner& GetObjectOwner() const { return *_pObjectOwner; }
+	const ObjectOwner& GetObjectOwner() const { return *_pValueOwner; }
 };
 
 //------------------------------------------------------------------------------
@@ -205,8 +205,8 @@ public:
 class GURAX_DLLDECLARE ObjectStack : public ObjectOwner {
 public:
 	Object* Peek(int offset) { return *(rbegin() + offset); }
-	void Push(Object* pObject) { push_back(pObject); }
-	Object* Pop() { Object* pObject = back(); pop_back(); return pObject; }
+	void Push(Object* pValue) { push_back(pValue); }
+	Object* Pop() { Object* pValue = back(); pop_back(); return pValue; }
 };
 
 //------------------------------------------------------------------------------
@@ -222,7 +222,7 @@ protected:
 	~ObjectMap() { Clear(); }
 public:
 	void Clear();
-	void Assign(const Symbol* pSymbol, Object* pObject);
+	void Assign(const Symbol* pSymbol, Object* pValue);
 	Object* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
@@ -246,12 +246,12 @@ public:
 	void Clear();
 	ObjectDict* Clone() const;
 	ObjectDict* CloneDeep() const;
-	void Assign(Object* pObjectKey, Object* pObject);
-	Object* Lookup(const Object* pObjectKey) const {
-		auto pPair = find(const_cast<Object*>(pObjectKey));
+	void Assign(Object* pValueKey, Object* pValue);
+	Object* Lookup(const Object* pValueKey) const {
+		auto pPair = find(const_cast<Object*>(pValueKey));
 		return (pPair == end())? nullptr : pPair->second;
 	}
-	bool DoesExist(const Object* pObjectKey) const { return find(const_cast<Object*>(pObjectKey)) != end(); }
+	bool DoesExist(const Object* pValueKey) const { return find(const_cast<Object*>(pValueKey)) != end(); }
 	ObjectOwner* GetKeys() const { return ObjectOwner::CollectKeys(*this); }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ObjectDict& objectDict) const { return this == &objectDict; }

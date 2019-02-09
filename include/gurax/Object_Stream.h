@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Stream.h
+// Value_Stream.h
 //==============================================================================
 #ifndef GURAX_OBJECT_STREAM_H
 #define GURAX_OBJECT_STREAM_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 #include "Stream.h"
 
 namespace Gurax {
@@ -20,31 +20,31 @@ public:
 extern VType_Stream VTYPE_Stream;
 
 //------------------------------------------------------------------------------
-// Object_Stream
+// Value_Stream
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Stream : public Object_Object {
+class GURAX_DLLDECLARE Value_Stream : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Stream);
+	Gurax_DeclareReferable(Value_Stream);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Stream");
+	Gurax_MemoryPoolAllocator("Value_Stream");
 private:
 	RefPtr<Stream> _pStream;
 public:
 	// Constructor
-	Object_Stream() = delete;
-	explicit Object_Stream(Stream *pStream, VType& vtype = VTYPE_Stream) :
-		Object_Object(vtype), _pStream(pStream) {}
+	Value_Stream() = delete;
+	explicit Value_Stream(Stream *pStream, VType& vtype = VTYPE_Stream) :
+		Value_Object(vtype), _pStream(pStream) {}
 	// Copy constructor/operator
-	Object_Stream(const Object_Stream& src) :
-		Object_Object(src), _pStream(src._pStream->Reference()) {}
-	Object_Stream& operator=(const Object_Stream& src) = delete;
+	Value_Stream(const Value_Stream& src) :
+		Value_Object(src), _pStream(src._pStream->Reference()) {}
+	Value_Stream& operator=(const Value_Stream& src) = delete;
 	// Move constructor/operator
-	Object_Stream(Object_Stream&& src) = delete;
-	Object_Stream& operator=(Object_Stream&& src) noexcept = delete;
+	Value_Stream(Value_Stream&& src) = delete;
+	Value_Stream& operator=(Value_Stream&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Stream() = default;
+	~Value_Stream() = default;
 public:
 	Stream& GetStream() { return *_pStream; }
 	const Stream& GetStream() const { return *_pStream; }
@@ -54,14 +54,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetStream().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetStream().IsEqualTo(dynamic_cast<const Object_Stream*>(pObject)->GetStream());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetStream().IsEqualTo(dynamic_cast<const Value_Stream*>(pValue)->GetStream());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetStream().IsLessThan(dynamic_cast<const Object_Stream*>(pObject)->GetStream()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetStream().IsLessThan(dynamic_cast<const Value_Stream*>(pValue)->GetStream()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetStream().ToString(ss);

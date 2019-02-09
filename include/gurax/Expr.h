@@ -336,14 +336,14 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<Object> _pObject;
+	RefPtr<Object> _pValue;
 	RefPtr<StringReferable> _pStrSource;
 public:
-	Expr_Object(Object* pObject) : Expr_Node(typeInfo), _pObject(pObject) {}
-	Expr_Object(Object* pObject, StringReferable* pStrSource) :
-		Expr_Node(typeInfo), _pObject(pObject), _pStrSource(pStrSource) {}
-	Object* GetObject() { return _pObject.get(); }
-	const Object* GetObject() const { return _pObject.get(); }
+	Expr_Object(Object* pValue) : Expr_Node(typeInfo), _pValue(pValue) {}
+	Expr_Object(Object* pValue, StringReferable* pStrSource) :
+		Expr_Node(typeInfo), _pValue(pValue), _pStrSource(pStrSource) {}
+	Object* GetObject() { return _pValue.get(); }
+	const Object* GetObject() const { return _pValue.get(); }
 	bool HasSource() const { return _pStrSource.get() != nullptr; }
 	const char* GetSource() const { return _pStrSource->GetString(); }
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }

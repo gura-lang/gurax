@@ -119,16 +119,16 @@ bool Parser::ReduceOneToken()
 	int lineNoBtm = pToken->GetLineNoBtm();
 	RefPtr<Expr> pExprGen;
 	if (pToken->IsType(TokenType::Number)) {
-		DBGPARSER(::printf("Reduce: Expr(Object) -> Number\n"));
+		DBGPARSER(::printf("Reduce: Expr(Value) -> Number\n"));
 		pExprGen.reset(
-			new Expr_Object(new Object_Number(
+			new Expr_Value(new Value_Number(
 								String::ToNumber(pToken->GetSegment())), pToken->GetSegmentReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::String)) {
-		DBGPARSER(::printf("Reduce: Expr(Object) -> String\n"));
-		pExprGen.reset(new Expr_Object(new Object_String(pToken->GetSegmentReferable()->Reference())));
+		DBGPARSER(::printf("Reduce: Expr(Value) -> String\n"));
+		pExprGen.reset(new Expr_Value(new Value_String(pToken->GetSegmentReferable()->Reference())));
 	} else if (pToken->IsType(TokenType::Binary)) {
-		DBGPARSER(::printf("Reduce: Expr(Object) -> Binary\n"));
-		pExprGen.reset(new Expr_Object(new Object_Binary(pToken->GetBinaryReferable()->Reference())));
+		DBGPARSER(::printf("Reduce: Expr(Value) -> Binary\n"));
+		pExprGen.reset(new Expr_Value(new Value_Binary(pToken->GetBinaryReferable()->Reference())));
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
 		RefPtr<Template> pTempl(new Template());

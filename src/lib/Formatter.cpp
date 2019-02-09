@@ -64,12 +64,12 @@ bool Formatter::Format(const char* format, Source&& source)
 			} else if (ch == '+') {
 				formatterFlags.plusMode = FormatterFlags::PlusMode::Plus;
 			} else if (ch == '*') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->IsType(VTYPE_Number)) {
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->IsType(VTYPE_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
-				formatterFlags.fieldMinWidth = dynamic_cast<Object_Number*>(pObject.get())->GetInt();
+				formatterFlags.fieldMinWidth = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
 				if (formatterFlags.fieldMinWidth < 0) {
 					formatterFlags.leftAlignFlag = true;
 					formatterFlags.fieldMinWidth = -formatterFlags.fieldMinWidth;
@@ -88,47 +88,47 @@ bool Formatter::Format(const char* format, Source&& source)
 			} else if (ch == 'z') {
 				// just ignore it
 			} else if (ch == 'd' || ch == 'i') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->Format_d(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->Format_d(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'u') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->Format_u(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->Format_u(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'b') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->Format_b(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->Format_b(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'o') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->Format_o(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->Format_o(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'x' || ch == 'X') {
-				RefPtr<Object> pObject(source.FetchInt());
+				RefPtr<Value> pValue(source.FetchInt());
 				formatterFlags.upperCaseFlag = (ch == 'X');
-				if (!pObject->Format_x(*this, formatterFlags)) return false;
+				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'e' || ch == 'E') {
-				RefPtr<Object> pObject(source.FetchDouble());
+				RefPtr<Value> pValue(source.FetchDouble());
 				formatterFlags.upperCaseFlag = (ch == 'E');
-				if (!pObject->Format_e(*this, formatterFlags)) return false;
+				if (!pValue->Format_e(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'f' || ch == 'F') {
-				RefPtr<Object> pObject(source.FetchDouble());
-				if (!pObject->Format_f(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchDouble());
+				if (!pValue->Format_f(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'g' || ch == 'G') {
-				RefPtr<Object> pObject(source.FetchDouble());
+				RefPtr<Value> pValue(source.FetchDouble());
 				formatterFlags.upperCaseFlag = (ch == 'G');
-				if (!pObject->Format_g(*this, formatterFlags)) return false;
+				if (!pValue->Format_g(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 's') {
-				RefPtr<Object> pObject(source.FetchString());
-				if (!pObject->Format_s(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchString());
+				if (!pValue->Format_s(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'c') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->Format_c(*this, formatterFlags)) return false;
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->Format_c(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else {
 				IssueError_WrongFormat();
@@ -157,12 +157,12 @@ bool Formatter::Format(const char* format, Source&& source)
 		}
 		case Stat::PrecisionPre: {
 			if (ch == '*') {
-				RefPtr<Object> pObject(source.FetchInt());
-				if (!pObject->IsType(VTYPE_Number)) {
+				RefPtr<Value> pValue(source.FetchInt());
+				if (!pValue->IsType(VTYPE_Number)) {
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
-				formatterFlags.precision = dynamic_cast<Object_Number*>(pObject.get())->GetInt();
+				formatterFlags.precision = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
 				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::PREC_Default;
 				if (source.IsEnd()) {
 					IssueError_NotEnoughArguments();
@@ -227,17 +227,17 @@ bool Formatter::PutInvalid(const FormatterFlags& formatterFlags)
 }
 
 #if 0
-Object_list* Formatter::FormatIterator(const char* format, IteratorOwner& iterOwner)
+Value_list* Formatter::FormatIterator(const char* format, IteratorOwner& iterOwner)
 {
-	const Object* pObject;
-	Object_list* pObjListResult = result.InitAsList(env);
-	ObjectList objectList;
-	while (iterOwner.Next(objectList)) {
-		String str = FormatObjectList(format, objectList);
-		if (Error::IsIssued()) return Object::nil();
-		pObjListResult->Add(Value(str));
+	const Value* pValue;
+	Value_list* pValueListResult = result.InitAsList(env);
+	ValueList valueList;
+	while (iterOwner.Next(valueList)) {
+		String str = FormatValueList(format, valueList);
+		if (Error::IsIssued()) return Value::nil();
+		pValueListResult->Add(Value(str));
 	}
-	if (Error::IsIssued()) return Object::nil();
+	if (Error::IsIssued()) return Value::nil();
 	return result;
 }
 #endif

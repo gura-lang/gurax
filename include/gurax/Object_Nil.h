@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Nil.h
+// Value_Nil.h
 //==============================================================================
 #ifndef GURAX_OBJECT_NIL_H
 #define GURAX_OBJECT_NIL_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,33 +19,33 @@ public:
 extern VType_Nil VTYPE_Nil;
 
 //------------------------------------------------------------------------------
-// Object_Nil
+// Value_Nil
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Nil : public Object_Object {
+class GURAX_DLLDECLARE Value_Nil : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Nil);
+	Gurax_DeclareReferable(Value_Nil);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Nil");
+	Gurax_MemoryPoolAllocator("Value_Nil");
 public:
 	// Constructor
-	explicit Object_Nil(VType& vtype = VTYPE_Nil) : Object_Object(vtype) {}
+	explicit Value_Nil(VType& vtype = VTYPE_Nil) : Value_Object(vtype) {}
 	// Copy constructor/operator
-	Object_Nil(const Object_Nil& src) : Object_Object(src) {}
-	Object_Nil& operator=(const Object_Nil& src) = delete;
+	Value_Nil(const Value_Nil& src) : Value_Object(src) {}
+	Value_Nil& operator=(const Value_Nil& src) = delete;
 	// Move constructor/operator
-	Object_Nil(Object_Nil&& src) = delete;
-	Object_Nil& operator=(Object_Nil&& src) noexcept = delete;
+	Value_Nil(Value_Nil&& src) = delete;
+	Value_Nil& operator=(Value_Nil&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Object_Nil() = default;
+	virtual ~Value_Nil() = default;
 public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return 0; }
-	virtual bool IsEqualTo(const Object* pObject) const override { return IsSameType(pObject); }
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)? false : GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsEqualTo(const Object* pValue) const override { return IsSameType(pValue); }
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return "nil";

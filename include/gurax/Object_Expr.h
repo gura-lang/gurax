@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Expr.h
+// Value_Expr.h
 //==============================================================================
 #ifndef GURAX_OBJECT_EXPR_H
 #define GURAX_OBJECT_EXPR_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 #include "Expr.h"
 
 namespace Gurax {
@@ -20,31 +20,31 @@ public:
 extern VType_Expr VTYPE_Expr;
 
 //------------------------------------------------------------------------------
-// Object_Expr
+// Value_Expr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Expr : public Object_Object {
+class GURAX_DLLDECLARE Value_Expr : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Expr);
+	Gurax_DeclareReferable(Value_Expr);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Expr");
+	Gurax_MemoryPoolAllocator("Value_Expr");
 private:
 	RefPtr<Expr> _pExpr;
 public:
 	// Constructor
-	Object_Expr() = delete;
-	explicit Object_Expr(Expr *pExpr, VType& vtype = VTYPE_Expr) :
-		Object_Object(vtype), _pExpr(pExpr) {}
+	Value_Expr() = delete;
+	explicit Value_Expr(Expr *pExpr, VType& vtype = VTYPE_Expr) :
+		Value_Object(vtype), _pExpr(pExpr) {}
 	// Copy constructor/operator
-	Object_Expr(const Object_Expr& src) :
-		Object_Object(src), _pExpr(src._pExpr->Reference()) {}
-	Object_Expr& operator=(const Object_Expr& src) = delete;
+	Value_Expr(const Value_Expr& src) :
+		Value_Object(src), _pExpr(src._pExpr->Reference()) {}
+	Value_Expr& operator=(const Value_Expr& src) = delete;
 	// Move constructor/operator
-	Object_Expr(Object_Expr&& src) = delete;
-	Object_Expr& operator=(Object_Expr&& src) noexcept = delete;
+	Value_Expr(Value_Expr&& src) = delete;
+	Value_Expr& operator=(Value_Expr&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Expr() = default;
+	~Value_Expr() = default;
 public:
 	Expr& GetExpr() { return *_pExpr; }
 	const Expr& GetExpr() const { return *_pExpr; }
@@ -54,14 +54,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetExpr().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetExpr().IsEqualTo(dynamic_cast<const Object_Expr*>(pObject)->GetExpr());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetExpr().IsLessThan(dynamic_cast<const Object_Expr*>(pObject)->GetExpr()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetExpr().IsLessThan(dynamic_cast<const Value_Expr*>(pValue)->GetExpr()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetExpr().ToString(ss);

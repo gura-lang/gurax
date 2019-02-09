@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Number.h
+// Value_Number.h
 //==============================================================================
 #ifndef GURAX_OBJECT_NUMBER_H
 #define GURAX_OBJECT_NUMBER_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,32 +19,32 @@ public:
 extern VType_Number VTYPE_Number;
 
 //------------------------------------------------------------------------------
-// Object_Number
+// Value_Number
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Number : public Object_Object {
+class GURAX_DLLDECLARE Value_Number : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Number);
+	Gurax_DeclareReferable(Value_Number);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Number");
+	Gurax_MemoryPoolAllocator("Value_Number");
 private:
 	Double _num;
 public:
 	// Constructor
-	explicit Object_Number(VType& vtype = VTYPE_Number) :
-		Object_Number(0., vtype) {}
-	explicit Object_Number(Double num, VType& vtype = VTYPE_Number) :
-		Object_Object(vtype), _num(num) {}
+	explicit Value_Number(VType& vtype = VTYPE_Number) :
+		Value_Number(0., vtype) {}
+	explicit Value_Number(Double num, VType& vtype = VTYPE_Number) :
+		Value_Object(vtype), _num(num) {}
 	// Copy constructor/operator
-	Object_Number(const Object_Number& src) :
-		Object_Object(src), _num(src._num) {}
-	Object_Number& operator=(const Object_Number& src) = delete;
+	Value_Number(const Value_Number& src) :
+		Value_Object(src), _num(src._num) {}
+	Value_Number& operator=(const Value_Number& src) = delete;
 	// Move constructor/operator
-	Object_Number(Object_Number&& src) = delete;
-	Object_Number& operator=(Object_Number&& src) noexcept = delete;
+	Value_Number(Value_Number&& src) = delete;
+	Value_Number& operator=(Value_Number&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Number() = default;
+	~Value_Number() = default;
 public:
 	size_t GetSizeT() const		{ return static_cast<size_t>(_num); }
 	Bool GetBool() const		{ return static_cast<Bool>(_num); }
@@ -70,13 +70,13 @@ public:
 	// Virtual functions of Object
 	virtual Object* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetSizeT(); }
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) && GetDouble() == dynamic_cast<const Object_Number*>(pObject)->GetDouble();
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) && GetDouble() == dynamic_cast<const Value_Number*>(pValue)->GetDouble();
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetDouble() < dynamic_cast<const Object_Number*>(pObject)->GetDouble() :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetDouble() < dynamic_cast<const Value_Number*>(pValue)->GetDouble() :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return std::to_string(_num);

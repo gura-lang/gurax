@@ -3,8 +3,8 @@
 //=============================================================================
 #ifndef GURAX_FORMATTER_H
 #define GURAX_FORMATTER_H
-#include "Object_Number.h"
-#include "Object_StringPtr.h"
+#include "Value_Number.h"
+#include "Value_StringPtr.h"
 
 namespace Gurax {
 
@@ -58,15 +58,15 @@ public:
 	class Source_ObjectList : public Source {
 	private:
 		const ObjectList& _objectList;
-		ObjectList::const_iterator _ppObject;
+		ObjectList::const_iterator _ppValue;
 	public:
 		Source_ObjectList(const ObjectList& objectList) : _objectList(objectList) {
-			_ppObject = _objectList.begin();
+			_ppValue = _objectList.begin();
 		}
-		virtual bool IsEnd() override { return _ppObject == _objectList.end(); }
-		virtual Object* FetchInt() override { return (*_ppObject++)->Reference(); }
-		virtual Object* FetchDouble() override { return (*_ppObject++)->Reference(); }
-		virtual Object* FetchString() override { return (*_ppObject++)->Reference(); }
+		virtual bool IsEnd() override { return _ppValue == _objectList.end(); }
+		virtual Object* FetchInt() override { return (*_ppValue++)->Reference(); }
+		virtual Object* FetchDouble() override { return (*_ppValue++)->Reference(); }
+		virtual Object* FetchString() override { return (*_ppValue++)->Reference(); }
 	};
 	class Source_va_list : public Source {
 	private:
@@ -80,15 +80,15 @@ public:
 		virtual bool IsEnd() override { return false; }
 		virtual Object* FetchInt() override {
 			Int num = va_arg(_ap, Int);
-			return new Object_Number(num);
+			return new Value_Number(num);
 		}
 		virtual Object* FetchDouble() override {
 			Double num = va_arg(_ap, Double);
-			return new Object_Number(num);
+			return new Value_Number(num);
 		}
 		virtual Object* FetchString() override {
 			char* str = va_arg(_ap, char*);
-			return new Object_StringPtr(str);
+			return new Value_StringPtr(str);
 		}
 	};
 private:

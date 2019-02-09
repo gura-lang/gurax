@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_DateTime.h
+// Value_DateTime.h
 //==============================================================================
 #ifndef GURAX_OBJECT_DATETIME_H
 #define GURAX_OBJECT_DATETIME_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 #include "DateTime.h"
 
 namespace Gurax {
@@ -20,32 +20,32 @@ public:
 extern VType_DateTime VTYPE_DateTime;
 
 //------------------------------------------------------------------------------
-// Object_DateTime
+// Value_DateTime
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_DateTime : public Object_Object {
+class GURAX_DLLDECLARE Value_DateTime : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_DateTime);
+	Gurax_DeclareReferable(Value_DateTime);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_DateTime");
+	Gurax_MemoryPoolAllocator("Value_DateTime");
 private:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor
-	explicit Object_DateTime(VType& vtype = VTYPE_DateTime) :
-		Object_DateTime(new DateTime(), vtype) {}
-	explicit Object_DateTime(DateTime *pDateTime, VType& vtype = VTYPE_DateTime) :
-		Object_Object(vtype), _pDateTime(pDateTime) {}
+	explicit Value_DateTime(VType& vtype = VTYPE_DateTime) :
+		Value_DateTime(new DateTime(), vtype) {}
+	explicit Value_DateTime(DateTime *pDateTime, VType& vtype = VTYPE_DateTime) :
+		Value_Object(vtype), _pDateTime(pDateTime) {}
 	// Copy constructor/operator
-	Object_DateTime(const Object_DateTime& src) :
-		Object_Object(src), _pDateTime(src._pDateTime->Reference()) {}
-	Object_DateTime& operator=(const Object_DateTime& src) = delete;
+	Value_DateTime(const Value_DateTime& src) :
+		Value_Object(src), _pDateTime(src._pDateTime->Reference()) {}
+	Value_DateTime& operator=(const Value_DateTime& src) = delete;
 	// Move constructor/operator
-	Object_DateTime(Object_DateTime&& src) = delete;
-	Object_DateTime& operator=(Object_DateTime&& src) noexcept = delete;
+	Value_DateTime(Value_DateTime&& src) = delete;
+	Value_DateTime& operator=(Value_DateTime&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_DateTime() = default;
+	~Value_DateTime() = default;
 public:
 	DateTime& GetDateTime() { return *_pDateTime; }
 	const DateTime& GetDateTime() const { return *_pDateTime; }
@@ -55,14 +55,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetDateTime().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetDateTime().IsEqualTo(dynamic_cast<const Object_DateTime*>(pObject)->GetDateTime());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetDateTime().IsEqualTo(dynamic_cast<const Value_DateTime*>(pValue)->GetDateTime());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetDateTime().IsLessThan(dynamic_cast<const Object_DateTime*>(pObject)->GetDateTime()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetDateTime().IsLessThan(dynamic_cast<const Value_DateTime*>(pValue)->GetDateTime()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return GetDateTime().ToString(ss);

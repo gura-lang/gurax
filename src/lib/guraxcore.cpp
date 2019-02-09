@@ -12,7 +12,6 @@ void Bootup()
 	Codec::Bootup();
 	DeclCaller::Bootup();
 	Error::Bootup();
-	Object::Bootup();
 	Operators::Bootup();
 	Random::Bootup();
 	String::Bootup();
@@ -20,6 +19,7 @@ void Bootup()
 	Symbol::Bootup();
 	Template::Bootup();
 	Token::Bootup();
+	Value::Bootup();
 }
 
 }

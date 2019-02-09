@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_String.h
+// Value_String.h
 //==============================================================================
 #ifndef GURAX_OBJECT_STRING_H
 #define GURAX_OBJECT_STRING_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,34 +19,34 @@ public:
 extern VType_String VTYPE_String;
 
 //------------------------------------------------------------------------------
-// Object_String
+// Value_String
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_String : public Object_Object {
+class GURAX_DLLDECLARE Value_String : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_String);
+	Gurax_DeclareReferable(Value_String);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_String");
+	Gurax_MemoryPoolAllocator("Value_String");
 private:
 	RefPtr<StringReferable> _pStr;
 public:
 	// Constructor
-	explicit Object_String(VType& vtype = VTYPE_String) :
-		Object_String(new StringReferable(), vtype) {}
-	explicit Object_String(String str, VType& vtype = VTYPE_String) :
-		Object_String(new StringReferable(std::move(str)), vtype) {}
-	explicit Object_String(StringReferable* pStr, VType& vtype = VTYPE_String) :
-		Object_Object(vtype), _pStr(pStr) {}
+	explicit Value_String(VType& vtype = VTYPE_String) :
+		Value_String(new StringReferable(), vtype) {}
+	explicit Value_String(String str, VType& vtype = VTYPE_String) :
+		Value_String(new StringReferable(std::move(str)), vtype) {}
+	explicit Value_String(StringReferable* pStr, VType& vtype = VTYPE_String) :
+		Value_Object(vtype), _pStr(pStr) {}
 	// Copy constructor/operator
-	Object_String(const Object_String& src) :
-		Object_Object(src), _pStr(src._pStr->Reference()) {}
-	Object_String& operator=(const Object_String& src) = delete;
+	Value_String(const Value_String& src) :
+		Value_Object(src), _pStr(src._pStr->Reference()) {}
+	Value_String& operator=(const Value_String& src) = delete;
 	// Move constructor/operator
-	Object_String(Object_String&& src) = delete;
-	Object_String& operator=(Object_String&& src) noexcept = delete;
+	Value_String(Value_String&& src) = delete;
+	Value_String& operator=(Value_String&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_String() = default;
+	~Value_String() = default;
 public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
@@ -56,14 +56,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return String::CalcHash(GetString());
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			String::IsEqualTo(GetString(), dynamic_cast<const Object_String*>(pObject)->GetString());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			String::IsEqualTo(GetString(), dynamic_cast<const Value_String*>(pValue)->GetString());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			String::IsLessThan(GetString(), dynamic_cast<const Object_String*>(pObject)->GetString()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			String::IsLessThan(GetString(), dynamic_cast<const Value_String*>(pValue)->GetString()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return _pStr->GetStringSTL().MakeQuoted(true);

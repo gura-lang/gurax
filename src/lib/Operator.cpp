@@ -98,20 +98,20 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
-Object* Operator::EvalUnary(const Object* pObject) const
+Value* Operator::EvalUnary(const Value* pValue) const
 {
-	if (!pObject) return nullptr;
-	const OpEntry* pOpEntry = LookupEntry(pObject->GetVType());
-	if (pOpEntry) return pOpEntry->EvalUnary(pObject);
+	if (!pValue) return nullptr;
+	const OpEntry* pOpEntry = LookupEntry(pValue->GetVType());
+	if (pOpEntry) return pOpEntry->EvalUnary(pValue);
 	Error::Issue(ErrorType::TypeError, "");
 	return nullptr;
 }
 
-Object* Operator::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
+Value* Operator::EvalBinary(const Value* pValueL, const Value* pValueR) const
 {
-	if (!pObjectL || !pObjectR) return nullptr;
-	const OpEntry* pOpEntry = LookupEntry(pObjectL->GetVType(), pObjectR->GetVType());
-	if (pOpEntry) pOpEntry->EvalBinary(pObjectL, pObjectR);
+	if (!pValueL || !pValueR) return nullptr;
+	const OpEntry* pOpEntry = LookupEntry(pValueL->GetVType(), pValueR->GetVType());
+	if (pOpEntry) pOpEntry->EvalBinary(pValueL, pValueR);
 	Error::Issue(ErrorType::TypeError, "");
 	return nullptr;
 }
@@ -119,14 +119,14 @@ Object* Operator::EvalBinary(const Object* pObjectL, const Object* pObjectR) con
 //------------------------------------------------------------------------------
 // OpEntry
 //------------------------------------------------------------------------------
-Object* OpEntry::EvalUnary(const Object* pObject) const
+Value* OpEntry::EvalUnary(const Value* pValue) const
 {
-	return Object::nil();
+	return Value::nil();
 }
 
-Object* OpEntry::EvalBinary(const Object* pObjectL, const Object* pObjectR) const
+Value* OpEntry::EvalBinary(const Value* pValueL, const Value* pValueR) const
 {
-	return Object::nil();
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------

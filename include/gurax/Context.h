@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Context {
 private:
-	RefPtr<ObjectStack> _pObjectStack;
+	RefPtr<ObjectStack> _pValueStack;
 	RefPtr<Frame> _pFrame;
 	static Context _context;
 public:
@@ -30,10 +30,10 @@ public:
 public:
 	static Context& GetGlobal() { return _context; }
 	static Frame* GetFrame() { return GetGlobal()._pFrame.get(); }
-	static void PushStack(Object* pObject) { GetGlobal().GetObjectStack().Push(pObject); }
+	static void PushStack(Object* pValue) { GetGlobal().GetObjectStack().Push(pValue); }
 	static Object* PopStack() { return GetGlobal().GetObjectStack().Pop(); }
 	static Object* PeekStack(size_t offset) { return GetGlobal().GetObjectStack().Peek(offset); }
-	ObjectStack& GetObjectStack() { return *_pObjectStack; }
+	ObjectStack& GetObjectStack() { return *_pValueStack; }
 };
 
 }

@@ -1,12 +1,12 @@
 //==============================================================================
-// Object_String.cpp
+// Value_String.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Object_String
+// Value_String
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ void VType_String::DoPrepare(Frame* pFrame)
 	pFrame->AssignVType(*this);
 }
 
-bool Object_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
+bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }

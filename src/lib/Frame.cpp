@@ -15,17 +15,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Source");
 protected:
-	RefPtr<ObjectMap> _pObjectMap;
+	RefPtr<ValueMap> _pValueMap;
 public:
 	// Constructor
-	Frame_Source() : Frame(Type::Source), _pObjectMap(new ObjectMap()) {}
+	Frame_Source() : Frame(Type::Source), _pValueMap(new ValueMap()) {}
 public:
 	// Virtual functions of Frame
-	virtual void AssignObject(const Symbol* pSymbol, Object* pObject) override {
-		_pObjectMap->Assign(pSymbol, pObject);
+	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override {
+		_pValueMap->Assign(pSymbol, pValue);
 	}
-	virtual Object* LookupObject(const Symbol* pSymbol) const override {
-		return _pObjectMap->Lookup(pSymbol);
+	virtual Value* LookupValue(const Symbol* pSymbol) const override {
+		return _pValueMap->Lookup(pSymbol);
 	}
 };
 
@@ -63,27 +63,27 @@ Frame* Frame::SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail)
 	for (auto ppSymbol = symbolList.begin(); ; ) {
 		const Symbol* pSymbol = *ppSymbol++;
 		if (ppSymbol + nTail == symbolList.end()) break;
-		Object* pObject = pFrame->LookupObject(pSymbol);
-		if (!pObject) return nullptr;
-		pFrame = pObject->ProvideFrame();
+		Value* pValue = pFrame->LookupValue(pSymbol);
+		if (!pValue) return nullptr;
+		pFrame = pValue->ProvideFrame();
 		if (!pFrame) return nullptr;
 	}
 	return pFrame;
 }
 
-bool Frame::AssignObject(const DottedSymbol& dottedSymbol, Object* pObject)
+bool Frame::AssignValue(const DottedSymbol& dottedSymbol, Value* pValue)
 {
 	Frame* pFrame = SeekTarget(dottedSymbol);
 	if (!pFrame) return false;
-	pFrame->AssignObject(dottedSymbol.GetSymbolLast(), pObject);
+	pFrame->AssignValue(dottedSymbol.GetSymbolLast(), pValue);
 	return true;
 }
 
-Object* Frame::LookupObject(const DottedSymbol& dottedSymbol) const
+Value* Frame::LookupValue(const DottedSymbol& dottedSymbol) const
 {
 	const Frame* pFrame = const_cast<Frame*>(this)->SeekTarget(dottedSymbol);
 	if (!pFrame) return nullptr;
-	return pFrame->LookupObject(dottedSymbol.GetSymbolLast());
+	return pFrame->LookupValue(dottedSymbol.GetSymbolLast());
 }
 
 bool Frame::AssignModule(Module* pModule)
@@ -91,36 +91,36 @@ bool Frame::AssignModule(Module* pModule)
 	const DottedSymbol& dottedSymbol = pModule->GetDottedSymbol();
 	Frame* pFrame = SeekTarget(dottedSymbol, 1);
 	if (pFrame == nullptr) return false;
-	pFrame->AssignObject(dottedSymbol.GetSymbolLast(), new Object_Module(pModule));
+	pFrame->AssignValue(dottedSymbol.GetSymbolLast(), new Value_Module(pModule));
 	return true;
 }
 
 void Frame::AssignVType(VType& vtype)
 {
 	vtype.SetFrameParent(this);
-	AssignObject(vtype.GetSymbol(), new Object_VType(vtype));
+	AssignValue(vtype.GetSymbol(), new Value_VType(vtype));
 }
 
 void Frame::AssignFunction(Function* pFunction)
 {
 	pFunction->SetFrameParent(this);
-	AssignObject(pFunction->GetSymbol(), new Object_Function(pFunction));
+	AssignValue(pFunction->GetSymbol(), new Value_Function(pFunction));
 }
 
 //------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
-void Frame_Branch::AssignObject(const Symbol* pSymbol, Object* pObject)
+void Frame_Branch::AssignValue(const Symbol* pSymbol, Value* pValue)
 {
-	if (_pFrameRight) _pFrameRight->AssignObject(pSymbol, pObject);
+	if (_pFrameRight) _pFrameRight->AssignValue(pSymbol, pValue);
 }
 
-Object* Frame_Branch::LookupObject(const Symbol* pSymbol) const
+Value* Frame_Branch::LookupValue(const Symbol* pSymbol) const
 {
-	Object* pObject = _pFrameRight? _pFrameRight->LookupObject(pSymbol) : nullptr;
-	if (pObject) return pObject;
-	pObject = _pFrameLeft? _pFrameLeft->LookupObject(pSymbol) : nullptr;
-	return pObject;
+	Value* pValue = _pFrameRight? _pFrameRight->LookupValue(pSymbol) : nullptr;
+	if (pValue) return pValue;
+	pValue = _pFrameLeft? _pFrameLeft->LookupValue(pSymbol) : nullptr;
+	return pValue;
 }
 
 }

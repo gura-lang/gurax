@@ -1,9 +1,9 @@
 //==============================================================================
-// Object_Binary.h
+// Value_Binary.h
 //==============================================================================
 #ifndef GURAX_OBJECT_BINARY_H
 #define GURAX_OBJECT_BINARY_H
-#include "Object_Object.h"
+#include "Value_Object.h"
 
 namespace Gurax {
 
@@ -19,33 +19,33 @@ public:
 extern VType_Binary VTYPE_Binary;
 
 //------------------------------------------------------------------------------
-// Object_Binary
+// Value_Binary
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Object_Binary : public Object_Object {
+class GURAX_DLLDECLARE Value_Binary : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Object_Binary);
+	Gurax_DeclareReferable(Value_Binary);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Object_Binary");
+	Gurax_MemoryPoolAllocator("Value_Binary");
 private:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
-	explicit Object_Binary(VType& vtype = VTYPE_Binary) :
-		Object_Binary(new BinaryReferable(), vtype) {}
-	explicit Object_Binary(BinaryReferable* pBinary, VType& vtype = VTYPE_Binary) :
-		Object_Object(vtype), _pBinary(pBinary) {}
-	explicit Object_Binary(Binary str, VType& vtype = VTYPE_Binary) :
-		Object_Binary(new BinaryReferable(std::move(str)), vtype) {}
+	explicit Value_Binary(VType& vtype = VTYPE_Binary) :
+		Value_Binary(new BinaryReferable(), vtype) {}
+	explicit Value_Binary(BinaryReferable* pBinary, VType& vtype = VTYPE_Binary) :
+		Value_Object(vtype), _pBinary(pBinary) {}
+	explicit Value_Binary(Binary str, VType& vtype = VTYPE_Binary) :
+		Value_Binary(new BinaryReferable(std::move(str)), vtype) {}
 	// Copy constructor/operator
-	Object_Binary(const Object_Binary& src) = delete;
-	Object_Binary& operator=(const Object_Binary& src) = delete;
+	Value_Binary(const Value_Binary& src) = delete;
+	Value_Binary& operator=(const Value_Binary& src) = delete;
 	// Move constructor/operator
-	Object_Binary(Object_Binary&& src) = delete;
-	Object_Binary& operator=(Object_Binary&& src) noexcept = delete;
+	Value_Binary(Value_Binary&& src) = delete;
+	Value_Binary& operator=(Value_Binary&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Object_Binary() = default;
+	~Value_Binary() = default;
 public:
 	Binary& GetBinary() { return _pBinary->GetBinary(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
@@ -55,14 +55,14 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetBinary().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pObject) const override {
-		return IsSameType(pObject) &&
-			GetBinary().IsEqualTo(dynamic_cast<const Object_Binary*>(pObject)->GetBinary());
+	virtual bool IsEqualTo(const Object* pValue) const override {
+		return IsSameType(pValue) &&
+			GetBinary().IsEqualTo(dynamic_cast<const Value_Binary*>(pValue)->GetBinary());
 	}
-	virtual bool IsLessThan(const Object* pObject) const override {
-		return IsSameType(pObject)?
-			GetBinary().IsLessThan(dynamic_cast<const Object_Binary*>(pObject)->GetBinary()) :
-			GetVType().IsLessThan(pObject->GetVType());
+	virtual bool IsLessThan(const Object* pValue) const override {
+		return IsSameType(pValue)?
+			GetBinary().IsLessThan(dynamic_cast<const Value_Binary*>(pValue)->GetBinary()) :
+			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {
 		return String("b").append(_pBinary->GetBinary().MakeQuoted(true));
