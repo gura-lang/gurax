@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Binary.h
 //==============================================================================
-#ifndef GURAX_OBJECT_BINARY_H
-#define GURAX_OBJECT_BINARY_H
+#ifndef GURAX_VALUE_BINARY_H
+#define GURAX_VALUE_BINARY_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -50,16 +50,16 @@ public:
 	Binary& GetBinary() { return _pBinary->GetBinary(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetBinary().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetBinary().IsEqualTo(dynamic_cast<const Value_Binary*>(pValue)->GetBinary());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetBinary().IsLessThan(dynamic_cast<const Value_Binary*>(pValue)->GetBinary()) :
 			GetVType().IsLessThan(pValue->GetVType());

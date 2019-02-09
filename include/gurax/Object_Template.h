@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Template.h
 //==============================================================================
-#ifndef GURAX_OBJECT_TEMPLATE_H
-#define GURAX_OBJECT_TEMPLATE_H
+#ifndef GURAX_VALUE_TEMPLATE_H
+#define GURAX_VALUE_TEMPLATE_H
 #include "Value_Object.h"
 #include "Template.h"
 
@@ -49,16 +49,16 @@ public:
 	Template& GetTemplate() { return *_pTempl; }
 	const Template& GetTemplate() const { return *_pTempl; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetTemplate().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetTemplate().IsEqualTo(dynamic_cast<const Value_Template*>(pValue)->GetTemplate());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetTemplate().IsLessThan(dynamic_cast<const Value_Template*>(pValue)->GetTemplate()) :
 			GetVType().IsLessThan(pValue->GetVType());

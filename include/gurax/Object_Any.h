@@ -1,9 +1,9 @@
 //==============================================================================
 // Value_Any.h
 //==============================================================================
-#ifndef GURAX_OBJECT_ANY_H
-#define GURAX_OBJECT_ANY_H
-#include "Object.h"
+#ifndef GURAX_VALUE_ANY_H
+#define GURAX_VALUE_ANY_H
+#include "Value.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern VType_Any VTYPE_Any;
 //------------------------------------------------------------------------------
 // Value_Any
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Any : public Object {
+class GURAX_DLLDECLARE Value_Any : public Value {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Any);
@@ -29,7 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Value_Any");
 public:
 	// Constructor
-	Value_Any() : Object(VTYPE_Any) {}
+	Value_Any() : Value(VTYPE_Any) {}
 	// Copy constructor/operator
 	Value_Any(const Value_Any& src) = delete;
 	Value_Any& operator=(const Value_Any& src) = delete;
@@ -40,11 +40,11 @@ protected:
 	// Destructor
 	virtual ~Value_Any() = default;
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return 0; }
-	virtual bool IsEqualTo(const Object* pValue) const override { return IsSameType(pValue); }
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override { return IsSameType(pValue); }
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

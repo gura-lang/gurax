@@ -9,7 +9,7 @@ namespace Gurax {
 
 class Function;
 class VType;
-class Object;
+class Value;
 class Module;
 class Frame_Branch;
 
@@ -44,15 +44,15 @@ public:
 	Frame* Expand() const;
 	static Frame* Shrink(Frame* pFrame);
 	Frame* SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail = 0);
-	bool AssignObject(const DottedSymbol& dottedSymbol, Object* pValue);
-	Object* LookupValue(const DottedSymbol& dottedSymbol) const;
+	bool AssignValue(const DottedSymbol& dottedSymbol, Value* pValue);
+	Value* LookupValue(const DottedSymbol& dottedSymbol) const;
 	bool AssignModule(Module* pModule);
 	void AssignVType(VType& vtype);
 	void AssignFunction(Function* pFunction);
 public:
 	// Virtual functions
-	virtual void AssignObject(const Symbol* pSymbol, Object* pValue) = 0;
-	virtual Object* LookupValue(const Symbol* pSymbol) const = 0;
+	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual Value* LookupValue(const Symbol* pSymbol) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -78,8 +78,8 @@ public:
 	const Frame* GetRight() const { return _pFrameRight.get(); }
 public:
 	// Virtual functions of Frame
-	virtual void AssignObject(const Symbol* pSymbol, Object* pValue) override;
-	virtual Object* LookupValue(const Symbol* pSymbol) const override;
+	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
 }

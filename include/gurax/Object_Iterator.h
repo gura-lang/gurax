@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Iterator.h
 //==============================================================================
-#ifndef GURAX_OBJECT_ITERATOR_H
-#define GURAX_OBJECT_ITERATOR_H
+#ifndef GURAX_VALUE_ITERATOR_H
+#define GURAX_VALUE_ITERATOR_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -49,15 +49,15 @@ public:
 	const Iterator& GetIterator() const { return *_pIterator; }
 public:
 	// Virtual iterators of Object
-	virtual Object* Clone() const override { return Reference(); }
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetIterator().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetIterator().IsEqualTo(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetIterator().IsLessThan(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator()) :
 			GetVType().IsLessThan(pValue->GetVType());

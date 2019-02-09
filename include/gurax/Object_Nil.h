@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Nil.h
 //==============================================================================
-#ifndef GURAX_OBJECT_NIL_H
-#define GURAX_OBJECT_NIL_H
+#ifndef GURAX_VALUE_NIL_H
+#define GURAX_VALUE_NIL_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -40,11 +40,11 @@ protected:
 	// Destructor
 	virtual ~Value_Nil() = default;
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return 0; }
-	virtual bool IsEqualTo(const Object* pValue) const override { return IsSameType(pValue); }
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override { return IsSameType(pValue); }
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

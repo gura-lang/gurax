@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Stream.h
 //==============================================================================
-#ifndef GURAX_OBJECT_STREAM_H
-#define GURAX_OBJECT_STREAM_H
+#ifndef GURAX_VALUE_STREAM_H
+#define GURAX_VALUE_STREAM_H
 #include "Value_Object.h"
 #include "Stream.h"
 
@@ -49,16 +49,16 @@ public:
 	Stream& GetStream() { return *_pStream; }
 	const Stream& GetStream() const { return *_pStream; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetStream().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetStream().IsEqualTo(dynamic_cast<const Value_Stream*>(pValue)->GetStream());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetStream().IsLessThan(dynamic_cast<const Value_Stream*>(pValue)->GetStream()) :
 			GetVType().IsLessThan(pValue->GetVType());

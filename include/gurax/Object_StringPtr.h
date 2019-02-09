@@ -2,8 +2,8 @@
 // Value_StringPtr.h
 // This object type is designed to be used with Formatter.
 //==============================================================================
-#ifndef GURAX_OBJECT_STRINGPTR_H
-#define GURAX_OBJECT_STRINGPTR_H
+#ifndef GURAX_VALUE_STRINGPTR_H
+#define GURAX_VALUE_STRINGPTR_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -49,16 +49,16 @@ protected:
 public:
 	const char* GetString() const { return _str; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return String::CalcHash(GetString());
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			String::IsEqualTo(GetString(), dynamic_cast<const Value_StringPtr*>(pValue)->GetString());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			String::IsLessThan(GetString(), dynamic_cast<const Value_StringPtr*>(pValue)->GetString()) :
 			GetVType().IsLessThan(pValue->GetVType());

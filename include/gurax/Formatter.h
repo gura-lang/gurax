@@ -51,22 +51,22 @@ public:
 	class Source {
 	public:
 		virtual bool IsEnd() = 0;
-		virtual Object* FetchInt() = 0;
-		virtual Object* FetchDouble() = 0;
-		virtual Object* FetchString() = 0;
+		virtual Value* FetchInt() = 0;
+		virtual Value* FetchDouble() = 0;
+		virtual Value* FetchString() = 0;
 	};
-	class Source_ObjectList : public Source {
+	class Source_ValueList : public Source {
 	private:
-		const ObjectList& _objectList;
-		ObjectList::const_iterator _ppValue;
+		const ValueList& _valueList;
+		ValueList::const_iterator _ppValue;
 	public:
-		Source_ObjectList(const ObjectList& objectList) : _objectList(objectList) {
-			_ppValue = _objectList.begin();
+		Source_ValueList(const ValueList& valueList) : _valueList(valueList) {
+			_ppValue = _valueList.begin();
 		}
-		virtual bool IsEnd() override { return _ppValue == _objectList.end(); }
-		virtual Object* FetchInt() override { return (*_ppValue++)->Reference(); }
-		virtual Object* FetchDouble() override { return (*_ppValue++)->Reference(); }
-		virtual Object* FetchString() override { return (*_ppValue++)->Reference(); }
+		virtual bool IsEnd() override { return _ppValue == _valueList.end(); }
+		virtual Value* FetchInt() override { return (*_ppValue++)->Reference(); }
+		virtual Value* FetchDouble() override { return (*_ppValue++)->Reference(); }
+		virtual Value* FetchString() override { return (*_ppValue++)->Reference(); }
 	};
 	class Source_va_list : public Source {
 	private:
@@ -78,15 +78,15 @@ public:
 		Source_va_list(va_list ap) { _ap = ap; }
 #endif
 		virtual bool IsEnd() override { return false; }
-		virtual Object* FetchInt() override {
+		virtual Value* FetchInt() override {
 			Int num = va_arg(_ap, Int);
 			return new Value_Number(num);
 		}
-		virtual Object* FetchDouble() override {
+		virtual Value* FetchDouble() override {
 			Double num = va_arg(_ap, Double);
 			return new Value_Number(num);
 		}
-		virtual Object* FetchString() override {
+		virtual Value* FetchString() override {
 			char* str = va_arg(_ap, char*);
 			return new Value_StringPtr(str);
 		}
@@ -96,8 +96,8 @@ private:
 	const char* _lineSep;
 public:
 	Formatter(bool nilVisibleFlag = true) : _nilVisibleFlag(nilVisibleFlag), _lineSep("\n") {}
-	bool Format(const char* format, const ObjectList& objectList) {
-		return Format(format, Source_ObjectList(objectList));
+	bool Format(const char* format, const ValueList& valueList) {
+		return Format(format, Source_ValueList(valueList));
 	}
 	bool Format(const char* format, va_list ap) {
 		return Format(format, Source_va_list(ap));
@@ -106,7 +106,7 @@ public:
 	bool PutString(const char* p);
 	bool PutAlignedString(const FormatterFlags& formatterFlags, const char* p, int cntMax = -1);
 	bool PutInvalid(const FormatterFlags& formatterFlags);
-	//static const Object* FormatIterator(const char* format, IteratorOwner& iterOwner);
+	//static const Value* FormatIterator(const char* format, IteratorOwner& iterOwner);
 private:
 	static char* FillZeroDigit(char* dstp, char* dstpEnd, int cnt);
 	static char* CopyDigits(char* dstp, char* dstpEnd, const char* srcp);

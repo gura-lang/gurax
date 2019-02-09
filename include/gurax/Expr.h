@@ -5,9 +5,9 @@
 #define GURAX_EXPR_H
 #include "Attribute.h"
 #include "DeclCaller.h"
-#include "Object.h"
 #include "Operator.h"
 #include "Template.h"
+#include "Value.h"
 
 namespace Gurax {
 
@@ -50,7 +50,7 @@ inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
 //------------------------------------------------------------------------------
 // Expr
 // [class hierarchy under Expr]
-// Expr <-+- Expr_Node <------+- Expr_Object
+// Expr <-+- Expr_Node <------+- Expr_Value
 //        |                   +- Expr_Identifier
 //        |                   +- Expr_Suffixed
 //        |                   `- Expr_Embedded
@@ -327,23 +327,23 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Expr_Object : Expr_Node
+// Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Object : public Expr_Node {
+class GURAX_DLLDECLARE Expr_Value : public Expr_Node {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Expr_Object);
+	Gurax_DeclareReferable(Expr_Value);
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<Object> _pValue;
+	RefPtr<Value> _pValue;
 	RefPtr<StringReferable> _pStrSource;
 public:
-	Expr_Object(Object* pValue) : Expr_Node(typeInfo), _pValue(pValue) {}
-	Expr_Object(Object* pValue, StringReferable* pStrSource) :
+	Expr_Value(Value* pValue) : Expr_Node(typeInfo), _pValue(pValue) {}
+	Expr_Value(Value* pValue, StringReferable* pStrSource) :
 		Expr_Node(typeInfo), _pValue(pValue), _pStrSource(pStrSource) {}
-	Object* GetObject() { return _pValue.get(); }
-	const Object* GetObject() const { return _pValue.get(); }
+	Value* GetValue() { return _pValue.get(); }
+	const Value* GetValue() const { return _pValue.get(); }
 	bool HasSource() const { return _pStrSource.get() != nullptr; }
 	const char* GetSource() const { return _pStrSource->GetString(); }
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }

@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Attribute.h
 //==============================================================================
-#ifndef GURAX_OBJECT_ATTRIBUTE_H
-#define GURAX_OBJECT_ATTRIBUTE_H
+#ifndef GURAX_VALUE_ATTRIBUTE_H
+#define GURAX_VALUE_ATTRIBUTE_H
 #include "Value_Object.h"
 #include "Attribute.h"
 
@@ -48,16 +48,16 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetAttr().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetAttr().IsEqualTo(dynamic_cast<const Value_Attribute*>(pValue)->GetAttr());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetAttr().IsLessThan(dynamic_cast<const Value_Attribute*>(pValue)->GetAttr()) :
 			GetVType().IsLessThan(pValue->GetVType());

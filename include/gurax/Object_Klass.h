@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_VType.h
 //==============================================================================
-#ifndef GURAX_OBJECT_KLASS_H
-#define GURAX_OBJECT_KLASS_H
+#ifndef GURAX_VALUE_KLASS_H
+#define GURAX_VALUE_KLASS_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -50,15 +50,15 @@ public:
 public:
 	// Virtual vtypes of Object
 	virtual Frame* ProvideFrame() override { return &GetVTypeThis().GetFrame(); }
-	virtual Object* Clone() const override { return Reference(); }
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetVTypeThis().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetVTypeThis().IsEqualTo(dynamic_cast<const Value_VType*>(pValue)->GetVTypeThis());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetVTypeThis().IsLessThan(dynamic_cast<const Value_VType*>(pValue)->GetVTypeThis()) :
 			GetVType().IsLessThan(pValue->GetVType());

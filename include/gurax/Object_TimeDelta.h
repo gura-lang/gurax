@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_TimeDelta.h
 //==============================================================================
-#ifndef GURAX_OBJECT_TIMEDELTA_H
-#define GURAX_OBJECT_TIMEDELTA_H
+#ifndef GURAX_VALUE_TIMEDELTA_H
+#define GURAX_VALUE_TIMEDELTA_H
 #include "Value_Object.h"
 #include "TimeDelta.h"
 
@@ -50,15 +50,15 @@ public:
 	TimeDelta& GetTimeDelta() { return *_pTimeDelta; }
 	const TimeDelta& GetTimeDelta() const { return *_pTimeDelta; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetTimeDelta().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return GetTimeDelta().IsEqualTo(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetTimeDelta().IsLessThan(dynamic_cast<const Value_TimeDelta*>(pValue)->GetTimeDelta()) :
 			GetVType().IsLessThan(pValue->GetVType());

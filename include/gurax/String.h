@@ -8,7 +8,7 @@
 namespace Gurax {
 
 class StringList;
-class ObjectList;
+class ValueList;
 
 //------------------------------------------------------------------------------
 // String
@@ -138,7 +138,7 @@ public:
 	String& AppendUTF32(UInt32 codeUTF32);
 	String& PrintfV(const char* format, va_list ap);
 	String& Printf(const char* format, ...);
-	String& PrintFmt(const char* format, const ObjectList& objectList);
+	String& PrintFmt(const char* format, const ValueList& valueList);
 public:
 	String MakeQuoted(bool surroundFlag = false) const { return MakeQuoted(c_str(), surroundFlag); }
 	static String MakeQuoted(const char* str, bool surroundFlag = true);

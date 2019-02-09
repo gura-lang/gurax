@@ -3,8 +3,8 @@
 //==============================================================================
 #ifndef GURAX_CONTEXT_H
 #define GURAX_CONTEXT_H
-#include "Object.h"
 #include "Frame.h"
+#include "Value.h"
 
 namespace Gurax {
 
@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Context {
 private:
-	RefPtr<ObjectStack> _pValueStack;
+	RefPtr<ValueStack> _pValueStack;
 	RefPtr<Frame> _pFrame;
 	static Context _context;
 public:
@@ -30,10 +30,10 @@ public:
 public:
 	static Context& GetGlobal() { return _context; }
 	static Frame* GetFrame() { return GetGlobal()._pFrame.get(); }
-	static void PushStack(Object* pValue) { GetGlobal().GetObjectStack().Push(pValue); }
-	static Object* PopStack() { return GetGlobal().GetObjectStack().Pop(); }
-	static Object* PeekStack(size_t offset) { return GetGlobal().GetObjectStack().Peek(offset); }
-	ObjectStack& GetObjectStack() { return *_pValueStack; }
+	static void PushStack(Value* pValue) { GetGlobal().GetValueStack().Push(pValue); }
+	static Value* PopStack() { return GetGlobal().GetValueStack().Pop(); }
+	static Value* PeekStack(size_t offset) { return GetGlobal().GetValueStack().Peek(offset); }
+	ValueStack& GetValueStack() { return *_pValueStack; }
 };
 
 }

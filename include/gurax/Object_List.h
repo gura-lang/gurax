@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_List.h
 //==============================================================================
-#ifndef GURAX_OBJECT_LIST_H
-#define GURAX_OBJECT_LIST_H
+#ifndef GURAX_VALUE_LIST_H
+#define GURAX_VALUE_LIST_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -50,16 +50,16 @@ public:
 	const ObjectTypedOwner& GetObjectTypedOwner() const { return *_pValueTypedOwner; }
 	const ObjectOwner& GetObjectOwner() const { return _pValueTypedOwner->GetObjectOwner(); }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return new Value_List(*this); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return new Value_List(*this); }
 	virtual size_t DoCalcHash() const override {
 		return GetObjectOwner().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetObjectOwner().IsEqualTo(dynamic_cast<const Value_List*>(pValue)->GetObjectOwner());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetObjectOwner().IsLessThan(dynamic_cast<const Value_List*>(pValue)->GetObjectOwner()) :
 			GetVType().IsLessThan(pValue->GetVType());

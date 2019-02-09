@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Module.h
 //==============================================================================
-#ifndef GURAX_OBJECT_MODULE_H
-#define GURAX_OBJECT_MODULE_H
+#ifndef GURAX_VALUE_MODULE_H
+#define GURAX_VALUE_MODULE_H
 #include "Value_Object.h"
 #include "Module.h"
 
@@ -49,17 +49,17 @@ public:
 	Module& GetModule() { return *_pModule; }
 	const Module& GetModule() const { return *_pModule; }
 public:
-	// Virtual functions of Object
+	// Virtual functions of Value
 	virtual Frame* ProvideFrame() override { return &GetModule().GetFrame(); }
-	virtual Object* Clone() const override { return Reference(); }
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetModule().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetModule().IsEqualTo(dynamic_cast<const Value_Module*>(pValue)->GetModule());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetModule().IsLessThan(dynamic_cast<const Value_Module*>(pValue)->GetModule()) :
 			GetVType().IsLessThan(pValue->GetVType());

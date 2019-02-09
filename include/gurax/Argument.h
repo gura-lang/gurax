@@ -4,7 +4,7 @@
 #ifndef GURAX_ARGUMENT_H
 #define GURAX_ARGUMENT_H
 #include "Attribute.h"
-#include "Object.h"
+#include "Value.h"
 
 namespace Gurax {
 

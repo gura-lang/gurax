@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_DateTime.h
 //==============================================================================
-#ifndef GURAX_OBJECT_DATETIME_H
-#define GURAX_OBJECT_DATETIME_H
+#ifndef GURAX_VALUE_DATETIME_H
+#define GURAX_VALUE_DATETIME_H
 #include "Value_Object.h"
 #include "DateTime.h"
 
@@ -50,16 +50,16 @@ public:
 	DateTime& GetDateTime() { return *_pDateTime; }
 	const DateTime& GetDateTime() const { return *_pDateTime; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetDateTime().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetDateTime().IsEqualTo(dynamic_cast<const Value_DateTime*>(pValue)->GetDateTime());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetDateTime().IsLessThan(dynamic_cast<const Value_DateTime*>(pValue)->GetDateTime()) :
 			GetVType().IsLessThan(pValue->GetVType());

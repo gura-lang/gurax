@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Dict.h
 //==============================================================================
-#ifndef GURAX_OBJECT_DICT_H
-#define GURAX_OBJECT_DICT_H
+#ifndef GURAX_VALUE_DICT_H
+#define GURAX_VALUE_DICT_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -49,14 +49,14 @@ public:
 	ObjectDict& GetObjectDict() { return *_pValueDict; }
 	const ObjectDict& GetObjectDict() const { return *_pValueDict; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return new Value_Dict(*this); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return new Value_Dict(*this); }
 	virtual size_t DoCalcHash() const override { return GetObjectDict().CalcHash(); }
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetObjectDict().IsEqualTo(dynamic_cast<const Value_Dict*>(pValue)->GetObjectDict());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetObjectDict().IsLessThan(dynamic_cast<const Value_Dict*>(pValue)->GetObjectDict()) :
 			GetVType().IsLessThan(pValue->GetVType());

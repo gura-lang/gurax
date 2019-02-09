@@ -70,7 +70,7 @@ public:
 	Stream& Println(const char* str);
 	Stream& PrintfV(const char* format, va_list ap);
 	Stream& Printf(const char* format, ...);
-	Stream& PrintFmt(const char* format, const ObjectList& objectList);
+	Stream& PrintFmt(const char* format, const ValueList& valueList);
 	bool ReadLine(String& str, bool includeEOLFlag);
 	bool ReadLines(StringList& strList, bool includeEOLFlag);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);

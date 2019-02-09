@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_String.h
 //==============================================================================
-#ifndef GURAX_OBJECT_STRING_H
-#define GURAX_OBJECT_STRING_H
+#ifndef GURAX_VALUE_STRING_H
+#define GURAX_VALUE_STRING_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -51,16 +51,16 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return String::CalcHash(GetString());
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			String::IsEqualTo(GetString(), dynamic_cast<const Value_String*>(pValue)->GetString());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			String::IsLessThan(GetString(), dynamic_cast<const Value_String*>(pValue)->GetString()) :
 			GetVType().IsLessThan(pValue->GetVType());

@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Expr.h
 //==============================================================================
-#ifndef GURAX_OBJECT_EXPR_H
-#define GURAX_OBJECT_EXPR_H
+#ifndef GURAX_VALUE_EXPR_H
+#define GURAX_VALUE_EXPR_H
 #include "Value_Object.h"
 #include "Expr.h"
 
@@ -49,16 +49,16 @@ public:
 	Expr& GetExpr() { return *_pExpr; }
 	const Expr& GetExpr() const { return *_pExpr; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetExpr().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetExpr().IsLessThan(dynamic_cast<const Value_Expr*>(pValue)->GetExpr()) :
 			GetVType().IsLessThan(pValue->GetVType());

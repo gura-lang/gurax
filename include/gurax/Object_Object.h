@@ -1,9 +1,9 @@
 //==============================================================================
 // Value_Object.h
 //==============================================================================
-#ifndef GURAX_OBJECT_OBJECT_H
-#define GURAX_OBJECT_OBJECT_H
-#include "Object.h"
+#ifndef GURAX_VALUE_VALUE_H
+#define GURAX_VALUE_VALUE_H
+#include "Value.h"
 
 namespace Gurax {
 
@@ -21,7 +21,7 @@ extern VType_Object VTYPE_Object;
 //------------------------------------------------------------------------------
 // Value_Object
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Object : public Object {
+class GURAX_DLLDECLARE Value_Object : public Value {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Object);
@@ -30,9 +30,9 @@ public:
 public:
 	// Constructor
 	Value_Object() : Value_Object(VTYPE_Object) {}
-	explicit Value_Object(VType& vtype) : Object(vtype) {}
+	explicit Value_Object(VType& vtype) : Value(vtype) {}
 	// Copy constructor/operator
-	Value_Object(const Value_Object& src) : Object(src) {}
+	Value_Object(const Value_Object& src) : Value(src) {}
 	Value_Object& operator=(const Value_Object& src) = delete;
 	// Move constructor/operator
 	Value_Object(Value_Object&& src) = delete;
@@ -41,11 +41,11 @@ protected:
 	// Destructor
 	virtual ~Value_Object() = default;
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return 0; }
-	virtual bool IsEqualTo(const Object* pValue) const override { return IsSameType(pValue); }
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override { return IsSameType(pValue); }
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToString(const StringStyle& ss) const override {

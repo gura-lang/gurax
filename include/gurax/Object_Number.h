@@ -1,8 +1,8 @@
 //==============================================================================
 // Value_Number.h
 //==============================================================================
-#ifndef GURAX_OBJECT_NUMBER_H
-#define GURAX_OBJECT_NUMBER_H
+#ifndef GURAX_VALUE_NUMBER_H
+#define GURAX_VALUE_NUMBER_H
 #include "Value_Object.h"
 
 namespace Gurax {
@@ -67,13 +67,13 @@ public:
 	Float GetFloat() const		{ return static_cast<Float>(_num); }
 	Double GetDouble() const	{ return _num; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetSizeT(); }
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) && GetDouble() == dynamic_cast<const Value_Number*>(pValue)->GetDouble();
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetDouble() < dynamic_cast<const Value_Number*>(pValue)->GetDouble() :
 			GetVType().IsLessThan(pValue->GetVType());

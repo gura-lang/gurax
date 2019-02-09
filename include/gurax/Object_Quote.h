@@ -1,9 +1,9 @@
 //==============================================================================
 // Value_Quote.h
 //==============================================================================
-#ifndef GURAX_OBJECT_QUOTE_H
-#define GURAX_OBJECT_QUOTE_H
-#include "Object.h"
+#ifndef GURAX_VALUE_QUOTE_H
+#define GURAX_VALUE_QUOTE_H
+#include "Value.h"
 #include "Expr.h"
 
 namespace Gurax {
@@ -22,7 +22,7 @@ extern VType_Quote VTYPE_Quote;
 //------------------------------------------------------------------------------
 // Value_Quote
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Quote : public Object {
+class GURAX_DLLDECLARE Value_Quote : public Value {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Quote);
@@ -33,9 +33,9 @@ private:
 public:
 	// Constructor
 	Value_Quote() = delete;
-	explicit Value_Quote(Expr* pExpr) : Object(VTYPE_Quote), _pExpr(pExpr) {}
+	explicit Value_Quote(Expr* pExpr) : Value(VTYPE_Quote), _pExpr(pExpr) {}
 	// Copy constructor/operator
-	Value_Quote(const Value_Quote& src) : Object(src), _pExpr(src._pExpr->Reference()) {}
+	Value_Quote(const Value_Quote& src) : Value(src), _pExpr(src._pExpr->Reference()) {}
 	Value_Quote& operator=(const Value_Quote& src) = delete;
 	// Move constructor/operator
 	Value_Quote(Value_Quote&& src) = delete;
@@ -47,16 +47,16 @@ public:
 	Expr& GetExpr() { return *_pExpr; }
 	const Expr& GetExpr() const { return *_pExpr; }
 public:
-	// Virtual functions of Object
-	virtual Object* Clone() const override { return Reference(); }
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetExpr().CalcHash();
 	}
-	virtual bool IsEqualTo(const Object* pValue) const override {
+	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
 			GetExpr().IsEqualTo(dynamic_cast<const Value_Quote*>(pValue)->GetExpr());
 	}
-	virtual bool IsLessThan(const Object* pValue) const override {
+	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
 			GetExpr().IsLessThan(dynamic_cast<const Value_Quote*>(pValue)->GetExpr()) :
 			GetVType().IsLessThan(pValue->GetVType());
