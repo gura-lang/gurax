@@ -133,6 +133,7 @@ public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Exec(Frame& frame) const = 0;
+	virtual void ExecForArgument(Frame& frame, Argument& argument) const;
 	virtual void Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }

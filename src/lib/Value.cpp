@@ -63,6 +63,25 @@ bool Value::IsInstanceOf(const VType& vtype) const
 	return false;
 }
 
+const DeclCaller& Value::GetDeclCaller()
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be called", GetVType().MakeFullName().c_str());
+	return *DeclCaller::Invalid;
+}
+
+void Value::DoCall(const Argument& argument)
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be called", GetVType().MakeFullName().c_str());
+}
+
+void Value::DoIndex(const Argument& argument)
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not work with indexer", GetVType().MakeFullName().c_str());
+}
+
 bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,

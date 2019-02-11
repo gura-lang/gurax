@@ -6,6 +6,7 @@
 #include "DeclCaller.h"
 #include "Help.h"
 #include "Frame.h"
+#include "Argument.h"
 
 namespace Gurax {
 
@@ -35,7 +36,7 @@ public:
 	Function& operator=(Function&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Function() = default;
+	virtual ~Function() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
@@ -49,6 +50,8 @@ public:
 	bool IsEqualTo(const Function& function) const { return IsIdentical(function); }
 	bool IsLessThan(const Function& function) const { return this < &function; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(function)"; }
+public:
+	virtual Value* Eval(const Argument& argument) = 0;
 };
 
 }

@@ -8,6 +8,16 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
+void Expr::ExecForArgument(Frame& frame, Argument& argument) const
+{
+	Exec(frame);
+	if (Error::IsIssued()) return;
+	//Context::PopStack();
+
+
+
+}
+
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -565,10 +575,15 @@ const Expr::TypeInfo Expr_Indexer::typeInfo;
 
 void Expr_Indexer::Exec(Frame& frame) const
 {
+	GetExprCar()->Exec(frame);
+	if (Error::IsIssued()) return;
+	RefPtr<Value> pValue(Context::PopStack());
+	RefPtr<Argument> pArgument(new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference()));
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Exec(frame);
+		pExpr->ExecForArgument(frame, *pArgument);
 		if (Error::IsIssued()) return;
 	}
+	pValue->DoIndex(*pArgument);
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
@@ -599,11 +614,17 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 
 void Expr_Caller::Exec(Frame& frame) const
 {
-	std::unique_ptr<Argument> pArg(new Argument(GetAttr().Reference()));
+	GetExprCar()->Exec(frame);
+	if (Error::IsIssued()) return;
+	RefPtr<Value> pValue(Context::PopStack());
+	const DeclCaller& declCaller = pValue->GetDeclCaller();
+	if (Error::IsIssued()) return;
+	RefPtr<Argument> pArgument(new Argument(declCaller.Reference(), GetAttr().Reference()));
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Exec(frame);
+		pExpr->ExecForArgument(frame, *pArgument);
 		if (Error::IsIssued()) return;
 	}
+	pValue->DoCall(*pArgument);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

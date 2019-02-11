@@ -20,6 +20,7 @@ public:
 		static const UInt32 None		= 0;
 		static const UInt32 Mutable		= (1 << 0);
 		static const UInt32 Immutable	= (0 << 0);
+		static const UInt32 Callable	= (1 << 1);
 	};
 	using SeqId = UInt32;
 protected:

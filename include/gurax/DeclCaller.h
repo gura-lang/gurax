@@ -67,10 +67,13 @@ private:
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 public:
+	static const DeclCaller* Empty;
+	static const DeclCaller* Invalid;
+public:
 	static void Bootup();
 public:
 	// Constructor
-	DeclCaller() : _validFlag(false), _flags(0), _pAttr(new Attribute()) {}
+	DeclCaller(bool validFlag = false) : _validFlag(validFlag), _flags(0), _pAttr(new Attribute()) {}
 	// Copy constructor/operator
 	DeclCaller(const DeclCaller& src) = delete;
 	DeclCaller& operator=(const DeclCaller& src) = delete;

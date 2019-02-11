@@ -8,8 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DeclCaller
 //------------------------------------------------------------------------------
+const DeclCaller* DeclCaller::Empty = nullptr;
+const DeclCaller* DeclCaller::Invalid = nullptr;
+
 void DeclCaller::Bootup()
 {
+	Empty = new DeclCaller(true);
+	Invalid = new DeclCaller(false);
 }
 
 bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)

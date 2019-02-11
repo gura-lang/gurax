@@ -29,7 +29,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Argument");
 private:
-	std::unique_ptr<Argument> _pArgument;
+	RefPtr<Argument> _pArgument;
 public:
 	// Constructor
 	Value_Argument() = delete;

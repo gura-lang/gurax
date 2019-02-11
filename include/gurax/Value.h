@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class Argument;
+class DeclCaller;
 class Formatter;
 class FormatterFlags;
 
@@ -82,24 +84,6 @@ public:
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
-	// Virtual functions
-	virtual Frame* ProvideFrame() { return nullptr; }
-	virtual Value* Clone() const = 0;
-	virtual size_t DoCalcHash() const = 0;
-	virtual bool IsEqualTo(const Value* pValue) const = 0;
-	virtual bool IsLessThan(const Value* pValue) const = 0;
-	virtual String ToString(const StringStyle& ss) const { return String::Empty; }
-	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const;
-	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const;
-public:
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
@@ -111,6 +95,27 @@ public:
 	static Value* true_()		{ return _pValue_true_->Reference(); }
 	static Value* Zero()		{ return _pValue_Zero->Reference(); }
 	static Value* EmptyStr()	{ return _pValue_EmptyStr->Reference(); }
+public:
+	// Virtual functions
+	virtual Frame* ProvideFrame() { return nullptr; }
+	virtual Value* Clone() const = 0;
+	virtual size_t DoCalcHash() const = 0;
+	virtual bool IsEqualTo(const Value* pValue) const = 0;
+	virtual bool IsLessThan(const Value* pValue) const = 0;
+	virtual String ToString(const StringStyle& ss) const { return String::Empty; }
+	virtual const DeclCaller& GetDeclCaller();
+	virtual void DoCall(const Argument& argument);
+	virtual void DoIndex(const Argument& argument);
+	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const;
+	virtual bool Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const;
 };
 
 //------------------------------------------------------------------------------

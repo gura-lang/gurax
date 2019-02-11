@@ -3,29 +3,35 @@
 //==============================================================================
 #ifndef GURAX_ARGUMENT_H
 #define GURAX_ARGUMENT_H
+#include "Referable.h"
 #include "Attribute.h"
 #include "Value.h"
+#include "DeclCaller.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-class Argument {
+class Argument : public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Argument);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Argument");
 private:
+	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	Argument(Attribute* pAttr) : _pAttr(pAttr) {}
+	Argument(DeclCaller* pDeclCaller, Attribute* pAttr) : _pDeclCaller(pDeclCaller), _pAttr(pAttr) {}
 	// Copy constructor/operator
 	Argument(const Argument& src);
 	Argument& operator=(const Argument& src) = delete;
 	// Move constructor/operator
 	Argument(Argument&& src) = delete;
 	Argument& operator=(Argument&& src) noexcept = delete;
+protected:
 	~Argument() = default;
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
