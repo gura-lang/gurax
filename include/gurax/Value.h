@@ -44,8 +44,8 @@ private:
 	static const Value* _pValue_nil;
 	static const Value* _pValue_false_;
 	static const Value* _pValue_true_;
-	static const Value* _pValue_zero;
-	static const Value* _pValue_emptystr;
+	static const Value* _pValue_Zero;
+	static const Value* _pValue_EmptyStr;
 protected:
 	VType* _pVType;
 public:
@@ -104,12 +104,13 @@ public:
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
 	static void Bootup();
+public:
 	static Value* undefined()	{ return _pValue_undefined->Reference(); }
-	static Value* nil()		{ return _pValue_nil->Reference(); }
+	static Value* nil()			{ return _pValue_nil->Reference(); }
 	static Value* false_()		{ return _pValue_false_->Reference(); }
 	static Value* true_()		{ return _pValue_true_->Reference(); }
-	static Value* zero()		{ return _pValue_zero->Reference(); }
-	static Value* emptystr()	{ return _pValue_emptystr->Reference(); }
+	static Value* Zero()		{ return _pValue_Zero->Reference(); }
+	static Value* EmptyStr()	{ return _pValue_EmptyStr->Reference(); }
 };
 
 //------------------------------------------------------------------------------

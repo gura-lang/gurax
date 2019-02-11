@@ -12,8 +12,8 @@ const Value *Value::_pValue_undefined	= nullptr;
 const Value *Value::_pValue_nil			= nullptr;
 const Value *Value::_pValue_false_		= nullptr;
 const Value *Value::_pValue_true_		= nullptr;
-const Value *Value::_pValue_zero			= nullptr;
-const Value *Value::_pValue_emptystr		= nullptr;
+const Value *Value::_pValue_Zero		= nullptr;
+const Value *Value::_pValue_EmptyStr	= nullptr;
 
 void Value::Bootup()
 {
@@ -42,11 +42,11 @@ void Value::Bootup()
 	VTYPE_TimeDelta.Prepare(pFrame);
 	VTYPE_Undefined.Prepare(pFrame);
 	_pValue_undefined	= new Value_Undefined();
-	_pValue_nil		= new Value_Nil();
+	_pValue_nil			= new Value_Nil();
 	_pValue_false_		= new Value_Bool(false);
 	_pValue_true_		= new Value_Bool(true);
-	_pValue_zero		= new Value_Number(0);
-	_pValue_emptystr	= new Value_String("");
+	_pValue_Zero		= new Value_Number(0);
+	_pValue_EmptyStr	= new Value_String("");
 }
 
 bool Value::GetBool() const

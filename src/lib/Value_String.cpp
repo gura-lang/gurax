@@ -16,13 +16,12 @@ void VType_String::DoPrepare(Frame* pFrame)
 	pFrame->AssignVType(*this);
 }
 
+//------------------------------------------------------------------------------
+// Value_String
+//------------------------------------------------------------------------------
 bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }
-
-//------------------------------------------------------------------------------
-// Value_String
-//------------------------------------------------------------------------------
 
 }

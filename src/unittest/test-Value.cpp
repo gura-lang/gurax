@@ -16,8 +16,8 @@ void Test_ValueMap()
 	pValueMap->Assign(Symbol::Add("foo6"), new Value_String("6"));
 	pValueMap->Assign(Symbol::Add("foo7"), new Value_Number(7));
 	pValueMap->Assign(Symbol::Add("foo8"), Value::undefined());
-	pValueMap->Assign(Symbol::Add("foo9"), Value::zero());
-	pValueMap->Assign(Symbol::Add("fooA"), Value::emptystr());
+	pValueMap->Assign(Symbol::Add("foo9"), Value::Zero());
+	pValueMap->Assign(Symbol::Add("fooA"), Value::EmptyStr());
 	std::cout << pValueMap->ToString();
 }
 

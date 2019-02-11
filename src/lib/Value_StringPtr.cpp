@@ -17,13 +17,12 @@ void VType_StringPtr::DoPrepare(Frame* pFrame)
 	pFrame->AssignVType(*this);
 }
 
+//------------------------------------------------------------------------------
+// Value_StringPtr
+//------------------------------------------------------------------------------
 bool Value_StringPtr::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }
-
-//------------------------------------------------------------------------------
-// Value_StringPtr
-//------------------------------------------------------------------------------
 
 }
