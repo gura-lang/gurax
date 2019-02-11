@@ -7,10 +7,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Value_StringPtr
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
 // VType_StringPtr
 //------------------------------------------------------------------------------
 VType_StringPtr VTYPE_StringPtr("StringPtr");
@@ -25,5 +21,9 @@ bool Value_StringPtr::Format_s(Formatter& formatter, FormatterFlags& formatterFl
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
 }
+
+//------------------------------------------------------------------------------
+// Value_StringPtr
+//------------------------------------------------------------------------------
 
 }

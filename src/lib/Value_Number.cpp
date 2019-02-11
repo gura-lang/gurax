@@ -6,6 +6,17 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// VType_Number
+//------------------------------------------------------------------------------
+VType_Number VTYPE_Number("Number");
+
+void VType_Number::DoPrepare(Frame* pFrame)
+{
+	SetAttrs(VTYPE_Object, Flag::Immutable);
+	pFrame->AssignVType(*this);
+}
+
+//------------------------------------------------------------------------------
 // Value_Number
 //------------------------------------------------------------------------------
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
@@ -70,17 +81,6 @@ bool Value_Number::Format_g(Formatter& formatter, FormatterFlags& formatterFlags
 bool Value_Number::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutChar(GetChar());
-}
-
-//------------------------------------------------------------------------------
-// VType_Number
-//------------------------------------------------------------------------------
-VType_Number VTYPE_Number("Number");
-
-void VType_Number::DoPrepare(Frame* pFrame)
-{
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	pFrame->AssignVType(*this);
 }
 
 }
