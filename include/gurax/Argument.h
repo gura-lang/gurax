@@ -35,11 +35,9 @@ protected:
 	~Argument() = default;
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
-	void RewindArgSlot() { _pArgSlotCur = nullptr; }
-	ArgSlot* NextArgSlot() {
-		_pArgSlotCur = _pArgSlotCur? _pArgSlotCur->GetNext() : _pArgSlotTop.get();
-		return _pArgSlotCur;
-	}
+	void RewindArgSlot() { _pArgSlotCur = _pArgSlotTop.get(); }
+	void NextArgSlot() { _pArgSlotCur = _pArgSlotCur->GetNext(); }
+	ArgSlot* GetArgSlotCur() { return _pArgSlotCur; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& attr) const { return this == &attr; }

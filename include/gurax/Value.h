@@ -191,6 +191,8 @@ public:
 	ValueTypedOwner* CloneDeep() const {
 		return new ValueTypedOwner(_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}
+	bool IsEmpty() const { return _pValueOwner->empty(); }
+	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
 	void Set(size_t pos, Value* pValue) {
 		UpdateVTypeOfElems(pValue->GetVType());

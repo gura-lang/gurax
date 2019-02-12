@@ -38,6 +38,7 @@ public:
 	// Virtual functions
 	virtual void FeedValue(Value* pValue) = 0;
 	virtual const Value& GetValue() = 0;
+	virtual bool IsUndefined() = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -52,6 +53,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(Value* pValue) override;
 	virtual const Value& GetValue() override { return *_pValue; }
+	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
 };
 
 //------------------------------------------------------------------------------
@@ -66,6 +68,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(Value* pValue) override;
 	virtual const Value& GetValue() override { return *_pValue; }
+	virtual bool IsUndefined() override { return _pValue->GetValueTypedOwner().IsEmpty(); }
 };
 
 }

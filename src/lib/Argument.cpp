@@ -27,6 +27,7 @@ Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 		}
 		pArgSlotLast = pArgSlot;
 	}
+	_pArgSlotCur = _pArgSlotTop.get();
 }
 
 String Argument::ToString(const StringStyle& ss) const
