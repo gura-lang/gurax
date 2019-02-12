@@ -481,6 +481,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Frame& frame) const override;
+	virtual void ExecForArgument(Frame& frame, Argument& argument) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

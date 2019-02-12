@@ -16,7 +16,7 @@ Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 	for (const DeclArg* pDeclArg : declArgOwner) {
 		ArgSlot* pArgSlot = nullptr;
 		if (pDeclArg->IsOccurZeroOrMore() || pDeclArg->IsOccurOnceOrMore()) {
-			pArgSlot = new ArgSlot_ValueList(pDeclArg->Reference());
+			pArgSlot = new ArgSlot_List(pDeclArg->Reference());
 		} else {
 			pArgSlot = new ArgSlot_Value(pDeclArg->Reference());
 		}

@@ -20,17 +20,34 @@ ArgSlot* ArgSlot::Find(const Symbol* pSymbol)
 //------------------------------------------------------------------------------
 // ArgSlot_Value
 //------------------------------------------------------------------------------
-void ArgSlot_Value::FeedValue(Value* pValue)
+void ArgSlot_Value::FeedValue(RefPtr<Value> pValue)
 {
-	_pValue.reset(pValue);
+	const VType& vtype = GetDeclArg().GetVType();
+	pValue.reset(vtype.DoCastFrom(pValue.release()));
+	if (Error::IsIssued()) return;
+	_pValue.reset(pValue.release());
 }
 
 //------------------------------------------------------------------------------
-// ArgSlot_ValueList
+// ArgSlot_List
 //------------------------------------------------------------------------------
-void ArgSlot_ValueList::FeedValue(Value* pValue)
+void ArgSlot_List::FeedValue(RefPtr<Value> pValue)
 {
-	_pValue->GetValueTypedOwner().Add(pValue);
+	const VType& vtype = GetDeclArg().GetVType();
+	pValue.reset(vtype.DoCastFrom(pValue.release()));
+	if (Error::IsIssued()) return;
+	_pValue->GetValueTypedOwner().Add(pValue.release());
+}
+
+//------------------------------------------------------------------------------
+// ArgSlot_Mapping
+//------------------------------------------------------------------------------
+void ArgSlot_Mapping::FeedValue(RefPtr<Value> pValue)
+{
+	const VType& vtype = GetDeclArg().GetVType();
+	pValue.reset(vtype.DoCastFrom(pValue.release()));
+	if (Error::IsIssued()) return;
+	_pValue.reset(pValue.release());
 }
 
 }

@@ -16,6 +16,11 @@ void VType_Any::DoPrepare(Frame* pFrame)
 	pFrame->AssignVType(*this);
 }
 
+Value* VType_Any::DoCastFrom(Value* pValue) const
+{
+	return pValue;
+}
+
 //------------------------------------------------------------------------------
 // Value_Any
 //------------------------------------------------------------------------------

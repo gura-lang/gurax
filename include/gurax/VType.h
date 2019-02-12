@@ -76,6 +76,7 @@ public:
 public:
 	// Virtual functions
 	virtual void DoPrepare(Frame* pFrame) {};
+	virtual Value* DoCastFrom(Value* pvalue) const;
 };
 
 //------------------------------------------------------------------------------

@@ -10,12 +10,17 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void Expr::ExecForArgument(Frame& frame, Argument& argument) const
 {
-	Exec(frame);
-	if (Error::IsIssued()) return;
-	//Context::PopStack();
-
-
-
+	ArgSlot* pArgSlot = argument.GetArgSlotCur();
+	RefPtr<Value> pValue;
+	if (pArgSlot->IsVType(VTYPE_Quote)) {
+		pValue.reset(new Value_Expr(Reference()));
+	} else {
+		Exec(frame);
+		if (Error::IsIssued()) return;
+		pValue.reset(Context::PopStack());
+	}
+	pArgSlot->FeedValue(pValue.release());
+	argument.NextArgSlot();
 }
 
 int Expr::CalcIndentLevel() const
@@ -283,6 +288,20 @@ void Expr_BinaryOp::Exec(Frame& frame) const
 	RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
 	if (!pValue) return;
 	Context::PushStack(pValue.release());
+}
+
+void Expr_BinaryOp::ExecForArgument(Frame& frame, Argument& argument) const
+{
+	if (!GetOperator()->IsType(OpType::Pair)) {
+		Expr_Binary::ExecForArgument(frame, argument);
+		return;
+	}
+
+
+	GetExprLeft();
+	GetExprRight();
+
+
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const

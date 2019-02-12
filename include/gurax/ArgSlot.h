@@ -28,6 +28,7 @@ protected:
 	virtual ~ArgSlot() = default;
 public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
+	bool IsVType(const VType& vtype) const { return _pDeclArg->IsVType(vtype); }
 	bool IsMatched(const Symbol* pSymbol) const {
 		return GetDeclArg().GetSymbol()->IsIdentical(pSymbol);
 	}
@@ -36,7 +37,7 @@ public:
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
 public:
 	// Virtual functions
-	virtual void FeedValue(Value* pValue) = 0;
+	virtual void FeedValue(RefPtr<Value> pValue) = 0;
 	virtual const Value& GetValue() = 0;
 	virtual bool IsUndefined() = 0;
 };
@@ -51,24 +52,39 @@ public:
 	ArgSlot_Value(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(Value::undefined()) {}
 public:
 	// Virtual functions of ArgSlot
-	virtual void FeedValue(Value* pValue) override;
+	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual const Value& GetValue() override { return *_pValue; }
 	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
 };
 
 //------------------------------------------------------------------------------
-// ArgSlot_ValueList
+// ArgSlot_List
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ArgSlot_ValueList : public ArgSlot {
+class GURAX_DLLDECLARE ArgSlot_List : public ArgSlot {
 protected:
 	RefPtr<Value_List> _pValue;
 public:
-	ArgSlot_ValueList(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(new Value_List()) {}
+	ArgSlot_List(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(new Value_List()) {}
 public:
 	// Virtual functions of ArgSlot
-	virtual void FeedValue(Value* pValue) override;
+	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual const Value& GetValue() override { return *_pValue; }
 	virtual bool IsUndefined() override { return _pValue->GetValueTypedOwner().IsEmpty(); }
+};
+
+//------------------------------------------------------------------------------
+// ArgSlot_Mapping
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ArgSlot_Mapping : public ArgSlot {
+protected:
+	RefPtr<Value> _pValue;
+public:
+	ArgSlot_Mapping(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(Value::undefined()) {}
+public:
+	// Virtual functions of ArgSlot
+	virtual void FeedValue(RefPtr<Value> pValue) override;
+	virtual const Value& GetValue() override { return *_pValue; }
+	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
 };
 
 }

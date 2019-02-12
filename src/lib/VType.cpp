@@ -37,6 +37,13 @@ DottedSymbol* VType::MakeDottedSymbol() const
 	return pDottedSymbol.release();
 }
 
+Value* VType::DoCastFrom(Value* pValue) const
+{
+	if (pValue->IsInstanceOf(*this)) return pValue;
+	Error::Issue(ErrorType::ValueError, "failed to cast");
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // VTypeMap
 //------------------------------------------------------------------------------
