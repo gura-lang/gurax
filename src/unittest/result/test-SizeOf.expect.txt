@@ -1,5 +1,6 @@
 [SizeOf]
-Argument                 8
+ArgSlot                  40
+Argument                 48
 Attribute                152
 DateTime                 48
 Symbol                   16

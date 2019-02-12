@@ -9,6 +9,7 @@ namespace Gurax {
 
 Gurax_TesterEntry(SizeOf)
 {
+	Gurax_PrintSizeOf(ArgSlot);
 	Gurax_PrintSizeOf(Argument);
 	Gurax_PrintSizeOf(Attribute);
 	Gurax_PrintSizeOf(DateTime);
