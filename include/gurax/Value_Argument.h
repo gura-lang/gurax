@@ -36,7 +36,8 @@ public:
 	Value_Argument(Argument* pArgument, VType& vtype = VTYPE_Argument) :
 		Value_Object(vtype), _pArgument(pArgument) {}
 	// Copy constructor/operator
-	Value_Argument(const Value_Argument& src) : Value_Object(src), _pArgument(src._pArgument->Clone()) {}
+	Value_Argument(const Value_Argument& src) :
+		Value_Object(src), _pArgument(src._pArgument->Reference()) {}
 	Value_Argument& operator=(const Value_Argument& src) = delete;
 	// Move constructor/operator
 	Value_Argument(Value_Argument&& src) = delete;

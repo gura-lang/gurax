@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Attribute
 //------------------------------------------------------------------------------
-class Attribute : public Referable {
+class GURAX_DLLDECLARE Attribute : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Attribute);

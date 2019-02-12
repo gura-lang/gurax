@@ -12,7 +12,7 @@ class BinaryList;
 //------------------------------------------------------------------------------
 // Binary
 //------------------------------------------------------------------------------
-class Binary : public std::basic_string<UInt8> {
+class GURAX_DLLDECLARE Binary : public std::basic_string<UInt8> {
 public:
 	// Algorithm operators
 	struct EqualTo {
@@ -67,13 +67,13 @@ inline String operator+(const String& v1, const String& v2) {
 //------------------------------------------------------------------------------
 // BinaryList
 //------------------------------------------------------------------------------
-class BinaryList : public std::vector<Binary> {
+class GURAX_DLLDECLARE BinaryList : public std::vector<Binary> {
 };
 
 //------------------------------------------------------------------------------
 // BinaryReferable
 //------------------------------------------------------------------------------
-class BinaryReferable : public Referable {
+class GURAX_DLLDECLARE BinaryReferable : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(BinaryReferable);
