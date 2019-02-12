@@ -20,6 +20,8 @@ public:
 private:
 	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<Attribute> _pAttr;
+	RefPtr<ArgSlot> _pArgSlotTop;
+	ArgSlot* _pArgSlotCur;
 public:
 	// Constructor
 	Argument(DeclCaller* pDeclCaller, Attribute* pAttr);
@@ -33,6 +35,11 @@ protected:
 	~Argument() = default;
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
+	void RewindArgSlot() { _pArgSlotCur = nullptr; }
+	ArgSlot* NextArgSlot() {
+		_pArgSlotCur = _pArgSlotCur? _pArgSlotCur->GetNext() : _pArgSlotTop.get();
+		return _pArgSlotCur;
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& attr) const { return this == &attr; }
