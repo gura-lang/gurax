@@ -183,4 +183,22 @@ String DeclArg::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
+//------------------------------------------------------------------------------
+// DeclArgList
+//------------------------------------------------------------------------------
+String DeclArgList::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	for (auto ppDeclArg = begin(); ppDeclArg != end(); ppDeclArg++) {
+		const DeclArg* pDeclArg = *ppDeclArg;
+		if (ppDeclArg != begin()) rtn += ss.GetComma();
+		rtn += pDeclArg->ToString(ss);
+	}
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// DeclArgOwner
+//------------------------------------------------------------------------------
+
 }

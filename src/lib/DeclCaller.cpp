@@ -50,14 +50,10 @@ String DeclCaller::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += '(';
-	for (auto ppDeclArg = _declArgOwner.begin(); ppDeclArg != _declArgOwner.end(); ppDeclArg++) {
-		const DeclArg* pDeclArg = *ppDeclArg;
-		if (ppDeclArg != _declArgOwner.begin()) rtn += ss.GetComma();
-		rtn += pDeclArg->ToString(ss);
-	}
+	rtn += GetDeclArgOwner().ToString(ss);
 	rtn += ')';
 	rtn += FlagsToString(_flags);
-	rtn += _pAttr->ToString(ss);
+	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
 

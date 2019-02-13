@@ -107,6 +107,8 @@ public:
 // DeclArgList
 //------------------------------------------------------------------------------
 class DeclArgList : public std::vector<DeclArg*> {
+public:
+	String ToString(const StringStyle& ss) const;
 };
 
 //------------------------------------------------------------------------------
