@@ -46,7 +46,7 @@ bool DeclCaller::CheckAttribute(const Attribute& attr) const
 {
 	for (const Symbol* pSymbol: attr.GetSymbols()) {
 		if (!GetAttr().GetSymbolSetOpt().IsSet(pSymbol)) {
-			Error::Issue(ErrorType::ValueError, "unacceptable attribute symbol: %s", pSymbol->GetName());
+			Error::Issue(ErrorType::ArgumentError, "unacceptable attribute symbol: %s", pSymbol->GetName());
 			return false;
 		}
 	}

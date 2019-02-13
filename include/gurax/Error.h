@@ -18,11 +18,12 @@ class ErrorType {
 private:
 	String _name;
 public:
+	static const ErrorType ArgumentError;
 	static const ErrorType CodecError;
+	static const ErrorType InvalidOperation;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
 	static const ErrorType ValueError;
-	static const ErrorType InvalidOperation;
 public:
 	ErrorType(const String& name) : _name(name) {}
 	const char* GetName() const { return _name.c_str(); }

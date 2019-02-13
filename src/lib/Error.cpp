@@ -8,11 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ErrorType
 //------------------------------------------------------------------------------
+const ErrorType ErrorType::ArgumentError("argument error");
 const ErrorType ErrorType::CodecError("codec error");
+const ErrorType ErrorType::InvalidOperation("invalid operation");
 const ErrorType ErrorType::SyntaxError("syntax error");
 const ErrorType ErrorType::TypeError("type error");
 const ErrorType ErrorType::ValueError("value error");
-const ErrorType ErrorType::InvalidOperation("invalid operation");
 
 //------------------------------------------------------------------------------
 // Error
