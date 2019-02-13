@@ -8,8 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
-void Expr::ExecForArgument(Frame& frame, Argument& argument) const
+void Expr::ExecForArgument(Frame& frame) const
 {
+	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.GetArgSlotCur(); // this may be nullptr
 	if (!pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -292,16 +293,17 @@ void Expr_BinaryOp::Exec(Frame& frame) const
 	Context::PushStack(pValue.release());
 }
 
-void Expr_BinaryOp::ExecForArgument(Frame& frame, Argument& argument) const
+void Expr_BinaryOp::ExecForArgument(Frame& frame) const
 {
 	if (!GetOperator()->IsType(OpType::Pair)) {
-		Expr_Binary::ExecForArgument(frame, argument);
+		Expr_Binary::ExecForArgument(frame);
 		return;
 	}
 	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
 		Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
 		return;
 	}
+	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
 	ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
 	if (!pArgSlot) {
@@ -607,12 +609,12 @@ void Expr_Indexer::Exec(Frame& frame) const
 	if (Error::IsIssued()) return;
 	RefPtr<Value> pValue(Context::PopStack());
 	RefPtr<Argument> pArgument(new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference()));
-	pArgument->RewindArgSlotCur();
+	Context::PushStack(new Value_Argument(pArgument.release()));
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecForArgument(frame, *pArgument);
+		pExpr->ExecForArgument(frame);
 		if (Error::IsIssued()) return;
 	}
-	pValue->DoIndex(frame, *pArgument);
+	pValue->DoIndex(frame);
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
@@ -654,12 +656,12 @@ void Expr_Caller::Exec(Frame& frame) const
 	}
 	if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 	RefPtr<Argument> pArgument(new Argument(pDeclCaller->Reference(), GetAttr().Reference()));
-	pArgument->RewindArgSlotCur();
+	Context::PushStack(new Value_Argument(pArgument.release()));
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecForArgument(frame, *pArgument);
+		pExpr->ExecForArgument(frame);
 		if (Error::IsIssued()) return;
 	}
-	pValue->DoCall(frame, *pArgument);
+	pValue->DoCall(frame);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
