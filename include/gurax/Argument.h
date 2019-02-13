@@ -34,7 +34,14 @@ public:
 protected:
 	~Argument() = default;
 public:
+	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool IsSet(const Symbol* pSymbol) {
+		return GetDeclCaller().IsSet(pSymbol) || GetAttr().IsSet(pSymbol);
+	}
+	bool IsSetOpt(const Symbol* pSymbol) {
+		return GetDeclCaller().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
+	}
 	void RewindArgSlot() { _pArgSlotCur = _pArgSlotTop.get(); }
 	void NextArgSlot() { _pArgSlotCur = _pArgSlotCur->GetNext(); }
 	ArgSlot* GetArgSlotCur() { return _pArgSlotCur; }

@@ -62,18 +62,16 @@ public:
 		}
 	};
 private:
-	bool _validFlag;
 	DeclArgOwner _declArgOwner;
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 public:
 	static const DeclCaller* Empty;
-	static const DeclCaller* Invalid;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	DeclCaller(bool validFlag = false) : _validFlag(validFlag), _flags(0), _pAttr(new Attribute()) {}
+	DeclCaller() : _flags(0), _pAttr(new Attribute()) {}
 	// Copy constructor/operator
 	DeclCaller(const DeclCaller& src) = delete;
 	DeclCaller& operator=(const DeclCaller& src) = delete;
@@ -86,9 +84,11 @@ protected:
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
 	void Clear();
-	bool IsValid() const { return _validFlag; }
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
+	UInt32 GetFlags() const { return _flags; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
+	bool IsSetOpt(const Symbol* pSymbol) const { return GetAttr().IsSetOpt(pSymbol); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclCaller& declCaller) const { return this == &declCaller; }

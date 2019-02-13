@@ -165,7 +165,7 @@ class GURAX_DLLDECLARE SymbolSet :
 	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
 public:
 	void Set(const Symbol* pSymbol) { insert(pSymbol); }
-	bool IsSet(const Symbol* pSymbol) { return find(pSymbol) != end(); }
+	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 };
 
 //------------------------------------------------------------------------------

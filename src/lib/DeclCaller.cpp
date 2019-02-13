@@ -9,12 +9,10 @@ namespace Gurax {
 // DeclCaller
 //------------------------------------------------------------------------------
 const DeclCaller* DeclCaller::Empty = nullptr;
-const DeclCaller* DeclCaller::Invalid = nullptr;
 
 void DeclCaller::Bootup()
 {
-	Empty = new DeclCaller(true);
-	Invalid = new DeclCaller(false);
+	Empty = new DeclCaller();
 }
 
 bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
@@ -34,13 +32,11 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, boo
 		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
-	_validFlag = true;
 	return true;
 }
 
 void DeclCaller::Clear()
 {
-	_validFlag = false;
 	_declArgOwner.Clear();
 	_flags = 0;
 	_pAttr.reset(new Attribute());

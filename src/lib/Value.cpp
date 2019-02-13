@@ -67,7 +67,7 @@ const DeclCaller& Value::GetDeclCaller()
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be called", GetVType().MakeFullName().c_str());
-	return *DeclCaller::Invalid;
+	return *DeclCaller::Empty;
 }
 
 void Value::DoCall(const Argument& argument)
