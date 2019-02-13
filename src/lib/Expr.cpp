@@ -8,14 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
-void Expr::ExecForArgument(Frame& frame, Argument& argument, ArgSlot** ppArgSlot) const
+void Expr::ExecForArgument(Frame& frame, Argument& argument) const
 {
-	ArgSlot* pArgSlot = *ppArgSlot; // this may be nullptr
+	ArgSlot* pArgSlot = argument.GetArgSlotCur(); // this may be nullptr
 	if (!pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "too many arguments");
 		return;
 	}
-	*ppArgSlot = pArgSlot->GetNext();
+	argument.NextArgSlotCur();
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(Reference()));
 	} else {
@@ -292,10 +292,10 @@ void Expr_BinaryOp::Exec(Frame& frame) const
 	Context::PushStack(pValue.release());
 }
 
-void Expr_BinaryOp::ExecForArgument(Frame& frame, Argument& argument, ArgSlot** ppArgSlot) const
+void Expr_BinaryOp::ExecForArgument(Frame& frame, Argument& argument) const
 {
 	if (!GetOperator()->IsType(OpType::Pair)) {
-		Expr_Binary::ExecForArgument(frame, argument, ppArgSlot);
+		Expr_Binary::ExecForArgument(frame, argument);
 		return;
 	}
 	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
@@ -607,9 +607,9 @@ void Expr_Indexer::Exec(Frame& frame) const
 	if (Error::IsIssued()) return;
 	RefPtr<Value> pValue(Context::PopStack());
 	RefPtr<Argument> pArgument(new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference()));
-	ArgSlot* pArgSlot = pArgument->GetArgSlotTop();
+	pArgument->RewindArgSlotCur();
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecForArgument(frame, *pArgument, &pArgSlot);
+		pExpr->ExecForArgument(frame, *pArgument);
 		if (Error::IsIssued()) return;
 	}
 	pValue->DoIndex(*pArgument);
@@ -650,9 +650,9 @@ void Expr_Caller::Exec(Frame& frame) const
 	if (Error::IsIssued()) return;
 	if (!declCaller.CheckAttribute(GetAttr())) return;
 	RefPtr<Argument> pArgument(new Argument(declCaller.Reference(), GetAttr().Reference()));
-	ArgSlot* pArgSlot = pArgument->GetArgSlotTop();
+	pArgument->RewindArgSlotCur();
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecForArgument(frame, *pArgument, &pArgSlot);
+		pExpr->ExecForArgument(frame, *pArgument);
 		if (Error::IsIssued()) return;
 	}
 	pValue->DoCall(*pArgument);

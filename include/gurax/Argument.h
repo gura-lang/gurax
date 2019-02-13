@@ -22,6 +22,7 @@ private:
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
+	ArgSlot* _pArgSlotCur;
 public:
 	// Constructor
 	Argument(DeclCaller* pDeclCaller, Attribute* pAttr);
@@ -43,6 +44,9 @@ public:
 		return GetDeclCaller().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
 	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
+	ArgSlot* GetArgSlotCur() { return _pArgSlotCur; }
+	void NextArgSlotCur() { _pArgSlotCur = _pArgSlotCur->GetNext(); }
+	void RewindArgSlotCur() { _pArgSlotCur = GetArgSlotTop(); }
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
 		return _pArgSlotTop? _pArgSlotTop->Find(pSymbol) : nullptr;
 	}
