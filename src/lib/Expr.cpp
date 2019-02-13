@@ -612,7 +612,7 @@ void Expr_Indexer::Exec(Frame& frame) const
 		pExpr->ExecForArgument(frame, *pArgument);
 		if (Error::IsIssued()) return;
 	}
-	pValue->DoIndex(*pArgument);
+	pValue->DoIndex(frame, *pArgument);
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
@@ -659,7 +659,7 @@ void Expr_Caller::Exec(Frame& frame) const
 		pExpr->ExecForArgument(frame, *pArgument);
 		if (Error::IsIssued()) return;
 	}
-	pValue->DoCall(*pArgument);
+	pValue->DoCall(frame, *pArgument);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
