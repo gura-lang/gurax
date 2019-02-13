@@ -19,6 +19,7 @@ public:
 public:
 private:
 	RefPtr<DeclCaller> _pDeclCaller;
+	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
 	ArgSlot* _pArgSlotCur;

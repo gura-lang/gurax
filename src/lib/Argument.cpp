@@ -9,7 +9,7 @@ namespace Gurax {
 // Argument
 //------------------------------------------------------------------------------
 Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
-	_pDeclCaller(pDeclCaller), _pAttr(pAttr), _pArgSlotCur(nullptr)
+	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotCur(nullptr)
 {
 	ArgSlot* pArgSlotLast = nullptr;
 	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
@@ -28,6 +28,7 @@ Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 		pArgSlotLast = pArgSlot;
 	}
 	_pArgSlotCur = _pArgSlotTop.get();
+	_flags = GetDeclCaller().GetFlags() | DeclCaller::SymbolsToFlags(GetAttr().GetSymbols());
 }
 
 String Argument::ToString(const StringStyle& ss) const

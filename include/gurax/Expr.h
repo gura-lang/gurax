@@ -648,7 +648,7 @@ protected:
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCaller(new DeclCaller()) {}
 public:
-	bool PrepareDeclCaller() { return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), true); }
+	bool PrepareDeclCaller() { return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr()); }
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
 		_pExprBlock->SetExprParent(this);

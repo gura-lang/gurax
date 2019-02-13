@@ -15,11 +15,11 @@ void DeclCaller::Bootup()
 	Empty = new DeclCaller();
 }
 
-bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag)
+bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr)
 {
 	_declArgOwner.reserve(exprLinkCdr.GetSize());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr, issueErrorFlag));
+		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr));
 		if (!pDeclArg) {
 			Clear();
 			return false;
@@ -42,6 +42,17 @@ void DeclCaller::Clear()
 	_pAttr.reset(new Attribute());
 }
 
+bool DeclCaller::CheckAttribute(const Attribute& attr) const
+{
+	for (const Symbol* pSymbol: attr.GetSymbols()) {
+		if (!GetAttr().GetSymbolSetOpt().IsSet(pSymbol)) {
+			Error::Issue(ErrorType::ValueError, "unacceptable attribute symbol: %s", pSymbol->GetName());
+			return false;
+		}
+	}
+	return true;
+}
+
 String DeclCaller::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -51,6 +62,13 @@ String DeclCaller::ToString(const StringStyle& ss) const
 	rtn += FlagsToString(_flags);
 	rtn += GetAttr().ToString(ss);
 	return rtn;
+}
+
+UInt32 DeclCaller::SymbolsToFlags(const SymbolList& symbols)
+{
+	UInt32 flags = 0;
+	for (const Symbol* pSymbol : symbols) flags |= SymbolToFlag(pSymbol);
+	return flags;
 }
 
 String DeclCaller::FlagsToString(UInt32 flags)

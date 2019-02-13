@@ -82,13 +82,14 @@ protected:
 	// Destructor
 	~DeclCaller() = default;
 public:
-	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, bool issueErrorFlag);
+	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr);
 	void Clear();
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
 	UInt32 GetFlags() const { return _flags; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetAttr().IsSetOpt(pSymbol); }
+	bool CheckAttribute(const Attribute& attr) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclCaller& declCaller) const { return this == &declCaller; }
@@ -102,6 +103,7 @@ public:
 	static const Symbol* FlagToSymbol(UInt32 flag) {
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
+	static UInt32 SymbolsToFlags(const SymbolList& symbols);
 	static String FlagsToString(UInt32 flags);
 };
 

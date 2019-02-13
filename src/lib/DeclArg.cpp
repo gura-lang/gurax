@@ -24,7 +24,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
 {
 }
 
-DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
+DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	const VType* pVType = nullptr;
@@ -35,9 +35,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 	if (pExpr->IsType<Expr_BinaryOp>()) {
 		const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
 		if (!pExprEx->GetOperator()->IsType(OpType::Pair)) {
-			if (issueErrorFlag) {
-				Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
-			}
+			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
 			return nullptr;
 		}
 		// x => value
@@ -63,18 +61,14 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 			// x?
 			occurPattern = OccurPattern::ZeroOrOnce;
 		} else {
-			if (issueErrorFlag) {
-				Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
-			}
+			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
 			return nullptr;
 		}
 	}
 	if (pExpr->IsType<Expr_Indexer>()) {
 		const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(pExpr);
 		if (!pExprEx->GetExprLinkCdr().IsEmpty()) {
-			if (issueErrorFlag) {
-				Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
-			}
+			Error::Issue(ErrorType::SyntaxError, "bracket must be empty");
 			return nullptr;
 		}
 		// x[]
@@ -83,9 +77,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 		flags |= Flag::ListVar;
 	}
 	if (!pExpr->IsType<Expr_Identifier>()) {
-		if (issueErrorFlag) {
-			Error::Issue(ErrorType::SyntaxError, "declaration must be an indentifier");
-		}
+		Error::Issue(ErrorType::SyntaxError, "declaration must be an indentifier");
 		return nullptr;
 	}
 	const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExpr);
@@ -93,15 +85,11 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 	if (!pAttrSrc) {
 		pAttrSrc = &pExprIdentifier->GetAttr();
 	} else if (!pExprIdentifier->GetAttr().IsEmpty()) {
-		if (issueErrorFlag) {
-			Error::Issue(ErrorType::SyntaxError, "invalid attribute");
-		}
+		Error::Issue(ErrorType::SyntaxError, "invalid attribute");
 		return nullptr;
 	}
 	if (!pAttrSrc->GetSymbolsOpt().empty()) {
-		if (issueErrorFlag) {
-			Error::Issue(ErrorType::SyntaxError, "optional attribute can not be declared");
-		}
+		Error::Issue(ErrorType::SyntaxError, "optional attribute can not be declared");
 		return nullptr;
 	}
 	pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
@@ -115,9 +103,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr, bool issueErrorFlag)
 			}
 		} else {
 			if (!firstFlag) {
-				if (issueErrorFlag) {
-					Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
-				}
+				Error::Issue(ErrorType::SyntaxError, "unsupported symbol: %s", pSymbol->GetName());
 				return nullptr;
 			}
 		}

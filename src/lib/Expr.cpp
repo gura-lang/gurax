@@ -638,6 +638,7 @@ void Expr_Caller::Exec(Frame& frame) const
 	RefPtr<Value> pValue(Context::PopStack());
 	const DeclCaller& declCaller = pValue->GetDeclCaller();
 	if (Error::IsIssued()) return;
+	if (!declCaller.CheckAttribute(GetAttr())) return;
 	RefPtr<Argument> pArgument(new Argument(declCaller.Reference(), GetAttr().Reference()));
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ExecForArgument(frame, *pArgument);
