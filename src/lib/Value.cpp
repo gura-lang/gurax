@@ -63,11 +63,9 @@ bool Value::IsInstanceOf(const VType& vtype) const
 	return false;
 }
 
-const DeclCaller& Value::GetDeclCaller()
+const DeclCaller* Value::GetDeclCaller()
 {
-	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be called", GetVType().MakeFullName().c_str());
-	return *DeclCaller::Empty;
+	return nullptr;
 }
 
 void Value::DoCall(const Argument& argument)

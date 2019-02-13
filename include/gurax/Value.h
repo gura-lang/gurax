@@ -103,7 +103,7 @@ public:
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
 	virtual bool IsLessThan(const Value* pValue) const = 0;
 	virtual String ToString(const StringStyle& ss) const { return String::Empty; }
-	virtual const DeclCaller& GetDeclCaller();
+	virtual const DeclCaller* GetDeclCaller();
 	virtual void DoCall(const Argument& argument);
 	virtual void DoIndex(const Argument& argument);
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;

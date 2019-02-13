@@ -646,10 +646,14 @@ void Expr_Caller::Exec(Frame& frame) const
 	GetExprCar()->Exec(frame);
 	if (Error::IsIssued()) return;
 	RefPtr<Value> pValue(Context::PopStack());
-	const DeclCaller& declCaller = pValue->GetDeclCaller();
-	if (Error::IsIssued()) return;
-	if (!declCaller.CheckAttribute(GetAttr())) return;
-	RefPtr<Argument> pArgument(new Argument(declCaller.Reference(), GetAttr().Reference()));
+	const DeclCaller* pDeclCaller = pValue->GetDeclCaller();
+	if (!pDeclCaller) {
+		Error::Issue(ErrorType::ValueError,
+					 "value type %s can not be called", pValue->GetVType().MakeFullName().c_str());
+		return;
+	}
+	if (!pDeclCaller->CheckAttribute(GetAttr())) return;
+	RefPtr<Argument> pArgument(new Argument(pDeclCaller->Reference(), GetAttr().Reference()));
 	pArgument->RewindArgSlotCur();
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ExecForArgument(frame, *pArgument);
