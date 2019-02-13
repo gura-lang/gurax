@@ -43,6 +43,9 @@ public:
 		return GetDeclCaller().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
 	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
+	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
+		return _pArgSlotTop? _pArgSlotTop->Find(pSymbol) : nullptr;
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& attr) const { return this == &attr; }

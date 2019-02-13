@@ -15,16 +15,14 @@ void Expr::ExecForArgument(Frame& frame, Argument& argument, ArgSlot** ppArgSlot
 		Error::Issue(ErrorType::ArgumentError, "too many arguments");
 		return;
 	}
-	RefPtr<Value> pValue;
+	*ppArgSlot = pArgSlot->GetNext();
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
-		pValue.reset(new Value_Expr(Reference()));
+		pArgSlot->FeedValue(new Value_Expr(Reference()));
 	} else {
 		Exec(frame);
 		if (Error::IsIssued()) return;
-		pValue.reset(Context::PopStack());
+		pArgSlot->FeedValue(Context::PopStack());
 	}
-	pArgSlot->FeedValue(pValue.release());
-	*ppArgSlot = pArgSlot->GetNext();
 }
 
 int Expr::CalcIndentLevel() const
@@ -300,12 +298,19 @@ void Expr_BinaryOp::ExecForArgument(Frame& frame, Argument& argument, ArgSlot** 
 		Expr_Binary::ExecForArgument(frame, argument, ppArgSlot);
 		return;
 	}
-	//ArgSlot* pArgSlot = *ppArgSlot; // this may be nullptr
-
-	GetExprLeft();
-	GetExprRight();
-
-
+	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
+		Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
+		return;
+	}
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
+	ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
+	if (!pArgSlot) {
+		Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
+		return;
+	}
+	GetExprRight()->Exec(frame);
+	if (Error::IsIssued()) return;
+	pArgSlot->FeedValue(Context::PopStack());
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
