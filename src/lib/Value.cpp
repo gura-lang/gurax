@@ -68,16 +68,30 @@ const DeclCaller* Value::GetDeclCaller()
 	return nullptr;
 }
 
-void Value::DoCall(Frame& frame)
+void Value::Call(Frame& frame)
+{
+	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
+	Argument& argument = pValue->GetArgument();
+	if (argument.CheckValidity()) DoCall(frame, argument);
+}
+
+void Value::IndexAccess(Frame& frame)
+{
+	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
+	Argument& argument = pValue->GetArgument();
+	if (argument.CheckValidity()) DoIndexAccess(frame, argument);
+}
+
+void Value::DoCall(Frame& frame, const Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be called", GetVType().MakeFullName().c_str());
 }
 
-void Value::DoIndex(Frame& frame)
+void Value::DoIndexAccess(Frame& frame, const Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not work with indexer", GetVType().MakeFullName().c_str());
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
 String Value::ToString(const StringStyle& ss) const
@@ -86,9 +100,11 @@ String Value::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "<";
 	rtn += GetVType().MakeFullName();
-	char buff[64];
-	::sprintf(buff, ":%p", this);
-	rtn += buff;
+	if (!IsUndefined() && !IsNil()) {
+		char buff[64];
+		::sprintf(buff, ":%p", this);
+		rtn += buff;
+	}
 	rtn += ">";
 	return rtn;
 }

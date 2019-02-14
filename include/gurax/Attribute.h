@@ -23,6 +23,8 @@ private:
 	SymbolSet _symbolSet;
 	SymbolSet _symbolSetOpt;
 public:
+	static const Attribute* Empty;
+public:
 	static void Bootup();
 public:
 	// Constructor

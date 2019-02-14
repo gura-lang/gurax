@@ -8,8 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Attribute
 //------------------------------------------------------------------------------
+const Attribute* Attribute::Empty;
+
 void Attribute::Bootup()
 {
+	Empty = new Attribute();
 }
 
 void Attribute::AddAttribute(const Attribute& attr)

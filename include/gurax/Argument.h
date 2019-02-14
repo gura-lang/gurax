@@ -22,7 +22,7 @@ private:
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
-	ArgSlot* _pArgSlotCur;
+	ArgSlot* _pArgSlotToFeed;
 public:
 	// Constructor
 	Argument(DeclCaller* pDeclCaller, Attribute* pAttr);
@@ -35,6 +35,7 @@ public:
 protected:
 	~Argument() = default;
 public:
+	bool CheckValidity() const;
 	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(const Symbol* pSymbol) {
@@ -44,11 +45,17 @@ public:
 		return GetDeclCaller().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
 	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
-	ArgSlot* GetArgSlotCur() { return _pArgSlotCur; }
-	void NextArgSlotCur() { _pArgSlotCur = _pArgSlotCur->GetNext(); }
-	void RewindArgSlotCur() { _pArgSlotCur = GetArgSlotTop(); }
+	const ArgSlot* GetArgSlotTop() const { return _pArgSlotTop.get(); }
+	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
+	void FeedValue(Value* pValue) {
+		if (!_pArgSlotToFeed) return;
+		_pArgSlotToFeed->FeedValue(pValue); _pArgSlotToFeed = _pArgSlotToFeed->GoNext();
+	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
 		return _pArgSlotTop? _pArgSlotTop->Find(pSymbol) : nullptr;
+	}
+	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
+		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

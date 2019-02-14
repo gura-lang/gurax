@@ -28,6 +28,20 @@ void ArgSlot_Value::FeedValue(RefPtr<Value> pValue)
 	_pValue.reset(pValue.release());
 }
 
+bool ArgSlot_Value::IsValid() const
+{
+	return true;
+}
+
+String ArgSlot_Value::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += GetDeclArg().GetSymbol()->GetName();
+	rtn += ss.IsCram()? "=>" : " => ";
+	rtn += _pValue->ToString(ss);
+	return rtn;
+}
+
 //------------------------------------------------------------------------------
 // ArgSlot_List
 //------------------------------------------------------------------------------
@@ -39,15 +53,18 @@ void ArgSlot_List::FeedValue(RefPtr<Value> pValue)
 	_pValue->GetValueTypedOwner().Add(pValue.release());
 }
 
-//------------------------------------------------------------------------------
-// ArgSlot_Mapping
-//------------------------------------------------------------------------------
-void ArgSlot_Mapping::FeedValue(RefPtr<Value> pValue)
+bool ArgSlot_List::IsValid() const
 {
-	const VType& vtype = GetDeclArg().GetVType();
-	pValue.reset(vtype.DoCastFrom(pValue.release()));
-	if (Error::IsIssued()) return;
-	_pValue.reset(pValue.release());
+	return true;
+}
+
+String ArgSlot_List::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += GetDeclArg().GetSymbol()->GetName();
+	rtn += ss.IsCram()? "=>" : " => ";
+	rtn += _pValue->GetValueOwner().ToString(ss);
+	return rtn;
 }
 
 }

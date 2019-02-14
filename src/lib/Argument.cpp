@@ -9,7 +9,7 @@ namespace Gurax {
 // Argument
 //------------------------------------------------------------------------------
 Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
-	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotCur(nullptr)
+	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotToFeed(nullptr)
 {
 	ArgSlot* pArgSlotLast = nullptr;
 	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
@@ -27,14 +27,25 @@ Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 		}
 		pArgSlotLast = pArgSlot;
 	}
-	_pArgSlotCur = _pArgSlotTop.get();
+	_pArgSlotToFeed = _pArgSlotTop.get();
 	_flags = GetDeclCaller().GetFlags() | DeclCaller::SymbolsToFlags(GetAttr().GetSymbols());
+}
+
+bool Argument::CheckValidity() const
+{
+	return true;
 }
 
 String Argument::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	//const ArgSlot* pArgSlot = GetArgSlotTop();
+	rtn += '(';
+	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		if (pArgSlot != GetArgSlotTop()) rtn += ss.GetComma();
+		rtn += pArgSlot->ToString(StringStyle().Digest());
+	}
+	rtn += ')';
+	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
 

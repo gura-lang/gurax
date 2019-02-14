@@ -35,11 +35,16 @@ public:
 	ArgSlot* Find(const Symbol* pSymbol);
 	void SetNext(ArgSlot* pArgSlotNext) { _pArgSlotNext.reset(pArgSlotNext); }
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
+	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
+	const ArgSlot* GoNext() const { return const_cast<ArgSlot*>(this)->GoNext(); }
 public:
 	// Virtual functions
 	virtual void FeedValue(RefPtr<Value> pValue) = 0;
+	virtual bool IsValid() const = 0;
+	virtual ArgSlot* GoNext() { return _pArgSlotNext.get(); }
 	virtual const Value& GetValue() = 0;
 	virtual bool IsUndefined() = 0;
+	virtual String ToString(const StringStyle& ss) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -53,8 +58,10 @@ public:
 public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(RefPtr<Value> pValue) override;
+	virtual bool IsValid() const override;
 	virtual const Value& GetValue() override { return *_pValue; }
 	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -68,23 +75,11 @@ public:
 public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(RefPtr<Value> pValue) override;
+	virtual bool IsValid() const override;
+	virtual ArgSlot* GoNext() override { return this; }
 	virtual const Value& GetValue() override { return *_pValue; }
-	virtual bool IsUndefined() override { return _pValue->GetValueTypedOwner().IsEmpty(); }
-};
-
-//------------------------------------------------------------------------------
-// ArgSlot_Mapping
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ArgSlot_Mapping : public ArgSlot {
-protected:
-	RefPtr<Value> _pValue;
-public:
-	ArgSlot_Mapping(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(Value::undefined()) {}
-public:
-	// Virtual functions of ArgSlot
-	virtual void FeedValue(RefPtr<Value> pValue) override;
-	virtual const Value& GetValue() override { return *_pValue; }
-	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
+	virtual bool IsUndefined() override { return false; }
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

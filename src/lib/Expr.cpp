@@ -11,18 +11,21 @@ namespace Gurax {
 void Expr::ExecForArgument(Frame& frame) const
 {
 	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-	ArgSlot* pArgSlot = argument.GetArgSlotCur(); // this may be nullptr
+	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "too many arguments");
 		return;
 	}
-	argument.NextArgSlotCur();
+	if (!pArgSlot->IsUndefined()) {
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		return;
+	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
-		pArgSlot->FeedValue(new Value_Expr(Reference()));
+		argument.FeedValue(new Value_Expr(Reference()));
 	} else {
 		Exec(frame);
 		if (Error::IsIssued()) return;
-		pArgSlot->FeedValue(Context::PopStack());
+		argument.FeedValue(Context::PopStack());
 	}
 }
 
@@ -614,7 +617,7 @@ void Expr_Indexer::Exec(Frame& frame) const
 		pExpr->ExecForArgument(frame);
 		if (Error::IsIssued()) return;
 	}
-	pValue->DoIndex(frame);
+	pValue->IndexAccess(frame);
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
@@ -661,7 +664,7 @@ void Expr_Caller::Exec(Frame& frame) const
 		pExpr->ExecForArgument(frame);
 		if (Error::IsIssued()) return;
 	}
-	pValue->DoCall(frame);
+	pValue->Call(frame);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
