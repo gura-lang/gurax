@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_TimeDelta VTYPE_TimeDelta("Timedelta");
 
-void VType_TimeDelta::DoPrepare(Frame* pFrame)
+void VType_TimeDelta::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 //------------------------------------------------------------------------------

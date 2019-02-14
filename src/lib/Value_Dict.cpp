@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Dict VTYPE_Dict("Dict");
 
-void VType_Dict::DoPrepare(Frame* pFrame)
+void VType_Dict::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Mutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 //------------------------------------------------------------------------------

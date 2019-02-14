@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Number VTYPE_Number("Number");
 
-void VType_Number::DoPrepare(Frame* pFrame)
+void VType_Number::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 //------------------------------------------------------------------------------

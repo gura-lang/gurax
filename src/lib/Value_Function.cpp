@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Function VTYPE_Function("Function");
 
-void VType_Function::DoPrepare(Frame* pFrame)
+void VType_Function::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 //------------------------------------------------------------------------------

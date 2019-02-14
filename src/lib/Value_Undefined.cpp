@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Undefined VTYPE_Undefined("Undefined");
 
-void VType_Undefined::DoPrepare(Frame* pFrame)
+void VType_Undefined::DoPrepare(Frame& frame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 //------------------------------------------------------------------------------

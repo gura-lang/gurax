@@ -13,7 +13,7 @@ namespace Gurax {
 class VType_List : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame* pFrame) override;
+	virtual void DoPrepare(Frame& frame) override;
 };
 
 extern VType_List VTYPE_List;

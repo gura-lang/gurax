@@ -13,7 +13,7 @@ namespace Gurax {
 class VType_Any : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame* pFrame) override;
+	virtual void DoPrepare(Frame& frame) override;
 	virtual Value* DoCastFrom(Value* pValue) const override;
 };
 

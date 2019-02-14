@@ -69,13 +69,13 @@ public:
 	const Frame& GetFrame() const { return *_pFrame; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 public:
-	void Prepare(Frame* pFrameParent) { DoPrepare(pFrameParent); }
+	void Prepare(Frame& frameParent) { DoPrepare(frameParent); }
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 public:
 	// Virtual functions
-	virtual void DoPrepare(Frame* pFrame) {};
+	virtual void DoPrepare(Frame& frame) {};
 	virtual Value* DoCastFrom(Value* pvalue) const;
 };
 

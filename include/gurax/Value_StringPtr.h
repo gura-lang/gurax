@@ -14,7 +14,7 @@ namespace Gurax {
 class VType_StringPtr : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame* pFrame) override;
+	virtual void DoPrepare(Frame& frame) override;
 };
 
 extern VType_StringPtr VTYPE_StringPtr;

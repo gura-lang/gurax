@@ -13,7 +13,7 @@ namespace Gurax {
 class VType_Symbol : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame* pFrame) override;
+	virtual void DoPrepare(Frame& frame) override;
 };
 
 extern VType_Symbol VTYPE_Symbol;

@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Any VTYPE_Any("Any");
 
-void VType_Any::DoPrepare(Frame* pFrame)
+void VType_Any::DoPrepare(Frame& frame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 Value* VType_Any::DoCastFrom(Value* pValue) const

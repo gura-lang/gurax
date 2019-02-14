@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_List VTYPE_List("List");
 
-void VType_List::DoPrepare(Frame* pFrame)
+void VType_List::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Mutable);
-	pFrame->AssignVType(*this);
+	frame.AssignVType(*this);
 }
 
 //------------------------------------------------------------------------------
