@@ -11,8 +11,6 @@
 
 namespace Gurax {
 
-class Frame;
-
 //------------------------------------------------------------------------------
 // MemberMode
 //------------------------------------------------------------------------------
@@ -132,9 +130,9 @@ public:
 public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
-	virtual void Exec(Frame& frame) const = 0;
-	virtual void ExecForArgument(Frame& frame) const;
-	virtual void Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const;
+	virtual void Exec() const = 0;
+	virtual void ExecForArgument() const;
+	virtual void Assign(const Expr* pExprAssigned, const Operator* pOperator) const;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
 public:
@@ -154,7 +152,7 @@ public:
 	static const ExprList Empty;
 public:
 	bool Traverse(Expr::Visitor& visitor);
-	void Exec(Frame& frame) const;
+	void Exec() const;
 	void SetExprParent(const Expr* pExprParent);
 };
 
@@ -334,7 +332,7 @@ public:
 		if (!_pExprLinkCdr->Traverse(visitor)) return false;
 		return true;
 	}
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
@@ -360,7 +358,7 @@ public:
 	const char* GetSource() const { return _pStrSource->GetString(); }
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
 public:
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -386,8 +384,8 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
-	virtual void Assign(Frame& frame, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void Exec() const override;
+	virtual void Assign(const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -415,7 +413,7 @@ public:
 	bool IsString() const { return !_numberFlag; }
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -438,7 +436,7 @@ public:
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -459,7 +457,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -480,8 +478,8 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
-	virtual void ExecForArgument(Frame& frame) const override;
+	virtual void Exec() const override;
+	virtual void ExecForArgument() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -503,7 +501,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -525,7 +523,7 @@ public:
 	MemberMode GetMemberMode() const { return _memberMode; }
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -542,7 +540,7 @@ public:
 	Expr_Root(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -575,7 +573,7 @@ public:
 		if (_pExprLinkParam && !_pExprLinkParam->Traverse(visitor)) return false;
 		return true;
 	}
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -592,7 +590,7 @@ public:
 	Expr_Lister(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -609,7 +607,7 @@ public:
 	Expr_Iterer(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -626,7 +624,7 @@ public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
 	// Virtual functions of Expr
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -671,7 +669,7 @@ public:
 		if (_pExprTrailer && !_pExprTrailer->Traverse(visitor)) return false;
 		return true;
 	}
-	virtual void Exec(Frame& frame) const override;
+	virtual void Exec() const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
