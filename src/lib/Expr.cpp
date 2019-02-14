@@ -64,8 +64,11 @@ bool ExprList::Traverse(Expr::Visitor& visitor)
 void ExprList::Exec() const
 {
 	for (const Expr* pExpr : *this) {
-		pExpr->Exec();
-		if (Error::IsIssued()) return;
+		do {
+			pExpr->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		Value::Delete(Context::PopStack());
 	}
 }
 
@@ -133,10 +136,6 @@ void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 	_pExprLinkCdr->AddExpr(pExprCdr);
 }
 
-void Expr_Composite::Exec() const
-{
-}
-
 //------------------------------------------------------------------------------
 // Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
@@ -159,23 +158,29 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 
 void Expr_Identifier::Exec() const
 {
-	Frame& frame = Context::GetFrame();
-	const Value* pValue = frame.LookupValue(GetSymbol());
-	if (!pValue) {
-		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-		return;
-	}
-	Context::PushStack(pValue->Reference());
+	do {
+		Frame& frame = Context::GetFrame();
+		const Value* pValue = frame.LookupValue(GetSymbol());
+		if (!pValue) {
+			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			return;
+		}
+		Context::PushStack(pValue->Reference());
+	} while (0);
 }
 
 void Expr_Identifier::Assign(const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	Frame& frame = Context::GetFrame();
-	pExprAssigned->Exec();
-	if (Error::IsIssued()) return;
-	RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
-	//RefPtr<Value> pValueAssigned(Context::PopStack());
-	frame.AssignValue(GetSymbol(), pValueAssigned.release());
+	do {
+		pExprAssigned->Exec();
+		if (Error::IsIssued()) return;
+	} while (0);
+	do {
+		Frame& frame = Context::GetFrame();
+		RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
+		//RefPtr<Value> pValueAssigned(Context::PopStack());
+		frame.AssignValue(GetSymbol(), pValueAssigned.release());
+	} while (0);
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -318,16 +323,18 @@ void Expr_BinaryOp::ExecForArgument() const
 		Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
 		return;
 	}
-	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
-	ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
-	if (!pArgSlot) {
-		Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
-		return;
-	}
-	GetExprRight()->Exec();
-	if (Error::IsIssued()) return;
-	pArgSlot->FeedValue(Context::PopStack());
+	do {
+		Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
+		ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
+		if (!pArgSlot) {
+			Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
+			return;
+		}
+		GetExprRight()->Exec();
+		if (Error::IsIssued()) return;
+		pArgSlot->FeedValue(Context::PopStack());
+	} while (0);
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -586,12 +593,16 @@ void Expr_Lister::Exec() const
 		Context::PushStack(new Value_List(pValueTypedOwner.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Exec();
-		if (Error::IsIssued()) return;
-		RefPtr<Value> pValue(Context::PopStack());
-		ValueTypedOwner& valueTypedOwner =
-			dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
-		valueTypedOwner.Add(pValue.release());
+		do {
+			pExpr->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		do {
+			RefPtr<Value> pValue(Context::PopStack());
+			ValueTypedOwner& valueTypedOwner =
+				dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
+			valueTypedOwner.Add(pValue.release());
+		} while (0);
 	}
 }
 
@@ -635,17 +646,19 @@ const Expr::TypeInfo Expr_Indexer::typeInfo;
 
 void Expr_Indexer::Exec() const
 {
-	GetExprCar()->Exec();
-	if (Error::IsIssued()) return;
+	do {
+		GetExprCar()->Exec();
+		if (Error::IsIssued()) return;
+	} while (0);
 	do {
 		RefPtr<Value> pValue(Context::PopStack());
 		RefPtr<Argument> pArgument(new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference()));
 		Context::PushStack(new Value_Argument(pArgument.release()));
-		for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ExecForArgument();
-			if (Error::IsIssued()) return;
-		}
 	} while (0);
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ExecForArgument();
+		if (Error::IsIssued()) return;
+	}
 	do {
 		Frame& frame = Context::GetFrame();
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
@@ -683,8 +696,10 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 
 void Expr_Caller::Exec() const
 {
-	GetExprCar()->Exec();
-	if (Error::IsIssued()) return;
+	do {
+		GetExprCar()->Exec();
+		if (Error::IsIssued()) return;
+	} while (0);
 	do {
 		RefPtr<Value> pValue(Context::PopStack());
 		const DeclCaller* pDeclCaller = pValue->GetDeclCaller();
@@ -696,11 +711,11 @@ void Expr_Caller::Exec() const
 		if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 		RefPtr<Argument> pArgument(new Argument(pDeclCaller->Reference(), GetAttr().Reference()));
 		Context::PushStack(new Value_Argument(pArgument.release()));
-		for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ExecForArgument();
-			if (Error::IsIssued()) return;
-		}
 	} while (0);
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ExecForArgument();
+		if (Error::IsIssued()) return;
+	}
 	do {
 		Frame& frame = Context::GetFrame();
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));

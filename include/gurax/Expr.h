@@ -332,7 +332,6 @@ public:
 		if (!_pExprLinkCdr->Traverse(visitor)) return false;
 		return true;
 	}
-	virtual void Exec() const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
