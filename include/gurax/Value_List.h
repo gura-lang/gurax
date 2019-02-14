@@ -64,7 +64,7 @@ public:
 			GetValueOwner().IsLessThan(dynamic_cast<const Value_List*>(pValue)->GetValueOwner()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToString(const StringStyle& ss) const override {
+	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetValueOwner().ToString(ss);
 	}
 };

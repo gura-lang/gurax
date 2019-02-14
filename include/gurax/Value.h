@@ -83,6 +83,7 @@ public:
 	bool IsInstanceOf(const VType& vtype) const;
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString(const StringStyle& ss) const;
 public:
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
@@ -102,7 +103,7 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
 	virtual bool IsLessThan(const Value* pValue) const = 0;
-	virtual String ToString(const StringStyle& ss) const { return String::Empty; }
+	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 	virtual const DeclCaller* GetDeclCaller();
 	virtual void DoCall(Frame& frame);
 	virtual void DoIndex(Frame& frame);

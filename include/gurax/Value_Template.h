@@ -63,7 +63,7 @@ public:
 			GetTemplate().IsLessThan(dynamic_cast<const Value_Template*>(pValue)->GetTemplate()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToString(const StringStyle& ss) const override {
+	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetTemplate().ToString(ss);
 	}
 };

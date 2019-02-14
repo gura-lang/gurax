@@ -63,7 +63,7 @@ public:
 			GetStream().IsLessThan(dynamic_cast<const Value_Stream*>(pValue)->GetStream()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToString(const StringStyle& ss) const override {
+	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetStream().ToString(ss);
 	}
 };

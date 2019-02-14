@@ -80,6 +80,19 @@ void Value::DoIndex(Frame& frame)
 				 "value type %s can not work with indexer", GetVType().MakeFullName().c_str());
 }
 
+String Value::ToString(const StringStyle& ss) const
+{
+	if (!ss.IsDigest()) return ToStringDetail(ss);
+	String rtn;
+	rtn += "<";
+	rtn += GetVType().MakeFullName();
+	char buff[64];
+	::sprintf(buff, ":%p", this);
+	rtn += buff;
+	rtn += ">";
+	return rtn;
+}
+
 bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
