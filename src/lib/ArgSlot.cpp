@@ -18,9 +18,9 @@ ArgSlot* ArgSlot::Find(const Symbol* pSymbol)
 }
 
 //------------------------------------------------------------------------------
-// ArgSlot_Value
+// ArgSlot_Single
 //------------------------------------------------------------------------------
-void ArgSlot_Value::FeedValue(RefPtr<Value> pValue)
+void ArgSlot_Single::FeedValue(RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
 	pValue.reset(vtype.DoCastFrom(pValue.release()));
@@ -28,12 +28,7 @@ void ArgSlot_Value::FeedValue(RefPtr<Value> pValue)
 	_pValue.reset(pValue.release());
 }
 
-bool ArgSlot_Value::IsValid() const
-{
-	return true;
-}
-
-String ArgSlot_Value::ToString(const StringStyle& ss) const
+String ArgSlot_Single::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += GetDeclArg().GetSymbol()->GetName();
@@ -43,9 +38,9 @@ String ArgSlot_Value::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// ArgSlot_List
+// ArgSlot_Multiple
 //------------------------------------------------------------------------------
-void ArgSlot_List::FeedValue(RefPtr<Value> pValue)
+void ArgSlot_Multiple::FeedValue(RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
 	pValue.reset(vtype.DoCastFrom(pValue.release()));
@@ -53,12 +48,7 @@ void ArgSlot_List::FeedValue(RefPtr<Value> pValue)
 	_pValue->GetValueTypedOwner().Add(pValue.release());
 }
 
-bool ArgSlot_List::IsValid() const
-{
-	return true;
-}
-
-String ArgSlot_List::ToString(const StringStyle& ss) const
+String ArgSlot_Multiple::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += GetDeclArg().GetSymbol()->GetName();

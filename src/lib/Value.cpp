@@ -68,20 +68,6 @@ const DeclCaller* Value::GetDeclCaller()
 	return nullptr;
 }
 
-void Value::Call(Frame& frame)
-{
-	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
-	Argument& argument = pValue->GetArgument();
-	if (argument.CheckValidity()) DoCall(frame, argument);
-}
-
-void Value::IndexAccess(Frame& frame)
-{
-	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
-	Argument& argument = pValue->GetArgument();
-	if (argument.CheckValidity()) DoIndexAccess(frame, argument);
-}
-
 void Value::DoCall(Frame& frame, const Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,

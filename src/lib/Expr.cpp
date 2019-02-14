@@ -159,7 +159,7 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 
 void Expr_Identifier::Exec(Frame& frame) const
 {
-	Value* pValue = frame.LookupValue(GetSymbol());
+	const Value* pValue = frame.LookupValue(GetSymbol());
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return;
@@ -171,8 +171,8 @@ void Expr_Identifier::Assign(Frame& frame, const Expr* pExprAssigned, const Oper
 {
 	pExprAssigned->Exec(frame);
 	if (Error::IsIssued()) return;
-	//RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
-	RefPtr<Value> pValueAssigned(Context::PopStack());
+	RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
+	//RefPtr<Value> pValueAssigned(Context::PopStack());
 	frame.AssignValue(GetSymbol(), pValueAssigned.release());
 }
 
@@ -227,13 +227,17 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 
 void Expr_UnaryOp::Exec(Frame& frame) const
 {
-	GetExprChild()->Exec(frame);
-	if (Error::IsIssued()) return;
-	RefPtr<Value> pValueChild(Context::PopStack());
-	if (!pValueChild) return;
-	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
-	if (!pValue) return;
-	Context::PushStack(pValue.release());
+	do {
+		GetExprChild()->Exec(frame);
+		if (Error::IsIssued()) return;
+	} while (0);
+	do {
+		RefPtr<Value> pValueChild(Context::PopStack());
+		if (!pValueChild) return;
+		RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
+		if (!pValue) return;
+		Context::PushStack(pValue.release());
+	} while (0);
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -284,16 +288,22 @@ const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 
 void Expr_BinaryOp::Exec(Frame& frame) const
 {
-	GetExprLeft()->Exec(frame);
-	if (Error::IsIssued()) return;
-	GetExprRight()->Exec(frame);
-	if (Error::IsIssued()) return;
-	RefPtr<Value> pValueRight(Context::PopStack());
-	RefPtr<Value> pValueLeft(Context::PopStack());
-	if (!pValueLeft || !pValueRight) return;
-	RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
-	if (!pValue) return;
-	Context::PushStack(pValue.release());
+	do {
+		GetExprLeft()->Exec(frame);
+		if (Error::IsIssued()) return;
+	} while (0);
+	do {
+		GetExprRight()->Exec(frame);
+		if (Error::IsIssued()) return;
+	} while (0);
+	do {
+		RefPtr<Value> pValueRight(Context::PopStack());
+		RefPtr<Value> pValueLeft(Context::PopStack());
+		if (!pValueLeft || !pValueRight) return;
+		RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
+		if (!pValue) return;
+		Context::PushStack(pValue.release());
+	} while (0);
 }
 
 void Expr_BinaryOp::ExecForArgument(Frame& frame) const
@@ -406,6 +416,11 @@ const Expr::TypeInfo Expr_Root::typeInfo;
 
 void Expr_Root::Exec(Frame& frame) const
 {
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->Exec(frame);
+		if (Error::IsIssued()) return;
+		Value::Delete(Context::PopStack());
+	}
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const
@@ -440,6 +455,11 @@ const Expr::TypeInfo Expr_Block::typeInfo;
 
 void Expr_Block::Exec(Frame& frame) const
 {
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->Exec(frame);
+		if (Error::IsIssued()) return;
+		Value::Delete(Context::PopStack());
+	}
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const
@@ -558,14 +578,19 @@ const Expr::TypeInfo Expr_Lister::typeInfo;
 
 void Expr_Lister::Exec(Frame& frame) const
 {
-	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
-	pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
+	do {
+		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
+		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
+		Context::PushStack(new Value_List(pValueTypedOwner.release()));
+	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(frame);
 		if (Error::IsIssued()) return;
-		pValueTypedOwner->Add(Context::PopStack());
+		RefPtr<Value> pValue(Context::PopStack());
+		ValueTypedOwner& valueTypedOwner =
+			dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
+		valueTypedOwner.Add(pValue.release());
 	}
-	Context::PushStack(new Value_List(pValueTypedOwner.release()));
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const
@@ -610,14 +635,21 @@ void Expr_Indexer::Exec(Frame& frame) const
 {
 	GetExprCar()->Exec(frame);
 	if (Error::IsIssued()) return;
-	RefPtr<Value> pValue(Context::PopStack());
-	RefPtr<Argument> pArgument(new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference()));
-	Context::PushStack(new Value_Argument(pArgument.release()));
-	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecForArgument(frame);
-		if (Error::IsIssued()) return;
-	}
-	pValue->IndexAccess(frame);
+	do {
+		RefPtr<Value> pValue(Context::PopStack());
+		RefPtr<Argument> pArgument(new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference()));
+		Context::PushStack(new Value_Argument(pArgument.release()));
+		for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+			pExpr->ExecForArgument(frame);
+			if (Error::IsIssued()) return;
+		}
+	} while (0);
+	do {
+		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
+		const Argument& argument = pValue->GetArgument();
+		if (!argument.CheckValidity()) return;
+		pValue->DoIndexAccess(frame, pValue->GetArgument());
+	} while (0);
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
@@ -650,21 +682,28 @@ void Expr_Caller::Exec(Frame& frame) const
 {
 	GetExprCar()->Exec(frame);
 	if (Error::IsIssued()) return;
-	RefPtr<Value> pValue(Context::PopStack());
-	const DeclCaller* pDeclCaller = pValue->GetDeclCaller();
-	if (!pDeclCaller) {
-		Error::Issue(ErrorType::ValueError,
-					 "value type %s can not be called", pValue->GetVType().MakeFullName().c_str());
-		return;
-	}
-	if (!pDeclCaller->CheckAttribute(GetAttr())) return;
-	RefPtr<Argument> pArgument(new Argument(pDeclCaller->Reference(), GetAttr().Reference()));
-	Context::PushStack(new Value_Argument(pArgument.release()));
-	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecForArgument(frame);
-		if (Error::IsIssued()) return;
-	}
-	pValue->Call(frame);
+	do {
+		RefPtr<Value> pValue(Context::PopStack());
+		const DeclCaller* pDeclCaller = pValue->GetDeclCaller();
+		if (!pDeclCaller) {
+			Error::Issue(ErrorType::ValueError,
+						 "value type %s can not be called", pValue->GetVType().MakeFullName().c_str());
+			return;
+		}
+		if (!pDeclCaller->CheckAttribute(GetAttr())) return;
+		RefPtr<Argument> pArgument(new Argument(pDeclCaller->Reference(), GetAttr().Reference()));
+		Context::PushStack(new Value_Argument(pArgument.release()));
+		for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+			pExpr->ExecForArgument(frame);
+			if (Error::IsIssued()) return;
+		}
+	} while (0);
+	do {
+		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
+		const Argument& argument = pValue->GetArgument();
+		if (!argument.CheckValidity()) return;
+		pValue->DoCall(frame, argument);
+	} while (0);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

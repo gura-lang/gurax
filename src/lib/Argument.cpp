@@ -15,10 +15,14 @@ Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
 	for (const DeclArg* pDeclArg : declArgOwner) {
 		ArgSlot* pArgSlot = nullptr;
-		if (pDeclArg->IsOccurZeroOrMore() || pDeclArg->IsOccurOnceOrMore()) {
-			pArgSlot = new ArgSlot_List(pDeclArg->Reference());
-		} else {
-			pArgSlot = new ArgSlot_Value(pDeclArg->Reference());
+		if (pDeclArg->IsOccurOnce()) {
+			pArgSlot = new ArgSlot_Once(pDeclArg->Reference());
+		} else if (pDeclArg->IsOccurZeroOrOnce()) {
+			pArgSlot = new ArgSlot_ZeroOrOnce(pDeclArg->Reference());
+		} else if (pDeclArg->IsOccurZeroOrMore()) {
+			pArgSlot = new ArgSlot_ZeroOrMore(pDeclArg->Reference());
+		} else { // if (pDeclArg->IsOccurOnceOrMore())
+			pArgSlot = new ArgSlot_OnceOrMore(pDeclArg->Reference());
 		}
 		if (pArgSlotLast) {
 			pArgSlotLast->SetNext(pArgSlot);
@@ -33,6 +37,12 @@ Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 
 bool Argument::CheckValidity() const
 {
+	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		if (!pArgSlot->IsValid()) {
+			Error::Issue(ErrorType::ArgumentError, "not enough argument");
+			return false;
+		}
+	}
 	return true;
 }
 

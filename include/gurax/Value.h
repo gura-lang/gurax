@@ -90,9 +90,6 @@ public:
 public:
 	static void Bootup();
 public:
-	void Call(Frame& frame);
-	void IndexAccess(Frame& frame);
-public:
 	static Value* undefined()	{ return _pValue_undefined->Reference(); }
 	static Value* nil()			{ return _pValue_nil->Reference(); }
 	static Value* false_()		{ return _pValue_false_->Reference(); }
