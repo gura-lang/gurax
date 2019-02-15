@@ -687,7 +687,7 @@ void Expr_Indexer::Exec() const
 		Frame& frame = Context::GetFrame();
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
 		Argument& argument = pValue->GetArgument();
-		if (!argument.CheckValidity()) return;
+		//if (!argument.CheckValidity()) return;
 		argument.IndexAccess(frame);
 	} while (0);
 }
