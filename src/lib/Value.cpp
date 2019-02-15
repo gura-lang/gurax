@@ -32,6 +32,7 @@ void Value::Bootup()
 	VTYPE_Iterator.Prepare(frame);
 	VTYPE_VType.Prepare(frame);
 	VTYPE_List.Prepare(frame);
+	VTYPE_Member.Prepare(frame);
 	VTYPE_Module.Prepare(frame);
 	VTYPE_Nil.Prepare(frame);
 	VTYPE_Number.Prepare(frame);

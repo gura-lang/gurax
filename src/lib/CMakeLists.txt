@@ -49,6 +49,7 @@ add_library(guraxcore SHARED
 	Value_Function.cpp
 	Value_Iterator.cpp
 	Value_List.cpp
+	Value_Member.cpp
 	Value_Module.cpp
 	Value_Nil.cpp
 	Value_Number.cpp

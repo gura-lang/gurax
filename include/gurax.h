@@ -51,6 +51,7 @@
 #include "gurax/Value_Function.h"
 #include "gurax/Value_Iterator.h"
 #include "gurax/Value_List.h"
+#include "gurax/Value_Member.h"
 #include "gurax/Value_Module.h"
 #include "gurax/Value_Nil.h"
 #include "gurax/Value_Number.h"
