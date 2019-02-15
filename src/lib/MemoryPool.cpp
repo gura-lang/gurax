@@ -11,7 +11,7 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPool;
 
 MemoryPool::MemoryPool() :
-	_chunkFixed1(64, 20), _chunkFixed2(192, 20), _chunkVariable()
+	_chunkFixed1(64, 20), _chunkFixed2(128, 20), _chunkVariable()
 {
 }
 

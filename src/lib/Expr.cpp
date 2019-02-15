@@ -433,6 +433,8 @@ void Expr_Member::Exec() const
 	do {
 		GetExprTarget()->Exec();
 		if (Error::IsIssued()) return;
+	} while (0);
+	do {
 		RefPtr<Value> pValueTarget(Context::PopStack());
 		Value* pValue = pValueTarget->GetFrame().LookupValue(GetSymbol());
 		if (!pValue) {
@@ -688,7 +690,7 @@ void Expr_Indexer::Exec() const
 	do {
 		RefPtr<Value> pValueCar(Context::PopStack());
 		RefPtr<Argument> pArgument(
-			new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), pValueCar.release()));
+			new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
 		Context::PushStack(new Value_Argument(pArgument.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -746,7 +748,7 @@ void Expr_Caller::Exec() const
 		}
 		if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 		RefPtr<Argument> pArgument(
-			new Argument(pDeclCaller->Reference(), GetAttr().Reference(), pValueCar.release()));
+			new Argument(pDeclCaller->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
 		Context::PushStack(new Value_Argument(pArgument.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {

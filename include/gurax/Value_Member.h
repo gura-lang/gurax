@@ -28,15 +28,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Member");
 private:
-	RefPtr<Value> _pValueTarget;
+	RefPtr<Value> _pValueThis;
 	RefPtr<Value> _pValueProp;
 public:
 	// Constructor
-	Value_Member(Value* pValueTarget, Value* pValueProp, VType& vtype = VTYPE_Member) :
-		Value_Object(vtype), _pValueTarget(pValueTarget), _pValueProp(pValueProp) {}
+	Value_Member(Value* pValueThis, Value* pValueProp, VType& vtype = VTYPE_Member) :
+		Value_Object(vtype), _pValueThis(pValueThis), _pValueProp(pValueProp) {}
 	// Copy constructor/operator
 	Value_Member(const Value_Member& src) :
-		Value_Object(src), _pValueTarget(src._pValueTarget->Reference()),
+		Value_Object(src), _pValueThis(src._pValueThis->Reference()),
 		_pValueProp(src._pValueProp->Reference()) {}
 	Value_Member& operator=(const Value_Member& src) = delete;
 	// Move constructor/operator
@@ -46,7 +46,7 @@ protected:
 	// Destructor
 	~Value_Member() = default;
 public:
-	Value& GetValueTarget() const { return *_pValueTarget; }
+	Value& GetValueThis() const { return *_pValueThis; }
 	Value& GetValueProp() const { return *_pValueProp; }
 public:
 	// Virtual functions of Value
@@ -57,6 +57,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual const DeclCaller* GetDeclCaller() override { return GetValueProp().GetDeclCaller(); }
 	virtual void DoCall(Frame& frame, Argument& argument) override {
+		argument.SetValueThis(GetValueThis().Reference());
 		GetValueProp().DoCall(frame, argument);
 	}
 	virtual void DoIndexAccess(Frame& frame, Argument& argument) override {

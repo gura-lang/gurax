@@ -23,10 +23,11 @@ private:
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
 	ArgSlot* _pArgSlotToFeed;
+	RefPtr<Value> _pValueThis;
 	RefPtr<Value> _pValueCar;
 public:
 	// Constructor
-	Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueCar);
+	Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis, Value* pValueCar);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -48,6 +49,8 @@ public:
 	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
 	const ArgSlot* GetArgSlotTop() const { return _pArgSlotTop.get(); }
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
+	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
+	Value& GetValueThis() { return *_pValueThis; }
 	Value& GetValueCar() { return *_pValueCar; }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
