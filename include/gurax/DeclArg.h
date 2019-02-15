@@ -9,6 +9,7 @@
 namespace Gurax {
 
 class VType;
+class ArgSlotFactory;
 
 //------------------------------------------------------------------------------
 // DeclArg
@@ -27,13 +28,37 @@ public:
 		static const UInt32 Read			= 1 << 5;	// :r
 		static const UInt32 Write			= 1 << 6;	// :w
 	};
-	enum class OccurPattern {
-		Invalid,
-		Zero,		// (none)
-		Once,		// 1
-		ZeroOrOnce,	// ?
-		ZeroOrMore,	// *
-		OnceOrMore,	// +
+	class OccurPattern {
+	private:
+		const char* _marker;
+		const ArgSlotFactory& _argSlotFactory;
+	public:
+		static const OccurPattern Invalid;
+		static const OccurPattern Zero;			// (none)
+		static const OccurPattern Once;			// 1
+		static const OccurPattern ZeroOrOnce;	// ?
+		static const OccurPattern ZeroOrMore;	// *
+		static const OccurPattern OnceOrMore;	// +
+	public:
+		// Constructor
+		explicit OccurPattern(const char* marker, const ArgSlotFactory& argSlotFactory) :
+		_marker(marker), _argSlotFactory(argSlotFactory) {}
+		// Copy constructor/operator
+		OccurPattern(const OccurPattern& src) = delete;
+		OccurPattern& operator=(const OccurPattern& src) = delete;
+		// Move constructor/operator
+		OccurPattern(OccurPattern&& src) = delete;
+		OccurPattern& operator=(OccurPattern&& src) noexcept = delete;
+		// Destructor
+		virtual ~OccurPattern() = default;
+	public:
+		const char* GetMarker() const { return _marker; }
+		const ArgSlotFactory& GetArgSlotFactory() const { return _argSlotFactory; }
+	public:
+		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+		bool IsIdentical(const OccurPattern& occurPattern) const { return this == &occurPattern; }
+		bool IsEqualTo(const OccurPattern& occurPattern) const { return IsIdentical(occurPattern); }
+		bool IsLessThan(const OccurPattern& occurPattern) const { return this < &occurPattern; }
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
 	public:
@@ -54,15 +79,15 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	const VType* _pVType;
-	OccurPattern _occurPattern;
+	const OccurPattern& _occurPattern;
 	UInt32 _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-			OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault);
+			const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault);
 	DeclArg(const Symbol* pSymbol, const VType& vtype,
-			OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault);
+			const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault);
 	// Copy constructor/operator
 	DeclArg(const DeclArg& src) = delete;
 	DeclArg& operator=(const DeclArg& src) = delete;
@@ -78,11 +103,11 @@ public:
 	bool IsVType(const VType& vtype) const { return _pVType->IsIdentical(vtype); }
 	const VType& GetVType() const { return *_pVType; }
 	void SetVType(const VType* pVType) { _pVType = pVType; }
-	const char* GetOccurPatternString() const { return OccurPatternToString(_occurPattern); }
-	bool IsOccurOnce() const { return _occurPattern == OccurPattern::Once; }
-	bool IsOccurZeroOrOnce() const { return _occurPattern == OccurPattern::ZeroOrOnce; }
-	bool IsOccurZeroOrMore() const { return _occurPattern == OccurPattern::ZeroOrMore; }
-	bool IsOccurOnceOrMore() const { return _occurPattern == OccurPattern::OnceOrMore; }
+	const OccurPattern& GetOccurPattern() const { return _occurPattern; }
+	bool IsOccurOnce() const { return _occurPattern.IsIdentical(OccurPattern::Once); }
+	bool IsOccurZeroOrOnce() const { return _occurPattern.IsIdentical(OccurPattern::ZeroOrOnce); }
+	bool IsOccurZeroOrMore() const { return _occurPattern.IsIdentical(OccurPattern::ZeroOrMore); }
+	bool IsOccurOnceOrMore() const { return _occurPattern.IsIdentical(OccurPattern::OnceOrMore); }
 	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr* pExpr);
@@ -94,7 +119,6 @@ public:
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
 	static String FlagsToString(UInt32 flags);
-	static const char* OccurPatternToString(OccurPattern occurPattern);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclArg& declArg) const { return this == &declArg; }

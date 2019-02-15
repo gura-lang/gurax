@@ -9,7 +9,7 @@ namespace Gurax {
 // DeclArg
 //------------------------------------------------------------------------------
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-				 OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault) :
+				 const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
 	_pVType(pDottedSymbol->IsEmpty()?
 			dynamic_cast<VType*>(&VTYPE_Any) : dynamic_cast<VType*>(&VTYPE_Undefined)),
@@ -18,7 +18,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 }
 
 DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
-				 OccurPattern occurPattern, UInt32 flags, Expr* pExprDefault) :
+				 const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(vtype.MakeDottedSymbol()), _pVType(&vtype),
 	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
 {
@@ -28,7 +28,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	const VType* pVType = nullptr;
-	OccurPattern occurPattern = OccurPattern::Once;
+	const OccurPattern* pOccurPattern = &OccurPattern::Once;
 	UInt32 flags = 0;
 	RefPtr<Expr> pExprDefault;
 	const Attribute* pAttrSrc = nullptr;
@@ -53,13 +53,13 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
 			// x*
-			occurPattern = OccurPattern::ZeroOrMore;
+			pOccurPattern = &OccurPattern::ZeroOrMore;
 		} else if (pOperator->IsType(OpType::PostPos)) {
 			// x+
-			occurPattern = OccurPattern::OnceOrMore;
+			pOccurPattern = &OccurPattern::OnceOrMore;
 		} else if (pOperator->IsType(OpType::PostQuestion)) {
 			// x?
-			occurPattern = OccurPattern::ZeroOrOnce;
+			pOccurPattern = &OccurPattern::ZeroOrOnce;
 		} else {
 			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
 			return nullptr;
@@ -110,8 +110,8 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 		firstFlag = false;
 	}
 	return pVType?
-		new DeclArg(pSymbol, *pVType, occurPattern, flags, pExprDefault.release()) :
-		new DeclArg(pSymbol, pDottedSymbol.release(), occurPattern, flags, pExprDefault.release());
+		new DeclArg(pSymbol, *pVType, *pOccurPattern, flags, pExprDefault.release()) :
+		new DeclArg(pSymbol, pDottedSymbol.release(), *pOccurPattern, flags, pExprDefault.release());
 }
 
 bool DeclArg::FixVType(Frame* pFrame)
@@ -136,14 +136,6 @@ String DeclArg::FlagsToString(UInt32 flags)
 	return rtn;
 }
 
-const char* DeclArg::OccurPatternToString(OccurPattern occurPattern)
-{
-	return
-		(occurPattern == OccurPattern::ZeroOrOnce)? "?" :
-		(occurPattern == OccurPattern::ZeroOrMore)? "*" :
-		(occurPattern == OccurPattern::OnceOrMore)? "+" : "";
-}
-
 String DeclArg::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -151,7 +143,7 @@ String DeclArg::ToString(const StringStyle& ss) const
 	if (quoteFlag) rtn += '`';
 	rtn += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) rtn += "[]";
-	rtn += GetOccurPatternString();
+	rtn += GetOccurPattern().GetMarker();
 	if (quoteFlag) {
 		// nothing to do 
 	} else if (!GetDottedSymbol().IsEmpty()) {
@@ -168,6 +160,16 @@ String DeclArg::ToString(const StringStyle& ss) const
 	}
 	return rtn;
 }
+
+//------------------------------------------------------------------------------
+// DeclArg::OccurPattern
+//------------------------------------------------------------------------------
+const DeclArg::OccurPattern DeclArg::OccurPattern::Invalid		("",	ArgSlot_Once::factory);
+const DeclArg::OccurPattern DeclArg::OccurPattern::Zero			("",	ArgSlot_Once::factory);
+const DeclArg::OccurPattern DeclArg::OccurPattern::Once			("",	ArgSlot_Once::factory);
+const DeclArg::OccurPattern DeclArg::OccurPattern::ZeroOrOnce	("?",	ArgSlot_ZeroOrOnce::factory);
+const DeclArg::OccurPattern DeclArg::OccurPattern::ZeroOrMore	("*",	ArgSlot_ZeroOrMore::factory);
+const DeclArg::OccurPattern DeclArg::OccurPattern::OnceOrMore	("+",	ArgSlot_OnceOrMore::factory);
 
 //------------------------------------------------------------------------------
 // DeclArgList

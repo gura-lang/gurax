@@ -19,17 +19,20 @@ public:
 	Gurax_DeclareReferable(ArgSlot);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ArgSlot");
-public:
-	class GURAX_DLLDECLARE Factory {
-	public:
-		virtual ArgSlot* Create(DeclArg* pDeclArg) const = 0;
-	};
 protected:
 	RefPtr<DeclArg> _pDeclArg;
 	RefPtr<ArgSlot> _pArgSlotNext;
 public:
-	ArgSlot(DeclArg* pDeclArg) : _pDeclArg(pDeclArg) {}
+	// Constructor
+	explicit ArgSlot(DeclArg* pDeclArg) : _pDeclArg(pDeclArg) {}
+	// Copy constructor/operator
+	ArgSlot(const ArgSlot& src) = delete;
+	ArgSlot& operator=(const ArgSlot& src) = delete;
+	// Move constructor/operator
+	ArgSlot(ArgSlot&& src) = delete;
+	ArgSlot& operator=(ArgSlot&& src) noexcept = delete;
 protected:
+	// Destructor
 	virtual ~ArgSlot() = default;
 public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
@@ -50,6 +53,14 @@ public:
 	virtual const Value& GetValue() = 0;
 	virtual bool IsUndefined() = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
+};
+
+//------------------------------------------------------------------------------
+// ArgSlotFactory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ArgSlotFactory {
+public:
+	virtual ArgSlot* Create(DeclArg* pDeclArg) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -90,7 +101,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_Once : public ArgSlot_Single {
 public:
-	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
 		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_Once(pDeclArg); }
 	};
@@ -106,7 +117,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_ZeroOrOnce : public ArgSlot_Single {
 public:
-	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
 		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_ZeroOrOnce(pDeclArg); }
 	};
@@ -122,7 +133,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_ZeroOrMore : public ArgSlot_Multiple {
 public:
-	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
 		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_ZeroOrMore(pDeclArg); }
 	};
@@ -138,7 +149,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_OnceOrMore : public ArgSlot_Multiple {
 public:
-	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
 		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_OnceOrMore(pDeclArg); }
 	};
