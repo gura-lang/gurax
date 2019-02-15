@@ -430,14 +430,19 @@ const Expr::TypeInfo Expr_Member::typeInfo;
 
 void Expr_Member::Exec() const
 {
+	do {
+		GetExprTarget()->Exec();
+		if (Error::IsIssued()) return;
+	} while (0);
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += GetExprLeft()->ToString(ss);
+	rtn += GetExprTarget()->ToString(ss);
 	rtn += MemberModeToSymbol(GetMemberMode())->GetName();
-	rtn += GetExprRight()->ToString(ss);
+	rtn += GetSymbol()->ToString();
+	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
 

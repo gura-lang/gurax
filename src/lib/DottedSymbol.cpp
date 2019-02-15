@@ -67,13 +67,11 @@ bool DottedSymbol::AppendFromExpr(const Expr* pExpr)
 	for (;;) {
 		if (pExpr->IsType<Expr_Member>()) {
 			const Expr_Member* pExprMember = dynamic_cast<const Expr_Member*>(pExpr);
-			if (!pExprMember->GetExprRight()->IsType<Expr_Identifier>()) return false;
-			_symbolList.insert(_symbolList.begin(),
-							   dynamic_cast<const Expr_Identifier*>(pExprMember->GetExprRight())->GetSymbol());
-			pExpr = pExprMember->GetExprLeft();
+			_symbolList.insert(_symbolList.begin(), pExprMember->GetSymbol());
+			pExpr = pExprMember->GetExprTarget();
 		} else if (pExpr->IsType<Expr_Identifier>()) {
-			_symbolList.insert(_symbolList.begin(),
-							   dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+			const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExpr);
+			_symbolList.insert(_symbolList.begin(), pExprIdentifier->GetSymbol());
 			break;
 		} else {
 			return false;

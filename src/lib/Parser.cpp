@@ -483,9 +483,10 @@ bool Parser::ReduceThreeTokens()
 				return false;
 			}
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr(Identifier)\n"));
-			pExprGen.reset(new Expr_Member(pExprLeft.release(),
-										   dynamic_cast<Expr_Identifier *>(pExprRight.release()),
-										   memberMode));
+			RefPtr<Expr_Identifier> pExprEx(dynamic_cast<Expr_Identifier *>(pExprRight.release()));
+			pExprGen.reset(new Expr_Member(
+							   pExprLeft.release(), pExprEx->GetSymbol(), pExprEx->GetAttr().Reference(),
+							   memberMode));
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
 			Expr* pExprDst = pExprLeft.get();
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
@@ -526,9 +527,7 @@ bool Parser::ReduceThreeTokens()
 					pAttrDst->SetDottedSymbol(pDottedSymbol.release());
 				} while (0);
 				Expr_Member* pExprMember = dynamic_cast<Expr_Member*>(pExprRight.get());
-				if (pExprMember->GetExprRight()->IsType<Expr_Identifier>()) {
-					pAttrDst->AddAttribute(dynamic_cast<Expr_Identifier*>(pExprMember->GetExprRight())->GetAttr());
-				}
+				pAttrDst->AddAttribute(pExprMember->GetAttr());
 				pExprGen.reset(pExprLeft->Reference());
 			} else if (pExprRight->IsType<Expr_Lister>()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Lister)\n"));

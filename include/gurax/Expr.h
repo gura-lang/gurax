@@ -51,7 +51,8 @@ inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
 // Expr <-+- Expr_Node <------+- Expr_Value
 //        |                   +- Expr_Identifier
 //        |                   +- Expr_Suffixed
-//        |                   `- Expr_Embedded
+//        |                   +- Expr_Embedded
+//        |                   `- Expr_Member
 //        +- Expr_Unary <------- Expr_UnaryOp
 //        +- Expr_Binary <----+- Expr_BinaryOp
 //        |                   `- Expr_Assign
@@ -440,6 +441,35 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Expr_Member : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Member : public Expr_Node {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Member);
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<Expr> _pExprTarget;
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	MemberMode _memberMode;
+public:
+	Expr_Member(Expr* pExprTarget, const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode) :
+		Expr_Node(typeInfo), _pExprTarget(pExprTarget), _pSymbol(pSymbol), _pAttr(pAttr),
+		_memberMode(memberMode) {}
+public:
+	const Expr* GetExprTarget() const { return _pExprTarget.get(); }	
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+	MemberMode GetMemberMode() const { return _memberMode; }
+public:
+	// Virtual functions of Expr
+	virtual void Exec() const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_UnaryOp : public Expr_Unary {
@@ -500,28 +530,6 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
-	virtual void Exec() const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Expr_Member : Expr_Binary
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Member : public Expr_Binary {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Expr_Member);
-public:
-	static const TypeInfo typeInfo;
-protected:
-	MemberMode _memberMode;
-public:
-	Expr_Member(Expr* pExprLeft, Expr* pExprRight, MemberMode memberMode) :
-		Expr_Binary(typeInfo, pExprLeft, pExprRight), _memberMode(memberMode) {}
-public:
-	MemberMode GetMemberMode() const { return _memberMode; }
-public:
-	// Virtual functions of Expr
 	virtual void Exec() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
