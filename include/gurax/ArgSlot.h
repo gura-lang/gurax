@@ -19,6 +19,11 @@ public:
 	Gurax_DeclareReferable(ArgSlot);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ArgSlot");
+public:
+	class GURAX_DLLDECLARE Factory {
+	public:
+		virtual ArgSlot* Create(DeclArg* pDeclArg) const = 0;
+	};
 protected:
 	RefPtr<DeclArg> _pDeclArg;
 	RefPtr<ArgSlot> _pArgSlotNext;
@@ -85,6 +90,13 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_Once : public ArgSlot_Single {
 public:
+	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	public:
+		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_Once(pDeclArg); }
+	};
+public:
+	static const Factory factory;
+public:
 	ArgSlot_Once(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
 	virtual bool IsValid() const { return !_pValue->IsUndefined(); }
 };
@@ -93,6 +105,13 @@ public:
 // ArgSlot_ZeroOrOnce
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_ZeroOrOnce : public ArgSlot_Single {
+public:
+	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	public:
+		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_ZeroOrOnce(pDeclArg); }
+	};
+public:
+	static const Factory factory;
 public:
 	ArgSlot_ZeroOrOnce(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
 	virtual bool IsValid() const { return true; }
@@ -103,6 +122,13 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_ZeroOrMore : public ArgSlot_Multiple {
 public:
+	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	public:
+		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_ZeroOrMore(pDeclArg); }
+	};
+public:
+	static const Factory factory;
+public:
 	ArgSlot_ZeroOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
 	virtual bool IsValid() const { return true; }
 };
@@ -111,6 +137,13 @@ public:
 // ArgSlot_OnceOrMore
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_OnceOrMore : public ArgSlot_Multiple {
+public:
+	class GURAX_DLLDECLARE Factory : public ArgSlot::Factory {
+	public:
+		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_OnceOrMore(pDeclArg); }
+	};
+public:
+	static const Factory factory;
 public:
 	ArgSlot_OnceOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
 	virtual bool IsValid() const { return !_pValue->GetValueTypedOwner().IsEmpty(); }

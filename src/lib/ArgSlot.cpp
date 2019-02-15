@@ -57,4 +57,24 @@ String ArgSlot_Multiple::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
+//------------------------------------------------------------------------------
+// ArgSlot_Once
+//------------------------------------------------------------------------------
+const ArgSlot_Once::Factory ArgSlot_Once::factory;
+
+//------------------------------------------------------------------------------
+// ArgSlot_ZeroOrOnce
+//------------------------------------------------------------------------------
+const ArgSlot_ZeroOrOnce::Factory ArgSlot_ZeroOrOnce::factory;
+
+//------------------------------------------------------------------------------
+// ArgSlot_ZeroOrMore
+//------------------------------------------------------------------------------
+const ArgSlot_ZeroOrMore::Factory ArgSlot_ZeroOrMore::factory;
+
+//------------------------------------------------------------------------------
+// ArgSlot_OnceOrMore
+//------------------------------------------------------------------------------
+const ArgSlot_OnceOrMore::Factory ArgSlot_OnceOrMore::factory;
+
 }
