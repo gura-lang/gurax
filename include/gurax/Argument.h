@@ -23,10 +23,10 @@ private:
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
 	ArgSlot* _pArgSlotToFeed;
-	RefPtr<Value> _pValueTarget;
+	RefPtr<Value> _pValueCar;
 public:
 	// Constructor
-	Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueTarget);
+	Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueCar);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -48,7 +48,7 @@ public:
 	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
 	const ArgSlot* GetArgSlotTop() const { return _pArgSlotTop.get(); }
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
-	Value& GetValueTarget() { return *_pValueTarget; }
+	Value& GetValueCar() { return *_pValueCar; }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);
@@ -60,8 +60,8 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
-	void Call(Frame& frame) { GetValueTarget().DoCall(frame, *this); }
-	void IndexAccess(Frame& frame) { GetValueTarget().DoIndexAccess(frame, *this); }
+	void Call(Frame& frame) { GetValueCar().DoCall(frame, *this); }
+	void IndexAccess(Frame& frame) { GetValueCar().DoIndexAccess(frame, *this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& argument) const { return this == &argument; }

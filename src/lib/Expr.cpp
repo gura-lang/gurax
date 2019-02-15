@@ -674,9 +674,9 @@ void Expr_Indexer::Exec() const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
-		RefPtr<Value> pValueTarget(Context::PopStack());
+		RefPtr<Value> pValueCar(Context::PopStack());
 		RefPtr<Argument> pArgument(
-			new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), pValueTarget.release()));
+			new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), pValueCar.release()));
 		Context::PushStack(new Value_Argument(pArgument.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -725,16 +725,16 @@ void Expr_Caller::Exec() const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
-		RefPtr<Value> pValueTarget(Context::PopStack());
-		const DeclCaller* pDeclCaller = pValueTarget->GetDeclCaller();
+		RefPtr<Value> pValueCar(Context::PopStack());
+		const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
 		if (!pDeclCaller) {
 			Error::Issue(ErrorType::ValueError,
-						 "value type %s can not be called", pValueTarget->GetVType().MakeFullName().c_str());
+						 "value type %s can not be called", pValueCar->GetVType().MakeFullName().c_str());
 			return;
 		}
 		if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 		RefPtr<Argument> pArgument(
-			new Argument(pDeclCaller->Reference(), GetAttr().Reference(), pValueTarget.release()));
+			new Argument(pDeclCaller->Reference(), GetAttr().Reference(), pValueCar.release()));
 		Context::PushStack(new Value_Argument(pArgument.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
