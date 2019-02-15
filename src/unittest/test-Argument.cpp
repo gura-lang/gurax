@@ -21,6 +21,11 @@ static DeclCaller* ComposeDeclCaller(const char* src)
 	return nullptr;
 }
 
+static Argument* ComposeArgument(const char* src)
+{
+	return new Argument(ComposeDeclCaller(src), Attribute::Empty->Reference(), Value::nil());
+}
+
 static void PrintArgument(const Argument &argument)
 {
 	::printf("%s\n", argument.ToString().c_str());
@@ -29,11 +34,11 @@ static void PrintArgument(const Argument &argument)
 Gurax_TesterEntry(Argument)
 {
 	do {
-		RefPtr<Argument> pArgument(new Argument(ComposeDeclCaller("f()"), Attribute::Empty->Reference()));
+		RefPtr<Argument> pArgument(ComposeArgument("f()"));
 		PrintArgument(*pArgument);
 	} while (0);
 	do {
-		RefPtr<Argument> pArgument(new Argument(ComposeDeclCaller("f(a, b, c)"), Attribute::Empty->Reference()));
+		RefPtr<Argument> pArgument(ComposeArgument("f(a, b, c)"));
 		PrintArgument(*pArgument);
 		pArgument->FeedValue(new Value_Number(3));
 		pArgument->FeedValue(new Value_Number(1));
@@ -41,7 +46,7 @@ Gurax_TesterEntry(Argument)
 		PrintArgument(*pArgument);
 	} while (0);
 	do {
-		RefPtr<Argument> pArgument(new Argument(ComposeDeclCaller("f(a+)"), Attribute::Empty->Reference()));
+		RefPtr<Argument> pArgument(ComposeArgument("f(a+)"));
 		PrintArgument(*pArgument);
 		pArgument->FeedValue(new Value_Number(3));
 		pArgument->FeedValue(new Value_Number(1));
@@ -49,7 +54,7 @@ Gurax_TesterEntry(Argument)
 		PrintArgument(*pArgument);
 	} while (0);
 	do {
-		RefPtr<Argument> pArgument(new Argument(ComposeDeclCaller("f(a, b, c+)"), Attribute::Empty->Reference()));
+		RefPtr<Argument> pArgument(ComposeArgument("f(a, b, c+)"));
 		PrintArgument(*pArgument);
 		pArgument->FeedValue(new Value_Number(3));
 		pArgument->FeedValue(new Value_Number(1));

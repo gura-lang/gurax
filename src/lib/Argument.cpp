@@ -8,8 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
-	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotToFeed(nullptr)
+Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueTarget) :
+	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotToFeed(nullptr),
+	_pValueTarget(pValueTarget)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
