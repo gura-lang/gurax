@@ -49,7 +49,8 @@ public:
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
-		_pArgSlotToFeed->FeedValue(pValue); _pArgSlotToFeed = _pArgSlotToFeed->GoNext();
+		_pArgSlotToFeed->FeedValue(pValue);
+		_pArgSlotToFeed = _pArgSlotToFeed->GoNext();
 	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
 		return _pArgSlotTop? _pArgSlotTop->Find(pSymbol) : nullptr;

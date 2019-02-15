@@ -10,23 +10,31 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void Expr::ExecForArgument() const
 {
-	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
-	if (!pArgSlot) {
-		Error::Issue(ErrorType::ArgumentError, "too many arguments");
-		return;
-	}
-	if (!pArgSlot->IsUndefined()) {
-		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
-		return;
-	}
-	if (pArgSlot->IsVType(VTYPE_Quote)) {
-		argument.FeedValue(new Value_Expr(Reference()));
-	} else {
+	do {
+		Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+		ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+		if (!pArgSlot) {
+			Error::Issue(ErrorType::ArgumentError, "too many arguments");
+			return;
+		}
+		if (!pArgSlot->IsVacant()) {
+			Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+			return;
+		}
+		if (pArgSlot->IsVType(VTYPE_Quote)) {
+			argument.FeedValue(new Value_Expr(Reference()));
+			return;
+		}
+	} while (0);
+	do {
 		Exec();
 		if (Error::IsIssued()) return;
-		argument.FeedValue(Context::PopStack());
-	}
+	} while (0);
+	do {
+		RefPtr<Value> pValue(Context::PopStack());
+		Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+		argument.FeedValue(pValue.release());
+	} while (0);
 }
 
 int Expr::CalcIndentLevel() const
@@ -318,8 +326,7 @@ void Expr_BinaryOp::ExecForArgument() const
 	if (!GetOperator()->IsType(OpType::Pair)) {
 		Expr_Binary::ExecForArgument();
 		return;
-	}
-	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
+	} else if (!GetExprLeft()->IsType<Expr_Identifier>()) {
 		Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
 		return;
 	}
@@ -329,6 +336,14 @@ void Expr_BinaryOp::ExecForArgument() const
 		ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
 		if (!pArgSlot) {
 			Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
+			return;
+		}
+		if (!pArgSlot->IsVacant()) {
+			Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+			return;
+		}
+		if (pArgSlot->IsVType(VTYPE_Quote)) {
+			pArgSlot->FeedValue(new Value_Expr(GetExprRight()->Reference()));
 			return;
 		}
 		GetExprRight()->Exec();

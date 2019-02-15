@@ -52,6 +52,7 @@ public:
 	virtual ArgSlot* GoNext() { return _pArgSlotNext.get(); }
 	virtual const Value& GetValue() = 0;
 	virtual bool IsUndefined() = 0;
+	virtual bool IsVacant() = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
 };
 
@@ -76,6 +77,7 @@ public:
 	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual const Value& GetValue() override { return *_pValue; }
 	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
+	virtual bool IsVacant() override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -93,6 +95,7 @@ public:
 	virtual ArgSlot* GoNext() override { return this; }
 	virtual const Value& GetValue() override { return *_pValue; }
 	virtual bool IsUndefined() override { return false; }
+	virtual bool IsVacant() override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
