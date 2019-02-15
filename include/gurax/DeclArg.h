@@ -104,6 +104,7 @@ public:
 	const VType& GetVType() const { return *_pVType; }
 	void SetVType(const VType* pVType) { _pVType = pVType; }
 	const OccurPattern& GetOccurPattern() const { return _occurPattern; }
+	const ArgSlotFactory& GetArgSlotFactory() const { return GetOccurPattern().GetArgSlotFactory(); }
 	bool IsOccurOnce() const { return _occurPattern.IsIdentical(OccurPattern::Once); }
 	bool IsOccurZeroOrOnce() const { return _occurPattern.IsIdentical(OccurPattern::ZeroOrOnce); }
 	bool IsOccurZeroOrMore() const { return _occurPattern.IsIdentical(OccurPattern::ZeroOrMore); }

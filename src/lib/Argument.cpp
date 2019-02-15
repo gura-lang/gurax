@@ -11,25 +11,18 @@ namespace Gurax {
 Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr) :
 	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotToFeed(nullptr)
 {
-	ArgSlot* pArgSlotLast = nullptr;
 	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
-	for (const DeclArg* pDeclArg : declArgOwner) {
-		ArgSlot* pArgSlot = nullptr;
-		if (pDeclArg->IsOccurOnce()) {
-			pArgSlot = new ArgSlot_Once(pDeclArg->Reference());
-		} else if (pDeclArg->IsOccurZeroOrOnce()) {
-			pArgSlot = new ArgSlot_ZeroOrOnce(pDeclArg->Reference());
-		} else if (pDeclArg->IsOccurZeroOrMore()) {
-			pArgSlot = new ArgSlot_ZeroOrMore(pDeclArg->Reference());
-		} else { // if (pDeclArg->IsOccurOnceOrMore())
-			pArgSlot = new ArgSlot_OnceOrMore(pDeclArg->Reference());
-		}
-		if (pArgSlotLast) {
+	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
+	if (ppDeclArg != declArgOwner.end()) {
+		DeclArg* pDeclArg = *ppDeclArg++;
+		_pArgSlotTop.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));
+		ArgSlot* pArgSlotLast = _pArgSlotTop.get();
+		while (ppDeclArg != declArgOwner.end()) {
+			DeclArg* pDeclArg = *ppDeclArg++;
+			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference());
 			pArgSlotLast->SetNext(pArgSlot);
-		} else {
-			_pArgSlotTop.reset(pArgSlot);
-		}
-		pArgSlotLast = pArgSlot;
+			pArgSlotLast = pArgSlot;
+		}			
 	}
 	_pArgSlotToFeed = _pArgSlotTop.get();
 	_flags = GetDeclCaller().GetFlags() | DeclCaller::SymbolsToFlags(GetAttr().GetSymbols());
