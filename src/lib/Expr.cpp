@@ -434,7 +434,12 @@ void Expr_Member::Exec() const
 		GetExprTarget()->Exec();
 		if (Error::IsIssued()) return;
 		RefPtr<Value> pValueTarget(Context::PopStack());
-		
+		Value* pValue = pValueTarget->GetFrame().LookupValue(GetSymbol());
+		if (!pValue) {
+			Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
+			return;
+		}
+		Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
 	} while (0);
 }
 

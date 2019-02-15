@@ -29,15 +29,15 @@ public:
 	Gurax_MemoryPoolAllocator("Value_Member");
 private:
 	RefPtr<Value> _pValueTarget;
-	RefPtr<Value> _pValueSelector;
+	RefPtr<Value> _pValueProp;
 public:
 	// Constructor
-	Value_Member(Value* pValueTarget, Value* pValueSelector, VType& vtype = VTYPE_Member) :
-		Value_Object(vtype), _pValueTarget(pValueTarget), _pValueSelector(pValueSelector) {}
+	Value_Member(Value* pValueTarget, Value* pValueProp, VType& vtype = VTYPE_Member) :
+		Value_Object(vtype), _pValueTarget(pValueTarget), _pValueProp(pValueProp) {}
 	// Copy constructor/operator
 	Value_Member(const Value_Member& src) :
 		Value_Object(src), _pValueTarget(src._pValueTarget->Reference()),
-		_pValueSelector(src._pValueSelector->Reference()) {}
+		_pValueProp(src._pValueProp->Reference()) {}
 	Value_Member& operator=(const Value_Member& src) = delete;
 	// Move constructor/operator
 	Value_Member(Value_Member&& src) = delete;
@@ -47,7 +47,7 @@ protected:
 	~Value_Member() = default;
 public:
 	Value& GetValueTarget() const { return *_pValueTarget; }
-	Value& GetValueSelector() const { return *_pValueSelector; }
+	Value& GetValueProp() const { return *_pValueProp; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -55,6 +55,13 @@ public:
 	virtual bool IsEqualTo(const Value* pValue) const override { return this == pValue; }
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual const DeclCaller* GetDeclCaller() override { return GetValueProp().GetDeclCaller(); }
+	virtual void DoCall(Frame& frame, const Argument& argument) override {
+		GetValueProp().DoCall(frame, argument);
+	}
+	virtual void DoIndexAccess(Frame& frame, const Argument& argument) override {
+		GetValueProp().DoIndexAccess(frame, argument);
+	}
 };
 
 }

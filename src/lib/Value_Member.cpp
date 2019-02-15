@@ -22,9 +22,9 @@ void VType_Member::DoPrepare(Frame& frame)
 String Value_Member::ToStringDetail(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += GetValueTarget().ToStringDetail(ss);
-	rtn += '.';
-	rtn += GetValueSelector().ToStringDetail(ss);
+	//rtn += GetValueTarget().ToStringDetail(ss);
+	//rtn += '.';
+	rtn += GetValueProp().ToStringDetail(ss);
 	return rtn;
 }
 
