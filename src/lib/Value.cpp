@@ -20,6 +20,7 @@ void Value::Bootup()
 	Frame& frame = Context::GetFrame();
 	VTYPE_Object.Prepare(frame);
 	VTYPE_Any.Prepare(frame);
+	VTYPE_ArgSlot.Prepare(frame);
 	VTYPE_Argument.Prepare(frame);
 	VTYPE_Attribute.Prepare(frame);
 	VTYPE_Binary.Prepare(frame);

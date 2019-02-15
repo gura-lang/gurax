@@ -60,9 +60,9 @@ public:
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Argument& attr) const { return this == &attr; }
-	bool IsEqualTo(const Argument& attr) const { return IsIdentical(attr); }
-	bool IsLessThan(const Argument& attr) const { return this < &attr; }
+	bool IsIdentical(const Argument& argument) const { return this == &argument; }
+	bool IsEqualTo(const Argument& argument) const { return IsIdentical(argument); }
+	bool IsLessThan(const Argument& argument) const { return this < &argument; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

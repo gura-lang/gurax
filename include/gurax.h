@@ -40,6 +40,7 @@
 #include "gurax/Tokenizer.h"
 #include "gurax/Value.h"
 #include "gurax/Value_Any.h"
+#include "gurax/Value_ArgSlot.h"
 #include "gurax/Value_Argument.h"
 #include "gurax/Value_Attribute.h"
 #include "gurax/Value_Binary.h"

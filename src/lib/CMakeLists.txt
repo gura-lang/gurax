@@ -38,6 +38,7 @@ add_library(guraxcore SHARED
 	Unicode-EastAsianWidth.cpp
 	Value.cpp
 	Value_Any.cpp
+	Value_ArgSlot.cpp
 	Value_Argument.cpp
 	Value_Attribute.cpp
 	Value_Binary.cpp

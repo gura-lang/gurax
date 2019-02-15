@@ -46,6 +46,11 @@ public:
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* GoNext() const { return const_cast<ArgSlot*>(this)->GoNext(); }
 public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ArgSlot& argSlot) const { return this == &argSlot; }
+	bool IsEqualTo(const ArgSlot& argSlot) const { return IsIdentical(argSlot); }
+	bool IsLessThan(const ArgSlot& argSlot) const { return this < &argSlot; }
+public:
 	// Virtual functions
 	virtual void FeedValue(RefPtr<Value> pValue) = 0;
 	virtual bool IsValid() const = 0;
