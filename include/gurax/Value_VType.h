@@ -49,7 +49,7 @@ public:
 	const VType& GetVTypeThis() const { return *_pVTypeThis; }
 public:
 	// Virtual functions of Value
-	virtual Frame* ProvideFrame() override { return &GetVTypeThis().GetFrame(); }
+	virtual Frame& GetFrame() override { return GetVTypeThis().GetFrame(); }
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetVTypeThis().CalcHash();

@@ -65,8 +65,7 @@ Frame* Frame::SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail)
 		if (ppSymbol + nTail == symbolList.end()) break;
 		Value* pValue = pFrame->LookupValue(pSymbol);
 		if (!pValue) return nullptr;
-		pFrame = pValue->ProvideFrame();
-		if (!pFrame) return nullptr;
+		pFrame = &pValue->GetFrame();
 	}
 	return pFrame;
 }

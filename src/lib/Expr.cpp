@@ -433,6 +433,8 @@ void Expr_Member::Exec() const
 	do {
 		GetExprTarget()->Exec();
 		if (Error::IsIssued()) return;
+		RefPtr<Value> pValueTarget(Context::PopStack());
+		
 	} while (0);
 }
 

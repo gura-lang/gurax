@@ -98,7 +98,7 @@ public:
 	static Value* EmptyStr()	{ return _pValue_EmptyStr->Reference(); }
 public:
 	// Virtual functions
-	virtual Frame* ProvideFrame() { return nullptr; }
+	virtual Frame& GetFrame() { return GetVType().GetFrame(); }
 	virtual Value* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
