@@ -56,10 +56,10 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual const DeclCaller* GetDeclCaller() override { return GetValueProp().GetDeclCaller(); }
-	virtual void DoCall(Frame& frame, const Argument& argument) override {
+	virtual void DoCall(Frame& frame, Argument& argument) override {
 		GetValueProp().DoCall(frame, argument);
 	}
-	virtual void DoIndexAccess(Frame& frame, const Argument& argument) override {
+	virtual void DoIndexAccess(Frame& frame, Argument& argument) override {
 		GetValueProp().DoIndexAccess(frame, argument);
 	}
 };

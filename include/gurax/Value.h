@@ -105,8 +105,8 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const = 0;
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 	virtual const DeclCaller* GetDeclCaller();
-	virtual void DoCall(Frame& frame, const Argument& argument);
-	virtual void DoIndexAccess(Frame& frame, const Argument& argument);
+	virtual void DoCall(Frame& frame, Argument& argument);
+	virtual void DoIndexAccess(Frame& frame, Argument& argument);
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;

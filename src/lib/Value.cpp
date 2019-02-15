@@ -70,13 +70,13 @@ const DeclCaller* Value::GetDeclCaller()
 	return nullptr;
 }
 
-void Value::DoCall(Frame& frame, const Argument& argument)
+void Value::DoCall(Frame& frame, Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be called", GetVType().MakeFullName().c_str());
 }
 
-void Value::DoIndexAccess(Frame& frame, const Argument& argument)
+void Value::DoIndexAccess(Frame& frame, Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
