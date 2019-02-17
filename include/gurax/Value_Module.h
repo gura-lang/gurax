@@ -50,7 +50,6 @@ public:
 	const Module& GetModule() const { return *_pModule; }
 public:
 	// Virtual functions of Value
-	virtual Frame& GetFrame() override { return GetModule().GetFrame(); }
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetModule().CalcHash();
@@ -66,6 +65,13 @@ public:
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetModule().ToString(ss);
+	}
+	virtual Frame& GetFrame() override { return GetModule().GetFrame(); }
+	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const override {
+		return GetModule().GetFrame().LookupValue(pSymbol);
+	}
+	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
+		GetModule().GetFrame().AssignValue(pSymbol, pValue);
 	}
 };
 

@@ -98,7 +98,6 @@ public:
 	static Value* EmptyStr()	{ return _pValue_EmptyStr->Reference(); }
 public:
 	// Virtual functions
-	virtual Frame& GetFrame() { return GetVType().GetFrame(); }
 	virtual Value* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
@@ -107,6 +106,11 @@ public:
 	virtual const DeclCaller* GetDeclCaller();
 	virtual void DoCall(Frame& frame, Argument& argument);
 	virtual void DoIndexAccess(Frame& frame, Argument& argument);
+	virtual Frame& GetFrame() { return GetVType().GetFrame(); }
+	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const {
+		return GetVType().GetFrame().LookupValue(pSymbol);
+	}
+	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr) {}
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;

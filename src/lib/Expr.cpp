@@ -178,14 +178,41 @@ void Expr_Identifier::Exec() const
 
 void Expr_Identifier::ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	do {
-		pExprAssigned->Exec();
-		if (Error::IsIssued()) return;
-	} while (0);
-	do {
-		RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
-		Context::GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
-	} while (0);
+	if (pOperator) {
+		do {
+			const Value* pValue = Context::GetFrame().LookupValue(GetSymbol());
+			if (!pValue) {
+				Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+				return;
+			}
+			Context::PushStack(pValue->Reference());
+		} while (0);
+		do {
+			pExprAssigned->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		do {
+			RefPtr<Value> pValueRight(Context::PopStack());
+			RefPtr<Value> pValueLeft(Context::PopStack());
+			if (!pValueLeft || !pValueRight) return;
+			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
+			if (!pValue) return;
+			Context::PushStack(pValue.release());
+		} while (0);
+		do {
+			RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
+			Context::GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
+		} while (0);
+	} else {
+		do {
+			pExprAssigned->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		do {
+			RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
+			Context::GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
+		} while (0);
+	}
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -432,7 +459,7 @@ void Expr_Member::Exec() const
 	} while (0);
 	do {
 		RefPtr<Value> pValueTarget(Context::PopStack());
-		Value* pValue = pValueTarget->GetFrame().LookupValue(GetSymbol());
+		Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
 		if (!pValue) {
 			Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
 			return;
@@ -443,6 +470,23 @@ void Expr_Member::Exec() const
 
 void Expr_Member::ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const
 {
+	do {
+		GetExprTarget()->Exec();
+		if (Error::IsIssued()) return;
+	} while (0);
+	if (pOperator) {
+	} else {
+		do {
+			pExprAssigned->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		do {
+			RefPtr<Value> pValueAssigned(Context::PopStack());
+			RefPtr<Value> pValueTarget(Context::PopStack());
+			pValueTarget->AssignPropValue(GetSymbol(), pValueAssigned->Reference(), GetAttr());
+			Context::PushStack(pValueAssigned.release());
+		} while (0);
+	}
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
@@ -772,6 +816,7 @@ void Expr_Caller::Exec() const
 
 void Expr_Caller::ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const
 {
+	
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
