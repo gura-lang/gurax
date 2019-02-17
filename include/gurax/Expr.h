@@ -132,8 +132,8 @@ public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Exec() const = 0;
-	virtual void ExecForArgument() const;
-	virtual void Assign(const Expr* pExprAssigned, const Operator* pOperator) const;
+	virtual void ExecInArgument() const;
+	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
 public:
@@ -385,7 +385,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec() const override;
-	virtual void Assign(const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -466,6 +466,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec() const override;
+	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -508,7 +509,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec() const override;
-	virtual void ExecForArgument() const override;
+	virtual void ExecInArgument() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -598,6 +599,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec() const override;
+	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -632,6 +634,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec() const override;
+	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -677,6 +680,7 @@ public:
 		return true;
 	}
 	virtual void Exec() const override;
+	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
