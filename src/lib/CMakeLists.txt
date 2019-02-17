@@ -10,7 +10,6 @@ add_library(guraxcore SHARED
 	DateTime.cpp
 	DeclArg.cpp
 	DeclCaller.cpp
-	DeclProp.cpp
 	DottedSymbol.cpp
 	Environment.cpp
 	Error.cpp
@@ -25,6 +24,7 @@ add_library(guraxcore SHARED
 	Operator.cpp
 	Operators.cpp
 	Parser.cpp
+	Property.cpp
 	Random.cpp
 	Referable.cpp
 	Stream.cpp

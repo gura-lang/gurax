@@ -1,49 +1,49 @@
 //==============================================================================
-// DeclProp.h
+// Property.h
 //==============================================================================
-#ifndef GURAX_DECLPROP_H
-#define GURAX_DECLPROP_H
+#ifndef GURAX_PROPERTY_H
+#define GURAX_PROPERTY_H
 #include "Attribute.h"
 #include "Symbol.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// DeclProp
+// Property
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DeclProp : public Referable {
+class GURAX_DLLDECLARE Property : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(DeclProp);
+	Gurax_DeclareReferable(Property);
 public:
 	// Constructor
-	DeclProp() = default;
+	Property() = default;
 	// Copy constructor/operator
-	DeclProp(const DeclProp& src) {}
-	DeclProp& operator=(const DeclProp& src) = delete;
+	Property(const Property& src) {}
+	Property& operator=(const Property& src) = delete;
 	// Move constructor/operator
-	DeclProp(DeclProp&& src) = delete;
-	DeclProp& operator=(DeclProp&& src) noexcept = delete;
+	Property(Property&& src) = delete;
+	Property& operator=(Property&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~DeclProp() = default;
+	virtual ~Property() = default;
 };
 
 //------------------------------------------------------------------------------
-// DeclPropMap
+// PropertyMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DeclPropMap :
-	public std::unordered_map<const Symbol*, DeclProp*,
+class GURAX_DLLDECLARE PropertyMap :
+	public std::unordered_map<const Symbol*, Property*,
 			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(DeclPropMap);
+	Gurax_DeclareReferable(PropertyMap);
 protected:
-	~DeclPropMap() { Clear(); }
+	~PropertyMap() { Clear(); }
 public:
 	void Clear();
-	void Assign(const Symbol* pSymbol, DeclProp* pDeclProp);
-	DeclProp* Lookup(const Symbol* pSymbol) const {
+	void Assign(const Symbol* pSymbol, Property* pProperty);
+	Property* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
 	}

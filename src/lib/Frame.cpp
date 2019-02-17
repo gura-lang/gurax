@@ -16,7 +16,7 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Source");
 protected:
 	RefPtr<ValueMap> _pValueMap;
-	RefPtr<DeclPropMap> _pDeclPropMap;
+	RefPtr<PropertyMap> _pPropertyMap;
 public:
 	// Constructor
 	Frame_Source() : Frame(Type::Source), _pValueMap(new ValueMap()) {}
@@ -25,15 +25,15 @@ public:
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override {
 		_pValueMap->Assign(pSymbol, pValue);
 	}
-	virtual void AssignDeclProp(const Symbol* pSymbol, DeclProp* pDeclProp) override {
-		if (!_pDeclPropMap) _pDeclPropMap.reset(new DeclPropMap());
-		_pDeclPropMap->Assign(pSymbol, pDeclProp);
+	virtual void AssignProperty(const Symbol* pSymbol, Property* pProperty) override {
+		if (!_pPropertyMap) _pPropertyMap.reset(new PropertyMap());
+		_pPropertyMap->Assign(pSymbol, pProperty);
 	}
 	virtual Value* LookupValue(const Symbol* pSymbol) const override {
 		return _pValueMap->Lookup(pSymbol);
 	}
-	virtual DeclProp* LookupDeclProp(const Symbol* pSymbol) const override {
-		return _pDeclPropMap? _pDeclPropMap->Lookup(pSymbol) : nullptr;
+	virtual Property* LookupProperty(const Symbol* pSymbol) const override {
+		return _pPropertyMap? _pPropertyMap->Lookup(pSymbol) : nullptr;
 	}
 };
 
@@ -122,9 +122,9 @@ void Frame_Branch::AssignValue(const Symbol* pSymbol, Value* pValue)
 	if (_pFrameRight) _pFrameRight->AssignValue(pSymbol, pValue);
 }
 
-void Frame_Branch::AssignDeclProp(const Symbol* pSymbol, DeclProp* pDeclProp)
+void Frame_Branch::AssignProperty(const Symbol* pSymbol, Property* pProperty)
 {
-	if (_pFrameRight) _pFrameRight->AssignDeclProp(pSymbol, pDeclProp);
+	if (_pFrameRight) _pFrameRight->AssignProperty(pSymbol, pProperty);
 }
 
 Value* Frame_Branch::LookupValue(const Symbol* pSymbol) const
@@ -135,12 +135,12 @@ Value* Frame_Branch::LookupValue(const Symbol* pSymbol) const
 	return pValue;
 }
 
-DeclProp* Frame_Branch::LookupDeclProp(const Symbol* pSymbol) const
+Property* Frame_Branch::LookupProperty(const Symbol* pSymbol) const
 {
-	DeclProp* pDeclProp = _pFrameRight? _pFrameRight->LookupDeclProp(pSymbol) : nullptr;
-	if (pDeclProp) return pDeclProp;
-	pDeclProp = _pFrameLeft? _pFrameLeft->LookupDeclProp(pSymbol) : nullptr;
-	return pDeclProp;
+	Property* pProperty = _pFrameRight? _pFrameRight->LookupProperty(pSymbol) : nullptr;
+	if (pProperty) return pProperty;
+	pProperty = _pFrameLeft? _pFrameLeft->LookupProperty(pSymbol) : nullptr;
+	return pProperty;
 }
 
 }

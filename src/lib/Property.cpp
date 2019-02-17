@@ -1,46 +1,46 @@
 //==============================================================================
-// DeclProp.cpp
+// Property.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// DeclProp
+// Property
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// DeclPropMap
+// PropertyMap
 //------------------------------------------------------------------------------
-void DeclPropMap::Clear()
+void PropertyMap::Clear()
 {
-	for (auto& pair : *this) DeclProp::Delete(pair.second);
+	for (auto& pair : *this) Property::Delete(pair.second);
 	clear();
 }
 
-void DeclPropMap::Assign(const Symbol* pSymbol, DeclProp* pDeclProp)
+void PropertyMap::Assign(const Symbol* pSymbol, Property* pProperty)
 {
 	iterator pPair = find(pSymbol);
 	if (pPair == end()) {
-		emplace(pSymbol, pDeclProp);
+		emplace(pSymbol, pProperty);
 	} else {
-		DeclProp::Delete(pPair->second);
-		pPair->second = pDeclProp;
+		Property::Delete(pPair->second);
+		pPair->second = pProperty;
 	}
 }
 
-String DeclPropMap::ToString(const StringStyle& ss) const
+String PropertyMap::ToString(const StringStyle& ss) const
 {
 	String str;
 #if 0
 	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		DeclProp* pDeclProp = Lookup(pSymbol);
+		Property* pProperty = Lookup(pSymbol);
 		str += pSymbol->GetName();
 		str += ":";
-		str += pDeclProp->GetVType().MakeFullName().c_str();
+		str += pProperty->GetVType().MakeFullName().c_str();
 		str += " = ";
-		str += pDeclProp->ToString();
+		str += pProperty->ToString();
 		str += "\n";
 	}
 #endif
