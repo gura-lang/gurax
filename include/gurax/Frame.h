@@ -11,7 +11,6 @@ class Function;
 class VType;
 class Value;
 class Module;
-class Property;
 class Frame_Branch;
 
 //------------------------------------------------------------------------------
@@ -53,9 +52,7 @@ public:
 public:
 	// Virtual functions
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual void AssignProperty(const Symbol* pSymbol, Property* pProperty) = 0;
 	virtual Value* LookupValue(const Symbol* pSymbol) const = 0;
-	virtual Property* LookupProperty(const Symbol* pSymbol) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -82,9 +79,7 @@ public:
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignProperty(const Symbol* pSymbol, Property* pProperty) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
-	virtual Property* LookupProperty(const Symbol* pSymbol) const override;
 };
 
 }

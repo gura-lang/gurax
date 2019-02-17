@@ -18,11 +18,11 @@ void PropertyMap::Clear()
 	clear();
 }
 
-void PropertyMap::Assign(const Symbol* pSymbol, Property* pProperty)
+void PropertyMap::Assign(Property* pProperty)
 {
-	iterator pPair = find(pSymbol);
+	iterator pPair = find(pProperty->GetSymbol());
 	if (pPair == end()) {
-		emplace(pSymbol, pProperty);
+		emplace(pProperty->GetSymbol(), pProperty);
 	} else {
 		Property::Delete(pPair->second);
 		pPair->second = pProperty;

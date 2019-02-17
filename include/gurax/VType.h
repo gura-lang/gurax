@@ -8,6 +8,7 @@
 #include "Referable.h"
 #include "DottedSymbol.h"
 #include "Frame.h"
+#include "Property.h"
 
 namespace Gurax {
 
@@ -31,6 +32,7 @@ protected:
 	UInt32 _flags;
 	RefPtr<Frame_Branch> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
+	RefPtr<PropertyMap> _pPropertyMap;
 private:
 	static SeqId _seqIdNext;
 	static const SeqId SeqId_Invalid = 0;
@@ -67,6 +69,10 @@ public:
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
+	PropertyMap& GetPropertyMap() { return *_pPropertyMap; }
+	const PropertyMap& GetPropertyMap() const { return *_pPropertyMap; }
+	void AssignProperty(Property* pProperty) { GetPropertyMap().Assign(pProperty); }
+	const Property* LookupProperty(const Symbol* pSymbol) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 public:
 	void Prepare(Frame& frameParent) { DoPrepare(frameParent); }

@@ -37,6 +37,13 @@ DottedSymbol* VType::MakeDottedSymbol() const
 	return pDottedSymbol.release();
 }
 
+const Property* VType::LookupProperty(const Symbol* pSymbol) const
+{
+	const Property* pProperty = GetPropertyMap().Lookup(pSymbol);
+	if (!pProperty) pProperty = GetVTypeInherited().LookupProperty(pSymbol);
+	return pProperty;
+}
+
 Value* VType::DoCastFrom(Value* pValue) const
 {
 	if (pValue->IsInstanceOf(*this)) return pValue;

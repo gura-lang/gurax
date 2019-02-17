@@ -15,11 +15,13 @@ class GURAX_DLLDECLARE Property : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Property);
+private:
+	const Symbol* _pSymbol;
 public:
 	// Constructor
-	Property() = default;
+	Property(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Property(const Property& src) {}
+	Property(const Property& src) : _pSymbol(src._pSymbol) {}
 	Property& operator=(const Property& src) = delete;
 	// Move constructor/operator
 	Property(Property&& src) = delete;
@@ -27,6 +29,8 @@ public:
 protected:
 	// Destructor
 	virtual ~Property() = default;
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
 };
 
 //------------------------------------------------------------------------------
@@ -42,7 +46,7 @@ protected:
 	~PropertyMap() { Clear(); }
 public:
 	void Clear();
-	void Assign(const Symbol* pSymbol, Property* pProperty);
+	void Assign(Property* pProperty);
 	Property* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
