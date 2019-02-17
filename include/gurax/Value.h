@@ -17,6 +17,9 @@ class FormatterFlags;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Value : public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Value);
+public:
 	// Algorithm operators
 	struct EqualTo {
 		size_t operator()(const Value* pValue1, const Value* pValue2) const {
@@ -38,9 +41,6 @@ public:
 			return pValue->CalcHash();
 		}
 	};
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Value);
 private:
 	static const Value* _pValue_undefined;
 	static const Value* _pValue_nil;

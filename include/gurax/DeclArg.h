@@ -14,7 +14,7 @@ class ArgSlotFactory;
 //------------------------------------------------------------------------------
 // DeclArg
 //------------------------------------------------------------------------------
-class DeclArg : public Referable {
+class GURAX_DLLDECLARE DeclArg : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclArg);

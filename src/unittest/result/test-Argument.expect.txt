@@ -1,0 +1,8 @@
+[Argument]
+()
+(a => <Undefined>, b => <Undefined>, c => <Undefined>)
+(a => <Number:0x7fa86d026768>, b => <Number:0x7fa86d0267b8>, c => <Number:0x7fa86d026808>)
+(a => [])
+(a => [<Number:0x7fa86d026808>, <Number:0x7fa86d0267b8>, <Number:0x7fa86d026768>])
+(a => <Undefined>, b => <Undefined>, c => [])
+(a => <Number:0x7fa86d026808>, b => <Number:0x7fa86d811e18>, c => [<Number:0x7fa86d811e68>, <Number:0x7fa86d811eb8>, <Number:0x7fa86d811f08>, <Number:0x7fa86d811f58>])
