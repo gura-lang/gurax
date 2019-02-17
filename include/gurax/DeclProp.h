@@ -4,7 +4,7 @@
 #ifndef GURAX_DECLPROP_H
 #define GURAX_DECLPROP_H
 #include "Attribute.h"
-#include "Symbols.h"
+#include "Symbol.h"
 
 namespace Gurax {
 

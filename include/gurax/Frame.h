@@ -11,6 +11,7 @@ class Function;
 class VType;
 class Value;
 class Module;
+class DeclProp;
 class Frame_Branch;
 
 //------------------------------------------------------------------------------
@@ -52,7 +53,9 @@ public:
 public:
 	// Virtual functions
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void AssignDeclProp(const Symbol* pSymbol, DeclProp* pDeclProp) = 0;
 	virtual Value* LookupValue(const Symbol* pSymbol) const = 0;
+	virtual DeclProp* LookupDeclProp(const Symbol* pSymbol) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -79,7 +82,9 @@ public:
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignDeclProp(const Symbol* pSymbol, DeclProp* pDeclProp) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+	virtual DeclProp* LookupDeclProp(const Symbol* pSymbol) const override;
 };
 
 }

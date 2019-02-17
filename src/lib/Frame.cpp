@@ -16,6 +16,7 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Source");
 protected:
 	RefPtr<ValueMap> _pValueMap;
+	RefPtr<DeclPropMap> _pDeclPropMap;
 public:
 	// Constructor
 	Frame_Source() : Frame(Type::Source), _pValueMap(new ValueMap()) {}
@@ -24,8 +25,15 @@ public:
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override {
 		_pValueMap->Assign(pSymbol, pValue);
 	}
+	virtual void AssignDeclProp(const Symbol* pSymbol, DeclProp* pDeclProp) override {
+		if (!_pDeclPropMap) _pDeclPropMap.reset(new DeclPropMap());
+		_pDeclPropMap->Assign(pSymbol, pDeclProp);
+	}
 	virtual Value* LookupValue(const Symbol* pSymbol) const override {
 		return _pValueMap->Lookup(pSymbol);
+	}
+	virtual DeclProp* LookupDeclProp(const Symbol* pSymbol) const override {
+		return _pDeclPropMap? _pDeclPropMap->Lookup(pSymbol) : nullptr;
 	}
 };
 
@@ -114,12 +122,25 @@ void Frame_Branch::AssignValue(const Symbol* pSymbol, Value* pValue)
 	if (_pFrameRight) _pFrameRight->AssignValue(pSymbol, pValue);
 }
 
+void Frame_Branch::AssignDeclProp(const Symbol* pSymbol, DeclProp* pDeclProp)
+{
+	if (_pFrameRight) _pFrameRight->AssignDeclProp(pSymbol, pDeclProp);
+}
+
 Value* Frame_Branch::LookupValue(const Symbol* pSymbol) const
 {
 	Value* pValue = _pFrameRight? _pFrameRight->LookupValue(pSymbol) : nullptr;
 	if (pValue) return pValue;
 	pValue = _pFrameLeft? _pFrameLeft->LookupValue(pSymbol) : nullptr;
 	return pValue;
+}
+
+DeclProp* Frame_Branch::LookupDeclProp(const Symbol* pSymbol) const
+{
+	DeclProp* pDeclProp = _pFrameRight? _pFrameRight->LookupDeclProp(pSymbol) : nullptr;
+	if (pDeclProp) return pDeclProp;
+	pDeclProp = _pFrameLeft? _pFrameLeft->LookupDeclProp(pSymbol) : nullptr;
+	return pDeclProp;
 }
 
 }
