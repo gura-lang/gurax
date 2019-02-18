@@ -646,7 +646,7 @@ void Expr_Iterer::Exec() const
 	do {
 		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
-		Context::PushStack(new Value_List(pValueTypedOwner.release()));
+		Context::PushStack(new Value_Iterator(new Iterator_Each(pValueTypedOwner.release())));
 	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		do {
@@ -655,8 +655,10 @@ void Expr_Iterer::Exec() const
 		} while (0);
 		do {
 			RefPtr<Value> pValue(Context::PopStack());
+			Iterator& iterator =
+				dynamic_cast<Value_Iterator*>(Context::PeekStack(0))->GetIterator();
 			ValueTypedOwner& valueTypedOwner =
-				dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
+				dynamic_cast<Iterator_Each*>(&iterator)->GetValueTypedOwner();
 			valueTypedOwner.Add(pValue.release());
 		} while (0);
 	}

@@ -16,7 +16,9 @@ private:
 	size_t _idx;
 public:
 	Iterator_Each(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner), _idx(0) {}
-	const ValueOwner& GetValueOwner() const { return _pValueTypedOwner->GetValueOwner(); }
+	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
+	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
+	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
 	virtual Value* Next() override {
 		const ValueOwner& valueOwner = GetValueOwner();
 		return (_idx < valueOwner.size())? valueOwner[_idx++] : nullptr;
