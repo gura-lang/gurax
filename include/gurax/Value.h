@@ -107,10 +107,8 @@ public:
 	virtual void DoCall(Frame& frame, Argument& argument);
 	virtual void DoIndexAccess(Frame& frame, Argument& argument);
 	virtual Frame& GetFrame() { return GetVType().GetFrame(); }
-	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const {
-		return GetVType().GetFrame().LookupValue(pSymbol);
-	}
-	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr) {}
+	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const;
+	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr);
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;

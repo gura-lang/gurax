@@ -31,6 +31,10 @@ protected:
 	virtual ~Property() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
+public:
+	// Virtual functions
+	virtual Value* DoGetValue(const Value* pValueTarget, const Attribute& attr) const = 0;
+	virtual void DoPutValue(Value* pValueTarget, const Value* pValue, const Attribute& attr) const = 0;
 };
 
 //------------------------------------------------------------------------------

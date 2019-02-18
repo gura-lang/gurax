@@ -73,6 +73,8 @@ public:
 	const PropertyMap& GetPropertyMap() const { return *_pPropertyMap; }
 	void AssignProperty(Property* pProperty) { GetPropertyMap().Assign(pProperty); }
 	const Property* LookupProperty(const Symbol* pSymbol) const;
+	Value* LookupPropValue(Value* pValueTarget, const Symbol* pSymbol, const Attribute& attr) const;
+	void AssignPropValue(Value* pValueTarget, const Symbol* pSymbol, Value* pValue, const Attribute& attr) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 public:
 	void Prepare(Frame& frameParent) { DoPrepare(frameParent); }

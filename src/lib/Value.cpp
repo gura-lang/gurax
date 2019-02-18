@@ -82,6 +82,20 @@ void Value::DoIndexAccess(Frame& frame, Argument& argument)
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
+Value* Value::LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const
+{
+	const Property* pProperty = GetVType().LookupProperty(pSymbol);
+	return pProperty? pProperty->DoGetValue(this, attr) : GetVType().GetFrame().LookupValue(pSymbol);
+}
+
+void Value::AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr)
+{
+	const Property* pProperty = GetVType().LookupProperty(pSymbol);
+	if (pProperty) {
+		pProperty->DoPutValue(this, pValue, attr);
+	}
+}
+
 String Value::ToString(const StringStyle& ss) const
 {
 	if (!ss.IsDigest()) return ToStringDetail(ss);
