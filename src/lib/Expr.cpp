@@ -475,18 +475,39 @@ void Expr_Member::ExecInAssignment(const Expr* pExprAssigned, const Operator* pO
 		if (Error::IsIssued()) return;
 	} while (0);
 	if (pOperator) {
-	} else {
+		do {
+			Value* pValueTarget = Context::PeekStack(0);
+			Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
+			if (!pValue) {
+				Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
+				return;
+			}
+			Context::PushStack(pValue->Reference());
+		} while (0);
 		do {
 			pExprAssigned->Exec();
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
-			RefPtr<Value> pValueAssigned(Context::PopStack());
-			RefPtr<Value> pValueTarget(Context::PopStack());
-			pValueTarget->AssignPropValue(GetSymbol(), pValueAssigned->Reference(), GetAttr());
-			Context::PushStack(pValueAssigned.release());
+			RefPtr<Value> pValueRight(Context::PopStack());
+			RefPtr<Value> pValueLeft(Context::PopStack());
+			if (!pValueLeft || !pValueRight) return;
+			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
+			if (!pValue) return;
+			Context::PushStack(pValue.release());
+		} while (0);
+	} else {
+		do {
+			pExprAssigned->Exec();
+			if (Error::IsIssued()) return;
 		} while (0);
 	}
+	do {
+		RefPtr<Value> pValueAssigned(Context::PopStack());
+		RefPtr<Value> pValueTarget(Context::PopStack());
+		pValueTarget->AssignPropValue(GetSymbol(), pValueAssigned->Reference(), GetAttr());
+		Context::PushStack(pValueAssigned.release());
+	} while (0);
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
