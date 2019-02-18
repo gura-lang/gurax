@@ -55,43 +55,36 @@ Frame* Frame::Shrink(Frame* pFrame)
 	return pFrameRtn;
 }
 
-Frame* Frame::SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail)
+Value* Frame::LookupValue(const DottedSymbol& dottedSymbol, size_t nTail) const
 {
-	Frame* pFrame = this;
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
-	if (symbolList.size() <= nTail) return pFrame;
-	for (auto ppSymbol = symbolList.begin(); ; ) {
+	if (symbolList.size() <= nTail) return nullptr;
+	auto ppSymbol = symbolList.begin();
+	const Symbol* pSymbol = *ppSymbol++;
+	Value* pValue = LookupValue(pSymbol);
+	while (pValue && ppSymbol + nTail != symbolList.end()) {
 		const Symbol* pSymbol = *ppSymbol++;
-		if (ppSymbol + nTail == symbolList.end()) break;
-		Value* pValue = pFrame->LookupValue(pSymbol);
-		if (!pValue) return nullptr;
-		pFrame = &pValue->GetFrame();
+		pValue = pValue->LookupPropValue(pSymbol, *Attribute::Empty);
 	}
-	return pFrame;
+	return pValue;
 }
 
 bool Frame::AssignValue(const DottedSymbol& dottedSymbol, Value* pValue)
 {
-	Frame* pFrame = SeekTarget(dottedSymbol);
-	if (!pFrame) return false;
-	pFrame->AssignValue(dottedSymbol.GetSymbolLast(), pValue);
+	if (dottedSymbol.IsEmpty()) return false;
+	if (dottedSymbol.IsDotted()) {
+		Value* pValueTarget = LookupValue(dottedSymbol, 1);
+		if (!pValueTarget) return false;
+		pValueTarget->AssignPropValue(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
+	} else {
+		AssignValue(dottedSymbol.GetSymbolLast(), pValue);
+	}
 	return true;
-}
-
-Value* Frame::LookupValue(const DottedSymbol& dottedSymbol) const
-{
-	const Frame* pFrame = const_cast<Frame*>(this)->SeekTarget(dottedSymbol);
-	if (!pFrame) return nullptr;
-	return pFrame->LookupValue(dottedSymbol.GetSymbolLast());
 }
 
 bool Frame::AssignModule(Module* pModule)
 {
-	const DottedSymbol& dottedSymbol = pModule->GetDottedSymbol();
-	Frame* pFrame = SeekTarget(dottedSymbol, 1);
-	if (pFrame == nullptr) return false;
-	pFrame->AssignValue(dottedSymbol.GetSymbolLast(), new Value_Module(pModule));
-	return true;
+	return AssignValue(pModule->GetDottedSymbol(), new Value_Module(pModule));
 }
 
 void Frame::AssignVType(VType& vtype)

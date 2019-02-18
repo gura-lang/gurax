@@ -66,7 +66,6 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetModule().ToString(ss);
 	}
-	virtual Frame& GetFrame() override { return GetModule().GetFrame(); }
 	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const override {
 		return GetModule().GetFrame().LookupValue(pSymbol);
 	}

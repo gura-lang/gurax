@@ -49,7 +49,6 @@ public:
 	const VType& GetVTypeThis() const { return *_pVTypeThis; }
 public:
 	// Virtual functions of Value
-	//virtual Frame& GetFrame() override { return GetVTypeThis().GetFrame(); }
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
 		return GetVTypeThis().CalcHash();
@@ -66,7 +65,6 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetVTypeThis().ToString(ss);
 	}
-	virtual Frame& GetFrame() override { return GetVTypeThis().GetFrame(); }
 	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const override {
 		return GetVTypeThis().GetFrame().LookupValue(pSymbol);
 	}

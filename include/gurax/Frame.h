@@ -43,9 +43,9 @@ public:
 	bool IsValueMap() const { return _type == Type::ValueMap; }
 	Frame* Expand() const;
 	static Frame* Shrink(Frame* pFrame);
-	Frame* SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail = 0);
+	//Value* SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail = 0);
+	Value* LookupValue(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
 	bool AssignValue(const DottedSymbol& dottedSymbol, Value* pValue);
-	Value* LookupValue(const DottedSymbol& dottedSymbol) const;
 	bool AssignModule(Module* pModule);
 	void AssignVType(VType& vtype);
 	void AssignFunction(Function* pFunction);
