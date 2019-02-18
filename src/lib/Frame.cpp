@@ -6,19 +6,19 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Frame_Source
+// Frame_ValueMap
 //------------------------------------------------------------------------------
-class Frame_Source : public Frame {
+class Frame_ValueMap : public Frame {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Source);
+	Gurax_DeclareReferable(Frame_ValueMap);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Source");
+	Gurax_MemoryPoolAllocator("Frame_ValueMap");
 protected:
 	RefPtr<ValueMap> _pValueMap;
 public:
 	// Constructor
-	Frame_Source() : Frame(Type::Source), _pValueMap(new ValueMap()) {}
+	Frame_ValueMap() : Frame(Type::ValueMap), _pValueMap(new ValueMap()) {}
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override {
@@ -32,19 +32,19 @@ public:
 //------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
-Frame* Frame::CreateSource()
-{
-	return new Frame_Source();
-}
-
-Frame_Branch* Frame::CreateBranch(Frame* pFrameLeft, Frame* pFrameRight)
+Frame_Branch* Frame::CreateOfBranch(Frame* pFrameLeft, Frame* pFrameRight)
 {
 	return new Frame_Branch(pFrameLeft, pFrameRight);
 }
 
+Frame* Frame::CreateOfValueMap()
+{
+	return new Frame_ValueMap();
+}
+
 Frame* Frame::Expand() const
 {
-	return new Frame_Branch(Reference(), new Frame_Source());
+	return new Frame_Branch(Reference(), new Frame_ValueMap());
 }
 
 Frame* Frame::Shrink(Frame* pFrame)

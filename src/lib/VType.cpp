@@ -14,7 +14,7 @@ VType VType::Empty("");
 VType::VType(const char* name) :
 	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0),
-	_pFrame(Frame::CreateBranch(nullptr, Frame::CreateSource()))
+	_pFrame(Frame::CreateOfBranch(nullptr, Frame::CreateOfValueMap()))
 {
 }
 

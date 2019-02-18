@@ -24,7 +24,7 @@ public:
 	// Constructor
 	Module() : Module(DottedSymbol::Empty.Reference()) {}
 	Module(DottedSymbol* pDottedSymbol) :
-		_pDottedSymbol(pDottedSymbol), _pHelpProvider(new HelpProvider()), _pFrame(Frame::CreateSource()) {}
+		_pDottedSymbol(pDottedSymbol), _pHelpProvider(new HelpProvider()), _pFrame(Frame::CreateOfValueMap()) {}
 	// Copy constructor/operator
 	Module(const Module& src) = delete;
 	Module& operator=(const Module& src) = delete;

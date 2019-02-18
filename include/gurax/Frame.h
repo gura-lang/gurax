@@ -21,7 +21,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame);
 public:
-	enum class Type { Source, Branch };
+	enum class Type { Branch, ValueMap };
 private:
 	Type _type;
 public:
@@ -37,10 +37,10 @@ protected:
 	// Destructor
 	virtual ~Frame() = default;
 public:
-	static Frame* CreateSource();
-	static Frame_Branch* CreateBranch(Frame* pFrameLeft, Frame* pFrameRight);
-	bool IsSource() const { return _type == Type::Source; }
+	static Frame_Branch* CreateOfBranch(Frame* pFrameLeft, Frame* pFrameRight);
+	static Frame* CreateOfValueMap();
 	bool IsBranch() const { return _type == Type::Branch; }
+	bool IsValueMap() const { return _type == Type::ValueMap; }
 	Frame* Expand() const;
 	static Frame* Shrink(Frame* pFrame);
 	Frame* SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail = 0);
