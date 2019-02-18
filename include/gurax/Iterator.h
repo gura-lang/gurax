@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
-class Iterator : public Referable {
+class GURAX_DLLDECLARE Iterator : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Iterator);
@@ -28,7 +28,7 @@ public:
 	Iterator& operator=(Iterator&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Iterator() = default;
+	virtual ~Iterator() = default;
 public:
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
@@ -38,6 +38,8 @@ public:
 	bool IsEqualTo(const Iterator& iterator) const { return IsIdentical(iterator); }
 	bool IsLessThan(const Iterator& iterator) const { return this < &iterator; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(iterator)"; }
+public:
+	virtual Value* Next() = 0;
 };
 
 }

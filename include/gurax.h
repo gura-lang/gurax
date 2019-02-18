@@ -23,6 +23,7 @@
 #include "gurax/Function.h"
 #include "gurax/Help.h"
 #include "gurax/Iterator.h"
+#include "gurax/Iterators.h"
 #include "gurax/MemoryPool.h"
 #include "gurax/Operator.h"
 #include "gurax/Operators.h"

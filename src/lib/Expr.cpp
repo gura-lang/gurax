@@ -643,6 +643,23 @@ const Expr::TypeInfo Expr_Iterer::typeInfo;
 
 void Expr_Iterer::Exec() const
 {
+	do {
+		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
+		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
+		Context::PushStack(new Value_List(pValueTypedOwner.release()));
+	} while (0);
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		do {
+			pExpr->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		do {
+			RefPtr<Value> pValue(Context::PopStack());
+			ValueTypedOwner& valueTypedOwner =
+				dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
+			valueTypedOwner.Add(pValue.release());
+		} while (0);
+	}
 }
 
 String Expr_Iterer::ToString(const StringStyle& ss) const
