@@ -1,69 +1,68 @@
 //==============================================================================
-// Value_Attribute.h
+// VType_Symbol.h
 //==============================================================================
-#ifndef GURAX_VALUE_ATTRIBUTE_H
-#define GURAX_VALUE_ATTRIBUTE_H
-#include "Value_Object.h"
-#include "Attribute.h"
+#ifndef GURAX_VTYPE_SYMBOL_H
+#define GURAX_VTYPE_SYMBOL_H
+#include "VType_Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Attribute
+// VType_Symbol
 //------------------------------------------------------------------------------
-class VType_Attribute : public VType {
+class VType_Symbol : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_Attribute VTYPE_Attribute;
+extern VType_Symbol VTYPE_Symbol;
 
 //------------------------------------------------------------------------------
-// Value_Attribute
+// Value_Symbol
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Attribute : public Value_Object {
+class GURAX_DLLDECLARE Value_Symbol : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Attribute);
+	Gurax_DeclareReferable(Value_Symbol);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Attribute");
+	Gurax_MemoryPoolAllocator("Value_Symbol");
 private:
-	RefPtr<Attribute> _pAttr;
+	const Symbol* _pSymbol;
 public:
 	// Constructor
-	Value_Attribute() = delete;
-	explicit Value_Attribute(Attribute* pAttr, VType& vtype = VTYPE_Attribute) :
-		Value_Object(vtype), _pAttr(pAttr) {}
+	explicit Value_Symbol(VType& vtype = VTYPE_Symbol) = delete;
+	explicit Value_Symbol(const Symbol* pSymbol, VType& vtype = VTYPE_Symbol) :
+		Value_Object(vtype), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Value_Attribute(const Value_Attribute& src) : Value_Object(src), _pAttr(src._pAttr->Reference()) {}
-	Value_Attribute& operator=(const Value_Attribute& src) = delete;
+	Value_Symbol(const Value_Symbol& src) :
+		Value_Object(src), _pSymbol(src._pSymbol) {}
+	Value_Symbol& operator=(const Value_Symbol& src) = delete;
 	// Move constructor/operator
-	Value_Attribute(Value_Attribute&& src) = delete;
-	Value_Attribute& operator=(Value_Attribute&& src) noexcept = delete;
+	Value_Symbol(Value_Symbol&& src) = delete;
+	Value_Symbol& operator=(Value_Symbol&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Attribute() = default;
+	~Value_Symbol() = default;
 public:
-	Attribute& GetAttr() { return *_pAttr; }
-	const Attribute& GetAttr() const { return *_pAttr; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetAttr().CalcHash();
+		return GetSymbol()->CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetAttr().IsEqualTo(dynamic_cast<const Value_Attribute*>(pValue)->GetAttr());
+			GetSymbol()->IsEqualTo(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetAttr().IsLessThan(dynamic_cast<const Value_Attribute*>(pValue)->GetAttr()) :
+			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetAttr().ToString(ss);
+		return String("`").append(_pSymbol->GetName());
 	}
 };
 

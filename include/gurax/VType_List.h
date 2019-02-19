@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_List.h
+// VType_List.h
 //==============================================================================
-#ifndef GURAX_VALUE_LIST_H
-#define GURAX_VALUE_LIST_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_LIST_H
+#define GURAX_VTYPE_LIST_H
+#include "VType_Object.h"
 
 namespace Gurax {
 
@@ -19,7 +19,7 @@ public:
 extern VType_List VTYPE_List;
 
 //------------------------------------------------------------------------------
-// Value_List
+// VType_List
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Value_List : public Value_Object {
 public:

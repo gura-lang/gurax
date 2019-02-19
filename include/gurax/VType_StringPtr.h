@@ -1,10 +1,10 @@
 //==============================================================================
-// Value_StringPtr.h
+// VType_StringPtr.h
 // This object type is designed to be used with Formatter.
 //==============================================================================
-#ifndef GURAX_VALUE_STRINGPTR_H
-#define GURAX_VALUE_STRINGPTR_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_STRINGPTR_H
+#define GURAX_VTYPE_STRINGPTR_H
+#include "VType_Object.h"
 
 namespace Gurax {
 

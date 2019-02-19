@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_Number.h
+// VType_Number.h
 //==============================================================================
-#ifndef GURAX_VALUE_NUMBER_H
-#define GURAX_VALUE_NUMBER_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_NUMBER_H
+#define GURAX_VTYPE_NUMBER_H
+#include "VType_Object.h"
 
 namespace Gurax {
 

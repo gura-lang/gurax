@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_String.h
+// VType_String.h
 //==============================================================================
-#ifndef GURAX_VALUE_STRING_H
-#define GURAX_VALUE_STRING_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_STRING_H
+#define GURAX_VTYPE_STRING_H
+#include "VType_Object.h"
 
 namespace Gurax {
 

@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_TimeDelta.h
+// VType_TimeDelta.h
 //==============================================================================
-#ifndef GURAX_VALUE_TIMEDELTA_H
-#define GURAX_VALUE_TIMEDELTA_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_TIMEDELTA_H
+#define GURAX_VTYPE_TIMEDELTA_H
+#include "VType_Object.h"
 #include "TimeDelta.h"
 
 namespace Gurax {

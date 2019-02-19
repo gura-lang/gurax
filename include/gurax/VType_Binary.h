@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_Binary.h
+// VType_Binary.h
 //==============================================================================
-#ifndef GURAX_VALUE_BINARY_H
-#define GURAX_VALUE_BINARY_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_BINARY_H
+#define GURAX_VTYPE_BINARY_H
+#include "VType_Object.h"
 
 namespace Gurax {
 

@@ -1,69 +1,68 @@
 //==============================================================================
-// Value_Function.h
+// VType_Quote.h
 //==============================================================================
-#ifndef GURAX_VALUE_FUNCTION_H
-#define GURAX_VALUE_FUNCTION_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_QUOTE_H
+#define GURAX_VTYPE_QUOTE_H
+#include "Value.h"
+#include "Expr.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Function
+// VType_Quote
 //------------------------------------------------------------------------------
-class VType_Function : public VType {
+class VType_Quote : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_Function VTYPE_Function;
+extern VType_Quote VTYPE_Quote;
 
 //------------------------------------------------------------------------------
-// Value_Function
+// Value_Quote
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Function : public Value_Object {
+class GURAX_DLLDECLARE Value_Quote : public Value {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Function);
+	Gurax_DeclareReferable(Value_Quote);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Function");
+	Gurax_MemoryPoolAllocator("Value_Quote");
 private:
-	RefPtr<Function> _pFunction;
+	RefPtr<Expr> _pExpr;
 public:
 	// Constructor
-	Value_Function() = delete;
-	explicit Value_Function(Function* pFunction, VType& vtype = VTYPE_Function) :
-		Value_Object(vtype), _pFunction(pFunction) {}
+	Value_Quote() = delete;
+	explicit Value_Quote(Expr* pExpr) : Value(VTYPE_Quote), _pExpr(pExpr) {}
 	// Copy constructor/operator
-	Value_Function(const Value_Function& src) :
-		Value_Object(src), _pFunction(src._pFunction->Reference()) {}
-	Value_Function& operator=(const Value_Function& src) = delete;
+	Value_Quote(const Value_Quote& src) : Value(src), _pExpr(src._pExpr->Reference()) {}
+	Value_Quote& operator=(const Value_Quote& src) = delete;
 	// Move constructor/operator
-	Value_Function(Value_Function&& src) = delete;
-	Value_Function& operator=(Value_Function&& src) noexcept = delete;
+	Value_Quote(Value_Quote&& src) = delete;
+	Value_Quote& operator=(Value_Quote&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Function() = default;
+	~Value_Quote() = default;
 public:
-	Function& GetFunction() { return *_pFunction; }
-	const Function& GetFunction() const { return *_pFunction; }
+	Expr& GetExpr() { return *_pExpr; }
+	const Expr& GetExpr() const { return *_pExpr; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetFunction().CalcHash();
+		return GetExpr().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetFunction().IsEqualTo(dynamic_cast<const Value_Function*>(pValue)->GetFunction());
+			GetExpr().IsEqualTo(dynamic_cast<const Value_Quote*>(pValue)->GetExpr());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetFunction().IsLessThan(dynamic_cast<const Value_Function*>(pValue)->GetFunction()) :
+			GetExpr().IsLessThan(dynamic_cast<const Value_Quote*>(pValue)->GetExpr()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetFunction().ToString(ss);
+		return GetExpr().ToString(ss);
 	}
 };
 

@@ -1,45 +1,44 @@
 //==============================================================================
-// Value_Any.h
+// VType_Nil.h
 //==============================================================================
-#ifndef GURAX_VALUE_ANY_H
-#define GURAX_VALUE_ANY_H
-#include "Value.h"
+#ifndef GURAX_VTYPE_NIL_H
+#define GURAX_VTYPE_NIL_H
+#include "VType_Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Any
+// VType_Nil
 //------------------------------------------------------------------------------
-class VType_Any : public VType {
+class VType_Nil : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
-	virtual Value* DoCastFrom(Value* pValue) const override;
 };
 
-extern VType_Any VTYPE_Any;
+extern VType_Nil VTYPE_Nil;
 
 //------------------------------------------------------------------------------
-// Value_Any
+// Value_Nil
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Any : public Value {
+class GURAX_DLLDECLARE Value_Nil : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Any);
+	Gurax_DeclareReferable(Value_Nil);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Any");
+	Gurax_MemoryPoolAllocator("Value_Nil");
 public:
 	// Constructor
-	Value_Any() : Value(VTYPE_Any) {}
+	explicit Value_Nil(VType& vtype = VTYPE_Nil) : Value_Object(vtype) {}
 	// Copy constructor/operator
-	Value_Any(const Value_Any& src) = delete;
-	Value_Any& operator=(const Value_Any& src) = delete;
+	Value_Nil(const Value_Nil& src) : Value_Object(src) {}
+	Value_Nil& operator=(const Value_Nil& src) = delete;
 	// Move constructor/operator
-	Value_Any(Value_Any&& src) = delete;
-	Value_Any& operator=(Value_Any&& src) noexcept = delete;
+	Value_Nil(Value_Nil&& src) = delete;
+	Value_Nil& operator=(Value_Nil&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Value_Any() = default;
+	virtual ~Value_Nil() = default;
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -49,7 +48,7 @@ public:
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return "any";
+		return "nil";
 	}
 };
 

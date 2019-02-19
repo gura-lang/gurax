@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_DateTime.h
+// VType_DateTime.h
 //==============================================================================
-#ifndef GURAX_VALUE_DATETIME_H
-#define GURAX_VALUE_DATETIME_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_DATETIME_H
+#define GURAX_VTYPE_DATETIME_H
+#include "VType_Object.h"
 #include "DateTime.h"
 
 namespace Gurax {

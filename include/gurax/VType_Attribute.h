@@ -1,70 +1,69 @@
 //==============================================================================
-// Value_Stream.h
+// VType_Attribute.h
 //==============================================================================
-#ifndef GURAX_VALUE_STREAM_H
-#define GURAX_VALUE_STREAM_H
-#include "Value_Object.h"
-#include "Stream.h"
+#ifndef GURAX_VTYPE_ATTRIBUTE_H
+#define GURAX_VTYPE_ATTRIBUTE_H
+#include "VType_Object.h"
+#include "Attribute.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Stream
+// VType_Attribute
 //------------------------------------------------------------------------------
-class VType_Stream : public VType {
+class VType_Attribute : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_Stream VTYPE_Stream;
+extern VType_Attribute VTYPE_Attribute;
 
 //------------------------------------------------------------------------------
-// Value_Stream
+// Value_Attribute
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Stream : public Value_Object {
+class GURAX_DLLDECLARE Value_Attribute : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Stream);
+	Gurax_DeclareReferable(Value_Attribute);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Stream");
+	Gurax_MemoryPoolAllocator("Value_Attribute");
 private:
-	RefPtr<Stream> _pStream;
+	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	Value_Stream() = delete;
-	explicit Value_Stream(Stream *pStream, VType& vtype = VTYPE_Stream) :
-		Value_Object(vtype), _pStream(pStream) {}
+	Value_Attribute() = delete;
+	explicit Value_Attribute(Attribute* pAttr, VType& vtype = VTYPE_Attribute) :
+		Value_Object(vtype), _pAttr(pAttr) {}
 	// Copy constructor/operator
-	Value_Stream(const Value_Stream& src) :
-		Value_Object(src), _pStream(src._pStream->Reference()) {}
-	Value_Stream& operator=(const Value_Stream& src) = delete;
+	Value_Attribute(const Value_Attribute& src) : Value_Object(src), _pAttr(src._pAttr->Reference()) {}
+	Value_Attribute& operator=(const Value_Attribute& src) = delete;
 	// Move constructor/operator
-	Value_Stream(Value_Stream&& src) = delete;
-	Value_Stream& operator=(Value_Stream&& src) noexcept = delete;
+	Value_Attribute(Value_Attribute&& src) = delete;
+	Value_Attribute& operator=(Value_Attribute&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Stream() = default;
+	~Value_Attribute() = default;
 public:
-	Stream& GetStream() { return *_pStream; }
-	const Stream& GetStream() const { return *_pStream; }
+	Attribute& GetAttr() { return *_pAttr; }
+	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetStream().CalcHash();
+		return GetAttr().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetStream().IsEqualTo(dynamic_cast<const Value_Stream*>(pValue)->GetStream());
+			GetAttr().IsEqualTo(dynamic_cast<const Value_Attribute*>(pValue)->GetAttr());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetStream().IsLessThan(dynamic_cast<const Value_Stream*>(pValue)->GetStream()) :
+			GetAttr().IsLessThan(dynamic_cast<const Value_Attribute*>(pValue)->GetAttr()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetStream().ToString(ss);
+		return GetAttr().ToString(ss);
 	}
 };
 

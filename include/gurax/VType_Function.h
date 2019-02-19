@@ -1,70 +1,69 @@
 //==============================================================================
-// Value_ArgSlot.h
+// VType_Function.h
 //==============================================================================
-#ifndef GURAX_VALUE_ARGSLOT_H
-#define GURAX_VALUE_ARGSLOT_H
-#include "Value_Object.h"
-#include "ArgSlot.h"
+#ifndef GURAX_VTYPE_FUNCTION_H
+#define GURAX_VTYPE_FUNCTION_H
+#include "VType_Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_ArgSlot
+// VType_Function
 //------------------------------------------------------------------------------
-class VType_ArgSlot : public VType {
+class VType_Function : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_ArgSlot VTYPE_ArgSlot;
+extern VType_Function VTYPE_Function;
 
 //------------------------------------------------------------------------------
-// Value_ArgSlot
+// Value_Function
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_ArgSlot : public Value_Object {
+class GURAX_DLLDECLARE Value_Function : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_ArgSlot);
+	Gurax_DeclareReferable(Value_Function);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_ArgSlot");
+	Gurax_MemoryPoolAllocator("Value_Function");
 private:
-	RefPtr<ArgSlot> _pArgSlot;
+	RefPtr<Function> _pFunction;
 public:
 	// Constructor
-	Value_ArgSlot() = delete;
-	Value_ArgSlot(ArgSlot* pArgSlot, VType& vtype = VTYPE_ArgSlot) :
-		Value_Object(vtype), _pArgSlot(pArgSlot) {}
+	Value_Function() = delete;
+	explicit Value_Function(Function* pFunction, VType& vtype = VTYPE_Function) :
+		Value_Object(vtype), _pFunction(pFunction) {}
 	// Copy constructor/operator
-	Value_ArgSlot(const Value_ArgSlot& src) :
-		Value_Object(src), _pArgSlot(src._pArgSlot->Reference()) {}
-	Value_ArgSlot& operator=(const Value_ArgSlot& src) = delete;
+	Value_Function(const Value_Function& src) :
+		Value_Object(src), _pFunction(src._pFunction->Reference()) {}
+	Value_Function& operator=(const Value_Function& src) = delete;
 	// Move constructor/operator
-	Value_ArgSlot(Value_ArgSlot&& src) = delete;
-	Value_ArgSlot& operator=(Value_ArgSlot&& src) noexcept = delete;
+	Value_Function(Value_Function&& src) = delete;
+	Value_Function& operator=(Value_Function&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_ArgSlot() = default;
+	~Value_Function() = default;
 public:
-	ArgSlot& GetArgSlot() { return *_pArgSlot; }
-	const ArgSlot& GetArgSlot() const { return *_pArgSlot; }
+	Function& GetFunction() { return *_pFunction; }
+	const Function& GetFunction() const { return *_pFunction; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetArgSlot().CalcHash();
+		return GetFunction().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetArgSlot().IsEqualTo(dynamic_cast<const Value_ArgSlot*>(pValue)->GetArgSlot());
+			GetFunction().IsEqualTo(dynamic_cast<const Value_Function*>(pValue)->GetFunction());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetArgSlot().IsLessThan(dynamic_cast<const Value_ArgSlot*>(pValue)->GetArgSlot()) :
+			GetFunction().IsLessThan(dynamic_cast<const Value_Function*>(pValue)->GetFunction()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetArgSlot().ToString(ss);
+		return GetFunction().ToString(ss);
 	}
 };
 

@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_Module.h
+// VType_Module.h
 //==============================================================================
-#ifndef GURAX_VALUE_MODULE_H
-#define GURAX_VALUE_MODULE_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_MODULE_H
+#define GURAX_VTYPE_MODULE_H
+#include "VType_Object.h"
 #include "Module.h"
 
 namespace Gurax {

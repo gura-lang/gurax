@@ -40,33 +40,33 @@ add_library(guraxcore SHARED
 	Tokenizer.cpp
 	Unicode-EastAsianWidth.cpp
 	Value.cpp
-	Value_Any.cpp
-	Value_ArgSlot.cpp
-	Value_Argument.cpp
-	Value_Attribute.cpp
-	Value_Binary.cpp
-	Value_Bool.cpp
-	Value_DateTime.cpp
-	Value_Dict.cpp
-	Value_Expr.cpp
-	Value_Function.cpp
-	Value_Iterator.cpp
-	Value_List.cpp
-	Value_Member.cpp
-	Value_Module.cpp
-	Value_Nil.cpp
-	Value_Number.cpp
-	Value_Object.cpp
-	Value_Quote.cpp
-	Value_Stream.cpp
-	Value_String.cpp
-	Value_StringPtr.cpp
-	Value_Symbol.cpp
-	Value_Template.cpp
-	Value_TimeDelta.cpp
-	Value_Undefined.cpp
-	Value_VType.cpp
 	VType.cpp
+	VType_Any.cpp
+	VType_ArgSlot.cpp
+	VType_Argument.cpp
+	VType_Attribute.cpp
+	VType_Binary.cpp
+	VType_Bool.cpp
+	VType_DateTime.cpp
+	VType_Dict.cpp
+	VType_Expr.cpp
+	VType_Function.cpp
+	VType_Iterator.cpp
+	VType_List.cpp
+	VType_Member.cpp
+	VType_Module.cpp
+	VType_Nil.cpp
+	VType_Number.cpp
+	VType_Object.cpp
+	VType_Quote.cpp
+	VType_Stream.cpp
+	VType_String.cpp
+	VType_StringPtr.cpp
+	VType_Symbol.cpp
+	VType_Template.cpp
+	VType_TimeDelta.cpp
+	VType_Undefined.cpp
+	VType_VType.cpp
 )
 
 target_link_libraries(guraxcore dl pthread)

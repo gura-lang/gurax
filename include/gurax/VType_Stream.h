@@ -1,68 +1,70 @@
 //==============================================================================
-// Value_Bool.h
+// VType_Stream.h
 //==============================================================================
-#ifndef GURAX_VALUE_BOOL_H
-#define GURAX_VALUE_BOOL_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_STREAM_H
+#define GURAX_VTYPE_STREAM_H
+#include "VType_Object.h"
+#include "Stream.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Bool
+// VType_Stream
 //------------------------------------------------------------------------------
-class VType_Bool : public VType {
+class VType_Stream : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_Bool VTYPE_Bool;
+extern VType_Stream VTYPE_Stream;
 
 //------------------------------------------------------------------------------
-// Value_Bool
+// Value_Stream
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Bool : public Value_Object {
+class GURAX_DLLDECLARE Value_Stream : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Bool);
+	Gurax_DeclareReferable(Value_Stream);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Bool");
+	Gurax_MemoryPoolAllocator("Value_Stream");
 private:
-	bool _flag;
+	RefPtr<Stream> _pStream;
 public:
 	// Constructor
-	explicit Value_Bool(VType& vtype = VTYPE_Bool) :
-		Value_Bool(false, vtype) {}
-	explicit Value_Bool(bool flag, VType& vtype = VTYPE_Bool) :
-		Value_Object(vtype), _flag(flag) {}
+	Value_Stream() = delete;
+	explicit Value_Stream(Stream *pStream, VType& vtype = VTYPE_Stream) :
+		Value_Object(vtype), _pStream(pStream) {}
 	// Copy constructor/operator
-	Value_Bool(const Value_Bool& src) :
-		Value_Object(src), _flag(src._flag) {}
-	Value_Bool& operator=(const Value_Bool& src) = delete;
+	Value_Stream(const Value_Stream& src) :
+		Value_Object(src), _pStream(src._pStream->Reference()) {}
+	Value_Stream& operator=(const Value_Stream& src) = delete;
 	// Move constructor/operator
-	Value_Bool(Value_Bool&& src) = delete;
-	Value_Bool& operator=(Value_Bool&& src) noexcept = delete;
+	Value_Stream(Value_Stream&& src) = delete;
+	Value_Stream& operator=(Value_Stream&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Bool() = default;
+	~Value_Stream() = default;
 public:
-	bool GetBool() const { return _flag; } // override Object::GetBool()
+	Stream& GetStream() { return *_pStream; }
+	const Stream& GetStream() const { return *_pStream; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return static_cast<size_t>(GetBool());
+		return GetStream().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetBool() == dynamic_cast<const Value_Bool*>(pValue)->GetBool();
+		return IsSameType(pValue) &&
+			GetStream().IsEqualTo(dynamic_cast<const Value_Stream*>(pValue)->GetStream());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetBool() < dynamic_cast<const Value_Bool*>(pValue)->GetBool() :
+			GetStream().IsLessThan(dynamic_cast<const Value_Stream*>(pValue)->GetStream()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return _flag? "true" : "false";
+		return GetStream().ToString(ss);
 	}
 };
 

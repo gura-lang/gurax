@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_Template.h
+// VType_Template.h
 //==============================================================================
-#ifndef GURAX_VALUE_TEMPLATE_H
-#define GURAX_VALUE_TEMPLATE_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_TEMPLATE_H
+#define GURAX_VTYPE_TEMPLATE_H
+#include "VType_Object.h"
 #include "Template.h"
 
 namespace Gurax {

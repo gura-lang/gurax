@@ -5,7 +5,7 @@
 #define GURAX_ARGSLOT_H
 #include "Referable.h"
 #include "Attribute.h"
-#include "Value_List.h"
+#include "VType_List.h"
 #include "DeclCaller.h"
 
 namespace Gurax {

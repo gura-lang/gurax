@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_Iterator.h
+// VType_Iterator.h
 //==============================================================================
-#ifndef GURAX_VALUE_ITERATOR_H
-#define GURAX_VALUE_ITERATOR_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_ITERATOR_H
+#define GURAX_VTYPE_ITERATOR_H
+#include "VType_Object.h"
 
 namespace Gurax {
 

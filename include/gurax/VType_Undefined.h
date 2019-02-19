@@ -1,45 +1,44 @@
 //==============================================================================
-// Value_Object.h
+// VType_Undefined.h
 //==============================================================================
-#ifndef GURAX_VALUE_VALUE_H
-#define GURAX_VALUE_VALUE_H
+#ifndef GURAX_VTYPE_UNDEFINED_H
+#define GURAX_VTYPE_UNDEFINED_H
 #include "Value.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Object
+// VType_Undefined
 //------------------------------------------------------------------------------
-class VType_Object : public VType {
+class VType_Undefined : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_Object VTYPE_Object;
+extern VType_Undefined VTYPE_Undefined;
 
 //------------------------------------------------------------------------------
-// Value_Object
+// Value_Undefined
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Object : public Value {
+class GURAX_DLLDECLARE Value_Undefined : public Value {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Object);
+	Gurax_DeclareReferable(Value_Undefined);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Object");
+	Gurax_MemoryPoolAllocator("Value_Undefined");
 public:
 	// Constructor
-	Value_Object() : Value_Object(VTYPE_Object) {}
-	explicit Value_Object(VType& vtype) : Value(vtype) {}
+	Value_Undefined() : Value(VTYPE_Undefined) {}
 	// Copy constructor/operator
-	Value_Object(const Value_Object& src) : Value(src) {}
-	Value_Object& operator=(const Value_Object& src) = delete;
+	Value_Undefined(const Value_Undefined& src) = delete;
+	Value_Undefined& operator=(const Value_Undefined& src) = delete;
 	// Move constructor/operator
-	Value_Object(Value_Object&& src) = delete;
-	Value_Object& operator=(Value_Object&& src) noexcept = delete;
+	Value_Undefined(Value_Undefined&& src) = delete;
+	Value_Undefined& operator=(Value_Undefined&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Value_Object() = default;
+	virtual ~Value_Undefined() = default;
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -49,7 +48,7 @@ public:
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return "Object";
+		return "undefined";
 	}
 };
 

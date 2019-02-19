@@ -1,9 +1,9 @@
 //==============================================================================
-// Value_Dict.h
+// VType_Dict.h
 //==============================================================================
-#ifndef GURAX_VALUE_DICT_H
-#define GURAX_VALUE_DICT_H
-#include "Value_Object.h"
+#ifndef GURAX_VTYPE_DICT_H
+#define GURAX_VTYPE_DICT_H
+#include "VType_Object.h"
 
 namespace Gurax {
 

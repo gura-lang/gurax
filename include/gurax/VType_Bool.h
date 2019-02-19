@@ -1,70 +1,68 @@
 //==============================================================================
-// Value_Expr.h
+// VType_Bool.h
 //==============================================================================
-#ifndef GURAX_VALUE_EXPR_H
-#define GURAX_VALUE_EXPR_H
-#include "Value_Object.h"
-#include "Expr.h"
+#ifndef GURAX_VTYPE_BOOL_H
+#define GURAX_VTYPE_BOOL_H
+#include "VType_Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Expr
+// VType_Bool
 //------------------------------------------------------------------------------
-class VType_Expr : public VType {
+class VType_Bool : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
 };
 
-extern VType_Expr VTYPE_Expr;
+extern VType_Bool VTYPE_Bool;
 
 //------------------------------------------------------------------------------
-// Value_Expr
+// Value_Bool
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Expr : public Value_Object {
+class GURAX_DLLDECLARE Value_Bool : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Expr);
+	Gurax_DeclareReferable(Value_Bool);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Expr");
+	Gurax_MemoryPoolAllocator("Value_Bool");
 private:
-	RefPtr<Expr> _pExpr;
+	bool _flag;
 public:
 	// Constructor
-	Value_Expr() = delete;
-	explicit Value_Expr(Expr *pExpr, VType& vtype = VTYPE_Expr) :
-		Value_Object(vtype), _pExpr(pExpr) {}
+	explicit Value_Bool(VType& vtype = VTYPE_Bool) :
+		Value_Bool(false, vtype) {}
+	explicit Value_Bool(bool flag, VType& vtype = VTYPE_Bool) :
+		Value_Object(vtype), _flag(flag) {}
 	// Copy constructor/operator
-	Value_Expr(const Value_Expr& src) :
-		Value_Object(src), _pExpr(src._pExpr->Reference()) {}
-	Value_Expr& operator=(const Value_Expr& src) = delete;
+	Value_Bool(const Value_Bool& src) :
+		Value_Object(src), _flag(src._flag) {}
+	Value_Bool& operator=(const Value_Bool& src) = delete;
 	// Move constructor/operator
-	Value_Expr(Value_Expr&& src) = delete;
-	Value_Expr& operator=(Value_Expr&& src) noexcept = delete;
+	Value_Bool(Value_Bool&& src) = delete;
+	Value_Bool& operator=(Value_Bool&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Expr() = default;
+	~Value_Bool() = default;
 public:
-	Expr& GetExpr() { return *_pExpr; }
-	const Expr& GetExpr() const { return *_pExpr; }
+	bool GetBool() const { return _flag; } // override Object::GetBool()
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetExpr().CalcHash();
+		return static_cast<size_t>(GetBool());
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
+		return IsSameType(pValue) && GetBool() == dynamic_cast<const Value_Bool*>(pValue)->GetBool();
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetExpr().IsLessThan(dynamic_cast<const Value_Expr*>(pValue)->GetExpr()) :
+			GetBool() < dynamic_cast<const Value_Bool*>(pValue)->GetBool() :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetExpr().ToString(ss);
+		return _flag? "true" : "false";
 	}
 };
 
