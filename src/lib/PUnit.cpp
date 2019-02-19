@@ -5,6 +5,8 @@
 
 namespace Gurax {
 
+class Processor;
+
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
@@ -38,7 +40,7 @@ public:
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 public:
 	// Virtual functions
-	virtual void Exec() const = 0;
+	virtual void Exec(Processor& processor) const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
 };
 
@@ -70,7 +72,7 @@ public:
 	PUnit_EraseStack() {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -90,7 +92,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -106,7 +108,7 @@ public:
 	PUnit_AddValueToList() {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -126,7 +128,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -146,7 +148,29 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Member
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Member : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("Member");
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+public:
+	// Constructor
+	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -166,7 +190,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -186,7 +210,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -206,7 +230,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -222,8 +246,104 @@ public:
 	PUnit_Call() {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec() const override;
+	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_PrepareArgument
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_PrepareArgument : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("PrepareArgument");
+private:
+	RefPtr<Expr> _pExpr;
+public:
+	// Constructor
+	explicit PUnit_PrepareArgument(Expr* pExpr) : _pExpr(pExpr) {}
+public:
+	const Expr* GetExpr() const { return _pExpr.get(); }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_FeedArgument
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_FeedArgument : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("FeedArgument");
+public:
+	// Constructor
+	PUnit_FeedArgument() {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_PrepareNamedArgument
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_PrepareNamedArgument : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("PrepareNamedArgument");
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Expr> _pExpr;
+public:
+	// Constructor
+	explicit PUnit_PrepareNamedArgument(const Symbol* pSymbol, Expr* pExpr) :
+		_pSymbol(pSymbol), _pExpr(pExpr) {}
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Expr* GetExpr() const { return _pExpr.get(); }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_FeedNamedArgument
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_FeedNamedArgument : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("FeedNamedArgument");
+public:
+	// Constructor
+	PUnit_FeedNamedArgument() {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Processor
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Processor {
+private:
+	const PUnit* _pPUnitCur;
+public:
+	// Constructor
+	Processor() : _pPUnitCur(nullptr) {}
+	// Copy constructor/operator
+	Processor(const Processor& src) = delete;
+	Processor& operator=(const Processor& src) = delete;
+	// Move constructor/operator
+	Processor(Processor&& src) = delete;
+	Processor& operator=(Processor&& src) noexcept = delete;
+	// Destructor
+	virtual ~Processor() = default;
+public:
+	void Goto(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
 };
 
 //------------------------------------------------------------------------------
@@ -238,11 +358,12 @@ PUnit* PUnit::_pPUnitCont = nullptr;
 //------------------------------------------------------------------------------
 // PUnit_CreateList
 //------------------------------------------------------------------------------
-void PUnit_CreateList::Exec() const
+void PUnit_CreateList::Exec(Processor& processor) const
 {
 	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 	pValueTypedOwner->Reserve(GetSizeReserve());
 	Context::PushStack(new Value_List(pValueTypedOwner.release()));
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_CreateList::ToString(const StringStyle& ss) const
@@ -254,12 +375,13 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_AddValueToList
 //------------------------------------------------------------------------------
-void PUnit_AddValueToList::Exec() const
+void PUnit_AddValueToList::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(Context::PopStack());
 	ValueTypedOwner& valueTypedOwner =
 		dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
 	valueTypedOwner.Add(pValue.release());
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_AddValueToList::ToString(const StringStyle& ss) const
@@ -271,9 +393,10 @@ String PUnit_AddValueToList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_EraseStack
 //------------------------------------------------------------------------------
-void PUnit_EraseStack::Exec() const
+void PUnit_EraseStack::Exec(Processor& processor) const
 {
 	Value::Delete(Context::PopStack());
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_EraseStack::ToString(const StringStyle& ss) const
@@ -285,7 +408,7 @@ String PUnit_EraseStack::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_LookupValue
 //------------------------------------------------------------------------------
-void PUnit_LookupValue::Exec() const
+void PUnit_LookupValue::Exec(Processor& processor) const
 {
 	const Value* pValue = Context::GetFrame().LookupValue(GetSymbol());
 	if (!pValue) {
@@ -293,6 +416,7 @@ void PUnit_LookupValue::Exec() const
 		return;
 	}
 	Context::PushStack(pValue->Reference());
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_LookupValue::ToString(const StringStyle& ss) const
@@ -304,10 +428,11 @@ String PUnit_LookupValue::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_AssignValue
 //------------------------------------------------------------------------------
-void PUnit_AssignValue::Exec() const
+void PUnit_AssignValue::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
 	Context::GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_AssignValue::ToString(const StringStyle& ss) const
@@ -317,14 +442,39 @@ String PUnit_AssignValue::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Member
+//------------------------------------------------------------------------------
+void PUnit_Member::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValueTarget(Context::PopStack());
+	Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
+	if (!pValue) {
+		Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
+		return;
+	}
+	Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_Member::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
 //------------------------------------------------------------------------------
-void PUnit_UnaryOp::Exec() const
+void PUnit_UnaryOp::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueChild(Context::PopStack());
-	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
+	//if (pValueChild->IsType(VTYPE_Member)) {
+	//	pValueChild.reset(dynamic_cast<Value_Member*>(pValueChild.get())->GetValueProp().Reference());
+	//}
+	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.get()));
 	if (!pValue) return;
 	Context::PushStack(pValue.release());
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_UnaryOp::ToString(const StringStyle& ss) const
@@ -336,13 +486,14 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_BinaryOp
 //------------------------------------------------------------------------------
-void PUnit_BinaryOp::Exec() const
+void PUnit_BinaryOp::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueRight(Context::PopStack());
 	RefPtr<Value> pValueLeft(Context::PopStack());
 	RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
 	if (!pValue) return;
 	Context::PushStack(pValue.release());
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_BinaryOp::ToString(const StringStyle& ss) const
@@ -354,7 +505,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_CreateArgumentForCall
 //------------------------------------------------------------------------------
-void PUnit_CreateArgumentForCall::Exec() const
+void PUnit_CreateArgumentForCall::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(Context::PopStack());
 	const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
@@ -367,6 +518,7 @@ void PUnit_CreateArgumentForCall::Exec() const
 	RefPtr<Argument> pArgument(
 		new Argument(pDeclCaller->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
 	Context::PushStack(new Value_Argument(pArgument.release()));
+	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_CreateArgumentForCall::ToString(const StringStyle& ss) const
@@ -378,15 +530,110 @@ String PUnit_CreateArgumentForCall::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_Call
 //------------------------------------------------------------------------------
-void PUnit_Call::Exec() const
+void PUnit_Call::Exec(Processor& processor) const
 {
 	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
 	Argument& argument = pValue->GetArgument();
 	if (!argument.CheckValidity()) return;
 	argument.Call(Context::GetFrame());
+	//processor.Goto();
 }
 
 String PUnit_Call::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PrepareArgument
+//------------------------------------------------------------------------------
+void PUnit_PrepareArgument::Exec(Processor& processor) const
+{
+	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+	if (!pArgSlot) {
+		Error::Issue(ErrorType::ArgumentError, "too many arguments");
+		return;
+	}
+	if (!pArgSlot->IsVacant()) {
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		return;
+	}
+	if (pArgSlot->IsVType(VTYPE_Quote)) {
+		argument.FeedValue(new Value_Expr(GetExpr()->Reference()));
+		//processor.Goto(GetPUnitNext());
+	} else {
+		processor.Goto(GetPUnitNext());
+	}
+}
+
+String PUnit_PrepareArgument::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_FeedArgument
+//------------------------------------------------------------------------------
+void PUnit_FeedArgument::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(Context::PopStack());
+	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+	argument.FeedValue(pValue.release());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_FeedArgument::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PrepareNamedArgument
+//------------------------------------------------------------------------------
+void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
+{
+	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+	//const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
+	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
+	if (!pArgSlot) {
+		Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
+		return;
+	}
+	if (!pArgSlot->IsVacant()) {
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		return;
+	}
+	if (pArgSlot->IsVType(VTYPE_Quote)) {
+		pArgSlot->FeedValue(new Value_Expr(GetExpr()->Reference()));
+		//processor.Goto(GetPUnitNext());
+	} else {
+		Context::PushStack(new Value_ArgSlot(pArgSlot->Reference()));
+		processor.Goto(GetPUnitNext());
+	}
+}
+
+String PUnit_PrepareNamedArgument::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_FeedNamedArgument
+//------------------------------------------------------------------------------
+void PUnit_FeedNamedArgument::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(Context::PopStack());
+	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(Context::PopStack())->GetArgSlot();
+	argSlot.FeedValue(pValue.release());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_FeedNamedArgument::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	return rtn;

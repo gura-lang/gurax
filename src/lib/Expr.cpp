@@ -194,7 +194,6 @@ void Expr_Identifier::ExecInAssignment(const Expr* pExprAssigned, const Operator
 		do {
 			RefPtr<Value> pValueRight(Context::PopStack());
 			RefPtr<Value> pValueLeft(Context::PopStack());
-			if (!pValueLeft || !pValueRight) return;
 			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
 			if (!pValue) return;
 			Context::PushStack(pValue.release());
@@ -272,7 +271,6 @@ void Expr_UnaryOp::Exec() const
 	} while (0);
 	do {
 		RefPtr<Value> pValueChild(Context::PopStack());
-		if (!pValueChild) return;
 		RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
 		if (!pValue) return;
 		Context::PushStack(pValue.release());
@@ -338,7 +336,6 @@ void Expr_BinaryOp::Exec() const
 	do {
 		RefPtr<Value> pValueRight(Context::PopStack());
 		RefPtr<Value> pValueLeft(Context::PopStack());
-		if (!pValueLeft || !pValueRight) return;
 		RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
 		if (!pValue) return;
 		Context::PushStack(pValue.release());
@@ -491,7 +488,6 @@ void Expr_Member::ExecInAssignment(const Expr* pExprAssigned, const Operator* pO
 		do {
 			RefPtr<Value> pValueRight(Context::PopStack());
 			RefPtr<Value> pValueLeft(Context::PopStack());
-			if (!pValueLeft || !pValueRight) return;
 			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
 			if (!pValue) return;
 			Context::PushStack(pValue.release());
