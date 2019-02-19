@@ -26,6 +26,7 @@ add_library(guraxcore SHARED
 	Operators.cpp
 	Parser.cpp
 	Property.cpp
+	PUnit.cpp
 	Random.cpp
 	Referable.cpp
 	Stream.cpp
