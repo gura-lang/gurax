@@ -1,5 +1,5 @@
 //==============================================================================
-// Value_StringPtr.cpp
+// VType_StringPtr.cpp
 // This object type is designed to be used with Formatter.
 //==============================================================================
 #include "stdafx.h"
