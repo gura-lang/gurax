@@ -241,7 +241,7 @@ PUnit* PUnit::_pPUnitCont = nullptr;
 void PUnit_CreateList::Exec() const
 {
 	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
-	if (GetSizeReserve() > 0) pValueTypedOwner->Reserve(GetSizeReserve());
+	pValueTypedOwner->Reserve(GetSizeReserve());
 	Context::PushStack(new Value_List(pValueTypedOwner.release()));
 }
 
