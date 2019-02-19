@@ -7,10 +7,18 @@
 
 #define Gurax_MemoryPoolAllocator(ownerName) \
 static void *operator new(size_t size) { \
-	return MemoryPool::Global().Allocate(size, ownerName);	\
+	return MemoryPool::ForGlobal().Allocate(size, ownerName);	\
 } \
 static void operator delete(void* p) { \
-	MemoryPool::Global().Deallocate(p); \
+	MemoryPool::ForGlobal().Deallocate(p); \
+}
+
+#define Gurax_MemoryPoolAllocator_PUnit(name) \
+static void *operator new(size_t size) { \
+	return MemoryPool::ForPUnit().Allocate(size, name);	\
+} \
+static void operator delete(void* p) { \
+	MemoryPool::ForPUnit().Deallocate(p); \
 }
 
 namespace Gurax {
@@ -60,7 +68,8 @@ public:
 		virtual void Deallocate(void* p);
 	};
 private:
-	static MemoryPool _memoryPool;
+	static MemoryPool _memoryPoolForGlobal;
+	static MemoryPool _memoryPoolForPUnit;
 private:
 	ChunkFixed _chunkFixed1;
 	ChunkFixed _chunkFixed2;
@@ -77,7 +86,8 @@ public:
 	// Destructor
 	~MemoryPool() = default;
 public:
-	static MemoryPool& Global() { return _memoryPool; }
+	static MemoryPool& ForGlobal() { return _memoryPoolForGlobal; }
+	static MemoryPool& ForPUnit() { return _memoryPoolForPUnit; }
 	void* Allocate(size_t bytes, const char* ownerName);
 	void Deallocate(void* p);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
@@ -105,10 +115,10 @@ public:
 	~Allocator() = default;
 public:
 	_Tp* allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
-		return static_cast<_Tp*>(MemoryPool::Global().Allocate(num * sizeof(_Tp), "Allocator"));
+		return static_cast<_Tp*>(MemoryPool::ForGlobal().Allocate(num * sizeof(_Tp), "Allocator"));
 	}
 	void deallocate(_Tp* p, size_t num) {
-		MemoryPool::Global().Deallocate(p);
+		MemoryPool::ForGlobal().Deallocate(p);
 	}
 };
 

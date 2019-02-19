@@ -8,7 +8,8 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // MemoryPool
 //-----------------------------------------------------------------------------
-MemoryPool MemoryPool::_memoryPool;
+MemoryPool MemoryPool::_memoryPoolForGlobal;
+MemoryPool MemoryPool::_memoryPoolForPUnit;
 
 MemoryPool::MemoryPool() :
 	_chunkFixed1(64, 20), _chunkFixed2(128, 20), _chunkVariable()
