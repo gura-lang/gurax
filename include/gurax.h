@@ -36,6 +36,7 @@
 #include "gurax/Stream.h"
 #include "gurax/Streams.h"
 #include "gurax/String.h"
+#include "gurax/SuffixMgr.h"
 #include "gurax/Symbol.h"
 #include "gurax/Symbols.h"
 #include "gurax/Template.h"

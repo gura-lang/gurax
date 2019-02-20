@@ -331,9 +331,11 @@ public:
 class GURAX_DLLDECLARE Processor {
 private:
 	const PUnit* _pPUnitCur;
+	RefPtr<ValueStack> _pValueStack;
+	RefPtr<Frame> _pFrame;
 public:
 	// Constructor
-	Processor() : _pPUnitCur(nullptr) {}
+	Processor();
 	// Copy constructor/operator
 	Processor(const Processor& src) = delete;
 	Processor& operator=(const Processor& src) = delete;
@@ -343,8 +345,31 @@ public:
 	// Destructor
 	virtual ~Processor() = default;
 public:
+	ValueStack& GetValueStack() { return *_pValueStack; }
+	void PushStack(Value* pValue) { GetValueStack().Push(pValue); }
+	Value* PopStack() { return GetValueStack().Pop(); }
+	Value* PeekStack(size_t offset) { return GetValueStack().Peek(offset); }
+	Frame& GetFrame() { return *_pFrame; }
 	void Goto(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
+	void Run(const PUnit* pPUnit);
 };
+
+//------------------------------------------------------------------------------
+// Processor
+//------------------------------------------------------------------------------
+Processor::Processor() :
+	_pPUnitCur(nullptr), _pValueStack(new ValueStack()), _pFrame(Context::GetFrame().Reference())
+{
+}
+
+void Processor::Run(const PUnit* pPUnit)
+{
+	while (pPUnit) {
+		_pPUnitCur = nullptr;
+		pPUnit->Exec(*this);
+		pPUnit = _pPUnitCur;
+	}
+}
 
 //------------------------------------------------------------------------------
 // PUnit
@@ -362,7 +387,7 @@ void PUnit_CreateList::Exec(Processor& processor) const
 {
 	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 	pValueTypedOwner->Reserve(GetSizeReserve());
-	Context::PushStack(new Value_List(pValueTypedOwner.release()));
+	processor.PushStack(new Value_List(pValueTypedOwner.release()));
 	processor.Goto(GetPUnitNext());
 }
 
@@ -378,9 +403,9 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_AddValueToList::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValue(Context::PopStack());
+	RefPtr<Value> pValue(processor.PopStack());
 	ValueTypedOwner& valueTypedOwner =
-		dynamic_cast<Value_List*>(Context::PeekStack(0))->GetValueTypedOwner();
+		dynamic_cast<Value_List*>(processor.PeekStack(0))->GetValueTypedOwner();
 	valueTypedOwner.Add(pValue.release());
 	processor.Goto(GetPUnitNext());
 }
@@ -397,7 +422,7 @@ String PUnit_AddValueToList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_EraseStack::Exec(Processor& processor) const
 {
-	Value::Delete(Context::PopStack());
+	Value::Delete(processor.PopStack());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -413,12 +438,12 @@ String PUnit_EraseStack::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_LookupValue::Exec(Processor& processor) const
 {
-	const Value* pValue = Context::GetFrame().LookupValue(GetSymbol());
+	const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return;
 	}
-	Context::PushStack(pValue->Reference());
+	processor.PushStack(pValue->Reference());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -436,8 +461,8 @@ String PUnit_LookupValue::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_AssignValue::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueAssigned(Context::PeekStack(0)->Reference());
-	Context::GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
+	RefPtr<Value> pValueAssigned(processor.PeekStack(0)->Reference());
+	processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -455,16 +480,16 @@ String PUnit_AssignValue::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Member::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueTarget(Context::PopStack());
+	RefPtr<Value> pValueTarget(processor.PopStack());
 	Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
 		return;
 	}
 	if (pValue->IsCallable()) {
-		Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+		processor.PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
 	} else {
-		Context::PushStack(pValue->Reference());
+		processor.PushStack(pValue->Reference());
 	}
 	processor.Goto(GetPUnitNext());
 }
@@ -481,10 +506,10 @@ String PUnit_Member::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_UnaryOp::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueChild(Context::PopStack());
+	RefPtr<Value> pValueChild(processor.PopStack());
 	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.get()));
 	if (!pValue) return;
-	Context::PushStack(pValue.release());
+	processor.PushStack(pValue.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -502,11 +527,11 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_BinaryOp::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueRight(Context::PopStack());
-	RefPtr<Value> pValueLeft(Context::PopStack());
+	RefPtr<Value> pValueRight(processor.PopStack());
+	RefPtr<Value> pValueLeft(processor.PopStack());
 	RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
 	if (!pValue) return;
-	Context::PushStack(pValue.release());
+	processor.PushStack(pValue.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -524,7 +549,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_CreateArgumentForCall::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueCar(Context::PopStack());
+	RefPtr<Value> pValueCar(processor.PopStack());
 	const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
 	if (!pDeclCaller) {
 		Error::Issue(ErrorType::ValueError,
@@ -534,7 +559,7 @@ void PUnit_CreateArgumentForCall::Exec(Processor& processor) const
 	if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 	RefPtr<Argument> pArgument(
 		new Argument(pDeclCaller->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
-	Context::PushStack(new Value_Argument(pArgument.release()));
+	processor.PushStack(new Value_Argument(pArgument.release()));
 	processor.Goto(GetPUnitNext());
 }
 
@@ -550,10 +575,10 @@ String PUnit_CreateArgumentForCall::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Call::Exec(Processor& processor) const
 {
-	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
+	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopStack()));
 	Argument& argument = pValue->GetArgument();
 	if (!argument.CheckValidity()) return;
-	argument.Call(Context::GetFrame());
+	argument.Call(processor.GetFrame());
 	//processor.Goto();
 }
 
@@ -569,7 +594,7 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_PrepareArgument::Exec(Processor& processor) const
 {
-	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -599,8 +624,8 @@ String PUnit_PrepareArgument::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_FeedArgument::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValue(Context::PopStack());
-	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+	RefPtr<Value> pValue(processor.PopStack());
+	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 	argument.FeedValue(pValue.release());
 	processor.Goto(GetPUnitNext());
 }
@@ -617,7 +642,7 @@ String PUnit_FeedArgument::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
 {
-	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
 	if (!pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
@@ -631,7 +656,7 @@ void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
 		pArgSlot->FeedValue(new Value_Expr(GetExpr()->Reference()));
 		//processor.Goto(GetPUnitNext());
 	} else {
-		Context::PushStack(new Value_ArgSlot(pArgSlot->Reference()));
+		processor.PushStack(new Value_ArgSlot(pArgSlot->Reference()));
 		processor.Goto(GetPUnitNext());
 	}
 }
@@ -650,8 +675,8 @@ String PUnit_PrepareNamedArgument::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_FeedNamedArgument::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValue(Context::PopStack());
-	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(Context::PopStack())->GetArgSlot();
+	RefPtr<Value> pValue(processor.PopStack());
+	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopStack())->GetArgSlot();
 	argSlot.FeedValue(pValue.release());
 	processor.Goto(GetPUnitNext());
 }

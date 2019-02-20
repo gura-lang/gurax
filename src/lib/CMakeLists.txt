@@ -33,6 +33,7 @@ add_library(guraxcore SHARED
 	Stream.cpp
 	Streams.cpp
 	String.cpp
+	SuffixMgr.cpp
 	Symbol.cpp
 	Symbols.cpp
 	Template.cpp
