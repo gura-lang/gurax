@@ -11,3 +11,5 @@ class GURAX_DLLDECLARE SuffixMgr {
 };
 
 }
+
+#endif
