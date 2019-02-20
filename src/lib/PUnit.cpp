@@ -369,6 +369,7 @@ void PUnit_CreateList::Exec(Processor& processor) const
 String PUnit_CreateList::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "CreateList()";
 	return rtn;
 }
 
@@ -387,6 +388,7 @@ void PUnit_AddValueToList::Exec(Processor& processor) const
 String PUnit_AddValueToList::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "AddValueList()";
 	return rtn;
 }
 
@@ -402,6 +404,7 @@ void PUnit_EraseStack::Exec(Processor& processor) const
 String PUnit_EraseStack::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "EraseStack()";
 	return rtn;
 }
 
@@ -422,6 +425,9 @@ void PUnit_LookupValue::Exec(Processor& processor) const
 String PUnit_LookupValue::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "LookupValue(`";
+	rtn += GetSymbol()->GetName();
+	rtn += ")";
 	return rtn;
 }
 
@@ -438,6 +444,9 @@ void PUnit_AssignValue::Exec(Processor& processor) const
 String PUnit_AssignValue::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "AssignValue(`";
+	rtn += GetSymbol()->GetName();
+	rtn += ")";
 	return rtn;
 }
 
@@ -452,13 +461,18 @@ void PUnit_Member::Exec(Processor& processor) const
 		Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
 		return;
 	}
-	Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+	if (pValue->IsCallable()) {
+		Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+	} else {
+		Context::PushStack(pValue->Reference());
+	}
 	processor.Goto(GetPUnitNext());
 }
 
 String PUnit_Member::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "Member()";
 	return rtn;
 }
 
@@ -468,9 +482,6 @@ String PUnit_Member::ToString(const StringStyle& ss) const
 void PUnit_UnaryOp::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueChild(Context::PopStack());
-	//if (pValueChild->IsType(VTYPE_Member)) {
-	//	pValueChild.reset(dynamic_cast<Value_Member*>(pValueChild.get())->GetValueProp().Reference());
-	//}
 	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.get()));
 	if (!pValue) return;
 	Context::PushStack(pValue.release());
@@ -480,6 +491,9 @@ void PUnit_UnaryOp::Exec(Processor& processor) const
 String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "UnaryOp(";
+	rtn += GetOperator()->GetSymbol();
+	rtn += ")";
 	return rtn;
 }
 
@@ -499,6 +513,9 @@ void PUnit_BinaryOp::Exec(Processor& processor) const
 String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "BinaryOp(";
+	rtn += GetOperator()->GetSymbol();
+	rtn += ")";
 	return rtn;
 }
 
@@ -524,6 +541,7 @@ void PUnit_CreateArgumentForCall::Exec(Processor& processor) const
 String PUnit_CreateArgumentForCall::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "CreateArgumentForCall()";
 	return rtn;
 }
 
@@ -542,6 +560,7 @@ void PUnit_Call::Exec(Processor& processor) const
 String PUnit_Call::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "Call()";
 	return rtn;
 }
 
@@ -571,6 +590,7 @@ void PUnit_PrepareArgument::Exec(Processor& processor) const
 String PUnit_PrepareArgument::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "PrepareArgument()";
 	return rtn;
 }
 
@@ -588,6 +608,7 @@ void PUnit_FeedArgument::Exec(Processor& processor) const
 String PUnit_FeedArgument::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "FeedArgument()";
 	return rtn;
 }
 
@@ -597,7 +618,6 @@ String PUnit_FeedArgument::ToString(const StringStyle& ss) const
 void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
 {
 	Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-	//const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
 	if (!pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
@@ -619,6 +639,9 @@ void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
 String PUnit_PrepareNamedArgument::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "PrepareNamesArgument(`";
+	rtn += GetSymbol()->GetName();
+	rtn += ")";
 	return rtn;
 }
 
@@ -636,6 +659,7 @@ void PUnit_FeedNamedArgument::Exec(Processor& processor) const
 String PUnit_FeedNamedArgument::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += "FeedNamedArgument()";
 	return rtn;
 }
 

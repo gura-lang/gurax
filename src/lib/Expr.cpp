@@ -461,7 +461,11 @@ void Expr_Member::Exec() const
 			Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
 			return;
 		}
-		Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+		if (pValue->IsCallable()) {
+			Context::PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+		} else {
+			Context::PushStack(pValue->Reference());
+		}
 	} while (0);
 }
 

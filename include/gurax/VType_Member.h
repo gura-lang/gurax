@@ -55,7 +55,7 @@ public:
 	virtual bool IsEqualTo(const Value* pValue) const override { return this == pValue; }
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
-	virtual const DeclCaller* GetDeclCaller() override { return GetValueProp().GetDeclCaller(); }
+	virtual const DeclCaller* GetDeclCaller() const override { return GetValueProp().GetDeclCaller(); }
 	virtual void DoCall(Frame& frame, Argument& argument) override {
 		argument.SetValueThis(GetValueThis().Reference());
 		GetValueProp().DoCall(frame, argument);

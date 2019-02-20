@@ -83,8 +83,11 @@ public:
 	bool IsInstanceOf(const VType& vtype) const;
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
-	String ToString(const StringStyle& ss) const;
+	String ToString(const StringStyle& ss) const {
+		return ss.IsDigest()? ToStringDigest(ss) : ToStringDetail(ss);
+	}
 public:
+	bool IsCallable() const { return GetDeclCaller() != nullptr; }
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
@@ -102,8 +105,9 @@ public:
 	virtual size_t DoCalcHash() const = 0;
 	virtual bool IsEqualTo(const Value* pValue) const = 0;
 	virtual bool IsLessThan(const Value* pValue) const = 0;
+	virtual String ToStringDigest(const StringStyle& ss) const;
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
-	virtual const DeclCaller* GetDeclCaller();
+	virtual const DeclCaller* GetDeclCaller() const { return nullptr; }
 	virtual void DoCall(Frame& frame, Argument& argument);
 	virtual void DoIndexAccess(Frame& frame, Argument& argument);
 	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const;

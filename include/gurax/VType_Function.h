@@ -65,6 +65,9 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetFunction().ToString(ss);
 	}
+	virtual const DeclCaller* GetDeclCaller() const override {
+		return &GetFunction().GetDeclCaller();
+	}
 };
 
 }

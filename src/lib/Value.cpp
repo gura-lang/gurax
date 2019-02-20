@@ -65,9 +65,18 @@ bool Value::IsInstanceOf(const VType& vtype) const
 	return false;
 }
 
-const DeclCaller* Value::GetDeclCaller()
+String Value::ToStringDigest(const StringStyle& ss) const
 {
-	return nullptr;
+	String rtn;
+	rtn += "<";
+	rtn += GetVType().MakeFullName();
+	if (!IsUndefined() && !IsNil()) {
+		char buff[64];
+		::sprintf(buff, ":%p", this);
+		rtn += buff;
+	}
+	rtn += ">";
+	return rtn;
 }
 
 void Value::DoCall(Frame& frame, Argument& argument)
@@ -94,21 +103,6 @@ void Value::AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribut
 	if (pProperty) {
 		pProperty->DoPutValue(this, pValue, attr);
 	}
-}
-
-String Value::ToString(const StringStyle& ss) const
-{
-	if (!ss.IsDigest()) return ToStringDetail(ss);
-	String rtn;
-	rtn += "<";
-	rtn += GetVType().MakeFullName();
-	if (!IsUndefined() && !IsNil()) {
-		char buff[64];
-		::sprintf(buff, ":%p", this);
-		rtn += buff;
-	}
-	rtn += ">";
-	return rtn;
 }
 
 bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const

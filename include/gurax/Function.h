@@ -39,6 +39,7 @@ protected:
 	virtual ~Function() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {

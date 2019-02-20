@@ -28,6 +28,7 @@
 #include "gurax/Operator.h"
 #include "gurax/Operators.h"
 #include "gurax/Parser.h"
+#include "gurax/Processor.h"
 #include "gurax/Property.h"
 #include "gurax/PUnit.h"
 #include "gurax/Random.h"
