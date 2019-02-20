@@ -93,15 +93,15 @@ void Value::DoIndexAccess(Frame& frame, Argument& argument)
 
 Value* Value::LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const
 {
-	const Property* pProperty = GetVType().LookupProperty(pSymbol);
-	return pProperty? pProperty->DoGetValue(this, attr) : GetVType().GetFrame().LookupValue(pSymbol);
+	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
+	return pPropHandler? pPropHandler->DoGetValue(this, attr) : GetVType().GetFrame().LookupValue(pSymbol);
 }
 
 void Value::AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr)
 {
-	const Property* pProperty = GetVType().LookupProperty(pSymbol);
-	if (pProperty) {
-		pProperty->DoPutValue(this, pValue, attr);
+	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
+	if (pPropHandler) {
+		pPropHandler->DoPutValue(this, pValue, attr);
 	}
 }
 

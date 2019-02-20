@@ -1,46 +1,46 @@
 //==============================================================================
-// Property.cpp
+// PropHandler.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Property
+// PropHandler
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// PropertyMap
+// PropHandlerMap
 //------------------------------------------------------------------------------
-void PropertyMap::Clear()
+void PropHandlerMap::Clear()
 {
-	for (auto& pair : *this) Property::Delete(pair.second);
+	for (auto& pair : *this) PropHandler::Delete(pair.second);
 	clear();
 }
 
-void PropertyMap::Assign(Property* pProperty)
+void PropHandlerMap::Assign(PropHandler* pPropHandler)
 {
-	iterator pPair = find(pProperty->GetSymbol());
+	iterator pPair = find(pPropHandler->GetSymbol());
 	if (pPair == end()) {
-		emplace(pProperty->GetSymbol(), pProperty);
+		emplace(pPropHandler->GetSymbol(), pPropHandler);
 	} else {
-		Property::Delete(pPair->second);
-		pPair->second = pProperty;
+		PropHandler::Delete(pPair->second);
+		pPair->second = pPropHandler;
 	}
 }
 
-String PropertyMap::ToString(const StringStyle& ss) const
+String PropHandlerMap::ToString(const StringStyle& ss) const
 {
 	String str;
 #if 0
 	SymbolList keys = GetKeys().Sort();
 	for (const Symbol* pSymbol : keys) {
-		Property* pProperty = Lookup(pSymbol);
+		PropHandler* pPropHandler = Lookup(pSymbol);
 		str += pSymbol->GetName();
 		str += ":";
-		str += pProperty->GetVType().MakeFullName().c_str();
+		str += pPropHandler->GetVType().MakeFullName().c_str();
 		str += " = ";
-		str += pProperty->ToString();
+		str += pPropHandler->ToString();
 		str += "\n";
 	}
 #endif

@@ -1,34 +1,34 @@
 //==============================================================================
-// Property.h
+// PropHandler.h
 //==============================================================================
-#ifndef GURAX_PROPERTY_H
-#define GURAX_PROPERTY_H
+#ifndef GURAX_PROPHANDLER_H
+#define GURAX_PROPHANDLER_H
 #include "Attribute.h"
 #include "Symbol.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Property
+// PropHandler
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Property : public Referable {
+class GURAX_DLLDECLARE PropHandler : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Property);
+	Gurax_DeclareReferable(PropHandler);
 private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	Property(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PropHandler(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
 	// Copy constructor/operator
-	Property(const Property& src) : _pSymbol(src._pSymbol) {}
-	Property& operator=(const Property& src) = delete;
+	PropHandler(const PropHandler& src) : _pSymbol(src._pSymbol) {}
+	PropHandler& operator=(const PropHandler& src) = delete;
 	// Move constructor/operator
-	Property(Property&& src) = delete;
-	Property& operator=(Property&& src) noexcept = delete;
+	PropHandler(PropHandler&& src) = delete;
+	PropHandler& operator=(PropHandler&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Property() = default;
+	virtual ~PropHandler() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -38,20 +38,20 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PropertyMap
+// PropHandlerMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PropertyMap :
-	public std::unordered_map<const Symbol*, Property*,
+class GURAX_DLLDECLARE PropHandlerMap :
+	public std::unordered_map<const Symbol*, PropHandler*,
 			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(PropertyMap);
+	Gurax_DeclareReferable(PropHandlerMap);
 protected:
-	~PropertyMap() { Clear(); }
+	~PropHandlerMap() { Clear(); }
 public:
 	void Clear();
-	void Assign(Property* pProperty);
-	Property* Lookup(const Symbol* pSymbol) const {
+	void Assign(PropHandler* pPropHandler);
+	PropHandler* Lookup(const Symbol* pSymbol) const {
 		auto pPair = find(pSymbol);
 		return (pPair == end())? nullptr : pPair->second;
 	}

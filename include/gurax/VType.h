@@ -8,7 +8,7 @@
 #include "Referable.h"
 #include "DottedSymbol.h"
 #include "Frame.h"
-#include "Property.h"
+#include "PropHandler.h"
 
 namespace Gurax {
 
@@ -32,7 +32,7 @@ protected:
 	UInt32 _flags;
 	RefPtr<Frame_Branch> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
-	RefPtr<PropertyMap> _pPropertyMap;
+	RefPtr<PropHandlerMap> _pPropHandlerMap;
 private:
 	static SeqId _seqIdNext;
 	static const SeqId SeqId_Invalid = 0;
@@ -69,10 +69,10 @@ public:
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
-	PropertyMap& GetPropertyMap() { return *_pPropertyMap; }
-	const PropertyMap& GetPropertyMap() const { return *_pPropertyMap; }
-	void AssignProperty(Property* pProperty) { GetPropertyMap().Assign(pProperty); }
-	const Property* LookupProperty(const Symbol* pSymbol) const;
+	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
+	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
+	void AssignPropHandler(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
+	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
 	Value* LookupPropValue(Value* pValueTarget, const Symbol* pSymbol, const Attribute& attr) const;
 	void AssignPropValue(Value* pValueTarget, const Symbol* pSymbol, Value* pValue, const Attribute& attr) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
