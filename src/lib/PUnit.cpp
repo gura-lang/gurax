@@ -332,17 +332,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PrepareArgument
+// PUnit_ArgSlot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_PrepareArgument : public PUnit {
+class GURAX_DLLDECLARE PUnit_ArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("PrepareArgument");
+	Gurax_MemoryPoolAllocator_PUnit("ArgSlot");
 private:
 	RefPtr<Expr> _pExpr;
 public:
 	// Constructor
-	explicit PUnit_PrepareArgument(Expr* pExpr) : _pExpr(pExpr) {}
+	explicit PUnit_ArgSlot(Expr* pExpr) : _pExpr(pExpr) {}
 public:
 	const Expr* GetExpr() const { return _pExpr.get(); }
 public:
@@ -352,15 +352,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_FeedArgument
+// PUnit_FeedArgSlot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_FeedArgument : public PUnit {
+class GURAX_DLLDECLARE PUnit_FeedArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("FeedArgument");
+	Gurax_MemoryPoolAllocator_PUnit("FeedArgSlot");
 public:
 	// Constructor
-	PUnit_FeedArgument() {}
+	PUnit_FeedArgSlot() {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -368,18 +368,18 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PrepareNamedArgument
+// PUnit_NamedArgSlot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_PrepareNamedArgument : public PUnit {
+class GURAX_DLLDECLARE PUnit_NamedArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("PrepareNamedArgument");
+	Gurax_MemoryPoolAllocator_PUnit("NamedArgSlot");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExpr;
 public:
 	// Constructor
-	explicit PUnit_PrepareNamedArgument(const Symbol* pSymbol, Expr* pExpr) :
+	explicit PUnit_NamedArgSlot(const Symbol* pSymbol, Expr* pExpr) :
 		_pSymbol(pSymbol), _pExpr(pExpr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
@@ -391,15 +391,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_FeedNamedArgument
+// PUnit_FeedNamedArgSlot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_FeedNamedArgument : public PUnit {
+class GURAX_DLLDECLARE PUnit_FeedNamedArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("FeedNamedArgument");
+	Gurax_MemoryPoolAllocator_PUnit("FeedNamedArgSlot");
 public:
 	// Constructor
-	PUnit_FeedNamedArgument() {}
+	PUnit_FeedNamedArgSlot() {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -779,10 +779,10 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PrepareArgument
+// PUnit_ArgSlot
 // [ValueArgument] -> [ValueArgument]
 //------------------------------------------------------------------------------
-void PUnit_PrepareArgument::Exec(Processor& processor) const
+void PUnit_ArgSlot::Exec(Processor& processor) const
 {
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
@@ -802,18 +802,18 @@ void PUnit_PrepareArgument::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_PrepareArgument::ToString(const StringStyle& ss) const
+String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "PrepareArgument()";
+	rtn += "ArgSlot()";
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_FeedArgument
+// PUnit_FeedArgSlot
 // [ValueArgument Value] -> [ValueArgument]
 //------------------------------------------------------------------------------
-void PUnit_FeedArgument::Exec(Processor& processor) const
+void PUnit_FeedArgSlot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopStack());
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
@@ -821,18 +821,18 @@ void PUnit_FeedArgument::Exec(Processor& processor) const
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_FeedArgument::ToString(const StringStyle& ss) const
+String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "FeedArgument()";
+	rtn += "FeedArgSlot()";
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PrepareNamedArgument
+// PUnit_NamedArgSlot
 // [ValueArgument] -> [ValueArgument ValueArgSlot]
 //------------------------------------------------------------------------------
-void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
+void PUnit_NamedArgSlot::Exec(Processor& processor) const
 {
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
@@ -853,7 +853,7 @@ void PUnit_PrepareNamedArgument::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_PrepareNamedArgument::ToString(const StringStyle& ss) const
+String PUnit_NamedArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "PrepareNamesArgument(`";
@@ -863,10 +863,10 @@ String PUnit_PrepareNamedArgument::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_FeedNamedArgument
+// PUnit_FeedNamedArgSlot
 // [ValueArgSlot Value] -> []
 //------------------------------------------------------------------------------
-void PUnit_FeedNamedArgument::Exec(Processor& processor) const
+void PUnit_FeedNamedArgSlot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopStack());
 	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopStack())->GetArgSlot();
@@ -874,10 +874,10 @@ void PUnit_FeedNamedArgument::Exec(Processor& processor) const
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_FeedNamedArgument::ToString(const StringStyle& ss) const
+String PUnit_FeedNamedArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "FeedNamedArgument()";
+	rtn += "FeedNamedArgSlot()";
 	return rtn;
 }
 
