@@ -141,6 +141,7 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 void Expr_Identifier::Exec(Processor& processor) const
 {
 	do {
+		// PUnit_Lookup
 		const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 		if (!pValue) {
 			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
@@ -154,6 +155,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 {
 	if (pOperator) {
 		do {
+			// PUnit_Lookup
 			const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 			if (!pValue) {
 				Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
@@ -166,6 +168,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
+			// PUnit_BinaryOp
 			RefPtr<Value> pValueRight(processor.PopStack());
 			RefPtr<Value> pValueLeft(processor.PopStack());
 			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
@@ -173,6 +176,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 			processor.PushStack(pValue.release());
 		} while (0);
 		do {
+			// PUnit_Assign
 			RefPtr<Value> pValueAssigned(processor.PeekStack(0)->Reference());
 			processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 		} while (0);
@@ -182,6 +186,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
+			// PUnit_Assign
 			RefPtr<Value> pValueAssigned(processor.PeekStack(0)->Reference());
 			processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 		} while (0);
@@ -244,6 +249,7 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
+		// PUnit_UnaryOp
 		RefPtr<Value> pValueChild(processor.PopStack());
 		RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
 		if (!pValue) return;
@@ -308,6 +314,7 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
+		// PUnit_BinaryOp
 		RefPtr<Value> pValueRight(processor.PopStack());
 		RefPtr<Value> pValueLeft(processor.PopStack());
 		RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
@@ -391,10 +398,11 @@ void Expr_Member::Exec(Processor& processor) const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
+		// PUnit_Member
 		RefPtr<Value> pValueTarget(processor.PopStack());
 		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 		if (!pValue) {
-			Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
+			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 			return;
 		}
 		if (pValue->IsCallable()) {
@@ -413,6 +421,7 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 	} while (0);
 	if (pOperator) {
 		do {
+			// PUnit_PropGet
 			Value* pValueTarget = processor.PeekStack(0);
 			Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 			if (!pValue) {
@@ -426,6 +435,7 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
+			// PUnit_BinaryOp
 			RefPtr<Value> pValueRight(processor.PopStack());
 			RefPtr<Value> pValueLeft(processor.PopStack());
 			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
@@ -439,10 +449,11 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 		} while (0);
 	}
 	do {
-		RefPtr<Value> pValueAssigned(processor.PopStack());
+		// PUnit_PropSet
+		RefPtr<Value> pValueProp(processor.PopStack());
 		RefPtr<Value> pValueTarget(processor.PopStack());
-		pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr());
-		processor.PushStack(pValueAssigned.release());
+		pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr());
+		processor.PushStack(pValueProp.release());
 	} while (0);
 }
 
@@ -645,6 +656,7 @@ const Expr::TypeInfo Expr_Lister::typeInfo;
 void Expr_Lister::Exec(Processor& processor) const
 {
 	do {
+		// PUnit_CreateList
 		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
 		processor.PushStack(new Value_List(pValueTypedOwner.release()));
@@ -655,6 +667,7 @@ void Expr_Lister::Exec(Processor& processor) const
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
+			// PUnit_AddList
 			RefPtr<Value> pValue(processor.PopStack());
 			ValueTypedOwner& valueTypedOwner =
 				dynamic_cast<Value_List*>(processor.PeekStack(0))->GetValueTypedOwner();
