@@ -22,6 +22,7 @@
 #include "gurax/Frame.h"
 #include "gurax/Function.h"
 #include "gurax/Help.h"
+#include "gurax/Index.h"
 #include "gurax/Iterator.h"
 #include "gurax/Iterators.h"
 #include "gurax/MemoryPool.h"

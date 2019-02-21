@@ -18,6 +18,7 @@ add_library(guraxcore SHARED
 	Frame.cpp
 	Function.cpp
 	Help.cpp
+	Index.cpp
 	Iterator.cpp
 	Iterators.cpp
 	MemoryPool.cpp

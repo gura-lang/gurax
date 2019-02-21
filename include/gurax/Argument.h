@@ -16,7 +16,6 @@ public:
 	Gurax_DeclareReferable(Argument);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Argument");
-public:
 private:
 	RefPtr<DeclCaller> _pDeclCaller;
 	UInt32 _flags;
