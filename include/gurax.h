@@ -56,6 +56,7 @@
 #include "gurax/VType_Dict.h"
 #include "gurax/VType_Expr.h"
 #include "gurax/VType_Function.h"
+#include "gurax/VType_Index.h"
 #include "gurax/VType_Iterator.h"
 #include "gurax/VType_List.h"
 #include "gurax/VType_Member.h"

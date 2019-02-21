@@ -54,6 +54,7 @@ add_library(guraxcore SHARED
 	VType_Dict.cpp
 	VType_Expr.cpp
 	VType_Function.cpp
+	VType_Index.cpp
 	VType_Iterator.cpp
 	VType_List.cpp
 	VType_Member.cpp
