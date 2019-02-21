@@ -122,7 +122,10 @@ const Expr::TypeInfo Expr_Value::typeInfo;
 
 void Expr_Value::Exec(Processor& processor) const
 {
-	processor.PushStack(GetValue()->Clone());
+	do {
+		// PUnit_Value
+		processor.PushStack(GetValue()->Clone());
+	} while (0);
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -709,6 +712,7 @@ void Expr_Indexer::Exec(Processor& processor) const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
+		// PUnit_Index
 		RefPtr<Value> pValueCar(processor.PopStack());
 		RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
 		processor.PushStack(new Value_Index(pIndex.release()));
@@ -719,9 +723,10 @@ void Expr_Indexer::Exec(Processor& processor) const
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
+			// PUnit_FeedIndex
 			RefPtr<Value> pValue(processor.PopStack());
-			Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
-			argument.FeedValue(pValue.release());
+			Index& index = dynamic_cast<Value_Index*>(processor.PeekStack(0))->GetIndex();
+			index.FeedValue(pValue.release());
 		} while (0);
 	}
 	do {
@@ -770,6 +775,7 @@ void Expr_Caller::Exec(Processor& processor) const
 		if (Error::IsIssued()) return;
 	} while (0);
 	do {
+		// PUnit_Argument
 		RefPtr<Value> pValueCar(processor.PopStack());
 		const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
 		if (!pDeclCaller) {
@@ -791,6 +797,7 @@ void Expr_Caller::Exec(Processor& processor) const
 				return;
 			}
 			do {
+				// PUnit_ArgSlotNamed
 				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 				const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
 				ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
@@ -804,7 +811,7 @@ void Expr_Caller::Exec(Processor& processor) const
 				}
 				if (pArgSlot->IsVType(VTYPE_Quote)) {
 					pArgSlot->FeedValue(new Value_Expr(pExprEx->GetExprRight()->Reference()));
-					return;
+					goto skip1;
 				}
 				processor.PushStack(new Value_ArgSlot(pArgSlot->Reference()));
 			} while (0);
@@ -813,12 +820,15 @@ void Expr_Caller::Exec(Processor& processor) const
 				if (Error::IsIssued()) return;
 			} while (0);
 			do {
+				// PUnit_FeedArgSlotNamed
 				RefPtr<Value> pValue(processor.PopStack());
 				ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopStack())->GetArgSlot();
 				argSlot.FeedValue(pValue.release());
 			} while (0);
+		skip1:;
 		} else {
 			do {
+				// PUnit_ArgSlot
 				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 				ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 				if (!pArgSlot) {
@@ -831,7 +841,7 @@ void Expr_Caller::Exec(Processor& processor) const
 				}
 				if (pArgSlot->IsVType(VTYPE_Quote)) {
 					argument.FeedValue(new Value_Expr(Reference()));
-					return;
+					goto skip2;
 				}
 			} while (0);
 			do {
@@ -839,13 +849,16 @@ void Expr_Caller::Exec(Processor& processor) const
 				if (Error::IsIssued()) return;
 			} while (0);
 			do {
+				// PUnit_FeedArgSlot
 				RefPtr<Value> pValue(processor.PopStack());
 				Index& index = dynamic_cast<Value_Index*>(processor.PeekStack(0))->GetIndex();
 				index.FeedValue(pValue.release());
 			} while (0);
+		skip2:;
 		}
 	}
 	do {
+		// PUnit_Call
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopStack()));
 		Argument& argument = pValue->GetArgument();
 		if (!argument.CheckValidity()) return;
