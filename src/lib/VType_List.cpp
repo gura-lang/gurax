@@ -19,5 +19,13 @@ void VType_List::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_List
 //------------------------------------------------------------------------------
+Value* Value_List::DoIndexGet(Argument& argument) const
+{
+	return Value::nil();
+}
+
+void Value_List::DoIndexSet(Argument& argument, Value* pValue)
+{
+}
 
 }

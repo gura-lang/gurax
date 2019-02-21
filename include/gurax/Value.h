@@ -109,8 +109,8 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 	virtual const DeclCaller* GetDeclCaller() const { return nullptr; }
 	virtual Value* DoCall(Frame& frame, Argument& argument);
-	virtual Value* DoIndexGet(Frame& frame, Argument& argument);
-	virtual void DoIndexSet(Frame& frame, Argument& argument, Value* pValue);
+	virtual Value* DoIndexGet(Argument& argument) const;
+	virtual void DoIndexSet(Argument& argument, Value* pValue);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr);
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;

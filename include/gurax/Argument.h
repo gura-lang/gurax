@@ -64,7 +64,8 @@ public:
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
 	Value* Call(Frame& frame) { return GetValueCar().DoCall(frame, *this); }
-	Value* IndexGet(Frame& frame) { return GetValueCar().DoIndexGet(frame, *this); }
+	Value* IndexGet() { return GetValueCar().DoIndexGet(*this); }
+	void IndexSet(Value* pValue) { return GetValueCar().DoIndexSet(*this, pValue); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& argument) const { return this == &argument; }

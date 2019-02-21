@@ -60,12 +60,12 @@ public:
 		argument.SetValueThis(GetValueThis().Reference());
 		return GetValueProp().DoCall(frame, argument);
 	}
-	virtual void DoIndexSet(Frame& frame, Argument& argument, Value* pValue) override {
-		GetValueProp().DoIndexSet(frame, argument, pValue);
-	}		
-	virtual Value* DoIndexGet(Frame& frame, Argument& argument) override {
-		return GetValueProp().DoIndexGet(frame, argument);
+	virtual Value* DoIndexGet(Argument& argument) const override {
+		return GetValueProp().DoIndexGet(argument);
 	}
+	virtual void DoIndexSet(Argument& argument, Value* pValue) override {
+		GetValueProp().DoIndexSet(argument, pValue);
+	}		
 };
 
 }

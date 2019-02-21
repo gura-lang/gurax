@@ -789,7 +789,7 @@ void Expr_Indexer::Exec() const
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
 		Argument& argument = pValue->GetArgument();
 		if (!argument.CheckValidity()) return;
-		RefPtr<Value> pValueRtn(argument.IndexGet(Context::GetFrame()));
+		RefPtr<Value> pValueRtn(argument.IndexGet());
 		if (Error::IsIssued()) return;
 		Context::PushStack(pValueRtn.release());
 	} while (0);

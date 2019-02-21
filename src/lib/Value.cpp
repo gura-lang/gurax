@@ -86,14 +86,14 @@ Value* Value::DoCall(Frame& frame, Argument& argument)
 	return Value::undefined();
 }
 
-Value* Value::DoIndexGet(Frame& frame, Argument& argument)
+Value* Value::DoIndexGet(Argument& argument) const
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 	return Value::undefined();
 }
 
-void Value::DoIndexSet(Frame& frame, Argument& argument, Value* pValue)
+void Value::DoIndexSet(Argument& argument, Value* pValue)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
