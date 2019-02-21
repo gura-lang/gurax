@@ -132,7 +132,6 @@ public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Exec() const = 0;
-	virtual void ExecInArgument() const;
 	virtual void ExecInAssignment(const Expr* pExprAssigned, const Operator* pOperator) const;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
@@ -509,7 +508,6 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec() const override;
-	virtual void ExecInArgument() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

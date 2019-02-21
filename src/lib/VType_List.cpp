@@ -19,12 +19,12 @@ void VType_List::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_List
 //------------------------------------------------------------------------------
-Value* Value_List::DoIndexGet(Argument& argument) const
+Value* Value_List::DoIndexGet(const Index& index) const
 {
 	return Value::nil();
 }
 
-void Value_List::DoIndexSet(Argument& argument, Value* pValue)
+void Value_List::DoIndexSet(const Index& index, Value* pValue)
 {
 }
 

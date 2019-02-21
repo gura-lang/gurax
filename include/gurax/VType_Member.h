@@ -60,11 +60,11 @@ public:
 		argument.SetValueThis(GetValueThis().Reference());
 		return GetValueProp().DoCall(frame, argument);
 	}
-	virtual Value* DoIndexGet(Argument& argument) const override {
-		return GetValueProp().DoIndexGet(argument);
+	virtual Value* DoIndexGet(const Index& index) const override {
+		return GetValueProp().DoIndexGet(index);
 	}
-	virtual void DoIndexSet(Argument& argument, Value* pValue) override {
-		GetValueProp().DoIndexSet(argument, pValue);
+	virtual void DoIndexSet(const Index& index, Value* pValue) override {
+		GetValueProp().DoIndexSet(index, pValue);
 	}		
 };
 

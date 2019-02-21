@@ -37,6 +37,8 @@ public:
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
 	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
 	void FeedValue(Value* pValue) { GetValueTypedOwner().Add(pValue); }
+	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
+	void IndexSet(Value* pValue) { GetValueCar().DoIndexSet(*this, pValue); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Index& index) const { return this == &index; }

@@ -67,8 +67,8 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetValueOwner().ToString(ss);
 	}
-	virtual Value* DoIndexGet(Argument& argument) const override;
-	virtual void DoIndexSet(Argument& argument, Value* pValue) override;
+	virtual Value* DoIndexGet(const Index& index) const override;
+	virtual void DoIndexSet(const Index& index, Value* pValue) override;
 };
 
 }

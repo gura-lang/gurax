@@ -8,35 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
-void Expr::ExecInArgument() const
-{
-	do {
-		Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-		ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
-		if (!pArgSlot) {
-			Error::Issue(ErrorType::ArgumentError, "too many arguments");
-			return;
-		}
-		if (!pArgSlot->IsVacant()) {
-			Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
-			return;
-		}
-		if (pArgSlot->IsVType(VTYPE_Quote)) {
-			argument.FeedValue(new Value_Expr(Reference()));
-			return;
-		}
-	} while (0);
-	do {
-		Exec();
-		if (Error::IsIssued()) return;
-	} while (0);
-	do {
-		RefPtr<Value> pValue(Context::PopStack());
-		Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-		argument.FeedValue(pValue.release());
-	} while (0);
-}
-
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -339,44 +310,6 @@ void Expr_BinaryOp::Exec() const
 		RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
 		if (!pValue) return;
 		Context::PushStack(pValue.release());
-	} while (0);
-}
-
-void Expr_BinaryOp::ExecInArgument() const
-{
-	if (!GetOperator()->IsType(OpType::Pair)) {
-		Expr_Binary::ExecInArgument();
-		return;
-	} else if (!GetExprLeft()->IsType<Expr_Identifier>()) {
-		Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
-		return;
-	}
-	do {
-		Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
-		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
-		ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
-		if (!pArgSlot) {
-			Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
-			return;
-		}
-		if (!pArgSlot->IsVacant()) {
-			Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
-			return;
-		}
-		if (pArgSlot->IsVType(VTYPE_Quote)) {
-			pArgSlot->FeedValue(new Value_Expr(GetExprRight()->Reference()));
-			return;
-		}
-		Context::PushStack(new Value_ArgSlot(pArgSlot->Reference()));
-	} while (0);
-	do {
-		GetExprRight()->Exec();
-		if (Error::IsIssued()) return;
-	} while (0);
-	do {
-		RefPtr<Value> pValue(Context::PopStack());
-		ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(Context::PopStack())->GetArgSlot();
-		argSlot.FeedValue(pValue.release());
 	} while (0);
 }
 
@@ -777,19 +710,24 @@ void Expr_Indexer::Exec() const
 	} while (0);
 	do {
 		RefPtr<Value> pValueCar(Context::PopStack());
-		RefPtr<Argument> pArgument(
-			new Argument(pValueCar.release(), DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil()));
-		Context::PushStack(new Value_Argument(pArgument.release()));
+		RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
+		Context::PushStack(new Value_Index(pIndex.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecInArgument();
-		if (Error::IsIssued()) return;
+		do {
+			pExpr->Exec();
+			if (Error::IsIssued()) return;
+		} while (0);
+		do {
+			RefPtr<Value> pValue(Context::PopStack());
+			Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+			argument.FeedValue(pValue.release());
+		} while (0);
 	}
 	do {
-		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
-		Argument& argument = pValue->GetArgument();
-		if (!argument.CheckValidity()) return;
-		RefPtr<Value> pValueRtn(argument.IndexGet());
+		RefPtr<Value_Index> pValue(dynamic_cast<Value_Index*>(Context::PopStack()));
+		Index& index = pValue->GetIndex();
+		RefPtr<Value> pValueRtn(index.IndexGet());
 		if (Error::IsIssued()) return;
 		Context::PushStack(pValueRtn.release());
 	} while (0);
@@ -845,8 +783,67 @@ void Expr_Caller::Exec() const
 		Context::PushStack(new Value_Argument(pArgument.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ExecInArgument();
-		if (Error::IsIssued()) return;
+		if (pExpr->IsType<Expr_BinaryOp>() &&
+			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
+			const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
+			if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
+				Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
+				return;
+			}
+			do {
+				Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+				const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
+				ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
+				if (!pArgSlot) {
+					Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
+					return;
+				}
+				if (!pArgSlot->IsVacant()) {
+					Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+					return;
+				}
+				if (pArgSlot->IsVType(VTYPE_Quote)) {
+					pArgSlot->FeedValue(new Value_Expr(pExprEx->GetExprRight()->Reference()));
+					return;
+				}
+				Context::PushStack(new Value_ArgSlot(pArgSlot->Reference()));
+			} while (0);
+			do {
+				pExprEx->GetExprRight()->Exec();
+				if (Error::IsIssued()) return;
+			} while (0);
+			do {
+				RefPtr<Value> pValue(Context::PopStack());
+				ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(Context::PopStack())->GetArgSlot();
+				argSlot.FeedValue(pValue.release());
+			} while (0);
+		} else {
+			do {
+				Argument& argument = dynamic_cast<Value_Argument*>(Context::PeekStack(0))->GetArgument();
+				ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+				if (!pArgSlot) {
+					Error::Issue(ErrorType::ArgumentError, "too many arguments");
+					return;
+				}
+				if (!pArgSlot->IsVacant()) {
+					Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+					return;
+				}
+				if (pArgSlot->IsVType(VTYPE_Quote)) {
+					argument.FeedValue(new Value_Expr(Reference()));
+					return;
+				}
+			} while (0);
+			do {
+				pExpr->Exec();
+				if (Error::IsIssued()) return;
+			} while (0);
+			do {
+				RefPtr<Value> pValue(Context::PopStack());
+				Index& index = dynamic_cast<Value_Index*>(Context::PeekStack(0))->GetIndex();
+				index.FeedValue(pValue.release());
+			} while (0);
+		}
 	}
 	do {
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));

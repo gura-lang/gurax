@@ -679,14 +679,13 @@ String PUnit_FeedIndex::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_IndexGet
-// [ValueArgument] -> [ValueElems]
+// [ValueIndex] -> [ValueElems]
 //------------------------------------------------------------------------------
 void PUnit_IndexGet::Exec(Processor& processor) const
 {
-	RefPtr<Value_Argument> pValueArgument(dynamic_cast<Value_Argument*>(Context::PopStack()));
-	Argument& argument = pValueArgument->GetArgument();
-	if (!argument.CheckValidity()) return;
-	RefPtr<Value> pValueElems(argument.IndexGet());
+	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(Context::PopStack()));
+	Index& index = pValueIndex->GetIndex();
+	RefPtr<Value> pValueElems(index.IndexGet());
 	if (Error::IsIssued()) return;
 	processor.PushStack(pValueElems.release());
 	processor.Goto(GetPUnitNext());
@@ -701,15 +700,14 @@ String PUnit_IndexGet::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_IndexSet
-// [ValueArgument ValueElems] -> [ValueElems]
+// [ValueIndex ValueElems] -> [ValueElems]
 //------------------------------------------------------------------------------
 void PUnit_IndexSet::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElems(processor.PopStack());
-	RefPtr<Value_Argument> pValueArgument(dynamic_cast<Value_Argument*>(Context::PopStack()));
-	Argument& argument = pValueArgument->GetArgument();
-	if (!argument.CheckValidity()) return;
-	argument.IndexSet(pValueElems->Reference());
+	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(Context::PopStack()));
+	Index& index = pValueIndex->GetIndex();
+	index.IndexSet(pValueElems->Reference());
 	if (Error::IsIssued()) return;
 	processor.PushStack(pValueElems.release());
 	processor.Goto(GetPUnitNext());
