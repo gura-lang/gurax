@@ -48,7 +48,7 @@ protected:
 public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
-	const ValueOwner& GetValueOwner() const { return _pValueTypedOwner->GetValueOwner(); }
+	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return new Value_List(*this); }

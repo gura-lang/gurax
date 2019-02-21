@@ -193,6 +193,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_CreateIndex
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_CreateIndex : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("CreateIndex");
+private:
+	RefPtr<Attribute> _pAttr;
+public:
+	// Constructor
+	PUnit_CreateIndex(Attribute* pAttr) : _pAttr(pAttr) {}
+public:
+	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_IndexGet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_IndexGet : public PUnit {
@@ -292,37 +312,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_ArgumentForCall
+// PUnit_CreateArgument
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_ArgumentForCall : public PUnit {
+class GURAX_DLLDECLARE PUnit_CreateArgument : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("ArgumentForCall");
+	Gurax_MemoryPoolAllocator_PUnit("CreateArgument");
 private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_ArgumentForCall(Attribute* pAttr) : _pAttr(pAttr) {}
-public:
-	const Attribute& GetAttr() const { return *_pAttr; }
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_ArgumentForIndex
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_ArgumentForIndex : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("ArgumentForIndex");
-private:
-	RefPtr<Attribute> _pAttr;
-public:
-	// Constructor
-	PUnit_ArgumentForIndex(Attribute* pAttr) : _pAttr(pAttr) {}
+	PUnit_CreateArgument(Attribute* pAttr) : _pAttr(pAttr) {}
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
@@ -623,22 +623,21 @@ String PUnit_AddList::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_ArgumentForIndex
-// [ValueCar] -> [ValueArgument(ValueCar)]
+// PUnit_CreateIndex
+// [ValueCar] -> [ValueIndex(ValueCar)]
 //------------------------------------------------------------------------------
-void PUnit_ArgumentForIndex::Exec(Processor& processor) const
+void PUnit_CreateIndex::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopStack());
-	RefPtr<Argument> pArgument(
-		new Argument(pValueCar.release(), DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil()));
-	processor.PushStack(new Value_Argument(pArgument.release()));
+	RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
+	processor.PushStack(new Value_Index(pIndex.release()));
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_ArgumentForIndex::ToString(const StringStyle& ss) const
+String PUnit_CreateIndex::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "ArgumentForIndex()";
+	rtn += "CreateIndex()";
 	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
@@ -769,10 +768,10 @@ String PUnit_Member::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_ArgumentForCall
+// PUnit_CreateArgument
 // [ValueCar] -> [ValueArgument(ValueCar)]
 //------------------------------------------------------------------------------
-void PUnit_ArgumentForCall::Exec(Processor& processor) const
+void PUnit_CreateArgument::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopStack());
 	const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
@@ -788,10 +787,10 @@ void PUnit_ArgumentForCall::Exec(Processor& processor) const
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_ArgumentForCall::ToString(const StringStyle& ss) const
+String PUnit_CreateArgument::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "ArgumentForCall()";
+	rtn += "CreateArgument()";
 	rtn += GetAttr().ToString(ss);
 	return rtn;
 }

@@ -16,9 +16,11 @@ public:
 private:
 	RefPtr<Value> _pValueCar;
 	RefPtr<Attribute> _pAttr;
+	RefPtr<ValueTypedOwner> _pValueTypedOwner;
 public:
 	// Constructor
-	Index(Value* pValueCar, Attribute* pAttr) : _pValueCar(pValueCar), _pAttr(pAttr) {}
+	Index(Value* pValueCar, Attribute* pAttr) :
+		_pValueCar(pValueCar), _pAttr(pAttr), _pValueTypedOwner(new ValueTypedOwner()) {}
 	// Copy constructor/operator
 	Index(const Index& src) = delete;
 	Index& operator=(const Index& src) = delete;
@@ -31,6 +33,10 @@ public:
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
+	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
+	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
+	void FeedValue(Value* pValue) { GetValueTypedOwner().Add(pValue); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Index& index) const { return this == &index; }
