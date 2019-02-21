@@ -63,6 +63,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Value
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Value : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("Value");
+private:
+	RefPtr<Value> _pValue;
+public:
+	// Constructor
+	PUnit_Value(Value* pValue) : _pValue(pValue) {}
+public:
+	const Value* GetValue() const { return _pValue.get(); }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Lookup
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Lookup : public PUnit {

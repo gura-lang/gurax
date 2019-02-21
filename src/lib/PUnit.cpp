@@ -15,6 +15,23 @@ PUnit* PUnit::_pPUnitCont = nullptr;
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
+// PUnit_Value
+// [] -> [Value]
+//------------------------------------------------------------------------------
+void PUnit_Value::Exec(Processor& processor) const
+{
+	processor.PushStack(GetValue()->Reference());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_Value::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Value()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Lookup
 // [] -> [Value]
 //------------------------------------------------------------------------------
