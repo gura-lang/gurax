@@ -29,6 +29,7 @@ protected:
 	~Index() = default;
 public:
 	Value& GetValueCar() { return *_pValueCar; }
+	const Value& GetValueCar() const { return *_pValueCar; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

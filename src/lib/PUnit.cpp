@@ -630,7 +630,7 @@ void PUnit_ArgumentForIndex::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopStack());
 	RefPtr<Argument> pArgument(
-		new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
+		new Argument(pValueCar.release(), DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil()));
 	processor.PushStack(new Value_Argument(pArgument.release()));
 	processor.Goto(GetPUnitNext());
 }
@@ -783,7 +783,7 @@ void PUnit_ArgumentForCall::Exec(Processor& processor) const
 	}
 	if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 	RefPtr<Argument> pArgument(
-		new Argument(pDeclCaller->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
+		new Argument(pValueCar.release(), pDeclCaller->Reference(), GetAttr().Reference(), Value::nil()));
 	processor.PushStack(new Value_Argument(pArgument.release()));
 	processor.Goto(GetPUnitNext());
 }

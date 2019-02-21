@@ -17,16 +17,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Argument");
 private:
+	RefPtr<Value> _pValueCar;
 	RefPtr<DeclCaller> _pDeclCaller;
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
 	ArgSlot* _pArgSlotToFeed;
 	RefPtr<Value> _pValueThis;
-	RefPtr<Value> _pValueCar;
 public:
 	// Constructor
-	Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis, Value* pValueCar);
+	Argument(Value* pValueCar, DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -37,6 +37,8 @@ protected:
 	~Argument() = default;
 public:
 	bool CheckValidity() const;
+	Value& GetValueCar() { return *_pValueCar; }
+	const Value& GetValueCar() const { return *_pValueCar; }
 	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(const Symbol* pSymbol) {
@@ -50,7 +52,6 @@ public:
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
-	Value& GetValueCar() { return *_pValueCar; }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);

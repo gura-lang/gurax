@@ -8,9 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-Argument::Argument(DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis, Value* pValueCar) :
-	_pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr), _pArgSlotToFeed(nullptr),
-	_pValueThis(pValueThis), _pValueCar(pValueCar)
+Argument::Argument(Value* pValueCar, DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis) :
+	_pValueCar(pValueCar), _pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr),
+	_pArgSlotToFeed(nullptr), _pValueThis(pValueThis)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
@@ -43,10 +43,11 @@ bool Argument::CheckValidity() const
 String Argument::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	rtn += GetValueCar().ToString(StringStyle(ss).Digest());
 	rtn += '(';
 	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (pArgSlot != GetArgSlotTop()) rtn += ss.GetComma();
-		rtn += pArgSlot->ToString(StringStyle().Digest());
+		rtn += pArgSlot->ToString(StringStyle(ss).Digest());
 	}
 	rtn += ')';
 	rtn += GetAttr().ToString(ss);
