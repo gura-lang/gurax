@@ -66,10 +66,10 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetModule().ToString(ss);
 	}
-	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const override {
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const override {
 		return GetModule().GetFrame().LookupValue(pSymbol);
 	}
-	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
+	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
 		GetModule().GetFrame().AssignValue(pSymbol, pValue);
 	}
 };

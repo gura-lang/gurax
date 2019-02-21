@@ -79,25 +79,33 @@ String Value::ToStringDigest(const StringStyle& ss) const
 	return rtn;
 }
 
-void Value::DoCall(Frame& frame, Argument& argument)
+Value* Value::DoCall(Frame& frame, Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be called", GetVType().MakeFullName().c_str());
+	return Value::undefined();
 }
 
-void Value::DoIndexAccess(Frame& frame, Argument& argument)
+Value* Value::DoIndexGet(Frame& frame, Argument& argument)
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+	return Value::undefined();
+}
+
+void Value::DoIndexSet(Frame& frame, Argument& argument, Value* pValue)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
-Value* Value::LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const
+Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr) const
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	return pPropHandler? pPropHandler->DoGetValue(this, attr) : GetVType().GetFrame().LookupValue(pSymbol);
 }
 
-void Value::AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr)
+void Value::DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (pPropHandler) {

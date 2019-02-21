@@ -108,10 +108,11 @@ public:
 	virtual String ToStringDigest(const StringStyle& ss) const;
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 	virtual const DeclCaller* GetDeclCaller() const { return nullptr; }
-	virtual void DoCall(Frame& frame, Argument& argument);
-	virtual void DoIndexAccess(Frame& frame, Argument& argument);
-	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const;
-	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr);
+	virtual Value* DoCall(Frame& frame, Argument& argument);
+	virtual Value* DoIndexGet(Frame& frame, Argument& argument);
+	virtual void DoIndexSet(Frame& frame, Argument& argument, Value* pValue);
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const;
+	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr);
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;

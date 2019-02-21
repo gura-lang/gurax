@@ -456,7 +456,7 @@ void Expr_Member::Exec() const
 	} while (0);
 	do {
 		RefPtr<Value> pValueTarget(Context::PopStack());
-		Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
+		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 		if (!pValue) {
 			Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
 			return;
@@ -478,7 +478,7 @@ void Expr_Member::ExecInAssignment(const Expr* pExprAssigned, const Operator* pO
 	if (pOperator) {
 		do {
 			Value* pValueTarget = Context::PeekStack(0);
-			Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
+			Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 			if (!pValue) {
 				Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
 				return;
@@ -505,7 +505,7 @@ void Expr_Member::ExecInAssignment(const Expr* pExprAssigned, const Operator* pO
 	do {
 		RefPtr<Value> pValueAssigned(Context::PopStack());
 		RefPtr<Value> pValueTarget(Context::PopStack());
-		pValueTarget->AssignPropValue(GetSymbol(), pValueAssigned->Reference(), GetAttr());
+		pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr());
 		Context::PushStack(pValueAssigned.release());
 	} while (0);
 }
@@ -789,7 +789,9 @@ void Expr_Indexer::Exec() const
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
 		Argument& argument = pValue->GetArgument();
 		if (!argument.CheckValidity()) return;
-		argument.IndexAccess(Context::GetFrame());
+		RefPtr<Value> pValueRtn(argument.IndexGet(Context::GetFrame()));
+		if (Error::IsIssued()) return;
+		Context::PushStack(pValueRtn.release());
 	} while (0);
 }
 
@@ -850,7 +852,9 @@ void Expr_Caller::Exec() const
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
 		Argument& argument = pValue->GetArgument();
 		if (!argument.CheckValidity()) return;
-		argument.Call(Context::GetFrame());
+		RefPtr<Value> pValueRtn(argument.Call(Context::GetFrame()));
+		if (Error::IsIssued()) return;
+		Context::PushStack(pValueRtn.release());
 	} while (0);
 }
 

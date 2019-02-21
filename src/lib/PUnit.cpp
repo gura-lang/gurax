@@ -97,15 +97,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AddValueToList
+// PUnit_AddList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_AddValueToList : public PUnit {
+class GURAX_DLLDECLARE PUnit_AddList : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("AddValueToList");
+	Gurax_MemoryPoolAllocator_PUnit("AddList");
 public:
 	// Constructor
-	PUnit_AddValueToList() {}
+	PUnit_AddList() {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -113,17 +113,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_LookupValue
+// PUnit_Lookup
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_LookupValue : public PUnit {
+class GURAX_DLLDECLARE PUnit_Lookup : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("LookupValue");
+	Gurax_MemoryPoolAllocator_PUnit("Lookup");
 private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	PUnit_LookupValue(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PUnit_Lookup(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -133,18 +133,54 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_LookupPropValue
+// PUnit_Assign
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_LookupPropValue : public PUnit {
+class GURAX_DLLDECLARE PUnit_Assign : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("LookupPropValue");
+	Gurax_MemoryPoolAllocator_PUnit("Assign");
+private:
+	const Symbol* _pSymbol;
+public:
+	// Constructor
+	PUnit_Assign(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_IndexGet
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_IndexGet : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("IndexGet");
+public:
+	// Constructor
+	PUnit_IndexGet() {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_PropGet
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_PropGet : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("PropGet");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_LookupPropValue(const Symbol* pSymbol, Attribute* pAttr) :
+	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr) :
 		_pSymbol(pSymbol), _pAttr(pAttr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
@@ -156,38 +192,18 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AssignValue
+// PUnit_PropSet
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_AssignValue : public PUnit {
+class GURAX_DLLDECLARE PUnit_PropSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("AssignValue");
-private:
-	const Symbol* _pSymbol;
-public:
-	// Constructor
-	PUnit_AssignValue(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
-public:
-	const Symbol* GetSymbol() const { return _pSymbol; }
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_AssignPropValue
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_AssignPropValue : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("AssignPropValue");
+	Gurax_MemoryPoolAllocator_PUnit("PropSet");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_AssignPropValue(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -309,22 +325,6 @@ public:
 public:
 	// Constructor
 	PUnit_Call() {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_IndexAccess
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_IndexAccess : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("IndexAccess");
-public:
-	// Constructor
-	PUnit_IndexAccess() {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -481,10 +481,10 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AddValueToList
+// PUnit_AddList
 // [ValueList ValueElem] -> [ValueList]
 //------------------------------------------------------------------------------
-void PUnit_AddValueToList::Exec(Processor& processor) const
+void PUnit_AddList::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElem(processor.PopStack());
 	ValueTypedOwner& valueTypedOwner =
@@ -493,7 +493,7 @@ void PUnit_AddValueToList::Exec(Processor& processor) const
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_AddValueToList::ToString(const StringStyle& ss) const
+String PUnit_AddList::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "AddValueList()";
@@ -518,10 +518,10 @@ String PUnit_EraseStack::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_LookupValue
-// [] -> [ValueFound]
+// PUnit_Lookup
+// [] -> [Value]
 //------------------------------------------------------------------------------
-void PUnit_LookupValue::Exec(Processor& processor) const
+void PUnit_Lookup::Exec(Processor& processor) const
 {
 	const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 	if (!pValue) {
@@ -532,90 +532,135 @@ void PUnit_LookupValue::Exec(Processor& processor) const
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_LookupValue::ToString(const StringStyle& ss) const
+String PUnit_Lookup::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "LookupValue(`";
+	rtn += "Lookup(`";
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_LookupPropValue
-// [ValueTarget] -> [ValueTarget ValueFound]
-//------------------------------------------------------------------------------
-void PUnit_LookupPropValue::Exec(Processor& processor) const
-{
-	Value* pValueTarget = processor.PeekStack(0);
-	Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
-	if (!pValue) {
-		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-		return;
-	}
-	processor.PushStack(pValue->Reference());
-	processor.Goto(GetPUnitNext());
-}
-
-String PUnit_LookupPropValue::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "LookupPropValue(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ")";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_AssignValue
+// PUnit_Assign
 // [ValueAssigned] -> [ValueAssigned]
 //------------------------------------------------------------------------------
-void PUnit_AssignValue::Exec(Processor& processor) const
+void PUnit_Assign::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(processor.PeekStack(0)->Reference());
 	processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_AssignValue::ToString(const StringStyle& ss) const
+String PUnit_Assign::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "AssignValue(`";
+	rtn += "Assign(`";
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AssignPropValue
-// [ValueTarget ValueAssigned] -> [ValueAssigned]
+// PUnit_CreateArgumentForIndex
+// [ValueCar] -> [ValueArgument(ValueCar)]
 //------------------------------------------------------------------------------
-void PUnit_AssignPropValue::Exec(Processor& processor) const
+void PUnit_CreateArgumentForIndex::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueAssigned(processor.PopStack());
-	RefPtr<Value> pValueTarget(processor.PopStack());
-	pValueTarget->AssignPropValue(GetSymbol(), pValueAssigned->Reference(), GetAttr());
-	processor.PushStack(pValueAssigned.release());
+	RefPtr<Value> pValueCar(processor.PopStack());
+	RefPtr<Argument> pArgument(
+		new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
+	processor.PushStack(new Value_Argument(pArgument.release()));
+	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_AssignPropValue::ToString(const StringStyle& ss) const
+String PUnit_CreateArgumentForIndex::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "AssignPropValue(`";
+	rtn += "CreateArgumentForIndex()";
+	rtn += GetAttr().ToString(ss);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_IndexGet
+// [ValueArgument] -> [ValueResult]
+//------------------------------------------------------------------------------
+void PUnit_IndexGet::Exec(Processor& processor) const
+{
+	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
+	Argument& argument = pValue->GetArgument();
+	if (!argument.CheckValidity()) return;
+	RefPtr<Value> pValueRtn(argument.IndexGet(processor.GetFrame()));
+	if (Error::IsIssued()) return;
+	processor.PushStack(pValueRtn.release());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_IndexGet::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "IndexGet()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PropGet
+// [ValueTarget] -> [ValueTarget ValueProp]
+//------------------------------------------------------------------------------
+void PUnit_PropGet::Exec(Processor& processor) const
+{
+	Value* pValueTarget = processor.PeekStack(0);
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+	if (!pValueProp) {
+		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		return;
+	}
+	processor.PushStack(pValueProp->Reference());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_PropGet::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "PropGet(`";
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
+	rtn += GetAttr().ToString(ss);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PropSet
+// [ValueTarget Value] -> [Value]
+//------------------------------------------------------------------------------
+void PUnit_PropSet::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValueProp(processor.PopStack());
+	RefPtr<Value> pValueTarget(processor.PopStack());
+	pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr());
+	processor.PushStack(pValueProp.release());
+}
+
+String PUnit_PropSet::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "PropSet(`";
+	rtn += GetSymbol()->GetName();
+	rtn += ")";
+	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
 // PUnit_Member
-// [ValueTarget] -> [ValueMember(ValueTarget+ValueFound)]
-// [ValueTarget] -> [ValueFound]
+// [ValueTarget] -> [ValueMember(ValueTarget+ValueProp)]
+// [ValueTarget] -> [ValueProp]
 //------------------------------------------------------------------------------
 void PUnit_Member::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueTarget(processor.PopStack());
-	Value* pValue = pValueTarget->LookupPropValue(GetSymbol(), GetAttr());
+	Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValue) {
 		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return;
@@ -631,7 +676,10 @@ void PUnit_Member::Exec(Processor& processor) const
 String PUnit_Member::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "Member()";
+	rtn += "Member(`";
+	rtn += GetSymbol()->GetName();
+	rtn += ")";
+	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
 
@@ -704,26 +752,7 @@ String PUnit_CreateArgumentForCall::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "CreateArgumentForCall()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_CreateArgumentForIndex
-// [ValueCar] -> [ValueArgument(ValueCar)]
-//------------------------------------------------------------------------------
-void PUnit_CreateArgumentForIndex::Exec(Processor& processor) const
-{
-	RefPtr<Value> pValueCar(processor.PopStack());
-	RefPtr<Argument> pArgument(
-		new Argument(DeclCaller::Empty->Reference(), GetAttr().Reference(), Value::nil(), pValueCar.release()));
-	processor.PushStack(new Value_Argument(pArgument.release()));
-	processor.Goto(GetPUnitNext());
-}
-
-String PUnit_CreateArgumentForIndex::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "CreateArgumentForIndex()";
+	rtn += GetAttr().ToString(ss);
 	return rtn;
 }
 
@@ -736,7 +765,9 @@ void PUnit_Call::Exec(Processor& processor) const
 	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopStack()));
 	Argument& argument = pValue->GetArgument();
 	if (!argument.CheckValidity()) return;
-	argument.Call(processor.GetFrame());
+	RefPtr<Value> pValueRtn(argument.Call(processor.GetFrame()));
+	if (Error::IsIssued()) return;
+	processor.PushStack(pValueRtn.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -744,26 +775,6 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Call()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_IndexAccess
-// [ValueArgument] -> [ValueResult]
-//------------------------------------------------------------------------------
-void PUnit_IndexAccess::Exec(Processor& processor) const
-{
-	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(Context::PopStack()));
-	Argument& argument = pValue->GetArgument();
-	if (!argument.CheckValidity()) return;
-	argument.IndexAccess(processor.GetFrame());
-	processor.Goto(GetPUnitNext());
-}
-
-String PUnit_IndexAccess::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "IndexAccess()";
 	return rtn;
 }
 

@@ -65,10 +65,10 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetVTypeThis().ToString(ss);
 	}
-	virtual Value* LookupPropValue(const Symbol* pSymbol, const Attribute& attr) const override {
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const override {
 		return GetVTypeThis().GetFrame().LookupValue(pSymbol);
 	}
-	virtual void AssignPropValue(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
+	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
 		GetVTypeThis().GetFrame().AssignValue(pSymbol, pValue);
 	}
 };
