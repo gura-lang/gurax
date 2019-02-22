@@ -37,6 +37,14 @@ static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p);	\
 }
 
+#define Gurax_MemoryPoolAllocator_Large(ownerName) \
+static void *operator new(size_t size) { \
+	return MemoryPool::Global().chunkLarge.Allocate(ownerName);	\
+} \
+static void operator delete(void* p) { \
+	MemoryPool::Deallocate(p);	\
+}
+
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
@@ -87,6 +95,7 @@ public:
 	ChunkFixed chunkPUnit;
 	ChunkFixed chunkSmall;
 	ChunkFixed chunkMedium;
+	ChunkFixed chunkLarge;
 	ChunkVariable chunkVariable;
 public:
 	// Constructor

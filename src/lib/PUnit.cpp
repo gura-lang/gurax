@@ -16,7 +16,7 @@ PUnit* PUnit::_pPUnitCont = nullptr;
 
 //------------------------------------------------------------------------------
 // PUnit_Value
-// [] -> [Value]
+// Stack View: [] -> [Value]
 //------------------------------------------------------------------------------
 void PUnit_Value::Exec(Processor& processor) const
 {
@@ -33,7 +33,7 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Lookup
-// [] -> [Value]
+// Stack View: [] -> [Value]
 //------------------------------------------------------------------------------
 void PUnit_Lookup::Exec(Processor& processor) const
 {
@@ -57,7 +57,7 @@ String PUnit_Lookup::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Assign
-// [ValueAssigned] -> [ValueAssigned]
+// Stack View: [ValueAssigned] -> [ValueAssigned]
 //------------------------------------------------------------------------------
 void PUnit_Assign::Exec(Processor& processor) const
 {
@@ -77,7 +77,7 @@ String PUnit_Assign::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Erase
-// [Value] -> []
+// Stack View: [Value] -> []
 //------------------------------------------------------------------------------
 void PUnit_Erase::Exec(Processor& processor) const
 {
@@ -94,14 +94,14 @@ String PUnit_Erase::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_UnaryOp
-// [Value] -> [ValueResult]
+// Stack View: [ValueChild] -> [ValueResult]
 //------------------------------------------------------------------------------
 void PUnit_UnaryOp::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueChild(processor.PopStack());
-	RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.get()));
-	if (!pValue) return;
-	processor.PushStack(pValue.release());
+	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(pValueChild.get()));
+	if (!pValueResult) return;
+	processor.PushStack(pValueResult.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -116,15 +116,15 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_BinaryOp
-// [ValueLeft ValueRight] -> [ValueResult]
+// Stack View: [ValueLeft ValueRight] -> [ValueResult]
 //------------------------------------------------------------------------------
 void PUnit_BinaryOp::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueRight(processor.PopStack());
 	RefPtr<Value> pValueLeft(processor.PopStack());
-	RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
-	if (!pValue) return;
-	processor.PushStack(pValue.release());
+	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
+	if (!pValueResult) return;
+	processor.PushStack(pValueResult.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -139,7 +139,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_CreateList
-// [] -> [ValueList]
+// Stack View: [] -> [ValueList]
 //------------------------------------------------------------------------------
 void PUnit_CreateList::Exec(Processor& processor) const
 {
@@ -158,7 +158,7 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_AddList
-// [ValueList ValueElem] -> [ValueList]
+// Stack View: [ValueList ValueElem] -> [ValueList]
 //------------------------------------------------------------------------------
 void PUnit_AddList::Exec(Processor& processor) const
 {
@@ -178,7 +178,7 @@ String PUnit_AddList::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Index
-// [ValueCar] -> [ValueIndex(ValueCar)]
+// Stack View: [ValueCar] -> [ValueIndex(ValueCar)]
 //------------------------------------------------------------------------------
 void PUnit_Index::Exec(Processor& processor) const
 {
@@ -198,7 +198,7 @@ String PUnit_Index::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_FeedIndex
-// [ValueIndex Value] -> [ValueIndex]
+// Stack View: [ValueIndex Value] -> [ValueIndex]
 //------------------------------------------------------------------------------
 void PUnit_FeedIndex::Exec(Processor& processor) const
 {
@@ -217,7 +217,7 @@ String PUnit_FeedIndex::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_IndexGet
-// [ValueIndex] -> [ValueElems]
+// Stack View: [ValueIndex] -> [ValueElems]
 //------------------------------------------------------------------------------
 void PUnit_IndexGet::Exec(Processor& processor) const
 {
@@ -238,7 +238,7 @@ String PUnit_IndexGet::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_IndexSet
-// [ValueIndex ValueElems] -> [ValueElems]
+// Stack View: [ValueIndex ValueElems] -> [ValueElems]
 //------------------------------------------------------------------------------
 void PUnit_IndexSet::Exec(Processor& processor) const
 {
@@ -260,7 +260,7 @@ String PUnit_IndexSet::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_PropGet
-// [ValueTarget] -> [ValueTarget ValueProp]
+// Stack View: [ValueTarget] -> [ValueTarget ValueProp]
 //------------------------------------------------------------------------------
 void PUnit_PropGet::Exec(Processor& processor) const
 {
@@ -286,7 +286,7 @@ String PUnit_PropGet::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_PropSet
-// [ValueTarget ValueProp] -> [ValueProp]
+// Stack View: [ValueTarget ValueProp] -> [ValueProp]
 //------------------------------------------------------------------------------
 void PUnit_PropSet::Exec(Processor& processor) const
 {
@@ -309,8 +309,8 @@ String PUnit_PropSet::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Member
-// [ValueTarget] -> [ValueMember(ValueTarget+ValueProp)]
-// [ValueTarget] -> [ValueProp]
+// Stack View: [ValueTarget] -> [ValueMember(ValueTarget+ValueProp)]
+//             [ValueTarget] -> [ValueProp]
 //------------------------------------------------------------------------------
 void PUnit_Member::Exec(Processor& processor) const
 {
@@ -340,7 +340,7 @@ String PUnit_Member::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Argument
-// [ValueCar] -> [ValueArgument(ValueCar)]
+// Stack View: [ValueCar] -> [ValueArgument(ValueCar)]
 //------------------------------------------------------------------------------
 void PUnit_Argument::Exec(Processor& processor) const
 {
@@ -367,30 +367,8 @@ String PUnit_Argument::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Call
-// [ValueArgument] -> [ValueResult]
-//------------------------------------------------------------------------------
-void PUnit_Call::Exec(Processor& processor) const
-{
-	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopStack()));
-	Argument& argument = pValue->GetArgument();
-	if (!argument.CheckValidity()) return;
-	RefPtr<Value> pValueRtn(argument.Call(processor.GetFrame()));
-	if (Error::IsIssued()) return;
-	processor.PushStack(pValueRtn.release());
-	processor.Goto(GetPUnitNext());
-}
-
-String PUnit_Call::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "Call()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_ArgSlot
-// [ValueArgument] -> [ValueArgument]
+// Stack View: [ValueArgument] -> [ValueArgument]
 //------------------------------------------------------------------------------
 void PUnit_ArgSlot::Exec(Processor& processor) const
 {
@@ -421,7 +399,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_FeedArgSlot
-// [ValueArgument Value] -> [ValueArgument]
+// Stack View: [ValueArgument Value] -> [ValueArgument]
 //------------------------------------------------------------------------------
 void PUnit_FeedArgSlot::Exec(Processor& processor) const
 {
@@ -440,7 +418,7 @@ String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_ArgSlotNamed
-// [ValueArgument] -> [ValueArgument ValueArgSlot]
+// Stack View: [ValueArgument] -> [ValueArgument ValueArgSlot]
 //------------------------------------------------------------------------------
 void PUnit_ArgSlotNamed::Exec(Processor& processor) const
 {
@@ -474,7 +452,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_FeedArgSlotNamed
-// [ValueArgSlot Value] -> []
+// Stack View: [ValueArgSlot Value] -> []
 //------------------------------------------------------------------------------
 void PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 {
@@ -488,6 +466,28 @@ String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "FeedArgSlotNamed()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Call
+// Stack View: [ValueArgument] -> [ValueResult]
+//------------------------------------------------------------------------------
+void PUnit_Call::Exec(Processor& processor) const
+{
+	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopStack()));
+	Argument& argument = pValue->GetArgument();
+	if (!argument.CheckValidity()) return;
+	RefPtr<Value> pValueResult(argument.Call(processor.GetFrame()));
+	if (Error::IsIssued()) return;
+	processor.PushStack(pValueResult.release());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_Call::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Call()";
 	return rtn;
 }
 

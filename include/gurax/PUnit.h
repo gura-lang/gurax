@@ -370,22 +370,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Call
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Call : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Call");
-public:
-	// Constructor
-	PUnit_Call() {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_ArgSlot
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_ArgSlot : public PUnit {
@@ -454,6 +438,22 @@ public:
 public:
 	// Constructor
 	PUnit_FeedArgSlotNamed() {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Call
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Call : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("Call");
+public:
+	// Constructor
+	PUnit_Call() {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

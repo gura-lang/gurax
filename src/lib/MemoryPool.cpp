@@ -11,7 +11,7 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	chunkPUnit(64, 20), chunkSmall(64, 20), chunkMedium(128, 20), chunkVariable()
+	chunkPUnit(64, 20), chunkSmall(64, 20), chunkMedium(128, 20), chunkLarge(192, 20), chunkVariable()
 {
 }
 
@@ -22,6 +22,8 @@ void* MemoryPool::Allocate(size_t bytes, const char* ownerName)
 		return chunkSmall.Allocate(ownerName);
 	} else if (bytes <= chunkMedium.GetBytesBlock()) {
 		return chunkMedium.Allocate(ownerName);
+	} else if (bytes <= chunkLarge.GetBytesBlock()) {
+		return chunkLarge.Allocate(ownerName);
 	} else {
 		return chunkVariable.Allocate(bytes, ownerName);
 	}
