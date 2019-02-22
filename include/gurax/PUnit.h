@@ -78,6 +78,8 @@ public:
 public:
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	PUnit* GetPUnitCont() { return _pPUnitCont; }
+	void Begin() { _pPUnitCont = nullptr; }
+	void Add(PUnit* pPUnit);
 };
 
 //------------------------------------------------------------------------------

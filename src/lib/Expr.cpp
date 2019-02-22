@@ -61,7 +61,6 @@ void ExprList::Compose(PUnitComposer& composer) const
 {
 	for (const Expr* pExpr : *this) {
 		pExpr->Compose(composer);
-		if (Error::IsIssued()) return;
 	}
 }
 
@@ -144,6 +143,7 @@ void Expr_Value::Exec(Processor& processor) const
 
 void Expr_Value::Compose(PUnitComposer& composer) const
 {
+	composer.Add(new PUnit_Value(GetValue()->Clone()));
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -171,6 +171,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 
 void Expr_Identifier::Compose(PUnitComposer& composer) const
 {
+	composer.Add(new PUnit_Lookup(GetSymbol()));
 }
 
 void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -218,6 +219,15 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 void Expr_Identifier::ComposeInAssignment(
 	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
+	if (pOperator) {
+		composer.Add(new PUnit_Lookup(GetSymbol()));
+		pExprAssigned->Compose(composer);
+		composer.Add(new PUnit_BinaryOp(pOperator));
+		composer.Add(new PUnit_Assign(GetSymbol()));
+	} else {
+		pExprAssigned->Compose(composer);
+		composer.Add(new PUnit_Assign(GetSymbol()));
+	}
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
@@ -236,7 +246,6 @@ const Expr::TypeInfo Expr_Suffixed::typeInfo;
 
 void Expr_Suffixed::Exec(Processor& processor) const
 {
-	
 }
 
 void Expr_Suffixed::Compose(PUnitComposer& composer) const
@@ -294,6 +303,8 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 
 void Expr_UnaryOp::Compose(PUnitComposer& composer) const
 {
+	GetExprChild()->Compose(composer);
+	composer.Add(new PUnit_UnaryOp(GetOperator()));
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -364,6 +375,9 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 
 void Expr_BinaryOp::Compose(PUnitComposer& composer) const
 {
+	GetExprLeft()->Compose(composer);
+	GetExprRight()->Compose(composer);
+	composer.Add(new PUnit_BinaryOp(GetOperator()));
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -419,6 +433,7 @@ void Expr_Assign::Exec(Processor& processor) const
 
 void Expr_Assign::Compose(PUnitComposer& composer) const
 {
+	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator());
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -462,6 +477,8 @@ void Expr_Member::Exec(Processor& processor) const
 
 void Expr_Member::Compose(PUnitComposer& composer) const
 {
+	GetExprTarget()->Compose(composer);
+	composer.Add(new PUnit_Member(GetSymbol(), GetAttr().Reference()));
 }
 
 void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -511,6 +528,14 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 void Expr_Member::ComposeInAssignment(
 	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
+	if (pOperator) {
+		composer.Add(new PUnit_PropGet(GetSymbol(), GetAttr().Reference()));
+		pExprAssigned->Compose(composer);
+		composer.Add(new PUnit_BinaryOp(pOperator));
+	} else {
+		pExprAssigned->Compose(composer);
+	}
+	composer.Add(new PUnit_PropSet(GetSymbol(), GetAttr().Reference()));
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
@@ -539,6 +564,9 @@ void Expr_Root::Exec(Processor& processor) const
 
 void Expr_Root::Compose(PUnitComposer& composer) const
 {
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->Compose(composer);
+	}
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const
@@ -582,6 +610,9 @@ void Expr_Block::Exec(Processor& processor) const
 
 void Expr_Block::Compose(PUnitComposer& composer) const
 {
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->Compose(composer);
+	}
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const
@@ -746,6 +777,11 @@ void Expr_Lister::Exec(Processor& processor) const
 
 void Expr_Lister::Compose(PUnitComposer& composer) const
 {
+	composer.Add(new PUnit_CreateList());
+	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->Compose(composer);
+		composer.Add(new PUnit_AddList());
+	}	
 }
 
 void Expr_Lister::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -820,6 +856,7 @@ void Expr_Indexer::Exec(Processor& processor) const
 		} while (0);
 	}
 	do {
+		// PUnit_IndexGet
 		RefPtr<Value_Index> pValue(dynamic_cast<Value_Index*>(processor.PopStack()));
 		Index& index = pValue->GetIndex();
 		RefPtr<Value> pValueRtn(index.IndexGet());
@@ -830,6 +867,13 @@ void Expr_Indexer::Exec(Processor& processor) const
 
 void Expr_Indexer::Compose(PUnitComposer& composer) const
 {
+	GetExprCar()->Compose(composer);
+	composer.Add(new PUnit_Index(GetAttr().Reference()));
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->Compose(composer);
+		composer.Add(new PUnit_FeedIndex());
+	}
+	composer.Add(new PUnit_IndexGet());
 }
 
 void Expr_Indexer::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -896,9 +940,9 @@ void Expr_Caller::Exec(Processor& processor) const
 				return;
 			}
 			do {
+				const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
 				// PUnit_ArgSlotNamed
 				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
-				const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
 				ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
 				if (!pArgSlot) {
 					Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
@@ -939,7 +983,7 @@ void Expr_Caller::Exec(Processor& processor) const
 					return;
 				}
 				if (pArgSlot->IsVType(VTYPE_Quote)) {
-					argument.FeedValue(new Value_Expr(Reference()));
+					argument.FeedValue(new Value_Expr(pExpr->Reference()));
 					goto skip2;
 				}
 			} while (0);
@@ -969,6 +1013,27 @@ void Expr_Caller::Exec(Processor& processor) const
 
 void Expr_Caller::Compose(PUnitComposer& composer) const
 {
+	GetExprCar()->Compose(composer);
+	composer.Add(new PUnit_Argument(GetAttr().Reference()));
+	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		if (pExpr->IsType<Expr_BinaryOp>() &&
+			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
+			const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
+			if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
+				Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
+				return;
+			}
+			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
+			composer.Add(new PUnit_ArgSlotNamed(pSymbol, pExprEx->GetExprRight()->Reference()));
+			pExprEx->GetExprRight()->Compose(composer);
+			composer.Add(new PUnit_FeedArgSlotNamed());
+		} else {
+			composer.Add(new PUnit_ArgSlot(pExpr->Reference()));
+			pExpr->Compose(composer);
+			composer.Add(new PUnit_FeedArgSlot());
+		}
+	}
+	composer.Add(new PUnit_Call());
 }
 
 void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
