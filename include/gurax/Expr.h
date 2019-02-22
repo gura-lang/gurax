@@ -124,7 +124,7 @@ public:
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
 	int CalcIndentLevel() const;
-	String ComposeIndent(const StringStyle& ss) const;
+	String MakeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 	bool Prepare() {
@@ -135,8 +135,11 @@ public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Exec(Processor& processor) const = 0;
+	virtual void Compose(PUnitComposer& composer) const = 0;
 	virtual void ExecInAssignment(
 		Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const;
+	virtual void ComposeInAssignment(
+		PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const;
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
 public:
@@ -157,6 +160,7 @@ public:
 public:
 	bool Traverse(Expr::Visitor& visitor);
 	void Exec(Processor& processor) const;
+	void Compose(PUnitComposer& composer) const;
 	void SetExprParent(const Expr* pExprParent);
 };
 
@@ -362,6 +366,7 @@ public:
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
 public:
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -388,8 +393,11 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual void ExecInAssignment(
 		Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void ComposeInAssignment(
+		PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -418,6 +426,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -441,6 +450,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -470,8 +480,11 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual void ExecInAssignment(
 		Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void ComposeInAssignment(
+		PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -493,6 +506,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -514,6 +528,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -536,6 +551,7 @@ public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -553,6 +569,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -586,6 +603,7 @@ public:
 		return true;
 	}
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -603,8 +621,11 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual void ExecInAssignment(
 		Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void ComposeInAssignment(
+		PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -622,6 +643,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -639,8 +661,11 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual void ExecInAssignment(
 		Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void ComposeInAssignment(
+		PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -686,8 +711,11 @@ public:
 		return true;
 	}
 	virtual void Exec(Processor& processor) const override;
+	virtual void Compose(PUnitComposer& composer) const override;
 	virtual void ExecInAssignment(
 		Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const override;
+	virtual void ComposeInAssignment(
+		PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };

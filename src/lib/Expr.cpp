@@ -15,7 +15,7 @@ int Expr::CalcIndentLevel() const
 	return indentLevel;
 }
 
-String Expr::ComposeIndent(const StringStyle& ss) const
+String Expr::MakeIndent(const StringStyle& ss) const
 {
 	String rtn;
 	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += ss.GetIndentUnit()) ;
@@ -23,6 +23,12 @@ String Expr::ComposeIndent(const StringStyle& ss) const
 }
 
 void Expr::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+	Error::Issue(ErrorType::InvalidOperation, "invalid assignment");
+}
+
+void Expr::ComposeInAssignment(
+	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	Error::Issue(ErrorType::InvalidOperation, "invalid assignment");
 }
@@ -48,6 +54,14 @@ void ExprList::Exec(Processor& processor) const
 			if (Error::IsIssued()) return;
 		} while (0);
 		Value::Delete(processor.PopStack());
+	}
+}
+
+void ExprList::Compose(PUnitComposer& composer) const
+{
+	for (const Expr* pExpr : *this) {
+		pExpr->Compose(composer);
+		if (Error::IsIssued()) return;
 	}
 }
 
@@ -128,6 +142,10 @@ void Expr_Value::Exec(Processor& processor) const
 	} while (0);
 }
 
+void Expr_Value::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_Value::ToString(const StringStyle& ss) const
 {
 	return HasSource()? GetSourceSTL() : GetValue()->ToString();
@@ -149,6 +167,10 @@ void Expr_Identifier::Exec(Processor& processor) const
 		}
 		processor.PushStack(pValue->Reference());
 	} while (0);
+}
+
+void Expr_Identifier::Compose(PUnitComposer& composer) const
+{
 }
 
 void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -193,6 +215,11 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 	}
 }
 
+void Expr_Identifier::ComposeInAssignment(
+	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+}
+
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
 {
 	String rtn;
@@ -212,6 +239,10 @@ void Expr_Suffixed::Exec(Processor& processor) const
 	
 }
 
+void Expr_Suffixed::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -226,6 +257,10 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 const Expr::TypeInfo Expr_Embedded::typeInfo;
 
 void Expr_Embedded::Exec(Processor& processor) const
+{
+}
+
+void Expr_Embedded::Compose(PUnitComposer& composer) const
 {
 }
 
@@ -255,6 +290,10 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 		if (!pValue) return;
 		processor.PushStack(pValue.release());
 	} while (0);
+}
+
+void Expr_UnaryOp::Compose(PUnitComposer& composer) const
+{
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -323,6 +362,10 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 	} while (0);
 }
 
+void Expr_BinaryOp::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -374,6 +417,10 @@ void Expr_Assign::Exec(Processor& processor) const
 	GetExprLeft()->ExecInAssignment(processor, GetExprRight(), GetOperator());
 }
 
+void Expr_Assign::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_Assign::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -411,6 +458,10 @@ void Expr_Member::Exec(Processor& processor) const
 			processor.PushStack(pValue->Reference());
 		}
 	} while (0);
+}
+
+void Expr_Member::Compose(PUnitComposer& composer) const
+{
 }
 
 void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -457,6 +508,11 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 	} while (0);
 }
 
+void Expr_Member::ComposeInAssignment(
+	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+}
+
 String Expr_Member::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -481,11 +537,15 @@ void Expr_Root::Exec(Processor& processor) const
 	}
 }
 
+void Expr_Root::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_Root::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	if (ss.IsMultiLine()) {
-		String indent = ComposeIndent(ss);
+		String indent = MakeIndent(ss);
 		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indent;
 			rtn += pExpr->ToString(ss);
@@ -520,11 +580,15 @@ void Expr_Block::Exec(Processor& processor) const
 	}
 }
 
+void Expr_Block::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_Block::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	if (ss.IsMultiLine()) {
-		String indent = ComposeIndent(ss);
+		String indent = MakeIndent(ss);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
@@ -611,6 +675,10 @@ void Expr_Iterer::Exec(Processor& processor) const
 	}
 }
 
+void Expr_Iterer::Compose(PUnitComposer& composer) const
+{
+}
+
 String Expr_Iterer::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -619,7 +687,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 		rtn += GetExprLinkElem().GetExprHead()->ToString(ss);
 		rtn += ",)";
 	} else if (ss.IsMultiLine()) {
-		String indent = ComposeIndent(ss);
+		String indent = MakeIndent(ss);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
@@ -676,7 +744,16 @@ void Expr_Lister::Exec(Processor& processor) const
 	}
 }
 
+void Expr_Lister::Compose(PUnitComposer& composer) const
+{
+}
+
 void Expr_Lister::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+}
+
+void Expr_Lister::ComposeInAssignment(
+	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 }
 
@@ -684,7 +761,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	if (ss.IsMultiLine()) {
-		String indent = ComposeIndent(ss);
+		String indent = MakeIndent(ss);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
@@ -751,7 +828,16 @@ void Expr_Indexer::Exec(Processor& processor) const
 	} while (0);
 }
 
+void Expr_Indexer::Compose(PUnitComposer& composer) const
+{
+}
+
 void Expr_Indexer::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
+{
+}
+
+void Expr_Indexer::ComposeInAssignment(
+	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 }
 
@@ -881,9 +967,18 @@ void Expr_Caller::Exec(Processor& processor) const
 	} while (0);
 }
 
+void Expr_Caller::Compose(PUnitComposer& composer) const
+{
+}
+
 void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	
+}
+
+void Expr_Caller::ComposeInAssignment(
+	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+{
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
