@@ -15,13 +15,9 @@ class Processor;
 class GURAX_DLLDECLARE PUnit {
 protected:
 	const PUnit* _pPUnitNext;
-	static PUnit* _pPUnitCont;
 public:
 	// Constructor
-	PUnit() : _pPUnitNext(nullptr) {
-		if (_pPUnitCont) _pPUnitCont->SetPUnitNext(this);
-		_pPUnitCont = this;
-	}
+	PUnit() : _pPUnitNext(nullptr) {}
 	// Copy constructor/operator
 	PUnit(const PUnit& src) = delete;
 	PUnit& operator=(const PUnit& src) = delete;
@@ -37,7 +33,6 @@ public:
 	bool IsLessThan(const PUnit* pPUnit) const { return this < pPUnit; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
-	static void PutTerminator() { _pPUnitCont = nullptr; }
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 public:
@@ -60,6 +55,29 @@ public:
 	const PUnit* Peek(int offset) { return *(rbegin() + offset); }
 	void Push(const PUnit* pPUnit) { push_back(pPUnit); }
 	const PUnit* Pop() { const PUnit* pPUnit = back(); pop_back(); return pPUnit; }
+};
+
+//------------------------------------------------------------------------------
+// PUnitComposer
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnitComposer {
+private:
+	PUnitStack _punitStack;
+	PUnit *_pPUnitCont;
+public:
+	// Constructor
+	PUnitComposer() : _pPUnitCont(nullptr) {}
+	// Copy constructor/operator
+	PUnitComposer(const PUnitComposer& src) = delete;
+	PUnitComposer& operator=(const PUnitComposer& src) = delete;
+	// Move constructor/operator
+	PUnitComposer(PUnitComposer&& src) = delete;
+	PUnitComposer& operator=(PUnitComposer&& src) noexcept = delete;
+	// Destructor
+	virtual ~PUnitComposer() = default;
+public:
+	PUnitStack& GetPUnitStack() { return _punitStack; }
+	PUnit* GetPUnitCont() { return _pPUnitCont; }
 };
 
 //------------------------------------------------------------------------------
