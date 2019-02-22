@@ -22,6 +22,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void PUnitComposer::Add(PUnit* pPUnit)
 {
+	_punitList.push_back(pPUnit);
 	if (_pPUnitCont) _pPUnitCont->SetPUnitNext(pPUnit);
 	_pPUnitCont = pPUnit;
 }

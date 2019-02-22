@@ -62,6 +62,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnitComposer {
 private:
+	PUnitList _punitList;
 	PUnitStack _punitStack;
 	PUnit *_pPUnitCont;
 public:
@@ -76,6 +77,7 @@ public:
 	// Destructor
 	virtual ~PUnitComposer() = default;
 public:
+	const PUnitList& GetPUnitList() const { return _punitList; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	PUnit* GetPUnitCont() { return _pPUnitCont; }
 	void Begin() { _pPUnitCont = nullptr; }
