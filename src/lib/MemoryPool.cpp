@@ -8,23 +8,22 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // MemoryPool
 //-----------------------------------------------------------------------------
-MemoryPool MemoryPool::_memoryPoolForGlobal;
-MemoryPool MemoryPool::_memoryPoolForPUnit;
+MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	_chunkFixed1(64, 20), _chunkFixed2(128, 20), _chunkVariable()
+	chunkPUnit(64, 20), chunkSmall(64, 20), chunkMedium(128, 20), chunkVariable()
 {
 }
 
 void* MemoryPool::Allocate(size_t bytes, const char* ownerName)
 {
 	//::printf("MemoryPool::DoAllocate(%ldbytes, \"%s\")\n", bytes, ownerName);
-	if (bytes <= _chunkFixed1.GetBytesBlock()) {
-		return _chunkFixed1.Allocate(ownerName);
-	} else if (bytes <= _chunkFixed2.GetBytesBlock()) {
-		return _chunkFixed2.Allocate(ownerName);
+	if (bytes <= chunkSmall.GetBytesBlock()) {
+		return chunkSmall.Allocate(ownerName);
+	} else if (bytes <= chunkMedium.GetBytesBlock()) {
+		return chunkMedium.Allocate(ownerName);
 	} else {
-		return _chunkVariable.Allocate(bytes, ownerName);
+		return chunkVariable.Allocate(bytes, ownerName);
 	}
 }
 
@@ -33,13 +32,6 @@ void MemoryPool::Deallocate(void* p)
 	char* pHeaderRaw = reinterpret_cast<char*>(p) - sizeof(Header);
 	Header* pHeader = reinterpret_cast<Header*>(pHeaderRaw);
 	pHeader->u.pChunk->Deallocate(p);
-}
-
-String MemoryPool::ToString(const StringStyle& ss) const
-{
-	String str;
-	str += _chunkFixed1.ToString(ss);
-	return str;
 }
 
 //-----------------------------------------------------------------------------
@@ -81,23 +73,28 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	char buff[128];
-	::sprintf(buff, "[ChunkFixed:%ldbytes/block]\n", _bytesBlock);
-	str += buff;
-	size_t bytesFrame = sizeof(Header) + _bytesBlock;
+	using PoolList = std::vector<MemoryPool::Pool*>;
 	PoolList poolList;
 	for (Pool* pPool = _pPool; pPool; pPool = pPool->pPoolPrev) poolList.push_back(pPool);
-	for (auto ppPool = poolList.rbegin(); ppPool != poolList.rend(); ++ppPool) {
-		Pool *pPool = *ppPool;
-		size_t nBlocks = (pPool == _pPool)? _iBlockNext : _nBlocks;
-		const char* pHeaderRaw = pPool->buff;
-		for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pHeaderRaw += bytesFrame) {
-			const Header* pHeader = reinterpret_cast<const Header*>(pHeaderRaw);
-			str += pHeader->ownerName? '*' : '.';
-		}
+	do {
+		char buff[128];
+		::sprintf(buff, "[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, poolList.size());
+		str += buff;
+	} while (0);
+	if (!ss.IsDigest()) {
+		size_t bytesFrame = sizeof(Header) + _bytesBlock;
 		str += "\n";
+		for (auto ppPool = poolList.rbegin(); ppPool != poolList.rend(); ++ppPool) {
+			Pool *pPool = *ppPool;
+			size_t nBlocks = (pPool == _pPool)? _iBlockNext : _nBlocks;
+			const char* pHeaderRaw = pPool->buff;
+			for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pHeaderRaw += bytesFrame) {
+				const Header* pHeader = reinterpret_cast<const Header*>(pHeaderRaw);
+				str += pHeader->ownerName? '*' : '.';
+			}
+			str += "\n";
+		}
 	}
-	//::printf("\n");
 	return str;
 }
 

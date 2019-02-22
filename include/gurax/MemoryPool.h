@@ -7,18 +7,34 @@
 
 #define Gurax_MemoryPoolAllocator(ownerName) \
 static void *operator new(size_t size) { \
-	return MemoryPool::ForGlobal().Allocate(size, ownerName);	\
+	return MemoryPool::Global().Allocate(size, ownerName);	\
 } \
 static void operator delete(void* p) { \
-	MemoryPool::ForGlobal().Deallocate(p); \
+	MemoryPool::Deallocate(p); \
 }
 
-#define Gurax_MemoryPoolAllocator_PUnit(name) \
+#define Gurax_MemoryPoolAllocator_PUnit(ownerName) \
 static void *operator new(size_t size) { \
-	return MemoryPool::ForPUnit().Allocate(size, name);	\
+	return MemoryPool::Global().chunkPUnit.Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
-	MemoryPool::ForPUnit().Deallocate(p); \
+	MemoryPool::Deallocate(p);	\
+}
+
+#define Gurax_MemoryPoolAllocator_Small(ownerName) \
+static void *operator new(size_t size) { \
+	return MemoryPool::Global().chunkSmall.Allocate(ownerName);	\
+} \
+static void operator delete(void* p) { \
+	MemoryPool::Deallocate(p);	\
+}
+
+#define Gurax_MemoryPoolAllocator_Medium(ownerName) \
+static void *operator new(size_t size) { \
+	return MemoryPool::Global().chunkMedium.Allocate(ownerName);	\
+} \
+static void operator delete(void* p) { \
+	MemoryPool::Deallocate(p);	\
 }
 
 namespace Gurax {
@@ -35,8 +51,6 @@ public:
 	struct Pool {
 		Pool* pPoolPrev;
 		char buff[0];
-	};
-	class PoolList : public std::vector<Pool*> {
 	};
 	struct Header {
 		union {
@@ -59,7 +73,7 @@ public:
 		size_t GetBytesBlock() const { return _bytesBlock; }
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
-		String ToString(const StringStyle& ss) const;
+		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
 	class ChunkVariable : public Chunk {
 	public:
@@ -68,12 +82,12 @@ public:
 		virtual void Deallocate(void* p);
 	};
 private:
-	static MemoryPool _memoryPoolForGlobal;
-	static MemoryPool _memoryPoolForPUnit;
-private:
-	ChunkFixed _chunkFixed1;
-	ChunkFixed _chunkFixed2;
-	ChunkVariable _chunkVariable;
+	static MemoryPool _memoryPoolGlobal;
+public:
+	ChunkFixed chunkPUnit;
+	ChunkFixed chunkSmall;
+	ChunkFixed chunkMedium;
+	ChunkVariable chunkVariable;
 public:
 	// Constructor
 	MemoryPool();
@@ -86,11 +100,9 @@ public:
 	// Destructor
 	~MemoryPool() = default;
 public:
-	static MemoryPool& ForGlobal() { return _memoryPoolForGlobal; }
-	static MemoryPool& ForPUnit() { return _memoryPoolForPUnit; }
+	static MemoryPool& Global() { return _memoryPoolGlobal; }
 	void* Allocate(size_t bytes, const char* ownerName);
-	void Deallocate(void* p);
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	static void Deallocate(void* p);
 };
 
 //-----------------------------------------------------------------------------
@@ -115,10 +127,10 @@ public:
 	~Allocator() = default;
 public:
 	_Tp* allocate(size_t num, std::allocator<void>::const_pointer hint = nullptr) {
-		return static_cast<_Tp*>(MemoryPool::ForGlobal().Allocate(num * sizeof(_Tp), "Allocator"));
+		return static_cast<_Tp*>(MemoryPool::Global().Allocate(num * sizeof(_Tp), "Allocator"));
 	}
 	void deallocate(_Tp* p, size_t num) {
-		MemoryPool::ForGlobal().Deallocate(p);
+		MemoryPool::Global().Deallocate(p);
 	}
 };
 
