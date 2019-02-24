@@ -400,11 +400,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("ArgSlot");
 private:
 	RefPtr<Expr> _pExpr;
+	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_ArgSlot(Expr* pExpr) : _pExpr(pExpr) {}
+	explicit PUnit_ArgSlot(Expr* pExpr) : _pExpr(pExpr), _pPUnitAtMerging(nullptr) {}
 public:
 	const Expr* GetExpr() const { return _pExpr.get(); }
+	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
+	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -437,13 +440,16 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExpr;
+	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
 	explicit PUnit_ArgSlotNamed(const Symbol* pSymbol, Expr* pExpr) :
-		_pSymbol(pSymbol), _pExpr(pExpr) {}
+	_pSymbol(pSymbol), _pExpr(pExpr), _pPUnitAtMerging(nullptr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExpr() const { return _pExpr.get(); }
+	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
+	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

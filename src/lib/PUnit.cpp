@@ -397,7 +397,7 @@ void PUnit_ArgSlot::Exec(Processor& processor) const
 	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(new Value_Expr(GetExpr()->Reference()));
-		//processor.Goto(GetPUnitNext());
+		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
 	} else {
 		processor.Goto(GetPUnitNext());
 	}
@@ -447,7 +447,7 @@ void PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(GetExpr()->Reference()));
-		//processor.Goto(GetPUnitNext());
+		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
 	} else {
 		processor.PushStack(new Value_ArgSlot(pArgSlot->Reference()));
 		processor.Goto(GetPUnitNext());
