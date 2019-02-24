@@ -143,7 +143,7 @@ void Expr_Value::Exec(Processor& processor) const
 
 void Expr_Value::Compose(PUnitComposer& composer) const
 {
-	composer.Add(new PUnit_Value(GetValue()->Clone()));
+	composer.Add(new PUnit_Value(GetValue()->Clone()));	// [] -> [Value]
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -171,7 +171,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 
 void Expr_Identifier::Compose(PUnitComposer& composer) const
 {
-	composer.Add(new PUnit_Lookup(GetSymbol()));
+	composer.Add(new PUnit_Lookup(GetSymbol()));		// [] -> [Value]
 }
 
 void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -220,13 +220,13 @@ void Expr_Identifier::ComposeInAssignment(
 	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
-		composer.Add(new PUnit_Lookup(GetSymbol()));
-		pExprAssigned->Compose(composer);
-		composer.Add(new PUnit_BinaryOp(pOperator));
-		composer.Add(new PUnit_Assign(GetSymbol()));
+		composer.Add(new PUnit_Lookup(GetSymbol()));	// [] -> [Value]
+		pExprAssigned->Compose(composer);				//    -> [Value ValueRight]
+		composer.Add(new PUnit_BinaryOp(pOperator));	//    -> [ValueAssigned]
+		composer.Add(new PUnit_Assign(GetSymbol()));	//    -> [ValueAssigned]
 	} else {
-		pExprAssigned->Compose(composer);
-		composer.Add(new PUnit_Assign(GetSymbol()));
+		pExprAssigned->Compose(composer);				// [] -> [ValueAssigned]
+		composer.Add(new PUnit_Assign(GetSymbol()));	//    -> [ValueAssigned
 	}
 }
 
@@ -303,8 +303,8 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 
 void Expr_UnaryOp::Compose(PUnitComposer& composer) const
 {
-	GetExprChild()->Compose(composer);
-	composer.Add(new PUnit_UnaryOp(GetOperator()));
+	GetExprChild()->Compose(composer);					// [] -> [Value]
+	composer.Add(new PUnit_UnaryOp(GetOperator()));		//    -> [ValueResult]
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -375,9 +375,9 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 
 void Expr_BinaryOp::Compose(PUnitComposer& composer) const
 {
-	GetExprLeft()->Compose(composer);
-	GetExprRight()->Compose(composer);
-	composer.Add(new PUnit_BinaryOp(GetOperator()));
+	GetExprLeft()->Compose(composer);					// [] -> [ValueLeft]
+	GetExprRight()->Compose(composer);					//    -> [ValueLeft ValueRight]
+	composer.Add(new PUnit_BinaryOp(GetOperator()));	//    -> [ValueResult]
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -477,8 +477,8 @@ void Expr_Member::Exec(Processor& processor) const
 
 void Expr_Member::Compose(PUnitComposer& composer) const
 {
-	GetExprTarget()->Compose(composer);
-	composer.Add(new PUnit_Member(GetSymbol(), GetAttr().Reference()));
+	GetExprTarget()->Compose(composer);									// [] -> [ValueTarget]
+	composer.Add(new PUnit_Member(GetSymbol(), GetAttr().Reference()));	//    -> [ValueMember] or [ValueProp]
 }
 
 void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -528,14 +528,17 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 void Expr_Member::ComposeInAssignment(
 	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
+	GetExprTarget()->Compose(composer);								// [] -> [ValueTarget]
 	if (pOperator) {
-		composer.Add(new PUnit_PropGet(GetSymbol(), GetAttr().Reference()));
-		pExprAssigned->Compose(composer);
-		composer.Add(new PUnit_BinaryOp(pOperator));
+		composer.Add(
+			new PUnit_PropGet(GetSymbol(), GetAttr().Reference()));	//    -> [ValueTarget ValueProp]
+		pExprAssigned->Compose(composer);							//    -> [ValueTarget ValueProp ValueRight]
+		composer.Add(new PUnit_BinaryOp(pOperator));				//    -> [ValueTarget ValueAssigned]
 	} else {
-		pExprAssigned->Compose(composer);
+		pExprAssigned->Compose(composer);							//    -> [ValueTarget ValueAssigned]
 	}
-	composer.Add(new PUnit_PropSet(GetSymbol(), GetAttr().Reference()));
+	composer.Add(
+		new PUnit_PropSet(GetSymbol(), GetAttr().Reference()));		//    -> [ValueAssigned]
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const

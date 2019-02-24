@@ -111,8 +111,8 @@ String PUnit_Erase::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_UnaryOp::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueChild(processor.PopStack());
-	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(pValueChild.get()));
+	RefPtr<Value> pValue(processor.PopStack());
+	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(pValue.get()));
 	if (!pValueResult) return;
 	processor.PushStack(pValueResult.release());
 	processor.Goto(GetPUnitNext());
