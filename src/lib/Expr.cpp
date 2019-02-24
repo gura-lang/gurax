@@ -24,13 +24,13 @@ String Expr::MakeIndent(const StringStyle& ss) const
 
 void Expr::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	Error::Issue(ErrorType::InvalidOperation, "invalid assignment");
+	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
 }
 
 void Expr::ComposeInAssignment(
 	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	Error::Issue(ErrorType::InvalidOperation, "invalid assignment");
+	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
 }
 
 //------------------------------------------------------------------------------
@@ -162,7 +162,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 		// PUnit_Lookup
 		const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 		if (!pValue) {
-			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			Error::IssueWith(ErrorType::ValueError, Reference(), "symbol not found: %s", GetSymbol()->GetName());
 			return;
 		}
 		processor.PushStack(pValue->Reference());
@@ -181,7 +181,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 			// PUnit_Lookup
 			const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 			if (!pValue) {
-				Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+				Error::IssueWith(ErrorType::ValueError, Reference(), "symbol not found: %s", GetSymbol()->GetName());
 				return;
 			}
 			processor.PushStack(pValue->Reference());
@@ -464,7 +464,7 @@ void Expr_Member::Exec(Processor& processor) const
 		RefPtr<Value> pValueTarget(processor.PopStack());
 		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 		if (!pValue) {
-			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			Error::IssueWith(ErrorType::ValueError, Reference(), "symbol not found: %s", GetSymbol()->GetName());
 			return;
 		}
 		if (pValue->IsCallable()) {
@@ -493,7 +493,7 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 			Value* pValueTarget = processor.PeekStack(0);
 			Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 			if (!pValue) {
-				Error::Issue(ErrorType::ValueError, "undefined symbol: %s", GetSymbol()->GetName());
+				Error::IssueWith(ErrorType::ValueError, Reference(), "undefined symbol: %s", GetSymbol()->GetName());
 				return;
 			}
 			processor.PushStack(pValue->Reference());
@@ -925,7 +925,7 @@ void Expr_Caller::Exec(Processor& processor) const
 		RefPtr<Value> pValueCar(processor.PopStack());
 		const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
 		if (!pDeclCaller) {
-			Error::Issue(ErrorType::ValueError,
+			Error::IssueWith(ErrorType::ValueError, Reference(),
 						 "value type %s can not be called", pValueCar->GetVType().MakeFullName().c_str());
 			return;
 		}
@@ -939,7 +939,7 @@ void Expr_Caller::Exec(Processor& processor) const
 			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
 			const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
 			if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
-				Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
+				Error::IssueWith(ErrorType::ArgumentError, Reference(), "named argument must be specified by a symbol");
 				return;
 			}
 			do {
@@ -948,11 +948,12 @@ void Expr_Caller::Exec(Processor& processor) const
 				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 				ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
 				if (!pArgSlot) {
-					Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", pSymbol->GetName());
+					Error::IssueWith(ErrorType::ArgumentError, Reference(),
+									 "can't find argument with a name: %s", pSymbol->GetName());
 					return;
 				}
 				if (!pArgSlot->IsVacant()) {
-					Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+					Error::IssueWith(ErrorType::ArgumentError, Reference(), "duplicated assignment of argument");
 					return;
 				}
 				if (pArgSlot->IsVType(VTYPE_Quote)) {
@@ -978,11 +979,11 @@ void Expr_Caller::Exec(Processor& processor) const
 				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
 				ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 				if (!pArgSlot) {
-					Error::Issue(ErrorType::ArgumentError, "too many arguments");
+					Error::IssueWith(ErrorType::ArgumentError, Reference(), "too many arguments");
 					return;
 				}
 				if (!pArgSlot->IsVacant()) {
-					Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+					Error::IssueWith(ErrorType::ArgumentError, Reference(), "duplicated assignment of argument");
 					return;
 				}
 				if (pArgSlot->IsVType(VTYPE_Quote)) {
@@ -1023,7 +1024,8 @@ void Expr_Caller::Compose(PUnitComposer& composer) const
 			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
 			const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
 			if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
-				Error::Issue(ErrorType::ArgumentError, "named argument must be specified by a symbol");
+				Error::IssueWith(ErrorType::ArgumentError, pExpr->Reference(),
+								 "named argument must be specified by a symbol");
 				return;
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
@@ -1047,7 +1049,21 @@ void Expr_Caller::Compose(PUnitComposer& composer) const
 
 void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, Reference(), "operator can not be applied in function assigment");
+		return;
+	}
+	if (GetExprCar()->IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::SyntaxError, Reference(), "identifier is expected");
+		return;
+	}
+	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
+	do {
+		RefPtr<Function> pFunction(new FunctionCustom(pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+		RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
+		// PUnit_AssignValue
+		processor.GetFrame().AssignValue(pExprCarEx->GetSymbol(), pValueAssigned.release());
+	} while (0);
 }
 
 void Expr_Caller::ComposeInAssignment(
