@@ -51,6 +51,11 @@ void Value::Bootup()
 	_pValue_EmptyStr	= new Value_String("");
 }
 
+Value* Value::Cast(const VType& vtype, Value* pValue)
+{
+	return vtype.DoCastFrom(pValue);
+}
+
 bool Value::GetBool() const
 {
 	return !(IsUndefined() || IsNil() ||

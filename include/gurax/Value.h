@@ -94,6 +94,7 @@ public:
 public:
 	static void Bootup();
 public:
+	static Value* Cast(const VType& vtype, Value* pValue);
 	static Value* undefined()	{ return _pValue_undefined->Reference(); }
 	static Value* nil()			{ return _pValue_nil->Reference(); }
 	static Value* false_()		{ return _pValue_false_->Reference(); }

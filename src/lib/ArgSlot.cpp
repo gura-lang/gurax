@@ -23,7 +23,7 @@ ArgSlot* ArgSlot::Find(const Symbol* pSymbol)
 void ArgSlot_Single::FeedValue(RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
-	pValue.reset(vtype.DoCastFrom(pValue.release()));
+	pValue.reset(Value::Cast(vtype, pValue.release()));
 	if (Error::IsIssued()) return;
 	_pValue.reset(pValue.release());
 }
@@ -43,7 +43,7 @@ String ArgSlot_Single::ToString(const StringStyle& ss) const
 void ArgSlot_Multiple::FeedValue(RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
-	pValue.reset(vtype.DoCastFrom(pValue.release()));
+	pValue.reset(Value::Cast(vtype, pValue.release()));
 	if (Error::IsIssued()) return;
 	_pValue->GetValueTypedOwner().Add(pValue.release());
 }
