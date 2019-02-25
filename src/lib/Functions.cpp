@@ -23,6 +23,7 @@ public:
 	// Destructor
 	~ArgAccessor() = default;
 public:
+	bool IsInvalid() { return _pArgSlot == nullptr; }
 	bool IsValid() { return _pArgSlot != nullptr; }
 	Value* GetValue() {
 		if (!_pArgSlot) return nullptr;
@@ -30,7 +31,11 @@ public:
 		_pArgSlot = _pArgSlot->GetNext();
 		return pValue;
 	}
-	const char* GetString() { return dynamic_cast<Value_String*>(GetValue())->GetString(); }
+	Bool GetBool()			{ return GetValue()->GetBool(); }
+	Int GetInt()			{ return dynamic_cast<Value_Number*>(GetValue())->GetInt(); }
+	Float GetFloat()		{ return dynamic_cast<Value_Number*>(GetValue())->GetFloat(); }
+	Double GetDouble()		{ return dynamic_cast<Value_Number*>(GetValue())->GetDouble(); }
+	const char* GetString()	{ return dynamic_cast<Value_String*>(GetValue())->GetString(); }
 };
 
 //------------------------------------------------------------------------------
