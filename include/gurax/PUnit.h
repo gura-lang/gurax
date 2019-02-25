@@ -14,10 +14,11 @@ class Processor;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit {
 protected:
+	RefPtr<Expr> _pExprSrc;
 	const PUnit* _pPUnitNext;
 public:
 	// Constructor
-	PUnit() : _pPUnitNext(nullptr) {}
+	explicit PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc), _pPUnitNext(nullptr) {}
 	// Copy constructor/operator
 	PUnit(const PUnit& src) = delete;
 	PUnit& operator=(const PUnit& src) = delete;
@@ -27,6 +28,7 @@ public:
 	// Destructor
 	virtual ~PUnit() = default;
 public:
+	const Expr* GetExprSrc() const { return _pExprSrc.get(); }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PUnit* pPUnit) const { return this == pPUnit; }
 	bool IsEqualTo(const PUnit* pPUnit) const { return IsIdentical(pPUnit); }
@@ -95,7 +97,7 @@ private:
 	RefPtr<Value> _pValue;
 public:
 	// Constructor
-	PUnit_Value(Value* pValue) : _pValue(pValue) {}
+	PUnit_Value(Expr* pExprSrc, Value* pValue) : PUnit(pExprSrc), _pValue(pValue) {}
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
@@ -115,7 +117,7 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	PUnit_Lookup(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PUnit_Lookup(Expr* pExprSrc, const Symbol* pSymbol) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -135,7 +137,7 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	PUnit_Assign(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PUnit_Assign(Expr* pExprSrc, const Symbol* pSymbol) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -155,7 +157,7 @@ private:
 	RefPtr<Function> _pFunction;
 public:
 	// Constructor
-	PUnit_AssignFunction(Function* pFunction) : _pFunction(pFunction) {}
+	PUnit_AssignFunction(Expr* pExprSrc, Function* pFunction) : PUnit(pExprSrc), _pFunction(pFunction) {}
 public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
@@ -173,7 +175,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("Erase");
 public:
 	// Constructor
-	PUnit_Erase() {}
+	explicit PUnit_Erase(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -191,7 +193,7 @@ private:
 	const Operator* _pOperator;
 public:
 	// Constructor
-	PUnit_UnaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
+	PUnit_UnaryOp(Expr* pExprSrc, const Operator* pOperator) : PUnit(pExprSrc), _pOperator(pOperator) {}
 public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -211,7 +213,7 @@ private:
 	const Operator* _pOperator;
 public:
 	// Constructor
-	PUnit_BinaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
+	PUnit_BinaryOp(Expr* pExprSrc, const Operator* pOperator) : PUnit(pExprSrc), _pOperator(pOperator) {}
 public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -231,7 +233,7 @@ private:
 	size_t _sizeReserve;
 public:
 	// Constructor
-	PUnit_CreateList(size_t sizeReserve = 0) : _sizeReserve(sizeReserve) {}
+	explicit PUnit_CreateList(Expr* pExprSrc, size_t sizeReserve = 0) : PUnit(pExprSrc), _sizeReserve(sizeReserve) {}
 public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
@@ -249,7 +251,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("AddList");
 public:
 	// Constructor
-	PUnit_AddList() {}
+	explicit PUnit_AddList(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -267,7 +269,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_Index(Attribute* pAttr) : _pAttr(pAttr) {}
+	PUnit_Index(Expr* pExprSrc, Attribute* pAttr) : PUnit(pExprSrc), _pAttr(pAttr) {}
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
@@ -285,7 +287,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("FeedIndex");
 public:
 	// Constructor
-	PUnit_FeedIndex() {}
+	explicit PUnit_FeedIndex(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -301,7 +303,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("IndexGet");
 public:
 	// Constructor
-	PUnit_IndexGet() {}
+	explicit PUnit_IndexGet(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -317,7 +319,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("IndexSet");
 public:
 	// Constructor
-	PUnit_IndexSet() {}
+	explicit PUnit_IndexSet(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -336,8 +338,8 @@ private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr) :
-		_pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropGet(Expr* pExprSrc, const Symbol* pSymbol, Attribute* pAttr) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -359,7 +361,8 @@ private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropSet(Expr* pExprSrc, const Symbol* pSymbol, Attribute* pAttr) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -381,7 +384,8 @@ private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_Member(Expr* pExprSrc, const Symbol* pSymbol, Attribute* pAttr) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -402,7 +406,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	PUnit_Argument(Attribute* pAttr) : _pAttr(pAttr) {}
+	PUnit_Argument(Expr* pExprSrc, Attribute* pAttr) : PUnit(pExprSrc), _pAttr(pAttr) {}
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
@@ -419,13 +423,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit("ArgSlot");
 private:
-	RefPtr<Expr> _pExpr;
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_ArgSlot(Expr* pExpr) : _pExpr(pExpr), _pPUnitAtMerging(nullptr) {}
+	PUnit_ArgSlot(Expr* pExprSrc) : PUnit(pExprSrc), _pPUnitAtMerging(nullptr) {}
 public:
-	const Expr* GetExpr() const { return _pExpr.get(); }
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
 	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
 public:
@@ -443,7 +445,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("FeedArgSlot");
 public:
 	// Constructor
-	PUnit_FeedArgSlot() {}
+	explicit PUnit_FeedArgSlot(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -459,15 +461,15 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("ArgSlotNamed");
 private:
 	const Symbol* _pSymbol;
-	RefPtr<Expr> _pExpr;
+	RefPtr<Expr> _pExprAssigned;
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_ArgSlotNamed(const Symbol* pSymbol, Expr* pExpr) :
-	_pSymbol(pSymbol), _pExpr(pExpr), _pPUnitAtMerging(nullptr) {}
+	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitAtMerging(nullptr) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	const Expr* GetExpr() const { return _pExpr.get(); }
+	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
 	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
 public:
@@ -485,7 +487,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("FeedArgSlotNamed");
 public:
 	// Constructor
-	PUnit_FeedArgSlotNamed() {}
+	explicit PUnit_FeedArgSlotNamed(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -501,7 +503,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit("Call");
 public:
 	// Constructor
-	PUnit_Call() {}
+	explicit PUnit_Call(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
