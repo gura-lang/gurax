@@ -53,18 +53,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(function)"; }
 public:
 	// Virtual functions
-	virtual Value* Eval(const Argument& argument) = 0;
-};
-
-//------------------------------------------------------------------------------
-// FunctionCustom
-//------------------------------------------------------------------------------
-class FunctionCustom : public Function {
-public:
-	using Function::Function;
-public:
-	// Virtual functions of Funcion
-	virtual Value* Eval(const Argument& argument) { return Value::nil(); }
+	virtual Value* Eval(const Argument& argument) const = 0;
 };
 
 }

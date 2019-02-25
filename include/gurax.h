@@ -21,6 +21,8 @@
 #include "gurax/Formatter.h"
 #include "gurax/Frame.h"
 #include "gurax/Function.h"
+#include "gurax/FunctionCustom.h"
+#include "gurax/Functions.h"
 #include "gurax/Help.h"
 #include "gurax/Index.h"
 #include "gurax/Iterator.h"

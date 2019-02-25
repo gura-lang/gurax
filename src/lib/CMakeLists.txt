@@ -17,6 +17,8 @@ add_library(guraxcore SHARED
 	Formatter.cpp
 	Frame.cpp
 	Function.cpp
+	FunctionCustom.cpp
+	Functions.cpp
 	Help.cpp
 	Index.cpp
 	Iterator.cpp
