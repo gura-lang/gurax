@@ -89,6 +89,26 @@ String PUnit_Assign::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_AssignFunction
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_AssignFunction::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
+	processor.GetFrame().AssignValue(GetFunction().GetSymbol(), pValueAssigned.release());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_AssignFunction::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "AssignFunction(";
+	rtn += GetFunction().ToString(ss);
+	rtn += ")";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Erase
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------

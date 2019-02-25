@@ -145,6 +145,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_AssignFunction
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_AssignFunction : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit("AssignFunction");
+private:
+	RefPtr<Function> _pFunction;
+public:
+	// Constructor
+	PUnit_AssignFunction(Function* pFunction) : _pFunction(pFunction) {}
+public:
+	const Function& GetFunction() const { return *_pFunction; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Erase
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Erase : public PUnit {

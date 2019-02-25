@@ -1058,10 +1058,10 @@ void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
+	RefPtr<Function> pFunction(new FunctionCustom(pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
 	do {
-		RefPtr<Function> pFunction(new FunctionCustom(pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+		// PUnit_AssignFunction
 		RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
-		// PUnit_AssignValue
 		processor.GetFrame().AssignValue(pExprCarEx->GetSymbol(), pValueAssigned.release());
 	} while (0);
 }
@@ -1069,6 +1069,17 @@ void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 void Expr_Caller::ComposeInAssignment(
 	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, Reference(), "operator can not be applied in function assigment");
+		return;
+	}
+	if (GetExprCar()->IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::SyntaxError, Reference(), "identifier is expected");
+		return;
+	}
+	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
+	RefPtr<Function> pFunction(new FunctionCustom(pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+	composer.Add(new PUnit_AssignFunction(pFunction.release()));	// -> []
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
