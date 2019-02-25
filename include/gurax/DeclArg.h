@@ -20,6 +20,7 @@ public:
 	Gurax_DeclareReferable(DeclArg);
 public:
 	struct Flag {
+		static const UInt32 None			= 0;
 		static const UInt32 ListVar			= 1 << 0;	// :listvar
 		static const UInt32 Map				= 1 << 1;	// :map
 		static const UInt32 NoMap			= 1 << 2;	// :nomap

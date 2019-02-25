@@ -20,6 +20,7 @@ public:
 	Gurax_DeclareReferable(DeclCaller);
 public:
 	struct Flag {
+		static const UInt32 None			= 0;
 		static const UInt32 Map				= 1 << 0;	// :map
 		static const UInt32 NoMap			= 1 << 1;	// :nomap
 		static const UInt32 Closure			= 1 << 2;	// :closure
@@ -36,6 +37,7 @@ public:
 		static const UInt32 Public			= 1 << 13;	// :public
 		static const UInt32 Private			= 1 << 14;	// :private
 		static const UInt32 Privileged		= 1 << 15;	// :privileged
+		static const UInt32 Reduce			= 1 << 16;	// :reduce
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
 	public:
@@ -56,22 +58,25 @@ public:
 			Assoc(Gurax_Symbol(public_),		Flag::Public);
 			Assoc(Gurax_Symbol(private_),		Flag::Private);
 			Assoc(Gurax_Symbol(privileged),		Flag::Privileged);
+			Assoc(Gurax_Symbol(reduce),			Flag::Reduce);
 		}
 		static SymbolAssoc* GetInstance() {
 			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_Flag());
 		}
 	};
 private:
-	DeclArgOwner _declArgOwner;
+	const VType* _pVType;
+	RefPtr<DottedSymbol> _pDottedSymbol;
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
+	DeclArgOwner _declArgOwner;
 public:
 	static const DeclCaller* Empty;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	DeclCaller() : _flags(0), _pAttr(new Attribute()) {}
+	DeclCaller();
 	// Copy constructor/operator
 	DeclCaller(const DeclCaller& src) = delete;
 	DeclCaller& operator=(const DeclCaller& src) = delete;
@@ -84,8 +89,13 @@ protected:
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr);
 	void Clear();
+	DeclArgOwner& GetDeclArgOwner() { return _declArgOwner; }
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
+	void SetVType(const VType& vtype) { _pVType = &vtype; }
+	const VType& GetVType() const { return *_pVType; }
+	void SetFlags(UInt32 flags) { _flags = flags; }
 	UInt32 GetFlags() const { return _flags; }
+	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetAttr().IsSetOpt(pSymbol); }

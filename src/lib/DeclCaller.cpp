@@ -15,6 +15,10 @@ void DeclCaller::Bootup()
 	Empty = new DeclCaller();
 }
 
+DeclCaller::DeclCaller() : _pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute())
+{
+}
+
 bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr)
 {
 	_declArgOwner.reserve(exprLinkCdr.GetSize());

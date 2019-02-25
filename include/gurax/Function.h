@@ -25,9 +25,14 @@ protected:
 public:
 	// Constructor
 	Function() : Function(Symbol::Empty, new DeclCaller(), new HelpProvider()) {}
+	Function(const Symbol* pSymbol) : Function(pSymbol, new DeclCaller(), new HelpProvider()) {}
 	Function(const Symbol* pSymbol, DeclCaller* pDeclCaller) : Function(pSymbol, pDeclCaller, new HelpProvider()) {}
 	Function(const Symbol* pSymbol, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
 		_pSymbol(pSymbol), _pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
+	Function(const char* name) : Function(Symbol::Add(name)) {}		
+	Function(const char* name, DeclCaller* pDeclCaller) : Function(Symbol::Add(name), pDeclCaller) {}
+	Function(const char* name, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
+		Function(Symbol::Add(name), pDeclCaller, pHelpProvider) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;
@@ -39,9 +44,30 @@ protected:
 	virtual ~Function() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	DeclCaller& GetDeclCaller() { return *_pDeclCaller; }
 	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
+	void DeclareCaller(const VType& vtype, UInt32 flags) {
+		GetDeclCaller().SetVType(vtype);
+		GetDeclCaller().SetFlags(flags);
+	}
+	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
+					const DeclArg::OccurPattern& occurPattern = DeclArg::OccurPattern::Once,
+					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
+		GetDeclCaller().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occurPattern, flags, pExprDefault));
+	}
+	void DeclareArg(const char* name, const VType& vtype,
+					const DeclArg::OccurPattern& occurPattern = DeclArg::OccurPattern::Once,
+					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
+		DeclareArg(Symbol::Add(name), vtype, occurPattern, flags, pExprDefault);
+	}
+	void DeclareAttrOpt(const Symbol* pSymbol) {
+		GetDeclCaller().GetAttr().AddSymbolOpt(pSymbol);
+	}
+	void DeclareAttrOpt(const char* name) {
+		GetDeclCaller().GetAttr().AddSymbolOpt(Symbol::Add(name));
+	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

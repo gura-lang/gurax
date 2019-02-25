@@ -19,9 +19,9 @@ PUnit_PropGet            32
 PUnit_PropSet            32
 PUnit_Member             32
 PUnit_Argument           24
-PUnit_ArgSlot            24
+PUnit_ArgSlot            32
 PUnit_FeedArgSlot        16
-PUnit_ArgSlotNamed       32
+PUnit_ArgSlotNamed       40
 PUnit_FeedArgSlotNamed   16
 PUnit_Call               16
 Symbol                   16
