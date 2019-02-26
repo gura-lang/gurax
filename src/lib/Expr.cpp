@@ -1027,18 +1027,16 @@ void Expr_Caller::Compose(Composer& composer) const
 				return;
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
-			auto pPUnit1 = new PUnit_ArgSlotNamed(pExpr->Reference(), pSymbol, pExprEx->GetExprRight()->Reference());
-			composer.Add(pPUnit1);							// -> [ValueArgument ValueArgSlot]
+			auto pPUnit1 = composer.Add_ArgSlotNamed(
+				pExpr, pSymbol, pExprEx->GetExprRight());	// -> [ValueArgument ValueArgSlot]
 			pExprEx->GetExprRight()->Compose(composer);		// -> [ValueArgument ValueArgSlot Value]
-			auto pPUnit2 = new PUnit_FeedArgSlotNamed(pExpr->Reference());
-			composer.Add(pPUnit2);							// -> [ValueArgument]
+			auto pPUnit2 =
+				composer.Add_FeedArgSlotNamed(pExpr);		// -> [ValueArgument]
 			pPUnit1->SetPUnitAtMerging(pPUnit2);
 		} else {
-			auto pPUnit1 = new PUnit_ArgSlot(pExpr->Reference());
-			composer.Add(pPUnit1);							// -> [ValueArgument]
+			auto pPUnit1 = composer.Add_ArgSlot(pExpr);		// -> [ValueArgument]
 			pExpr->Compose(composer);						// -> [ValueArgument Value]
-			auto pPUnit2 = new PUnit_FeedArgSlot(pExpr->Reference());
-			composer.Add(pPUnit2);							// -> [ValueArgument]
+			auto pPUnit2 = composer.Add_FeedArgSlot(pExpr);	// -> [ValueArgument]
 			pPUnit1->SetPUnitAtMerging(pPUnit2);
 		}
 	}

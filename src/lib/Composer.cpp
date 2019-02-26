@@ -100,24 +100,32 @@ void Composer::Add_Argument(const Expr* pExprSrc, const Attribute& attr)
 	Add(new PUnit_Argument(pExprSrc->Reference(), attr.Reference()));
 }
 
-void Composer::Add_ArgSlot(const Expr* pExprSrc)
+PUnit_ArgSlot* Composer::Add_ArgSlot(const Expr* pExprSrc)
 {
-	Add(new PUnit_ArgSlot(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_ArgSlot(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_FeedArgSlot(const Expr* pExprSrc)
+PUnit_FeedArgSlot* Composer::Add_FeedArgSlot(const Expr* pExprSrc)
 {
-	Add(new PUnit_FeedArgSlot(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_FeedArgSlot(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned)
+PUnit_ArgSlotNamed* Composer::Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned)
 {
-	Add(new PUnit_ArgSlotNamed(pExprSrc->Reference(), pSymbol, pExprAssigned->Reference()));
+	auto pPUnit = new PUnit_ArgSlotNamed(pExprSrc->Reference(), pSymbol, pExprAssigned->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
+PUnit_FeedArgSlotNamed* Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
 {
-	Add(new PUnit_FeedArgSlotNamed(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_FeedArgSlotNamed(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 void Composer::Add_Call(const Expr* pExprSrc)

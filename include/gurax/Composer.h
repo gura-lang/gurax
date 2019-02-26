@@ -50,10 +50,10 @@ public:
 	void Add_PropSet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Argument(const Expr* pExprSrc, const Attribute& attr);
-	void Add_ArgSlot(const Expr* pExprSrc);
-	void Add_FeedArgSlot(const Expr* pExprSrc);
-	void Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned);
-	void Add_FeedArgSlotNamed(const Expr* pExprSrc);
+	PUnit_ArgSlot* Add_ArgSlot(const Expr* pExprSrc);
+	PUnit_FeedArgSlot* Add_FeedArgSlot(const Expr* pExprSrc);
+	PUnit_ArgSlotNamed* Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned);
+	PUnit_FeedArgSlotNamed* Add_FeedArgSlotNamed(const Expr* pExprSrc);
 	void Add_Call(const Expr* pExprSrc);
 	void Add_Jump(const Expr* pExprSrc);
 	void Add_JumpSub(const Expr* pExprSrc);
