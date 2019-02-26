@@ -6,177 +6,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// PUnit_Branch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Branch : public PUnit {
-private:
-	const PUnit* _pPUnitBranch;
-public:
-	// Constructor
-	explicit PUnit_Branch(Expr* pExprSrc) : PUnit(pExprSrc), _pPUnitBranch(nullptr) {}
-public:
-	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
-	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
-};
-
-//------------------------------------------------------------------------------
-// PUnit_Jump
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Jump : public PUnit_Branch {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Jump");
-public:
-	// Constructor
-	explicit PUnit_Jump(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_JumpSub
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpSub : public PUnit_Branch {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("JumpSub");
-public:
-	// Constructor
-	explicit PUnit_JumpSub(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_Return
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Return : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Return");
-public:
-	// Constructor
-	explicit PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_JumpIf
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit_Branch {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("JumpIf");
-public:
-	// Constructor
-	explicit PUnit_JumpIf(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_JumpIfNot
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpIfNot : public PUnit_Branch {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("JumpIfNot");
-public:
-	// Constructor
-	explicit PUnit_JumpIfNot(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_Jump
-//------------------------------------------------------------------------------
-void PUnit_Jump::Exec(Processor& processor) const
-{
-	processor.Goto(GetPUnitBranch());
-}
-
-String PUnit_Jump::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "Jump()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_JumpSub
-//------------------------------------------------------------------------------
-void PUnit_JumpSub::Exec(Processor& processor) const
-{
-	processor.PushPUnit(this);
-	processor.Goto(GetPUnitBranch());
-}
-
-String PUnit_JumpSub::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "JumpSub()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_Return
-//------------------------------------------------------------------------------
-void PUnit_Return::Exec(Processor& processor) const
-{
-	const PUnit* pPUnitAtMerging = processor.PopPUnit();
-	processor.Goto(pPUnitAtMerging->GetPUnitNext());
-}
-
-String PUnit_Return::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "Return()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_JumpIf
-//------------------------------------------------------------------------------
-void PUnit_JumpIf::Exec(Processor& processor) const
-{
-	processor.Goto(GetPUnitBranch());
-}
-
-String PUnit_JumpIf::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "JumpIf()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_JumpIfNot
-//------------------------------------------------------------------------------
-void PUnit_JumpIfNot::Exec(Processor& processor) const
-{
-	processor.Goto(GetPUnitBranch());
-}
-
-String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "JumpIfNot()";
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
 
@@ -696,6 +525,90 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Call()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Jump
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_Jump::Exec(Processor& processor) const
+{
+	processor.Goto(GetPUnitBranch());
+}
+
+String PUnit_Jump::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Jump()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_JumpSub
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_JumpSub::Exec(Processor& processor) const
+{
+	processor.PushPUnit(this);
+	processor.Goto(GetPUnitBranch());
+}
+
+String PUnit_JumpSub::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "JumpSub()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Return
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_Return::Exec(Processor& processor) const
+{
+	const PUnit* pPUnitAtMerging = processor.PopPUnit();
+	processor.Goto(pPUnitAtMerging->GetPUnitNext());
+}
+
+String PUnit_Return::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Return()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_JumpIf
+// Stack View: [Value] -> []
+//------------------------------------------------------------------------------
+void PUnit_JumpIf::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	processor.Goto(pValue->GetBool()? GetPUnitBranch() : GetPUnitNext());
+}
+
+String PUnit_JumpIf::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "JumpIf()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_JumpIfNot
+// Stack View: [Value] -> []
+//------------------------------------------------------------------------------
+void PUnit_JumpIfNot::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	processor.Goto(pValue->GetBool()? GetPUnitNext() : GetPUnitBranch());
+}
+
+String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "JumpIfNot()";
 	return rtn;
 }
 
