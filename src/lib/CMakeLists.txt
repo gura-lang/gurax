@@ -6,6 +6,7 @@ add_library(guraxcore SHARED
 	Binary.cpp
 	Codec.cpp
 	Common.cpp
+	Composer.cpp
 	Context.cpp
 	DateTime.cpp
 	DeclArg.cpp

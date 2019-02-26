@@ -28,7 +28,7 @@ void Expr::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, con
 }
 
 void Expr::ComposeInAssignment(
-	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
 }
@@ -57,7 +57,7 @@ void ExprList::Exec(Processor& processor) const
 	}
 }
 
-void ExprList::Compose(PUnitComposer& composer) const
+void ExprList::Compose(Composer& composer) const
 {
 	for (const Expr* pExpr : *this) {
 		pExpr->Compose(composer);
@@ -141,7 +141,7 @@ void Expr_Value::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_Value::Compose(PUnitComposer& composer) const
+void Expr_Value::Compose(Composer& composer) const
 {
 	composer.Add(new PUnit_Value(Reference(), GetValue()->Clone()));	// -> [Value]
 }
@@ -169,7 +169,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_Identifier::Compose(PUnitComposer& composer) const
+void Expr_Identifier::Compose(Composer& composer) const
 {
 	composer.Add(new PUnit_Lookup(Reference(), GetSymbol()));		// -> [Value]
 }
@@ -217,7 +217,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 }
 
 void Expr_Identifier::ComposeInAssignment(
-	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
 		composer.Add(new PUnit_Lookup(Reference(), GetSymbol()));	// -> [Value]
@@ -248,7 +248,7 @@ void Expr_Suffixed::Exec(Processor& processor) const
 {
 }
 
-void Expr_Suffixed::Compose(PUnitComposer& composer) const
+void Expr_Suffixed::Compose(Composer& composer) const
 {
 }
 
@@ -269,7 +269,7 @@ void Expr_Embedded::Exec(Processor& processor) const
 {
 }
 
-void Expr_Embedded::Compose(PUnitComposer& composer) const
+void Expr_Embedded::Compose(Composer& composer) const
 {
 }
 
@@ -301,7 +301,7 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_UnaryOp::Compose(PUnitComposer& composer) const
+void Expr_UnaryOp::Compose(Composer& composer) const
 {
 	GetExprChild()->Compose(composer);					// -> [Value]
 	composer.Add(new PUnit_UnaryOp(Reference(), GetOperator()));		// -> [ValueResult]
@@ -373,7 +373,7 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_BinaryOp::Compose(PUnitComposer& composer) const
+void Expr_BinaryOp::Compose(Composer& composer) const
 {
 	GetExprLeft()->Compose(composer);								// -> [ValueLeft]
 	GetExprRight()->Compose(composer);								// -> [ValueLeft ValueRight]
@@ -431,7 +431,7 @@ void Expr_Assign::Exec(Processor& processor) const
 	GetExprLeft()->ExecInAssignment(processor, GetExprRight(), GetOperator());
 }
 
-void Expr_Assign::Compose(PUnitComposer& composer) const
+void Expr_Assign::Compose(Composer& composer) const
 {
 	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator());
 }
@@ -475,7 +475,7 @@ void Expr_Member::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_Member::Compose(PUnitComposer& composer) const
+void Expr_Member::Compose(Composer& composer) const
 {
 	GetExprTarget()->Compose(composer);									// -> [ValueTarget]
 	composer.Add(new PUnit_Member(
@@ -527,7 +527,7 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 }
 
 void Expr_Member::ComposeInAssignment(
-	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	GetExprTarget()->Compose(composer);								// -> [ValueTarget]
 	if (pOperator) {
@@ -568,7 +568,7 @@ void Expr_Root::Exec(Processor& processor) const
 	}
 }
 
-void Expr_Root::Compose(PUnitComposer& composer) const
+void Expr_Root::Compose(Composer& composer) const
 {
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);
@@ -614,7 +614,7 @@ void Expr_Block::Exec(Processor& processor) const
 	}
 }
 
-void Expr_Block::Compose(PUnitComposer& composer) const
+void Expr_Block::Compose(Composer& composer) const
 {
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);
@@ -712,7 +712,7 @@ void Expr_Iterer::Exec(Processor& processor) const
 	}
 }
 
-void Expr_Iterer::Compose(PUnitComposer& composer) const
+void Expr_Iterer::Compose(Composer& composer) const
 {
 }
 
@@ -781,7 +781,7 @@ void Expr_Lister::Exec(Processor& processor) const
 	}
 }
 
-void Expr_Lister::Compose(PUnitComposer& composer) const
+void Expr_Lister::Compose(Composer& composer) const
 {
 	composer.Add(new PUnit_CreateList(Reference()));				// -> [ValueList]
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -795,7 +795,7 @@ void Expr_Lister::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 }
 
 void Expr_Lister::ComposeInAssignment(
-	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 }
 
@@ -871,7 +871,7 @@ void Expr_Indexer::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_Indexer::Compose(PUnitComposer& composer) const
+void Expr_Indexer::Compose(Composer& composer) const
 {
 	GetExprCar()->Compose(composer);									// -> [ValueCar]
 	composer.Add(new PUnit_Index(Reference(), GetAttr().Reference()));	// -> [ValueIndex]
@@ -887,7 +887,7 @@ void Expr_Indexer::ExecInAssignment(Processor& processor, const Expr* pExprAssig
 }
 
 void Expr_Indexer::ComposeInAssignment(
-	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 }
 
@@ -1018,7 +1018,7 @@ void Expr_Caller::Exec(Processor& processor) const
 	} while (0);
 }
 
-void Expr_Caller::Compose(PUnitComposer& composer) const
+void Expr_Caller::Compose(Composer& composer) const
 {
 	GetExprCar()->Compose(composer);
 	composer.Add(new PUnit_Argument(
@@ -1071,7 +1071,7 @@ void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 }
 
 void Expr_Caller::ComposeInAssignment(
-	PUnitComposer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
+	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, Reference(), "operator can not be applied in function assigment");

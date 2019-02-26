@@ -10,6 +10,7 @@
 #include "gurax/Binary.h"
 #include "gurax/Codec.h"
 #include "gurax/Common.h"
+#include "gurax/Composer.h"
 #include "gurax/Context.h"
 #include "gurax/DateTime.h"
 #include "gurax/DeclArg.h"

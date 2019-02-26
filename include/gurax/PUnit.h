@@ -59,32 +59,6 @@ public:
 	const PUnit* Pop() { const PUnit* pPUnit = back(); pop_back(); return pPUnit; }
 };
 
-//------------------------------------------------------------------------------
-// PUnitComposer
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnitComposer {
-private:
-	PUnitList _punitList;
-	PUnitStack _punitStack;
-	PUnit *_pPUnitCont;
-public:
-	// Constructor
-	PUnitComposer() : _pPUnitCont(nullptr) {}
-	// Copy constructor/operator
-	PUnitComposer(const PUnitComposer& src) = delete;
-	PUnitComposer& operator=(const PUnitComposer& src) = delete;
-	// Move constructor/operator
-	PUnitComposer(PUnitComposer&& src) = delete;
-	PUnitComposer& operator=(PUnitComposer&& src) noexcept = delete;
-	// Destructor
-	virtual ~PUnitComposer() = default;
-public:
-	const PUnitList& GetPUnitList() const { return _punitList; }
-	PUnitStack& GetPUnitStack() { return _punitStack; }
-	PUnit* GetPUnitCont() { return _pPUnitCont; }
-	void Begin() { _pPUnitCont = nullptr; }
-	void Add(PUnit* pPUnit);
-};
 
 //------------------------------------------------------------------------------
 // PUnit_Value
