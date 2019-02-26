@@ -143,7 +143,7 @@ void Expr_Value::Exec(Processor& processor) const
 
 void Expr_Value::Compose(Composer& composer) const
 {
-	composer.Add(new PUnit_Value(Reference(), GetValue()->Clone()));	// -> [Value]
+	composer.Add_Value(this, GetValue());	// -> [Value]
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -171,7 +171,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 
 void Expr_Identifier::Compose(Composer& composer) const
 {
-	composer.Add(new PUnit_Lookup(Reference(), GetSymbol()));		// -> [Value]
+	composer.Add_Lookup(this, GetSymbol());		// -> [Value]
 }
 
 void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -220,13 +220,13 @@ void Expr_Identifier::ComposeInAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
-		composer.Add(new PUnit_Lookup(Reference(), GetSymbol()));	// -> [Value]
-		pExprAssigned->Compose(composer);							// -> [Value ValueRight]
-		composer.Add(new PUnit_BinaryOp(Reference(), pOperator));	// -> [ValueAssigned]
-		composer.Add(new PUnit_Assign(Reference(), GetSymbol()));	// -> [ValueAssigned]
+		composer.Add_Lookup(this, GetSymbol());	// -> [Value]
+		pExprAssigned->Compose(composer);		// -> [Value ValueRight]
+		composer.Add_BinaryOp(this, pOperator);	// -> [ValueAssigned]
+		composer.Add_Assign(this, GetSymbol());	// -> [ValueAssigned]
 	} else {
-		pExprAssigned->Compose(composer);							// -> [ValueAssigned]
-		composer.Add(new PUnit_Assign(Reference(), GetSymbol()));	// -> [ValueAssigned]
+		pExprAssigned->Compose(composer);		// -> [ValueAssigned]
+		composer.Add_Assign(this, GetSymbol());	// -> [ValueAssigned]
 	}
 }
 

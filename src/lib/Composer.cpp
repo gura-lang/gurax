@@ -17,7 +17,7 @@ void Composer::Add(PUnit* pPUnit)
 
 void Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
 {
-	Add(new PUnit_Value(pExprSrc->Reference(), pValue->Reference()));
+	Add(new PUnit_Value(pExprSrc->Reference(), pValue->Clone()));
 }
 
 void Composer::Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol)
