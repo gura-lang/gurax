@@ -10,9 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Context Context::_context;
 
-Context::Context() : _pValueStack(new ValueStack()), _pFrame(Frame::CreateOfValueMap())
+Context::Context() : _pFrame(Frame::CreateOfValueMap())
 {
-	_pValueStack->reserve(8192);
 }
 
 }

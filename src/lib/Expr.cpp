@@ -53,7 +53,7 @@ void ExprList::Exec(Processor& processor) const
 			pExpr->Exec(processor);
 			if (Error::IsIssued()) return;
 		} while (0);
-		Value::Delete(processor.PopStack());
+		Value::Delete(processor.PopValue());
 	}
 }
 
@@ -137,7 +137,7 @@ void Expr_Value::Exec(Processor& processor) const
 {
 	do {
 		// PUnit_Value
-		processor.PushStack(GetValue()->Clone());
+		processor.PushValue(GetValue()->Clone());
 	} while (0);
 }
 
@@ -165,7 +165,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 			Error::IssueWith(ErrorType::ValueError, Reference(), "symbol not found: %s", GetSymbol()->GetName());
 			return;
 		}
-		processor.PushStack(pValue->Reference());
+		processor.PushValue(pValue->Reference());
 	} while (0);
 }
 
@@ -184,7 +184,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 				Error::IssueWith(ErrorType::ValueError, Reference(), "symbol not found: %s", GetSymbol()->GetName());
 				return;
 			}
-			processor.PushStack(pValue->Reference());
+			processor.PushValue(pValue->Reference());
 		} while (0);
 		do {
 			pExprAssigned->Exec(processor);
@@ -192,15 +192,15 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 		} while (0);
 		do {
 			// PUnit_BinaryOp
-			RefPtr<Value> pValueRight(processor.PopStack());
-			RefPtr<Value> pValueLeft(processor.PopStack());
+			RefPtr<Value> pValueRight(processor.PopValue());
+			RefPtr<Value> pValueLeft(processor.PopValue());
 			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
 			if (!pValue) return;
-			processor.PushStack(pValue.release());
+			processor.PushValue(pValue.release());
 		} while (0);
 		do {
 			// PUnit_Assign
-			RefPtr<Value> pValueAssigned(processor.PeekStack(0)->Reference());
+			RefPtr<Value> pValueAssigned(processor.PeekValue(0)->Reference());
 			processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 		} while (0);
 	} else {
@@ -210,7 +210,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 		} while (0);
 		do {
 			// PUnit_Assign
-			RefPtr<Value> pValueAssigned(processor.PeekStack(0)->Reference());
+			RefPtr<Value> pValueAssigned(processor.PeekValue(0)->Reference());
 			processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 		} while (0);
 	}
@@ -294,10 +294,10 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 	} while (0);
 	do {
 		// PUnit_UnaryOp
-		RefPtr<Value> pValueChild(processor.PopStack());
+		RefPtr<Value> pValueChild(processor.PopValue());
 		RefPtr<Value> pValue(GetOperator()->EvalUnary(pValueChild.release()));
 		if (!pValue) return;
-		processor.PushStack(pValue.release());
+		processor.PushValue(pValue.release());
 	} while (0);
 }
 
@@ -365,11 +365,11 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 	} while (0);
 	do {
 		// PUnit_BinaryOp
-		RefPtr<Value> pValueRight(processor.PopStack());
-		RefPtr<Value> pValueLeft(processor.PopStack());
+		RefPtr<Value> pValueRight(processor.PopValue());
+		RefPtr<Value> pValueLeft(processor.PopValue());
 		RefPtr<Value> pValue(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
 		if (!pValue) return;
-		processor.PushStack(pValue.release());
+		processor.PushValue(pValue.release());
 	} while (0);
 }
 
@@ -461,16 +461,16 @@ void Expr_Member::Exec(Processor& processor) const
 	} while (0);
 	do {
 		// PUnit_Member
-		RefPtr<Value> pValueTarget(processor.PopStack());
+		RefPtr<Value> pValueTarget(processor.PopValue());
 		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 		if (!pValue) {
 			Error::IssueWith(ErrorType::ValueError, Reference(), "symbol not found: %s", GetSymbol()->GetName());
 			return;
 		}
 		if (pValue->IsCallable()) {
-			processor.PushStack(new Value_Member(pValueTarget.release(), pValue->Reference()));
+			processor.PushValue(new Value_Member(pValueTarget.release(), pValue->Reference()));
 		} else {
-			processor.PushStack(pValue->Reference());
+			processor.PushValue(pValue->Reference());
 		}
 	} while (0);
 }
@@ -491,13 +491,13 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 	if (pOperator) {
 		do {
 			// PUnit_PropGet
-			Value* pValueTarget = processor.PeekStack(0);
+			Value* pValueTarget = processor.PeekValue(0);
 			Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 			if (!pValue) {
 				Error::IssueWith(ErrorType::ValueError, Reference(), "undefined symbol: %s", GetSymbol()->GetName());
 				return;
 			}
-			processor.PushStack(pValue->Reference());
+			processor.PushValue(pValue->Reference());
 		} while (0);
 		do {
 			pExprAssigned->Exec(processor);
@@ -505,11 +505,11 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 		} while (0);
 		do {
 			// PUnit_BinaryOp
-			RefPtr<Value> pValueRight(processor.PopStack());
-			RefPtr<Value> pValueLeft(processor.PopStack());
+			RefPtr<Value> pValueRight(processor.PopValue());
+			RefPtr<Value> pValueLeft(processor.PopValue());
 			RefPtr<Value> pValue(pOperator->EvalBinary(pValueLeft.release(), pValueRight.release()));
 			if (!pValue) return;
-			processor.PushStack(pValue.release());
+			processor.PushValue(pValue.release());
 		} while (0);
 	} else {
 		do {
@@ -519,10 +519,10 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 	}
 	do {
 		// PUnit_PropSet
-		RefPtr<Value> pValueProp(processor.PopStack());
-		RefPtr<Value> pValueTarget(processor.PopStack());
+		RefPtr<Value> pValueProp(processor.PopValue());
+		RefPtr<Value> pValueTarget(processor.PopValue());
 		pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr());
-		processor.PushStack(pValueProp.release());
+		processor.PushValue(pValueProp.release());
 	} while (0);
 }
 
@@ -564,7 +564,7 @@ void Expr_Root::Exec(Processor& processor) const
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(processor);
 		if (Error::IsIssued()) return;
-		Value::Delete(processor.PopStack());
+		Value::Delete(processor.PopValue());
 	}
 }
 
@@ -610,7 +610,7 @@ void Expr_Block::Exec(Processor& processor) const
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Exec(processor);
 		if (Error::IsIssued()) return;
-		Value::Delete(processor.PopStack());
+		Value::Delete(processor.PopValue());
 	}
 }
 
@@ -694,7 +694,7 @@ void Expr_Iterer::Exec(Processor& processor) const
 	do {
 		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
-		processor.PushStack(new Value_Iterator(new Iterator_Each(pValueTypedOwner.release())));
+		processor.PushValue(new Value_Iterator(new Iterator_Each(pValueTypedOwner.release())));
 	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		do {
@@ -702,9 +702,9 @@ void Expr_Iterer::Exec(Processor& processor) const
 			if (Error::IsIssued()) return;
 		} while (0);
 		do {
-			RefPtr<Value> pValue(processor.PopStack());
+			RefPtr<Value> pValue(processor.PopValue());
 			Iterator& iterator =
-				dynamic_cast<Value_Iterator*>(processor.PeekStack(0))->GetIterator();
+				dynamic_cast<Value_Iterator*>(processor.PeekValue(0))->GetIterator();
 			ValueTypedOwner& valueTypedOwner =
 				dynamic_cast<Iterator_Each*>(&iterator)->GetValueTypedOwner();
 			valueTypedOwner.Add(pValue.release());
@@ -764,7 +764,7 @@ void Expr_Lister::Exec(Processor& processor) const
 		// PUnit_CreateList
 		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
-		processor.PushStack(new Value_List(pValueTypedOwner.release()));
+		processor.PushValue(new Value_List(pValueTypedOwner.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		do {
@@ -773,9 +773,9 @@ void Expr_Lister::Exec(Processor& processor) const
 		} while (0);
 		do {
 			// PUnit_AddList
-			RefPtr<Value> pValue(processor.PopStack());
+			RefPtr<Value> pValue(processor.PopValue());
 			ValueTypedOwner& valueTypedOwner =
-				dynamic_cast<Value_List*>(processor.PeekStack(0))->GetValueTypedOwner();
+				dynamic_cast<Value_List*>(processor.PeekValue(0))->GetValueTypedOwner();
 			valueTypedOwner.Add(pValue.release());
 		} while (0);
 	}
@@ -845,9 +845,9 @@ void Expr_Indexer::Exec(Processor& processor) const
 	} while (0);
 	do {
 		// PUnit_Index
-		RefPtr<Value> pValueCar(processor.PopStack());
+		RefPtr<Value> pValueCar(processor.PopValue());
 		RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
-		processor.PushStack(new Value_Index(pIndex.release()));
+		processor.PushValue(new Value_Index(pIndex.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		do {
@@ -856,18 +856,18 @@ void Expr_Indexer::Exec(Processor& processor) const
 		} while (0);
 		do {
 			// PUnit_FeedIndex
-			RefPtr<Value> pValue(processor.PopStack());
-			Index& index = dynamic_cast<Value_Index*>(processor.PeekStack(0))->GetIndex();
+			RefPtr<Value> pValue(processor.PopValue());
+			Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
 			index.FeedValue(pValue.release());
 		} while (0);
 	}
 	do {
 		// PUnit_IndexGet
-		RefPtr<Value_Index> pValue(dynamic_cast<Value_Index*>(processor.PopStack()));
+		RefPtr<Value_Index> pValue(dynamic_cast<Value_Index*>(processor.PopValue()));
 		Index& index = pValue->GetIndex();
 		RefPtr<Value> pValueRtn(index.IndexGet());
 		if (Error::IsIssued()) return;
-		processor.PushStack(pValueRtn.release());
+		processor.PushValue(pValueRtn.release());
 	} while (0);
 }
 
@@ -925,7 +925,7 @@ void Expr_Caller::Exec(Processor& processor) const
 	} while (0);
 	do {
 		// PUnit_Argument
-		RefPtr<Value> pValueCar(processor.PopStack());
+		RefPtr<Value> pValueCar(processor.PopValue());
 		const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
 		if (!pDeclCaller) {
 			Error::IssueWith(ErrorType::ValueError, Reference(),
@@ -935,7 +935,7 @@ void Expr_Caller::Exec(Processor& processor) const
 		if (!pDeclCaller->CheckAttribute(GetAttr())) return;
 		RefPtr<Argument> pArgument(
 			new Argument(pValueCar.release(), pDeclCaller->Reference(), GetAttr().Reference(), Value::nil()));
-		processor.PushStack(new Value_Argument(pArgument.release()));
+		processor.PushValue(new Value_Argument(pArgument.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_BinaryOp>() &&
@@ -948,7 +948,7 @@ void Expr_Caller::Exec(Processor& processor) const
 			do {
 				const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
 				// PUnit_ArgSlotNamed
-				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
+				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 				ArgSlot* pArgSlot = argument.FindArgSlot(pSymbol);
 				if (!pArgSlot) {
 					Error::IssueWith(ErrorType::ArgumentError, Reference(),
@@ -963,7 +963,7 @@ void Expr_Caller::Exec(Processor& processor) const
 					pArgSlot->FeedValue(new Value_Expr(pExprEx->GetExprRight()->Reference()));
 					goto skip1;
 				}
-				processor.PushStack(new Value_ArgSlot(pArgSlot->Reference()));
+				processor.PushValue(new Value_ArgSlot(pArgSlot->Reference()));
 			} while (0);
 			do {
 				pExprEx->GetExprRight()->Exec(processor);
@@ -971,15 +971,15 @@ void Expr_Caller::Exec(Processor& processor) const
 			} while (0);
 			do {
 				// PUnit_FeedArgSlotNamed
-				RefPtr<Value> pValue(processor.PopStack());
-				ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopStack())->GetArgSlot();
+				RefPtr<Value> pValue(processor.PopValue());
+				ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopValue())->GetArgSlot();
 				argSlot.FeedValue(pValue.release());
 			} while (0);
 		skip1:;
 		} else {
 			do {
 				// PUnit_ArgSlot
-				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekStack(0))->GetArgument();
+				Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 				ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 				if (!pArgSlot) {
 					Error::IssueWith(ErrorType::ArgumentError, Reference(), "too many arguments");
@@ -1000,8 +1000,8 @@ void Expr_Caller::Exec(Processor& processor) const
 			} while (0);
 			do {
 				// PUnit_FeedArgSlot
-				RefPtr<Value> pValue(processor.PopStack());
-				Index& index = dynamic_cast<Value_Index*>(processor.PeekStack(0))->GetIndex();
+				RefPtr<Value> pValue(processor.PopValue());
+				Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
 				index.FeedValue(pValue.release());
 			} while (0);
 		skip2:;
@@ -1009,12 +1009,12 @@ void Expr_Caller::Exec(Processor& processor) const
 	}
 	do {
 		// PUnit_Call
-		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopStack()));
+		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopValue()));
 		Argument& argument = pValue->GetArgument();
 		if (!argument.CheckValidity()) return;
 		RefPtr<Value> pValueRtn(argument.Call(processor.GetFrame()));
 		if (Error::IsIssued()) return;
-		processor.PushStack(pValueRtn.release());
+		processor.PushValue(pValueRtn.release());
 	} while (0);
 }
 
