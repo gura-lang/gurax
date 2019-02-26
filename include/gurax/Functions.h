@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+void AssignFunctions(Frame& frame);
+
 }
 
 #endif

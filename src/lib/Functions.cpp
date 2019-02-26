@@ -31,6 +31,7 @@ public:
 		_pArgSlot = _pArgSlot->GetNext();
 		return pValue;
 	}
+	Bool GetBool()				{ return GetValue()->GetBool(); }
 	size_t GetSizeT()			{ return dynamic_cast<Value_Number*>(GetValue())->GetSizeT(); }
 	Char GetChar()				{ return dynamic_cast<Value_Number*>(GetValue())->GetChar(); }
 	UChar GetUChar()			{ return dynamic_cast<Value_Number*>(GetValue())->GetUChar(); }
@@ -50,32 +51,51 @@ public:
 	UInt64 GetUInt64()			{ return dynamic_cast<Value_Number*>(GetValue())->GetUInt64(); }
 	Float GetFloat()			{ return dynamic_cast<Value_Number*>(GetValue())->GetFloat(); }
 	Double GetDouble()			{ return dynamic_cast<Value_Number*>(GetValue())->GetDouble(); }
+	const Symbol* GetSymbol()	{ return dynamic_cast<Value_Symbol*>(GetValue())->GetSymbol(); }
 	const char* GetString()		{ return dynamic_cast<Value_String*>(GetValue())->GetString(); }
+	const String& GetStringSTL() { return dynamic_cast<Value_String*>(GetValue())->GetStringSTL(); }
+	Stream& GetStream()			{ return dynamic_cast<Value_Stream*>(GetValue())->GetStream(); }
+	ValueTypedOwner& GetList()	{ return dynamic_cast<Value_List*>(GetValue())->GetValueTypedOwner(); }
+	Iterator& GetIterator()		{ return dynamic_cast<Value_Iterator*>(GetValue())->GetIterator(); }
+	const Expr& GetExpr()		{ return dynamic_cast<Value_Expr*>(GetValue())->GetExpr(); }
+	DateTime& GetDateTime()		{ return dynamic_cast<Value_DateTime*>(GetValue())->GetDateTime(); }
+	TimeDelta& GetTimeDelta()	{ return dynamic_cast<Value_TimeDelta*>(GetValue())->GetTimeDelta(); }
 };
 
-//------------------------------------------------------------------------------
-// Function_Print
-//------------------------------------------------------------------------------
-class Function_Print : public Function {
-public:
-	Function_Print();
-	// Virtual functions of Function
-	virtual Value* Eval(const Argument& argument) const override;
-};
+#define Gurax_DeclareFunctionAlias(name, strName) \
+class Function_##name : public Function { \
+public: \
+	Function_##name(const char* name_ = strName); \
+	virtual Value* Eval(const Argument& argument) const override; \
+}; \
+Function_##name::Function_##name(const char* name_) : Function(name_) \
 
-Function_Print::Function_Print() : Function("Print")
+#define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
+
+#define Gurax_ImplementFunction(name) \
+Value* Function_##name::Eval(const Argument& argument) const
+
+#define Gurax_AssignFunction(name) \
+frame.AssignFunction(new Function_##name())
+
+// Print(str:String):void
+Gurax_DeclareFunction(Print)
 {
 	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
 	DeclareArg("str", VTYPE_String, DeclArg::OccurPattern::Once, DeclArg::Flag::None, nullptr);
-	DeclareAttrOpt("list");
 }
 
-Value* Function_Print::Eval(const Argument& argument) const
+Gurax_ImplementFunction(Print)
 {
-	ArgAccessor argAccessor(argument);
-	const char* str = argAccessor.GetString();
-	::printf("%s", str);
+	ArgAccessor args(argument);
+	const char* str = args.GetString();
+	Stream::COut->Print(str);
 	return Value::nil();
+}
+
+void AssignFunctions(Frame& frame)
+{
+	Gurax_AssignFunction(Print);
 }
 
 }

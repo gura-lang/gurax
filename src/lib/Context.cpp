@@ -12,6 +12,7 @@ Context Context::_context;
 
 Context::Context() : _pFrame(Frame::CreateOfValueMap())
 {
+	AssignFunctions(GetFrame());
 }
 
 }
