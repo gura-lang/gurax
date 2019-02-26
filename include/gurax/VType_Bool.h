@@ -46,7 +46,7 @@ protected:
 	// Destructor
 	~Value_Bool() = default;
 public:
-	bool GetBool() const { return _flag; } // override Object::GetBool()
+	bool GetBool() const { return _flag; } // override Value::GetBool()
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

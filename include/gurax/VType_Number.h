@@ -47,7 +47,6 @@ protected:
 	~Value_Number() = default;
 public:
 	size_t GetSizeT() const		{ return static_cast<size_t>(_num); }
-	Bool GetBool() const		{ return static_cast<Bool>(_num); }
 	Char GetChar() const		{ return static_cast<Char>(_num); }
 	UChar GetUChar() const		{ return static_cast<UChar>(_num); }
 	Short GetShort() const		{ return static_cast<Short>(_num); }
