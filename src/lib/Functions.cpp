@@ -71,14 +71,49 @@ Gurax_ImplementStatement(repeat)
 	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 }
 
-// Print(str+:String):void
+// Print(str*:String):void
 Gurax_DeclareFunction(Print)
 {
 	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
-	DeclareArg("str", VTYPE_String, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("str", VTYPE_String, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementFunction(Print)
+{
+	ArgAccessor args(argument);
+	const ValueList& valueList = args.GetList();
+	for (auto pValue : valueList) {
+		const char* str = dynamic_cast<Value_String*>(pValue)->GetString();
+		Stream::COut->Print(str);
+	}
+	return Value::nil();
+}
+
+// Printf(format:String, arg*):void
+Gurax_DeclareFunction(Printf)
+{
+	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
+	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("arg", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementFunction(Printf)
+{
+	ArgAccessor args(argument);
+	const char* format = args.GetString();
+	const ValueList& valueList = args.GetList();
+	Stream::COut->PrintFmt(format, valueList);
+	return Value::nil();
+}
+
+// Println(str*:String):void
+Gurax_DeclareFunction(Println)
+{
+	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
+	DeclareArg("str", VTYPE_String, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementFunction(Println)
 {
 	ArgAccessor args(argument);
 	const ValueList& valueList = args.GetList();
@@ -95,6 +130,8 @@ void AssignFunctions(Frame& frame)
 	Gurax_AssignStatement(if_);
 	Gurax_AssignStatement(repeat);
 	Gurax_AssignFunction(Print);
+	Gurax_AssignFunction(Printf);
+	Gurax_AssignFunction(Println);
 }
 
 }
