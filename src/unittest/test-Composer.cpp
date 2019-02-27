@@ -12,6 +12,7 @@ v = [3, 1, 4, 1]
 v[0]
 f()
 f(3, 1, 4, 1)
+Println('Hello World')
 )";
 
 Gurax_TesterEntry(Composer)
