@@ -60,13 +60,14 @@ Gurax_DeclareStatement(repeat)
 
 Gurax_ImplementStatement(repeat)
 {
+	size_t pos = composer.MarkPUnit();
 	do {
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
 		pExpr->Compose(composer);
 	} while (0);
 	auto pPUnit = composer.Add_BranchIfNot(pExprCaller);
 	pExprCaller->GetExprBlock()->Compose(composer);
-	composer.Add_Jump(pExprCaller, nullptr);
+	composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
 	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 }
 
