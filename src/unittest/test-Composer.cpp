@@ -10,6 +10,7 @@ a = 3
 c = a + b
 v = [1, 2, 3, 4]
 v[0]
+f()
 )";
 
 Gurax_TesterEntry(Composer)
