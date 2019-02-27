@@ -13,6 +13,14 @@ v[0]
 f()
 f(3, 1, 4, 1)
 Println('Hello World')
+if (a == 3) {
+	Println('a is three')
+}
+a = 0
+while (a < 3) {
+	Println('Hello World')
+	a += 1
+}
 )";
 
 Gurax_TesterEntry(Composer)

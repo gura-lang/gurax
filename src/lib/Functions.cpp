@@ -53,12 +53,12 @@ Gurax_ImplementStatement(if_)
 	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 }
 
-// repeat (cond) {block}
-Gurax_DeclareStatement(repeat)
+// while (cond) {block}
+Gurax_DeclareStatementAlias(while_, "while")
 {
 }
 
-Gurax_ImplementStatement(repeat)
+Gurax_ImplementStatement(while_)
 {
 	size_t pos = composer.MarkPUnit();
 	do {
@@ -128,7 +128,7 @@ Gurax_ImplementFunction(Println)
 void AssignFunctions(Frame& frame)
 {
 	Gurax_AssignStatement(if_);
-	Gurax_AssignStatement(repeat);
+	Gurax_AssignStatement(while_);
 	Gurax_AssignFunction(Print);
 	Gurax_AssignFunction(Printf);
 	Gurax_AssignFunction(Println);
