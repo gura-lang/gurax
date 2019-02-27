@@ -11,7 +11,7 @@ public: \
 	Function_##name(const char* name_ = strName); \
 	virtual Value* Eval(const Argument& argument) const override; \
 }; \
-Function_##name::Function_##name(const char* name_) : Function(name_) \
+Function_##name::Function_##name(const char* name_) : Function(Function::Type::Function, name_) \
 
 #define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
 
@@ -27,7 +27,7 @@ public: \
 	Statement_##name(const char* name_ = strName); \
 	virtual void Compose(Composer& composer, const Expr_Caller* pExprCaller) const override; \
 }; \
-Statement_##name::Statement_##name(const char* name_) : Function(name_) \
+Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
 
 #define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
 

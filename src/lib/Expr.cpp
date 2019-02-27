@@ -1015,6 +1015,17 @@ void Expr_Caller::Exec(Processor& processor) const
 
 void Expr_Caller::Compose(Composer& composer) const
 {
+	if (GetExprCar()->IsType<Expr_Identifier>()) {
+		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprCar())->GetSymbol();
+		Value* pValue = Context::GetFrame().LookupValue(pSymbol);
+		if (pValue->IsType(VTYPE_Function)) {
+			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
+			if (func.IsTypeStatement()) {
+				func.Compose(composer, this);
+				return;
+			}
+		}
+	}
 	GetExprCar()->Compose(composer);
 	composer.Add_Argument(this, GetAttr());					// -> [ValueArgument]
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -1053,7 +1064,8 @@ void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
-	RefPtr<Function> pFunction(new FunctionCustom(pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+	RefPtr<Function> pFunction(new FunctionCustom(Function::Type::Function,
+												  pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
 	do {
 		// PUnit_AssignFunction
 		RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
@@ -1073,7 +1085,8 @@ void Expr_Caller::ComposeInAssignment(
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
-	RefPtr<Function> pFunction(new FunctionCustom(pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+	RefPtr<Function> pFunction(new FunctionCustom(Function::Type::Function,
+												  pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
 	composer.Add_AssignFunction(this, pFunction.get());	// -> []
 }
 

@@ -2,6 +2,7 @@ add_executable(unittest
 	unittest.cpp
 	SampleRecord.cpp
 	test-Argument.cpp
+	test-Composer.cpp
 	test-DateTime.cpp
 	test-DeclCaller.cpp
 	test-Function.cpp

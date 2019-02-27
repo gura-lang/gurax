@@ -18,22 +18,30 @@ class Function : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
+public:
+	enum class Type { Statement, Function, Method };
 protected:
+	Type _type;
 	const Symbol* _pSymbol;
 	RefPtr<DeclCaller> _pDeclCaller;
 	RefPtr<HelpProvider> _pHelpProvider;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
 public:
 	// Constructor
-	Function() : Function(Symbol::Empty, new DeclCaller(), new HelpProvider()) {}
-	Function(const Symbol* pSymbol) : Function(pSymbol, new DeclCaller(), new HelpProvider()) {}
-	Function(const Symbol* pSymbol, DeclCaller* pDeclCaller) : Function(pSymbol, pDeclCaller, new HelpProvider()) {}
-	Function(const Symbol* pSymbol, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
-		_pSymbol(pSymbol), _pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
-	Function(const char* name) : Function(Symbol::Add(name)) {}		
-	Function(const char* name, DeclCaller* pDeclCaller) : Function(Symbol::Add(name), pDeclCaller) {}
-	Function(const char* name, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
-		Function(Symbol::Add(name), pDeclCaller, pHelpProvider) {}
+	Function(Type type) :
+		Function(type, Symbol::Empty, new DeclCaller(), new HelpProvider()) {}
+	Function(Type type, const Symbol* pSymbol) :
+		Function(type, pSymbol, new DeclCaller(), new HelpProvider()) {}
+	Function(Type type, const Symbol* pSymbol, DeclCaller* pDeclCaller) :
+		Function(type, pSymbol, pDeclCaller, new HelpProvider()) {}
+	Function(Type type, const Symbol* pSymbol, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
+		_type(type), _pSymbol(pSymbol), _pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
+	Function(Type type, const char* name) :
+		Function(type, Symbol::Add(name)) {}		
+	Function(Type type, const char* name, DeclCaller* pDeclCaller) :
+		Function(type, Symbol::Add(name), pDeclCaller) {}
+	Function(Type type, const char* name, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
+		Function(type, Symbol::Add(name), pDeclCaller, pHelpProvider) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;
@@ -44,6 +52,9 @@ protected:
 	// Destructor
 	virtual ~Function() = default;
 public:
+	bool IsTypeStatement() const { return _type == Type::Statement; }
+	bool IsTypeFunction() const { return _type == Type::Function; }
+	bool IsTypeMethod() const { return _type == Type::Method; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	DeclCaller& GetDeclCaller() { return *_pDeclCaller; }
 	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }

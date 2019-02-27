@@ -30,7 +30,9 @@ void PUnit_Value::Exec(Processor& processor) const
 String PUnit_Value::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "Value()";
+	rtn += "Value(";
+	rtn += GetValue()->ToString(StringStyle().Digest());
+	rtn += ")";
 	return rtn;
 }
 
