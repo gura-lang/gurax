@@ -8,6 +8,8 @@ namespace Gurax {
 static const char* src = R"(
 a = 3
 c = a + b
+v = [1, 2, 3, 4]
+v[0]
 )";
 
 Gurax_TesterEntry(Composer)
