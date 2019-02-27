@@ -1027,17 +1027,16 @@ void Expr_Caller::Compose(Composer& composer) const
 				return;
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
-			auto pPUnit1 = composer.Add_ArgSlotNamed(
+			auto pPUnit = composer.Add_ArgSlotNamed(
 				pExpr, pSymbol, pExprEx->GetExprRight());	// -> [ValueArgument ValueArgSlot]
 			pExprEx->GetExprRight()->Compose(composer);		// -> [ValueArgument ValueArgSlot Value]
-			auto pPUnit2 =
-				composer.Add_FeedArgSlotNamed(pExpr);		// -> [ValueArgument]
-			pPUnit1->SetPUnitAtMerging(pPUnit2);
+			composer.Add_FeedArgSlotNamed(pExpr);			// -> [ValueArgument]
+			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 		} else {
-			auto pPUnit1 = composer.Add_ArgSlot(pExpr);		// -> [ValueArgument]
+			auto pPUnit = composer.Add_ArgSlot(pExpr);		// -> [ValueArgument]
 			pExpr->Compose(composer);						// -> [ValueArgument Value]
-			auto pPUnit2 = composer.Add_FeedArgSlot(pExpr);	// -> [ValueArgument]
-			pPUnit1->SetPUnitAtMerging(pPUnit2);
+			composer.Add_FeedArgSlot(pExpr);				// -> [ValueArgument]
+			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 		}
 	}
 	composer.Add_Call(this);								// -> [ValueResult]

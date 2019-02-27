@@ -485,29 +485,21 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Branch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Branch : public PUnit {
-private:
-	const PUnit* _pPUnitBranch;
-public:
-	// Constructor
-	explicit PUnit_Branch(Expr* pExprSrc) : PUnit(pExprSrc), _pPUnitBranch(nullptr) {}
-public:
-	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
-	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
-};
-
-//------------------------------------------------------------------------------
 // PUnit_Jump
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Jump : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_Jump : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit("Jump");
+private:
+	const PUnit* _pPUnitDest;
 public:
 	// Constructor
-	explicit PUnit_Jump(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
+	explicit PUnit_Jump(Expr* pExprSrc, const PUnit* pPUnitDest = nullptr) :
+		PUnit(pExprSrc), _pPUnitDest(pPUnitDest) {}
+public:
+	void SetPUnitDest(const PUnit* pPUnit) { _pPUnitDest = pPUnit; }
+	const PUnit* GetPUnitDest() const { return _pPUnitDest; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -517,13 +509,19 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpSub
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpSub : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_JumpSub : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit("JumpSub");
+private:
+	const PUnit* _pPUnitDest;
 public:
 	// Constructor
-	explicit PUnit_JumpSub(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
+	explicit PUnit_JumpSub(Expr* pExprSrc, const PUnit* pPUnitDest = nullptr) :
+		PUnit(pExprSrc), _pPUnitDest(pPUnitDest) {}
+public:
+	void SetPUnitDest(const PUnit* pPUnit) { _pPUnitDest = pPUnit; }
+	const PUnit* GetPUnitDest() const { return _pPUnitDest; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -547,15 +545,21 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_JumpIf
+// PUnit_BranchIf
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_BranchIf : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("JumpIf");
+	Gurax_MemoryPoolAllocator_PUnit("BranchIf");
+private:
+	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_JumpIf(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
+	explicit PUnit_BranchIf(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
+public:
+	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
+	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -563,15 +567,21 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_JumpIfNot
+// PUnit_BranchIfNot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpIfNot : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_BranchIfNot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("JumpIfNot");
+	Gurax_MemoryPoolAllocator_PUnit("BranchIfNot");
+private:
+	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_JumpIfNot(Expr* pExprSrc) : PUnit_Branch(pExprSrc) {}
+	explicit PUnit_BranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
+public:
+	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
+	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

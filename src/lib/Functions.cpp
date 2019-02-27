@@ -78,6 +78,55 @@ Value* Function_##name::Eval(const Argument& argument) const
 #define Gurax_AssignFunction(name) \
 frame.AssignFunction(new Function_##name())
 
+#define Gurax_DeclareStatementAlias(name, strName) \
+class Statement_##name : public Function { \
+public: \
+	Statement_##name(const char* name_ = strName); \
+	virtual void Compose(Composer& composer, const Expr_Caller* pExprCaller) const override; \
+}; \
+Statement_##name::Statement_##name(const char* name_) : Function(name_) \
+
+#define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
+
+#define Gurax_ImplementStatement(name) \
+void Statement_##name::Compose(Composer& composer, const Expr_Caller* pExprCaller) const
+
+#define Gurax_AssignStatement(name) \
+frame.AssignFunction(new Statement_##name())
+
+// if (cond) {block}
+Gurax_DeclareStatementAlias(if_, "if")
+{
+}
+
+Gurax_ImplementStatement(if_)
+{
+	do {
+		const Expr* pExpr = pExprCaller->GetExprCdrHead();
+		pExpr->Compose(composer);
+	} while (0);
+	auto pPUnit = composer.Add_BranchIfNot(pExprCaller);
+	pExprCaller->GetExprBlock()->Compose(composer);
+	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+}
+
+// repeat (cond) {block}
+Gurax_DeclareStatement(repeat)
+{
+}
+
+Gurax_ImplementStatement(repeat)
+{
+	do {
+		const Expr* pExpr = pExprCaller->GetExprCdrHead();
+		pExpr->Compose(composer);
+	} while (0);
+	auto pPUnit = composer.Add_BranchIfNot(pExprCaller);
+	pExprCaller->GetExprBlock()->Compose(composer);
+	composer.Add_Jump(pExprCaller, nullptr);
+	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+}
+
 // Print(str:String):void
 Gurax_DeclareFunction(Print)
 {
@@ -95,6 +144,8 @@ Gurax_ImplementFunction(Print)
 
 void AssignFunctions(Frame& frame)
 {
+	Gurax_AssignStatement(if_);
+	Gurax_AssignStatement(repeat);
 	Gurax_AssignFunction(Print);
 }
 

@@ -11,8 +11,8 @@ namespace Gurax {
 void Composer::Add(PUnit* pPUnit)
 {
 	_punitList.push_back(pPUnit);
-	if (_pPUnitCont) _pPUnitCont->SetPUnitNext(pPUnit);
-	_pPUnitCont = pPUnit;
+	if (_pPUnitLast) _pPUnitLast->SetPUnitNext(pPUnit);
+	_pPUnitLast = pPUnit;
 }
 
 void Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
@@ -107,11 +107,9 @@ PUnit_ArgSlot* Composer::Add_ArgSlot(const Expr* pExprSrc)
 	return pPUnit;
 }
 
-PUnit_FeedArgSlot* Composer::Add_FeedArgSlot(const Expr* pExprSrc)
+void Composer::Add_FeedArgSlot(const Expr* pExprSrc)
 {
-	auto pPUnit = new PUnit_FeedArgSlot(pExprSrc->Reference());
-	Add(pPUnit);
-	return pPUnit;
+	Add(new PUnit_FeedArgSlot(pExprSrc->Reference()));
 }
 
 PUnit_ArgSlotNamed* Composer::Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned)
@@ -121,11 +119,9 @@ PUnit_ArgSlotNamed* Composer::Add_ArgSlotNamed(const Expr* pExprSrc, const Symbo
 	return pPUnit;
 }
 
-PUnit_FeedArgSlotNamed* Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
+void Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
 {
-	auto pPUnit = new PUnit_FeedArgSlotNamed(pExprSrc->Reference());
-	Add(pPUnit);
-	return pPUnit;
+	Add(new PUnit_FeedArgSlotNamed(pExprSrc->Reference()));
 }
 
 void Composer::Add_Call(const Expr* pExprSrc)
@@ -133,14 +129,16 @@ void Composer::Add_Call(const Expr* pExprSrc)
 	Add(new PUnit_Call(pExprSrc->Reference()));
 }
 
-void Composer::Add_Jump(const Expr* pExprSrc)
+void Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
 {
-	Add(new PUnit_Jump(pExprSrc->Reference()));
+	Add(new PUnit_Jump(pExprSrc->Reference(), pPUnitDest));
 }
 
-void Composer::Add_JumpSub(const Expr* pExprSrc)
+PUnit_JumpSub* Composer::Add_JumpSub(const Expr* pExprSrc)
 {
-	Add(new PUnit_JumpSub(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_JumpSub(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 void Composer::Add_Return(const Expr* pExprSrc)
@@ -148,14 +146,18 @@ void Composer::Add_Return(const Expr* pExprSrc)
 	Add(new PUnit_Return(pExprSrc->Reference()));
 }
 
-void Composer::Add_JumpIf(const Expr* pExprSrc)
+PUnit_BranchIf* Composer::Add_BranchIf(const Expr* pExprSrc)
 {
-	Add(new PUnit_JumpIf(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_BranchIf(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_JumpIfNot(const Expr* pExprSrc)
+PUnit_BranchIfNot* Composer::Add_BranchIfNot(const Expr* pExprSrc)
 {
-	Add(new PUnit_JumpIfNot(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_BranchIfNot(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 }

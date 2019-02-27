@@ -79,7 +79,8 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(function)"; }
 public:
 	// Virtual functions
-	virtual Value* Eval(const Argument& argument) const = 0;
+	virtual Value* Eval(const Argument& argument) const { return Value::nil(); };
+	virtual void Compose(Composer& composer, const Expr_Caller* pExprCaller) const {}
 };
 
 }

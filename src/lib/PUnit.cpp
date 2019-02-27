@@ -524,7 +524,7 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Jump::Exec(Processor& processor) const
 {
-	processor.Goto(GetPUnitBranch());
+	processor.Goto(GetPUnitDest());
 }
 
 String PUnit_Jump::ToString(const StringStyle& ss) const
@@ -541,7 +541,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 void PUnit_JumpSub::Exec(Processor& processor) const
 {
 	processor.PushPUnit(this);
-	processor.Goto(GetPUnitBranch());
+	processor.Goto(GetPUnitDest());
 }
 
 String PUnit_JumpSub::ToString(const StringStyle& ss) const
@@ -569,36 +569,36 @@ String PUnit_Return::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_JumpIf
+// PUnit_BranchIf
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
-void PUnit_JumpIf::Exec(Processor& processor) const
+void PUnit_BranchIf::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	processor.Goto(pValue->GetBool()? GetPUnitBranch() : GetPUnitNext());
+	processor.Goto(pValue->GetBool()? GetPUnitAtMerging()->GetPUnitNext() : GetPUnitNext());
 }
 
-String PUnit_JumpIf::ToString(const StringStyle& ss) const
+String PUnit_BranchIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "JumpIf()";
+	rtn += "BranchIf()";
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_JumpIfNot
+// PUnit_BranchIfNot
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
-void PUnit_JumpIfNot::Exec(Processor& processor) const
+void PUnit_BranchIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	processor.Goto(pValue->GetBool()? GetPUnitNext() : GetPUnitBranch());
+	processor.Goto(pValue->GetBool()? GetPUnitNext() : GetPUnitAtMerging()->GetPUnitNext());
 }
 
-String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
+String PUnit_BranchIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "JumpIfNot()";
+	rtn += "BranchIfNot()";
 	return rtn;
 }
 
