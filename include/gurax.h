@@ -4,6 +4,7 @@
 #ifndef GURAX_H
 #define GURAX_H
 
+#include "gurax/ArgAccessor.h"
 #include "gurax/ArgSlot.h"
 #include "gurax/Argument.h"
 #include "gurax/Attribute.h"

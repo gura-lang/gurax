@@ -7,6 +7,7 @@
 #include "Help.h"
 #include "Frame.h"
 #include "Argument.h"
+#include "ArgAccessor.h"
 
 namespace Gurax {
 

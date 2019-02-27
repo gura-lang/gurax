@@ -1,5 +1,6 @@
 add_library(guraxcore SHARED
 	guraxcore.cpp
+	ArgAccessor.cpp
 	ArgSlot.cpp
 	Argument.cpp
 	Attribute.cpp
