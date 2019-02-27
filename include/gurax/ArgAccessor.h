@@ -65,9 +65,9 @@ public:
 	const Symbol* GetSymbol()	{ return dynamic_cast<Value_Symbol*>(GetValue())->GetSymbol(); }
 	const char* GetString()		{ return dynamic_cast<Value_String*>(GetValue())->GetString(); }
 	const String& GetStringSTL() { return dynamic_cast<Value_String*>(GetValue())->GetStringSTL(); }
-	//Stream& GetStream()			{ return dynamic_cast<Value_Stream*>(GetValue())->GetStream(); }
-	ValueTypedOwner& GetList()	{ return dynamic_cast<Value_List*>(GetValue())->GetValueTypedOwner(); }
-	//Iterator& GetIterator()		{ return dynamic_cast<Value_Iterator*>(GetValue())->GetIterator(); }
+	//Stream& GetStream()		{ return dynamic_cast<Value_Stream*>(GetValue())->GetStream(); }
+	const ValueList& GetList()	{ return dynamic_cast<Value_List*>(GetValue())->GetValueOwner(); }
+	//Iterator& GetIterator()	{ return dynamic_cast<Value_Iterator*>(GetValue())->GetIterator(); }
 	const Expr& GetExpr()		{ return dynamic_cast<Value_Expr*>(GetValue())->GetExpr(); }
 	DateTime& GetDateTime()		{ return dynamic_cast<Value_DateTime*>(GetValue())->GetDateTime(); }
 	TimeDelta& GetTimeDelta()	{ return dynamic_cast<Value_TimeDelta*>(GetValue())->GetTimeDelta(); }

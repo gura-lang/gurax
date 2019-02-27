@@ -1018,7 +1018,7 @@ void Expr_Caller::Compose(Composer& composer) const
 	if (GetExprCar()->IsType<Expr_Identifier>()) {
 		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprCar())->GetSymbol();
 		Value* pValue = Context::GetFrame().LookupValue(pSymbol);
-		if (pValue->IsType(VTYPE_Function)) {
+		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
 				func.Compose(composer, this);

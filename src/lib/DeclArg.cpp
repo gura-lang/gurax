@@ -9,18 +9,18 @@ namespace Gurax {
 // DeclArg
 //------------------------------------------------------------------------------
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-				 const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault) :
+				 const Occur& occur, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
 	_pVType(pDottedSymbol->IsEmpty()?
 			dynamic_cast<VType*>(&VTYPE_Any) : dynamic_cast<VType*>(&VTYPE_Undefined)),
-	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
+	_occur(occur), _flags(flags), _pExprDefault(pExprDefault)
 {
 }
 
 DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
-				 const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault) :
+				 const Occur& occur, UInt32 flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(vtype.MakeDottedSymbol()), _pVType(&vtype),
-	_occurPattern(occurPattern), _flags(flags), _pExprDefault(pExprDefault)
+	_occur(occur), _flags(flags), _pExprDefault(pExprDefault)
 {
 }
 
@@ -28,7 +28,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	const VType* pVType = nullptr;
-	const OccurPattern* pOccurPattern = &OccurPattern::Once;
+	const Occur* pOccur = &Occur::Once;
 	UInt32 flags = 0;
 	RefPtr<Expr> pExprDefault;
 	const Attribute* pAttrSrc = nullptr;
@@ -53,13 +53,13 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 			// x%
 		} else if (pOperator->IsType(OpType::PostMul)) {
 			// x*
-			pOccurPattern = &OccurPattern::ZeroOrMore;
+			pOccur = &Occur::ZeroOrMore;
 		} else if (pOperator->IsType(OpType::PostPos)) {
 			// x+
-			pOccurPattern = &OccurPattern::OnceOrMore;
+			pOccur = &Occur::OnceOrMore;
 		} else if (pOperator->IsType(OpType::PostQuestion)) {
 			// x?
-			pOccurPattern = &OccurPattern::ZeroOrOnce;
+			pOccur = &Occur::ZeroOrOnce;
 		} else {
 			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
 			return nullptr;
@@ -110,8 +110,8 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 		firstFlag = false;
 	}
 	return pVType?
-		new DeclArg(pSymbol, *pVType, *pOccurPattern, flags, pExprDefault.release()) :
-		new DeclArg(pSymbol, pDottedSymbol.release(), *pOccurPattern, flags, pExprDefault.release());
+		new DeclArg(pSymbol, *pVType, *pOccur, flags, pExprDefault.release()) :
+		new DeclArg(pSymbol, pDottedSymbol.release(), *pOccur, flags, pExprDefault.release());
 }
 
 bool DeclArg::FixVType(Frame* pFrame)
@@ -143,7 +143,7 @@ String DeclArg::ToString(const StringStyle& ss) const
 	if (quoteFlag) rtn += '`';
 	rtn += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) rtn += "[]";
-	rtn += GetOccurPattern().GetMarker();
+	rtn += GetOccur().GetMarker();
 	if (quoteFlag) {
 		// nothing to do 
 	} else if (!GetDottedSymbol().IsEmpty()) {
@@ -162,14 +162,14 @@ String DeclArg::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// DeclArg::OccurPattern
+// DeclArg::Occur
 //------------------------------------------------------------------------------
-const DeclArg::OccurPattern DeclArg::OccurPattern::Invalid		("",	ArgSlot_Once::factory);
-const DeclArg::OccurPattern DeclArg::OccurPattern::Zero			("",	ArgSlot_Once::factory);
-const DeclArg::OccurPattern DeclArg::OccurPattern::Once			("",	ArgSlot_Once::factory);
-const DeclArg::OccurPattern DeclArg::OccurPattern::ZeroOrOnce	("?",	ArgSlot_ZeroOrOnce::factory);
-const DeclArg::OccurPattern DeclArg::OccurPattern::ZeroOrMore	("*",	ArgSlot_ZeroOrMore::factory);
-const DeclArg::OccurPattern DeclArg::OccurPattern::OnceOrMore	("+",	ArgSlot_OnceOrMore::factory);
+const DeclArg::Occur DeclArg::Occur::Invalid	("",	ArgSlot_Once::factory);
+const DeclArg::Occur DeclArg::Occur::Zero		("",	ArgSlot_Once::factory);
+const DeclArg::Occur DeclArg::Occur::Once		("",	ArgSlot_Once::factory);
+const DeclArg::Occur DeclArg::Occur::ZeroOrOnce	("?",	ArgSlot_ZeroOrOnce::factory);
+const DeclArg::Occur DeclArg::Occur::ZeroOrMore	("*",	ArgSlot_ZeroOrMore::factory);
+const DeclArg::Occur DeclArg::Occur::OnceOrMore	("+",	ArgSlot_OnceOrMore::factory);
 
 //------------------------------------------------------------------------------
 // DeclArgList

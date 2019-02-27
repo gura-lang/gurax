@@ -29,37 +29,37 @@ public:
 		static const UInt32 Read			= 1 << 5;	// :r
 		static const UInt32 Write			= 1 << 6;	// :w
 	};
-	class OccurPattern {
+	class Occur {
 	private:
 		const char* _marker;
 		const ArgSlotFactory& _argSlotFactory;
 	public:
-		static const OccurPattern Invalid;
-		static const OccurPattern Zero;			// (none)
-		static const OccurPattern Once;			// 1
-		static const OccurPattern ZeroOrOnce;	// ?
-		static const OccurPattern ZeroOrMore;	// *
-		static const OccurPattern OnceOrMore;	// +
+		static const Occur Invalid;
+		static const Occur Zero;		// (none)
+		static const Occur Once;		// 1
+		static const Occur ZeroOrOnce;	// ?
+		static const Occur ZeroOrMore;	// *
+		static const Occur OnceOrMore;	// +
 	public:
 		// Constructor
-		explicit OccurPattern(const char* marker, const ArgSlotFactory& argSlotFactory) :
+		explicit Occur(const char* marker, const ArgSlotFactory& argSlotFactory) :
 		_marker(marker), _argSlotFactory(argSlotFactory) {}
 		// Copy constructor/operator
-		OccurPattern(const OccurPattern& src) = delete;
-		OccurPattern& operator=(const OccurPattern& src) = delete;
+		Occur(const Occur& src) = delete;
+		Occur& operator=(const Occur& src) = delete;
 		// Move constructor/operator
-		OccurPattern(OccurPattern&& src) = delete;
-		OccurPattern& operator=(OccurPattern&& src) noexcept = delete;
+		Occur(Occur&& src) = delete;
+		Occur& operator=(Occur&& src) noexcept = delete;
 		// Destructor
-		virtual ~OccurPattern() = default;
+		virtual ~Occur() = default;
 	public:
 		const char* GetMarker() const { return _marker; }
 		const ArgSlotFactory& GetArgSlotFactory() const { return _argSlotFactory; }
 	public:
 		size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-		bool IsIdentical(const OccurPattern& occurPattern) const { return this == &occurPattern; }
-		bool IsEqualTo(const OccurPattern& occurPattern) const { return IsIdentical(occurPattern); }
-		bool IsLessThan(const OccurPattern& occurPattern) const { return this < &occurPattern; }
+		bool IsIdentical(const Occur& occur) const { return this == &occur; }
+		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
+		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
 	public:
@@ -80,15 +80,15 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	const VType* _pVType;
-	const OccurPattern& _occurPattern;
+	const Occur& _occur;
 	UInt32 _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-			const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault);
+			const Occur& occur, UInt32 flags, Expr* pExprDefault);
 	DeclArg(const Symbol* pSymbol, const VType& vtype,
-			const OccurPattern& occurPattern, UInt32 flags, Expr* pExprDefault);
+			const Occur& occur, UInt32 flags, Expr* pExprDefault);
 	// Copy constructor/operator
 	DeclArg(const DeclArg& src) = delete;
 	DeclArg& operator=(const DeclArg& src) = delete;
@@ -104,12 +104,12 @@ public:
 	bool IsVType(const VType& vtype) const { return _pVType->IsIdentical(vtype); }
 	const VType& GetVType() const { return *_pVType; }
 	void SetVType(const VType* pVType) { _pVType = pVType; }
-	const OccurPattern& GetOccurPattern() const { return _occurPattern; }
-	const ArgSlotFactory& GetArgSlotFactory() const { return GetOccurPattern().GetArgSlotFactory(); }
-	bool IsOccurOnce() const { return _occurPattern.IsIdentical(OccurPattern::Once); }
-	bool IsOccurZeroOrOnce() const { return _occurPattern.IsIdentical(OccurPattern::ZeroOrOnce); }
-	bool IsOccurZeroOrMore() const { return _occurPattern.IsIdentical(OccurPattern::ZeroOrMore); }
-	bool IsOccurOnceOrMore() const { return _occurPattern.IsIdentical(OccurPattern::OnceOrMore); }
+	const Occur& GetOccur() const { return _occur; }
+	const ArgSlotFactory& GetArgSlotFactory() const { return GetOccur().GetArgSlotFactory(); }
+	bool IsOccurOnce() const { return _occur.IsIdentical(Occur::Once); }
+	bool IsOccurZeroOrOnce() const { return _occur.IsIdentical(Occur::ZeroOrOnce); }
+	bool IsOccurZeroOrMore() const { return _occur.IsIdentical(Occur::ZeroOrMore); }
+	bool IsOccurOnceOrMore() const { return _occur.IsIdentical(Occur::OnceOrMore); }
 	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr* pExpr);

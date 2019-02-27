@@ -71,18 +71,22 @@ Gurax_ImplementStatement(repeat)
 	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 }
 
-// Print(str:String):void
+// Print(str+:String):void
 Gurax_DeclareFunction(Print)
 {
 	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
-	DeclareArg("str", VTYPE_String, DeclArg::OccurPattern::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("str", VTYPE_String, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementFunction(Print)
 {
 	ArgAccessor args(argument);
-	const char* str = args.GetString();
-	Stream::COut->Print(str);
+	const ValueList& valueList = args.GetList();
+	for (auto pValue : valueList) {
+		const char* str = dynamic_cast<Value_String*>(pValue)->GetString();
+		Stream::COut->Print(str);
+	}
+	Stream::COut->Println();
 	return Value::nil();
 }
 

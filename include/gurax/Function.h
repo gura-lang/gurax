@@ -65,14 +65,14 @@ public:
 		GetDeclCaller().SetFlags(flags);
 	}
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
-					const DeclArg::OccurPattern& occurPattern = DeclArg::OccurPattern::Once,
+					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
-		GetDeclCaller().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occurPattern, flags, pExprDefault));
+		GetDeclCaller().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
 	}
 	void DeclareArg(const char* name, const VType& vtype,
-					const DeclArg::OccurPattern& occurPattern = DeclArg::OccurPattern::Once,
+					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
-		DeclareArg(Symbol::Add(name), vtype, occurPattern, flags, pExprDefault);
+		DeclareArg(Symbol::Add(name), vtype, occur, flags, pExprDefault);
 	}
 	void DeclareAttrOpt(const Symbol* pSymbol) {
 		GetDeclCaller().GetAttr().AddSymbolOpt(pSymbol);

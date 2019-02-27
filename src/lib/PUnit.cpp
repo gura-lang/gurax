@@ -418,9 +418,9 @@ void PUnit_ArgSlot::Exec(Processor& processor) const
 String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "ArgSlot(";
+	rtn += "ArgSlot(`{";
 	rtn += GetExprSrc()->ToString(ss);
-	rtn += ")";
+	rtn += "})";
 	return rtn;
 }
 
