@@ -89,12 +89,12 @@ Gurax_ImplementFunction(Print)
 	return Value::nil();
 }
 
-// Printf(format:String, arg*):void
+// Printf(format:String, values*):void
 Gurax_DeclareFunction(Printf)
 {
 	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
 	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("arg", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementFunction(Printf)
