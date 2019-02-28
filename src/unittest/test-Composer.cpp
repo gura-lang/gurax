@@ -37,6 +37,8 @@ Gurax_TesterEntry(Composer)
 	for (auto pPUnit : punitList) {
 		::printf("#%zu %s\n", pPUnit->GetIndex(), pPUnit->ToString().c_str());
 	}
+	Processor processor;
+	processor.Run(composer.GetPUnitTop());
 }
 
 }

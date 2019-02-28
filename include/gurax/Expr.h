@@ -13,6 +13,7 @@ namespace Gurax {
 
 class Composer;
 class Processor;
+class PUnit;
 
 //------------------------------------------------------------------------------
 // MemberMode
@@ -92,9 +93,10 @@ protected:
 	RefPtr<Expr> _pExprNext;
 	RefPtr<WeakPtr> _pwExprPrev;
 	RefPtr<WeakPtr> _pwExprParent;
+	const PUnit* _pPUnitTop;
 public:
 	// Constructor
-	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo) {}
+	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo), _pPUnitTop(nullptr) {}
 	// Copy constructor/operator
 	Expr(const Expr& src) = delete;
 	Expr& operator=(const Expr& src) = delete;
@@ -123,6 +125,8 @@ public:
 	Expr* LockExprPrev() const { return _pwExprPrev? _pwExprPrev->Lock() : nullptr; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
+	void SetPUnitTop(const PUnit* pPUnit) { if (!_pPUnitTop) _pPUnitTop = pPUnit; }
+	const PUnit* GetPUnitTop() const { return _pPUnitTop; }
 	int CalcIndentLevel() const;
 	String MakeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }

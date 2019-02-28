@@ -29,6 +29,7 @@ public:
 public:
 	const PUnitList& GetPUnitList() const { return _punitList; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
+	const PUnit* GetPUnitTop() const { return _punitList.front(); }
 	PUnit* GetPUnitLast() { return _pPUnitLast; }
 	const PUnit* GetPUnitAt(size_t pos) const { return _punitList[pos]; }
 	size_t MarkPUnit() const { return _punitList.size(); }

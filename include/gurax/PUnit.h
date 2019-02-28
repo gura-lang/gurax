@@ -18,7 +18,7 @@ protected:
 	const PUnit* _pPUnitNext;
 public:
 	// Constructor
-	explicit PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc), _pPUnitNext(nullptr) {}
+	explicit PUnit(Expr* pExprSrc);
 	// Copy constructor/operator
 	PUnit(const PUnit& src) = delete;
 	PUnit& operator=(const PUnit& src) = delete;

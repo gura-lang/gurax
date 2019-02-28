@@ -8,6 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
+PUnit::PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc), _pPUnitNext(nullptr)
+{
+	_pExprSrc->SetPUnitTop(this);
+}
+
 void PUnit::AppendJumpInfo(String& str) const
 {
 	if (_pPUnitNext) {
@@ -447,9 +452,9 @@ void PUnit_ArgSlot::Exec(Processor& processor) const
 String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "ArgSlot(`{";
+	rtn += "ArgSlot(`(";
 	rtn += GetExprSrc()->ToString(ss);
-	rtn += "}, ##";
+	rtn += "), ##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
 	AppendJumpInfo(rtn);
@@ -506,9 +511,9 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "ArgSlotNamed(`";
 	rtn += GetSymbol()->GetName();
-	rtn += ss.IsCram()? "=>" : " => `{";
+	rtn += ss.IsCram()? "=>" : " => `(";
 	rtn += GetExprSrc()->ToString(ss);
-	rtn += "}, ##";
+	rtn += "), ##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
 	AppendJumpInfo(rtn);
