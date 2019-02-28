@@ -47,12 +47,23 @@ size_t MemoryPool::ChunkImmortal::CountPools() const
 	return nPools;
 }
 
+size_t MemoryPool::ChunkImmortal::GetIndex(const void* p) const
+{
+	const char* p1 = reinterpret_cast<const char*>(p);
+	size_t idxBase = 0;
+	for (const Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext, idxBase += _nBlocks) {
+		const char *p2 = reinterpret_cast<const char*>(pPool);
+		if (p1 >= p2 && p1 - p2 < _bytesPool) {
+			return (p1 - p2 - sizeof(Pool)) / _bytesFrame + idxBase;
+		}
+	}
+	return 0;
+}
+
 void* MemoryPool::ChunkImmortal::Allocate()
 {
-	char* pAllocated = nullptr;
-	//::printf("_iBlockNext=%zu, _nBlocks=%zu\n", _iBlockNext, _nBlocks);
 	if (_iBlockNext >= _nBlocks) {
-		Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + _bytesBlock * _nBlocks));
+		Pool* pPool = reinterpret_cast<Pool*>(::malloc(_bytesPool));
 		if (_pPoolCur) {
 			_pPoolCur->pPoolNext = pPool;
 		} else {
@@ -61,7 +72,7 @@ void* MemoryPool::ChunkImmortal::Allocate()
 		_iBlockNext = 0;
 		_pPoolCur = pPool;
 	}
-	pAllocated = _pPoolCur->buff + _bytesBlock * _iBlockNext;
+	char* pAllocated = _pPoolCur->buff + _bytesFrame * _iBlockNext;
 	_iBlockNext++;
 	return pAllocated;
 }
@@ -85,20 +96,7 @@ void* MemoryPool::ChunkFixed::Allocate(const char* ownerName)
 		pAllocated = reinterpret_cast<char*>(_pHeaderVacantHead);
 		_pHeaderVacantHead = _pHeaderVacantHead->u.pHeaderVacantNext;
 	} else {
-		size_t bytesFrame = sizeof(Header) + _bytesBlock;
-		//::printf("_iBlockNext=%zu, _nBlocks=%zu\n", _iBlockNext, _nBlocks);
-		if (_iBlockNext >= _nBlocks) {
-			Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesFrame * _nBlocks));
-			if (_pPoolCur) {
-				_pPoolCur->pPoolNext = pPool;
-			} else {
-				_pPoolTop = pPool;
-			}
-			_iBlockNext = 0;
-			_pPoolCur = pPool;
-		}
-		pAllocated = _pPoolCur->buff + bytesFrame * _iBlockNext;
-		_iBlockNext++;
+		pAllocated = reinterpret_cast<char*>(ChunkImmortal::Allocate());
 	}
 	Header* pHeader = reinterpret_cast<Header*>(pAllocated);
 	pHeader->u.pChunk = this;

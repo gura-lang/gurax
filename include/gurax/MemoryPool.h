@@ -74,16 +74,20 @@ public:
 		};
 	protected:
 		size_t _bytesBlock;
+		size_t _bytesFrame;
+		size_t _bytesPool;
 		size_t _nBlocks;
 		size_t _iBlockNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
 	public:
-		ChunkImmortal(size_t bytesBlock, size_t nBlocks) :
-			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
-			_pPoolTop(nullptr), _pPoolCur(nullptr) {}
+		ChunkImmortal(size_t bytesBlock, size_t nBlocks, size_t bytesExtra = 0) :
+			_bytesBlock(bytesBlock), _bytesFrame(bytesBlock + bytesExtra),
+			_bytesPool(sizeof(Pool) + (bytesBlock + bytesExtra) * nBlocks),
+			_nBlocks(nBlocks), _iBlockNext(nBlocks), _pPoolTop(nullptr), _pPoolCur(nullptr) {}
 		size_t GetBytesBlock() const { return _bytesBlock; }
 		size_t CountPools() const;
+		size_t GetIndex(const void* p) const;
 		void* Allocate();
 		virtual void Deallocate(void* p) {}
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
@@ -93,7 +97,7 @@ public:
 		Header* _pHeaderVacantHead;
 	public:
 		ChunkFixed(size_t bytesBlock, size_t nBlocks) :
-			ChunkImmortal(bytesBlock, nBlocks), _pHeaderVacantHead(nullptr) {}
+			ChunkImmortal(bytesBlock, nBlocks, sizeof(Header)), _pHeaderVacantHead(nullptr) {}
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
