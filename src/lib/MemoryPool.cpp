@@ -75,7 +75,6 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	using PoolList = std::vector<MemoryPool::Pool*>;
 	PoolList poolList;
 	for (Pool* pPool = _pPool; pPool; pPool = pPool->pPoolPrev) poolList.push_back(pPool);
 	do {

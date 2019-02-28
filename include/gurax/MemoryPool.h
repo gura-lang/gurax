@@ -5,6 +5,9 @@
 #define GURAX_MEMORYPOOL_H
 #include "String.h"
 
+//-----------------------------------------------------------------------------
+// Macros
+//-----------------------------------------------------------------------------
 #define Gurax_MemoryPoolAllocator(ownerName) \
 static void *operator new(size_t size) { \
 	return MemoryPool::Global().Allocate(size, ownerName);	\
@@ -56,10 +59,6 @@ public:
 	public:
 		virtual void Deallocate(void* p) = 0;
 	};
-	struct Pool {
-		Pool* pPoolPrev;
-		char buff[0];
-	};
 	struct Header {
 		union {
 			Chunk* pChunk;
@@ -68,6 +67,12 @@ public:
 		const char* ownerName;
 	};
 	class ChunkFixed : public Chunk {
+	public:
+		struct Pool {
+			Pool* pPoolPrev;
+			char buff[0];
+		};
+		using PoolList = std::vector<Pool*>;
 	private:
 		size_t _bytesBlock;
 		size_t _nBlocks;
