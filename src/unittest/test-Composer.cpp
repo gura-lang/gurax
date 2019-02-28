@@ -35,7 +35,7 @@ Gurax_TesterEntry(Composer)
 	pExprRoot->Compose(composer);
 	const PUnitList& punitList = composer.GetPUnitList();
 	for (auto pPUnit : punitList) {
-		::printf("%s\n", pPUnit->ToString().c_str());
+		::printf("#%zu %s\n", pPUnit->GetIndex(), pPUnit->ToString().c_str());
 	}
 }
 

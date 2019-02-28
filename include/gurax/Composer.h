@@ -59,7 +59,6 @@ public:
 	void Add_Call(const Expr* pExprSrc);
 	void Add_Jump(const Expr* pExprSrc, const PUnit *pPUnitDest);
 	PUnit_JumpSub* Add_JumpSub(const Expr* pExprSrc);
-	void Add_Return(const Expr* pExprSrc);
 	PUnit_BranchIf* Add_BranchIf(const Expr* pExprSrc);
 	PUnit_BranchIfNot* Add_BranchIfNot(const Expr* pExprSrc);
 	

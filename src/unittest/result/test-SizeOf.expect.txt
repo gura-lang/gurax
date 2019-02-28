@@ -26,9 +26,8 @@ PUnit_FeedArgSlotNamed   24
 PUnit_Call               24
 PUnit_Jump               32
 PUnit_JumpSub            32
-PUnit_Return             24
-PUnit_JumpIf             32
-PUnit_JumpIfNot          32
+PUnit_BranchIf           32
+PUnit_BranchIfNot        32
 Symbol                   16
 TimeDelta                24
 ValueOwner               40

@@ -35,8 +35,10 @@ public:
 	bool IsLessThan(const PUnit* pPUnit) const { return this < pPUnit; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
+	size_t GetIndex() const { return MemoryPool::Global().chunkPUnit.GetIndex(this); }
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
+	void AppendJumpInfo(String& str) const;
 public:
 	// Virtual functions
 	virtual void Exec(Processor& processor) const = 0;
@@ -522,22 +524,6 @@ public:
 public:
 	void SetPUnitDest(const PUnit* pPUnit) { _pPUnitDest = pPUnit; }
 	const PUnit* GetPUnitDest() const { return _pPUnitDest; }
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// PUnit_Return
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Return : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-public:
-	// Constructor
-	explicit PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
