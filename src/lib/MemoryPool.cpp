@@ -40,13 +40,24 @@ void MemoryPool::Deallocate(void* p)
 //-----------------------------------------------------------------------------
 // MemoryPool::ChunkImmortal
 //-----------------------------------------------------------------------------
+size_t MemoryPool::ChunkImmortal::CountPools() const
+{
+	size_t nPools = 0;
+	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) nPools++;
+	return nPools;
+}
+
 void* MemoryPool::ChunkImmortal::Allocate()
 {
 	char* pAllocated = nullptr;
 	//::printf("_iBlockNext=%zu, _nBlocks=%zu\n", _iBlockNext, _nBlocks);
 	if (_iBlockNext >= _nBlocks) {
 		Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + _bytesBlock * _nBlocks));
-		pPool->pPoolPrev = _pPoolCur;
+		if (_pPoolCur) {
+			_pPoolCur->pPoolNext = pPool;
+		} else {
+			_pPoolTop = pPool;
+		}
 		_iBlockNext = 0;
 		_pPoolCur = pPool;
 	}
@@ -58,10 +69,8 @@ void* MemoryPool::ChunkImmortal::Allocate()
 String MemoryPool::ChunkImmortal::ToString(const StringStyle& ss) const
 {
 	String str;
-	size_t nPools = 0;
-	for (Pool* pPool = _pPoolCur; pPool; pPool = pPool->pPoolPrev) nPools++;
 	char buff[256];
-	::sprintf(buff, "[ChunkImmortal:%ldbytes/block,%zupools]", _bytesBlock, nPools);
+	::sprintf(buff, "[ChunkImmortal:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
 	str += buff;
 	return str;
 }
@@ -80,7 +89,11 @@ void* MemoryPool::ChunkFixed::Allocate(const char* ownerName)
 		//::printf("_iBlockNext=%zu, _nBlocks=%zu\n", _iBlockNext, _nBlocks);
 		if (_iBlockNext >= _nBlocks) {
 			Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesFrame * _nBlocks));
-			pPool->pPoolPrev = _pPoolCur;
+			if (_pPoolCur) {
+				_pPoolCur->pPoolNext = pPool;
+			} else {
+				_pPoolTop = pPool;
+			}
 			_iBlockNext = 0;
 			_pPoolCur = pPool;
 		}
@@ -105,18 +118,15 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	PoolList poolList;
-	for (Pool* pPool = _pPoolCur; pPool; pPool = pPool->pPoolPrev) poolList.push_back(pPool);
 	do {
 		char buff[256];
-		::sprintf(buff, "[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, poolList.size());
+		::sprintf(buff, "[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
 		str += buff;
 	} while (0);
 	if (!ss.IsDigest()) {
 		size_t bytesFrame = sizeof(Header) + _bytesBlock;
 		str += "\n";
-		for (auto ppPool = poolList.rbegin(); ppPool != poolList.rend(); ++ppPool) {
-			Pool *pPool = *ppPool;
+		for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
 			size_t nBlocks = (pPool == _pPoolCur)? _iBlockNext : _nBlocks;
 			const char* pAllocated = pPool->buff;
 			for (size_t iBlock = 0; iBlock < nBlocks; ++iBlock, pAllocated += bytesFrame) {

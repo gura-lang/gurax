@@ -69,20 +69,21 @@ public:
 	class ChunkImmortal : public Chunk {
 	public:
 		struct Pool {
-			Pool* pPoolPrev;
+			Pool* pPoolNext;
 			char buff[0];
 		};
-		using PoolList = std::vector<Pool*>;
 	protected:
 		size_t _bytesBlock;
 		size_t _nBlocks;
 		size_t _iBlockNext;
+		Pool* _pPoolTop;
 		Pool* _pPoolCur;
 	public:
 		ChunkImmortal(size_t bytesBlock, size_t nBlocks) :
 			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
-			_pPoolCur(nullptr) {}
+			_pPoolTop(nullptr), _pPoolCur(nullptr) {}
 		size_t GetBytesBlock() const { return _bytesBlock; }
+		size_t CountPools() const;
 		void* Allocate();
 		virtual void Deallocate(void* p) {}
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
