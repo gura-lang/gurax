@@ -5,12 +5,12 @@
 
 namespace Gurax {
 
-static MemoryPool g_memoryPoolTest;
+static MemoryPool::ChunkFixed g_chunkTest(64, 20);
 
 class A {
 public:
 	static void *operator new(size_t size) {
-		return g_memoryPoolTest.chunkSmall.Allocate("A");
+		return g_chunkTest.Allocate("A");
 	}
 	static void operator delete(void* p) {
 		MemoryPool::Deallocate(p);
@@ -34,22 +34,22 @@ public:
 Gurax_TesterEntry(MemoryPool)
 {
 	AList aList;
-	std::cout << g_memoryPoolTest.chunkSmall.ToString() << std::endl;
+	std::cout << g_chunkTest.ToString() << std::endl;
 	for (int i = 0; i < 100; ++i) {
 		aList.push_back(new A());
 	}
-	std::cout << g_memoryPoolTest.chunkSmall.ToString() << std::endl;
+	std::cout << g_chunkTest.ToString() << std::endl;
 	for (int j = 0; j < 10000; ++j) {
 		int n = Random::Global().Range(30) + 1;
 		for (int i = 0; i < n; ++i) {
 			size_t idx = Random::Global().Range(aList.size());
 			aList.Delete(idx);
 		}
-		std::cout << g_memoryPoolTest.chunkSmall.ToString() << std::endl;
+		std::cout << g_chunkTest.ToString() << std::endl;
 		for (int i = 0; i < n; ++i) {
 			aList.push_back(new A());
 		}
-		std::cout << g_memoryPoolTest.chunkSmall.ToString() << std::endl;
+		std::cout << g_chunkTest.ToString() << std::endl;
 	}
 }
 

@@ -16,9 +16,9 @@ static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p); \
 }
 
-#define Gurax_MemoryPoolAllocator_PUnit(ownerName) \
+#define Gurax_MemoryPoolAllocator_PUnit() \
 static void *operator new(size_t size) { \
-	return MemoryPool::Global().chunkPUnit.Allocate(ownerName);	\
+	return MemoryPool::Global().chunkPUnit.Allocate();	\
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p);	\
@@ -73,38 +73,26 @@ public:
 			char buff[0];
 		};
 		using PoolList = std::vector<Pool*>;
-	private:
+	protected:
 		size_t _bytesBlock;
 		size_t _nBlocks;
 		size_t _iBlockNext;
-		Pool* _pPool;
+		Pool* _pPoolCur;
 	public:
 		ChunkImmortal(size_t bytesBlock, size_t nBlocks) :
 			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
-			_pPool(nullptr) {}
+			_pPoolCur(nullptr) {}
 		size_t GetBytesBlock() const { return _bytesBlock; }
 		void* Allocate();
 		virtual void Deallocate(void* p) {}
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	};
-	class ChunkFixed : public Chunk {
-	public:
-		struct Pool {
-			Pool* pPoolPrev;
-			char buff[0];
-		};
-		using PoolList = std::vector<Pool*>;
+	class ChunkFixed : public ChunkImmortal {
 	private:
-		size_t _bytesBlock;
-		size_t _nBlocks;
-		size_t _iBlockNext;
-		Pool* _pPool;
 		Header* _pHeaderVacantHead;
 	public:
 		ChunkFixed(size_t bytesBlock, size_t nBlocks) :
-			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
-			_pPool(nullptr), _pHeaderVacantHead(nullptr) {}
-		size_t GetBytesBlock() const { return _bytesBlock; }
+			ChunkImmortal(bytesBlock, nBlocks), _pHeaderVacantHead(nullptr) {}
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
@@ -118,7 +106,7 @@ public:
 private:
 	static MemoryPool _memoryPoolGlobal;
 public:
-	ChunkFixed chunkPUnit;
+	ChunkImmortal chunkPUnit;
 	ChunkFixed chunkSmall;
 	ChunkFixed chunkMedium;
 	ChunkFixed chunkLarge;

@@ -66,7 +66,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Value : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Value");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Value> _pValue;
 public:
@@ -86,7 +86,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Lookup : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Lookup");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 public:
@@ -106,7 +106,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Assign : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Assign");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 public:
@@ -126,7 +126,7 @@ public:
 class GURAX_DLLDECLARE PUnit_AssignFunction : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("AssignFunction");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Function> _pFunction;
 public:
@@ -146,7 +146,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Erase : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Erase");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_Erase(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -162,7 +162,7 @@ public:
 class GURAX_DLLDECLARE PUnit_UnaryOp : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("UnaryOp");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Operator* _pOperator;
 public:
@@ -182,7 +182,7 @@ public:
 class GURAX_DLLDECLARE PUnit_BinaryOp : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("BinaryOp");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Operator* _pOperator;
 public:
@@ -202,7 +202,7 @@ public:
 class GURAX_DLLDECLARE PUnit_CreateList : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("List");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _sizeReserve;
 public:
@@ -222,7 +222,7 @@ public:
 class GURAX_DLLDECLARE PUnit_AddList : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("AddList");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_AddList(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -238,7 +238,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Index : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("CreateIndex");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Attribute> _pAttr;
 public:
@@ -258,7 +258,7 @@ public:
 class GURAX_DLLDECLARE PUnit_FeedIndex : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("FeedIndex");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_FeedIndex(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -274,7 +274,7 @@ public:
 class GURAX_DLLDECLARE PUnit_IndexGet : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("IndexGet");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_IndexGet(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -290,7 +290,7 @@ public:
 class GURAX_DLLDECLARE PUnit_IndexSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("IndexSet");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_IndexSet(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -306,7 +306,7 @@ public:
 class GURAX_DLLDECLARE PUnit_PropGet : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("PropGet");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
@@ -329,7 +329,7 @@ public:
 class GURAX_DLLDECLARE PUnit_PropSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("PropSet");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
@@ -352,7 +352,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Member : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Member");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
@@ -375,7 +375,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Argument : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("CreateArgument");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Attribute> _pAttr;
 public:
@@ -395,7 +395,7 @@ public:
 class GURAX_DLLDECLARE PUnit_ArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("ArgSlot");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitAtMerging;
 public:
@@ -416,7 +416,7 @@ public:
 class GURAX_DLLDECLARE PUnit_FeedArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("FeedArgSlot");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_FeedArgSlot(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -432,7 +432,7 @@ public:
 class GURAX_DLLDECLARE PUnit_ArgSlotNamed : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("ArgSlotNamed");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
@@ -458,7 +458,7 @@ public:
 class GURAX_DLLDECLARE PUnit_FeedArgSlotNamed : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("FeedArgSlotNamed");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_FeedArgSlotNamed(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -474,7 +474,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Call : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Call");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_Call(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -490,7 +490,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Jump : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Jump");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitDest;
 public:
@@ -512,7 +512,7 @@ public:
 class GURAX_DLLDECLARE PUnit_JumpSub : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("JumpSub");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitDest;
 public:
@@ -534,7 +534,7 @@ public:
 class GURAX_DLLDECLARE PUnit_Return : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("Return");
+	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
 	explicit PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
@@ -550,7 +550,7 @@ public:
 class GURAX_DLLDECLARE PUnit_BranchIf : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("BranchIf");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitAtMerging;
 public:
@@ -572,7 +572,7 @@ public:
 class GURAX_DLLDECLARE PUnit_BranchIfNot : public PUnit {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit("BranchIfNot");
+	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitAtMerging;
 public:
