@@ -66,6 +66,27 @@ public:
 		} u;
 		const char* ownerName;
 	};
+	class ChunkImmortal : public Chunk {
+	public:
+		struct Pool {
+			Pool* pPoolPrev;
+			char buff[0];
+		};
+		using PoolList = std::vector<Pool*>;
+	private:
+		size_t _bytesBlock;
+		size_t _nBlocks;
+		size_t _iBlockNext;
+		Pool* _pPool;
+	public:
+		ChunkImmortal(size_t bytesBlock, size_t nBlocks) :
+			_bytesBlock(bytesBlock), _nBlocks(nBlocks), _iBlockNext(nBlocks),
+			_pPool(nullptr) {}
+		size_t GetBytesBlock() const { return _bytesBlock; }
+		void* Allocate();
+		virtual void Deallocate(void* p) {}
+		String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	};
 	class ChunkFixed : public Chunk {
 	public:
 		struct Pool {
