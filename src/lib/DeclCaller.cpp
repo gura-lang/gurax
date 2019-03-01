@@ -21,7 +21,7 @@ DeclCaller::DeclCaller() : _pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute(
 
 bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr)
 {
-	_declArgOwner.reserve(exprLinkCdr.GetSize());
+	_declArgOwner.reserve(exprLinkCdr.CountSequence());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr));
 		if (!pDeclArg) {

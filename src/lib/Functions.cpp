@@ -5,38 +5,6 @@
 
 namespace Gurax {
 
-#define Gurax_DeclareFunctionAlias(name, strName) \
-class Function_##name : public Function { \
-public: \
-	Function_##name(const char* name_ = strName); \
-	virtual Value* Eval(Frame& frame, const Argument& argument) const override; \
-}; \
-Function_##name::Function_##name(const char* name_) : Function(Function::Type::Function, name_) \
-
-#define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
-
-#define Gurax_ImplementFunction(name) \
-Value* Function_##name::Eval(Frame& frame, const Argument& argument) const
-
-#define Gurax_AssignFunction(name) \
-frame.AssignFunction(new Function_##name())
-
-#define Gurax_DeclareStatementAlias(name, strName) \
-class Statement_##name : public Function { \
-public: \
-	Statement_##name(const char* name_ = strName); \
-	virtual void Compose(Composer& composer, const Expr_Caller* pExprCaller) const override; \
-}; \
-Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
-
-#define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
-
-#define Gurax_ImplementStatement(name) \
-void Statement_##name::Compose(Composer& composer, const Expr_Caller* pExprCaller) const
-
-#define Gurax_AssignStatement(name) \
-frame.AssignFunction(new Statement_##name())
-
 // if (cond) {block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
@@ -45,6 +13,9 @@ Gurax_DeclareStatementAlias(if_, "if")
 
 Gurax_ImplementStatement(if_)
 {
+	if (pExprCaller->CountExprCdr() != 1) {
+		
+	}
 	do {
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
 		pExpr->Compose(composer);

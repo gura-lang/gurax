@@ -122,7 +122,6 @@ public:
 	}
 	Expr* GetExprNext() { return _pExprNext.get(); }
 	const Expr* GetExprNext() const { return _pExprNext.get(); }
-	size_t CountSequence() const;
 	Expr* LockExprPrev() const { return _pwExprPrev? _pwExprPrev->Lock() : nullptr; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
@@ -136,6 +135,7 @@ public:
 		Visitor_Prepare visitor;
 		return Traverse(visitor);
 	}
+	static size_t CountSequence(const Expr* pExpr);
 	static void ComposeSequence(Composer& composer, const Expr* pExpr);
 public:
 	// Virtual functions
@@ -222,7 +222,7 @@ public:
 		}
 		_pExprTail = pExpr;
 	}
-	size_t GetSize() const;
+	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
 };
@@ -335,6 +335,7 @@ public:
 	const ExprLink& GetExprLinkCdr() const { return *_pExprLinkCdr; }
 	bool HasExprCdr() const { return !_pExprLinkCdr->IsEmpty(); }
 	const Expr* GetExprCdrHead() const { return _pExprLinkCdr->GetExprHead(); }
+	size_t CountExprCdr() const { return GetExprLinkCdr().CountSequence(); }
 	void AddExprCdr(Expr* pExprCdr);
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }

@@ -8,13 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
-size_t Expr::CountSequence() const
-{
-	size_t nExprs = 0;
-	for (const Expr* pExpr = this; pExpr; pExpr = pExpr->GetExprNext(), nExprs++) ;
-	return nExprs;
-}
-
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -27,6 +20,13 @@ String Expr::MakeIndent(const StringStyle& ss) const
 	String rtn;
 	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += ss.GetIndentUnit()) ;
 	return rtn;
+}
+
+size_t Expr::CountSequence(const Expr* pExpr)
+{
+	size_t nExprs = 0;
+	for ( ; pExpr; pExpr = pExpr->GetExprNext(), nExprs++) ;
+	return nExprs;
 }
 
 void Expr::ComposeSequence(Composer& composer, const Expr* pExpr)
@@ -111,7 +111,7 @@ void ExprList::SetExprParent(const Expr* pExprParent)
 //------------------------------------------------------------------------------
 // ExprLink
 //------------------------------------------------------------------------------
-size_t ExprLink::GetSize() const
+size_t ExprLink::CountSequence() const
 {
 	size_t cnt = 0;
 	for (const Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext(), cnt++) ;
@@ -719,7 +719,7 @@ void Expr_Iterer::Exec(Processor& processor) const
 {
 	do {
 		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
-		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
+		pValueTypedOwner->Reserve(GetExprLinkElem().CountSequence());
 		processor.PushValue(new Value_Iterator(new Iterator_Each(pValueTypedOwner.release())));
 	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -745,7 +745,7 @@ void Expr_Iterer::Compose(Composer& composer) const
 String Expr_Iterer::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	if (GetExprLinkElem().GetSize() == 1) {
+	if (GetExprLinkElem().CountSequence() == 1) {
 		rtn += '(';
 		rtn += GetExprLinkElem().GetExprHead()->ToString(ss);
 		rtn += ",)";
@@ -789,7 +789,7 @@ void Expr_Lister::Exec(Processor& processor) const
 	do {
 		// PUnit_CreateList
 		RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
-		pValueTypedOwner->Reserve(GetExprLinkElem().GetSize());
+		pValueTypedOwner->Reserve(GetExprLinkElem().CountSequence());
 		processor.PushValue(new Value_List(pValueTypedOwner.release()));
 	} while (0);
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -809,7 +809,7 @@ void Expr_Lister::Exec(Processor& processor) const
 
 void Expr_Lister::Compose(Composer& composer) const
 {
-	size_t nExprs = GetExprElemHead()->CountSequence();
+	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(this, nExprs);		// -> [ValueList]
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);				// -> [ValueList Value]
@@ -901,7 +901,7 @@ void Expr_Indexer::Exec(Processor& processor) const
 void Expr_Indexer::Compose(Composer& composer) const
 {
 	GetExprCar()->Compose(composer);				// -> [ValueCar]
-	size_t nExprs = GetExprCdrHead()->CountSequence();
+	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(this, GetAttr(), nExprs);	// -> [ValueIndex]
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);					// -> [ValueIndex Value]
