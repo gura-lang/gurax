@@ -103,7 +103,8 @@ Value* Operator::EvalUnary(const Value* pValue) const
 	if (!pValue) return nullptr;
 	const OpEntry* pOpEntry = LookupEntry(pValue->GetVType());
 	if (pOpEntry) return pOpEntry->EvalUnary(pValue);
-	Error::Issue(ErrorType::TypeError, "");
+	Error::Issue(ErrorType::TypeError, "unsupported unary operation: %s %s",
+				 GetSymbol(), pValue->GetVType().MakeFullName().c_str());
 	return nullptr;
 }
 
@@ -112,7 +113,10 @@ Value* Operator::EvalBinary(const Value* pValueL, const Value* pValueR) const
 	if (!pValueL || !pValueR) return nullptr;
 	const OpEntry* pOpEntry = LookupEntry(pValueL->GetVType(), pValueR->GetVType());
 	if (pOpEntry) pOpEntry->EvalBinary(pValueL, pValueR);
-	Error::Issue(ErrorType::TypeError, "");
+	Error::Issue(ErrorType::TypeError, "unsuppported binary operation: %s %s %s",
+				 pValueL->GetVType().MakeFullName().c_str(),
+				 GetSymbol(),
+				 pValueR->GetVType().MakeFullName().c_str());
 	return nullptr;
 }
 

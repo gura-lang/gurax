@@ -5,13 +5,16 @@
 
 namespace Gurax {
 
+#if 0
 static const char* src = R"(
 Println('Hello World')
 )";
+#endif
 
-#if 0
+#if 1
 static const char* src = R"(
 a = 3
+b = 2
 c = a + b
 v = [3, 1, 4, 1]
 v[0]
