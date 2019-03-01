@@ -18,8 +18,8 @@ b = 2
 c = a + b
 v = [3, 1, 4, 1]
 v[0]
-f()
-f(3, 1, 4, 1)
+//f()
+//f(3, 1, 4, 1)
 Println('Hello World')
 if (a == 3) {
 	Println('a is three')

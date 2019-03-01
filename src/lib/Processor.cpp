@@ -17,7 +17,7 @@ void Processor::Run(const PUnit* pPUnit)
 {
 	while (pPUnit) {
 		_pPUnitCur = nullptr;
-		::printf("%s\n", pPUnit->ToString().c_str());
+		//::printf("%s\n", pPUnit->ToString().c_str());
 		pPUnit->Exec(*this);
 		if (Error::IsIssued()) {
 			::printf("error: %s\n", Error::GetLastError()->GetText());
