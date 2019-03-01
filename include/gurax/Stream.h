@@ -67,7 +67,11 @@ protected:
 public:
 	static void Bootup();
 	Stream& Print(const char* str);
+	Stream& Print(const StringList& strList);
+	Stream& Print(const ValueList& valueList);
 	Stream& Println(const char* str);
+	Stream& Println(const StringList& strList);
+	Stream& Println(const ValueList& valueList);
 	Stream& Println() { PutChar('\n'); return *this; }
 	Stream& PrintfV(const char* format, va_list ap);
 	Stream& Printf(const char* format, ...);

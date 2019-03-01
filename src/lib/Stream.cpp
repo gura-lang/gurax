@@ -24,10 +24,40 @@ Stream& Stream::Print(const char* str)
 	for (const char* p = str; *p != '\0'; ++p) PutChar(*p);
 	return *this;
 }
-	
+
+Stream& Stream::Print(const StringList& strList)
+{
+	for (const String& str : strList) Print(str.c_str());
+	return *this;
+}
+
+Stream& Stream::Print(const ValueList& valueList)
+{
+	for (auto pValue : valueList) {
+		Print(pValue->IsInstanceOf(VTYPE_String)?
+			  dynamic_cast<const Value_String*>(pValue)->GetString() :
+			  pValue->ToString().c_str());
+	}
+	return *this;
+}
+
 Stream& Stream::Println(const char* str)
 {
 	Print(str);
+	PutChar('\n');
+	return *this;
+}
+
+Stream& Stream::Println(const StringList& strList)
+{
+	Print(strList);
+	PutChar('\n');
+	return *this;
+}
+
+Stream& Stream::Println(const ValueList& valueList)
+{
+	Print(valueList);
 	PutChar('\n');
 	return *this;
 }

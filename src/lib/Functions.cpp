@@ -80,12 +80,11 @@ Gurax_DeclareFunction(Print)
 
 Gurax_ImplementFunction(Print)
 {
+	// Arguments
 	ArgAccessor args(argument);
 	const ValueList& valueList = args.GetList();
-	for (auto pValue : valueList) {
-		const char* str = dynamic_cast<Value_String*>(pValue)->GetString();
-		Stream::COut->Print(str);
-	}
+	// Function body
+	Stream::COut->Print(valueList);
 	return Value::nil();
 }
 
@@ -99,29 +98,29 @@ Gurax_DeclareFunction(Printf)
 
 Gurax_ImplementFunction(Printf)
 {
+	// Arguments
 	ArgAccessor args(argument);
 	const char* format = args.GetString();
 	const ValueList& valueList = args.GetList();
+	// Function body
 	Stream::COut->PrintFmt(format, valueList);
 	return Value::nil();
 }
 
-// Println(str*:String):void
+// Println(objs*):void
 Gurax_DeclareFunction(Println)
 {
 	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
-	DeclareArg("str", VTYPE_String, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("objs", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementFunction(Println)
 {
+	// Arguments
 	ArgAccessor args(argument);
 	const ValueList& valueList = args.GetList();
-	for (auto pValue : valueList) {
-		const char* str = dynamic_cast<Value_String*>(pValue)->GetString();
-		Stream::COut->Print(str);
-	}
-	Stream::COut->Println();
+	// Function body
+	Stream::COut->Println(valueList);
 	return Value::nil();
 }
 

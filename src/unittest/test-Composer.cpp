@@ -16,11 +16,13 @@ static const char* src = R"(
 a = 3
 b = 2
 c = a + b
+Println('Hello World')
+Println(c)
 v = [3, 1, 4, 1]
-v[0]
+Println(v)
+Println(v[0])
 //f()
 //f(3, 1, 4, 1)
-Println('Hello World')
 if (a == 3) {
 	Println('a is three')
 }
