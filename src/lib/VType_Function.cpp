@@ -19,5 +19,14 @@ void VType_Function::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Function
 //------------------------------------------------------------------------------
+const DeclCaller* Value_Function::GetDeclCaller() const
+{
+	return &GetFunction().GetDeclCaller();
+}
+
+Value* Value_Function::DoCall(Frame& frame, Argument& argument)
+{
+	return GetFunction().Eval(frame, argument);
+}
 
 }

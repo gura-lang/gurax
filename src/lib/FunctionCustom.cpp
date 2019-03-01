@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // FunctionCustom
 //------------------------------------------------------------------------------
-Value* FunctionCustom::Eval(const Argument& argument) const
+Value* FunctionCustom::Eval(Frame& frame, const Argument& argument) const
 {
 	return Value::nil();
 }

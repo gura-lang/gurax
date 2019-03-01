@@ -9,14 +9,14 @@ namespace Gurax {
 class Function_##name : public Function { \
 public: \
 	Function_##name(const char* name_ = strName); \
-	virtual Value* Eval(const Argument& argument) const override; \
+	virtual Value* Eval(Frame& frame, const Argument& argument) const override; \
 }; \
 Function_##name::Function_##name(const char* name_) : Function(Function::Type::Function, name_) \
 
 #define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
 
 #define Gurax_ImplementFunction(name) \
-Value* Function_##name::Eval(const Argument& argument) const
+Value* Function_##name::Eval(Frame& frame, const Argument& argument) const
 
 #define Gurax_AssignFunction(name) \
 frame.AssignFunction(new Function_##name())

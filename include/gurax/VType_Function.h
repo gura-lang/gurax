@@ -65,9 +65,10 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetFunction().ToString(ss);
 	}
-	virtual const DeclCaller* GetDeclCaller() const override {
-		return &GetFunction().GetDeclCaller();
-	}
+public:
+	// Virtual functions for runtime process
+	virtual const DeclCaller* GetDeclCaller() const override;
+	virtual Value* DoCall(Frame& frame, Argument& argument) override;
 };
 
 }

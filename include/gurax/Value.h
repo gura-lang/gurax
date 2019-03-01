@@ -109,12 +109,16 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const = 0;
 	virtual String ToStringDigest(const StringStyle& ss) const;
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
+public:
+	// Virtual functions for runtime process
 	virtual const DeclCaller* GetDeclCaller() const { return nullptr; }
 	virtual Value* DoCall(Frame& frame, Argument& argument);
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, Value* pValue);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const;
 	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr);
+public:
+	// Virtual functions for Formatter
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const;

@@ -6,6 +6,11 @@
 namespace Gurax {
 
 static const char* src = R"(
+Println('Hello World')
+)";
+
+#if 0
+static const char* src = R"(
 a = 3
 c = a + b
 v = [3, 1, 4, 1]
@@ -22,6 +27,7 @@ while (a < 3) {
 	a += 1
 }
 )";
+#endif
 
 Gurax_TesterEntry(Composer)
 {
