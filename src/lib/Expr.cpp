@@ -29,6 +29,23 @@ String Expr::MakeIndent(const StringStyle& ss) const
 	return rtn;
 }
 
+void Expr::ComposeSequence(Composer& composer, const Expr* pExpr)
+{
+	const Expr* pExprPrev = nullptr;
+	if (pExpr) {
+		pExpr->Compose(composer);
+		pExprPrev = pExpr;
+		pExpr = pExpr->GetExprNext();
+	}
+	while (pExpr) {
+		composer.Add_PopToDiscard(pExprPrev);
+		pExpr->Compose(composer);
+		pExprPrev = pExpr;
+		pExpr = pExpr->GetExprNext();
+	}
+	// -> [Value]
+}
+
 void Expr::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
@@ -66,9 +83,20 @@ void ExprList::Exec(Processor& processor) const
 
 void ExprList::Compose(Composer& composer) const
 {
-	for (const Expr* pExpr : *this) {
+	const Expr* pExprPrev = nullptr;
+	auto ppExpr = begin();
+	if (ppExpr != end()) {
+		const Expr* pExpr = *ppExpr++;
 		pExpr->Compose(composer);
+		pExprPrev = pExpr;
 	}
+	while (ppExpr != end()) {
+		const Expr* pExpr = *ppExpr++;
+		composer.Add_PopToDiscard(pExprPrev);
+		pExpr->Compose(composer);
+		pExprPrev = pExpr;
+	}
+	// -> [Value]
 }
 
 void ExprList::SetExprParent(const Expr* pExprParent)
@@ -440,7 +468,7 @@ void Expr_Assign::Exec(Processor& processor) const
 
 void Expr_Assign::Compose(Composer& composer) const
 {
-	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator());
+	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator()); // -> [ValueAssigned]
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -572,9 +600,7 @@ void Expr_Root::Exec(Processor& processor) const
 
 void Expr_Root::Compose(Composer& composer) const
 {
-	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Compose(composer);
-	}
+	ComposeSequence(composer, GetExprElemHead());	// -> [Value]
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const
@@ -618,9 +644,7 @@ void Expr_Block::Exec(Processor& processor) const
 
 void Expr_Block::Compose(Composer& composer) const
 {
-	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Compose(composer);
-	}
+	ComposeSequence(composer, GetExprElemHead());	// -> [Value]
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const
@@ -1030,7 +1054,7 @@ void Expr_Caller::Compose(Composer& composer) const
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, this);
+				func.Compose(composer, this);				// -> [ValueResult]
 				return;
 			}
 		}
@@ -1094,9 +1118,9 @@ void Expr_Caller::ComposeInAssignment(
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
-	RefPtr<Function> pFunction(new FunctionCustom(Function::Type::Function,
-												  pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
-	composer.Add_AssignFunction(this, pFunction.get());	// -> []
+	RefPtr<Function> pFunction(
+		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+	composer.Add_AssignFunction(this, pFunction.get());	// -> [Value]
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

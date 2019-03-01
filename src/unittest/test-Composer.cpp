@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-#if 1
+#if 0
 static const char* src = R"(
 a = 0
 if (a == 3) {
@@ -14,7 +14,7 @@ if (a == 3) {
 )";
 #endif
 
-#if 0
+#if 1
 static const char* src = R"(
 a = 3
 b = 2

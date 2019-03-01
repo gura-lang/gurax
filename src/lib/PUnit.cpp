@@ -8,13 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-PUnit::PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc), _pPUnitNext(nullptr)
+PUnit::PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc), _pPUnitNext(nullptr), _popToDiscardFlag(false)
 {
 	_pExprSrc->SetPUnitTop(this);
 }
 
-void PUnit::AppendJumpInfo(String& str) const
+void PUnit::AppendInfoToString(String& str) const
 {
+	if (GetPopToDiscardFlag()) str += ", PopToDiscard";
 	if (_pPUnitNext) {
 		size_t idxNext = _pPUnitNext->GetIndex();
 		if (idxNext != GetIndex() + 1) {
@@ -40,7 +41,7 @@ void PUnit::AppendJumpInfo(String& str) const
 //------------------------------------------------------------------------------
 void PUnit_Value::Exec(Processor& processor) const
 {
-	processor.PushValue(GetValue()->Reference());
+	if (!GetPopToDiscardFlag()) processor.PushValue(GetValue()->Reference());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -50,7 +51,7 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 	rtn += "Value(";
 	rtn += GetValue()->ToString(StringStyle().Digest());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -60,12 +61,14 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Lookup::Exec(Processor& processor) const
 {
-	const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
-	if (!pValue) {
-		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-		return;
+	if (!GetPopToDiscardFlag()) {
+		const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
+		if (!pValue) {
+			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			return;
+		}
+		processor.PushValue(pValue->Reference());
 	}
-	processor.PushValue(pValue->Reference());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -75,7 +78,7 @@ String PUnit_Lookup::ToString(const StringStyle& ss) const
 	rtn += "Lookup(`";
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -85,7 +88,8 @@ String PUnit_Lookup::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Assign::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueAssigned(processor.PeekValue(0)->Reference());
+	RefPtr<Value> pValueAssigned(
+		GetPopToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
 	processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
 	processor.Goto(GetPUnitNext());
 }
@@ -96,18 +100,19 @@ String PUnit_Assign::ToString(const StringStyle& ss) const
 	rtn += "Assign(`";
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
 // PUnit_AssignFunction
-// Stack View: [] -> []
+// Stack View: [] -> [Value]
 //------------------------------------------------------------------------------
 void PUnit_AssignFunction::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
 	processor.GetFrame().AssignValue(GetFunction().GetSymbol(), pValueAssigned.release());
+	if (!GetPopToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -117,7 +122,7 @@ String PUnit_AssignFunction::ToString(const StringStyle& ss) const
 	rtn += "AssignFunction(";
 	rtn += GetFunction().ToString(ss);
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -135,7 +140,7 @@ String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "PopToDiscard()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -145,10 +150,14 @@ String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_UnaryOp::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(pValue.get()));
-	if (!pValueResult) return;
-	processor.PushValue(pValueResult.release());
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+	} else {
+		RefPtr<Value> pValue(processor.PopValue());
+		RefPtr<Value> pValueResult(GetOperator()->EvalUnary(pValue.get()));
+		if (!pValueResult) return;
+		processor.PushValue(pValueResult.release());
+	}
 	processor.Goto(GetPUnitNext());
 }
 
@@ -158,7 +167,7 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 	rtn += "UnaryOp(";
 	rtn += GetOperator()->GetSymbol();
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -168,11 +177,16 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_BinaryOp::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueRight(processor.PopValue());
-	RefPtr<Value> pValueLeft(processor.PopValue());
-	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
-	if (!pValueResult) return;
-	processor.PushValue(pValueResult.release());
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+		Value::Delete(processor.PopValue());
+	} else {
+		RefPtr<Value> pValueRight(processor.PopValue());
+		RefPtr<Value> pValueLeft(processor.PopValue());
+		RefPtr<Value> pValueResult(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
+		if (!pValueResult) return;
+		processor.PushValue(pValueResult.release());
+	}
 	processor.Goto(GetPUnitNext());
 }
 
@@ -182,7 +196,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 	rtn += "BinaryOp(";
 	rtn += GetOperator()->GetSymbol();
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -202,7 +216,7 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "CreateList()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -212,10 +226,15 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_AddList::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueElem(processor.PopValue());
-	ValueTypedOwner& valueTypedOwner =
-		dynamic_cast<Value_List*>(processor.PeekValue(0))->GetValueTypedOwner();
-	valueTypedOwner.Add(pValueElem.release());
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+		Value::Delete(processor.PopValue());
+	} else {
+		RefPtr<Value> pValueElem(processor.PopValue());
+		ValueTypedOwner& valueTypedOwner =
+			dynamic_cast<Value_List*>(processor.PeekValue(0))->GetValueTypedOwner();
+		valueTypedOwner.Add(pValueElem.release());
+	}
 	processor.Goto(GetPUnitNext());
 }
 
@@ -223,7 +242,7 @@ String PUnit_AddList::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "AddValueList()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -245,7 +264,7 @@ String PUnit_Index::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "CreateIndex()";
 	rtn += GetAttr().ToString(ss);
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -265,7 +284,7 @@ String PUnit_FeedIndex::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "FeedIndex()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -275,11 +294,15 @@ String PUnit_FeedIndex::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_IndexGet::Exec(Processor& processor) const
 {
-	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
-	Index& index = pValueIndex->GetIndex();
-	RefPtr<Value> pValueElems(index.IndexGet());
-	if (Error::IsIssued()) return;
-	processor.PushValue(pValueElems.release());
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+	} else {
+		RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
+		Index& index = pValueIndex->GetIndex();
+		RefPtr<Value> pValueElems(index.IndexGet());
+		if (Error::IsIssued()) return;
+		processor.PushValue(pValueElems.release());
+	}
 	processor.Goto(GetPUnitNext());
 }
 
@@ -287,7 +310,7 @@ String PUnit_IndexGet::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "IndexGet()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -302,7 +325,7 @@ void PUnit_IndexSet::Exec(Processor& processor) const
 	Index& index = pValueIndex->GetIndex();
 	index.IndexSet(pValueElems->Reference());
 	if (Error::IsIssued()) return;
-	processor.PushValue(pValueElems.release());
+	if (!GetPopToDiscardFlag()) processor.PushValue(pValueElems.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -310,7 +333,7 @@ String PUnit_IndexSet::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "IndexSet()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -320,13 +343,17 @@ String PUnit_IndexSet::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_PropGet::Exec(Processor& processor) const
 {
-	Value* pValueTarget = processor.PeekValue(0);
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
-	if (!pValueProp) {
-		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-		return;
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+	} else {
+		Value* pValueTarget = processor.PeekValue(0);
+		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+		if (!pValueProp) {
+			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			return;
+		}
+		processor.PushValue(pValueProp->Reference());
 	}
-	processor.PushValue(pValueProp->Reference());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -337,7 +364,7 @@ String PUnit_PropGet::ToString(const StringStyle& ss) const
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
 	rtn += GetAttr().ToString(ss);
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -350,7 +377,7 @@ void PUnit_PropSet::Exec(Processor& processor) const
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr());
-	processor.PushValue(pValueProp.release());
+	if (!GetPopToDiscardFlag()) processor.PushValue(pValueProp.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -361,7 +388,7 @@ String PUnit_PropSet::ToString(const StringStyle& ss) const
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
 	rtn += GetAttr().ToString(ss);
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -372,16 +399,20 @@ String PUnit_PropSet::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Member::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueTarget(processor.PopValue());
-	Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
-	if (!pValue) {
-		Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-		return;
-	}
-	if (pValue->IsCallable()) {
-		processor.PushValue(new Value_Member(pValueTarget.release(), pValue->Reference()));
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
 	} else {
-		processor.PushValue(pValue->Reference());
+		RefPtr<Value> pValueTarget(processor.PopValue());
+		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+		if (!pValue) {
+			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			return;
+		}
+		if (pValue->IsCallable()) {
+			processor.PushValue(new Value_Member(pValueTarget.release(), pValue->Reference()));
+		} else {
+			processor.PushValue(pValue->Reference());
+		}
 	}
 	processor.Goto(GetPUnitNext());
 }
@@ -393,7 +424,7 @@ String PUnit_Member::ToString(const StringStyle& ss) const
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
 	rtn += GetAttr().ToString(ss);
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -422,7 +453,7 @@ String PUnit_Argument::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "Argument()";
 	rtn += GetAttr().ToString(ss);
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -458,7 +489,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 	rtn += "), ##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -478,7 +509,7 @@ String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "FeedArgSlot()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -517,7 +548,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	rtn += "), ##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -537,7 +568,7 @@ String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "FeedArgSlotNamed()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -552,7 +583,7 @@ void PUnit_Call::Exec(Processor& processor) const
 	if (!argument.CheckValidity()) return;
 	RefPtr<Value> pValueResult(argument.Call(processor.GetFrame()));
 	if (Error::IsIssued()) return;
-	processor.PushValue(pValueResult.release());
+	if (!GetPopToDiscardFlag()) processor.PushValue(pValueResult.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -560,7 +591,7 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Call()";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -579,7 +610,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 	rtn += "Jump(#";
 	rtn += std::to_string(GetPUnitDest()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -599,7 +630,7 @@ String PUnit_JumpSub::ToString(const StringStyle& ss) const
 	rtn += "JumpSub(#";
 	rtn += std::to_string(GetPUnitDest()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -619,7 +650,7 @@ String PUnit_BranchIf::ToString(const StringStyle& ss) const
 	rtn += "BranchIf(##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -639,7 +670,7 @@ String PUnit_BranchIfNot::ToString(const StringStyle& ss) const
 	rtn += "BranchIfNot(##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -664,7 +695,7 @@ String PUnit_NilBranchIf::ToString(const StringStyle& ss) const
 	rtn += "NilBranchIf(##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 
@@ -689,7 +720,7 @@ String PUnit_NilBranchIfNot::ToString(const StringStyle& ss) const
 	rtn += "NilBranchIfNot(##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
-	AppendJumpInfo(rtn);
+	AppendInfoToString(rtn);
 	return rtn;
 }
 

@@ -136,6 +136,7 @@ public:
 		Visitor_Prepare visitor;
 		return Traverse(visitor);
 	}
+	static void ComposeSequence(Composer& composer, const Expr* pExpr);
 public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;

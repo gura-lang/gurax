@@ -16,6 +16,7 @@ class GURAX_DLLDECLARE PUnit {
 protected:
 	RefPtr<Expr> _pExprSrc;
 	const PUnit* _pPUnitNext;
+	bool _popToDiscardFlag;
 public:
 	// Constructor
 	explicit PUnit(Expr* pExprSrc);
@@ -38,7 +39,9 @@ public:
 	size_t GetIndex() const { return MemoryPool::Global().chunkPUnit.GetIndex(this); }
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
-	void AppendJumpInfo(String& str) const;
+	void SetPopToDiscardFlag() { _popToDiscardFlag = true; }
+	bool GetPopToDiscardFlag() const { return _popToDiscardFlag; }
+	void AppendInfoToString(String& str) const;
 public:
 	// Virtual functions
 	virtual void Exec(Processor& processor) const = 0;

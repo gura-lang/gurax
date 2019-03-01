@@ -39,7 +39,11 @@ void Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunctio
 
 void Composer::Add_PopToDiscard(const Expr* pExprSrc)
 {
-	Add(new PUnit_PopToDiscard(pExprSrc->Reference()));
+	if (_pPUnitLast) {
+		_pPUnitLast->SetPopToDiscardFlag();
+	} else {
+		Add(new PUnit_PopToDiscard(pExprSrc->Reference()));
+	}
 }
 
 void Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
