@@ -37,9 +37,9 @@ void Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunctio
 	Add(new PUnit_AssignFunction(pExprSrc->Reference(), pFunction->Reference()));
 }
 
-void Composer::Add_Erase(const Expr* pExprSrc)
+void Composer::Add_PopToDiscard(const Expr* pExprSrc)
 {
-	Add(new PUnit_Erase(pExprSrc->Reference()));
+	Add(new PUnit_PopToDiscard(pExprSrc->Reference()));
 }
 
 void Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
@@ -160,6 +160,20 @@ PUnit_BranchIf* Composer::Add_BranchIf(const Expr* pExprSrc)
 PUnit_BranchIfNot* Composer::Add_BranchIfNot(const Expr* pExprSrc)
 {
 	auto pPUnit = new PUnit_BranchIfNot(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_NilBranchIf* Composer::Add_NilBranchIf(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_NilBranchIf(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_NilBranchIfNot* Composer::Add_NilBranchIfNot(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_NilBranchIfNot(pExprSrc->Reference());
 	Add(pPUnit);
 	return pPUnit;
 }

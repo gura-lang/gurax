@@ -40,7 +40,7 @@ public:
 	void Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_Assign(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
-	void Add_Erase(const Expr* pExprSrc);
+	void Add_PopToDiscard(const Expr* pExprSrc);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_CreateList(const Expr* pExprSrc, size_t sizeReserve);
@@ -62,6 +62,8 @@ public:
 	PUnit_JumpSub* Add_JumpSub(const Expr* pExprSrc);
 	PUnit_BranchIf* Add_BranchIf(const Expr* pExprSrc);
 	PUnit_BranchIfNot* Add_BranchIfNot(const Expr* pExprSrc);
+	PUnit_NilBranchIf* Add_NilBranchIf(const Expr* pExprSrc);
+	PUnit_NilBranchIfNot* Add_NilBranchIfNot(const Expr* pExprSrc);
 	
 };
 

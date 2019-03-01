@@ -6,12 +6,12 @@ DateTime                 48
 PUnit_Value              32
 PUnit_Lookup             32
 PUnit_Assign             32
-PUnit_Erase              24
+PUnit_PopToDiscard       24
 PUnit_UnaryOp            32
 PUnit_BinaryOp           32
 PUnit_CreateList         32
 PUnit_AddList            24
-PUnit_Index              32
+PUnit_Index              40
 PUnit_FeedIndex          24
 PUnit_IndexGet           24
 PUnit_IndexSet           24
@@ -28,6 +28,8 @@ PUnit_Jump               32
 PUnit_JumpSub            32
 PUnit_BranchIf           32
 PUnit_BranchIfNot        32
+PUnit_NilBranchIf        32
+PUnit_NilBranchIfNot     32
 Symbol                   16
 TimeDelta                24
 ValueOwner               40

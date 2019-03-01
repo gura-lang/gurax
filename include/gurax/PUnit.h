@@ -143,15 +143,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Erase
+// PUnit_PopToDiscard
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Erase : public PUnit {
+class GURAX_DLLDECLARE PUnit_PopToDiscard : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
-	explicit PUnit_Erase(Expr* pExprSrc) : PUnit(pExprSrc) {}
+	explicit PUnit_PopToDiscard(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -567,6 +567,50 @@ private:
 public:
 	// Constructor
 	explicit PUnit_BranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
+public:
+	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
+	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_NilBranchIf
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_NilBranchIf : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitAtMerging;
+public:
+	// Constructor
+	explicit PUnit_NilBranchIf(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
+public:
+	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
+	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_NilBranchIfNot
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_NilBranchIfNot : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitAtMerging;
+public:
+	// Constructor
+	explicit PUnit_NilBranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
 		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }

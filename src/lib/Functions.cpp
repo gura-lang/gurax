@@ -40,6 +40,7 @@ frame.AssignFunction(new Statement_##name())
 // if (cond) {block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
+	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
 }
 
 Gurax_ImplementStatement(if_)
@@ -48,14 +49,20 @@ Gurax_ImplementStatement(if_)
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
 		pExpr->Compose(composer);
 	} while (0);
-	auto pPUnit = composer.Add_BranchIfNot(pExprCaller);
-	pExprCaller->GetExprBlock()->Compose(composer);
-	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	if (pExprCaller->GetExprBlock()->HasExprElem()) {
+		auto pPUnit = composer.Add_NilBranchIfNot(pExprCaller);
+		pExprCaller->GetExprBlock()->Compose(composer);
+		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	} else {
+		composer.Add_PopToDiscard(pExprCaller);
+		composer.Add_Value(pExprCaller, Value::nil());
+	}
 }
 
 // while (cond) {block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
+	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
 }
 
 Gurax_ImplementStatement(while_)

@@ -122,19 +122,19 @@ String PUnit_AssignFunction::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Erase
+// PUnit_PopToDiscard
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
-void PUnit_Erase::Exec(Processor& processor) const
+void PUnit_PopToDiscard::Exec(Processor& processor) const
 {
 	Value::Delete(processor.PopValue());
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_Erase::ToString(const StringStyle& ss) const
+String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "Erase()";
+	rtn += "PopToDiscard()";
 	AppendJumpInfo(rtn);
 	return rtn;
 }
@@ -637,6 +637,56 @@ String PUnit_BranchIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "BranchIfNot(##";
+	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += ")";
+	AppendJumpInfo(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_NilBranchIf
+// Stack View: [Value] -> [] or [nil]
+//------------------------------------------------------------------------------
+void PUnit_NilBranchIf::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	if (pValue->GetBool()) {
+		processor.PushValue(Value::nil());
+		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
+	} else {
+		processor.Goto(GetPUnitNext());
+	}
+}
+
+String PUnit_NilBranchIf::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "NilBranchIf(##";
+	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += ")";
+	AppendJumpInfo(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_NilBranchIfNot
+// Stack View: [Value] -> [] or [nil]
+//------------------------------------------------------------------------------
+void PUnit_NilBranchIfNot::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	if (pValue->GetBool()) {
+		processor.Goto(GetPUnitNext());
+	} else {
+		processor.PushValue(Value::nil());
+		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
+	}
+}
+
+String PUnit_NilBranchIfNot::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "NilBranchIfNot(##";
 	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
 	rtn += ")";
 	AppendJumpInfo(rtn);

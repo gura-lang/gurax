@@ -16,7 +16,7 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(PUnit_Value);
 	Gurax_PrintSizeOf(PUnit_Lookup);
 	Gurax_PrintSizeOf(PUnit_Assign);
-	Gurax_PrintSizeOf(PUnit_Erase);
+	Gurax_PrintSizeOf(PUnit_PopToDiscard);
 	Gurax_PrintSizeOf(PUnit_UnaryOp);
 	Gurax_PrintSizeOf(PUnit_BinaryOp);
 	Gurax_PrintSizeOf(PUnit_CreateList);
@@ -38,6 +38,8 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(PUnit_JumpSub);
 	Gurax_PrintSizeOf(PUnit_BranchIf);
 	Gurax_PrintSizeOf(PUnit_BranchIfNot);
+	Gurax_PrintSizeOf(PUnit_NilBranchIf);
+	Gurax_PrintSizeOf(PUnit_NilBranchIfNot);
 	Gurax_PrintSizeOf(Symbol);
 	Gurax_PrintSizeOf(TimeDelta);
 	Gurax_PrintSizeOf(ValueOwner);
