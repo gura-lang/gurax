@@ -10,6 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 const ErrorType ErrorType::ArgumentError("argument error");
 const ErrorType ErrorType::CodecError("codec error");
+const ErrorType ErrorType::IndexError("index error");
 const ErrorType ErrorType::InvalidOperation("invalid operation");
 const ErrorType ErrorType::SyntaxError("syntax error");
 const ErrorType ErrorType::TypeError("type error");

@@ -122,6 +122,7 @@ public:
 	}
 	Expr* GetExprNext() { return _pExprNext.get(); }
 	const Expr* GetExprNext() const { return _pExprNext.get(); }
+	size_t CountSequence() const;
 	Expr* LockExprPrev() const { return _pwExprPrev? _pwExprPrev->Lock() : nullptr; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }

@@ -19,7 +19,7 @@ public:
 extern VType_List VTYPE_List;
 
 //------------------------------------------------------------------------------
-// VType_List
+// Value_List
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Value_List : public Value_Object {
 public:

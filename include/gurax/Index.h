@@ -16,11 +16,11 @@ public:
 private:
 	RefPtr<Value> _pValueCar;
 	RefPtr<Attribute> _pAttr;
-	RefPtr<ValueTypedOwner> _pValueTypedOwner;
+	RefPtr<ValueOwner> _pValueOwner;
 public:
 	// Constructor
 	Index(Value* pValueCar, Attribute* pAttr) :
-		_pValueCar(pValueCar), _pAttr(pAttr), _pValueTypedOwner(new ValueTypedOwner()) {}
+		_pValueCar(pValueCar), _pAttr(pAttr), _pValueOwner(new ValueOwner()) {}
 	// Copy constructor/operator
 	Index(const Index& src) = delete;
 	Index& operator=(const Index& src) = delete;
@@ -30,13 +30,13 @@ public:
 protected:
 	~Index() = default;
 public:
+	void Reserve(size_t size) { GetValueOwner().reserve(size); }
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
 	const Attribute& GetAttr() const { return *_pAttr; }
-	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
-	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
-	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
-	void FeedValue(Value* pValue) { GetValueTypedOwner().Add(pValue); }
+	ValueOwner& GetValueOwner() { return *_pValueOwner; }
+	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
+	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
 	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
 	void IndexSet(Value* pValue) { GetValueCar().DoIndexSet(*this, pValue); }
 public:

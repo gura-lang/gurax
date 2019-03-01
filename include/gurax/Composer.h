@@ -43,9 +43,9 @@ public:
 	void Add_Erase(const Expr* pExprSrc);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
-	void Add_CreateList(const Expr* pExprSrc, size_t sizeReserved = 0);
+	void Add_CreateList(const Expr* pExprSrc, size_t sizeReserve);
 	void Add_AddList(const Expr* pExprSrc);
-	void Add_Index(const Expr* pExprSrc, const Attribute& attr);
+	void Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve);
 	void Add_FeedIndex(const Expr* pExprSrc);
 	void Add_IndexGet(const Expr* pExprSrc);
 	void Add_IndexSet(const Expr* pExprSrc);

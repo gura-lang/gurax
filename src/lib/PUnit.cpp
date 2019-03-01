@@ -235,6 +235,7 @@ void PUnit_Index::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopValue());
 	RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
+	pIndex->Reserve(GetSizeReserve());
 	processor.PushValue(new Value_Index(pIndex.release()));
 	processor.Goto(GetPUnitNext());
 }

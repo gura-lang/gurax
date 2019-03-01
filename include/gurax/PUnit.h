@@ -209,7 +209,7 @@ private:
 	size_t _sizeReserve;
 public:
 	// Constructor
-	explicit PUnit_CreateList(Expr* pExprSrc, size_t sizeReserve = 0) : PUnit(pExprSrc), _sizeReserve(sizeReserve) {}
+	explicit PUnit_CreateList(Expr* pExprSrc, size_t sizeReserve) : PUnit(pExprSrc), _sizeReserve(sizeReserve) {}
 public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
@@ -243,11 +243,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Attribute> _pAttr;
+	size_t _sizeReserve;
 public:
 	// Constructor
-	PUnit_Index(Expr* pExprSrc, Attribute* pAttr) : PUnit(pExprSrc), _pAttr(pAttr) {}
+	PUnit_Index(Expr* pExprSrc, Attribute* pAttr, size_t sizeReserve) :
+		PUnit(pExprSrc), _pAttr(pAttr), _sizeReserve(sizeReserve) {}
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
+	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

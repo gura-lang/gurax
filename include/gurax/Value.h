@@ -161,6 +161,8 @@ public:
 	ValueOwner* CloneDeep() const;
 	void Set(size_t pos, Value* pValue);
 	Value* Get(size_t pos) const { return at(pos); }
+	bool IndexSet(const Value* pValueIndex, Value* pValue);
+	bool IndexGet(const Value* pValueIndex, Value** ppValue) const;
 public:
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };
@@ -212,6 +214,13 @@ public:
 		_pValueOwner->Set(pos, pValue);
 	}
 	Value* Get(size_t pos) const { return _pValueOwner->Get(pos); }
+	bool IndexSet(const Value* pValueIndex, Value* pValue) {
+		UpdateVTypeOfElems(pValue->GetVType());
+		return _pValueOwner->IndexSet(pValueIndex, pValue);
+	}
+	bool IndexGet(const Value* pValueIndex, Value** ppValue) const {
+		return _pValueOwner->IndexGet(pValueIndex, ppValue);
+	}
 	void Add(Value* pValue) {
 		UpdateVTypeOfElems(pValue->GetVType());
 		_pValueOwner->push_back(pValue);

@@ -52,9 +52,9 @@ void Composer::Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator)
 	Add(new PUnit_BinaryOp(pExprSrc->Reference(), pOperator));
 }
 
-void Composer::Add_CreateList(const Expr* pExprSrc, size_t sizeReserved)
+void Composer::Add_CreateList(const Expr* pExprSrc, size_t sizeReserve)
 {
-	Add(new PUnit_CreateList(pExprSrc->Reference(), sizeReserved));
+	Add(new PUnit_CreateList(pExprSrc->Reference(), sizeReserve));
 }
 
 void Composer::Add_AddList(const Expr* pExprSrc)
@@ -62,9 +62,9 @@ void Composer::Add_AddList(const Expr* pExprSrc)
 	Add(new PUnit_AddList(pExprSrc->Reference()));
 }
 
-void Composer::Add_Index(const Expr* pExprSrc, const Attribute& attr)
+void Composer::Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve)
 {
-	Add(new PUnit_Index(pExprSrc->Reference(), attr.Reference()));
+	Add(new PUnit_Index(pExprSrc->Reference(), attr.Reference(), sizeReserve));
 }
 
 void Composer::Add_FeedIndex(const Expr* pExprSrc)

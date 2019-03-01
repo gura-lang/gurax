@@ -252,6 +252,61 @@ void ValueOwner::Set(size_t pos, Value* pValue)
 	*ppValue = pValue;
 }
 
+bool ValueOwner::IndexGet(const Value* pValueIndex, Value** ppValue) const
+{
+	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
+		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
+		int idxOrg = pValueIndexEx->GetInt();
+		int idx = (idxOrg >= 0)? idxOrg : idxOrg + size();
+		if (0 <= idx && static_cast<size_t>(idx) < size()) {
+			*ppValue = Get(idx)->Reference();
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError, "index %d is out of range of the list size %zu",
+					 idx, size());
+	} else if (pValueIndex->IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool* pValueIndexEx = dynamic_cast<const Value_Bool*>(pValueIndex);
+		int idx = static_cast<int>(pValueIndexEx->GetBool());
+		if (static_cast<size_t>(idx) < size()) {
+			*ppValue = Get(idx)->Reference();
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError, "index %s is out of range of the list size %zu",
+					 pValueIndexEx->ToString().c_str(), size());
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	return false;
+}
+
+bool ValueOwner::IndexSet(const Value* pValueIndex, Value* pValue)
+{
+	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
+		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
+		int idxOrg = pValueIndexEx->GetInt();
+		int idx = (idxOrg >= 0)? idxOrg : idxOrg + size();
+		if (0 <= idx && static_cast<size_t>(idx) < size()) {
+			Set(idx, pValue);
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError, "index %d is out of range of the list size %zu",
+					 idx, size());
+	} else if (pValueIndex->IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool* pValueIndexEx = dynamic_cast<const Value_Bool*>(pValueIndex);
+		int idx = static_cast<int>(pValueIndexEx->GetBool());
+		if (static_cast<size_t>(idx) < size()) {
+			Set(idx, pValue);
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError, "index %s is out of range of the list size %zu",
+					 pValueIndexEx->ToString().c_str(), size());
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	Value::Delete(pValue);
+	return false;
+}
+
 //------------------------------------------------------------------------------
 // ValueTypedOwner
 //------------------------------------------------------------------------------

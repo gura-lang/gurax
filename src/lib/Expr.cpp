@@ -8,6 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
+size_t Expr::CountSequence() const
+{
+	size_t nExprs = 0;
+	for (const Expr* pExpr = this; pExpr; pExpr = pExpr->GetExprNext(), nExprs++) ;
+	return nExprs;
+}
+
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -778,7 +785,8 @@ void Expr_Lister::Exec(Processor& processor) const
 
 void Expr_Lister::Compose(Composer& composer) const
 {
-	composer.Add_CreateList(this);				// -> [ValueList]
+	size_t nExprs = GetExprElemHead()->CountSequence();
+	composer.Add_CreateList(this, nExprs);		// -> [ValueList]
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);				// -> [ValueList Value]
 		composer.Add_AddList(this);				// -> [ValueList]
@@ -868,13 +876,14 @@ void Expr_Indexer::Exec(Processor& processor) const
 
 void Expr_Indexer::Compose(Composer& composer) const
 {
-	GetExprCar()->Compose(composer);			// -> [ValueCar]
-	composer.Add_Index(this, GetAttr());		// -> [ValueIndex]
+	GetExprCar()->Compose(composer);				// -> [ValueCar]
+	size_t nExprs = GetExprCdrHead()->CountSequence();
+	composer.Add_Index(this, GetAttr(), nExprs);	// -> [ValueIndex]
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Compose(composer);				// -> [ValueIndex Value]
-		composer.Add_FeedIndex(this);			// -> [ValueIndex]
+		pExpr->Compose(composer);					// -> [ValueIndex Value]
+		composer.Add_FeedIndex(this);				// -> [ValueIndex]
 	}
-	composer.Add_IndexGet(this);				// -> [ValueElems]
+	composer.Add_IndexGet(this);					// -> [ValueElems]
 }
 
 void Expr_Indexer::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
