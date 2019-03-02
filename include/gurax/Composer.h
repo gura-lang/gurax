@@ -69,7 +69,7 @@ public:
 	PUnit_BranchIfNot* AddF_BranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
 	PUnit_NilBranchIf* AddF_NilBranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
 	PUnit_NilBranchIfNot* AddF_NilBranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
-	
+	void Print() const;
 };
 
 }

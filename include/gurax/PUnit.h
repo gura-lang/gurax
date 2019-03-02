@@ -52,6 +52,8 @@ public:
 // PUnitList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnitList : public std::vector<const PUnit*> {
+public:
+	void Print() const;
 };
 
 //------------------------------------------------------------------------------

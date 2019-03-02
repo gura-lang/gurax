@@ -41,16 +41,13 @@ Gurax_TesterEntry(Composer)
 {
 	RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
 	if (Error::IsIssued()) {
-		::printf("error: %s\n", Error::GetLastError()->GetText());
+		Error::Print(*Stream::CErr);
 		Error::Clear();
 		return;
 	}
 	Composer composer;
 	pExprRoot->Compose(composer);
-	const PUnitList& punitList = composer.GetPUnitList();
-	for (auto pPUnit : punitList) {
-		::printf("#%zu %s\n", pPUnit->GetIndex(), pPUnit->ToString().c_str());
-	}
+	composer.GetPUnitList().Print();
 	Processor processor;
 	processor.Run(composer.GetPUnitTop());
 }

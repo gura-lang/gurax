@@ -30,6 +30,12 @@ void PUnit::AppendInfoToString(String& str) const
 //------------------------------------------------------------------------------
 // PUnitList
 //------------------------------------------------------------------------------
+void PUnitList::Print() const
+{
+	for (auto pPUnit : *this) {
+		::printf("#%zu %s\n", pPUnit->GetIndex(), pPUnit->ToString().c_str());
+	}
+}
 
 //------------------------------------------------------------------------------
 // PUnitStack
