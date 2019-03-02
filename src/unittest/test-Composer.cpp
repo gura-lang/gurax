@@ -31,7 +31,7 @@ if (a == 3) {
 }
 a = 0
 while (a < 3) {
-	Println('Hello World')
+	Printf('Hello World #%d\n', a)
 	a += 1
 }
 )";
