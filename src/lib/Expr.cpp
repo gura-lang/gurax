@@ -43,7 +43,7 @@ void Expr::ComposeSequence(Composer& composer, const Expr* pExpr)
 		pExprPrev = pExpr;
 		pExpr = pExpr->GetExprNext();
 	}
-	// -> [Value]
+	// [Value]
 }
 
 void Expr::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -96,7 +96,7 @@ void ExprList::Compose(Composer& composer) const
 		pExpr->Compose(composer);
 		pExprPrev = pExpr;
 	}
-	// -> [Value]
+	// [Value]
 }
 
 void ExprList::SetExprParent(const Expr* pExprParent)
@@ -178,7 +178,7 @@ void Expr_Value::Exec(Processor& processor) const
 
 void Expr_Value::Compose(Composer& composer) const
 {
-	composer.Add_Value(this, GetValue());	// -> [Value]
+	composer.Add_Value(this, GetValue());	// [Value]
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -206,7 +206,7 @@ void Expr_Identifier::Exec(Processor& processor) const
 
 void Expr_Identifier::Compose(Composer& composer) const
 {
-	composer.Add_Lookup(this, GetSymbol());		// -> [Value]
+	composer.Add_Lookup(this, GetSymbol());		// [Value]
 }
 
 void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -255,13 +255,13 @@ void Expr_Identifier::ComposeInAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
-		composer.Add_Lookup(this, GetSymbol());	// -> [Value]
-		pExprAssigned->Compose(composer);		// -> [Value ValueRight]
-		composer.Add_BinaryOp(this, pOperator);	// -> [ValueAssigned]
-		composer.Add_Assign(this, GetSymbol());	// -> [ValueAssigned]
+		composer.Add_Lookup(this, GetSymbol());	// [Value]
+		pExprAssigned->Compose(composer);		// [Value ValueRight]
+		composer.Add_BinaryOp(this, pOperator);	// [ValueAssigned]
+		composer.Add_Assign(this, GetSymbol());	// [ValueAssigned]
 	} else {
-		pExprAssigned->Compose(composer);		// -> [ValueAssigned]
-		composer.Add_Assign(this, GetSymbol());	// -> [ValueAssigned]
+		pExprAssigned->Compose(composer);		// [ValueAssigned]
+		composer.Add_Assign(this, GetSymbol());	// [ValueAssigned]
 	}
 }
 
@@ -338,8 +338,8 @@ void Expr_UnaryOp::Exec(Processor& processor) const
 
 void Expr_UnaryOp::Compose(Composer& composer) const
 {
-	GetExprChild()->Compose(composer);			// -> [Value]
-	composer.Add_UnaryOp(this, GetOperator());	// -> [ValueResult]
+	GetExprChild()->Compose(composer);			// [Value]
+	composer.Add_UnaryOp(this, GetOperator());	// [ValueResult]
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -410,9 +410,9 @@ void Expr_BinaryOp::Exec(Processor& processor) const
 
 void Expr_BinaryOp::Compose(Composer& composer) const
 {
-	GetExprLeft()->Compose(composer);			// -> [ValueLeft]
-	GetExprRight()->Compose(composer);			// -> [ValueLeft ValueRight]
-	composer.Add_BinaryOp(this, GetOperator());	// -> [ValueResult]
+	GetExprLeft()->Compose(composer);			// [ValueLeft]
+	GetExprRight()->Compose(composer);			// [ValueLeft ValueRight]
+	composer.Add_BinaryOp(this, GetOperator());	// [ValueResult]
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -468,7 +468,7 @@ void Expr_Assign::Exec(Processor& processor) const
 
 void Expr_Assign::Compose(Composer& composer) const
 {
-	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator()); // -> [ValueAssigned]
+	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator()); // [ValueAssigned]
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -512,8 +512,8 @@ void Expr_Member::Exec(Processor& processor) const
 
 void Expr_Member::Compose(Composer& composer) const
 {
-	GetExprTarget()->Compose(composer);					// -> [ValueTarget]
-	composer.Add_Member(this, GetSymbol(), GetAttr());	// -> [ValueMember] or [ValueProp]
+	GetExprTarget()->Compose(composer);						// [ValueTarget]
+	composer.Add_Member(this, GetSymbol(), GetAttr());		// [ValueMember] or [ValueProp]
 }
 
 void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -563,15 +563,15 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 void Expr_Member::ComposeInAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	GetExprTarget()->Compose(composer);						// -> [ValueTarget]
+	GetExprTarget()->Compose(composer);						// [ValueTarget]
 	if (pOperator) {
-		composer.Add_PropGet(this, GetSymbol(), GetAttr());	// -> [ValueTarget ValueProp]
-		pExprAssigned->Compose(composer);					// -> [ValueTarget ValueProp ValueRight]
-		composer.Add_BinaryOp(this, pOperator);				// -> [ValueTarget ValueAssigned]
+		composer.Add_PropGet(this, GetSymbol(), GetAttr());	// [ValueTarget ValueProp]
+		pExprAssigned->Compose(composer);					// [ValueTarget ValueProp ValueRight]
+		composer.Add_BinaryOp(this, pOperator);				// [ValueTarget ValueAssigned]
 	} else {
-		pExprAssigned->Compose(composer);					// -> [ValueTarget ValueAssigned]
+		pExprAssigned->Compose(composer);					// [ValueTarget ValueAssigned]
 	}
-	composer.Add_PropSet(this, GetSymbol(), GetAttr());		// -> [ValueAssigned]
+	composer.Add_PropSet(this, GetSymbol(), GetAttr());		// [ValueAssigned]
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
@@ -600,7 +600,7 @@ void Expr_Root::Exec(Processor& processor) const
 
 void Expr_Root::Compose(Composer& composer) const
 {
-	ComposeSequence(composer, GetExprElemHead());	// -> [Value]
+	ComposeSequence(composer, GetExprElemHead());			// [Value]
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const
@@ -644,7 +644,7 @@ void Expr_Block::Exec(Processor& processor) const
 
 void Expr_Block::Compose(Composer& composer) const
 {
-	ComposeSequence(composer, GetExprElemHead());	// -> [Value]
+	ComposeSequence(composer, GetExprElemHead());			// [Value]
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const
@@ -810,10 +810,10 @@ void Expr_Lister::Exec(Processor& processor) const
 void Expr_Lister::Compose(Composer& composer) const
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
-	composer.Add_CreateList(this, nExprs);		// -> [ValueList]
+	composer.Add_CreateList(this, nExprs);					// [ValueList]
 	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Compose(composer);				// -> [ValueList Value]
-		composer.Add_AddList(this);				// -> [ValueList]
+		pExpr->Compose(composer);							// [ValueList Value]
+		composer.Add_AddList(this);							// [ValueList]
 	}	
 }
 
@@ -900,14 +900,14 @@ void Expr_Indexer::Exec(Processor& processor) const
 
 void Expr_Indexer::Compose(Composer& composer) const
 {
-	GetExprCar()->Compose(composer);				// -> [ValueCar]
+	GetExprCar()->Compose(composer);						// [ValueCar]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
-	composer.Add_Index(this, GetAttr(), nExprs);	// -> [ValueIndex]
+	composer.Add_Index(this, GetAttr(), nExprs);			// [ValueIndex]
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->Compose(composer);					// -> [ValueIndex Value]
-		composer.Add_FeedIndex(this);				// -> [ValueIndex]
+		pExpr->Compose(composer);							// [ValueIndex Value]
+		composer.Add_FeedIndex(this);						// [ValueIndex]
 	}
-	composer.Add_IndexGet(this);					// -> [ValueElems]
+	composer.Add_IndexGet(this);							// [ValueElems]
 }
 
 void Expr_Indexer::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -1054,13 +1054,13 @@ void Expr_Caller::Compose(Composer& composer) const
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, this);				// -> [ValueResult]
+				func.Compose(composer, this);				// [ValueResult]
 				return;
 			}
 		}
 	}
 	GetExprCar()->Compose(composer);
-	composer.Add_Argument(this, GetAttr());					// -> [ValueArgument]
+	composer.Add_Argument(this, GetAttr());					// [ValueArgument]
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_BinaryOp>() &&
 			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
@@ -1072,18 +1072,18 @@ void Expr_Caller::Compose(Composer& composer) const
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
 			auto pPUnit = composer.AddF_ArgSlotNamed(
-				pExpr, pSymbol, pExprEx->GetExprRight());	// -> [ValueArgument ValueArgSlot]
-			pExprEx->GetExprRight()->Compose(composer);		// -> [ValueArgument ValueArgSlot Value]
-			composer.Add_FeedArgSlotNamed(pExpr);			// -> [ValueArgument]
+				pExpr, pSymbol, pExprEx->GetExprRight());	// [ValueArgument ValueArgSlot]
+			pExprEx->GetExprRight()->Compose(composer);		// [ValueArgument ValueArgSlot Value]
+			composer.Add_FeedArgSlotNamed(pExpr);			// [ValueArgument]
 			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 		} else {
-			auto pPUnit = composer.AddF_ArgSlot(pExpr);		// -> [ValueArgument]
-			pExpr->Compose(composer);						// -> [ValueArgument Value]
-			composer.Add_FeedArgSlot(pExpr);				// -> [ValueArgument]
+			auto pPUnit = composer.AddF_ArgSlot(pExpr);		// [ValueArgument]
+			pExpr->Compose(composer);						// [ValueArgument Value]
+			composer.Add_FeedArgSlot(pExpr);				// [ValueArgument]
 			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 		}
 	}
-	composer.Add_Call(this);								// -> [ValueResult]
+	composer.Add_Call(this);								// [ValueResult]
 }
 
 void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
@@ -1120,7 +1120,7 @@ void Expr_Caller::ComposeInAssignment(
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
 	RefPtr<Function> pFunction(
 		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
-	composer.Add_AssignFunction(this, pFunction.get());	// -> [Value]
+	composer.Add_AssignFunction(this, pFunction.get());		// [Value]
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

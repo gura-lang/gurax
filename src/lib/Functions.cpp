@@ -14,7 +14,8 @@ Gurax_DeclareStatementAlias(if_, "if")
 Gurax_ImplementStatement(if_)
 {
 	if (pExprCaller->CountExprCdr() != 1) {
-		
+		Error::Issue(ErrorType::ArgumentError, "if-statement takes one argument");
+		return;
 	}
 	do {
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
@@ -38,6 +39,10 @@ Gurax_DeclareStatementAlias(while_, "while")
 
 Gurax_ImplementStatement(while_)
 {
+	if (pExprCaller->CountExprCdr() != 1) {
+		Error::Issue(ErrorType::ArgumentError, "while-statement takes one argument");
+		return;
+	}
 	composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 	size_t pos = composer.MarkPUnit();
 	do {
