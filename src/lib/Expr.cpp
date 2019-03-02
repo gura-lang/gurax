@@ -46,6 +46,14 @@ void Expr::ComposeSequence(Composer& composer, const Expr* pExpr)
 	// [Value]
 }
 
+void Expr::ComposeForArgSlot(Composer& composer, const Expr* pExpr)
+{
+	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeForArgSlot(composer);
+		if (Error::IsIssued()) return;
+	}
+}
+
 void Expr::ComposeForArgSlot(Composer& composer) const
 {
 	auto pPUnit = composer.AddF_ArgSlot(this);		// [ValueArgument]
@@ -1086,34 +1094,10 @@ void Expr_Caller::Compose(Composer& composer) const
 			}
 		}
 	}
-	GetExprCar()->Compose(composer);
+	GetExprCar()->Compose(composer);						// [ValueCar]
 	composer.Add_Argument(this, GetAttr());					// [ValueArgument]
-	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForArgSlot(composer);
-		if (Error::IsIssued()) return;
-#if 0
-		if (pExpr->IsType<Expr_BinaryOp>() &&
-			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
-			const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
-			if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
-				Error::IssueWith(ErrorType::ArgumentError, pExpr->Reference(),
-								 "named argument must be specified by a symbol");
-				return;
-			}
-			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprLeft())->GetSymbol();
-			auto pPUnit = composer.AddF_ArgSlotNamed(
-				pExpr, pSymbol, pExprEx->GetExprRight());	// [ValueArgument ValueArgSlot]
-			pExprEx->GetExprRight()->Compose(composer);		// [ValueArgument ValueArgSlot Value]
-			composer.Add_FeedArgSlotNamed(pExpr);			// [ValueArgument]
-			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
-		} else {
-			auto pPUnit = composer.AddF_ArgSlot(pExpr);		// [ValueArgument]
-			pExpr->Compose(composer);						// [ValueArgument Value]
-			composer.Add_FeedArgSlot(pExpr);				// [ValueArgument]
-			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
-		}
-#endif
-	}
+	Expr::ComposeForArgSlot(composer, GetExprCdrHead());	// [ValueArgument]
+	if (Error::IsIssued()) return;
 	composer.Add_Call(this);								// [ValueResult]
 }
 
