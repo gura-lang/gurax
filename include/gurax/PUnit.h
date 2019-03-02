@@ -408,7 +408,8 @@ private:
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	PUnit_ArgSlot(Expr* pExprSrc) : PUnit(pExprSrc), _pPUnitAtMerging(nullptr) {}
+	PUnit_ArgSlot(Expr* pExprSrc, const PUnit* pPUnitAtMerging) :
+		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
 	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
@@ -447,8 +448,8 @@ private:
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned) :
-		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitAtMerging(nullptr) {}
+	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitAtMerging) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
@@ -503,7 +504,7 @@ private:
 	const PUnit* _pPUnitDest;
 public:
 	// Constructor
-	explicit PUnit_Jump(Expr* pExprSrc, const PUnit* pPUnitDest = nullptr) :
+	PUnit_Jump(Expr* pExprSrc, const PUnit* pPUnitDest) :
 		PUnit(pExprSrc), _pPUnitDest(pPUnitDest) {}
 public:
 	void SetPUnitDest(const PUnit* pPUnit) { _pPUnitDest = pPUnit; }
@@ -525,7 +526,7 @@ private:
 	const PUnit* _pPUnitDest;
 public:
 	// Constructor
-	explicit PUnit_JumpSub(Expr* pExprSrc, const PUnit* pPUnitDest = nullptr) :
+	PUnit_JumpSub(Expr* pExprSrc, const PUnit* pPUnitDest) :
 		PUnit(pExprSrc), _pPUnitDest(pPUnitDest) {}
 public:
 	void SetPUnitDest(const PUnit* pPUnit) { _pPUnitDest = pPUnit; }
@@ -547,7 +548,7 @@ private:
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_BranchIf(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+	PUnit_BranchIf(Expr* pExprSrc, const PUnit* pPUnitAtMerging) :
 		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
@@ -569,7 +570,7 @@ private:
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_BranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+	PUnit_BranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging) :
 		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
@@ -591,7 +592,7 @@ private:
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_NilBranchIf(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+	PUnit_NilBranchIf(Expr* pExprSrc, const PUnit* pPUnitAtMerging) :
 		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
@@ -613,7 +614,7 @@ private:
 	const PUnit* _pPUnitAtMerging;
 public:
 	// Constructor
-	explicit PUnit_NilBranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr) :
+	PUnit_NilBranchIfNot(Expr* pExprSrc, const PUnit* pPUnitAtMerging) :
 		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
 public:
 	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }

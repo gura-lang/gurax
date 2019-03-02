@@ -19,7 +19,14 @@ void Composer::Add(PUnit* pPUnit)
 
 void Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
 {
-	Add(new PUnit_Value(pExprSrc->Reference(), pValue->Clone()));
+	AddF_Value(pExprSrc, pValue);
+}
+
+PUnit_Value* Composer::AddF_Value(const Expr* pExprSrc, const Value* pValue)
+{
+	auto pPUnit = new PUnit_Value(pExprSrc->Reference(), pValue->Clone());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 void Composer::Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol)
@@ -42,8 +49,15 @@ void Composer::Add_PopToDiscard(const Expr* pExprSrc)
 	if (_pPUnitLast) {
 		_pPUnitLast->SetPopToDiscardFlag();
 	} else {
-		Add(new PUnit_PopToDiscard(pExprSrc->Reference()));
+		AddF_PopToDiscard(pExprSrc);
 	}
+}
+
+PUnit_PopToDiscard* Composer::AddF_PopToDiscard(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_PopToDiscard(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 void Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
@@ -106,9 +120,9 @@ void Composer::Add_Argument(const Expr* pExprSrc, const Attribute& attr)
 	Add(new PUnit_Argument(pExprSrc->Reference(), attr.Reference()));
 }
 
-PUnit_ArgSlot* Composer::Add_ArgSlot(const Expr* pExprSrc)
+PUnit_ArgSlot* Composer::AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitArMerging)
 {
-	auto pPUnit = new PUnit_ArgSlot(pExprSrc->Reference());
+	auto pPUnit = new PUnit_ArgSlot(pExprSrc->Reference(), pPUnitArMerging);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -118,9 +132,11 @@ void Composer::Add_FeedArgSlot(const Expr* pExprSrc)
 	Add(new PUnit_FeedArgSlot(pExprSrc->Reference()));
 }
 
-PUnit_ArgSlotNamed* Composer::Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned)
+PUnit_ArgSlotNamed* Composer::AddF_ArgSlotNamed(
+	const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned, const PUnit* pPUnitAtMerging)
 {
-	auto pPUnit = new PUnit_ArgSlotNamed(pExprSrc->Reference(), pSymbol, pExprAssigned->Reference());
+	auto pPUnit = new PUnit_ArgSlotNamed(
+		pExprSrc->Reference(), pSymbol, pExprAssigned->Reference(), pPUnitAtMerging);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -137,47 +153,51 @@ void Composer::Add_Call(const Expr* pExprSrc)
 
 void Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
 {
-#if 0
 	if (_pPUnitLast && !_pPUnitLast->GetPUnitNext()) {
 		_pPUnitLast->SetPUnitNext(pPUnitDest);
 	} else {
-		Add(new PUnit_Jump(pExprSrc->Reference(), pPUnitDest));
+		AddF_Jump(pExprSrc->Reference(), pPUnitDest);
 	}
-#endif
-	Add(new PUnit_Jump(pExprSrc->Reference(), pPUnitDest));
 }
 
-PUnit_JumpSub* Composer::Add_JumpSub(const Expr* pExprSrc)
+PUnit_Jump* Composer::AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
 {
-	auto pPUnit = new PUnit_JumpSub(pExprSrc->Reference());
+	auto pPUnit = new PUnit_Jump(pExprSrc->Reference(), pPUnitDest);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_BranchIf* Composer::Add_BranchIf(const Expr* pExprSrc)
+PUnit_JumpSub* Composer::AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitDest)
 {
-	auto pPUnit = new PUnit_BranchIf(pExprSrc->Reference());
+	auto pPUnit = new PUnit_JumpSub(pExprSrc->Reference(), pPUnitDest);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_BranchIfNot* Composer::Add_BranchIfNot(const Expr* pExprSrc)
+PUnit_BranchIf* Composer::AddF_BranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging)
 {
-	auto pPUnit = new PUnit_BranchIfNot(pExprSrc->Reference());
+	auto pPUnit = new PUnit_BranchIf(pExprSrc->Reference(), pPUnitAtMerging);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilBranchIf* Composer::Add_NilBranchIf(const Expr* pExprSrc)
+PUnit_BranchIfNot* Composer::AddF_BranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging)
 {
-	auto pPUnit = new PUnit_NilBranchIf(pExprSrc->Reference());
+	auto pPUnit = new PUnit_BranchIfNot(pExprSrc->Reference(), pPUnitAtMerging);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilBranchIfNot* Composer::Add_NilBranchIfNot(const Expr* pExprSrc)
+PUnit_NilBranchIf* Composer::AddF_NilBranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging)
 {
-	auto pPUnit = new PUnit_NilBranchIfNot(pExprSrc->Reference());
+	auto pPUnit = new PUnit_NilBranchIf(pExprSrc->Reference(), pPUnitAtMerging);
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_NilBranchIfNot* Composer::AddF_NilBranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging)
+{
+	auto pPUnit = new PUnit_NilBranchIfNot(pExprSrc->Reference(), pPUnitAtMerging);
 	Add(pPUnit);
 	return pPUnit;
 }

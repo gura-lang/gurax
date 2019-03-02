@@ -37,10 +37,12 @@ public:
 	void Add(PUnit* pPUnit);
 public:
 	void Add_Value(const Expr* pExprSrc, const Value* pValue);
+	PUnit_Value* AddF_Value(const Expr* pExprSrc, const Value* pValue);
 	void Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_Assign(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
 	void Add_PopToDiscard(const Expr* pExprSrc);
+	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_CreateList(const Expr* pExprSrc, size_t sizeReserve);
@@ -53,17 +55,20 @@ public:
 	void Add_PropSet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Argument(const Expr* pExprSrc, const Attribute& attr);
-	PUnit_ArgSlot* Add_ArgSlot(const Expr* pExprSrc);
+	PUnit_ArgSlot* AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitArMerging = nullptr);
 	void Add_FeedArgSlot(const Expr* pExprSrc);
-	PUnit_ArgSlotNamed* Add_ArgSlotNamed(const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned);
+	PUnit_ArgSlotNamed* AddF_ArgSlotNamed(
+		const Expr* pExprSrc, const Symbol* pSymbol,
+		const Expr* pExprAssigned, const PUnit* pPUnitAtMerging = nullptr);
 	void Add_FeedArgSlotNamed(const Expr* pExprSrc);
 	void Add_Call(const Expr* pExprSrc);
-	void Add_Jump(const Expr* pExprSrc, const PUnit *pPUnitDest);
-	PUnit_JumpSub* Add_JumpSub(const Expr* pExprSrc);
-	PUnit_BranchIf* Add_BranchIf(const Expr* pExprSrc);
-	PUnit_BranchIfNot* Add_BranchIfNot(const Expr* pExprSrc);
-	PUnit_NilBranchIf* Add_NilBranchIf(const Expr* pExprSrc);
-	PUnit_NilBranchIfNot* Add_NilBranchIfNot(const Expr* pExprSrc);
+	void Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest);
+	PUnit_Jump* AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
+	PUnit_JumpSub* AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
+	PUnit_BranchIf* AddF_BranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
+	PUnit_BranchIfNot* AddF_BranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
+	PUnit_NilBranchIf* AddF_NilBranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
+	PUnit_NilBranchIfNot* AddF_NilBranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
 	
 };
 

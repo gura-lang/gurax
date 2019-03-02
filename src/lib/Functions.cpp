@@ -18,15 +18,15 @@ Gurax_ImplementStatement(if_)
 	}
 	do {
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
-		pExpr->Compose(composer);
+		pExpr->Compose(composer);									// [ValueBool]
 	} while (0);
 	if (pExprCaller->GetExprBlock()->HasExprElem()) {
-		auto pPUnit = composer.Add_NilBranchIfNot(pExprCaller);
-		pExprCaller->GetExprBlock()->Compose(composer);
+		auto pPUnit = composer.AddF_NilBranchIfNot(pExprCaller);	// [] or [nil]
+		pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
 		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 	} else {
-		composer.Add_PopToDiscard(pExprCaller);
-		composer.Add_Value(pExprCaller, Value::nil());
+		composer.Add_PopToDiscard(pExprCaller);						// []
+		composer.Add_Value(pExprCaller, Value::nil());				// [nil]
 	}
 }
 
@@ -38,14 +38,16 @@ Gurax_DeclareStatementAlias(while_, "while")
 
 Gurax_ImplementStatement(while_)
 {
+	composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 	size_t pos = composer.MarkPUnit();
 	do {
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
-		pExpr->Compose(composer);
+		pExpr->Compose(composer);									// [ValueLast ValueBool]
 	} while (0);
-	auto pPUnit = composer.Add_BranchIfNot(pExprCaller);
-	pExprCaller->GetExprBlock()->Compose(composer);
-	composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
+	auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueLast]
+	composer.AddF_PopToDiscard(pExprCaller);						// []
+	pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
+	composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
 	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 }
 
