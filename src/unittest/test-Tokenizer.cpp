@@ -31,7 +31,7 @@ Gurax_TesterEntry(Tokenizer)
 		char ch = *p;
 		pTokenizer->FeedChar(ch);
 		if (Error::IsIssued()) {
-			Error::Print(stdout);
+			Error::Print(*Stream::CErr);
 			break;
 		}
 		if (ch == '\0') break;

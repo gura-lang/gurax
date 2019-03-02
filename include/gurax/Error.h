@@ -10,6 +10,7 @@ namespace Gurax {
 
 class Expr;
 class Error;
+class Stream;
 
 //------------------------------------------------------------------------------
 // ErrorType
@@ -126,7 +127,7 @@ public:
 		_pErrorOwnerGlobal->ClearSilentFlag();
 		_errorIssuedFlag = true;
 	}
-	static void Print(FILE* fp);
+	static void Print(Stream& stream);
 };
 
 }

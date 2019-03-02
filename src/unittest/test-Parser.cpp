@@ -224,7 +224,7 @@ Gurax_TesterEntry(Parser)
 		Error::Clear();
 		RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
 		if (Error::IsIssued()) {
-			Error::Print(stderr);
+			Error::Print(*Stream::CErr);
 			return;
 		}
 		for (const Expr* pExpr = pExprRoot->GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {

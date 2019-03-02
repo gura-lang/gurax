@@ -57,10 +57,10 @@ void Error::Clear()
 	_pErrorOwnerGlobal->Clear();
 }
 
-void Error::Print(FILE* fp)
+void Error::Print(Stream& stream)
 {
 	for (Error* pError : *_pErrorOwnerGlobal) {
-		::fprintf(fp, "%s\n", pError->MakeMessage().c_str());
+		stream.Printf("%s\n", pError->MakeMessage().c_str());
 	}
 }
 
