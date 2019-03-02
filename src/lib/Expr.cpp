@@ -46,12 +46,20 @@ void Expr::ComposeSequence(Composer& composer, const Expr* pExpr)
 	// [Value]
 }
 
+void Expr::ComposeForArgSlot(Composer& composer) const
+{
+	auto pPUnit = composer.AddF_ArgSlot(this);		// [ValueArgument]
+	Compose(composer);								// [ValueArgument Value]
+	composer.Add_FeedArgSlot(this);					// [ValueArgument]
+	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+}
+
 void Expr::ExecInAssignment(Processor& processor, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
 }
 
-void Expr::ComposeInAssignment(
+void Expr::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
@@ -251,7 +259,7 @@ void Expr_Identifier::ExecInAssignment(Processor& processor, const Expr* pExprAs
 	}
 }
 
-void Expr_Identifier::ComposeInAssignment(
+void Expr_Identifier::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
@@ -415,6 +423,25 @@ void Expr_BinaryOp::Compose(Composer& composer) const
 	composer.Add_BinaryOp(this, GetOperator());	// [ValueResult]
 }
 
+void Expr_BinaryOp::ComposeForArgSlot(Composer& composer) const
+{
+	if (!GetOperator()->IsType(OpType::Pair)) {
+		Expr::ComposeForArgSlot(composer);
+		return;
+	}
+	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::ArgumentError, Reference(),
+						 "named argument must be specified by a symbol");
+		return;
+	}
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
+	auto pPUnit = composer.AddF_ArgSlotNamed(this, pSymbol, GetExprRight());
+													// [ValueArgument ValueArgSlot]
+	GetExprRight()->Compose(composer);				// [ValueArgument ValueArgSlot Value]
+	composer.Add_FeedArgSlotNamed(this);			// [ValueArgument]
+	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+}
+
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
 {
 	String rtn;
@@ -468,7 +495,7 @@ void Expr_Assign::Exec(Processor& processor) const
 
 void Expr_Assign::Compose(Composer& composer) const
 {
-	GetExprLeft()->ComposeInAssignment(composer, GetExprRight(), GetOperator()); // [ValueAssigned]
+	GetExprLeft()->ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [ValueAssigned]
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -560,7 +587,7 @@ void Expr_Member::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 	} while (0);
 }
 
-void Expr_Member::ComposeInAssignment(
+void Expr_Member::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	GetExprTarget()->Compose(composer);						// [ValueTarget]
@@ -821,7 +848,7 @@ void Expr_Lister::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 {
 }
 
-void Expr_Lister::ComposeInAssignment(
+void Expr_Lister::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 }
@@ -914,7 +941,7 @@ void Expr_Indexer::ExecInAssignment(Processor& processor, const Expr* pExprAssig
 {
 }
 
-void Expr_Indexer::ComposeInAssignment(
+void Expr_Indexer::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 }
@@ -1062,6 +1089,9 @@ void Expr_Caller::Compose(Composer& composer) const
 	GetExprCar()->Compose(composer);
 	composer.Add_Argument(this, GetAttr());					// [ValueArgument]
 	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeForArgSlot(composer);
+		if (Error::IsIssued()) return;
+#if 0
 		if (pExpr->IsType<Expr_BinaryOp>() &&
 			dynamic_cast<const Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
 			const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
@@ -1082,6 +1112,7 @@ void Expr_Caller::Compose(Composer& composer) const
 			composer.Add_FeedArgSlot(pExpr);				// [ValueArgument]
 			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 		}
+#endif
 	}
 	composer.Add_Call(this);								// [ValueResult]
 }
@@ -1106,7 +1137,7 @@ void Expr_Caller::ExecInAssignment(Processor& processor, const Expr* pExprAssign
 	} while (0);
 }
 
-void Expr_Caller::ComposeInAssignment(
+void Expr_Caller::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
