@@ -89,10 +89,10 @@ String PUnit_Lookup::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Assign
+// PUnit_AssignToSymbol
 // Stack View: [ValueAssigned] -> [ValueAssigned]
 //------------------------------------------------------------------------------
-void PUnit_Assign::Exec(Processor& processor) const
+void PUnit_AssignToSymbol::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(
 		GetPopToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
@@ -100,10 +100,10 @@ void PUnit_Assign::Exec(Processor& processor) const
 	processor.Goto(GetPUnitNext());
 }
 
-String PUnit_Assign::ToString(const StringStyle& ss) const
+String PUnit_AssignToSymbol::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "Assign(`";
+	rtn += "AssignToSymbol(`";
 	rtn += GetSymbol()->GetName();
 	rtn += ")";
 	AppendInfoToString(rtn);

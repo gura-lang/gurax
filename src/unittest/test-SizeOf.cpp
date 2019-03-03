@@ -15,7 +15,7 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(DateTime);
 	Gurax_PrintSizeOf(PUnit_Value);
 	Gurax_PrintSizeOf(PUnit_Lookup);
-	Gurax_PrintSizeOf(PUnit_Assign);
+	Gurax_PrintSizeOf(PUnit_AssignToSymbol);
 	Gurax_PrintSizeOf(PUnit_PopToDiscard);
 	Gurax_PrintSizeOf(PUnit_UnaryOp);
 	Gurax_PrintSizeOf(PUnit_BinaryOp);

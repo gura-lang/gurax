@@ -34,9 +34,9 @@ void Composer::Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol)
 	Add(new PUnit_Lookup(pExprSrc->Reference(), pSymbol));
 }
 
-void Composer::Add_Assign(const Expr* pExprSrc, const Symbol* pSymbol)
+void Composer::Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol)
 {
-	Add(new PUnit_Assign(pExprSrc->Reference(), pSymbol));
+	Add(new PUnit_AssignToSymbol(pExprSrc->Reference(), pSymbol));
 }
 
 void Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction)

@@ -192,14 +192,13 @@ void Expr_Identifier::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
-		composer.Add_Lookup(this, GetSymbol());	// [Value]
-		pExprAssigned->Compose(composer);		// [Value ValueRight]
-		composer.Add_BinaryOp(this, pOperator);	// [ValueAssigned]
-		composer.Add_Assign(this, GetSymbol());	// [ValueAssigned]
+		composer.Add_Lookup(this, GetSymbol());			// [Value]
+		pExprAssigned->Compose(composer);				// [Value ValueRight]
+		composer.Add_BinaryOp(this, pOperator);			// [ValueAssigned]
 	} else {
-		pExprAssigned->Compose(composer);		// [ValueAssigned]
-		composer.Add_Assign(this, GetSymbol());	// [ValueAssigned]
+		pExprAssigned->Compose(composer);				// [ValueAssigned]
 	}
+	composer.Add_AssignToSymbol(this, GetSymbol());		// [ValueAssigned]
 }
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const

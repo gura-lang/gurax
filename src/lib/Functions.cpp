@@ -89,7 +89,20 @@ Gurax_ImplementStatement(while_)
 		Error::Issue(ErrorType::ArgumentError, "while-statement takes one argument");
 		return;
 	}
-	if (pExprCaller->GetExprBlock()->HasExprParam()) {
+	const DeclArgOwner& declArgOwner = pExprCaller->GetExprBlock()->GetDeclCallable().GetDeclArgOwner();
+	if (declArgOwner.empty()) {
+		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
+		size_t pos = composer.MarkPUnit();
+		do {
+			const Expr* pExpr = pExprCaller->GetExprCdrHead();
+			pExpr->Compose(composer);									// [ValueLast ValueBool]
+		} while (0);
+		auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueLast]
+		composer.AddF_PopToDiscard(pExprCaller);						// []
+		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
+		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	} else if (declArgOwner.size() == 1) {
 		composer.Add_Value(pExprCaller, Value::Zero());					// [ValueIdx=0 ValueLast=nil]
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
 		size_t pos = composer.MarkPUnit();
@@ -105,17 +118,8 @@ Gurax_ImplementStatement(while_)
 		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 		// delete ValueIdx here
 	} else {
-		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
-		size_t pos = composer.MarkPUnit();
-		do {
-			const Expr* pExpr = pExprCaller->GetExprCdrHead();
-			pExpr->Compose(composer);									// [ValueLast ValueBool]
-		} while (0);
-		auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueLast]
-		composer.AddF_PopToDiscard(pExprCaller);						// []
-		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
-		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
+		return;
 	}
 }
 

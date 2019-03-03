@@ -108,9 +108,9 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Assign
+// PUnit_AssignToSymbol
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Assign : public PUnit {
+class GURAX_DLLDECLARE PUnit_AssignToSymbol : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -118,7 +118,7 @@ private:
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	PUnit_Assign(Expr* pExprSrc, const Symbol* pSymbol) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
+	PUnit_AssignToSymbol(Expr* pExprSrc, const Symbol* pSymbol) : PUnit(pExprSrc), _pSymbol(pSymbol) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:

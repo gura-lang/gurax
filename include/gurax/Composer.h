@@ -39,7 +39,7 @@ public:
 	void Add_Value(const Expr* pExprSrc, const Value* pValue);
 	PUnit_Value* AddF_Value(const Expr* pExprSrc, const Value* pValue);
 	void Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol);
-	void Add_Assign(const Expr* pExprSrc, const Symbol* pSymbol);
+	void Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
 	void Add_PopToDiscard(const Expr* pExprSrc);
 	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
