@@ -7,48 +7,48 @@ namespace Gurax {
 
 Gurax_ImplementOpPreUnary(Pos, Number)
 {
-	return pValue->Clone();
+	return value.Clone();
 }
 
 Gurax_ImplementOpBinary(Add, Number, Number)
 {
-	Double numL = dynamic_cast<const Value_Number*>(pValueL)->GetDouble();
-	Double numR = dynamic_cast<const Value_Number*>(pValueR)->GetDouble();
+	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
+	Double numR = dynamic_cast<const Value_Number*>(&valueR)->GetDouble();
 	return new Value_Number(numL + numR);
 }
 
 Gurax_ImplementOpBinary(Eq, Number, Number)
 {
-	Double numL = dynamic_cast<const Value_Number*>(pValueL)->GetDouble();
-	Double numR = dynamic_cast<const Value_Number*>(pValueR)->GetDouble();
+	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
+	Double numR = dynamic_cast<const Value_Number*>(&valueR)->GetDouble();
 	return new Value_Bool(numL == numR);
 }
 
 Gurax_ImplementOpBinary(Ge, Number, Number)
 {
-	Double numL = dynamic_cast<const Value_Number*>(pValueL)->GetDouble();
-	Double numR = dynamic_cast<const Value_Number*>(pValueR)->GetDouble();
+	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
+	Double numR = dynamic_cast<const Value_Number*>(&valueR)->GetDouble();
 	return new Value_Bool(numL >= numR);
 }
 
 Gurax_ImplementOpBinary(Gt, Number, Number)
 {
-	Double numL = dynamic_cast<const Value_Number*>(pValueL)->GetDouble();
-	Double numR = dynamic_cast<const Value_Number*>(pValueR)->GetDouble();
+	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
+	Double numR = dynamic_cast<const Value_Number*>(&valueR)->GetDouble();
 	return new Value_Bool(numL > numR);
 }
 
 Gurax_ImplementOpBinary(Le, Number, Number)
 {
-	Double numL = dynamic_cast<const Value_Number*>(pValueL)->GetDouble();
-	Double numR = dynamic_cast<const Value_Number*>(pValueR)->GetDouble();
+	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
+	Double numR = dynamic_cast<const Value_Number*>(&valueR)->GetDouble();
 	return new Value_Bool(numL <= numR);
 }
 
 Gurax_ImplementOpBinary(Lt, Number, Number)
 {
-	Double numL = dynamic_cast<const Value_Number*>(pValueL)->GetDouble();
-	Double numR = dynamic_cast<const Value_Number*>(pValueR)->GetDouble();
+	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
+	Double numR = dynamic_cast<const Value_Number*>(&valueR)->GetDouble();
 	return new Value_Bool(numL < numR);
 }
 

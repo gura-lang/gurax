@@ -98,37 +98,37 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
-Value* Operator::EvalUnary(const Value* pValue) const
+Value* Operator::EvalUnary(const Value& value) const
 {
-	if (!pValue) return nullptr;
-	const OpEntry* pOpEntry = LookupEntry(pValue->GetVType());
-	if (pOpEntry) return pOpEntry->EvalUnary(pValue);
+	if (value.IsUndefined()) return Value::undefined();
+	const OpEntry* pOpEntry = LookupEntry(value.GetVType());
+	if (pOpEntry) return pOpEntry->EvalUnary(value);
 	Error::Issue(ErrorType::TypeError, "unsupported unary operation: %s %s",
-				 GetSymbol(), pValue->GetVType().MakeFullName().c_str());
-	return nullptr;
+				 GetSymbol(), value.GetVType().MakeFullName().c_str());
+	return Value::undefined();
 }
 
-Value* Operator::EvalBinary(const Value* pValueL, const Value* pValueR) const
+Value* Operator::EvalBinary(const Value& valueL, const Value& valueR) const
 {
-	if (!pValueL || !pValueR) return nullptr;
-	const OpEntry* pOpEntry = LookupEntry(pValueL->GetVType(), pValueR->GetVType());
-	if (pOpEntry) return pOpEntry->EvalBinary(pValueL, pValueR);
+	if (valueL.IsUndefined() || valueR.IsUndefined()) return Value::undefined();
+	const OpEntry* pOpEntry = LookupEntry(valueL.GetVType(), valueR.GetVType());
+	if (pOpEntry) return pOpEntry->EvalBinary(valueL, valueR);
 	Error::Issue(ErrorType::TypeError, "unsuppported binary operation: %s %s %s",
-				 pValueL->GetVType().MakeFullName().c_str(),
+				 valueL.GetVType().MakeFullName().c_str(),
 				 GetSymbol(),
-				 pValueR->GetVType().MakeFullName().c_str());
-	return nullptr;
+				 valueR.GetVType().MakeFullName().c_str());
+	return Value::undefined();
 }
 
 //------------------------------------------------------------------------------
 // OpEntry
 //------------------------------------------------------------------------------
-Value* OpEntry::EvalUnary(const Value* pValue) const
+Value* OpEntry::EvalUnary(const Value& value) const
 {
 	return Value::nil();
 }
 
-Value* OpEntry::EvalBinary(const Value* pValueL, const Value* pValueR) const
+Value* OpEntry::EvalBinary(const Value& valueL, const Value& valueR) const
 {
 	return Value::nil();
 }

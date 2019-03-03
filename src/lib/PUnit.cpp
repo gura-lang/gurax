@@ -187,8 +187,8 @@ void PUnit_UnaryOp::Exec(Processor& processor) const
 		Value::Delete(processor.PopValue());
 	} else {
 		RefPtr<Value> pValue(processor.PopValue());
-		RefPtr<Value> pValueResult(GetOperator()->EvalUnary(pValue.get()));
-		if (!pValueResult) return;
+		RefPtr<Value> pValueResult(GetOperator()->EvalUnary(*pValue));
+		if (pValueResult->IsUndefined()) return;
 		processor.PushValue(pValueResult.release());
 	}
 	processor.Goto(GetPUnitNext());
@@ -216,8 +216,8 @@ void PUnit_BinaryOp::Exec(Processor& processor) const
 	} else {
 		RefPtr<Value> pValueRight(processor.PopValue());
 		RefPtr<Value> pValueLeft(processor.PopValue());
-		RefPtr<Value> pValueResult(GetOperator()->EvalBinary(pValueLeft.release(), pValueRight.release()));
-		if (!pValueResult) return;
+		RefPtr<Value> pValueResult(GetOperator()->EvalBinary(*pValueLeft, *pValueRight));
+		if (pValueResult->IsUndefined()) return;
 		processor.PushValue(pValueResult.release());
 	}
 	processor.Goto(GetPUnitNext());
