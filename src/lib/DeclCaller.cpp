@@ -37,20 +37,29 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, con
 	}
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	if (pExprBlock) {
+		const char* strError = "invalid format of block declaration";
 		UInt32 flags = DeclBlock::Flag::None;
 		if (pExprBlock->CountExprElem() != 1) {
-			Error::Issue(ErrorType::SyntaxError, "invalid format of block declaration");
+			Error::Issue(ErrorType::DeclarationError, strError);
 			return false;
 		}
 		const Expr* pExpr = pExprBlock->GetExprLinkElem().GetExprHead();
 		while (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::Quote)) {
+				if (flags & DeclBlock::Flag::Quote) {
+					Error::Issue(ErrorType::DeclarationError, strError);
+					return false;
+				}
 				flags |= DeclBlock::Flag::Quote;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostQuestion)) {
+				if (!GetDeclBlock().IsOccurZero()) {
+					Error::Issue(ErrorType::DeclarationError, strError);
+					return false;
+				}
 				GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
 			} else {
-				Error::Issue(ErrorType::SyntaxError, "invalid format of block declaration");
+				Error::Issue(ErrorType::DeclarationError, strError);
 				return false;
 			}
 			pExpr = pExprEx->GetExprChild();
@@ -60,7 +69,7 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, con
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(pExpr);
 			GetDeclBlock().SetSymbol(pExprEx->GetSymbol());
 		} else {
-			Error::Issue(ErrorType::SyntaxError, "invalid format of block declaration");
+			Error::Issue(ErrorType::DeclarationError, strError);
 			return false;
 		}
 	}
