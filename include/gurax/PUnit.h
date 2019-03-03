@@ -128,6 +128,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_AssignToDeclArg
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_AssignToDeclArg : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	RefPtr<DeclArg> _pDeclArg;
+public:
+	// Constructor
+	PUnit_AssignToDeclArg(Expr* pExprSrc, DeclArg* pDeclArg) : PUnit(pExprSrc), _pDeclArg(pDeclArg) {}
+public:
+	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_AssignFunction
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_AssignFunction : public PUnit {
@@ -217,6 +237,26 @@ public:
 	PUnit_BinaryOp(Expr* pExprSrc, const Operator* pOperator) : PUnit(pExprSrc), _pOperator(pOperator) {}
 public:
 	const Operator* GetOperator() const { return _pOperator; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Add
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Add : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	int _added;
+public:
+	// Constructor
+	PUnit_Add(Expr* pExprSrc, int added) : PUnit(pExprSrc), _added(added) {}
+public:
+	const int GetAdded() const { return _added; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

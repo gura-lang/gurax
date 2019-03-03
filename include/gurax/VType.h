@@ -76,6 +76,7 @@ public:
 	Value* DoPropGet(Value* pValueTarget, const Symbol* pSymbol, const Attribute& attr) const;
 	void DoPropSet(Value* pValueTarget, const Symbol* pSymbol, Value* pValue, const Attribute& attr) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
+	Value* Cast(const Value& value) const;
 public:
 	void Prepare(Frame& frameParent) { DoPrepare(frameParent); }
 public:

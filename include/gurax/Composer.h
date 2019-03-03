@@ -40,12 +40,14 @@ public:
 	PUnit_Value* AddF_Value(const Expr* pExprSrc, const Value* pValue);
 	void Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol);
+	void Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg);
 	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
 	void Add_PopToDiscard(const Expr* pExprSrc);
 	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
 	void Add_Cast(const Expr* pExprSrc, const VType& vtype);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
+	void Add_Add(const Expr* pExprSrc, int added);
 	void Add_CreateList(const Expr* pExprSrc, size_t sizeReserve);
 	void Add_AddList(const Expr* pExprSrc);
 	void Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve);

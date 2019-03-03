@@ -111,6 +111,31 @@ String PUnit_AssignToSymbol::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_AssignToDeclArg
+// Stack View: [ValueAssigned] -> [ValueAssigned]
+//------------------------------------------------------------------------------
+void PUnit_AssignToDeclArg::Exec(Processor& processor) const
+{
+	Frame& frame = processor.GetFrame();
+	RefPtr<Value> pValueAssigned(
+		GetPopToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
+	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
+	if (!pValueCasted) return;
+	frame.AssignValue(GetDeclArg().GetSymbol(), pValueCasted.release());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_AssignToDeclArg::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "AssignToDeclArg(`";
+	rtn += GetDeclArg().ToString(ss);
+	rtn += ")";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_AssignFunction
 // Stack View: [] -> [Value]
 //------------------------------------------------------------------------------
@@ -160,7 +185,7 @@ void PUnit_Cast::Exec(Processor& processor) const
 		Value::Delete(processor.PopValue());
 	} else {
 		RefPtr<Value> pValue(processor.PopValue());
-		RefPtr<Value> pValueResult(Value::Cast(GetVType(), *pValue));
+		RefPtr<Value> pValueResult(GetVType().Cast(*pValue));
 		if (!pValueResult) return;
 		processor.PushValue(pValueResult.release());
 	}
@@ -228,6 +253,36 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "BinaryOp(";
 	rtn += GetOperator()->GetSymbol();
+	rtn += ")";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Add
+// Stack View: [Value] -> [ValueResult]
+//------------------------------------------------------------------------------
+void PUnit_Add::Exec(Processor& processor) const
+{
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+	} else {
+		RefPtr<Value> pValue(processor.PopValue());
+		if (!pValue->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "number value is expected");
+			return;
+		}
+		int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
+		processor.PushValue(new Value_Number(num + GetAdded()));
+	}
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_Add::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Add(";
+	rtn += std::to_string(GetAdded());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;

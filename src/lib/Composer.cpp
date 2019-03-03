@@ -39,6 +39,11 @@ void Composer::Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol)
 	Add(new PUnit_AssignToSymbol(pExprSrc->Reference(), pSymbol));
 }
 
+void Composer::Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg)
+{
+	Add(new PUnit_AssignToDeclArg(pExprSrc->Reference(), pDeclArg));
+}
+
 void Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction)
 {
 	Add(new PUnit_AssignFunction(pExprSrc->Reference(), pFunction->Reference()));
@@ -73,6 +78,11 @@ void Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
 void Composer::Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator)
 {
 	Add(new PUnit_BinaryOp(pExprSrc->Reference(), pOperator));
+}
+
+void Composer::Add_Add(const Expr* pExprSrc, int added)
+{
+	Add(new PUnit_Add(pExprSrc->Reference(), added));
 }
 
 void Composer::Add_CreateList(const Expr* pExprSrc, size_t sizeReserve)

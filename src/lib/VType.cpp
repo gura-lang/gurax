@@ -44,6 +44,11 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 	return pPropHandler;
 }
 
+Value* VType::Cast(const Value& value) const
+{
+	return DoCastFrom(value);
+}
+
 Value* VType::DoCastFrom(const Value& value) const
 {
 	if (value.IsInstanceOf(*this)) return value.Reference();

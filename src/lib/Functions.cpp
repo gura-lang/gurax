@@ -103,6 +103,7 @@ Gurax_ImplementStatement(while_)
 		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
 		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
 	} else if (declArgOwner.size() == 1) {
+		const DeclArg* pDeclArg = declArgOwner.front();
 		composer.Add_Value(pExprCaller, Value::Zero());					// [ValueIdx=0 ValueLast=nil]
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
 		size_t pos = composer.MarkPUnit();
@@ -112,7 +113,9 @@ Gurax_ImplementStatement(while_)
 		} while (0);
 		auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueIdx ValueLast]
 		composer.AddF_PopToDiscard(pExprCaller);						// [ValueIdx]
-		
+		composer.Add_AssignToDeclArg(
+			pExprCaller, pDeclArg->Reference());						// [ValueIdx]
+		composer.Add_Add(pExprCaller, 1);								// [ValueIdx=ValueIdx+1]
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueIdx ValueLast]
 		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
 		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());

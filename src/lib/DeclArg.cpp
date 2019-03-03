@@ -114,14 +114,24 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 		new DeclArg(pSymbol, pDottedSymbol.release(), *pOccur, flags, pExprDefault.release());
 }
 
-bool DeclArg::FixVType(Frame* pFrame)
+bool DeclArg::FixVType(Frame& frame)
 {
-	Value* pValue = pFrame->LookupValue(GetDottedSymbol());
+	Value* pValue = frame.LookupValue(GetDottedSymbol());
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		_pVType = &dynamic_cast<Value_VType*>(pValue)->GetVType();
 		return true;
 	}
 	return false;
+}
+
+Value* DeclArg::Cast(Frame& frame, const Value& value)
+{
+	if (GetVType().IsIdentical(VTYPE_Undefined) && !FixVType(frame)) {
+		Error::Issue(ErrorType::TypeError,
+					 "unknown value type: %s", GetDottedSymbol().ToString().c_str());
+		return nullptr;
+	}
+	return GetVType().Cast(value);
 }
 
 String DeclArg::FlagsToString(UInt32 flags)

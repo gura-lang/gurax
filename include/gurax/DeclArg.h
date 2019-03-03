@@ -113,7 +113,8 @@ public:
 	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr* pExpr);
-	bool FixVType(Frame* pFrame);
+	bool FixVType(Frame& frame);
+	Value* Cast(Frame& frame, const Value& value);
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}

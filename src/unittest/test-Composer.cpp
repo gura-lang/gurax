@@ -37,6 +37,16 @@ while (a < 3) {
 )";
 #endif
 
+#if 0
+static const char* src = R"(
+a = 0
+while (a < 3) {|i|
+	Printf('Hello World #%d\n', i)
+	a += 1
+}
+)";
+#endif
+
 Gurax_TesterEntry(Composer)
 {
 	RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
