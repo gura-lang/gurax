@@ -112,8 +112,14 @@ public:
 	void DeclareAttrOpt(const char* name) {
 		GetDeclCaller().GetAttr().AddSymbolOpt(Symbol::Add(name));
 	}
-	void DeclareBlock(const DeclArg::Occur& occur) {
-		// to-do
+	void DeclareBlock(const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
+		GetDeclCaller().GetDeclBlock().SetOccur(occur).SetFlags(flags);
+	}
+	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
+		GetDeclCaller().GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
+	}
+	void DeclareBlock(const char* name, const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
+		DeclareBlock(Symbol::Add(name), occur, flags);
 	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));

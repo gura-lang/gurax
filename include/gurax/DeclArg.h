@@ -61,7 +61,7 @@ public:
 		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
 		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
+	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(listvar),		Flag::ListVar);
@@ -106,10 +106,10 @@ public:
 	void SetVType(const VType* pVType) { _pVType = pVType; }
 	const Occur& GetOccur() const { return _occur; }
 	const ArgSlotFactory& GetArgSlotFactory() const { return GetOccur().GetArgSlotFactory(); }
-	bool IsOccurOnce() const { return _occur.IsIdentical(Occur::Once); }
-	bool IsOccurZeroOrOnce() const { return _occur.IsIdentical(Occur::ZeroOrOnce); }
-	bool IsOccurZeroOrMore() const { return _occur.IsIdentical(Occur::ZeroOrMore); }
-	bool IsOccurOnceOrMore() const { return _occur.IsIdentical(Occur::OnceOrMore); }
+	bool IsOccurOnce() const { return GetOccur().IsIdentical(Occur::Once); }
+	bool IsOccurZeroOrOnce() const { return GetOccur().IsIdentical(Occur::ZeroOrOnce); }
+	bool IsOccurZeroOrMore() const { return GetOccur().IsIdentical(Occur::ZeroOrMore); }
+	bool IsOccurOnceOrMore() const { return GetOccur().IsIdentical(Occur::OnceOrMore); }
 	UInt32 GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr* pExpr);

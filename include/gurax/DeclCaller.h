@@ -6,6 +6,7 @@
 #include "Attribute.h"
 #include "Symbols.h"
 #include "DeclArg.h"
+#include "DeclBlock.h"
 
 namespace Gurax {
 
@@ -39,7 +40,7 @@ public:
 		static const UInt32 Privileged		= 1 << 15;	// :privileged
 		static const UInt32 Reduce			= 1 << 16;	// :reduce
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
+	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(map),			Flag::Map);
@@ -70,6 +71,7 @@ private:
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 	DeclArgOwner _declArgOwner;
+	DeclBlock _declBlock;
 public:
 	static const DeclCaller* Empty;
 public:
@@ -91,6 +93,8 @@ public:
 	void Clear();
 	DeclArgOwner& GetDeclArgOwner() { return _declArgOwner; }
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
+	DeclBlock& GetDeclBlock() { return _declBlock; }
+	const DeclBlock& GetDeclBlock() const { return _declBlock; }
 	void SetVType(const VType& vtype) { _pVType = &vtype; }
 	const VType& GetVType() const { return *_pVType; }
 	void SetFlags(UInt32 flags) { _flags = flags; }

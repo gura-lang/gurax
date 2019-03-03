@@ -14,7 +14,8 @@ namespace Gurax {
 class GURAX_DLLDECLARE DeclBlock {
 public:
 	struct Flag {
-		static const UInt32 None			= 0;
+		static const UInt32 None	= 0;
+		static const UInt32 Quote	= (1 << 0);
 	};
 	class Occur {
 	private:
@@ -43,7 +44,7 @@ public:
 		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
 		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, 0> {
+	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 		}
@@ -53,26 +54,28 @@ public:
 	};
 private:
 	const Symbol* _pSymbol;
-	const Occur& _occur;
+	const Occur* _pOccur;
 	UInt32 _flags;
 public:
 	// Constructor
-	DeclBlock(const Symbol* pSymbol, const Occur& occur, UInt32 flags);
+	DeclBlock();
 	// Copy constructor/operator
 	DeclBlock(const DeclBlock& src) = delete;
 	DeclBlock& operator=(const DeclBlock& src) = delete;
 	// Move constructor/operator
 	DeclBlock(DeclBlock&& src) = delete;
 	DeclBlock& operator=(DeclBlock&& src) noexcept = delete;
-protected:
 	// Destructor
 	~DeclBlock() = default;
 public:
+	DeclBlock& SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; return *this; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	const Occur& GetOccur() const { return _occur; }
-	bool IsOccurZero() const { return _occur.IsIdentical(Occur::Zero); }
-	bool IsOccurOnce() const { return _occur.IsIdentical(Occur::Once); }
-	bool IsOccurZeroOrOnce() const { return _occur.IsIdentical(Occur::ZeroOrOnce); }
+	DeclBlock& SetOccur(const Occur& occur) { _pOccur = &occur; return *this; }
+	const Occur& GetOccur() const { return *_pOccur; }
+	bool IsOccurZero() const { return GetOccur().IsIdentical(Occur::Zero); }
+	bool IsOccurOnce() const { return GetOccur().IsIdentical(Occur::Once); }
+	bool IsOccurZeroOrOnce() const { return GetOccur().IsIdentical(Occur::ZeroOrOnce); }
+	DeclBlock& SetFlags(UInt32 flags) { _flags = flags; return *this; }
 	UInt32 GetFlags() const { return _flags; }
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);

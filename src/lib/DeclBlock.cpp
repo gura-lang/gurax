@@ -8,20 +8,28 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DeclBlock
 //------------------------------------------------------------------------------
-DeclBlock::DeclBlock(const Symbol* pSymbol, const Occur& occur, UInt32 flags) :
-	_pSymbol(pSymbol), _occur(occur), _flags(flags)
+DeclBlock::DeclBlock() : _pSymbol(Symbol::Empty), _pOccur(&Occur::Zero), _flags(Flag::None)
 {
 }
 
 String DeclBlock::FlagsToString(UInt32 flags)
 {
 	String rtn;
+	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
+		if (flags & 1) {
+			rtn += ':';
+			rtn += FlagToSymbol(flag)->GetName();
+		}
+	}
 	return rtn;
 }
 
 String DeclBlock::ToString(const StringStyle& ss) const
 {
 	String rtn;
+	if (GetFlags() & Flag::Quote) rtn += '`';
+	rtn += GetSymbol()->GetName();
+	rtn += GetOccur().GetMarker();
 	return rtn;
 }
 

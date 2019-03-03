@@ -10,6 +10,7 @@ Gurax_DeclareStatementAlias(if_, "if")
 {
 	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
 }
 
 Gurax_ImplementStatement(if_)
@@ -37,6 +38,7 @@ Gurax_DeclareStatementAlias(while_, "while")
 {
 	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
 }
 
 Gurax_ImplementStatement(while_)
