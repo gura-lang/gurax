@@ -466,6 +466,11 @@ String Expr_Root::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Block::typeInfo;
 
+bool Expr_Block::DoPrepare()
+{
+	return PrepareDeclCallable();
+}
+
 void Expr_Block::Compose(Composer& composer) const
 {
 	ComposeSequence(composer, GetExprElemHead());			// [Value]

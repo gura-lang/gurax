@@ -1,4 +1,4 @@
-[DeclCaller]
+[DeclCallable]
 f(a:[]) = {}f() = {} .. error: trailer must follow after caller
 f(`v) = {} .. (`v)
 f(v) = {} .. (v:Any)

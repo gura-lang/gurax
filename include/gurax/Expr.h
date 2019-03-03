@@ -577,9 +577,11 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<ExprLink> _pExprLinkParam;	// this may be nullptr
+	RefPtr<ExprLink> _pExprLinkParam;		// this may be nullptr
+	RefPtr<DeclCallable> _pDeclCallable;
 public:
-	explicit Expr_Block(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
+	explicit Expr_Block(ExprLink* pExprLinkElem) :
+		Expr_Collector(typeInfo, pExprLinkElem), _pDeclCallable(new DeclCallable()) {}
 	void SetExprLinkParam(ExprLink* pExprLinkParam) {
 		_pExprLinkParam.reset(pExprLinkParam);
 		_pExprLinkParam->SetExprParent(this);
@@ -589,6 +591,11 @@ public:
 	const Expr* GetExprParamHead() const {
 		return _pExprLinkParam? _pExprLinkParam->GetExprHead() : nullptr;
 	}
+	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
+	bool PrepareDeclCallable() {
+		if (!_pExprLinkParam) return true;
+		return _pDeclCallable->Prepare(GetExprLinkParam(), *Attribute::Empty, nullptr);
+	}
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
@@ -596,6 +603,7 @@ public:
 		if (_pExprLinkParam && !_pExprLinkParam->Traverse(visitor)) return false;
 		return true;
 	}
+	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
