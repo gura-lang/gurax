@@ -38,7 +38,12 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, con
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	if (pExprBlock) {
 		const char* strError = "invalid format of block declaration";
+		if (pExprBlock->HasExprParam()) {
+			Error::Issue(ErrorType::DeclarationError, strError);
+			return false;
+		}
 		UInt32 flags = DeclBlock::Flag::None;
+		const DeclBlock::Occur* pOccur = nullptr;
 		if (pExprBlock->CountExprElem() != 1) {
 			Error::Issue(ErrorType::DeclarationError, strError);
 			return false;
@@ -53,18 +58,18 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, con
 				}
 				flags |= DeclBlock::Flag::Quote;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostQuestion)) {
-				if (!GetDeclBlock().IsOccurZero()) {
+				if (pOccur) {
 					Error::Issue(ErrorType::DeclarationError, strError);
 					return false;
 				}
-				GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
+				pOccur = &DeclBlock::Occur::ZeroOrOnce;
 			} else {
 				Error::Issue(ErrorType::DeclarationError, strError);
 				return false;
 			}
 			pExpr = pExprEx->GetExprChild();
 		}
-		GetDeclBlock().SetFlags(flags);
+		GetDeclBlock().SetFlags(flags).SetOccur(pOccur? *pOccur : DeclBlock::Occur::Once);
 		if (pExpr->IsType<Expr_Identifier>()) {
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(pExpr);
 			GetDeclBlock().SetSymbol(pExprEx->GetSymbol());
