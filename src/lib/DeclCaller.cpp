@@ -60,11 +60,16 @@ bool DeclCaller::CheckAttribute(const Attribute& attr) const
 String DeclCaller::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += '(';
+	rtn += "(";
 	rtn += GetDeclArgOwner().ToString(ss);
-	rtn += ')';
+	rtn += ")";
 	rtn += FlagsToString(_flags);
 	rtn += GetAttr().ToString(ss);
+	if (!GetDeclBlock().IsOccurZero()) {
+		rtn += ss.IsCram()? "{" : " {";
+		rtn += GetDeclBlock().ToString(ss);
+		rtn += "}";
+	}
 	return rtn;
 }
 
