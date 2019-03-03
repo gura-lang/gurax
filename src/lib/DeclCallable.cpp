@@ -1,25 +1,25 @@
 //==============================================================================
-// DeclCaller.cpp
+// DeclCallable.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// DeclCaller
+// DeclCallable
 //------------------------------------------------------------------------------
-const DeclCaller* DeclCaller::Empty = nullptr;
+const DeclCallable* DeclCallable::Empty = nullptr;
 
-void DeclCaller::Bootup()
+void DeclCallable::Bootup()
 {
-	Empty = new DeclCaller();
+	Empty = new DeclCallable();
 }
 
-DeclCaller::DeclCaller() : _pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute())
+DeclCallable::DeclCallable() : _pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute())
 {
 }
 
-bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock)
+bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock)
 {
 	_declArgOwner.reserve(exprLinkCdr.CountSequence());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -81,14 +81,14 @@ bool DeclCaller::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, con
 	return true;
 }
 
-void DeclCaller::Clear()
+void DeclCallable::Clear()
 {
 	_declArgOwner.Clear();
 	_flags = 0;
 	_pAttr.reset(new Attribute());
 }
 
-bool DeclCaller::CheckAttribute(const Attribute& attr) const
+bool DeclCallable::CheckAttribute(const Attribute& attr) const
 {
 	for (const Symbol* pSymbol: attr.GetSymbols()) {
 		if (!GetAttr().GetSymbolSetOpt().IsSet(pSymbol)) {
@@ -99,7 +99,7 @@ bool DeclCaller::CheckAttribute(const Attribute& attr) const
 	return true;
 }
 
-String DeclCaller::ToString(const StringStyle& ss) const
+String DeclCallable::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "(";
@@ -115,14 +115,14 @@ String DeclCaller::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
-UInt32 DeclCaller::SymbolsToFlags(const SymbolList& symbols)
+UInt32 DeclCallable::SymbolsToFlags(const SymbolList& symbols)
 {
 	UInt32 flags = 0;
 	for (const Symbol* pSymbol : symbols) flags |= SymbolToFlag(pSymbol);
 	return flags;
 }
 
-String DeclCaller::FlagsToString(UInt32 flags)
+String DeclCallable::FlagsToString(UInt32 flags)
 {
 	String rtn;
 	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {

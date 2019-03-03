@@ -9,7 +9,7 @@ namespace Gurax {
 
 class Argument;
 class Index;
-class DeclCaller;
+class DeclCallable;
 class Formatter;
 class FormatterFlags;
 class Processor;
@@ -89,7 +89,7 @@ public:
 		return ss.IsDigest()? ToStringDigest(ss) : ToStringDetail(ss);
 	}
 public:
-	bool IsCallable() const { return GetDeclCaller() != nullptr; }
+	bool IsCallable() const { return GetDeclCallable() != nullptr; }
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
@@ -112,7 +112,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
-	virtual const DeclCaller* GetDeclCaller() const { return nullptr; }
+	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
 	virtual Value* DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, Value* pValue);

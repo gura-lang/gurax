@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_FUNCTION_H
 #define GURAX_FUNCTION_H
-#include "DeclCaller.h"
+#include "DeclCallable.h"
 #include "Help.h"
 #include "Frame.h"
 #include "Argument.h"
@@ -55,25 +55,25 @@ public:
 protected:
 	Type _type;
 	const Symbol* _pSymbol;
-	RefPtr<DeclCaller> _pDeclCaller;
+	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<HelpProvider> _pHelpProvider;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
 public:
 	// Constructor
 	Function(Type type) :
-		Function(type, Symbol::Empty, new DeclCaller(), new HelpProvider()) {}
+		Function(type, Symbol::Empty, new DeclCallable(), new HelpProvider()) {}
 	Function(Type type, const Symbol* pSymbol) :
-		Function(type, pSymbol, new DeclCaller(), new HelpProvider()) {}
-	Function(Type type, const Symbol* pSymbol, DeclCaller* pDeclCaller) :
-		Function(type, pSymbol, pDeclCaller, new HelpProvider()) {}
-	Function(Type type, const Symbol* pSymbol, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
-		_type(type), _pSymbol(pSymbol), _pDeclCaller(pDeclCaller), _pHelpProvider(pHelpProvider) {}
+		Function(type, pSymbol, new DeclCallable(), new HelpProvider()) {}
+	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable) :
+		Function(type, pSymbol, pDeclCallable, new HelpProvider()) {}
+	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, HelpProvider* pHelpProvider) :
+		_type(type), _pSymbol(pSymbol), _pDeclCallable(pDeclCallable), _pHelpProvider(pHelpProvider) {}
 	Function(Type type, const char* name) :
 		Function(type, Symbol::Add(name)) {}		
-	Function(Type type, const char* name, DeclCaller* pDeclCaller) :
-		Function(type, Symbol::Add(name), pDeclCaller) {}
-	Function(Type type, const char* name, DeclCaller* pDeclCaller, HelpProvider* pHelpProvider) :
-		Function(type, Symbol::Add(name), pDeclCaller, pHelpProvider) {}
+	Function(Type type, const char* name, DeclCallable* pDeclCallable) :
+		Function(type, Symbol::Add(name), pDeclCallable) {}
+	Function(Type type, const char* name, DeclCallable* pDeclCallable, HelpProvider* pHelpProvider) :
+		Function(type, Symbol::Add(name), pDeclCallable, pHelpProvider) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;
@@ -88,18 +88,18 @@ public:
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	DeclCaller& GetDeclCaller() { return *_pDeclCaller; }
-	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
+	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
+	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	void DeclareCaller(const VType& vtype, UInt32 flags) {
-		GetDeclCaller().SetVType(vtype);
-		GetDeclCaller().SetFlags(flags);
+		GetDeclCallable().SetVType(vtype);
+		GetDeclCallable().SetFlags(flags);
 	}
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
-		GetDeclCaller().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
+		GetDeclCallable().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
 	}
 	void DeclareArg(const char* name, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
@@ -107,16 +107,16 @@ public:
 		DeclareArg(Symbol::Add(name), vtype, occur, flags, pExprDefault);
 	}
 	void DeclareAttrOpt(const Symbol* pSymbol) {
-		GetDeclCaller().GetAttr().AddSymbolOpt(pSymbol);
+		GetDeclCallable().GetAttr().AddSymbolOpt(pSymbol);
 	}
 	void DeclareAttrOpt(const char* name) {
-		GetDeclCaller().GetAttr().AddSymbolOpt(Symbol::Add(name));
+		GetDeclCallable().GetAttr().AddSymbolOpt(Symbol::Add(name));
 	}
 	void DeclareBlock(const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
-		GetDeclCaller().GetDeclBlock().SetOccur(occur).SetFlags(flags);
+		GetDeclCallable().GetDeclBlock().SetOccur(occur).SetFlags(flags);
 	}
 	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
-		GetDeclCaller().GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
+		GetDeclCallable().GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
 	}
 	void DeclareBlock(const char* name, const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
 		DeclareBlock(Symbol::Add(name), occur, flags);

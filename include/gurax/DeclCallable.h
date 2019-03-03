@@ -1,5 +1,5 @@
 //==============================================================================
-// DeclCaller.h
+// DeclCallable.h
 //==============================================================================
 #ifndef GURAX_DECLCALLER_H
 #define GURAX_DECLCALLER_H
@@ -14,12 +14,12 @@ class ExprLink;
 class Expr_Block;
 
 //------------------------------------------------------------------------------
-// DeclCaller
+// DeclCallable
 //------------------------------------------------------------------------------
-class DeclCaller : public Referable {
+class DeclCallable : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(DeclCaller);
+	Gurax_DeclareReferable(DeclCallable);
 public:
 	struct Flag {
 		static const UInt32 None			= 0;
@@ -74,21 +74,21 @@ private:
 	DeclArgOwner _declArgOwner;
 	DeclBlock _declBlock;
 public:
-	static const DeclCaller* Empty;
+	static const DeclCallable* Empty;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	DeclCaller();
+	DeclCallable();
 	// Copy constructor/operator
-	DeclCaller(const DeclCaller& src) = delete;
-	DeclCaller& operator=(const DeclCaller& src) = delete;
+	DeclCallable(const DeclCallable& src) = delete;
+	DeclCallable& operator=(const DeclCallable& src) = delete;
 	// Move constructor/operator
-	DeclCaller(DeclCaller&& src) = delete;
-	DeclCaller& operator=(DeclCaller&& src) noexcept = delete;
+	DeclCallable(DeclCallable&& src) = delete;
+	DeclCallable& operator=(DeclCallable&& src) noexcept = delete;
 protected:
 	// Destructor
-	~DeclCaller() = default;
+	~DeclCallable() = default;
 public:
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock);
 	void Clear();
@@ -107,9 +107,9 @@ public:
 	bool CheckAttribute(const Attribute& attr) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const DeclCaller& declCaller) const { return this == &declCaller; }
-	bool IsEqualTo(const DeclCaller& declCaller) const { return IsIdentical(declCaller); }
-	bool IsLessThan(const DeclCaller& declCaller) const { return this < &declCaller; }
+	bool IsIdentical(const DeclCallable& declCaller) const { return this == &declCaller; }
+	bool IsEqualTo(const DeclCallable& declCaller) const { return IsIdentical(declCaller); }
+	bool IsLessThan(const DeclCallable& declCaller) const { return this < &declCaller; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	static UInt32 SymbolToFlag(const Symbol* pSymbol) {

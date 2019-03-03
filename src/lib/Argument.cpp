@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-Argument::Argument(Value* pValueCar, DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis) :
-	_pValueCar(pValueCar), _pDeclCaller(pDeclCaller), _flags(0), _pAttr(pAttr),
+Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr, Value* pValueThis) :
+	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _flags(0), _pAttr(pAttr),
 	_pArgSlotToFeed(nullptr), _pValueThis(pValueThis)
 {
-	const DeclArgOwner &declArgOwner = _pDeclCaller->GetDeclArgOwner();
+	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 	if (ppDeclArg != declArgOwner.end()) {
 		DeclArg* pDeclArg = *ppDeclArg++;
@@ -26,7 +26,7 @@ Argument::Argument(Value* pValueCar, DeclCaller* pDeclCaller, Attribute* pAttr, 
 		}			
 	}
 	_pArgSlotToFeed = _pArgSlotTop.get();
-	_flags = GetDeclCaller().GetFlags() | DeclCaller::SymbolsToFlags(GetAttr().GetSymbols());
+	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
 }
 
 bool Argument::CheckValidity() const

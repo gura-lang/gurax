@@ -8,7 +8,7 @@ namespace Gurax {
 // if (`cond) {`block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
-	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -36,7 +36,7 @@ Gurax_ImplementStatement(if_)
 // repeat (cnt?:number) {`block}
 Gurax_DeclareStatement(repeat)
 {
-	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
 	DeclareArg("repeat", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -78,7 +78,7 @@ Gurax_ImplementStatement(repeat)
 // while (`cond) {`block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
-	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -122,7 +122,7 @@ Gurax_ImplementStatement(while_)
 // Print(str*:String):void
 Gurax_DeclareFunction(Print)
 {
-	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
+	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
 	DeclareArg("str", VTYPE_String, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
@@ -139,7 +139,7 @@ Gurax_ImplementFunction(Print)
 // Printf(format:String, values*):void
 Gurax_DeclareFunction(Printf)
 {
-	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
+	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
 	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
@@ -158,7 +158,7 @@ Gurax_ImplementFunction(Printf)
 // Println(objs*):void
 Gurax_DeclareFunction(Println)
 {
-	DeclareCaller(VTYPE_Nil, DeclCaller::Flag::None);
+	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
 	DeclareArg("objs", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 

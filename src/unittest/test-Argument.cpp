@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-static DeclCaller* ComposeDeclCaller(const char* src)
+static DeclCallable* ComposeDeclCallable(const char* src)
 {
 	RefPtr<Expr_Root> pExprRoot = Parser::ParseString(String(src).append("={}").c_str());
 	if (Error::IsIssued()) return nullptr;
@@ -15,7 +15,7 @@ static DeclCaller* ComposeDeclCaller(const char* src)
 		const Expr* pExpr = pExprEx->GetExprLeft();
 		if (pExpr->IsType<Expr_Caller>()) {
 			const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
-			return pExprEx->GetDeclCaller().Reference();
+			return pExprEx->GetDeclCallable().Reference();
 		}
 	}
 	return nullptr;
@@ -23,7 +23,7 @@ static DeclCaller* ComposeDeclCaller(const char* src)
 
 static Argument* ComposeArgument(const char* src)
 {
-	return new Argument(Value::nil(), ComposeDeclCaller(src), Attribute::Empty->Reference(), Value::nil());
+	return new Argument(Value::nil(), ComposeDeclCallable(src), Attribute::Empty->Reference(), Value::nil());
 }
 
 static void PrintArgument(const Argument &argument)

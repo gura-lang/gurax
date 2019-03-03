@@ -6,7 +6,7 @@
 #include "Referable.h"
 #include "Attribute.h"
 #include "VType_List.h"
-#include "DeclCaller.h"
+#include "DeclCallable.h"
 
 namespace Gurax {
 

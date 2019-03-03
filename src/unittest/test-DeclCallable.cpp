@@ -1,5 +1,5 @@
 //==============================================================================
-// test-DeclCaller.cpp
+// test-DeclCallable.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -94,7 +94,7 @@ static const char* srcTbl[] = {
 	"f(v1:Type1, v2:Type2):map:attr1:attr2 {`foo?} = {}",
 };
 
-Gurax_TesterEntry(DeclCaller)
+Gurax_TesterEntry(DeclCallable)
 {
 	for (const char* src : srcTbl) {
 		::printf("%s .. ", src);
@@ -110,7 +110,7 @@ Gurax_TesterEntry(DeclCaller)
 			const Expr* pExpr = pExprEx->GetExprLeft();
 			if (pExpr->IsType<Expr_Caller>()) {
 				const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
-				::printf("%s\n", pExprEx->GetDeclCaller().ToString(StringStyle().Verbose()).c_str());
+				::printf("%s\n", pExprEx->GetDeclCallable().ToString(StringStyle().Verbose()).c_str());
 			}
 		}
 	}

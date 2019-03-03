@@ -369,7 +369,7 @@ bool Expr_Assign::DoPrepare()
 {
 	if (GetExprLeft()->IsType<Expr_Caller>()) {
 		Expr_Caller*pExprEx = dynamic_cast<Expr_Caller*>(GetExprLeft());
-		return pExprEx->PrepareDeclCaller();
+		return pExprEx->PrepareDeclCallable();
 	}
 	return true;
 }
@@ -714,7 +714,7 @@ void Expr_Caller::ComposeForAssignment(
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
 	RefPtr<Function> pFunction(
-		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCaller().Reference()));
+		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
 	composer.Add_AssignFunction(this, pFunction.get());		// [Value]
 }
 

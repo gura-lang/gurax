@@ -19,9 +19,9 @@ void VType_Function::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Function
 //------------------------------------------------------------------------------
-const DeclCaller* Value_Function::GetDeclCaller() const
+const DeclCallable* Value_Function::GetDeclCallable() const
 {
-	return &GetFunction().GetDeclCaller();
+	return &GetFunction().GetDeclCallable();
 }
 
 Value* Value_Function::DoCall(Processor& processor, Argument& argument)

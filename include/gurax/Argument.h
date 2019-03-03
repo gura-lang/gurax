@@ -18,7 +18,7 @@ public:
 	Gurax_MemoryPoolAllocator("Argument");
 private:
 	RefPtr<Value> _pValueCar;
-	RefPtr<DeclCaller> _pDeclCaller;
+	RefPtr<DeclCallable> _pDeclCallable;
 	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
 	RefPtr<ArgSlot> _pArgSlotTop;
@@ -26,7 +26,7 @@ private:
 	RefPtr<Value> _pValueThis;
 public:
 	// Constructor
-	Argument(Value* pValueCar, DeclCaller* pDeclCaller, Attribute* pAttr, Value* pValueThis);
+	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr, Value* pValueThis);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -39,13 +39,13 @@ public:
 	bool CheckValidity() const;
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
-	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
+	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(const Symbol* pSymbol) {
-		return GetDeclCaller().IsSet(pSymbol) || GetAttr().IsSet(pSymbol);
+		return GetDeclCallable().IsSet(pSymbol) || GetAttr().IsSet(pSymbol);
 	}
 	bool IsSetOpt(const Symbol* pSymbol) {
-		return GetDeclCaller().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
+		return GetDeclCallable().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
 	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
 	const ArgSlot* GetArgSlotTop() const { return _pArgSlotTop.get(); }

@@ -468,15 +468,15 @@ String PUnit_Member::ToString(const StringStyle& ss) const
 void PUnit_Argument::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopValue());
-	const DeclCaller* pDeclCaller = pValueCar->GetDeclCaller();
-	if (!pDeclCaller) {
+	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallable();
+	if (!pDeclCallable) {
 		Error::Issue(ErrorType::ValueError,
 					 "value type %s can not be called", pValueCar->GetVType().MakeFullName().c_str());
 		return;
 	}
-	if (!pDeclCaller->CheckAttribute(GetAttr())) return;
+	if (!pDeclCallable->CheckAttribute(GetAttr())) return;
 	RefPtr<Argument> pArgument(
-		new Argument(pValueCar.release(), pDeclCaller->Reference(), GetAttr().Reference(), Value::nil()));
+		new Argument(pValueCar.release(), pDeclCallable->Reference(), GetAttr().Reference(), Value::nil()));
 	processor.PushValue(new Value_Argument(pArgument.release()));
 	processor.Goto(GetPUnitNext());
 }

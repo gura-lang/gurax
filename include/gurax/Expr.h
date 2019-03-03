@@ -4,7 +4,7 @@
 #ifndef GURAX_EXPR_H
 #define GURAX_EXPR_H
 #include "Attribute.h"
-#include "DeclCaller.h"
+#include "DeclCallable.h"
 #include "Operator.h"
 #include "Template.h"
 #include "Value.h"
@@ -667,20 +667,20 @@ public:
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<DeclCaller> _pDeclCaller;
+	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<Expr_Block> _pExprBlock;		// this may be nullptr
 	RefPtr<Expr_Caller> _pExprTrailer;	// this may be nullptr
 public:
-	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCaller(new DeclCaller()) {}
+	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCallable(new DeclCallable()) {}
 public:
-	bool PrepareDeclCaller() {
-		return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), GetExprBlock());
+	bool PrepareDeclCallable() {
+		return _pDeclCallable->Prepare(GetExprLinkCdr(), GetAttr(), GetExprBlock());
 	}
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
 		_pExprBlock->SetExprParent(this);
 	}
-	const DeclCaller& GetDeclCaller() const { return *_pDeclCaller; }
+	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	bool HasExprBlock() const { return _pExprBlock.get() != nullptr; }
 	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);
