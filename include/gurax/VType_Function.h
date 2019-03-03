@@ -68,7 +68,7 @@ public:
 public:
 	// Virtual functions for runtime process
 	virtual const DeclCaller* GetDeclCaller() const override;
-	virtual Value* DoCall(Frame& frame, Argument& argument) override;
+	virtual Value* DoCall(Processor& processor, Argument& argument) override;
 };
 
 }

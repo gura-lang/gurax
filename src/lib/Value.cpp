@@ -84,7 +84,7 @@ String Value::ToStringDigest(const StringStyle& ss) const
 	return rtn;
 }
 
-Value* Value::DoCall(Frame& frame, Argument& argument)
+Value* Value::DoCall(Processor& processor, Argument& argument)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be called", GetVType().MakeFullName().c_str());

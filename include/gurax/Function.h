@@ -13,14 +13,14 @@
 class Function_##name : public Function { \
 public: \
 	Function_##name(const char* name_ = strName); \
-	virtual Value* Eval(Frame& frame, const Argument& argument) const override; \
+	virtual Value* Eval(Processor& processor, const Argument& argument) const override; \
 }; \
 Function_##name::Function_##name(const char* name_) : Function(Function::Type::Function, name_) \
 
 #define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
 
 #define Gurax_ImplementFunction(name) \
-Value* Function_##name::Eval(Frame& frame, const Argument& argument) const
+Value* Function_##name::Eval(Processor& processor, const Argument& argument) const
 
 #define Gurax_AssignFunction(name) \
 frame.AssignFunction(new Function_##name())
@@ -123,7 +123,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(function)"; }
 public:
 	// Virtual functions
-	virtual Value* Eval(Frame& frame, const Argument& argument) const { return Value::nil(); };
+	virtual Value* Eval(Processor& processor, const Argument& argument) const { return Value::nil(); };
 	virtual void Compose(Composer& composer, const Expr_Caller* pExprCaller) const {}
 };
 

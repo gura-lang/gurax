@@ -24,9 +24,9 @@ const DeclCaller* Value_Function::GetDeclCaller() const
 	return &GetFunction().GetDeclCaller();
 }
 
-Value* Value_Function::DoCall(Frame& frame, Argument& argument)
+Value* Value_Function::DoCall(Processor& processor, Argument& argument)
 {
-	return GetFunction().Eval(frame, argument);
+	return GetFunction().Eval(processor, argument);
 }
 
 }

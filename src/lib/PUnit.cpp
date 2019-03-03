@@ -587,7 +587,7 @@ void PUnit_Call::Exec(Processor& processor) const
 	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopValue()));
 	Argument& argument = pValue->GetArgument();
 	if (!argument.CheckValidity()) return;
-	RefPtr<Value> pValueResult(argument.Call(processor.GetFrame()));
+	RefPtr<Value> pValueResult(argument.DoCall(processor));
 	if (Error::IsIssued()) return;
 	if (!GetPopToDiscardFlag()) processor.PushValue(pValueResult.release());
 	processor.Goto(GetPUnitNext());

@@ -15,7 +15,7 @@ public:
 	using Function::Function;
 public:
 	// Virtual functions of Function
-	virtual Value* Eval(Frame& frame, const Argument& argument) const override;
+	virtual Value* Eval(Processor& processor, const Argument& argument) const override;
 };
 
 }

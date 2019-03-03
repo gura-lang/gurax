@@ -1075,7 +1075,7 @@ void Expr_Caller::Exec(Processor& processor) const
 		RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopValue()));
 		Argument& argument = pValue->GetArgument();
 		if (!argument.CheckValidity()) return;
-		RefPtr<Value> pValueRtn(argument.Call(processor.GetFrame()));
+		RefPtr<Value> pValueRtn(argument.DoCall(processor));
 		if (Error::IsIssued()) return;
 		processor.PushValue(pValueRtn.release());
 	} while (0);

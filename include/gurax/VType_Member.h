@@ -56,9 +56,9 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual const DeclCaller* GetDeclCaller() const override { return GetValueProp().GetDeclCaller(); }
-	virtual Value* DoCall(Frame& frame, Argument& argument) override {
+	virtual Value* DoCall(Processor& processor, Argument& argument) override {
 		argument.SetValueThis(GetValueThis().Reference());
-		return GetValueProp().DoCall(frame, argument);
+		return GetValueProp().DoCall(processor, argument);
 	}
 	virtual Value* DoIndexGet(const Index& index) const override {
 		return GetValueProp().DoIndexGet(index);

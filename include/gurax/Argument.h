@@ -63,7 +63,7 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
-	Value* Call(Frame& frame) { return GetValueCar().DoCall(frame, *this); }
+	Value* DoCall(Processor& processor) { return GetValueCar().DoCall(processor, *this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& argument) const { return this == &argument; }
