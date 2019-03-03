@@ -13,7 +13,6 @@ add_library(guraxcore SHARED
 	DeclArg.cpp
 	DeclCaller.cpp
 	DottedSymbol.cpp
-	Environment.cpp
 	Error.cpp
 	Expr.cpp
 	Formatter.cpp
