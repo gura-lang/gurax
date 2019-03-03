@@ -151,8 +151,35 @@ String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Cast
+// Stack View: [Value] -> [ValueResult]
+//------------------------------------------------------------------------------
+void PUnit_Cast::Exec(Processor& processor) const
+{
+	if (GetPopToDiscardFlag()) {
+		Value::Delete(processor.PopValue());
+	} else {
+		RefPtr<Value> pValue(processor.PopValue());
+		RefPtr<Value> pValueResult(Value::Cast(GetVType(), *pValue));
+		if (!pValueResult) return;
+		processor.PushValue(pValueResult.release());
+	}
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_Cast::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Cast(";
+	rtn += GetVType().MakeFullName().c_str();
+	rtn += ")";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
-// Stack View: [ValueChild] -> [ValueResult]
+// Stack View: [Value] -> [ValueResult]
 //------------------------------------------------------------------------------
 void PUnit_UnaryOp::Exec(Processor& processor) const
 {

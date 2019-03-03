@@ -164,6 +164,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Cast
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Cast : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const VType* _pVType;
+public:
+	// Constructor
+	PUnit_Cast(Expr* pExprSrc, const VType* pVType) : PUnit(pExprSrc), _pVType(pVType) {}
+public:
+	const VType& GetVType() const { return *_pVType; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_UnaryOp : public PUnit {

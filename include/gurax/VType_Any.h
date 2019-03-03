@@ -14,7 +14,7 @@ class VType_Any : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
-	virtual Value* DoCastFrom(Value* pValue) const override;
+	virtual Value* DoCastFrom(const Value& value) const override;
 };
 
 extern VType_Any VTYPE_Any;

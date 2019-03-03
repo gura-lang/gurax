@@ -16,9 +16,9 @@ void VType_Any::DoPrepare(Frame& frame)
 	frame.AssignVType(*this);
 }
 
-Value* VType_Any::DoCastFrom(Value* pValue) const
+Value* VType_Any::DoCastFrom(const Value& value) const
 {
-	return pValue;
+	return value.Reference();
 }
 
 //------------------------------------------------------------------------------

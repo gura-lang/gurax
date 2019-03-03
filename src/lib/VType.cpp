@@ -44,9 +44,9 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 	return pPropHandler;
 }
 
-Value* VType::DoCastFrom(Value* pValue) const
+Value* VType::DoCastFrom(const Value& value) const
 {
-	if (pValue->IsInstanceOf(*this)) return pValue;
+	if (value.IsInstanceOf(*this)) return value.Reference();
 	Error::Issue(ErrorType::ValueError, "failed to cast");
 	return nullptr;
 }
