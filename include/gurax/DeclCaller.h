@@ -11,6 +11,7 @@
 namespace Gurax {
 
 class ExprLink;
+class Expr_Block;
 
 //------------------------------------------------------------------------------
 // DeclCaller
@@ -89,7 +90,7 @@ protected:
 	// Destructor
 	~DeclCaller() = default;
 public:
-	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr);
+	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock);
 	void Clear();
 	DeclArgOwner& GetDeclArgOwner() { return _declArgOwner; }
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }

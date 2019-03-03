@@ -297,6 +297,7 @@ public:
 		_pExprLinkElem->SetExprParent(this);
 	}
 	const ExprLink& GetExprLinkElem() const { return *_pExprLinkElem; }
+	size_t CountExprElem() const { return _pExprLinkElem->CountSequence(); }
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
 	const Expr* GetExprElemHead() const { return _pExprLinkElem->GetExprHead(); }
 	void AddExprElem(Expr* pExprElem);
@@ -672,7 +673,9 @@ protected:
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCaller(new DeclCaller()) {}
 public:
-	bool PrepareDeclCaller() { return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr()); }
+	bool PrepareDeclCaller() {
+		return _pDeclCaller->Prepare(GetExprLinkCdr(), GetAttr(), GetExprBlock());
+	}
 	void SetExprBlock(Expr_Block* pExprBlock) {
 		_pExprBlock.reset(pExprBlock);
 		_pExprBlock->SetExprParent(this);
