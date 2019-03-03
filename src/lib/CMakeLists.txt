@@ -11,6 +11,7 @@ add_library(guraxcore SHARED
 	Context.cpp
 	DateTime.cpp
 	DeclArg.cpp
+	DeclBlock.cpp
 	DeclCaller.cpp
 	DottedSymbol.cpp
 	Error.cpp

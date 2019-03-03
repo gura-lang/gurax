@@ -112,6 +112,9 @@ public:
 	void DeclareAttrOpt(const char* name) {
 		GetDeclCaller().GetAttr().AddSymbolOpt(Symbol::Add(name));
 	}
+	void DeclareBlock(const DeclArg::Occur& occur) {
+		// to-do
+	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

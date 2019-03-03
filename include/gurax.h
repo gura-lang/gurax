@@ -15,6 +15,7 @@
 #include "gurax/Context.h"
 #include "gurax/DateTime.h"
 #include "gurax/DeclArg.h"
+#include "gurax/DeclBlock.h"
 #include "gurax/DeclCaller.h"
 #include "gurax/DottedSymbol.h"
 #include "gurax/Error.h"

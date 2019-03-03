@@ -5,10 +5,11 @@
 
 namespace Gurax {
 
-// if (cond) {block}
+// if (`cond) {block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
 	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
+	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementStatement(if_)
@@ -31,10 +32,11 @@ Gurax_ImplementStatement(if_)
 	}
 }
 
-// while (cond) {block}
+// while (`cond) {block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
 	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
+	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementStatement(while_)
