@@ -43,6 +43,7 @@ public:
 	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
 	void Add_PopToDiscard(const Expr* pExprSrc);
 	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
+	void Add_Cast(const Expr* pExprSrc, const VType& vtype);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_CreateList(const Expr* pExprSrc, size_t sizeReserve);

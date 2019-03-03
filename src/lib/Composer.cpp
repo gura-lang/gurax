@@ -60,6 +60,11 @@ PUnit_PopToDiscard* Composer::AddF_PopToDiscard(const Expr* pExprSrc)
 	return pPUnit;
 }
 
+void Composer::Add_Cast(const Expr* pExprSrc, const VType& vtype)
+{
+	Add(new PUnit_Cast(pExprSrc->Reference(), vtype));
+}
+
 void Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
 {
 	Add(new PUnit_UnaryOp(pExprSrc->Reference(), pOperator));

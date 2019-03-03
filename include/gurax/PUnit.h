@@ -171,12 +171,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const VType* _pVType;
+	const VType& _vtype;
 public:
 	// Constructor
-	PUnit_Cast(Expr* pExprSrc, const VType* pVType) : PUnit(pExprSrc), _pVType(pVType) {}
+	PUnit_Cast(Expr* pExprSrc, const VType& vtype) : PUnit(pExprSrc), _vtype(vtype) {}
 public:
-	const VType& GetVType() const { return *_pVType; }
+	const VType& GetVType() const { return _vtype; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

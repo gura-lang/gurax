@@ -5,12 +5,12 @@
 
 namespace Gurax {
 
-// if (`cond) {block}
+// if (`cond) {`block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
 	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
 Gurax_ImplementStatement(if_)
@@ -33,12 +33,54 @@ Gurax_ImplementStatement(if_)
 	}
 }
 
-// while (`cond) {block}
+// repeat (cnt?:number) {`block}
+Gurax_DeclareStatement(repeat)
+{
+	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
+	DeclareArg("repeat", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(repeat)
+{
+	size_t nArgs = pExprCaller->CountExprCdr();
+	if (pExprCaller->CountExprCdr() > 1) {
+		Error::Issue(ErrorType::ArgumentError, "repeat-statement takes zero or one argument");
+		return;
+	}
+	if (nArgs == 0) {
+		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
+		size_t pos = composer.MarkPUnit();
+		composer.AddF_PopToDiscard(pExprCaller);						// []
+		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
+		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+	} else if (nArgs == 1) {
+		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
+		size_t pos = composer.MarkPUnit();
+		do {
+			const Expr* pExpr = pExprCaller->GetExprCdrHead();
+			pExpr->Compose(composer);									// [ValueLast Value]
+			composer.Add_Cast(pExprCaller, VTYPE_Number);				// [ValueLast ValueCount]
+		} while (0);
+
+		auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueLast]
+
+		composer.AddF_PopToDiscard(pExprCaller);						// []
+		if (pExprCaller->GetExprBlock()->HasExprParam()) {
+			// processing of block parameter here
+		}
+		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
+		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	}
+}
+
+// while (`cond) {`block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
 	DeclareCaller(VTYPE_Any, DeclCaller::Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
 Gurax_ImplementStatement(while_)
@@ -47,17 +89,34 @@ Gurax_ImplementStatement(while_)
 		Error::Issue(ErrorType::ArgumentError, "while-statement takes one argument");
 		return;
 	}
-	composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
-	size_t pos = composer.MarkPUnit();
-	do {
-		const Expr* pExpr = pExprCaller->GetExprCdrHead();
-		pExpr->Compose(composer);									// [ValueLast ValueBool]
-	} while (0);
-	auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueLast]
-	composer.AddF_PopToDiscard(pExprCaller);						// []
-	pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-	composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
-	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	if (pExprCaller->GetExprBlock()->HasExprParam()) {
+		composer.Add_Value(pExprCaller, Value::Zero());					// [ValueIdx=0 ValueLast=nil]
+		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
+		size_t pos = composer.MarkPUnit();
+		do {
+			const Expr* pExpr = pExprCaller->GetExprCdrHead();
+			pExpr->Compose(composer);									// [ValueIdx ValueLast ValueBool]
+		} while (0);
+		auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueIdx ValueLast]
+		composer.AddF_PopToDiscard(pExprCaller);						// [ValueIdx]
+		
+		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueIdx ValueLast]
+		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+		// delete ValueIdx here
+	} else {
+		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
+		size_t pos = composer.MarkPUnit();
+		do {
+			const Expr* pExpr = pExprCaller->GetExprCdrHead();
+			pExpr->Compose(composer);									// [ValueLast ValueBool]
+		} while (0);
+		auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);			// [ValueLast]
+		composer.AddF_PopToDiscard(pExprCaller);						// []
+		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
+		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	}
 }
 
 // Print(str*:String):void
