@@ -11,7 +11,7 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	chunkPUnit(64, 65536), chunkSmall(64, 65536),
+	chunkPUnit(64 * 65536, 64), chunkSmall(64, 65536),
 	chunkMedium(128, 65536), chunkLarge(192, 65536), chunkVariable()
 {
 }
@@ -38,8 +38,27 @@ void MemoryPool::Deallocate(void* p)
 }
 
 //-----------------------------------------------------------------------------
+// MemoryPool::Pool
+//-----------------------------------------------------------------------------
+MemoryPool::Pool* MemoryPool::Pool::Create(size_t bytesPoolBuff)
+{
+	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
+	pPool->pPoolNext = nullptr;
+	return pPool;
+}
+
+//-----------------------------------------------------------------------------
+// MemoryPool::Chunk
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
 // MemoryPool::ChunkImmortal
 //-----------------------------------------------------------------------------
+MemoryPool::ChunkImmortal::ChunkImmortal(size_t bytesPoolBuff, size_t bytesAllocMax) :
+	_bytesPoolBuff(bytesPoolBuff), _bytesAllocMax(bytesAllocMax), _offsetNext(0),
+	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop)
+{}
+
 size_t MemoryPool::ChunkImmortal::CountPools() const
 {
 	size_t nPools = 0;
@@ -47,33 +66,16 @@ size_t MemoryPool::ChunkImmortal::CountPools() const
 	return nPools;
 }
 
-size_t MemoryPool::ChunkImmortal::GetIndex(const void* p) const
+void* MemoryPool::ChunkImmortal::Allocate(size_t bytes)
 {
-	const char* p1 = reinterpret_cast<const char*>(p);
-	size_t idxBase = 0;
-	for (const Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext, idxBase += _nBlocks) {
-		const char *p2 = reinterpret_cast<const char*>(pPool);
-		if (p1 >= p2 && p1 - p2 < _bytesPool) {
-			return (p1 - p2 - sizeof(Pool)) / _bytesFrame + idxBase;
-		}
-	}
-	return 0;
-}
-
-void* MemoryPool::ChunkImmortal::Allocate()
-{
-	if (_iBlockNext >= _nBlocks) {
-		Pool* pPool = reinterpret_cast<Pool*>(::malloc(_bytesPool));
-		if (_pPoolCur) {
-			_pPoolCur->pPoolNext = pPool;
-		} else {
-			_pPoolTop = pPool;
-		}
-		_iBlockNext = 0;
+	void* pAllocated = PeekPointer();
+	_offsetNext += bytes;
+	if (_offsetNext + _bytesAllocMax > _bytesPoolBuff) {
+		Pool* pPool = Pool::Create(_bytesPoolBuff);
+		_pPoolCur->pPoolNext = pPool;
+		_offsetNext = 0;
 		_pPoolCur = pPool;
 	}
-	char* pAllocated = _pPoolCur->buff + _bytesFrame * _iBlockNext;
-	_iBlockNext++;
 	return pAllocated;
 }
 
@@ -81,7 +83,7 @@ String MemoryPool::ChunkImmortal::ToString(const StringStyle& ss) const
 {
 	String str;
 	char buff[256];
-	::sprintf(buff, "[ChunkImmortal:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
+	::sprintf(buff, "[ChunkImmortal:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
 	str += buff;
 	return str;
 }
@@ -89,6 +91,21 @@ String MemoryPool::ChunkImmortal::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 // MemoryPool::ChunkFixed
 //-----------------------------------------------------------------------------
+MemoryPool::ChunkFixed::ChunkFixed(size_t bytesBlock, size_t nBlocks) :
+	_bytesBlock(bytesBlock), _bytesFrame(sizeof(Header) + bytesBlock),
+	_bytesPoolBuff(_bytesFrame * nBlocks),
+	_nBlocks(nBlocks), _iBlockNext(0),
+	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop),
+	_pHeaderVacantHead(nullptr)
+{}
+
+size_t MemoryPool::ChunkFixed::CountPools() const
+{
+	size_t nPools = 0;
+	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) nPools++;
+	return nPools;
+}
+
 void* MemoryPool::ChunkFixed::Allocate(const char* ownerName)
 {
 	char* pAllocated = nullptr;
@@ -96,7 +113,14 @@ void* MemoryPool::ChunkFixed::Allocate(const char* ownerName)
 		pAllocated = reinterpret_cast<char*>(_pHeaderVacantHead);
 		_pHeaderVacantHead = _pHeaderVacantHead->u.pHeaderVacantNext;
 	} else {
-		pAllocated = reinterpret_cast<char*>(ChunkImmortal::Allocate());
+		if (_iBlockNext >= _nBlocks) {
+			Pool* pPool = Pool::Create(_bytesPoolBuff);
+			_pPoolCur->pPoolNext = pPool;
+			_iBlockNext = 0;
+			_pPoolCur = pPool;
+		}
+		pAllocated = _pPoolCur->buff + _bytesFrame * _iBlockNext;
+		_iBlockNext++;
 	}
 	Header* pHeader = reinterpret_cast<Header*>(pAllocated);
 	pHeader->u.pChunk = this;

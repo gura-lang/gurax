@@ -9,23 +9,23 @@
 // Macros
 //-----------------------------------------------------------------------------
 #define Gurax_MemoryPoolAllocator(ownerName) \
-static void *operator new(size_t size) { \
-	return MemoryPool::Global().Allocate(size, ownerName);	\
+static void *operator new(size_t bytes) { \
+	return MemoryPool::Global().Allocate(bytes, ownerName);	\
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p); \
 }
 
 #define Gurax_MemoryPoolAllocator_PUnit() \
-static void *operator new(size_t size) { \
-	return MemoryPool::Global().chunkPUnit.Allocate();	\
+static void *operator new(size_t bytes) { \
+	return MemoryPool::Global().chunkPUnit.Allocate(bytes);	\
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p);	\
 }
 
 #define Gurax_MemoryPoolAllocator_Small(ownerName) \
-static void *operator new(size_t size) { \
+static void *operator new(size_t bytes) { \
 	return MemoryPool::Global().chunkSmall.Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
@@ -33,7 +33,7 @@ static void operator delete(void* p) { \
 }
 
 #define Gurax_MemoryPoolAllocator_Medium(ownerName) \
-static void *operator new(size_t size) { \
+static void *operator new(size_t bytes) { \
 	return MemoryPool::Global().chunkMedium.Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
@@ -41,7 +41,7 @@ static void operator delete(void* p) { \
 }
 
 #define Gurax_MemoryPoolAllocator_Large(ownerName) \
-static void *operator new(size_t size) { \
+static void *operator new(size_t bytes) { \
 	return MemoryPool::Global().chunkLarge.Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
@@ -55,10 +55,7 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE MemoryPool {
 public:
-	class Chunk {
-	public:
-		virtual void Deallocate(void* p) = 0;
-	};
+	class Chunk;
 	struct Header {
 		union {
 			Chunk* pChunk;
@@ -66,38 +63,56 @@ public:
 		} u;
 		const char* ownerName;
 	};
-	class ChunkImmortal : public Chunk {
+	struct Pool {
+		Pool* pPoolNext;
+		char buff[0];
+		static Pool* Create(size_t bytesPoolBuff);
+	};
+	class Chunk {
 	public:
-		struct Pool {
-			Pool* pPoolNext;
-			char buff[0];
-		};
+		// Constructor
+		Chunk() = default;
+		// Copy constructor/operator
+		Chunk(const Chunk& src) = delete;
+		Chunk& operator=(const Chunk& src) = delete;
+		// Move constructor/operator
+		Chunk(Chunk&& src) = delete;
+		Chunk& operator=(Chunk&& src) noexcept = delete;
+		// Destructor
+		~Chunk() = default;
+	public:
+		virtual void Deallocate(void* p) = 0;
+	};
+	class ChunkImmortal : public Chunk {
 	protected:
+		size_t _bytesPoolBuff;
+		size_t _bytesAllocMax;
+		size_t _offsetNext;
+		Pool* _pPoolTop;
+		Pool* _pPoolCur;
+	public:
+		ChunkImmortal(size_t bytesPoolBuff, size_t bytesAllocMax);
+		size_t CountPools() const;
+		void* Allocate(size_t bytes);
+		virtual void Deallocate(void* p) {}
+		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
+		String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	};
+	class ChunkFixed : public Chunk {
+	private:
 		size_t _bytesBlock;
 		size_t _bytesFrame;
-		size_t _bytesPool;
+		size_t _bytesPoolBuff;
 		size_t _nBlocks;
 		size_t _iBlockNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
-	public:
-		ChunkImmortal(size_t bytesBlock, size_t nBlocks, size_t bytesExtra = 0) :
-			_bytesBlock(bytesBlock), _bytesFrame(bytesBlock + bytesExtra),
-			_bytesPool(sizeof(Pool) + (bytesBlock + bytesExtra) * nBlocks),
-			_nBlocks(nBlocks), _iBlockNext(nBlocks), _pPoolTop(nullptr), _pPoolCur(nullptr) {}
-		size_t GetBytesBlock() const { return _bytesBlock; }
-		size_t CountPools() const;
-		size_t GetIndex(const void* p) const;
-		void* Allocate();
-		virtual void Deallocate(void* p) {}
-		String ToString(const StringStyle& ss = StringStyle::Empty) const;
-	};
-	class ChunkFixed : public ChunkImmortal {
-	private:
 		Header* _pHeaderVacantHead;
 	public:
-		ChunkFixed(size_t bytesBlock, size_t nBlocks) :
-			ChunkImmortal(bytesBlock, nBlocks, sizeof(Header)), _pHeaderVacantHead(nullptr) {}
+		ChunkFixed(size_t bytesBlock, size_t nBlocks);
+	public:
+		size_t GetBytesBlock() const { return _bytesBlock; }
+		size_t CountPools() const;
 		void* Allocate(const char* ownerName);
 		virtual void Deallocate(void* p);
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;

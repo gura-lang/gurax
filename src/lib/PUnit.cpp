@@ -8,7 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-PUnit::PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc), _pPUnitNext(nullptr), _popToDiscardFlag(false)
+int PUnit::_idNext = 0;
+
+PUnit::PUnit(Expr* pExprSrc) :
+	_id(_idNext++), _pExprSrc(pExprSrc), _pPUnitNext(nullptr), _popToDiscardFlag(false)
 {
 	_pExprSrc->SetPUnitTop(this);
 }
@@ -17,10 +20,10 @@ void PUnit::AppendInfoToString(String& str) const
 {
 	if (GetPopToDiscardFlag()) str += ", PopToDiscard";
 	if (_pPUnitNext) {
-		size_t idxNext = _pPUnitNext->GetIndex();
-		if (idxNext != GetIndex() + 1) {
+		size_t idNext = _pPUnitNext->GetId();
+		if (idNext != GetId() + 1) {
 			str += ", #";
-			str += std::to_string(idxNext);
+			str += std::to_string(idNext);
 		}
 	} else {
 		str += ", Return";
@@ -33,7 +36,7 @@ void PUnit::AppendInfoToString(String& str) const
 void PUnitList::Print() const
 {
 	for (auto pPUnit : *this) {
-		::printf("#%zu %s\n", pPUnit->GetIndex(), pPUnit->ToString().c_str());
+		::printf("#%zu %s\n", pPUnit->GetId(), pPUnit->ToString().c_str());
 	}
 }
 
@@ -575,7 +578,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 	rtn += "ArgSlot(`(";
 	rtn += GetExprSrc()->ToString(ss);
 	rtn += "), ##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += std::to_string(GetPUnitAtMerging()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -634,7 +637,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	rtn += ss.IsCram()? "=>" : " => `(";
 	rtn += GetExprSrc()->ToString(ss);
 	rtn += "), ##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += std::to_string(GetPUnitAtMerging()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -696,7 +699,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Jump(#";
-	rtn += std::to_string(GetPUnitDest()->GetIndex());
+	rtn += std::to_string(GetPUnitDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -716,7 +719,7 @@ String PUnit_JumpSub::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpSub(#";
-	rtn += std::to_string(GetPUnitDest()->GetIndex());
+	rtn += std::to_string(GetPUnitDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -736,7 +739,7 @@ String PUnit_BranchIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "BranchIf(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += std::to_string(GetPUnitAtMerging()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -756,7 +759,7 @@ String PUnit_BranchIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "BranchIfNot(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += std::to_string(GetPUnitAtMerging()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -781,7 +784,7 @@ String PUnit_NilBranchIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "NilBranchIf(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += std::to_string(GetPUnitAtMerging()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -806,7 +809,7 @@ String PUnit_NilBranchIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "NilBranchIfNot(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetIndex());
+	rtn += std::to_string(GetPUnitAtMerging()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;

@@ -21,15 +21,28 @@ Gurax_ImplementStatement(if_)
 	}
 	do {
 		const Expr* pExpr = pExprCaller->GetExprCdrHead();
-		pExpr->Compose(composer);									// [ValueBool]
+		pExpr->Compose(composer);										// [ValueBool]
 	} while (0);
-	if (pExprCaller->GetExprBlock()->HasExprElem()) {
-		auto pPUnit = composer.AddF_NilBranchIfNot(pExprCaller);	// [] or [nil]
-		pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
-		pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	if (pExprCaller->HasExprTrailer()) {
+		if (pExprCaller->GetExprBlock()->HasExprElem()) {
+			auto pPUnit = composer.AddF_BranchIfNot(pExprCaller);		// []
+			pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
+			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+			pExprCaller->GetExprTrailer()->Compose(composer);
+		} else {
+			composer.Add_PopToDiscard(pExprCaller);						// []
+			composer.Add_Value(pExprCaller, Value::nil());				// [nil]
+			pExprCaller->GetExprTrailer()->Compose(composer);
+		}
 	} else {
-		composer.Add_PopToDiscard(pExprCaller);						// []
-		composer.Add_Value(pExprCaller, Value::nil());				// [nil]
+		if (pExprCaller->GetExprBlock()->HasExprElem()) {
+			auto pPUnit = composer.AddF_NilBranchIfNot(pExprCaller);	// [] or [nil]
+			pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
+			pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+		} else {
+			composer.Add_PopToDiscard(pExprCaller);						// []
+			composer.Add_Value(pExprCaller, Value::nil());				// [nil]
+		}
 	}
 }
 

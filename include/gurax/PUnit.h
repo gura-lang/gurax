@@ -14,9 +14,12 @@ class Processor;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit {
 protected:
+	int _id;
 	RefPtr<Expr> _pExprSrc;
 	const PUnit* _pPUnitNext;
 	bool _popToDiscardFlag;
+protected:
+	static int _idNext;
 public:
 	// Constructor
 	explicit PUnit(Expr* pExprSrc);
@@ -36,7 +39,7 @@ public:
 	bool IsLessThan(const PUnit* pPUnit) const { return this < pPUnit; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
-	size_t GetIndex() const { return MemoryPool::Global().chunkPUnit.GetIndex(this); }
+	size_t GetId() const { return _id; }
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 	void SetPopToDiscardFlag() { _popToDiscardFlag = true; }
