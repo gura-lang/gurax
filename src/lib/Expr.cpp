@@ -59,7 +59,7 @@ void Expr::ComposeForArgSlot(Composer& composer) const
 	auto pPUnit = composer.AddF_ArgSlot(this);		// [ValueArgument]
 	Compose(composer);								// [ValueArgument Value]
 	composer.Add_FeedArgSlot(this);					// [ValueArgument]
-	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	pPUnit->SetPUnitSkipDest(composer.PeekPUnitNext());
 }
 
 void Expr::ComposeForAssignment(
@@ -324,7 +324,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer) const
 													// [ValueArgument ValueArgSlot]
 	GetExprRight()->Compose(composer);				// [ValueArgument ValueArgSlot Value]
 	composer.Add_FeedArgSlotNamed(this);			// [ValueArgument]
-	pPUnit->SetPUnitAtMerging(composer.GetPUnitLast());
+	pPUnit->SetPUnitSkipDest(composer.PeekPUnitNext());
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const

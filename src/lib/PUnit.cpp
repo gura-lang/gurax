@@ -566,7 +566,7 @@ void PUnit_ArgSlot::Exec(Processor& processor) const
 	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(new Value_Expr(GetExprSrc()->Reference()));
-		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
+		processor.Goto(GetPUnitSkipDest());
 	} else {
 		processor.Goto(GetPUnitNext());
 	}
@@ -577,8 +577,8 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "ArgSlot(`(";
 	rtn += GetExprSrc()->ToString(ss);
-	rtn += "), ##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetId());
+	rtn += "), #";
+	rtn += std::to_string(GetPUnitSkipDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -622,7 +622,7 @@ void PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(GetExprAssigned()->Reference()));
-		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
+		processor.Goto(GetPUnitSkipDest());
 	} else {
 		processor.PushValue(new Value_ArgSlot(pArgSlot->Reference()));
 		processor.Goto(GetPUnitNext());
@@ -636,8 +636,8 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	rtn += GetSymbol()->GetName();
 	rtn += ss.IsCram()? "=>" : " => `(";
 	rtn += GetExprSrc()->ToString(ss);
-	rtn += "), ##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetId());
+	rtn += "), #";
+	rtn += std::to_string(GetPUnitSkipDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;

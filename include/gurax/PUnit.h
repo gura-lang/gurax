@@ -45,9 +45,6 @@ public:
 	void SetPopToDiscardFlag() { _popToDiscardFlag = true; }
 	bool GetPopToDiscardFlag() const { return _popToDiscardFlag; }
 	void AppendInfoToString(String& str) const;
-	static const PUnit* PeekPUnit() {
-		return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
-	}
 public:
 	// Virtual functions
 	virtual void Exec(Processor& processor) const = 0;
@@ -473,14 +470,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitAtMerging;
+	const PUnit* _pPUnitSkipDest;
 public:
 	// Constructor
-	PUnit_ArgSlot(Expr* pExprSrc, const PUnit* pPUnitAtMerging) :
-		PUnit(pExprSrc), _pPUnitAtMerging(pPUnitAtMerging) {}
+	PUnit_ArgSlot(Expr* pExprSrc, const PUnit* pPUnitSkipDest) :
+		PUnit(pExprSrc), _pPUnitSkipDest(pPUnitSkipDest) {}
 public:
-	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
-	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
+	void SetPUnitSkipDest(const PUnit* pPUnit) { _pPUnitSkipDest = pPUnit; }
+	const PUnit* GetPUnitSkipDest() const { return _pPUnitSkipDest; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;
@@ -513,16 +510,16 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
-	const PUnit* _pPUnitAtMerging;
+	const PUnit* _pPUnitSkipDest;
 public:
 	// Constructor
-	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitAtMerging) :
-		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitAtMerging(pPUnitAtMerging) {}
+	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitSkipDest) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitSkipDest(pPUnitSkipDest) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
-	void SetPUnitAtMerging(const PUnit* pPUnit) { _pPUnitAtMerging = pPUnit; }
-	const PUnit* GetPUnitAtMerging() const { return _pPUnitAtMerging; }
+	void SetPUnitSkipDest(const PUnit* pPUnit) { _pPUnitSkipDest = pPUnit; }
+	const PUnit* GetPUnitSkipDest() const { return _pPUnitSkipDest; }
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

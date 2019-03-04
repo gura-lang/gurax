@@ -33,6 +33,9 @@ public:
 	PUnit* GetPUnitLast() { return _pPUnitLast; }
 	const PUnit* GetPUnitAt(size_t pos) const { return _punitList[pos]; }
 	size_t MarkPUnit() const { return _punitList.size(); }
+	static const PUnit* PeekPUnitNext() {
+		return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
+	}
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
 public:
