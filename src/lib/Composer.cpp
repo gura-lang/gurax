@@ -189,6 +189,11 @@ PUnit_JumpSub* Composer::AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitD
 	return pPUnit;
 }
 
+void Composer::Add_Return(const Expr* pExprSrc)
+{
+	Add(new PUnit_Return(pExprSrc->Reference()));
+}
+
 PUnit_JumpIf* Composer::AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest)
 {
 	auto pPUnit = new PUnit_JumpIf(pExprSrc->Reference(), pPUnitJumpDest);

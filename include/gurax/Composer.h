@@ -71,6 +71,7 @@ public:
 	void Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest);
 	PUnit_Jump* AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
 	PUnit_JumpSub* AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
+	void Add_Return(const Expr* pExprSrc);
 	PUnit_JumpIf* AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_JumpIfNot* AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_NilJumpIf* AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);

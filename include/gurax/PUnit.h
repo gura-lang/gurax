@@ -603,6 +603,22 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Return
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Return : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit {

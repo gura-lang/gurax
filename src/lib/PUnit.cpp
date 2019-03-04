@@ -726,6 +726,23 @@ String PUnit_JumpSub::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Return
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_Return::Exec(Processor& processor) const
+{
+	processor.Goto(processor.IsPUnitStackEmpty()? nullptr : processor.PopPUnit());
+}
+
+String PUnit_Return::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Return()";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_JumpIf
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------

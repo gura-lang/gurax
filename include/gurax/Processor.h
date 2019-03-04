@@ -29,10 +29,14 @@ public:
 	virtual ~Processor() = default;
 public:
 	PUnitStack& GetPUnitStack() { return _punitStack; }
+	const PUnitStack& GetPUnitStack() const { return _punitStack; }
+	bool IsPUnitStackEmpty() const { return GetPUnitStack().empty(); }
 	void PushPUnit(const PUnit* pPUnit) { GetPUnitStack().Push(pPUnit); }
 	const PUnit* PopPUnit() { return GetPUnitStack().Pop(); }
 	const PUnit* PeekPUnit(size_t offset) { return GetPUnitStack().Peek(offset); }
 	ValueStack& GetValueStack() { return *_pValueStack; }
+	const ValueStack& GetValueStack() const { return *_pValueStack; }
+	bool IsValueStackEmpty() const { return GetValueStack().empty(); }
 	void PushValue(Value* pValue) { GetValueStack().Push(pValue); }
 	Value* PopValue() { return GetValueStack().Pop(); }
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }

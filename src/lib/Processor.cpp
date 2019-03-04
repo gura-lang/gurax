@@ -23,9 +23,6 @@ void Processor::Run(const PUnit* pPUnit)
 			Error::Print(*Stream::CErr);
 			break;
 		}
-		if (!_pPUnitCur) {
-			_pPUnitCur = _punitStack.empty()? nullptr : _punitStack.Pop();
-		}
 		pPUnit = _pPUnitCur;
 	}
 }

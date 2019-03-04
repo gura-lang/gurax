@@ -433,6 +433,7 @@ const Expr::TypeInfo Expr_Root::typeInfo;
 void Expr_Root::Compose(Composer& composer) const
 {
 	ComposeSequence(composer, GetExprElemHead());			// [Value]
+	composer.Add_Return(this);
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const
