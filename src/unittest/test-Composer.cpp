@@ -5,16 +5,18 @@
 
 namespace Gurax {
 
-#if 0
+#if 1
 static const char* src = R"(
-a = 0
+a = 3
 if (a == 3) {
-	b = 2
+	Println('a is 3')
+} else () {
+	Println('a is not 3')
 }
 )";
 #endif
 
-#if 1
+#if 0
 static const char* src = R"(
 a = 3
 b = 2
