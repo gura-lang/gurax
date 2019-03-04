@@ -45,6 +45,9 @@ public:
 	void SetPopToDiscardFlag() { _popToDiscardFlag = true; }
 	bool GetPopToDiscardFlag() const { return _popToDiscardFlag; }
 	void AppendInfoToString(String& str) const;
+	static const PUnit* PeekPUnit() {
+		return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
+	}
 public:
 	// Virtual functions
 	virtual void Exec(Processor& processor) const = 0;
