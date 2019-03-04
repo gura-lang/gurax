@@ -49,22 +49,6 @@ void Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunctio
 	Add(new PUnit_AssignFunction(pExprSrc->Reference(), pFunction->Reference()));
 }
 
-void Composer::Add_PopToDiscard(const Expr* pExprSrc)
-{
-	if (_pPUnitLast) {
-		_pPUnitLast->SetPopToDiscardFlag();
-	} else {
-		AddF_PopToDiscard(pExprSrc);
-	}
-}
-
-PUnit_PopToDiscard* Composer::AddF_PopToDiscard(const Expr* pExprSrc)
-{
-	auto pPUnit = new PUnit_PopToDiscard(pExprSrc->Reference());
-	Add(pPUnit);
-	return pPUnit;
-}
-
 void Composer::Add_Cast(const Expr* pExprSrc, const VType& vtype)
 {
 	Add(new PUnit_Cast(pExprSrc->Reference(), vtype));
@@ -189,11 +173,6 @@ PUnit_JumpSub* Composer::AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitD
 	return pPUnit;
 }
 
-void Composer::Add_Return(const Expr* pExprSrc)
-{
-	Add(new PUnit_Return(pExprSrc->Reference()));
-}
-
 PUnit_JumpIf* Composer::AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest)
 {
 	auto pPUnit = new PUnit_JumpIf(pExprSrc->Reference(), pPUnitJumpDest);
@@ -220,6 +199,32 @@ PUnit_NilJumpIfNot* Composer::AddF_NilJumpIfNot(const Expr* pExprSrc, const PUni
 	auto pPUnit = new PUnit_NilJumpIfNot(pExprSrc->Reference(), pPUnitJumpDest);
 	Add(pPUnit);
 	return pPUnit;
+}
+
+void Composer::Add_PopToDiscard(const Expr* pExprSrc)
+{
+	if (_pPUnitLast) {
+		_pPUnitLast->SetPopToDiscardFlag();
+	} else {
+		AddF_PopToDiscard(pExprSrc);
+	}
+}
+
+PUnit_PopToDiscard* Composer::AddF_PopToDiscard(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_PopToDiscard(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
+}
+
+void Composer::Add_Return(const Expr* pExprSrc)
+{
+	Add(new PUnit_Return(pExprSrc->Reference()));
+}
+
+void Composer::Add_Terminate(const Expr* pExprSrc)
+{
+	Add(new PUnit_Terminate(pExprSrc->Reference()));
 }
 
 }

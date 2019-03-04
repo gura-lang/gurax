@@ -45,8 +45,6 @@ public:
 	void Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg);
 	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
-	void Add_PopToDiscard(const Expr* pExprSrc);
-	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
 	void Add_Cast(const Expr* pExprSrc, const VType& vtype);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
@@ -71,11 +69,14 @@ public:
 	void Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest);
 	PUnit_Jump* AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
 	PUnit_JumpSub* AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
-	void Add_Return(const Expr* pExprSrc);
 	PUnit_JumpIf* AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_JumpIfNot* AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_NilJumpIf* AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_NilJumpIfNot* AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
+	void Add_PopToDiscard(const Expr* pExprSrc);
+	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
+	void Add_Return(const Expr* pExprSrc);
+	void Add_Terminate(const Expr* pExprSrc);
 	void Print() const;
 };
 

@@ -25,14 +25,16 @@ Gurax_ImplementStatement(if_)
 	} while (0);
 	if (pExprCaller->HasExprTrailer()) {
 		if (pExprCaller->GetExprBlock()->HasExprElem()) {
-			auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);			// []
+			auto pPUnit1 = composer.AddF_JumpIfNot(pExprCaller);		// []
 			pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
-			pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
-			pExprCaller->GetExprTrailer()->Compose(composer);
+			auto pPUnit2 = composer.AddF_Jump(pExprCaller);				// [Value]
+			pPUnit1->SetPUnitJumpDest(composer.PeekPUnitNext());
+			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			pPUnit2->SetPUnitJumpDest(composer.PeekPUnitNext());
 		} else {
-			composer.Add_PopToDiscard(pExprCaller);						// []
-			composer.Add_Value(pExprCaller, Value::nil());				// [nil]
-			pExprCaller->GetExprTrailer()->Compose(composer);
+			auto pPUnit = composer.AddF_NilJumpIf(pExprCaller);			// [] or [nil]
+			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
 		}
 	} else {
 		if (pExprCaller->GetExprBlock()->HasExprElem()) {
@@ -43,6 +45,30 @@ Gurax_ImplementStatement(if_)
 			composer.Add_PopToDiscard(pExprCaller);						// []
 			composer.Add_Value(pExprCaller, Value::nil());				// [nil]
 		}
+	}
+}
+
+// else ():trailer {`block}
+Gurax_DeclareStatementAlias(else_, "else")
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::Trailer);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(else_)
+{
+	if (pExprCaller->CountExprCdr() != 0) {
+		Error::Issue(ErrorType::ArgumentError, "else-statement takes no argument");
+		return;
+	}
+	if (pExprCaller->HasExprTrailer()) {
+		Error::Issue(ErrorType::SyntaxError, "invalid format of if-elsif-else sequence");
+		return;
+	}
+	if (pExprCaller->GetExprBlock()->HasExprElem()) {
+		pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
+	} else {
+		composer.Add_Value(pExprCaller, Value::nil());				// [nil]
 	}
 }
 
@@ -64,9 +90,9 @@ Gurax_ImplementStatement(repeat)
 	if (nArgs == 0) {
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 		size_t pos = composer.MarkPUnit();
-		composer.AddF_PopToDiscard(pExprCaller);						// []
+		composer.Add_PopToDiscard(pExprCaller);							// []
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
 	} else if (nArgs == 1) {
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 		size_t pos = composer.MarkPUnit();
@@ -78,12 +104,12 @@ Gurax_ImplementStatement(repeat)
 
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
 
-		composer.AddF_PopToDiscard(pExprCaller);						// []
+		composer.Add_PopToDiscard(pExprCaller);							// []
 		if (pExprCaller->GetExprBlock()->HasExprParam()) {
 			// processing of block parameter here
 		}
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
 	}
 }
@@ -111,9 +137,9 @@ Gurax_ImplementStatement(while_)
 			pExpr->Compose(composer);									// [ValueLast ValueBool]
 		} while (0);
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
-		composer.AddF_PopToDiscard(pExprCaller);						// []
+		composer.Add_PopToDiscard(pExprCaller);							// []
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
 	} else if (declArgOwner.size() == 1) {
 		const DeclArg* pDeclArg = declArgOwner.front();
@@ -125,12 +151,12 @@ Gurax_ImplementStatement(while_)
 			pExpr->Compose(composer);									// [ValueIdx ValueLast ValueBool]
 		} while (0);
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueIdx ValueLast]
-		composer.AddF_PopToDiscard(pExprCaller);						// [ValueIdx]
+		composer.Add_PopToDiscard(pExprCaller);							// [ValueIdx]
 		composer.Add_AssignToDeclArg(
 			pExprCaller, pDeclArg->Reference());						// [ValueIdx]
 		composer.Add_Add(pExprCaller, 1);								// [ValueIdx=ValueIdx+1]
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueIdx ValueLast]
-		composer.AddF_Jump(pExprCaller, composer.GetPUnitAt(pos));
+		composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
 		// delete ValueIdx here
 	} else {
@@ -195,6 +221,7 @@ Gurax_ImplementFunction(Println)
 void AssignFunctions(Frame& frame)
 {
 	Gurax_AssignStatement(if_);
+	Gurax_AssignStatement(else_);
 	Gurax_AssignStatement(while_);
 	Gurax_AssignFunction(Print);
 	Gurax_AssignFunction(Printf);

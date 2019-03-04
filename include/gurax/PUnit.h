@@ -171,22 +171,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PopToDiscard
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_PopToDiscard : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-public:
-	// Constructor
-	explicit PUnit_PopToDiscard(Expr* pExprSrc) : PUnit(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_Cast
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Cast : public PUnit {
@@ -603,22 +587,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Return
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Return : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-public:
-	// Constructor
-	PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
-public:
-	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit {
@@ -700,6 +668,54 @@ public:
 public:
 	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_PopToDiscard
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_PopToDiscard : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	explicit PUnit_PopToDiscard(Expr* pExprSrc) : PUnit(pExprSrc) {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Return
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Return : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
+public:
+	// Virtual functions of PUnit
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Terminate
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Terminate : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_Terminate(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
 	virtual void Exec(Processor& processor) const override;

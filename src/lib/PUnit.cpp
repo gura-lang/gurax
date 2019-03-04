@@ -18,15 +18,16 @@ PUnit::PUnit(Expr* pExprSrc) :
 
 void PUnit::AppendInfoToString(String& str) const
 {
-	if (GetPopToDiscardFlag()) str += ", PopToDiscard";
+	if (GetPopToDiscardFlag()) str += ", PopToDiscard()";
 	if (_pPUnitNext) {
 		size_t idNext = _pPUnitNext->GetId();
 		if (idNext != GetId() + 1) {
-			str += ", #";
+			str += ", Jump(#";
 			str += std::to_string(idNext);
+			str += ")";
 		}
 	} else {
-		str += ", Return";
+		str += ", Terminate()";
 	}
 }
 
@@ -156,24 +157,6 @@ String PUnit_AssignFunction::ToString(const StringStyle& ss) const
 	rtn += "AssignFunction(";
 	rtn += GetFunction().ToString(ss);
 	rtn += ")";
-	AppendInfoToString(rtn);
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
-// PUnit_PopToDiscard
-// Stack View: [Value] -> []
-//------------------------------------------------------------------------------
-void PUnit_PopToDiscard::Exec(Processor& processor) const
-{
-	Value::Delete(processor.PopValue());
-	processor.Goto(GetPUnitNext());
-}
-
-String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "PopToDiscard()";
 	AppendInfoToString(rtn);
 	return rtn;
 }
@@ -726,23 +709,6 @@ String PUnit_JumpSub::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Return
-// Stack View: [] -> []
-//------------------------------------------------------------------------------
-void PUnit_Return::Exec(Processor& processor) const
-{
-	processor.Goto(processor.IsPUnitStackEmpty()? nullptr : processor.PopPUnit());
-}
-
-String PUnit_Return::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "Return()";
-	AppendInfoToString(rtn);
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_JumpIf
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
@@ -828,6 +794,58 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 	rtn += "NilJumpIfNot(#";
 	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PopToDiscard
+// Stack View: [Value] -> []
+//------------------------------------------------------------------------------
+void PUnit_PopToDiscard::Exec(Processor& processor) const
+{
+	Value::Delete(processor.PopValue());
+	processor.Goto(GetPUnitNext());
+}
+
+String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "PopToDiscard()";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Return
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_Return::Exec(Processor& processor) const
+{
+	processor.Goto(processor.IsPUnitStackEmpty()? nullptr : processor.PopPUnit());
+}
+
+String PUnit_Return::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Return()";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Terminate
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_Terminate::Exec(Processor& processor) const
+{
+	processor.Goto(nullptr);
+}
+
+String PUnit_Terminate::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Terminate()";
 	AppendInfoToString(rtn);
 	return rtn;
 }
