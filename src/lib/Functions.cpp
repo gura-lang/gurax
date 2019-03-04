@@ -66,9 +66,9 @@ Gurax_ImplementStatement(else_)
 		return;
 	}
 	if (pExprCaller->GetExprBlock()->HasExprElem()) {
-		pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
+		pExprCaller->GetExprBlock()->Compose(composer);					// [Value]
 	} else {
-		composer.Add_Value(pExprCaller, Value::nil());				// [nil]
+		composer.Add_Value(pExprCaller, Value::nil());					// [nil]
 	}
 }
 
