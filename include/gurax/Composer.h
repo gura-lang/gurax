@@ -61,20 +61,20 @@ public:
 	void Add_PropSet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Argument(const Expr* pExprSrc, const Attribute& attr);
-	PUnit_ArgSlot* AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitArMerging = nullptr);
+	PUnit_ArgSlot* AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitSkipDest = nullptr);
 	void Add_FeedArgSlot(const Expr* pExprSrc);
 	PUnit_ArgSlotNamed* AddF_ArgSlotNamed(
 		const Expr* pExprSrc, const Symbol* pSymbol,
-		const Expr* pExprAssigned, const PUnit* pPUnitAtMerging = nullptr);
+		const Expr* pExprAssigned, const PUnit* pPUnitSkipDest = nullptr);
 	void Add_FeedArgSlotNamed(const Expr* pExprSrc);
 	void Add_Call(const Expr* pExprSrc);
 	void Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest);
 	PUnit_Jump* AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
 	PUnit_JumpSub* AddF_JumpSub(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
-	PUnit_BranchIf* AddF_BranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
-	PUnit_BranchIfNot* AddF_BranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
-	PUnit_NilBranchIf* AddF_NilBranchIf(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
-	PUnit_NilBranchIfNot* AddF_NilBranchIfNot(const Expr* pExprSrc, const PUnit* pPUnitAtMerging = nullptr);
+	PUnit_JumpIf* AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
+	PUnit_JumpIfNot* AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
+	PUnit_NilJumpIf* AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
+	PUnit_NilJumpIfNot* AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	void Print() const;
 };
 

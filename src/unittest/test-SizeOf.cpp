@@ -36,10 +36,10 @@ Gurax_TesterEntry(SizeOf)
 	Gurax_PrintSizeOf(PUnit_Call);
 	Gurax_PrintSizeOf(PUnit_Jump);
 	Gurax_PrintSizeOf(PUnit_JumpSub);
-	Gurax_PrintSizeOf(PUnit_BranchIf);
-	Gurax_PrintSizeOf(PUnit_BranchIfNot);
-	Gurax_PrintSizeOf(PUnit_NilBranchIf);
-	Gurax_PrintSizeOf(PUnit_NilBranchIfNot);
+	Gurax_PrintSizeOf(PUnit_JumpIf);
+	Gurax_PrintSizeOf(PUnit_JumpIfNot);
+	Gurax_PrintSizeOf(PUnit_NilJumpIf);
+	Gurax_PrintSizeOf(PUnit_NilJumpIfNot);
 	Gurax_PrintSizeOf(Symbol);
 	Gurax_PrintSizeOf(TimeDelta);
 	Gurax_PrintSizeOf(ValueOwner);

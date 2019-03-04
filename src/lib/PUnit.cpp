@@ -692,14 +692,14 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnit_Jump::Exec(Processor& processor) const
 {
-	processor.Goto(GetPUnitDest());
+	processor.Goto(GetPUnitJumpDest());
 }
 
 String PUnit_Jump::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Jump(#";
-	rtn += std::to_string(GetPUnitDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -712,104 +712,104 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 void PUnit_JumpSub::Exec(Processor& processor) const
 {
 	processor.PushPUnit(this);
-	processor.Goto(GetPUnitDest());
+	processor.Goto(GetPUnitJumpDest());
 }
 
 String PUnit_JumpSub::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpSub(#";
-	rtn += std::to_string(GetPUnitDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_BranchIf
+// PUnit_JumpIf
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
-void PUnit_BranchIf::Exec(Processor& processor) const
+void PUnit_JumpIf::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	processor.Goto(pValue->GetBool()? GetPUnitAtMerging()->GetPUnitNext() : GetPUnitNext());
+	processor.Goto(pValue->GetBool()? GetPUnitJumpDest() : GetPUnitNext());
 }
 
-String PUnit_BranchIf::ToString(const StringStyle& ss) const
+String PUnit_JumpIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "BranchIf(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetId());
+	rtn += "JumpIf(#";
+	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_BranchIfNot
+// PUnit_JumpIfNot
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
-void PUnit_BranchIfNot::Exec(Processor& processor) const
+void PUnit_JumpIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	processor.Goto(pValue->GetBool()? GetPUnitNext() : GetPUnitAtMerging()->GetPUnitNext());
+	processor.Goto(pValue->GetBool()? GetPUnitNext() : GetPUnitJumpDest());
 }
 
-String PUnit_BranchIfNot::ToString(const StringStyle& ss) const
+String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "BranchIfNot(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetId());
+	rtn += "JumpIfNot(#";
+	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_NilBranchIf
+// PUnit_NilJumpIf
 // Stack View: [Value] -> [] or [nil]
 //------------------------------------------------------------------------------
-void PUnit_NilBranchIf::Exec(Processor& processor) const
+void PUnit_NilJumpIf::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		processor.PushValue(Value::nil());
-		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
+		processor.Goto(GetPUnitJumpDest());
 	} else {
 		processor.Goto(GetPUnitNext());
 	}
 }
 
-String PUnit_NilBranchIf::ToString(const StringStyle& ss) const
+String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "NilBranchIf(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetId());
+	rtn += "NilJumpIf(#";
+	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_NilBranchIfNot
+// PUnit_NilJumpIfNot
 // Stack View: [Value] -> [] or [nil]
 //------------------------------------------------------------------------------
-void PUnit_NilBranchIfNot::Exec(Processor& processor) const
+void PUnit_NilJumpIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		processor.Goto(GetPUnitNext());
 	} else {
 		processor.PushValue(Value::nil());
-		processor.Goto(GetPUnitAtMerging()->GetPUnitNext());
+		processor.Goto(GetPUnitJumpDest());
 	}
 }
 
-String PUnit_NilBranchIfNot::ToString(const StringStyle& ss) const
+String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "NilBranchIfNot(##";
-	rtn += std::to_string(GetPUnitAtMerging()->GetId());
+	rtn += "NilJumpIfNot(#";
+	rtn += std::to_string(GetPUnitJumpDest()->GetId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
