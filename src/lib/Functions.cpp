@@ -5,6 +5,9 @@
 
 namespace Gurax {
 
+//------------------------------------------------------------------------------
+// Functions
+//------------------------------------------------------------------------------
 // if (`cond) {`block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
@@ -218,7 +221,7 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
-void AssignFunctions(Frame& frame)
+void Functions::PrepareBasic(Frame& frame)
 {
 	Gurax_AssignStatement(if_);
 	Gurax_AssignStatement(else_);

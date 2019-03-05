@@ -7,7 +7,10 @@
 
 namespace Gurax {
 
-void AssignFunctions(Frame& frame);
+class Functions {
+public:
+	static void PrepareBasic(Frame& frame);
+};
 
 }
 

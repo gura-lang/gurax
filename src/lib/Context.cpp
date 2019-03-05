@@ -10,9 +10,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Context Context::_context;
 
-Context::Context() : _pFrame(Frame::CreateOfValueMap())
+void Context::Prepare()
 {
-	AssignFunctions(GetFrame());
+	VType::PrepareBasic(GetFrame());
+	Value::PrepareBasic(GetFrame());
+	Functions::PrepareBasic(GetFrame());
 }
 
 }

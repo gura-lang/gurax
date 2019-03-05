@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-void Bootup()
+void Initialize()
 {
 	Attribute::Bootup();
 	Binary::Bootup();
@@ -19,7 +19,7 @@ void Bootup()
 	Symbol::Bootup();
 	Template::Bootup();
 	Token::Bootup();
-	Value::Bootup();
+	Context::GetGlobal().Prepare();
 }
 
 }

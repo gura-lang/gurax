@@ -17,7 +17,7 @@ private:
 	static Context _context;
 public:
 	// Constructor
-	Context();
+	Context() : _pFrame(Frame::CreateOfValueMap()) {}
 	// Copy constructor/operator
 	Context(const Context& src) = delete;
 	Context& operator=(const Context& src) = delete;
@@ -26,6 +26,8 @@ public:
 	Context& operator=(Context&& src) noexcept = delete;
 	// Destructor
 	~Context() = default;
+public:
+	void Prepare();
 public:
 	static Context& GetGlobal() { return _context; }
 	static Frame& GetFrame() { return *GetGlobal()._pFrame; }

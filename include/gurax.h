@@ -80,7 +80,7 @@
 
 namespace Gurax {
 
-void Bootup();
+void Initialize();
 
 }
 

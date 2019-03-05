@@ -16,7 +16,6 @@ int Main(int argc, char* argv[])
 		return 1;
 	}
 	const char* testerName = argv[1];
-	Bootup();
 	bool foundFlag = false;
 	size_t nLen = ::strlen(testerName);
 	for (auto pTester : Tester::GetTesterList()) {
@@ -41,5 +40,6 @@ void PrintTitle(const char* title)
 
 int main(int argc, char* argv[])
 {
+	Gurax::Initialize();
 	return Gurax::Main(argc, argv);
 }

@@ -93,7 +93,7 @@ public:
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
-	static void Bootup();
+	static void PrepareBasic(Frame& frame);
 public:
 	static Value* undefined()	{ return _pValue_undefined->Reference(); }
 	static Value* nil()			{ return _pValue_nil->Reference(); }

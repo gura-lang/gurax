@@ -49,6 +49,8 @@ public:
 	bool AssignModule(Module* pModule);
 	void AssignVType(VType& vtype);
 	void AssignFunction(Function* pFunction);
+	void AssignValue(const char* name, Value* pValue) { AssignValue(Symbol::Add(name), pValue); }
+	Value* LookupValue(const char* name) { return LookupValue(Symbol::Add(name)); }
 public:
 	// Virtual functions
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) = 0;

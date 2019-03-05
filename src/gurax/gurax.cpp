@@ -7,7 +7,6 @@ namespace Gurax {
 
 int Main(int argc, char* argv[])
 {
-	Gurax::Bootup();
 #if 0
 	RefPtr<Tokenizer> pTokenizer(new Tokenizer("", 0, false));
 	RefPtr<Object> pObj(new Object_number());
@@ -25,5 +24,6 @@ int Main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+	Gurax::Initialize();
 	return Gurax::Main(argc, argv);
 }

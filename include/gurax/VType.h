@@ -78,6 +78,8 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value) const;
 public:
+	static void PrepareBasic(Frame& frame);
+public:
 	void Prepare(Frame& frameParent) { DoPrepare(frameParent); }
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
