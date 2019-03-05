@@ -28,13 +28,14 @@ public:
 	};
 	enum class SeekMode { Set, Cur, End };
 	enum class ErrorType { None, Codec };
-	struct Attr {
-		static const UInt32 None		= 0;
-		static const UInt32 Infinite	= (1 << 0);
-		static const UInt32 BwdSeekable	= (1 << 1);
-		static const UInt32 Readable	= (1 << 2);
-		static const UInt32 Writable	= (1 << 3);
-		static const UInt32 Append		= (1 << 4);
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags None			= 0;
+		static const Flags Infinite		= (1 << 0);
+		static const Flags BwdSeekable	= (1 << 1);
+		static const Flags Readable		= (1 << 2);
+		static const Flags Writable		= (1 << 3);
+		static const Flags Append		= (1 << 4);
 	};
 	struct Info {
 	public:
@@ -43,10 +44,10 @@ public:
 		//DateTime ctime;
 		Int32 uid;
 		Int32 gid;
-		UInt32 attr;
-		UInt32 attrMask;
+		Flags flags;
+		Flags flagsMask;
 	public:
-		inline Info() : uid(0), gid(0), attr(0), attrMask(0) {}
+		inline Info() : uid(0), gid(0), flags(Flag::None), flagsMask(Flag::None) {}
 	};
 public:
 	static RefPtr<Stream> CIn;

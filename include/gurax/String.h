@@ -62,29 +62,30 @@ public:
 		}
 	};
 public:
+	using CTypes = UInt32;
 	struct CType {
-		static constexpr UInt32 Alpha			= 1 << 0;
-		static constexpr UInt32 Digit			= 1 << 1;
-		static constexpr UInt32 HexDigit		= 1 << 2;
-		static constexpr UInt32 OctDigit		= 1 << 3;
-		static constexpr UInt32 BinDigit		= 1 << 4;
-		static constexpr UInt32 White			= 1 << 5;
-		static constexpr UInt32 Space			= 1 << 6;
-		static constexpr UInt32 SJISFirst		= 1 << 7;
-		static constexpr UInt32 SJISSecond		= 1 << 8;
-		static constexpr UInt32 UTF8First		= 1 << 9;
-		static constexpr UInt32 UTF8Follower	= 1 << 10;
-		static constexpr UInt32 SymbolExtra		= 1 << 11;
-		static constexpr UInt32 Lower			= 1 << 12;
-		static constexpr UInt32 Upper			= 1 << 13;
-		static constexpr UInt32 URIC			= 1 << 14;
-		static constexpr UInt32 SymbolFirst		= Alpha | SymbolExtra | UTF8First;
-		static constexpr UInt32 SymbolFollower	= SymbolFirst | Digit | UTF8Follower;
+		static constexpr CTypes Alpha			= 1 << 0;
+		static constexpr CTypes Digit			= 1 << 1;
+		static constexpr CTypes HexDigit		= 1 << 2;
+		static constexpr CTypes OctDigit		= 1 << 3;
+		static constexpr CTypes BinDigit		= 1 << 4;
+		static constexpr CTypes White			= 1 << 5;
+		static constexpr CTypes Space			= 1 << 6;
+		static constexpr CTypes SJISFirst		= 1 << 7;
+		static constexpr CTypes SJISSecond		= 1 << 8;
+		static constexpr CTypes UTF8First		= 1 << 9;
+		static constexpr CTypes UTF8Follower	= 1 << 10;
+		static constexpr CTypes SymbolExtra		= 1 << 11;
+		static constexpr CTypes Lower			= 1 << 12;
+		static constexpr CTypes Upper			= 1 << 13;
+		static constexpr CTypes URIC			= 1 << 14;
+		static constexpr CTypes SymbolFirst		= Alpha | SymbolExtra | UTF8First;
+		static constexpr CTypes SymbolFollower	= SymbolFirst | Digit | UTF8Follower;
 	};
 public:
 	static const String Empty;
 private:
-	static UInt32 _ctypeTbl[256];
+	static CTypes _ctypesTbl[256];
 	static int    _convBinDigitTbl[256];
 	static int    _convOctDigitTbl[256];
 	static int    _convHexDigitTbl[256];
@@ -100,30 +101,30 @@ public:
 	static void Bootup();
 public:
 	// Character operation
-	static UInt32 GetCType(char ch)			{ return _ctypeTbl[static_cast<UChar>(ch)]; }
-	static bool IsAlpha(char ch)			{ return (GetCType(ch) & CType::Alpha) != 0; }
-	static bool IsDigit(char ch)			{ return (GetCType(ch) & CType::Digit) != 0; }
-	static bool IsHexDigit(char ch)			{ return (GetCType(ch) & CType::HexDigit) != 0; }
-	static bool IsOctDigit(char ch)			{ return (GetCType(ch) & CType::OctDigit) != 0; }
-	static bool IsBinDigit(char ch)			{ return (GetCType(ch) & CType::BinDigit) != 0; }
-	static bool IsWhite(char ch)			{ return (GetCType(ch) & CType::White) != 0; }
-	static bool IsSpace(char ch)			{ return (GetCType(ch) & CType::Space) != 0; }
-	static bool IsSJISFirst(char ch)		{ return (GetCType(ch) & CType::SJISFirst) != 0; }
-	static bool IsSJISSecond(char ch)		{ return (GetCType(ch) & CType::SJISSecond) != 0; }
-	static bool IsUTF8First(char ch)		{ return (GetCType(ch) & CType::UTF8First) != 0; }
-	static bool IsUTF8Follower(char ch)		{ return (GetCType(ch) & CType::UTF8Follower) != 0; }
-	static bool IsSymbolExtra(char ch)		{ return (GetCType(ch) & CType::SymbolExtra) != 0; }
-	static bool IsLower(char ch)			{ return (GetCType(ch) & CType::Lower) != 0; }
-	static bool IsUpper(char ch)			{ return (GetCType(ch) & CType::Upper) != 0; }
-	static bool IsURIC(char ch)				{ return (GetCType(ch) & CType::URIC) != 0; }
-	static bool IsSymbolFirst(char ch)		{ return (GetCType(ch) & CType::SymbolFirst) != 0; }
-	static bool IsSymbolFollower(char ch)	{ return (GetCType(ch) & CType::SymbolFollower) != 0; }
-	static int ConvBinDigit(char ch)		{ return _convBinDigitTbl[static_cast<UChar>(ch)]; }
-	static int ConvOctDigit(char ch)		{ return _convOctDigitTbl[static_cast<UChar>(ch)]; }
-	static int ConvHexDigit(char ch)		{ return _convHexDigitTbl[static_cast<UChar>(ch)]; }
-	static char ToUpper(char ch)			{ return _toUpperTbl[static_cast<UChar>(ch)]; }
-	static char ToLower(char ch)			{ return _toLowerTbl[static_cast<UChar>(ch)]; }
-	static char ToEscaped(char ch)			{ return _toEscapedTbl[static_cast<UChar>(ch)]; }
+	static CTypes GetCTypes(char ch)		{ return _ctypesTbl[static_cast<UChar>(ch)];		}
+	static bool IsAlpha(char ch)			{ return (GetCTypes(ch) & CType::Alpha) != 0;		}
+	static bool IsDigit(char ch)			{ return (GetCTypes(ch) & CType::Digit) != 0;		}
+	static bool IsHexDigit(char ch)			{ return (GetCTypes(ch) & CType::HexDigit) != 0;	}
+	static bool IsOctDigit(char ch)			{ return (GetCTypes(ch) & CType::OctDigit) != 0;	}
+	static bool IsBinDigit(char ch)			{ return (GetCTypes(ch) & CType::BinDigit) != 0;	}
+	static bool IsWhite(char ch)			{ return (GetCTypes(ch) & CType::White) != 0;		}
+	static bool IsSpace(char ch)			{ return (GetCTypes(ch) & CType::Space) != 0;		}
+	static bool IsSJISFirst(char ch)		{ return (GetCTypes(ch) & CType::SJISFirst) != 0;	}
+	static bool IsSJISSecond(char ch)		{ return (GetCTypes(ch) & CType::SJISSecond) != 0;	}
+	static bool IsUTF8First(char ch)		{ return (GetCTypes(ch) & CType::UTF8First) != 0;	}
+	static bool IsUTF8Follower(char ch)		{ return (GetCTypes(ch) & CType::UTF8Follower) != 0; }
+	static bool IsSymbolExtra(char ch)		{ return (GetCTypes(ch) & CType::SymbolExtra) != 0; }
+	static bool IsLower(char ch)			{ return (GetCTypes(ch) & CType::Lower) != 0;		}
+	static bool IsUpper(char ch)			{ return (GetCTypes(ch) & CType::Upper) != 0;		}
+	static bool IsURIC(char ch)				{ return (GetCTypes(ch) & CType::URIC) != 0;		}
+	static bool IsSymbolFirst(char ch)		{ return (GetCTypes(ch) & CType::SymbolFirst) != 0;	}
+	static bool IsSymbolFollower(char ch)	{ return (GetCTypes(ch) & CType::SymbolFollower) != 0; }
+	static int ConvBinDigit(char ch)		{ return _convBinDigitTbl[static_cast<UChar>(ch)];	}
+	static int ConvOctDigit(char ch)		{ return _convOctDigitTbl[static_cast<UChar>(ch)];	}
+	static int ConvHexDigit(char ch)		{ return _convHexDigitTbl[static_cast<UChar>(ch)];	}
+	static char ToUpper(char ch)			{ return _toUpperTbl[static_cast<UChar>(ch)];		}
+	static char ToLower(char ch)			{ return _toLowerTbl[static_cast<UChar>(ch)];		}
+	static char ToEscaped(char ch)			{ return _toEscapedTbl[static_cast<UChar>(ch)];		}
 public:
 	String PickChar(size_t idx) const;
 	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const;

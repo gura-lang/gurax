@@ -27,7 +27,7 @@ public:
 //------------------------------------------------------------------------------
 const String String::Empty("");
 
-UInt32 String::_ctypeTbl[256];
+String::CTypes String::_ctypesTbl[256];
 int String::_convBinDigitTbl[256];
 int String::_convOctDigitTbl[256];
 int String::_convHexDigitTbl[256];
@@ -38,57 +38,57 @@ char String::_toEscapedTbl[256];
 void String::Bootup()
 {
 	for (int ch = 0; ch < 256; ++ch) {
-		UInt32 num = 0;
+		CTypes ctypes = 0;
 		if (('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z')) {
-			num |= CType::Alpha;
+			ctypes |= CType::Alpha;
 		}
 		if ('0' <= ch && ch <= '9') {
-			num |= CType::Digit;
+			ctypes |= CType::Digit;
 		}
 		if (('0' <= ch && ch <= '9') || ('A' <= ch && ch <= 'F') || ('a' <= ch && ch <= 'f')) {
-			num |= CType::HexDigit;
+			ctypes |= CType::HexDigit;
 		}
 		if ('0' <= ch && ch <= '7') {
-			num |= CType::OctDigit;
+			ctypes |= CType::OctDigit;
 		}
 		if ('0' <= ch && ch <= '1') {
-			num |= CType::BinDigit;
+			ctypes |= CType::BinDigit;
 		}
 		if (ch == ' ' || ch == '\t') {
-			num |= CType::White;
+			ctypes |= CType::White;
 		}
 		if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') {
-			num |= CType::Space;
+			ctypes |= CType::Space;
 		}
 		if ((0x81 <= ch && ch <= 0x9f) || (0xe0 <= ch && ch <= 0xef) || (0xfa <= ch && ch <= 0xfc)) {
-			num |= CType::SJISFirst;
+			ctypes |= CType::SJISFirst;
 		}
 		if ((0x40 <= ch && ch <= 0x7e) || (0x80 <= ch && ch <= 0xfc)) {
-			num |= CType::SJISSecond;
+			ctypes |= CType::SJISSecond;
 		}
 		if ((ch & 0xc0) == 0xc0) {
-			num |= CType::UTF8First;
+			ctypes |= CType::UTF8First;
 		}
 		if ((ch & 0xc0) == 0x80) {
-			num |= CType::UTF8Follower;
+			ctypes |= CType::UTF8Follower;
 		}
 		if (ch == '_' || ch == '$' || ch == '@') {
-			num |= CType::SymbolExtra;
+			ctypes |= CType::SymbolExtra;
 		}
 		if ('a' <= ch && ch <= 'z') {
-			num |= CType::Lower;
+			ctypes |= CType::Lower;
 		}
 		if ('A' <= ch && ch <= 'Z') {
-			num |= CType::Upper;
+			ctypes |= CType::Upper;
 		}
 		if (('0' <= ch && ch <= '9') || ('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z') ||
 			ch == ';' || ch ==  '/' || ch == '?' || ch == ':' || ch == '@' ||
 			ch == '&' || ch ==  '=' || ch == '+' || ch == '$' || ch == ',' ||
 			ch == '-' || ch == '_' || ch == '.' || ch == '!' || ch == '~' ||
 			ch == '*' || ch == '\'' || ch == '(' || ch == ')') {
-			num |= CType::URIC;
+			ctypes |= CType::URIC;
 		}
-		_ctypeTbl[ch] = num;
+		_ctypesTbl[ch] = ctypes;
 		_convBinDigitTbl[ch] = ('0' <= ch && ch <= '1')? ch - '0' : 0;
 		_convOctDigitTbl[ch] = ('0' <= ch && ch <= '7')? ch - '0' : 0;
 		_convHexDigitTbl[ch] =
