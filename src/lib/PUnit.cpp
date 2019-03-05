@@ -116,16 +116,16 @@ String PUnit_AssignToSymbol::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_AssignToDeclArg
-// Stack View: [ValueAssigned] -> [ValueAssigned]
+// Stack View: [ValueAssigned] -> [ValueCasted]
 //------------------------------------------------------------------------------
 void PUnit_AssignToDeclArg::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrame();
-	RefPtr<Value> pValueAssigned(
-		GetPopToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
+	RefPtr<Value> pValueAssigned(processor.PopValue());
 	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
 	if (!pValueCasted) return;
-	frame.AssignValue(GetDeclArg().GetSymbol(), pValueCasted.release());
+	frame.AssignValue(GetDeclArg().GetSymbol(), pValueCasted->Reference());
+	if (!GetPopToDiscardFlag()) processor.PushValue(pValueCasted.release());
 	processor.Goto(GetPUnitNext());
 }
 
@@ -146,7 +146,7 @@ String PUnit_AssignToDeclArg::ToString(const StringStyle& ss) const
 void PUnit_AssignFunction::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
-	processor.GetFrame().AssignValue(GetFunction().GetSymbol(), pValueAssigned.release());
+	processor.GetFrame().AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
 	if (!GetPopToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
 	processor.Goto(GetPUnitNext());
 }
@@ -171,9 +171,9 @@ void PUnit_Cast::Exec(Processor& processor) const
 		Value::Delete(processor.PopValue());
 	} else {
 		RefPtr<Value> pValue(processor.PopValue());
-		RefPtr<Value> pValueResult(GetVType().Cast(*pValue));
-		if (!pValueResult) return;
-		processor.PushValue(pValueResult.release());
+		RefPtr<Value> pValueCasted(GetVType().Cast(*pValue));
+		if (!pValueCasted) return;
+		processor.PushValue(pValueCasted.release());
 	}
 	processor.Goto(GetPUnitNext());
 }
