@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // FunctionCustom
 //------------------------------------------------------------------------------
-Value* FunctionCustom::DoCall(Processor& processor, const Argument& argument) const
+Value* FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 {
 	return Value::nil();
 }

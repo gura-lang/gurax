@@ -647,9 +647,17 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 	Argument& argument = pValue->GetArgument();
 	if (!argument.CheckValidity()) return nullptr;
 	RefPtr<Value> pValueResult(argument.DoCall(processor));
-	if (Error::IsIssued()) return nullptr;
-	if (!GetPopToDiscardFlag()) processor.PushValue(pValueResult.release());
-	return GetPUnitNext();
+	if (Error::IsIssued()) {
+		for (auto pExpr : Error::GetErrorOwner()) pExpr->SetExpr(GetExprSrc()->Reference());
+		return nullptr;
+	}
+	if (argument.GetPUnitNext()) {
+		processor.PushPUnit(GetPUnitNext());
+		return argument.GetPUnitNext();
+	} else {
+		if (!GetPopToDiscardFlag()) processor.PushValue(pValueResult.release());
+		return GetPUnitNext();
+	}
 }
 
 String PUnit_Call::ToString(const StringStyle& ss) const
@@ -685,7 +693,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_JumpSub::Exec(Processor& processor) const
 {
-	processor.PushPUnit(this);
+	processor.PushPUnit(GetPUnitNext());
 	return GetPUnitJumpDest();
 }
 

@@ -91,6 +91,8 @@ protected:
 public:
 	static void Bootup();
 	String MakeMessage() const;
+	const Expr* GetExpr() const { return _pExpr.get(); }
+	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
 	const ErrorType& GetErrorType() const { return _errorType; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }

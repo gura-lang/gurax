@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class PUnit;
+
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
@@ -19,11 +21,12 @@ public:
 private:
 	RefPtr<Value> _pValueCar;
 	RefPtr<DeclCallable> _pDeclCallable;
-	UInt32 _flags;
 	RefPtr<Attribute> _pAttr;
-	RefPtr<ArgSlot> _pArgSlotTop;
-	ArgSlot* _pArgSlotToFeed;
 	RefPtr<Value> _pValueThis;
+	RefPtr<ArgSlot> _pArgSlotTop;
+	UInt32 _flags;
+	ArgSlot* _pArgSlotToFeed;
+	const PUnit* _pPUnitNext;
 public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr, Value* pValueThis);
@@ -63,6 +66,8 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
+	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
+	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 	Value* DoCall(Processor& processor) { return GetValueCar().DoCall(processor, *this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

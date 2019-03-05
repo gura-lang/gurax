@@ -19,7 +19,52 @@ Gurax_DeclareStatementAlias(if_, "if")
 Gurax_ImplementStatement(if_)
 {
 	if (pExprCaller->CountExprCdr() != 1) {
-		Error::Issue(ErrorType::ArgumentError, "if-statement takes one argument");
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "if-statement takes one argument");
+		return;
+	}
+	do {
+		const Expr* pExpr = pExprCaller->GetExprCdrHead();
+		pExpr->Compose(composer);										// [ValueBool]
+	} while (0);
+	if (pExprCaller->HasExprTrailer()) {
+		if (pExprCaller->GetExprBlock()->HasExprElem()) {
+			auto pPUnit1 = composer.AddF_JumpIfNot(pExprCaller);		// []
+			pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
+			auto pPUnit2 = composer.AddF_Jump(pExprCaller);				// [Value]
+			pPUnit1->SetPUnitJumpDest(composer.PeekPUnitNext());
+			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			pPUnit2->SetPUnitJumpDest(composer.PeekPUnitNext());
+		} else {
+			auto pPUnit = composer.AddF_NilJumpIf(pExprCaller);			// [] or [nil]
+			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
+		}
+	} else {
+		if (pExprCaller->GetExprBlock()->HasExprElem()) {
+			auto pPUnit = composer.AddF_NilJumpIfNot(pExprCaller);		// [] or [nil]
+			pExprCaller->GetExprBlock()->Compose(composer);				// [Value]
+			pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
+		} else {
+			composer.Add_PopToDiscard(pExprCaller);						// []
+			composer.Add_Value(pExprCaller, Value::nil());				// [nil]
+		}
+	}
+}
+
+// elsif (`cond) {`block}
+Gurax_DeclareStatementAlias(elsif, "elsif")
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::Trailer);
+	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(elsif)
+{
+	if (pExprCaller->CountExprCdr() != 1) {
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "elsif-statement takes one argument");
 		return;
 	}
 	do {
@@ -61,11 +106,13 @@ Gurax_DeclareStatementAlias(else_, "else")
 Gurax_ImplementStatement(else_)
 {
 	if (pExprCaller->CountExprCdr() != 0) {
-		Error::Issue(ErrorType::ArgumentError, "else-statement takes no argument");
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "else-statement takes no argument");
 		return;
 	}
 	if (pExprCaller->HasExprTrailer()) {
-		Error::Issue(ErrorType::SyntaxError, "invalid format of if-elsif-else sequence");
+		Error::IssueWith(ErrorType::SyntaxError, pExprCaller,
+						 "invalid format of if-elsif-else sequence");
 		return;
 	}
 	if (pExprCaller->GetExprBlock()->HasExprElem()) {
@@ -87,7 +134,8 @@ Gurax_ImplementStatement(repeat)
 {
 	size_t nArgs = pExprCaller->CountExprCdr();
 	if (pExprCaller->CountExprCdr() > 1) {
-		Error::Issue(ErrorType::ArgumentError, "repeat-statement takes zero or one argument");
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "repeat-statement takes zero or one argument");
 		return;
 	}
 	if (nArgs == 0) {
@@ -128,7 +176,8 @@ Gurax_DeclareStatementAlias(while_, "while")
 Gurax_ImplementStatement(while_)
 {
 	if (pExprCaller->CountExprCdr() != 1) {
-		Error::Issue(ErrorType::ArgumentError, "while-statement takes one argument");
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "while-statement takes one argument");
 		return;
 	}
 	const DeclArgOwner& declArgOwner = pExprCaller->GetExprBlock()->GetDeclCallable().GetDeclArgOwner();
@@ -163,7 +212,8 @@ Gurax_ImplementStatement(while_)
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitNext());
 		// delete ValueIdx here
 	} else {
-		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "invalid number of block parameters");
 		return;
 	}
 }
@@ -224,6 +274,7 @@ Gurax_ImplementFunction(Println)
 void Functions::PrepareBasic(Frame& frame)
 {
 	Gurax_AssignStatement(if_);
+	Gurax_AssignStatement(elsif);
 	Gurax_AssignStatement(else_);
 	Gurax_AssignStatement(while_);
 	Gurax_AssignFunction(Print);

@@ -15,7 +15,7 @@ public:
 	using Function::Function;
 public:
 	// Virtual functions of Function
-	virtual Value* DoCall(Processor& processor, const Argument& argument) const override;
+	virtual Value* DoCall(Processor& processor, Argument& argument) const override;
 };
 
 }
