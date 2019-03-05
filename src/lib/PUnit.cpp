@@ -71,14 +71,13 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 {
-	if (!GetPopToDiscardFlag()) {
-		const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
-		if (!pValue) {
-			IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-			return nullptr;
-		}
-		processor.PushValue(pValue->Reference());
+	if (GetPopToDiscardFlag()) return GetPUnitNext();
+	const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
+	if (!pValue) {
+		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		return nullptr;
 	}
+	processor.PushValue(pValue->Reference());
 	return GetPUnitNext();
 }
 
@@ -169,12 +168,12 @@ const PUnit* PUnit_Cast::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
-	} else {
-		RefPtr<Value> pValue(processor.PopValue());
-		RefPtr<Value> pValueCasted(GetVType().Cast(*pValue));
-		if (!pValueCasted) return nullptr;
-		processor.PushValue(pValueCasted.release());
+		return GetPUnitNext();
 	}
+	RefPtr<Value> pValue(processor.PopValue());
+	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue));
+	if (!pValueCasted) return nullptr;
+	processor.PushValue(pValueCasted.release());
 	return GetPUnitNext();
 }
 
@@ -196,12 +195,12 @@ const PUnit* PUnit_UnaryOp::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
-	} else {
-		RefPtr<Value> pValue(processor.PopValue());
-		RefPtr<Value> pValueResult(GetOperator()->EvalUnary(*pValue));
-		if (pValueResult->IsUndefined()) return nullptr;
-		processor.PushValue(pValueResult.release());
+		return GetPUnitNext();
 	}
+	RefPtr<Value> pValue(processor.PopValue());
+	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(*pValue));
+	if (pValueResult->IsUndefined()) return nullptr;
+	processor.PushValue(pValueResult.release());
 	return GetPUnitNext();
 }
 
@@ -224,13 +223,13 @@ const PUnit* PUnit_BinaryOp::Exec(Processor& processor) const
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
 		Value::Delete(processor.PopValue());
-	} else {
-		RefPtr<Value> pValueRight(processor.PopValue());
-		RefPtr<Value> pValueLeft(processor.PopValue());
-		RefPtr<Value> pValueResult(GetOperator()->EvalBinary(*pValueLeft, *pValueRight));
-		if (pValueResult->IsUndefined()) return nullptr;
-		processor.PushValue(pValueResult.release());
+		return GetPUnitNext();
 	}
+	RefPtr<Value> pValueRight(processor.PopValue());
+	RefPtr<Value> pValueLeft(processor.PopValue());
+	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(*pValueLeft, *pValueRight));
+	if (pValueResult->IsUndefined()) return nullptr;
+	processor.PushValue(pValueResult.release());
 	return GetPUnitNext();
 }
 
@@ -252,15 +251,11 @@ const PUnit* PUnit_Add::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
-	} else {
-		RefPtr<Value> pValue(processor.PopValue());
-		if (!pValue->IsType(VTYPE_Number)) {
-			IssueError(ErrorType::TypeError, "number value is expected");
-			return nullptr;
-		}
-		int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
-		processor.PushValue(new Value_Number(num + GetAdded()));
+		return GetPUnitNext();
 	}
+	RefPtr<Value> pValue(processor.PopValue());
+	int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
+	processor.PushValue(new Value_Number(num + GetAdded()));
 	return GetPUnitNext();
 }
 
@@ -303,12 +298,12 @@ const PUnit* PUnit_AddList::Exec(Processor& processor) const
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
 		Value::Delete(processor.PopValue());
-	} else {
-		RefPtr<Value> pValueElem(processor.PopValue());
-		ValueTypedOwner& valueTypedOwner =
-			dynamic_cast<Value_List*>(processor.PeekValue(0))->GetValueTypedOwner();
-		valueTypedOwner.Add(pValueElem.release());
+		return GetPUnitNext();
 	}
+	RefPtr<Value> pValueElem(processor.PopValue());
+	ValueTypedOwner& valueTypedOwner =
+		dynamic_cast<Value_List*>(processor.PeekValue(0))->GetValueTypedOwner();
+	valueTypedOwner.Add(pValueElem.release());
 	return GetPUnitNext();
 }
 
@@ -370,13 +365,13 @@ const PUnit* PUnit_IndexGet::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
-	} else {
-		RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
-		Index& index = pValueIndex->GetIndex();
-		RefPtr<Value> pValueElems(index.IndexGet());
-		if (Error::IsIssued()) return nullptr;
-		processor.PushValue(pValueElems.release());
+		return GetPUnitNext();
 	}
+	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
+	Index& index = pValueIndex->GetIndex();
+	RefPtr<Value> pValueElems(index.IndexGet());
+	if (Error::IsIssued()) return nullptr;
+	processor.PushValue(pValueElems.release());
 	return GetPUnitNext();
 }
 
@@ -419,15 +414,15 @@ const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
-	} else {
-		Value* pValueTarget = processor.PeekValue(0);
-		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
-		if (!pValueProp) {
-			IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-			return nullptr;
-		}
-		processor.PushValue(pValueProp->Reference());
+		return GetPUnitNext();
 	}
+	Value* pValueTarget = processor.PeekValue(0);
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+	if (!pValueProp) {
+		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		return nullptr;
+	}
+	processor.PushValue(pValueProp->Reference());
 	return GetPUnitNext();
 }
 
@@ -475,18 +470,18 @@ const PUnit* PUnit_Member::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) {
 		Value::Delete(processor.PopValue());
+		return GetPUnitNext();
+	}
+	RefPtr<Value> pValueTarget(processor.PopValue());
+	Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+	if (!pValue) {
+		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		return nullptr;
+	}
+	if (pValue->IsCallable()) {
+		processor.PushValue(new Value_Member(pValueTarget.release(), pValue->Reference()));
 	} else {
-		RefPtr<Value> pValueTarget(processor.PopValue());
-		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
-		if (!pValue) {
-			IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
-			return nullptr;
-		}
-		if (pValue->IsCallable()) {
-			processor.PushValue(new Value_Member(pValueTarget.release(), pValue->Reference()));
-		} else {
-			processor.PushValue(pValue->Reference());
-		}
+		processor.PushValue(pValue->Reference());
 	}
 	return GetPUnitNext();
 }
