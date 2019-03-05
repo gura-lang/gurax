@@ -13,9 +13,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE DeclBlock {
 public:
+	using Flags = UInt32;
 	struct Flag {
-		static const UInt32 None	= 0;
-		static const UInt32 Quote	= (1 << 0);
+		static const Flags None	= 0;
+		static const Flags Quote	= (1 << 0);
 	};
 	class Occur {
 	private:
@@ -44,7 +45,7 @@ public:
 		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
 		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, Flag::None> {
+	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 		}
@@ -55,7 +56,7 @@ public:
 private:
 	const Symbol* _pSymbol;
 	const Occur* _pOccur;
-	UInt32 _flags;
+	Flags _flags;
 public:
 	// Constructor
 	DeclBlock();
@@ -75,15 +76,15 @@ public:
 	bool IsOccurZero() const { return GetOccur().IsIdentical(Occur::Zero); }
 	bool IsOccurOnce() const { return GetOccur().IsIdentical(Occur::Once); }
 	bool IsOccurZeroOrOnce() const { return GetOccur().IsIdentical(Occur::ZeroOrOnce); }
-	DeclBlock& SetFlags(UInt32 flags) { _flags = flags; return *this; }
-	UInt32 GetFlags() const { return _flags; }
-	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
+	DeclBlock& SetFlags(Flags flags) { _flags = flags; return *this; }
+	Flags GetFlags() const { return _flags; }
+	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}
-	static const Symbol* FlagToSymbol(UInt32 flag) {
+	static const Symbol* FlagToSymbol(Flags flag) {
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
-	static String FlagsToString(UInt32 flags);
+	static String FlagsToString(Flags flags);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclBlock& declBlock) const { return this == &declBlock; }

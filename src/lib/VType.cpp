@@ -47,7 +47,7 @@ void VType::PrepareBasic(Frame& frame)
 	VTYPE_Undefined.Prepare(frame);
 }
 
-void VType::SetAttrs(VType& vtypeInherited, UInt32 flags)
+void VType::SetAttrs(VType& vtypeInherited, Flags flags)
 {
 	_pVTypeInherited = &vtypeInherited;
 	_pFrame->SetLeft(_pVTypeInherited->GetFrame().Reference());

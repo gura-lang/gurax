@@ -21,27 +21,28 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclCallable);
 public:
+	using Flags = UInt32;
 	struct Flag {
-		static const UInt32 None			= 0;
-		static const UInt32 Map				= 1 << 0;	// :map
-		static const UInt32 NoMap			= 1 << 1;	// :nomap
-		static const UInt32 Closure			= 1 << 2;	// :closure
-		static const UInt32 CutExtraArgs	= 1 << 3;	// :cut_extra_args
-		static const UInt32 DynamicScope	= 1 << 4;	// :dynamic_scope
-		static const UInt32 EndMarker		= 1 << 5;	// :end_marker
-		static const UInt32 Flat			= 1 << 6;	// :flat
-		static const UInt32 Fork			= 1 << 7;	// :fork
-		static const UInt32 Finalizer		= 1 << 8;	// :finalizer
-		static const UInt32 Leader			= 1 << 9;	// :leader
-		static const UInt32 Trailer			= 1 << 10;	// :trailer
-		static const UInt32 SymbolFunc		= 1 << 11;	// :symbol_func
-		static const UInt32 NoNamed			= 1 << 12;	// :nonamed
-		static const UInt32 Public			= 1 << 13;	// :public
-		static const UInt32 Private			= 1 << 14;	// :private
-		static const UInt32 Privileged		= 1 << 15;	// :privileged
-		static const UInt32 Reduce			= 1 << 16;	// :reduce
+		static const Flags None				= 0;
+		static const Flags Map				= 1 << 0;	// :map
+		static const Flags NoMap			= 1 << 1;	// :nomap
+		static const Flags Closure			= 1 << 2;	// :closure
+		static const Flags CutExtraArgs		= 1 << 3;	// :cut_extra_args
+		static const Flags DynamicScope		= 1 << 4;	// :dynamic_scope
+		static const Flags EndMarker		= 1 << 5;	// :end_marker
+		static const Flags Flat				= 1 << 6;	// :flat
+		static const Flags Fork				= 1 << 7;	// :fork
+		static const Flags Finalizer		= 1 << 8;	// :finalizer
+		static const Flags Leader			= 1 << 9;	// :leader
+		static const Flags Trailer			= 1 << 10;	// :trailer
+		static const Flags SymbolFunc		= 1 << 11;	// :symbol_func
+		static const Flags NoNamed			= 1 << 12;	// :nonamed
+		static const Flags Public			= 1 << 13;	// :public
+		static const Flags Private			= 1 << 14;	// :private
+		static const Flags Privileged		= 1 << 15;	// :privileged
+		static const Flags Reduce			= 1 << 16;	// :reduce
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, Flag::None> {
+	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(map),			Flag::Map);
@@ -69,7 +70,7 @@ public:
 private:
 	const VType* _pVType;
 	RefPtr<DottedSymbol> _pDottedSymbol;
-	UInt32 _flags;
+	Flags _flags;
 	RefPtr<Attribute> _pAttr;
 	DeclArgOwner _declArgOwner;
 	DeclBlock _declBlock;
@@ -98,8 +99,8 @@ public:
 	const DeclBlock& GetDeclBlock() const { return _declBlock; }
 	void SetVType(const VType& vtype) { _pVType = &vtype; }
 	const VType& GetVType() const { return *_pVType; }
-	void SetFlags(UInt32 flags) { _flags = flags; }
-	UInt32 GetFlags() const { return _flags; }
+	void SetFlags(Flags flags) { _flags = flags; }
+	Flags GetFlags() const { return _flags; }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
@@ -112,14 +113,14 @@ public:
 	bool IsLessThan(const DeclCallable& declCaller) const { return this < &declCaller; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
-	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
+	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}
-	static const Symbol* FlagToSymbol(UInt32 flag) {
+	static const Symbol* FlagToSymbol(Flags flag) {
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
-	static UInt32 SymbolsToFlags(const SymbolList& symbols);
-	static String FlagsToString(UInt32 flags);
+	static Flags SymbolsToFlags(const SymbolList& symbols);
+	static String FlagsToString(Flags flags);
 };
 
 }

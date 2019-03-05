@@ -8,10 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-int PUnit::_idNext = 0;
+int PUnit::_seqIdNext = 0;
 
 PUnit::PUnit(Expr* pExprSrc) :
-	_id(_idNext++), _pExprSrc(pExprSrc), _pPUnitNext(nullptr), _popToDiscardFlag(false)
+	_seqId(++_seqIdNext), _flags(Flag::None), _pExprSrc(pExprSrc), _pPUnitNext(nullptr)
 {
 	_pExprSrc->SetPUnitTop(this);
 }
@@ -20,10 +20,10 @@ void PUnit::AppendInfoToString(String& str) const
 {
 	if (GetPopToDiscardFlag()) str += ", PopToDiscard()";
 	if (_pPUnitNext) {
-		size_t idNext = _pPUnitNext->GetId();
-		if (idNext != GetId() + 1) {
+		size_t seqIdNext = _pPUnitNext->GetSeqId();
+		if (seqIdNext != GetSeqId() + 1) {
 			str += ", Jump(#";
-			str += std::to_string(idNext);
+			str += std::to_string(seqIdNext);
 			str += ")";
 		}
 	} else {
@@ -37,7 +37,7 @@ void PUnit::AppendInfoToString(String& str) const
 void PUnitList::Print() const
 {
 	for (auto pPUnit : *this) {
-		::printf("#%zu %s\n", pPUnit->GetId(), pPUnit->ToString().c_str());
+		::printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 	}
 }
 
@@ -561,7 +561,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 	rtn += "ArgSlot(`(";
 	rtn += GetExprSrc()->ToString(ss);
 	rtn += "), #";
-	rtn += std::to_string(GetPUnitSkipDest()->GetId());
+	rtn += std::to_string(GetPUnitSkipDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -620,7 +620,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	rtn += ss.IsCram()? "=>" : " => `(";
 	rtn += GetExprSrc()->ToString(ss);
 	rtn += "), #";
-	rtn += std::to_string(GetPUnitSkipDest()->GetId());
+	rtn += std::to_string(GetPUnitSkipDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -682,7 +682,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Jump(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -702,7 +702,7 @@ String PUnit_JumpSub::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpSub(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -722,7 +722,7 @@ String PUnit_JumpIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpIf(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -742,7 +742,7 @@ String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpIfNot(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -767,7 +767,7 @@ String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "NilJumpIf(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -792,7 +792,7 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "NilJumpIfNot(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetId());
+	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;

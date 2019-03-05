@@ -92,18 +92,18 @@ public:
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
-	void DeclareCaller(const VType& vtype, UInt32 flags) {
+	void DeclareCaller(const VType& vtype, DeclCallable::Flags flags) {
 		GetDeclCallable().SetVType(vtype);
 		GetDeclCallable().SetFlags(flags);
 	}
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
-					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
+					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
 		GetDeclCallable().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
 	}
 	void DeclareArg(const char* name, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
-					UInt32 flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
+					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
 		DeclareArg(Symbol::Add(name), vtype, occur, flags, pExprDefault);
 	}
 	void DeclareAttrOpt(const Symbol* pSymbol) {
@@ -112,13 +112,15 @@ public:
 	void DeclareAttrOpt(const char* name) {
 		GetDeclCallable().GetAttr().AddSymbolOpt(Symbol::Add(name));
 	}
-	void DeclareBlock(const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclCallable().GetDeclBlock().SetOccur(occur).SetFlags(flags);
 	}
-	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur,
+					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclCallable().GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
 	}
-	void DeclareBlock(const char* name, const DeclBlock::Occur& occur, UInt32 flags = DeclBlock::Flag::None) {
+	void DeclareBlock(const char* name, const DeclBlock::Occur& occur,
+					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Symbol::Add(name), occur, flags);
 	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {

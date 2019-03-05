@@ -17,19 +17,20 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class VType {
 public:
-	struct Flag {
-		static const UInt32 None		= 0;
-		static const UInt32 Mutable		= (1 << 0);
-		static const UInt32 Immutable	= (0 << 0);
-		static const UInt32 Callable	= (1 << 1);
-	};
 	using SeqId = UInt32;
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags None		= 0;
+		static const Flags Mutable		= (1 << 0);
+		static const Flags Immutable	= (0 << 0);
+		static const Flags Callable	= (1 << 1);
+	};
 protected:
 	SeqId _seqId;
 	RefPtr<HelpProvider> _pHelpProvider;
 	VType* _pVTypeInherited;
 	const Symbol* _pSymbol;
-	UInt32 _flags;
+	Flags _flags;
 	RefPtr<Frame_Branch> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
@@ -51,7 +52,7 @@ public:
 	virtual ~VType() = default;
 public:
 	SeqId GetSeqId() const { return _seqId; }
-	void SetAttrs(VType& vtypeInherited, UInt32 flags);
+	void SetAttrs(VType& vtypeInherited, Flags flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	VType& GetVTypeInherited() const { return *_pVTypeInherited; }
 	const Symbol* GetSymbol() const { return _pSymbol; }

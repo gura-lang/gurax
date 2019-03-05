@@ -13,13 +13,20 @@ class Processor;
 // PUnit
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit {
+public:
+	using SeqId = UInt32;
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags None			= 0;
+		static const Flags PopToDiscard	= (1 << 0);
+	};
 protected:
-	int _id;
+	SeqId _seqId;
+	Flags _flags;
 	RefPtr<Expr> _pExprSrc;
 	const PUnit* _pPUnitNext;
-	bool _popToDiscardFlag;
 protected:
-	static int _idNext;
+	static int _seqIdNext;
 public:
 	// Constructor
 	explicit PUnit(Expr* pExprSrc);
@@ -39,11 +46,11 @@ public:
 	bool IsLessThan(const PUnit* pPUnit) const { return this < pPUnit; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
-	size_t GetId() const { return _id; }
+	size_t GetSeqId() const { return _seqId; }
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
-	void SetPopToDiscardFlag() { _popToDiscardFlag = true; }
-	bool GetPopToDiscardFlag() const { return _popToDiscardFlag; }
+	void SetPopToDiscardFlag() { _flags |= Flag::PopToDiscard; }
+	bool GetPopToDiscardFlag() const { return (_flags & Flag::PopToDiscard) != 0; }
 	void AppendInfoToString(String& str) const;
 public:
 	// Virtual functions

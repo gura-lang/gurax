@@ -19,15 +19,16 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclArg);
 public:
+	using Flags = UInt32;
 	struct Flag {
-		static const UInt32 None			= 0;
-		static const UInt32 ListVar			= 1 << 0;	// :listvar
-		static const UInt32 Map				= 1 << 1;	// :map
-		static const UInt32 NoMap			= 1 << 2;	// :nomap
-		static const UInt32 NoCast			= 1 << 3;	// :nocast
-		static const UInt32 Nil				= 1 << 4;	// :nil
-		static const UInt32 Read			= 1 << 5;	// :r
-		static const UInt32 Write			= 1 << 6;	// :w
+		static const Flags None		= 0;
+		static const Flags ListVar	= 1 << 0;	// :listvar
+		static const Flags Map		= 1 << 1;	// :map
+		static const Flags NoMap	= 1 << 2;	// :nomap
+		static const Flags NoCast	= 1 << 3;	// :nocast
+		static const Flags Nil		= 1 << 4;	// :nil
+		static const Flags Read		= 1 << 5;	// :r
+		static const Flags Write	= 1 << 6;	// :w
 	};
 	class Occur {
 	private:
@@ -61,7 +62,7 @@ public:
 		bool IsEqualTo(const Occur& occur) const { return IsIdentical(occur); }
 		bool IsLessThan(const Occur& occur) const { return this < &occur; }
 	};
-	class SymbolAssoc_Flag : public SymbolAssoc<UInt32, Flag::None> {
+	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(listvar),		Flag::ListVar);
@@ -81,14 +82,14 @@ private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	const VType* _pVType;
 	const Occur& _occur;
-	UInt32 _flags;
+	Flags _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-			const Occur& occur, UInt32 flags, Expr* pExprDefault);
+			const Occur& occur, Flags flags, Expr* pExprDefault);
 	DeclArg(const Symbol* pSymbol, const VType& vtype,
-			const Occur& occur, UInt32 flags, Expr* pExprDefault);
+			const Occur& occur, Flags flags, Expr* pExprDefault);
 	// Copy constructor/operator
 	DeclArg(const DeclArg& src) = delete;
 	DeclArg& operator=(const DeclArg& src) = delete;
@@ -110,18 +111,18 @@ public:
 	bool IsOccurZeroOrOnce() const { return GetOccur().IsIdentical(Occur::ZeroOrOnce); }
 	bool IsOccurZeroOrMore() const { return GetOccur().IsIdentical(Occur::ZeroOrMore); }
 	bool IsOccurOnceOrMore() const { return GetOccur().IsIdentical(Occur::OnceOrMore); }
-	UInt32 GetFlags() const { return _flags; }
+	Flags GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr* pExpr);
 	bool FixVType(Frame& frame);
 	Value* Cast(Frame& frame, const Value& value);
-	static UInt32 SymbolToFlag(const Symbol* pSymbol) {
+	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}
-	static const Symbol* FlagToSymbol(UInt32 flag) {
+	static const Symbol* FlagToSymbol(Flags flag) {
 		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
 	}
-	static String FlagsToString(UInt32 flags);
+	static String FlagsToString(Flags flags);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclArg& declArg) const { return this == &declArg; }

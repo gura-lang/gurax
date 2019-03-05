@@ -9,7 +9,7 @@ namespace Gurax {
 // DeclArg
 //------------------------------------------------------------------------------
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
-				 const Occur& occur, UInt32 flags, Expr* pExprDefault) :
+				 const Occur& occur, Flags flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
 	_pVType(pDottedSymbol->IsEmpty()?
 			dynamic_cast<VType*>(&VTYPE_Any) : dynamic_cast<VType*>(&VTYPE_Undefined)),
@@ -18,7 +18,7 @@ DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 }
 
 DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
-				 const Occur& occur, UInt32 flags, Expr* pExprDefault) :
+				 const Occur& occur, Flags flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(vtype.MakeDottedSymbol()), _pVType(&vtype),
 	_occur(occur), _flags(flags), _pExprDefault(pExprDefault)
 {
@@ -29,7 +29,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 	RefPtr<DottedSymbol> pDottedSymbol;
 	const VType* pVType = nullptr;
 	const Occur* pOccur = &Occur::Once;
-	UInt32 flags = 0;
+	Flags flags = 0;
 	RefPtr<Expr> pExprDefault;
 	const Attribute* pAttrSrc = nullptr;
 	if (pExpr->IsType<Expr_BinaryOp>()) {
@@ -95,7 +95,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 	pDottedSymbol.reset(pAttrSrc->GetDottedSymbol().Reference());
 	bool firstFlag = true;
 	for (const Symbol* pSymbol : pAttrSrc->GetSymbols()) {
-		UInt32 flag = SymbolToFlag(pSymbol);
+		Flags flag = SymbolToFlag(pSymbol);
 		flags |= flag;
 		if (flag) {
 			if (firstFlag && pDottedSymbol->IsEqualTo(pSymbol)) {
@@ -134,10 +134,10 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 	return GetVType().Cast(value);
 }
 
-String DeclArg::FlagsToString(UInt32 flags)
+String DeclArg::FlagsToString(Flags flags)
 {
 	String rtn;
-	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
+	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
 			rtn += ':';
 			rtn += FlagToSymbol(flag)->GetName();

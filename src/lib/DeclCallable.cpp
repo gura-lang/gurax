@@ -31,7 +31,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		_declArgOwner.push_back(pDeclArg.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
-		UInt32 flag = SymbolToFlag(pSymbol);
+		Flags flag = SymbolToFlag(pSymbol);
 		_flags |= flag;
 		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
@@ -42,7 +42,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			Error::Issue(ErrorType::DeclarationError, strError);
 			return false;
 		}
-		UInt32 flags = DeclBlock::Flag::None;
+		Flags flags = DeclBlock::Flag::None;
 		const DeclBlock::Occur* pOccur = nullptr;
 		if (pExprBlock->CountExprElem() != 1) {
 			Error::Issue(ErrorType::DeclarationError, strError);
@@ -115,17 +115,17 @@ String DeclCallable::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
-UInt32 DeclCallable::SymbolsToFlags(const SymbolList& symbols)
+DeclCallable::Flags DeclCallable::SymbolsToFlags(const SymbolList& symbols)
 {
-	UInt32 flags = 0;
+	Flags flags = 0;
 	for (const Symbol* pSymbol : symbols) flags |= SymbolToFlag(pSymbol);
 	return flags;
 }
 
-String DeclCallable::FlagsToString(UInt32 flags)
+String DeclCallable::FlagsToString(Flags flags)
 {
 	String rtn;
-	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
+	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
 			rtn += ':';
 			rtn += FlagToSymbol(flag)->GetName();

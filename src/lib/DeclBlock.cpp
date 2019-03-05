@@ -12,10 +12,10 @@ DeclBlock::DeclBlock() : _pSymbol(Symbol::Empty), _pOccur(&Occur::Zero), _flags(
 {
 }
 
-String DeclBlock::FlagsToString(UInt32 flags)
+String DeclBlock::FlagsToString(Flags flags)
 {
 	String rtn;
-	for (UInt32 flag = 1; flags; flag <<= 1, flags >>= 1) {
+	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
 			rtn += ':';
 			rtn += FlagToSymbol(flag)->GetName();

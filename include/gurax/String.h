@@ -343,16 +343,18 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE StringStyle {
 public:
+	using Flags = UInt32;
 	struct Flag {
-		static const UInt32 AsSource	= (1 << 0);
-		static const UInt32 Cram		= (1 << 1);
-		static const UInt32 MultiLine	= (1 << 2);
-		static const UInt32 UpperCase	= (1 << 3);
-		static const UInt32 Verbose		= (1 << 4);
-		static const UInt32 Digest	= (1 << 5);
+		static const Flags None			= 0;
+		static const Flags AsSource		= (1 << 0);
+		static const Flags Cram			= (1 << 1);
+		static const Flags MultiLine	= (1 << 2);
+		static const Flags UpperCase	= (1 << 3);
+		static const Flags Verbose		= (1 << 4);
+		static const Flags Digest		= (1 << 5);
 	};
 private:
-	UInt32 _flags;
+	Flags _flags;
 	String _indentUnit;
 	static const char* _strsComma[2];
 	static const char* _strsColon[2];
@@ -361,7 +363,7 @@ public:
 	static const StringStyle Empty;
 public:
 	// Constructor
-	explicit StringStyle(const char* indentUnit = "  ") : _flags(0), _indentUnit(indentUnit) {}
+	explicit StringStyle(const char* indentUnit = "  ") : _flags(Flag::None), _indentUnit(indentUnit) {}
 	// Copy constructor/operator
 	StringStyle(const StringStyle& src) : _flags(src._flags), _indentUnit(src._indentUnit) {}
 	StringStyle& operator=(const StringStyle& src) {
