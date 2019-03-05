@@ -4,6 +4,7 @@
 #ifndef GURAX_PUNIT_H
 #define GURAX_PUNIT_H
 #include "Expr.h"
+#include "Error.h"
 
 namespace Gurax {
 
@@ -52,6 +53,11 @@ public:
 	void SetPopToDiscardFlag() { _flags |= Flag::PopToDiscard; }
 	bool GetPopToDiscardFlag() const { return (_flags & Flag::PopToDiscard) != 0; }
 	void AppendInfoToString(String& str) const;
+public:
+	template<typename... Args>
+	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {
+		Error::IssueWith(errorType, GetExprSrc(), format, args...);
+	}
 public:
 	// Virtual functions
 	virtual const PUnit* Exec(Processor& processor) const = 0;

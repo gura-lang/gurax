@@ -74,7 +74,7 @@ const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 	if (!GetPopToDiscardFlag()) {
 		const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
 		if (!pValue) {
-			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 			return nullptr;
 		}
 		processor.PushValue(pValue->Reference());
@@ -255,7 +255,7 @@ const PUnit* PUnit_Add::Exec(Processor& processor) const
 	} else {
 		RefPtr<Value> pValue(processor.PopValue());
 		if (!pValue->IsType(VTYPE_Number)) {
-			Error::Issue(ErrorType::TypeError, "number value is expected");
+			IssueError(ErrorType::TypeError, "number value is expected");
 			return nullptr;
 		}
 		int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
@@ -423,7 +423,7 @@ const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 		Value* pValueTarget = processor.PeekValue(0);
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 		if (!pValueProp) {
-			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 			return nullptr;
 		}
 		processor.PushValue(pValueProp->Reference());
@@ -479,7 +479,7 @@ const PUnit* PUnit_Member::Exec(Processor& processor) const
 		RefPtr<Value> pValueTarget(processor.PopValue());
 		Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 		if (!pValue) {
-			Error::Issue(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+			IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 			return nullptr;
 		}
 		if (pValue->IsCallable()) {
@@ -511,8 +511,8 @@ const PUnit* PUnit_Argument::Exec(Processor& processor) const
 	RefPtr<Value> pValueCar(processor.PopValue());
 	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallable();
 	if (!pDeclCallable) {
-		Error::Issue(ErrorType::ValueError,
-					 "value type %s can not be called", pValueCar->GetVType().MakeFullName().c_str());
+		IssueError(ErrorType::ValueError,
+				   "value type %s can not be called", pValueCar->GetVType().MakeFullName().c_str());
 		return nullptr;
 	}
 	if (!pDeclCallable->CheckAttribute(GetAttr())) return nullptr;
@@ -540,11 +540,11 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
-		Error::Issue(ErrorType::ArgumentError, "too many arguments");
+		IssueError(ErrorType::ArgumentError, "too many arguments");
 		return nullptr;
 	}
 	if (!pArgSlot->IsVacant()) {
-		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
 	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {
@@ -596,11 +596,11 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
 	if (!pArgSlot) {
-		Error::Issue(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
+		IssueError(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
 		return nullptr;
 	}
 	if (!pArgSlot->IsVacant()) {
-		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
 	}
 	if (pArgSlot->IsVType(VTYPE_Quote)) {

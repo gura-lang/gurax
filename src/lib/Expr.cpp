@@ -65,7 +65,7 @@ void Expr::ComposeForArgSlot(Composer& composer) const
 void Expr::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
-	Error::IssueWith(ErrorType::InvalidOperation, Reference(), "invalid assignment");
+	Error::IssueWith(ErrorType::InvalidOperation, this, "invalid assignment");
 }
 
 //------------------------------------------------------------------------------
@@ -315,7 +315,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer) const
 		return;
 	}
 	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::ArgumentError, Reference(),
+		Error::IssueWith(ErrorType::ArgumentError, this,
 						 "named argument must be specified by a symbol");
 		return;
 	}
@@ -710,11 +710,11 @@ void Expr_Caller::ComposeForAssignment(
 	Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const
 {
 	if (pOperator) {
-		Error::IssueWith(ErrorType::SyntaxError, Reference(), "operator can not be applied in function assigment");
+		Error::IssueWith(ErrorType::SyntaxError, this, "operator can not be applied in function assigment");
 		return;
 	}
 	if (GetExprCar()->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::SyntaxError, Reference(), "identifier is expected");
+		Error::IssueWith(ErrorType::SyntaxError, this, "identifier is expected");
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());

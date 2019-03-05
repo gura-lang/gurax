@@ -120,11 +120,11 @@ public:
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
-	static void IssueWith(const ErrorType& errorType, Expr* pExpr, const char* format, const Args&... args) {
+	static void IssueWith(const ErrorType& errorType, const Expr* pExpr, const char* format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
 		_pErrorOwnerGlobal->SetSilentFlag();
 		_pErrorOwnerGlobal->push_back(
-			new Error(errorType, pExpr, String().Printf(format, args...)));
+			new Error(errorType, pExpr->Reference(), String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
 		_errorIssuedFlag = true;
 	}
