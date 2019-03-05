@@ -12,7 +12,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Processor {
 private:
-	const PUnit* _pPUnitCur;
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
 	RefPtr<Frame> _pFrame;
@@ -41,7 +40,6 @@ public:
 	Value* PopValue() { return GetValueStack().Pop(); }
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }
 	Frame& GetFrame() { return *_pFrame; }
-	void Goto(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
 	void Run(const PUnit* pPUnit);
 };
 

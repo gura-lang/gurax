@@ -54,7 +54,7 @@ public:
 	void AppendInfoToString(String& str) const;
 public:
 	// Virtual functions
-	virtual void Exec(Processor& processor) const = 0;
+	virtual const PUnit* Exec(Processor& processor) const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
 };
 
@@ -93,7 +93,7 @@ public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -113,7 +113,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -133,7 +133,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -153,7 +153,7 @@ public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -173,7 +173,7 @@ public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -193,7 +193,7 @@ public:
 	const VType& GetVType() const { return _vtype; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -213,7 +213,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -233,7 +233,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -253,7 +253,7 @@ public:
 	const int GetAdded() const { return _added; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -273,7 +273,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -289,7 +289,7 @@ public:
 	explicit PUnit_AddList(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -312,7 +312,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -328,7 +328,7 @@ public:
 	explicit PUnit_FeedIndex(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -344,7 +344,7 @@ public:
 	explicit PUnit_IndexGet(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -360,7 +360,7 @@ public:
 	explicit PUnit_IndexSet(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -383,7 +383,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -406,7 +406,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -429,7 +429,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -449,7 +449,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -471,7 +471,7 @@ public:
 	const PUnit* GetPUnitSkipDest() const { return _pPUnitSkipDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -487,7 +487,7 @@ public:
 	explicit PUnit_FeedArgSlot(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -513,7 +513,7 @@ public:
 	const PUnit* GetPUnitSkipDest() const { return _pPUnitSkipDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -529,7 +529,7 @@ public:
 	explicit PUnit_FeedArgSlotNamed(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -545,7 +545,7 @@ public:
 	explicit PUnit_Call(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -567,7 +567,7 @@ public:
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -589,7 +589,7 @@ public:
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -611,7 +611,7 @@ public:
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -633,7 +633,7 @@ public:
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -655,7 +655,7 @@ public:
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -677,7 +677,7 @@ public:
 	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -693,7 +693,7 @@ public:
 	explicit PUnit_PopToDiscard(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -709,7 +709,7 @@ public:
 	PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -725,7 +725,7 @@ public:
 	PUnit_Terminate(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual void Exec(Processor& processor) const override;
+	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
