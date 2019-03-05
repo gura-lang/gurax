@@ -473,15 +473,15 @@ const PUnit* PUnit_Member::Exec(Processor& processor) const
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	Value* pValue = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
-	if (!pValue) {
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+	if (!pValueProp) {
 		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return nullptr;
 	}
-	if (pValue->IsCallable()) {
-		processor.PushValue(new Value_Member(pValueTarget.release(), pValue->Reference()));
+	if (pValueProp->IsCallable()) {
+		processor.PushValue(new Value_Member(pValueTarget.release(), pValueProp->Reference()));
 	} else {
-		processor.PushValue(pValue->Reference());
+		processor.PushValue(pValueProp->Reference());
 	}
 	return GetPUnitNext();
 }
@@ -537,12 +537,10 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 	if (!pArgSlot) {
 		IssueError(ErrorType::ArgumentError, "too many arguments");
 		return nullptr;
-	}
-	if (!pArgSlot->IsVacant()) {
+	} else if (!pArgSlot->IsVacant()) {
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
-	}
-	if (pArgSlot->IsVType(VTYPE_Quote)) {
+	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(new Value_Expr(GetExprSrc()->Reference()));
 		return GetPUnitSkipDest();
 	} else {
@@ -593,12 +591,10 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	if (!pArgSlot) {
 		IssueError(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
 		return nullptr;
-	}
-	if (!pArgSlot->IsVacant()) {
+	} else if (!pArgSlot->IsVacant()) {
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
-	}
-	if (pArgSlot->IsVType(VTYPE_Quote)) {
+	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(GetExprAssigned()->Reference()));
 		return GetPUnitSkipDest();
 	} else {
