@@ -45,6 +45,9 @@ public:
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* GoNext() const { return const_cast<ArgSlot*>(this)->GoNext(); }
+	void AssignToFrame(Frame& frame) const {
+		if (!IsUndefined()) frame.AssignValue(GetDeclArg().GetSymbol(), GetValue()->Reference());;
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ArgSlot& argSlot) const { return this == &argSlot; }
@@ -56,8 +59,8 @@ public:
 	virtual bool IsValid() const = 0;
 	virtual ArgSlot* GoNext() { return _pArgSlotNext.get(); }
 	virtual Value* GetValue() const = 0;
-	virtual bool IsUndefined() = 0;
-	virtual bool IsVacant() = 0;
+	virtual bool IsUndefined() const = 0;
+	virtual bool IsVacant() const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
 };
 
@@ -81,8 +84,8 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual Value* GetValue() const override { return _pValue.get(); }
-	virtual bool IsUndefined() override { return _pValue->IsUndefined(); }
-	virtual bool IsVacant() override { return _pValue->IsUndefined(); }
+	virtual bool IsUndefined() const override { return _pValue->IsUndefined(); }
+	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -99,8 +102,8 @@ public:
 	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual ArgSlot* GoNext() override { return this; }
 	virtual Value* GetValue() const override { return _pValue.get(); }
-	virtual bool IsUndefined() override { return false; }
-	virtual bool IsVacant() override { return true; }
+	virtual bool IsUndefined() const override { return false; }
+	virtual bool IsVacant() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -117,7 +120,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_Once(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
-	virtual bool IsValid() const { return !_pValue->IsUndefined(); }
+	virtual bool IsValid() const override { return !_pValue->IsUndefined(); }
 };
 
 //------------------------------------------------------------------------------
@@ -133,7 +136,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_ZeroOrOnce(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
-	virtual bool IsValid() const { return true; }
+	virtual bool IsValid() const override { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -149,7 +152,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_ZeroOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
-	virtual bool IsValid() const { return true; }
+	virtual bool IsValid() const override { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -165,7 +168,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_OnceOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
-	virtual bool IsValid() const { return !_pValue->GetValueTypedOwner().IsEmpty(); }
+	virtual bool IsValid() const override { return !_pValue->GetValueTypedOwner().IsEmpty(); }
 };
 
 }

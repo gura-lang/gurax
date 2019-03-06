@@ -15,7 +15,8 @@ void DeclCallable::Bootup()
 	Empty = new DeclCallable();
 }
 
-DeclCallable::DeclCallable() : _pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute())
+DeclCallable::DeclCallable() :
+	_pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute()), _pSymbolOfDict(Symbol::Empty)
 {
 }
 
@@ -23,6 +24,23 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 {
 	_declArgOwner.reserve(exprLinkCdr.CountSequence());
 	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		if (pExpr->IsType<Expr_UnaryOp>()) {
+			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
+			if (pExprEx->GetOperator()->IsType(OpType::PostMod)) {
+				if (!pExprEx->GetExprChild()->IsType<Expr_Identifier>()) {
+					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+									 "invalid format of declaration");
+					return false;
+				}
+				if (!_pSymbolOfDict->IsEmpty()) {
+					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+									 "duplicated declaration of dictionary argument");
+					return false;
+				}
+				_pSymbolOfDict = dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild())->GetSymbol();
+				continue;
+			}
+		}
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr));
 		if (!pDeclArg) {
 			Clear();
@@ -39,13 +57,13 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 	if (pExprBlock) {
 		const char* strError = "invalid format of block declaration";
 		if (pExprBlock->HasExprParam()) {
-			Error::Issue(ErrorType::DeclarationError, strError);
+			Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
 			return false;
 		}
 		Flags flags = DeclBlock::Flag::None;
 		const DeclBlock::Occur* pOccur = nullptr;
 		if (pExprBlock->CountExprElem() != 1) {
-			Error::Issue(ErrorType::DeclarationError, strError);
+			Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
 			return false;
 		}
 		const Expr* pExpr = pExprBlock->GetExprLinkElem().GetExprHead();
@@ -53,18 +71,18 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::Quote)) {
 				if (flags & DeclBlock::Flag::Quote) {
-					Error::Issue(ErrorType::DeclarationError, strError);
+					Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
 					return false;
 				}
 				flags |= DeclBlock::Flag::Quote;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostQuestion)) {
 				if (pOccur) {
-					Error::Issue(ErrorType::DeclarationError, strError);
+					Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
 					return false;
 				}
 				pOccur = &DeclBlock::Occur::ZeroOrOnce;
 			} else {
-				Error::Issue(ErrorType::DeclarationError, strError);
+				Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
 				return false;
 			}
 			pExpr = pExprEx->GetExprChild();
@@ -74,7 +92,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(pExpr);
 			GetDeclBlock().SetSymbol(pExprEx->GetSymbol());
 		} else {
-			Error::Issue(ErrorType::DeclarationError, strError);
+			Error::IssueWith(ErrorType::DeclarationError, pExpr, strError);
 			return false;
 		}
 	}
@@ -104,6 +122,11 @@ String DeclCallable::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += "(";
 	rtn += GetDeclArgOwner().ToString(ss);
+	if (!GetSymbolOfDict()->IsEmpty()) {
+		if (!GetDeclArgOwner().empty()) rtn += ss.IsCram()? "," : ", ";
+		rtn += GetSymbolOfDict()->GetName();
+		rtn += "%";
+	}
 	rtn += ")";
 	rtn += FlagsToString(_flags);
 	rtn += GetAttr().ToString(ss);

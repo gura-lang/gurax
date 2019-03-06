@@ -6,7 +6,7 @@
 namespace Gurax {
 
 static const char* srcTbl[] = {
-	"f(a:[]) = {}"
+	"f(a:[]) = {}",
 	"f() = {}",
 	"f(`v) = {}",
 	"f(v) = {}",
@@ -92,6 +92,11 @@ static const char* srcTbl[] = {
 	"f(v1:Type1, v2:Type2):map:attr1:attr2 {`foo} = {}",
 	"f(v1:Type1, v2:Type2):map:attr1:attr2 {foo?} = {}",
 	"f(v1:Type1, v2:Type2):map:attr1:attr2 {`foo?} = {}",
+	"f(dict%) = {}",
+	"f(v1, v2, v3, dict%) = {}",
+	"f(dict%, v1, v2, v3) = {}",
+	"f(v1, dict%, v2, v3) = {}",
+	"f(dict%, dict2%) = {}",
 };
 
 Gurax_TesterEntry(DeclCallable)

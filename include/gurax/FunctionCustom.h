@@ -22,6 +22,7 @@ public:
 public:
 	// Virtual functions of Function
 	virtual Value* DoCall(Processor& processor, Argument& argument) const override;
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 };
 
 }

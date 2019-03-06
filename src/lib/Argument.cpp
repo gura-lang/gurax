@@ -40,6 +40,13 @@ bool Argument::CheckValidity() const
 	return true;
 }
 
+void Argument::AssignToFrame(Frame& frame) const
+{
+	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		pArgSlot->AssignToFrame(frame);
+	}
+}
+
 String Argument::ToString(const StringStyle& ss) const
 {
 	String rtn;

@@ -1,5 +1,6 @@
 [DeclCallable]
-f(a:[]) = {}f() = {} .. error: trailer must follow after caller
+f(a:[]) = {} .. (a:Any)
+f() = {} .. ()
 f(`v) = {} .. (`v)
 f(v) = {} .. (v:Any)
 f(v1, v2, v3) = {} .. (v1:Any, v2:Any, v3:Any)
@@ -84,3 +85,8 @@ f(v1:Type1, v2:Type2):map:attr1:attr2 {foo} = {} .. (v1:Type1, v2:Type2):map:att
 f(v1:Type1, v2:Type2):map:attr1:attr2 {`foo} = {} .. (v1:Type1, v2:Type2):map:attr1:attr2 {`foo}
 f(v1:Type1, v2:Type2):map:attr1:attr2 {foo?} = {} .. (v1:Type1, v2:Type2):map:attr1:attr2 {foo?}
 f(v1:Type1, v2:Type2):map:attr1:attr2 {`foo?} = {} .. (v1:Type1, v2:Type2):map:attr1:attr2 {`foo?}
+f(dict%) = {} .. (dict%)
+f(v1, v2, v3, dict%) = {} .. (v1:Any, v2:Any, v3:Any, dict%)
+f(dict%, v1, v2, v3) = {} .. (v1:Any, v2:Any, v3:Any, dict%)
+f(v1, dict%, v2, v3) = {} .. (v1:Any, v2:Any, v3:Any, dict%)
+f(dict%, dict2%) = {} .. error: duplicated declaration of dictionary argument

@@ -68,6 +68,7 @@ public:
 	}
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
+	void AssignToFrame(Frame& frame) const;
 	Value* DoCall(Processor& processor) { return GetValueCar().DoCall(processor, *this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
