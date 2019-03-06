@@ -5,7 +5,16 @@
 
 namespace Gurax {
 
-#if 1
+static const char* src = R"(
+i = 0
+f() = {
+	Printf('%d\n', i)
+	i += 1
+}
+f()
+)";
+
+#if 0
 static const char* src = R"(
 a = 3
 if (a == 3) {

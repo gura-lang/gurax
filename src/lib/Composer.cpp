@@ -44,9 +44,11 @@ void Composer::Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg)
 	Add(new PUnit_AssignToDeclArg(pExprSrc->Reference(), pDeclArg));
 }
 
-void Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction)
+PUnit_AssignFunction* Composer::AddF_AssignFunction(const Expr* pExprSrc, const Function* pFunction)
 {
-	Add(new PUnit_AssignFunction(pExprSrc->Reference(), pFunction->Reference()));
+	auto pPUnit = new PUnit_AssignFunction(pExprSrc->Reference(), pFunction->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 void Composer::Add_Cast(const Expr* pExprSrc, const VType& vtype)

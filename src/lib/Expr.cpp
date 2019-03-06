@@ -713,14 +713,22 @@ void Expr_Caller::ComposeForAssignment(
 		Error::IssueWith(ErrorType::SyntaxError, this, "operator can not be applied in function assigment");
 		return;
 	}
-	if (GetExprCar()->IsType<Expr_Identifier>()) {
+	if (!GetExprCar()->IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::SyntaxError, this, "identifier is expected");
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
-	RefPtr<Function> pFunction(
+	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
-	composer.Add_AssignFunction(this, pFunction.get());		// [Value]
+	auto pPUnit = composer.AddF_AssignFunction(this, pFunction.get());		// [Value]
+	auto pPUnitBody = composer.PeekPUnitNext();
+	pFunction->SetPUnitBody(pPUnitBody);
+	pExprAssigned->Compose(composer);
+	if (pPUnitBody == composer.PeekPUnitNext()) { // empty block
+		composer.Add_Value(this, Value::nil());
+	}
+	composer.Add_Return(this);
+	pPUnit->SetPUnitNext(composer.PeekPUnitNext());
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

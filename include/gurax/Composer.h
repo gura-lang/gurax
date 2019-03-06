@@ -44,7 +44,7 @@ public:
 	void Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol);
 	void Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg);
-	void Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
+	PUnit_AssignFunction* AddF_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
 	void Add_Cast(const Expr* pExprSrc, const VType& vtype);
 	void Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
