@@ -760,6 +760,7 @@ bool Parser::ReduceFourTokens()
 			pExprCaller->GetExprTrailerLast()->SetExprBlock(CreateExprBlock(pToken3));
 			pExprLeader->AppendExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
+			return true;
 		} else if (pToken4->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: Expr Expr '{' -> Expr Expr '{' EndOfLine\n"));
 			tokenStack.Push(pToken1->Reference());

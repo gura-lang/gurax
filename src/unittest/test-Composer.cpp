@@ -10,7 +10,7 @@ static const char* src = R"(
 a = 3
 if (a == 3) {
 	Println('a is 3')
-} else () {
+} else {
 	Println('a is not 3')
 }
 )";
