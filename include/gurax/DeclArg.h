@@ -85,6 +85,8 @@ private:
 	Flags _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
+	static DeclArg* Empty;
+public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 			const Occur& occur, Flags flags, Expr* pExprDefault);
@@ -99,6 +101,8 @@ public:
 protected:
 	// Destructor
 	~DeclArg() = default;
+public:
+	static void Bootup();
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }

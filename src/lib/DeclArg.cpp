@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DeclArg
 //------------------------------------------------------------------------------
+DeclArg* DeclArg::Empty;
+
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 				 const Occur& occur, Flags flags, Expr* pExprDefault) :
 	_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol),
@@ -22,6 +24,11 @@ DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
 	_pSymbol(pSymbol), _pDottedSymbol(vtype.MakeDottedSymbol()), _pVType(&vtype),
 	_occur(occur), _flags(flags), _pExprDefault(pExprDefault)
 {
+}
+
+void DeclArg::Bootup()
+{
+	Empty = new DeclArg(Symbol::Empty, VTYPE_Undefined, Occur::Once, Flag::None, nullptr);
 }
 
 DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
