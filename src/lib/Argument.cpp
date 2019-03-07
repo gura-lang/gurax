@@ -69,6 +69,12 @@ String Argument::ToString(const StringStyle& ss) const
 		if (pArgSlot != GetArgSlotTop()) rtn += ss.GetComma();
 		rtn += pArgSlot->ToString(StringStyle(ss).Digest());
 	}
+	if (GetValueOfDict()) {
+		if (GetArgSlotTop()) rtn += ss.GetComma();
+		rtn += "(";
+		rtn += GetValueOfDict()->ToString(StringStyle(ss).Digest());
+		rtn += ")%";
+	}
 	rtn += ')';
 	rtn += GetAttr().ToString(ss);
 	return rtn;

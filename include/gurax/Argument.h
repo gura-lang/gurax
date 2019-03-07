@@ -58,6 +58,7 @@ public:
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
+	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);

@@ -165,13 +165,13 @@ String DeclCallable::ToString(const StringStyle& ss) const
 	rtn += "(";
 	rtn += GetDeclArgOwner().ToString(ss);
 	if (!GetSymbolOfDict()->IsEmpty()) {
-		if (!GetDeclArgOwner().empty()) rtn += ss.IsCram()? "," : ", ";
+		if (!GetDeclArgOwner().empty()) rtn += ss.GetComma();
 		rtn += GetSymbolOfDict()->GetName();
 		rtn += "%";
 	}
 	if (!GetSymbolOfAccessor()->IsEmpty()) {
 		if (!GetDeclArgOwner().empty() || !GetSymbolOfDict()->IsEmpty()) {
-			rtn += ss.IsCram()? "," : ", ";
+			rtn += ss.GetComma();
 		}
 		rtn += GetSymbolOfAccessor()->GetName();
 		rtn += "%%";
