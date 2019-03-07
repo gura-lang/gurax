@@ -93,10 +93,21 @@ static const char* srcTbl[] = {
 	"f(v1:Type1, v2:Type2):map:attr1:attr2 {foo?} = {}",
 	"f(v1:Type1, v2:Type2):map:attr1:attr2 {`foo?} = {}",
 	"f(dict%) = {}",
+	"f(dict:attr%) = {}",
 	"f(v1, v2, v3, dict%) = {}",
 	"f(dict%, v1, v2, v3) = {}",
 	"f(v1, dict%, v2, v3) = {}",
 	"f(dict%, dict2%) = {}",
+	"f(arg%%) = {}",
+	"f(arg:attr%%) = {}",
+	"f(v1, v2, v3, arg%%) = {}",
+	"f(arg%%, v1, v2, v3) = {}",
+	"f(v1, arg%%, v2, v3) = {}",
+	"f(arg%%, arg2%%) = {}",
+	"f(v1, v2, v3, dict%, arg%%) = {}",
+	"f(v1, v2, v3, v1) = {}",
+	"f(v1, v2, v3, v1%) = {}",
+	"f(v1, v2, v3, v1%%) = {}",
 };
 
 Gurax_TesterEntry(DeclCallable)

@@ -110,6 +110,10 @@ public:
 	bool CheckAttribute(const Attribute& attr) const;
 	const Symbol* GetSymbolOfDict() const { return _pSymbolOfDict; }
 	const Symbol* GetSymbolOfAccessor() const { return _pSymbolOfAccessor; }
+	bool IsDeclaredSymbol(const Symbol* pSymbol) {
+		return GetDeclArgOwner().FindBySymbol(pSymbol) ||
+			GetSymbolOfDict()->IsIdentical(pSymbol) || GetSymbolOfAccessor()->IsIdentical(pSymbol);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclCallable& declCaller) const { return this == &declCaller; }

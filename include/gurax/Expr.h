@@ -395,6 +395,7 @@ public:
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool IsPureSymbol() const { return GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) const override;

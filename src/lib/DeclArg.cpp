@@ -86,7 +86,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 	const Symbol* pSymbol = pExprIdentifier->GetSymbol();
 	if (!pAttrSrc) {
 		pAttrSrc = &pExprIdentifier->GetAttr();
-	} else if (!pExprIdentifier->GetAttr().IsEmpty()) {
+	} else if (!pExprIdentifier->IsPureSymbol()) {
 		Error::Issue(ErrorType::SyntaxError, "invalid attribute");
 		return nullptr;
 	}
@@ -186,6 +186,14 @@ const DeclArg::Occur DeclArg::Occur::OnceOrMore	("+",	ArgSlot_OnceOrMore::factor
 //------------------------------------------------------------------------------
 // DeclArgList
 //------------------------------------------------------------------------------
+DeclArg* DeclArgList::FindBySymbol(const Symbol* pSymbol) const
+{
+	for (DeclArg* pDeclArg : *this) {
+		if (pDeclArg->GetSymbol()->IsIdentical(pSymbol)) return pDeclArg;
+	}
+	return nullptr;
+}
+
 String DeclArgList::ToString(const StringStyle& ss) const
 {
 	String rtn;

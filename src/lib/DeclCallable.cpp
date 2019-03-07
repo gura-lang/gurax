@@ -40,8 +40,18 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				}
 				const Expr_Identifier* pExprIdentifier =
 					dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild());
-				
-				_pSymbolOfDict = pExprIdentifier->GetSymbol();
+				if (!pExprIdentifier->IsPureSymbol()) {
+					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+									 "dictionary argument cannot have attributes");
+					return false;
+				}
+				const Symbol* pSymbol = pExprIdentifier->GetSymbol();
+				if (IsDeclaredSymbol(pSymbol)) {
+					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+									 "duplicated symbol declaration: %s", pSymbol->GetName());
+					return false;
+				}
+				_pSymbolOfDict = pSymbol;
 				continue;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostModMod)) {
 				if (!_pSymbolOfAccessor->IsEmpty()) {
@@ -56,16 +66,28 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				}
 				const Expr_Identifier* pExprIdentifier =
 					dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild());
-				
-				_pSymbolOfAccessor = pExprIdentifier->GetSymbol();
+				if (!pExprIdentifier->IsPureSymbol()) {
+					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+									 "argument accessor cannot have attributes");
+					return false;
+				}
+				const Symbol* pSymbol = pExprIdentifier->GetSymbol();
+				if (IsDeclaredSymbol(pSymbol)) {
+					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+									 "duplicated symbol declaration: %s", pSymbol->GetName());
+					return false;
+				}
+				_pSymbolOfAccessor = pSymbol;
+				continue;
 			}
 		}
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr));
-		if (!pDeclArg) {
-			Clear();
+		if (!pDeclArg) return false;
+		if (IsDeclaredSymbol(pDeclArg->GetSymbol())) {
+			Error::IssueWith(ErrorType::DeclarationError, pExpr,
+							 "duplicated symbol declaration: %s", pDeclArg->GetSymbol()->GetName());
 			return false;
 		}
-		
 		_declArgOwner.push_back(pDeclArg.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
