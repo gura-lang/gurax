@@ -171,6 +171,26 @@ public:
 	virtual bool IsValid() const override { return !_pValue->GetValueTypedOwner().IsEmpty(); }
 };
 
+//------------------------------------------------------------------------------
+// ArgSlot_Dict
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ArgSlot_Dict : public ArgSlot {
+protected:
+	RefPtr<ValueDict> _pValueDict;
+	const Symbol* _pSymbol;
+public:
+	ArgSlot_Dict(ValueDict* pValueDict, const Symbol* pSymbol) :
+		ArgSlot(DeclArg::Empty->Reference()), _pValueDict(pValueDict), _pSymbol(pSymbol) {}
+public:
+	// Virtual functions of ArgSlot
+	virtual void FeedValue(RefPtr<Value> pValue) override;
+	virtual Value* GetValue() const override { return Value::nil(); }
+	virtual bool IsUndefined() const override { return false; }
+	virtual bool IsVacant() const override { return true; }
+	virtual bool IsValid() const override { return true; }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

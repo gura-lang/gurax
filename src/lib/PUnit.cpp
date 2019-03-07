@@ -580,35 +580,6 @@ String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
-#if 0
-//------------------------------------------------------------------------------
-// ArgSlot_Dict
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ArgSlot_Dict : public ArgSlot {
-protected:
-	RefPtr<ValueDict> _pValueDict;
-public:
-	ArgSlot_Dict(ValueDict* pValueDict) : ArgSlot(DeclArg::Empty->Reference()), _pValueDict(pValueDict) {}
-public:
-	// Virtual functions of ArgSlot
-	virtual void FeedValue(RefPtr<Value> pValue) override;
-	virtual Value* GetValue() const override { return Value::nil(); }
-	virtual bool IsUndefined() const override { return false; }
-	virtual bool IsVacant() const override { return true; }
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-void ArgSlot_Dict::FeedValue(RefPtr<Value> pValue)
-{
-}
-
-String ArgSlot_Dict::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	return rtn;
-}
-#endif
-
 //------------------------------------------------------------------------------
 // PUnit_ArgSlotNamed
 // Stack View: [ValueArgument] -> [ValueArgument ValueArgSlot]
@@ -620,8 +591,10 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	if (!pArgSlot) {
 		Value_Dict* pValueOfDict = argument.GetValueOfDict();
 		if (pValueOfDict) {
-			//pValueOfDict->GetValueDict().Assign(new Value_Symbol());
-			return nullptr;
+			processor.PushValue(
+				new Value_ArgSlot(
+					new ArgSlot_Dict(pValueOfDict->GetValueDict().Reference(), GetSymbol())));
+			return GetPUnitNext();
 		} else {
 			IssueError(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
 			return nullptr;

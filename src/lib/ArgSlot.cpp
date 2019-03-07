@@ -77,4 +77,18 @@ const ArgSlot_ZeroOrMore::Factory ArgSlot_ZeroOrMore::factory;
 //------------------------------------------------------------------------------
 const ArgSlot_OnceOrMore::Factory ArgSlot_OnceOrMore::factory;
 
+//------------------------------------------------------------------------------
+// ArgSlot_Dict
+//------------------------------------------------------------------------------
+void ArgSlot_Dict::FeedValue(RefPtr<Value> pValue)
+{
+	_pValueDict->Assign(new Value_Symbol(_pSymbol), pValue.release());
+}
+
+String ArgSlot_Dict::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	return rtn;
+}
+
 }
