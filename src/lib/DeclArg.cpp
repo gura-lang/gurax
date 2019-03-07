@@ -50,7 +50,9 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 			// `x
 			pVType = &VTYPE_Quote;
 		} else if (pOperator->IsType(OpType::PostMod)) {
-			// x%
+			// x% ... nothing to do here
+		} else if (pOperator->IsType(OpType::PostModMod)) {
+			// x%% ... nothing to do here
 		} else if (pOperator->IsType(OpType::PostMul)) {
 			// x*
 			pOccur = &Occur::ZeroOrMore;

@@ -304,15 +304,18 @@ bool Parser::ReduceTwoTokens()
 		} else if (pToken2->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '+'\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostPos));
+		} else if (pToken2->IsType(TokenType::Mod)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '%%'\n"));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMod));
+		} else if (pToken2->IsType(TokenType::ModMod)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '%%%%'\n"));
+			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostModMod));
 		} else if (pToken2->IsType(TokenType::Mul)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '*'\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMul));
 		} else if (pToken2->IsType(TokenType::Question)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '?'\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostQuestion));
-		} else if (pToken2->IsType(TokenType::Mod)) {
-			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr '%%'\n"));
-			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostMod));
 		} else if (pToken2->IsType(TokenType::Seq)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> Expr ..\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken1->GetExpr()->Reference(), Operator::PostSeq));

@@ -18,6 +18,7 @@ Operator* Operator::Pos				= new Operator(OpStyle::OpPreUnary,		"+",			OpType::P
 Operator* Operator::Quote			= new Operator(OpStyle::OpPreUnary,		"`",			OpType::Quote);
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::OpPostUnary,	"%",			OpType::PostMod);
+Operator* Operator::PostModMod		= new Operator(OpStyle::OpPostUnary,	"%%",			OpType::PostModMod);
 Operator* Operator::PostMul			= new Operator(OpStyle::OpPostUnary,	"*",			OpType::PostMul);
 Operator* Operator::PostPos			= new Operator(OpStyle::OpPostUnary,	"+",			OpType::PostPos);
 Operator* Operator::PostQuestion	= new Operator(OpStyle::OpPostUnary,	"?",			OpType::PostQuestion);

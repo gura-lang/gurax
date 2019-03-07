@@ -53,6 +53,7 @@ enum class OpType {
 	Quote,
 	// Post-unary operators
 	PostMod,
+	PostModMod,
 	PostMul,
 	PostPos,
 	PostQuestion,
@@ -197,6 +198,7 @@ public:
 	static Operator* Quote;
 	// Post-unary operators
 	static Operator* PostMod;
+	static Operator* PostModMod;
 	static Operator* PostMul;
 	static Operator* PostPos;
 	static Operator* PostQuestion;
