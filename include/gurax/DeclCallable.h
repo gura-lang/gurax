@@ -68,7 +68,7 @@ public:
 		}
 	};
 private:
-	const VType* _pVType;
+	const VType* _pVTypeResult;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	Flags _flags;
 	RefPtr<Attribute> _pAttr;
@@ -99,8 +99,8 @@ public:
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
 	DeclBlock& GetDeclBlock() { return _declBlock; }
 	const DeclBlock& GetDeclBlock() const { return _declBlock; }
-	void SetVType(const VType& vtype) { _pVType = &vtype; }
-	const VType& GetVType() const { return *_pVType; }
+	void SetVTypeResult(const VType& vtype) { _pVTypeResult = &vtype; }
+	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
 	Attribute& GetAttr() { return *_pAttr; }

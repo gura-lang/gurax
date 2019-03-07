@@ -1,6 +1,6 @@
 [SizeOf]
 ArgSlot                  40
-Argument                 72
+Argument                 80
 Attribute                152
 DateTime                 48
 PUnit_Value              40

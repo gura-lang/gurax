@@ -93,7 +93,7 @@ public:
 	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	void DeclareCaller(const VType& vtype, DeclCallable::Flags flags) {
-		GetDeclCallable().SetVType(vtype);
+		GetDeclCallable().SetVTypeResult(vtype);
 		GetDeclCallable().SetFlags(flags);
 	}
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,

@@ -16,7 +16,7 @@ void DeclCallable::Bootup()
 }
 
 DeclCallable::DeclCallable() :
-	_pVType(&VTYPE_Any), _flags(0), _pAttr(new Attribute()),
+	_pVTypeResult(&VTYPE_Any), _flags(0), _pAttr(new Attribute()),
 	_pSymbolOfDict(Symbol::Empty), _pSymbolOfAccessor(Symbol::Empty)
 {
 }
