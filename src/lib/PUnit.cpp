@@ -589,8 +589,14 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
 	if (!pArgSlot) {
-		IssueError(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
-		return nullptr;
+		Value_Dict* pValueOfDict =argument.GetValueOfDict();
+		if (pValueOfDict) {
+			//pValueOfDict->GetValueDict().Assign(new Value_Symbol());
+			return nullptr;
+		} else {
+			IssueError(ErrorType::ArgumentError, "can't find argument with a name: %s", GetSymbol()->GetName());
+			return nullptr;
+		}
 	} else if (!pArgSlot->IsVacant()) {
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;

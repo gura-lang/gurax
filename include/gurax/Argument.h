@@ -4,6 +4,7 @@
 #ifndef GURAX_ARGUMENT_H
 #define GURAX_ARGUMENT_H
 #include "ArgSlot.h"
+#include "VType_Dict.h"
 
 namespace Gurax {
 
@@ -22,8 +23,9 @@ private:
 	RefPtr<Value> _pValueCar;
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<Attribute> _pAttr;
-	RefPtr<Value> _pValueThis;
-	RefPtr<ArgSlot> _pArgSlotTop;
+	RefPtr<Value> _pValueThis;				// this may be nullptr
+	RefPtr<Value_Dict> _pValueOfDict;		// this may be nullptr
+	RefPtr<ArgSlot> _pArgSlotTop;			// this may be nullptr
 	UInt32 _flags;
 	ArgSlot* _pArgSlotToFeed;
 	const PUnit* _pPUnitNext;
@@ -55,6 +57,7 @@ public:
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
+	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);

@@ -25,6 +25,9 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 			pArgSlotLast = pArgSlot;
 		}			
 	}
+	if (!_pDeclCallable->GetSymbolOfDict()->IsEmpty()) {
+		_pValueOfDict.reset(new Value_Dict());
+	}
 	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
 	_pArgSlotToFeed = _pArgSlotTop.get();
 }
@@ -45,6 +48,16 @@ void Argument::AssignToFrame(Frame& frame) const
 	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		pArgSlot->AssignToFrame(frame);
 	}
+	do {
+		// assign to symbol declared as dict%
+		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();
+		if (!pSymbol->IsEmpty()) frame.AssignValue(pSymbol, _pValueOfDict->Reference());
+	} while (0);
+	do {
+		// assign to symbol declared as arg%%
+		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
+		if (!pSymbol->IsEmpty()) frame.AssignValue(pSymbol, new Value_Argument(Reference()));
+	} while (0);
 }
 
 String Argument::ToString(const StringStyle& ss) const
