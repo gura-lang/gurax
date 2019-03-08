@@ -31,6 +31,7 @@ public:
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitTop() const { return _punitList.front(); }
 	PUnit* GetPUnitLast() { return _pPUnitLast; }
+	void SetPUnitLast(PUnit* pPUnit) { _pPUnitLast = pPUnit; }
 	const PUnit* GetPUnitAt(size_t pos) const { return _punitList[pos]; }
 	size_t MarkPUnit() const { return _punitList.size(); }
 	static const PUnit* PeekPUnitNext() {

@@ -729,6 +729,7 @@ void Expr_Caller::ComposeForAssignment(
 	}
 	composer.Add_Return(this);
 	pPUnit->SetPUnitNext(composer.PeekPUnitNext());
+	composer.SetPUnitLast(pPUnit);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
