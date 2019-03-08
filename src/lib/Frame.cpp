@@ -55,7 +55,7 @@ void Frame::AssignFunction(Function* pFunction)
 //------------------------------------------------------------------------------
 // Frame_ValueMap
 //------------------------------------------------------------------------------
-Frame_ValueMap::Frame_ValueMap() : _pValueMap(new ValueMap())
+Frame_ValueMap::Frame_ValueMap() : Frame(nullptr), _pValueMap(new ValueMap())
 {
 }
 
@@ -77,17 +77,53 @@ Value* Frame_ValueMap::LookupValue(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
-void Frame_Branch::AssignValue(const Symbol* pSymbol, Value* pValue)
+
+//------------------------------------------------------------------------------
+// Frame_Root
+//------------------------------------------------------------------------------
+void Frame_Root::AssignValue(const Symbol* pSymbol, Value* pValue)
 {
-	if (_pFrameLocal) _pFrameLocal->AssignValue(pSymbol, pValue);
+	_pFrameLocal->AssignValue(pSymbol, pValue);
 }
 
-Value* Frame_Branch::LookupValue(const Symbol* pSymbol) const
+Value* Frame_Root::LookupValue(const Symbol* pSymbol) const
 {
-	Value* pValue = _pFrameLocal? _pFrameLocal->LookupValue(pSymbol) : nullptr;
+	Value* pValue = _pFrameLocal->LookupValue(pSymbol);
 	if (pValue) return pValue;
-	pValue = _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
-	return pValue;
+	return _pFrameOuter->LookupValue(pSymbol);
+}
+
+//------------------------------------------------------------------------------
+// Frame_Environment
+//------------------------------------------------------------------------------
+void Frame_Environment::AssignValue(const Symbol* pSymbol, Value* pValue)
+{
+	_pFrameLocal->AssignValue(pSymbol, pValue);
+}
+
+Value* Frame_Environment::LookupValue(const Symbol* pSymbol) const
+{
+	Value* pValue = _pFrameLocal->LookupValue(pSymbol);
+	if (pValue) return pValue;
+	return _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
+}
+
+//------------------------------------------------------------------------------
+// Frame_Function
+//------------------------------------------------------------------------------
+void Frame_Function::AssignValue(const Symbol* pSymbol, Value* pValue)
+{
+	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
+	_pFrameLocal->AssignValue(pSymbol, pValue);
+}
+
+Value* Frame_Function::LookupValue(const Symbol* pSymbol) const
+{
+	if (_pFrameLocal) {
+		Value* pValue = _pFrameLocal->LookupValue(pSymbol);
+		if (pValue) return pValue;
+	}
+	return _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
 }
 
 }
