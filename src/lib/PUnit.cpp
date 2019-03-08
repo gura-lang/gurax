@@ -72,7 +72,7 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 {
 	if (GetPopToDiscardFlag()) return GetPUnitNext();
-	const Value* pValue = processor.GetFrame().LookupValue(GetSymbol());
+	const Value* pValue = processor.GetFrameCur().LookupValue(GetSymbol());
 	if (!pValue) {
 		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return nullptr;
@@ -99,7 +99,7 @@ const PUnit* PUnit_AssignToSymbol::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(
 		GetPopToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
-	processor.GetFrame().AssignValue(GetSymbol(), pValueAssigned.release());
+	processor.GetFrameCur().AssignValue(GetSymbol(), pValueAssigned.release());
 	return GetPUnitNext();
 }
 
@@ -119,7 +119,7 @@ String PUnit_AssignToSymbol::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrame();
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(processor.PopValue());
 	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
 	if (!pValueCasted) return nullptr;
@@ -145,7 +145,7 @@ String PUnit_AssignToDeclArg::ToString(const StringStyle& ss) const
 const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
-	processor.GetFrame().AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
+	processor.GetFrameCur().AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
 	if (!GetPopToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
 	return GetPUnitNext();
 }
@@ -809,6 +809,7 @@ String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Return::Exec(Processor& processor) const
 {
+	processor.PopFrame();
 	return processor.IsPUnitStackEmpty()? nullptr : processor.PopPUnit();
 }
 

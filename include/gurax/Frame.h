@@ -59,9 +59,13 @@ class GURAX_DLLDECLARE FrameList : public std::vector<Frame*> {
 //------------------------------------------------------------------------------
 // FrameOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE FrameOwner : public FrameList {
+class GURAX_DLLDECLARE FrameOwner : public FrameList, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(FrameOwner);
+protected:
 	~FrameOwner() { Clear(); }
+public:
 	void Clear();
 };
 
@@ -70,9 +74,9 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE FrameStack : public FrameOwner {
 public:
-	Frame* Peek(int offset) { return *(rbegin() + offset); }
+	Frame* GetCur() { return back(); }
 	void Push(Frame* pFrame) { push_back(pFrame); }
-	Frame* Pop() { Frame* pFrame = back(); pop_back(); return pFrame; }
+	void Pop() { pop_back(); }
 };
 
 //------------------------------------------------------------------------------

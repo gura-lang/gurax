@@ -9,8 +9,12 @@ namespace Gurax {
 // Processor
 //------------------------------------------------------------------------------
 Processor::Processor() :
-	_pValueStack(new ValueStack()), _pFrame(Context::GetFrame().Reference())
+	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack())
 {
+	GetPUnitStack().reserve(1024);
+	GetValueStack().reserve(1024);
+	GetFrameStack().reserve(1024);
+	GetFrameStack().Push(Context::GetFrame().Reference());
 }
 
 void Processor::Run(const PUnit* pPUnit)

@@ -14,7 +14,7 @@ class GURAX_DLLDECLARE Processor {
 private:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
-	RefPtr<Frame> _pFrame;
+	RefPtr<FrameStack> _pFrameStack;
 public:
 	// Constructor
 	Processor();
@@ -33,13 +33,25 @@ public:
 	void PushPUnit(const PUnit* pPUnit) { GetPUnitStack().Push(pPUnit); }
 	const PUnit* PopPUnit() { return GetPUnitStack().Pop(); }
 	const PUnit* PeekPUnit(size_t offset) { return GetPUnitStack().Peek(offset); }
+public:
 	ValueStack& GetValueStack() { return *_pValueStack; }
 	const ValueStack& GetValueStack() const { return *_pValueStack; }
 	bool IsValueStackEmpty() const { return GetValueStack().empty(); }
 	void PushValue(Value* pValue) { GetValueStack().Push(pValue); }
 	Value* PopValue() { return GetValueStack().Pop(); }
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }
-	Frame& GetFrame() { return *_pFrame; }
+public:
+	FrameStack& GetFrameStack() { return *_pFrameStack; }
+	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
+	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
+	Frame& PushFrameForCall() {
+		Frame* pFrame = new Frame_Function(GetFrameCur().GetFrameOuter()->Reference());
+		PushFrame(pFrame);
+		return *pFrame;
+	}
+	void PopFrame() { GetFrameStack().Pop(); }
+	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
+public:
 	void Run(const PUnit* pPUnit);
 	void DebugRun(const PUnit* pPUnit);
 };
