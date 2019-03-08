@@ -41,6 +41,7 @@ public:
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }
 	Frame& GetFrame() { return *_pFrame; }
 	void Run(const PUnit* pPUnit);
+	void DebugRun(const PUnit* pPUnit);
 };
 
 }
