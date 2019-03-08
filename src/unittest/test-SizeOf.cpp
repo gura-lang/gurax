@@ -3,63 +3,72 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define Gurax_PrintSizeOf(type) ::printf("%-24s %zu\n", #type, sizeof(type))
+#define PrintSizeOf(type) ::printf("%-24s %zu\n", #type, sizeof(type))
 
 namespace Gurax {
 
 Gurax_TesterEntry(SizeOf)
 {
-	Gurax_PrintSizeOf(ArgSlot);
-	Gurax_PrintSizeOf(Argument);
-	Gurax_PrintSizeOf(Attribute);
-	Gurax_PrintSizeOf(DateTime);
-	Gurax_PrintSizeOf(PUnit_Value);
-	Gurax_PrintSizeOf(PUnit_Lookup);
-	Gurax_PrintSizeOf(PUnit_AssignToSymbol);
-	Gurax_PrintSizeOf(PUnit_PopToDiscard);
-	Gurax_PrintSizeOf(PUnit_UnaryOp);
-	Gurax_PrintSizeOf(PUnit_BinaryOp);
-	Gurax_PrintSizeOf(PUnit_CreateList);
-	Gurax_PrintSizeOf(PUnit_AddList);
-	Gurax_PrintSizeOf(PUnit_Index);
-	Gurax_PrintSizeOf(PUnit_FeedIndex);
-	Gurax_PrintSizeOf(PUnit_IndexGet);
-	Gurax_PrintSizeOf(PUnit_IndexSet);
-	Gurax_PrintSizeOf(PUnit_PropGet);
-	Gurax_PrintSizeOf(PUnit_PropSet);
-	Gurax_PrintSizeOf(PUnit_Member);
-	Gurax_PrintSizeOf(PUnit_Argument);
-	Gurax_PrintSizeOf(PUnit_ArgSlot);
-	Gurax_PrintSizeOf(PUnit_FeedArgSlot);
-	Gurax_PrintSizeOf(PUnit_ArgSlotNamed);
-	Gurax_PrintSizeOf(PUnit_FeedArgSlotNamed);
-	Gurax_PrintSizeOf(PUnit_Call);
-	Gurax_PrintSizeOf(PUnit_Jump);
-	Gurax_PrintSizeOf(PUnit_JumpIf);
-	Gurax_PrintSizeOf(PUnit_JumpIfNot);
-	Gurax_PrintSizeOf(PUnit_NilJumpIf);
-	Gurax_PrintSizeOf(PUnit_NilJumpIfNot);
-	Gurax_PrintSizeOf(Symbol);
-	Gurax_PrintSizeOf(TimeDelta);
-	Gurax_PrintSizeOf(ValueOwner);
-	Gurax_PrintSizeOf(ValueStack);
-	Gurax_PrintSizeOf(Value_Any);
-	Gurax_PrintSizeOf(Value_Attribute);
-	Gurax_PrintSizeOf(Value_Binary);
-	Gurax_PrintSizeOf(Value_Bool);
-	Gurax_PrintSizeOf(Value_Dict);
-	Gurax_PrintSizeOf(Value_Expr);
-	Gurax_PrintSizeOf(Value_Function);
-	Gurax_PrintSizeOf(Value_Iterator);
-	Gurax_PrintSizeOf(Value_List);
-	Gurax_PrintSizeOf(Value_Module);
-	Gurax_PrintSizeOf(Value_Nil);
-	Gurax_PrintSizeOf(Value_Number);
-	Gurax_PrintSizeOf(Value_Stream);
-	Gurax_PrintSizeOf(Value_String);
-	Gurax_PrintSizeOf(Value_Symbol);
-	Gurax_PrintSizeOf(Value_Undefined);
-	Gurax_PrintSizeOf(Value_VType);
+	PrintSizeOf(ArgSlot);
+	PrintSizeOf(Argument);
+	PrintSizeOf(Attribute);
+	PrintSizeOf(DateTime);
+	PrintSizeOf(PUnit_Value);
+	PrintSizeOf(PUnit_Lookup);
+	PrintSizeOf(PUnit_AssignToSymbol);
+	PrintSizeOf(PUnit_PopToDiscard);
+	PrintSizeOf(PUnit_UnaryOp);
+	PrintSizeOf(PUnit_BinaryOp);
+	PrintSizeOf(PUnit_CreateList);
+	PrintSizeOf(PUnit_AddList);
+	PrintSizeOf(PUnit_Index);
+	PrintSizeOf(PUnit_FeedIndex);
+	PrintSizeOf(PUnit_IndexGet);
+	PrintSizeOf(PUnit_IndexSet);
+	PrintSizeOf(PUnit_PropGet);
+	PrintSizeOf(PUnit_PropSet);
+	PrintSizeOf(PUnit_Member);
+	PrintSizeOf(PUnit_Argument);
+	PrintSizeOf(PUnit_ArgSlot);
+	PrintSizeOf(PUnit_FeedArgSlot);
+	PrintSizeOf(PUnit_ArgSlotNamed);
+	PrintSizeOf(PUnit_FeedArgSlotNamed);
+	PrintSizeOf(PUnit_Call);
+	PrintSizeOf(PUnit_Jump);
+	PrintSizeOf(PUnit_JumpIf);
+	PrintSizeOf(PUnit_JumpIfNot);
+	PrintSizeOf(PUnit_NilJumpIf);
+	PrintSizeOf(PUnit_NilJumpIfNot);
+	PrintSizeOf(Symbol);
+	PrintSizeOf(TimeDelta);
+	PrintSizeOf(ValueOwner);
+	PrintSizeOf(ValueStack);
+	PrintSizeOf(Value_Any);
+	PrintSizeOf(Value_ArgSlot);
+	PrintSizeOf(Value_Argument);
+	PrintSizeOf(Value_Attribute);
+	PrintSizeOf(Value_Binary);
+	PrintSizeOf(Value_Bool);
+	PrintSizeOf(Value_DateTime);
+	PrintSizeOf(Value_Dict);
+	PrintSizeOf(Value_Expr);
+	PrintSizeOf(Value_Function);
+	PrintSizeOf(Value_Index);
+	PrintSizeOf(Value_Iterator);
+	PrintSizeOf(Value_List);
+	PrintSizeOf(Value_Member);
+	PrintSizeOf(Value_Module);
+	PrintSizeOf(Value_Nil);
+	PrintSizeOf(Value_Number);
+	PrintSizeOf(Value_Object);
+	PrintSizeOf(Value_Quote);
+	PrintSizeOf(Value_Stream);
+	PrintSizeOf(Value_String);
+	PrintSizeOf(Value_Symbol);
+	PrintSizeOf(Value_Template);
+	PrintSizeOf(Value_TimeDelta);
+	PrintSizeOf(Value_Undefined);
+	PrintSizeOf(Value_VType);
 }
 
 }
