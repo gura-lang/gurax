@@ -10,6 +10,7 @@ namespace Gurax {
 class Function;
 class VType;
 class Value;
+class ValueMap;
 class Module;
 class Frame_Branch;
 
@@ -21,12 +22,8 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame);
 public:
-	enum class Type { Branch, ValueMap };
-private:
-	Type _type;
-public:
 	// Constructor
-	explicit Frame(Type type) : _type(type) {}
+	Frame() {}
 	// Copy constructor/operator
 	Frame(const Frame& src) = delete;
 	Frame& operator=(const Frame& src) = delete;
@@ -37,13 +34,6 @@ protected:
 	// Destructor
 	virtual ~Frame() = default;
 public:
-	static Frame_Branch* CreateOfBranch(Frame* pFrameLeft, Frame* pFrameRight);
-	static Frame* CreateOfValueMap();
-	bool IsBranch() const { return _type == Type::Branch; }
-	bool IsValueMap() const { return _type == Type::ValueMap; }
-	Frame* Expand() const;
-	static Frame* Shrink(Frame* pFrame);
-	//Value* SeekTarget(const DottedSymbol& dottedSymbol, size_t nTail = 0);
 	Value* LookupValue(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
 	bool AssignValue(const DottedSymbol& dottedSymbol, Value* pValue);
 	bool AssignModule(Module* pModule);
@@ -58,6 +48,29 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Frame_ValueMap
+//------------------------------------------------------------------------------
+class Frame_ValueMap : public Frame {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_ValueMap);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_ValueMap");
+protected:
+	ValueMap* _pValueMap;	// RefPtr can not be used here because Value.h hasn't included yet.
+public:
+	// Constructor
+	Frame_ValueMap();
+protected:
+	// Destructor
+	virtual ~Frame_ValueMap() override;
+public:
+	// Virtual functions of Frame
+	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+};
+
+//------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Frame_Branch : public Frame {
@@ -67,17 +80,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Branch");
 protected:
-	RefPtr<Frame> _pFrameLeft;
-	RefPtr<Frame> _pFrameRight;
+	RefPtr<Frame> _pFrameOuter;
+	RefPtr<Frame> _pFrameLocal;
 public:
 	// Constructor
-	Frame_Branch(Frame* pFrameLeft, Frame* pFrameRight) :
-		Frame(Type::Branch), _pFrameLeft(pFrameLeft), _pFrameRight(pFrameRight) {}
+	Frame_Branch(Frame* pFrameOuter, Frame* pFrameLocal) :
+		_pFrameOuter(pFrameOuter), _pFrameLocal(pFrameLocal) {}
 public:
-	void SetLeft(Frame* pFrame) { _pFrameLeft.reset(pFrame); }
-	void SetRight(Frame* pFrame) { _pFrameRight.reset(pFrame); }
-	const Frame* GetLeft() const { return _pFrameLeft.get(); }
-	const Frame* GetRight() const { return _pFrameRight.get(); }
+	void SetFrameOuter(Frame* pFrame) { _pFrameOuter.reset(pFrame); }
+	void SetFrameLocal(Frame* pFrame) { _pFrameLocal.reset(pFrame); }
+	const Frame* GetFrameOuter() const { return _pFrameOuter.get(); }
+	const Frame* GetFrameLocal() const { return _pFrameLocal.get(); }
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;

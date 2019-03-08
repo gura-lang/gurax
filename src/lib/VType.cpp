@@ -14,7 +14,7 @@ VType VType::Empty("");
 VType::VType(const char* name) :
 	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0),
-	_pFrame(Frame::CreateOfBranch(nullptr, Frame::CreateOfValueMap()))
+	_pFrame(new Frame_Branch(nullptr, new Frame_ValueMap()))
 {
 }
 
@@ -50,7 +50,7 @@ void VType::PrepareBasic(Frame& frame)
 void VType::SetAttrs(VType& vtypeInherited, Flags flags)
 {
 	_pVTypeInherited = &vtypeInherited;
-	_pFrame->SetLeft(_pVTypeInherited->GetFrame().Reference());
+	_pFrame->SetFrameOuter(_pVTypeInherited->GetFrame().Reference());
 	_flags = flags;
 }
 

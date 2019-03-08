@@ -6,55 +6,8 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Frame_ValueMap
-//------------------------------------------------------------------------------
-class Frame_ValueMap : public Frame {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Frame_ValueMap);
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_ValueMap");
-protected:
-	RefPtr<ValueMap> _pValueMap;
-public:
-	// Constructor
-	Frame_ValueMap() : Frame(Type::ValueMap), _pValueMap(new ValueMap()) {}
-public:
-	// Virtual functions of Frame
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override {
-		_pValueMap->Assign(pSymbol, pValue);
-	}
-	virtual Value* LookupValue(const Symbol* pSymbol) const override {
-		return _pValueMap->Lookup(pSymbol);
-	}
-};
-
-//------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
-Frame_Branch* Frame::CreateOfBranch(Frame* pFrameLeft, Frame* pFrameRight)
-{
-	return new Frame_Branch(pFrameLeft, pFrameRight);
-}
-
-Frame* Frame::CreateOfValueMap()
-{
-	return new Frame_ValueMap();
-}
-
-Frame* Frame::Expand() const
-{
-	return new Frame_Branch(Reference(), new Frame_ValueMap());
-}
-
-Frame* Frame::Shrink(Frame* pFrame)
-{
-	if (!pFrame->IsBranch()) return pFrame;
-	Frame* pFrameRtn = dynamic_cast<Frame_Branch*>(pFrame)->GetLeft()->Reference();
-	Frame::Delete(pFrame);
-	return pFrameRtn;
-}
-
 Value* Frame::LookupValue(const DottedSymbol& dottedSymbol, size_t nTail) const
 {
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
@@ -100,18 +53,40 @@ void Frame::AssignFunction(Function* pFunction)
 }
 
 //------------------------------------------------------------------------------
+// Frame_ValueMap
+//------------------------------------------------------------------------------
+Frame_ValueMap::Frame_ValueMap() : _pValueMap(new ValueMap())
+{
+}
+
+Frame_ValueMap::~Frame_ValueMap()
+{
+	ValueMap::Delete(_pValueMap);
+}
+
+void Frame_ValueMap::AssignValue(const Symbol* pSymbol, Value* pValue)
+{
+	_pValueMap->Assign(pSymbol, pValue);
+}
+
+Value* Frame_ValueMap::LookupValue(const Symbol* pSymbol) const
+{
+	return _pValueMap->Lookup(pSymbol);
+}
+
+//------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
 void Frame_Branch::AssignValue(const Symbol* pSymbol, Value* pValue)
 {
-	if (_pFrameRight) _pFrameRight->AssignValue(pSymbol, pValue);
+	if (_pFrameLocal) _pFrameLocal->AssignValue(pSymbol, pValue);
 }
 
 Value* Frame_Branch::LookupValue(const Symbol* pSymbol) const
 {
-	Value* pValue = _pFrameRight? _pFrameRight->LookupValue(pSymbol) : nullptr;
+	Value* pValue = _pFrameLocal? _pFrameLocal->LookupValue(pSymbol) : nullptr;
 	if (pValue) return pValue;
-	pValue = _pFrameLeft? _pFrameLeft->LookupValue(pSymbol) : nullptr;
+	pValue = _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
 	return pValue;
 }
 

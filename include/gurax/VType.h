@@ -20,10 +20,10 @@ public:
 	using SeqId = UInt32;
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None		= 0;
+		static const Flags None			= 0;
 		static const Flags Mutable		= (1 << 0);
 		static const Flags Immutable	= (0 << 0);
-		static const Flags Callable	= (1 << 1);
+		static const Flags Callable		= (1 << 1);
 	};
 protected:
 	SeqId _seqId;
