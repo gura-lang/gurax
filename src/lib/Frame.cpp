@@ -80,16 +80,15 @@ Value* Frame_ValueMap::LookupValue(const Symbol* pSymbol) const
 
 //------------------------------------------------------------------------------
 // Frame_Root
+// _pFrameLocal is always nullptr.
 //------------------------------------------------------------------------------
 void Frame_Root::AssignValue(const Symbol* pSymbol, Value* pValue)
 {
-	_pFrameLocal->AssignValue(pSymbol, pValue);
+	_pFrameOuter->AssignValue(pSymbol, pValue);
 }
 
 Value* Frame_Root::LookupValue(const Symbol* pSymbol) const
 {
-	Value* pValue = _pFrameLocal->LookupValue(pSymbol);
-	if (pValue) return pValue;
 	return _pFrameOuter->LookupValue(pSymbol);
 }
 

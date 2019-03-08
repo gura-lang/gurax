@@ -99,7 +99,8 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Root");
 public:
 	// Constructor
-	Frame_Root() : Frame_Branch(new Frame_ValueMap(), new Frame_ValueMap()) {}
+	Frame_Root() :
+		Frame_Branch(new Frame_ValueMap(), nullptr) {}
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
@@ -117,7 +118,8 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Environment");
 public:
 	// Constructor
-	explicit Frame_Environment(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, new Frame_ValueMap()) {}
+	explicit Frame_Environment(Frame* pFrameOuter) :
+		Frame_Branch(pFrameOuter, new Frame_ValueMap()) {}
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
@@ -135,7 +137,8 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Function");
 public:
 	// Constructor
-	explicit Frame_Function(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr) {}
+	explicit Frame_Function(Frame* pFrameOuter) :
+		Frame_Branch(pFrameOuter, nullptr) {}
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;

@@ -17,7 +17,7 @@ private:
 	static Context _context;
 public:
 	// Constructor
-	Context() : _pFrame(new Frame_ValueMap()) {}
+	Context();
 	// Copy constructor/operator
 	Context(const Context& src) = delete;
 	Context& operator=(const Context& src) = delete;

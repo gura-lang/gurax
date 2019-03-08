@@ -10,6 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Context Context::_context;
 
+Context::Context() : _pFrame(new Frame_Root())
+{
+}
+
 void Context::Prepare()
 {
 	VType::PrepareBasic(GetFrame());
