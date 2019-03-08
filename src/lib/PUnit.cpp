@@ -696,26 +696,6 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_JumpSub
-// Stack View: [] -> []
-//------------------------------------------------------------------------------
-const PUnit* PUnit_JumpSub::Exec(Processor& processor) const
-{
-	processor.PushPUnit(GetPUnitNext());
-	return GetPUnitJumpDest();
-}
-
-String PUnit_JumpSub::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "JumpSub(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn);
-	return rtn;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_JumpIf
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------

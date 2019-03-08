@@ -578,28 +578,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_JumpSub
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpSub : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitJumpDest;
-public:
-	// Constructor
-	PUnit_JumpSub(Expr* pExprSrc, const PUnit* pPUnitJumpDest) :
-		PUnit(pExprSrc), _pPUnitJumpDest(pPUnitJumpDest) {}
-public:
-	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
-	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
-public:
-	// Virtual functions of PUnit
-	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit {

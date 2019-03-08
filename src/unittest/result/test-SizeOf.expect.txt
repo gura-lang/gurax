@@ -25,7 +25,6 @@ PUnit_ArgSlotNamed       56
 PUnit_FeedArgSlotNamed   32
 PUnit_Call               32
 PUnit_Jump               40
-PUnit_JumpSub            40
 PUnit_JumpIf             40
 PUnit_JumpIfNot          40
 PUnit_NilJumpIf          40
