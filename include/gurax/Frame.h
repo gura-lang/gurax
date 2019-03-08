@@ -51,6 +51,31 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// FrameList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE FrameList : public std::vector<Frame*> {
+};
+
+//------------------------------------------------------------------------------
+// FrameOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE FrameOwner : public FrameList {
+public:
+	~FrameOwner() { Clear(); }
+	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// FrameStack
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE FrameStack : public FrameOwner {
+public:
+	Frame* Peek(int offset) { return *(rbegin() + offset); }
+	void Push(Frame* pFrame) { push_back(pFrame); }
+	Frame* Pop() { Frame* pFrame = back(); pop_back(); return pFrame; }
+};
+
+//------------------------------------------------------------------------------
 // Frame_ValueMap
 //------------------------------------------------------------------------------
 class Frame_ValueMap : public Frame {
