@@ -724,7 +724,7 @@ void Expr_Caller::ComposeForAssignment(
 	auto pPUnitBody = composer.PeekPUnitNext();
 	pFunction->SetPUnitBody(pPUnitBody);
 	pExprAssigned->Compose(composer);
-	if (pPUnitBody == composer.PeekPUnitNext()) { // empty block
+	if (pPUnitBody == composer.PeekPUnitNext()) { // when pExprAssigned yielded nothing
 		composer.Add_Value(this, Value::nil());
 	}
 	composer.Add_Return(this);
