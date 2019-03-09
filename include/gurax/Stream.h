@@ -82,6 +82,7 @@ public:
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
+	virtual void Close() = 0;
 	virtual int GetChar() = 0;
 	virtual bool PutChar(char ch) = 0;
 	virtual size_t Read(void* buff, size_t len) = 0;

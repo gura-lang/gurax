@@ -14,9 +14,9 @@ RefPtr<Stream> Stream::CErr;
 
 void Stream::Bootup()
 {
-	CIn.reset(new Stream_Console("CIn", stdin));
-	COut.reset(new Stream_Console("COut", stdout));
-	CErr.reset(new Stream_Console("CErr", stderr));
+	CIn.reset(new Stream_File(stdin, false, "CIn"));
+	COut.reset(new Stream_File(stdout, false, "COut"));
+	CErr.reset(new Stream_File(stderr, false, "CErr"));
 }
 
 Stream& Stream::Print(const char* str)
