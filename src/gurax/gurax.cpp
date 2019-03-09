@@ -7,16 +7,30 @@ namespace Gurax {
 
 int Main(int argc, char* argv[])
 {
-#if 0
-	RefPtr<Tokenizer> pTokenizer(new Tokenizer("", 0, false));
-	RefPtr<Object> pObj(new Object_number());
-	const Symbol* pSymbol1 = Symbol::Add("hoge");
-	const Symbol* pSymbol2 = Symbol::Add("hoge");
-	::printf("%p %p\n", pSymbol1, pSymbol2);
-	for (UInt32 ch = 0; ch < 256; ch++) {
-		::printf("%d %d %d\n", ch, static_cast<char>(static_cast<UChar>(ch)), static_cast<char>(ch));
+	if (argc < 2) {
+		Stream::CErr->Printf("usage: gurax file\n");
+		return 1;
 	}
-#endif
+	const char* fileName = argv[1];
+	RefPtr<Stream> pStream(Stream_File::Open(fileName, "rt"));
+	if (!pStream) {
+		Stream::CErr->Printf("failed to open file: %s", fileName);
+		return 1;
+	}
+	RefPtr<Expr_Root> pExprRoot(Parser::ParseStream(*pStream));
+	if (Error::IsIssued()) {
+		Error::Print(*Stream::CErr);
+		return 1;
+	}
+	Composer composer;
+	pExprRoot->Compose(composer);
+	//composer.GetPUnitList().Print();
+	Processor processor;
+	processor.DebugRun(composer.GetPUnitTop());
+	if (Error::IsIssued()) {
+		Error::Print(*Stream::CErr);
+		return 1;
+	}
 	return 0;
 }
 

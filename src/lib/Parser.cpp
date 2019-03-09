@@ -17,6 +17,20 @@ Parser::Parser(String pathNameSrc) :
 {
 }
 
+Expr_Root* Parser::ParseStream(Stream& stream)
+{
+	RefPtr<Parser> pParser(new Parser(stream.GetIdentifier()));
+	for (;;) {
+		int chRaw = stream.GetChar();
+		char ch = (chRaw > 0)? static_cast<char>(chRaw) : '\0';
+		pParser->ParseChar(ch);
+		if (Error::IsIssued()) return nullptr;
+		if (ch == '\0') break;
+	}
+	pParser->GetExprRoot().Prepare();
+	return pParser->GetExprRoot().Reference();
+}
+
 Expr_Root* Parser::ParseString(const char* text)
 {
 	RefPtr<Parser> pParser(new Parser("*string*"));

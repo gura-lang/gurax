@@ -33,6 +33,7 @@ protected:
 public:
 	Expr_Root& GetExprRoot() { return *_pExprRoot; }
 	const Expr_Root& GetExprRoot() const { return *_pExprRoot; }
+	static Expr_Root* ParseStream(Stream& stream);
 	static Expr_Root* ParseString(const char* text);
 	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
 private:
