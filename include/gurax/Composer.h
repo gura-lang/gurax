@@ -72,6 +72,7 @@ public:
 	PUnit_NilJumpIfNot* AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	void Add_PopValueToDiscard(const Expr* pExprSrc);
 	PUnit_PopValueToDiscard* AddF_PopValueToDiscard(const Expr* pExprSrc);
+	void Add_RemoveValue(const Expr* pExprSrc, size_t offset);
 	void Add_Return(const Expr* pExprSrc);
 	void Add_Terminate(const Expr* pExprSrc);
 	void Print() const;

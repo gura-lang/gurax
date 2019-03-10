@@ -212,6 +212,11 @@ PUnit_PopValueToDiscard* Composer::AddF_PopValueToDiscard(const Expr* pExprSrc)
 	return pPUnit;
 }
 
+void Composer::Add_RemoveValue(const Expr* pExprSrc, size_t offset)
+{
+	Add(new PUnit_RemoveValue(pExprSrc->Reference(), offset));
+}
+
 void Composer::Add_Return(const Expr* pExprSrc)
 {
 	Add(new PUnit_Return(pExprSrc->Reference()));

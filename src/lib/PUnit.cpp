@@ -703,6 +703,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
 	return pValue->GetBool()? GetPUnitJumpDest() : GetPUnitCont();
 }
 
@@ -723,6 +724,7 @@ String PUnit_JumpIf::ToString(const StringStyle& ss) const
 const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
 	return pValue->GetBool()? GetPUnitCont() : GetPUnitJumpDest();
 }
 
@@ -800,6 +802,26 @@ String PUnit_PopValueToDiscard::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "PopValueToDiscard()";
+	AppendInfoToString(rtn);
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_RemoveValue
+// Stack View: [.. Value ..] -> [.. ..]
+//------------------------------------------------------------------------------
+const PUnit* PUnit_RemoveValue::Exec(Processor& processor) const
+{
+	processor.RemoveValue(GetOffset());
+	return GetPUnitCont();
+}
+
+String PUnit_RemoveValue::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "RemoveValue(offset=";
+	rtn += std::to_string(GetOffset());
+	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
 }

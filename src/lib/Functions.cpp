@@ -140,32 +140,33 @@ Gurax_ImplementStatement(repeat)
 	}
 	const DeclArgOwner& declArgOwner = pExprCaller->GetExprBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (nArgs == 0) {
-		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
-		const PUnit* pPUnitDest = composer.PeekPUnitCont();
-		composer.Add_PopValueToDiscard(pExprCaller);					// []
-		if (!declArgOwner.empty()) {
-			// processing of block parameter here
+		if (declArgOwner.empty()) {
+			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
+			const PUnit* pPUnitDest = composer.PeekPUnitCont();
+			composer.Add_PopValueToDiscard(pExprCaller);				// []
+			pExprCaller->GetExprBlock()->Compose(composer);				// [ValueLast]
+			composer.Add_Jump(pExprCaller, pPUnitDest);
 		}
-		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-		composer.Add_Jump(pExprCaller, pPUnitDest);
 	} else if (nArgs == 1) {
-		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
-		const PUnit* pPUnitDest = composer.PeekPUnitCont();
-		do {
-			const Expr* pExpr = pExprCaller->GetExprCdrHead();
-			pExpr->Compose(composer);									// [ValueLast Value]
-			composer.Add_Cast(pExprCaller, VTYPE_Number);				// [ValueLast ValueCount]
-		} while (0);
-
-		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
-
-		composer.Add_PopValueToDiscard(pExprCaller);					// []
-		if (!declArgOwner.empty()) {
-			// processing of block parameter here
+		if (declArgOwner.empty()) {
+			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
+			do {
+				const Expr* pExpr = pExprCaller->GetExprCdrHead();
+				pExpr->Compose(composer);								// [ValueLast Value]
+				composer.Add_Cast(pExprCaller, VTYPE_Number);			// [ValueLast ValueCount]
+			} while (0);
+			const PUnit* pPUnitDest = composer.PeekPUnitCont();
+			
+			auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);			// [ValueLast]
+			composer.Add_PopValueToDiscard(pExprCaller);				// []
+			pExprCaller->GetExprBlock()->Compose(composer);				// [ValueLast]
+			composer.Add_Jump(pExprCaller, pPUnitDest);
+			pPUnit->SetPUnitJumpDest(composer.PeekPUnitCont());
 		}
-		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
-		composer.Add_Jump(pExprCaller, pPUnitDest);
-		pPUnit->SetPUnitJumpDest(composer.PeekPUnitCont());
+	} else {
+		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+						 "wrong number of arguments");
+		return;
 	}
 }
 
@@ -214,7 +215,7 @@ Gurax_ImplementStatement(while_)
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueIdx ValueLast]
 		composer.Add_Jump(pExprCaller, pPUnitDest);
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitCont());
-		// delete ValueIdx here
+		composer.Add_RemoveValue(pExprCaller, 1);						// [ValueLast]
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
 						 "invalid number of block parameters");

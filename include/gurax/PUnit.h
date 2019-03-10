@@ -719,6 +719,27 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_RemoveValue
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_RemoveValue : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
+public:
+	// Constructor
+	explicit PUnit_RemoveValue(Expr* pExprSrc, size_t offset) : PUnit(pExprSrc), _offset(offset) {}
+public:
+	size_t GetOffset() const { return _offset; }
+public:
+	// Virtual functions of PUnit
+	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Return
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Return : public PUnit {
