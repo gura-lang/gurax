@@ -28,7 +28,7 @@ private:
 	RefPtr<ArgSlot> _pArgSlotTop;			// this may be nullptr
 	UInt32 _flags;
 	ArgSlot* _pArgSlotToFeed;
-	const PUnit* _pPUnitNext;
+	const PUnit* _pPUnitCont;
 public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr, Value* pValueThis);
@@ -70,8 +70,8 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
-	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
-	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
+	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
+	const PUnit* GetPUnitCont() const { return _pPUnitCont; }
 	void AssignToFrame(Frame& frame) const;
 	Value* DoCall(Processor& processor) { return GetValueCar().DoCall(processor, *this); }
 public:

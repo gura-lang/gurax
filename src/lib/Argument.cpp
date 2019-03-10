@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr, Value* pValueThis) :
 	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _pValueThis(pValueThis),
-	_flags(0), _pArgSlotToFeed(nullptr), _pPUnitNext(nullptr)
+	_flags(0), _pArgSlotToFeed(nullptr), _pPUnitCont(nullptr)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();

@@ -11,8 +11,8 @@ namespace Gurax {
 void Composer::Add(PUnit* pPUnit)
 {
 	if (!_pPUnitFirst) _pPUnitFirst = pPUnit;
-	if (_pPUnitLast && !_pPUnitLast->GetPUnitNext()) {
-		_pPUnitLast->SetPUnitNext(pPUnit);
+	if (_pPUnitLast && !_pPUnitLast->GetPUnitCont()) {
+		_pPUnitLast->SetPUnitCont(pPUnit);
 	}
 	_pPUnitLast = pPUnit;
 }
@@ -154,8 +154,8 @@ void Composer::Add_Call(const Expr* pExprSrc)
 
 void Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
 {
-	if (_pPUnitLast && !_pPUnitLast->GetPUnitNext()) {
-		_pPUnitLast->SetPUnitNext(pPUnitDest);
+	if (_pPUnitLast && !_pPUnitLast->GetPUnitCont()) {
+		_pPUnitLast->SetPUnitCont(pPUnitDest);
 	} else {
 		AddF_Jump(pExprSrc->Reference(), pPUnitDest);
 	}
@@ -228,6 +228,9 @@ void Composer::Print() const
 
 void Composer::PrintPUnit() const
 {
+	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
+		::printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+	}
 }
 
 }

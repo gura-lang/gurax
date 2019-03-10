@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_PROCESSOR_H
 #define GURAX_PROCESSOR_H
-#include "PUnit.h"
+#include "Composer.h"
 
 namespace Gurax {
 
@@ -60,6 +60,7 @@ public:
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 public:
 	void Call(const PUnit* pPUnit, Argument& argument);
+	void Run(const Composer& composer) { Run(composer.GetPUnitFirst()); }
 public:
 	virtual void Run(const PUnit* pPUnit) = 0;
 };

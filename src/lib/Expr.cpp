@@ -59,7 +59,7 @@ void Expr::ComposeForArgSlot(Composer& composer) const
 	auto pPUnit = composer.AddF_ArgSlot(this);		// [ValueArgument]
 	Compose(composer);								// [ValueArgument Value]
 	composer.Add_FeedArgSlot(this);					// [ValueArgument]
-	pPUnit->SetPUnitSkipDest(composer.PeekPUnitNext());
+	pPUnit->SetPUnitSkipDest(composer.PeekPUnitCont());
 }
 
 void Expr::ComposeForAssignment(
@@ -324,7 +324,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer) const
 													// [ValueArgument ValueArgSlot]
 	GetExprRight()->Compose(composer);				// [ValueArgument ValueArgSlot Value]
 	composer.Add_FeedArgSlotNamed(this);			// [ValueArgument]
-	pPUnit->SetPUnitSkipDest(composer.PeekPUnitNext());
+	pPUnit->SetPUnitSkipDest(composer.PeekPUnitCont());
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -722,14 +722,14 @@ void Expr_Caller::ComposeForAssignment(
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
 	auto pPUnit = composer.AddF_AssignFunction(this, pFunction.get());		// [Value]
-	auto pPUnitBody = composer.PeekPUnitNext();
+	auto pPUnitBody = composer.PeekPUnitCont();
 	pFunction->SetPUnitBody(pPUnitBody);
 	pExprAssigned->Compose(composer);
-	if (pPUnitBody == composer.PeekPUnitNext()) { // when pExprAssigned yielded nothing
+	if (pPUnitBody == composer.PeekPUnitCont()) { // when pExprAssigned yielded nothing
 		composer.Add_Value(this, Value::nil());
 	}
 	composer.Add_Return(this);
-	pPUnit->SetPUnitNext(composer.PeekPUnitNext());
+	pPUnit->SetPUnitCont(composer.PeekPUnitCont());
 	composer.SetPUnitLast(pPUnit);
 }
 
