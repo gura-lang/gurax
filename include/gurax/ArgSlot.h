@@ -46,7 +46,9 @@ public:
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* GoNext() const { return const_cast<ArgSlot*>(this)->GoNext(); }
 	void AssignToFrame(Frame& frame) const {
-		if (!IsUndefined()) frame.AssignValue(GetDeclArg().GetSymbol(), GetValue()->Reference());;
+		if (!IsUndefined()) {
+			frame.AssignValueOfArgument(GetDeclArg().GetSymbol(), GetValue()->Reference());;
+		}
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

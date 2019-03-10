@@ -47,6 +47,7 @@ public:
 public:
 	// Virtual functions
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* LookupValue(const Symbol* pSymbol) const = 0;
 };
 
@@ -99,6 +100,7 @@ protected:
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -128,11 +130,11 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Root");
 public:
 	// Constructor
-	Frame_Root() :
-		Frame_Branch(new Frame_ValueMap(), nullptr) {}
+	Frame_Root();
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -147,11 +149,11 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_VType");
 public:
 	// Constructor
-	explicit Frame_VType(Frame* pFrameOuter) :
-		Frame_Branch(pFrameOuter, new Frame_ValueMap()) {}
+	explicit Frame_VType(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -166,11 +168,30 @@ public:
 	Gurax_MemoryPoolAllocator("Frame_Function");
 public:
 	// Constructor
-	explicit Frame_Function(Frame* pFrameOuter) :
-		Frame_Branch(pFrameOuter, nullptr) {}
+	explicit Frame_Function(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
 	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+};
+
+//------------------------------------------------------------------------------
+// Frame_Block
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Block : public Frame_Branch {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Block);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Block");
+public:
+	// Constructor
+	explicit Frame_Block(Frame* pFrameOuter);
+public:
+	// Virtual functions of Frame
+	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 

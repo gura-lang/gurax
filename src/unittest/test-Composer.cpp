@@ -68,10 +68,12 @@ Gurax_TesterEntry(Composer)
 	}
 	Composer composer;
 	pExprRoot->Compose(composer);
-	//composer.GetPUnitList().Print();
-	RefPtr<Processor> pProcessor(Processor::Debug());
-	pProcessor->Run(composer.GetPUnitTop());
-	if (Error::IsIssued()) Error::Print(*Stream::CErr);
+	if (Error::IsIssued()) {
+		Error::Print(*Stream::CErr);
+		Error::Clear();
+		return;
+	}
+	composer.GetPUnitList().Print();
 }
 
 }
