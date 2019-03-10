@@ -73,7 +73,7 @@ Gurax_TesterEntry(Composer)
 		Error::Clear();
 		return;
 	}
-	composer.GetPUnitList().Print();
+	composer.PrintPUnit();
 }
 
 }

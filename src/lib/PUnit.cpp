@@ -821,7 +821,7 @@ String PUnit_Return::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Return()";
-	AppendInfoToString(rtn);
+	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
 	return rtn;
 }
 
@@ -838,7 +838,6 @@ String PUnit_Terminate::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Terminate()";
-	AppendInfoToString(rtn);
 	return rtn;
 }
 

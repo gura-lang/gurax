@@ -434,6 +434,7 @@ void Expr_Root::Compose(Composer& composer) const
 {
 	ComposeSequence(composer, GetExprElemHead());			// [Value]
 	composer.Add_Return(this);
+	composer.Add_Terminate(this);
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const

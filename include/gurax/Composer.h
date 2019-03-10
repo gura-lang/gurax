@@ -12,12 +12,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Composer {
 private:
-	PUnitList _punitList;
+	PUnit* _pPUnitFirst;
+	PUnit* _pPUnitLast;
 	PUnitStack _punitStack;
-	PUnit *_pPUnitLast;
 public:
 	// Constructor
-	Composer() : _pPUnitLast(nullptr) {}
+	Composer() : _pPUnitFirst(nullptr), _pPUnitLast(nullptr) {}
 	// Copy constructor/operator
 	Composer(const Composer& src) = delete;
 	Composer& operator=(const Composer& src) = delete;
@@ -27,13 +27,10 @@ public:
 	// Destructor
 	virtual ~Composer() = default;
 public:
-	const PUnitList& GetPUnitList() const { return _punitList; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
-	const PUnit* GetPUnitTop() const { return _punitList.front(); }
+	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
 	PUnit* GetPUnitLast() { return _pPUnitLast; }
 	void SetPUnitLast(PUnit* pPUnit) { _pPUnitLast = pPUnit; }
-	const PUnit* GetPUnitAt(size_t pos) const { return _punitList[pos]; }
-	size_t MarkPUnit() const { return _punitList.size(); }
 	static const PUnit* PeekPUnitNext() {
 		return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
 	}
@@ -78,6 +75,7 @@ public:
 	void Add_Return(const Expr* pExprSrc);
 	void Add_Terminate(const Expr* pExprSrc);
 	void Print() const;
+	void PrintPUnit() const;
 };
 
 }

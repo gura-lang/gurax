@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void Composer::Add(PUnit* pPUnit)
 {
-	_punitList.push_back(pPUnit);
+	if (!_pPUnitFirst) _pPUnitFirst = pPUnit;
 	if (_pPUnitLast && !_pPUnitLast->GetPUnitNext()) {
 		_pPUnitLast->SetPUnitNext(pPUnit);
 	}
@@ -220,6 +220,14 @@ void Composer::Add_Return(const Expr* pExprSrc)
 void Composer::Add_Terminate(const Expr* pExprSrc)
 {
 	Add(new PUnit_Terminate(pExprSrc->Reference()));
+}
+
+void Composer::Print() const
+{
+}
+
+void Composer::PrintPUnit() const
+{
 }
 
 }

@@ -24,9 +24,9 @@ int Main(int argc, char* argv[])
 	}
 	Composer composer;
 	pExprRoot->Compose(composer);
-	composer.GetPUnitList().Print();
+	composer.PrintPUnit();
 	RefPtr<Processor> pProcessor(Processor::Debug());
-	pProcessor->Run(composer.GetPUnitTop());
+	pProcessor->Run(composer.GetPUnitFirst());
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		return 1;
