@@ -10,7 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Processor
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Processor {
+class GURAX_DLLDECLARE Processor : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Processor);
 private:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
@@ -26,6 +29,9 @@ public:
 	Processor& operator=(Processor&& src) noexcept = delete;
 	// Destructor
 	virtual ~Processor() = default;
+public:
+	static Processor* Normal();
+	static Processor* Debug();
 public:
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnitStack& GetPUnitStack() const { return _punitStack; }
@@ -53,8 +59,23 @@ public:
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 public:
-	void Run(const PUnit* pPUnit);
-	void DebugRun(const PUnit* pPUnit);
+	virtual void Run(const PUnit* pPUnit) = 0;
+};
+
+//------------------------------------------------------------------------------
+// Processor_Normal
+//------------------------------------------------------------------------------
+class Processor_Normal : public Processor {
+public:
+	virtual void Run(const PUnit* pPUnit) override;
+};
+
+//------------------------------------------------------------------------------
+// Processor_Debug
+//------------------------------------------------------------------------------
+class Processor_Debug : public Processor {
+public:
+	virtual void Run(const PUnit* pPUnit) override;
 };
 
 }

@@ -25,8 +25,8 @@ int Main(int argc, char* argv[])
 	Composer composer;
 	pExprRoot->Compose(composer);
 	composer.GetPUnitList().Print();
-	Processor processor;
-	processor.DebugRun(composer.GetPUnitTop());
+	RefPtr<Processor> pProcessor(Processor::Debug());
+	pProcessor->Run(composer.GetPUnitTop());
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		return 1;
