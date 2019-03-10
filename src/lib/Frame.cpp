@@ -110,14 +110,14 @@ Value* Frame_Root::LookupValue(const Symbol* pSymbol) const
 }
 
 //------------------------------------------------------------------------------
-// Frame_Environment
+// Frame_VType
 //------------------------------------------------------------------------------
-void Frame_Environment::AssignValue(const Symbol* pSymbol, Value* pValue)
+void Frame_VType::AssignValue(const Symbol* pSymbol, Value* pValue)
 {
 	_pFrameLocal->AssignValue(pSymbol, pValue);
 }
 
-Value* Frame_Environment::LookupValue(const Symbol* pSymbol) const
+Value* Frame_VType::LookupValue(const Symbol* pSymbol) const
 {
 	Value* pValue = _pFrameLocal->LookupValue(pSymbol);
 	if (pValue) return pValue;

@@ -31,7 +31,7 @@ protected:
 	VType* _pVTypeInherited;
 	const Symbol* _pSymbol;
 	Flags _flags;
-	RefPtr<Frame_Environment> _pFrame;
+	RefPtr<Frame_VType> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 private:
@@ -68,8 +68,8 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
-	Frame_Environment& GetFrame() { return *_pFrame; }
-	const Frame_Environment& GetFrame() const { return *_pFrame; }
+	Frame_VType& GetFrame() { return *_pFrame; }
+	const Frame_VType& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	void AssignPropHandler(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }

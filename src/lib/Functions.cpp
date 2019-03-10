@@ -138,10 +138,14 @@ Gurax_ImplementStatement(repeat)
 						 "repeat-statement takes zero or one argument");
 		return;
 	}
+	const DeclArgOwner& declArgOwner = pExprCaller->GetExprBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (nArgs == 0) {
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 		size_t pos = composer.MarkPUnit();
 		composer.Add_PopValueToDiscard(pExprCaller);					// []
+		if (!declArgOwner.empty()) {
+			// processing of block parameter here
+		}
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
 		composer.Add_Jump(pExprCaller, composer.GetPUnitAt(pos));
 	} else if (nArgs == 1) {
@@ -156,7 +160,7 @@ Gurax_ImplementStatement(repeat)
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
 
 		composer.Add_PopValueToDiscard(pExprCaller);					// []
-		if (pExprCaller->GetExprBlock()->HasExprParam()) {
+		if (!declArgOwner.empty()) {
 			// processing of block parameter here
 		}
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]

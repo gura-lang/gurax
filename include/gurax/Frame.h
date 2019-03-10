@@ -137,17 +137,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Environment
+// Frame_VType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Environment : public Frame_Branch {
+class GURAX_DLLDECLARE Frame_VType : public Frame_Branch {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Environment);
+	Gurax_DeclareReferable(Frame_VType);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Environment");
+	Gurax_MemoryPoolAllocator("Frame_VType");
 public:
 	// Constructor
-	explicit Frame_Environment(Frame* pFrameOuter) :
+	explicit Frame_VType(Frame* pFrameOuter) :
 		Frame_Branch(pFrameOuter, new Frame_ValueMap()) {}
 public:
 	// Virtual functions of Frame
