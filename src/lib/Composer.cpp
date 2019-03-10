@@ -196,18 +196,18 @@ PUnit_NilJumpIfNot* Composer::AddF_NilJumpIfNot(const Expr* pExprSrc, const PUni
 	return pPUnit;
 }
 
-void Composer::Add_PopToDiscard(const Expr* pExprSrc)
+void Composer::Add_PopValueToDiscard(const Expr* pExprSrc)
 {
 	if (_pPUnitLast) {
-		_pPUnitLast->SetPopToDiscardFlag();
+		_pPUnitLast->SetPopValueToDiscardFlag();
 	} else {
-		AddF_PopToDiscard(pExprSrc);
+		AddF_PopValueToDiscard(pExprSrc);
 	}
 }
 
-PUnit_PopToDiscard* Composer::AddF_PopToDiscard(const Expr* pExprSrc)
+PUnit_PopValueToDiscard* Composer::AddF_PopValueToDiscard(const Expr* pExprSrc)
 {
-	auto pPUnit = new PUnit_PopToDiscard(pExprSrc->Reference());
+	auto pPUnit = new PUnit_PopValueToDiscard(pExprSrc->Reference());
 	Add(pPUnit);
 	return pPUnit;
 }

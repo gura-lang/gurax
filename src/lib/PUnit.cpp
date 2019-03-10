@@ -18,7 +18,7 @@ PUnit::PUnit(Expr* pExprSrc) :
 
 void PUnit::AppendInfoToString(String& str) const
 {
-	if (GetPopToDiscardFlag()) str += ", PopToDiscard()";
+	if (GetPopValueToDiscardFlag()) str += ", PopValueToDiscard()";
 	if (_pPUnitNext) {
 		size_t seqIdNext = _pPUnitNext->GetSeqId();
 		if (seqIdNext != GetSeqId() + 1) {
@@ -51,7 +51,7 @@ void PUnitList::Print() const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Value::Exec(Processor& processor) const
 {
-	if (!GetPopToDiscardFlag()) processor.PushValue(GetValue()->Reference());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(GetValue()->Reference());
 	return GetPUnitNext();
 }
 
@@ -71,7 +71,7 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) return GetPUnitNext();
+	if (GetPopValueToDiscardFlag()) return GetPUnitNext();
 	const Value* pValue = processor.GetFrameCur().LookupValue(GetSymbol());
 	if (!pValue) {
 		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
@@ -98,7 +98,7 @@ String PUnit_Lookup::ToString(const StringStyle& ss) const
 const PUnit* PUnit_AssignToSymbol::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(
-		GetPopToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
+		GetPopValueToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
 	processor.GetFrameCur().AssignValue(GetSymbol(), pValueAssigned.release());
 	return GetPUnitNext();
 }
@@ -124,7 +124,7 @@ const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
 	if (!pValueCasted) return nullptr;
 	frame.AssignValue(GetDeclArg().GetSymbol(), pValueCasted->Reference());
-	if (!GetPopToDiscardFlag()) processor.PushValue(pValueCasted.release());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueCasted.release());
 	return GetPUnitNext();
 }
 
@@ -146,7 +146,7 @@ const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
 	processor.GetFrameCur().AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
-	if (!GetPopToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
 	return GetPUnitNext();
 }
 
@@ -166,8 +166,8 @@ String PUnit_AssignFunction::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Cast::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValue(processor.PopValue());
@@ -193,8 +193,8 @@ String PUnit_Cast::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_UnaryOp::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValue(processor.PopValue());
@@ -220,9 +220,9 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_BinaryOp::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValueRight(processor.PopValue());
@@ -249,8 +249,8 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Add::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValue(processor.PopValue());
@@ -295,9 +295,9 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AddList::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValueElem(processor.PopValue());
@@ -363,8 +363,8 @@ String PUnit_FeedIndex::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_IndexGet::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
@@ -394,7 +394,7 @@ const PUnit* PUnit_IndexSet::Exec(Processor& processor) const
 	Index& index = pValueIndex->GetIndex();
 	index.IndexSet(pValueElems->Reference());
 	if (Error::IsIssued()) return nullptr;
-	if (!GetPopToDiscardFlag()) processor.PushValue(pValueElems.release());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueElems.release());
 	return GetPUnitNext();
 }
 
@@ -412,8 +412,8 @@ String PUnit_IndexSet::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	Value* pValueTarget = processor.PeekValue(0);
@@ -446,7 +446,7 @@ const PUnit* PUnit_PropSet::Exec(Processor& processor) const
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr());
-	if (!GetPopToDiscardFlag()) processor.PushValue(pValueProp.release());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueProp.release());
 	return GetPUnitNext();
 }
 
@@ -468,8 +468,8 @@ String PUnit_PropSet::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Member::Exec(Processor& processor) const
 {
-	if (GetPopToDiscardFlag()) {
-		Value::Delete(processor.PopValue());
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
 		return GetPUnitNext();
 	}
 	RefPtr<Value> pValueTarget(processor.PopValue());
@@ -660,10 +660,11 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 		return nullptr;
 	}
 	if (argument.GetPUnitNext()) {
-		processor.PushPUnit(GetPUnitNext());
+		// PUnit_Return is responsible of PopValueToDiscard.
+		processor.PushPUnit(this);
 		return argument.GetPUnitNext();
 	} else {
-		if (!GetPopToDiscardFlag()) processor.PushValue(pValueResult.release());
+		if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueResult.release());
 		return GetPUnitNext();
 	}
 }
@@ -786,19 +787,19 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PopToDiscard
+// PUnit_PopValueToDiscard
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------
-const PUnit* PUnit_PopToDiscard::Exec(Processor& processor) const
+const PUnit* PUnit_PopValueToDiscard::Exec(Processor& processor) const
 {
-	Value::Delete(processor.PopValue());
+	processor.PopValueToDiscard();
 	return GetPUnitNext();
 }
 
-String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
+String PUnit_PopValueToDiscard::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "PopToDiscard()";
+	rtn += "PopValueToDiscard()";
 	AppendInfoToString(rtn);
 	return rtn;
 }
@@ -810,7 +811,10 @@ String PUnit_PopToDiscard::ToString(const StringStyle& ss) const
 const PUnit* PUnit_Return::Exec(Processor& processor) const
 {
 	processor.PopFrame();
-	return processor.IsPUnitStackEmpty()? nullptr : processor.PopPUnit();
+	if (processor.IsPUnitStackEmpty()) return nullptr;
+	const PUnit* pPUnit = processor.PopPUnit();
+	if (pPUnit->GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
+	return pPUnit->GetPUnitNext();
 }
 
 String PUnit_Return::ToString(const StringStyle& ss) const

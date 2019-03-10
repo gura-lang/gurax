@@ -6,7 +6,7 @@ DateTime                 48
 PUnit_Value              40
 PUnit_Lookup             40
 PUnit_AssignToSymbol     40
-PUnit_PopToDiscard       32
+PUnit_PopValueToDiscard  32
 PUnit_UnaryOp            40
 PUnit_BinaryOp           40
 PUnit_CreateList         40

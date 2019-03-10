@@ -40,6 +40,7 @@ public:
 	void PushValue(Value* pValue) { GetValueStack().Push(pValue); }
 	Value* PopValue() { return GetValueStack().Pop(); }
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }
+	void PopValueToDiscard() { Value::Delete(PopValue()); }
 public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }

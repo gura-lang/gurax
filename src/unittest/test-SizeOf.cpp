@@ -16,7 +16,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Value);
 	PrintSizeOf(PUnit_Lookup);
 	PrintSizeOf(PUnit_AssignToSymbol);
-	PrintSizeOf(PUnit_PopToDiscard);
+	PrintSizeOf(PUnit_PopValueToDiscard);
 	PrintSizeOf(PUnit_UnaryOp);
 	PrintSizeOf(PUnit_BinaryOp);
 	PrintSizeOf(PUnit_CreateList);

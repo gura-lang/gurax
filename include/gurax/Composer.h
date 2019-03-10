@@ -73,8 +73,8 @@ public:
 	PUnit_JumpIfNot* AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_NilJumpIf* AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
 	PUnit_NilJumpIfNot* AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest = nullptr);
-	void Add_PopToDiscard(const Expr* pExprSrc);
-	PUnit_PopToDiscard* AddF_PopToDiscard(const Expr* pExprSrc);
+	void Add_PopValueToDiscard(const Expr* pExprSrc);
+	PUnit_PopValueToDiscard* AddF_PopValueToDiscard(const Expr* pExprSrc);
 	void Add_Return(const Expr* pExprSrc);
 	void Add_Terminate(const Expr* pExprSrc);
 	void Print() const;
