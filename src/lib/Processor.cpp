@@ -27,6 +27,12 @@ Processor* Processor::Debug()
 	return new Processor_Debug();
 }
 
+void Processor::Call(const PUnit* pPUnit, Argument& argument)
+{
+	argument.AssignToFrame(PushFrameForCall());
+	Run(pPUnit);
+}
+
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------

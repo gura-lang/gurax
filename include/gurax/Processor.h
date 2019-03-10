@@ -59,6 +59,8 @@ public:
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 public:
+	void Call(const PUnit* pPUnit, Argument& argument);
+public:
 	virtual void Run(const PUnit* pPUnit) = 0;
 };
 
@@ -67,6 +69,7 @@ public:
 //------------------------------------------------------------------------------
 class Processor_Normal : public Processor {
 public:
+	// Virtual function of Processor
 	virtual void Run(const PUnit* pPUnit) override;
 };
 
@@ -75,6 +78,7 @@ public:
 //------------------------------------------------------------------------------
 class Processor_Debug : public Processor {
 public:
+	// Virtual function of Processor
 	virtual void Run(const PUnit* pPUnit) override;
 };
 
