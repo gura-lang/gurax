@@ -132,7 +132,13 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		GetDeclBlock().SetFlags(flags).SetOccur(pOccur? *pOccur : DeclBlock::Occur::Once);
 		if (pExpr->IsType<Expr_Identifier>()) {
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(pExpr);
-			GetDeclBlock().SetSymbol(pExprEx->GetSymbol());
+			const Symbol* pSymbol = pExprEx->GetSymbol();
+			if (IsDeclaredSymbol(pSymbol)) {
+				Error::IssueWith(ErrorType::DeclarationError, pExpr,
+								 "duplicated symbol declaration: %s", pSymbol->GetName());
+				return false;
+			}
+			GetDeclBlock().SetSymbol(pSymbol);
 		} else {
 			Error::IssueWith(ErrorType::DeclarationError, pExpr, strError);
 			return false;

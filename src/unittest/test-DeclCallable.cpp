@@ -108,6 +108,12 @@ static const char* srcTbl[] = {
 	"f(v1, v2, v3, v1) = {}",
 	"f(v1, v2, v3, v1%) = {}",
 	"f(v1, v2, v3, v1%%) = {}",
+	"f() {block} = {}",
+	"f() {`block} = {}",
+	"f(v1, v2, v3) {block} = {}",
+	"f(v1, v2, v3) {`block} = {}",
+	"f(v1, v2, v3, block) {block} = {}",
+	"f(v1, v2, v3, block) {`block} = {}",
 };
 
 Gurax_TesterEntry(DeclCallable)
