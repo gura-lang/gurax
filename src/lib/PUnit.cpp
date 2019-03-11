@@ -123,7 +123,7 @@ const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 	RefPtr<Value> pValueAssigned(processor.PopValue());
 	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
 	if (!pValueCasted) return nullptr;
-	frame.AssignValue(GetDeclArg().GetSymbol(), pValueCasted->Reference());
+	frame.AssignValueOfArgument(GetDeclArg().GetSymbol(), pValueCasted->Reference());
 	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueCasted.release());
 	return GetPUnitCont();
 }
