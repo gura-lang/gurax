@@ -23,10 +23,7 @@ Gurax_ImplementStatement(if_)
 						 "if-statement takes one argument");
 		return;
 	}
-	do {
-		const Expr* pExpr = pExprCaller->GetExprCdrFirst();
-		pExpr->Compose(composer);										// [ValueBool]
-	} while (0);
+	pExprCaller->GetExprCdrFirst()->Compose(composer);					// [ValueBool]
 	if (pExprCaller->HasExprTrailer()) {
 		if (pExprCaller->GetExprBlock()->HasExprElem()) {
 			auto pPUnit1 = composer.AddF_JumpIfNot(pExprCaller);		// []
@@ -67,10 +64,7 @@ Gurax_ImplementStatement(elsif)
 						 "elsif-statement takes one argument");
 		return;
 	}
-	do {
-		const Expr* pExpr = pExprCaller->GetExprCdrFirst();
-		pExpr->Compose(composer);										// [ValueBool]
-	} while (0);
+	pExprCaller->GetExprCdrFirst()->Compose(composer);					// [ValueBool]
 	if (pExprCaller->HasExprTrailer()) {
 		if (pExprCaller->GetExprBlock()->HasExprElem()) {
 			auto pPUnit1 = composer.AddF_JumpIfNot(pExprCaller);		// []
@@ -150,11 +144,8 @@ Gurax_ImplementStatement(repeat)
 	} else if (nArgs == 1) {
 		if (declArgOwner.empty()) {
 			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
-			do {
-				const Expr* pExpr = pExprCaller->GetExprCdrFirst();
-				pExpr->Compose(composer);								// [ValueLast Value]
-				composer.Add_Cast(pExprCaller, VTYPE_Number);			// [ValueLast ValueCount]
-			} while (0);
+			pExprCaller->GetExprCdrFirst()->Compose(composer);			// [ValueLast Value]
+			composer.Add_Cast(pExprCaller, VTYPE_Number);			// [ValueLast ValueCount]
 			const PUnit* pPUnitDest = composer.PeekPUnitCont();
 			
 			auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);			// [ValueLast]
@@ -189,10 +180,7 @@ Gurax_ImplementStatement(while_)
 	if (declArgOwner.empty()) {
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 		const PUnit* pPUnitDest = composer.PeekPUnitCont();
-		do {
-			const Expr* pExpr = pExprCaller->GetExprCdrFirst();
-			pExpr->Compose(composer);									// [ValueLast ValueBool]
-		} while (0);
+		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueLast ValueBool]
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
 		composer.Add_PopValueToDiscard(pExprCaller);					// []
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueLast]
@@ -203,10 +191,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_Value(pExprCaller, Value::Zero());					// [ValueIdx=0 ValueLast=nil]
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
 		const PUnit* pPUnitDest = composer.PeekPUnitCont();
-		do {
-			const Expr* pExpr = pExprCaller->GetExprCdrFirst();
-			pExpr->Compose(composer);									// [ValueIdx ValueLast ValueBool]
-		} while (0);
+		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueIdx ValueLast ValueBool]
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueIdx ValueLast]
 		composer.Add_PopValueToDiscard(pExprCaller);					// [ValueIdx]
 		composer.Add_AssignToDeclArg(
