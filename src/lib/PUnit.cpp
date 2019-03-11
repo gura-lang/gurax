@@ -848,6 +848,44 @@ String PUnit_Return::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_PushFrame_Block
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+const PUnit* PUnit_PushFrame_Block::Exec(Processor& processor) const
+{
+	processor.PushFrame_Block();
+	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
+	return GetPUnitCont();
+}
+
+String PUnit_PushFrame_Block::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "PushFrame_Block()";
+	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PopFrame
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+const PUnit* PUnit_PopFrame::Exec(Processor& processor) const
+{
+	processor.PopFrame();
+	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
+	return GetPUnitCont();
+}
+
+String PUnit_PopFrame::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "PopFrame()";
+	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Terminate
 // Stack View: [] -> []
 //------------------------------------------------------------------------------

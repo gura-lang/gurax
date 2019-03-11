@@ -757,6 +757,40 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_PushFrame_Block
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_PushFrame_Block : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_PushFrame_Block(Expr* pExprSrc) : PUnit(pExprSrc) {}
+public:
+	// Virtual functions of PUnit
+	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_PopFrame
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_PopFrame : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_PopFrame(Expr* pExprSrc) : PUnit(pExprSrc) {}
+public:
+	// Virtual functions of PUnit
+	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Terminate
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Terminate : public PUnit {

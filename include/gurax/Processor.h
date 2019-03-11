@@ -52,8 +52,13 @@ public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
 	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
-	Frame& PushFrameForCall() {
+	Frame& PushFrame_Function() {
 		Frame* pFrame = new Frame_Function(GetFrameCur().GetFrameOuter()->Reference());
+		PushFrame(pFrame);
+		return *pFrame;
+	}
+	Frame& PushFrame_Block() {
+		Frame* pFrame = new Frame_Block(GetFrameCur().GetFrameOuter()->Reference());
 		PushFrame(pFrame);
 		return *pFrame;
 	}

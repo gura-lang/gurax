@@ -29,7 +29,7 @@ Processor* Processor::Debug()
 
 void Processor::Call(const PUnit* pPUnit, Argument& argument)
 {
-	argument.AssignToFrame(PushFrameForCall());
+	argument.AssignToFrame(PushFrame_Function());
 	Run(pPUnit);
 }
 

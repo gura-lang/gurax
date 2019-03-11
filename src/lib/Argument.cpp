@@ -35,7 +35,7 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 bool Argument::CheckValidity() const
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		if (!pArgSlot->IsValid()) {
+		if (!pArgSlot->HasValidValue()) {
 			Error::Issue(ErrorType::ArgumentError, "not enough argument");
 			return false;
 		}

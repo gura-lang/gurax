@@ -58,7 +58,7 @@ public:
 public:
 	// Virtual functions
 	virtual void FeedValue(RefPtr<Value> pValue) = 0;
-	virtual bool IsValid() const = 0;
+	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
 	virtual Value* GetValue() const = 0;
 	virtual bool IsUndefined() const = 0;
@@ -122,7 +122,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_Once(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
-	virtual bool IsValid() const override { return !_pValue->IsUndefined(); }
+	virtual bool HasValidValue() const override { return !_pValue->IsUndefined(); }
 };
 
 //------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_ZeroOrOnce(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
-	virtual bool IsValid() const override { return true; }
+	virtual bool HasValidValue() const override { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_ZeroOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
-	virtual bool IsValid() const override { return true; }
+	virtual bool HasValidValue() const override { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_OnceOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
-	virtual bool IsValid() const override { return !_pValue->GetValueTypedOwner().IsEmpty(); }
+	virtual bool HasValidValue() const override { return !_pValue->GetValueTypedOwner().IsEmpty(); }
 };
 
 //------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ public:
 	virtual Value* GetValue() const override { return Value::nil(); }
 	virtual bool IsUndefined() const override { return false; }
 	virtual bool IsVacant() const override { return true; }
-	virtual bool IsValid() const override { return true; }
+	virtual bool HasValidValue() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
