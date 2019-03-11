@@ -16,8 +16,8 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 	if (ppDeclArg != declArgOwner.end()) {
 		DeclArg* pDeclArg = *ppDeclArg++;
-		_pArgSlotTop.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));
-		ArgSlot* pArgSlotLast = _pArgSlotTop.get();
+		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));
+		ArgSlot* pArgSlotLast = _pArgSlotFirst.get();
 		while (ppDeclArg != declArgOwner.end()) {
 			DeclArg* pDeclArg = *ppDeclArg++;
 			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference());
@@ -29,12 +29,12 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 		_pValueOfDict.reset(new Value_Dict());
 	}
 	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
-	_pArgSlotToFeed = _pArgSlotTop.get();
+	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 
 bool Argument::CheckValidity() const
 {
-	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (!pArgSlot->IsValid()) {
 			Error::Issue(ErrorType::ArgumentError, "not enough argument");
 			return false;
@@ -45,7 +45,7 @@ bool Argument::CheckValidity() const
 
 void Argument::AssignToFrame(Frame& frame) const
 {
-	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		pArgSlot->AssignToFrame(frame);
 	}
 	do {
@@ -65,12 +65,12 @@ String Argument::ToString(const StringStyle& ss) const
 	String rtn;
 	rtn += GetValueCar().ToString(StringStyle(ss).Digest());
 	rtn += '(';
-	for (const ArgSlot* pArgSlot = GetArgSlotTop(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		if (pArgSlot != GetArgSlotTop()) rtn += ss.GetComma();
+	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		if (pArgSlot != GetArgSlotFirst()) rtn += ss.GetComma();
 		rtn += pArgSlot->ToString(StringStyle(ss).Digest());
 	}
 	if (GetValueOfDict()) {
-		if (GetArgSlotTop()) rtn += ss.GetComma();
+		if (GetArgSlotFirst()) rtn += ss.GetComma();
 		rtn += "(";
 		rtn += GetValueOfDict()->ToString(StringStyle(ss).Digest());
 		rtn += ")%";

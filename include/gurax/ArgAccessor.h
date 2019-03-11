@@ -21,10 +21,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class ArgAccessor {
 private:
-	const ArgSlot* _pArgSlot;
+	ArgSlot* _pArgSlot;
 public:
 	// Constructor
-	ArgAccessor(const Argument& argument) : _pArgSlot(argument.GetArgSlotTop()) {}
+	ArgAccessor(Argument& argument) : _pArgSlot(argument.GetArgSlotFirst()) {}
 	// Copy constructor/operator
 	ArgAccessor(const ArgAccessor& src) = delete;
 	ArgAccessor& operator=(const ArgAccessor& src) = delete;
@@ -36,12 +36,10 @@ public:
 public:
 	bool IsInvalid() { return _pArgSlot == nullptr; }
 	bool IsValid() { return _pArgSlot != nullptr; }
-	Value* GetValue() {
-		if (!_pArgSlot) return nullptr;
-		Value* pValue = _pArgSlot->GetValue();
-		_pArgSlot = _pArgSlot->GetNext();
-		return pValue;
-	}
+public:
+	bool FeedValue(Value* pValue);
+public:
+	Value* GetValue();
 	Bool GetBool()				{ return GetValue()->GetBool(); }
 	size_t GetSizeT()			{ return dynamic_cast<Value_Number*>(GetValue())->GetSizeT(); }
 	Char GetChar()				{ return dynamic_cast<Value_Number*>(GetValue())->GetChar(); }

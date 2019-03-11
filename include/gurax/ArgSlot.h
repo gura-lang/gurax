@@ -44,7 +44,7 @@ public:
 	void SetNext(ArgSlot* pArgSlotNext) { _pArgSlotNext.reset(pArgSlotNext); }
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
-	const ArgSlot* GoNext() const { return const_cast<ArgSlot*>(this)->GoNext(); }
+	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
 	void AssignToFrame(Frame& frame) const {
 		if (!IsUndefined()) {
 			frame.AssignValueOfArgument(GetDeclArg().GetSymbol(), GetValue()->Reference());;
@@ -59,7 +59,7 @@ public:
 	// Virtual functions
 	virtual void FeedValue(RefPtr<Value> pValue) = 0;
 	virtual bool IsValid() const = 0;
-	virtual ArgSlot* GoNext() { return _pArgSlotNext.get(); }
+	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
 	virtual Value* GetValue() const = 0;
 	virtual bool IsUndefined() const = 0;
 	virtual bool IsVacant() const = 0;
@@ -102,7 +102,7 @@ public:
 public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(RefPtr<Value> pValue) override;
-	virtual ArgSlot* GoNext() override { return this; }
+	virtual ArgSlot* Advance() override { return this; }
 	virtual Value* GetValue() const override { return _pValue.get(); }
 	virtual bool IsUndefined() const override { return false; }
 	virtual bool IsVacant() const override { return true; }

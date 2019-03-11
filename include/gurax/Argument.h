@@ -25,7 +25,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 	RefPtr<Value> _pValueThis;				// this may be nullptr
 	RefPtr<Value_Dict> _pValueOfDict;		// this may be nullptr
-	RefPtr<ArgSlot> _pArgSlotTop;			// this may be nullptr
+	RefPtr<ArgSlot> _pArgSlotFirst;			// this may be nullptr
 	UInt32 _flags;
 	ArgSlot* _pArgSlotToFeed;
 	const PUnit* _pPUnitCont;
@@ -52,8 +52,8 @@ public:
 	bool IsSetOpt(const Symbol* pSymbol) {
 		return GetDeclCallable().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
-	ArgSlot* GetArgSlotTop() { return _pArgSlotTop.get(); }
-	const ArgSlot* GetArgSlotTop() const { return _pArgSlotTop.get(); }
+	ArgSlot* GetArgSlotFirst() { return _pArgSlotFirst.get(); }
+	const ArgSlot* GetArgSlotFirst() const { return _pArgSlotFirst.get(); }
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
@@ -62,10 +62,10 @@ public:
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);
-		_pArgSlotToFeed = _pArgSlotToFeed->GoNext();
+		_pArgSlotToFeed = _pArgSlotToFeed->Advance();
 	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
-		return _pArgSlotTop? _pArgSlotTop->Find(pSymbol) : nullptr;
+		return _pArgSlotFirst? _pArgSlotFirst->Find(pSymbol) : nullptr;
 	}
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
