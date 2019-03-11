@@ -114,20 +114,20 @@ void ExprList::SetExprParent(const Expr* pExprParent)
 size_t ExprLink::CountSequence() const
 {
 	size_t cnt = 0;
-	for (const Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext(), cnt++) ;
+	for (const Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext(), cnt++) ;
 	return cnt;
 }
 
 void ExprLink::SetExprParent(const Expr* pExprParent)
 {
-	for (Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->SetExprParent(pExprParent);
 	}
 }
 
 bool ExprLink::Traverse(Expr::Visitor& visitor)
 {
-	for (Expr* pExpr = GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->Traverse(visitor)) return false;
 	}
 	return true;
@@ -432,7 +432,7 @@ const Expr::TypeInfo Expr_Root::typeInfo;
 
 void Expr_Root::Compose(Composer& composer) const
 {
-	ComposeSequence(composer, GetExprElemHead());			// [Value]
+	ComposeSequence(composer, GetExprElemFirst());			// [Value]
 	composer.Add_Return(this);
 	composer.Add_Terminate(this);
 }
@@ -442,14 +442,14 @@ String Expr_Root::ToString(const StringStyle& ss) const
 	String rtn;
 	if (ss.IsMultiLine()) {
 		String indent = MakeIndent(ss);
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indent;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
 		}
 	} else {
 		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -474,7 +474,7 @@ bool Expr_Block::DoPrepare()
 
 void Expr_Block::Compose(Composer& composer) const
 {
-	ComposeSequence(composer, GetExprElemHead());			// [Value]
+	ComposeSequence(composer, GetExprElemFirst());			// [Value]
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const
@@ -489,7 +489,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		if (HasExprParam()) {
 			rtn += '|';
 			bool firstFlag = true;
-			for (const Expr* pExpr = GetExprParamHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+			for (const Expr* pExpr = GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 				if (firstFlag) {
 					firstFlag = false;
 				} else {
@@ -501,7 +501,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 			rtn += '|';
 		}
 		rtn += '\n';
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
@@ -513,7 +513,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		if (HasExprParam()) {
 			rtn += '|';
 			bool firstFlag = true;
-			for (const Expr* pExpr = GetExprParamHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+			for (const Expr* pExpr = GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 				if (firstFlag) {
 					firstFlag = false;
 				} else {
@@ -526,7 +526,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 			if (!ss.IsCram() && HasExprElem()) rtn += ' ';
 		}
 		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -554,7 +554,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 	String rtn;
 	if (GetExprLinkElem().CountSequence() == 1) {
 		rtn += '(';
-		rtn += GetExprLinkElem().GetExprHead()->ToString(ss);
+		rtn += GetExprLinkElem().GetExprFirst()->ToString(ss);
 		rtn += ",)";
 	} else if (ss.IsMultiLine()) {
 		String indent = MakeIndent(ss);
@@ -562,7 +562,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
 		rtn += "(\n";
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
@@ -572,7 +572,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 	} else {
 		rtn += '(';
 		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -595,7 +595,7 @@ void Expr_Lister::Compose(Composer& composer) const
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(this, nExprs);					// [ValueList]
-	for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);							// [ValueList Value]
 		composer.Add_AddList(this);							// [ValueList]
 	}	
@@ -615,7 +615,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 		indentDown += ss.GetIndentUnit();
 		rtn += indent;
 		rtn += "[\n";
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			rtn += indentDown;
 			rtn += pExpr->ToString(ss);
 			rtn += '\n';
@@ -625,7 +625,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 	} else {
 		rtn += '[';
 		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
@@ -649,7 +649,7 @@ void Expr_Indexer::Compose(Composer& composer) const
 	GetExprCar()->Compose(composer);						// [ValueCar]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(this, GetAttr(), nExprs);			// [ValueIndex]
-	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->Compose(composer);							// [ValueIndex Value]
 		composer.Add_FeedIndex(this);						// [ValueIndex]
 	}
@@ -667,7 +667,7 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 	rtn += _pExprCar->ToString(ss);
 	rtn += '[';
 	bool firstFlag = true;
-	for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (firstFlag) {
 			firstFlag = false;
 		} else {
@@ -702,7 +702,7 @@ void Expr_Caller::Compose(Composer& composer) const
 	}
 	GetExprCar()->Compose(composer);						// [ValueCar]
 	composer.Add_Argument(this, GetAttr());					// [ValueArgument]
-	Expr::ComposeForArgSlot(composer, GetExprCdrHead());	// [ValueArgument]
+	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());	// [ValueArgument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(this);								// [ValueResult]
 }
@@ -745,7 +745,7 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 		}
 		rtn += '(';
 		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprCdrHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+		for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {

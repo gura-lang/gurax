@@ -120,7 +120,7 @@ Gurax_TesterEntry(DeclCallable)
 			Error::Clear();
 			continue;
 		}
-		const Expr* pExpr = pExprRoot->GetExprElemHead();
+		const Expr* pExpr = pExprRoot->GetExprElemFirst();
 		if (pExpr->IsType<Expr_Assign>()) {
 			const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);
 			const Expr* pExpr = pExprEx->GetExprLeft();

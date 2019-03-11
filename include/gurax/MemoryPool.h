@@ -107,7 +107,7 @@ public:
 		size_t _iBlockNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
-		Header* _pHeaderVacantHead;
+		Header* _pHeaderVacantFirst;
 	public:
 		ChunkFixed(size_t bytesBlock, size_t nBlocks);
 	public:

@@ -24,7 +24,7 @@ Gurax_ImplementStatement(if_)
 		return;
 	}
 	do {
-		const Expr* pExpr = pExprCaller->GetExprCdrHead();
+		const Expr* pExpr = pExprCaller->GetExprCdrFirst();
 		pExpr->Compose(composer);										// [ValueBool]
 	} while (0);
 	if (pExprCaller->HasExprTrailer()) {
@@ -68,7 +68,7 @@ Gurax_ImplementStatement(elsif)
 		return;
 	}
 	do {
-		const Expr* pExpr = pExprCaller->GetExprCdrHead();
+		const Expr* pExpr = pExprCaller->GetExprCdrFirst();
 		pExpr->Compose(composer);										// [ValueBool]
 	} while (0);
 	if (pExprCaller->HasExprTrailer()) {
@@ -151,7 +151,7 @@ Gurax_ImplementStatement(repeat)
 		if (declArgOwner.empty()) {
 			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
 			do {
-				const Expr* pExpr = pExprCaller->GetExprCdrHead();
+				const Expr* pExpr = pExprCaller->GetExprCdrFirst();
 				pExpr->Compose(composer);								// [ValueLast Value]
 				composer.Add_Cast(pExprCaller, VTYPE_Number);			// [ValueLast ValueCount]
 			} while (0);
@@ -190,7 +190,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 		const PUnit* pPUnitDest = composer.PeekPUnitCont();
 		do {
-			const Expr* pExpr = pExprCaller->GetExprCdrHead();
+			const Expr* pExpr = pExprCaller->GetExprCdrFirst();
 			pExpr->Compose(composer);									// [ValueLast ValueBool]
 		} while (0);
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
@@ -204,7 +204,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
 		const PUnit* pPUnitDest = composer.PeekPUnitCont();
 		do {
-			const Expr* pExpr = pExprCaller->GetExprCdrHead();
+			const Expr* pExpr = pExprCaller->GetExprCdrFirst();
 			pExpr->Compose(composer);									// [ValueIdx ValueLast ValueBool]
 		} while (0);
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueIdx ValueLast]

@@ -96,7 +96,7 @@ MemoryPool::ChunkFixed::ChunkFixed(size_t bytesBlock, size_t nBlocks) :
 	_bytesPoolBuff(_bytesFrame * nBlocks),
 	_nBlocks(nBlocks), _iBlockNext(0),
 	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop),
-	_pHeaderVacantHead(nullptr)
+	_pHeaderVacantFirst(nullptr)
 {}
 
 size_t MemoryPool::ChunkFixed::CountPools() const
@@ -109,9 +109,9 @@ size_t MemoryPool::ChunkFixed::CountPools() const
 void* MemoryPool::ChunkFixed::Allocate(const char* ownerName)
 {
 	char* pAllocated = nullptr;
-	if (_pHeaderVacantHead) {
-		pAllocated = reinterpret_cast<char*>(_pHeaderVacantHead);
-		_pHeaderVacantHead = _pHeaderVacantHead->u.pHeaderVacantNext;
+	if (_pHeaderVacantFirst) {
+		pAllocated = reinterpret_cast<char*>(_pHeaderVacantFirst);
+		_pHeaderVacantFirst = _pHeaderVacantFirst->u.pHeaderVacantNext;
 	} else {
 		if (_iBlockNext >= _nBlocks) {
 			Pool* pPool = Pool::Create(_bytesPoolBuff);
@@ -132,9 +132,9 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 {
 	char* pAllocated = reinterpret_cast<char*>(p) - sizeof(Header);
 	Header* pHeader = reinterpret_cast<Header*>(pAllocated);
-	pHeader->u.pHeaderVacantNext = _pHeaderVacantHead;
+	pHeader->u.pHeaderVacantNext = _pHeaderVacantFirst;
 	pHeader->ownerName = nullptr;
-	_pHeaderVacantHead = pHeader;
+	_pHeaderVacantFirst = pHeader;
 }
 
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const

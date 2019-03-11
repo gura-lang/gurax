@@ -24,7 +24,7 @@ DeclCallable::DeclCallable() :
 bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock)
 {
 	_declArgOwner.reserve(exprLinkCdr.CountSequence());
-	for (const Expr* pExpr = exprLinkCdr.GetExprHead(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (const Expr* pExpr = exprLinkCdr.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::PostMod)) {
@@ -108,7 +108,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
 			return false;
 		}
-		const Expr* pExpr = pExprBlock->GetExprLinkElem().GetExprHead();
+		const Expr* pExpr = pExprBlock->GetExprLinkElem().GetExprFirst();
 		while (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::Quote)) {

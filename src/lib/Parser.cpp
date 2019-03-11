@@ -554,7 +554,7 @@ bool Parser::ReduceThreeTokens()
 							   "optional attributes can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
 				}
-				const Expr* pExprElem = dynamic_cast<Expr_Lister*>(pExprRight.get())->GetExprElemHead();
+				const Expr* pExprElem = dynamic_cast<Expr_Lister*>(pExprRight.get())->GetExprElemFirst();
 				for ( ; pExprElem; pExprElem = pExprElem->GetExprNext()) {
 					if (!pExprElem->IsType<Expr_Identifier>()) {
 						IssueError(ErrorType::SyntaxError, pToken1, pToken3,

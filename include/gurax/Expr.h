@@ -192,7 +192,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(ExprLink);
 private:
-	RefPtr<Expr> _pExprHead;
+	RefPtr<Expr> _pExprFirst;
 	Expr* _pExprTail;
 public:
 	// Constructor
@@ -207,16 +207,16 @@ protected:
 	// Destructor
 	virtual ~ExprLink() = default;
 public:	
-	bool IsEmpty() const { return _pExprHead.get() == nullptr; }
-	Expr* GetExprHead() { return _pExprHead.get(); }
-	const Expr* GetExprHead() const { return _pExprHead.get(); }
+	bool IsEmpty() const { return _pExprFirst.get() == nullptr; }
+	Expr* GetExprFirst() { return _pExprFirst.get(); }
+	const Expr* GetExprFirst() const { return _pExprFirst.get(); }
 	Expr* GetExprTail() { return _pExprTail; }
 	const Expr* GetExprTail() const { return _pExprTail; }
 	void AddExpr(Expr* pExpr) {
 		if (_pExprTail) {
 			_pExprTail->SetExprNext(pExpr);
 		} else {
-			_pExprHead.reset(pExpr);
+			_pExprFirst.reset(pExpr);
 		}
 		_pExprTail = pExpr;
 	}
@@ -299,7 +299,7 @@ public:
 	const ExprLink& GetExprLinkElem() const { return *_pExprLinkElem; }
 	size_t CountExprElem() const { return _pExprLinkElem->CountSequence(); }
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
-	const Expr* GetExprElemHead() const { return _pExprLinkElem->GetExprHead(); }
+	const Expr* GetExprElemFirst() const { return _pExprLinkElem->GetExprFirst(); }
 	void AddExprElem(Expr* pExprElem);
 public:
 	// Virtual functions of Expr
@@ -333,7 +333,7 @@ public:
 	}
 	const ExprLink& GetExprLinkCdr() const { return *_pExprLinkCdr; }
 	bool HasExprCdr() const { return !_pExprLinkCdr->IsEmpty(); }
-	const Expr* GetExprCdrHead() const { return _pExprLinkCdr->GetExprHead(); }
+	const Expr* GetExprCdrFirst() const { return _pExprLinkCdr->GetExprFirst(); }
 	size_t CountExprCdr() const { return GetExprLinkCdr().CountSequence(); }
 	void AddExprCdr(Expr* pExprCdr);
 	Attribute& GetAttr() { return *_pAttr; }
@@ -589,8 +589,8 @@ public:
 	}
 	bool HasExprParam() const { return _pExprLinkParam && !_pExprLinkParam->IsEmpty(); }
 	const ExprLink& GetExprLinkParam() const { return *_pExprLinkParam; }
-	const Expr* GetExprParamHead() const {
-		return _pExprLinkParam? _pExprLinkParam->GetExprHead() : nullptr;
+	const Expr* GetExprParamFirst() const {
+		return _pExprLinkParam? _pExprLinkParam->GetExprFirst() : nullptr;
 	}
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	bool PrepareDeclCallable() {
