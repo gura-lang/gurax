@@ -1,6 +1,6 @@
 [SizeOf]
 ArgSlot                  40
-Argument                 88
+Argument                 96
 Attribute                152
 DateTime                 48
 PUnit_Value              40
@@ -18,7 +18,7 @@ PUnit_IndexSet           32
 PUnit_PropGet            48
 PUnit_PropSet            48
 PUnit_Member             48
-PUnit_Argument           40
+PUnit_Argument           48
 PUnit_ArgSlot            40
 PUnit_FeedArgSlot        32
 PUnit_ArgSlotNamed       56

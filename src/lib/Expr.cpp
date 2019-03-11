@@ -701,7 +701,7 @@ void Expr_Caller::Compose(Composer& composer) const
 		}
 	}
 	GetExprCar()->Compose(composer);						// [ValueCar]
-	composer.Add_Argument(this, GetAttr());					// [ValueArgument]
+	composer.Add_Argument(this, GetAttr(), GetExprBlock());	// [ValueArgument]
 	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());	// [ValueArgument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(this);								// [ValueResult]

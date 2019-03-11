@@ -473,11 +473,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Attribute> _pAttr;
+	RefPtr<Expr_Block> _pExprBlock;
 public:
 	// Constructor
-	PUnit_Argument(Expr* pExprSrc, Attribute* pAttr) : PUnit(pExprSrc), _pAttr(pAttr) {}
+	PUnit_Argument(Expr* pExprSrc, Attribute* pAttr, Expr_Block* pExprBlock) :
+		PUnit(pExprSrc), _pAttr(pAttr), _pExprBlock(pExprBlock) {}
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
+	const Expr_Block* GetExprBlock() { return _pExprBlock.get(); }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }

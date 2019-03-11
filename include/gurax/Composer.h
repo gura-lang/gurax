@@ -56,7 +56,7 @@ public:
 	void Add_PropGet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_PropSet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
 	void Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr);
-	void Add_Argument(const Expr* pExprSrc, const Attribute& attr);
+	void Add_Argument(const Expr* pExprSrc, const Attribute& attr, const Expr_Block* pExpBlock);
 	PUnit_ArgSlot* AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitSkipDest = nullptr);
 	void Add_FeedArgSlot(const Expr* pExprSrc);
 	PUnit_ArgSlotNamed* AddF_ArgSlotNamed(

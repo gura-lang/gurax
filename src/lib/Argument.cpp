@@ -8,9 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr, Value* pValueThis) :
-	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _pValueThis(pValueThis),
-	_flags(0), _pArgSlotToFeed(nullptr), _pPUnitCont(nullptr)
+Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
+				   Value* pValueThis, const PUnit* pPUnitBodyOfBlock) :
+	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _pAttr(pAttr),
+	_pValueThis(pValueThis), _flags(0), _pArgSlotToFeed(nullptr), _pPUnitCont(nullptr)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
@@ -27,6 +28,15 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	}
 	if (!_pDeclCallable->GetSymbolOfDict()->IsEmpty()) {
 		_pValueOfDict.reset(new Value_Dict());
+	}
+	//*********************************
+	//pPUnitBodyOfBlock
+	if (!_pDeclCallable->GetDeclBlock().GetSymbol()->IsEmpty()) {
+		const Symbol* pSymbol = _pDeclCallable->GetDeclBlock().GetSymbol();
+		RefPtr<FunctionCustom>
+			pFunction(new FunctionCustom(
+						  Function::Type::Function, pSymbol, _pDeclCallable->Reference(), pPUnitBodyOfBlock));
+		_pValueOfBlock.reset(new Value_Function(pFunction.release()));
 	}
 	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
 	_pArgSlotToFeed = _pArgSlotFirst.get();
@@ -57,6 +67,11 @@ void Argument::AssignToFrame(Frame& frame) const
 		// assign to symbol declared as arg%%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
 		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, new Value_Argument(Reference()));
+	} while (0);
+	do {
+		// assign to symbol declared as {block}
+		const Symbol* pSymbol = GetDeclCallable().GetDeclBlock().GetSymbol();
+		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, _pValueOfBlock->Reference());
 	} while (0);
 }
 
