@@ -74,6 +74,8 @@ public:
 	PUnit_PopValueToDiscard* AddF_PopValueToDiscard(const Expr* pExprSrc);
 	void Add_RemoveValue(const Expr* pExprSrc, size_t offset);
 	void Add_Return(const Expr* pExprSrc);
+	void Add_PushFrame_Block(const Expr* pExprSrc);
+	void Add_PopFrame(const Expr* pExprSrc);
 	void Add_Terminate(const Expr* pExprSrc);
 	void Print() const;
 	void PrintPUnit() const;

@@ -222,6 +222,16 @@ void Composer::Add_Return(const Expr* pExprSrc)
 	Add(new PUnit_Return(pExprSrc->Reference()));
 }
 
+void Composer::Add_PushFrame_Block(const Expr* pExprSrc)
+{
+	Add(new PUnit_PushFrame_Block(pExprSrc->Reference()));
+}
+
+void Composer::Add_PopFrame(const Expr* pExprSrc)
+{
+	Add(new PUnit_PopFrame(pExprSrc->Reference()));
+}
+
 void Composer::Add_Terminate(const Expr* pExprSrc)
 {
 	Add(new PUnit_Terminate(pExprSrc->Reference()));

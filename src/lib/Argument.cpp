@@ -51,12 +51,12 @@ void Argument::AssignToFrame(Frame& frame) const
 	do {
 		// assign to symbol declared as dict%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();
-		if (!pSymbol->IsEmpty()) frame.AssignValue(pSymbol, _pValueOfDict->Reference());
+		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, _pValueOfDict->Reference());
 	} while (0);
 	do {
 		// assign to symbol declared as arg%%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
-		if (!pSymbol->IsEmpty()) frame.AssignValue(pSymbol, new Value_Argument(Reference()));
+		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, new Value_Argument(Reference()));
 	} while (0);
 }
 

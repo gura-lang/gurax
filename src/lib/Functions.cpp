@@ -145,7 +145,7 @@ Gurax_ImplementStatement(repeat)
 		if (declArgOwner.empty()) {
 			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
 			pExprCaller->GetExprCdrFirst()->Compose(composer);			// [ValueLast Value]
-			composer.Add_Cast(pExprCaller, VTYPE_Number);			// [ValueLast ValueCount]
+			composer.Add_Cast(pExprCaller, VTYPE_Number);				// [ValueLast ValueCount]
 			const PUnit* pPUnitDest = composer.PeekPUnitCont();
 			
 			auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);			// [ValueLast]
@@ -187,20 +187,22 @@ Gurax_ImplementStatement(while_)
 		composer.Add_Jump(pExprCaller, pPUnitDest);
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
-		const DeclArg* pDeclArg = declArgOwner.front();
+		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
+		composer.Add_PushFrame_Block(pExprCaller);
 		composer.Add_Value(pExprCaller, Value::Zero());					// [ValueIdx=0 ValueLast=nil]
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
-		const PUnit* pPUnitDest = composer.PeekPUnitCont();
+		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueIdx ValueLast ValueBool]
 		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueIdx ValueLast]
 		composer.Add_PopValueToDiscard(pExprCaller);					// [ValueIdx]
 		composer.Add_AssignToDeclArg(
-			pExprCaller, pDeclArg->Reference());						// [ValueIdx]
+			pExprCaller, (*ppDeclArg)->Reference());					// [ValueIdx]
 		composer.Add_Add(pExprCaller, 1);								// [ValueIdx=ValueIdx+1]
 		pExprCaller->GetExprBlock()->Compose(composer);					// [ValueIdx ValueLast]
-		composer.Add_Jump(pExprCaller, pPUnitDest);
+		composer.Add_Jump(pExprCaller, pPUnitLoop);
 		pPUnit->SetPUnitJumpDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(pExprCaller, 1);						// [ValueLast]
+		composer.Add_PopFrame(pExprCaller);
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
 						 "invalid number of block parameters");
