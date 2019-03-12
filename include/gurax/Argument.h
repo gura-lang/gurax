@@ -24,16 +24,17 @@ private:
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<Attribute> _pAttr;
 	RefPtr<Value> _pValueThis;				// this may be nullptr
+	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 	RefPtr<Value_Dict> _pValueOfDict;		// this may be nullptr
-	RefPtr<Value> _pValueOfBlock;			// this may be nullptr
 	RefPtr<ArgSlot> _pArgSlotFirst;			// this may be nullptr
+	const PUnit *_pPUnitCont;				// this may be nullptr
 	UInt32 _flags;
 	ArgSlot* _pArgSlotToFeed;
-	const PUnit* _pPUnitCont;
+
 public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
-			 Value* pValueThis, const PUnit* pPUnitBodyOfBlock);
+			 Value* pValueThis, Expr_Block* pExprOfBlock);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -60,8 +61,6 @@ public:
 	Value& GetValueThis() { return *_pValueThis; }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
-	Value* GetValueOfBlock() { return _pValueOfBlock.get(); }
-	const Value* GetValueOfBlock() const { return _pValueOfBlock.get(); }
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);

@@ -15,7 +15,7 @@ class GURAX_DLLDECLARE DeclBlock {
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None	= 0;
+		static const Flags None		= 0;
 		static const Flags Quote	= (1 << 0);
 	};
 	class Occur {
