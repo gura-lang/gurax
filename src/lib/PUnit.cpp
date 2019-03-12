@@ -13,7 +13,6 @@ int PUnit::_seqIdNext = 0;
 PUnit::PUnit(Expr* pExprSrc, Flags flags) :
 	_seqId(++_seqIdNext), _flags(flags), _pExprSrc(pExprSrc), _pPUnitCont(nullptr)
 {
-	_pExprSrc->SetPUnitTop(this);
 }
 
 void PUnit::AppendInfoToString(String& str) const

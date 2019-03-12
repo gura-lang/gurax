@@ -136,15 +136,15 @@ public:
 		return Traverse(visitor);
 	}
 	static size_t CountSequence(const Expr* pExpr);
-	static void ComposeForArgSlot(Composer& composer, const Expr* pExpr);
-	static void ComposeSequence(Composer& composer, const Expr* pExpr);
+	static void ComposeForArgSlot(Composer& composer, Expr* pExpr);
+	static void ComposeSequence(Composer& composer, Expr* pExpr);
 public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
-	virtual void Compose(Composer& composer) const = 0;
+	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeForAssignment(
-		Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const;
-	virtual void ComposeForArgSlot(Composer& composer) const;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator);
+	virtual void ComposeForArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
 public:
@@ -164,7 +164,7 @@ public:
 	static const ExprList Empty;
 public:
 	bool Traverse(Expr::Visitor& visitor);
-	void Compose(Composer& composer) const;
+	void Compose(Composer& composer);
 	void SetExprParent(const Expr* pExprParent);
 };
 
@@ -299,6 +299,7 @@ public:
 	const ExprLink& GetExprLinkElem() const { return *_pExprLinkElem; }
 	size_t CountExprElem() const { return _pExprLinkElem->CountSequence(); }
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
+	Expr* GetExprElemFirst() { return _pExprLinkElem->GetExprFirst(); }
 	const Expr* GetExprElemFirst() const { return _pExprLinkElem->GetExprFirst(); }
 	void AddExprElem(Expr* pExprElem);
 public:
@@ -333,6 +334,7 @@ public:
 	}
 	const ExprLink& GetExprLinkCdr() const { return *_pExprLinkCdr; }
 	bool HasExprCdr() const { return !_pExprLinkCdr->IsEmpty(); }
+	Expr* GetExprCdrFirst() { return _pExprLinkCdr->GetExprFirst(); }
 	const Expr* GetExprCdrFirst() const { return _pExprLinkCdr->GetExprFirst(); }
 	size_t CountExprCdr() const { return GetExprLinkCdr().CountSequence(); }
 	void AddExprCdr(Expr* pExprCdr);
@@ -371,7 +373,7 @@ public:
 	const char* GetSource() const { return _pStrSource->GetString(); }
 	const String& GetSourceSTL() const { return _pStrSource->GetStringSTL(); }
 public:
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -398,9 +400,9 @@ public:
 	bool IsPureSymbol() const { return GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
-		Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -428,7 +430,7 @@ public:
 	bool IsString() const { return !_numberFlag; }
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -451,7 +453,7 @@ public:
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -474,15 +476,16 @@ public:
 		Expr_Node(typeInfo), _pExprTarget(pExprTarget), _pSymbol(pSymbol), _pAttr(pAttr),
 		_memberMode(memberMode) {}
 public:
+	Expr* GetExprTarget() { return _pExprTarget.get(); }	
 	const Expr* GetExprTarget() const { return _pExprTarget.get(); }	
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	MemberMode GetMemberMode() const { return _memberMode; }
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
-		Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -503,7 +506,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -524,8 +527,8 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
-	virtual void ComposeForArgSlot(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
+	virtual void ComposeForArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -547,7 +550,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -564,7 +567,7 @@ public:
 	Expr_Root(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -589,6 +592,9 @@ public:
 	}
 	bool HasExprParam() const { return _pExprLinkParam && !_pExprLinkParam->IsEmpty(); }
 	const ExprLink& GetExprLinkParam() const { return *_pExprLinkParam; }
+	Expr* GetExprParamFirst() {
+		return _pExprLinkParam? _pExprLinkParam->GetExprFirst() : nullptr;
+	}
 	const Expr* GetExprParamFirst() const {
 		return _pExprLinkParam? _pExprLinkParam->GetExprFirst() : nullptr;
 	}
@@ -605,7 +611,7 @@ public:
 		return true;
 	}
 	virtual bool DoPrepare() override;
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -622,9 +628,9 @@ public:
 	Expr_Lister(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
-		Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -641,7 +647,7 @@ public:
 	Expr_Iterer(ExprLink* pExprLinkElem) : Expr_Collector(typeInfo, pExprLinkElem) {}
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -658,9 +664,9 @@ public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
 public:
 	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
-		Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -691,6 +697,7 @@ public:
 	}
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	bool HasExprBlock() const { return _pExprBlock.get() != nullptr; }
+	Expr_Block* GetExprBlock() { return _pExprBlock.get(); }
 	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);
 	void AppendExprTrailer(Expr_Caller* pExprTrailer);
@@ -707,9 +714,9 @@ public:
 		if (_pExprTrailer && !_pExprTrailer->Traverse(visitor)) return false;
 		return true;
 	}
-	virtual void Compose(Composer& composer) const override;
+	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
-		Composer& composer, const Expr* pExprAssigned, const Operator* pOperator) const override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
