@@ -33,6 +33,17 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 
+Function* Argument::GenerateFunctionOfBlock(Frame& frameParent) const
+{
+	if (!GetExprOfBlock()) return nullptr;
+	RefPtr<FunctionCustom>
+		pFunction(new FunctionCustom(
+					  Function::Type::Function, GetDeclCallable().GetDeclBlock().GetSymbol(),
+					  GetDeclCallable().Reference(), GetExprOfBlock()->GetPUnitTop()));
+	pFunction->SetFrameParent(frameParent);
+	return pFunction.release();
+}
+
 Value* Argument::DoCall(Processor& processor)
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
@@ -47,21 +58,11 @@ Value* Argument::DoCall(Processor& processor)
 			Error::Issue(ErrorType::ArgumentError, "block is unnecessary");
 			return nullptr;
 		}
-#if 0
-		const Symbol* pSymbol = declBlock.GetSymbol();
-		if (declBlock.GetFlags() & DeclBlock::Flag::Quote) {
-			_pValueOfBlock.reset
-		} else {
-			RefPtr<FunctionCustom>
-				pFunction(new FunctionCustom(
-							  Function::Type::Function, pSymbol, _pDeclCallable->Reference(),
-							  _pExprOfBlock->GetPUnitTop()));
-			_pValueOfBlock.reset(new Value_Function(pFunction.release()));
+	} else {
+		if (declBlock.IsOccurOnce()) {
+			Error::Issue(ErrorType::ArgumentError, "block is necessary");
+			return nullptr;
 		}
-#endif
-	} else if (declBlock.IsOccurOnce()) {
-		Error::Issue(ErrorType::ArgumentError, "block is necessary");
-		return nullptr;
 	}
 	return GetValueCar().DoCall(processor, *this);
 }
@@ -74,20 +75,27 @@ void Argument::AssignToFrame(Frame& frame) const
 	do {
 		// assign to symbol declared as dict%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();
-		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, _pValueOfDict->Reference());
+		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, GetValueOfDict()->Reference());
 	} while (0);
 	do {
 		// assign to symbol declared as arg%%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
 		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, new Value_Argument(Reference()));
 	} while (0);
-#if 0
-	do {
+	if (GetExprOfBlock()) {
 		// assign to symbol declared as {block}
-		const Symbol* pSymbol = GetDeclCallable().GetDeclBlock().GetSymbol();
-		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, _pValueOfBlock->Reference());
-	} while (0);
-#endif
+		const DeclBlock& declBlock = GetDeclCallable().GetDeclBlock();
+		const Symbol* pSymbol = declBlock.GetSymbol();
+		if (declBlock.GetFlags() & DeclBlock::Flag::Quote) {
+			frame.AssignValue(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
+		} else {
+			RefPtr<FunctionCustom>
+				pFunction(new FunctionCustom(
+							  Function::Type::Function, pSymbol, GetDeclCallable().Reference(),
+							  GetExprOfBlock()->GetPUnitTop()));
+			frame.AssignFunction(pFunction.release());
+		}
+	}
 }
 
 String Argument::ToString(const StringStyle& ss) const
@@ -107,6 +115,11 @@ String Argument::ToString(const StringStyle& ss) const
 	}
 	rtn += ')';
 	rtn += GetAttr().ToString(ss);
+	if (GetExprOfBlock()) {
+		rtn += ss.IsCram()? "{" : " {";
+		rtn += GetDeclCallable().GetDeclBlock().GetSymbol()->GetName();
+		rtn += "}";
+	}
 	return rtn;
 }
 

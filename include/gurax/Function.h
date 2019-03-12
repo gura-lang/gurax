@@ -90,7 +90,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
-	void SetFrameParent(Frame* pFrameParent) { _pwFrameParent.reset(pFrameParent->GetWeakPtr()); }
+	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	void DeclareCaller(const VType& vtype, DeclCallable::Flags flags) {
 		GetDeclCallable().SetVTypeResult(vtype);

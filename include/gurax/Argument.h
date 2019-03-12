@@ -59,6 +59,9 @@ public:
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
+	bool HasBlock() const { return _pExprOfBlock.get() != nullptr; }
+	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
+	Function* GenerateFunctionOfBlock(Frame& frameParent) const;
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
 	void FeedValue(Value* pValue) {

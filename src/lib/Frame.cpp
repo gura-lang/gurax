@@ -42,13 +42,13 @@ bool Frame::AssignModule(Module* pModule)
 
 void Frame::AssignVType(VType& vtype)
 {
-	vtype.SetFrameParent(this);
+	vtype.SetFrameParent(*this);
 	AssignValue(vtype.GetSymbol(), new Value_VType(vtype));
 }
 
 void Frame::AssignFunction(Function* pFunction)
 {
-	pFunction->SetFrameParent(this);
+	pFunction->SetFrameParent(*this);
 	AssignValue(pFunction->GetSymbol(), new Value_Function(pFunction));
 }
 

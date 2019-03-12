@@ -10,7 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Value* FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 {
-	argument.AssignToFrame(processor.PushFrame_Function());
+	Frame& frame = processor.PushFrame_Function();
+	argument.AssignToFrame(frame);
 	argument.SetPUnitCont(GetPUnitBody());
 	return Value::nil();
 }
