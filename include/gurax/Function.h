@@ -13,14 +13,14 @@
 class Function_##name : public Function { \
 public: \
 	Function_##name(const char* name_ = strName); \
-	virtual Value* DoCall(Processor& processor, Argument& argument) const override; \
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
 }; \
 Function_##name::Function_##name(const char* name_) : Function(Function::Type::Function, name_) \
 
 #define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
 
 #define Gurax_ImplementFunction(name) \
-Value* Function_##name::DoCall(Processor& processor, Argument& argument) const
+Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_AssignFunction(name) \
 frame.AssignFunction(new Function_##name())
@@ -133,7 +133,8 @@ public:
 	bool IsLessThan(const Function& function) const { return this < &function; }
 public:
 	// Virtual functions
-	virtual Value* DoCall(Processor& processor, Argument& argument) const { return Value::nil(); };
+	virtual Value* DoCall(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
+	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };
 	virtual void Compose(Composer& composer, const Expr_Caller* pExprCaller) const {}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };

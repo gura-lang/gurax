@@ -513,7 +513,7 @@ const PUnit* PUnit_Argument::Exec(Processor& processor) const
 	if (!pDeclCallable->CheckAttribute(GetAttr())) return nullptr;
 	RefPtr<Argument> pArgument(
 		new Argument(pValueCar.release(), pDeclCallable->Reference(),
-					 GetAttr().Reference(), Value::nil(), nullptr));
+					 GetAttr().Reference(), Value::nil(), Expr_Block::Reference(GetExprBlock())));
 	processor.PushValue(new Value_Argument(pArgument.release()));
 	return GetPUnitCont();
 }

@@ -33,6 +33,10 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 
+Argument::Argument(const Function& function) : Argument(function.GetDeclCallable().Reference())
+{
+}
+	
 Function* Argument::GenerateFunctionOfBlock(Frame& frameParent) const
 {
 	if (!GetExprOfBlock()) return nullptr;

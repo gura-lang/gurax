@@ -4,11 +4,13 @@
 #ifndef GURAX_ARGUMENT_H
 #define GURAX_ARGUMENT_H
 #include "ArgSlot.h"
+#include "Processor.h"
 #include "VType_Dict.h"
 
 namespace Gurax {
 
 class PUnit;
+class Function;
 
 //------------------------------------------------------------------------------
 // Argument
@@ -30,11 +32,13 @@ private:
 	const PUnit *_pPUnitCont;				// this may be nullptr
 	UInt32 _flags;
 	ArgSlot* _pArgSlotToFeed;
-
 public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 			 Value* pValueThis, Expr_Block* pExprOfBlock);
+	Argument(DeclCallable* pDeclCallable) :
+		Argument(Value::nil(), pDeclCallable, Attribute::Empty->Reference(), Value::nil(), nullptr) {}
+	Argument(const Function& function);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -62,6 +66,9 @@ public:
 	bool HasBlock() const { return _pExprOfBlock.get() != nullptr; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	Function* GenerateFunctionOfBlock(Frame& frameParent) const;
+	Function* GenerateFunctionOfBlock(Processor& processor) const {
+		return GenerateFunctionOfBlock(processor.GetFrameCur());
+	}
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
 	void FeedValue(Value* pValue) {

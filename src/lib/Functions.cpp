@@ -116,65 +116,6 @@ Gurax_ImplementStatement(else_)
 	}
 }
 
-// repeat (cnt?:number) {block}
-Gurax_DeclareStatement(repeat)
-{
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
-	DeclareArg("cnt", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
-}
-
-Gurax_ImplementStatement(repeat)
-{
-	size_t nArgs = pExprCaller->CountExprCdr();
-	if (pExprCaller->CountExprCdr() > 1) {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
-						 "repeat-statement takes zero or one argument");
-		return;
-	}
-	const DeclArgOwner& declArgOwner = pExprCaller->GetExprBlock()->GetDeclCallable().GetDeclArgOwner();
-	if (nArgs == 0) {
-		if (declArgOwner.empty()) {
-			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
-			const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-			composer.Add_PopValueToDiscard(pExprCaller);				// []
-			pExprCaller->GetExprBlock()->Compose(composer);				// [ValueLast]
-			composer.Add_Jump(pExprCaller, pPUnitLoop);
-		} else if (declArgOwner.size() == 1) {
-			
-		} else {
-			Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
-							 "invalid number of block parameters");
-			return;
-		}
-	} else if (nArgs == 1) {
-		if (declArgOwner.empty()) {
-			composer.Add_Value(pExprCaller, Value::nil());				// [ValueLast=nil]
-			pExprCaller->GetExprCdrFirst()->Compose(composer);			// [ValueLast Value]
-			composer.Add_Cast(pExprCaller, VTYPE_Number);				// [ValueLast ValueCount]
-			composer.Add_Value(pExprCaller, Value::Zero());				// [ValueLast ValueCount ValueIdx=0]
-			
-			const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-			
-			auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);			// [ValueLast]
-			composer.Add_PopValueToDiscard(pExprCaller);				// []
-			pExprCaller->GetExprBlock()->Compose(composer);				// [ValueLast]
-			composer.Add_Jump(pExprCaller, pPUnitLoop);
-			pPUnit->SetPUnitJumpDest(composer.PeekPUnitCont());
-		} else if (declArgOwner.size() == 1) {
-			
-		} else {
-			Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
-							 "invalid number of block parameters");
-			return;
-		}
-	} else {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
-						 "wrong number of arguments");
-		return;
-	}
-}
-
 // while (`cond) {`block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
@@ -222,6 +163,22 @@ Gurax_ImplementStatement(while_)
 						 "invalid number of block parameters");
 		return;
 	}
+}
+
+// repeat (cnt?:number) {block}
+Gurax_DeclareFunction(repeat)
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	DeclareArg("cnt", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+}
+
+Gurax_ImplementFunction(repeat)
+{
+	RefPtr<Function> pFuncOfBlock(argument.GenerateFunctionOfBlock(processor));
+	RefPtr<Argument> pArgument(new Argument(*pFuncOfBlock));
+	pFuncOfBlock->DoEval(processor, *pArgument);
+	return Value::nil();
 }
 
 // Print(str*:String):void
@@ -283,6 +240,7 @@ void Functions::PrepareBasic(Frame& frame)
 	Gurax_AssignStatement(elsif);
 	Gurax_AssignStatement(else_);
 	Gurax_AssignStatement(while_);
+	Gurax_AssignFunction(repeat);
 	Gurax_AssignFunction(Print);
 	Gurax_AssignFunction(Printf);
 	Gurax_AssignFunction(Println);
