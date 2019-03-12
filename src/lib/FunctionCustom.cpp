@@ -20,7 +20,9 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
 	Frame& frame = processor.PushFrame_Function();
 	argument.AssignToFrame(frame);
+	//*****************
 	processor.Run(GetPUnitBody());
+	//*****************
 	processor.PopFrame();
 	return processor.PopValue();
 }
