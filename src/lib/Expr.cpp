@@ -704,7 +704,16 @@ void Expr_Caller::Compose(Composer& composer) const
 	composer.Add_Argument(this, GetAttr(), GetExprBlock());	// [ValueArgument]
 	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());	// [ValueArgument]
 	if (Error::IsIssued()) return;
-	composer.Add_Call(this);								// [ValueResult]
+	auto pPUnit = composer.AddF_Call(this);					// [ValueResult]
+	if (GetExprBlock()) {
+		auto pPUnitBody = composer.PeekPUnitCont();
+		GetExprBlock()->Compose(composer);
+		if (pPUnitBody == composer.PeekPUnitCont()) { // when ExprBlock yielded nothing
+			composer.Add_Value(this, Value::nil());
+		}
+		composer.Add_Return(this);
+		pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+	}
 }
 
 void Expr_Caller::ComposeForAssignment(

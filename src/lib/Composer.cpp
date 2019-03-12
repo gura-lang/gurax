@@ -147,9 +147,16 @@ void Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
 	Add(new PUnit_FeedArgSlotNamed(pExprSrc->Reference()));
 }
 
+PUnit_Call* Composer::AddF_Call(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_Call(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
+}
+
 void Composer::Add_Call(const Expr* pExprSrc)
 {
-	Add(new PUnit_Call(pExprSrc->Reference()));
+	AddF_Call(pExprSrc);
 }
 
 void Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)

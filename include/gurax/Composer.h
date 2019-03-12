@@ -63,6 +63,7 @@ public:
 		const Expr* pExprSrc, const Symbol* pSymbol,
 		const Expr* pExprAssigned, const PUnit* pPUnitSkipDest = nullptr);
 	void Add_FeedArgSlotNamed(const Expr* pExprSrc);
+	PUnit_Call* AddF_Call(const Expr* pExprSrc);
 	void Add_Call(const Expr* pExprSrc);
 	void Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest);
 	PUnit_Jump* AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest = nullptr);
