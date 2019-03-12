@@ -43,7 +43,6 @@ public:
 protected:
 	~Argument() = default;
 public:
-	bool CheckValidity() const;
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
@@ -77,7 +76,7 @@ public:
 	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 	const PUnit* GetPUnitCont() const { return _pPUnitCont; }
 	void AssignToFrame(Frame& frame) const;
-	Value* DoCall(Processor& processor) { return GetValueCar().DoCall(processor, *this); }
+	Value* DoCall(Processor& processor);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& argument) const { return this == &argument; }

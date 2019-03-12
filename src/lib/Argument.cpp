@@ -42,15 +42,15 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 
-bool Argument::CheckValidity() const
+Value* Argument::DoCall(Processor& processor)
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (!pArgSlot->HasValidValue()) {
 			Error::Issue(ErrorType::ArgumentError, "not enough argument");
-			return false;
+			return nullptr;
 		}
 	}
-	return true;
+	return GetValueCar().DoCall(processor, *this);
 }
 
 void Argument::AssignToFrame(Frame& frame) const

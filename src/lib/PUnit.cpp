@@ -655,7 +655,6 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 {
 	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopValue()));
 	Argument& argument = pValue->GetArgument();
-	if (!argument.CheckValidity()) return nullptr;
 	RefPtr<Value> pValueResult(argument.DoCall(processor));
 	if (Error::IsIssued()) {
 		for (auto pExpr : Error::GetErrorOwner()) pExpr->SetExpr(GetExprSrc()->Reference());
