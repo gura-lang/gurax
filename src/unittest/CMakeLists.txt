@@ -5,6 +5,7 @@ add_executable(unittest
 	test-Composer.cpp
 	test-DateTime.cpp
 	test-DeclCallable.cpp
+	test-Error.cpp
 	test-Function.cpp
 	test-Help.cpp
 	test-Iterator.cpp
