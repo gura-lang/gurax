@@ -15,6 +15,7 @@ Processor::Processor() :
 	GetValueStack().reserve(1024);
 	GetFrameStack().reserve(1024);
 	GetFrameStack().Push(Context::GetFrame().Reference());
+	PushPUnit(nullptr);
 }
 
 Processor* Processor::Normal()

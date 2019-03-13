@@ -21,9 +21,9 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 	Frame& frame = processor.PushFrame_Function();
 	argument.AssignToFrame(frame);
 	//*****************
+	processor.PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 	processor.Run(GetPUnitBody());
 	//*****************
-	processor.PopFrame();
 	return processor.PopValue();
 }
 
