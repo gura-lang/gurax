@@ -126,6 +126,9 @@ public:
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
+	void DoEvalVoid(Processor& processor, Argument& argument) const {
+		Value::Delete(DoEval(processor, argument));
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Function& function) const { return this == &function; }

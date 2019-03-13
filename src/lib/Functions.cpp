@@ -184,11 +184,13 @@ Gurax_ImplementFunction(repeat)
 	// Function body
 	if (cnt < 0) {
 		for (;;) {
-			pFuncOfBlock->DoEval(processor, *pArgument);
+			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
+			if (Error::IsIssued()) return Value::nil();
 		}
 	} else {
 		for ( ; cnt > 0; --cnt) {
-			pFuncOfBlock->DoEval(processor, *pArgument);
+			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
+			if (Error::IsIssued()) return Value::nil();
 		}
 	}
 	return Value::nil();
