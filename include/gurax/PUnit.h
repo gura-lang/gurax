@@ -58,7 +58,7 @@ public:
 	void SetPopValueToDiscardFlag() { _flags |= Flag::PopValueToDiscard; }
 	bool GetPopValueToDiscardFlag() const { return (_flags & Flag::PopValueToDiscard) != 0; }
 	bool GetTerminateFlag() const { return (_flags & Flag::Terminate) != 0; }
-	void AppendInfoToString(String& str) const;
+	void AppendInfoToString(String& str, const StringStyle& ss) const;
 public:
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {
@@ -596,8 +596,6 @@ class GURAX_DLLDECLARE PUnit_Jump : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
 	PUnit_Jump(Expr* pExprSrc, const PUnit* pPUnitCont) : PUnit(pExprSrc) {
