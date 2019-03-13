@@ -46,7 +46,7 @@ public:
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
 	void AssignToFrame(Frame& frame) const {
-		if (!IsUndefined()) {
+		if (IsDefined()) {
 			frame.AssignValueOfArgument(GetDeclArg().GetSymbol(), GetValue()->Reference());;
 		}
 	}
@@ -61,7 +61,7 @@ public:
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
 	virtual Value* GetValue() const = 0;
-	virtual bool IsUndefined() const = 0;
+	virtual bool IsDefined() const = 0;
 	virtual bool IsVacant() const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
 };
@@ -86,7 +86,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual Value* GetValue() const override { return _pValue.get(); }
-	virtual bool IsUndefined() const override { return _pValue->IsUndefined(); }
+	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -104,7 +104,7 @@ public:
 	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
 	virtual Value* GetValue() const override { return _pValue.get(); }
-	virtual bool IsUndefined() const override { return false; }
+	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -187,7 +187,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void FeedValue(RefPtr<Value> pValue) override;
 	virtual Value* GetValue() const override { return Value::nil(); }
-	virtual bool IsUndefined() const override { return false; }
+	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual bool HasValidValue() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;

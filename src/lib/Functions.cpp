@@ -175,9 +175,22 @@ Gurax_DeclareFunction(repeat)
 
 Gurax_ImplementFunction(repeat)
 {
+	// Arguments
+	ArgAccessor args(argument);
+	int cnt = args.IsDefined()? args.GetInt() : -1;
+	// Block
 	RefPtr<Function> pFuncOfBlock(argument.GenerateFunctionOfBlock(processor));
 	RefPtr<Argument> pArgument(new Argument(*pFuncOfBlock));
-	pFuncOfBlock->DoEval(processor, *pArgument);
+	// Function body
+	if (cnt < 0) {
+		for (;;) {
+			pFuncOfBlock->DoEval(processor, *pArgument);
+		}
+	} else {
+		for ( ; cnt > 0; --cnt) {
+			pFuncOfBlock->DoEval(processor, *pArgument);
+		}
+	}
 	return Value::nil();
 }
 

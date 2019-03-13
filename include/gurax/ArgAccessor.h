@@ -34,8 +34,7 @@ public:
 	// Destructor
 	~ArgAccessor() = default;
 public:
-	bool IsInvalid() { return _pArgSlot == nullptr; }
-	bool IsValid() { return _pArgSlot != nullptr; }
+	bool IsDefined() { return _pArgSlot && _pArgSlot->IsDefined(); }
 public:
 	bool FeedValue(Value* pValue);
 public:
