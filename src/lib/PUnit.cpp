@@ -542,7 +542,7 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(new Value_Expr(GetExprSrc()->Reference()));
-		return GetPUnitSkipDest();
+		return GetPUnitBranch();
 	} else {
 		return GetPUnitCont();
 	}
@@ -554,7 +554,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 	rtn += "ArgSlot(`(";
 	rtn += GetExprSrc()->ToString(ss);
 	rtn += "), #";
-	rtn += std::to_string(GetPUnitSkipDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -604,7 +604,7 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(GetExprAssigned()->Reference()));
-		return GetPUnitSkipDest();
+		return GetPUnitBranch();
 	} else {
 		processor.PushValue(new Value_ArgSlot(pArgSlot->Reference()));
 		return GetPUnitCont();
@@ -619,7 +619,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	rtn += ss.IsCram()? "=>" : " => `(";
 	rtn += GetExprSrc()->ToString(ss);
 	rtn += "), #";
-	rtn += std::to_string(GetPUnitSkipDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -682,16 +682,16 @@ String PUnit_Call::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Jump::Exec(Processor& processor) const
 {
-	return GetPUnitJumpDest();
+	return GetPUnitCont();
 }
 
 String PUnit_Jump::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "Jump(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitCont()->GetSeqId());
 	rtn += ")";
-	AppendInfoToString(rtn);
+	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
 	return rtn;
 }
 
@@ -703,14 +703,14 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
-	return pValue->GetBool()? GetPUnitJumpDest() : GetPUnitCont();
+	return pValue->GetBool()? GetPUnitBranch() : GetPUnitCont();
 }
 
 String PUnit_JumpIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpIf(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -724,14 +724,14 @@ const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
-	return pValue->GetBool()? GetPUnitCont() : GetPUnitJumpDest();
+	return pValue->GetBool()? GetPUnitCont() : GetPUnitBranch();
 }
 
 String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "JumpIfNot(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -746,7 +746,7 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		processor.PushValue(Value::nil());
-		return GetPUnitJumpDest();
+		return GetPUnitBranch();
 	} else {
 		return GetPUnitCont();
 	}
@@ -756,7 +756,7 @@ String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "NilJumpIf(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;
@@ -773,7 +773,7 @@ const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 		return GetPUnitCont();
 	} else {
 		processor.PushValue(Value::nil());
-		return GetPUnitJumpDest();
+		return GetPUnitBranch();
 	}
 }
 
@@ -781,7 +781,7 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 {
 	String rtn;
 	rtn += "NilJumpIfNot(#";
-	rtn += std::to_string(GetPUnitJumpDest()->GetSeqId());
+	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
 	rtn += ")";
 	AppendInfoToString(rtn);
 	return rtn;

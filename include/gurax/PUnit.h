@@ -496,14 +496,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitSkipDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_ArgSlot(Expr* pExprSrc, const PUnit* pPUnitSkipDest) :
-		PUnit(pExprSrc), _pPUnitSkipDest(pPUnitSkipDest) {}
+	PUnit_ArgSlot(Expr* pExprSrc, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc), _pPUnitBranch(pPUnitBranch) {}
 public:
-	void SetPUnitSkipDest(const PUnit* pPUnit) { _pPUnitSkipDest = pPUnit; }
-	const PUnit* GetPUnitSkipDest() const { return _pPUnitSkipDest; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
@@ -538,16 +538,16 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
-	const PUnit* _pPUnitSkipDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitSkipDest) :
-		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitSkipDest(pPUnitSkipDest) {}
+	PUnit_ArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitBranch(pPUnitBranch) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
-	void SetPUnitSkipDest(const PUnit* pPUnit) { _pPUnitSkipDest = pPUnit; }
-	const PUnit* GetPUnitSkipDest() const { return _pPUnitSkipDest; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
@@ -597,14 +597,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitJumpDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_Jump(Expr* pExprSrc, const PUnit* pPUnitJumpDest) :
-		PUnit(pExprSrc), _pPUnitJumpDest(pPUnitJumpDest) {}
-public:
-	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
-	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
+	PUnit_Jump(Expr* pExprSrc, const PUnit* pPUnitCont) : PUnit(pExprSrc) {
+		SetPUnitCont(pPUnitCont);
+	}
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
@@ -620,14 +618,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitJumpDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_JumpIf(Expr* pExprSrc, const PUnit* pPUnitJumpDest) :
-		PUnit(pExprSrc), _pPUnitJumpDest(pPUnitJumpDest) {}
+	PUnit_JumpIf(Expr* pExprSrc, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc), _pPUnitBranch(pPUnitBranch) {}
 public:
-	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
-	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
@@ -643,14 +641,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitJumpDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_JumpIfNot(Expr* pExprSrc, const PUnit* pPUnitJumpDest) :
-		PUnit(pExprSrc), _pPUnitJumpDest(pPUnitJumpDest) {}
+	PUnit_JumpIfNot(Expr* pExprSrc, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc), _pPUnitBranch(pPUnitBranch) {}
 public:
-	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
-	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
@@ -666,14 +664,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitJumpDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_NilJumpIf(Expr* pExprSrc, const PUnit* pPUnitJumpDest) :
-		PUnit(pExprSrc), _pPUnitJumpDest(pPUnitJumpDest) {}
+	PUnit_NilJumpIf(Expr* pExprSrc, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc), _pPUnitBranch(pPUnitBranch) {}
 public:
-	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
-	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
@@ -689,14 +687,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitJumpDest;
+	const PUnit* _pPUnitBranch;
 public:
 	// Constructor
-	PUnit_NilJumpIfNot(Expr* pExprSrc, const PUnit* pPUnitJumpDest) :
-		PUnit(pExprSrc), _pPUnitJumpDest(pPUnitJumpDest) {}
+	PUnit_NilJumpIfNot(Expr* pExprSrc, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc), _pPUnitBranch(pPUnitBranch) {}
 public:
-	void SetPUnitJumpDest(const PUnit* pPUnit) { _pPUnitJumpDest = pPUnit; }
-	const PUnit* GetPUnitJumpDest() const { return _pPUnitJumpDest; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
