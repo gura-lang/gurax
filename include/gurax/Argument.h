@@ -65,9 +65,13 @@ public:
 	Value& GetValueThis() { return *_pValueThis; }
 	bool HasBlock() const { return _pExprOfBlock.get() != nullptr; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
-	Function* GenerateFunctionOfBlock(Frame& frameParent) const;
-	Function* GenerateFunctionOfBlock(Processor& processor) const {
-		return GenerateFunctionOfBlock(processor.GetFrameCur());
+	Function* CreateFunctionOfBlock(Frame& frameParent) const;
+	Function* CreateFunctionOfBlock(Processor& processor) const {
+		return CreateFunctionOfBlock(processor.GetFrameCur());
+	}
+	Function* CreateFunctionOfBlock(Frame& frameParent, RefPtr<Argument>& pArgument) const;
+	Function* CreateFunctionOfBlock(Processor& processor, RefPtr<Argument>& pArgument) const {
+		return CreateFunctionOfBlock(processor.GetFrameCur(), pArgument);
 	}
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }

@@ -179,8 +179,8 @@ Gurax_ImplementFunction(repeat)
 	ArgAccessor args(argument);
 	int cnt = args.IsDefined()? args.GetInt() : -1;
 	// Block
-	RefPtr<Function> pFuncOfBlock(argument.GenerateFunctionOfBlock(processor));
-	RefPtr<Argument> pArgument(new Argument(*pFuncOfBlock));
+	RefPtr<Argument> pArgument;
+	RefPtr<Function> pFuncOfBlock(argument.CreateFunctionOfBlock(processor, pArgument));
 	// Function body
 	if (cnt < 0) {
 		for (;;) {

@@ -37,7 +37,7 @@ Argument::Argument(const Function& function) : Argument(function.GetDeclCallable
 {
 }
 	
-Function* Argument::GenerateFunctionOfBlock(Frame& frameParent) const
+Function* Argument::CreateFunctionOfBlock(Frame& frameParent) const
 {
 	if (!GetExprOfBlock()) return nullptr;
 	RefPtr<FunctionCustom>
@@ -46,6 +46,13 @@ Function* Argument::GenerateFunctionOfBlock(Frame& frameParent) const
 					  GetDeclCallable().Reference(), GetExprOfBlock()->GetPUnitTop()));
 	pFunction->SetFrameParent(frameParent);
 	return pFunction.release();
+}
+
+Function* Argument::CreateFunctionOfBlock(Frame& frameParent, RefPtr<Argument>& pArgument) const
+{
+	Function* pFunction = CreateFunctionOfBlock(frameParent);
+	if (pFunction) pArgument.reset(new Argument(*pFunction));
+	return pFunction;
 }
 
 Value* Argument::DoCall(Processor& processor)
