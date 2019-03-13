@@ -75,6 +75,7 @@ public:
 	}
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
+	void ResetAllValues();
 	void FeedValue(Value* pValue) {
 		if (!_pArgSlotToFeed) return;
 		_pArgSlotToFeed->FeedValue(pValue);

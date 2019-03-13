@@ -183,12 +183,18 @@ Gurax_ImplementFunction(repeat)
 	RefPtr<Function> pFuncOfBlock(argument.CreateFunctionOfBlock(processor, pArgument));
 	// Function body
 	if (cnt < 0) {
-		for (;;) {
+		for (int i = 0; ; ++i) {
+			pArgument->ResetAllValues();
+			ArgAccessor args(*pArgument);
+			args.FeedValue(new Value_Number(i));
 			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
 			if (Error::IsIssued()) return Value::nil();
 		}
 	} else {
-		for ( ; cnt > 0; --cnt) {
+		for (int i = 0; i < cnt; ++i) {
+			pArgument->ResetAllValues();
+			ArgAccessor args(*pArgument);
+			args.FeedValue(new Value_Number(i));
 			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
 			if (Error::IsIssued()) return Value::nil();
 		}

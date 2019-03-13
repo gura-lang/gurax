@@ -37,6 +37,14 @@ Argument::Argument(const Function& function) : Argument(function.GetDeclCallable
 {
 }
 	
+void Argument::ResetAllValues()
+{
+	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		pArgSlot->ResetValue();
+	}
+	if (_pValueOfDict) _pValueOfDict->GetValueDict().Clear();
+}
+
 Function* Argument::CreateFunctionOfBlock(Frame& frameParent) const
 {
 	if (!GetExprOfBlock()) return nullptr;

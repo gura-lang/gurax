@@ -20,6 +20,11 @@ ArgSlot* ArgSlot::Find(const Symbol* pSymbol)
 //------------------------------------------------------------------------------
 // ArgSlot_Single
 //------------------------------------------------------------------------------
+void ArgSlot_Single::ResetValue()
+{
+	_pValue.reset(Value::undefined());
+}
+
 void ArgSlot_Single::FeedValue(RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
@@ -40,6 +45,11 @@ String ArgSlot_Single::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // ArgSlot_Multiple
 //------------------------------------------------------------------------------
+void ArgSlot_Multiple::ResetValue()
+{
+	_pValue->GetValueTypedOwner().Clear();
+}
+
 void ArgSlot_Multiple::FeedValue(RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
@@ -80,6 +90,11 @@ const ArgSlot_OnceOrMore::Factory ArgSlot_OnceOrMore::factory;
 //------------------------------------------------------------------------------
 // ArgSlot_Dict
 //------------------------------------------------------------------------------
+void ArgSlot_Dict::ResetValue()
+{
+	_pValueDict->Clear();
+}
+
 void ArgSlot_Dict::FeedValue(RefPtr<Value> pValue)
 {
 	_pValueDict->Assign(new Value_Symbol(_pSymbol), pValue.release());
