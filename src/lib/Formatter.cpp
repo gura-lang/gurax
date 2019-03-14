@@ -23,9 +23,6 @@ bool Formatter::Format(const char* format, Source&& source)
 				stat = Stat::FlagsPre;
 			} else if (ch == '\n') {
 				if (!PutString(_lineSep)) return false;
-				//for (const char* p = _lineSep; *p != '\0'; p++) {
-				//	if (!PutChar(*p)) return false;
-				//}
 			} else {
 				if (!PutChar(ch)) return false;
 			}

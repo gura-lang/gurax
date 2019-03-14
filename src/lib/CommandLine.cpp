@@ -15,14 +15,16 @@ void CommandLine::AddInfo(Info* pInfo)
 	_infoMapByKeyShort[pInfo->GetKeyShort()] = pInfo;
 }
 
-bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
+bool CommandLine::Parse(int& argc, char* argv[])
 {
-	enum { STAT_Key, STAT_Value } stat = STAT_Key;
+	enum class Stat { Key, Value };
+	Stat stat = Stat::Key;
 	const Info* pInfo = nullptr;
 	const char* arg = "";
+	_strErr.clear();
 	for (int iArg = 1; iArg < argc; ) {
 		arg = argv[iArg];
-		if (stat == STAT_Key) {
+		if (stat == Stat::Key) {
 			if (arg[0] != '-') {
 				iArg++;
 				continue;
@@ -31,12 +33,12 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 				auto iter = _infoMapByKeyLong.find(keyLong);
 				pInfo = (iter == _infoMapByKeyLong.end())? nullptr : iter->second;
 				if (pInfo == nullptr) {
-					strErr = "unknown option ";
-					strErr += arg;
+					_strErr = "unknown option ";
+					_strErr += arg;
 					return false;
 				}
 				if (pInfo->GetType() == Type::Value) {
-					stat = STAT_Value;
+					stat = Stat::Value;
 				} else {
 					_map[pInfo->GetKeyLong()] = nullptr;
 				}
@@ -46,14 +48,14 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 				auto iter = _infoMapByKeyShort.find(keyShort);
 				pInfo = (iter == _infoMapByKeyShort.end())? nullptr : iter->second;
 				if (pInfo == nullptr) {
-					strErr = "unknown option ";
-					strErr += arg;
+					_strErr = "unknown option ";
+					_strErr += arg;
 					return false;
 				}
 				const char* value = &arg[2];
 				if (pInfo->GetType() == Type::Value) {
 					if (value[0] == '\0') {
-						stat = STAT_Value;
+						stat = Stat::Value;
 					} else {
 						auto iter = _map.find(pInfo->GetKeyLong());
 						StringList* pStrList = nullptr;
@@ -67,8 +69,8 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 					}
 				} else {
 					if (value[0] != '\0') {
-						strErr = "unknown option ";
-						strErr += arg;
+						_strErr = "unknown option ";
+						_strErr += arg;
 						return false;
 					}
 					_map[pInfo->GetKeyLong()] = nullptr;
@@ -78,7 +80,7 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 			for (int iArgTmp = iArg; iArgTmp < argc; iArgTmp++) {
 				argv[iArgTmp] = argv[iArgTmp + 1];
 			}
-		} else if (stat == STAT_Value) {
+		} else if (stat == Stat::Value) {
 			const char* value = arg;
 			auto iter = _map.find(pInfo->GetKeyLong());
 			StringList* pStrList = nullptr;
@@ -93,13 +95,13 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 			for (int iArgTmp = iArg; iArgTmp < argc; iArgTmp++) {
 				argv[iArgTmp] = argv[iArgTmp + 1];
 			}
-			stat = STAT_Key;
+			stat = Stat::Key;
 		}
 	}
-	if (stat == STAT_Value) {
-		strErr = "option ";
-		strErr += arg;
-		strErr += " requires a value";
+	if (stat == Stat::Value) {
+		_strErr = "option ";
+		_strErr += arg;
+		_strErr += " requires a value";
 		return false;
 	}
 	return true;

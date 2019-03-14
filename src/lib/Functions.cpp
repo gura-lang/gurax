@@ -229,9 +229,9 @@ Gurax_ImplementFunction(Printf)
 	// Arguments
 	ArgPicker args(argument);
 	const char* format = args.PickString();
-	const ValueList& valueList = args.PickList();
+	const ValueList& values = args.PickList();
 	// Function body
-	Stream::COut->PrintFmt(format, valueList);
+	Stream::COut->PrintFmt(format, values);
 	return Value::nil();
 }
 
@@ -239,16 +239,16 @@ Gurax_ImplementFunction(Printf)
 Gurax_DeclareFunction(Println)
 {
 	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
-	DeclareArg("objs", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementFunction(Println)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const ValueList& valueList = args.PickList();
+	const ValueList& values = args.PickList();
 	// Function body
-	Stream::COut->Println(valueList);
+	Stream::COut->Println(values);
 	return Value::nil();
 }
 

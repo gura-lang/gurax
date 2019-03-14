@@ -5,8 +5,21 @@
 
 namespace Gurax {
 
+class CommandLineEx : public CommandLine {
+public:
+	CommandLineEx() {
+		AddInfo("debug",		'g', Type::Flag);
+		AddInfo("punitlist",	'L', Type::Flag);
+	}
+};
+
 int Main(int argc, char* argv[])
 {
+	CommandLineEx cmdLine;
+	if (!cmdLine.Parse(argc, argv)) {
+		Stream::CErr->Printf("%s\n", cmdLine.GetError());
+		return 1;
+	}
 	if (argc < 2) {
 		Stream::CErr->Printf("usage: gurax file\n");
 		return 1;
@@ -24,13 +37,15 @@ int Main(int argc, char* argv[])
 	}
 	Composer composer;
 	pExprRoot->Compose(composer);
-	composer.PrintPUnit();
-	//RefPtr<Processor> pProcessor(Processor::Normal());
-	RefPtr<Processor> pProcessor(Processor::Debug());
-	pProcessor->Run(composer);
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
-		return 1;
+	if (cmdLine.IsSet("punitlist")) {
+		composer.PrintPUnit();
+	} else {
+		RefPtr<Processor> pProcessor(cmdLine.IsSet("debug")? Processor::Debug() : Processor::Normal());
+		pProcessor->Run(composer);
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			return 1;
+		}
 	}
 	return 0;
 }

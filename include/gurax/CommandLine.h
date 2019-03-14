@@ -58,6 +58,7 @@ private:
 	InfoMapByKeyLong _infoMapByKeyLong;
 	InfoMapByKeyShort _infoMapByKeyShort;
 	Map _map;
+	String _strErr;
 public:
 	// Constructor
 	CommandLine() {}
@@ -76,11 +77,12 @@ public:
 	void AddInfo(String keyLong, char keyShort, Type type) {
 		AddInfo(new Info(std::move(keyLong), keyShort, type));
 	}
-	bool Parse(int& argc, const char* argv[], String& strErr);
+	bool Parse(int& argc, char* argv[]);
 	bool IsSet(const char* keyLong);
 	const char* GetString(const char* keyLong, const char* defValue) const;
 	const StringList& GetStringList(const char* keyLong) const;
 	Int GetInt(const char* keyLong, Int defValue) const;
+	const char* GetError() const { return _strErr.c_str(); }
 private:
 	const char* _GetString(const char* keyLong) const;
 };
