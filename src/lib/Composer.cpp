@@ -116,9 +116,9 @@ void Composer::Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Att
 	Add(new PUnit_Member(pExprSrc->Reference(), pSymbol, attr.Reference()));
 }
 
-void Composer::Add_Argument(const Expr* pExprSrc, const Attribute& attr, const Expr_Block* pExprBlock)
+void Composer::Add_Argument(const Expr* pExprSrc, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
-	Add(new PUnit_Argument(pExprSrc->Reference(), attr.Reference(), Expr_Block::Reference(pExprBlock)));
+	Add(new PUnit_Argument(pExprSrc->Reference(), attr.Reference(), Expr_Block::Reference(pExprOfBlock)));
 }
 
 PUnit_ArgSlot* Composer::AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitSkipDest)

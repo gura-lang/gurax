@@ -93,7 +93,7 @@ protected:
 	// Destructor
 	~DeclCallable() = default;
 public:
-	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock);
+	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock);
 	void Clear();
 	DeclArgOwner& GetDeclArgOwner() { return _declArgOwner; }
 	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }

@@ -21,7 +21,7 @@ DeclCallable::DeclCallable() :
 {
 }
 
-bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprBlock)
+bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
 	_declArgOwner.reserve(exprLinkCdr.CountSequence());
 	for (const Expr* pExpr = exprLinkCdr.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -96,35 +96,35 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
-	if (pExprBlock) {
+	if (pExprOfBlock) {
 		const char* strError = "invalid format of block declaration";
-		if (pExprBlock->HasExprParam()) {
-			Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
+		if (pExprOfBlock->HasExprParam()) {
+			Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
 			return false;
 		}
 		Flags flags = DeclBlock::Flag::None;
 		const DeclBlock::Occur* pOccur = nullptr;
-		if (pExprBlock->CountExprElem() != 1) {
-			Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
+		if (pExprOfBlock->CountExprElem() != 1) {
+			Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
 			return false;
 		}
-		const Expr* pExpr = pExprBlock->GetExprLinkElem().GetExprFirst();
+		const Expr* pExpr = pExprOfBlock->GetExprLinkElem().GetExprFirst();
 		while (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::Quote)) {
 				if (flags & DeclBlock::Flag::Quote) {
-					Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
+					Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
 					return false;
 				}
 				flags |= DeclBlock::Flag::Quote;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostQuestion)) {
 				if (pOccur) {
-					Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
+					Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
 					return false;
 				}
 				pOccur = &DeclBlock::Occur::ZeroOrOnce;
 			} else {
-				Error::IssueWith(ErrorType::DeclarationError, pExprBlock, strError);
+				Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
 				return false;
 			}
 			pExpr = pExprEx->GetExprChild();

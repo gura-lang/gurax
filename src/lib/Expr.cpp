@@ -695,25 +695,25 @@ void Expr_Caller::Compose(Composer& composer)
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, this);				// [ValueResult]
+				func.Compose(composer, this);					// [ValueResult]
 				return;
 			}
 		}
 	}
-	GetExprCar()->Compose(composer);						// [ValueCar]
-	composer.Add_Argument(this, GetAttr(), GetExprBlock());	// [ValueArgument]
-	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());	// [ValueArgument]
+	GetExprCar()->Compose(composer);							// [ValueCar]
+	composer.Add_Argument(this, GetAttr(), GetExprOfBlock());	// [ValueArgument]
+	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());		// [ValueArgument]
 	if (Error::IsIssued()) return;
-	auto pPUnit = composer.AddF_Call(this);					// [ValueResult]
-	if (GetExprBlock()) {
+	auto pPUnit = composer.AddF_Call(this);						// [ValueResult]
+	if (GetExprOfBlock()) {
 		auto pPUnitBody = composer.PeekPUnitCont();
-		GetExprBlock()->Compose(composer);
-		if (pPUnitBody == composer.PeekPUnitCont()) { // when ExprBlock yielded nothing
+		GetExprOfBlock()->Compose(composer);
+		if (pPUnitBody == composer.PeekPUnitCont()) { // when ExprOfBlock yielded nothing
 			composer.Add_Value(this, Value::nil());
 		}
 		composer.Add_Return(this);
 		pPUnit->SetPUnitCont(composer.PeekPUnitCont());
-		GetExprBlock()->SetPUnitTop(pPUnitBody);
+		GetExprOfBlock()->SetPUnitTop(pPUnitBody);
 	}
 }
 
@@ -745,7 +745,7 @@ void Expr_Caller::ComposeForAssignment(
 
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
-	bool argListFlag = HasExprCdr() || !GetAttr().IsEmpty() || !HasExprBlock();
+	bool argListFlag = HasExprCdr() || !GetAttr().IsEmpty() || !HasExprOfBlock();
 	String rtn;
 	rtn += _pExprCar->ToString(ss);
 	if (argListFlag) {
@@ -767,9 +767,9 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 		rtn += ')';
 	}
 	rtn += GetAttr().ToString(ss);
-	if (HasExprBlock()) {
+	if (HasExprOfBlock()) {
 		if (!ss.IsCram()) rtn += ' ';
-		rtn += GetExprBlock()->ToString(ss);
+		rtn += GetExprOfBlock()->ToString(ss);
 	}
 	if (HasExprTrailer()) {
 		if (!ss.IsCram()) rtn += ' ';
@@ -787,12 +787,12 @@ void Expr_Caller::SetExprTrailer(Expr_Caller* pExprTrailer)
 void Expr_Caller::AppendExprTrailer(Expr_Caller* pExprTrailer)
 {
 #if 0
-	if (_pExprBlock.IsNull()) {
+	if (_pExprOfBlock.IsNull()) {
 		SetBlock(new Expr_Block());
 		_implicitBlockFlag = true;
 	}
 	if (_implicitBlockFlag) {
-		_pExprBlock->AddExpr(pExprCaller);
+		_pExprOfBlock->AddExpr(pExprCaller);
 	} else {
 		GetLastTrailer()->SetTrailer(pExprCaller);
 	}

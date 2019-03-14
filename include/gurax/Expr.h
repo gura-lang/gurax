@@ -683,22 +683,22 @@ public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<DeclCallable> _pDeclCallable;
-	RefPtr<Expr_Block> _pExprBlock;		// this may be nullptr
+	RefPtr<Expr_Block> _pExprOfBlock;	// this may be nullptr
 	RefPtr<Expr_Caller> _pExprTrailer;	// this may be nullptr
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCallable(new DeclCallable()) {}
 public:
 	bool PrepareDeclCallable() {
-		return _pDeclCallable->Prepare(GetExprLinkCdr(), GetAttr(), GetExprBlock());
+		return _pDeclCallable->Prepare(GetExprLinkCdr(), GetAttr(), GetExprOfBlock());
 	}
-	void SetExprBlock(Expr_Block* pExprBlock) {
-		_pExprBlock.reset(pExprBlock);
-		_pExprBlock->SetExprParent(this);
+	void SetExprOfBlock(Expr_Block* pExprOfBlock) {
+		_pExprOfBlock.reset(pExprOfBlock);
+		_pExprOfBlock->SetExprParent(this);
 	}
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
-	bool HasExprBlock() const { return _pExprBlock.get() != nullptr; }
-	Expr_Block* GetExprBlock() { return _pExprBlock.get(); }
-	const Expr_Block* GetExprBlock() const { return _pExprBlock.get(); }
+	bool HasExprOfBlock() const { return _pExprOfBlock.get() != nullptr; }
+	Expr_Block* GetExprOfBlock() { return _pExprOfBlock.get(); }
+	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);
 	void AppendExprTrailer(Expr_Caller* pExprTrailer);
 	bool HasExprTrailer() const { return _pExprTrailer.get() != nullptr; }
@@ -710,7 +710,7 @@ public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;
-		if (_pExprBlock && !_pExprBlock->Traverse(visitor)) return false;
+		if (_pExprOfBlock && !_pExprOfBlock->Traverse(visitor)) return false;
 		if (_pExprTrailer && !_pExprTrailer->Traverse(visitor)) return false;
 		return true;
 	}
