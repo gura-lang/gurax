@@ -50,8 +50,10 @@ Function* Argument::CreateFunctionOfBlock(Frame& frameParent) const
 	if (!GetExprOfBlock()) return nullptr;
 	RefPtr<FunctionCustom>
 		pFunction(new FunctionCustom(
-					  Function::Type::Function, GetDeclCallable().GetDeclBlock().GetSymbol(),
-					  GetDeclCallable().Reference(), GetExprOfBlock()->GetPUnitTop()));
+					  Function::Type::Function,
+					  GetExprOfBlock()->GetDeclCallable().GetDeclBlock().GetSymbol(),
+					  GetExprOfBlock()->GetDeclCallable().Reference(),
+					  GetExprOfBlock()->GetPUnitTop()));
 	pFunction->SetFrameParent(frameParent);
 	return pFunction.release();
 }
@@ -89,6 +91,7 @@ Value* Argument::DoCall(Processor& processor)
 void Argument::AssignToFrame(Frame& frame) const
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		::printf("** %s\n", pArgSlot->ToString().c_str());
 		pArgSlot->AssignToFrame(frame);
 	}
 	do {

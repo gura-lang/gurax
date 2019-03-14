@@ -179,21 +179,21 @@ Gurax_ImplementFunction(repeat)
 	ArgPicker args(argument);
 	int cnt = args.IsDefined()? args.PickInt() : -1;
 	// Block
-	RefPtr<Argument> pArgument;
-	RefPtr<Function> pFuncOfBlock(argument.CreateFunctionOfBlock(processor, pArgument));
+	RefPtr<Argument> pArgOfBlock;
+	RefPtr<Function> pFuncOfBlock(argument.CreateFunctionOfBlock(processor, pArgOfBlock));
 	// Function body
 	if (cnt < 0) {
 		for (int i = 0; ; ++i) {
-			ArgFeeder args(*pArgument);
+			ArgFeeder args(*pArgOfBlock);
 			if (args.IsValid()) args.FeedValue(new Value_Number(i));
-			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
+			pFuncOfBlock->DoEvalVoid(processor, *pArgOfBlock);
 			if (Error::IsIssued()) return Value::nil();
 		}
 	} else {
 		for (int i = 0; i < cnt; ++i) {
-			ArgFeeder args(*pArgument);
+			ArgFeeder args(*pArgOfBlock);
 			if (args.IsValid()) args.FeedValue(new Value_Number(i));
-			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
+			pFuncOfBlock->DoEvalVoid(processor, *pArgOfBlock);
 			if (Error::IsIssued()) return Value::nil();
 		}
 	}

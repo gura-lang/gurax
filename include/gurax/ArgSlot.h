@@ -64,7 +64,7 @@ public:
 	virtual Value* GetValue() const = 0;
 	virtual bool IsDefined() const = 0;
 	virtual bool IsVacant() const = 0;
-	virtual String ToString(const StringStyle& ss) const = 0;
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const = 0;
 };
 
 //------------------------------------------------------------------------------
