@@ -308,6 +308,8 @@ const char* String::EndsWith_Tmpl(const char* str, size_t posEnd, const char* su
 //------------------------------------------------------------------------------
 class StringList : public std::vector<String> {
 public:
+	static const StringList Empty;
+public:
 	StringList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 };
 

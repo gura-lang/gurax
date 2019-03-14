@@ -11,6 +11,7 @@
 #include "gurax/Attribute.h"
 #include "gurax/Binary.h"
 #include "gurax/Codec.h"
+#include "gurax/CommandLine.h"
 #include "gurax/Common.h"
 #include "gurax/Composer.h"
 #include "gurax/Context.h"

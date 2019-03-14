@@ -429,6 +429,8 @@ size_t String::Width(const char* str)
 //------------------------------------------------------------------------------
 // StringList
 //------------------------------------------------------------------------------
+const StringList StringList::Empty;
+
 StringList& StringList::Sort(SortOrder sortOrder)
 {
 	SortListByOrder<StringList, String::LessThan, String::GreaterThan>(*this, sortOrder);

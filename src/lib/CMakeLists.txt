@@ -7,6 +7,7 @@ add_library(guraxcore SHARED
 	Attribute.cpp
 	Binary.cpp
 	Codec.cpp
+	CommandLine.cpp
 	Common.cpp
 	Composer.cpp
 	Context.cpp
