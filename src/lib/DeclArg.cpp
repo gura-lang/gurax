@@ -127,7 +127,7 @@ bool DeclArg::FixVType(Frame& frame)
 {
 	Value* pValue = frame.LookupValue(GetDottedSymbol());
 	if (pValue && pValue->IsType(VTYPE_VType)) {
-		_pVType = &dynamic_cast<Value_VType*>(pValue)->GetVType();
+		_pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		return true;
 	}
 	return false;

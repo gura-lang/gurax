@@ -16,6 +16,11 @@ void VType_String::DoPrepare(Frame& frame)
 	frame.AssignVType(*this);
 }
 
+Value* VType_String::DoCastFrom(const Value& value) const
+{
+	return new Value_String(value.ToString());
+}
+
 //------------------------------------------------------------------------------
 // Value_String
 //------------------------------------------------------------------------------

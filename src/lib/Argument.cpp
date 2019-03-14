@@ -91,7 +91,6 @@ Value* Argument::DoCall(Processor& processor)
 void Argument::AssignToFrame(Frame& frame) const
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		::printf("** %s\n", pArgSlot->ToString().c_str());
 		pArgSlot->AssignToFrame(frame);
 	}
 	do {

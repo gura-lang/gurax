@@ -81,7 +81,7 @@ Value* VType::Cast(const Value& value) const
 Value* VType::DoCastFrom(const Value& value) const
 {
 	if (value.IsInstanceOf(*this)) return value.Reference();
-	Error::Issue(ErrorType::ValueError, "failed to cast");
+	Error::Issue(ErrorType::ValueError, "failed to cast to %s", MakeFullName().c_str());
 	return nullptr;
 }
 
