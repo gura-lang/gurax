@@ -7,7 +7,6 @@
 #include "Help.h"
 #include "Frame.h"
 #include "Argument.h"
-#include "ArgAccessor.h"
 
 #define Gurax_DeclareFunctionAlias(name, strName) \
 class Function_##name : public Function { \

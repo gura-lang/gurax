@@ -1,0 +1,37 @@
+//==============================================================================
+// ArgFeeder.h
+//==============================================================================
+#ifndef GURAX_ARGFEEDER_H
+#define GURAX_ARGFEEDER_H
+#include "Argument.h"
+
+namespace Gurax {
+
+//------------------------------------------------------------------------------
+// ArgFeeder
+//------------------------------------------------------------------------------
+class ArgFeeder {
+private:
+	ArgSlot* _pArgSlot;
+public:
+	// Constructor
+	ArgFeeder(Argument& argument) : _pArgSlot(argument.GetArgSlotFirst()) {
+		argument.ResetAllValues();
+	}
+	// Copy constructor/operator
+	ArgFeeder(const ArgFeeder& src) = delete;
+	ArgFeeder& operator=(const ArgFeeder& src) = delete;
+	// Move constructor/operator
+	ArgFeeder(ArgFeeder&& src) = delete;
+	ArgFeeder& operator=(ArgFeeder&& src) noexcept = delete;
+	// Destructor
+	~ArgFeeder() = default;
+public:
+	bool IsValid() const { return _pArgSlot != nullptr; }
+public:
+	bool FeedValue(Value* pValue);
+};
+
+}
+
+#endif

@@ -1,14 +1,14 @@
 //==============================================================================
-// ArgAccessor.cpp
+// ArgFeeder.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// ArgAccessor
+// ArgFeeder
 //------------------------------------------------------------------------------
-bool ArgAccessor::FeedValue(Value* pValue)
+bool ArgFeeder::FeedValue(Value* pValue)
 {
 	if (!_pArgSlot) {
 		Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -18,24 +18,6 @@ bool ArgAccessor::FeedValue(Value* pValue)
 	if (Error::IsIssued()) return false;
 	_pArgSlot = _pArgSlot->Advance();
 	return true;
-}
-
-Value* ArgAccessor::GetValue()
-{
-	if (!_pArgSlot) return nullptr;
-	Value* pValue = _pArgSlot->GetValue();
-	_pArgSlot = _pArgSlot->GetNext();
-	return pValue;
-}
-
-Stream& ArgAccessor::GetStream()
-{
-	return dynamic_cast<Value_Stream*>(GetValue())->GetStream();
-}
-
-Iterator& ArgAccessor::GetIterator()
-{
-	return dynamic_cast<Value_Iterator*>(GetValue())->GetIterator();
 }
 
 }

@@ -176,25 +176,23 @@ Gurax_DeclareFunction(repeat)
 Gurax_ImplementFunction(repeat)
 {
 	// Arguments
-	ArgAccessor args(argument);
-	int cnt = args.IsDefined()? args.GetInt() : -1;
+	ArgPicker args(argument);
+	int cnt = args.IsDefined()? args.PickInt() : -1;
 	// Block
 	RefPtr<Argument> pArgument;
 	RefPtr<Function> pFuncOfBlock(argument.CreateFunctionOfBlock(processor, pArgument));
 	// Function body
 	if (cnt < 0) {
 		for (int i = 0; ; ++i) {
-			pArgument->ResetAllValues();
-			ArgAccessor args(*pArgument);
-			args.FeedValue(new Value_Number(i));
+			ArgFeeder args(*pArgument);
+			if (args.IsValid()) args.FeedValue(new Value_Number(i));
 			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
 			if (Error::IsIssued()) return Value::nil();
 		}
 	} else {
 		for (int i = 0; i < cnt; ++i) {
-			pArgument->ResetAllValues();
-			ArgAccessor args(*pArgument);
-			args.FeedValue(new Value_Number(i));
+			ArgFeeder args(*pArgument);
+			if (args.IsValid()) args.FeedValue(new Value_Number(i));
 			pFuncOfBlock->DoEvalVoid(processor, *pArgument);
 			if (Error::IsIssued()) return Value::nil();
 		}
@@ -212,8 +210,8 @@ Gurax_DeclareFunction(Print)
 Gurax_ImplementFunction(Print)
 {
 	// Arguments
-	ArgAccessor args(argument);
-	const ValueList& valueList = args.GetList();
+	ArgPicker args(argument);
+	const ValueList& valueList = args.PickList();
 	// Function body
 	Stream::COut->Print(valueList);
 	return Value::nil();
@@ -230,9 +228,9 @@ Gurax_DeclareFunction(Printf)
 Gurax_ImplementFunction(Printf)
 {
 	// Arguments
-	ArgAccessor args(argument);
-	const char* format = args.GetString();
-	const ValueList& valueList = args.GetList();
+	ArgPicker args(argument);
+	const char* format = args.PickString();
+	const ValueList& valueList = args.PickList();
 	// Function body
 	Stream::COut->PrintFmt(format, valueList);
 	return Value::nil();
@@ -248,8 +246,8 @@ Gurax_DeclareFunction(Println)
 Gurax_ImplementFunction(Println)
 {
 	// Arguments
-	ArgAccessor args(argument);
-	const ValueList& valueList = args.GetList();
+	ArgPicker args(argument);
+	const ValueList& valueList = args.PickList();
 	// Function body
 	Stream::COut->Println(valueList);
 	return Value::nil();
