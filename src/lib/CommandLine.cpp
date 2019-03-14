@@ -45,7 +45,7 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 					strErr += arg;
 					return false;
 				}
-				if (pInfo->type == TYPE_Value) {
+				if (pInfo->type == Type::Value) {
 					stat = STAT_Value;
 				} else {
 					_map[pInfo->keyLong] = nullptr;
@@ -61,7 +61,7 @@ bool CommandLine::Parse(int& argc, const char* argv[], String& strErr)
 					return false;
 				}
 				const char* value = &arg[2];
-				if (pInfo->type == TYPE_Value) {
+				if (pInfo->type == Type::Value) {
 					if (value[0] == '\0') {
 						stat = STAT_Value;
 					} else {
