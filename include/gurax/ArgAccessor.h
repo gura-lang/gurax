@@ -6,15 +6,16 @@
 #include "Argument.h"
 #include "VType_DateTime.h"
 #include "VType_Expr.h"
-//#include "VType_Iterator.h"
 #include "VType_List.h"
 #include "VType_Number.h"
-//#include "VType_Stream.h"
 #include "VType_String.h"
 #include "VType_Symbol.h"
 #include "VType_TimeDelta.h"
 
 namespace Gurax {
+
+class Iterator;
+class Stream;
 
 //------------------------------------------------------------------------------
 // ArgAccessor
@@ -34,7 +35,8 @@ public:
 	// Destructor
 	~ArgAccessor() = default;
 public:
-	bool IsDefined() { return _pArgSlot && _pArgSlot->IsDefined(); }
+	bool IsValid() const { return _pArgSlot != nullptr; }
+	bool IsDefined() const { return _pArgSlot && _pArgSlot->IsDefined(); }
 public:
 	bool FeedValue(Value* pValue);
 public:
@@ -62,9 +64,9 @@ public:
 	const Symbol* GetSymbol()	{ return dynamic_cast<Value_Symbol*>(GetValue())->GetSymbol(); }
 	const char* GetString()		{ return dynamic_cast<Value_String*>(GetValue())->GetString(); }
 	const String& GetStringSTL() { return dynamic_cast<Value_String*>(GetValue())->GetStringSTL(); }
-	//Stream& GetStream()		{ return dynamic_cast<Value_Stream*>(GetValue())->GetStream(); }
+	Stream& GetStream();
 	const ValueList& GetList()	{ return dynamic_cast<Value_List*>(GetValue())->GetValueOwner(); }
-	//Iterator& GetIterator()	{ return dynamic_cast<Value_Iterator*>(GetValue())->GetIterator(); }
+	Iterator& GetIterator();
 	const Expr& GetExpr()		{ return dynamic_cast<Value_Expr*>(GetValue())->GetExpr(); }
 	DateTime& GetDateTime()		{ return dynamic_cast<Value_DateTime*>(GetValue())->GetDateTime(); }
 	TimeDelta& GetTimeDelta()	{ return dynamic_cast<Value_TimeDelta*>(GetValue())->GetTimeDelta(); }

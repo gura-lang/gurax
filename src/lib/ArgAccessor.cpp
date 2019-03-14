@@ -28,4 +28,14 @@ Value* ArgAccessor::GetValue()
 	return pValue;
 }
 
+Stream& ArgAccessor::GetStream()
+{
+	return dynamic_cast<Value_Stream*>(GetValue())->GetStream();
+}
+
+Iterator& ArgAccessor::GetIterator()
+{
+	return dynamic_cast<Value_Iterator*>(GetValue())->GetIterator();
+}
+
 }
