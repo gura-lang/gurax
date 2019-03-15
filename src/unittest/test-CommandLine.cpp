@@ -35,6 +35,9 @@ Gurax_TesterEntry(CommandLine)
 		::printf("  int_g  %d\n", cmdLine.GetInt("int_g", 0));
 		::printf("  int_h  %d\n", cmdLine.GetInt("int_h", 0));
 		::printf("  int_i  %d\n", cmdLine.GetInt("int_i", 0));
+		::printf("  mstr_j");
+		for (auto str : cmdLine.GetStringList("mstr_j")) ::printf(" %s", str.c_str());
+		::printf("\n");
 	};
 	CommandLine cmdLine;
 	cmdLine
@@ -46,7 +49,8 @@ Gurax_TesterEntry(CommandLine)
 		.OptString("str_f", 'f')
 		.OptInt("int_g", 'g')
 		.OptInt("int_h", 'h')
-		.OptInt("int_i", 'i');
+		.OptInt("int_i", 'i')
+		.OptMultiString("mstr_j", 'j');
 	do {
 		const char* argv[] = {"gurax"};
 		int argc = ArraySizeOf(argv);
@@ -98,7 +102,22 @@ Gurax_TesterEntry(CommandLine)
 		Tester(cmdLine, argc, argv);
 	} while (0);
 	do {
+		const char* argv[] = {"gurax", "--mstr_j=aaa", "--mstr_j=bbb", "-jccc", "-j", "ddd"};
+		int argc = ArraySizeOf(argv);
+		Tester(cmdLine, argc, argv);
+	} while (0);
+	do {
 		const char* argv[] = {"gurax", "--hoge"};
+		int argc = ArraySizeOf(argv);
+		Tester(cmdLine, argc, argv);
+	} while (0);
+	do {
+		const char* argv[] = {"gurax", "--str_d=aaa", "--str_d=bbb"};
+		int argc = ArraySizeOf(argv);
+		Tester(cmdLine, argc, argv);
+	} while (0);
+	do {
+		const char* argv[] = {"gurax", "-daaa", "-dbbb"};
 		int argc = ArraySizeOf(argv);
 		Tester(cmdLine, argc, argv);
 	} while (0);

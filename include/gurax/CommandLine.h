@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class CommandLine {
 public:
-	enum class Type { Bool, String, Int };
+	enum class Type { Bool, String, Int, MultiString, MultiInt };
 	class Opt : public Referable {
 	public:
 		// Referable declaration
@@ -38,7 +38,10 @@ public:
 	public:
 		const char* GetKeyLong() const { return _keyLong.c_str(); }
 		char GetKeyShort() const { return _keyShort; }
-		bool IsType(Type type) const { return _type == type; }
+		bool IsTypeBool() const { return _type == Type::Bool; }
+		bool IsTypeString() const { return _type == Type::String || _type == Type::MultiString; }
+		bool IsTypeInt() const { return _type == Type::Int || _type == Type::MultiInt; }
+		bool IsMulti() const { return _type == Type::MultiString || _type == Type::MultiInt; }
 		String MakeKeyArg(bool longFlag) const;
 	};
 	class OptList : public std::vector<Opt*> {
@@ -89,6 +92,9 @@ public:
 	CommandLine& OptInt(String keyLong, char keyShort) {
 		return AddOpt(new Opt(Type::Int, std::move(keyLong), keyShort));
 	}
+	CommandLine& OptMultiString(String keyLong, char keyShort) {
+		return AddOpt(new Opt(Type::MultiString, std::move(keyLong), keyShort));
+	}
 	void ClearMap() { _map.Clear(); }
 	bool Parse(int& argc, const char* argv[]);
 	bool Parse(int& argc, char* argv[]) { return Parse(argc, const_cast<const char**>(argv)); }
@@ -96,6 +102,7 @@ public:
 	const char* GetString(const char* keyLong, const char* defValue) const;
 	const StringList& GetStringList(const char* keyLong) const;
 	Int GetInt(const char* keyLong, Int defValue) const;
+	//IntList GetIntList(const char* keyLong) const;
 	const char* GetError() const { return _strErr.c_str(); }
 private:
 	const char* _GetString(const char* keyLong) const;

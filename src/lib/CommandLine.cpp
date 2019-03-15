@@ -25,7 +25,7 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 		_map[keyLong] = nullptr;
 	};
 	auto FeedValue = [this](const Opt* pOpt, const char* value, bool longFlag) {
-		if (pOpt->IsType(Type::Int)) {
+		if (pOpt->IsTypeInt()) {
 			char* p;
 			::strtol(value, &p, 0);
 			if (p == value || *p != '\0') {
@@ -38,8 +38,11 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 		if (iter == _map.end()) {
 			pStrList = new StringList();
 			_map[pOpt->GetKeyLong()] = pStrList;
-		} else {
+		} else if (pOpt->IsMulti()) {
 			pStrList = iter->second;
+		} else {
+			_strErr.Printf("option %s cannot accept multiple values", pOpt->MakeKeyArg(longFlag).c_str());
+			return false;
 		}
 		pStrList->push_back(value);
 		return true;
@@ -70,9 +73,9 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 					_strErr.Printf("unknown option --%s", keyLong.c_str());
 					return false;
 				}
-				if (pOpt->IsType(Type::Bool)) {
+				if (pOpt->IsTypeBool()) {
 					SetBool(pOpt->GetKeyLong());
-				} else if (pOpt->IsType(Type::String) || pOpt->IsType(Type::Int)) {
+				} else if (pOpt->IsTypeString() || pOpt->IsTypeInt()) {
 					if (!value) {
 						_strErr.Printf("option --%s requires a value", keyLong.c_str());;
 						return false;
@@ -88,13 +91,13 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 					return false;
 				}
 				const char* value = &arg[2];
-				if (pOpt->IsType(Type::Bool)) {
+				if (pOpt->IsTypeBool()) {
 					if (*value != '\0') {
 						_strErr.Printf("unknown option -%c", keyShort);;
 						return false;
 					}
 					SetBool(pOpt->GetKeyLong());
-				} else if (pOpt->IsType(Type::String) || pOpt->IsType(Type::Int)) {
+				} else if (pOpt->IsTypeString() || pOpt->IsTypeInt()) {
 					if (*value == '\0') {
 						stat = Stat::Value;
 					} else if (!FeedValue(pOpt, value, false)) return false;
@@ -121,8 +124,8 @@ bool CommandLine::GetBool(const char* keyLong)
 
 const char* CommandLine::GetString(const char* keyLong, const char* defValue) const
 {
-	const char* valStr = _GetString(keyLong);
-	return (valStr == nullptr)? defValue : valStr;
+	const char* str = _GetString(keyLong);
+	return (str == nullptr)? defValue : str;
 }
 
 const StringList& CommandLine::GetStringList(const char* keyLong) const
@@ -134,9 +137,22 @@ const StringList& CommandLine::GetStringList(const char* keyLong) const
 
 Int CommandLine::GetInt(const char* keyLong, Int defValue) const
 {
-	const char* valStr = _GetString(keyLong);
-	return (valStr == nullptr)? defValue : static_cast<int>(::strtol(valStr, nullptr, 0));
+	const char* str = _GetString(keyLong);
+	return (str == nullptr)? defValue : static_cast<int>(::strtol(str, nullptr, 0));
 }
+
+#if 0
+IntList CommandLine::GetIntList(const char* keyLong) const
+{
+	IntList intList;
+	const StringList& strList = GetStringList(keyLong);
+	intList.reserve(strList.size());
+	for (const String& str : strList) {
+		intList.push_back(static_cast<int>(::strtol(str.c_str(), nullptr, 0)));
+	}
+	return intList;
+}
+#endif
 
 const char* CommandLine::_GetString(const char* keyLong) const
 {
