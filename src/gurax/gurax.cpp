@@ -25,13 +25,13 @@ int Main(int argc, char* argv[])
 		Stream::CErr->Printf("failed to open file: %s", fileName);
 		return 1;
 	}
-	RefPtr<Expr_Root> pExprRoot(Parser::ParseStream(*pStream));
+	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		return 1;
 	}
 	Composer composer;
-	pExprRoot->Compose(composer);
+	pExprOfRoot->Compose(composer);
 	if (cmdLine.GetBool("list")) {
 		composer.PrintPUnit();
 	} else {

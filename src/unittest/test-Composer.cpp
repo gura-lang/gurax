@@ -60,14 +60,14 @@ while (a < 3) {|i|
 
 Gurax_TesterEntry(Composer)
 {
-	RefPtr<Expr_Root> pExprRoot(Parser::ParseString(src));
+	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseString(src));
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		Error::Clear();
 		return;
 	}
 	Composer composer;
-	pExprRoot->Compose(composer);
+	pExprOfRoot->Compose(composer);
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		Error::Clear();

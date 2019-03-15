@@ -72,13 +72,9 @@ private:
 	static ErrorOwner* _pErrorOwnerGlobal;
 public:
 	// Constructor
-	Error(const ErrorType& errorType, String text) :
-		_errorType(errorType), _lineNoTop(0), _lineNoBtm(0), _text(std::move(text)) {}
-	Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text) :
-		_errorType(errorType), _pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-		_text(std::move(text)) {}
-	Error(const ErrorType& errorType, Expr *pExpr, String text) :
-		_errorType(errorType), _pExpr(pExpr), _lineNoTop(0), _lineNoBtm(0), _text(std::move(text)) {}
+	Error(const ErrorType& errorType, String text);
+	Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text);
+	Error(const ErrorType& errorType, Expr *pExpr, String text);
 	// Copy constructor/operator
 	Error(const Error& src) = delete;
 	Error& operator=(const Error& src) = delete;
@@ -92,7 +88,7 @@ public:
 	static void Bootup();
 	String MakeMessage() const;
 	const Expr* GetExpr() const { return _pExpr.get(); }
-	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }
+	void SetExpr(Expr* pExpr);
 	const ErrorType& GetErrorType() const { return _errorType; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }

@@ -140,8 +140,6 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 					 "unknown value type: %s", GetDottedSymbol().ToString().c_str());
 		return nullptr;
 	}
-	//::printf("%s %s\n", GetVType().MakeFullName().c_str(), value.GetVType().MakeFullName().c_str());
-	if (value.IsInstanceOf(GetVType())) return value.Reference();
 	return GetVType().Cast(value);
 }
 

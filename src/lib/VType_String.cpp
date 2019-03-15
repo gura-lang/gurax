@@ -18,8 +18,7 @@ void VType_String::DoPrepare(Frame& frame)
 
 Value* VType_String::DoCastFrom(const Value& value) const
 {
-	//return new Value_String(value.ToString());
-	return value.Reference();
+	return new Value_String(value.ToString());
 }
 
 //------------------------------------------------------------------------------

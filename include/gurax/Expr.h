@@ -112,6 +112,7 @@ public:
 		_lineNoTop = lineNoTop, _lineNoBtm = lineNoBtm;
 	}
 	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
+	const StringReferable* GetPathNameSrcReferable() const { return _pPathNameSrc.get(); }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }

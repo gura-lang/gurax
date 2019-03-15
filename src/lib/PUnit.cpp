@@ -665,7 +665,7 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 	Argument& argument = pValue->GetArgument();
 	RefPtr<Value> pValueResult(argument.DoCall(processor));
 	if (Error::IsIssued()) {
-		for (auto pExpr : Error::GetErrorOwner()) pExpr->SetExpr(GetExprSrc()->Reference());
+		for (auto pError : Error::GetErrorOwner()) pError->SetExpr(GetExprSrc()->Reference());
 		return nullptr;
 	}
 	if (argument.GetPUnitCont()) {
