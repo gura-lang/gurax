@@ -21,88 +21,94 @@ bool CommandLine::Parse(int& argc, char* argv[])
 	enum class Stat { Key, Value };
 	Stat stat = Stat::Key;
 	const Opt* pOpt = nullptr;
-	const char* arg = "";
+	auto SetBool = [this](const char* keyLong) {
+		_map[keyLong] = nullptr;
+	};
+	auto FeedValue = [this](const Opt* pOpt, const char* value) {
+		if (pOpt->IsType(Type::Int)) {
+			char* p;
+			::strtol(value, &p, 0);
+			if (p == value || *p != '\0') {
+				_strErr.Printf("invalid format of number");
+				return false;
+			}
+		}
+		auto iter = _map.find(pOpt->GetKeyLong());
+		StringList* pStrList = nullptr;
+		if (iter == _map.end()) {
+			pStrList = new StringList();
+			_map[pOpt->GetKeyLong()] = pStrList;
+		} else {
+			pStrList = iter->second;
+		}
+		pStrList->push_back(value);
+		return true;
+	};
+	auto ShiftArg = [](int& argc, char* argv[], int iArg) {
+		argc--;
+		for ( ; iArg < argc; iArg++) argv[iArg] = argv[iArg + 1];
+	};
 	_strErr.clear();
 	for (int iArg = 1; iArg < argc; ) {
-		arg = argv[iArg];
+		const char* arg = argv[iArg];
 		if (stat == Stat::Key) {
-			if (arg[0] != '-') {
-				iArg++;
-				continue;
-			} else if (arg[1] == '-') {
-				const char* keyLong = &arg[2];
+			if (arg[0] != '-') { // non-option argument
+				break;
+			} else if (arg[1] == '-') { // long-option 
+				String keyLong;
+				const char* p = &arg[2];
+				const char* value = ::strchr(p, '=');
+				if (value) {
+					keyLong = String(p, value);
+					value++;
+				} else {
+					keyLong = String(p);
+				}
 				auto iter = _optMapByKeyLong.find(keyLong);
 				pOpt = (iter == _optMapByKeyLong.end())? nullptr : iter->second;
 				if (pOpt == nullptr) {
-					_strErr = "unknown option ";
-					_strErr += arg;
+					_strErr.Printf("unknown option --%s", keyLong.c_str());
 					return false;
 				}
 				if (pOpt->IsType(Type::Bool)) {
-					_map[pOpt->GetKeyLong()] = nullptr;
-				} else if (pOpt->IsType(Type::String)) {
-					stat = Stat::Value;
+					SetBool(pOpt->GetKeyLong());
+				} else if (pOpt->IsType(Type::String) || pOpt->IsType(Type::Int)) {
+					if (!value) {
+						_strErr.Printf("option --%s requires a value", keyLong.c_str());;
+						return false;
+					} else if (!FeedValue(pOpt, value)) return false;
 				}
-			} else {
+			} else { // short-option
 				char keyShort = arg[1];
 				if (keyShort == '\0') break;
 				auto iter = _optMapByKeyShort.find(keyShort);
 				pOpt = (iter == _optMapByKeyShort.end())? nullptr : iter->second;
 				if (pOpt == nullptr) {
-					_strErr = "unknown option ";
-					_strErr += arg;
+					_strErr.Printf("unknown option -%c", keyShort);
 					return false;
 				}
 				const char* value = &arg[2];
 				if (pOpt->IsType(Type::Bool)) {
-					if (value[0] != '\0') {
-						_strErr = "unknown option ";
-						_strErr += arg;
+					if (*value != '\0') {
+						_strErr.Printf("unknown option -%c", keyShort);;
 						return false;
 					}
-					_map[pOpt->GetKeyLong()] = nullptr;
-				} else if (pOpt->IsType(Type::String)) {
-					if (value[0] == '\0') {
+					SetBool(pOpt->GetKeyLong());
+				} else if (pOpt->IsType(Type::String) || pOpt->IsType(Type::Int)) {
+					if (*value == '\0') {
 						stat = Stat::Value;
-					} else {
-						auto iter = _map.find(pOpt->GetKeyLong());
-						StringList* pStrList = nullptr;
-						if (iter == _map.end()) {
-							pStrList = new StringList();
-							_map[pOpt->GetKeyLong()] = pStrList;
-						} else {
-							pStrList = iter->second;
-						}
-						pStrList->push_back(value);
-					}
+					} else if (!FeedValue(pOpt, value)) return false;
 				}
 			}
-			argc--;
-			for (int iArgTmp = iArg; iArgTmp < argc; iArgTmp++) {
-				argv[iArgTmp] = argv[iArgTmp + 1];
-			}
+			ShiftArg(argc, argv, iArg);
 		} else if (stat == Stat::Value) {
-			const char* value = arg;
-			auto iter = _map.find(pOpt->GetKeyLong());
-			StringList* pStrList = nullptr;
-			if (iter == _map.end()) {
-				pStrList = new StringList();
-				_map[pOpt->GetKeyLong()] = pStrList;
-			} else {
-				pStrList = iter->second;
-			}
-			pStrList->push_back(value);
-			argc--;
-			for (int iArgTmp = iArg; iArgTmp < argc; iArgTmp++) {
-				argv[iArgTmp] = argv[iArgTmp + 1];
-			}
+			if (!FeedValue(pOpt, arg)) return false;
+			ShiftArg(argc, argv, iArg);
 			stat = Stat::Key;
 		}
 	}
 	if (stat == Stat::Value) {
-		_strErr = "option ";
-		_strErr += arg;
-		_strErr += " requires a value";
+		_strErr.Printf("option -%c requires a value", pOpt->GetKeyShort());
 		return false;
 	}
 	return true;

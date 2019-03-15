@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class CommandLine {
 public:
-	enum class Type { Bool, String };
+	enum class Type { Bool, String, Int };
 	class Opt : public Referable {
 	public:
 		// Referable declaration
