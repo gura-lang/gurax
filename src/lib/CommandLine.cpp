@@ -12,11 +12,11 @@ CommandLine& CommandLine::AddOpt(Opt* pOpt)
 {
 	_optOwner.push_back(pOpt);
 	_optMapByKeyLong[pOpt->GetKeyLong()] = pOpt;
-	_optMapByKeyShort[pOpt->GetKeyShort()] = pOpt;
+	if (pOpt->GetKeyShort()) _optMapByKeyShort[pOpt->GetKeyShort()] = pOpt;
 	return *this;
 }
 
-bool CommandLine::Parse(int& argc, char* argv[])
+bool CommandLine::Parse(int& argc, const char* argv[])
 {
 	enum class Stat { Key, Value };
 	Stat stat = Stat::Key;
@@ -24,12 +24,12 @@ bool CommandLine::Parse(int& argc, char* argv[])
 	auto SetBool = [this](const char* keyLong) {
 		_map[keyLong] = nullptr;
 	};
-	auto FeedValue = [this](const Opt* pOpt, const char* value) {
+	auto FeedValue = [this](const Opt* pOpt, const char* value, bool longFlag) {
 		if (pOpt->IsType(Type::Int)) {
 			char* p;
 			::strtol(value, &p, 0);
 			if (p == value || *p != '\0') {
-				_strErr.Printf("invalid format of number");
+				_strErr.Printf("option %s expects an integer number", pOpt->MakeKeyArg(longFlag).c_str());
 				return false;
 			}
 		}
@@ -44,7 +44,7 @@ bool CommandLine::Parse(int& argc, char* argv[])
 		pStrList->push_back(value);
 		return true;
 	};
-	auto ShiftArg = [](int& argc, char* argv[], int iArg) {
+	auto ShiftArg = [](int& argc, const char* argv[], int iArg) {
 		argc--;
 		for ( ; iArg < argc; iArg++) argv[iArg] = argv[iArg + 1];
 	};
@@ -76,7 +76,7 @@ bool CommandLine::Parse(int& argc, char* argv[])
 					if (!value) {
 						_strErr.Printf("option --%s requires a value", keyLong.c_str());;
 						return false;
-					} else if (!FeedValue(pOpt, value)) return false;
+					} else if (!FeedValue(pOpt, value, true)) return false;
 				}
 			} else { // short-option
 				char keyShort = arg[1];
@@ -97,12 +97,12 @@ bool CommandLine::Parse(int& argc, char* argv[])
 				} else if (pOpt->IsType(Type::String) || pOpt->IsType(Type::Int)) {
 					if (*value == '\0') {
 						stat = Stat::Value;
-					} else if (!FeedValue(pOpt, value)) return false;
+					} else if (!FeedValue(pOpt, value, false)) return false;
 				}
 			}
 			ShiftArg(argc, argv, iArg);
 		} else if (stat == Stat::Value) {
-			if (!FeedValue(pOpt, arg)) return false;
+			if (!FeedValue(pOpt, arg, false)) return false;
 			ShiftArg(argc, argv, iArg);
 			stat = Stat::Key;
 		}
@@ -142,6 +142,22 @@ const char* CommandLine::_GetString(const char* keyLong) const
 {
 	auto iter = _map.find(keyLong);
 	return (iter == _map.end())? nullptr : iter->second->front().c_str();
+}
+
+//------------------------------------------------------------------------------
+// CommandLine::Opt
+//------------------------------------------------------------------------------
+String CommandLine::Opt::MakeKeyArg(bool longFlag) const
+{
+	String str;
+	if (longFlag) {
+		str = "--";
+		str += GetKeyLong();
+	} else {
+		str ="-";
+		str += GetKeyShort();
+	}
+	return str;
 }
 
 }

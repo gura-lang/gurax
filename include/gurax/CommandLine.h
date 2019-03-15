@@ -39,6 +39,7 @@ public:
 		const char* GetKeyLong() const { return _keyLong.c_str(); }
 		char GetKeyShort() const { return _keyShort; }
 		bool IsType(Type type) const { return _type == type; }
+		String MakeKeyArg(bool longFlag) const;
 	};
 	class OptList : public std::vector<Opt*> {
 	};
@@ -52,7 +53,14 @@ public:
 	};
 	using OptMapByKeyLong = std::map<String, const Opt*>;
 	using OptMapByKeyShort = std::map<char, const Opt*>;
-	using Map = std::map<String, StringList*>;
+	class Map : public std::map<String, StringList*> {
+	public:
+		~Map() { Clear(); }
+		void Clear() {
+			for (auto iter : *this) delete iter.second;
+			clear();
+		}
+	};
 private:
 	OptOwner _optOwner;
 	OptMapByKeyLong _optMapByKeyLong;
@@ -69,9 +77,7 @@ public:
 	CommandLine(CommandLine&& src) = delete;
 	CommandLine& operator=(CommandLine&& src) noexcept = delete;
 	// Destructor
-	~CommandLine() {
-		for (auto iter : _map) delete iter.second;
-	}		
+	~CommandLine() = default;
 public:
 	CommandLine& AddOpt(Opt* pOpt);
 	CommandLine& OptBool(String keyLong, char keyShort) {
@@ -80,7 +86,12 @@ public:
 	CommandLine& OptString(String keyLong, char keyShort) {
 		return AddOpt(new Opt(Type::String, std::move(keyLong), keyShort));
 	}
-	bool Parse(int& argc, char* argv[]);
+	CommandLine& OptInt(String keyLong, char keyShort) {
+		return AddOpt(new Opt(Type::Int, std::move(keyLong), keyShort));
+	}
+	void ClearMap() { _map.Clear(); }
+	bool Parse(int& argc, const char* argv[]);
+	bool Parse(int& argc, char* argv[]) { return Parse(argc, const_cast<const char**>(argv)); }
 	bool GetBool(const char* keyLong);
 	const char* GetString(const char* keyLong, const char* defValue) const;
 	const StringList& GetStringList(const char* keyLong) const;
