@@ -13,50 +13,50 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class CommandLine {
 public:
-	enum class Type { Flag, Value };
-	class Info : public Referable {
+	enum class Type { Bool, String };
+	class Opt : public Referable {
 	public:
 		// Referable declaration
-		Gurax_DeclareReferable(Info);
+		Gurax_DeclareReferable(Opt);
 	private:
+		Type _type;
 		String _keyLong;
 		char _keyShort;
-		Type _type;
 	public:
 		// Constructor
-		Info(String keyLong, char keyShort, Type type) :
-			_keyLong(std::move(keyLong)), _keyShort(keyShort), _type(type) {}
+		Opt(Type type, String keyLong, char keyShort) :
+			_type(type), _keyLong(std::move(keyLong)), _keyShort(keyShort) {}
 		// Copy constructor/operator
-		Info(const Info& src) = delete;
-		Info& operator=(const Info& src) = delete;
+		Opt(const Opt& src) = delete;
+		Opt& operator=(const Opt& src) = delete;
 		// Move constructor/operator
-		Info(Info&& src) = delete;
-		Info& operator=(Info&& src) noexcept = delete;
+		Opt(Opt&& src) = delete;
+		Opt& operator=(Opt&& src) noexcept = delete;
 	protected:
 		// Destructor
-		~Info() = default;
+		~Opt() = default;
 	public:
 		const char* GetKeyLong() const { return _keyLong.c_str(); }
 		char GetKeyShort() const { return _keyShort; }
-		Type GetType() const { return _type; }
+		bool IsType(Type type) const { return _type == type; }
 	};
-	class InfoList : public std::vector<Info*> {
+	class OptList : public std::vector<Opt*> {
 	};
-	class InfoOwner : public InfoList {
+	class OptOwner : public OptList {
 	public:
-		~InfoOwner() { Clear(); }
+		~OptOwner() { Clear(); }
 		void Clear() {
-			for (auto pInfo : *this) Info::Delete(pInfo);
+			for (auto pOpt : *this) Opt::Delete(pOpt);
 			clear();
 		}
 	};
-	using InfoMapByKeyLong = std::map<String, const Info*>;
-	using InfoMapByKeyShort = std::map<char, const Info*>;
+	using OptMapByKeyLong = std::map<String, const Opt*>;
+	using OptMapByKeyShort = std::map<char, const Opt*>;
 	using Map = std::map<String, StringList*>;
 private:
-	InfoOwner _infoOwner;
-	InfoMapByKeyLong _infoMapByKeyLong;
-	InfoMapByKeyShort _infoMapByKeyShort;
+	OptOwner _optOwner;
+	OptMapByKeyLong _optMapByKeyLong;
+	OptMapByKeyShort _optMapByKeyShort;
 	Map _map;
 	String _strErr;
 public:
@@ -73,12 +73,15 @@ public:
 		for (auto iter : _map) delete iter.second;
 	}		
 public:
-	void AddInfo(Info* pInfo);
-	void AddInfo(String keyLong, char keyShort, Type type) {
-		AddInfo(new Info(std::move(keyLong), keyShort, type));
+	CommandLine& AddOpt(Opt* pOpt);
+	CommandLine& OptBool(String keyLong, char keyShort) {
+		return AddOpt(new Opt(Type::Bool, std::move(keyLong), keyShort));
+	}
+	CommandLine& OptString(String keyLong, char keyShort) {
+		return AddOpt(new Opt(Type::String, std::move(keyLong), keyShort));
 	}
 	bool Parse(int& argc, char* argv[]);
-	bool IsSet(const char* keyLong);
+	bool GetBool(const char* keyLong);
 	const char* GetString(const char* keyLong, const char* defValue) const;
 	const StringList& GetStringList(const char* keyLong) const;
 	Int GetInt(const char* keyLong, Int defValue) const;

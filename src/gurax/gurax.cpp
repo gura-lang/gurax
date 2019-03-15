@@ -5,18 +5,13 @@
 
 namespace Gurax {
 
-class CommandLineEx : public CommandLine {
-public:
-	CommandLineEx() {
-		AddInfo("debug",		'g', Type::Flag);
-		AddInfo("punitlist",	'L', Type::Flag);
-	}
-};
-
 int Main(int argc, char* argv[])
 {
-	CommandLineEx cmdLine;
-	if (!cmdLine.Parse(argc, argv)) {
+	CommandLine cmdLine;
+	if (!cmdLine
+		.OptBool("debug",	'g')
+		.OptBool("list",	'L')
+		.Parse(argc, argv)) {
 		Stream::CErr->Printf("%s\n", cmdLine.GetError());
 		return 1;
 	}
@@ -37,10 +32,10 @@ int Main(int argc, char* argv[])
 	}
 	Composer composer;
 	pExprRoot->Compose(composer);
-	if (cmdLine.IsSet("punitlist")) {
+	if (cmdLine.GetBool("list")) {
 		composer.PrintPUnit();
 	} else {
-		RefPtr<Processor> pProcessor(cmdLine.IsSet("debug")? Processor::Debug() : Processor::Normal());
+		RefPtr<Processor> pProcessor(cmdLine.GetBool("debug")? Processor::Debug() : Processor::Normal());
 		pProcessor->Run(composer);
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);

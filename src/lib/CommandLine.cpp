@@ -8,18 +8,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // CommandLine
 //------------------------------------------------------------------------------
-void CommandLine::AddInfo(Info* pInfo)
+CommandLine& CommandLine::AddOpt(Opt* pOpt)
 {
-	_infoOwner.push_back(pInfo);
-	_infoMapByKeyLong[pInfo->GetKeyLong()] = pInfo;
-	_infoMapByKeyShort[pInfo->GetKeyShort()] = pInfo;
+	_optOwner.push_back(pOpt);
+	_optMapByKeyLong[pOpt->GetKeyLong()] = pOpt;
+	_optMapByKeyShort[pOpt->GetKeyShort()] = pOpt;
+	return *this;
 }
 
 bool CommandLine::Parse(int& argc, char* argv[])
 {
 	enum class Stat { Key, Value };
 	Stat stat = Stat::Key;
-	const Info* pInfo = nullptr;
+	const Opt* pOpt = nullptr;
 	const char* arg = "";
 	_strErr.clear();
 	for (int iArg = 1; iArg < argc; ) {
@@ -30,50 +31,50 @@ bool CommandLine::Parse(int& argc, char* argv[])
 				continue;
 			} else if (arg[1] == '-') {
 				const char* keyLong = &arg[2];
-				auto iter = _infoMapByKeyLong.find(keyLong);
-				pInfo = (iter == _infoMapByKeyLong.end())? nullptr : iter->second;
-				if (pInfo == nullptr) {
+				auto iter = _optMapByKeyLong.find(keyLong);
+				pOpt = (iter == _optMapByKeyLong.end())? nullptr : iter->second;
+				if (pOpt == nullptr) {
 					_strErr = "unknown option ";
 					_strErr += arg;
 					return false;
 				}
-				if (pInfo->GetType() == Type::Value) {
+				if (pOpt->IsType(Type::Bool)) {
+					_map[pOpt->GetKeyLong()] = nullptr;
+				} else if (pOpt->IsType(Type::String)) {
 					stat = Stat::Value;
-				} else {
-					_map[pInfo->GetKeyLong()] = nullptr;
 				}
 			} else {
 				char keyShort = arg[1];
 				if (keyShort == '\0') break;
-				auto iter = _infoMapByKeyShort.find(keyShort);
-				pInfo = (iter == _infoMapByKeyShort.end())? nullptr : iter->second;
-				if (pInfo == nullptr) {
+				auto iter = _optMapByKeyShort.find(keyShort);
+				pOpt = (iter == _optMapByKeyShort.end())? nullptr : iter->second;
+				if (pOpt == nullptr) {
 					_strErr = "unknown option ";
 					_strErr += arg;
 					return false;
 				}
 				const char* value = &arg[2];
-				if (pInfo->GetType() == Type::Value) {
-					if (value[0] == '\0') {
-						stat = Stat::Value;
-					} else {
-						auto iter = _map.find(pInfo->GetKeyLong());
-						StringList* pStrList = nullptr;
-						if (iter == _map.end()) {
-							pStrList = new StringList();
-							_map[pInfo->GetKeyLong()] = pStrList;
-						} else {
-							pStrList = iter->second;
-						}
-						pStrList->push_back(value);
-					}
-				} else {
+				if (pOpt->IsType(Type::Bool)) {
 					if (value[0] != '\0') {
 						_strErr = "unknown option ";
 						_strErr += arg;
 						return false;
 					}
-					_map[pInfo->GetKeyLong()] = nullptr;
+					_map[pOpt->GetKeyLong()] = nullptr;
+				} else if (pOpt->IsType(Type::String)) {
+					if (value[0] == '\0') {
+						stat = Stat::Value;
+					} else {
+						auto iter = _map.find(pOpt->GetKeyLong());
+						StringList* pStrList = nullptr;
+						if (iter == _map.end()) {
+							pStrList = new StringList();
+							_map[pOpt->GetKeyLong()] = pStrList;
+						} else {
+							pStrList = iter->second;
+						}
+						pStrList->push_back(value);
+					}
 				}
 			}
 			argc--;
@@ -82,11 +83,11 @@ bool CommandLine::Parse(int& argc, char* argv[])
 			}
 		} else if (stat == Stat::Value) {
 			const char* value = arg;
-			auto iter = _map.find(pInfo->GetKeyLong());
+			auto iter = _map.find(pOpt->GetKeyLong());
 			StringList* pStrList = nullptr;
 			if (iter == _map.end()) {
 				pStrList = new StringList();
-				_map[pInfo->GetKeyLong()] = pStrList;
+				_map[pOpt->GetKeyLong()] = pStrList;
 			} else {
 				pStrList = iter->second;
 			}
@@ -107,7 +108,7 @@ bool CommandLine::Parse(int& argc, char* argv[])
 	return true;
 }
 
-bool CommandLine::IsSet(const char* keyLong)
+bool CommandLine::GetBool(const char* keyLong)
 {
 	return _map.find(keyLong) != _map.end();
 }
