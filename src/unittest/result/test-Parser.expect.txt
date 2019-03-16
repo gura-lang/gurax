@@ -40,37 +40,37 @@ foo
 123456%
 123456..
 ======== ReduceThreeTokens ========
-(a) + (b)
-(a) - (b)
-(a) * (b)
-(a) / (b)
-(a) % (b)
-(a) %% (b)
-(a) |.| (b)
-(a) |^| (b)
-(a) |*| (b)
-(a) |+| (b)
-(a) |-| (b)
-(a) |&| (b)
-(a) ||| (b)
-(a) ** (b)
-(a) == (b)
-(a) != (b)
-(a) < (b)
-(a) > (b)
-(a) <= (b)
-(a) >= (b)
-(a) <=> (b)
-(a) in (b)
-(a) => (b)
-(a) || (b)
-(a) && (b)
-(a) | (b)
-(a) & (b)
-(a) ^ (b)
-(a) << (b)
-(a) >> (b)
-(a) .. (b)
+a + b
+a - b
+a * b
+a / b
+a % b
+a %% b
+a |.| b
+a |^| b
+a |*| b
+a |+| b
+a |-| b
+a |&| b
+a ||| b
+a ** b
+a == b
+a != b
+a < b
+a > b
+a <= b
+a >= b
+a <=> b
+a in b
+a => b
+a || b
+a && b
+a | b
+a & b
+a ^ b
+a << b
+a >> b
+a .. b
 a = b
 a += b
 a -= b
@@ -145,7 +145,7 @@ f(a, b, c) {elem1; elem2} g(a, b, c) {}
 f(a, b, c) {elem1; elem2} g(a, b, c) {elem1; elem2}
 f(a, b, c) {|a, b, c| elem1; elem2; elem3} g(a, b, c) {|a, b, c| elem1; elem2; elem3}
 f(a, b, c) {|a, b, c| elem1; elem2; elem3} g(a, b, c) {|a, b, c| elem1; elem2; elem3} h(a, b, c) {|a, b, c| elem1; elem2; elem3} k(a, b, c) {|a, b, c| elem1; elem2; elem3}
-if ((a) == (b)) {foo}
+if (a == b) {foo}
 f(a:number, b:string, c:symbol) = {}
 ======== Attribute ========
 a:b

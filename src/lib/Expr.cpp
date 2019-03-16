@@ -332,15 +332,23 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 	String str;
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::OpBinary: {
-		str += '(';
-		str += GetExprLeft()->ToString(ss);
-		str += ')';
+		do {
+			bool needParenFlag =
+				GetExprLeft()->IsType<Expr_BinaryOp>() || GetExprLeft()->IsType<Expr_UnaryOp>();
+			if (needParenFlag) str += '(';
+			str += GetExprLeft()->ToString(ss);
+			if (needParenFlag) str += ')';
+		} while (0);
 		if (!ss.IsCram()) str += ' ';
 		str += GetOperator()->GetSymbol();
 		if (!ss.IsCram()) str += ' ';
-		str += '(';
-		str += GetExprRight()->ToString(ss);
-		str += ')';
+		do {
+			bool needParenFlag =
+				GetExprRight()->IsType<Expr_BinaryOp>() || GetExprRight()->IsType<Expr_UnaryOp>();
+			if (needParenFlag) str += '(';
+			str += GetExprRight()->ToString(ss);
+			if (needParenFlag) str += ')';
+		} while (0);
 		break;
 	}
 	case OpStyle::MathBinary: {
