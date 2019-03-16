@@ -1138,7 +1138,7 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 //-----------------------------------------------------------------------------
 bool Tokenizer::MagicCommentParser::FeedChar(char ch)
 {
-	bool rtn = false;
+	bool rslt = false;
 	switch (_stat) {
 	case Stat::Idle: {
 		// nothing to do
@@ -1174,13 +1174,13 @@ bool Tokenizer::MagicCommentParser::FeedChar(char ch)
 		if (String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.' || ch == '-' || ch == '_') {
 			_segment += ch;
 		} else {
-			rtn = true;
+			rslt = true;
 			_stat = Stat::Idle;
 		}
 		break;
 	}
 	}
-	return rtn;
+	return rslt;
 }
 
 }

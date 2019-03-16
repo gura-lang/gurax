@@ -145,39 +145,39 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 
 String DeclArg::FlagsToString(Flags flags)
 {
-	String rtn;
+	String str;
 	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
-			rtn += ':';
-			rtn += FlagToSymbol(flag)->GetName();
+			str += ':';
+			str += FlagToSymbol(flag)->GetName();
 		}
 	}
-	return rtn;
+	return str;
 }
 
 String DeclArg::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	bool quoteFlag = GetVType().IsIdentical(VTYPE_Quote);
-	if (quoteFlag) rtn += '`';
-	rtn += GetSymbol()->GetName();
-	if (GetFlags() & Flag::ListVar) rtn += "[]";
-	rtn += GetOccur().GetMarker();
+	if (quoteFlag) str += '`';
+	str += GetSymbol()->GetName();
+	if (GetFlags() & Flag::ListVar) str += "[]";
+	str += GetOccur().GetMarker();
 	if (quoteFlag) {
 		// nothing to do 
 	} else if (!GetDottedSymbol().IsEmpty()) {
-		rtn += ':';
-		rtn += GetDottedSymbol().ToString();
+		str += ':';
+		str += GetDottedSymbol().ToString();
 	} else if (ss.IsVerbose()) {
-		rtn += ':';
-		rtn += VTYPE_Any.GetName();
+		str += ':';
+		str += VTYPE_Any.GetName();
 	}
-	rtn += FlagsToString(GetFlags() & ~Flag::ListVar);
+	str += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (GetExprDefault()) {
-		rtn += ss.IsCram()? "=>" : " => ";
-		rtn += GetExprDefault()->ToString(ss);
+		str += ss.IsCram()? "=>" : " => ";
+		str += GetExprDefault()->ToString(ss);
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -203,13 +203,13 @@ DeclArg* DeclArgList::FindBySymbol(const Symbol* pSymbol) const
 
 String DeclArgList::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	for (auto ppDeclArg = begin(); ppDeclArg != end(); ppDeclArg++) {
 		const DeclArg* pDeclArg = *ppDeclArg;
-		if (ppDeclArg != begin()) rtn += ss.GetComma();
-		rtn += pDeclArg->ToString(ss);
+		if (ppDeclArg != begin()) str += ss.GetComma();
+		str += pDeclArg->ToString(ss);
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------

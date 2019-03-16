@@ -160,11 +160,11 @@ bool Codec::Decoder::Decode(String& dst, const UInt8* src, size_t bytes)
 {
 	char ch;
 	for (const UInt8* p = src; bytes > 0; p++, bytes--) {
-		Codec::Result rtn = FeedChar(*p, ch);
-		if (rtn == Codec::Result::Complete) {
+		Codec::Result rslt = FeedChar(*p, ch);
+		if (rslt == Codec::Result::Complete) {
 			dst.push_back(ch);
 			while (FollowChar(ch)) dst.push_back(ch);
-		} else if (rtn == Codec::Result::Error) {
+		} else if (rslt == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "failed to decode a binary");
 			return false;
 		}
@@ -183,11 +183,11 @@ bool Codec::Encoder::Encode(Binary& dst, const char* src)
 {
 	char ch;
 	for (const char* p = src; *p != '\0'; p++) {
-		Codec::Result rtn = FeedChar(*p, ch);
-		if (rtn == Codec::Result::Complete) {
+		Codec::Result rslt = FeedChar(*p, ch);
+		if (rslt == Codec::Result::Complete) {
 			dst.push_back(ch);
 			while (FollowChar(ch)) dst.push_back(ch);
-		} else if (rtn == Codec::Result::Error) {
+		} else if (rslt == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "failed to encode a string");
 			return false;
 		}
@@ -258,15 +258,15 @@ Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 
 Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 {
-	Codec::Result rtn = Codec::Result::None;
+	Codec::Result rslt = Codec::Result::None;
 	UChar _ch = static_cast<UChar>(ch);
 	if ((_ch & 0x80) == 0x00) {
-		rtn = FeedUTF32(_ch, chConv);
+		rslt = FeedUTF32(_ch, chConv);
 		_cntChars = 0;
 	} else if ((_ch & 0xc0) == 0x80) {
 		if (_cntChars == 1) {
 			_codeUTF32 = (_codeUTF32 << 6) | (_ch & 0x3f);
-			rtn = FeedUTF32(_codeUTF32, chConv);
+			rslt = FeedUTF32(_codeUTF32, chConv);
 			_codeUTF32 = 0x00000000;
 			_cntChars = 0;
 		} else if (_cntChars > 0) {
@@ -291,7 +291,7 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 		_codeUTF32 = _ch & 0x01;
 		_cntChars = 5;
 	}
-	return rtn;
+	return rslt;
 }
 
 //-----------------------------------------------------------------------------

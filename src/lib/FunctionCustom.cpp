@@ -28,17 +28,17 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 
 String FunctionCustom::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetSymbol()->GetName();
-	rtn += GetDeclCallable().ToString(ss);
-	rtn += ss.IsCram()? "=" : " = ";
+	String str;
+	str += GetSymbol()->GetName();
+	str += GetDeclCallable().ToString(ss);
+	str += ss.IsCram()? "=" : " = ";
 	if (GetPUnitBody()) {
-		rtn += "#";
-		rtn += std::to_string(GetPUnitBody()->GetSeqId());
+		str += "#";
+		str += std::to_string(GetPUnitBody()->GetSeqId());
 	} else {
-		rtn += "null";
+		str += "null";
 	}
-	return rtn;
+	return str;
 }
 
 }

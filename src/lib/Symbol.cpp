@@ -19,10 +19,10 @@ void Symbol::Bootup()
 
 String Symbol::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	if (ss.IsAsSource()) rtn += '`';
-	rtn += GetName();
-	return rtn;
+	String str;
+	if (ss.IsAsSource()) str += '`';
+	str += GetName();
+	return str;
 }
 
 bool Symbol::IsFlowControl() const
@@ -95,12 +95,12 @@ bool SymbolList::IsEqualTo(const SymbolList& symbolList) const
 
 String SymbolList::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	for (const Symbol* pSymbol : *this) {
-		if (!rtn.empty()) rtn += ss.GetComma();
-		rtn += pSymbol->ToString(ss);
+		if (!str.empty()) str += ss.GetComma();
+		str += pSymbol->ToString(ss);
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------

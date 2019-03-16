@@ -48,25 +48,25 @@ void Error::Bootup()
 
 String Error::MakeMessage() const
 {
-	String rtn;
+	String str;
 	if (_pFileName && !_pFileName->GetStringSTL().empty()) {
-		rtn += _pFileName->GetStringSTL();
+		str += _pFileName->GetStringSTL();
 		if (_lineNoTop == 0) {
-			rtn += ": ";
+			str += ": ";
 		} else if (_lineNoTop == _lineNoBtm) {
 			char buff[128];
 			::sprintf(buff, ":%d: ", _lineNoTop);
-			rtn += buff;
+			str += buff;
 		} else {
 			char buff[128];
 			::sprintf(buff, ":%d:%d: ", _lineNoTop, _lineNoBtm);
-			rtn += buff;
+			str += buff;
 		}
 	}
-	rtn += _errorType.GetName();
-	rtn += ": ";
-	rtn += _text;
-	return rtn;
+	str += _errorType.GetName();
+	str += ": ";
+	str += _text;
+	return str;
 }
 
 void Error::SetExpr(Expr* pExpr)

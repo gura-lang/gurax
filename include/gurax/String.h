@@ -141,8 +141,8 @@ public:
 	String& Printf(const char* format, ...);
 	String& PrintFmt(const char* format, const ValueList& valueList);
 public:
-	String MakeQuoted(bool surroundFlag = false) const { return MakeQuoted(c_str(), surroundFlag); }
-	static String MakeQuoted(const char* str, bool surroundFlag = true);
+	String MakeQuoted(bool surroundFlag) const { return MakeQuoted(c_str(), surroundFlag); }
+	static String MakeQuoted(const char* str, bool surroundFlag);
 public:
 	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }
 	static Double ToNumber(const char* str, bool* pSuccessFlag = nullptr);

@@ -19,6 +19,25 @@ void VType_Number::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Number
 //------------------------------------------------------------------------------
+String Value_Number::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	do {
+		char buff[64];
+		::sprintf(buff, ":%g", GetDouble());
+		str += buff;
+	} while (0);
+	return str;
+}
+
+String Value_Number::ToStringDetail(const StringStyle& ss) const
+{
+	char buff[64];
+	::sprintf(buff, "%g", GetDouble());
+	return buff;
+}
+
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	char buff[128];

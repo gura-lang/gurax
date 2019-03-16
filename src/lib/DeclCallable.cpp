@@ -167,30 +167,30 @@ bool DeclCallable::CheckAttribute(const Attribute& attr) const
 
 String DeclCallable::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "(";
-	rtn += GetDeclArgOwner().ToString(ss);
+	String str;
+	str += "(";
+	str += GetDeclArgOwner().ToString(ss);
 	if (!GetSymbolOfDict()->IsEmpty()) {
-		if (!GetDeclArgOwner().empty()) rtn += ss.GetComma();
-		rtn += GetSymbolOfDict()->GetName();
-		rtn += "%";
+		if (!GetDeclArgOwner().empty()) str += ss.GetComma();
+		str += GetSymbolOfDict()->GetName();
+		str += "%";
 	}
 	if (!GetSymbolOfAccessor()->IsEmpty()) {
 		if (!GetDeclArgOwner().empty() || !GetSymbolOfDict()->IsEmpty()) {
-			rtn += ss.GetComma();
+			str += ss.GetComma();
 		}
-		rtn += GetSymbolOfAccessor()->GetName();
-		rtn += "%%";
+		str += GetSymbolOfAccessor()->GetName();
+		str += "%%";
 	}
-	rtn += ")";
-	rtn += FlagsToString(_flags);
-	rtn += GetAttr().ToString(ss);
+	str += ")";
+	str += FlagsToString(_flags);
+	str += GetAttr().ToString(ss);
 	if (!GetDeclBlock().IsOccurZero()) {
-		rtn += ss.IsCram()? "{" : " {";
-		rtn += GetDeclBlock().ToString(ss);
-		rtn += "}";
+		str += ss.IsCram()? "{" : " {";
+		str += GetDeclBlock().ToString(ss);
+		str += "}";
 	}
-	return rtn;
+	return str;
 }
 
 DeclCallable::Flags DeclCallable::SymbolsToFlags(const SymbolList& symbols)
@@ -202,14 +202,14 @@ DeclCallable::Flags DeclCallable::SymbolsToFlags(const SymbolList& symbols)
 
 String DeclCallable::FlagsToString(Flags flags)
 {
-	String rtn;
+	String str;
 	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
-			rtn += ':';
-			rtn += FlagToSymbol(flag)->GetName();
+			str += ':';
+			str += FlagToSymbol(flag)->GetName();
 		}
 	}
-	return rtn;
+	return str;
 }
 
 }

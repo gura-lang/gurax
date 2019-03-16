@@ -17,9 +17,9 @@ int Expr::CalcIndentLevel() const
 
 String Expr::MakeIndent(const StringStyle& ss) const
 {
-	String rtn;
-	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), rtn += ss.GetIndentUnit()) ;
-	return rtn;
+	String str;
+	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), str += ss.GetIndentUnit()) ;
+	return str;
 }
 
 size_t Expr::CountSequence(const Expr* pExpr)
@@ -203,11 +203,11 @@ void Expr_Identifier::ComposeForAssignment(
 
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
 {
-	String rtn;
-	rtn += GetSymbol()->ToString();
-	rtn += strInsert;
-	rtn += GetAttr().ToString(ss);
-	return rtn;
+	String str;
+	str += GetSymbol()->ToString();
+	str += strInsert;
+	str += GetAttr().ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -221,10 +221,10 @@ void Expr_Suffixed::Compose(Composer& composer)
 
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += IsNumber()? GetSegmentSTL() : GetSegmentSTL().MakeQuoted(true);
-	rtn += GetSuffix()->GetName();
-	return rtn;
+	String str;
+	str += IsNumber()? GetSegmentSTL() : GetSegmentSTL().MakeQuoted(true);
+	str += GetSuffix()->GetName();
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -238,10 +238,10 @@ void Expr_Embedded::Compose(Composer& composer)
 
 String Expr_Embedded::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += 'e';
-	rtn += GetStringSTL().MakeQuoted(true);
-	return rtn;
+	String str;
+	str += 'e';
+	str += GetStringSTL().MakeQuoted(true);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -257,43 +257,43 @@ void Expr_UnaryOp::Compose(Composer& composer)
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::OpPreUnary: {
 		bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
-		rtn += GetOperator()->GetSymbol();
-		if (requireParFlag) rtn += '(';
-		rtn += GetExprChild()->ToString(ss);
-		if (requireParFlag) rtn += ')';
+		str += GetOperator()->GetSymbol();
+		if (requireParFlag) str += '(';
+		str += GetExprChild()->ToString(ss);
+		if (requireParFlag) str += ')';
 		break;
 	}
 	case OpStyle::OpPostUnary: {
 		if (GetExprChild()->IsType<Expr_Identifier>()) {
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(GetExprChild());
-			rtn += pExprEx->ToString(ss, GetOperator()->GetSymbol());
+			str += pExprEx->ToString(ss, GetOperator()->GetSymbol());
 		} else if (GetExprChild()->IsType<Expr_Indexer>()) {
 			const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(GetExprChild());
-			rtn += pExprEx->ToString(ss, GetOperator()->GetSymbol());
+			str += pExprEx->ToString(ss, GetOperator()->GetSymbol());
 		} else {
 			bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
-			if (requireParFlag) rtn += '(';
-			rtn += GetExprChild()->ToString(ss);
-			if (requireParFlag) rtn += ')';
-			rtn += GetOperator()->GetSymbol();
+			if (requireParFlag) str += '(';
+			str += GetExprChild()->ToString(ss);
+			if (requireParFlag) str += ')';
+			str += GetOperator()->GetSymbol();
 		}
 		break;
 	}
 	case OpStyle::MathUnary: {
-		rtn += GetOperator()->GetSymbol();
-		rtn += '(';
-		rtn += GetExprChild()->ToString(ss);
-		rtn += ')';
+		str += GetOperator()->GetSymbol();
+		str += '(';
+		str += GetExprChild()->ToString(ss);
+		str += ')';
 		break;
 	}
 	default:
 		break;
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -329,34 +329,34 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::OpBinary: {
-		rtn += '(';
-		rtn += GetExprLeft()->ToString(ss);
-		rtn += ')';
-		if (!ss.IsCram()) rtn += ' ';
-		rtn += GetOperator()->GetSymbol();
-		if (!ss.IsCram()) rtn += ' ';
-		rtn += '(';
-		rtn += GetExprRight()->ToString(ss);
-		rtn += ')';
+		str += '(';
+		str += GetExprLeft()->ToString(ss);
+		str += ')';
+		if (!ss.IsCram()) str += ' ';
+		str += GetOperator()->GetSymbol();
+		if (!ss.IsCram()) str += ' ';
+		str += '(';
+		str += GetExprRight()->ToString(ss);
+		str += ')';
 		break;
 	}
 	case OpStyle::MathBinary: {
-		rtn += GetOperator()->GetSymbol();
-		rtn += '(';
-		rtn += GetExprLeft()->ToString(ss);
-		rtn += ss.GetComma();
-		if (!ss.IsCram()) rtn += ' ';
-		rtn += GetExprRight()->ToString(ss);
-		rtn += ')';
+		str += GetOperator()->GetSymbol();
+		str += '(';
+		str += GetExprLeft()->ToString(ss);
+		str += ss.GetComma();
+		if (!ss.IsCram()) str += ' ';
+		str += GetExprRight()->ToString(ss);
+		str += ')';
 		break;
 	}
 	default:
 		break;
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -380,14 +380,14 @@ void Expr_Assign::Compose(Composer& composer)
 
 String Expr_Assign::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetExprLeft()->ToString(ss);
-	if (!ss.IsCram()) rtn += ' ';
-	if (GetOperator()) rtn += GetOperator()->GetSymbol();
-	rtn += '=';
-	if (!ss.IsCram()) rtn += ' ';
-	rtn += GetExprRight()->ToString(ss);
-	return rtn;
+	String str;
+	str += GetExprLeft()->ToString(ss);
+	if (!ss.IsCram()) str += ' ';
+	if (GetOperator()) str += GetOperator()->GetSymbol();
+	str += '=';
+	if (!ss.IsCram()) str += ' ';
+	str += GetExprRight()->ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -417,12 +417,12 @@ void Expr_Member::ComposeForAssignment(
 
 String Expr_Member::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetExprTarget()->ToString(ss);
-	rtn += MemberModeToSymbol(GetMemberMode())->GetName();
-	rtn += GetSymbol()->ToString();
-	rtn += GetAttr().ToString(ss);
-	return rtn;
+	String str;
+	str += GetExprTarget()->ToString(ss);
+	str += MemberModeToSymbol(GetMemberMode())->GetName();
+	str += GetSymbol()->ToString();
+	str += GetAttr().ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -439,13 +439,13 @@ void Expr_Root::Compose(Composer& composer)
 
 String Expr_Root::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	if (ss.IsMultiLine()) {
 		String indent = MakeIndent(ss);
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			rtn += indent;
-			rtn += pExpr->ToString(ss);
-			rtn += '\n';
+			str += indent;
+			str += pExpr->ToString(ss);
+			str += '\n';
 		}
 	} else {
 		bool firstFlag = true;
@@ -453,13 +453,13 @@ String Expr_Root::ToString(const StringStyle& ss) const
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
-				rtn += ';';
-				if (!ss.IsCram()) rtn += ' ';
+				str += ';';
+				if (!ss.IsCram()) str += ' ';
 			}
-			rtn += pExpr->ToString(ss);
+			str += pExpr->ToString(ss);
 		}
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -479,65 +479,65 @@ void Expr_Block::Compose(Composer& composer)
 
 String Expr_Block::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	if (ss.IsMultiLine()) {
 		String indent = MakeIndent(ss);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
-		rtn += indent;
-		rtn += '{';
+		str += indent;
+		str += '{';
 		if (HasExprParam()) {
-			rtn += '|';
+			str += '|';
 			bool firstFlag = true;
 			for (const Expr* pExpr = GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 				if (firstFlag) {
 					firstFlag = false;
 				} else {
-					rtn += ',';
-					if (!ss.IsCram()) rtn += ' ';
+					str += ',';
+					if (!ss.IsCram()) str += ' ';
 				}
-				rtn += pExpr->ToString(ss);
+				str += pExpr->ToString(ss);
 			}
-			rtn += '|';
+			str += '|';
 		}
-		rtn += '\n';
+		str += '\n';
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			rtn += indentDown;
-			rtn += pExpr->ToString(ss);
-			rtn += '\n';
+			str += indentDown;
+			str += pExpr->ToString(ss);
+			str += '\n';
 		}
-		rtn += indent;
-		rtn += "}\n";
+		str += indent;
+		str += "}\n";
 	} else {
-		rtn += '{';
+		str += '{';
 		if (HasExprParam()) {
-			rtn += '|';
+			str += '|';
 			bool firstFlag = true;
 			for (const Expr* pExpr = GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 				if (firstFlag) {
 					firstFlag = false;
 				} else {
-					rtn += ',';
-					if (!ss.IsCram()) rtn += ' ';
+					str += ',';
+					if (!ss.IsCram()) str += ' ';
 				}
-				rtn += pExpr->ToString(ss);
+				str += pExpr->ToString(ss);
 			}
-			rtn += '|';
-			if (!ss.IsCram() && HasExprElem()) rtn += ' ';
+			str += '|';
+			if (!ss.IsCram() && HasExprElem()) str += ' ';
 		}
 		bool firstFlag = true;
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
-				rtn += ';';
-				if (!ss.IsCram()) rtn += ' ';
+				str += ';';
+				if (!ss.IsCram()) str += ' ';
 			}
-			rtn += pExpr->ToString(ss);
+			str += pExpr->ToString(ss);
 		}
-		rtn += '}';
+		str += '}';
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -551,39 +551,39 @@ void Expr_Iterer::Compose(Composer& composer)
 
 String Expr_Iterer::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	if (GetExprLinkElem().CountSequence() == 1) {
-		rtn += '(';
-		rtn += GetExprLinkElem().GetExprFirst()->ToString(ss);
-		rtn += ",)";
+		str += '(';
+		str += GetExprLinkElem().GetExprFirst()->ToString(ss);
+		str += ",)";
 	} else if (ss.IsMultiLine()) {
 		String indent = MakeIndent(ss);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
-		rtn += indent;
-		rtn += "(\n";
+		str += indent;
+		str += "(\n";
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			rtn += indentDown;
-			rtn += pExpr->ToString(ss);
-			rtn += '\n';
+			str += indentDown;
+			str += pExpr->ToString(ss);
+			str += '\n';
 		}
-		rtn += indent;
-		rtn += ")\n";
+		str += indent;
+		str += ")\n";
 	} else {
-		rtn += '(';
+		str += '(';
 		bool firstFlag = true;
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
-				rtn += ',';
-				if (!ss.IsCram()) rtn += ' ';
+				str += ',';
+				if (!ss.IsCram()) str += ' ';
 			}
-			rtn += pExpr->ToString(ss);
+			str += pExpr->ToString(ss);
 		}
-		rtn += ')';
+		str += ')';
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -608,35 +608,35 @@ void Expr_Lister::ComposeForAssignment(
 
 String Expr_Lister::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	if (ss.IsMultiLine()) {
 		String indent = MakeIndent(ss);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
-		rtn += indent;
-		rtn += "[\n";
+		str += indent;
+		str += "[\n";
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			rtn += indentDown;
-			rtn += pExpr->ToString(ss);
-			rtn += '\n';
+			str += indentDown;
+			str += pExpr->ToString(ss);
+			str += '\n';
 		}
-		rtn += indent;
-		rtn += "]\n";
+		str += indent;
+		str += "]\n";
 	} else {
-		rtn += '[';
+		str += '[';
 		bool firstFlag = true;
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
-				rtn += ',';
-				if (!ss.IsCram()) rtn += ' ';
+				str += ',';
+				if (!ss.IsCram()) str += ' ';
 			}
-			rtn += pExpr->ToString(ss);
+			str += pExpr->ToString(ss);
 		}
-		rtn += ']';
+		str += ']';
 	}
-	return rtn;
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -663,23 +663,23 @@ void Expr_Indexer::ComposeForAssignment(
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
 {
-	String rtn;
-	rtn += _pExprCar->ToString(ss);
-	rtn += '[';
+	String str;
+	str += _pExprCar->ToString(ss);
+	str += '[';
 	bool firstFlag = true;
 	for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (firstFlag) {
 			firstFlag = false;
 		} else {
-			rtn += ',';
-			if (!ss.IsCram()) rtn += ' ';
+			str += ',';
+			if (!ss.IsCram()) str += ' ';
 		}
-		rtn += pExpr->ToString(ss);
+		str += pExpr->ToString(ss);
 	}
-	rtn += ']';
-	rtn += strInsert;
-	rtn += GetAttr().ToString(ss);
-	return rtn;
+	str += ']';
+	str += strInsert;
+	str += GetAttr().ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -746,36 +746,36 @@ void Expr_Caller::ComposeForAssignment(
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
 	bool argListFlag = HasExprCdr() || !GetAttr().IsEmpty() || !HasExprOfBlock();
-	String rtn;
-	rtn += _pExprCar->ToString(ss);
+	String str;
+	str += _pExprCar->ToString(ss);
 	if (argListFlag) {
 		if (!ss.IsCram() && _pExprCar->IsType<Expr_Identifier>() &&
 			dynamic_cast<Expr_Identifier*>(_pExprCar.get())->GetSymbol()->IsFlowControl()) {
-			rtn += ' ';
+			str += ' ';
 		}
-		rtn += '(';
+		str += '(';
 		bool firstFlag = true;
 		for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (firstFlag) {
 				firstFlag = false;
 			} else {
-				rtn += ',';
-				if (!ss.IsCram()) rtn += ' ';
+				str += ',';
+				if (!ss.IsCram()) str += ' ';
 			}
-			rtn += pExpr->ToString(ss);
+			str += pExpr->ToString(ss);
 		}
-		rtn += ')';
+		str += ')';
 	}
-	rtn += GetAttr().ToString(ss);
+	str += GetAttr().ToString(ss);
 	if (HasExprOfBlock()) {
-		if (!ss.IsCram()) rtn += ' ';
-		rtn += GetExprOfBlock()->ToString(ss);
+		if (!ss.IsCram()) str += ' ';
+		str += GetExprOfBlock()->ToString(ss);
 	}
 	if (HasExprTrailer()) {
-		if (!ss.IsCram()) rtn += ' ';
-		rtn += GetExprTrailer()->ToString(ss);
+		if (!ss.IsCram()) str += ' ';
+		str += GetExprTrailer()->ToString(ss);
 	}
-	return rtn;
+	return str;
 }
 
 void Expr_Caller::SetExprTrailer(Expr_Caller* pExprTrailer)

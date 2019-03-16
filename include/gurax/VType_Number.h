@@ -77,9 +77,8 @@ public:
 			GetDouble() < dynamic_cast<const Value_Number*>(pValue)->GetDouble() :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return std::to_string(_num);
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& flags) const override;
 	virtual bool Format_u(Formatter& formatter, FormatterFlags& flags) const override;
 	virtual bool Format_b(Formatter& formatter, FormatterFlags& flags) const override;

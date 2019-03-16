@@ -108,9 +108,9 @@ String String::PickChar(size_t idx) const
 	const_iterator p = begin();
 	for ( ; p != end() && idx > 0; p = Forward(p), idx--) ;
 	String::const_iterator pEnd = Forward(p);
-	String rtn;
-	for ( ; p != pEnd; ++p) rtn.push_back(*p);
-	return rtn;
+	String str;
+	for ( ; p != pEnd; ++p) str.push_back(*p);
+	return str;
 }
 
 String::const_iterator String::Forward(const_iterator p, size_t nChars, size_t *pnCharsActual) const

@@ -82,12 +82,12 @@ bool DottedSymbol::AppendFromExpr(const Expr* pExpr)
 
 String DottedSymbol::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	for (const Symbol* pSymbol : _symbolList) {
-		if (!rtn.empty()) rtn += '.';
-		rtn += pSymbol->ToString();
+		if (!str.empty()) str += '.';
+		str += pSymbol->ToString();
 	}
-	return rtn;
+	return str;
 }
 
 }

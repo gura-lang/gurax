@@ -44,16 +44,21 @@ bool Value::IsInstanceOf(const VType& vtype) const
 
 String Value::ToStringDigest(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "<";
-	rtn += GetVType().MakeFullName();
+	String str;
+	_ToStringDigest(str, ss);
+	str += ">";
+	return str;
+}
+
+void Value::_ToStringDigest(String& str, const StringStyle& ss) const
+{
+	str += "<";
+	str += GetVType().MakeFullName();
 	if (!IsUndefined() && !IsNil()) {
 		char buff[64];
 		::sprintf(buff, ":%p", this);
-		rtn += buff;
+		str += buff;
 	}
-	rtn += ">";
-	return rtn;
 }
 
 Value* Value::DoCall(Processor& processor, Argument& argument)

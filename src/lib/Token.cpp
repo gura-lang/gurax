@@ -185,12 +185,12 @@ bool TokenStack::CheckBlockParamEnd() const
 
 String TokenStack::ToString(const StringStyle&) const
 {
-	String rtn;
+	String str;
 	for (auto ppToken = begin(); ppToken != end(); ppToken++) {
-		if (ppToken != begin()) rtn.append(" ");
-		rtn.append((*ppToken)->GetSymbol());
+		if (ppToken != begin()) str.append(" ");
+		str.append((*ppToken)->GetSymbol());
 	}
-	return rtn;
+	return str;
 }
 
 }

@@ -21,11 +21,11 @@ void VType_Member::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 String Value_Member::ToStringDetail(const StringStyle& ss) const
 {
-	String rtn;
-	//rtn += GetValueThis().ToStringDetail(ss);
-	//rtn += '.';
-	rtn += GetValueProp().ToStringDetail(ss);
-	return rtn;
+	String str;
+	//str += GetValueThis().ToStringDetail(ss);
+	//str += '.';
+	str += GetValueProp().ToStringDetail(ss);
+	return str;
 }
 
 }

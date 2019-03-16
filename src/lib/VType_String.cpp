@@ -24,6 +24,20 @@ Value* VType_String::DoCastFrom(const Value& value) const
 //------------------------------------------------------------------------------
 // Value_String
 //------------------------------------------------------------------------------
+String Value_String::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str += ":";
+	str += GetStringSTL().MakeQuoted(true);
+	return str;
+}
+
+String Value_String::ToStringDetail(const StringStyle& ss) const
+{
+	return GetStringSTL().MakeQuoted(true);
+}
+
 bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);

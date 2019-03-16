@@ -41,7 +41,7 @@ public:
 	// Copy constructor/operator
 	Value_String(const Value_String& src) :
 		Value_Object(src), _pStr(src._pStr->Reference()) {}
-	Value_String& operator=(const Value_String& src) = delete;
+		Value_String& operator=(const Value_String& src) = delete;
 	// Move constructor/operator
 	Value_String(Value_String&& src) = delete;
 	Value_String& operator=(Value_String&& src) noexcept = delete;
@@ -66,9 +66,8 @@ public:
 			String::IsLessThan(GetString(), dynamic_cast<const Value_String*>(pValue)->GetString()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return _pStr->GetStringSTL().MakeQuoted(true);
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };
 

@@ -35,11 +35,11 @@ void ArgSlot_Single::FeedValue(RefPtr<Value> pValue)
 
 String ArgSlot_Single::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetDeclArg().GetSymbol()->GetName();
-	rtn += ss.IsCram()? "=>" : " => ";
-	rtn += _pValue->ToString(ss);
-	return rtn;
+	String str;
+	str += GetDeclArg().GetSymbol()->GetName();
+	str += ss.IsCram()? "=>" : " => ";
+	str += _pValue->ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -60,11 +60,11 @@ void ArgSlot_Multiple::FeedValue(RefPtr<Value> pValue)
 
 String ArgSlot_Multiple::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetDeclArg().GetSymbol()->GetName();
-	rtn += ss.IsCram()? "=>" : " => ";
-	rtn += _pValue->GetValueOwner().ToString(ss);
-	return rtn;
+	String str;
+	str += GetDeclArg().GetSymbol()->GetName();
+	str += ss.IsCram()? "=>" : " => ";
+	str += _pValue->GetValueOwner().ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -102,8 +102,8 @@ void ArgSlot_Dict::FeedValue(RefPtr<Value> pValue)
 
 String ArgSlot_Dict::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	return rtn;
+	String str;
+	return str;
 }
 
 }

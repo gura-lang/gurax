@@ -14,23 +14,23 @@ DeclBlock::DeclBlock() : _pSymbol(Symbol::Empty), _pOccur(&Occur::Zero), _flags(
 
 String DeclBlock::FlagsToString(Flags flags)
 {
-	String rtn;
+	String str;
 	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
-			rtn += ':';
-			rtn += FlagToSymbol(flag)->GetName();
+			str += ':';
+			str += FlagToSymbol(flag)->GetName();
 		}
 	}
-	return rtn;
+	return str;
 }
 
 String DeclBlock::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	if (GetFlags() & Flag::Quote) rtn += '`';
-	rtn += GetSymbol()->GetName();
-	rtn += GetOccur().GetMarker();
-	return rtn;
+	String str;
+	if (GetFlags() & Flag::Quote) str += '`';
+	str += GetSymbol()->GetName();
+	str += GetOccur().GetMarker();
+	return str;
 }
 
 //------------------------------------------------------------------------------

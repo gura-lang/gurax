@@ -61,12 +61,12 @@ const PUnit* PUnit_Value::Exec(Processor& processor) const
 
 String PUnit_Value::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Value(";
-	rtn += GetValue()->ToString(StringStyle().Digest());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Value(";
+	str += GetValue()->ToString(StringStyle().Digest());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -87,12 +87,12 @@ const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 
 String PUnit_Lookup::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Lookup(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Lookup(`";
+	str += GetSymbol()->GetName();
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -110,12 +110,12 @@ const PUnit* PUnit_AssignToSymbol::Exec(Processor& processor) const
 
 String PUnit_AssignToSymbol::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "AssignToSymbol(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "AssignToSymbol(`";
+	str += GetSymbol()->GetName();
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -135,12 +135,12 @@ const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 
 String PUnit_AssignToDeclArg::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "AssignToDeclArg(`";
-	rtn += GetDeclArg().ToString(ss);
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "AssignToDeclArg(`";
+	str += GetDeclArg().ToString(ss);
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -157,12 +157,12 @@ const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 
 String PUnit_AssignFunction::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "AssignFunction(";
-	rtn += GetFunction().ToString(ss);
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "AssignFunction(";
+	str += GetFunction().ToString(ss);
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -184,12 +184,12 @@ const PUnit* PUnit_Cast::Exec(Processor& processor) const
 
 String PUnit_Cast::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Cast(";
-	rtn += GetVType().MakeFullName().c_str();
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Cast(";
+	str += GetVType().MakeFullName().c_str();
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -211,12 +211,12 @@ const PUnit* PUnit_UnaryOp::Exec(Processor& processor) const
 
 String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "UnaryOp(";
-	rtn += GetOperator()->GetSymbol();
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "UnaryOp(";
+	str += GetOperator()->GetSymbol();
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -240,12 +240,12 @@ const PUnit* PUnit_BinaryOp::Exec(Processor& processor) const
 
 String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "BinaryOp(";
-	rtn += GetOperator()->GetSymbol();
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "BinaryOp(";
+	str += GetOperator()->GetSymbol();
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -266,12 +266,12 @@ const PUnit* PUnit_Add::Exec(Processor& processor) const
 
 String PUnit_Add::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Add(";
-	rtn += std::to_string(GetAdded());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Add(";
+	str += std::to_string(GetAdded());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -288,10 +288,10 @@ const PUnit* PUnit_CreateList::Exec(Processor& processor) const
 
 String PUnit_CreateList::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "CreateList()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "CreateList()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -314,10 +314,10 @@ const PUnit* PUnit_AddList::Exec(Processor& processor) const
 
 String PUnit_AddList::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "AddValueList()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "AddValueList()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -335,11 +335,11 @@ const PUnit* PUnit_Index::Exec(Processor& processor) const
 
 String PUnit_Index::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "CreateIndex()";
-	rtn += GetAttr().ToString(ss);
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "CreateIndex()";
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -356,10 +356,10 @@ const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 
 String PUnit_FeedIndex::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "FeedIndex()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "FeedIndex()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -382,10 +382,10 @@ const PUnit* PUnit_IndexGet::Exec(Processor& processor) const
 
 String PUnit_IndexGet::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "IndexGet()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "IndexGet()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -405,10 +405,10 @@ const PUnit* PUnit_IndexSet::Exec(Processor& processor) const
 
 String PUnit_IndexSet::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "IndexSet()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "IndexSet()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -433,13 +433,13 @@ const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 
 String PUnit_PropGet::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "PropGet(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ")";
-	rtn += GetAttr().ToString(ss);
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "PropGet(`";
+	str += GetSymbol()->GetName();
+	str += ")";
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -457,13 +457,13 @@ const PUnit* PUnit_PropSet::Exec(Processor& processor) const
 
 String PUnit_PropSet::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "PropSet(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ")";
-	rtn += GetAttr().ToString(ss);
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "PropSet(`";
+	str += GetSymbol()->GetName();
+	str += ")";
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -493,13 +493,13 @@ const PUnit* PUnit_Member::Exec(Processor& processor) const
 
 String PUnit_Member::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Member(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ")";
-	rtn += GetAttr().ToString(ss);
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Member(`";
+	str += GetSymbol()->GetName();
+	str += ")";
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -525,11 +525,11 @@ const PUnit* PUnit_Argument::Exec(Processor& processor) const
 
 String PUnit_Argument::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Argument()";
-	rtn += GetAttr().ToString(ss);
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Argument()";
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -556,16 +556,16 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 
 String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "ArgSlot(`(";
-	rtn += GetExprSrc()->ToString(ss);
-	rtn += ")";
-	rtn += ss.GetComma();
-	rtn += "#";
-	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "ArgSlot(`(";
+	str += GetExprSrc()->ToString(ss);
+	str += ")";
+	str += ss.GetComma();
+	str += "#";
+	str += std::to_string(GetPUnitBranch()->GetSeqId());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -582,10 +582,10 @@ const PUnit* PUnit_FeedArgSlot::Exec(Processor& processor) const
 
 String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "FeedArgSlot()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "FeedArgSlot()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -621,18 +621,18 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 
 String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "ArgSlotNamed(`";
-	rtn += GetSymbol()->GetName();
-	rtn += ss.IsCram()? "=>" : " => `(";
-	rtn += GetExprSrc()->ToString(ss);
-	rtn += ")";
-	rtn += ss.GetComma();
-	rtn += "#";
-	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "ArgSlotNamed(`";
+	str += GetSymbol()->GetName();
+	str += ss.IsCram()? "=>" : " => `(";
+	str += GetExprSrc()->ToString(ss);
+	str += ")";
+	str += ss.GetComma();
+	str += "#";
+	str += std::to_string(GetPUnitBranch()->GetSeqId());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -649,10 +649,10 @@ const PUnit* PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 
 String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "FeedArgSlotNamed()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "FeedArgSlotNamed()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -680,10 +680,10 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 
 String PUnit_Call::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Call()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "Call()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -697,15 +697,15 @@ const PUnit* PUnit_Jump::Exec(Processor& processor) const
 
 String PUnit_Jump::ToString(const StringStyle& ss) const
 {
-	String rtn;
+	String str;
 	if (GetPopValueToDiscardFlag()) {
-		rtn += "PopValueToDiscard()";
-		rtn += ss.GetComma();
+		str += "PopValueToDiscard()";
+		str += ss.GetComma();
 	}
-	rtn += "Jump(#";
-	rtn += std::to_string(GetPUnitCont()->GetSeqId());
-	rtn += ")";
-	return rtn;
+	str += "Jump(#";
+	str += std::to_string(GetPUnitCont()->GetSeqId());
+	str += ")";
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -725,12 +725,12 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 
 String PUnit_JumpIf::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "JumpIf(#";
-	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "JumpIf(#";
+	str += std::to_string(GetPUnitBranch()->GetSeqId());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -750,12 +750,12 @@ const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 
 String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "JumpIfNot(#";
-	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "JumpIfNot(#";
+	str += std::to_string(GetPUnitBranch()->GetSeqId());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -776,12 +776,12 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 
 String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "NilJumpIf(#";
-	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "NilJumpIf(#";
+	str += std::to_string(GetPUnitBranch()->GetSeqId());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -802,12 +802,12 @@ const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 
 String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "NilJumpIfNot(#";
-	rtn += std::to_string(GetPUnitBranch()->GetSeqId());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "NilJumpIfNot(#";
+	str += std::to_string(GetPUnitBranch()->GetSeqId());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -822,10 +822,10 @@ const PUnit* PUnit_PopValueToDiscard::Exec(Processor& processor) const
 
 String PUnit_PopValueToDiscard::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "PopValueToDiscard()";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "PopValueToDiscard()";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -840,12 +840,12 @@ const PUnit* PUnit_RemoveValue::Exec(Processor& processor) const
 
 String PUnit_RemoveValue::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "RemoveValue(offset=";
-	rtn += std::to_string(GetOffset());
-	rtn += ")";
-	AppendInfoToString(rtn, ss);
-	return rtn;
+	String str;
+	str += "RemoveValue(offset=";
+	str += std::to_string(GetOffset());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -863,10 +863,10 @@ const PUnit* PUnit_Return::Exec(Processor& processor) const
 
 String PUnit_Return::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Return()";
-	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
-	return rtn;
+	String str;
+	str += "Return()";
+	if (GetPopValueToDiscardFlag()) str += ", PopValueToDiscard()";
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -882,10 +882,10 @@ const PUnit* PUnit_PushFrame_Block::Exec(Processor& processor) const
 
 String PUnit_PushFrame_Block::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "PushFrame_Block()";
-	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
-	return rtn;
+	String str;
+	str += "PushFrame_Block()";
+	if (GetPopValueToDiscardFlag()) str += ", PopValueToDiscard()";
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -901,10 +901,10 @@ const PUnit* PUnit_PopFrame::Exec(Processor& processor) const
 
 String PUnit_PopFrame::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "PopFrame()";
-	if (GetPopValueToDiscardFlag()) rtn += ", PopValueToDiscard()";
-	return rtn;
+	String str;
+	str += "PopFrame()";
+	if (GetPopValueToDiscardFlag()) str += ", PopValueToDiscard()";
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -918,9 +918,9 @@ const PUnit* PUnit_Terminate::Exec(Processor& processor) const
 
 String PUnit_Terminate::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "Terminate()";
-	return rtn;
+	String str;
+	str += "Terminate()";
+	return str;
 }
 
 }

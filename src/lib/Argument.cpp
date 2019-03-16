@@ -121,27 +121,27 @@ void Argument::AssignToFrame(Frame& frame) const
 
 String Argument::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetValueCar().ToString(StringStyle(ss).Digest());
-	rtn += '(';
+	String str;
+	str += GetValueCar().ToString(StringStyle(ss).Digest());
+	str += '(';
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		if (pArgSlot != GetArgSlotFirst()) rtn += ss.GetComma();
-		rtn += pArgSlot->ToString(StringStyle(ss).Digest());
+		if (pArgSlot != GetArgSlotFirst()) str += ss.GetComma();
+		str += pArgSlot->ToString(StringStyle(ss).Digest());
 	}
 	if (GetValueOfDict()) {
-		if (GetArgSlotFirst()) rtn += ss.GetComma();
-		rtn += "(";
-		rtn += GetValueOfDict()->ToString(StringStyle(ss).Digest());
-		rtn += ")%";
+		if (GetArgSlotFirst()) str += ss.GetComma();
+		str += "(";
+		str += GetValueOfDict()->ToString(StringStyle(ss).Digest());
+		str += ")%";
 	}
-	rtn += ')';
-	rtn += GetAttr().ToString(ss);
+	str += ')';
+	str += GetAttr().ToString(ss);
 	if (GetExprOfBlock()) {
-		rtn += ss.IsCram()? "{" : " {";
-		rtn += GetDeclCallable().GetDeclBlock().GetSymbol()->GetName();
-		rtn += "}";
+		str += ss.IsCram()? "{" : " {";
+		str += GetDeclCallable().GetDeclBlock().GetSymbol()->GetName();
+		str += "}";
 	}
-	return rtn;
+	return str;
 }
 
 }

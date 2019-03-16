@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Function::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += GetSymbol()->GetName();
-	rtn += GetDeclCallable().ToString(ss);
-	return rtn;
+	String str;
+	str += GetSymbol()->GetName();
+	str += GetDeclCallable().ToString(ss);
+	return str;
 }
 
 }

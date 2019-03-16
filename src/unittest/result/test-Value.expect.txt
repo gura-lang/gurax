@@ -1,13 +1,13 @@
 [Value]
-foo1:Number = 1.000000
-foo2:Number = 2.000000
+foo1:Number = 1
+foo2:Number = 2
 foo3:Nil = nil
 foo4:Bool = true
 foo5:Bool = false
 foo6:String = '6'
-foo7:Number = 7.000000
+foo7:Number = 7
 foo8:Undefined = undefined
-foo9:Number = 0.000000
+foo9:Number = 0
 fooA:String = ''
 Bool         1 1 0 0
 Number       1 0 1 0
