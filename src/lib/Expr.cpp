@@ -367,7 +367,7 @@ const Expr::TypeInfo Expr_Assign::typeInfo;
 bool Expr_Assign::DoPrepare()
 {
 	if (GetExprLeft()->IsType<Expr_Caller>()) {
-		Expr_Caller*pExprEx = dynamic_cast<Expr_Caller*>(GetExprLeft());
+		Expr_Caller* pExprEx = dynamic_cast<Expr_Caller*>(GetExprLeft());
 		return pExprEx->PrepareDeclCallable();
 	}
 	return true;

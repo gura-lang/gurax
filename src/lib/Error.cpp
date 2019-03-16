@@ -34,8 +34,9 @@ Error::Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoT
 {
 }
 
-Error::Error(const ErrorType& errorType, Expr *pExpr, String text) :
-	_errorType(errorType), _pExpr(pExpr), _pFileName(pExpr->GetPathNameSrcReferable()->Reference()),
+Error::Error(const ErrorType& errorType, Expr* pExpr, String text) :
+	_errorType(errorType), _pExpr(pExpr),
+	_pFileName(StringReferable::Reference(pExpr->GetPathNameSrcReferable())),
 	_lineNoTop(pExpr->GetLineNoTop()), _lineNoBtm(pExpr->GetLineNoBtm()), _text(std::move(text))
 {
 }
