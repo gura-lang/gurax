@@ -40,6 +40,7 @@
 #include "gurax/PUnit.h"
 #include "gurax/Random.h"
 #include "gurax/Referable.h"
+#include "gurax/Statements.h"
 #include "gurax/Stream.h"
 #include "gurax/Streams.h"
 #include "gurax/String.h"

@@ -37,6 +37,7 @@ add_library(guraxcore SHARED
 	PUnit.cpp
 	Random.cpp
 	Referable.cpp
+	Statements.cpp
 	Stream.cpp
 	Streams.cpp
 	String.cpp

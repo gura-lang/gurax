@@ -19,6 +19,7 @@ void Context::Prepare()
 	VType::PrepareBasic(GetFrame());
 	Value::PrepareBasic(GetFrame());
 	Functions::PrepareBasic(GetFrame());
+	Statements::PrepareBasic(GetFrame());
 }
 
 }
