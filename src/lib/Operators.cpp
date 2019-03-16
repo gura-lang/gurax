@@ -5,11 +5,33 @@
 
 namespace Gurax {
 
+// ~Number
+Gurax_ImplementOpPreUnary(Inv, Number)
+{
+	Int num = dynamic_cast<const Value_Number*>(&value)->GetInt();
+	return new Value_Number(~num);
+}
+
+// -Number
+Gurax_ImplementOpPreUnary(Neg, Number)
+{
+	Double num = dynamic_cast<const Value_Number*>(&value)->GetDouble();
+	return new Value_Number(-num);
+}
+
+// !Number
+Gurax_ImplementOpPreUnary(Not, Number)
+{
+	return Value::false_();
+}
+
+// +Number
 Gurax_ImplementOpPreUnary(Pos, Number)
 {
 	return value.Clone();
 }
 
+// Number + Number
 Gurax_ImplementOpBinary(Add, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
@@ -17,6 +39,7 @@ Gurax_ImplementOpBinary(Add, Number, Number)
 	return new Value_Number(numL + numR);
 }
 
+// Number == Number
 Gurax_ImplementOpBinary(Eq, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
@@ -24,6 +47,7 @@ Gurax_ImplementOpBinary(Eq, Number, Number)
 	return new Value_Bool(numL == numR);
 }
 
+// Number >= Number
 Gurax_ImplementOpBinary(Ge, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
@@ -31,6 +55,7 @@ Gurax_ImplementOpBinary(Ge, Number, Number)
 	return new Value_Bool(numL >= numR);
 }
 
+// Number > Number
 Gurax_ImplementOpBinary(Gt, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
@@ -38,6 +63,7 @@ Gurax_ImplementOpBinary(Gt, Number, Number)
 	return new Value_Bool(numL > numR);
 }
 
+// Number <= Number
 Gurax_ImplementOpBinary(Le, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
@@ -45,6 +71,7 @@ Gurax_ImplementOpBinary(Le, Number, Number)
 	return new Value_Bool(numL <= numR);
 }
 
+// Number < Number
 Gurax_ImplementOpBinary(Lt, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number*>(&valueL)->GetDouble();
@@ -54,6 +81,9 @@ Gurax_ImplementOpBinary(Lt, Number, Number)
 
 void Operators::Bootup()
 {
+	Gurax_AssignOpPreUnary(Inv, Number);
+	Gurax_AssignOpPreUnary(Neg, Number);
+	Gurax_AssignOpPreUnary(Not, Number);
 	Gurax_AssignOpPreUnary(Pos, Number);
 	Gurax_AssignOpBinary(Add, Number, Number);
 	Gurax_AssignOpBinary(Eq, Number, Number);

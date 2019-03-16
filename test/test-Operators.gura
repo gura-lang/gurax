@@ -1,0 +1,7 @@
+#!../build/gurax/gurax
+//Printf('%d\n', ~3)
+f(`x) = {
+	Println(x)
+}
+
+f(3 + 4)
