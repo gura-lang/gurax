@@ -139,6 +139,18 @@ Gurax_ImplementStatement(else_)
 	}
 }
 
+// for (`cond) {`block}
+Gurax_DeclareStatementAlias(for_, "for")
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(for_)
+{
+}
+
 // while (`cond) {`block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
@@ -222,13 +234,36 @@ Gurax_ImplementFunction(repeat)
 	return Value::nil();
 }
 
+// break
+Gurax_DeclareStatementAlias(break_, "break")
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+}
+
+Gurax_ImplementStatement(break_)
+{
+}
+
+// continue
+Gurax_DeclareStatementAlias(continue_, "continue")
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+}
+
+Gurax_ImplementStatement(continue_)
+{
+}
+
 void Statements::PrepareBasic(Frame& frame)
 {
 	Gurax_AssignStatement(if_);
 	Gurax_AssignStatement(elsif);
 	Gurax_AssignStatement(else_);
+	Gurax_AssignStatement(for_);
 	Gurax_AssignStatement(while_);
 	Gurax_AssignFunction(repeat);
+	Gurax_AssignStatement(break_);
+	Gurax_AssignStatement(continue_);
 }
 
 }
