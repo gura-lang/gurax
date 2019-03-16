@@ -18,6 +18,29 @@ Gurax_DeclareStatementAlias(if_, "if")
 
 Gurax_ImplementStatement(if_)
 {
+	SymbolList symbols;
+	if (const Expr* pExprError = pExprCaller->GetTrailerSymbols(symbols)) {
+		Error::IssueWith(ErrorType::SyntaxError, pExprError,
+						 "invalid format of if-elsif-else sequence");
+		return;
+	}
+	if (!symbols.empty()) {
+		auto ppSymbol = symbols.begin();
+		for ( ; ppSymbol + 1 != symbols.end(); ppSymbol++) {
+			const Symbol* pSymbol = *ppSymbol;
+			if (!pSymbol->IsIdentical(Gurax_Symbol(elsif))) {
+				Error::IssueWith(ErrorType::SyntaxError, pExprCaller,
+								 "invalid format of if-elsif-else sequence");
+				return;
+			}
+		}
+		const Symbol* pSymbol = *ppSymbol;
+		if (!(pSymbol->IsIdentical(Gurax_Symbol(elsif)) || pSymbol->IsIdentical(Gurax_Symbol(else_)))) {
+			Error::IssueWith(ErrorType::SyntaxError, pExprCaller,
+							 "invalid format of if-elsif-else sequence");
+			return;
+		}
+	}
 	if (pExprCaller->CountExprCdr() != 1) {
 		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
 						 "if-statement takes one argument");

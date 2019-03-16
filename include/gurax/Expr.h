@@ -707,6 +707,7 @@ public:
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
 	Expr_Caller* GetExprTrailerLast();
 	bool IsTrailer() const { return false; }
+	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
