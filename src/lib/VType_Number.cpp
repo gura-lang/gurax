@@ -28,6 +28,7 @@ String Value_Number::ToStringDigest(const StringStyle& ss) const
 		::sprintf(buff, ":%g", GetDouble());
 		str += buff;
 	} while (0);
+	str += ">";
 	return str;
 }
 

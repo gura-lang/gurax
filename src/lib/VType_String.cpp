@@ -30,6 +30,7 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 	_ToStringDigest(str, ss);
 	str += ":";
 	str += GetStringSTL().MakeQuoted(true);
+	str += ">";
 	return str;
 }
 
