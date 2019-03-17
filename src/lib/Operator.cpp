@@ -104,7 +104,7 @@ Value* Operator::EvalUnary(const Value& value) const
 	if (value.IsUndefined()) return Value::undefined();
 	const OpEntry* pOpEntry = LookupEntry(value.GetVType());
 	if (pOpEntry) return pOpEntry->EvalUnary(value);
-	Error::Issue(ErrorType::TypeError, "unsupported unary operation: %s %s",
+	Error::Issue(ErrorType::TypeError, "unsupported unary operation: %s%s",
 				 GetSymbol(), value.GetVType().MakeFullName().c_str());
 	return Value::undefined();
 }

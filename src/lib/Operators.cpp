@@ -31,6 +31,12 @@ Gurax_ImplementOpPreUnary(Pos, Number)
 	return value.Clone();
 }
 
+// `Expr
+Gurax_ImplementOpPreUnary(Quote, Expr)
+{
+	return value.Clone();
+}
+
 // Number + Number
 Gurax_ImplementOpBinary(Add, Number, Number)
 {
@@ -85,6 +91,7 @@ void Operators::Bootup()
 	Gurax_AssignOpPreUnary(Neg, Number);
 	Gurax_AssignOpPreUnary(Not, Number);
 	Gurax_AssignOpPreUnary(Pos, Number);
+	Gurax_AssignOpPreUnary(Quote, Expr);
 	Gurax_AssignOpBinary(Add, Number, Number);
 	Gurax_AssignOpBinary(Eq, Number, Number);
 	Gurax_AssignOpBinary(Ge, Number, Number);
