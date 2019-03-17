@@ -257,14 +257,14 @@ Gurax_ImplementStatement(continue_)
 
 void Statements::PrepareBasic(Frame& frame)
 {
-	Gurax_AssignStatement(if_);
-	Gurax_AssignStatement(elsif);
-	Gurax_AssignStatement(else_);
-	Gurax_AssignStatement(for_);
-	Gurax_AssignStatement(while_);
-	Gurax_AssignFunction(repeat);
-	Gurax_AssignStatement(break_);
-	Gurax_AssignStatement(continue_);
+	frame.Assign(Gurax_CreateStatement(if_));
+	frame.Assign(Gurax_CreateStatement(elsif));
+	frame.Assign(Gurax_CreateStatement(else_));
+	frame.Assign(Gurax_CreateStatement(for_));
+	frame.Assign(Gurax_CreateStatement(while_));
+	frame.Assign(Gurax_CreateFunction(repeat));
+	frame.Assign(Gurax_CreateStatement(break_));
+	frame.Assign(Gurax_CreateStatement(continue_));
 }
 
 }

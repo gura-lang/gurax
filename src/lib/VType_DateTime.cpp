@@ -13,7 +13,7 @@ VType_DateTime VTYPE_DateTime("Datetime");
 void VType_DateTime::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

@@ -38,16 +38,16 @@ public:
 	void SetFrameOuter(Frame* pFrame) { _pFrameOuter.reset(pFrame); }
 	const Frame* GetFrameOuter() const { return _pFrameOuter.get(); }
 	Value* LookupValue(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
-	bool AssignValue(const DottedSymbol& dottedSymbol, Value* pValue);
-	bool AssignModule(Module* pModule);
-	void AssignVType(VType& vtype);
-	void AssignFunction(Function* pFunction);
-	void AssignValue(const char* name, Value* pValue) { AssignValue(Symbol::Add(name), pValue); }
+	bool Assign(const DottedSymbol& dottedSymbol, Value* pValue);
+	void Assign(const char* name, Value* pValue) { Assign(Symbol::Add(name), pValue); }
+	bool Assign(Module* pModule);
+	void Assign(VType& vtype);
+	void Assign(Function* pFunction);
 	Value* LookupValue(const char* name) { return LookupValue(Symbol::Add(name)); }
 public:
 	// Virtual functions
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* LookupValue(const Symbol* pSymbol) const = 0;
 };
 
@@ -99,8 +99,8 @@ protected:
 	virtual ~Frame_ValueMap() override;
 public:
 	// Virtual functions of Frame
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -133,8 +133,8 @@ public:
 	Frame_Root();
 public:
 	// Virtual functions of Frame
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -152,8 +152,8 @@ public:
 	explicit Frame_VType(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -171,8 +171,8 @@ public:
 	explicit Frame_Function(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 
@@ -190,8 +190,8 @@ public:
 	explicit Frame_Block(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
-	virtual void AssignValue(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignValueOfArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* LookupValue(const Symbol* pSymbol) const override;
 };
 

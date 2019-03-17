@@ -13,7 +13,7 @@ VType_Attribute VTYPE_Attribute("Attribute");
 void VType_Attribute::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

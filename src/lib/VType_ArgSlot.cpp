@@ -13,7 +13,7 @@ VType_ArgSlot VTYPE_ArgSlot("ArgSlot");
 void VType_ArgSlot::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

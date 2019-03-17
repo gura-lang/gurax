@@ -14,7 +14,7 @@ VType_StringPtr VTYPE_StringPtr("StringPtr");
 void VType_StringPtr::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

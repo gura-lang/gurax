@@ -105,7 +105,7 @@ const PUnit* PUnit_AssignToSymbol::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(
 		GetPopValueToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
-	frame.AssignValue(GetSymbol(), pValueAssigned.release());
+	frame.Assign(GetSymbol(), pValueAssigned.release());
 	return GetPUnitCont();
 }
 
@@ -130,7 +130,7 @@ const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 		GetPopValueToDiscardFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
 	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
 	if (!pValueCasted) return nullptr;
-	frame.AssignValueOfArgument(GetDeclArg().GetSymbol(), pValueCasted->Reference());
+	frame.AssignFromArgument(GetDeclArg().GetSymbol(), pValueCasted->Reference());
 	return GetPUnitCont();
 }
 
@@ -152,7 +152,7 @@ const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
-	frame.AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
+	frame.Assign(GetFunction().GetSymbol(), pValueAssigned->Reference());
 	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
 	return GetPUnitCont();
 }

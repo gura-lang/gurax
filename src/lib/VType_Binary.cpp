@@ -13,7 +13,7 @@ VType_Binary VTYPE_Binary("Binary");
 void VType_Binary::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

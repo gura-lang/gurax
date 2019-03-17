@@ -13,7 +13,7 @@ VType_String VTYPE_String("String");
 void VType_String::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 Value* VType_String::DoCastFrom(const Value& value) const

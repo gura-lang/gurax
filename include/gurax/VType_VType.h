@@ -69,7 +69,7 @@ public:
 		return GetVTypeThis().GetFrame().LookupValue(pSymbol);
 	}
 	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
-		GetVTypeThis().GetFrame().AssignValue(pSymbol, pValue);
+		GetVTypeThis().GetFrame().Assign(pSymbol, pValue);
 	}
 };
 

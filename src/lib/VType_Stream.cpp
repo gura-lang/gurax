@@ -13,7 +13,7 @@ VType_Stream VTYPE_Stream("Stream");
 void VType_Stream::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

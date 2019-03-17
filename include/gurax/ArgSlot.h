@@ -48,7 +48,7 @@ public:
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
 	void AssignToFrame(Frame& frame) const {
 		if (IsDefined()) {
-			frame.AssignValueOfArgument(GetDeclArg().GetSymbol(), GetValue()->Reference());;
+			frame.AssignFromArgument(GetDeclArg().GetSymbol(), GetValue()->Reference());;
 		}
 	}
 public:

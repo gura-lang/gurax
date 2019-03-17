@@ -13,7 +13,7 @@ VType_Argument VTYPE_Argument("Argument");
 void VType_Argument::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

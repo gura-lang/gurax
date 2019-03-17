@@ -63,9 +63,9 @@ Gurax_ImplementFunction(Println)
 
 void Functions::PrepareBasic(Frame& frame)
 {
-	Gurax_AssignFunction(Print);
-	Gurax_AssignFunction(Printf);
-	Gurax_AssignFunction(Println);
+	frame.Assign(Gurax_CreateFunction(Print));
+	frame.Assign(Gurax_CreateFunction(Printf));
+	frame.Assign(Gurax_CreateFunction(Println));
 }
 
 }

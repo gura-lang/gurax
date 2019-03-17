@@ -13,7 +13,7 @@ VType_Undefined VTYPE_Undefined("Undefined");
 void VType_Undefined::DoPrepare(Frame& frame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

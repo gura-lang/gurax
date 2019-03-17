@@ -13,7 +13,7 @@ VType_Member VTYPE_Member("Member");
 void VType_Member::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

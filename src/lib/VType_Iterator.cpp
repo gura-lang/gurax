@@ -13,7 +13,7 @@ VType_Iterator VTYPE_Iterator("Iterator");
 void VType_Iterator::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

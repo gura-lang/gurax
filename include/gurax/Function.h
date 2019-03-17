@@ -8,6 +8,9 @@
 #include "Frame.h"
 #include "Argument.h"
 
+//------------------------------------------------------------------------------
+// Macros to declare functions
+//------------------------------------------------------------------------------
 #define Gurax_DeclareFunctionAlias(name, strName) \
 class Function_##name : public Function { \
 public: \
@@ -21,8 +24,7 @@ Function_##name::Function_##name(const char* name_) : Function(Function::Type::F
 #define Gurax_ImplementFunction(name) \
 Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 
-#define Gurax_AssignFunction(name) \
-frame.AssignFunction(new Function_##name())
+#define Gurax_CreateFunction(name) (new Function_##name())
 
 #define Gurax_DeclareStatementAlias(name, strName) \
 class Statement_##name : public Function { \
@@ -37,8 +39,7 @@ Statement_##name::Statement_##name(const char* name_) : Function(Function::Type:
 #define Gurax_ImplementStatement(name) \
 void Statement_##name::Compose(Composer& composer, Expr_Caller* pExprCaller) const
 
-#define Gurax_AssignStatement(name) \
-frame.AssignFunction(new Statement_##name())
+#define Gurax_CreateStatement(name) (new Statement_##name())
 
 namespace Gurax {
 

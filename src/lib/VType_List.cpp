@@ -13,7 +13,7 @@ VType_List VTYPE_List("List");
 void VType_List::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Mutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

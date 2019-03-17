@@ -13,7 +13,7 @@ VType_Nil VTYPE_Nil("Nil");
 void VType_Nil::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

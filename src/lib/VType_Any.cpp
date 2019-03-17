@@ -13,7 +13,7 @@ VType_Any VTYPE_Any("Any");
 void VType_Any::DoPrepare(Frame& frame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 Value* VType_Any::DoCastFrom(const Value& value) const

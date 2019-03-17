@@ -13,7 +13,7 @@ VType_Quote VTYPE_Quote("Quote");
 void VType_Quote::DoPrepare(Frame& frame)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
-	frame.AssignVType(*this);
+	frame.Assign(*this);
 }
 
 Value* VType_Quote::DoCastFrom(const Value& value) const

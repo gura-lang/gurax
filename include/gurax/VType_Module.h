@@ -70,7 +70,7 @@ public:
 		return GetModule().GetFrame().LookupValue(pSymbol);
 	}
 	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
-		GetModule().GetFrame().AssignValue(pSymbol, pValue);
+		GetModule().GetFrame().Assign(pSymbol, pValue);
 	}
 };
 

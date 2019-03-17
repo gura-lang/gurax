@@ -97,25 +97,25 @@ void Argument::AssignToFrame(Frame& frame) const
 	do {
 		// assign to symbol declared as dict%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();
-		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, GetValueOfDict()->Reference());
+		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(pSymbol, GetValueOfDict()->Reference());
 	} while (0);
 	do {
 		// assign to symbol declared as arg%%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
-		if (!pSymbol->IsEmpty()) frame.AssignValueOfArgument(pSymbol, new Value_Argument(Reference()));
+		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(pSymbol, new Value_Argument(Reference()));
 	} while (0);
 	if (GetExprOfBlock()) {
 		// assign to symbol declared as {block}
 		const DeclBlock& declBlock = GetDeclCallable().GetDeclBlock();
 		const Symbol* pSymbol = declBlock.GetSymbol();
 		if (declBlock.GetFlags() & DeclBlock::Flag::Quote) {
-			frame.AssignValue(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
+			frame.Assign(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
 		} else {
 			RefPtr<FunctionCustom>
 				pFunction(new FunctionCustom(
 							  Function::Type::Function, pSymbol, GetDeclCallable().Reference(),
 							  GetExprOfBlock()->GetPUnitTop()));
-			frame.AssignFunction(pFunction.release());
+			frame.Assign(pFunction.release());
 		}
 	}
 }
