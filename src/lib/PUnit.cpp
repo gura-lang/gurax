@@ -351,7 +351,11 @@ const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
 	index.FeedValue(pValue.release());
-	return Error::IsIssued()? nullptr : GetPUnitCont();
+	if (Error::IsIssued()) {
+		Error::GetErrorOwner().SetExpr(GetExprSrc());
+		return nullptr;
+	}
+	return GetPUnitCont();
 }
 
 String PUnit_FeedIndex::ToString(const StringStyle& ss) const
@@ -375,7 +379,10 @@ const PUnit* PUnit_IndexGet::Exec(Processor& processor) const
 	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
 	Index& index = pValueIndex->GetIndex();
 	RefPtr<Value> pValueElems(index.IndexGet());
-	if (Error::IsIssued()) return nullptr;
+	if (Error::IsIssued()) {
+		Error::GetErrorOwner().SetExpr(GetExprSrc());
+		return nullptr;
+	}
 	processor.PushValue(pValueElems.release());
 	return GetPUnitCont();
 }
@@ -398,7 +405,10 @@ const PUnit* PUnit_IndexSet::Exec(Processor& processor) const
 	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
 	Index& index = pValueIndex->GetIndex();
 	index.IndexSet(pValueElems->Reference());
-	if (Error::IsIssued()) return nullptr;
+	if (Error::IsIssued()) {
+		Error::GetErrorOwner().SetExpr(GetExprSrc());
+		return nullptr;
+	}
 	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueElems.release());
 	return GetPUnitCont();
 }
@@ -548,7 +558,11 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(new Value_Expr(GetExprSrc().Reference()));
-		return Error::IsIssued()? nullptr : GetPUnitBranch();
+		if (Error::IsIssued()) {
+			Error::GetErrorOwner().SetExpr(GetExprSrc());
+			return nullptr;
+		}
+		return GetPUnitBranch();
 	} else {
 		return GetPUnitCont();
 	}
@@ -577,7 +591,11 @@ const PUnit* PUnit_FeedArgSlot::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 	argument.FeedValue(pValue.release());
-	return Error::IsIssued()? nullptr : GetPUnitCont();
+	if (Error::IsIssued()) {
+		Error::GetErrorOwner().SetExpr(GetExprSrc());
+		return nullptr;
+	}
+	return GetPUnitCont();
 }
 
 String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
@@ -612,7 +630,11 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(GetExprAssigned()->Reference()));
-		return Error::IsIssued()? nullptr : GetPUnitBranch();
+		if (Error::IsIssued()) {
+			Error::GetErrorOwner().SetExpr(GetExprSrc());
+			return nullptr;
+		}
+		return GetPUnitBranch();
 	} else {
 		processor.PushValue(new Value_ArgSlot(pArgSlot->Reference()));
 		return GetPUnitCont();
@@ -644,7 +666,11 @@ const PUnit* PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopValue())->GetArgSlot();
 	argSlot.FeedValue(pValue.release());
-	return Error::IsIssued()? nullptr : GetPUnitCont();
+	if (Error::IsIssued()) {
+		Error::GetErrorOwner().SetExpr(GetExprSrc());
+		return nullptr;
+	}
+	return GetPUnitCont();
 }
 
 String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss) const
