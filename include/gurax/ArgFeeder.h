@@ -29,7 +29,7 @@ public:
 public:
 	bool IsValid() const { return _pArgSlot != nullptr; }
 public:
-	bool FeedValue(Value* pValue);
+	bool FeedValue(Frame& frame, Value* pValue);
 };
 
 }

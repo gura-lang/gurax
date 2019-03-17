@@ -23,7 +23,8 @@ static DeclCallable* ComposeDeclCallable(const char* src)
 
 static Argument* ComposeArgument(const char* src)
 {
-	return new Argument(Value::nil(), ComposeDeclCallable(src), Attribute::Empty->Reference(), Value::nil(), nullptr);
+	return new Argument(Value::nil(), ComposeDeclCallable(src),
+						Attribute::Empty->Reference(), Value::nil(), nullptr);
 }
 
 static void PrintArgument(const Argument &argument)
@@ -33,6 +34,7 @@ static void PrintArgument(const Argument &argument)
 
 Gurax_TesterEntry(Argument)
 {
+	Frame& frame = Context::GetFrame();
 	do {
 		RefPtr<Argument> pArgument(ComposeArgument("f()"));
 		PrintArgument(*pArgument);
@@ -40,28 +42,28 @@ Gurax_TesterEntry(Argument)
 	do {
 		RefPtr<Argument> pArgument(ComposeArgument("f(a, b, c)"));
 		PrintArgument(*pArgument);
-		pArgument->FeedValue(new Value_Number(3));
-		pArgument->FeedValue(new Value_Number(1));
-		pArgument->FeedValue(new Value_Number(4));
+		pArgument->FeedValue(frame, new Value_Number(3));
+		pArgument->FeedValue(frame, new Value_Number(1));
+		pArgument->FeedValue(frame, new Value_Number(4));
 		PrintArgument(*pArgument);
 	} while (0);
 	do {
 		RefPtr<Argument> pArgument(ComposeArgument("f(a+)"));
 		PrintArgument(*pArgument);
-		pArgument->FeedValue(new Value_Number(3));
-		pArgument->FeedValue(new Value_Number(1));
-		pArgument->FeedValue(new Value_Number(4));
+		pArgument->FeedValue(frame, new Value_Number(3));
+		pArgument->FeedValue(frame, new Value_Number(1));
+		pArgument->FeedValue(frame, new Value_Number(4));
 		PrintArgument(*pArgument);
 	} while (0);
 	do {
 		RefPtr<Argument> pArgument(ComposeArgument("f(a, b, c+)"));
 		PrintArgument(*pArgument);
-		pArgument->FeedValue(new Value_Number(3));
-		pArgument->FeedValue(new Value_Number(1));
-		pArgument->FeedValue(new Value_Number(4));
-		pArgument->FeedValue(new Value_Number(1));
-		pArgument->FeedValue(new Value_Number(5));
-		pArgument->FeedValue(new Value_Number(9));
+		pArgument->FeedValue(frame, new Value_Number(3));
+		pArgument->FeedValue(frame, new Value_Number(1));
+		pArgument->FeedValue(frame, new Value_Number(4));
+		pArgument->FeedValue(frame, new Value_Number(1));
+		pArgument->FeedValue(frame, new Value_Number(5));
+		pArgument->FeedValue(frame, new Value_Number(9));
 		PrintArgument(*pArgument);
 	} while (0);
 }

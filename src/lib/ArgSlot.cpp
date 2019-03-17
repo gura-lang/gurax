@@ -25,7 +25,7 @@ void ArgSlot_Single::ResetValue()
 	_pValue.reset(Value::undefined());
 }
 
-void ArgSlot_Single::FeedValue(RefPtr<Value> pValue)
+void ArgSlot_Single::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
 	pValue.reset(vtype.Cast(*pValue));
@@ -50,7 +50,7 @@ void ArgSlot_Multiple::ResetValue()
 	_pValue->GetValueTypedOwner().Clear();
 }
 
-void ArgSlot_Multiple::FeedValue(RefPtr<Value> pValue)
+void ArgSlot_Multiple::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
 	const VType& vtype = GetDeclArg().GetVType();
 	pValue.reset(vtype.Cast(*pValue));
@@ -95,7 +95,7 @@ void ArgSlot_Dict::ResetValue()
 	_pValueDict->Clear();
 }
 
-void ArgSlot_Dict::FeedValue(RefPtr<Value> pValue)
+void ArgSlot_Dict::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
 	_pValueDict->Assign(new Value_Symbol(_pSymbol), pValue.release());
 }

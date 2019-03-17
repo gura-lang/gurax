@@ -209,6 +209,7 @@ Gurax_DeclareFunction(repeat)
 
 Gurax_ImplementFunction(repeat)
 {
+	Frame& frame = processor.GetFrameCur();
 	// Arguments
 	ArgPicker args(argument);
 	int cnt = args.IsDefined()? args.PickInt() : -1;
@@ -219,14 +220,14 @@ Gurax_ImplementFunction(repeat)
 	if (cnt < 0) {
 		for (int i = 0; ; ++i) {
 			ArgFeeder args(*pArgOfBlock);
-			if (args.IsValid()) args.FeedValue(new Value_Number(i));
+			if (args.IsValid()) args.FeedValue(frame, new Value_Number(i));
 			pFuncOfBlock->DoEvalVoid(processor, *pArgOfBlock);
 			if (Error::IsIssued()) return Value::nil();
 		}
 	} else {
 		for (int i = 0; i < cnt; ++i) {
 			ArgFeeder args(*pArgOfBlock);
-			if (args.IsValid()) args.FeedValue(new Value_Number(i));
+			if (args.IsValid()) args.FeedValue(frame, new Value_Number(i));
 			pFuncOfBlock->DoEvalVoid(processor, *pArgOfBlock);
 			if (Error::IsIssued()) return Value::nil();
 		}

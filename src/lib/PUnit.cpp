@@ -75,8 +75,9 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 {
+	Frame& frame = processor.GetFrameCur();
 	if (GetPopValueToDiscardFlag()) return GetPUnitCont();
-	const Value* pValue = processor.GetFrameCur().LookupValue(GetSymbol());
+	const Value* pValue = frame.LookupValue(GetSymbol());
 	if (!pValue) {
 		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return nullptr;
@@ -149,8 +150,9 @@ String PUnit_AssignToDeclArg::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 {
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
-	processor.GetFrameCur().AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
+	frame.AssignValue(GetFunction().GetSymbol(), pValueAssigned->Reference());
 	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueAssigned->Reference());
 	return GetPUnitCont();
 }
@@ -348,6 +350,7 @@ String PUnit_Index::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 {
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
 	index.FeedValue(pValue.release());
@@ -557,7 +560,8 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		argument.FeedValue(new Value_Expr(GetExprSrc().Reference()));
+		Frame& frame = processor.GetFrameCur();
+		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 		if (Error::IsIssued()) {
 			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			return nullptr;
@@ -588,9 +592,10 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedArgSlot::Exec(Processor& processor) const
 {
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
-	argument.FeedValue(pValue.release());
+	argument.FeedValue(frame, pValue.release());
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		return nullptr;
@@ -629,7 +634,8 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		pArgSlot->FeedValue(new Value_Expr(GetExprAssigned()->Reference()));
+		Frame& frame = processor.GetFrameCur();
+		pArgSlot->FeedValue(frame, new Value_Expr(GetExprAssigned()->Reference()));
 		if (Error::IsIssued()) {
 			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			return nullptr;
@@ -663,9 +669,10 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 {
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopValue())->GetArgSlot();
-	argSlot.FeedValue(pValue.release());
+	argSlot.FeedValue(frame, pValue.release());
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		return nullptr;

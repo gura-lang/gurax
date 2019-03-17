@@ -76,9 +76,9 @@ public:
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
 	void ResetAllValues();
-	void FeedValue(Value* pValue) {
+	void FeedValue(Frame& frame, Value* pValue) {
 		if (!_pArgSlotToFeed) return;
-		_pArgSlotToFeed->FeedValue(pValue);
+		_pArgSlotToFeed->FeedValue(frame, pValue);
 		_pArgSlotToFeed = _pArgSlotToFeed->Advance();
 	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
