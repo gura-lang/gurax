@@ -18,7 +18,8 @@ Gurax_DeclareMethod(Expr, Eval)
 
 Gurax_ImplementMethod(Expr, Eval)
 {
-	::printf("%s\n", argument.GetValueThis().ToString().c_str());
+	auto& valueThis = argument.GetValueThis<Value_Expr>();
+	::printf("%s\n", valueThis.ToString().c_str());
 	return Value::nil();
 }
 

@@ -62,7 +62,8 @@ public:
 	const ArgSlot* GetArgSlotFirst() const { return _pArgSlotFirst.get(); }
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
-	Value& GetValueThis() { return *_pValueThis; }
+	template<typename T_Value>
+	T_Value& GetValueThis() { return dynamic_cast<T_Value&>(*_pValueThis); }
 	bool HasBlock() const { return _pExprOfBlock.get() != nullptr; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	Function* CreateFunctionOfBlock(Frame& frameParent) const;

@@ -22,7 +22,7 @@ void VType_Member::DoPrepare(Frame& frame)
 String Value_Member::ToStringDetail(const StringStyle& ss) const
 {
 	String str;
-	//str += GetValueThis().ToStringDetail(ss);
+	//str += GetValueThis<Value>().ToStringDetail(ss);
 	//str += '.';
 	str += GetValueProp().ToStringDetail(ss);
 	return str;
