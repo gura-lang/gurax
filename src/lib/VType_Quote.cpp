@@ -16,6 +16,11 @@ void VType_Quote::DoPrepare(Frame& frame)
 	frame.AssignVType(*this);
 }
 
+Value* VType_Quote::DoCastFrom(const Value& value) const
+{
+	return value.IsInstanceOf(VTYPE_Expr)? value.Reference() : nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_Quote
 //------------------------------------------------------------------------------

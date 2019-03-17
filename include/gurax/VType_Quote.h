@@ -15,6 +15,7 @@ class VType_Quote : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frame) override;
+	virtual Value* DoCastFrom(const Value& value) const override;
 };
 
 extern VType_Quote VTYPE_Quote;

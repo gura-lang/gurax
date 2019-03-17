@@ -75,12 +75,17 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 
 Value* VType::Cast(const Value& value) const
 {
-	return value.IsInstanceOf(*this)? value.Reference() : DoCastFrom(value);
+	if (value.IsInstanceOf(*this)) return value.Reference();
+	Value* pValueCasted = DoCastFrom(value);
+	if (!pValueCasted) {
+		Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",
+					 value.GetVType().MakeFullName().c_str(), MakeFullName().c_str());
+	}
+	return pValueCasted;
 }
 
 Value* VType::DoCastFrom(const Value& value) const
 {
-	Error::Issue(ErrorType::ValueError, "failed to cast to %s", MakeFullName().c_str());
 	return nullptr;
 }
 
