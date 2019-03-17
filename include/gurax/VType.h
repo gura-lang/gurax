@@ -68,8 +68,8 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
-	Frame_VType& GetFrame() { return *_pFrame; }
-	const Frame_VType& GetFrame() const { return *_pFrame; }
+	Frame& GetFrame() { return *_pFrame; }
+	const Frame& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	void AssignPropHandler(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
@@ -78,6 +78,10 @@ public:
 	void DoPropSet(Value* pValueTarget, const Symbol* pSymbol, Value* pValue, const Attribute& attr) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value) const;
+	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
+	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
+	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
+	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
 public:
 	static void PrepareBasic(Frame& frame);
 public:

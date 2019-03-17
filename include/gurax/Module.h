@@ -41,6 +41,11 @@ public:
 	}
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
+	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
+	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
+	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
+	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Module& module) const { return this == &module; }
 	bool IsEqualTo(const Module& module) const { return IsIdentical(module); }
