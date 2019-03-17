@@ -263,8 +263,12 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 
 void Expr_UnaryOp::Compose(Composer& composer)
 {
-	GetExprChild()->Compose(composer);			// [Value]
-	composer.Add_UnaryOp(this, GetOperator());	// [ValueResult]
+	if (GetOperator()->GetRawFlag()) {
+		composer.Add_Value(this, new Value_Expr(GetExprChild()->Reference()));	// [Value]
+	} else {
+		GetExprChild()->Compose(composer);					// [Value]
+	}
+	composer.Add_UnaryOp(this, GetOperator());				// [ValueResult]
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -315,8 +319,13 @@ const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 
 void Expr_BinaryOp::Compose(Composer& composer)
 {
-	GetExprLeft()->Compose(composer);			// [ValueLeft]
-	GetExprRight()->Compose(composer);			// [ValueLeft ValueRight]
+	if (GetOperator()->GetRawFlag()) {
+		composer.Add_Value(this, new Value_Expr(GetExprLeft()->Reference()));	// [ValueLeft]
+		composer.Add_Value(this, new Value_Expr(GetExprRight()->Reference()));	// [ValueLeft ValueRight]
+	} else {
+		GetExprLeft()->Compose(composer);		// [ValueLeft]
+		GetExprRight()->Compose(composer);		// [ValueLeft ValueRight]
+	}
 	composer.Add_BinaryOp(this, GetOperator());	// [ValueResult]
 }
 

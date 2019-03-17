@@ -185,6 +185,7 @@ private:
 	OpStyle _opStyle;
 	const char* _symbol;
 	OpType _opType;
+	bool _rawFlag;
 	bool _binaryFlag;
 	OpEntryMap _opEntryMap;
 private:
@@ -268,7 +269,7 @@ public:
 	static Operator* math_unitstep;
 public:
 	// Constructor
-	Operator(OpStyle opStyle, const char* symbol, OpType opType);
+	Operator(OpStyle opStyle, const char* symbol, OpType opType, bool rawFlag = false);
 	// Copy constructor/operator
 	Operator(const Operator& src) = delete;
 	Operator& operator=(const Operator& src) = delete;
@@ -281,6 +282,7 @@ public:
 	OpStyle GetStyle() const			{ return _opStyle; }
 	const char* GetSymbol() const		{ return _symbol; }
 	OpType GetType() const				{ return _opType; }
+	bool GetRawFlag() const				{ return _rawFlag; }
 	bool IsType(OpType opType) const	{ return _opType == opType; }
 	bool IsUnary() const				{ return !_binaryFlag; }
 	bool IsBinary() const				{ return _binaryFlag; }

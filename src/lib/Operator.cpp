@@ -15,7 +15,7 @@ Operator* Operator::Inv				= new Operator(OpStyle::OpPreUnary,		"~",			OpType::I
 Operator* Operator::Neg				= new Operator(OpStyle::OpPreUnary,		"-",			OpType::Neg);
 Operator* Operator::Not				= new Operator(OpStyle::OpPreUnary,		"!",			OpType::Not);
 Operator* Operator::Pos				= new Operator(OpStyle::OpPreUnary,		"+",			OpType::Pos);
-Operator* Operator::Quote			= new Operator(OpStyle::OpPreUnary,		"`",			OpType::Quote);
+Operator* Operator::Quote			= new Operator(OpStyle::OpPreUnary,		"`",			OpType::Quote, true);
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::OpPostUnary,	"%",			OpType::PostMod);
 Operator* Operator::PostModMod		= new Operator(OpStyle::OpPostUnary,	"%%",			OpType::PostModMod);
@@ -26,7 +26,7 @@ Operator* Operator::PostSeq			= new Operator(OpStyle::OpPostUnary,	"..",			OpTyp
 // Binary operators
 Operator* Operator::Add				= new Operator(OpStyle::OpBinary,		"+",			OpType::Add);
 Operator* Operator::And				= new Operator(OpStyle::OpBinary,		"&",			OpType::And);
-Operator* Operator::AndAnd			= new Operator(OpStyle::OpBinary,		"&&",			OpType::AndAnd);
+Operator* Operator::AndAnd			= new Operator(OpStyle::OpBinary,		"&&",			OpType::AndAnd, true);
 Operator* Operator::Cmp				= new Operator(OpStyle::OpBinary,		"<=>",			OpType::Cmp);
 Operator* Operator::Concat			= new Operator(OpStyle::OpBinary,		"|+|",			OpType::Concat);
 Operator* Operator::Contains		= new Operator(OpStyle::OpBinary,		"in",			OpType::Contains);
@@ -46,7 +46,7 @@ Operator* Operator::ModMod			= new Operator(OpStyle::OpBinary,		"%%",			OpType::
 Operator* Operator::Mul				= new Operator(OpStyle::OpBinary,		"*",			OpType::Mul);
 Operator* Operator::Ne				= new Operator(OpStyle::OpBinary,		"!=",			OpType::Ne);
 Operator* Operator::Or				= new Operator(OpStyle::OpBinary,		"|",			OpType::Or);
-Operator* Operator::OrOr			= new Operator(OpStyle::OpBinary,		"||",			OpType::OrOr);
+Operator* Operator::OrOr			= new Operator(OpStyle::OpBinary,		"||",			OpType::OrOr, true);
 Operator* Operator::Pair			= new Operator(OpStyle::OpBinary,		"=>",			OpType::Pair);
 Operator* Operator::Pow				= new Operator(OpStyle::OpBinary,		"**",			OpType::Pow);
 Operator* Operator::Seq				= new Operator(OpStyle::OpBinary,		"..",			OpType::Seq);
@@ -87,8 +87,8 @@ Operator* Operator::math_tan		= new Operator(OpStyle::MathUnary,		"tan",			OpTyp
 Operator* Operator::math_tanh		= new Operator(OpStyle::MathUnary,		"tanh",			OpType::math_tanh);
 Operator* Operator::math_unitstep	= new Operator(OpStyle::MathUnary,		"unitstep",		OpType::math_unitstep);
 
-Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType) :
-	_opStyle(opStyle), _symbol(symbol), _opType(opType),
+Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType, bool rawFlag) :
+	_opStyle(opStyle), _symbol(symbol), _opType(opType), _rawFlag(rawFlag),
 	_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary)
 {
 	_operatorTbl[static_cast<size_t>(opType)] = this;

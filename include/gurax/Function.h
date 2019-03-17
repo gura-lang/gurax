@@ -11,6 +11,23 @@
 //------------------------------------------------------------------------------
 // Macros to declare functions
 //------------------------------------------------------------------------------
+// Declaration/implementation/creation of Statement
+#define Gurax_DeclareStatementAlias(name, strName) \
+class Statement_##name : public Function { \
+public: \
+	Statement_##name(const char* name_ = strName); \
+	virtual void Compose(Composer& composer, Expr_Caller* pExprCaller) const override; \
+}; \
+Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
+
+#define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
+
+#define Gurax_ImplementStatement(name) \
+void Statement_##name::Compose(Composer& composer, Expr_Caller* pExprCaller) const
+
+#define Gurax_CreateStatement(name) (new Statement_##name())
+
+// Declaration/implementation/creation of Function
 #define Gurax_DeclareFunctionAlias(name, strName) \
 class Function_##name : public Function { \
 public: \
@@ -26,20 +43,21 @@ Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateFunction(name) (new Function_##name())
 
-#define Gurax_DeclareStatementAlias(name, strName) \
-class Statement_##name : public Function { \
+// Declaration/implementation/creation of Method
+#define Gurax_DeclareMethodAlias(nameVType, name, strName)	\
+class Method_##nameVType##_##name : public Function { \
 public: \
-	Statement_##name(const char* name_ = strName); \
-	virtual void Compose(Composer& composer, Expr_Caller* pExprCaller) const override; \
+	Method_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
 }; \
-Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Function::Type::Method, name_) \
 
-#define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
+#define Gurax_DeclareMethod(nameVType, name) Gurax_DeclareMethodAlias(nameVType, name, #name)
 
-#define Gurax_ImplementStatement(name) \
-void Statement_##name::Compose(Composer& composer, Expr_Caller* pExprCaller) const
+#define Gurax_ImplementMethod(nameVType, name) \
+Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
-#define Gurax_CreateStatement(name) (new Statement_##name())
+#define Gurax_CreateMethod(nameVType, name) (new Method_##nameVType##_##name())
 
 namespace Gurax {
 
