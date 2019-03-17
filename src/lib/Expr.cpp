@@ -264,11 +264,15 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		composer.Add_Value(this, new Value_Expr(GetExprChild()->Reference()));	// [Value]
+		PUnit* pPUnit = composer.AddF_Value(
+			this, new Value_Expr(GetExprChild()->Reference()));	// [Value]
+		GetExprChild()->Compose(composer);
+		composer.Add_Return(this);
+		pPUnit->SetPUnitCont(composer.PeekPUnitCont());
 	} else {
-		GetExprChild()->Compose(composer);					// [Value]
+		GetExprChild()->Compose(composer);						// [Value]
 	}
-	composer.Add_UnaryOp(this, GetOperator());				// [ValueResult]
+	composer.Add_UnaryOp(this, GetOperator());					// [ValueResult]
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -320,8 +324,16 @@ const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 void Expr_BinaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		composer.Add_Value(this, new Value_Expr(GetExprLeft()->Reference()));	// [ValueLeft]
-		composer.Add_Value(this, new Value_Expr(GetExprRight()->Reference()));	// [ValueLeft ValueRight]
+		PUnit* pPUnitLeft = composer.AddF_Value(
+			this, new Value_Expr(GetExprLeft()->Reference()));	// [ValueLeft]
+		GetExprLeft()->Compose(composer);
+		composer.Add_Return(this);
+		pPUnitLeft->SetPUnitCont(composer.PeekPUnitCont());
+		PUnit* pPUnitRight = composer.AddF_Value(
+			this, new Value_Expr(GetExprRight()->Reference()));	// [ValueLeft ValueRight]
+		GetExprRight()->Compose(composer);
+		composer.Add_Return(this);
+		pPUnitRight->SetPUnitCont(composer.PeekPUnitCont());
 	} else {
 		GetExprLeft()->Compose(composer);		// [ValueLeft]
 		GetExprRight()->Compose(composer);		// [ValueLeft ValueRight]
