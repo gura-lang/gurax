@@ -35,6 +35,7 @@ protected:
 	// Destructor
 	virtual ~ArgSlot() = default;
 public:
+	DeclArg& GetDeclArg() { return *_pDeclArg; }
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 	bool IsVType(const VType& vtype) const { return _pDeclArg->IsVType(vtype); }
 	bool IsMatched(const Symbol* pSymbol) const {

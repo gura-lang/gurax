@@ -135,7 +135,6 @@ bool DeclArg::FixVType(Frame& frame)
 
 Value* DeclArg::Cast(Frame& frame, const Value& value)
 {
-	::printf("DeclArg::Cast()\n");
 	if (GetVType().IsIdentical(VTYPE_Undefined) && !FixVType(frame)) {
 		Error::Issue(ErrorType::TypeError,
 					 "unknown value type: %s", GetDottedSymbol().ToString().c_str());

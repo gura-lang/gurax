@@ -27,8 +27,7 @@ void ArgSlot_Single::ResetValue()
 
 void ArgSlot_Single::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
-	const VType& vtype = GetDeclArg().GetVType();
-	pValue.reset(vtype.Cast(*pValue));
+	pValue.reset(GetDeclArg().Cast(frame, *pValue));
 	if (Error::IsIssued()) return;
 	_pValue.reset(pValue.release());
 }
@@ -52,8 +51,7 @@ void ArgSlot_Multiple::ResetValue()
 
 void ArgSlot_Multiple::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
-	const VType& vtype = GetDeclArg().GetVType();
-	pValue.reset(vtype.Cast(*pValue));
+	pValue.reset(GetDeclArg().Cast(frame, *pValue));
 	if (Error::IsIssued()) return;
 	_pValue->GetValueTypedOwner().Add(pValue.release());
 }
