@@ -8,6 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
+const Expr* Expr::Empty = nullptr;
+
+void Expr::Bootup()
+{
+	Empty = new Expr_Empty();
+}
+
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;
@@ -65,7 +72,7 @@ void Expr::ComposeForArgSlot(Composer& composer)
 void Expr::ComposeForAssignment(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
-	Error::IssueWith(ErrorType::InvalidOperation, this, "invalid assignment");
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 //------------------------------------------------------------------------------
@@ -132,6 +139,11 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	}
 	return true;
 }
+
+//------------------------------------------------------------------------------
+// Expr_Empty
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_Empty::typeInfo;
 
 //------------------------------------------------------------------------------
 // Expr_Node
@@ -315,7 +327,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 		return;
 	}
 	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::ArgumentError, this,
+		Error::IssueWith(ErrorType::ArgumentError, *this,
 						 "named argument must be specified by a symbol");
 		return;
 	}
@@ -729,11 +741,11 @@ void Expr_Caller::ComposeForAssignment(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
 	if (pOperator) {
-		Error::IssueWith(ErrorType::SyntaxError, this, "operator can not be applied in function assigment");
+		Error::IssueWith(ErrorType::SyntaxError, *this, "operator can not be applied in function assigment");
 		return;
 	}
 	if (!GetExprCar()->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::SyntaxError, this, "identifier is expected");
+		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());

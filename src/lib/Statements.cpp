@@ -20,7 +20,7 @@ Gurax_ImplementStatement(if_)
 {
 	SymbolList symbols;
 	if (const Expr* pExprError = pExprCaller->GetTrailerSymbols(symbols)) {
-		Error::IssueWith(ErrorType::SyntaxError, pExprError,
+		Error::IssueWith(ErrorType::SyntaxError, *pExprError,
 						 "invalid format of if-elsif-else sequence");
 		return;
 	}
@@ -29,20 +29,20 @@ Gurax_ImplementStatement(if_)
 		for ( ; ppSymbol + 1 != symbols.end(); ppSymbol++) {
 			const Symbol* pSymbol = *ppSymbol;
 			if (!pSymbol->IsIdentical(Gurax_Symbol(elsif))) {
-				Error::IssueWith(ErrorType::SyntaxError, pExprCaller,
+				Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
 								 "invalid format of if-elsif-else sequence");
 				return;
 			}
 		}
 		const Symbol* pSymbol = *ppSymbol;
 		if (!(pSymbol->IsIdentical(Gurax_Symbol(elsif)) || pSymbol->IsIdentical(Gurax_Symbol(else_)))) {
-			Error::IssueWith(ErrorType::SyntaxError, pExprCaller,
+			Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
 							 "invalid format of if-elsif-else sequence");
 			return;
 		}
 	}
 	if (pExprCaller->CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
 						 "if-statement takes one argument");
 		return;
 	}
@@ -83,7 +83,7 @@ Gurax_DeclareStatementAlias(elsif, "elsif")
 Gurax_ImplementStatement(elsif)
 {
 	if (pExprCaller->CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
 						 "elsif-statement takes one argument");
 		return;
 	}
@@ -123,12 +123,12 @@ Gurax_DeclareStatementAlias(else_, "else")
 Gurax_ImplementStatement(else_)
 {
 	if (pExprCaller->CountExprCdr() != 0) {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
 						 "else-statement takes no argument");
 		return;
 	}
 	if (pExprCaller->HasExprTrailer()) {
-		Error::IssueWith(ErrorType::SyntaxError, pExprCaller,
+		Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
 						 "invalid format of if-elsif-else sequence");
 		return;
 	}
@@ -162,7 +162,7 @@ Gurax_DeclareStatementAlias(while_, "while")
 Gurax_ImplementStatement(while_)
 {
 	if (pExprCaller->CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
 						 "while-statement takes one argument");
 		return;
 	}
@@ -193,7 +193,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_RemoveValue(pExprCaller, 1);						// [ValueLast]
 		composer.Add_PopFrame(pExprCaller);
 	} else {
-		Error::IssueWith(ErrorType::ArgumentError, pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
 						 "invalid number of block parameters");
 		return;
 	}

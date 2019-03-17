@@ -95,6 +95,8 @@ protected:
 	RefPtr<WeakPtr> _pwExprParent;
 	const PUnit* _pPUnitTop;
 public:
+	static const Expr* Empty;
+public:
 	// Constructor
 	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo), _pPUnitTop(nullptr) {}
 	// Copy constructor/operator
@@ -107,6 +109,7 @@ protected:
 	// Destructor
 	virtual ~Expr() = default;
 public:
+	static void Bootup();
 	void SetSourceInfo(StringReferable *pPathNameSrc, int lineNoTop, int lineNoBtm) {
 		_pPathNameSrc.reset(pPathNameSrc);
 		_lineNoTop = lineNoTop, _lineNoBtm = lineNoBtm;
@@ -224,6 +227,21 @@ public:
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
+};
+
+//------------------------------------------------------------------------------
+// Expr_Empty
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Empty : public Expr {
+public:
+	static const TypeInfo typeInfo;
+public:
+	Expr_Empty() : Expr(typeInfo) {}
+public:
+	// Virtual functions of Expr
+	virtual bool Traverse(Visitor& visitor) override { return false; }
+	virtual void Compose(Composer& composer) override {}
+	virtual String ToString(const StringStyle& ss) const override { return String::Empty; }
 };
 
 //------------------------------------------------------------------------------

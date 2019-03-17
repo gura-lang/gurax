@@ -29,25 +29,25 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::PostMod)) {
 				if (!_pSymbolOfDict->IsEmpty()) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "duplicated declaration of dictionary argument");
 					return false;
 				}
 				if (!pExprEx->GetExprChild()->IsType<Expr_Identifier>()) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "invalid format of dictionary argument");
 					return false;
 				}
 				const Expr_Identifier* pExprIdentifier =
 					dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild());
 				if (!pExprIdentifier->IsPureSymbol()) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "dictionary argument cannot have attributes");
 					return false;
 				}
 				const Symbol* pSymbol = pExprIdentifier->GetSymbol();
 				if (IsDeclaredSymbol(pSymbol)) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "duplicated symbol declaration: %s", pSymbol->GetName());
 					return false;
 				}
@@ -55,25 +55,25 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				continue;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostModMod)) {
 				if (!_pSymbolOfAccessor->IsEmpty()) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "duplicated declaration of argument accessor");
 					return false;
 				}
 				if (!pExprEx->GetExprChild()->IsType<Expr_Identifier>()) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "invalid format of argument accessor");
 					return false;
 				}
 				const Expr_Identifier* pExprIdentifier =
 					dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild());
 				if (!pExprIdentifier->IsPureSymbol()) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "argument accessor cannot have attributes");
 					return false;
 				}
 				const Symbol* pSymbol = pExprIdentifier->GetSymbol();
 				if (IsDeclaredSymbol(pSymbol)) {
-					Error::IssueWith(ErrorType::DeclarationError, pExpr,
+					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "duplicated symbol declaration: %s", pSymbol->GetName());
 					return false;
 				}
@@ -84,7 +84,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr));
 		if (!pDeclArg) return false;
 		if (IsDeclaredSymbol(pDeclArg->GetSymbol())) {
-			Error::IssueWith(ErrorType::DeclarationError, pExpr,
+			Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 							 "duplicated symbol declaration: %s", pDeclArg->GetSymbol()->GetName());
 			return false;
 		}
@@ -99,13 +99,13 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 	if (pExprOfBlock) {
 		const char* strError = "invalid format of block declaration";
 		if (pExprOfBlock->HasExprParam()) {
-			Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
+			Error::IssueWith(ErrorType::DeclarationError, *pExprOfBlock, strError);
 			return false;
 		}
 		Flags flags = DeclBlock::Flag::None;
 		const DeclBlock::Occur* pOccur = nullptr;
 		if (pExprOfBlock->CountExprElem() != 1) {
-			Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
+			Error::IssueWith(ErrorType::DeclarationError, *pExprOfBlock, strError);
 			return false;
 		}
 		const Expr* pExpr = pExprOfBlock->GetExprLinkElem().GetExprFirst();
@@ -113,18 +113,18 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 			if (pExprEx->GetOperator()->IsType(OpType::Quote)) {
 				if (flags & DeclBlock::Flag::Quote) {
-					Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
+					Error::IssueWith(ErrorType::DeclarationError, *pExprOfBlock, strError);
 					return false;
 				}
 				flags |= DeclBlock::Flag::Quote;
 			} else if (pExprEx->GetOperator()->IsType(OpType::PostQuestion)) {
 				if (pOccur) {
-					Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
+					Error::IssueWith(ErrorType::DeclarationError, *pExprOfBlock, strError);
 					return false;
 				}
 				pOccur = &DeclBlock::Occur::ZeroOrOnce;
 			} else {
-				Error::IssueWith(ErrorType::DeclarationError, pExprOfBlock, strError);
+				Error::IssueWith(ErrorType::DeclarationError, *pExprOfBlock, strError);
 				return false;
 			}
 			pExpr = pExprEx->GetExprChild();
@@ -134,13 +134,13 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(pExpr);
 			const Symbol* pSymbol = pExprEx->GetSymbol();
 			if (IsDeclaredSymbol(pSymbol)) {
-				Error::IssueWith(ErrorType::DeclarationError, pExpr,
+				Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 								 "duplicated symbol declaration: %s", pSymbol->GetName());
 				return false;
 			}
 			GetDeclBlock().SetSymbol(pSymbol);
 		} else {
-			Error::IssueWith(ErrorType::DeclarationError, pExpr, strError);
+			Error::IssueWith(ErrorType::DeclarationError, *pExpr, strError);
 			return false;
 		}
 	}

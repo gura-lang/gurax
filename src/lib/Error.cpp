@@ -24,13 +24,14 @@ bool Error::_errorIssuedFlag = false;
 ErrorOwner* Error::_pErrorOwnerGlobal = nullptr;
 
 Error::Error(const ErrorType& errorType, String text) :
-	_errorType(errorType), _lineNoTop(0), _lineNoBtm(0), _text(std::move(text))
+	_errorType(errorType), _pExpr(Expr::Empty->Reference()),
+	_lineNoTop(0), _lineNoBtm(0), _text(std::move(text))
 {
 }
 
 Error::Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text) :
-	_errorType(errorType), _pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm),
-	_text(std::move(text))
+	_errorType(errorType), _pExpr(Expr::Empty->Reference()),
+	_pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _text(std::move(text))
 {
 }
 
@@ -70,12 +71,12 @@ String Error::MakeMessage() const
 	return str;
 }
 
-void Error::SetExpr(Expr* pExpr)
+void Error::SetExpr(const Expr& expr)
 {
-	_pExpr.reset(pExpr);
-	_pFileName.reset(pExpr->GetPathNameSrcReferable()->Reference());
-	_lineNoTop = pExpr->GetLineNoTop();
-	_lineNoBtm = pExpr->GetLineNoBtm();
+	_pExpr.reset(expr.Reference());
+	_pFileName.reset(expr.GetPathNameSrcReferable()->Reference());
+	_lineNoTop = expr.GetLineNoTop();
+	_lineNoBtm = expr.GetLineNoBtm();
 }
 
 void Error::Clear()
@@ -94,6 +95,12 @@ void Error::Print(Stream& stream)
 //------------------------------------------------------------------------------
 // ErrorList
 //------------------------------------------------------------------------------
+void ErrorList::SetExpr(const Expr& expr)
+{
+	for (Error* pError : *this) {
+		if (pError->GetExpr().IsType<Expr_Empty>()) pError->SetExpr(expr);
+	}
+}
 
 //------------------------------------------------------------------------------
 // ErrorOwner

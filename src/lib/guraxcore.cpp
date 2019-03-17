@@ -13,6 +13,7 @@ void Initialize()
 	DeclArg::Bootup();
 	DeclCallable::Bootup();
 	Error::Bootup();
+	Expr::Bootup();
 	Operators::Bootup();
 	Random::Bootup();
 	String::Bootup();

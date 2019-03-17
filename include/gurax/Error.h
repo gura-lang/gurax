@@ -36,6 +36,8 @@ public:
 // ErrorList
 //------------------------------------------------------------------------------
 class ErrorList : public std::vector<Error*> {
+public:
+	void SetExpr(const Expr& expr);
 };
 
 //------------------------------------------------------------------------------
@@ -62,7 +64,7 @@ public:
 	Gurax_DeclareReferable(Error);
 private:
 	const ErrorType& _errorType;
-	RefPtr<Expr> _pExpr;				// maybe nullptr
+	RefPtr<Expr> _pExpr;
 	RefPtr<StringReferable> _pFileName;	// maybe nullptr
 	int _lineNoTop;
 	int _lineNoBtm;
@@ -87,8 +89,8 @@ protected:
 public:
 	static void Bootup();
 	String MakeMessage() const;
-	const Expr* GetExpr() const { return _pExpr.get(); }
-	void SetExpr(Expr* pExpr);
+	const Expr& GetExpr() const { return *_pExpr; }
+	void SetExpr(const Expr& expr);
 	const ErrorType& GetErrorType() const { return _errorType; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }
@@ -118,11 +120,11 @@ public:
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
-	static void IssueWith(const ErrorType& errorType, const Expr* pExpr, const char* format, const Args&... args) {
+	static void IssueWith(const ErrorType& errorType, const Expr& expr, const char* format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
 		_pErrorOwnerGlobal->SetSilentFlag();
 		_pErrorOwnerGlobal->push_back(
-			new Error(errorType, pExpr->Reference(), String().Printf(format, args...)));
+			new Error(errorType, expr.Reference(), String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
 		_errorIssuedFlag = true;
 	}

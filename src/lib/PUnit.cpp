@@ -351,7 +351,7 @@ const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
 	index.FeedValue(pValue.release());
-	return GetPUnitCont();
+	return Error::IsIssued()? nullptr : GetPUnitCont();
 }
 
 String PUnit_FeedIndex::ToString(const StringStyle& ss) const
@@ -547,8 +547,8 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		argument.FeedValue(new Value_Expr(GetExprSrc()->Reference()));
-		return GetPUnitBranch();
+		argument.FeedValue(new Value_Expr(GetExprSrc().Reference()));
+		return Error::IsIssued()? nullptr : GetPUnitBranch();
 	} else {
 		return GetPUnitCont();
 	}
@@ -558,7 +558,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "ArgSlot(`(";
-	str += GetExprSrc()->ToString(ss);
+	str += GetExprSrc().ToString(ss);
 	str += ")";
 	str += ss.GetComma();
 	str += "#";
@@ -577,7 +577,7 @@ const PUnit* PUnit_FeedArgSlot::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
 	argument.FeedValue(pValue.release());
-	return GetPUnitCont();
+	return Error::IsIssued()? nullptr : GetPUnitCont();
 }
 
 String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
@@ -612,7 +612,7 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 		return nullptr;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		pArgSlot->FeedValue(new Value_Expr(GetExprAssigned()->Reference()));
-		return GetPUnitBranch();
+		return Error::IsIssued()? nullptr : GetPUnitBranch();
 	} else {
 		processor.PushValue(new Value_ArgSlot(pArgSlot->Reference()));
 		return GetPUnitCont();
@@ -625,7 +625,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	str += "ArgSlotNamed(`";
 	str += GetSymbol()->GetName();
 	str += ss.IsCram()? "=>" : " => `(";
-	str += GetExprSrc()->ToString(ss);
+	str += GetExprSrc().ToString(ss);
 	str += ")";
 	str += ss.GetComma();
 	str += "#";
@@ -644,7 +644,7 @@ const PUnit* PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopValue())->GetArgSlot();
 	argSlot.FeedValue(pValue.release());
-	return GetPUnitCont();
+	return Error::IsIssued()? nullptr : GetPUnitCont();
 }
 
 String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss) const
@@ -665,7 +665,7 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 	Argument& argument = pValue->GetArgument();
 	RefPtr<Value> pValueResult(argument.DoCall(processor));
 	if (Error::IsIssued()) {
-		for (auto pError : Error::GetErrorOwner()) pError->SetExpr(GetExprSrc()->Reference());
+		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		return nullptr;
 	}
 	if (argument.GetPUnitCont()) {
