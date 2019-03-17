@@ -72,7 +72,6 @@ public:
 	const Frame& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
-	void AssignPropHandler(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
 	Value* DoPropGet(Value* pValueTarget, const Symbol* pSymbol, const Attribute& attr) const;
 	void DoPropSet(Value* pValueTarget, const Symbol* pSymbol, Value* pValue, const Attribute& attr) const;
@@ -82,6 +81,7 @@ public:
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
+	void Assign(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
 public:
 	static void PrepareBasic(Frame& frame);
 public:

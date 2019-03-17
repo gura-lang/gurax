@@ -6,6 +6,21 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// String#Len()
+Gurax_DeclareMethod(String, Len)
+{
+	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+}
+
+Gurax_ImplementMethod(String, Len)
+{
+	auto& valueThis = argument.GetValueThis<Value_String>();
+	return new Value_Number(valueThis.GetStringSTL().size());
+}
+
+//------------------------------------------------------------------------------
 // VType_String
 //------------------------------------------------------------------------------
 VType_String VTYPE_String("String");
@@ -14,6 +29,8 @@ void VType_String::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
+	Assign(Gurax_CreateMethod(String, Len));
+	//Assign(Gurax_CreatePropHandler(String, Len));
 }
 
 Value* VType_String::DoCastFrom(const Value& value) const

@@ -6,10 +6,8 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Expr
+// Implementation of method
 //------------------------------------------------------------------------------
-VType_Expr VTYPE_Expr("Expr");
-
 // Expr#Eval()
 Gurax_DeclareMethod(Expr, Eval)
 {
@@ -22,6 +20,11 @@ Gurax_ImplementMethod(Expr, Eval)
 	::printf("%s\n", valueThis.ToString().c_str());
 	return Value::nil();
 }
+
+//------------------------------------------------------------------------------
+// VType_Expr
+//------------------------------------------------------------------------------
+VType_Expr VTYPE_Expr("Expr");
 
 void VType_Expr::DoPrepare(Frame& frame)
 {
