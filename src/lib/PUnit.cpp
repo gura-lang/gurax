@@ -77,7 +77,7 @@ const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	if (GetPopValueToDiscardFlag()) return GetPUnitCont();
-	const Value* pValue = frame.LookupValue(GetSymbol());
+	const Value* pValue = frame.Lookup(GetSymbol());
 	if (!pValue) {
 		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
 		return nullptr;

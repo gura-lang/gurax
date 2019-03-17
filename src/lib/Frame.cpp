@@ -8,13 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
-Value* Frame::LookupValue(const DottedSymbol& dottedSymbol, size_t nTail) const
+Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail) const
 {
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
 	if (symbolList.size() <= nTail) return nullptr;
 	auto ppSymbol = symbolList.begin();
 	const Symbol* pSymbol = *ppSymbol++;
-	Value* pValue = LookupValue(pSymbol);
+	Value* pValue = Lookup(pSymbol);
 	while (pValue && ppSymbol + nTail != symbolList.end()) {
 		const Symbol* pSymbol = *ppSymbol++;
 		pValue = pValue->DoPropGet(pSymbol, *Attribute::Empty);
@@ -26,7 +26,7 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 {
 	if (dottedSymbol.IsEmpty()) return false;
 	if (dottedSymbol.IsDotted()) {
-		Value* pValueTarget = LookupValue(dottedSymbol, 1);
+		Value* pValueTarget = Lookup(dottedSymbol, 1);
 		if (!pValueTarget) return false;
 		pValueTarget->DoPropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
 	} else {
@@ -91,7 +91,7 @@ void Frame_ValueMap::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pValueMap->Assign(pSymbol, pValue);
 }
 
-Value* Frame_ValueMap::LookupValue(const Symbol* pSymbol) const
+Value* Frame_ValueMap::Lookup(const Symbol* pSymbol) const
 {
 	return _pValueMap->Lookup(pSymbol);
 }
@@ -118,9 +118,9 @@ void Frame_Root::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	// nothing to do
 }
 
-Value* Frame_Root::LookupValue(const Symbol* pSymbol) const
+Value* Frame_Root::Lookup(const Symbol* pSymbol) const
 {
-	return _pFrameOuter->LookupValue(pSymbol);
+	return _pFrameOuter->Lookup(pSymbol);
 }
 
 //------------------------------------------------------------------------------
@@ -140,11 +140,11 @@ void Frame_VType::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	// nothing to do
 }
 
-Value* Frame_VType::LookupValue(const Symbol* pSymbol) const
+Value* Frame_VType::Lookup(const Symbol* pSymbol) const
 {
-	Value* pValue = _pFrameLocal->LookupValue(pSymbol);
+	Value* pValue = _pFrameLocal->Lookup(pSymbol);
 	if (pValue) return pValue;
-	return _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
 }
 
 //------------------------------------------------------------------------------
@@ -166,13 +166,13 @@ void Frame_Function::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->Assign(pSymbol, pValue);
 }
 
-Value* Frame_Function::LookupValue(const Symbol* pSymbol) const
+Value* Frame_Function::Lookup(const Symbol* pSymbol) const
 {
 	if (_pFrameLocal) {
-		Value* pValue = _pFrameLocal->LookupValue(pSymbol);
+		Value* pValue = _pFrameLocal->Lookup(pSymbol);
 		if (pValue) return pValue;
 	}
-	return _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
 }
 
 //------------------------------------------------------------------------------
@@ -192,11 +192,11 @@ void Frame_Block::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->Assign(pSymbol, pValue);
 }
 
-Value* Frame_Block::LookupValue(const Symbol* pSymbol) const
+Value* Frame_Block::Lookup(const Symbol* pSymbol) const
 {
-	Value* pValue = _pFrameLocal->LookupValue(pSymbol);
+	Value* pValue = _pFrameLocal->Lookup(pSymbol);
 	if (pValue) return pValue;
-	return _pFrameOuter? _pFrameOuter->LookupValue(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
 }
 
 }

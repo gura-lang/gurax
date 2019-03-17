@@ -125,7 +125,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 
 bool DeclArg::FixVType(Frame& frame)
 {
-	Value* pValue = frame.LookupValue(GetDottedSymbol());
+	Value* pValue = frame.Lookup(GetDottedSymbol());
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		_pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		return true;

@@ -37,18 +37,18 @@ protected:
 public:
 	void SetFrameOuter(Frame* pFrame) { _pFrameOuter.reset(pFrame); }
 	const Frame* GetFrameOuter() const { return _pFrameOuter.get(); }
-	Value* LookupValue(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
+	Value* Lookup(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
 	bool Assign(const DottedSymbol& dottedSymbol, Value* pValue);
 	void Assign(const char* name, Value* pValue) { Assign(Symbol::Add(name), pValue); }
 	bool Assign(Module* pModule);
 	void Assign(VType& vtype);
 	void Assign(Function* pFunction);
-	Value* LookupValue(const char* name) { return LookupValue(Symbol::Add(name)); }
+	Value* Lookup(const char* name) { return Lookup(Symbol::Add(name)); }
 public:
 	// Virtual functions
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual Value* LookupValue(const Symbol* pSymbol) const = 0;
+	virtual Value* Lookup(const Symbol* pSymbol) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+	virtual Value* Lookup(const Symbol* pSymbol) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -135,7 +135,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+	virtual Value* Lookup(const Symbol* pSymbol) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+	virtual Value* Lookup(const Symbol* pSymbol) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+	virtual Value* Lookup(const Symbol* pSymbol) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -192,7 +192,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* LookupValue(const Symbol* pSymbol) const override;
+	virtual Value* Lookup(const Symbol* pSymbol) const override;
 };
 
 }

@@ -66,7 +66,7 @@ public:
 		return GetVTypeThis().ToString(ss);
 	}
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const override {
-		return GetVTypeThis().GetFrame().LookupValue(pSymbol);
+		return GetVTypeThis().GetFrame().Lookup(pSymbol);
 	}
 	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
 		GetVTypeThis().GetFrame().Assign(pSymbol, pValue);
