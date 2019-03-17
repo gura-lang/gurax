@@ -49,10 +49,12 @@ void Processor_Normal::Run(const PUnit* pPUnit)
 //------------------------------------------------------------------------------
 void Processor_Debug::Run(const PUnit* pPUnit)
 {
+	StringStyle ss;
+	ss.Digest();
 	while (pPUnit) {
 		::printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 		pPUnit = pPUnit->Exec(*this);
-		::printf("%s\n", GetValueStack().ToString().c_str());
+		::printf("%s\n", GetValueStack().ToString(ss).c_str());
 	}
 }
 

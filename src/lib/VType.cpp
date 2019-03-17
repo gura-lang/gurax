@@ -14,7 +14,7 @@ VType VType::Empty("");
 VType::VType(const char* name) :
 	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0),
-	_pFrame(new Frame_VType(nullptr))
+	_pFrame(new Frame_VType(nullptr)), _pPropHandlerMap(new PropHandlerMap())
 {
 }
 
@@ -68,9 +68,11 @@ DottedSymbol* VType::MakeDottedSymbol() const
 
 const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 {
-	const PropHandler* pPropHandler = GetPropHandlerMap().Lookup(pSymbol);
-	if (!pPropHandler) pPropHandler = GetVTypeInherited().LookupPropHandler(pSymbol);
-	return pPropHandler;
+	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInherited()) {
+		const PropHandler* pPropHandler = pVType->GetPropHandlerMap().Lookup(pSymbol);
+		if (pPropHandler) return pPropHandler;
+	}
+	return nullptr;
 }
 
 Value* VType::Cast(const Value& value) const

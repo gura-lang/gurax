@@ -32,7 +32,7 @@ protected:
 	const Symbol* _pSymbol;
 	Flags _flags;
 	RefPtr<Frame_VType> _pFrame;
-	RefPtr<Frame::WeakPtr> _pwFrameParent;
+	RefPtr<Frame::WeakPtr> _pwFrameParent;		// may be nullptr
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 private:
 	static SeqId _seqIdNext;
@@ -54,7 +54,7 @@ public:
 	SeqId GetSeqId() const { return _seqId; }
 	void SetAttrs(VType& vtypeInherited, Flags flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-	VType& GetVTypeInherited() const { return *_pVTypeInherited; }
+	VType* GetVTypeInherited() const { return _pVTypeInherited; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }

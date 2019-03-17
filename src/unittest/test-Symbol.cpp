@@ -17,8 +17,8 @@ void Test_Add()
 	const Symbol* Sym_foo1 = Symbol::Add("foo");
 	const Symbol* Sym_foo2 = Symbol::Add("foo");
 	const Symbol* Sym_foo3 = Symbol::Add("foo");
-	//::printf("%d %d %d\n", Sym_foo1->GetUniqId(), Sym_foo2->GetUniqId(), Sym_foo3->GetUniqId());
 	::printf("%d\n", Sym_foo1->IsIdentical(Sym_foo2));
+	::printf("%d\n", Sym_foo1->IsIdentical(Sym_foo3));
 }
 
 void Test_SymbolList()

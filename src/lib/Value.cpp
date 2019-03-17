@@ -36,7 +36,7 @@ bool Value::GetBool() const
 
 bool Value::IsInstanceOf(const VType& vtype) const
 {
-	for (const VType *pVType = &GetVType(); pVType != nullptr; pVType = &pVType->GetVTypeInherited()) {
+	for (const VType *pVType = &GetVType(); pVType != nullptr; pVType = pVType->GetVTypeInherited()) {
 		if (pVType->IsIdentical(vtype)) return true;
 	}
 	return false;
