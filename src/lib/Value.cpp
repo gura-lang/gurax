@@ -81,18 +81,20 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
-Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr) const
+Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	return pPropHandler? pPropHandler->DoGetValue(*this, attr) : GetVType().GetFrame().Lookup(pSymbol);
 }
 
-void Value::DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr)
+bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (pPropHandler) {
-		pPropHandler->DoPutValue(*this, pValue, attr);
+		pPropHandler->DoSetValue(*this, pValue.release(), attr);
+		return true;
 	}
+	return false;
 }
 
 bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const

@@ -49,6 +49,9 @@ class Method_##nameVType##_##name : public Function { \
 public: \
 	Method_##nameVType##_##name(const char* name_ = strName); \
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
+	static Value_##nameVType& GetValueThis(Argument& argument) { \
+		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
+	} \
 }; \
 Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Function::Type::Method, name_) \
 

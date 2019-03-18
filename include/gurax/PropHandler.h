@@ -6,6 +6,47 @@
 #include "Attribute.h"
 #include "Symbol.h"
 
+//------------------------------------------------------------------------------
+// Macros to declare PropHandler
+//------------------------------------------------------------------------------
+#define Gurax_DeclarePropertyAlias_R(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override {} \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable)
+
+#define Gurax_DeclareProperty_R(nameVType, name) Gurax_DeclarePropertyAlias_R(nameVType, name, #name)
+
+#define Gurax_DeclarePropertyAlias_RW(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override; \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable | Flag::Writable)
+
+#define Gurax_DeclareProperty_RW(nameVType, name) Gurax_DeclarePropertyAlias_RW(nameVType, name, #name)
+
+#define Gurax_ImplementPropertyGetter(nameVType, name) \
+Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
+
+#define Gurax_ImplementPropertySetter(nameVType, name) \
+void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const
+
+#define Gurax_CreateProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -46,8 +87,8 @@ public:
 	const Flags GegFlags() const { return _flags; }
 public:
 	// Virtual functions
-	virtual Value* DoGetValue(const Value& valueTarget, const Attribute& attr) const = 0;
-	virtual void DoPutValue(Value& valueTarget, const Value* pValue, const Attribute& attr) const = 0;
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;
+	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const = 0;
 };
 
 //------------------------------------------------------------------------------

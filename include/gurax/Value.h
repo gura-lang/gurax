@@ -115,8 +115,8 @@ public:
 	virtual Value* DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, Value* pValue);
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const;
-	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr);
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr);
+	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 public:
 	// Virtual functions for Formatter
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;

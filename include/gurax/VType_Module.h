@@ -66,11 +66,12 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetModule().ToString(ss);
 	}
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) const override {
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override {
 		return GetModule().GetFrame().Lookup(pSymbol);
 	}
-	virtual void DoPropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) override {
-		GetModule().GetFrame().Assign(pSymbol, pValue);
+	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override {
+		GetModule().GetFrame().Assign(pSymbol, pValue.release());
+		return true;
 	}
 };
 

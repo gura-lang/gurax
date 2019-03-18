@@ -462,7 +462,10 @@ const PUnit* PUnit_PropSet::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr());
+	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
+		IssueError(ErrorType::ValueError, "failed to set symbol: %s", GetSymbol()->GetName());
+		return nullptr;
+	}
 	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueProp.release());
 	return GetPUnitCont();
 }

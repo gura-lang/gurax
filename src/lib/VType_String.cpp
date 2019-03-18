@@ -3,24 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-// Declaration/implementation/creation of PropHandler
-#define Gurax_DeclarePropertyAlias_R(nameVType, name, strName)	\
-class PropHandler_##nameVType##_##name : public PropHandler { \
-public: \
-	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	virtual Value* DoGetValue(const Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoPutValue(Value& valueTarget, const Value* pValue, const Attribute& attr) const override {} \
-}; \
-PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable)
-
-#define Gurax_DeclareProperty_R(nameVType, name) Gurax_DeclarePropertyAlias_R(nameVType, name, #name)
-
-#define Gurax_ImplementPropertyGetter(nameVType, name) \
-Value* PropHandler_##nameVType##_##name::DoGetValue(const Value& valueTarget, const Attribute& attr) const
-
-#define Gurax_CreateProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
-
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -34,21 +16,37 @@ Gurax_DeclareMethod(String, Len)
 
 Gurax_ImplementMethod(String, Len)
 {
-	auto& valueThis = argument.GetValueThis<Value_String>();
+	auto& valueThis = GetValueThis(argument);
 	return new Value_Number(valueThis.GetStringSTL().size());
 }
 
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-Gurax_DeclarePropertyAlias_R(String, len, "len")
+Gurax_DeclareProperty_R(String, len)
 {
 	Declare(VTYPE_Number, Flag::None);
 }
 
 Gurax_ImplementPropertyGetter(String, len)
 {
-	return new Value_Number(0);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetStringSTL().size());
+}
+
+Gurax_DeclareProperty_RW(String, hoge)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertySetter(String, hoge)
+{
+}
+
+Gurax_ImplementPropertyGetter(String, hoge)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetStringSTL().size());
 }
 
 //------------------------------------------------------------------------------

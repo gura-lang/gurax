@@ -73,8 +73,6 @@ public:
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
-	Value* DoPropGet(Value* pValueTarget, const Symbol* pSymbol, const Attribute& attr) const;
-	void DoPropSet(Value* pValueTarget, const Symbol* pSymbol, Value* pValue, const Attribute& attr) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }

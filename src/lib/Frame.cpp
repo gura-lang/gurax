@@ -28,11 +28,11 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 	if (dottedSymbol.IsDotted()) {
 		Value* pValueTarget = Lookup(dottedSymbol, 1);
 		if (!pValueTarget) return false;
-		pValueTarget->DoPropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
+		return pValueTarget->DoPropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
 	} else {
 		Assign(dottedSymbol.GetSymbolLast(), pValue);
+		return true;
 	}
-	return true;
 }
 
 bool Frame::Assign(Module* pModule)
