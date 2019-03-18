@@ -6,6 +6,30 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+Gurax_DeclareProperty_R(Number, im)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(Number, im)
+{
+	return Value::Zero();
+}
+
+Gurax_DeclareProperty_R(Number, re)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(Number, re)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDouble());
+}
+
+//------------------------------------------------------------------------------
 // VType_Number
 //------------------------------------------------------------------------------
 VType_Number VTYPE_Number("Number");
@@ -14,6 +38,8 @@ void VType_Number::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
+	Assign(Gurax_CreateProperty(Number, im));
+	Assign(Gurax_CreateProperty(Number, re));
 }
 
 //------------------------------------------------------------------------------
