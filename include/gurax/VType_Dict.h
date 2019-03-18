@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Dict);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Dict");
-private:
+protected:
 	RefPtr<ValueDict> _pValueDict;
 public:
 	// Constructor

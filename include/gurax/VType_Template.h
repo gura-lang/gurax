@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_Template);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Template");
-private:
+protected:
 	RefPtr<Template> _pTempl;
 public:
 	// Constructor

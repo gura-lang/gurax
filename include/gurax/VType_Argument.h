@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_Argument);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Argument");
-private:
+protected:
 	RefPtr<Argument> _pArgument;
 public:
 	// Constructor

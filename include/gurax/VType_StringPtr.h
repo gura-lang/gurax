@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_StringPtr);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_StringPtr");
-private:
+protected:
 	const char* _str;
 public:
 	// Constructor

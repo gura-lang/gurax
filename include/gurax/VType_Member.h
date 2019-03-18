@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Member);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Member");
-private:
+protected:
 	RefPtr<Value> _pValueThis;
 	RefPtr<Value> _pValueProp;
 public:

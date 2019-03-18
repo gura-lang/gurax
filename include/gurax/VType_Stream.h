@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_Stream);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Stream");
-private:
+protected:
 	RefPtr<Stream> _pStream;
 public:
 	// Constructor

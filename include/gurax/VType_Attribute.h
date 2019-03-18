@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_Attribute);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Attribute");
-private:
+protected:
 	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor

@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Number);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Number");
-private:
+protected:
 	Double _num;
 public:
 	// Constructor

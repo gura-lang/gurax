@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Symbol);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Symbol");
-private:
+protected:
 	const Symbol* _pSymbol;
 public:
 	// Constructor

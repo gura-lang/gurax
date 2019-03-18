@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Function);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Function");
-private:
+protected:
 	RefPtr<Function> _pFunction;
 public:
 	// Constructor

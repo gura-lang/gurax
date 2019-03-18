@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_DateTime);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_DateTime");
-private:
+protected:
 	RefPtr<DateTime> _pDateTime;
 public:
 	// Constructor

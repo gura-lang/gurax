@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_Index);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Index");
-private:
+protected:
 	RefPtr<Index> _pIndex;
 public:
 	// Constructor

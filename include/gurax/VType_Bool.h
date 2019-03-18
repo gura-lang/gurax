@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Bool);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Bool");
-private:
+protected:
 	bool _flag;
 public:
 	// Constructor

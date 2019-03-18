@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_TimeDelta);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_TimeDelta");
-private:
+protected:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
 	// Constructor

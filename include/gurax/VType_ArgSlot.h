@@ -28,7 +28,7 @@ public:
 	Gurax_DeclareReferable(Value_ArgSlot);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_ArgSlot");
-private:
+protected:
 	RefPtr<ArgSlot> _pArgSlot;
 public:
 	// Constructor

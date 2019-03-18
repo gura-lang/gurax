@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_VType);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_VType");
-private:
+protected:
 	VType* _pVTypeThis;
 public:
 	// Constructor

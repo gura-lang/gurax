@@ -29,7 +29,7 @@ public:
 	Gurax_DeclareReferable(Value_Quote);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Quote");
-private:
+protected:
 	RefPtr<Expr> _pExpr;
 public:
 	// Constructor

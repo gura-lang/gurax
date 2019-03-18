@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Iterator);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Iterator");
-private:
+protected:
 	RefPtr<Iterator> _pIterator;
 public:
 	// Constructor

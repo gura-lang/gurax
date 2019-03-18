@@ -27,7 +27,7 @@ public:
 	Gurax_DeclareReferable(Value_Binary);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Binary");
-private:
+protected:
 	RefPtr<BinaryReferable> _pBinary;
 public:
 	// Constructor
