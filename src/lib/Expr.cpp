@@ -327,11 +327,13 @@ void Expr_BinaryOp::Compose(Composer& composer)
 	if (GetOperator()->GetRawFlag()) {
 		PUnit* pPUnitLeft = composer.AddF_Value(
 			this, new Value_Expr(GetExprLeft()->Reference()));	// [ValueLeft]
+		GetExprLeft()->SetPUnitTop(composer.PeekPUnitCont());
 		GetExprLeft()->Compose(composer);
 		composer.Add_Return(this);
 		pPUnitLeft->SetPUnitCont(composer.PeekPUnitCont());
 		PUnit* pPUnitRight = composer.AddF_Value(
 			this, new Value_Expr(GetExprRight()->Reference()));	// [ValueLeft ValueRight]
+		GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
 		GetExprRight()->Compose(composer);
 		composer.Add_Return(this);
 		pPUnitRight->SetPUnitCont(composer.PeekPUnitCont());

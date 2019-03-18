@@ -40,5 +40,21 @@ void VType_Expr::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Expr
 //------------------------------------------------------------------------------
+String Value_Expr::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	if (GetExpr().GetPUnitTop()) {
+		str += ":PUnit#";
+		str += std::to_string(GetExpr().GetPUnitTop()->GetSeqId());
+	}
+	str += ">";
+	return str;
+}
+
+String Value_Expr::ToStringDetail(const StringStyle& ss) const
+{
+	return GetExpr().ToString(ss);
+}
 
 }
