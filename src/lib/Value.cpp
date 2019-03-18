@@ -84,8 +84,8 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (pPropHandler && pPropHandler->IsReadable()) {
-		return pPropHandler->DoGetValue(*this, attr);
+	if (pPropHandler) {
+		return pPropHandler->IsReadable()? pPropHandler->DoGetValue(*this, attr) : nullptr;
 	}		
 	return GetVType().GetFrame().Lookup(pSymbol);
 }
