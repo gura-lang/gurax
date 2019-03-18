@@ -11,7 +11,7 @@ namespace Gurax {
 // Print(str*:String):void
 Gurax_DeclareFunction(Print)
 {
-	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
@@ -28,7 +28,7 @@ Gurax_ImplementFunction(Print)
 // Printf(format:String, values*):void
 Gurax_DeclareFunction(Printf)
 {
-	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
@@ -47,7 +47,7 @@ Gurax_ImplementFunction(Printf)
 // Println(objs*):void
 Gurax_DeclareFunction(Println)
 {
-	DeclareCaller(VTYPE_Nil, DeclCallable::Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 

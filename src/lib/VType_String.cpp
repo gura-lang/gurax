@@ -11,7 +11,7 @@ namespace Gurax {
 // String#Len()
 Gurax_DeclareMethod(String, Len)
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 }
 
 Gurax_ImplementMethod(String, Len)

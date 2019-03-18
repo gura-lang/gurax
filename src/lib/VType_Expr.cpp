@@ -11,7 +11,7 @@ namespace Gurax {
 // Expr#Eval()
 Gurax_DeclareMethod(Expr, Eval)
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 }
 
 Gurax_ImplementMethod(Expr, Eval)

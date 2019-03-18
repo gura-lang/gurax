@@ -70,6 +70,8 @@ public:
 	Gurax_DeclareReferable(Function);
 public:
 	enum class Type { Statement, Function, Method };
+	using Flags = DeclCallable::Flags;
+	using Flag = DeclCallable::Flag;
 protected:
 	Type _type;
 	const Symbol* _pSymbol;
@@ -110,7 +112,7 @@ public:
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
-	void DeclareCaller(const VType& vtype, DeclCallable::Flags flags) {
+	void Declare(const VType& vtype, Flags flags) {
 		GetDeclCallable().SetVTypeResult(vtype);
 		GetDeclCallable().SetFlags(flags);
 	}

@@ -11,7 +11,7 @@ namespace Gurax {
 // if (`cond) {`block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -75,7 +75,7 @@ Gurax_ImplementStatement(if_)
 // elsif (`cond) {`block}
 Gurax_DeclareStatementAlias(elsif, "elsif")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::Trailer);
+	Declare(VTYPE_Any, Flag::Trailer);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -116,7 +116,7 @@ Gurax_ImplementStatement(elsif)
 // else ():trailer {`block}
 Gurax_DeclareStatementAlias(else_, "else")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::Trailer);
+	Declare(VTYPE_Any, Flag::Trailer);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
@@ -142,7 +142,7 @@ Gurax_ImplementStatement(else_)
 // for (`cond) {`block}
 Gurax_DeclareStatementAlias(for_, "for")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -154,7 +154,7 @@ Gurax_ImplementStatement(for_)
 // while (`cond) {`block}
 Gurax_DeclareStatementAlias(while_, "while")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -202,7 +202,7 @@ Gurax_ImplementStatement(while_)
 // repeat (cnt?:number) {block}
 Gurax_DeclareFunction(repeat)
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
 }
@@ -238,7 +238,7 @@ Gurax_ImplementFunction(repeat)
 // break
 Gurax_DeclareStatementAlias(break_, "break")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 }
 
 Gurax_ImplementStatement(break_)
@@ -248,7 +248,7 @@ Gurax_ImplementStatement(break_)
 // continue
 Gurax_DeclareStatementAlias(continue_, "continue")
 {
-	DeclareCaller(VTYPE_Any, DeclCallable::Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 }
 
 Gurax_ImplementStatement(continue_)
