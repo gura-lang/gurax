@@ -889,9 +889,9 @@ String PUnit_RemoveValue::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Return::Exec(Processor& processor) const
 {
-	processor.PopFrame();
 	const PUnit* pPUnit = processor.PopPUnit();
 	if (!pPUnit) return nullptr;
+	processor.PopFrame();
 	if (pPUnit->GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
 	return pPUnit->GetPUnitCont();
 }
