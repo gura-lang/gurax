@@ -85,6 +85,8 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	const Flags GegFlags() const { return _flags; }
+	bool IsReadable() const { return (_flags & Flag::Readable) != 0; }
+	bool IsWritable() const { return (_flags & Flag::Writable) != 0; }
 public:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;

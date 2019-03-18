@@ -84,13 +84,16 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	return pPropHandler? pPropHandler->DoGetValue(*this, attr) : GetVType().GetFrame().Lookup(pSymbol);
+	if (pPropHandler && pPropHandler->IsReadable()) {
+		return pPropHandler->DoGetValue(*this, attr);
+	}		
+	return GetVType().GetFrame().Lookup(pSymbol);
 }
 
 bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (pPropHandler) {
+	if (pPropHandler && pPropHandler->IsWritable()) {
 		pPropHandler->DoSetValue(*this, pValue.release(), attr);
 		return true;
 	}

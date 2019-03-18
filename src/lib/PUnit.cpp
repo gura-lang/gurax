@@ -79,7 +79,7 @@ const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 	if (GetPopValueToDiscardFlag()) return GetPUnitCont();
 	const Value* pValue = frame.Lookup(GetSymbol());
 	if (!pValue) {
-		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		return nullptr;
 	}
 	processor.PushValue(pValue->Reference());
@@ -436,7 +436,7 @@ const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 	Value* pValueTarget = processor.PeekValue(0);
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		return nullptr;
 	}
 	processor.PushValue(pValueProp->Reference());
@@ -463,7 +463,7 @@ const PUnit* PUnit_PropSet::Exec(Processor& processor) const
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
-		IssueError(ErrorType::ValueError, "failed to set symbol: %s", GetSymbol()->GetName());
+		IssueError(ErrorType::ValueError, "failed to set value to symbol '%s'", GetSymbol()->GetName());
 		return nullptr;
 	}
 	if (!GetPopValueToDiscardFlag()) processor.PushValue(pValueProp.release());
@@ -495,7 +495,7 @@ const PUnit* PUnit_Member::Exec(Processor& processor) const
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		IssueError(ErrorType::ValueError, "symbol not found: %s", GetSymbol()->GetName());
+		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		return nullptr;
 	}
 	if (pValueProp->IsCallable()) {
