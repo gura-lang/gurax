@@ -15,11 +15,21 @@ class GURAX_DLLDECLARE PropHandler : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(PropHandler);
+public:
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags None				= 0;
+		static const Flags Readable			= (1 << 0);
+		static const Flags Writable			= (1 << 1);
+	};
 private:
 	const Symbol* _pSymbol;
+	const VType* _pVTypeResult;
+	Flags _flags;
 public:
 	// Constructor
-	PropHandler(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PropHandler(const Symbol* pSymbol, Flags flags);
+	PropHandler(const char* name, Flags flags) : PropHandler(Symbol::Add(name), flags) {}
 	// Copy constructor/operator
 	PropHandler(const PropHandler& src) : _pSymbol(src._pSymbol) {}
 	PropHandler& operator=(const PropHandler& src) = delete;
@@ -30,11 +40,14 @@ protected:
 	// Destructor
 	virtual ~PropHandler() = default;
 public:
+	void Declare(const VType& vtypeResult, UInt32 flags) { _pVTypeResult = &vtypeResult, _flags |= flags; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	const VType& GetVTypeResult() const { return *_pVTypeResult; }
+	const Flags GegFlags() const { return _flags; }
 public:
 	// Virtual functions
-	virtual Value* DoGetValue(const Value* pValueTarget, const Attribute& attr) const = 0;
-	virtual void DoPutValue(Value* pValueTarget, const Value* pValue, const Attribute& attr) const = 0;
+	virtual Value* DoGetValue(const Value& valueTarget, const Attribute& attr) const = 0;
+	virtual void DoPutValue(Value& valueTarget, const Value* pValue, const Attribute& attr) const = 0;
 };
 
 //------------------------------------------------------------------------------

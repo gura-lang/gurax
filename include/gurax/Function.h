@@ -112,8 +112,8 @@ public:
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
-	void Declare(const VType& vtype, Flags flags) {
-		GetDeclCallable().SetVTypeResult(vtype);
+	void Declare(const VType& vtypeResult, Flags flags) {
+		GetDeclCallable().SetVTypeResult(vtypeResult);
 		GetDeclCallable().SetFlags(flags);
 	}
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,

@@ -3,6 +3,24 @@
 //==============================================================================
 #include "stdafx.h"
 
+// Declaration/implementation/creation of PropHandler
+#define Gurax_DeclarePropertyAlias_R(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(const Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoPutValue(Value& valueTarget, const Value* pValue, const Attribute& attr) const override {} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable)
+
+#define Gurax_DeclareProperty_R(nameVType, name) Gurax_DeclarePropertyAlias_R(nameVType, name, #name)
+
+#define Gurax_ImplementPropertyGetter(nameVType, name) \
+Value* PropHandler_##nameVType##_##name::DoGetValue(const Value& valueTarget, const Attribute& attr) const
+
+#define Gurax_CreateProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -21,6 +39,19 @@ Gurax_ImplementMethod(String, Len)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+Gurax_DeclarePropertyAlias_R(String, len, "len")
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementPropertyGetter(String, len)
+{
+	return new Value_Number(0);
+}
+
+//------------------------------------------------------------------------------
 // VType_String
 //------------------------------------------------------------------------------
 VType_String VTYPE_String("String");
@@ -30,7 +61,7 @@ void VType_String::DoPrepare(Frame& frame)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
 	Assign(Gurax_CreateMethod(String, Len));
-	//Assign(Gurax_CreatePropHandler(String, Len));
+	Assign(Gurax_CreateProperty(String, len));
 }
 
 Value* VType_String::DoCastFrom(const Value& value) const
