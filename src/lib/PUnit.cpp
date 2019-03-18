@@ -890,7 +890,9 @@ String PUnit_RemoveValue::ToString(const StringStyle& ss) const
 const PUnit* PUnit_Return::Exec(Processor& processor) const
 {
 	const PUnit* pPUnit = processor.PopPUnit();
-	if (!pPUnit) return nullptr;
+	// Since nullptr means the end of the processor loop, there's no need to
+	// pop frame or value from their stacks.
+	if (!pPUnit) return nullptr;	
 	processor.PopFrame();
 	if (pPUnit->GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
 	return pPUnit->GetPUnitCont();

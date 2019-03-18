@@ -266,6 +266,7 @@ void Expr_UnaryOp::Compose(Composer& composer)
 	if (GetOperator()->GetRawFlag()) {
 		PUnit* pPUnit = composer.AddF_Value(
 			this, new Value_Expr(GetExprChild()->Reference()));	// [Value]
+		GetExprChild()->SetPUnitTop(composer.PeekPUnitCont());
 		GetExprChild()->Compose(composer);
 		composer.Add_Return(this);
 		pPUnit->SetPUnitCont(composer.PeekPUnitCont());
