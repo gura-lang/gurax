@@ -45,8 +45,7 @@ String Value_Expr::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	if (GetExpr().GetPUnitTop()) {
-		str += ":PUnit#";
-		str += std::to_string(GetExpr().GetPUnitTop()->GetSeqId());
+		str.Printf(":PUnit#%zu", GetExpr().GetPUnitTop()->GetSeqId());
 	}
 	str += ">";
 	return str;

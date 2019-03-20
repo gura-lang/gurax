@@ -25,9 +25,7 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 		size_t seqIdNext = _pPUnitCont->GetSeqId();
 		if (seqIdNext != GetSeqId() + 1) {
 			str += ss.GetComma();
-			str += "Jump(#";
-			str += std::to_string(seqIdNext);
-			str += ")";
+			str.Printf("Jump(#%zu)", seqIdNext);
 		}
 	} else {
 		str += ss.GetComma();
@@ -269,9 +267,7 @@ const PUnit* PUnit_Add::Exec(Processor& processor) const
 String PUnit_Add::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "Add(";
-	str += std::to_string(GetAdded());
-	str += ")";
+	str.Printf("Add(%d)", GetAdded());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -581,9 +577,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 	str += GetExprSrc().ToString(ss);
 	str += ")";
 	str += ss.GetComma();
-	str += "#";
-	str += std::to_string(GetPUnitBranch()->GetSeqId());
-	str += ")";
+	str.Printf("#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -658,9 +652,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	str += GetExprSrc().ToString(ss);
 	str += ")";
 	str += ss.GetComma();
-	str += "#";
-	str += std::to_string(GetPUnitBranch()->GetSeqId());
-	str += ")";
+	str.Printf("#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -737,9 +729,7 @@ String PUnit_Jump::ToString(const StringStyle& ss) const
 		str += "PopValueToDiscard()";
 		str += ss.GetComma();
 	}
-	str += "Jump(#";
-	str += std::to_string(GetPUnitCont()->GetSeqId());
-	str += ")";
+	str.Printf("Jump(#%zu)", GetPUnitCont()->GetSeqId());
 	return str;
 }
 
@@ -761,9 +751,7 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 String PUnit_JumpIf::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "JumpIf(#";
-	str += std::to_string(GetPUnitBranch()->GetSeqId());
-	str += ")";
+	str.Printf("JumpIf(#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -786,9 +774,7 @@ const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "JumpIfNot(#";
-	str += std::to_string(GetPUnitBranch()->GetSeqId());
-	str += ")";
+	str.Printf("JumpIfNot(#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -812,9 +798,7 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "NilJumpIf(#";
-	str += std::to_string(GetPUnitBranch()->GetSeqId());
-	str += ")";
+	str.Printf("NilJumpIf(#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -838,9 +822,7 @@ const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "NilJumpIfNot(#";
-	str += std::to_string(GetPUnitBranch()->GetSeqId());
-	str += ")";
+	str.Printf("NilJumpIfNot(#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -876,9 +858,7 @@ const PUnit* PUnit_RemoveValue::Exec(Processor& processor) const
 String PUnit_RemoveValue::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "RemoveValue(offset=";
-	str += std::to_string(GetOffset());
-	str += ")";
+	str.Printf("RemoveValue(offset=%zu)", GetOffset());
 	AppendInfoToString(str, ss);
 	return str;
 }

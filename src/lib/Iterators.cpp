@@ -24,8 +24,7 @@ String Iterator_ConstN::ToString(const StringStyle& ss) const
 	String str;
 	str += "ConstN:";
 	str += _pValue->ToString();
-	str += ":n=";
-	str += std::to_string(_num);
+	str.Printf(":n=%zu", _num);
 	return str;
 }
 
@@ -35,8 +34,7 @@ String Iterator_ConstN::ToString(const StringStyle& ss) const
 String Iterator_Each::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "Each:n=";
-	str += std::to_string(GetValueOwner().size());
+	str.Printf("Each:n=%zu", GetValueOwner().size());
 	return str;
 }
 
