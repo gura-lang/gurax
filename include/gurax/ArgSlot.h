@@ -48,7 +48,7 @@ public:
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
 	void AssignToFrame(Frame& frame) const {
 		if (IsDefined()) {
-			frame.AssignFromArgument(GetDeclArg().GetSymbol(), GetValue()->Reference());;
+			frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue()->Reference());;
 		}
 	}
 public:
@@ -62,7 +62,7 @@ public:
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) = 0;
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
-	virtual Value* GetValue() const = 0;
+	virtual Value* PickValue() const = 0;
 	virtual bool IsDefined() const = 0;
 	virtual bool IsVacant() const = 0;
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const = 0;
@@ -88,7 +88,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
-	virtual Value* GetValue() const override { return _pValue.get(); }
+	virtual Value* PickValue() const override { return _pValue.get(); }
 	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -107,7 +107,7 @@ public:
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
-	virtual Value* GetValue() const override { return _pValue.get(); }
+	virtual Value* PickValue() const override { return _pValue.get(); }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -191,7 +191,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
-	virtual Value* GetValue() const override { return Value::nil(); }
+	virtual Value* PickValue() const override { return Value::nil(); }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual bool HasValidValue() const override { return true; }

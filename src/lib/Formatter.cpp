@@ -496,17 +496,11 @@ String FormatterFlags::ToString(const char* qualifier) const
 	} else if (plusMode == PlusMode::Plus) {
 		fmt += "+";
 	}
-	if (fieldMinWidth > 0) {
-		char buff[64];
-		::sprintf(buff, "%d", fieldMinWidth);
-		fmt += buff;
-	}
+	if (fieldMinWidth > 0) fmt.Printf("%d", fieldMinWidth);
 	if (precision == PREC_Null) {
 		fmt += '.';
 	} else if (precision >= 0) {
-		char buff[64];
-		::sprintf(buff, ".%d", precision);
-		fmt += buff;
+		fmt.Printf(".%d", precision);
 	}
 	fmt += qualifier;
 	return fmt;

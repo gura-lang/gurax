@@ -54,11 +54,7 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 {
 	str += "<";
 	str += GetVType().MakeFullName();
-	if (!IsUndefined() && !IsNil()) {
-		char buff[64];
-		::sprintf(buff, ":%p", this);
-		str += buff;
-	}
+	if (!IsUndefined() && !IsNil()) str.Printf(":%p", this);
 }
 
 Value* Value::DoCall(Processor& processor, Argument& argument)

@@ -8,5 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
+String Iterator::ToString(const StringStyle& ss) const
+{
+	String str;
+	return str;
+}
 
 }

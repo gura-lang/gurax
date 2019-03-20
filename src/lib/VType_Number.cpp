@@ -49,20 +49,16 @@ String Value_Number::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	do {
-		char buff[64];
-		::sprintf(buff, ":%g", GetDouble());
-		str += buff;
-	} while (0);
+	str.Printf(":%g", GetDouble());
 	str += ">";
 	return str;
 }
 
 String Value_Number::ToStringDetail(const StringStyle& ss) const
 {
-	char buff[64];
-	::sprintf(buff, "%g", GetDouble());
-	return buff;
+	String str;
+	str.Printf("%g", GetDouble());
+	return str;
 }
 
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const

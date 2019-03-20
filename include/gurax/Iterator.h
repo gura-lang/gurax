@@ -37,9 +37,10 @@ public:
 	bool IsIdentical(const Iterator& iterator) const { return this == &iterator; }
 	bool IsEqualTo(const Iterator& iterator) const { return IsIdentical(iterator); }
 	bool IsLessThan(const Iterator& iterator) const { return this < &iterator; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(iterator)"; }
+	String ToString() const { return ToString(StringStyle::Empty); }
 public:
-	virtual Value* Next() = 0;
+	virtual Value* NextValue() = 0;
+	virtual String ToString(const StringStyle& ss) const;
 };
 
 }

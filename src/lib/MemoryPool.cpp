@@ -82,9 +82,7 @@ void* MemoryPool::ChunkImmortal::Allocate(size_t bytes)
 String MemoryPool::ChunkImmortal::ToString(const StringStyle& ss) const
 {
 	String str;
-	char buff[256];
-	::sprintf(buff, "[ChunkImmortal:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
-	str += buff;
+	str.Printf("[ChunkImmortal:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
 	return str;
 }
 
@@ -140,11 +138,7 @@ void MemoryPool::ChunkFixed::Deallocate(void* p)
 String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	do {
-		char buff[256];
-		::sprintf(buff, "[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
-		str += buff;
-	} while (0);
+	str.Printf("[ChunkFixed:%ldbytes/block,%zupools]", _bytesBlock, CountPools());
 	if (!ss.IsDigest()) {
 		size_t bytesFrame = sizeof(Header) + _bytesBlock;
 		str += "\n";

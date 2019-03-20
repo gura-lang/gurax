@@ -57,13 +57,9 @@ String Error::MakeMessage() const
 		if (_lineNoTop == 0) {
 			str += ": ";
 		} else if (_lineNoTop == _lineNoBtm) {
-			char buff[128];
-			::sprintf(buff, ":%d: ", _lineNoTop);
-			str += buff;
+			str.Printf(":%d: ", _lineNoTop);
 		} else {
-			char buff[128];
-			::sprintf(buff, ":%d:%d: ", _lineNoTop, _lineNoBtm);
-			str += buff;
+			str.Printf(":%d:%d: ", _lineNoTop, _lineNoBtm);
 		}
 	}
 	str += _errorType.GetName();

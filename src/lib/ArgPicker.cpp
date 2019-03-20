@@ -11,7 +11,7 @@ namespace Gurax {
 Value* ArgPicker::PickValue()
 {
 	if (!_pArgSlot) return nullptr;
-	Value* pValue = _pArgSlot->GetValue();
+	Value* pValue = _pArgSlot->PickValue();
 	_pArgSlot = _pArgSlot->GetNext();
 	return pValue;
 }
