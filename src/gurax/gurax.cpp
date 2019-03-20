@@ -22,7 +22,7 @@ int Main(int argc, char* argv[])
 	const char* fileName = argv[1];
 	RefPtr<Stream> pStream(Stream_File::Open(fileName, "rt"));
 	if (!pStream) {
-		Stream::CErr->Printf("failed to open file: %s\n", fileName);
+		Stream::CErr->Printf("failed to open file '%s'\n", fileName);
 		return 1;
 	}
 	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
