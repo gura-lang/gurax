@@ -137,7 +137,7 @@ Gurax_ImplementOpBinary(Eq, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number&>(valueL).GetDouble();
 	Double numR = dynamic_cast<const Value_Number&>(valueR).GetDouble();
-	return new Value_Number(numL == numR);
+	return new Value_Bool(numL == numR);
 }
 
 // Number <*> Number
@@ -153,7 +153,7 @@ Gurax_ImplementOpBinary(Ge, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number&>(valueL).GetDouble();
 	Double numR = dynamic_cast<const Value_Number&>(valueR).GetDouble();
-	return new Value_Number(numL >= numR);
+	return new Value_Bool(numL >= numR);
 }
 
 // Number > Number
@@ -161,7 +161,7 @@ Gurax_ImplementOpBinary(Gt, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number&>(valueL).GetDouble();
 	Double numR = dynamic_cast<const Value_Number&>(valueR).GetDouble();
-	return new Value_Number(numL > numR);
+	return new Value_Bool(numL > numR);
 }
 
 // Number <&> Number
@@ -177,7 +177,7 @@ Gurax_ImplementOpBinary(Le, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number&>(valueL).GetDouble();
 	Double numR = dynamic_cast<const Value_Number&>(valueR).GetDouble();
-	return new Value_Number(numL <= numR);
+	return new Value_Bool(numL <= numR);
 }
 
 // Number < Number
@@ -185,7 +185,7 @@ Gurax_ImplementOpBinary(Lt, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number&>(valueL).GetDouble();
 	Double numR = dynamic_cast<const Value_Number&>(valueR).GetDouble();
-	return new Value_Number(numL + numR);
+	return new Value_Bool(numL < numR);
 }
 
 // Number % Number
@@ -221,7 +221,7 @@ Gurax_ImplementOpBinary(Ne, Number, Number)
 {
 	Double numL = dynamic_cast<const Value_Number&>(valueL).GetDouble();
 	Double numR = dynamic_cast<const Value_Number&>(valueR).GetDouble();
-	return new Value_Number(numL != numR);
+	return new Value_Bool(numL != numR);
 }
 
 // Number | Number

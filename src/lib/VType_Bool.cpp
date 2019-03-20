@@ -19,5 +19,17 @@ void VType_Bool::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Bool
 //------------------------------------------------------------------------------
+String Value_Bool::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str.Printf(":%s>", _flag? "true" : "false");
+	return str;
+}
+
+String Value_Bool::ToStringDetail(const StringStyle& ss) const
+{
+	return _flag? "true" : "false";
+}
 
 }

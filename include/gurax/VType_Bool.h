@@ -61,9 +61,8 @@ public:
 			GetBool() < dynamic_cast<const Value_Bool*>(pValue)->GetBool() :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return _flag? "true" : "false";
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 }

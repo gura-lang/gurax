@@ -108,6 +108,11 @@ bool Formatter::Format(const char* format, Source&& source)
 				formatterFlags.upperCaseFlag = (ch == 'X');
 				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;
+			} else if (ch == 'p') {
+				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!PutString("0x")) return false;
+				if (!pValue->Format_x(*this, formatterFlags)) return false;
+				stat = Stat::Start;
 			} else if (ch == 'e' || ch == 'E') {
 				RefPtr<Value> pValue(source.FetchDouble());
 				formatterFlags.upperCaseFlag = (ch == 'E');

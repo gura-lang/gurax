@@ -49,8 +49,7 @@ String Value_Number::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%g", GetDouble());
-	str += ">";
+	str.Printf(":%g>", GetDouble());
 	return str;
 }
 
