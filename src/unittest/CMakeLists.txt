@@ -7,6 +7,7 @@ add_executable(unittest
 	test-DateTime.cpp
 	test-DeclCallable.cpp
 	test-Error.cpp
+	test-Formatter.cpp
 	test-Function.cpp
 	test-Help.cpp
 	test-Iterator.cpp
