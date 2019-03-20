@@ -2,6 +2,7 @@
 cases=
 cases="$cases DateTime"
 cases="$cases DeclCallable"
+cases="$cases Formatter"
 cases="$cases Function"
 cases="$cases Help"
 cases="$cases Iterator"
