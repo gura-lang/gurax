@@ -99,7 +99,9 @@ bool Value_Number::Format_x(Formatter& formatter, FormatterFlags& formatterFlags
 bool Value_Number::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	char buff[128];
-	if (formatterFlags.precision == FormatterFlags::PREC_Null) formatterFlags.precision = FormatterFlags::PREC_Default;
+	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
+		formatterFlags.precision = FormatterFlags::Prec::Default;
+	}
 	return formatter.PutAlignedString(
 		formatterFlags, formatterFlags.FormatNumber_e(GetDouble(), buff, sizeof(buff)));
 }
@@ -107,7 +109,9 @@ bool Value_Number::Format_e(Formatter& formatter, FormatterFlags& formatterFlags
 bool Value_Number::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	char buff[128];
-	if (formatterFlags.precision == FormatterFlags::PREC_Null) formatterFlags.precision = FormatterFlags::PREC_Default;
+	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
+		formatterFlags.precision = FormatterFlags::Prec::Default;
+	}
 	return formatter.PutAlignedString(
 		formatterFlags, formatterFlags.FormatNumber_f(GetDouble(), buff, sizeof(buff)));
 }
@@ -115,7 +119,9 @@ bool Value_Number::Format_f(Formatter& formatter, FormatterFlags& formatterFlags
 bool Value_Number::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	char buff[128];
-	if (formatterFlags.precision == FormatterFlags::PREC_Null) formatterFlags.precision = FormatterFlags::PREC_Default;
+	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
+		formatterFlags.precision = FormatterFlags::Prec::Default;
+	}
 	return formatter.PutAlignedString(
 		formatterFlags, formatterFlags.FormatNumber_g(GetDouble(), buff, sizeof(buff)));
 }

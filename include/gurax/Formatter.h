@@ -16,9 +16,10 @@ class IteratorOwner;
 class FormatterFlags {
 public:
 	enum class PlusMode { None, Space, Plus };
-public:
-	static const int PREC_Default	= -1;
-	static const int PREC_Null		= -2;
+	struct Prec {
+		static const int Default	= -1;
+		static const int Null		= -2;
+	};
 public:
 	bool upperCaseFlag;
 	bool leftAlignFlag;
@@ -45,13 +46,11 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Formatter {
 public:
-	enum class Stat {
-		Start, FlagsPre, Flags, FlagsAfterWhite, PrecisionPre, Precision, Padding,
-	};
 	class Source {
 	public:
 		virtual bool IsEnd() = 0;
 		virtual Value* FetchInt() = 0;
+		virtual Value* FetchSizeT() = 0;
 		virtual Value* FetchDouble() = 0;
 		virtual Value* FetchString() = 0;
 	};
@@ -65,6 +64,7 @@ public:
 		}
 		virtual bool IsEnd() override { return _ppValue == _valueList.end(); }
 		virtual Value* FetchInt() override { return (*_ppValue++)->Reference(); }
+		virtual Value* FetchSizeT() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchDouble() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchString() override { return (*_ppValue++)->Reference(); }
 	};
@@ -80,6 +80,10 @@ public:
 		virtual bool IsEnd() override { return false; }
 		virtual Value* FetchInt() override {
 			Int num = va_arg(_ap, Int);
+			return new Value_Number(num);
+		}
+		virtual Value* FetchSizeT() override {
+			size_t num = va_arg(_ap, size_t);
 			return new Value_Number(num);
 		}
 		virtual Value* FetchDouble() override {

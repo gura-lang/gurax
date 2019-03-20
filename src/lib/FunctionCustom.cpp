@@ -33,8 +33,7 @@ String FunctionCustom::ToString(const StringStyle& ss) const
 	str += GetDeclCallable().ToString(ss);
 	str += ss.IsCram()? "=" : " = ";
 	if (GetPUnitBody()) {
-		str += "#";
-		str += std::to_string(GetPUnitBody()->GetSeqId());
+		str.Printf("#%zu", GetPUnitBody()->GetSeqId());
 	} else {
 		str += "null";
 	}

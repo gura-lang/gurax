@@ -10,6 +10,9 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 bool Formatter::Format(const char* format, Source&& source)
 {
+	enum class Stat {
+		Start, FlagsPre, Flags, FlagsAfterWhite, FlagsAfterZ, PrecisionPre, Precision, Padding,
+	};
 	bool eatNextFlag;
 	FormatterFlags formatterFlags;
 	Stat stat = Stat::Start;
@@ -83,7 +86,7 @@ bool Formatter::Format(const char* format, Source&& source)
 			} else if (ch == 'l') {
 				// just ignore it
 			} else if (ch == 'z') {
-				// just ignore it
+				stat = Stat::FlagsAfterZ;
 			} else if (ch == 'd' || ch == 'i') {
 				RefPtr<Value> pValue(source.FetchInt());
 				if (!pValue->Format_d(*this, formatterFlags)) return false;
@@ -143,6 +146,34 @@ bool Formatter::Format(const char* format, Source&& source)
 			}
 			break;
 		}
+		case Stat::FlagsAfterZ: {
+			if (ch == 'd' || ch == 'i') {
+				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue->Format_d(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'u') {
+				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue->Format_u(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'b') {
+				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue->Format_b(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'o') {
+				RefPtr<Value> pValue(source.FetchSizeT());
+				if (!pValue->Format_o(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else if (ch == 'x' || ch == 'X') {
+				RefPtr<Value> pValue(source.FetchSizeT());
+				formatterFlags.upperCaseFlag = (ch == 'X');
+				if (!pValue->Format_x(*this, formatterFlags)) return false;
+				stat = Stat::Start;
+			} else {
+				IssueError_WrongFormat();
+				return false;
+			}
+			break;
+		}
 		case Stat::Padding: {
 			if ('0' <= ch && ch <= '9') {
 				formatterFlags.fieldMinWidth = formatterFlags.fieldMinWidth * 10 + (ch - '0');
@@ -160,7 +191,7 @@ bool Formatter::Format(const char* format, Source&& source)
 					return false;
 				}
 				formatterFlags.precision = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
-				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::PREC_Default;
+				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::Prec::Default;
 				if (source.IsEnd()) {
 					IssueError_NotEnoughArguments();
 					return false;
@@ -171,7 +202,7 @@ bool Formatter::Format(const char* format, Source&& source)
 				eatNextFlag = false;
 				stat = Stat::Precision;
 			} else {
-				formatterFlags.precision = FormatterFlags::PREC_Null;
+				formatterFlags.precision = FormatterFlags::Prec::Null;
 				eatNextFlag = false;
 				stat = Stat::Flags;
 			}
@@ -278,7 +309,7 @@ void FormatterFlags::Initialize()
 	leftAlignFlag = false;
 	sharpFlag = false;
 	fieldMinWidth = 0;
-	precision = PREC_Default;
+	precision = Prec::Default;
 	plusMode = PlusMode::None;
 	charPadding = ' ';
 }
@@ -497,7 +528,7 @@ String FormatterFlags::ToString(const char* qualifier) const
 		fmt += "+";
 	}
 	if (fieldMinWidth > 0) fmt.Printf("%d", fieldMinWidth);
-	if (precision == PREC_Null) {
+	if (precision == Prec::Null) {
 		fmt += '.';
 	} else if (precision >= 0) {
 		fmt.Printf(".%d", precision);
