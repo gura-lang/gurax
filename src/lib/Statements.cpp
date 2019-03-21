@@ -49,20 +49,20 @@ Gurax_ImplementStatement(if_)
 	pExprCaller->GetExprCdrFirst()->Compose(composer);					// [ValueBool]
 	if (pExprCaller->HasExprTrailer()) {
 		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit1 = composer.AddF_JumpIfNot(pExprCaller);		// []
+			auto pPUnit1 = composer.Add_JumpIfNot(pExprCaller);			// []
 			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
-			auto pPUnit2 = composer.AddF_Jump(pExprCaller);				// [Value]
+			auto pPUnit2 = composer.Add_Jump(pExprCaller);				// [Value]
 			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
 			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
-			auto pPUnit = composer.AddF_NilJumpIf(pExprCaller);			// [] or [nil]
+			auto pPUnit = composer.Add_NilJumpIf(pExprCaller);			// [] or [nil]
 			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		}
 	} else {
 		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit = composer.AddF_NilJumpIfNot(pExprCaller);		// [] or [nil]
+			auto pPUnit = composer.Add_NilJumpIfNot(pExprCaller);		// [] or [nil]
 			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		} else {
@@ -90,20 +90,20 @@ Gurax_ImplementStatement(elsif)
 	pExprCaller->GetExprCdrFirst()->Compose(composer);					// [ValueBool]
 	if (pExprCaller->HasExprTrailer()) {
 		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit1 = composer.AddF_JumpIfNot(pExprCaller);		// []
+			auto pPUnit1 = composer.Add_JumpIfNot(pExprCaller);			// []
 			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
-			auto pPUnit2 = composer.AddF_Jump(pExprCaller);				// [Value]
+			auto pPUnit2 = composer.Add_Jump(pExprCaller);				// [Value]
 			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
 			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
-			auto pPUnit = composer.AddF_NilJumpIf(pExprCaller);			// [] or [nil]
+			auto pPUnit = composer.Add_NilJumpIf(pExprCaller);			// [] or [nil]
 			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		}
 	} else {
 		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit = composer.AddF_NilJumpIfNot(pExprCaller);		// [] or [nil]
+			auto pPUnit = composer.Add_NilJumpIfNot(pExprCaller);		// [] or [nil]
 			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		} else {
@@ -171,7 +171,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueLast ValueBool]
-		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueLast]
+		auto pPUnit = composer.Add_JumpIfNot(pExprCaller);				// [ValueLast]
 		composer.Add_PopValueToDiscard(pExprCaller);					// []
 		pExprCaller->GetExprOfBlock()->Compose(composer);				// [ValueLast]
 		composer.Add_Jump(pExprCaller, pPUnitLoop);
@@ -183,7 +183,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_Value(pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueIdx ValueLast ValueBool]
-		auto pPUnit = composer.AddF_JumpIfNot(pExprCaller);				// [ValueIdx ValueLast]
+		auto pPUnit = composer.Add_JumpIfNot(pExprCaller);				// [ValueIdx ValueLast]
 		composer.Add_PopValueToDiscard(pExprCaller);					// [ValueIdx]
 		composer.Add_AssignToDeclArg(pExprCaller, (*ppDeclArg)->Reference()); // [ValueIdx]
 		composer.Add_Add(pExprCaller, 1);								// [ValueIdx=ValueIdx+1]

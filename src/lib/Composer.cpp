@@ -22,123 +22,154 @@ void Composer::DoEval(Processor& processor) const
 	processor.RunLoop(GetPUnitFirst());
 }
 
-void Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
-{
-	AddF_Value(pExprSrc, pValue);
-}
-
-PUnit_Value* Composer::AddF_Value(const Expr* pExprSrc, const Value* pValue)
+PUnit_Value* Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
 {
 	auto pPUnit = new PUnit_Value(pExprSrc->Reference(), pValue->Clone());
 	Add(pPUnit);
 	return pPUnit;
 }
 
-void Composer::Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol)
+PUnit_Lookup* Composer::Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol)
 {
-	Add(new PUnit_Lookup(pExprSrc->Reference(), pSymbol));
+	auto pPUnit = new PUnit_Lookup(pExprSrc->Reference(), pSymbol);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol)
+PUnit_AssignToSymbol* Composer::Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol)
 {
-	Add(new PUnit_AssignToSymbol(pExprSrc->Reference(), pSymbol));
+	auto pPUnit = new PUnit_AssignToSymbol(pExprSrc->Reference(), pSymbol);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg)
+PUnit_AssignToDeclArg* Composer::Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg)
 {
-	Add(new PUnit_AssignToDeclArg(pExprSrc->Reference(), pDeclArg));
+	auto pPUnit = new PUnit_AssignToDeclArg(pExprSrc->Reference(), pDeclArg);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-PUnit_AssignFunction* Composer::AddF_AssignFunction(const Expr* pExprSrc, const Function* pFunction)
+PUnit_AssignFunction* Composer::Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction)
 {
 	auto pPUnit = new PUnit_AssignFunction(pExprSrc->Reference(), pFunction->Reference());
 	Add(pPUnit);
 	return pPUnit;
 }
 
-void Composer::Add_Cast(const Expr* pExprSrc, const VType& vtype)
+PUnit_Cast* Composer::Add_Cast(const Expr* pExprSrc, const VType& vtype)
 {
-	Add(new PUnit_Cast(pExprSrc->Reference(), vtype));
+	auto pPUnit = new PUnit_Cast(pExprSrc->Reference(), vtype);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
+PUnit_UnaryOp* Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
 {
-	Add(new PUnit_UnaryOp(pExprSrc->Reference(), pOperator));
+	auto pPUnit = new PUnit_UnaryOp(pExprSrc->Reference(), pOperator);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator)
+PUnit_BinaryOp* Composer::Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator)
 {
-	Add(new PUnit_BinaryOp(pExprSrc->Reference(), pOperator));
+	auto pPUnit = new PUnit_BinaryOp(pExprSrc->Reference(), pOperator);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_Add(const Expr* pExprSrc, int added)
+PUnit_Add* Composer::Add_Add(const Expr* pExprSrc, int added)
 {
-	Add(new PUnit_Add(pExprSrc->Reference(), added));
+	auto pPUnit = new PUnit_Add(pExprSrc->Reference(), added);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_CreateList(const Expr* pExprSrc, size_t sizeReserve)
+PUnit_CreateList* Composer::Add_CreateList(const Expr* pExprSrc, size_t sizeReserve)
 {
-	Add(new PUnit_CreateList(pExprSrc->Reference(), sizeReserve));
+	auto pPUnit = new PUnit_CreateList(pExprSrc->Reference(), sizeReserve);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_AddList(const Expr* pExprSrc)
+PUnit_AddList* Composer::Add_AddList(const Expr* pExprSrc)
 {
-	Add(new PUnit_AddList(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_AddList(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve)
+PUnit_Index* Composer::Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve)
 {
-	Add(new PUnit_Index(pExprSrc->Reference(), attr.Reference(), sizeReserve));
+	auto pPUnit = new PUnit_Index(pExprSrc->Reference(), attr.Reference(), sizeReserve);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_FeedIndex(const Expr* pExprSrc)
+PUnit_FeedIndex* Composer::Add_FeedIndex(const Expr* pExprSrc)
 {
-	Add(new PUnit_FeedIndex(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_FeedIndex(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_IndexGet(const Expr* pExprSrc)
+PUnit_IndexGet* Composer::Add_IndexGet(const Expr* pExprSrc)
 {
-	Add(new PUnit_IndexGet(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_IndexGet(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_IndexSet(const Expr* pExprSrc)
+PUnit_IndexSet* Composer::Add_IndexSet(const Expr* pExprSrc)
 {
-	Add(new PUnit_IndexSet(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_IndexSet(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_PropGet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr)
+PUnit_PropGet* Composer::Add_PropGet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr)
 {
-	Add(new PUnit_PropGet(pExprSrc->Reference(), pSymbol, attr.Reference()));
+	auto pPUnit = new PUnit_PropGet(pExprSrc->Reference(), pSymbol, attr.Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_PropSet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr)
+PUnit_PropSet* Composer::Add_PropSet(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr)
 {
-	Add(new PUnit_PropSet(pExprSrc->Reference(), pSymbol, attr.Reference()));
+	auto pPUnit = new PUnit_PropSet(pExprSrc->Reference(), pSymbol, attr.Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr)
+PUnit_Member* Composer::Add_Member(const Expr* pExprSrc, const Symbol* pSymbol, const Attribute& attr)
 {
-	Add(new PUnit_Member(pExprSrc->Reference(), pSymbol, attr.Reference()));
+	auto pPUnit = new PUnit_Member(pExprSrc->Reference(), pSymbol, attr.Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_Argument(const Expr* pExprSrc, const Attribute& attr, const Expr_Block* pExprOfBlock)
+PUnit_Argument* Composer::Add_Argument(const Expr* pExprSrc, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
-	Add(new PUnit_Argument(pExprSrc->Reference(), attr.Reference(), Expr_Block::Reference(pExprOfBlock)));
+	auto pPUnit = new PUnit_Argument(pExprSrc->Reference(), attr.Reference(), Expr_Block::Reference(pExprOfBlock));
+	Add(pPUnit);
+	return pPUnit;
 }
 
-PUnit_ArgSlot* Composer::AddF_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitSkipDest)
+PUnit_ArgSlot* Composer::Add_ArgSlot(const Expr* pExprSrc, const PUnit* pPUnitSkipDest)
 {
 	auto pPUnit = new PUnit_ArgSlot(pExprSrc->Reference(), pPUnitSkipDest);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-void Composer::Add_FeedArgSlot(const Expr* pExprSrc)
+PUnit_FeedArgSlot* Composer::Add_FeedArgSlot(const Expr* pExprSrc)
 {
-	Add(new PUnit_FeedArgSlot(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_FeedArgSlot(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-PUnit_ArgSlotNamed* Composer::AddF_ArgSlotNamed(
+PUnit_ArgSlotNamed* Composer::Add_ArgSlotNamed(
 	const Expr* pExprSrc, const Symbol* pSymbol, const Expr* pExprAssigned, const PUnit* pPUnitSkipDest)
 {
 	auto pPUnit = new PUnit_ArgSlotNamed(
@@ -147,113 +178,120 @@ PUnit_ArgSlotNamed* Composer::AddF_ArgSlotNamed(
 	return pPUnit;
 }
 
-void Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
+PUnit_FeedArgSlotNamed* Composer::Add_FeedArgSlotNamed(const Expr* pExprSrc)
 {
-	Add(new PUnit_FeedArgSlotNamed(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_FeedArgSlotNamed(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-PUnit_Call* Composer::AddF_Call(const Expr* pExprSrc)
+PUnit_Call* Composer::Add_Call(const Expr* pExprSrc)
 {
 	auto pPUnit = new PUnit_Call(pExprSrc->Reference());
 	Add(pPUnit);
 	return pPUnit;
 }
 
-void Composer::Add_Call(const Expr* pExprSrc)
-{
-	AddF_Call(pExprSrc);
-}
-
-void Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
+void Composer::AddOpt_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
 {
 	if (_pPUnitLast && !_pPUnitLast->GetPUnitCont()) {
 		_pPUnitLast->SetPUnitCont(pPUnitDest);
 	} else {
-		AddF_Jump(pExprSrc->Reference(), pPUnitDest);
+		Add_Jump(pExprSrc->Reference(), pPUnitDest);
 	}
 }
 
-PUnit_Jump* Composer::AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitCont)
+PUnit_Jump* Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitCont)
 {
 	auto pPUnit = new PUnit_Jump(pExprSrc->Reference(), pPUnitCont);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_JumpIf* Composer::AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch)
+PUnit_JumpIf* Composer::Add_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
 	auto pPUnit = new PUnit_JumpIf(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_JumpIfNot* Composer::AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch)
+PUnit_JumpIfNot* Composer::Add_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
 	auto pPUnit = new PUnit_JumpIfNot(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilJumpIf* Composer::AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch)
+PUnit_NilJumpIf* Composer::Add_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
 	auto pPUnit = new PUnit_NilJumpIf(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilJumpIfNot* Composer::AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch)
+PUnit_NilJumpIfNot* Composer::Add_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
 	auto pPUnit = new PUnit_NilJumpIfNot(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_ExitPoint* Composer::AddF_ExitPoint(const Expr* pExprSrc, const PUnit* pPUnitExit)
+PUnit_ExitPoint* Composer::Add_ExitPoint(const Expr* pExprSrc, const PUnit* pPUnitExit)
 {
 	auto pPUnit = new PUnit_ExitPoint(pExprSrc->Reference(), pPUnitExit);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-void Composer::Add_PopValueToDiscard(const Expr* pExprSrc)
+void Composer::AddOpt_PopValueToDiscard(const Expr* pExprSrc)
 {
 	if (_pPUnitLast) {
 		_pPUnitLast->SetPopValueToDiscardFlag();
 	} else {
-		AddF_PopValueToDiscard(pExprSrc);
+		Add_PopValueToDiscard(pExprSrc);
 	}
 }
 
-PUnit_PopValueToDiscard* Composer::AddF_PopValueToDiscard(const Expr* pExprSrc)
+PUnit_PopValueToDiscard* Composer::Add_PopValueToDiscard(const Expr* pExprSrc)
 {
 	auto pPUnit = new PUnit_PopValueToDiscard(pExprSrc->Reference());
 	Add(pPUnit);
 	return pPUnit;
 }
 
-void Composer::Add_RemoveValue(const Expr* pExprSrc, size_t offset)
+PUnit_RemoveValue* Composer::Add_RemoveValue(const Expr* pExprSrc, size_t offset)
 {
-	Add(new PUnit_RemoveValue(pExprSrc->Reference(), offset));
+	auto pPUnit = new PUnit_RemoveValue(pExprSrc->Reference(), offset);
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_Return(const Expr* pExprSrc)
+PUnit_Return* Composer::Add_Return(const Expr* pExprSrc)
 {
-	Add(new PUnit_Return(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_Return(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_PushFrame_Block(const Expr* pExprSrc)
+PUnit_PushFrame_Block* Composer::Add_PushFrame_Block(const Expr* pExprSrc)
 {
-	Add(new PUnit_PushFrame_Block(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_PushFrame_Block(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_PopFrame(const Expr* pExprSrc)
+PUnit_PopFrame* Composer::Add_PopFrame(const Expr* pExprSrc)
 {
-	Add(new PUnit_PopFrame(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_PopFrame(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
-void Composer::Add_Terminate(const Expr* pExprSrc)
+PUnit_Terminate* Composer::Add_Terminate(const Expr* pExprSrc)
 {
-	Add(new PUnit_Terminate(pExprSrc->Reference()));
+	auto pPUnit = new PUnit_Terminate(pExprSrc->Reference());
+	Add(pPUnit);
+	return pPUnit;
 }
 
 void Composer::Print() const
