@@ -69,7 +69,7 @@ void Symbol::PrintAllSymbols()
 {
 	SymbolList symbolList = GetAllSymbols();
 	for (auto pSymbol : symbolList) {
-		::printf("%08d %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
+		Stream::COut->Printf("%08d %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
 	}
 }
 

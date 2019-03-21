@@ -251,7 +251,7 @@ void Composer::Print() const
 void Composer::PrintPUnit() const
 {
 	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
-		::printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		Stream::COut->Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 	}
 }
 

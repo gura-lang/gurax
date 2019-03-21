@@ -18,7 +18,7 @@ MemoryPool::MemoryPool() :
 
 void* MemoryPool::Allocate(size_t bytes, const char* ownerName)
 {
-	//::printf("MemoryPool::DoAllocate(%ldbytes, \"%s\")\n", bytes, ownerName);
+	//Stream::COut->Printf("MemoryPool::DoAllocate(%ldbytes, \"%s\")\n", bytes, ownerName);
 	if (bytes <= chunkSmall.GetBytesBlock()) {
 		return chunkSmall.Allocate(ownerName);
 	} else if (bytes <= chunkMedium.GetBytesBlock()) {
