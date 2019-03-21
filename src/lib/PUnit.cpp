@@ -829,6 +829,23 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_ExitPoint
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+const PUnit* PUnit_ExitPoint::Exec(Processor& processor) const
+{
+	return GetPUnitCont();
+}
+
+String PUnit_ExitPoint::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("ExitPoint(#%zu)", GetPUnitExit()->GetSeqId());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_PopValueToDiscard
 // Stack View: [Value] -> []
 //------------------------------------------------------------------------------

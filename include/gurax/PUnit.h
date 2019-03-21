@@ -66,6 +66,7 @@ public:
 	}
 public:
 	// Virtual functions
+	virtual const PUnit* GetPUnitExit() const { return nullptr; } // only PUnit_ExitPoint returns a valid value.
 	virtual size_t GetSizeOf() const = 0;
 	virtual const PUnit* Exec(Processor& processor) const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
@@ -695,6 +696,29 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
+	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_ExitPoint
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_ExitPoint : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitExit;
+public:
+	// Constructor
+	PUnit_ExitPoint(Expr* pExprSrc, const PUnit* pPUnitExit) :
+		PUnit(pExprSrc), _pPUnitExit(pPUnitExit) {}
+public:
+	void SetPUnitExit(const PUnit* pPUnit) { _pPUnitExit = pPUnit; }
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitExit() const override { return _pPUnitExit; }
 	virtual size_t GetSizeOf() const override { return sizeof(*this); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
