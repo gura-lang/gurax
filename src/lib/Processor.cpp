@@ -20,11 +20,9 @@ Processor::Processor() :
 
 Processor* Processor::Create(bool debugFlag)
 {
-	if (debugFlag) {
-		return new Processor_Debug();
-	} else {
-		return new Processor_Normal();
-	}
+	return debugFlag?
+		dynamic_cast<Processor*>(new Processor_Debug()) :
+		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
 //------------------------------------------------------------------------------
