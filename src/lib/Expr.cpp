@@ -15,6 +15,14 @@ void Expr::Bootup()
 	Empty = new Expr_Empty();
 }
 
+Value* Expr::DoEval(Processor& processor) const
+{
+	if (!GetPUnitTop()) return Value::nil();
+	processor.PushPUnit(nullptr);	// push a terminator so that Return exits the loop
+	processor.RunLoop(GetPUnitTop());
+	return Error::IsIssued()? Value::nil() : processor.PopValue();
+}
+
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;

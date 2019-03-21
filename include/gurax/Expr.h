@@ -131,6 +131,8 @@ public:
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
 	void SetPUnitTop(const PUnit* pPUnit) { if (!_pPUnitTop) _pPUnitTop = pPUnit; }
 	const PUnit* GetPUnitTop() const { return _pPUnitTop; }
+public:
+	Value* DoEval(Processor& processor) const;
 	int CalcIndentLevel() const;
 	String MakeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }

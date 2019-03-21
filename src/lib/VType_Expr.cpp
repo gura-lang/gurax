@@ -18,11 +18,7 @@ Gurax_ImplementMethod(Expr, Eval)
 {
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
-	if (!expr.GetPUnitTop()) return Value::nil();
-	processor.PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-	processor.Run(expr.GetPUnitTop());
-	if (Error::IsIssued()) return Value::nil();
-	return processor.PopValue();
+	return expr.DoEval(processor);
 }
 
 //------------------------------------------------------------------------------

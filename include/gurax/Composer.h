@@ -36,6 +36,7 @@ public:
 	}
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
+	void DoEval(Processor& processor) const;
 public:
 	void Add_Value(const Expr* pExprSrc, const Value* pValue);
 	PUnit_Value* AddF_Value(const Expr* pExprSrc, const Value* pValue);

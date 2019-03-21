@@ -18,41 +18,40 @@ Processor::Processor() :
 	PushPUnit(nullptr);
 }
 
-Processor* Processor::Normal()
+Processor* Processor::Create(bool debugFlag)
 {
-	return new Processor_Normal();
-}
-
-Processor* Processor::Debug()
-{
-	return new Processor_Debug();
-}
-
-void Processor::Call(const PUnit* pPUnit, Argument& argument)
-{
-	argument.AssignToFrame(PushFrame_Function());
-	Run(pPUnit);
+	if (debugFlag) {
+		return new Processor_Debug();
+	} else {
+		return new Processor_Normal();
+	}
 }
 
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
-void Processor_Normal::Run(const PUnit* pPUnit)
+void Processor_Normal::RunLoop(const PUnit* pPUnit)
 {
-	while (pPUnit) {
-		pPUnit = pPUnit->Exec(*this);
+	const PUnit* pPUnitExit = nullptr;
+	
+	if (pPUnitExit) {
+		while (pPUnit && pPUnit != pPUnitExit) pPUnit = pPUnit->Exec(*this);
+	} else {
+		while (pPUnit) pPUnit = pPUnit->Exec(*this);
 	}
 }
 
 //------------------------------------------------------------------------------
 // Processor_Debug
 //------------------------------------------------------------------------------
-void Processor_Debug::Run(const PUnit* pPUnit)
+void Processor_Debug::RunLoop(const PUnit* pPUnit)
 {
 	Stream& stream = *Stream::COut;
 	StringStyle ss;
 	ss.Digest();
-	while (pPUnit) {
+	const PUnit* pPUnitExit = nullptr;
+	
+	while (pPUnit && pPUnit != pPUnitExit) {
 		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 		pPUnit = pPUnit->Exec(*this);
 		stream.Printf("%s\n", GetValueStack().ToString(ss).c_str());

@@ -30,8 +30,7 @@ public:
 	// Destructor
 	virtual ~Processor() = default;
 public:
-	static Processor* Normal();
-	static Processor* Debug();
+	static Processor* Create(bool debugFlag);
 public:
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnitStack& GetPUnitStack() const { return _punitStack; }
@@ -65,10 +64,7 @@ public:
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 public:
-	void Call(const PUnit* pPUnit, Argument& argument);
-	void Run(const Composer& composer) { Run(composer.GetPUnitFirst()); }
-public:
-	virtual void Run(const PUnit* pPUnit) = 0;
+	virtual void RunLoop(const PUnit* pPUnit) = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -77,7 +73,7 @@ public:
 class Processor_Normal : public Processor {
 public:
 	// Virtual function of Processor
-	virtual void Run(const PUnit* pPUnit) override;
+	virtual void RunLoop(const PUnit* pPUnit) override;
 };
 
 //------------------------------------------------------------------------------
@@ -86,7 +82,7 @@ public:
 class Processor_Debug : public Processor {
 public:
 	// Virtual function of Processor
-	virtual void Run(const PUnit* pPUnit) override;
+	virtual void RunLoop(const PUnit* pPUnit) override;
 };
 
 }

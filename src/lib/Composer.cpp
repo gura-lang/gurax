@@ -17,6 +17,11 @@ void Composer::Add(PUnit* pPUnit)
 	_pPUnitLast = pPUnit;
 }
 
+void Composer::DoEval(Processor& processor) const
+{
+	processor.RunLoop(GetPUnitFirst());
+}
+
 void Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
 {
 	AddF_Value(pExprSrc, pValue);

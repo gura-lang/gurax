@@ -35,8 +35,8 @@ int Main(int argc, char* argv[])
 	if (cmdLine.GetBool("list")) {
 		composer.PrintPUnit();
 	} else {
-		RefPtr<Processor> pProcessor(cmdLine.GetBool("debug")? Processor::Debug() : Processor::Normal());
-		pProcessor->Run(composer);
+		RefPtr<Processor> pProcessor(Processor::Create(cmdLine.GetBool("debug")));
+		composer.DoEval(*pProcessor);
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			return 1;

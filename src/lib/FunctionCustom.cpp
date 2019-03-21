@@ -18,12 +18,10 @@ Value* FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 
 Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
-	Frame& frame = processor.PushFrame_Function();
-	argument.AssignToFrame(frame);
+	argument.AssignToFrame(processor.PushFrame_Function());
 	processor.PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-	processor.Run(GetPUnitBody());
-	if (Error::IsIssued()) return Value::nil();
-	return processor.PopValue();
+	processor.RunLoop(GetPUnitBody());
+	return Error::IsIssued()? Value::nil() : processor.PopValue();
 }
 
 String FunctionCustom::ToString(const StringStyle& ss) const
