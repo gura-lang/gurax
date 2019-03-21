@@ -30,7 +30,8 @@ Processor* Processor::Create(bool debugFlag)
 //------------------------------------------------------------------------------
 void Processor_Normal::RunLoop(const PUnit* pPUnit)
 {
-	if (pPUnit && pPUnit->GetPUnitExit()) {
+	if (!pPUnit) return;
+	if (pPUnit->GetPUnitExit()) {
 		const PUnit* pPUnitExit = pPUnit->GetPUnitExit();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_ExitPoint
 		while (pPUnit && pPUnit != pPUnitExit) pPUnit = pPUnit->Exec(*this);
@@ -44,18 +45,26 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 //------------------------------------------------------------------------------
 void Processor_Debug::RunLoop(const PUnit* pPUnit)
 {
+	auto PrintPUnit = [](Stream& stream, const PUnit* pPUnit) {
+		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+	};
+	auto PrintStack = [this](Stream& stream) {
+		stream.Printf("%s\n", GetValueStack().ToString(StringStyle().Digest()).c_str());
+	};
+	if (!pPUnit) return;
 	Stream& stream = *Stream::COut;
-	StringStyle ss;
-	ss.Digest();
 	const PUnit* pPUnitExit = nullptr;
-	if (pPUnit && pPUnit->GetPUnitExit()) {
+	if (pPUnit->GetPUnitExit()) {
 		pPUnitExit = pPUnit->GetPUnitExit();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_ExitPoint
+	} else {
+		PrintPUnit(stream, pPUnit);
+		pPUnit = pPUnit->Exec(*this);
 	}
 	while (pPUnit && pPUnit != pPUnitExit) {
-		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		PrintStack(stream);
+		PrintPUnit(stream, pPUnit);
 		pPUnit = pPUnit->Exec(*this);
-		stream.Printf("%s\n", GetValueStack().ToString(ss).c_str());
 	}
 }
 
