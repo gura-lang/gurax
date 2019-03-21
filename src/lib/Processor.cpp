@@ -49,12 +49,13 @@ void Processor_Normal::Run(const PUnit* pPUnit)
 //------------------------------------------------------------------------------
 void Processor_Debug::Run(const PUnit* pPUnit)
 {
+	Stream& stream = *Stream::COut;
 	StringStyle ss;
 	ss.Digest();
 	while (pPUnit) {
-		::printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 		pPUnit = pPUnit->Exec(*this);
-		::printf("%s\n", GetValueStack().ToString(ss).c_str());
+		stream.Printf("%s\n", GetValueStack().ToString(ss).c_str());
 	}
 }
 
