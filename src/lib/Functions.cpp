@@ -17,11 +17,12 @@ Gurax_DeclareFunction(Print)
 
 Gurax_ImplementFunction(Print)
 {
+	Stream& stream = *Stream::COut;
 	// Arguments
 	ArgPicker args(argument);
 	const ValueList& valueList = args.PickList();
 	// Function body
-	Stream::COut->Print(valueList);
+	stream.Print(valueList);
 	return Value::nil();
 }
 
@@ -35,12 +36,13 @@ Gurax_DeclareFunction(Printf)
 
 Gurax_ImplementFunction(Printf)
 {
+	Stream& stream = *Stream::COut;
 	// Arguments
 	ArgPicker args(argument);
 	const char* format = args.PickString();
 	const ValueList& values = args.PickList();
 	// Function body
-	Stream::COut->PrintFmt(format, values);
+	stream.PrintFmt(format, values);
 	return Value::nil();
 }
 
@@ -53,11 +55,12 @@ Gurax_DeclareFunction(Println)
 
 Gurax_ImplementFunction(Println)
 {
+	Stream& stream = *Stream::COut;
 	// Arguments
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	Stream::COut->Println(values);
+	stream.Println(values);
 	return Value::nil();
 }
 

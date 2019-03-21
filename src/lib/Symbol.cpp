@@ -67,9 +67,10 @@ SymbolList Symbol::GetAllSymbols()
 
 void Symbol::PrintAllSymbols()
 {
+	Stream& stream = *Stream::COut;
 	SymbolList symbolList = GetAllSymbols();
 	for (auto pSymbol : symbolList) {
-		Stream::COut->Printf("%08d %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
+		stream.Printf("%08d %s\n", pSymbol->GetUniqId(), pSymbol->GetName());
 	}
 }
 

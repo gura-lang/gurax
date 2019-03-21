@@ -38,8 +38,9 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void PUnitList::Print() const
 {
+	Stream& stream = *Stream::COut;
 	for (auto pPUnit : *this) {
-		Stream::COut->Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 	}
 }
 

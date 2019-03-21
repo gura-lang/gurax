@@ -250,8 +250,9 @@ void Composer::Print() const
 
 void Composer::PrintPUnit() const
 {
+	Stream& stream = *Stream::COut;
 	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
-		Stream::COut->Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 	}
 }
 
