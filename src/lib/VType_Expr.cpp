@@ -40,6 +40,9 @@ String Value_Expr::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
+	str += ":`(";
+	str += GetExpr().ToString();
+	str += ")";
 	if (GetExpr().GetPUnitTop()) {
 		str.Printf(":PUnit#%zu", GetExpr().GetPUnitTop()->GetSeqId());
 	}

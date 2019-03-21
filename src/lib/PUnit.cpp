@@ -575,8 +575,11 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "ArgSlot(`(";
-	str += GetExprSrc().ToString(ss);
+	str += GetExprSrc().ToString();
 	str += ")";
+	if (GetExprSrc().GetPUnitTop()) {
+		str.Printf(":PUnit#%zu", GetExprSrc().GetPUnitTop()->GetSeqId());
+	}
 	str += ss.GetComma();
 	str.Printf("#%zu)", GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
