@@ -173,37 +173,44 @@ void Composer::Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
 	}
 }
 
-PUnit_Jump* Composer::AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitDest)
+PUnit_Jump* Composer::AddF_Jump(const Expr* pExprSrc, const PUnit* pPUnitCont)
 {
-	auto pPUnit = new PUnit_Jump(pExprSrc->Reference(), pPUnitDest);
+	auto pPUnit = new PUnit_Jump(pExprSrc->Reference(), pPUnitCont);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_JumpIf* Composer::AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest)
+PUnit_JumpIf* Composer::AddF_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
-	auto pPUnit = new PUnit_JumpIf(pExprSrc->Reference(), pPUnitJumpDest);
+	auto pPUnit = new PUnit_JumpIf(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_JumpIfNot* Composer::AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest)
+PUnit_JumpIfNot* Composer::AddF_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
-	auto pPUnit = new PUnit_JumpIfNot(pExprSrc->Reference(), pPUnitJumpDest);
+	auto pPUnit = new PUnit_JumpIfNot(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilJumpIf* Composer::AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitJumpDest)
+PUnit_NilJumpIf* Composer::AddF_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
-	auto pPUnit = new PUnit_NilJumpIf(pExprSrc->Reference(), pPUnitJumpDest);
+	auto pPUnit = new PUnit_NilJumpIf(pExprSrc->Reference(), pPUnitBranch);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilJumpIfNot* Composer::AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitJumpDest)
+PUnit_NilJumpIfNot* Composer::AddF_NilJumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch)
 {
-	auto pPUnit = new PUnit_NilJumpIfNot(pExprSrc->Reference(), pPUnitJumpDest);
+	auto pPUnit = new PUnit_NilJumpIfNot(pExprSrc->Reference(), pPUnitBranch);
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_ExitPoint* Composer::AddF_ExitPoint(const Expr* pExprSrc, const PUnit* pPUnitExit)
+{
+	auto pPUnit = new PUnit_ExitPoint(pExprSrc->Reference(), pPUnitExit);
 	Add(pPUnit);
 	return pPUnit;
 }
