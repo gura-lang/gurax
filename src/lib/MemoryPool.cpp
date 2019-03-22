@@ -11,8 +11,8 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	//chunkPUnit(64 * 65536, 64 * 2), chunkSmall(64, 65536),
-	chunkPUnit(64 * 8, 64 * 2), chunkSmall(64, 65536),
+	chunkPUnit(64 * 65536, 64 * 2), chunkSmall(64, 65536),
+	//chunkPUnit(64 * 8, 64 * 2), chunkSmall(64, 65536),
 	chunkMedium(128, 65536), chunkLarge(192, 65536), chunkVariable()
 {
 }

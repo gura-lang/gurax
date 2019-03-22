@@ -585,7 +585,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "ArgSlot(`(";
-	str += GetExprSrc().ToString();
+	str += GetExprSrc().ToString(StringStyle().Cram());
 	str += ")";
 	if (GetExprSrc().GetPUnitTop()) {
 		str.Printf(":PUnit#%zu", GetExprSrc().GetPUnitTop()->GetSeqId());
@@ -663,7 +663,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	str += "ArgSlotNamed(`";
 	str += GetSymbol()->GetName();
 	str += ss.IsCram()? "=>" : " => `(";
-	str += GetExprSrc().ToString(ss);
+	str += GetExprSrc().ToString(StringStyle().Cram());
 	str += ")";
 	str += ss.GetComma();
 	str.Printf("#%zu)", GetPUnitBranch()->GetSeqId());
