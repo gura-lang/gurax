@@ -33,12 +33,16 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 	}
 }
 
-void PUnit::Print(const PUnit* pPUnit)
+void PUnit::Print() const
 {
 	Stream& stream = *Stream::COut;
+	stream.Printf("#%zu %s\n", GetSeqId(), ToString().c_str());
+}
+
+void PUnit::PrintSequence(const PUnit* pPUnit)
+{
 	for ( ; pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
-		if (pPUnit->IsBridge()) continue;
-		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		if (!pPUnit->IsBridge()) pPUnit->Print();
 	}
 }
 
@@ -47,10 +51,8 @@ void PUnit::Print(const PUnit* pPUnit)
 //------------------------------------------------------------------------------
 void PUnitList::Print() const
 {
-	Stream& stream = *Stream::COut;
 	for (auto pPUnit : *this) {
-		if (pPUnit->IsBridge()) continue;
-		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		if (!pPUnit->IsBridge()) pPUnit->Print();
 	}
 }
 

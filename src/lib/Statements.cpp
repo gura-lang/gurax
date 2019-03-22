@@ -149,6 +149,50 @@ Gurax_DeclareStatementAlias(for_, "for")
 
 Gurax_ImplementStatement(for_)
 {
+	if (pExprCaller->CountExprCdr() < 1) {
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+						 "for-statement takes more than one argument");
+		return;
+	}
+	for (Expr* pExpr = pExprCaller->GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		if (!pExpr->IsType<Expr_BinaryOp>()) {
+			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
+							 "invalid argument for for-statement");
+			return;
+		}
+		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
+		if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
+			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
+							 "invalid argument for for-statement");
+			return;
+		}
+		if (!pExprEx->GetOperator()->IsType(OpType::Contains)) {
+			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
+							 "invalid argument for for-statement");
+			return;
+		}
+		pExprEx->GetExprRight()->Compose(composer);
+		
+	}
+
+
+	const DeclArgOwner& declArgOwner = pExprCaller->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	if (declArgOwner.empty()) {
+		composer.Add_Value(pExprCaller, Value::nil());					// [ValueLast=nil]
+		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
+		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueLast ValueBool]
+		auto pPUnit = composer.Add_JumpIfNot(pExprCaller);				// [ValueLast]
+		composer.Add_PopValueToDiscard(pExprCaller);					// []
+		pExprCaller->GetExprOfBlock()->Compose(composer);				// [ValueLast]
+		composer.Add_Jump(pExprCaller, pPUnitLoop);
+		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
+	} else if (declArgOwner.size() == 1) {
+		
+	} else {
+		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+						 "invalid number of block parameters");
+		return;
+	}
 }
 
 // while (`cond) {`block}

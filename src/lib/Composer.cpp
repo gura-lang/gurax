@@ -300,7 +300,7 @@ void Composer::Print() const
 
 void Composer::PrintPUnit() const
 {
-	PUnit::Print(GetPUnitFirst());
+	PUnit::PrintSequence(GetPUnitFirst());
 }
 
 }

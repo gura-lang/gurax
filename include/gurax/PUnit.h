@@ -54,7 +54,8 @@ public:
 	void SetPopValueToDiscardFlag() { _flags |= Flag::PopValueToDiscard; }
 	bool GetPopValueToDiscardFlag() const { return (_flags & Flag::PopValueToDiscard) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
-	static void Print(const PUnit* pPUnit);
+	void Print() const;
+	static void PrintSequence(const PUnit* pPUnit);
 public:
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {
