@@ -39,6 +39,14 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_JumpIfNot);
 	PrintSizeOf(PUnit_NilJumpIf);
 	PrintSizeOf(PUnit_NilJumpIfNot);
+	PrintSizeOf(PUnit_ExitPoint);
+	PrintSizeOf(PUnit_PopValueToDiscard);
+	PrintSizeOf(PUnit_RemoveValue);
+	PrintSizeOf(PUnit_Return);
+	PrintSizeOf(PUnit_PushFrame_Block);
+	PrintSizeOf(PUnit_PopFrame);
+	PrintSizeOf(PUnit_Terminate);
+	PrintSizeOf(PUnit_Bridge);
 	PrintSizeOf(Symbol);
 	PrintSizeOf(TimeDelta);
 	PrintSizeOf(ValueOwner);

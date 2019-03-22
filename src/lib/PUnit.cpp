@@ -10,8 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 int PUnit::_seqIdNext = 0;
 
-PUnit::PUnit(Expr* pExprSrc, Flags flags) :
-	_seqId(++_seqIdNext), _flags(flags), _pExprSrc(pExprSrc), _pPUnitCont(nullptr)
+PUnit::PUnit(Expr* pExprSrc, SeqId seqId, Flags flags) :
+	_pExprSrc(pExprSrc), _seqId(seqId), _flags(flags), _pPUnitCont(nullptr)
 {
 }
 
@@ -33,6 +33,15 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 	}
 }
 
+void PUnit::Print(const PUnit* pPUnit)
+{
+	Stream& stream = *Stream::COut;
+	for ( ; pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
+		if (pPUnit->IsBridge()) continue;
+		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+	}
+}
+
 //------------------------------------------------------------------------------
 // PUnitList
 //------------------------------------------------------------------------------
@@ -40,6 +49,7 @@ void PUnitList::Print() const
 {
 	Stream& stream = *Stream::COut;
 	for (auto pPUnit : *this) {
+		if (pPUnit->IsBridge()) continue;
 		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 	}
 }
@@ -958,6 +968,22 @@ String PUnit_Terminate::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "Terminate()";
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Bridge
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+const PUnit* PUnit_Bridge::Exec(Processor& processor) const
+{
+	return nullptr;
+}
+
+String PUnit_Bridge::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "Bridge()";
 	return str;
 }
 

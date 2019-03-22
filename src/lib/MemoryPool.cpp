@@ -11,7 +11,8 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	chunkPUnit(64 * 65536, 64), chunkSmall(64, 65536),
+	//chunkPUnit(64 * 65536, 64 * 2), chunkSmall(64, 65536),
+	chunkPUnit(64 * 8, 64 * 2), chunkSmall(64, 65536),
 	chunkMedium(128, 65536), chunkLarge(192, 65536), chunkVariable()
 {
 }
@@ -52,37 +53,45 @@ MemoryPool::Pool* MemoryPool::Pool::Create(size_t bytesPoolBuff)
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// MemoryPool::ChunkImmortal
+// MemoryPool::ChunkPUnit
 //-----------------------------------------------------------------------------
-MemoryPool::ChunkImmortal::ChunkImmortal(size_t bytesPoolBuff, size_t bytesAllocMax) :
-	_bytesPoolBuff(bytesPoolBuff), _bytesAllocMax(bytesAllocMax), _offsetNext(0),
+MemoryPool::ChunkPUnit::ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin) :
+	_bytesPoolBuff(bytesPoolBuff), _bytesMargin(bytesMargin), _offsetNext(0),
 	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop)
 {}
 
-size_t MemoryPool::ChunkImmortal::CountPools() const
+size_t MemoryPool::ChunkPUnit::CountPools() const
 {
 	size_t nPools = 0;
 	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) nPools++;
 	return nPools;
 }
 
-void* MemoryPool::ChunkImmortal::Allocate(size_t bytes)
+void* MemoryPool::ChunkPUnit::Allocate(size_t bytes)
 {
 	void* pAllocated = PeekPointer();
 	_offsetNext += bytes;
-	if (_offsetNext + _bytesAllocMax > _bytesPoolBuff) {
+	if (_offsetNext + _bytesMargin > _bytesPoolBuff) {
+		PUnit* pPUnitBridge = new PUnit_Bridge();
 		Pool* pPool = Pool::Create(_bytesPoolBuff);
 		_pPoolCur->pPoolNext = pPool;
 		_offsetNext = 0;
 		_pPoolCur = pPool;
+		pPUnitBridge->SetPUnitCont(reinterpret_cast<const PUnit*>(PeekPointer()));
 	}
 	return pAllocated;
 }
 
-String MemoryPool::ChunkImmortal::ToString(const StringStyle& ss) const
+// Allocator that is exclusively used for PUnit_Bridge
+void* MemoryPool::ChunkPUnit::AllocateBridge()
+{
+	return PeekPointer();
+}
+
+String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("[ChunkImmortal:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
+	str.Printf("[ChunkPUnit:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
 	return str;
 }
 

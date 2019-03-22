@@ -20,9 +20,7 @@ static void operator delete(void* p) { \
 static void *operator new(size_t bytes) { \
 	return MemoryPool::Global().chunkPUnit.Allocate(bytes);	\
 } \
-static void operator delete(void* p) { \
-	MemoryPool::Deallocate(p);	\
-}
+static void operator delete(void* p) {}
 
 #define Gurax_MemoryPoolAllocator_Small(ownerName) \
 static void *operator new(size_t bytes) { \
@@ -83,17 +81,18 @@ public:
 	public:
 		virtual void Deallocate(void* p) = 0;
 	};
-	class ChunkImmortal : public Chunk {
+	class ChunkPUnit : public Chunk {
 	protected:
 		size_t _bytesPoolBuff;
-		size_t _bytesAllocMax;
+		size_t _bytesMargin;
 		size_t _offsetNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
 	public:
-		ChunkImmortal(size_t bytesPoolBuff, size_t bytesAllocMax);
+		ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin);
 		size_t CountPools() const;
 		void* Allocate(size_t bytes);
+		void* AllocateBridge();
 		virtual void Deallocate(void* p) {}
 		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
@@ -126,7 +125,7 @@ public:
 private:
 	static MemoryPool _memoryPoolGlobal;
 public:
-	ChunkImmortal chunkPUnit;
+	ChunkPUnit chunkPUnit;
 	ChunkFixed chunkSmall;
 	ChunkFixed chunkMedium;
 	ChunkFixed chunkLarge;

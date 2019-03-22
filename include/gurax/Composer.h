@@ -12,12 +12,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Composer {
 private:
+	PUnit::SeqId _seqIdCur;
 	PUnit* _pPUnitFirst;
 	PUnit* _pPUnitLast;
 	PUnitStack _punitStack;
 public:
 	// Constructor
-	Composer() : _pPUnitFirst(nullptr), _pPUnitLast(nullptr) {}
+	Composer() : _seqIdCur(0), _pPUnitFirst(nullptr), _pPUnitLast(nullptr) {}
 	// Copy constructor/operator
 	Composer(const Composer& src) = delete;
 	Composer& operator=(const Composer& src) = delete;
@@ -27,6 +28,7 @@ public:
 	// Destructor
 	virtual ~Composer() = default;
 public:
+	PUnit::SeqId NextSeqId() { return ++_seqIdCur; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
 	PUnit* GetPUnitLast() { return _pPUnitLast; }

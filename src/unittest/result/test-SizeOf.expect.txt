@@ -29,6 +29,14 @@ PUnit_JumpIf             40
 PUnit_JumpIfNot          40
 PUnit_NilJumpIf          40
 PUnit_NilJumpIfNot       40
+PUnit_ExitPoint          40
+PUnit_PopValueToDiscard  32
+PUnit_RemoveValue        40
+PUnit_Return             32
+PUnit_PushFrame_Block    32
+PUnit_PopFrame           32
+PUnit_Terminate          32
+PUnit_Bridge             32
 Symbol                   16
 TimeDelta                24
 ValueOwner               40
