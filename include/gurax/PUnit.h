@@ -20,7 +20,6 @@ public:
 	struct Flag {
 		static const Flags None					= 0;
 		static const Flags PopValueToDiscard	= (1 << 0);
-		static const Flags Terminate			= (1 << 1);
 	};
 protected:
 	SeqId _seqId;
@@ -51,13 +50,8 @@ public:
 	size_t GetSeqId() const { return _seqId; }
 	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 	const PUnit* GetPUnitCont() const { return _pPUnitCont; }
-	const PUnit* GetPUnitNext() const {
-		return GetTerminateFlag()? nullptr :
-			reinterpret_cast<const PUnit*>(reinterpret_cast<const char*>(this) + GetSizeOf());
-	}
 	void SetPopValueToDiscardFlag() { _flags |= Flag::PopValueToDiscard; }
 	bool GetPopValueToDiscardFlag() const { return (_flags & Flag::PopValueToDiscard) != 0; }
-	bool GetTerminateFlag() const { return (_flags & Flag::Terminate) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 public:
 	template<typename... Args>
@@ -67,9 +61,13 @@ public:
 public:
 	// Virtual functions
 	virtual const PUnit* GetPUnitExit() const { return nullptr; } // only PUnit_ExitPoint returns a valid value.
-	virtual size_t GetSizeOf() const = 0;
+	virtual const PUnit* GetPUnitNext() const = 0;
 	virtual const PUnit* Exec(Processor& processor) const = 0;
 	virtual String ToString(const StringStyle& ss) const = 0;
+protected:
+	const PUnit* CalcNext(size_t bytes) const {
+		return reinterpret_cast<const PUnit*>(reinterpret_cast<const char*>(this) + bytes);
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -107,7 +105,7 @@ public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -128,7 +126,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -149,7 +147,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -170,7 +168,7 @@ public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -191,7 +189,7 @@ public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -212,7 +210,7 @@ public:
 	const VType& GetVType() const { return _vtype; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -233,7 +231,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -254,7 +252,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -275,7 +273,7 @@ public:
 	const int GetAdded() const { return _added; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -296,7 +294,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -313,7 +311,7 @@ public:
 	explicit PUnit_AddList(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -337,7 +335,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -354,7 +352,7 @@ public:
 	explicit PUnit_FeedIndex(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -371,7 +369,7 @@ public:
 	explicit PUnit_IndexGet(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -388,7 +386,7 @@ public:
 	explicit PUnit_IndexSet(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -412,7 +410,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -436,7 +434,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -460,7 +458,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -484,7 +482,7 @@ public:
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -507,7 +505,7 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -524,7 +522,7 @@ public:
 	explicit PUnit_FeedArgSlot(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -551,7 +549,7 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -568,7 +566,7 @@ public:
 	explicit PUnit_FeedArgSlotNamed(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -585,7 +583,7 @@ public:
 	explicit PUnit_Call(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -604,7 +602,7 @@ public:
 	}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -627,7 +625,7 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -650,7 +648,7 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -673,7 +671,7 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -696,7 +694,7 @@ public:
 	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -719,7 +717,7 @@ public:
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitExit() const override { return _pPUnitExit; }
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -736,7 +734,7 @@ public:
 	explicit PUnit_PopValueToDiscard(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -757,7 +755,7 @@ public:
 	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -774,7 +772,7 @@ public:
 	PUnit_Return(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -791,7 +789,7 @@ public:
 	PUnit_PushFrame_Block(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -808,7 +806,7 @@ public:
 	PUnit_PopFrame(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return CalcNext(sizeof(*this)); }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -822,10 +820,10 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
-	PUnit_Terminate(Expr* pExprSrc) : PUnit(pExprSrc, Flag::Terminate) {}
+	PUnit_Terminate(Expr* pExprSrc) : PUnit(pExprSrc) {}
 public:
 	// Virtual functions of PUnit
-	virtual size_t GetSizeOf() const override { return sizeof(*this); }
+	virtual const PUnit* GetPUnitNext() const override { return nullptr; }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
