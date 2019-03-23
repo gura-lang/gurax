@@ -14,8 +14,8 @@ Gurax_DeclareStatementAlias(_dict_, "%")
 
 Gurax_ImplementStatement(_dict_)
 {
-	Expr* pExpr = pExprCaller->GetExprOfBlock()->GetExprElemFirst();
-	composer.Add_CreateDict(*pExprCaller);						// [ValueDict]
+	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
+	composer.Add_CreateDict(exprCaller);						// [ValueDict]
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_BinaryOp>() &&
 			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
@@ -27,7 +27,7 @@ Gurax_ImplementStatement(_dict_)
 			// %{ .. {key, value} .. }
 			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
 			if (pExprEx->CountExprElem() != 2) {
-				Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 								 "block is expected to have a format of {key, value}");
 				return;
 			}
@@ -40,13 +40,13 @@ Gurax_ImplementStatement(_dict_)
 			pExpr->Compose(composer);							// [ValueDict ValueKey]
 			pExpr = pExpr->GetExprNext();
 			if (!pExpr) {
-				Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 								 "value is missing in the initialization list for dictionary");
 				return;
 			}
 			pExpr->Compose(composer);							// [ValueDict ValueKey ValueElem]
 		}
-		composer.Add_AddDict(*pExprCaller);						// [ValueDict]
+		composer.Add_AddDict(exprCaller);						// [ValueDict]
 	}
 }
 

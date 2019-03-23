@@ -19,7 +19,7 @@ Gurax_DeclareStatementAlias(if_, "if")
 Gurax_ImplementStatement(if_)
 {
 	SymbolList symbols;
-	if (const Expr* pExprError = pExprCaller->GetTrailerSymbols(symbols)) {
+	if (const Expr* pExprError = exprCaller.GetTrailerSymbols(symbols)) {
 		Error::IssueWith(ErrorType::SyntaxError, *pExprError,
 						 "invalid format of if-elsif-else sequence");
 		return;
@@ -29,45 +29,45 @@ Gurax_ImplementStatement(if_)
 		for ( ; ppSymbol + 1 != symbols.end(); ppSymbol++) {
 			const Symbol* pSymbol = *ppSymbol;
 			if (!pSymbol->IsIdentical(Gurax_Symbol(elsif))) {
-				Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 								 "invalid format of if-elsif-else sequence");
 				return;
 			}
 		}
 		const Symbol* pSymbol = *ppSymbol;
 		if (!(pSymbol->IsIdentical(Gurax_Symbol(elsif)) || pSymbol->IsIdentical(Gurax_Symbol(else_)))) {
-			Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
+			Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 							 "invalid format of if-elsif-else sequence");
 			return;
 		}
 	}
-	if (pExprCaller->CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+	if (exprCaller.CountExprCdr() != 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "if-statement takes one argument");
 		return;
 	}
-	pExprCaller->GetExprCdrFirst()->Compose(composer);					// [ValueBool]
-	if (pExprCaller->HasExprTrailer()) {
-		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit1 = composer.Add_JumpIfNot(*pExprCaller);		// []
-			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
-			auto pPUnit2 = composer.Add_Jump(*pExprCaller);				// [Value]
+	exprCaller.GetExprCdrFirst()->Compose(composer);				// [ValueBool]
+	if (exprCaller.HasExprTrailer()) {
+		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
+			auto pPUnit1 = composer.Add_JumpIfNot(exprCaller);		// []
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
+			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Value]
 			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
-			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
-			auto pPUnit = composer.Add_NilJumpIf(*pExprCaller);			// [] or [nil]
-			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			auto pPUnit = composer.Add_NilJumpIf(exprCaller);		// [] or [nil]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		}
 	} else {
-		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit = composer.Add_NilJumpIfNot(*pExprCaller);		// [] or [nil]
-			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
+		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
+			auto pPUnit = composer.Add_NilJumpIfNot(exprCaller);	// [] or [nil]
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		} else {
-			composer.Add_PopValueToDiscard(*pExprCaller);				// []
-			composer.Add_Value(*pExprCaller, Value::nil());				// [nil]
+			composer.Add_PopValueToDiscard(exprCaller);				// []
+			composer.Add_Value(exprCaller, Value::nil());			// [nil]
 		}
 	}
 }
@@ -82,33 +82,33 @@ Gurax_DeclareStatementAlias(elsif, "elsif")
 
 Gurax_ImplementStatement(elsif)
 {
-	if (pExprCaller->CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+	if (exprCaller.CountExprCdr() != 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "elsif-statement takes one argument");
 		return;
 	}
-	pExprCaller->GetExprCdrFirst()->Compose(composer);					// [ValueBool]
-	if (pExprCaller->HasExprTrailer()) {
-		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit1 = composer.Add_JumpIfNot(*pExprCaller);		// []
-			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
-			auto pPUnit2 = composer.Add_Jump(*pExprCaller);				// [Value]
+	exprCaller.GetExprCdrFirst()->Compose(composer);				// [ValueBool]
+	if (exprCaller.HasExprTrailer()) {
+		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
+			auto pPUnit1 = composer.Add_JumpIfNot(exprCaller);		// []
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
+			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Value]
 			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
-			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
-			auto pPUnit = composer.Add_NilJumpIf(*pExprCaller);			// [] or [nil]
-			pExprCaller->GetExprTrailer()->Compose(composer);			// [Value]
+			auto pPUnit = composer.Add_NilJumpIf(exprCaller);		// [] or [nil]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		}
 	} else {
-		if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit = composer.Add_NilJumpIfNot(*pExprCaller);		// [] or [nil]
-			pExprCaller->GetExprOfBlock()->Compose(composer);			// [Value]
+		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
+			auto pPUnit = composer.Add_NilJumpIfNot(exprCaller);	// [] or [nil]
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		} else {
-			composer.Add_PopValueToDiscard(*pExprCaller);				// []
-			composer.Add_Value(*pExprCaller, Value::nil());				// [nil]
+			composer.Add_PopValueToDiscard(exprCaller);				// []
+			composer.Add_Value(exprCaller, Value::nil());			// [nil]
 		}
 	}
 }
@@ -122,20 +122,20 @@ Gurax_DeclareStatementAlias(else_, "else")
 
 Gurax_ImplementStatement(else_)
 {
-	if (pExprCaller->CountExprCdr() != 0) {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+	if (exprCaller.CountExprCdr() != 0) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "else-statement takes no argument");
 		return;
 	}
-	if (pExprCaller->HasExprTrailer()) {
-		Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
+	if (exprCaller.HasExprTrailer()) {
+		Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 						 "invalid format of if-elsif-else sequence");
 		return;
 	}
-	if (pExprCaller->GetExprOfBlock()->HasExprElem()) {
-		pExprCaller->GetExprOfBlock()->Compose(composer);				// [Value]
+	if (exprCaller.GetExprOfBlock()->HasExprElem()) {
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [Value]
 	} else {
-		composer.Add_Value(*pExprCaller, Value::nil());					// [nil]
+		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
 }
 
@@ -149,12 +149,12 @@ Gurax_DeclareStatementAlias(for_, "for")
 
 Gurax_ImplementStatement(for_)
 {
-	if (pExprCaller->CountExprCdr() < 1) {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+	if (exprCaller.CountExprCdr() < 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "for-statement takes more than one argument");
 		return;
 	}
-	for (Expr* pExpr = pExprCaller->GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+	for (Expr* pExpr = exprCaller.GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
 							 "invalid argument for for-statement");
@@ -176,20 +176,20 @@ Gurax_ImplementStatement(for_)
 	}
 
 
-	const DeclArgOwner& declArgOwner = pExprCaller->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgOwner.empty()) {
-		composer.Add_Value(*pExprCaller, Value::nil());					// [ValueLast=nil]
+		composer.Add_Value(exprCaller, Value::nil());				// [ValueLast=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueLast ValueBool]
-		auto pPUnit = composer.Add_JumpIfNot(*pExprCaller);				// [ValueLast]
-		composer.Add_PopValueToDiscard(*pExprCaller);					// []
-		pExprCaller->GetExprOfBlock()->Compose(composer);				// [ValueLast]
-		composer.Add_Jump(*pExprCaller, pPUnitLoop);
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueLast ValueBool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueLast]
+		composer.Add_PopValueToDiscard(exprCaller);					// []
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueLast]
+		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
 		
 	} else {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "invalid number of block parameters");
 		return;
 	}
@@ -205,39 +205,39 @@ Gurax_DeclareStatementAlias(while_, "while")
 
 Gurax_ImplementStatement(while_)
 {
-	if (pExprCaller->CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+	if (exprCaller.CountExprCdr() != 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "while-statement takes one argument");
 		return;
 	}
-	const DeclArgOwner& declArgOwner = pExprCaller->GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgOwner.empty()) {
-		composer.Add_Value(*pExprCaller, Value::nil());					// [ValueLast=nil]
+		composer.Add_Value(exprCaller, Value::nil());				// [ValueLast=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueLast ValueBool]
-		auto pPUnit = composer.Add_JumpIfNot(*pExprCaller);				// [ValueLast]
-		composer.Add_PopValueToDiscard(*pExprCaller);					// []
-		pExprCaller->GetExprOfBlock()->Compose(composer);				// [ValueLast]
-		composer.Add_Jump(*pExprCaller, pPUnitLoop);
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueLast ValueBool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueLast]
+		composer.Add_PopValueToDiscard(exprCaller);					// []
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueLast]
+		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
-		composer.Add_PushFrame_Block(*pExprCaller);
-		composer.Add_Value(*pExprCaller, Value::Zero());				// [ValueIdx=0 ValueLast=nil]
-		composer.Add_Value(*pExprCaller, Value::nil());					// [ValueIdx ValueLast=nil]
+		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_Value(exprCaller, Value::Zero());				// [ValueIdx=0 ValueLast=nil]
+		composer.Add_Value(exprCaller, Value::nil());				// [ValueIdx ValueLast=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		pExprCaller->GetExprCdrFirst()->Compose(composer);				// [ValueIdx ValueLast ValueBool]
-		auto pPUnit = composer.Add_JumpIfNot(*pExprCaller);				// [ValueIdx ValueLast]
-		composer.Add_PopValueToDiscard(*pExprCaller);					// [ValueIdx]
-		composer.Add_AssignToDeclArg(*pExprCaller, (*ppDeclArg)->Reference()); // [ValueIdx]
-		composer.Add_Add(*pExprCaller, 1);								// [ValueIdx=ValueIdx+1]
-		pExprCaller->GetExprOfBlock()->Compose(composer);				// [ValueIdx ValueLast]
-		composer.Add_Jump(*pExprCaller, pPUnitLoop);
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueIdx ValueLast ValueBool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueIdx ValueLast]
+		composer.Add_PopValueToDiscard(exprCaller);					// [ValueIdx]
+		composer.Add_AssignToDeclArg(exprCaller, (*ppDeclArg)->Reference()); // [ValueIdx]
+		composer.Add_Add(exprCaller, 1);							// [ValueIdx=ValueIdx+1]
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueIdx ValueLast]
+		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
-		composer.Add_RemoveValue(*pExprCaller, 1);						// [ValueLast]
-		composer.Add_PopFrame(*pExprCaller);
+		composer.Add_RemoveValue(exprCaller, 1);					// [ValueLast]
+		composer.Add_PopFrame(exprCaller);
 	} else {
-		Error::IssueWith(ErrorType::ArgumentError, *pExprCaller,
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "invalid number of block parameters");
 		return;
 	}

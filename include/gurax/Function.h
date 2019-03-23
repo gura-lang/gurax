@@ -16,14 +16,14 @@
 class Statement_##name : public Function { \
 public: \
 	Statement_##name(const char* name_ = strName); \
-	virtual void Compose(Composer& composer, Expr_Caller* pExprCaller) const override; \
+	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const override; \
 }; \
 Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
 
 #define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
 
 #define Gurax_ImplementStatement(name) \
-void Statement_##name::Compose(Composer& composer, Expr_Caller* pExprCaller) const
+void Statement_##name::Compose(Composer& composer, Expr_Caller& exprCaller) const
 
 #define Gurax_CreateStatement(name) (new Statement_##name())
 
@@ -161,7 +161,7 @@ public:
 	// Virtual functions
 	virtual Value* DoCall(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };
-	virtual void Compose(Composer& composer, Expr_Caller* pExprCaller) const {}
+	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const {}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

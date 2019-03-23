@@ -759,7 +759,7 @@ void Expr_Caller::Compose(Composer& composer)
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, this);					// [ValueResult]
+				func.Compose(composer, *this);					// [ValueResult]
 				return;
 			}
 		}
