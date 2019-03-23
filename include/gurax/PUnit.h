@@ -25,8 +25,6 @@ protected:
 	RefPtr<Expr> _pExprSrc;
 	SeqId _seqId;
 	Flags _flags;
-protected:
-	static int _seqIdNext;
 public:
 	// Constructor
 	explicit PUnit(Expr* pExprSrc, SeqId seqId, Flags flags = Flag::None);

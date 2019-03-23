@@ -8,8 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-int PUnit::_seqIdNext = 0;
-
 PUnit::PUnit(Expr* pExprSrc, SeqId seqId, Flags flags) :
 	_pExprSrc(pExprSrc), _seqId(seqId), _flags(flags)
 {
