@@ -103,6 +103,20 @@ PUnit_AddList* Composer::Add_AddList(const Expr* pExprSrc)
 	return pPUnit;
 }
 
+PUnit_CreateDict* Composer::Add_CreateDict(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_CreateDict(pExprSrc->Reference(), NextSeqId());
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_AddDict* Composer::Add_AddDict(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_AddDict(pExprSrc->Reference(), NextSeqId());
+	Add(pPUnit);
+	return pPUnit;
+}
+
 PUnit_Index* Composer::Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve)
 {
 	auto pPUnit = new PUnit_Index(pExprSrc->Reference(), NextSeqId(), attr.Reference(), sizeReserve);

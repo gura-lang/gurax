@@ -32,6 +32,10 @@ int Main(int argc, char* argv[])
 	}
 	Composer composer;
 	pExprOfRoot->Compose(composer);
+	if (Error::IsIssued()) {
+		Error::Print(*Stream::CErr);
+		return 1;
+	}
 	if (cmdLine.GetBool("list")) {
 		composer.PrintPUnit();
 	} else {

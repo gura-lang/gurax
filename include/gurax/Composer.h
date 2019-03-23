@@ -52,6 +52,8 @@ public:
 	PUnit_Add* Add_Add(const Expr* pExprSrc, int added);
 	PUnit_CreateList* Add_CreateList(const Expr* pExprSrc, size_t sizeReserve);
 	PUnit_AddList* Add_AddList(const Expr* pExprSrc);
+	PUnit_CreateDict* Add_CreateDict(const Expr* pExprSrc);
+	PUnit_AddDict* Add_AddDict(const Expr* pExprSrc);
 	PUnit_Index* Add_Index(const Expr* pExprSrc, const Attribute& attr, size_t sizeReserve);
 	PUnit_FeedIndex* Add_FeedIndex(const Expr* pExprSrc);
 	PUnit_IndexGet* Add_IndexGet(const Expr* pExprSrc);
