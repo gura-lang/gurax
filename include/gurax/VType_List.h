@@ -69,6 +69,7 @@ public:
 	}
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, Value* pValue) override;
+	virtual Iterator* DoGenIterator() override;
 };
 
 }

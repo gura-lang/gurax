@@ -25,6 +25,7 @@ public:
 	static const ErrorType DividedByZero;
 	static const ErrorType IndexError;
 	static const ErrorType InvalidOperation;
+	static const ErrorType IteratorError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
 	static const ErrorType ValueError;

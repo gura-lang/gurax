@@ -29,11 +29,7 @@ private:
 	size_t _idx;
 public:
 	Iterator_ConstN(Value* pValue, size_t num) : _pValue(pValue) , _num(num), _idx(0) {}
-	virtual Value* NextValue() override {
-		if (_idx >= _num) return nullptr;
-		_idx++;
-		return _pValue.get();
-	}
+	virtual Value* NextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -49,11 +45,23 @@ public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
 	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
-	virtual Value* NextValue() override {
-		const ValueOwner& valueOwner = GetValueOwner();
-		if (_idx >= valueOwner.size()) return nullptr;
-		return valueOwner[_idx++];
-	}
+	virtual Value* NextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Range
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Range : public Iterator {
+private:
+	int _idxBegin, _idxEnd;
+	int _idxStep;
+	int _idx;
+public:
+	Iterator_Range(int idxBegin, int idxEnd, int idxStep) :
+		_idxBegin(idxBegin), _idxEnd(idxEnd), _idxStep(idxStep), _idx(idxBegin) {}
+	Iterator_Range(int n) : Iterator_Range(0, n, 1) {}
+	virtual Value* NextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

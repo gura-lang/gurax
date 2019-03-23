@@ -41,4 +41,9 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 	}
 }
 
+Iterator* Value_List::DoGenIterator()
+{
+	return new Iterator_Each(GetValueTypedOwner().Reference());
+}
+
 }
