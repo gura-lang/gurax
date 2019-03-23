@@ -19,10 +19,12 @@ Gurax_ImplementStatement(_dict_)
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_BinaryOp>() &&
 			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
+			// %{ .. key => value .. }
 			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
 			pExprEx->GetExprLeft()->Compose(composer);			// [ValueDict ValueKey]
 			pExprEx->GetExprRight()->Compose(composer);			// [ValueDict ValueKey ValueElem]
 		} else if (pExpr->IsType<Expr_Block>()) {
+			// %{ .. {key, value} .. }
 			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
 			if (pExprEx->CountExprElem() != 2) {
 				Error::IssueWith(ErrorType::SyntaxError, *pExprCaller,
@@ -34,6 +36,7 @@ Gurax_ImplementStatement(_dict_)
 			pExprElem = pExprElem->GetExprNext();
 			pExprElem->Compose(composer);						// [ValueDict ValueKey ValueElem]
 		} else {
+			// %{ .. key, value .. }
 			pExpr->Compose(composer);							// [ValueDict ValueKey]
 			pExpr = pExpr->GetExprNext();
 			if (!pExpr) {
