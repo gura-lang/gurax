@@ -16,6 +16,12 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Value);
 	PrintSizeOf(PUnit_Lookup);
 	PrintSizeOf(PUnit_AssignToSymbol);
+	PrintSizeOf(PUnit_AssignToDeclArg);
+	PrintSizeOf(PUnit_AssignFunction);
+	PrintSizeOf(PUnit_Cast);
+	PrintSizeOf(PUnit_GenIterator);
+	PrintSizeOf(PUnit_GenRangeIterator);
+	PrintSizeOf(PUnit_EvalIterator);
 	PrintSizeOf(PUnit_PopValueToDiscard);
 	PrintSizeOf(PUnit_UnaryOp);
 	PrintSizeOf(PUnit_BinaryOp);

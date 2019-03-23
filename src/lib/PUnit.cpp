@@ -206,6 +206,82 @@ String PUnit_Cast::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_GenIterator
+// Stack View: [Value] -> [ValueIterator]
+//------------------------------------------------------------------------------
+const PUnit* PUnit_GenIterator::Exec(Processor& processor) const
+{
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		return GetPUnitCont();
+	}
+	RefPtr<Value> pValue(processor.PopValue());
+	RefPtr<Iterator> pIterator(pValue->DoGenIterator());
+	if (!pIterator) return nullptr;
+	processor.PushValue(new Value_Iterator(pIterator.release()));
+	return GetPUnitCont();
+}
+
+String PUnit_GenIterator::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "GenIterator()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_GenRangeIterator
+// Stack View: [ValueNumber] -> [ValueIterator]
+//------------------------------------------------------------------------------
+const PUnit* PUnit_GenRangeIterator::Exec(Processor& processor) const
+{
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		return GetPUnitCont();
+	}
+	RefPtr<Value> pValue(processor.PopValue());
+	int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
+	RefPtr<Iterator> pIterator(new Iterator_Range(num));
+	processor.PushValue(new Value_Iterator(pIterator.release()));
+	return GetPUnitCont();
+}
+
+String PUnit_GenRangeIterator::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "GenRangeIterator()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_EvalIterator
+// Stack View: [ValueIterator] -> [ValueIterator ValueElem]
+//------------------------------------------------------------------------------
+const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
+{
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		return GetPUnitCont();
+	}
+	Iterator& iterator =
+		dynamic_cast<Value_Iterator*>(processor.PeekValue(_offset))->GetIterator();
+	RefPtr<Value> pValueElem(iterator.NextValue());
+	if (!pValueElem) return GetPUnitBranch();
+	processor.PushValue(pValueElem.release());
+	return GetPUnitCont();
+}
+
+String PUnit_EvalIterator::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("EvalIterator(%zu%s#%zu)", GetOffset(), ss.GetComma(), GetPUnitBranch()->GetSeqId());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
 // Stack View: [Value] -> [ValueResult]
 //------------------------------------------------------------------------------
@@ -263,7 +339,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Add
-// Stack View: [Value] -> [ValueResult]
+// Stack View: [ValueNumer] -> [ValueResult]
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Add::Exec(Processor& processor) const
 {

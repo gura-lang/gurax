@@ -221,6 +221,65 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_GenIterator
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_GenIterator : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_GenIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_GenRangeIterator
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_GenRangeIterator : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_GenRangeIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_EvalIterator
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_EvalIterator : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
+	const PUnit* _pPUnitBranch;
+public:
+	// Constructor
+	PUnit_EvalIterator(Expr* pExprSrc, SeqId seqId, size_t offset, const PUnit* pPUnitBranch) :
+		PUnit(pExprSrc, seqId), _offset(offset), _pPUnitBranch(pPUnitBranch) {}
+public:
+	size_t GetOffset() const { return _offset; }
+	void SetPUnitBranch(const PUnit* pPUnit) { _pPUnitBranch = pPUnit; }
+	const PUnit* GetPUnitBranch() const { return _pPUnitBranch; }
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_UnaryOp : public PUnit {
