@@ -269,15 +269,13 @@ String PUnit_GenRangeIterator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 {
-	if (GetPopValueToDiscardFlag()) {
-		processor.PopValueToDiscard();
-		return _GetPUnitCont();
-	}
 	Iterator& iterator =
 		dynamic_cast<Value_Iterator*>(processor.PeekValue(_offset))->GetIterator();
 	RefPtr<Value> pValueElem(iterator.NextValue());
 	if (!pValueElem) return GetPUnitBranch();
-	processor.PushValue(pValueElem.release());
+	if (!GetPopValueToDiscardFlag()) {
+		processor.PushValue(pValueElem.release());
+	}
 	return _GetPUnitCont();
 }
 
@@ -322,16 +320,13 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_BinaryOp::Exec(Processor& processor) const
 {
-	if (GetPopValueToDiscardFlag()) {
-		processor.PopValueToDiscard();
-		processor.PopValueToDiscard();
-		return _GetPUnitCont();
-	}
 	RefPtr<Value> pValueRight(processor.PopValue());
 	RefPtr<Value> pValueLeft(processor.PopValue());
 	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(*pValueLeft, *pValueRight));
 	if (pValueResult->IsUndefined()) return nullptr;
-	processor.PushValue(pValueResult.release());
+	if (!GetPopValueToDiscardFlag()) {
+		processor.PushValue(pValueResult.release());
+	}
 	return _GetPUnitCont();
 }
 
@@ -375,6 +370,7 @@ String PUnit_Add::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_CreateList::Exec(Processor& processor) const
 {
+	if (GetPopValueToDiscardFlag()) return _GetPUnitCont();
 	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 	pValueTypedOwner->Reserve(GetSizeReserve());
 	processor.PushValue(new Value_List(pValueTypedOwner.release()));
@@ -421,6 +417,7 @@ String PUnit_AddList::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_CreateDict::Exec(Processor& processor) const
 {
+	if (GetPopValueToDiscardFlag()) return _GetPUnitCont();
 	processor.PushValue(new Value_Dict());
 	return _GetPUnitCont();
 }
@@ -467,6 +464,10 @@ String PUnit_AddDict::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Index::Exec(Processor& processor) const
 {
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		return _GetPUnitCont();
+	}
 	RefPtr<Value> pValueCar(processor.PopValue());
 	RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
 	pIndex->Reserve(GetSizeReserve());
@@ -489,6 +490,11 @@ String PUnit_Index::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 {
+	if (GetPopValueToDiscardFlag()) {
+		processor.PopValueToDiscard();
+		processor.PopValueToDiscard();
+		return _GetPUnitCont();
+	}
 	RefPtr<Value> pValue(processor.PopValue());
 	Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
 	index.FeedValue(pValue.release());

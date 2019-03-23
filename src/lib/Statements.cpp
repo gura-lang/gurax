@@ -229,7 +229,8 @@ Gurax_ImplementStatement(while_)
 		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueIdx ValueLast ValueBool]
 		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueIdx ValueLast]
 		composer.Add_PopValueToDiscard(exprCaller);					// [ValueIdx]
-		composer.Add_AssignToDeclArg(exprCaller, (*ppDeclArg)->Reference()); // [ValueIdx]
+		composer.Add_AssignToDeclArg(
+			exprCaller, (*ppDeclArg)->Reference());					// [ValueIdx]
 		composer.Add_Add(exprCaller, 1);							// [ValueIdx=ValueIdx+1]
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueIdx ValueLast]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
