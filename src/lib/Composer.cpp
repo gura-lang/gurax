@@ -68,6 +68,27 @@ PUnit_Cast* Composer::Add_Cast(const Expr* pExprSrc, const VType& vtype)
 	return pPUnit;
 }
 
+PUnit_GenIterator* Composer::Add_GenIterator(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_GenIterator(pExprSrc->Reference(), NextSeqId());
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_GenRangeIterator* Composer::Add_GenRangeIterator(const Expr* pExprSrc)
+{
+	auto pPUnit = new PUnit_GenRangeIterator(pExprSrc->Reference(), NextSeqId());
+	Add(pPUnit);
+	return pPUnit;
+}
+
+PUnit_EvalIterator* Composer::Add_EvalIterator(const Expr* pExprSrc, size_t offset, const PUnit* pPUnitBranch)
+{
+	auto pPUnit = new PUnit_EvalIterator(pExprSrc->Reference(), NextSeqId(), offset, pPUnitBranch);
+	Add(pPUnit);
+	return pPUnit;
+}
+
 PUnit_UnaryOp* Composer::Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator)
 {
 	auto pPUnit = new PUnit_UnaryOp(pExprSrc->Reference(), NextSeqId(), pOperator);

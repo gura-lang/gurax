@@ -47,6 +47,9 @@ public:
 	PUnit_AssignToDeclArg* Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg);
 	PUnit_AssignFunction* Add_AssignFunction(const Expr* pExprSrc, const Function* pFunction);
 	PUnit_Cast* Add_Cast(const Expr* pExprSrc, const VType& vtype);
+	PUnit_GenIterator* Add_GenIterator(const Expr* pExprSrc);
+	PUnit_GenRangeIterator* Add_GenRangeIterator(const Expr* pExprSrc);
+	PUnit_EvalIterator* Add_EvalIterator(const Expr* pExprSrc, size_t offset, const PUnit* pPUnitBranch = nullptr);
 	PUnit_UnaryOp* Add_UnaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	PUnit_BinaryOp* Add_BinaryOp(const Expr* pExprSrc, const Operator* pOperator);
 	PUnit_Add* Add_Add(const Expr* pExprSrc, int added);
