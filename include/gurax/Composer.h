@@ -67,8 +67,8 @@ public:
 		const Expr* pExprAssigned, const PUnit* pPUnitSkipDest = nullptr);
 	PUnit_FeedArgSlotNamed* Add_FeedArgSlotNamed(const Expr* pExprSrc);
 	PUnit_Call* Add_Call(const Expr* pExprSrc);
-	void AddOpt_Jump(const Expr* pExprSrc, const PUnit* pPUnitCont);
-	PUnit_Jump* Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitCont = nullptr);
+	PUnit_Jump* Add_Jump(const Expr* pExprSrc, const PUnit* pPUnitCont);
+	PUnit_Jump* Add_Jump(const Expr* pExprSrc);
 	PUnit_JumpIf* Add_JumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch = nullptr);
 	PUnit_JumpIfNot* Add_JumpIfNot(const Expr* pExprSrc, const PUnit* pPUnitBranch = nullptr);
 	PUnit_NilJumpIf* Add_NilJumpIf(const Expr* pExprSrc, const PUnit* pPUnitBranch = nullptr);

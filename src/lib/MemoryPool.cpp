@@ -72,7 +72,7 @@ void* MemoryPool::ChunkPUnit::Allocate(size_t bytes)
 	void* pAllocated = PeekPointer();
 	_offsetNext += bytes;
 	if (_offsetNext + _bytesMargin > _bytesPoolBuff) {
-		PUnit* pPUnitBridge = new PUnit_Bridge();
+		auto pPUnitBridge = new PUnit_Bridge();
 		Pool* pPool = Pool::Create(_bytesPoolBuff);
 		_pPoolCur->pPoolNext = pPool;
 		_offsetNext = 0;
