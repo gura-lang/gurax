@@ -19,18 +19,6 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 		str += ss.GetComma();
 		str += "PopValueToDiscard()";
 	}
-#if 0
-	if (_pPUnitCont) {
-		size_t seqIdNext = _pPUnitCont->GetSeqId();
-		if (seqIdNext != GetSeqId() + 1) {
-			str += ss.GetComma();
-			str.Printf("Jump(#%zu)", seqIdNext);
-		}
-	} else {
-		str += ss.GetComma();
-		str += "Terminate()";
-	}
-#endif
 }
 
 void PUnit::Print() const
@@ -95,7 +83,7 @@ String PUnit_ValueAndJump::ToString(const StringStyle& ss) const
 	String str;
 	str += "ValueAndJump(";
 	str += GetValue()->ToString(StringStyle().Digest());
-	str += ")";
+	str.Printf(", #%zu)", _GetPUnitCont()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -193,7 +181,7 @@ String PUnit_AssignFunction::ToString(const StringStyle& ss) const
 	String str;
 	str += "AssignFunction(";
 	str += GetFunction().ToString(ss);
-	str += ")";
+	str.Printf(", #%zu)", _GetPUnitCont()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -689,7 +677,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 		str.Printf(":PUnit#%zu", GetExprSrc().GetPUnitTop()->GetSeqId());
 	}
 	str += ss.GetComma();
-	str.Printf("#%zu)", GetPUnitBranch()->GetSeqId());
+	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -764,7 +752,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	str += GetExprSrc().ToString(StringStyle().Cram());
 	str += ")";
 	str += ss.GetComma();
-	str.Printf("#%zu)", GetPUnitBranch()->GetSeqId());
+	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranch()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -820,7 +808,7 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 String PUnit_Call::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "Call()";
+	str.Printf("Call(#%zu)", _GetPUnitCont()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1081,7 +1069,7 @@ const PUnit* PUnit_Bridge::Exec(Processor& processor) const
 String PUnit_Bridge::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "Bridge()";
+	str.Printf("Bridge(#%zu)", _GetPUnitCont()->GetSeqId());
 	return str;
 }
 
