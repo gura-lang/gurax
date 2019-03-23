@@ -452,6 +452,46 @@ private:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_CreateDict
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_CreateDict : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	explicit PUnit_CreateDict(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+//------------------------------------------------------------------------------
+// PUnit_AddDict
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_AddDict : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	explicit PUnit_AddDict(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Index
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Index : public PUnit {

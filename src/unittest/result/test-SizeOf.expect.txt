@@ -18,6 +18,8 @@ PUnit_UnaryOp            32
 PUnit_BinaryOp           32
 PUnit_CreateList         32
 PUnit_AddList            24
+PUnit_CreateDict         24
+PUnit_AddDict            24
 PUnit_Index              40
 PUnit_FeedIndex          24
 PUnit_IndexGet           24
