@@ -15,7 +15,7 @@ Gurax_DeclareStatementAlias(_dict_, "%")
 Gurax_ImplementStatement(_dict_)
 {
 	Expr* pExpr = pExprCaller->GetExprOfBlock()->GetExprElemFirst();
-	composer.Add_CreateDict(pExprCaller);						// [ValueDict]
+	composer.Add_CreateDict(*pExprCaller);						// [ValueDict]
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_BinaryOp>() &&
 			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
@@ -46,7 +46,7 @@ Gurax_ImplementStatement(_dict_)
 			}
 			pExpr->Compose(composer);							// [ValueDict ValueKey ValueElem]
 		}
-		composer.Add_AddDict(pExprCaller);						// [ValueDict]
+		composer.Add_AddDict(*pExprCaller);						// [ValueDict]
 	}
 }
 
