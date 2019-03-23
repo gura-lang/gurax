@@ -276,7 +276,7 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		PUnit* pPUnit = composer.Add_Value(
+		auto pPUnit = composer.Add_ValueAndJump(
 			this, new Value_Expr(GetExprChild()->Reference()));	// [Value]
 		GetExprChild()->SetPUnitTop(composer.PeekPUnitCont());
 		GetExprChild()->Compose(composer);
@@ -338,7 +338,7 @@ void Expr_BinaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
 		do {
-			PUnit* pPUnit = composer.Add_Value(
+			auto pPUnit = composer.Add_ValueAndJump(
 				this, new Value_Expr(GetExprLeft()->Reference()));	// [ValueLeft]
 			GetExprLeft()->SetPUnitTop(composer.PeekPUnitCont());
 			GetExprLeft()->Compose(composer);
@@ -346,7 +346,7 @@ void Expr_BinaryOp::Compose(Composer& composer)
 			pPUnit->SetPUnitCont(composer.PeekPUnitCont());
 		} while (0);
 		do {
-			PUnit* pPUnit = composer.Add_Value(
+			auto pPUnit = composer.Add_ValueAndJump(
 				this, new Value_Expr(GetExprRight()->Reference()));	// [ValueLeft ValueRight]
 			GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
 			GetExprRight()->Compose(composer);

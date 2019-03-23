@@ -29,6 +29,13 @@ PUnit_Value* Composer::Add_Value(const Expr* pExprSrc, const Value* pValue)
 	return pPUnit;
 }
 
+PUnit_ValueAndJump* Composer::Add_ValueAndJump(const Expr* pExprSrc, const Value* pValue)
+{
+	auto pPUnit = new PUnit_ValueAndJump(pExprSrc->Reference(), NextSeqId(), pValue->Clone());
+	Add(pPUnit);
+	return pPUnit;
+}
+
 PUnit_Lookup* Composer::Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol)
 {
 	auto pPUnit = new PUnit_Lookup(pExprSrc->Reference(), NextSeqId(), pSymbol);

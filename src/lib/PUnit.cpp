@@ -81,6 +81,26 @@ String PUnit_Value::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_ValueAndJump
+// Stack View: [] -> [Value]
+//------------------------------------------------------------------------------
+const PUnit* PUnit_ValueAndJump::Exec(Processor& processor) const
+{
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(GetValue()->Reference());
+	return GetPUnitCont();
+}
+
+String PUnit_ValueAndJump::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "ValueAndJump(";
+	str += GetValue()->ToString(StringStyle().Digest());
+	str += ")";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Lookup
 // Stack View: [] -> [Value]
 //------------------------------------------------------------------------------

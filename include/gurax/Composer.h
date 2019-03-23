@@ -41,6 +41,7 @@ public:
 	void DoEval(Processor& processor) const;
 public:
 	PUnit_Value* Add_Value(const Expr* pExprSrc, const Value* pValue);
+	PUnit_ValueAndJump* Add_ValueAndJump(const Expr* pExprSrc, const Value* pValue);
 	PUnit_Lookup* Add_Lookup(const Expr* pExprSrc, const Symbol* pSymbol);
 	PUnit_AssignToSymbol* Add_AssignToSymbol(const Expr* pExprSrc, const Symbol* pSymbol);
 	PUnit_AssignToDeclArg* Add_AssignToDeclArg(const Expr* pExprSrc, DeclArg* pDeclArg);

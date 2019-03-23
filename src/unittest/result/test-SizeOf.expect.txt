@@ -6,6 +6,12 @@ DateTime                 48
 PUnit_Value              40
 PUnit_Lookup             40
 PUnit_AssignToSymbol     40
+PUnit_AssignToDeclArg    40
+PUnit_AssignFunction     40
+PUnit_Cast               40
+PUnit_GenIterator        32
+PUnit_GenRangeIterator   32
+PUnit_EvalIterator       48
 PUnit_PopValueToDiscard  32
 PUnit_UnaryOp            40
 PUnit_BinaryOp           40
