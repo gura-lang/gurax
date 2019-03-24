@@ -232,7 +232,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_EvalIterator(exprCaller, 0);					// [Iterator Idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());					// [Iterator]
-		composer.AddOpt_PopValueToDiscard(exprCaller);
+		composer.SetPopValueToDiscardFlagAtLast();
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
@@ -273,7 +273,7 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_Value(exprCaller, Value::nil());				// [Iteartor Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		auto pPUnitJump = composer.Add_EvalIterator(exprCaller, 1);	// [Iterator Last]
-		composer.AddOpt_PopValueToDiscard(exprCaller);				// [Iterator Last]
+		composer.SetPopValueToDiscardFlagAtLast();
 		composer.Add_PopValueToDiscard(exprCaller);					// [Iterator]
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
@@ -294,7 +294,7 @@ Gurax_ImplementStatement(repeat)
 		auto pPUnitJump = composer.Add_EvalIterator(exprCaller, 1);	// [Iterator Last idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());					// [Iterator Last]
-		composer.AddOpt_PopValueToDiscard(exprCaller);				// [Iterator Last]
+		composer.SetPopValueToDiscardFlagAtLast();
 		composer.Add_PopValueToDiscard(exprCaller);					// [Iterator]
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);

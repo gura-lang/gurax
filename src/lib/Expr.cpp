@@ -46,16 +46,13 @@ size_t Expr::CountSequence(const Expr* pExpr)
 
 void Expr::ComposeSequence(Composer& composer, Expr* pExpr)
 {
-	const Expr* pExprPrev = nullptr;
 	if (pExpr) {
 		pExpr->Compose(composer);
-		pExprPrev = pExpr;
 		pExpr = pExpr->GetExprNext();
 	}
 	while (pExpr) {
-		composer.AddOpt_PopValueToDiscard(*pExprPrev);
+		composer.SetPopValueToDiscardFlagAtLast();
 		pExpr->Compose(composer);
-		pExprPrev = pExpr;
 		pExpr = pExpr->GetExprNext();
 	}
 	// [Value]
@@ -102,18 +99,15 @@ bool ExprList::Traverse(Expr::Visitor& visitor)
 
 void ExprList::Compose(Composer& composer)
 {
-	const Expr* pExprPrev = nullptr;
 	auto ppExpr = begin();
 	if (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
 		pExpr->Compose(composer);
-		pExprPrev = pExpr;
 	}
 	while (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
-		composer.AddOpt_PopValueToDiscard(*pExprPrev);
+		composer.SetPopValueToDiscardFlagAtLast();
 		pExpr->Compose(composer);
-		pExprPrev = pExpr;
 	}
 	// [Value]
 }
