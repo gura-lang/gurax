@@ -19,5 +19,19 @@ void VType_Iterator::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Iterator
 //------------------------------------------------------------------------------
+String Value_Iterator::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str += ":";
+	str += GetIterator().ToString(StringStyle().Digest());
+	str += ">";
+	return str;
+}
+
+String Value_Iterator::ToStringDetail(const StringStyle& ss) const
+{
+	return GetIterator().ToString(ss);
+}
 
 }
