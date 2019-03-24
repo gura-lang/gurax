@@ -254,16 +254,21 @@ Gurax_DeclareStatement(repeat)
 
 Gurax_ImplementStatement(repeat)
 {
-	if (exprCaller.CountExprCdr() != 1) {
+	if (exprCaller.CountExprCdr() > 1) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "repeat-statement takes one argument");
+						 "repeat-statement takes zero or one argument");
 		return;
 	}
 	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (declArgOwner.empty()) {
-		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Any]
-		composer.Add_Cast(exprCaller, VTYPE_Number);				// [Number]
-		composer.Add_GenRangeIterator(exprCaller);					// [Iterator]
+		if (pExprCdr) {
+			pExprCdr->Compose(composer);							// [Any]
+			composer.Add_Cast(exprCaller, VTYPE_Number);			// [Number]
+			composer.Add_GenRangeIterator(exprCaller);				// [Iterator]
+		} else {
+			
+		}
 		composer.Add_Value(exprCaller, Value::nil());				// [Iteartor Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		auto pPUnit = composer.Add_EvalIterator(exprCaller, 1);		// [Iterator Last]
@@ -276,9 +281,13 @@ Gurax_ImplementStatement(repeat)
 	} else if (declArgOwner.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 		composer.Add_PushFrame_Block(exprCaller);
-		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Any]
-		composer.Add_Cast(exprCaller, VTYPE_Number);				// [Number]
-		composer.Add_GenRangeIterator(exprCaller);					// [Iterator]
+		if (pExprCdr) {
+			pExprCdr->Compose(composer);							// [Any]
+			composer.Add_Cast(exprCaller, VTYPE_Number);			// [Number]
+			composer.Add_GenRangeIterator(exprCaller);				// [Iterator]
+		} else {
+			
+		}
 		composer.Add_Value(exprCaller, Value::nil());				// [Iteartor Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		auto pPUnit = composer.Add_EvalIterator(exprCaller, 1);		// [Iterator Last idx]
