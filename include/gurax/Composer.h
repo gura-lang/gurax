@@ -53,7 +53,6 @@ public:
 	PUnit_EvalIterator* Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranch = nullptr);
 	PUnit_UnaryOp* Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	PUnit_BinaryOp* Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
-	PUnit_Add* Add_Add(const Expr& exprSrc, int added);
 	PUnit_CreateList* Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
 	PUnit_AddList* Add_AddList(const Expr& exprSrc);
 	PUnit_CreateDict* Add_CreateDict(const Expr& exprSrc);

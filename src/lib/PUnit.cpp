@@ -352,27 +352,6 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Add
-// Stack View: [Prev Numer] -> [Prev Result] (continue)
-//                          -> [Prev]        (pop to discard)
-//------------------------------------------------------------------------------
-const PUnit* PUnit_Add::Exec(Processor& processor) const
-{
-	RefPtr<Value> pValue(processor.PopValue());
-	int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
-	if (!GetPopValueToDiscardFlag()) processor.PushValue(new Value_Number(num + GetAdded()));
-	return _GetPUnitCont();
-}
-
-String PUnit_Add::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("Add(%d)", GetAdded());
-	AppendInfoToString(str, ss);
-	return str;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_CreateList
 // Stack View: [Prev] -> [Prev List] (continue)
 //             [Prev] -> [Prev]      (pop to discard)

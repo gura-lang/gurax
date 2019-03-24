@@ -110,13 +110,6 @@ PUnit_BinaryOp* Composer::Add_BinaryOp(const Expr& exprSrc, const Operator* pOpe
 	return pPUnit;
 }
 
-PUnit_Add* Composer::Add_Add(const Expr& exprSrc, int added)
-{
-	auto pPUnit = new PUnit_Add(exprSrc.Reference(), NextSeqId(), added);
-	Add(pPUnit);
-	return pPUnit;
-}
-
 PUnit_CreateList* Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReserve)
 {
 	auto pPUnit = new PUnit_CreateList(exprSrc.Reference(), NextSeqId(), sizeReserve);
