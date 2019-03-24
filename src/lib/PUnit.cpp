@@ -398,12 +398,12 @@ String PUnit_AddList::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_CreateDict
-// Stack View: [] -> [ValueDict]
+// Stack View: [Prev] -> [Prev Dict] (continue)
+//                    -> [Prev]      (pop to discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_CreateDict::Exec(Processor& processor) const
 {
-	if (GetPopValueToDiscardFlag()) return _GetPUnitCont();
-	processor.PushValue(new Value_Dict());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(new Value_Dict());
 	return _GetPUnitCont();
 }
 
@@ -417,21 +417,17 @@ String PUnit_CreateDict::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_AddDict
-// Stack View: [ValueDict ValueKey ValueElem] -> [ValueDict]
+// Stack View: [Prev Dict Key Elem] -> [Prev Dict] (continue)
+//                                  -> [Prev]      (pop to discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AddDict::Exec(Processor& processor) const
 {
-	if (GetPopValueToDiscardFlag()) {
-		processor.PopValueToDiscard();
-		processor.PopValueToDiscard();
-		processor.PopValueToDiscard();
-		return _GetPUnitCont();
-	}
 	RefPtr<Value> pValueElem(processor.PopValue());
 	RefPtr<Value> pValueKey(processor.PopValue());
 	ValueDict& valueDict =
 		dynamic_cast<Value_Dict*>(processor.PeekValue(0))->GetValueDict();
 	valueDict.Assign(pValueKey.release(), pValueElem.release());
+	if (GetPopValueToDiscardFlag()) processor.PopValueToDiscard();
 	return _GetPUnitCont();
 }
 
