@@ -82,6 +82,13 @@ PUnit_GenRangeIterator* Composer::Add_GenRangeIterator(const Expr& exprSrc)
 	return pPUnit;
 }
 
+PUnit_GenInfiniteIterator* Composer::Add_GenInfiniteIterator(const Expr& exprSrc)
+{
+	auto pPUnit = new PUnit_GenInfiniteIterator(exprSrc.Reference(), NextSeqId());
+	Add(pPUnit);
+	return pPUnit;
+}
+
 PUnit_EvalIterator* Composer::Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranch)
 {
 	auto pPUnit = new PUnit_EvalIterator(exprSrc.Reference(), NextSeqId(), offset, pPUnitBranch);

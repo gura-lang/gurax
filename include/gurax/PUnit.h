@@ -304,6 +304,26 @@ private:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_GenInfiniteIterator
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_GenInfiniteIterator : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_GenInfiniteIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+//------------------------------------------------------------------------------
 // PUnit_EvalIterator
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_EvalIterator : public PUnit {

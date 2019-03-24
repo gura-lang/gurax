@@ -260,6 +260,26 @@ String PUnit_GenRangeIterator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_GenInfiniteIterator
+// Stack View: [Prev] -> [Prev Iterator] (continue)
+//                    -> [Prev]          (pop to discard)
+//------------------------------------------------------------------------------
+const PUnit* PUnit_GenInfiniteIterator::Exec(Processor& processor) const
+{
+	RefPtr<Iterator> pIterator(new Iterator_Infinite());
+	if (!GetPopValueToDiscardFlag()) processor.PushValue(new Value_Iterator(pIterator.release()));
+	return _GetPUnitCont();
+}
+
+String PUnit_GenInfiniteIterator::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "GenInfiniteIterator()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_EvalIterator
 // Stack View: [Prev Iterator ..] -> [Prev Iterator .. Elem] (continue)
 //                                -> [Prev Iterator ..]      (pop to discard)

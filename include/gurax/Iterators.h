@@ -65,6 +65,22 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Infinite
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Infinite : public Iterator {
+private:
+	int _idxBegin;
+	int _idxStep;
+	int _idx;
+public:
+	Iterator_Infinite(int idxBegin, int idxStep) :
+		_idxBegin(idxBegin), _idxStep(idxStep), _idx(idxBegin) {}
+	Iterator_Infinite() : Iterator_Infinite(0, 1) {}
+	virtual Value* NextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

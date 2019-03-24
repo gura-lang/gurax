@@ -70,4 +70,21 @@ String Iterator_Range::ToString(const StringStyle& ss) const
 	return str;
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Infinite
+//------------------------------------------------------------------------------
+Value* Iterator_Infinite::NextValue()
+{
+	Value* pValue = new Value_Number(_idx);
+	_idx += _idxStep;
+	return pValue;
+}
+
+String Iterator_Infinite::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("Range:begin=%d:step=%d", _idxBegin, _idxStep);
+	return str;
+}
+
 }

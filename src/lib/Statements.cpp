@@ -267,7 +267,7 @@ Gurax_ImplementStatement(repeat)
 			composer.Add_Cast(exprCaller, VTYPE_Number);			// [Number]
 			composer.Add_GenRangeIterator(exprCaller);				// [Iterator]
 		} else {
-			
+			composer.Add_GenInfiniteIterator(exprCaller);			// [Iterator]
 		}
 		composer.Add_Value(exprCaller, Value::nil());				// [Iteartor Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
@@ -286,7 +286,7 @@ Gurax_ImplementStatement(repeat)
 			composer.Add_Cast(exprCaller, VTYPE_Number);			// [Number]
 			composer.Add_GenRangeIterator(exprCaller);				// [Iterator]
 		} else {
-			
+			composer.Add_GenInfiniteIterator(exprCaller);			// [Iterator]
 		}
 		composer.Add_Value(exprCaller, Value::nil());				// [Iteartor Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();

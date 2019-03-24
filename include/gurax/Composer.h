@@ -49,6 +49,7 @@ public:
 	PUnit_Cast* Add_Cast(const Expr& exprSrc, const VType& vtype);
 	PUnit_GenIterator* Add_GenIterator(const Expr& exprSrc);
 	PUnit_GenRangeIterator* Add_GenRangeIterator(const Expr& exprSrc);
+	PUnit_GenInfiniteIterator* Add_GenInfiniteIterator(const Expr& exprSrc);
 	PUnit_EvalIterator* Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranch = nullptr);
 	PUnit_UnaryOp* Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	PUnit_BinaryOp* Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
