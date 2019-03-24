@@ -46,24 +46,24 @@ Gurax_ImplementStatement(if_)
 						 "if-statement takes one argument");
 		return;
 	}
-	exprCaller.GetExprCdrFirst()->Compose(composer);				// [ValueBool]
+	exprCaller.GetExprCdrFirst()->Compose(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
 			auto pPUnit1 = composer.Add_JumpIfNot(exprCaller);		// []
-			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
-			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Value]
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
+			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Any]
 			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
-			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
 			auto pPUnit = composer.Add_NilJumpIf(exprCaller);		// [] or [nil]
-			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		}
 	} else {
 		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
 			auto pPUnit = composer.Add_NilJumpIfNot(exprCaller);	// [] or [nil]
-			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		} else {
 			composer.Add_PopValueToDiscard(exprCaller);				// []
@@ -87,24 +87,24 @@ Gurax_ImplementStatement(elsif)
 						 "elsif-statement takes one argument");
 		return;
 	}
-	exprCaller.GetExprCdrFirst()->Compose(composer);				// [ValueBool]
+	exprCaller.GetExprCdrFirst()->Compose(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
 			auto pPUnit1 = composer.Add_JumpIfNot(exprCaller);		// []
-			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
-			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Value]
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
+			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Any]
 			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
-			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
 			auto pPUnit = composer.Add_NilJumpIf(exprCaller);		// [] or [nil]
-			exprCaller.GetExprTrailer()->Compose(composer);			// [Value]
+			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		}
 	} else {
 		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
 			auto pPUnit = composer.Add_NilJumpIfNot(exprCaller);	// [] or [nil]
-			exprCaller.GetExprOfBlock()->Compose(composer);			// [Value]
+			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
 			pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		} else {
 			composer.Add_PopValueToDiscard(exprCaller);				// []
@@ -133,7 +133,7 @@ Gurax_ImplementStatement(else_)
 		return;
 	}
 	if (exprCaller.GetExprOfBlock()->HasExprElem()) {
-		exprCaller.GetExprOfBlock()->Compose(composer);				// [Value]
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [Any]
 	} else {
 		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
@@ -178,12 +178,12 @@ Gurax_ImplementStatement(for_)
 
 	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgOwner.empty()) {
-		composer.Add_Value(exprCaller, Value::nil());				// [ValueLast=nil]
+		composer.Add_Value(exprCaller, Value::nil());				// [Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueLast ValueBool]
-		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueLast]
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Last Bool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [Last]
 		composer.Add_PopValueToDiscard(exprCaller);					// []
-		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueLast]
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
@@ -212,30 +212,30 @@ Gurax_ImplementStatement(while_)
 	}
 	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgOwner.empty()) {
-		composer.Add_Value(exprCaller, Value::nil());				// [ValueLast=nil]
+		composer.Add_Value(exprCaller, Value::nil());				// [Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueLast ValueBool]
-		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueLast]
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Last Bool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [Last]
 		composer.Add_PopValueToDiscard(exprCaller);					// []
-		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueLast]
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 		composer.Add_PushFrame_Block(exprCaller);
-		composer.Add_Value(exprCaller, Value::Zero());				// [ValueIdx=0 ValueLast=nil]
-		composer.Add_Value(exprCaller, Value::nil());				// [ValueIdx ValueLast=nil]
+		composer.Add_Value(exprCaller, Value::Zero());				// [Idx=0]
+		composer.Add_Value(exprCaller, Value::nil());				// [Idx Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		exprCaller.GetExprCdrFirst()->Compose(composer);			// [ValueIdx ValueLast ValueBool]
-		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [ValueIdx ValueLast]
-		composer.Add_PopValueToDiscard(exprCaller);					// [ValueIdx]
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Idx Last Bool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [Idx Last]
+		composer.Add_PopValueToDiscard(exprCaller);					// [Idx]
 		composer.Add_AssignToDeclArg(
-			exprCaller, (*ppDeclArg)->Reference());					// [ValueIdx]
-		composer.Add_Add(exprCaller, 1);							// [ValueIdx=ValueIdx+1]
-		exprCaller.GetExprOfBlock()->Compose(composer);				// [ValueIdx ValueLast]
+			exprCaller, (*ppDeclArg)->Reference());					// [Idx]
+		composer.Add_Add(exprCaller, 1);							// [Idx=Idx+1]
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [Idx Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
-		composer.Add_RemoveValue(exprCaller, 1);					// [ValueLast]
+		composer.Add_RemoveValue(exprCaller, 1);					// [Last]
 		composer.Add_PopFrame(exprCaller);
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
