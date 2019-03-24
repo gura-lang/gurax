@@ -461,22 +461,22 @@ const Expr::TypeInfo Expr_Member::typeInfo;
 
 void Expr_Member::Compose(Composer& composer)
 {
-	GetExprTarget()->Compose(composer);						// [ValueTarget]
-	composer.Add_Member(*this, GetSymbol(), GetAttr());		// [ValueMember] or [ValueProp]
+	GetExprTarget()->Compose(composer);							// [Target]
+	composer.Add_Member(*this, GetSymbol(), GetAttr());			// [Member] or [Prop]
 }
 
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
-	GetExprTarget()->Compose(composer);						// [ValueTarget]
+	GetExprTarget()->Compose(composer);							// [Target]
 	if (pOperator) {
-		composer.Add_PropGet(*this, GetSymbol(), GetAttr());	// [ValueTarget ValueProp]
-		pExprAssigned->Compose(composer);					// [ValueTarget ValueProp ValueRight]
-		composer.Add_BinaryOp(*this, pOperator);				// [ValueTarget ValueAssigned]
+		composer.Add_PropGet(*this, GetSymbol(), GetAttr());	// [Target Prop]
+		pExprAssigned->Compose(composer);						// [Target Prop Right]
+		composer.Add_BinaryOp(*this, pOperator);				// [Target Assigned]
 	} else {
-		pExprAssigned->Compose(composer);					// [ValueTarget ValueAssigned]
+		pExprAssigned->Compose(composer);						// [Target Assigned]
 	}
-	composer.Add_PropSet(*this, GetSymbol(), GetAttr());		// [ValueAssigned]
+	composer.Add_PropSet(*this, GetSymbol(), GetAttr());		// [Assigned]
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
