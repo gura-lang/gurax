@@ -13,7 +13,6 @@ PUnit_Cast               32
 PUnit_GenIterator        24
 PUnit_GenRangeIterator   24
 PUnit_EvalIterator       40
-PUnit_PopValueToDiscard  24
 PUnit_UnaryOp            32
 PUnit_BinaryOp           32
 PUnit_CreateList         32
@@ -39,7 +38,7 @@ PUnit_JumpIfNot          32
 PUnit_NilJumpIf          32
 PUnit_NilJumpIfNot       32
 PUnit_ExitPoint          32
-PUnit_PopValueToDiscard  24
+PUnit_DiscardValue       24
 PUnit_RemoveValue        32
 PUnit_Return             24
 PUnit_PushFrame_Block    24

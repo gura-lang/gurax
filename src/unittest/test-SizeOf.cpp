@@ -23,7 +23,6 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_GenIterator);
 	PrintSizeOf(PUnit_GenRangeIterator);
 	PrintSizeOf(PUnit_EvalIterator);
-	PrintSizeOf(PUnit_PopValueToDiscard);
 	PrintSizeOf(PUnit_UnaryOp);
 	PrintSizeOf(PUnit_BinaryOp);
 	PrintSizeOf(PUnit_CreateList);
@@ -49,7 +48,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_NilJumpIf);
 	PrintSizeOf(PUnit_NilJumpIfNot);
 	PrintSizeOf(PUnit_ExitPoint);
-	PrintSizeOf(PUnit_PopValueToDiscard);
+	PrintSizeOf(PUnit_DiscardValue);
 	PrintSizeOf(PUnit_RemoveValue);
 	PrintSizeOf(PUnit_Return);
 	PrintSizeOf(PUnit_PushFrame_Block);

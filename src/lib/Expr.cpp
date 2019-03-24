@@ -51,7 +51,7 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr)
 		pExpr = pExpr->GetExprNext();
 	}
 	while (pExpr) {
-		composer.SetPopValueToDiscardFlagAtLast();
+		composer.SetDiscardValueFlagAtLast();
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
@@ -106,7 +106,7 @@ void ExprList::Compose(Composer& composer)
 	}
 	while (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
-		composer.SetPopValueToDiscardFlagAtLast();
+		composer.SetDiscardValueFlagAtLast();
 		pExpr->Compose(composer);
 	}
 	// [Value]

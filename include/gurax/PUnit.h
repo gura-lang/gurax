@@ -18,8 +18,8 @@ public:
 	using SeqId = UInt32;
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None					= 0;
-		static const Flags PopValueToDiscard	= (1 << 0);
+		static const Flags None			= 0;
+		static const Flags DiscardValue	= (1 << 0);
 	};
 protected:
 	RefPtr<Expr> _pExprSrc;
@@ -46,8 +46,8 @@ public:
 public:
 	size_t GetSeqId() const { return _seqId; }
 	bool IsBridge() const { return GetSeqId() == 0; }
-	void SetPopValueToDiscardFlag() { _flags |= Flag::PopValueToDiscard; }
-	bool GetPopValueToDiscardFlag() const { return (_flags & Flag::PopValueToDiscard) != 0; }
+	void SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
+	bool GetDiscardValueFlag() const { return (_flags & Flag::DiscardValue) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print() const;
 	static void PrintSequence(const PUnit* pPUnit);
@@ -963,15 +963,15 @@ private:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PopValueToDiscard
+// PUnit_DiscardValue
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_PopValueToDiscard : public PUnit {
+class GURAX_DLLDECLARE PUnit_DiscardValue : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
-	explicit PUnit_PopValueToDiscard(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	explicit PUnit_DiscardValue(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }

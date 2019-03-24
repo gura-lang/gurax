@@ -79,14 +79,14 @@ public:
 	PUnit_NilJumpIf* Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranch = nullptr);
 	PUnit_NilJumpIfNot* Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranch = nullptr);
 	PUnit_ExitPoint* Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUnitExit = nullptr);
-	PUnit_PopValueToDiscard* Add_PopValueToDiscard(const Expr& exprSrc);
+	PUnit_DiscardValue* Add_DiscardValue(const Expr& exprSrc);
 	PUnit_RemoveValue* Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	PUnit_Return* Add_Return(const Expr& exprSrc);
 	PUnit_PushFrame_Block* Add_PushFrame_Block(const Expr& exprSrc);
 	PUnit_PopFrame* Add_PopFrame(const Expr& exprSrc);
 	PUnit_Terminate* Add_Terminate(const Expr& exprSrc);
-	void SetPopValueToDiscardFlagAtLast() {
-		if (_pPUnitLast) _pPUnitLast->SetPopValueToDiscardFlag();
+	void SetDiscardValueFlagAtLast() {
+		if (_pPUnitLast) _pPUnitLast->SetDiscardValueFlag();
 	}
 	void Print() const;
 	void PrintPUnit() const;
