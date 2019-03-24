@@ -71,14 +71,14 @@ void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
 
 void Expr::ComposeForArgSlot(Composer& composer)
 {
-	auto pPUnit = composer.Add_ArgSlot(*this);					// [Argument]
+	auto pPUnitJump = composer.Add_ArgSlot(*this);				// [Argument]
 	SetPUnitTop(composer.PeekPUnitCont());
 	auto pPUnitExitPoint = composer.Add_ExitPoint(*this);		// [Argument]
-	pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+	pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
 	Compose(composer);											// [Argument Any]
 	pPUnitExitPoint->SetPUnitExit(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlot(*this);							// [Argument]
-	pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
+	pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
 }
 
 void Expr::ComposeForAssignment(
@@ -276,12 +276,12 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		auto pPUnit = composer.Add_ValueAndJump(
+		auto pPUnitJump = composer.Add_ValueAndJump(
 			*this, new Value_Expr(GetExprChild()->Reference()));	// [Any]
 		GetExprChild()->SetPUnitTop(composer.PeekPUnitCont());
 		GetExprChild()->Compose(composer);							// [Any]
 		composer.Add_Return(*this);
-		pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
 	} else {
 		GetExprChild()->Compose(composer);							// [Any]
 	}
@@ -338,20 +338,20 @@ void Expr_BinaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
 		do {
-			auto pPUnit = composer.Add_ValueAndJump(
+			auto pPUnitJump = composer.Add_ValueAndJump(
 				*this, new Value_Expr(GetExprLeft()->Reference()));		// [Left]
 			GetExprLeft()->SetPUnitTop(composer.PeekPUnitCont());
 			GetExprLeft()->Compose(composer);							// [Any]
 			composer.Add_Return(*this);
-			pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+			pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
 		} while (0);
 		do {
-			auto pPUnit = composer.Add_ValueAndJump(
+			auto pPUnitJump = composer.Add_ValueAndJump(
 				*this, new Value_Expr(GetExprRight()->Reference()));	// [Left Right]
 			GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
 			GetExprRight()->Compose(composer);							// [Any]
 			composer.Add_Return(*this);
-			pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+			pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
 		} while (0);
 	} else {
 		GetExprLeft()->Compose(composer);								// [Left]
@@ -372,15 +372,15 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 		return;
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
-	auto pPUnit = composer.Add_ArgSlotNamed(*this, pSymbol, GetExprRight());
-																		// [Argument ArgSlot]
+	auto pPUnitJump = composer.Add_ArgSlotNamed(
+		*this, pSymbol, GetExprRight());								// [Argument ArgSlot]
 	GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
 	auto pPUnitExitPoint = composer.Add_ExitPoint(*this);				// [Argument ArgSlot]
-	pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+	pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
 	GetExprRight()->Compose(composer);									// [Argument ArgSlot Assigned]
 	pPUnitExitPoint->SetPUnitExit(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlotNamed(*this);								// [Argument]
-	pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
+	pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -768,7 +768,7 @@ void Expr_Caller::Compose(Composer& composer)
 	composer.Add_Argument(*this, GetAttr(), GetExprOfBlock());	// [Argument]
 	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());		// [Argument]
 	if (Error::IsIssued()) return;
-	auto pPUnit = composer.Add_Call(*this);						// [Result]
+	auto pPUnitJump = composer.Add_Call(*this);					// [Result]
 	if (GetExprOfBlock()) {
 		auto pPUnitBody = composer.PeekPUnitCont();
 		GetExprOfBlock()->Compose(composer);
@@ -776,7 +776,7 @@ void Expr_Caller::Compose(Composer& composer)
 			composer.Add_Value(*this, Value::nil());
 		}
 		composer.Add_Return(*this);
-		pPUnit->SetPUnitCont(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
 		GetExprOfBlock()->SetPUnitTop(pPUnitBody);
 	}
 }
@@ -795,7 +795,7 @@ void Expr_Caller::ComposeForAssignment(
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
-	auto pPUnit = composer.Add_AssignFunction(*this, pFunction.get());		// [Value]
+	auto pPUnitJump = composer.Add_AssignFunction(*this, pFunction.get());		// [Value]
 	auto pPUnitBody = composer.PeekPUnitCont();
 	pFunction->SetPUnitBody(pPUnitBody);
 	pExprAssigned->Compose(composer);
@@ -803,8 +803,8 @@ void Expr_Caller::ComposeForAssignment(
 		composer.Add_Value(*this, Value::nil());
 	}
 	composer.Add_Return(*this);
-	pPUnit->SetPUnitCont(composer.PeekPUnitCont());
-	composer.SetPUnitLast(pPUnit);
+	pPUnitJump->SetPUnitCont(composer.PeekPUnitCont());
+	composer.SetPUnitLast(pPUnitJump);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
