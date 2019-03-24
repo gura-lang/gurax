@@ -223,16 +223,17 @@ Gurax_ImplementStatement(while_)
 	} else if (declArgOwner.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 		composer.Add_PushFrame_Block(exprCaller);
-		composer.Add_Value(exprCaller, Value::Zero());				// [Idx=0]
-		composer.Add_Value(exprCaller, Value::nil());				// [Idx Last=nil]
+		composer.Add_GenInfiniteIterator(exprCaller);				// [Iterator]
+		composer.Add_Value(exprCaller, Value::nil());				// [Iterator Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Idx Last Bool]
-		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [Idx Last]
-		composer.Add_PopValueToDiscard(exprCaller);					// [Idx]
+		exprCaller.GetExprCdrFirst()->Compose(composer);			// [Iterator Last Bool]
+		auto pPUnit = composer.Add_JumpIfNot(exprCaller);			// [Iterator Last]
+		composer.Add_PopValueToDiscard(exprCaller);					// [Iterator]
+		composer.Add_EvalIterator(exprCaller, 0);					// [Iterator Idx]
 		composer.Add_AssignToDeclArg(
-			exprCaller, (*ppDeclArg)->Reference());					// [Idx]
-		composer.Add_Add(exprCaller, 1);							// [Idx=Idx+1]
-		exprCaller.GetExprOfBlock()->Compose(composer);				// [Idx Last]
+			exprCaller, (*ppDeclArg)->Reference());					// [Iterator]
+		composer.AddOpt_PopValueToDiscard(exprCaller);
+		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnit->SetPUnitBranch(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);					// [Last]
