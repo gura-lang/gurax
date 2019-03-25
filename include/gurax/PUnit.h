@@ -364,6 +364,33 @@ private:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_EvalIterators
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_EvalIterators : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
+	size_t _cnt;
+public:
+	// Constructor
+	PUnit_EvalIterators(Expr* pExprSrc, SeqId seqId, size_t offset, size_t cnt, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset), _cnt(cnt) {}
+public:
+	size_t GetOffset() const { return _offset; }
+	size_t GetCount() const { return _cnt; }
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_UnaryOp : public PUnit {

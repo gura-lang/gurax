@@ -303,6 +303,30 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_EvalIterators
+// Stack View: [Prev Iterator1..n ..] -> [Prev Iterator1..n .. Elem1..n] (continue)
+//                                    -> [Prev Iterator1..n ..]          (discard)
+//------------------------------------------------------------------------------
+const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
+{
+	Iterator& iterator =
+		dynamic_cast<Value_Iterator*>(processor.PeekValue(_offset))->GetIterator();
+	RefPtr<Value> pValueElem(iterator.NextValue());
+	if (!pValueElem) return GetPUnitBranchDest();
+	if (!GetDiscardValueFlag()) processor.PushValue(pValueElem.release());
+	return _GetPUnitCont();
+}
+
+String PUnit_EvalIterators::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("EvalIterators(%zu%s#%zu%s%zu)", GetOffset(), ss.GetComma(),
+			   GetCount(), ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_UnaryOp
 // Stack View: [Prev Any] -> [Prev Result] (continue)
 //                        -> [Prev]        (discard)
