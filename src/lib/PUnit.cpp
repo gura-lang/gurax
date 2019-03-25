@@ -151,9 +151,7 @@ const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(
 		GetDiscardValueFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
-	RefPtr<Value> pValueCasted(_pDeclArg->Cast(frame, *pValueAssigned));
-	if (!pValueCasted) return nullptr;
-	frame.AssignFromArgument(GetDeclArg().GetSymbol(), pValueCasted.release());
+	frame.Assign(*_pDeclArg, *pValueAssigned);
 	return _GetPUnitCont();
 }
 
@@ -308,18 +306,16 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
 {
-#if 0
-	for (size_t n = 0; n < GetCount(); n++) {
+	Frame& frame = processor.GetFrameCur();
+	size_t offset = GetOffset();
+	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
 		Iterator& iterator =
-			dynamic_cast<Value_Iterator*>(processor.PeekValue(GetOffset()))->GetIterator();
+			dynamic_cast<Value_Iterator*>(processor.PeekValue(offset))->GetIterator();
 		RefPtr<Value> pValueElem(iterator.NextValue());
-		if (!pValueElem) {
-			if (n > 0) processor.RemoveValues(n - 1, n);
-			return GetPUnitBranchDest();
-		}
-		processor.PushValue(pValueElem.release());
+		if (!pValueElem) return GetPUnitBranchDest();
+		frame.Assign(*pDeclArg, *pValueElem);
+		offset--;
 	}
-#endif
 	return _GetPUnitCont();
 }
 

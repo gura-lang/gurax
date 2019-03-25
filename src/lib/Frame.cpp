@@ -35,6 +35,14 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 	}
 }
 
+bool Frame::Assign(DeclArg& declArg, const Value& value)
+{
+	RefPtr<Value> pValueCasted(declArg.Cast(*this, value));
+	if (!pValueCasted) return false;
+	AssignFromArgument(declArg.GetSymbol(), pValueCasted.release());
+	return true;
+}
+
 bool Frame::Assign(Module* pModule)
 {
 	return Assign(pModule->GetDottedSymbol(), new Value_Module(pModule));

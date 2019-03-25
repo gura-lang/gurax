@@ -154,7 +154,7 @@ Gurax_ImplementStatement(for_)
 						 "for-statement takes more than one argument");
 		return;
 	}
-	std::unique_ptr<DeclArgOwner> pDeclArgOwner(new DeclArgOwner());
+	std::unique_ptr<DeclArgOwner> pDeclArgs(new DeclArgOwner());
 	for (Expr* pExpr = exprCaller.GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
@@ -169,29 +169,25 @@ Gurax_ImplementStatement(for_)
 		}
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(*pExprEx->GetExprLeft()));
 		if (!pDeclArg) return;
-		pDeclArgOwner->push_back(pDeclArg.release());
+		pDeclArgs->push_back(pDeclArg.release());
 		pExprEx->GetExprRight()->Compose(composer);						// [Any]
 		composer.Add_GenIterator(exprCaller);							// [Iterator]
 	}
-
-	size_t nIterators = 1;
-
-	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
-	if (declArgOwner.empty()) {
+	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	if (declArgsOfBlock.empty()) {
+		composer.Add_PushFrame_Block(exprCaller);
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Iterator1..n Last Bool]
 		auto pPUnitBranch = composer.Add_EvalIterators(
-			exprCaller, 1, pDeclArgOwner.release());					// [Iterator1..n Last]
-
-		// assignment
-		
+			exprCaller, 1, pDeclArgs.release());						// [Iterator1..n Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n]
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
-	} else if (declArgOwner.size() == 1) {
+		composer.Add_PopFrame(exprCaller);
+	} else if (declArgsOfBlock.size() == 1) {
 		
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
@@ -215,8 +211,8 @@ Gurax_ImplementStatement(while_)
 						 "while-statement takes one argument");
 		return;
 	}
-	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
-	if (declArgOwner.empty()) {
+	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	if (declArgsOfBlock.empty()) {
 		composer.Add_Value(exprCaller, Value::nil());					// [Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Last Bool]
@@ -225,8 +221,8 @@ Gurax_ImplementStatement(while_)
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-	} else if (declArgOwner.size() == 1) {
-		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
+	} else if (declArgsOfBlock.size() == 1) {
+		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
 		composer.Add_PushFrame_Block(exprCaller);
 		composer.Add_GenInfiniteIterator(exprCaller);					// [Iterator]
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator Last=nil]
@@ -265,9 +261,9 @@ Gurax_ImplementStatement(repeat)
 						 "repeat-statement takes zero or one argument");
 		return;
 	}
-	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
+	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	if (declArgOwner.empty()) {
+	if (declArgsOfBlock.empty()) {
 		if (pExprCdr) {
 			pExprCdr->Compose(composer);								// [Any]
 			composer.Add_Cast(exprCaller, VTYPE_Number);				// [Number]
@@ -284,8 +280,8 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
-	} else if (declArgOwner.size() == 1) {
-		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
+	} else if (declArgsOfBlock.size() == 1) {
+		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
 		composer.Add_PushFrame_Block(exprCaller);
 		if (pExprCdr) {
 			pExprCdr->Compose(composer);								// [Any]
