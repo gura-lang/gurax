@@ -178,12 +178,14 @@ Gurax_ImplementStatement(for_)
 	if (declArgOwner.empty()) {
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Last Bool]
-		auto pPUnitBranch = composer.Add_JumpIfNot(exprCaller);			// [Last]
-		composer.Add_PopValue(exprCaller);								// []
-		exprCaller.GetExprOfBlock()->Compose(composer);					// [Last]
+		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Iterator1..n Last Bool]
+		auto pPUnitBranch = composer.Add_EvalIterator(exprCaller, 1);	// [Iterator1..n Last]
+
+		composer.Add_PopValue(exprCaller);								// [Iterator1..n]
+		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
 	} else if (declArgOwner.size() == 1) {
 		
 	} else {
