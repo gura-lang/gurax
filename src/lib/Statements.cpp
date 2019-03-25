@@ -174,13 +174,19 @@ Gurax_ImplementStatement(for_)
 		pExprEx->GetExprRight()->Compose(composer);						// [Any]
 		composer.Add_GenIterator(exprCaller);							// [Iterator]
 	}
+
+	size_t nIterators = 1;
+
 	const DeclArgOwner& declArgOwner = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgOwner.empty()) {
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Iterator1..n Last Bool]
-		auto pPUnitBranch = composer.Add_EvalIterator(exprCaller, 1);	// [Iterator1..n Last]
+		auto pPUnitBranch = composer.Add_EvalIterators(
+			exprCaller, 1, nIterators);									// [Iterator1..n Last Elem1..n]
 
+		// assignment
+		
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n]
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
