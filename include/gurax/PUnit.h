@@ -364,9 +364,9 @@ private:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_EvalIterators
+// PUnit_ForEach
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_EvalIterators : public PUnit_Branch {
+class GURAX_DLLDECLARE PUnit_ForEach : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -375,8 +375,8 @@ private:
 	std::unique_ptr<DeclArgOwner> _pDeclArgOwner;
 public:
 	// Constructor
-	PUnit_EvalIterators(Expr* pExprSrc, SeqId seqId, size_t offset,
-						DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
+	PUnit_ForEach(Expr* pExprSrc, SeqId seqId, size_t offset,
+				  DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
 public:
 	size_t GetOffset() const { return _offset; }

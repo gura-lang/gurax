@@ -178,7 +178,7 @@ Gurax_ImplementStatement(for_)
 		composer.Add_PushFrame_Block(exprCaller);
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
-		auto pPUnitBranch = composer.Add_EvalIterators(
+		auto pPUnitBranch = composer.Add_ForEach(
 			exprCaller, 1, pDeclArgs.release());						// [Iterator1..n Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n]
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Last]

@@ -301,10 +301,10 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_EvalIterators
+// PUnit_ForEach
 // Stack View: [Prev Iterator1..n ..] -> [Prev Iterator1..n ..] (continue)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
+const PUnit* PUnit_ForEach::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
@@ -319,10 +319,10 @@ const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_EvalIterators::ToString(const StringStyle& ss) const
+String PUnit_ForEach::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("EvalIterators(offset=%zu%s#%zu)", GetOffset(),
+	str.Printf("ForEach(offset=%zu%s#%zu)", GetOffset(),
 			   ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
