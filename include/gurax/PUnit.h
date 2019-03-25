@@ -66,6 +66,21 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Branch
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Branch : public PUnit {
+private:
+	const PUnit* _pPUnitBranchDest;
+public:
+	// Constructor
+	PUnit_Branch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
+public:
+	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
+	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+};
+
+//------------------------------------------------------------------------------
 // PUnitList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnitList : public std::vector<const PUnit*> {
@@ -326,21 +341,18 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_EvalIterator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_EvalIterator : public PUnit {
+class GURAX_DLLDECLARE PUnit_EvalIterator : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
-	const PUnit* _pPUnitBranchDest;
 public:
 	// Constructor
 	PUnit_EvalIterator(Expr* pExprSrc, SeqId seqId, size_t offset, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _offset(offset), _pPUnitBranchDest(pPUnitBranchDest) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset) {}
 public:
 	size_t GetOffset() const { return _offset; }
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -684,20 +696,17 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_ArgSlot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_ArgSlot : public PUnit {
+class GURAX_DLLDECLARE PUnit_ArgSlot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitBranchDest;
 	const PUnit* _pPUnitCont;
 public:
 	// Constructor
 	PUnit_ArgSlot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest), _pPUnitCont(this + 1) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _pPUnitCont(this + 1) {}
 public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
 	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 public:
 	// Virtual functions of PUnit
@@ -732,25 +741,23 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_ArgSlotNamed
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_ArgSlotNamed : public PUnit {
+class GURAX_DLLDECLARE PUnit_ArgSlotNamed : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
-	const PUnit* _pPUnitBranchDest;
 	const PUnit* _pPUnitCont;
 public:
 	// Constructor
-	PUnit_ArgSlotNamed(Expr* pExprSrc, SeqId seqId, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned),
-		_pPUnitBranchDest(pPUnitBranchDest), _pPUnitCont(this + 1) {}
+	PUnit_ArgSlotNamed(Expr* pExprSrc, SeqId seqId, const Symbol* pSymbol,
+					   Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _pSymbol(pSymbol),
+		_pExprAssigned(pExprAssigned), _pPUnitCont(this + 1) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
 	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 public:
 	// Virtual functions of PUnit
@@ -835,19 +842,14 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit {
+class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitBranchDest;
 public:
 	// Constructor
 	PUnit_JumpIf(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
-public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -861,19 +863,14 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_JumpIfNot : public PUnit {
+class GURAX_DLLDECLARE PUnit_JumpIfNot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitBranchDest;
 public:
 	// Constructor
 	PUnit_JumpIfNot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
-public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -887,19 +884,14 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIf
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_NilJumpIf : public PUnit {
+class GURAX_DLLDECLARE PUnit_NilJumpIf : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitBranchDest;
 public:
 	// Constructor
 	PUnit_NilJumpIf(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
-public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -913,19 +905,14 @@ private:
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIfNot
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_NilJumpIfNot : public PUnit {
+class GURAX_DLLDECLARE PUnit_NilJumpIfNot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitBranchDest;
 public:
 	// Constructor
 	PUnit_NilJumpIfNot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
-public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
