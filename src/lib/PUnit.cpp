@@ -287,7 +287,7 @@ String PUnit_GenInfiniteIterator::ToString(const StringStyle& ss) const
 const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 {
 	Iterator& iterator =
-		dynamic_cast<Value_Iterator*>(processor.PeekValue(_offset))->GetIterator();
+		dynamic_cast<Value_Iterator*>(processor.PeekValue(GetOffset()))->GetIterator();
 	RefPtr<Value> pValueElem(iterator.NextValue());
 	if (!pValueElem) return GetPUnitBranchDest();
 	if (!GetDiscardValueFlag()) processor.PushValue(pValueElem.release());
@@ -309,18 +309,24 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
 {
-	Iterator& iterator =
-		dynamic_cast<Value_Iterator*>(processor.PeekValue(_offset))->GetIterator();
-	RefPtr<Value> pValueElem(iterator.NextValue());
-	if (!pValueElem) return GetPUnitBranchDest();
-	if (!GetDiscardValueFlag()) processor.PushValue(pValueElem.release());
+	for (size_t n = 0; n < GetCount(); n++) {
+		Iterator& iterator =
+			dynamic_cast<Value_Iterator*>(processor.PeekValue(GetOffset()))->GetIterator();
+		RefPtr<Value> pValueElem(iterator.NextValue());
+		if (!pValueElem) {
+			if (n > 0) processor.RemoveValues(n - 1, n);
+			return GetPUnitBranchDest();
+		}
+		processor.PushValue(pValueElem.release());
+	}
+	if (GetDiscardValueFlag()) processor.RemoveValues(GetCount() - 1, GetCount());
 	return _GetPUnitCont();
 }
 
 String PUnit_EvalIterators::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("EvalIterators(%zu%s#%zu%s%zu)", GetOffset(), ss.GetComma(),
+	str.Printf("EvalIterators(offset=%zu%scount=%zu%s#%zu)", GetOffset(), ss.GetComma(),
 			   GetCount(), ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
@@ -1034,7 +1040,7 @@ const PUnit* PUnit_RemoveValues::Exec(Processor& processor) const
 String PUnit_RemoveValues::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("RemoveValues(offset=%zu,count=%zu)", GetOffset(), GetCount());
+	str.Printf("RemoveValues(offset=%zu%scount=%zu)", GetOffset(), ss.GetComma(), GetCount());
 	AppendInfoToString(str, ss);
 	return str;
 }
