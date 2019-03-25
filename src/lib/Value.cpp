@@ -315,6 +315,27 @@ void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 }
 
 //------------------------------------------------------------------------------
+// ValueStack
+//------------------------------------------------------------------------------
+void ValueStack::Remove(size_t offset)
+{
+	iterator ppValue = begin() + size() - (offset + 1);
+	Value* pValue = *ppValue;
+	erase(ppValue);
+	Value::Delete(pValue);
+}
+
+void ValueStack::Remove(size_t offset, size_t cnt)
+{
+	iterator ppValueBegin = begin() + size() - (offset + 1);
+	iterator ppValueEnd = (cnt < offset + 1)? ppValueBegin + cnt : end();
+	for (iterator ppValue = ppValueBegin; ppValue != ppValueEnd; ppValue++) {
+		Value::Delete(*ppValue);
+	}
+	erase(ppValueBegin, ppValueEnd);
+}
+
+//------------------------------------------------------------------------------
 // ValueMap
 //------------------------------------------------------------------------------
 void ValueMap::Clear()

@@ -83,6 +83,7 @@ public:
 	PUnit_ExitPoint* Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUnitExit = nullptr);
 	PUnit_PopValue* Add_PopValue(const Expr& exprSrc);
 	PUnit_RemoveValue* Add_RemoveValue(const Expr& exprSrc, size_t offset);
+	PUnit_RemoveValues* Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
 	PUnit_Return* Add_Return(const Expr& exprSrc);
 	PUnit_PushFrame_Block* Add_PushFrame_Block(const Expr& exprSrc);
 	PUnit_PopFrame* Add_PopFrame(const Expr& exprSrc);

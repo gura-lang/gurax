@@ -47,6 +47,7 @@ public:
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }
 	void DiscardValue() { Value::Delete(PopValue()); }
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
+	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
 public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }

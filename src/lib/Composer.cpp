@@ -302,6 +302,13 @@ PUnit_RemoveValue* Composer::Add_RemoveValue(const Expr& exprSrc, size_t offset)
 	return pPUnit;
 }
 
+PUnit_RemoveValues* Composer::Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt)
+{
+	auto pPUnit = new PUnit_RemoveValues(exprSrc.Reference(), NextSeqId(), offset, cnt);
+	Add(pPUnit);
+	return pPUnit;
+}
+
 PUnit_Return* Composer::Add_Return(const Expr& exprSrc)
 {
 	auto pPUnit = new PUnit_Return(exprSrc.Reference(), NextSeqId());

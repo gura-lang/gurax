@@ -241,12 +241,8 @@ public:
 	Value* Peek(int offset) { return *(rbegin() + offset); }
 	void Push(Value* pValue) { push_back(pValue); }
 	Value* Pop() { Value* pValue = back(); pop_back(); return pValue; }
-	void Remove(size_t offset) {
-		iterator ppValue = begin() + size() - offset - 1;
-		Value* pValue = *ppValue;
-		erase(ppValue);
-		Value::Delete(pValue);
-	}
+	void Remove(size_t offset);
+	void Remove(size_t offset, size_t cnt);
 };
 
 //------------------------------------------------------------------------------

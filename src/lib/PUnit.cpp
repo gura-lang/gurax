@@ -1022,6 +1022,24 @@ String PUnit_RemoveValue::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_RemoveValues
+// Stack View: [.. Any1..n ..] -> [.. ..] (always)
+//------------------------------------------------------------------------------
+const PUnit* PUnit_RemoveValues::Exec(Processor& processor) const
+{
+	processor.RemoveValues(GetOffset(), GetCount());
+	return _GetPUnitCont();
+}
+
+String PUnit_RemoveValues::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("RemoveValues(offset=%zu,count=%zu)", GetOffset(), GetCount());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Return
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
