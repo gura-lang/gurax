@@ -372,14 +372,15 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
-	size_t _cnt;
+	std::unique_ptr<DeclArgOwner> _pDeclArgOwner;
 public:
 	// Constructor
-	PUnit_EvalIterators(Expr* pExprSrc, SeqId seqId, size_t offset, size_t cnt, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset), _cnt(cnt) {}
+	PUnit_EvalIterators(Expr* pExprSrc, SeqId seqId, size_t offset,
+						DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
 public:
 	size_t GetOffset() const { return _offset; }
-	size_t GetCount() const { return _cnt; }
+	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }

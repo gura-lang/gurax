@@ -81,7 +81,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				continue;
 			}
 		}
-		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExpr));
+		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(*pExpr));
 		if (!pDeclArg) return false;
 		if (IsDeclaredSymbol(pDeclArg->GetSymbol())) {
 			Error::IssueWith(ErrorType::DeclarationError, *pExpr,

@@ -304,11 +304,11 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_EvalIterators
-// Stack View: [Prev Iterator1..n ..] -> [Prev Iterator1..n .. Elem1..n] (continue)
-//                                    -> [Prev Iterator1..n ..]          (discard)
+// Stack View: [Prev Iterator1..n ..] -> [Prev Iterator1..n ..] (continue)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
 {
+#if 0
 	for (size_t n = 0; n < GetCount(); n++) {
 		Iterator& iterator =
 			dynamic_cast<Value_Iterator*>(processor.PeekValue(GetOffset()))->GetIterator();
@@ -319,15 +319,15 @@ const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
 		}
 		processor.PushValue(pValueElem.release());
 	}
-	if (GetDiscardValueFlag()) processor.RemoveValues(GetCount() - 1, GetCount());
+#endif
 	return _GetPUnitCont();
 }
 
 String PUnit_EvalIterators::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("EvalIterators(offset=%zu%scount=%zu%s#%zu)", GetOffset(), ss.GetComma(),
-			   GetCount(), ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
+	str.Printf("EvalIterators(offset=%zu%s#%zu)", GetOffset(),
+			   ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }

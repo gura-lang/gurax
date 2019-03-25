@@ -154,6 +154,7 @@ Gurax_ImplementStatement(for_)
 						 "for-statement takes more than one argument");
 		return;
 	}
+	std::unique_ptr<DeclArgOwner> pDeclArgOwner(new DeclArgOwner());
 	for (Expr* pExpr = exprCaller.GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
@@ -161,16 +162,14 @@ Gurax_ImplementStatement(for_)
 			return;
 		}
 		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-		if (!pExprEx->GetExprLeft()->IsType<Expr_Identifier>()) {
-			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
-							 "invalid argument for for-statement");
-			return;
-		}
 		if (!pExprEx->GetOperator()->IsType(OpType::Contains)) {
 			Error::IssueWith(ErrorType::ArgumentError, *pExpr,
 							 "invalid argument for for-statement");
 			return;
 		}
+		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(*pExprEx->GetExprLeft()));
+		if (!pDeclArg) return;
+		pDeclArgOwner->push_back(pDeclArg.release());
 		pExprEx->GetExprRight()->Compose(composer);						// [Any]
 		composer.Add_GenIterator(exprCaller);							// [Iterator]
 	}
@@ -183,7 +182,7 @@ Gurax_ImplementStatement(for_)
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
 		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Iterator1..n Last Bool]
 		auto pPUnitBranch = composer.Add_EvalIterators(
-			exprCaller, 1, nIterators);									// [Iterator1..n Last Elem1..n]
+			exprCaller, 1, pDeclArgOwner.release());					// [Iterator1..n Last]
 
 		// assignment
 		

@@ -117,7 +117,7 @@ public:
 	bool IsOccurOnceOrMore() const { return GetOccur().IsIdentical(Occur::OnceOrMore); }
 	Flags GetFlags() const { return _flags; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
-	static DeclArg* CreateFromExpr(const Expr* pExpr);
+	static DeclArg* CreateFromExpr(const Expr& expr);
 	bool FixVType(Frame& frame);
 	Value* Cast(Frame& frame, const Value& value);
 	static Flags SymbolToFlag(const Symbol* pSymbol) {

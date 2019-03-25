@@ -96,10 +96,10 @@ PUnit_EvalIterator* Composer::Add_EvalIterator(const Expr& exprSrc, size_t offse
 	return pPUnit;
 }
 
-PUnit_EvalIterators* Composer::Add_EvalIterators(const Expr& exprSrc, size_t offset, size_t cnt,
+PUnit_EvalIterators* Composer::Add_EvalIterators(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
 												 const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_EvalIterators(exprSrc.Reference(), NextSeqId(), offset, cnt, pPUnitBranchDest);
+	auto pPUnit = new PUnit_EvalIterators(exprSrc.Reference(), NextSeqId(), offset, pDeclArgOwner, pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }

@@ -31,7 +31,7 @@ void DeclArg::Bootup()
 	Empty = new DeclArg(Symbol::Empty, VTYPE_Undefined, Occur::Once, Flag::None, nullptr);
 }
 
-DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
+DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 {
 	RefPtr<DottedSymbol> pDottedSymbol;
 	const VType* pVType = nullptr;
@@ -39,6 +39,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr* pExpr)
 	Flags flags = 0;
 	RefPtr<Expr> pExprDefault;
 	const Attribute* pAttrSrc = nullptr;
+	const Expr* pExpr = &expr;
 	if (pExpr->IsType<Expr_BinaryOp>()) {
 		const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
 		if (!pExprEx->GetOperator()->IsType(OpType::Pair)) {
