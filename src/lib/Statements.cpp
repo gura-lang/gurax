@@ -173,6 +173,7 @@ Gurax_ImplementStatement(for_)
 		pExprEx->GetExprRight()->Compose(composer);						// [Any]
 		composer.Add_GenIterator(exprCaller);							// [Iterator]
 	}
+	size_t nIterators = pDeclArgs->size();
 	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgsOfBlock.empty()) {
 		composer.Add_PushFrame_Block(exprCaller);
@@ -184,10 +185,27 @@ Gurax_ImplementStatement(for_)
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
+		composer.Add_RemoveValues(exprCaller, nIterators, nIterators);	// [Last]
 		composer.Add_PopFrame(exprCaller);
 	} else if (declArgsOfBlock.size() == 1) {
-		
+		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
+		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_GenInfiniteIterator(exprCaller);					// [Iterator1..n Iterator]
+		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Iterator Last=nil]
+		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
+		auto pPUnitBranch = composer.Add_ForEach(
+			exprCaller, 2, pDeclArgs.release());						// [Iterator1..n Iterator Last]
+		composer.Add_PopValue(exprCaller);								// [Iterator1..n Iterator]
+		composer.Add_EvalIterator(exprCaller, 0)->
+			SetPUnitBranchDest(composer.PeekPUnitCont());				// [Iterator1..n Iterator Idx]
+		composer.Add_AssignToDeclArg(
+			exprCaller, (*ppDeclArg)->Reference());						// [Iterator1..n Iterator]
+		composer.SetDiscardValueFlagAtLast();
+		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Iterator Last]
+		composer.Add_Jump(exprCaller, pPUnitLoop);
+		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		composer.Add_RemoveValues(exprCaller, nIterators + 1, nIterators);	// [Last]
+		composer.Add_PopFrame(exprCaller);
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "invalid number of block parameters");
@@ -229,7 +247,8 @@ Gurax_ImplementStatement(while_)
 		exprCaller.GetExprCdrFirst()->Compose(composer);				// [Iterator Last Bool]
 		auto pPUnitBranch = composer.Add_JumpIfNot(exprCaller);			// [Iterator Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator]
-		composer.Add_EvalIterator(exprCaller, 0);						// [Iterator Idx]
+		composer.Add_EvalIterator(exprCaller, 0)->
+			SetPUnitBranchDest(composer.PeekPUnitCont());				// [Iterator Idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());						// [Iterator]
 		composer.SetDiscardValueFlagAtLast();
