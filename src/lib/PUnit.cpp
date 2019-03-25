@@ -307,7 +307,7 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 const PUnit* PUnit_EvalIterators::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
-	size_t offset = GetOffset();
+	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
 	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
 		Iterator& iterator =
 			dynamic_cast<Value_Iterator*>(processor.PeekValue(offset))->GetIterator();
