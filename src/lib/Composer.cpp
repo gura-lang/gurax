@@ -280,9 +280,9 @@ PUnit_ExitPoint* Composer::Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUni
 	return pPUnit;
 }
 
-PUnit_DiscardValue* Composer::Add_DiscardValue(const Expr& exprSrc)
+PUnit_PopValue* Composer::Add_PopValue(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_DiscardValue(exprSrc.Reference(), NextSeqId());
+	auto pPUnit = new PUnit_PopValue(exprSrc.Reference(), NextSeqId());
 	Add(pPUnit);
 	return pPUnit;
 }

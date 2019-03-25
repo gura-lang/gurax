@@ -950,15 +950,15 @@ private:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_DiscardValue
+// PUnit_PopValue
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_DiscardValue : public PUnit {
+class GURAX_DLLDECLARE PUnit_PopValue : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
-	explicit PUnit_DiscardValue(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	explicit PUnit_PopValue(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
