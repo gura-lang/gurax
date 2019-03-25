@@ -89,9 +89,9 @@ PUnit_GenInfiniteIterator* Composer::Add_GenInfiniteIterator(const Expr& exprSrc
 	return pPUnit;
 }
 
-PUnit_EvalIterator* Composer::Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranch)
+PUnit_EvalIterator* Composer::Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_EvalIterator(exprSrc.Reference(), NextSeqId(), offset, pPUnitBranch);
+	auto pPUnit = new PUnit_EvalIterator(exprSrc.Reference(), NextSeqId(), offset, pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -194,9 +194,9 @@ PUnit_Argument* Composer::Add_Argument(const Expr& exprSrc, const Attribute& att
 	return pPUnit;
 }
 
-PUnit_ArgSlot* Composer::Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitSkipDest)
+PUnit_ArgSlot* Composer::Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_ArgSlot(exprSrc.Reference(), NextSeqId(), pPUnitSkipDest);
+	auto pPUnit = new PUnit_ArgSlot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -209,10 +209,10 @@ PUnit_FeedArgSlot* Composer::Add_FeedArgSlot(const Expr& exprSrc)
 }
 
 PUnit_ArgSlotNamed* Composer::Add_ArgSlotNamed(
-	const Expr& exprSrc, const Symbol* pSymbol, const Expr* pExprAssigned, const PUnit* pPUnitSkipDest)
+	const Expr& exprSrc, const Symbol* pSymbol, const Expr* pExprAssigned, const PUnit* pPUnitBranchDest)
 {
 	auto pPUnit = new PUnit_ArgSlotNamed(
-		exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned->Reference(), pPUnitSkipDest);
+		exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned->Reference(), pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -245,30 +245,30 @@ PUnit_Jump* Composer::Add_Jump(const Expr& exprSrc)
 	return pPUnit;
 }
 
-PUnit_JumpIf* Composer::Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranch)
+PUnit_JumpIf* Composer::Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_JumpIf(exprSrc.Reference(), NextSeqId(), pPUnitBranch);
+	auto pPUnit = new PUnit_JumpIf(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_JumpIfNot* Composer::Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranch)
+PUnit_JumpIfNot* Composer::Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_JumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranch);
+	auto pPUnit = new PUnit_JumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilJumpIf* Composer::Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranch)
+PUnit_NilJumpIf* Composer::Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_NilJumpIf(exprSrc.Reference(), NextSeqId(), pPUnitBranch);
+	auto pPUnit = new PUnit_NilJumpIf(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit_NilJumpIfNot* Composer::Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranch)
+PUnit_NilJumpIfNot* Composer::Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_NilJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranch);
+	auto pPUnit = new PUnit_NilJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }

@@ -50,7 +50,7 @@ public:
 	PUnit_GenIterator* Add_GenIterator(const Expr& exprSrc);
 	PUnit_GenRangeIterator* Add_GenRangeIterator(const Expr& exprSrc);
 	PUnit_GenInfiniteIterator* Add_GenInfiniteIterator(const Expr& exprSrc);
-	PUnit_EvalIterator* Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranch = nullptr);
+	PUnit_EvalIterator* Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit_UnaryOp* Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	PUnit_BinaryOp* Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
 	PUnit_CreateList* Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
@@ -65,19 +65,19 @@ public:
 	PUnit_PropSet* Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr);
 	PUnit_Member* Add_Member(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr);
 	PUnit_Argument* Add_Argument(const Expr& exprSrc, const Attribute& attr, const Expr_Block* pExpBlock);
-	PUnit_ArgSlot* Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitSkipDest = nullptr);
+	PUnit_ArgSlot* Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit_FeedArgSlot* Add_FeedArgSlot(const Expr& exprSrc);
 	PUnit_ArgSlotNamed* Add_ArgSlotNamed(
 		const Expr& exprSrc, const Symbol* pSymbol,
-		const Expr* pExprAssigned, const PUnit* pPUnitSkipDest = nullptr);
+		const Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit_FeedArgSlotNamed* Add_FeedArgSlotNamed(const Expr& exprSrc);
 	PUnit_Call* Add_Call(const Expr& exprSrc);
 	PUnit_Jump* Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont);
 	PUnit_Jump* Add_Jump(const Expr& exprSrc);
-	PUnit_JumpIf* Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranch = nullptr);
-	PUnit_JumpIfNot* Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranch = nullptr);
-	PUnit_NilJumpIf* Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranch = nullptr);
-	PUnit_NilJumpIfNot* Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranch = nullptr);
+	PUnit_JumpIf* Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	PUnit_JumpIfNot* Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	PUnit_NilJumpIf* Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	PUnit_NilJumpIfNot* Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit_ExitPoint* Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUnitExit = nullptr);
 	PUnit_DiscardValue* Add_DiscardValue(const Expr& exprSrc);
 	PUnit_RemoveValue* Add_RemoveValue(const Expr& exprSrc, size_t offset);

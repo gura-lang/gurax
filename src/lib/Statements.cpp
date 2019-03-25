@@ -52,19 +52,19 @@ Gurax_ImplementStatement(if_)
 			auto pPUnitJump1 = composer.Add_JumpIfNot(exprCaller);	// []
 			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
 			auto pPUnitJump2 = composer.Add_Jump(exprCaller);		// [Any]
-			pPUnitJump1->SetPUnitBranch(composer.PeekPUnitCont());
+			pPUnitJump1->SetPUnitBranchDest(composer.PeekPUnitCont());
 			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
 			pPUnitJump2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
 			auto pPUnitJump = composer.Add_NilJumpIf(exprCaller);	// [] or [nil]
 			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
-			pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+			pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		}
 	} else {
 		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
 			auto pPUnitJump = composer.Add_NilJumpIfNot(exprCaller);// [] or [nil]
 			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
-			pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+			pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		} else {
 			composer.Add_DiscardValue(exprCaller);					// []
 			composer.Add_Value(exprCaller, Value::nil());			// [nil]
@@ -93,19 +93,19 @@ Gurax_ImplementStatement(elsif)
 			auto pPUnit1 = composer.Add_JumpIfNot(exprCaller);		// []
 			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
 			auto pPUnit2 = composer.Add_Jump(exprCaller);			// [Any]
-			pPUnit1->SetPUnitBranch(composer.PeekPUnitCont());
+			pPUnit1->SetPUnitBranchDest(composer.PeekPUnitCont());
 			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
 			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
 		} else {
 			auto pPUnitJump = composer.Add_NilJumpIf(exprCaller);	// [] or [nil]
 			exprCaller.GetExprTrailer()->Compose(composer);			// [Any]
-			pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+			pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		}
 	} else {
 		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
 			auto pPUnitJump = composer.Add_NilJumpIfNot(exprCaller);// [] or [nil]
 			exprCaller.GetExprOfBlock()->Compose(composer);			// [Any]
-			pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+			pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		} else {
 			composer.Add_DiscardValue(exprCaller);					// []
 			composer.Add_Value(exprCaller, Value::nil());			// [nil]
@@ -185,7 +185,7 @@ Gurax_ImplementStatement(for_)
 		composer.Add_DiscardValue(exprCaller);						// []
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
-		pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
 		
 	} else {
@@ -219,7 +219,7 @@ Gurax_ImplementStatement(while_)
 		composer.Add_DiscardValue(exprCaller);						// []
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
-		pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else if (declArgOwner.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
 		composer.Add_PushFrame_Block(exprCaller);
@@ -235,7 +235,7 @@ Gurax_ImplementStatement(while_)
 		composer.SetDiscardValueFlagAtLast();
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
-		pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);					// [Last]
 		composer.Add_PopFrame(exprCaller);
 	} else {
@@ -277,7 +277,7 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_DiscardValue(exprCaller);						// [Iterator]
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
-		pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);					// [Last]
 	} else if (declArgOwner.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
@@ -298,7 +298,7 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_DiscardValue(exprCaller);						// [Iterator]
 		exprCaller.GetExprOfBlock()->Compose(composer);				// [Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
-		pPUnitJump->SetPUnitBranch(composer.PeekPUnitCont());
+		pPUnitJump->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);					// [Last]
 		composer.Add_PopFrame(exprCaller);
 	} else {

@@ -289,7 +289,7 @@ const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 	Iterator& iterator =
 		dynamic_cast<Value_Iterator*>(processor.PeekValue(_offset))->GetIterator();
 	RefPtr<Value> pValueElem(iterator.NextValue());
-	if (!pValueElem) return GetPUnitBranch();
+	if (!pValueElem) return GetPUnitBranchDest();
 	if (!GetDiscardValueFlag()) processor.PushValue(pValueElem.release());
 	return _GetPUnitCont();
 }
@@ -297,7 +297,7 @@ const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 String PUnit_EvalIterator::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("EvalIterator(%zu%s#%zu)", GetOffset(), ss.GetComma(), GetPUnitBranch()->GetSeqId());
+	str.Printf("EvalIterator(%zu%s#%zu)", GetOffset(), ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -689,7 +689,7 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			return nullptr;
 		}
-		return GetPUnitBranch();
+		return GetPUnitBranchDest();
 	} else {
 		if (GetDiscardValueFlag()) processor.DiscardValue();
 		return _GetPUnitCont();
@@ -706,7 +706,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss) const
 		str.Printf(":PUnit#%zu", GetExprSrc().GetPUnitTop()->GetSeqId());
 	}
 	str += ss.GetComma();
-	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranch()->GetSeqId());
+	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -769,7 +769,7 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			return nullptr;
 		}
-		return GetPUnitBranch();
+		return GetPUnitBranchDest();
 	} else {
 		if (!GetDiscardValueFlag()) processor.PushValue(new Value_ArgSlot(pArgSlot->Reference()));
 		return _GetPUnitCont();
@@ -785,7 +785,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	str += GetExprSrc().ToString(StringStyle().Cram());
 	str += ")";
 	str += ss.GetComma();
-	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranch()->GetSeqId());
+	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -880,7 +880,7 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
-		return GetPUnitBranch();
+		return GetPUnitBranchDest();
 	} else {
 		if (GetDiscardValueFlag()) processor.DiscardValue();
 		return _GetPUnitCont();
@@ -890,7 +890,7 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 String PUnit_JumpIf::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("JumpIf(#%zu)", GetPUnitBranch()->GetSeqId());
+	str.Printf("JumpIf(#%zu)", GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -908,14 +908,14 @@ const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 		if (GetDiscardValueFlag()) processor.DiscardValue();
 		return _GetPUnitCont();
 	} else {
-		return GetPUnitBranch();
+		return GetPUnitBranchDest();
 	}
 }
 
 String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("JumpIfNot(#%zu)", GetPUnitBranch()->GetSeqId());
+	str.Printf("JumpIfNot(#%zu)", GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -931,7 +931,7 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		processor.PushValue(Value::nil());
-		return GetPUnitBranch();
+		return GetPUnitBranchDest();
 	} else {
 		if (GetDiscardValueFlag()) processor.DiscardValue();
 		return _GetPUnitCont();
@@ -941,7 +941,7 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("NilJumpIf(#%zu)", GetPUnitBranch()->GetSeqId());
+	str.Printf("NilJumpIf(#%zu)", GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -960,14 +960,14 @@ const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 		return _GetPUnitCont();
 	} else {
 		processor.PushValue(Value::nil());
-		return GetPUnitBranch();
+		return GetPUnitBranchDest();
 	}
 }
 
 String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("NilJumpIfNot(#%zu)", GetPUnitBranch()->GetSeqId());
+	str.Printf("NilJumpIfNot(#%zu)", GetPUnitBranchDest()->GetSeqId());
 	AppendInfoToString(str, ss);
 	return str;
 }
