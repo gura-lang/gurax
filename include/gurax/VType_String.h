@@ -28,6 +28,8 @@ public:
 	Gurax_DeclareReferable(Value_String);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_String");
+public:
+	
 protected:
 	RefPtr<StringReferable> _pStr;
 public:

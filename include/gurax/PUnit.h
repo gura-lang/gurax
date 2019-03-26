@@ -319,15 +319,15 @@ private:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_GenInfiniteIterator
+// PUnit_GenCounterIterator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_GenInfiniteIterator : public PUnit {
+class GURAX_DLLDECLARE PUnit_GenCounterIterator : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
-	PUnit_GenInfiniteIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	PUnit_GenCounterIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -467,15 +467,20 @@ private:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AddList
+// PUnit_ListElem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_AddList : public PUnit {
+class GURAX_DLLDECLARE PUnit_ListElem : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
 public:
 	// Constructor
-	explicit PUnit_AddList(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	explicit PUnit_ListElem(Expr* pExprSrc, SeqId seqId, size_t offset) :
+		PUnit(pExprSrc, seqId), _offset(offset) {}
+public:
+	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -507,15 +512,20 @@ private:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AddDict
+// PUnit_DictElem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_AddDict : public PUnit {
+class GURAX_DLLDECLARE PUnit_DictElem : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	size_t _offset;
 public:
 	// Constructor
-	explicit PUnit_AddDict(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	explicit PUnit_DictElem(Expr* pExprSrc, SeqId seqId, size_t offset) :
+		PUnit(pExprSrc, seqId), _offset(offset) {}
+public:
+	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }

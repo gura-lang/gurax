@@ -49,16 +49,16 @@ public:
 	PUnit_Cast* Add_Cast(const Expr& exprSrc, const VType& vtype);
 	PUnit_GenIterator* Add_GenIterator(const Expr& exprSrc);
 	PUnit_GenRangeIterator* Add_GenRangeIterator(const Expr& exprSrc);
-	PUnit_GenInfiniteIterator* Add_GenInfiniteIterator(const Expr& exprSrc);
+	PUnit_GenCounterIterator* Add_GenCounterIterator(const Expr& exprSrc);
 	PUnit_EvalIterator* Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit_ForEach* Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
 							   const PUnit* pPUnitBranchDest = nullptr);
 	PUnit_UnaryOp* Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	PUnit_BinaryOp* Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
 	PUnit_CreateList* Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
-	PUnit_AddList* Add_AddList(const Expr& exprSrc);
+	PUnit_ListElem* Add_ListElem(const Expr& exprSrc, size_t offset);
 	PUnit_CreateDict* Add_CreateDict(const Expr& exprSrc);
-	PUnit_AddDict* Add_AddDict(const Expr& exprSrc);
+	PUnit_DictElem* Add_DictElem(const Expr& exprSrc, size_t offset);
 	PUnit_Index* Add_Index(const Expr& exprSrc, const Attribute& attr, size_t sizeReserve);
 	PUnit_FeedIndex* Add_FeedIndex(const Expr& exprSrc);
 	PUnit_IndexGet* Add_IndexGet(const Expr& exprSrc);

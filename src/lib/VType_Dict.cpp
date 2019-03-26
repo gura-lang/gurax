@@ -15,14 +15,14 @@ Gurax_DeclareStatementAlias(_dict_, "%")
 Gurax_ImplementStatement(_dict_)
 {
 	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
-	composer.Add_CreateDict(exprCaller);						// [ValueDict]
+	composer.Add_CreateDict(exprCaller);						// [Dict]
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_BinaryOp>() &&
 			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
 			// %{ .. key => value .. }
 			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-			pExprEx->GetExprLeft()->Compose(composer);			// [ValueDict ValueKey]
-			pExprEx->GetExprRight()->Compose(composer);			// [ValueDict ValueKey ValueElem]
+			pExprEx->GetExprLeft()->Compose(composer);			// [Dict Key]
+			pExprEx->GetExprRight()->Compose(composer);			// [Dict Key Elem]
 		} else if (pExpr->IsType<Expr_Block>()) {
 			// %{ .. {key, value} .. }
 			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
@@ -32,21 +32,22 @@ Gurax_ImplementStatement(_dict_)
 				return;
 			}
 			Expr* pExprElem = pExprEx->GetExprElemFirst();
-			pExprElem->Compose(composer);						// [ValueDict ValueKey]
+			pExprElem->Compose(composer);						// [Dict Key]
 			pExprElem = pExprElem->GetExprNext();
-			pExprElem->Compose(composer);						// [ValueDict ValueKey ValueElem]
+			pExprElem->Compose(composer);						// [Dict Key Elem]
 		} else {
 			// %{ .. key, value .. }
-			pExpr->Compose(composer);							// [ValueDict ValueKey]
+			pExpr->Compose(composer);							// [Dict Key]
 			pExpr = pExpr->GetExprNext();
 			if (!pExpr) {
 				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 								 "value is missing in the initialization list for dictionary");
 				return;
 			}
-			pExpr->Compose(composer);							// [ValueDict ValueKey ValueElem]
+			pExpr->Compose(composer);							// [Dict Key Elem]
 		}
-		composer.Add_AddDict(exprCaller);						// [ValueDict]
+		composer.Add_DictElem(exprCaller, 0)->
+			SetDiscardValueFlag();								// [Dict]
 	}
 }
 

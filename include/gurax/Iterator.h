@@ -15,6 +15,14 @@ class GURAX_DLLDECLARE Iterator : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Iterator);
+public:
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags Infinite			= (0 << 0);
+		static const Flags Finite			= (1 << 0);
+		static const Flags LenUndetermined	= (0 << 1);
+		static const Flags LenDetermined	= (1 << 1);
+	};
 protected:
 	RefPtr<HelpProvider> _pHelpProvider;
 public:
@@ -30,6 +38,10 @@ protected:
 	// Destructor
 	virtual ~Iterator() = default;
 public:
+	bool IsInfinite() const { return (GetFlags() & Flag::Finite) == 0; }
+	bool IsFinite() const { return (GetFlags() & Flag::Finite) != 0; }
+	bool IsLenUndetermined() const { return (GetFlags() & Flag::LenDetermined) == 0; }
+	bool IsLenDetermined() const { return (GetFlags() & Flag::LenDetermined) != 0; }
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
@@ -39,7 +51,10 @@ public:
 	bool IsLessThan(const Iterator& iterator) const { return this < &iterator; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
+	// Virtual functions
+	virtual Flags GetFlags() const = 0;
 	virtual Value* NextValue() = 0;
+	virtual size_t GetLength() const = 0;
 	virtual String ToString(const StringStyle& ss) const;
 };
 

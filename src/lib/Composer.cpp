@@ -82,9 +82,9 @@ PUnit_GenRangeIterator* Composer::Add_GenRangeIterator(const Expr& exprSrc)
 	return pPUnit;
 }
 
-PUnit_GenInfiniteIterator* Composer::Add_GenInfiniteIterator(const Expr& exprSrc)
+PUnit_GenCounterIterator* Composer::Add_GenCounterIterator(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_GenInfiniteIterator(exprSrc.Reference(), NextSeqId());
+	auto pPUnit = new PUnit_GenCounterIterator(exprSrc.Reference(), NextSeqId());
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -125,9 +125,9 @@ PUnit_CreateList* Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReser
 	return pPUnit;
 }
 
-PUnit_AddList* Composer::Add_AddList(const Expr& exprSrc)
+PUnit_ListElem* Composer::Add_ListElem(const Expr& exprSrc, size_t offset)
 {
-	auto pPUnit = new PUnit_AddList(exprSrc.Reference(), NextSeqId());
+	auto pPUnit = new PUnit_ListElem(exprSrc.Reference(), NextSeqId(), offset);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -139,9 +139,9 @@ PUnit_CreateDict* Composer::Add_CreateDict(const Expr& exprSrc)
 	return pPUnit;
 }
 
-PUnit_AddDict* Composer::Add_AddDict(const Expr& exprSrc)
+PUnit_DictElem* Composer::Add_DictElem(const Expr& exprSrc, size_t offset)
 {
-	auto pPUnit = new PUnit_AddDict(exprSrc.Reference(), NextSeqId());
+	auto pPUnit = new PUnit_DictElem(exprSrc.Reference(), NextSeqId(), offset);
 	Add(pPUnit);
 	return pPUnit;
 }

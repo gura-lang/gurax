@@ -258,21 +258,21 @@ String PUnit_GenRangeIterator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_GenInfiniteIterator
+// PUnit_GenCounterIterator
 // Stack View: [Prev] -> [Prev Iterator] (continue)
 //                    -> [Prev]          (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_GenInfiniteIterator::Exec(Processor& processor) const
+const PUnit* PUnit_GenCounterIterator::Exec(Processor& processor) const
 {
-	RefPtr<Iterator> pIterator(new Iterator_Infinite());
+	RefPtr<Iterator> pIterator(new Iterator_Counter());
 	if (!GetDiscardValueFlag()) processor.PushValue(new Value_Iterator(pIterator.release()));
 	return _GetPUnitCont();
 }
 
-String PUnit_GenInfiniteIterator::ToString(const StringStyle& ss) const
+String PUnit_GenCounterIterator::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "GenInfiniteIterator()";
+	str += "GenCounterIterator()";
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -399,22 +399,24 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AddList
-// Stack View: [Prev List Elem] -> [Prev List] (continue)
+// PUnit_ListElem
+// Stack View: [Prev List .. Elem] -> [Prev List .. Elem] (continue)
+//                                 -> [Prev List ..]      (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_AddList::Exec(Processor& processor) const
+const PUnit* PUnit_ListElem::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueElem(processor.PopValue());
 	ValueTypedOwner& valueTypedOwner =
-		dynamic_cast<Value_List*>(processor.PeekValue(0))->GetValueTypedOwner();
+		dynamic_cast<Value_List*>(processor.PeekValue(GetOffset() + 1))->GetValueTypedOwner();
+	RefPtr<Value> pValueElem(
+		GetDiscardValueFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
 	valueTypedOwner.Add(pValueElem.release());
 	return _GetPUnitCont();
 }
 
-String PUnit_AddList::ToString(const StringStyle& ss) const
+String PUnit_ListElem::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "AddValueList()";
+	str.Printf("ListElem(offset=%zu)", GetOffset());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -439,23 +441,30 @@ String PUnit_CreateDict::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AddDict
-// Stack View: [Prev Dict Key Elem] -> [Prev Dict] (continue)
+// PUnit_DictElem
+// Stack View: [Prev Dict .. Key Elem] -> [Prev Dict .. Key Elem] (continue)
+//                                     -> [Prev Dict ..]          (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_AddDict::Exec(Processor& processor) const
+const PUnit* PUnit_DictElem::Exec(Processor& processor) const
 {
-	RefPtr<Value> pValueElem(processor.PopValue());
-	RefPtr<Value> pValueKey(processor.PopValue());
 	ValueDict& valueDict =
-		dynamic_cast<Value_Dict*>(processor.PeekValue(0))->GetValueDict();
-	valueDict.Assign(pValueKey.release(), pValueElem.release());
+		dynamic_cast<Value_Dict*>(processor.PeekValue(GetOffset() + 2))->GetValueDict();
+	if (GetDiscardValueFlag()) {
+		RefPtr<Value> pValueElem(processor.PopValue());
+		RefPtr<Value> pValueKey(processor.PopValue());
+		valueDict.Assign(pValueKey.release(), pValueElem.release());
+	} else {
+		RefPtr<Value> pValueElem(processor.PeekValue(0)->Reference());
+		RefPtr<Value> pValueKey(processor.PeekValue(1)->Reference());
+		valueDict.Assign(pValueKey.release(), pValueElem.release());
+	}
 	return _GetPUnitCont();
 }
 
-String PUnit_AddDict::ToString(const StringStyle& ss) const
+String PUnit_DictElem::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "AddValueDict()";
+	str.Printf("DictElem(offset=%zu)", GetOffset());
 	AppendInfoToString(str, ss);
 	return str;
 }

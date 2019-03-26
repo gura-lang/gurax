@@ -71,19 +71,19 @@ String Iterator_Range::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Infinite
+// Iterator_Counter
 //------------------------------------------------------------------------------
-Value* Iterator_Infinite::NextValue()
+Value* Iterator_Counter::NextValue()
 {
 	Value* pValue = new Value_Number(_idx);
 	_idx += _idxStep;
 	return pValue;
 }
 
-String Iterator_Infinite::ToString(const StringStyle& ss) const
+String Iterator_Counter::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Range:begin=%d:step=%d", _idxBegin, _idxStep);
+	str.Printf("Counter:begin=%d:step=%d", _idxBegin, _idxStep);
 	return str;
 }
 
