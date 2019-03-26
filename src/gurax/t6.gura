@@ -1,0 +1,11 @@
+repeat (6) {|a|
+	if (a == 0) {
+		Println('zero')
+	} elsif (a == 1) {
+		Println('one')
+	} elsif (a == 2) {
+		Println('two')
+	} else {
+		Println('other')
+	}
+}

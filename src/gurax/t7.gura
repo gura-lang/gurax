@@ -1,0 +1,3 @@
+f(`x) = Println(x, ' .. ', x.Eval())
+//f(x:Symbol) = {}
+f(3 + 4)

@@ -1,0 +1,4 @@
+x = 'Hello World'
+Println(x.Len())
+Println(x.len)
+x.hoge = 3
