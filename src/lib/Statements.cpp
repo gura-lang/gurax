@@ -185,7 +185,7 @@ Gurax_ImplementStatement(for_)
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-		composer.Add_RemoveValues(exprCaller, nIterators, nIterators);	// [Last]
+		composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [Last]
 		composer.Add_PopFrame(exprCaller);
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
@@ -204,7 +204,7 @@ Gurax_ImplementStatement(for_)
 		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n Iterator Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-		composer.Add_RemoveValues(exprCaller, nIterators + 1, nIterators);	// [Last]
+		composer.Add_RemoveValues(exprCaller, 1, nIterators + 1);		// [Last]
 		composer.Add_PopFrame(exprCaller);
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,

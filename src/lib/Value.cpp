@@ -327,8 +327,8 @@ void ValueStack::Remove(size_t offset)
 
 void ValueStack::Remove(size_t offset, size_t cnt)
 {
-	iterator ppValueBegin = begin() + size() - (offset + 1);
-	iterator ppValueEnd = (cnt < offset + 1)? ppValueBegin + cnt : end();
+	iterator ppValueBegin = begin() + size() - (offset + cnt);
+	iterator ppValueEnd = ppValueBegin + cnt;
 	for (iterator ppValue = ppValueBegin; ppValue != ppValueEnd; ppValue++) {
 		Value::Delete(*ppValue);
 	}
