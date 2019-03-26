@@ -385,7 +385,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 const PUnit* PUnit_CreateList::Exec(Processor& processor) const
 {
 	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
-	pValueTypedOwner->Reserve(GetSizeReserve());
+	if (GetSizeReserve() > 0) pValueTypedOwner->Reserve(GetSizeReserve());
 	if (!GetDiscardValueFlag()) processor.PushValue(new Value_List(pValueTypedOwner.release()));
 	return _GetPUnitCont();
 }
@@ -473,7 +473,7 @@ const PUnit* PUnit_Index::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopValue());
 	RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
-	pIndex->Reserve(GetSizeReserve());
+	if (GetSizeReserve() > 0) pIndex->Reserve(GetSizeReserve());
 	if (!GetDiscardValueFlag()) processor.PushValue(new Value_Index(pIndex.release()));
 	return _GetPUnitCont();
 }

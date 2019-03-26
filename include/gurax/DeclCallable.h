@@ -41,6 +41,11 @@ public:
 		static const Flags Private			= 1 << 14;	// :private
 		static const Flags Privileged		= 1 << 15;	// :privileged
 		static const Flags Reduce			= 1 << 16;	// :reduce
+		static const Flags List				= 1 << 17;	// :list
+		static const Flags XList			= 1 << 18;	// :xlist
+		static const Flags Iter				= 1 << 19;	// :iter
+		static const Flags XIter			= 1 << 20;	// :xiter
+		
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
@@ -62,6 +67,10 @@ public:
 			Assoc(Gurax_Symbol(private_),		Flag::Private);
 			Assoc(Gurax_Symbol(privileged),		Flag::Privileged);
 			Assoc(Gurax_Symbol(reduce),			Flag::Reduce);
+			Assoc(Gurax_Symbol(list),			Flag::List);
+			Assoc(Gurax_Symbol(xlist),			Flag::XList);
+			Assoc(Gurax_Symbol(iter),			Flag::Iter);
+			Assoc(Gurax_Symbol(xiter),			Flag::XIter);
 		}
 		static SymbolAssoc* GetInstance() {
 			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_Flag());
@@ -105,6 +114,7 @@ public:
 	Flags GetFlags() const { return _flags; }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
 	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetAttr().IsSetOpt(pSymbol); }
 	bool CheckAttribute(const Attribute& attr) const;

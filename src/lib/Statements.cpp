@@ -175,7 +175,10 @@ Gurax_ImplementStatement(for_)
 	}
 	size_t nIterators = pDeclArgs->size();
 	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
-	if (declArgsOfBlock.empty()) {
+	bool createListFlag =
+		exprCaller.GetAttr().IsSet(Gurax_Symbol(list)) ||
+		exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
+	if (declArgsOfBlock.empty() && !createListFlag) {
 		composer.Add_PushFrame_Block(exprCaller);
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
 		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
@@ -186,6 +189,18 @@ Gurax_ImplementStatement(for_)
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [Last]
+		composer.Add_PopFrame(exprCaller);
+	} else if (declArgsOfBlock.empty() && createListFlag) {
+		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_CreateList(exprCaller, 32);						// [Iterator1..n List]
+		const PUnit* pPUnitLoop = composer.PeekPUnitCont();
+		auto pPUnitBranch = composer.Add_ForEach(
+			exprCaller, 1, pDeclArgs.release());						// [Iterator1..n List]
+		exprCaller.GetExprOfBlock()->Compose(composer);					// [Iterator1..n List Elem]
+		composer.Add_ListElem(exprCaller, 0);							// [Iterator1..n List]
+		composer.Add_Jump(exprCaller, pPUnitLoop);
+		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [List]
 		composer.Add_PopFrame(exprCaller);
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();

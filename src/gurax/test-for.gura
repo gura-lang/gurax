@@ -1,3 +1,8 @@
+x = for (n in [3, 1, 4, 1, 5]):list {
+	n * 2
+}
+Println(x)
+/*
 for (n in []) {
 	Printf('%d\n', n)
 }
@@ -19,3 +24,4 @@ for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1]) {|i|
 for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]) {|i|
 	Printf('#%d %d %d %d\n', i, n1, n2, n3)
 }
+*/
