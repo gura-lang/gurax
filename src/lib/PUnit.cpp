@@ -279,8 +279,8 @@ String PUnit_GenCounterIterator::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_EvalIterator
-// Stack View: [Prev Iterator ..] -> [Prev Iterator .. Elem] (continue)
-//                                -> [Prev Iterator ..]      (discard)
+// Stack View: [Prev Iterator] -> [Prev Iterator Elem] (continue)
+//                             -> [Prev Iterator]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 {
@@ -380,7 +380,7 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PUnit_CreateList
 // Stack View: [Prev] -> [Prev List] (continue)
-//             [Prev] -> [Prev]      (discard)
+//                    -> [Prev]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_CreateList::Exec(Processor& processor) const
 {
@@ -400,16 +400,16 @@ String PUnit_CreateList::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_ListElem
-// Stack View: [Prev List .. Elem] -> [Prev List .. Elem] (continue)
-//                                 -> [Prev List ..]      (discard)
+// Stack View: [Prev List Elem] -> [Prev List] (continue)
+//                              -> [Prev]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ListElem::Exec(Processor& processor) const
 {
+	RefPtr<Value> pValueElem(processor.PopValue());
 	ValueTypedOwner& valueTypedOwner =
-		dynamic_cast<Value_List*>(processor.PeekValue(GetOffset() + 1))->GetValueTypedOwner();
-	RefPtr<Value> pValueElem(
-		GetDiscardValueFlag()? processor.PopValue() : processor.PeekValue(0)->Reference());
+		dynamic_cast<Value_List*>(processor.PeekValue(GetOffset()))->GetValueTypedOwner();
 	valueTypedOwner.Add(pValueElem.release());
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -442,22 +442,17 @@ String PUnit_CreateDict::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_DictElem
-// Stack View: [Prev Dict .. Key Elem] -> [Prev Dict .. Key Elem] (continue)
-//                                     -> [Prev Dict ..]          (discard)
+// Stack View: [Prev Dict Key Elem] -> [Prev Dict] (continue)
+//                                  -> [Prev]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_DictElem::Exec(Processor& processor) const
 {
+	RefPtr<Value> pValueElem(processor.PopValue());
+	RefPtr<Value> pValueKey(processor.PopValue());
 	ValueDict& valueDict =
-		dynamic_cast<Value_Dict*>(processor.PeekValue(GetOffset() + 2))->GetValueDict();
-	if (GetDiscardValueFlag()) {
-		RefPtr<Value> pValueElem(processor.PopValue());
-		RefPtr<Value> pValueKey(processor.PopValue());
-		valueDict.Assign(pValueKey.release(), pValueElem.release());
-	} else {
-		RefPtr<Value> pValueElem(processor.PeekValue(0)->Reference());
-		RefPtr<Value> pValueKey(processor.PeekValue(1)->Reference());
-		valueDict.Assign(pValueKey.release(), pValueElem.release());
-	}
+		dynamic_cast<Value_Dict*>(processor.PeekValue(GetOffset()))->GetValueDict();
+	valueDict.Assign(pValueKey.release(), pValueElem.release());
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1070,17 +1065,19 @@ String PUnit_Return::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "Return()";
-	if (GetDiscardValueFlag()) str += ", DiscardValue()";
+	AppendInfoToString(str, ss);
 	return str;
 }
 
 //------------------------------------------------------------------------------
 // PUnit_PushFrame_Block
 // Stack View: [prev] -> [prev] (continue)
+//                    -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_PushFrame_Block::Exec(Processor& processor) const
 {
 	processor.PushFrame_Block();
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1088,16 +1085,19 @@ String PUnit_PushFrame_Block::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "PushFrame_Block()";
+	AppendInfoToString(str, ss);
 	return str;
 }
 
 //------------------------------------------------------------------------------
 // PUnit_PopFrame
 // Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_PopFrame::Exec(Processor& processor) const
 {
 	processor.PopFrame();
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1105,15 +1105,18 @@ String PUnit_PopFrame::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "PopFrame()";
+	AppendInfoToString(str, ss);
 	return str;
 }
 
 //------------------------------------------------------------------------------
 // PUnit_Terminate
-// Stack View: [Prev] -> [Prev] (always)
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Terminate::Exec(Processor& processor) const
 {
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return nullptr;
 }
 
@@ -1121,15 +1124,18 @@ String PUnit_Terminate::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += "Terminate()";
+	AppendInfoToString(str, ss);
 	return str;
 }
 
 //------------------------------------------------------------------------------
 // PUnit_Bridge
-// Stack View: [Prev] -> [Prev] (always)
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Bridge::Exec(Processor& processor) const
 {
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1137,6 +1143,7 @@ String PUnit_Bridge::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("Bridge(#%zu)", _GetPUnitCont()->GetSeqId());
+	AppendInfoToString(str, ss);
 	return str;
 }
 

@@ -46,8 +46,7 @@ Gurax_ImplementStatement(_dict_)
 			}
 			pExpr->Compose(composer);							// [Dict Key Elem]
 		}
-		composer.Add_DictElem(exprCaller, 0)->
-			SetDiscardValueFlag();								// [Dict]
+		composer.Add_DictElem(exprCaller, 0);					// [Dict]
 	}
 }
 
