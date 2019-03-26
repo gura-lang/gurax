@@ -19,6 +19,19 @@ void VType_List::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_List
 //------------------------------------------------------------------------------
+String Value_List::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str.Printf(":%zuitems>", GetValueOwner().size());
+	return str;
+}
+
+String Value_List::ToStringDetail(const StringStyle& ss) const
+{
+	return GetValueOwner().ToString(ss);
+}
+
 Value* Value_List::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
