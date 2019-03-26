@@ -62,9 +62,8 @@ public:
 			GetVType().IsLessThan(pValue->GetVType());
 		
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetValueDict().ToString(ss);
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 }

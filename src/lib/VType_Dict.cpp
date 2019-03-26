@@ -66,5 +66,17 @@ void VType_Dict::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Dict
 //------------------------------------------------------------------------------
+String Value_Dict::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str.Printf(":%zuitems>", GetValueDict().size());
+	return str;
+}
+
+String Value_Dict::ToStringDetail(const StringStyle& ss) const
+{
+	return GetValueDict().ToString(ss);
+}
 
 }
