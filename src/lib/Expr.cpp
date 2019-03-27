@@ -32,6 +32,23 @@ void Expr::ComposeOrNil(Composer& composer)
 	}
 }
 
+void Expr::PrintPUnit() const
+{
+	const PUnit* pPUnitExit = nullptr;
+	const PUnit* pPUnit = GetPUnitTop();
+	if (!pPUnit) return;
+	if (pPUnit->GetPUnitExit()) {
+		pPUnitExit = pPUnit->GetPUnitExit();
+		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_ExitPoint
+		if (!pPUnit) return;
+	}
+	int seqIdOffset = pPUnit->GetSeqId();
+	for ( ; pPUnit && pPUnit != pPUnitExit; pPUnit = pPUnit->GetPUnitNext()) {
+		if (!pPUnit->IsBridge()) pPUnit->Print(seqIdOffset);
+		if (pPUnit->IsReturn()) break;
+	}
+}
+
 int Expr::CalcIndentLevel() const
 {
 	int indentLevel = 0;

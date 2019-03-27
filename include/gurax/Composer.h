@@ -28,7 +28,7 @@ public:
 	// Destructor
 	virtual ~Composer() = default;
 public:
-	PUnit::SeqId NextSeqId() { return ++_seqIdCur; }
+	PUnit::SeqId NextSeqId() { return _seqIdCur++; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
 	PUnit* GetPUnitLast() { return _pPUnitLast; }

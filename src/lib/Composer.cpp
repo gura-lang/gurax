@@ -343,7 +343,9 @@ void Composer::Print() const
 
 void Composer::PrintPUnit() const
 {
-	PUnit::PrintSequence(GetPUnitFirst());
+	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
+		if (!pPUnit->IsBridge()) pPUnit->Print();
+	}
 }
 
 }

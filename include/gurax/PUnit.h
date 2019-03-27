@@ -42,15 +42,16 @@ public:
 	bool IsIdentical(const PUnit* pPUnit) const { return this == pPUnit; }
 	bool IsEqualTo(const PUnit* pPUnit) const { return IsIdentical(pPUnit); }
 	bool IsLessThan(const PUnit* pPUnit) const { return this < pPUnit; }
-	String ToString() const { return ToString(StringStyle::Empty); }
+	String ToString() const { return ToString(StringStyle::Empty, 0); }
+	String ToString(int seqIdOffset) const { return ToString(StringStyle::Empty, seqIdOffset); }
+	String ToString(const StringStyle& ss) const { return ToString(ss, 0); }
 public:
 	size_t GetSeqId() const { return _seqId; }
-	bool IsBridge() const { return GetSeqId() == 0; }
+	size_t GetSeqId(int seqIdOffset) const { return _seqId - seqIdOffset; }
 	void SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
 	bool GetDiscardValueFlag() const { return (_flags & Flag::DiscardValue) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
-	void Print() const;
-	static void PrintSequence(const PUnit* pPUnit);
+	void Print(int seqIdOffset = 0) const;
 public:
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {
@@ -58,11 +59,13 @@ public:
 	}
 public:
 	// Virtual functions
+	virtual bool IsReturn() const { return false; }
+	virtual bool IsBridge() const { return false; }
 	virtual const PUnit* GetPUnitExit() const { return nullptr; } // only PUnit_ExitPoint returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
 	virtual const PUnit* Exec(Processor& processor) const = 0;
-	virtual String ToString(const StringStyle& ss) const = 0;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -119,7 +122,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -146,7 +149,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
@@ -171,7 +174,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -196,7 +199,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -221,7 +224,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -248,7 +251,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
@@ -273,7 +276,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -293,7 +296,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -313,7 +316,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -333,7 +336,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -358,7 +361,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -386,7 +389,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -411,7 +414,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -436,7 +439,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -461,7 +464,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -486,7 +489,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -506,7 +509,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -531,7 +534,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -558,7 +561,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -578,7 +581,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -598,7 +601,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -618,7 +621,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -645,7 +648,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -672,7 +675,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -699,7 +702,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -726,7 +729,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -751,7 +754,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
@@ -771,7 +774,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -802,7 +805,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
@@ -822,7 +825,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -846,7 +849,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
@@ -872,7 +875,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
@@ -893,7 +896,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -914,7 +917,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -935,7 +938,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -956,7 +959,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -982,7 +985,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -1002,7 +1005,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -1027,7 +1030,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -1054,7 +1057,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -1071,10 +1074,11 @@ public:
 	PUnit_Return(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
+	virtual bool IsReturn() const override { return true; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
@@ -1094,7 +1098,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -1114,7 +1118,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
@@ -1134,7 +1138,7 @@ public:
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return nullptr; }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return nullptr; }
 };
@@ -1158,10 +1162,11 @@ public:
 	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 public:
 	// Virtual functions of PUnit
+	virtual bool IsBridge() const override { return true; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return _GetPUnitCont(); }
 	virtual const PUnit* Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };

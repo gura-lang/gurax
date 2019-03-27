@@ -21,17 +21,10 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 	}
 }
 
-void PUnit::Print() const
+void PUnit::Print(int seqIdOffset) const
 {
 	Stream& stream = *Stream::COut;
-	stream.Printf("#%zu %s\n", GetSeqId(), ToString().c_str());
-}
-
-void PUnit::PrintSequence(const PUnit* pPUnit)
-{
-	for ( ; pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
-		if (!pPUnit->IsBridge()) pPUnit->Print();
-	}
+	stream.Printf("#%zu %s\n", GetSeqId(seqIdOffset), ToString(seqIdOffset).c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -59,7 +52,7 @@ const PUnit* PUnit_Value::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Value::ToString(const StringStyle& ss) const
+String PUnit_Value::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Value(";
@@ -80,12 +73,12 @@ const PUnit* PUnit_ValueAndJump::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_ValueAndJump::ToString(const StringStyle& ss) const
+String PUnit_ValueAndJump::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "ValueAndJump(";
 	str += GetValue()->ToString(StringStyle().Digest());
-	str.Printf(", #%zu)", _GetPUnitCont()->GetSeqId());
+	str.Printf(", #%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -107,7 +100,7 @@ const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Lookup::ToString(const StringStyle& ss) const
+String PUnit_Lookup::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Lookup(`";
@@ -131,7 +124,7 @@ const PUnit* PUnit_AssignToSymbol::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_AssignToSymbol::ToString(const StringStyle& ss) const
+String PUnit_AssignToSymbol::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "AssignToSymbol(`";
@@ -155,7 +148,7 @@ const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_AssignToDeclArg::ToString(const StringStyle& ss) const
+String PUnit_AssignToDeclArg::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "AssignToDeclArg(`";
@@ -179,12 +172,12 @@ const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_AssignFunction::ToString(const StringStyle& ss) const
+String PUnit_AssignFunction::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "AssignFunction(";
 	str += GetFunction().ToString(ss);
-	str.Printf(", #%zu)", _GetPUnitCont()->GetSeqId());
+	str.Printf(", #%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -203,7 +196,7 @@ const PUnit* PUnit_Cast::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Cast::ToString(const StringStyle& ss) const
+String PUnit_Cast::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Cast(";
@@ -227,7 +220,7 @@ const PUnit* PUnit_GenIterator::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_GenIterator::ToString(const StringStyle& ss) const
+String PUnit_GenIterator::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "GenIterator()";
@@ -249,7 +242,7 @@ const PUnit* PUnit_GenRangeIterator::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_GenRangeIterator::ToString(const StringStyle& ss) const
+String PUnit_GenRangeIterator::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "GenRangeIterator()";
@@ -269,7 +262,7 @@ const PUnit* PUnit_GenCounterIterator::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_GenCounterIterator::ToString(const StringStyle& ss) const
+String PUnit_GenCounterIterator::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "GenCounterIterator()";
@@ -292,10 +285,10 @@ const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_EvalIterator::ToString(const StringStyle& ss) const
+String PUnit_EvalIterator::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("EvalIterator(%zu%s#%zu)", GetOffset(), ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
+	str.Printf("EvalIterator(%zu%s#%zu)", GetOffset(), ss.GetComma(), GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -319,11 +312,11 @@ const PUnit* PUnit_ForEach::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_ForEach::ToString(const StringStyle& ss) const
+String PUnit_ForEach::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ForEach(offset=%zu%s#%zu)", GetOffset(),
-			   ss.GetComma(), GetPUnitBranchDest()->GetSeqId());
+			   ss.GetComma(), GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -342,7 +335,7 @@ const PUnit* PUnit_UnaryOp::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_UnaryOp::ToString(const StringStyle& ss) const
+String PUnit_UnaryOp::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "UnaryOp(";
@@ -367,7 +360,7 @@ const PUnit* PUnit_BinaryOp::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_BinaryOp::ToString(const StringStyle& ss) const
+String PUnit_BinaryOp::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "BinaryOp(";
@@ -390,7 +383,7 @@ const PUnit* PUnit_CreateList::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_CreateList::ToString(const StringStyle& ss) const
+String PUnit_CreateList::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "CreateList()";
@@ -413,7 +406,7 @@ const PUnit* PUnit_ListElem::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_ListElem::ToString(const StringStyle& ss) const
+String PUnit_ListElem::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ListElem(offset=%zu)", GetOffset());
@@ -432,7 +425,7 @@ const PUnit* PUnit_CreateDict::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_CreateDict::ToString(const StringStyle& ss) const
+String PUnit_CreateDict::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "CreateDict()";
@@ -456,7 +449,7 @@ const PUnit* PUnit_DictElem::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_DictElem::ToString(const StringStyle& ss) const
+String PUnit_DictElem::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("DictElem(offset=%zu)", GetOffset());
@@ -478,7 +471,7 @@ const PUnit* PUnit_Index::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Index::ToString(const StringStyle& ss) const
+String PUnit_Index::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "CreateIndex()";
@@ -503,7 +496,7 @@ const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_FeedIndex::ToString(const StringStyle& ss) const
+String PUnit_FeedIndex::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "FeedIndex()";
@@ -529,7 +522,7 @@ const PUnit* PUnit_IndexGet::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_IndexGet::ToString(const StringStyle& ss) const
+String PUnit_IndexGet::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "IndexGet()";
@@ -556,7 +549,7 @@ const PUnit* PUnit_IndexSet::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_IndexSet::ToString(const StringStyle& ss) const
+String PUnit_IndexSet::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "IndexSet()";
@@ -581,7 +574,7 @@ const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_PropGet::ToString(const StringStyle& ss) const
+String PUnit_PropGet::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PropGet(`";
@@ -609,7 +602,7 @@ const PUnit* PUnit_PropSet::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_PropSet::ToString(const StringStyle& ss) const
+String PUnit_PropSet::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PropSet(`";
@@ -644,7 +637,7 @@ const PUnit* PUnit_Member::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Member::ToString(const StringStyle& ss) const
+String PUnit_Member::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Member(`";
@@ -677,7 +670,7 @@ const PUnit* PUnit_Argument::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Argument::ToString(const StringStyle& ss) const
+String PUnit_Argument::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Argument()";
@@ -714,17 +707,17 @@ const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_ArgSlot::ToString(const StringStyle& ss) const
+String PUnit_ArgSlot::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "ArgSlot(`(";
 	str += GetExprSrc().ToString(StringStyle().Cram());
 	str += ")";
 	if (GetExprSrc().GetPUnitTop()) {
-		str.Printf(":PUnit#%zu", GetExprSrc().GetPUnitTop()->GetSeqId());
+		str.Printf(":PUnit#%zu", GetExprSrc().GetPUnitTop()->GetSeqId(seqIdOffset));
 	}
 	str += ss.GetComma();
-	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranchDest()->GetSeqId());
+	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset), GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -746,7 +739,7 @@ const PUnit* PUnit_FeedArgSlot::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_FeedArgSlot::ToString(const StringStyle& ss) const
+String PUnit_FeedArgSlot::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "FeedArgSlot()";
@@ -792,7 +785,7 @@ const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
+String PUnit_ArgSlotNamed::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "ArgSlotNamed(`";
@@ -801,7 +794,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss) const
 	str += GetExprSrc().ToString(StringStyle().Cram());
 	str += ")";
 	str += ss.GetComma();
-	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(), GetPUnitBranchDest()->GetSeqId());
+	str.Printf("#%zu, #%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset), GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -824,7 +817,7 @@ const PUnit* PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss) const
+String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "FeedArgSlotNamed()";
@@ -856,10 +849,10 @@ const PUnit* PUnit_Call::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_Call::ToString(const StringStyle& ss) const
+String PUnit_Call::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Call(#%zu)", _GetPUnitCont()->GetSeqId());
+	str.Printf("Call(#%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -873,10 +866,10 @@ const PUnit* PUnit_Jump::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Jump::ToString(const StringStyle& ss) const
+String PUnit_Jump::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Jump(#%zu)", _GetPUnitCont()->GetSeqId());
+	str.Printf("Jump(#%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset));
 	return str;
 }
 
@@ -895,10 +888,10 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_JumpIf::ToString(const StringStyle& ss) const
+String PUnit_JumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("JumpIf(#%zu)", GetPUnitBranchDest()->GetSeqId());
+	str.Printf("JumpIf(#%zu)", GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -918,10 +911,10 @@ const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_JumpIfNot::ToString(const StringStyle& ss) const
+String PUnit_JumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("JumpIfNot(#%zu)", GetPUnitBranchDest()->GetSeqId());
+	str.Printf("JumpIfNot(#%zu)", GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -942,10 +935,10 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_NilJumpIf::ToString(const StringStyle& ss) const
+String PUnit_NilJumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("NilJumpIf(#%zu)", GetPUnitBranchDest()->GetSeqId());
+	str.Printf("NilJumpIf(#%zu)", GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -966,10 +959,10 @@ const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_NilJumpIfNot::ToString(const StringStyle& ss) const
+String PUnit_NilJumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("NilJumpIfNot(#%zu)", GetPUnitBranchDest()->GetSeqId());
+	str.Printf("NilJumpIfNot(#%zu)", GetPUnitBranchDest()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -983,10 +976,10 @@ const PUnit* PUnit_ExitPoint::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_ExitPoint::ToString(const StringStyle& ss) const
+String PUnit_ExitPoint::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ExitPoint(#%zu)", GetPUnitExit()->GetSeqId());
+	str.Printf("ExitPoint(#%zu)", GetPUnitExit()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1001,7 +994,7 @@ const PUnit* PUnit_PopValue::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_PopValue::ToString(const StringStyle& ss) const
+String PUnit_PopValue::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PopValue()";
@@ -1019,7 +1012,7 @@ const PUnit* PUnit_RemoveValue::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_RemoveValue::ToString(const StringStyle& ss) const
+String PUnit_RemoveValue::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("RemoveValue(offset=%zu)", GetOffset());
@@ -1037,7 +1030,7 @@ const PUnit* PUnit_RemoveValues::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_RemoveValues::ToString(const StringStyle& ss) const
+String PUnit_RemoveValues::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("RemoveValues(offset=%zu%scount=%zu)", GetOffset(), ss.GetComma(), GetCount());
@@ -1061,7 +1054,7 @@ const PUnit* PUnit_Return::Exec(Processor& processor) const
 	return pPUnit->GetPUnitCont();
 }
 
-String PUnit_Return::ToString(const StringStyle& ss) const
+String PUnit_Return::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Return()";
@@ -1081,7 +1074,7 @@ const PUnit* PUnit_PushFrame_Block::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_PushFrame_Block::ToString(const StringStyle& ss) const
+String PUnit_PushFrame_Block::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PushFrame_Block()";
@@ -1101,7 +1094,7 @@ const PUnit* PUnit_PopFrame::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_PopFrame::ToString(const StringStyle& ss) const
+String PUnit_PopFrame::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PopFrame()";
@@ -1120,7 +1113,7 @@ const PUnit* PUnit_Terminate::Exec(Processor& processor) const
 	return nullptr;
 }
 
-String PUnit_Terminate::ToString(const StringStyle& ss) const
+String PUnit_Terminate::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Terminate()";
@@ -1139,10 +1132,10 @@ const PUnit* PUnit_Bridge::Exec(Processor& processor) const
 	return _GetPUnitCont();
 }
 
-String PUnit_Bridge::ToString(const StringStyle& ss) const
+String PUnit_Bridge::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Bridge(#%zu)", _GetPUnitCont()->GetSeqId());
+	str.Printf("Bridge(#%zu)", _GetPUnitCont()->GetSeqId(seqIdOffset));
 	AppendInfoToString(str, ss);
 	return str;
 }

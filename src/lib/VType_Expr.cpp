@@ -21,6 +21,20 @@ Gurax_ImplementMethod(Expr, Eval)
 	return expr.DoEval(processor);
 }
 
+// Expr#PrintPUnit():void
+Gurax_DeclareMethod(Expr, PrintPUnit)
+{
+	Declare(VTYPE_Nil, Flag::None);
+}
+
+Gurax_ImplementMethod(Expr, PrintPUnit)
+{
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	expr.PrintPUnit();
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // VType_Expr
 //------------------------------------------------------------------------------
@@ -30,7 +44,9 @@ void VType_Expr::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
+	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, Eval));
+	Assign(Gurax_CreateMethod(Expr, PrintPUnit));
 }
 
 //------------------------------------------------------------------------------

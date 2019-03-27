@@ -58,7 +58,9 @@ void VType_String::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
+	// Assignment of method
 	Assign(Gurax_CreateMethod(String, Len));
+	// Assignment of property
 	Assign(Gurax_CreateProperty(String, len));
 }
 
