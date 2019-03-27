@@ -71,6 +71,7 @@
 #include "gurax/VType_Nil.h"
 #include "gurax/VType_Number.h"
 #include "gurax/VType_Object.h"
+#include "gurax/VType_PUnit.h"
 #include "gurax/VType_Quote.h"
 #include "gurax/VType_Stream.h"
 #include "gurax/VType_String.h"

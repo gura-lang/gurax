@@ -70,6 +70,7 @@ add_library(guraxcore SHARED
 	VType_Number.cpp
 	VType_Object.cpp
 	VType_Quote.cpp
+	VType_PUnit.cpp
 	VType_Stream.cpp
 	VType_String.cpp
 	VType_StringPtr.cpp
