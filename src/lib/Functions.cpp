@@ -17,11 +17,11 @@ Gurax_DeclareFunction(Print)
 
 Gurax_ImplementFunction(Print)
 {
-	Stream& stream = *Stream::COut;
 	// Arguments
 	ArgPicker args(argument);
 	const ValueList& valueList = args.PickList();
 	// Function body
+	Stream& stream = *Stream::COut;
 	stream.Print(valueList);
 	return Value::nil();
 }

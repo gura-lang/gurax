@@ -1,15 +1,16 @@
+#!./gurax
 Println('--------')
 x = `(a)
 Printf('`(%s)\n', x)
-x.PrintPUnit()
+x.PrintPUnit('  ')
 Println('--------')
 f(`x) = {
 	Printf('f(`(%s))\n', x)
-	x.PrintPUnit()
+	x.PrintPUnit('  ')
 }
 f(a = 3)
 Println('--------')
 x = `{
 	while (a < 3) {}
 }
-x.PrintPUnit()
+x.PrintPUnit('  ')

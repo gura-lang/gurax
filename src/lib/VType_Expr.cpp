@@ -21,17 +21,23 @@ Gurax_ImplementMethod(Expr, Eval)
 	return expr.DoEval(processor);
 }
 
-// Expr#PrintPUnit():void
+// Expr#PrintPUnit(indent?:String):void
 Gurax_DeclareMethod(Expr, PrintPUnit)
 {
 	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("indent", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementMethod(Expr, PrintPUnit)
 {
+	// Target
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
-	expr.PrintPUnit();
+	// Arguments
+	ArgPicker args(argument);
+	const char* indent = args.IsDefined()? args.PickString() : "";
+	// Function body
+	expr.PrintPUnit(StringStyle().SetMargin(indent));
 	return Value::nil();
 }
 

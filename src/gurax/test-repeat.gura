@@ -1,3 +1,4 @@
+#!./gurax
 repeat {|n|
 	Println('hello', n)
 }

@@ -1,3 +1,4 @@
+#!./gurax
 n = 0
 while (n < 10) {|i|
 	Printf('hello #%d\n', i)
