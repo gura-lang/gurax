@@ -16,9 +16,9 @@ PUnit_EvalIterator       40
 PUnit_UnaryOp            32
 PUnit_BinaryOp           32
 PUnit_CreateList         32
-PUnit_AddList            24
+PUnit_ListElem           32
 PUnit_CreateDict         24
-PUnit_AddDict            24
+PUnit_DictElem           32
 PUnit_Index              40
 PUnit_FeedIndex          24
 PUnit_IndexGet           24
@@ -38,7 +38,7 @@ PUnit_JumpIfNot          32
 PUnit_NilJumpIf          32
 PUnit_NilJumpIfNot       32
 PUnit_ExitPoint          32
-PUnit_DiscardValue       24
+PUnit_PopValue           24
 PUnit_RemoveValue        32
 PUnit_Return             24
 PUnit_PushFrame_Block    24

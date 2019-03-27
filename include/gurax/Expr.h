@@ -133,6 +133,7 @@ public:
 	const PUnit* GetPUnitTop() const { return _pPUnitTop; }
 public:
 	Value* DoEval(Processor& processor) const;
+	void ComposeOrNil(Composer& composer);
 	int CalcIndentLevel() const;
 	String MakeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
