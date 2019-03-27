@@ -355,9 +355,11 @@ public:
 		static const Flags UpperCase	= (1 << 3);
 		static const Flags Verbose		= (1 << 4);
 		static const Flags Digest		= (1 << 5);
+		static const Flags AddressInfo	= (1 << 6);
 	};
 private:
 	Flags _flags;
+	String _margin;
 	String _indentUnit;
 	static const char* _strsComma[2];
 	static const char* _strsColon[2];
@@ -378,6 +380,7 @@ public:
 	// Destructor
 	virtual ~StringStyle() = default;
 public:	
+	StringStyle& SetMargin(const char* margin) { _margin = margin; return *this; }
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
 	StringStyle& AsSource()				{ _flags |= Flag::AsSource; return *this; }
 	StringStyle& NoAsSource()			{ _flags &= ~Flag::AsSource; return *this; }
@@ -391,12 +394,16 @@ public:
 	StringStyle& NoVerbose()			{ _flags &= ~Flag::Verbose; return *this; }
 	StringStyle& Digest()				{ _flags |= Flag::Digest; return *this; }
 	StringStyle& NoDigest()				{ _flags &= ~Flag::Digest; return *this; }
+	StringStyle& AddressInfo()			{ _flags |= Flag::AddressInfo; return *this; }
+	StringStyle& NoAddressInfo()		{ _flags &= ~Flag::AddressInfo; return *this; }
 	bool IsAsSource() const				{ return (_flags & Flag::AsSource) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsUpperCase() const			{ return (_flags & Flag::UpperCase) != 0; }
 	bool IsVerbose() const				{ return (_flags & Flag::Verbose) != 0; }
 	bool IsDigest() const				{ return (_flags & Flag::Digest) != 0; }
+	bool IsAddressInfo() const			{ return (_flags & Flag::AddressInfo) != 0; }
+	const char* GetMargin() const		{ return _margin.c_str(); }
 	const char* GetIndentUnit() const	{ return _indentUnit.c_str(); }
 	const char* GetComma() const		{ return _strsComma[static_cast<int>(IsCram())]; }
 	const char* GetColon() const		{ return _strsColon[static_cast<int>(IsCram())]; }

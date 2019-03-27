@@ -32,7 +32,7 @@ void Expr::ComposeOrNil(Composer& composer)
 	}
 }
 
-void Expr::PrintPUnit() const
+void Expr::PrintPUnit(const StringStyle& ss) const
 {
 	const PUnit* pPUnitExit = nullptr;
 	const PUnit* pPUnit = GetPUnitTop();
@@ -44,7 +44,7 @@ void Expr::PrintPUnit() const
 	}
 	int seqIdOffset = pPUnit->GetSeqId();
 	for ( ; pPUnit && pPUnit != pPUnitExit; pPUnit = pPUnit->GetPUnitNext()) {
-		if (!pPUnit->IsBridge()) pPUnit->Print(seqIdOffset);
+		if (!pPUnit->IsBridge()) pPUnit->Print(ss, seqIdOffset);
 		if (pPUnit->IsReturn()) break;
 	}
 }

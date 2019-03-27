@@ -21,10 +21,11 @@ void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 	}
 }
 
-void PUnit::Print(int seqIdOffset) const
+void PUnit::Print(const StringStyle& ss, int seqIdOffset) const
 {
 	Stream& stream = *Stream::COut;
-	stream.Printf("#%zu %s\n", GetSeqId(seqIdOffset), ToString(seqIdOffset).c_str());
+	stream.Printf("%s#%zu %s\n", ss.GetMargin(),
+				  GetSeqId(seqIdOffset), ToString(ss, seqIdOffset).c_str());
 }
 
 //------------------------------------------------------------------------------

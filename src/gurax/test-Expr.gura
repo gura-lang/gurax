@@ -1,4 +1,8 @@
-x = `{a}
+x = `(a)
+Printf('`(%s)\n', x)
 x.PrintPUnit()
-f(`x) = x.PrintPUnit()
+f(`x) = {
+	Printf('f(`(%s))\n', x)
+	x.PrintPUnit()
+}
 f(a = 3)

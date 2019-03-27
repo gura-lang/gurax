@@ -341,10 +341,10 @@ void Composer::Print() const
 {
 }
 
-void Composer::PrintPUnit() const
+void Composer::PrintPUnit(const StringStyle& ss) const
 {
 	for (const PUnit* pPUnit = GetPUnitFirst(); pPUnit; pPUnit = pPUnit->GetPUnitNext()) {
-		if (!pPUnit->IsBridge()) pPUnit->Print();
+		if (!pPUnit->IsBridge()) pPUnit->Print(ss);
 	}
 }
 

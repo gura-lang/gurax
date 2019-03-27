@@ -51,7 +51,7 @@ public:
 	void SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
 	bool GetDiscardValueFlag() const { return (_flags & Flag::DiscardValue) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
-	void Print(int seqIdOffset = 0) const;
+	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
 public:
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {

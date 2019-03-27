@@ -92,7 +92,7 @@ public:
 		if (_pPUnitLast) _pPUnitLast->SetDiscardValueFlag();
 	}
 	void Print() const;
-	void PrintPUnit() const;
+	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 }

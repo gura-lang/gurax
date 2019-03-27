@@ -54,7 +54,7 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 {
 	str += "<";
 	str += GetVType().MakeFullName();
-	if (!IsUndefined() && !IsNil()) str.Printf(":%p", this);
+	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Printf(":%p", this);
 }
 
 Value* Value::DoCall(Processor& processor, Argument& argument)
