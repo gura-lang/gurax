@@ -33,7 +33,7 @@ protected:
 public:
 	// Constructor
 	Value_PUnit() = delete;
-	Value_PUnit(PUnit* pPUnit, VType& vtype = VTYPE_PUnit) :
+	Value_PUnit(const PUnit* pPUnit, VType& vtype = VTYPE_PUnit) :
 		Value_Object(vtype), _pPUnit(pPUnit) {}
 	// Copy constructor/operator
 	Value_PUnit(const Value_PUnit& src) :

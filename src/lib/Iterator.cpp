@@ -8,6 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
+Iterator* Iterator::Clone() const
+{
+	//*********************
+	return Reference();
+}
+
 String Iterator::ToString(const StringStyle& ss) const
 {
 	String str;

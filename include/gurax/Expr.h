@@ -135,6 +135,7 @@ public:
 	Value* DoEval(Processor& processor) const;
 	void ComposeOrNil(Composer& composer);
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
+	Iterator* EachPUnit() const;
 	int CalcIndentLevel() const;
 	String MakeIndent(const StringStyle& ss) const;
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }

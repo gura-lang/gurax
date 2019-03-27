@@ -34,4 +34,9 @@ String Value_Iterator::ToStringDetail(const StringStyle& ss) const
 	return GetIterator().ToString(ss);
 }
 
+Iterator* Value_Iterator::DoGenIterator()
+{
+	return GetIterator().Clone();
+}
+
 }

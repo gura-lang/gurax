@@ -64,6 +64,7 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual Iterator* DoGenIterator() override;
 };
 
 }

@@ -8,6 +8,22 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Expr#EachPUnit()
+Gurax_DeclareMethod(Expr, EachPUnit)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+}
+
+Gurax_ImplementMethod(Expr, EachPUnit)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Function body
+	RefPtr<Iterator> pIterator(expr.EachPUnit());
+	return new Value_Iterator(pIterator.release());
+}
+
 // Expr#Eval()
 Gurax_DeclareMethod(Expr, Eval)
 {
@@ -51,6 +67,7 @@ void VType_Expr::DoPrepare(Frame& frame)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
 	Assign(Gurax_CreateMethod(Expr, PrintPUnit));
 }

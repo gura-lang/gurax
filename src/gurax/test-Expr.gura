@@ -1,4 +1,12 @@
 #!./gurax
+x = `{
+	while (a < 3) {}
+}
+/*
+for (punit in x.EachPUnit()) {
+	Println(punit)
+}
+*/
 Println('--------')
 x = `(a)
 Printf('`(%s)\n', x)
