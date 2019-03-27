@@ -1,8 +1,15 @@
+Println('--------')
 x = `(a)
 Printf('`(%s)\n', x)
 x.PrintPUnit()
+Println('--------')
 f(`x) = {
 	Printf('f(`(%s))\n', x)
 	x.PrintPUnit()
 }
 f(a = 3)
+Println('--------')
+x = `{
+	while (a < 3) {}
+}
+x.PrintPUnit()
