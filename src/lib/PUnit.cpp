@@ -737,7 +737,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss, int seqIdOffset) const
 	String str;
 	str.Printf("ArgSlot(`(%s)", GetExprSrc().ToString(StringStyle().Cram()).c_str());
 	if (GetExprSrc().GetPUnitTop()) {
-		str.Printf(":PUnit%s", GetExprSrc().GetPUnitTop()->MakeSeqIdString(seqIdOffset).c_str());
+		str.Printf(":%s", GetExprSrc().GetPUnitTop()->MakeSeqIdString(seqIdOffset).c_str());
 	}
 	str.Printf(",cont=%s,branch=%s)",
 			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str(),
