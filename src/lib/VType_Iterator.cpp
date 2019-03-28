@@ -6,6 +6,25 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// Iterator#NextValue()
+Gurax_DeclareMethod(Iterator, NextValue)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+}
+
+Gurax_ImplementMethod(Iterator, NextValue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iterator = valueThis.GetIterator();
+	// Function body
+	RefPtr<Value> pValue(iterator.NextValue());
+	return pValue? pValue.release() : Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // VType_Iterator
 //------------------------------------------------------------------------------
 VType_Iterator VTYPE_Iterator("Iterator");
@@ -14,6 +33,8 @@ void VType_Iterator::DoPrepare(Frame& frame)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frame.Assign(*this);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Iterator, NextValue));
 }
 
 //------------------------------------------------------------------------------
