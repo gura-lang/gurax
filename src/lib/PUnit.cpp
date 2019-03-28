@@ -81,8 +81,8 @@ String Iterator_EachPUnit::ToString(const StringStyle& ss) const
 
 //------------------------------------------------------------------------------
 // PUnit_Value
-// Stack View: [Prev] -> [Prev Any] (continue)
-//                    -> [Prev]     (discard)
+// Stack View: [] -> [Any] (continue)
+//                -> []    (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Value::Exec(Processor& processor) const
 {
@@ -100,8 +100,8 @@ String PUnit_Value::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_ValueAndJump
-// Stack View: [Prev] -> [Prev Any] (continue)
-//                       [Prev]     (discard)
+// Stack View: [] -> [Any] (continue)
+//                   []    (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ValueAndJump::Exec(Processor& processor) const
 {
@@ -121,8 +121,8 @@ String PUnit_ValueAndJump::ToString(const StringStyle& ss, int seqIdOffset) cons
 
 //------------------------------------------------------------------------------
 // PUnit_Lookup
-// Stack View: [Prev] -> [Prev Any] (continue)
-//                    -> [Prev]     (discard)
+// Stack View: [] -> [Any] (continue)
+//                -> []    (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Lookup::Exec(Processor& processor) const
 {
@@ -148,8 +148,8 @@ String PUnit_Lookup::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_AssignToSymbol
-// Stack View: [Prev Assigned] -> [Prev Assigned] (continue)
-//                             -> [Prev]          (discard)
+// Stack View: [Assigned] -> [Assigned] (continue)
+//                        -> []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AssignToSymbol::Exec(Processor& processor) const
 {
@@ -172,8 +172,8 @@ String PUnit_AssignToSymbol::ToString(const StringStyle& ss, int seqIdOffset) co
 
 //------------------------------------------------------------------------------
 // PUnit_AssignToDeclArg
-// Stack View: [Prev Assigned] -> [Prev Assigned] (continue)
-//                                [Prev]          (discard)
+// Stack View: [Assigned] -> [Assigned] (continue)
+//                           []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AssignToDeclArg::Exec(Processor& processor) const
 {
@@ -196,8 +196,8 @@ String PUnit_AssignToDeclArg::ToString(const StringStyle& ss, int seqIdOffset) c
 
 //------------------------------------------------------------------------------
 // PUnit_AssignFunction
-// Stack View: [Prev] -> [Prev Function] (continue)
-//                    -> [Prev]          (discard)
+// Stack View: [] -> [Function] (continue)
+//                -> []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_AssignFunction::Exec(Processor& processor) const
 {
@@ -220,8 +220,8 @@ String PUnit_AssignFunction::ToString(const StringStyle& ss, int seqIdOffset) co
 
 //------------------------------------------------------------------------------
 // PUnit_Cast
-// Stack View: [Prev Any] -> [Prev Casted] (continue)
-//                        -> [Prev]        (discard)
+// Stack View: [Any] -> [Casted] (continue)
+//                   -> []       (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Cast::Exec(Processor& processor) const
 {
@@ -242,8 +242,8 @@ String PUnit_Cast::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_GenIterator
-// Stack View: [Prev Iterable] -> [Prev Iterator] (continue)
-//                             -> [Prev]          (discard)
+// Stack View: [Iterable] -> [Iterator] (continue)
+//                        -> []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_GenIterator::Exec(Processor& processor) const
 {
@@ -264,8 +264,8 @@ String PUnit_GenIterator::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_GenRangeIterator
-// Stack View: [Prev Number] -> [Prev Iterator] (continue)
-//                           -> [Prev]          (discard)
+// Stack View: [Number] -> [Iterator] (continue)
+//                      -> []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_GenRangeIterator::Exec(Processor& processor) const
 {
@@ -286,8 +286,8 @@ String PUnit_GenRangeIterator::ToString(const StringStyle& ss, int seqIdOffset) 
 
 //------------------------------------------------------------------------------
 // PUnit_GenCounterIterator
-// Stack View: [Prev] -> [Prev Iterator] (continue)
-//                    -> [Prev]          (discard)
+// Stack View: [] -> [Iterator] (continue)
+//                -> []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_GenCounterIterator::Exec(Processor& processor) const
 {
@@ -306,8 +306,8 @@ String PUnit_GenCounterIterator::ToString(const StringStyle& ss, int seqIdOffset
 
 //------------------------------------------------------------------------------
 // PUnit_EvalIterator
-// Stack View: [Prev Iterator] -> [Prev Iterator Elem] (continue)
-//                             -> [Prev Iterator]      (discard)
+// Stack View: [Iterator] -> [Iterator Elem] (continue)
+//                        -> [Iterator]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_EvalIterator::Exec(Processor& processor) const
 {
@@ -330,7 +330,7 @@ String PUnit_EvalIterator::ToString(const StringStyle& ss, int seqIdOffset) cons
 
 //------------------------------------------------------------------------------
 // PUnit_ForEach
-// Stack View: [Prev Iterator1..n ..] -> [Prev Iterator1..n ..] (continue)
+// Stack View: [Iterator1..n ..] -> [Iterator1..n ..] (continue)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ForEach::Exec(Processor& processor) const
 {
@@ -358,8 +358,8 @@ String PUnit_ForEach::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_UnaryOp
-// Stack View: [Prev Any] -> [Prev Result] (continue)
-//                        -> [Prev]        (discard)
+// Stack View: [Any] -> [Result] (continue)
+//                   -> []       (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_UnaryOp::Exec(Processor& processor) const
 {
@@ -380,8 +380,8 @@ String PUnit_UnaryOp::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_BinaryOp
-// Stack View: [Prev Left Right] -> [Prev Result] (continue)
-//                               -> [Prev]        (discard)
+// Stack View: [Left Right] -> [Result] (continue)
+//                          -> []       (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_BinaryOp::Exec(Processor& processor) const
 {
@@ -403,8 +403,8 @@ String PUnit_BinaryOp::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_CreateList
-// Stack View: [Prev] -> [Prev List] (continue)
-//                    -> [Prev]      (discard)
+// Stack View: [] -> [List] (continue)
+//                -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_CreateList::Exec(Processor& processor) const
 {
@@ -424,8 +424,8 @@ String PUnit_CreateList::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_ListElem
-// Stack View: [Prev List Elem] -> [Prev List] (continue)
-//                              -> [Prev]      (discard)
+// Stack View: [List Elem] -> [List] (continue)
+//                         -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ListElem::Exec(Processor& processor) const
 {
@@ -447,8 +447,8 @@ String PUnit_ListElem::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_CreateDict
-// Stack View: [Prev] -> [Prev Dict] (continue)
-//                    -> [Prev]      (discard)
+// Stack View: [] -> [Dict] (continue)
+//                -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_CreateDict::Exec(Processor& processor) const
 {
@@ -466,8 +466,8 @@ String PUnit_CreateDict::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_DictElem
-// Stack View: [Prev Dict Key Elem] -> [Prev Dict] (continue)
-//                                  -> [Prev]      (discard)
+// Stack View: [Dict Key Elem] -> [Dict] (continue)
+//                             -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_DictElem::Exec(Processor& processor) const
 {
@@ -490,8 +490,8 @@ String PUnit_DictElem::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_Index
-// Stack View: [Prev Car] -> [Prev Index(Car)] (continue)
-//                        -> [Prev]            (discard)
+// Stack View: [Car] -> [Index(Car)] (continue)
+//                   -> []           (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Index::Exec(Processor& processor) const
 {
@@ -513,7 +513,7 @@ String PUnit_Index::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_FeedIndex
-// Stack View: [Prev Index(Car) Any] -> [Prev Index(Car)] (continue)
+// Stack View: [Index(Car) Any] -> [Index(Car)] (continue)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedIndex::Exec(Processor& processor) const
 {
@@ -537,8 +537,8 @@ String PUnit_FeedIndex::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_IndexGet
-// Stack View: [Prev Index(Car)] -> [Prev Elems] (continue)
-//                               -> [Prev]       (discard)
+// Stack View: [Index(Car)] -> [Elems] (continue)
+//                          -> []      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_IndexGet::Exec(Processor& processor) const
 {
@@ -563,8 +563,8 @@ String PUnit_IndexGet::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_IndexSet
-// Stack View: [Prev Index(Car) Elems] -> [Prev Elems] (continue)
-//                                     -> [Prev]       (discard)
+// Stack View: [Index(Car) Elems] -> [Elems] (continue)
+//                                -> []      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_IndexSet::Exec(Processor& processor) const
 {
@@ -590,8 +590,8 @@ String PUnit_IndexSet::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_PropGet
-// Stack View: [Prev Target] -> [Prev Target Prop] (continue)
-//                           -> [Prev Target]      (discard)
+// Stack View: [Target] -> [Target Prop] (continue)
+//                      -> [Target]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_PropGet::Exec(Processor& processor) const
 {
@@ -616,8 +616,8 @@ String PUnit_PropGet::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_PropSet
-// Stack View: [Prev Target Assigned] -> [Prev Assigned] (continue)
-//                                    -> [Prev]          (discard)
+// Stack View: [Target Assigned] -> [Assigned] (continue)
+//                               -> []         (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_PropSet::Exec(Processor& processor) const
 {
@@ -642,9 +642,9 @@ String PUnit_PropSet::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_Member
-// Stack View: [Prev Target] -> [Prev Member(Target+Prop)] (continue, callable)
-//                           -> [Prev Prop]                (continue, not callable)
-//                           -> [Prev]                     (discard)
+// Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
+//                      -> [Prop]                (continue, not callable)
+//                      -> []                    (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Member::Exec(Processor& processor) const
 {
@@ -675,8 +675,8 @@ String PUnit_Member::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_Argument
-// Stack View: [Prev Car] -> [Prev Argument(Car)] (continue)
-//                        -> [Prev]               (discard)
+// Stack View: [Car] -> [Argument(Car)] (continue)
+//                   -> []              (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Argument::Exec(Processor& processor) const
 {
@@ -706,8 +706,8 @@ String PUnit_Argument::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_ArgSlot
-// Stack View: [Prev Argument(Car)] -> [Prev Argument(Car)] (continue)
-//                                  -> [Prev Argument(Car)] (branch)
+// Stack View: [Argument(Car)] -> [Argument(Car)] (continue)
+//                             -> [Argument(Car)] (branch)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ArgSlot::Exec(Processor& processor) const
 {
@@ -748,7 +748,7 @@ String PUnit_ArgSlot::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_FeedArgSlot
-// Stack View: [Prev Argument(Car) Any] -> [Prev Argument(Car)] (continue)
+// Stack View: [Argument(Car) Any] -> [Argument(Car)] (continue)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedArgSlot::Exec(Processor& processor) const
 {
@@ -773,9 +773,9 @@ String PUnit_FeedArgSlot::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_ArgSlotNamed
-// Stack View: [Prev Argument(Car)] -> [Prev Argument(Car) ArgSlot] (continue)
-//                                  -> [Prev Argument(Car)]         (discard)
-//                                  -> [Prev Argument(Car)]         (branch)
+// Stack View: [Argument(Car)] -> [Argument(Car) ArgSlot] (continue)
+//                             -> [Argument(Car)]         (discard)
+//                             -> [Argument(Car)]         (branch)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ArgSlotNamed::Exec(Processor& processor) const
 {
@@ -822,8 +822,7 @@ String PUnit_ArgSlotNamed::ToString(const StringStyle& ss, int seqIdOffset) cons
 
 //------------------------------------------------------------------------------
 // PUnit_FeedArgSlotNamed
-// Stack View: [Prev Argument ArgSlot Any] -> [Prev Argument] (continue)
-//                                         -> [Prev Argument] (discard)
+// Stack View: [Argument ArgSlot Any] -> [Argument] (continue)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_FeedArgSlotNamed::Exec(Processor& processor) const
 {
@@ -848,8 +847,8 @@ String PUnit_FeedArgSlotNamed::ToString(const StringStyle& ss, int seqIdOffset) 
 
 //------------------------------------------------------------------------------
 // PUnit_Call
-// Stack View: [Prev Argument] -> [Prev Result] (continue)
-//                             -> [Prev]        (discard)
+// Stack View: [Argument] -> [Result] (continue)
+//                        -> []       (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Call::Exec(Processor& processor) const
 {
@@ -881,9 +880,11 @@ String PUnit_Call::ToString(const StringStyle& ss, int seqIdOffset) const
 //------------------------------------------------------------------------------
 // PUnit_Jump
 // Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_Jump::Exec(Processor& processor) const
 {
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -897,6 +898,7 @@ String PUnit_Jump::ToString(const StringStyle& ss, int seqIdOffset) const
 //------------------------------------------------------------------------------
 // PUnit_JumpIf
 // Stack View: [Prev Bool] -> [Prev] (continue)
+//                         -> []     (discard)
 //                         -> [Prev] (branch)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
@@ -905,6 +907,7 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 	if (pValue->GetBool()) {
 		return GetPUnitBranchDest();
 	} else {
+		if (GetDiscardValueFlag()) processor.PopValue();
 		return _GetPUnitCont();
 	}
 }
@@ -920,12 +923,14 @@ String PUnit_JumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNot
 // Stack View: [Prev Bool] -> [Prev]  (continue)
+//                         -> []      (discard)
 //                         -> [Prev]  (branch)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
+		if (GetDiscardValueFlag()) processor.PopValue();
 		return _GetPUnitCont();
 	} else {
 		return GetPUnitBranchDest();
@@ -943,6 +948,7 @@ String PUnit_JumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) const
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIf
 // Stack View: [Prev Bool] -> [Prev]     (continue)
+//                         -> []         (discard)
 //                         -> [Prev Nil] (branch)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
@@ -952,6 +958,7 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 		processor.PushValue(Value::nil());
 		return GetPUnitBranchDest();
 	} else {
+		if (GetDiscardValueFlag()) processor.PopValue();
 		return _GetPUnitCont();
 	}
 }
@@ -967,12 +974,14 @@ String PUnit_NilJumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIfNot
 // Stack View: [Prev Bool] -> [Prev]     (continue)
+//                         -> []         (discard)
 //                         -> [Prev Nil] (branch)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
+		if (GetDiscardValueFlag()) processor.PopValue();
 		return _GetPUnitCont();
 	} else {
 		processor.PushValue(Value::nil());
@@ -990,10 +999,12 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) cons
 
 //------------------------------------------------------------------------------
 // PUnit_ExitPoint
-// Stack View: [Prev] -> [Prev] (always)
+// Stack View: [Prev] -> [Prev] (continue)
+//                       []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_ExitPoint::Exec(Processor& processor) const
 {
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1007,11 +1018,13 @@ String PUnit_ExitPoint::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_PopValue
-// Stack View: [Prev] -> [] (always)
+// Stack View: [Prev Any] -> [Prev] (continue)
+//                        -> []     (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_PopValue::Exec(Processor& processor) const
 {
 	processor.PopValue();
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1025,11 +1038,13 @@ String PUnit_PopValue::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_RemoveValue
-// Stack View: [.. Any ..] -> [.. ..] (always)
+// Stack View: [.. Any .. Prev] -> [.. .. Prev] (continue)
+//                              -> [.. ..]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_RemoveValue::Exec(Processor& processor) const
 {
 	processor.RemoveValue(GetOffset());
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1043,11 +1058,13 @@ String PUnit_RemoveValue::ToString(const StringStyle& ss, int seqIdOffset) const
 
 //------------------------------------------------------------------------------
 // PUnit_RemoveValues
-// Stack View: [.. Any1..n ..] -> [.. ..] (always)
+// Stack View: [.. Any1..n .. Prev] -> [.. .. Prev] (continue)
+//                                  -> [.. ..]      (discard)
 //------------------------------------------------------------------------------
 const PUnit* PUnit_RemoveValues::Exec(Processor& processor) const
 {
 	processor.RemoveValues(GetOffset(), GetCount());
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
@@ -1071,7 +1088,7 @@ const PUnit* PUnit_Return::Exec(Processor& processor) const
 	// pop frame or value from their stacks.
 	if (!pPUnit) return nullptr;	
 	processor.PopFrame();
-	if (pPUnit->GetDiscardValueFlag()) processor.PopValue();
+	if (GetDiscardValueFlag()) processor.PopValue();
 	return pPUnit->GetPUnitCont();
 }
 

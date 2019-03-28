@@ -228,6 +228,7 @@ Gurax_ImplementStatement(while_)
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Last]
 		composer.Add_Jump(exprCaller, pPUnitLoop);
 		pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		composer.Add_NoOperation(exprCaller);
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
 		composer.Add_PushFrame_Block(exprCaller);
