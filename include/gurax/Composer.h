@@ -87,6 +87,7 @@ public:
 	PUnit_Return* Add_Return(const Expr& exprSrc);
 	PUnit_PushFrame_Block* Add_PushFrame_Block(const Expr& exprSrc);
 	PUnit_PopFrame* Add_PopFrame(const Expr& exprSrc);
+	PUnit_NoOperation* Add_NoOperation(const Expr& exprSrc);
 	PUnit_Terminate* Add_Terminate(const Expr& exprSrc);
 	void SetDiscardValueFlagAtLast() {
 		if (_pPUnitLast) _pPUnitLast->SetDiscardValueFlag();

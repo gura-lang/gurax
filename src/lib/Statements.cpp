@@ -46,17 +46,20 @@ Gurax_ImplementStatement(if_)
 						 "if-statement takes one argument");
 		return;
 	}
-	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Bool]
-	auto pPUnitBranch1 = composer.Add_NilJumpIfNot(exprCaller);		// [] or [nil]
-	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
-		auto pPUnitBranch2 = composer.Add_Jump(exprCaller);			// [Any]
+		auto pPUnitBranch1 = composer.Add_JumpIfNot(exprCaller);		// []
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		auto pPUnitBranch2 = composer.Add_Jump(exprCaller);				// [Any]
 		pPUnitBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
-		exprCaller.GetExprTrailer()->ComposeOrNil(composer);		// [Any]
+		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
 		pPUnitBranch2->SetPUnitCont(composer.PeekPUnitCont());
 	} else {
+		auto pPUnitBranch1 = composer.Add_NilJumpIfNot(exprCaller);		// [] or [nil]
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 		pPUnitBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
+	composer.Add_NoOperation(exprCaller);								// [Any]
 }
 
 // elsif (`cond) {`block}
@@ -76,27 +79,16 @@ Gurax_ImplementStatement(elsif)
 	}
 	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
-		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
-			auto pPUnit1 = composer.Add_JumpIfNot(exprCaller);			// []
-			exprCaller.GetExprOfBlock()->ComposeOrNil(composer);		// [Any]
-			auto pPUnit2 = composer.Add_Jump(exprCaller);				// [Any]
-			pPUnit1->SetPUnitBranchDest(composer.PeekPUnitCont());
-			exprCaller.GetExprTrailer()->ComposeOrNil(composer);		// [Any]
-			pPUnit2->SetPUnitCont(composer.PeekPUnitCont());
-		} else {
-			auto pPUnitBranch = composer.Add_NilJumpIf(exprCaller);		// [] or [nil]
-			exprCaller.GetExprTrailer()->ComposeOrNil(composer);		// [Any]
-			pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-		}
+		auto pPUnitBranch1 = composer.Add_JumpIfNot(exprCaller);		// []
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		auto pPUnitBranch2 = composer.Add_Jump(exprCaller);				// [Any]
+		pPUnitBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
+		pPUnitBranch2->SetPUnitCont(composer.PeekPUnitCont());
 	} else {
-		if (exprCaller.GetExprOfBlock()->HasExprElem()) {
-			auto pPUnitBranch = composer.Add_NilJumpIfNot(exprCaller);	// [] or [nil]
-			exprCaller.GetExprOfBlock()->ComposeOrNil(composer);		// [Any]
-			pPUnitBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
-		} else {
-			composer.Add_PopValue(exprCaller);							// []
-			composer.Add_Value(exprCaller, Value::nil());				// [nil]
-		}
+		auto pPUnitBranch1 = composer.Add_NilJumpIfNot(exprCaller);		// [] or [nil]
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		pPUnitBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}
 }
 
@@ -119,11 +111,7 @@ Gurax_ImplementStatement(else_)
 						 "invalid format of if-elsif-else sequence");
 		return;
 	}
-	if (exprCaller.GetExprOfBlock()->HasExprElem()) {
-		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);		// [Any]
-	} else {
-		composer.Add_Value(exprCaller, Value::nil());				// [nil]
-	}
+	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 }
 
 // for (`cond) {`block}

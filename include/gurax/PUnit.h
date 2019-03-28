@@ -1144,6 +1144,26 @@ private:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_NoOperation
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_NoOperation : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_NoOperation(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Terminate
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Terminate : public PUnit {

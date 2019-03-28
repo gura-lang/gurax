@@ -330,6 +330,13 @@ PUnit_PopFrame* Composer::Add_PopFrame(const Expr& exprSrc)
 	return pPUnit;
 }
 
+PUnit_NoOperation* Composer::Add_NoOperation(const Expr& exprSrc)
+{
+	auto pPUnit = new PUnit_NoOperation(exprSrc.Reference(), NextSeqId());
+	Add(pPUnit);
+	return pPUnit;
+}
+
 PUnit_Terminate* Composer::Add_Terminate(const Expr& exprSrc)
 {
 	auto pPUnit = new PUnit_Terminate(exprSrc.Reference(), NextSeqId());

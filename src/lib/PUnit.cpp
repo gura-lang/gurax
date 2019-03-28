@@ -1148,6 +1148,25 @@ String PUnit_PopFrame::ToString(const StringStyle& ss, int seqIdOffset) const
 }
 
 //------------------------------------------------------------------------------
+// PUnit_NoOperation
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
+//------------------------------------------------------------------------------
+const PUnit* PUnit_NoOperation::Exec(Processor& processor) const
+{
+	if (GetDiscardValueFlag()) processor.PopValue();
+	return _GetPUnitCont();
+}
+
+String PUnit_NoOperation::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "NoOperation()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Terminate
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
