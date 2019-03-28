@@ -93,6 +93,7 @@ public:
 	}
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
+	Iterator* EachPUnit() const;
 };
 
 }
