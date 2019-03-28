@@ -46,8 +46,10 @@ public:
 	String ToString(int seqIdOffset) const { return ToString(StringStyle::Empty, seqIdOffset); }
 	String ToString(const StringStyle& ss) const { return ToString(ss, 0); }
 public:
-	size_t GetSeqId() const { return _seqId; }
-	size_t GetSeqId(int seqIdOffset) const { return _seqId - seqIdOffset; }
+	size_t GetSeqId(int seqIdOffset = 0) const { return _seqId - seqIdOffset; }
+	String MakeSeqIdString(int seqIdOffset = 0) const {
+		return String().Printf((seqIdOffset == 0)? "#%zu" : "##%zu", GetSeqId(seqIdOffset));
+	}
 	void SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
 	bool GetDiscardValueFlag() const { return (_flags & Flag::DiscardValue) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;

@@ -5,7 +5,7 @@ PrintPUnit(expr:Expr) = {
 	punit = punits.NextValue()
 	seqIdOffset = punit.seqId
 	while (punit) {
-		Printf('#%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
+		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
 		punit = punits.NextValue()
 	}
 }
