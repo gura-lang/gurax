@@ -1,10 +1,5 @@
-n = 0
-while (n < 3) {|i:String|
-	Println('hello #', n)
-	n += 1
+f(n) = {
+	Println(n)
+	f(n + 1)
 }
-/*
-repeat (3) {|i|
-	Println('hello #', i)
-}
-*/
+f(0)

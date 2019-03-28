@@ -5,6 +5,7 @@
 #define GURAX_EXPR_H
 #include "Attribute.h"
 #include "DeclCallable.h"
+#include "Iterator.h"
 #include "Operator.h"
 #include "Template.h"
 #include "Value.h"

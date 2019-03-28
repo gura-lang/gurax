@@ -6,42 +6,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Iterator_EachPUnit
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachPUnit : public Iterator {
-private:
-	const PUnit* _pPUnit;
-	const PUnit* _pPUnitExit;
-	bool _returnAsEndFlag;
-public:
-	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitExit, bool returnAsEndFlag) :
-		_pPUnit(pPUnit), _pPUnitExit(pPUnitExit), _returnAsEndFlag(returnAsEndFlag) {}
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite; }
-	virtual Value* NextValue() override;
-	virtual size_t GetLength() const override { return -1; }
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-Value* Iterator_EachPUnit::NextValue()
-{
-	if (!_pPUnit || _pPUnit == _pPUnitExit) return nullptr;
-	::printf("NextValue\n");
-	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
-	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
-	if (_returnAsEndFlag && _pPUnit->IsReturn()) _pPUnit = nullptr;
-	return pValue.release();
-}
-
-String Iterator_EachPUnit::ToString(const StringStyle& ss) const
-{
-	String str;
-	str += "EachPUnit";
-	return str;
-}
-
-//------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
 const Expr* Expr::Empty = nullptr;

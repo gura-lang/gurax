@@ -1,11 +1,5 @@
-repeat (6) {|a|
-	if (a == 0) {
-		Println('zero')
-	} elsif (a == 1) {
-		Println('one')
-	} elsif (a == 2) {
-		Println('two')
-	} else {
-		Println('other')
-	}
+f(x:Expr) = {
+	Printf('%s .. %s\n', x, x.Eval())
 }
+f(`(3 + 5))
+f(`(3 - 5))

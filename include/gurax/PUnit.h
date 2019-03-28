@@ -69,21 +69,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Branch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnit_Branch : public PUnit {
-private:
-	const PUnit* _pPUnitBranchDest;
-public:
-	// Constructor
-	PUnit_Branch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
-public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
-};
-
-//------------------------------------------------------------------------------
 // PUnitList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnitList : public std::vector<const PUnit*> {
@@ -101,6 +86,39 @@ public:
 	const PUnit* Pop() { const PUnit* pPUnit = back(); pop_back(); return pPUnit; }
 };
 
+//------------------------------------------------------------------------------
+// Iterator_EachPUnit
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachPUnit : public Iterator {
+private:
+	const PUnit* _pPUnit;
+	const PUnit* _pPUnitExit;
+	bool _returnAsEndFlag;
+public:
+	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitExit, bool returnAsEndFlag) :
+		_pPUnit(pPUnit), _pPUnitExit(pPUnitExit), _returnAsEndFlag(returnAsEndFlag) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Branch
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_Branch : public PUnit {
+private:
+	const PUnit* _pPUnitBranchDest;
+public:
+	// Constructor
+	PUnit_Branch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
+public:
+	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
+	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+};
 
 //------------------------------------------------------------------------------
 // PUnit_Value
