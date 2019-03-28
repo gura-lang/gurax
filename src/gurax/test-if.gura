@@ -1,3 +1,22 @@
+/*
+a = 5
+if (a == 0) {
+	b = 2
+} elsif (a == 1) {
+	b = 3
+} else {
+}
+*/
+
+a = 0
+if (a == 0) {
+	b = 2
+}
+if (a == 0) {
+	b = 2
+}
+
+/*
 repeat (6) {|a|
 	if (a == 0) {
 		Println('zero')
@@ -9,3 +28,5 @@ repeat (6) {|a|
 		Println('other')
 	}
 }
+*/
+
