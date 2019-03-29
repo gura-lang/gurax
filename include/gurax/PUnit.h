@@ -50,7 +50,7 @@ public:
 	String MakeSeqIdString(int seqIdOffset = 0) const {
 		return String().Printf((seqIdOffset == 0)? "#%zu" : "##%zu", GetSeqId(seqIdOffset));
 	}
-	void SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
+	void _SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
 	bool GetDiscardValueFlag() const { return (_flags & Flag::DiscardValue) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
@@ -77,21 +77,37 @@ public:
 //------------------------------------------------------------------------------
 // PUnitFactory
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PUnitFactory {
+class GURAX_DLLDECLARE PUnitFactory : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(PUnitFactory);
 protected:
 	RefPtr<Expr> _pExprSrc;
 	PUnit::SeqId _seqId;
+	PUnit* _pPUnitCreated;
 public:
 	// Constructor
-	PUnitFactory(Expr* pExprSrc, PUnit::SeqId seqId) : _pExprSrc(pExprSrc), _seqId(seqId) {}
+	PUnitFactory(Expr* pExprSrc, PUnit::SeqId seqId) :
+		_pExprSrc(pExprSrc), _seqId(seqId), _pPUnitCreated(nullptr) {}
 	// Copy constructor/operator
 	PUnitFactory(const PUnitFactory& src) = delete;
 	PUnitFactory& operator=(const PUnitFactory& src) = delete;
 	// Move constructor/operator
 	PUnitFactory(PUnitFactory&& src) = delete;
 	PUnitFactory& operator=(PUnitFactory&& src) noexcept = delete;
+protected:
 	// Destructor
 	virtual ~PUnitFactory() = default;
+public:
+	void SetPUnitExit(const PUnit* pPUnit) {
+		if (_pPUnitCreated) _pPUnitCreated->SetPUnitExit(pPUnit);
+	}
+	void SetPUnitCont(const PUnit* pPUnit) {
+		if (_pPUnitCreated) _pPUnitCreated->SetPUnitCont(pPUnit);
+	}
+	void SetPUnitBranchDest(const PUnit* pPUnit) {
+		if (_pPUnitCreated) _pPUnitCreated->SetPUnitBranchDest(pPUnit);
+	}
 public:
 	virtual PUnit* Create(bool discardValueFlag) = 0;
 };

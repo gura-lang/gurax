@@ -14,16 +14,21 @@ void Composer::Add(PUnit* pPUnit)
 	_pPUnitLast = pPUnit;
 }
 
+void Composer::SetFactory(PUnitFactory* pPUnitFactory)
+{
+	_pPUnitFactory.reset(pPUnitFactory);
+}
+
 void Composer::DoEval(Processor& processor) const
 {
 	processor.RunLoop(GetPUnitFirst());
 }
 
-PUnit* Composer::Add_Value(const Expr& exprSrc, const Value* pValue)
+RefPtr<PUnitFactory> Composer::Add_Value(const Expr& exprSrc, const Value* pValue)
 {
-	PUnit* pPUnit = PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone()).Create(false);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
 PUnit* Composer::Add_ValueAndJump(const Expr& exprSrc, const Value* pValue)

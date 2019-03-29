@@ -16,6 +16,7 @@ private:
 	PUnit* _pPUnitFirst;
 	PUnit* _pPUnitLast;
 	PUnitStack _punitStack;
+	RefPtr<PUnitFactory> _pPUnitFactory;
 public:
 	// Constructor
 	Composer() : _seqIdCur(0), _pPUnitFirst(nullptr), _pPUnitLast(nullptr) {}
@@ -36,9 +37,11 @@ public:
 	}
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
+	void SetFactory(PUnitFactory* pPUnitFactory);
+	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void DoEval(Processor& processor) const;
 public:
-	PUnit* Add_Value(const Expr& exprSrc, const Value* pValue);
+	RefPtr<PUnitFactory> Add_Value(const Expr& exprSrc, const Value* pValue);
 	PUnit* Add_ValueAndJump(const Expr& exprSrc, const Value* pValue);
 	PUnit* Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
 	PUnit* Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
@@ -88,7 +91,7 @@ public:
 	PUnit* Add_NoOperation(const Expr& exprSrc);
 	PUnit* Add_Terminate(const Expr& exprSrc);
 	void SetDiscardValueFlagAtLast() {
-		if (_pPUnitLast) _pPUnitLast->SetDiscardValueFlag();
+		if (_pPUnitLast) _pPUnitLast->_SetDiscardValueFlag();
 	}
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;

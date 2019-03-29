@@ -107,10 +107,11 @@ String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdO
 PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		return new PUnit_Value<true>(_pExprSrc.release(), _seqId, _pValue.release());
+		_pPUnitCreated = new PUnit_Value<true>(_pExprSrc.release(), _seqId, _pValue.release());
 	} else {
-		return new PUnit_Value<false>(_pExprSrc.release(), _seqId, _pValue.release());
+		_pPUnitCreated = new PUnit_Value<false>(_pExprSrc.release(), _seqId, _pValue.release());
 	}
+	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
