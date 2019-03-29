@@ -194,6 +194,8 @@ private:
 };
 
 class PUnitFactory_Value : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory");
 private:
 	RefPtr<Value> _pValue;
 public:
