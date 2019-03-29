@@ -21,7 +21,6 @@ void Composer::DoEval(Processor& processor) const
 
 PUnit* Composer::Add_Value(const Expr& exprSrc, const Value* pValue)
 {
-	//auto pPUnit = new PUnit_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone());
 	PUnit* pPUnit = PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone()).Create(false);
 	Add(pPUnit);
 	return pPUnit;

@@ -31,8 +31,6 @@ public:
 	PUnit::SeqId NextSeqId() { return _seqIdCur++; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
-	PUnit* GetPUnitLast() { return _pPUnitLast; }
-	void SetPUnitLast(PUnit* pPUnit) { _pPUnitLast = pPUnit; }
 	static const PUnit* PeekPUnitCont() {
 		return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
 	}

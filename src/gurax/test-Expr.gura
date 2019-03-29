@@ -9,22 +9,23 @@ PrintPUnit(expr:Expr) = {
 		punit = punits.NextValue()
 	}
 }
-x = `{
+Println('--------')
+expr = `{
 	while (a < 3) {}
 }
-PrintPUnit(x)
+PrintPUnit(expr)
 Println('--------')
-x = `(a)
-Printf('`(%s)\n', x)
-PrintPUnit(x)
+expr = `(a)
+Printf('`(%s)\n', expr)
+PrintPUnit(expr)
 Println('--------')
-f(`x) = {
-	Printf('f(`(%s))\n', x)
-	PrintPUnit(x)
+f(`expr) = {
+	Printf('f(`(%s))\n', expr)
+	PrintPUnit(expr)
 }
 f(a = 3)
 Println('--------')
-x = `{
+expr = `{
 	while (a < 3) {}
 }
-PrintPUnit(x)
+PrintPUnit(expr)

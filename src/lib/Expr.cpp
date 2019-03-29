@@ -782,13 +782,14 @@ void Expr_Caller::Compose(Composer& composer)
 	composer.Add_Argument(*this, GetAttr(), GetExprOfBlock());	// [Argument]
 	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());		// [Argument]
 	if (Error::IsIssued()) return;
-	auto pPUnitOfBranch = composer.Add_Call(*this);				// [Result]
 	if (GetExprOfBlock()) {
+		auto pPUnitOfBranch = composer.Add_Jump(*this);
 		GetExprOfBlock()->SetPUnitTop(composer.PeekPUnitCont());
 		GetExprOfBlock()->ComposeOrNil(composer);
 		composer.Add_Return(*this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
+	composer.Add_Call(*this);									// [Result]
 }
 
 void Expr_Caller::ComposeForAssignment(
@@ -810,7 +811,6 @@ void Expr_Caller::ComposeForAssignment(
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	composer.SetPUnitLast(pPUnitOfBranch);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
