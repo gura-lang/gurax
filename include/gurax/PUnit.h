@@ -64,6 +64,9 @@ public:
 	virtual bool IsReturn() const { return false; }
 	virtual bool IsBridge() const { return false; }
 	virtual bool GetDiscardValueFlag_New() const { return false; }
+	virtual void SetPUnitExit(const PUnit* pPUnit) { /* just ignore it */ }
+	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
+	virtual void SetPUnitBranchDest(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual const PUnit* GetPUnitExit() const { return nullptr; } // only PUnit_ExitPoint returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
@@ -141,8 +144,10 @@ public:
 	PUnit_Branch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
 public:
-	void SetPUnitBranchDest(const PUnit* pPUnit) { _pPUnitBranchDest = pPUnit; }
 	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
+public:
+	// Virtual function of PUnit
+	virtual void SetPUnitBranchDest(const PUnit* pPUnit) override { _pPUnitBranchDest = pPUnit; }
 };
 
 //------------------------------------------------------------------------------
@@ -197,9 +202,9 @@ public:
 		PUnit(pExprSrc, seqId), _pValue(pValue), _pPUnitCont(this + 1) {}
 public:
 	const Value* GetValue() const { return _pValue.get(); }
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -299,9 +304,9 @@ public:
 		PUnit(pExprSrc, seqId), _pFunction(pFunction), _pPUnitCont(this + 1) {}
 public:
 	const Function& GetFunction() const { return *_pFunction; }
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -802,9 +807,8 @@ public:
 	PUnit_ArgSlot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _pPUnitCont(this + 1) {}
 public:
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
-public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -853,9 +857,9 @@ public:
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
 public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -891,13 +895,9 @@ class GURAX_DLLDECLARE PUnit_Call : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const PUnit* _pPUnitCont;
 public:
 	// Constructor
-	explicit PUnit_Call(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId), _pPUnitCont(this + 1) {}
-public:
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
+	explicit PUnit_Call(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -905,7 +905,7 @@ public:
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
+	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
 //------------------------------------------------------------------------------
@@ -923,9 +923,8 @@ public:
 		PUnit(pExprSrc, seqId), _pPUnitCont(pPUnitCont) {}
 	PUnit_Jump(Expr* pExprSrc, SeqId seqId) : PUnit_Jump(pExprSrc, seqId, this + 1) {}
 public:
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
-public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1032,9 +1031,8 @@ public:
 	PUnit_ExitPoint(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitExit) :
 		PUnit(pExprSrc, seqId), _pPUnitExit(pPUnitExit) {}
 public:
-	void SetPUnitExit(const PUnit* pPUnit) { _pPUnitExit = pPUnit; }
-public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitExit(const PUnit* pPUnit) override { _pPUnitExit = pPUnit; }
 	virtual const PUnit* GetPUnitExit() const override { return _pPUnitExit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -1233,9 +1231,8 @@ public:
 	// Constructor
 	PUnit_Bridge() : PUnit(Expr::Empty->Reference(), 0), _pPUnitCont(this + 1) {}
 public:
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
-public:
 	// Virtual functions of PUnit
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual bool IsBridge() const override { return true; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return _GetPUnitCont(); }
