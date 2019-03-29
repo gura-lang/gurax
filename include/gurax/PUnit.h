@@ -27,7 +27,7 @@ protected:
 	Flags _flags;
 public:
 	// Constructor
-	explicit PUnit(Expr* pExprSrc, SeqId seqId, Flags flags = Flag::None);
+	PUnit(Expr* pExprSrc, SeqId seqId);
 	// Copy constructor/operator
 	PUnit(const PUnit& src) = delete;
 	PUnit& operator=(const PUnit& src) = delete;
@@ -63,11 +63,34 @@ public:
 	// Virtual functions
 	virtual bool IsReturn() const { return false; }
 	virtual bool IsBridge() const { return false; }
+	virtual bool GetDiscardValueFlag_New() const { return false; }
 	virtual const PUnit* GetPUnitExit() const { return nullptr; } // only PUnit_ExitPoint returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
 	virtual const PUnit* Exec(Processor& processor) const = 0;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const = 0;
+};
+
+//------------------------------------------------------------------------------
+// PUnitFactory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnitFactory {
+protected:
+	RefPtr<Expr> _pExprSrc;
+	PUnit::SeqId _seqId;
+public:
+	// Constructor
+	PUnitFactory(Expr* pExprSrc, PUnit::SeqId seqId) : _pExprSrc(pExprSrc), _seqId(seqId) {}
+	// Copy constructor/operator
+	PUnitFactory(const PUnitFactory& src) = delete;
+	PUnitFactory& operator=(const PUnitFactory& src) = delete;
+	// Move constructor/operator
+	PUnitFactory(PUnitFactory&& src) = delete;
+	PUnitFactory& operator=(PUnitFactory&& src) noexcept = delete;
+	// Destructor
+	virtual ~PUnitFactory() = default;
+public:
+	virtual PUnit* Create(bool discardValueFlag) = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -125,6 +148,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Value
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Value : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -139,12 +163,22 @@ public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
 	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_Value : public PUnitFactory {
+private:
+	RefPtr<Value> _pValue;
+public:
+	PUnitFactory_Value(Expr* pExprSrc, PUnit::SeqId seqId, Value* pValue) :
+		PUnitFactory(pExprSrc, seqId), _pValue(pValue) {}
+	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
@@ -160,7 +194,7 @@ private:
 public:
 	// Constructor
 	PUnit_ValueAndJump(Expr* pExprSrc, SeqId seqId, Value* pValue) :
-	PUnit(pExprSrc, seqId), _pValue(pValue), _pPUnitCont(this + 1) {}
+		PUnit(pExprSrc, seqId), _pValue(pValue), _pPUnitCont(this + 1) {}
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }

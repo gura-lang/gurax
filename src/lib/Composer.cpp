@@ -19,9 +19,10 @@ void Composer::DoEval(Processor& processor) const
 	processor.RunLoop(GetPUnitFirst());
 }
 
-PUnit_Value* Composer::Add_Value(const Expr& exprSrc, const Value* pValue)
+PUnit* Composer::Add_Value(const Expr& exprSrc, const Value* pValue)
 {
-	auto pPUnit = new PUnit_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone());
+	//auto pPUnit = new PUnit_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone());
+	PUnit* pPUnit = PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone()).Create(false);
 	Add(pPUnit);
 	return pPUnit;
 }

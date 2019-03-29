@@ -8,8 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-PUnit::PUnit(Expr* pExprSrc, SeqId seqId, Flags flags) :
-	_pExprSrc(pExprSrc), _seqId(seqId), _flags(flags)
+PUnit::PUnit(Expr* pExprSrc, SeqId seqId) :
+	_pExprSrc(pExprSrc), _seqId(seqId), _flags(Flag::None)
 {
 }
 
@@ -27,6 +27,10 @@ void PUnit::Print(const StringStyle& ss, int seqIdOffset) const
 	stream.Printf("%s%s %s\n", ss.GetMargin(),
 				  MakeSeqIdString(seqIdOffset).c_str(), ToString(ss, seqIdOffset).c_str());
 }
+
+//------------------------------------------------------------------------------
+// PUnitFactory
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // PUnitList
@@ -84,18 +88,29 @@ String Iterator_EachPUnit::ToString(const StringStyle& ss) const
 // Stack View: [] -> [Any] (continue)
 //                -> []    (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_Value::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_Value<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (!GetDiscardValueFlag()) processor.PushValue(GetValue()->Reference());
 	return _GetPUnitCont();
 }
 
-String PUnit_Value::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("Value(%s)", GetValue()->ToString(StringStyle().Digest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
+}
+
+PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		return new PUnit_Value<true>(_pExprSrc.release(), _seqId, _pValue.release());
+	} else {
+		return new PUnit_Value<false>(_pExprSrc.release(), _seqId, _pValue.release());
+	}
 }
 
 //------------------------------------------------------------------------------

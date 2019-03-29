@@ -13,7 +13,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Argument);
 	PrintSizeOf(Attribute);
 	PrintSizeOf(DateTime);
-	PrintSizeOf(PUnit_Value);
+	PrintSizeOf(PUnit_Value<false>);
 	PrintSizeOf(PUnit_ValueAndJump);
 	PrintSizeOf(PUnit_Lookup);
 	PrintSizeOf(PUnit_AssignToSymbol);

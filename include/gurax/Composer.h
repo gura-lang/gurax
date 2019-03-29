@@ -40,7 +40,7 @@ public:
 	void Add(PUnit* pPUnit);
 	void DoEval(Processor& processor) const;
 public:
-	PUnit_Value* Add_Value(const Expr& exprSrc, const Value* pValue);
+	PUnit* Add_Value(const Expr& exprSrc, const Value* pValue);
 	PUnit_ValueAndJump* Add_ValueAndJump(const Expr& exprSrc, const Value* pValue);
 	PUnit_Lookup* Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
 	PUnit_AssignToSymbol* Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
