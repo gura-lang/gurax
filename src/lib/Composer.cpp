@@ -101,147 +101,147 @@ RefPtr<PUnitFactory> Composer::Add_EvalIterator(const Expr& exprSrc, size_t offs
 	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
+RefPtr<PUnitFactory> Composer::Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
 							 const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_ForEach(exprSrc.Reference(), NextSeqId(), offset, pDeclArgOwner, pPUnitBranchDest);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_ForEach(exprSrc.Reference(), NextSeqId(), offset, pDeclArgOwner, pPUnitBranchDest));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator)
+RefPtr<PUnitFactory> Composer::Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator)
 {
-	auto pPUnit = new PUnit_UnaryOp(exprSrc.Reference(), NextSeqId(), pOperator);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_UnaryOp(exprSrc.Reference(), NextSeqId(), pOperator));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator)
+RefPtr<PUnitFactory> Composer::Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator)
 {
-	auto pPUnit = new PUnit_BinaryOp(exprSrc.Reference(), NextSeqId(), pOperator);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_BinaryOp(exprSrc.Reference(), NextSeqId(), pOperator));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReserve)
+RefPtr<PUnitFactory> Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReserve)
 {
-	auto pPUnit = new PUnit_CreateList(exprSrc.Reference(), NextSeqId(), sizeReserve);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_CreateList(exprSrc.Reference(), NextSeqId(), sizeReserve));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_ListElem(const Expr& exprSrc, size_t offset)
+RefPtr<PUnitFactory> Composer::Add_ListElem(const Expr& exprSrc, size_t offset)
 {
-	auto pPUnit = new PUnit_ListElem(exprSrc.Reference(), NextSeqId(), offset);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_ListElem(exprSrc.Reference(), NextSeqId(), offset));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_CreateDict(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_CreateDict(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_CreateDict(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_CreateDict(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_DictElem(const Expr& exprSrc, size_t offset)
+RefPtr<PUnitFactory> Composer::Add_DictElem(const Expr& exprSrc, size_t offset)
 {
-	auto pPUnit = new PUnit_DictElem(exprSrc.Reference(), NextSeqId(), offset);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_DictElem(exprSrc.Reference(), NextSeqId(), offset));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve)
+RefPtr<PUnitFactory> Composer::Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve)
 {
-	auto pPUnit = new PUnit_Index(exprSrc.Reference(), NextSeqId(), pAttr, sizeReserve);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_Index(exprSrc.Reference(), NextSeqId(), pAttr, sizeReserve));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_FeedIndex(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_FeedIndex(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_FeedIndex(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_FeedIndex(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_IndexGet(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_IndexGet(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_IndexGet(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_IndexGet(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_IndexSet(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_IndexSet(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_IndexSet(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_IndexSet(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
+RefPtr<PUnitFactory> Composer::Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
 {
-	auto pPUnit = new PUnit_PropGet(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_PropGet(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
+RefPtr<PUnitFactory> Composer::Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
 {
-	auto pPUnit = new PUnit_PropSet(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_PropSet(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
+RefPtr<PUnitFactory> Composer::Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
 {
-	auto pPUnit = new PUnit_Member(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_Member(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock)
+RefPtr<PUnitFactory> Composer::Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock)
 {
-	auto pPUnit = new PUnit_Argument(exprSrc.Reference(), NextSeqId(), pAttr, pExprOfBlock);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_Argument(exprSrc.Reference(), NextSeqId(), pAttr, pExprOfBlock));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+RefPtr<PUnitFactory> Composer::Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_ArgSlot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_ArgSlot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_FeedArgSlot(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_FeedArgSlot(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_FeedArgSlot(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_FeedArgSlot(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_ArgSlotNamed(
+RefPtr<PUnitFactory> Composer::Add_ArgSlotNamed(
 	const Expr& exprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest)
 {
-	auto pPUnit = new PUnit_ArgSlotNamed(
-		exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned, pPUnitBranchDest);
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_ArgSlotNamed(
+				   exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned, pPUnitBranchDest));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_FeedArgSlotNamed(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_FeedArgSlotNamed(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_FeedArgSlotNamed(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_FeedArgSlotNamed(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_Call(const Expr& exprSrc)
+RefPtr<PUnitFactory> Composer::Add_Call(const Expr& exprSrc)
 {
-	auto pPUnit = new PUnit_Call(exprSrc.Reference(), NextSeqId());
-	Add(pPUnit);
-	return pPUnit;
+	SetFactory(new PUnitFactory_Call(exprSrc.Reference(), NextSeqId()));
+	Add(GetFactory().Create(false));
+	return GetFactory().Reference();
 }
 
 PUnit* Composer::Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont)

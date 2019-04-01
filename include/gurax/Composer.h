@@ -53,29 +53,29 @@ public:
 	RefPtr<PUnitFactory> Add_GenCounterIterator(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
 
-	PUnit* Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
+	RefPtr<PUnitFactory> Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
 					   const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
-	PUnit* Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
-	PUnit* Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
-	PUnit* Add_ListElem(const Expr& exprSrc, size_t offset);
-	PUnit* Add_CreateDict(const Expr& exprSrc);
-	PUnit* Add_DictElem(const Expr& exprSrc, size_t offset);
-	PUnit* Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve);
-	PUnit* Add_FeedIndex(const Expr& exprSrc);
-	PUnit* Add_IndexGet(const Expr& exprSrc);
-	PUnit* Add_IndexSet(const Expr& exprSrc);
-	PUnit* Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
-	PUnit* Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
-	PUnit* Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
-	PUnit* Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
-	PUnit* Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_FeedArgSlot(const Expr& exprSrc);
-	PUnit* Add_ArgSlotNamed(
+	RefPtr<PUnitFactory> Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
+	RefPtr<PUnitFactory> Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
+	RefPtr<PUnitFactory> Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
+	RefPtr<PUnitFactory> Add_ListElem(const Expr& exprSrc, size_t offset);
+	RefPtr<PUnitFactory> Add_CreateDict(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_DictElem(const Expr& exprSrc, size_t offset);
+	RefPtr<PUnitFactory> Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve);
+	RefPtr<PUnitFactory> Add_FeedIndex(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_IndexGet(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_IndexSet(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	RefPtr<PUnitFactory> Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	RefPtr<PUnitFactory> Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	RefPtr<PUnitFactory> Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
+	RefPtr<PUnitFactory> Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_FeedArgSlot(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_ArgSlotNamed(
 		const Expr& exprSrc, const Symbol* pSymbol,
 		Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_FeedArgSlotNamed(const Expr& exprSrc);
-	PUnit* Add_Call(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_FeedArgSlotNamed(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_Call(const Expr& exprSrc);
 	PUnit* Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont);
 	PUnit* Add_Jump(const Expr& exprSrc);
 	PUnit* Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);

@@ -569,6 +569,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_ForEach
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_ForEach : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -612,6 +613,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_UnaryOp
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_UnaryOp : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -648,6 +650,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_BinaryOp
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_BinaryOp : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -684,6 +687,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_CreateList
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_CreateList : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -720,6 +724,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_ListElem
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_ListElem : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -756,6 +761,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_CreateDict
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_CreateDict : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -785,6 +791,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_DictElem
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_DictElem : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -821,6 +828,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Index
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Index : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -860,6 +868,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_FeedIndex
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_FeedIndex : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -889,6 +898,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_IndexGet
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_IndexGet : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -918,6 +928,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_IndexSet
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_IndexSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -947,6 +958,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_PropGet
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_PropGet : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -986,6 +998,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_PropSet
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_PropSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1025,6 +1038,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Member
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Member : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1064,6 +1078,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Argument
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Argument : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1103,6 +1118,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_ArgSlot
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_ArgSlot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -1137,6 +1153,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_FeedArgSlot
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_FeedArgSlot : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1167,6 +1184,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_ArgSlotNamed
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_ArgSlotNamed : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -1203,7 +1221,7 @@ private:
 	RefPtr<Expr> _pExprAssigned;
 public:
 	PUnitFactory_ArgSlotNamed(Expr* pExprSrc, PUnit::SeqId seqId, const Symbol* pSymbol,
-						  Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
+							  Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest),
 		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned) {}
 	virtual PUnit* Create(bool discardValueFlag) override;
@@ -1212,6 +1230,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_FeedArgSlotNamed
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_FeedArgSlotNamed : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1242,6 +1261,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Call
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Call : public PUnit {
 public:
 	// Uses MemoryPool allocator
