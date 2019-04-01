@@ -42,16 +42,17 @@ public:
 	void DoEval(Processor& processor) const;
 public:
 	RefPtr<PUnitFactory> Add_Value(const Expr& exprSrc, Value* pValue);
-	PUnit* Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
-	PUnit* Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
-	PUnit* Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
-	PUnit* Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
-	PUnit* Add_AssignFunction(const Expr& exprSrc, Function* pFunction);
-	PUnit* Add_Cast(const Expr& exprSrc, const VType& vtype);
-	PUnit* Add_GenIterator(const Expr& exprSrc);
-	PUnit* Add_GenRangeIterator(const Expr& exprSrc);
-	PUnit* Add_GenCounterIterator(const Expr& exprSrc);
-	PUnit* Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
+	RefPtr<PUnitFactory> Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
+	RefPtr<PUnitFactory> Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
+	RefPtr<PUnitFactory> Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
+	RefPtr<PUnitFactory> Add_AssignFunction(const Expr& exprSrc, Function* pFunction);
+	RefPtr<PUnitFactory> Add_Cast(const Expr& exprSrc, const VType& vtype);
+	RefPtr<PUnitFactory> Add_GenIterator(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_GenRangeIterator(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_GenCounterIterator(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
+
 	PUnit* Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
 					   const PUnit* pPUnitBranchDest = nullptr);
 	PUnit* Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
