@@ -32,12 +32,11 @@ public:
 	PUnit::SeqId NextSeqId() { return _seqIdCur++; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
-	static const PUnit* PeekPUnitCont() {
-		return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
-	}
+	const PUnit* PeekPUnitCont() const;
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
 	void SetFactory(PUnitFactory* pPUnitFactory);
+	void SetDiscardValueFlagAtLast_();
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void DoEval(Processor& processor) const;
 public:

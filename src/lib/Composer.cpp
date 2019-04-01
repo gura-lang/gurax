@@ -14,9 +14,25 @@ void Composer::Add(PUnit* pPUnit)
 	_pPUnitLast = pPUnit;
 }
 
+const PUnit* Composer::PeekPUnitCont() const
+{
+	return reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
+}
+
 void Composer::SetFactory(PUnitFactory* pPUnitFactory)
 {
+#if 0
+	if (_pPUnitFactory) {
+		Add(_pPUnitFactory->Create(false));
+	}
+#endif
 	_pPUnitFactory.reset(pPUnitFactory);
+}
+
+void Composer::SetDiscardValueFlagAtLast_()
+{
+	Add(_pPUnitFactory->Create(true));
+	_pPUnitFactory.reset(nullptr);
 }
 
 void Composer::DoEval(Processor& processor) const
