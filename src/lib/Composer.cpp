@@ -24,16 +24,16 @@ void Composer::DoEval(Processor& processor) const
 	processor.RunLoop(GetPUnitFirst());
 }
 
-RefPtr<PUnitFactory> Composer::Add_Value(const Expr& exprSrc, const Value* pValue)
+RefPtr<PUnitFactory> Composer::Add_Value(const Expr& exprSrc, Value* pValue)
 {
-	SetFactory(new PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue->Clone()));
+	SetFactory(new PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue));
 	Add(GetFactory().Create(false));
 	return GetFactory().Reference();
 }
 
-PUnit* Composer::Add_ValueAndJump(const Expr& exprSrc, const Value* pValue)
+PUnit* Composer::Add_ValueAndJump(const Expr& exprSrc, Value* pValue)
 {
-	auto pPUnit = new PUnit_ValueAndJump(exprSrc.Reference(), NextSeqId(), pValue->Clone());
+	auto pPUnit = new PUnit_ValueAndJump(exprSrc.Reference(), NextSeqId(), pValue);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -59,9 +59,9 @@ PUnit* Composer::Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg)
 	return pPUnit;
 }
 
-PUnit* Composer::Add_AssignFunction(const Expr& exprSrc, const Function* pFunction)
+PUnit* Composer::Add_AssignFunction(const Expr& exprSrc, Function* pFunction)
 {
-	auto pPUnit = new PUnit_AssignFunction(exprSrc.Reference(), NextSeqId(), pFunction->Reference());
+	auto pPUnit = new PUnit_AssignFunction(exprSrc.Reference(), NextSeqId(), pFunction);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -102,7 +102,7 @@ PUnit* Composer::Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUni
 }
 
 PUnit* Composer::Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
-									 const PUnit* pPUnitBranchDest)
+							 const PUnit* pPUnitBranchDest)
 {
 	auto pPUnit = new PUnit_ForEach(exprSrc.Reference(), NextSeqId(), offset, pDeclArgOwner, pPUnitBranchDest);
 	Add(pPUnit);
@@ -151,9 +151,9 @@ PUnit* Composer::Add_DictElem(const Expr& exprSrc, size_t offset)
 	return pPUnit;
 }
 
-PUnit* Composer::Add_Index(const Expr& exprSrc, const Attribute& attr, size_t sizeReserve)
+PUnit* Composer::Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve)
 {
-	auto pPUnit = new PUnit_Index(exprSrc.Reference(), NextSeqId(), attr.Reference(), sizeReserve);
+	auto pPUnit = new PUnit_Index(exprSrc.Reference(), NextSeqId(), pAttr, sizeReserve);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -179,30 +179,30 @@ PUnit* Composer::Add_IndexSet(const Expr& exprSrc)
 	return pPUnit;
 }
 
-PUnit* Composer::Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr)
+PUnit* Composer::Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
 {
-	auto pPUnit = new PUnit_PropGet(exprSrc.Reference(), NextSeqId(), pSymbol, attr.Reference());
+	auto pPUnit = new PUnit_PropGet(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit* Composer::Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr)
+PUnit* Composer::Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
 {
-	auto pPUnit = new PUnit_PropSet(exprSrc.Reference(), NextSeqId(), pSymbol, attr.Reference());
+	auto pPUnit = new PUnit_PropSet(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit* Composer::Add_Member(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr)
+PUnit* Composer::Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr)
 {
-	auto pPUnit = new PUnit_Member(exprSrc.Reference(), NextSeqId(), pSymbol, attr.Reference());
+	auto pPUnit = new PUnit_Member(exprSrc.Reference(), NextSeqId(), pSymbol, pAttr);
 	Add(pPUnit);
 	return pPUnit;
 }
 
-PUnit* Composer::Add_Argument(const Expr& exprSrc, const Attribute& attr, const Expr_Block* pExprOfBlock)
+PUnit* Composer::Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock)
 {
-	auto pPUnit = new PUnit_Argument(exprSrc.Reference(), NextSeqId(), attr.Reference(), Expr_Block::Reference(pExprOfBlock));
+	auto pPUnit = new PUnit_Argument(exprSrc.Reference(), NextSeqId(), pAttr, pExprOfBlock);
 	Add(pPUnit);
 	return pPUnit;
 }
@@ -222,10 +222,10 @@ PUnit* Composer::Add_FeedArgSlot(const Expr& exprSrc)
 }
 
 PUnit* Composer::Add_ArgSlotNamed(
-	const Expr& exprSrc, const Symbol* pSymbol, const Expr* pExprAssigned, const PUnit* pPUnitBranchDest)
+	const Expr& exprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest)
 {
 	auto pPUnit = new PUnit_ArgSlotNamed(
-		exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned->Reference(), pPUnitBranchDest);
+		exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned, pPUnitBranchDest);
 	Add(pPUnit);
 	return pPUnit;
 }

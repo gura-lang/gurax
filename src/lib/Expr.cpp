@@ -208,7 +208,7 @@ const Expr::TypeInfo Expr_Value::typeInfo;
 
 void Expr_Value::Compose(Composer& composer)
 {
-	composer.Add_Value(*this, GetValue());	// [Value]
+	composer.Add_Value(*this, GetValue()->Clone());	// [Value]
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const
@@ -387,7 +387,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
 	auto pPUnitOfBranch = composer.Add_ArgSlotNamed(
-		*this, pSymbol, GetExprRight());								// [Argument ArgSlot]
+		*this, pSymbol, GetExprRight()->Reference());					// [Argument ArgSlot]
 	GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
 	auto pPUnitOfExitPoint = composer.Add_ExitPoint(*this);				// [Argument ArgSlot]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
@@ -475,22 +475,22 @@ const Expr::TypeInfo Expr_Member::typeInfo;
 
 void Expr_Member::Compose(Composer& composer)
 {
-	GetExprTarget()->ComposeOrNil(composer);					// [Target]
-	composer.Add_Member(*this, GetSymbol(), GetAttr());			// [Member] or [Prop]
+	GetExprTarget()->ComposeOrNil(composer);								// [Target]
+	composer.Add_Member(*this, GetSymbol(), GetAttr().Reference());			// [Member] or [Prop]
 }
 
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
-	GetExprTarget()->ComposeOrNil(composer);					// [Target]
+	GetExprTarget()->ComposeOrNil(composer);								// [Target]
 	if (pOperator) {
-		composer.Add_PropGet(*this, GetSymbol(), GetAttr());	// [Target Prop]
-		pExprAssigned->ComposeOrNil(composer);					// [Target Prop Right]
-		composer.Add_BinaryOp(*this, pOperator);				// [Target Assigned]
+		composer.Add_PropGet(*this, GetSymbol(), GetAttr().Reference());	// [Target Prop]
+		pExprAssigned->ComposeOrNil(composer);								// [Target Prop Right]
+		composer.Add_BinaryOp(*this, pOperator);							// [Target Assigned]
 	} else {
-		pExprAssigned->ComposeOrNil(composer);					// [Target Assigned]
+		pExprAssigned->ComposeOrNil(composer);								// [Target Assigned]
 	}
-	composer.Add_PropSet(*this, GetSymbol(), GetAttr());		// [Assigned]
+	composer.Add_PropSet(*this, GetSymbol(), GetAttr().Reference());		// [Assigned]
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
@@ -724,14 +724,14 @@ const Expr::TypeInfo Expr_Indexer::typeInfo;
 
 void Expr_Indexer::Compose(Composer& composer)
 {
-	GetExprCar()->ComposeOrNil(composer);					// [Car]
+	GetExprCar()->ComposeOrNil(composer);						// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
-	composer.Add_Index(*this, GetAttr(), nExprs);			// [Index(Car)]
+	composer.Add_Index(*this, GetAttr().Reference(), nExprs);	// [Index(Car)]
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);						// [Index(Car) Assigned]
-		composer.Add_FeedIndex(*this);						// [Index(Car)]
+		pExpr->ComposeOrNil(composer);							// [Index(Car) Assigned]
+		composer.Add_FeedIndex(*this);							// [Index(Car)]
 	}
-	composer.Add_IndexGet(*this);							// [Elems]
+	composer.Add_IndexGet(*this);								// [Elems]
 }
 
 void Expr_Indexer::ComposeForAssignment(
@@ -773,14 +773,15 @@ void Expr_Caller::Compose(Composer& composer)
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, *this);					// [Result]
+				func.Compose(composer, *this);						// [Result]
 				return;
 			}
 		}
 	}
-	GetExprCar()->ComposeOrNil(composer);						// [Car]
-	composer.Add_Argument(*this, GetAttr(), GetExprOfBlock());	// [Argument]
-	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());		// [Argument]
+	GetExprCar()->ComposeOrNil(composer);							// [Car]
+	composer.Add_Argument(*this, GetAttr().Reference(),
+						  Expr_Block::Reference(GetExprOfBlock()));	// [Argument]
+	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());			// [Argument]
 	if (Error::IsIssued()) return;
 	if (GetExprOfBlock()) {
 		auto pPUnitOfBranch = composer.Add_Jump(*this);
@@ -789,7 +790,7 @@ void Expr_Caller::Compose(Composer& composer)
 		composer.Add_Return(*this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
-	composer.Add_Call(*this);									// [Result]
+	composer.Add_Call(*this);										// [Result]
 }
 
 void Expr_Caller::ComposeForAssignment(
@@ -806,7 +807,7 @@ void Expr_Caller::ComposeForAssignment(
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
-	auto pPUnitOfBranch = composer.Add_AssignFunction(*this, pFunction.get());	// [Value]
+	auto pPUnitOfBranch = composer.Add_AssignFunction(*this, pFunction->Reference());	// [Value]
 	pFunction->SetPUnitBody(composer.PeekPUnitCont());
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);

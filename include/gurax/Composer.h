@@ -41,12 +41,12 @@ public:
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void DoEval(Processor& processor) const;
 public:
-	RefPtr<PUnitFactory> Add_Value(const Expr& exprSrc, const Value* pValue);
-	PUnit* Add_ValueAndJump(const Expr& exprSrc, const Value* pValue);
+	RefPtr<PUnitFactory> Add_Value(const Expr& exprSrc, Value* pValue);
+	PUnit* Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
 	PUnit* Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
 	PUnit* Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
 	PUnit* Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
-	PUnit* Add_AssignFunction(const Expr& exprSrc, const Function* pFunction);
+	PUnit* Add_AssignFunction(const Expr& exprSrc, Function* pFunction);
 	PUnit* Add_Cast(const Expr& exprSrc, const VType& vtype);
 	PUnit* Add_GenIterator(const Expr& exprSrc);
 	PUnit* Add_GenRangeIterator(const Expr& exprSrc);
@@ -60,19 +60,19 @@ public:
 	PUnit* Add_ListElem(const Expr& exprSrc, size_t offset);
 	PUnit* Add_CreateDict(const Expr& exprSrc);
 	PUnit* Add_DictElem(const Expr& exprSrc, size_t offset);
-	PUnit* Add_Index(const Expr& exprSrc, const Attribute& attr, size_t sizeReserve);
+	PUnit* Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve);
 	PUnit* Add_FeedIndex(const Expr& exprSrc);
 	PUnit* Add_IndexGet(const Expr& exprSrc);
 	PUnit* Add_IndexSet(const Expr& exprSrc);
-	PUnit* Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr);
-	PUnit* Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr);
-	PUnit* Add_Member(const Expr& exprSrc, const Symbol* pSymbol, const Attribute& attr);
-	PUnit* Add_Argument(const Expr& exprSrc, const Attribute& attr, const Expr_Block* pExpBlock);
+	PUnit* Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	PUnit* Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	PUnit* Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	PUnit* Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
 	PUnit* Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit* Add_FeedArgSlot(const Expr& exprSrc);
 	PUnit* Add_ArgSlotNamed(
 		const Expr& exprSrc, const Symbol* pSymbol,
-		const Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
+		Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
 	PUnit* Add_FeedArgSlotNamed(const Expr& exprSrc);
 	PUnit* Add_Call(const Expr& exprSrc);
 	PUnit* Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont);

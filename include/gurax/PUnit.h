@@ -532,7 +532,7 @@ private:
 public:
 	// Constructor
 	PUnit_EvalIterator(Expr* pExprSrc, SeqId seqId, size_t offset, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1), _offset(offset) {}
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -570,7 +570,8 @@ public:
 	// Constructor
 	PUnit_ForEach(Expr* pExprSrc, SeqId seqId, size_t offset,
 				  DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1),
+		_offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
 public:
 	size_t GetOffset() const { return _offset; }
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
@@ -1101,7 +1102,8 @@ private:
 public:
 	// Constructor
 	PUnit_ArgSlot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _pPUnitCont(this + 1) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1),
+		_pPUnitCont(this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
@@ -1167,8 +1169,8 @@ public:
 	// Constructor
 	PUnit_ArgSlotNamed(Expr* pExprSrc, SeqId seqId, const Symbol* pSymbol,
 					   Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest), _pSymbol(pSymbol),
-		_pExprAssigned(pExprAssigned), _pPUnitCont(this + 1) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1),
+		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitCont(this + 1) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
@@ -1302,7 +1304,7 @@ public:
 public:
 	// Constructor
 	PUnit_JumpIf(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -1333,7 +1335,7 @@ public:
 public:
 	// Constructor
 	PUnit_JumpIfNot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -1364,7 +1366,7 @@ public:
 public:
 	// Constructor
 	PUnit_NilJumpIf(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -1395,7 +1397,7 @@ public:
 public:
 	// Constructor
 	PUnit_NilJumpIfNot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }

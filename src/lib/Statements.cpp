@@ -238,8 +238,7 @@ Gurax_ImplementStatement(while_)
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Iterator Last Bool]
 		auto pPUnitBranch = composer.Add_JumpIfNot(exprCaller);			// [Iterator Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator]
-		composer.Add_EvalIterator(exprCaller, 0)->
-			SetPUnitBranchDest(composer.PeekPUnitCont());				// [Iterator Idx]
+		composer.Add_EvalIterator(exprCaller, 0);						// [Iterator Idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());
 		composer.SetDiscardValueFlagAtLast();							// [Iterator]
