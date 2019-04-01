@@ -3,7 +3,7 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define PrintSizeOf(type) ::printf("%-24s %zu\n", #type, sizeof(type))
+#define PrintSizeOf(type) ::printf("%-32s %zu\n", #type, sizeof(type))
 
 namespace Gurax {
 

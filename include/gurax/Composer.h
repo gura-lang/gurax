@@ -36,7 +36,7 @@ public:
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
 	void SetFactory(PUnitFactory* pPUnitFactory);
-	void SetDiscardValueFlagAtLast_();
+	void Flush(bool discardValueFlag);
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void DoEval(Processor& processor) const;
 public:
@@ -88,10 +88,10 @@ public:
 	RefPtr<PUnitFactory> Add_PushFrame_Block(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_PopFrame(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_NoOperation(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_Terminate(const Expr& exprSrc);
-	void SetDiscardValueFlagAtLast() {
-		if (_pPUnitLast) _pPUnitLast->_SetDiscardValueFlag();
-	}
+	void Add_Terminate(const Expr& exprSrc);
+	//void SetDiscardValueFlagAtLast() {
+	//	if (_pPUnitLast) _pPUnitLast->_SetDiscardValueFlag();
+	//}
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;

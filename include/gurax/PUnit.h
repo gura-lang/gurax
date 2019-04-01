@@ -16,15 +16,9 @@ class Processor;
 class GURAX_DLLDECLARE PUnit {
 public:
 	using SeqId = UInt32;
-	using Flags = UInt32;
-	struct Flag {
-		static const Flags None			= 0;
-		static const Flags DiscardValue	= (1 << 0);
-	};
 protected:
 	RefPtr<Expr> _pExprSrc;
 	SeqId _seqId;
-	Flags _flags;
 public:
 	// Constructor
 	PUnit(Expr* pExprSrc, SeqId seqId);
@@ -50,8 +44,6 @@ public:
 	String MakeSeqIdString(int seqIdOffset = 0) const {
 		return String().Printf((seqIdOffset == 0)? "#%zu" : "##%zu", GetSeqId(seqIdOffset));
 	}
-	void _SetDiscardValueFlag() { _flags |= Flag::DiscardValue; }
-	bool GetDiscardValueFlag() const { return (_flags & Flag::DiscardValue) != 0; }
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
 public:
@@ -63,7 +55,7 @@ public:
 	// Virtual functions
 	virtual bool IsReturn() const { return false; }
 	virtual bool IsBridge() const { return false; }
-	virtual bool GetDiscardValueFlag_New() const { return false; }
+	virtual bool GetDiscardValueFlag() const = 0;
 	virtual void SetPUnitExit(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitBranchDest(const PUnit* pPUnit) { /* just ignore it */ }
@@ -193,7 +185,7 @@ public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -235,7 +227,7 @@ public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -277,7 +269,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -318,7 +310,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -359,7 +351,7 @@ public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -401,7 +393,7 @@ public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -443,7 +435,7 @@ public:
 	const VType& GetVType() const { return _vtype; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -479,7 +471,7 @@ public:
 	PUnit_GenIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -513,7 +505,7 @@ public:
 	PUnit_GenRangeIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -547,7 +539,7 @@ public:
 	PUnit_GenCounterIterator(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -586,7 +578,7 @@ public:
 	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -631,7 +623,7 @@ public:
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -675,7 +667,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -716,7 +708,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -757,7 +749,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -798,7 +790,7 @@ public:
 	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -834,7 +826,7 @@ public:
 	explicit PUnit_CreateDict(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -873,7 +865,7 @@ public:
 	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -916,7 +908,7 @@ public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -953,7 +945,7 @@ public:
 	explicit PUnit_FeedIndex(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -987,7 +979,7 @@ public:
 	explicit PUnit_IndexGet(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1021,7 +1013,7 @@ public:
 	explicit PUnit_IndexSet(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1062,7 +1054,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1106,7 +1098,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1150,7 +1142,7 @@ public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1194,7 +1186,7 @@ public:
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1235,7 +1227,7 @@ public:
 		_pPUnitCont(this + 1) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -1270,7 +1262,7 @@ public:
 	explicit PUnit_FeedArgSlot(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1315,7 +1307,7 @@ public:
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -1355,7 +1347,7 @@ public:
 	explicit PUnit_FeedArgSlotNamed(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1390,7 +1382,7 @@ public:
 	explicit PUnit_Call(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1428,7 +1420,7 @@ public:
 	PUnit_Jump(Expr* pExprSrc, SeqId seqId) : PUnit_Jump(pExprSrc, seqId, this + 1) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -1466,7 +1458,7 @@ public:
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1502,7 +1494,7 @@ public:
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1538,7 +1530,7 @@ public:
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1574,7 +1566,7 @@ public:
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1612,7 +1604,7 @@ public:
 		PUnit(pExprSrc, seqId), _pPUnitExit(pPUnitExit) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitExit(const PUnit* pPUnit) override { _pPUnitExit = pPUnit; }
 	virtual const PUnit* GetPUnitExit() const override { return _pPUnitExit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
@@ -1650,7 +1642,7 @@ public:
 	explicit PUnit_PopValue(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1689,7 +1681,7 @@ public:
 	size_t GetOffset() const { return _offset; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1732,7 +1724,7 @@ public:
 	size_t GetCount() const { return _cnt; }
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1769,7 +1761,7 @@ public:
 	PUnit_Return(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual bool IsReturn() const override { return true; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
@@ -1804,7 +1796,7 @@ public:
 	PUnit_PushFrame_Block(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1838,7 +1830,7 @@ public:
 	PUnit_PopFrame(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1872,7 +1864,7 @@ public:
 	PUnit_NoOperation(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1906,7 +1898,7 @@ public:
 	PUnit_Terminate(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag_New() const override { return discardValueFlag; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return nullptr; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1946,6 +1938,7 @@ public:
 	// Virtual functions of PUnit
 	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual bool IsBridge() const override { return true; }
+	virtual bool GetDiscardValueFlag() const override { return false; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return _GetPUnitCont(); }
 	virtual const PUnit* Exec(Processor& processor) const override;
