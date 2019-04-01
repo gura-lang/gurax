@@ -395,7 +395,6 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignFunction");
 private:
 	RefPtr<Function> _pFunction;
-	const PUnit* _pPUnitCont;
 public:
 	PUnitFactory_AssignFunction(Expr* pExprSrc, PUnit::SeqId seqId, Function* pFunction) :
 		PUnitFactory(pExprSrc, seqId), _pFunction(pFunction) {}
@@ -1291,6 +1290,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Jump
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Jump : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1300,7 +1300,7 @@ private:
 public:
 	// Constructor
 	PUnit_Jump(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitCont) :
-		PUnit(pExprSrc, seqId), _pPUnitCont(pPUnitCont) {}
+		PUnit(pExprSrc, seqId), _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
 	PUnit_Jump(Expr* pExprSrc, SeqId seqId) : PUnit_Jump(pExprSrc, seqId, this + 1) {}
 public:
 	// Virtual functions of PUnit
@@ -1327,6 +1327,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIf
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_JumpIf : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -1358,6 +1359,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNot
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_JumpIfNot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -1389,6 +1391,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIf
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_NilJumpIf : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -1420,6 +1423,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIfNot
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_NilJumpIfNot : public PUnit_Branch {
 public:
 	// Uses MemoryPool allocator
@@ -1451,6 +1455,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_ExitPoint
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_ExitPoint : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1477,15 +1482,17 @@ class PUnitFactory_ExitPoint : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_ExitPoint");
 private:
+	const PUnit* _pPUnitExit;
 public:
-	PUnitFactory_ExitPoint(Expr* pExprSrc, PUnit::SeqId seqId) :
-		PUnitFactory(pExprSrc, seqId) {}
+	PUnitFactory_ExitPoint(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitExit) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitExit(pPUnitExit) {}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
 // PUnit_PopValue
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_PopValue : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1515,6 +1522,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_RemoveValue
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_RemoveValue : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1551,6 +1559,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_RemoveValues
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_RemoveValues : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1590,6 +1599,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Return
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Return : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1620,6 +1630,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_PushFrame_Block
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_PushFrame_Block : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1649,6 +1660,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_PopFrame
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_PopFrame : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1678,6 +1690,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_NoOperation
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_NoOperation : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1707,6 +1720,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Terminate
 //------------------------------------------------------------------------------
+template<bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Terminate : public PUnit {
 public:
 	// Uses MemoryPool allocator

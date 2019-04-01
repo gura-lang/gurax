@@ -1264,13 +1264,15 @@ PUnit* PUnitFactory_Call::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_Jump::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_Jump<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_Jump::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_Jump<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("Jump(%s)", _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1279,13 +1281,11 @@ String PUnit_Jump::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Jump<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Jump<true>(_pExprSrc.release(), _seqId, _pPUnitCont);
 	} else {
-		_pPUnitCreated = new PUnit_Jump<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Jump<false>(_pExprSrc.release(), _seqId, _pPUnitCont);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1295,7 +1295,8 @@ PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 //                         -> []     (discard)
 //                         -> [Prev] (branch)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_JumpIf<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
@@ -1306,7 +1307,8 @@ const PUnit* PUnit_JumpIf::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_JumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_JumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("JumpIf(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1316,13 +1318,11 @@ String PUnit_JumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIf<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_JumpIf<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_JumpIf<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_JumpIf<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1332,7 +1332,8 @@ PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 //                         -> []      (discard)
 //                         -> [Prev]  (branch)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_JumpIfNot<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
@@ -1343,7 +1344,8 @@ const PUnit* PUnit_JumpIfNot::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_JumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_JumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("JumpIfNot(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1353,13 +1355,11 @@ String PUnit_JumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_JumpIfNot::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNot<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_JumpIfNot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNot<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_JumpIfNot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1369,7 +1369,8 @@ PUnit* PUnitFactory_JumpIfNot::Create(bool discardValueFlag)
 //                         -> []         (discard)
 //                         -> [Prev Nil] (branch)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_NilJumpIf<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
@@ -1381,7 +1382,8 @@ const PUnit* PUnit_NilJumpIf::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_NilJumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_NilJumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("NilJumpIf(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1391,13 +1393,11 @@ String PUnit_NilJumpIf::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_NilJumpIf::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NilJumpIf<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_NilJumpIf<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_NilJumpIf<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_NilJumpIf<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1407,7 +1407,8 @@ PUnit* PUnitFactory_NilJumpIf::Create(bool discardValueFlag)
 //                         -> []         (discard)
 //                         -> [Prev Nil] (branch)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_NilJumpIfNot<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
@@ -1419,7 +1420,8 @@ const PUnit* PUnit_NilJumpIfNot::Exec(Processor& processor) const
 	}
 }
 
-String PUnit_NilJumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_NilJumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("NilJumpIfNot(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1429,13 +1431,11 @@ String PUnit_NilJumpIfNot::ToString(const StringStyle& ss, int seqIdOffset) cons
 
 PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NilJumpIfNot<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_NilJumpIfNot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_NilJumpIfNot<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_NilJumpIfNot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1444,13 +1444,15 @@ PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_ExitPoint::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_ExitPoint<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_ExitPoint::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_ExitPoint<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ExitPoint(exit=%s)", GetPUnitExit()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1460,13 +1462,11 @@ String PUnit_ExitPoint::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_ExitPoint::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_ExitPoint<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_ExitPoint<true>(_pExprSrc.release(), _seqId, _pPUnitExit);
 	} else {
-		_pPUnitCreated = new PUnit_ExitPoint<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_ExitPoint<false>(_pExprSrc.release(), _seqId, _pPUnitExit);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1475,14 +1475,16 @@ PUnit* PUnitFactory_ExitPoint::Create(bool discardValueFlag)
 // Stack View: [Prev Any] -> [Prev] (continue)
 //                        -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_PopValue::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_PopValue<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.PopValue();
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_PopValue::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_PopValue<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PopValue()";
@@ -1492,13 +1494,11 @@ String PUnit_PopValue::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_PopValue::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_PopValue<true>(_pExprSrc.release(), _seqId);
 	} else {
 		_pPUnitCreated = new PUnit_PopValue<false>(_pExprSrc.release(), _seqId);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1507,14 +1507,16 @@ PUnit* PUnitFactory_PopValue::Create(bool discardValueFlag)
 // Stack View: [.. Any .. Prev] -> [.. .. Prev] (continue)
 //                              -> [.. ..]      (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_RemoveValue::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_RemoveValue<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.RemoveValue(GetOffset());
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_RemoveValue::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_RemoveValue<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("RemoveValue(offset=%zu)", GetOffset());
@@ -1524,13 +1526,11 @@ String PUnit_RemoveValue::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_RemoveValue::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_RemoveValue<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_RemoveValue<true>(_pExprSrc.release(), _seqId, _offset);
 	} else {
-		_pPUnitCreated = new PUnit_RemoveValue<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_RemoveValue<false>(_pExprSrc.release(), _seqId, _offset);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1539,14 +1539,16 @@ PUnit* PUnitFactory_RemoveValue::Create(bool discardValueFlag)
 // Stack View: [.. Any1..n .. Prev] -> [.. .. Prev] (continue)
 //                                  -> [.. ..]      (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_RemoveValues::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_RemoveValues<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.RemoveValues(GetOffset(), GetCount());
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_RemoveValues::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_RemoveValues<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("RemoveValues(offset=%zu,count=%zu)", GetOffset(), GetCount());
@@ -1556,13 +1558,11 @@ String PUnit_RemoveValues::ToString(const StringStyle& ss, int seqIdOffset) cons
 
 PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_RemoveValues<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_RemoveValues<true>(_pExprSrc.release(), _seqId, _offset, _cnt);
 	} else {
-		_pPUnitCreated = new PUnit_RemoveValues<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_RemoveValues<false>(_pExprSrc.release(), _seqId, _offset, _cnt);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1571,7 +1571,8 @@ PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_Return::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 {
 	const PUnit* pPUnit = processor.PopPUnit();
 	// Since nullptr means the end of the processor loop, there's no need to
@@ -1582,7 +1583,8 @@ const PUnit* PUnit_Return::Exec(Processor& processor) const
 	return pPUnit->GetPUnitCont();
 }
 
-String PUnit_Return::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_Return<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Return()";
@@ -1592,13 +1594,11 @@ String PUnit_Return::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_Return<true>(_pExprSrc.release(), _seqId);
 	} else {
 		_pPUnitCreated = new PUnit_Return<false>(_pExprSrc.release(), _seqId);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1607,14 +1607,16 @@ PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 // Stack View: [prev] -> [prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_PushFrame_Block::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_PushFrame_Block<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.PushFrame_Block();
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_PushFrame_Block::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_PushFrame_Block<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PushFrame_Block()";
@@ -1624,13 +1626,11 @@ String PUnit_PushFrame_Block::ToString(const StringStyle& ss, int seqIdOffset) c
 
 PUnit* PUnitFactory_PushFrame_Block::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_PushFrame_Block<true>(_pExprSrc.release(), _seqId);
 	} else {
 		_pPUnitCreated = new PUnit_PushFrame_Block<false>(_pExprSrc.release(), _seqId);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1639,14 +1639,16 @@ PUnit* PUnitFactory_PushFrame_Block::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_PopFrame::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_PopFrame<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.PopFrame();
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_PopFrame::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_PopFrame<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "PopFrame()";
@@ -1656,13 +1658,11 @@ String PUnit_PopFrame::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_PopFrame::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_PopFrame<true>(_pExprSrc.release(), _seqId);
 	} else {
 		_pPUnitCreated = new PUnit_PopFrame<false>(_pExprSrc.release(), _seqId);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1671,13 +1671,15 @@ PUnit* PUnitFactory_PopFrame::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_NoOperation::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_NoOperation<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-String PUnit_NoOperation::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_NoOperation<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "NoOperation()";
@@ -1687,13 +1689,11 @@ String PUnit_NoOperation::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_NoOperation::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_NoOperation<true>(_pExprSrc.release(), _seqId);
 	} else {
 		_pPUnitCreated = new PUnit_NoOperation<false>(_pExprSrc.release(), _seqId);
 	}
-#endif
 	return _pPUnitCreated;
 }
 
@@ -1702,13 +1702,15 @@ PUnit* PUnitFactory_NoOperation::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-const PUnit* PUnit_Terminate::Exec(Processor& processor) const
+template<bool discardValueFlag>
+const PUnit* PUnit_Terminate<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (GetDiscardValueFlag()) processor.PopValue();
 	return nullptr;
 }
 
-String PUnit_Terminate::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag>
+String PUnit_Terminate<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "Terminate()";
@@ -1718,13 +1720,11 @@ String PUnit_Terminate::ToString(const StringStyle& ss, int seqIdOffset) const
 
 PUnit* PUnitFactory_Terminate::Create(bool discardValueFlag)
 {
-#if 0
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_Terminate<true>(_pExprSrc.release(), _seqId);
 	} else {
 		_pPUnitCreated = new PUnit_Terminate<false>(_pExprSrc.release(), _seqId);
 	}
-#endif
 	return _pPUnitCreated;
 }
 

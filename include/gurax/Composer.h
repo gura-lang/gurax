@@ -76,21 +76,20 @@ public:
 		Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
 	RefPtr<PUnitFactory> Add_FeedArgSlotNamed(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_Call(const Expr& exprSrc);
-	PUnit* Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont);
-	PUnit* Add_Jump(const Expr& exprSrc);
-	PUnit* Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	PUnit* Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUnitExit = nullptr);
-	PUnit* Add_PopValue(const Expr& exprSrc);
-	PUnit* Add_RemoveValue(const Expr& exprSrc, size_t offset);
-	PUnit* Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
-	PUnit* Add_Return(const Expr& exprSrc);
-	PUnit* Add_PushFrame_Block(const Expr& exprSrc);
-	PUnit* Add_PopFrame(const Expr& exprSrc);
-	PUnit* Add_NoOperation(const Expr& exprSrc);
-	PUnit* Add_Terminate(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
+	RefPtr<PUnitFactory> Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUnitExit = nullptr);
+	RefPtr<PUnitFactory> Add_PopValue(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_RemoveValue(const Expr& exprSrc, size_t offset);
+	RefPtr<PUnitFactory> Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
+	RefPtr<PUnitFactory> Add_Return(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_PushFrame_Block(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_PopFrame(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_NoOperation(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_Terminate(const Expr& exprSrc);
 	void SetDiscardValueFlagAtLast() {
 		if (_pPUnitLast) _pPUnitLast->_SetDiscardValueFlag();
 	}
