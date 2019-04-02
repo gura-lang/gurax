@@ -259,6 +259,12 @@ RefPtr<PUnitFactory> Composer::Add_NilJumpIfNot(const Expr& exprSrc, const PUnit
 	return GetFactory().Reference();
 }
 
+RefPtr<PUnitFactory> Composer::Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel)
+{
+	SetFactory(new PUnitFactory_BeginSequence(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));
+	return GetFactory().Reference();
+}
+
 RefPtr<PUnitFactory> Composer::Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel)
 {
 	SetFactory(new PUnitFactory_BeginQuote(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));

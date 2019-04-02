@@ -80,6 +80,7 @@ public:
 	RefPtr<PUnitFactory> Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	RefPtr<PUnitFactory> Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	RefPtr<PUnitFactory> Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	RefPtr<PUnitFactory> Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	RefPtr<PUnitFactory> Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	RefPtr<PUnitFactory> Add_PopValue(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_RemoveValue(const Expr& exprSrc, size_t offset);

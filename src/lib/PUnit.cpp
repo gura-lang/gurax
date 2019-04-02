@@ -1433,6 +1433,37 @@ PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_BeginSequence
+// Stack View: [Prev] -> [Prev] (continue)
+//                       []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+const PUnit* PUnit_BeginSequence<discardValueFlag>::Exec(Processor& processor) const
+{
+	if (discardValueFlag) processor.PopValue();
+	return _GetPUnitCont();
+}
+
+template<bool discardValueFlag>
+String PUnit_BeginSequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("BeginSequence(exit=%s)", GetPUnitSentinel()->MakeSeqIdString(seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_BeginSequence<true>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
+	} else {
+		_pPUnitCreated = new PUnit_BeginSequence<false>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_BeginQuote
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)
