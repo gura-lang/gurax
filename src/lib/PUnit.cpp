@@ -1448,7 +1448,7 @@ template<bool discardValueFlag>
 String PUnit_BeginQuote<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("BeginQuote(exit=%s)", GetPUnitEndOfQuote()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("BeginQuote(exit=%s)", GetPUnitSentinel()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1456,9 +1456,9 @@ String PUnit_BeginQuote<discardValueFlag>::ToString(const StringStyle& ss, int s
 PUnit* PUnitFactory_BeginQuote::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_BeginQuote<true>(_pExprSrc.release(), _seqId, _pPUnitEndOfQuote);
+		_pPUnitCreated = new PUnit_BeginQuote<true>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
 	} else {
-		_pPUnitCreated = new PUnit_BeginQuote<false>(_pExprSrc.release(), _seqId, _pPUnitEndOfQuote);
+		_pPUnitCreated = new PUnit_BeginQuote<false>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
 	}
 	return _pPUnitCreated;
 }

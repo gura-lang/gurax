@@ -56,10 +56,10 @@ public:
 	virtual bool IsReturn() const { return false; }
 	virtual bool IsBridge() const { return false; }
 	virtual bool GetDiscardValueFlag() const = 0;
-	virtual void SetPUnitEndOfQuote(const PUnit* pPUnit) { /* just ignore it */ }
+	virtual void SetPUnitSentinel(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitBranchDest(const PUnit* pPUnit) { /* just ignore it */ }
-	virtual const PUnit* GetPUnitEndOfQuote() const { return nullptr; } // only PUnit_BeginQuote returns a valid value.
+	virtual const PUnit* GetPUnitSentinel() const { return nullptr; } // only PUnit_BeginQuote returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
 	virtual const PUnit* Exec(Processor& processor) const = 0;
@@ -91,8 +91,8 @@ protected:
 	// Destructor
 	virtual ~PUnitFactory() = default;
 public:
-	void SetPUnitEndOfQuote(const PUnit* pPUnit) {
-		if (_pPUnitCreated) _pPUnitCreated->SetPUnitEndOfQuote(pPUnit);
+	void SetPUnitSentinel(const PUnit* pPUnit) {
+		if (_pPUnitCreated) _pPUnitCreated->SetPUnitSentinel(pPUnit);
 	}
 	void SetPUnitCont(const PUnit* pPUnit) {
 		if (_pPUnitCreated) _pPUnitCreated->SetPUnitCont(pPUnit);
@@ -1597,16 +1597,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitEndOfQuote;
+	const PUnit* _pPUnitSentinel;
 public:
 	// Constructor
-	PUnit_BeginQuote(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitEndOfQuote) :
-		PUnit(pExprSrc, seqId), _pPUnitEndOfQuote(pPUnitEndOfQuote) {}
+	PUnit_BeginQuote(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitSentinel) :
+		PUnit(pExprSrc, seqId), _pPUnitSentinel(pPUnitSentinel) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual void SetPUnitEndOfQuote(const PUnit* pPUnit) override { _pPUnitEndOfQuote = pPUnit; }
-	virtual const PUnit* GetPUnitEndOfQuote() const override { return _pPUnitEndOfQuote; }
+	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
+	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1619,10 +1619,10 @@ class PUnitFactory_BeginQuote : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginQuote");
 private:
-	const PUnit* _pPUnitEndOfQuote;
+	const PUnit* _pPUnitSentinel;
 public:
-	PUnitFactory_BeginQuote(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitEndOfQuote) :
-		PUnitFactory(pExprSrc, seqId), _pPUnitEndOfQuote(pPUnitEndOfQuote) {}
+	PUnitFactory_BeginQuote(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitSentinel) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitSentinel(pPUnitSentinel) {}
 	virtual const PUnit* CalcPUnitCont(const void *p) const override {
 		return reinterpret_cast<const PUnit_BeginQuote<false>*>(p) + 1;
 	}

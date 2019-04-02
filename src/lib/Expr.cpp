@@ -38,8 +38,8 @@ Iterator* Expr::EachPUnit() const
 	const PUnit* pPUnit = GetPUnitTop();
 	if (!pPUnit) {
 		// nothing to do
-	} else if (pPUnit->GetPUnitEndOfQuote()) {
-		pPUnitSentinel = pPUnit->GetPUnitEndOfQuote();
+	} else if (pPUnit->GetPUnitSentinel()) {
+		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 	}
 	return new Iterator_EachPUnit(pPUnit, pPUnitSentinel, true);
@@ -95,7 +95,7 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	auto pPUnitOfBeginQuote = composer.Add_BeginQuote(*this);		// [Argument]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	Compose(composer);												// [Argument Any]
-	pPUnitOfBeginQuote->SetPUnitEndOfQuote(composer.PeekPUnitCont());
+	pPUnitOfBeginQuote->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlot(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 }
@@ -405,7 +405,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 	auto pPUnitOfBeginQuote = composer.Add_BeginQuote(*this);			// [Argument ArgSlot]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
-	pPUnitOfBeginQuote->SetPUnitEndOfQuote(composer.PeekPUnitCont());
+	pPUnitOfBeginQuote->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlotNamed(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 }
