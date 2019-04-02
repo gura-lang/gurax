@@ -316,23 +316,36 @@ Gurax_ImplementStatement(repeat)
 	}
 }
 
-// break
+// break(value?)
 Gurax_DeclareStatementAlias(break_, "break")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementStatement(break_)
 {
 }
 
-// continue
+// continue(value?)
 Gurax_DeclareStatementAlias(continue_, "continue")
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 }
 
 Gurax_ImplementStatement(continue_)
+{
+}
+
+// return(value?)
+Gurax_DeclareStatementAlias(return_, "return")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementStatement(return_)
 {
 }
 
@@ -346,6 +359,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(repeat));
 	frame.Assign(Gurax_CreateStatement(break_));
 	frame.Assign(Gurax_CreateStatement(continue_));
+	frame.Assign(Gurax_CreateStatement(return_));
 }
 
 }
