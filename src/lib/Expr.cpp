@@ -42,7 +42,7 @@ Iterator* Expr::EachPUnit() const
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence or BeginQuote
 	}
-	return new Iterator_EachPUnit(pPUnit, pPUnitSentinel, true);
+	return new Iterator_EachPUnit(pPUnit, pPUnitSentinel);
 }
 
 int Expr::CalcIndentLevel() const

@@ -344,7 +344,7 @@ void Composer::PrintPUnit(const StringStyle& ss) const
 
 Iterator* Composer::EachPUnit() const
 {
-	return new Iterator_EachPUnit(GetPUnitFirst(), nullptr, false);
+	return new Iterator_EachPUnit(GetPUnitFirst(), nullptr);
 }
 
 }

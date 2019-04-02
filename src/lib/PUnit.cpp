@@ -53,21 +53,17 @@ Value* Iterator_EachPUnit::NextValue()
 	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
 	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
 	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
-	_pPUnit = (_returnAsEndFlag && _pPUnit->IsReturn())? nullptr : _pPUnit->GetPUnitNext();
+	_pPUnit = _pPUnit->GetPUnitNext();
 	return pValue.release();
 }
 
 size_t Iterator_EachPUnit::GetLength() const
 {
 	const PUnit* pPUnit = _pPUnit;
-	if (!pPUnit || pPUnit == _pPUnitSentinel) return 0;
-	for ( ; pPUnit->IsBridge(); pPUnit = _pPUnit->GetPUnitNext()) ;
+	if (!pPUnit) return 0;
+	for ( ; pPUnit && pPUnit->IsBridge(); pPUnit = _pPUnit->GetPUnitNext()) ;
 	size_t cnt = 0;
-	while (pPUnit) {
-		cnt++;
-		if (_returnAsEndFlag && pPUnit->IsReturn()) break;
-		pPUnit = pPUnit->GetPUnitNext();
-	}
+	for ( ; pPUnit != _pPUnitSentinel; cnt++, pPUnit = pPUnit->GetPUnitNext()) ;
 	return cnt;
 }
 

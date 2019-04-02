@@ -11,8 +11,11 @@ PrintPUnit(expr:Expr) = {
 }
 Println('--------')
 expr = `{
-	while (a < 3) {}
+	f(a, b, c) {
+		Println(a)
+	}
 }
+Printf('%s\n', expr)
 PrintPUnit(expr)
 Println('--------')
 expr = `(a)

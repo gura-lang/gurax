@@ -131,10 +131,9 @@ class GURAX_DLLDECLARE Iterator_EachPUnit : public Iterator {
 private:
 	const PUnit* _pPUnit;
 	const PUnit* _pPUnitSentinel;
-	bool _returnAsEndFlag;
 public:
-	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel, bool returnAsEndFlag) :
-		_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel), _returnAsEndFlag(returnAsEndFlag) {}
+	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel) :
+		_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
