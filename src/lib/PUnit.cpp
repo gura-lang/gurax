@@ -50,7 +50,7 @@ void PUnitList::Print() const
 //------------------------------------------------------------------------------
 Value* Iterator_EachPUnit::NextValue()
 {
-	if (!_pPUnit || _pPUnit == _pPUnitExit) return nullptr;
+	if (!_pPUnit || _pPUnit == _pPUnitEndOfQuote) return nullptr;
 	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
 	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
 	_pPUnit = (_returnAsEndFlag && _pPUnit->IsReturn())? nullptr : _pPUnit->GetPUnitNext();
@@ -60,7 +60,7 @@ Value* Iterator_EachPUnit::NextValue()
 size_t Iterator_EachPUnit::GetLength() const
 {
 	const PUnit* pPUnit = _pPUnit;
-	if (!pPUnit || pPUnit == _pPUnitExit) return 0;
+	if (!pPUnit || pPUnit == _pPUnitEndOfQuote) return 0;
 	for ( ; pPUnit->IsBridge(); pPUnit = _pPUnit->GetPUnitNext()) ;
 	size_t cnt = 0;
 	while (pPUnit) {
@@ -1433,32 +1433,32 @@ PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_ExitPoint
+// PUnit_BeginQuote
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-const PUnit* PUnit_ExitPoint<discardValueFlag>::Exec(Processor& processor) const
+const PUnit* PUnit_BeginQuote<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (discardValueFlag) processor.PopValue();
 	return _GetPUnitCont();
 }
 
 template<bool discardValueFlag>
-String PUnit_ExitPoint<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_BeginQuote<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ExitPoint(exit=%s)", GetPUnitExit()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("BeginQuote(exit=%s)", GetPUnitEndOfQuote()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_ExitPoint::Create(bool discardValueFlag)
+PUnit* PUnitFactory_BeginQuote::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_ExitPoint<true>(_pExprSrc.release(), _seqId, _pPUnitExit);
+		_pPUnitCreated = new PUnit_BeginQuote<true>(_pExprSrc.release(), _seqId, _pPUnitEndOfQuote);
 	} else {
-		_pPUnitCreated = new PUnit_ExitPoint<false>(_pExprSrc.release(), _seqId, _pPUnitExit);
+		_pPUnitCreated = new PUnit_BeginQuote<false>(_pExprSrc.release(), _seqId, _pPUnitEndOfQuote);
 	}
 	return _pPUnitCreated;
 }

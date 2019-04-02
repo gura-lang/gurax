@@ -34,13 +34,13 @@ void Expr::ComposeOrNil(Composer& composer)
 
 Iterator* Expr::EachPUnit() const
 {
-	const PUnit* pPUnitExit = nullptr;
+	const PUnit* pPUnitEndOfQuote = nullptr;
 	const PUnit* pPUnit = GetPUnitTop();
-	if (pPUnit && pPUnit->GetPUnitExit()) {
-		pPUnitExit = pPUnit->GetPUnitExit();
-		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_ExitPoint
+	if (pPUnit && pPUnit->GetPUnitEndOfQuote()) {
+		pPUnitEndOfQuote = pPUnit->GetPUnitEndOfQuote();
+		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 	}
-	return new Iterator_EachPUnit(pPUnit, pPUnitExit, true);
+	return new Iterator_EachPUnit(pPUnit, pPUnitEndOfQuote, true);
 }
 
 int Expr::CalcIndentLevel() const
@@ -90,10 +90,10 @@ void Expr::ComposeForArgSlot(Composer& composer)
 {
 	auto pPUnitOfBranch = composer.Add_ArgSlot(*this);				// [Argument]
 	SetPUnitTop(composer.PeekPUnitCont());
-	auto pPUnitOfExitPoint = composer.Add_ExitPoint(*this);			// [Argument]
+	auto pPUnitOfBeginQuote = composer.Add_BeginQuote(*this);		// [Argument]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	Compose(composer);												// [Argument Any]
-	pPUnitOfExitPoint->SetPUnitExit(composer.PeekPUnitCont());
+	pPUnitOfBeginQuote->SetPUnitEndOfQuote(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlot(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 }
@@ -400,10 +400,10 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 	auto pPUnitOfBranch = composer.Add_ArgSlotNamed(
 		*this, pSymbol, GetExprRight()->Reference());					// [Argument ArgSlot]
 	GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
-	auto pPUnitOfExitPoint = composer.Add_ExitPoint(*this);				// [Argument ArgSlot]
+	auto pPUnitOfBeginQuote = composer.Add_BeginQuote(*this);			// [Argument ArgSlot]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
-	pPUnitOfExitPoint->SetPUnitExit(composer.PeekPUnitCont());
+	pPUnitOfBeginQuote->SetPUnitEndOfQuote(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlotNamed(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 }

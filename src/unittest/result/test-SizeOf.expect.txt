@@ -38,7 +38,7 @@ PUnit_JumpIf<false>              32
 PUnit_JumpIfNot<false>           32
 PUnit_NilJumpIf<false>           32
 PUnit_NilJumpIfNot<false>        32
-PUnit_ExitPoint<false>           32
+PUnit_BeginQuote<false>          32
 PUnit_PopValue<false>            24
 PUnit_RemoveValue<false>         32
 PUnit_Return<false>              24

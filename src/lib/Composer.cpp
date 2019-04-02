@@ -259,9 +259,9 @@ RefPtr<PUnitFactory> Composer::Add_NilJumpIfNot(const Expr& exprSrc, const PUnit
 	return GetFactory().Reference();
 }
 
-RefPtr<PUnitFactory> Composer::Add_ExitPoint(const Expr& exprSrc, const PUnit* pPUnitExit)
+RefPtr<PUnitFactory> Composer::Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitEndOfQuote)
 {
-	SetFactory(new PUnitFactory_ExitPoint(exprSrc.Reference(), NextSeqId(), pPUnitExit));
+	SetFactory(new PUnitFactory_BeginQuote(exprSrc.Reference(), NextSeqId(), pPUnitEndOfQuote));
 	return GetFactory().Reference();
 }
 

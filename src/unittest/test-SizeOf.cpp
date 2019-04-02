@@ -48,7 +48,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_JumpIfNot<false>);
 	PrintSizeOf(PUnit_NilJumpIf<false>);
 	PrintSizeOf(PUnit_NilJumpIfNot<false>);
-	PrintSizeOf(PUnit_ExitPoint<false>);
+	PrintSizeOf(PUnit_BeginQuote<false>);
 	PrintSizeOf(PUnit_PopValue<false>);
 	PrintSizeOf(PUnit_RemoveValue<false>);
 	PrintSizeOf(PUnit_Return<false>);

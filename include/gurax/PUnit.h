@@ -56,10 +56,10 @@ public:
 	virtual bool IsReturn() const { return false; }
 	virtual bool IsBridge() const { return false; }
 	virtual bool GetDiscardValueFlag() const = 0;
-	virtual void SetPUnitExit(const PUnit* pPUnit) { /* just ignore it */ }
+	virtual void SetPUnitEndOfQuote(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitBranchDest(const PUnit* pPUnit) { /* just ignore it */ }
-	virtual const PUnit* GetPUnitExit() const { return nullptr; } // only PUnit_ExitPoint returns a valid value.
+	virtual const PUnit* GetPUnitEndOfQuote() const { return nullptr; } // only PUnit_BeginQuote returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
 	virtual const PUnit* Exec(Processor& processor) const = 0;
@@ -91,8 +91,8 @@ protected:
 	// Destructor
 	virtual ~PUnitFactory() = default;
 public:
-	void SetPUnitExit(const PUnit* pPUnit) {
-		if (_pPUnitCreated) _pPUnitCreated->SetPUnitExit(pPUnit);
+	void SetPUnitEndOfQuote(const PUnit* pPUnit) {
+		if (_pPUnitCreated) _pPUnitCreated->SetPUnitEndOfQuote(pPUnit);
 	}
 	void SetPUnitCont(const PUnit* pPUnit) {
 		if (_pPUnitCreated) _pPUnitCreated->SetPUnitCont(pPUnit);
@@ -129,11 +129,11 @@ public:
 class GURAX_DLLDECLARE Iterator_EachPUnit : public Iterator {
 private:
 	const PUnit* _pPUnit;
-	const PUnit* _pPUnitExit;
+	const PUnit* _pPUnitEndOfQuote;
 	bool _returnAsEndFlag;
 public:
-	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitExit, bool returnAsEndFlag) :
-		_pPUnit(pPUnit), _pPUnitExit(pPUnitExit), _returnAsEndFlag(returnAsEndFlag) {}
+	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitEndOfQuote, bool returnAsEndFlag) :
+		_pPUnit(pPUnit), _pPUnitEndOfQuote(pPUnitEndOfQuote), _returnAsEndFlag(returnAsEndFlag) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -1589,24 +1589,24 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_ExitPoint
+// PUnit_BeginQuote
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_ExitPoint : public PUnit {
+class GURAX_DLLDECLARE PUnit_BeginQuote : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitExit;
+	const PUnit* _pPUnitEndOfQuote;
 public:
 	// Constructor
-	PUnit_ExitPoint(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitExit) :
-		PUnit(pExprSrc, seqId), _pPUnitExit(pPUnitExit) {}
+	PUnit_BeginQuote(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitEndOfQuote) :
+		PUnit(pExprSrc, seqId), _pPUnitEndOfQuote(pPUnitEndOfQuote) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual void SetPUnitExit(const PUnit* pPUnit) override { _pPUnitExit = pPUnit; }
-	virtual const PUnit* GetPUnitExit() const override { return _pPUnitExit; }
+	virtual void SetPUnitEndOfQuote(const PUnit* pPUnit) override { _pPUnitEndOfQuote = pPUnit; }
+	virtual const PUnit* GetPUnitEndOfQuote() const override { return _pPUnitEndOfQuote; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
@@ -1615,16 +1615,16 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_ExitPoint : public PUnitFactory {
+class PUnitFactory_BeginQuote : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_ExitPoint");
+	Gurax_MemoryPoolAllocator("PUnitFactory_BeginQuote");
 private:
-	const PUnit* _pPUnitExit;
+	const PUnit* _pPUnitEndOfQuote;
 public:
-	PUnitFactory_ExitPoint(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitExit) :
-		PUnitFactory(pExprSrc, seqId), _pPUnitExit(pPUnitExit) {}
+	PUnitFactory_BeginQuote(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitEndOfQuote) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitEndOfQuote(pPUnitEndOfQuote) {}
 	virtual const PUnit* CalcPUnitCont(const void *p) const override {
-		return reinterpret_cast<const PUnit_ExitPoint<false>*>(p) + 1;
+		return reinterpret_cast<const PUnit_BeginQuote<false>*>(p) + 1;
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

@@ -31,10 +31,10 @@ Processor* Processor::Create(bool debugFlag)
 void Processor_Normal::RunLoop(const PUnit* pPUnit)
 {
 	if (!pPUnit) return;
-	if (pPUnit->GetPUnitExit()) {
-		const PUnit* pPUnitExit = pPUnit->GetPUnitExit();
-		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_ExitPoint
-		while (pPUnit && pPUnit != pPUnitExit) pPUnit = pPUnit->Exec(*this);
+	if (pPUnit->GetPUnitEndOfQuote()) {
+		const PUnit* pPUnitEndOfQuote = pPUnit->GetPUnitEndOfQuote();
+		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
+		while (pPUnit && pPUnit != pPUnitEndOfQuote) pPUnit = pPUnit->Exec(*this);
 	} else {
 		while (pPUnit) pPUnit = pPUnit->Exec(*this);
 	}
@@ -53,15 +53,15 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	};
 	if (!pPUnit) return;
 	Stream& stream = *Stream::COut;
-	const PUnit* pPUnitExit = nullptr;
-	if (pPUnit->GetPUnitExit()) {
-		pPUnitExit = pPUnit->GetPUnitExit();
-		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_ExitPoint
+	const PUnit* pPUnitEndOfQuote = nullptr;
+	if (pPUnit->GetPUnitEndOfQuote()) {
+		pPUnitEndOfQuote = pPUnit->GetPUnitEndOfQuote();
+		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 	} else {
 		PrintPUnit(stream, pPUnit);
 		pPUnit = pPUnit->Exec(*this);
 	}
-	while (pPUnit && pPUnit != pPUnitExit) {
+	while (pPUnit && pPUnit != pPUnitEndOfQuote) {
 		PrintStack(stream);
 		PrintPUnit(stream, pPUnit);
 		pPUnit = pPUnit->Exec(*this);
