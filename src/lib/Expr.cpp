@@ -306,13 +306,13 @@ void Expr_UnaryOp::Compose(Composer& composer)
 		auto pPUnitOfBranch = composer.Add_ValueAndJump(
 			*this, new Value_Expr(GetExprChild()->Reference()));	// [Any]
 		GetExprChild()->SetPUnitTop(composer.PeekPUnitCont());
-		//auto pPUnitOfBeginSequence =
-		//	composer.Add_BeginSequence(*this);						// [Any]
+		auto pPUnitOfBeginSequence =
+			composer.Add_BeginSequence(*this);						// [Any]
 		GetExprChild()->ComposeOrNil(composer);						// [Any]
 		composer.Add_Return(*this);
 		const PUnit* pPUnitCont = composer.PeekPUnitCont();
 		pPUnitOfBranch->SetPUnitCont(pPUnitCont);
-		//pPUnitOfBeginSequence->SetPUnitCont(pPUnitCont);
+		pPUnitOfBeginSequence->SetPUnitSentinel(pPUnitCont);
 	} else {
 		GetExprChild()->ComposeOrNil(composer);						// [Any]
 	}
@@ -372,25 +372,25 @@ void Expr_BinaryOp::Compose(Composer& composer)
 			auto pPUnitOfBranch = composer.Add_ValueAndJump(
 				*this, new Value_Expr(GetExprLeft()->Reference()));		// [Left]
 			GetExprLeft()->SetPUnitTop(composer.PeekPUnitCont());
-			//auto pPUnitOfBeginSequence =
-			//	composer.Add_BeginSequence(*this);						// [Any]
+			auto pPUnitOfBeginSequence =
+				composer.Add_BeginSequence(*this);						// [Any]
 			GetExprLeft()->ComposeOrNil(composer);						// [Any]
 			composer.Add_Return(*this);
 			const PUnit* pPUnitCont = composer.PeekPUnitCont();
 			pPUnitOfBranch->SetPUnitCont(pPUnitCont);
-			//pPUnitOfBeginSequence->SetPUnitSentinel(pPUnitCont);
+			pPUnitOfBeginSequence->SetPUnitSentinel(pPUnitCont);
 		} while (0);
 		do {
 			auto pPUnitOfBranch = composer.Add_ValueAndJump(
 				*this, new Value_Expr(GetExprRight()->Reference()));	// [Left Right]
 			GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
-			//auto pPUnitOfBeginSequence =
-			//	composer.Add_BeginSequence(*this);						// [Any]
+			auto pPUnitOfBeginSequence =
+				composer.Add_BeginSequence(*this);						// [Any]
 			GetExprRight()->ComposeOrNil(composer);						// [Any]
 			composer.Add_Return(*this);
 			const PUnit* pPUnitCont = composer.PeekPUnitCont();
 			pPUnitOfBranch->SetPUnitCont(pPUnitCont);
-			//pPUnitOfBeginSequence->SetPUnitSentinel(pPUnitCont);
+			pPUnitOfBeginSequence->SetPUnitSentinel(pPUnitCont);
 		} while (0);
 	} else {
 		GetExprLeft()->ComposeOrNil(composer);							// [Left]
