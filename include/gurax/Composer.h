@@ -84,6 +84,8 @@ public:
 	RefPtr<PUnitFactory> Add_PopValue(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	RefPtr<PUnitFactory> Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
+	RefPtr<PUnitFactory> Add_Break(const Expr& exprSrc);
+	RefPtr<PUnitFactory> Add_Continue(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_Return(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_PushFrame_Block(const Expr& exprSrc);
 	RefPtr<PUnitFactory> Add_PopFrame(const Expr& exprSrc);

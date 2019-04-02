@@ -1560,6 +1560,78 @@ PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Break
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+const PUnit* PUnit_Break<discardValueFlag>::Exec(Processor& processor) const
+{
+	const PUnit* pPUnit = processor.PopPUnit();
+	// Since nullptr means the end of the processor loop, there's no need to
+	// pop frame or value from their stacks.
+	if (!pPUnit) return nullptr;	
+	processor.PopFrame();
+	if (discardValueFlag) processor.PopValue();
+	return pPUnit->GetPUnitCont();
+}
+
+template<bool discardValueFlag>
+String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "Break()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Break<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_Break<false>(_pExprSrc.release(), _seqId);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Continue
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+const PUnit* PUnit_Continue<discardValueFlag>::Exec(Processor& processor) const
+{
+	const PUnit* pPUnit = processor.PopPUnit();
+	// Since nullptr means the end of the processor loop, there's no need to
+	// pop frame or value from their stacks.
+	if (!pPUnit) return nullptr;	
+	processor.PopFrame();
+	if (discardValueFlag) processor.PopValue();
+	return pPUnit->GetPUnitCont();
+}
+
+template<bool discardValueFlag>
+String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "Continue()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _seqId);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Return
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)

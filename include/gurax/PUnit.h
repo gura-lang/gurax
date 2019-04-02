@@ -1749,6 +1749,74 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Break
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_Break : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_Break(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return nullptr; }
+};
+
+class PUnitFactory_Break : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_Break");
+public:
+	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId) :
+		PUnitFactory(pExprSrc, seqId) {}
+	virtual const PUnit* CalcPUnitCont(const void *p) const override {
+		return reinterpret_cast<const PUnit_Break<false>*>(p) + 1;
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_Continue
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_Continue : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_Continue(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return nullptr; }
+};
+
+class PUnitFactory_Continue : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_Continue");
+public:
+	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId) :
+		PUnitFactory(pExprSrc, seqId) {}
+	virtual const PUnit* CalcPUnitCont(const void *p) const override {
+		return reinterpret_cast<const PUnit_Continue<false>*>(p) + 1;
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Return
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

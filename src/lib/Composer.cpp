@@ -283,6 +283,18 @@ RefPtr<PUnitFactory> Composer::Add_RemoveValues(const Expr& exprSrc, size_t offs
 	return GetFactory().Reference();
 }
 
+RefPtr<PUnitFactory> Composer::Add_Break(const Expr& exprSrc)
+{
+	SetFactory(new PUnitFactory_Break(exprSrc.Reference(), NextSeqId()));
+	return GetFactory().Reference();
+}
+
+RefPtr<PUnitFactory> Composer::Add_Continue(const Expr& exprSrc)
+{
+	SetFactory(new PUnitFactory_Continue(exprSrc.Reference(), NextSeqId()));
+	return GetFactory().Reference();
+}
+
 RefPtr<PUnitFactory> Composer::Add_Return(const Expr& exprSrc)
 {
 	SetFactory(new PUnitFactory_Return(exprSrc.Reference(), NextSeqId()));

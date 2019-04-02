@@ -269,8 +269,8 @@ Gurax_ImplementStatement(repeat)
 						 "repeat-statement takes zero or one argument");
 		return;
 	}
-	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	if (declArgsOfBlock.empty()) {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);							// [Any]
@@ -325,6 +325,17 @@ Gurax_DeclareStatementAlias(break_, "break")
 
 Gurax_ImplementStatement(break_)
 {
+	if (exprCaller.CountExprCdr() > 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "break-statement takes zero or one argument");
+		return;
+	}
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	if (pExprCdr) {
+		composer.Add_PopValue(exprCaller);
+		pExprCdr->ComposeOrNil(composer);							// [Any]
+	}
+	composer.Add_Break(exprCaller);
 }
 
 // continue(value?)
@@ -336,6 +347,17 @@ Gurax_DeclareStatementAlias(continue_, "continue")
 
 Gurax_ImplementStatement(continue_)
 {
+	if (exprCaller.CountExprCdr() > 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "continue-statement takes zero or one argument");
+		return;
+	}
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	if (pExprCdr) {
+		composer.Add_PopValue(exprCaller);
+		pExprCdr->ComposeOrNil(composer);							// [Any]
+	}
+	composer.Add_Continue(exprCaller);
 }
 
 // return(value?)
@@ -347,6 +369,17 @@ Gurax_DeclareStatementAlias(return_, "return")
 
 Gurax_ImplementStatement(return_)
 {
+	if (exprCaller.CountExprCdr() > 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "return-statement takes zero or one argument");
+		return;
+	}
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	if (pExprCdr) {
+		composer.Add_PopValue(exprCaller);
+		pExprCdr->ComposeOrNil(composer);							// [Any]
+	}
+	composer.Add_Return(exprCaller);
 }
 
 void Statements::PrepareBasic(Frame& frame)
