@@ -50,7 +50,7 @@ void PUnitList::Print() const
 //------------------------------------------------------------------------------
 Value* Iterator_EachPUnit::NextValue()
 {
-	if (!_pPUnit || _pPUnit == _pPUnitEndOfQuote) return nullptr;
+	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
 	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
 	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
 	_pPUnit = (_returnAsEndFlag && _pPUnit->IsReturn())? nullptr : _pPUnit->GetPUnitNext();
@@ -60,7 +60,7 @@ Value* Iterator_EachPUnit::NextValue()
 size_t Iterator_EachPUnit::GetLength() const
 {
 	const PUnit* pPUnit = _pPUnit;
-	if (!pPUnit || pPUnit == _pPUnitEndOfQuote) return 0;
+	if (!pPUnit || pPUnit == _pPUnitSentinel) return 0;
 	for ( ; pPUnit->IsBridge(); pPUnit = _pPUnit->GetPUnitNext()) ;
 	size_t cnt = 0;
 	while (pPUnit) {

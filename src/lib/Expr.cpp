@@ -34,13 +34,15 @@ void Expr::ComposeOrNil(Composer& composer)
 
 Iterator* Expr::EachPUnit() const
 {
-	const PUnit* pPUnitEndOfQuote = nullptr;
+	const PUnit* pPUnitSentinel = nullptr;
 	const PUnit* pPUnit = GetPUnitTop();
-	if (pPUnit && pPUnit->GetPUnitEndOfQuote()) {
-		pPUnitEndOfQuote = pPUnit->GetPUnitEndOfQuote();
+	if (!pPUnit) {
+		// nothing to do
+	} else if (pPUnit->GetPUnitEndOfQuote()) {
+		pPUnitSentinel = pPUnit->GetPUnitEndOfQuote();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 	}
-	return new Iterator_EachPUnit(pPUnit, pPUnitEndOfQuote, true);
+	return new Iterator_EachPUnit(pPUnit, pPUnitSentinel, true);
 }
 
 int Expr::CalcIndentLevel() const
