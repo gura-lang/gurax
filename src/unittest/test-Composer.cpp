@@ -5,75 +5,55 @@
 
 namespace Gurax {
 
-static const char* src = R"(
-i = 0
-f() = {
-	Printf('%d\n', i)
-	i += 1
-}
-f()
-)";
+struct Info {
+	const char* title;
+	const char* src;
+};
 
-#if 0
-static const char* src = R"(
-a = 3
-if (a == 3) {
-	Println('a is 3')
-} else {
-	Println('a is not 3')
+static const Info infoTbl[] = {
+{"Identifier", R"(
+var
+var = 3
+)"},
+{"Statement-repeat", R"(
+repeat {
 }
-)";
-#endif
-
-#if 0
-static const char* src = R"(
-a = 3
-b = 2
-c = a + b
-Println('Hello World')
-Println(c)
-v = [3, 1, 4, 1]
-Println(v)
-Println(v[0])
-//f()
-//f(3, 1, 4, 1)
-if (a == 3) {
-	Println('a is three')
+)"},
+{"Statement-for", R"(
+for (a in b) {
 }
-a = 0
-while (a < 3) {
-	Printf('Hello World #%d\n', a)
-	a += 1
+)"},
+{"Statement-while", R"(
+while (a) {
 }
-)";
-#endif
-
-#if 0
-static const char* src = R"(
-a = 0
-while (a < 3) {|i|
-	Printf('Hello World #%d\n', i)
-	a += 1
-}
-)";
-#endif
+)"},
+{"Statement-return", R"(
+return
+return(1)
+)"},
+};
 
 Gurax_TesterEntry(Composer)
 {
-	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseString(src));
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
+	auto TestFunc = [](const Info& info) {
+		PrintTitle(info.title);
 		Error::Clear();
-		return;
-	}
-	Composer composer;
-	pExprOfRoot->Compose(composer);
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
-		Error::Clear();
-		return;
-	}
-	composer.PrintPUnit();
+		RefPtr<Expr_Root> pExprOfRoot(Parser::ParseString(info.src));
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			Error::Clear();
+			return;
+		}
+		Composer composer;
+		pExprOfRoot->Compose(composer);
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			Error::Clear();
+			return;
+		}
+		composer.PrintPUnit();
+	};
+	for (size_t i = 0; i < ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
 }
 
 }

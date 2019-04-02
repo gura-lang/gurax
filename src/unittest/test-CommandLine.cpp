@@ -3,8 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define ArraySizeOf(x) (sizeof(x) / sizeof(x[0]))
-
 namespace Gurax {
 
 Gurax_TesterEntry(CommandLine)

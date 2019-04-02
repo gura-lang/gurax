@@ -5,7 +5,13 @@
 
 namespace Gurax {
 
-static const char* src_ReduceOneToken = R"(
+struct Info {
+	const char* title;
+	const char* src;
+};
+
+static const Info infoTbl[] = {
+{"ReduceOneToken", R"(
 123456
 'foo'
 b'\x12\x34\x56'
@@ -17,9 +23,8 @@ foo
 -
 123456S
 'foo'S
-)";
-
-static const char* src_ReduceTwoTokens = R"(
+)"},
+{"ReduceTwoTokens", R"(
 ()
 []
 {}
@@ -47,9 +52,8 @@ static const char* src_ReduceTwoTokens = R"(
 123456?
 123456%
 123456..
-)";
-
-static const char* src_ReduceThreeTokens = R"(
+)"},
+{"ReduceThreeTokens", R"(
 a + b
 a - b
 a * b
@@ -162,9 +166,8 @@ f[
   elem2
   elem3
 ]
-)";
-
-static const char* src_ReduceFourAndFiveTokens = R"(
+)"},
+{"ReduceFourAndFiveTokens", R"(
 f() g()
 f() g() h() k() l() m()
 f() g(a)
@@ -185,9 +188,8 @@ f(a, b, c) {|a, b, c|
 }
 if (a == b) {foo}
 f(a:number, b:string, c:symbol) = {}
-)";
-
-static const char* src_Attribute = R"(
+)"},
+{"Attribute", R"(
 a:b
 a:b:c:d
 a:b.c.d:e:f
@@ -216,13 +218,15 @@ v[elem1,elem2,elem3]:[b,c,d]
 v[elem1,elem2,elem3]:[b,c,d]:e:f:g
 v[elem1,elem2,elem3]:e:f:g:[b,c,d]
 v[elem1,elem2,elem3]:e:f:g:[b,c,d]:[h,i,k]
-)";
+)"},
+};
 
 Gurax_TesterEntry(Parser)
 {
-	auto TestFunc = [](const char* src) {
+	auto TestFunc = [](const Info& info) {
+		PrintTitle(info.title);
 		Error::Clear();
-		RefPtr<Expr_Root> pExprRoot = Parser::ParseString(src);
+		RefPtr<Expr_Root> pExprRoot = Parser::ParseString(info.src);
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			return;
@@ -231,20 +235,7 @@ Gurax_TesterEntry(Parser)
 			::printf("%s\n", pExpr->ToString().c_str());
 		}
 	};
-#if 1
-	PrintTitle("ReduceOneToken");
-	TestFunc(src_ReduceOneToken);
-	PrintTitle("ReduceTwoTokens");
-	TestFunc(src_ReduceTwoTokens);
-	PrintTitle("ReduceThreeTokens");
-	TestFunc(src_ReduceThreeTokens);
-	PrintTitle("ReduceFourAndFiveTokens");
-	TestFunc(src_ReduceFourAndFiveTokens);
-	PrintTitle("Attribute");
-	TestFunc(src_Attribute);
-#else
-	TestFunc(src_Attribute);
-#endif
+	for (size_t i = 0; i < ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
 }
 
 }

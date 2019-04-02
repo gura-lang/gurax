@@ -441,7 +441,7 @@ template<bool discardValueFlag>
 String PUnit_EvalIterator<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("EvalIterator(offset=%zu,branch=%s)", GetOffset(),
+	str.Printf("EvalIterator(offsetToIterator=%zu,branch=%s)", GetOffset(),
 			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -481,7 +481,7 @@ template<bool discardValueFlag>
 String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ForEach(offset=%zu,branch=%s)", GetOffset(),
+	str.Printf("ForEach(offsetToIterator=%zu,branch=%s)", GetOffset(),
 			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -621,7 +621,7 @@ template<bool discardValueFlag>
 String PUnit_ListElem<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ListElem(offset=%zu)", GetOffset());
+	str.Printf("ListElem(offsetToList=%zu)", GetOffset());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -688,7 +688,7 @@ template<bool discardValueFlag>
 String PUnit_DictElem<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("DictElem(offset=%zu)", GetOffset());
+	str.Printf("DictElem(offsetToDict=%zu)", GetOffset());
 	AppendInfoToString(str, ss);
 	return str;
 }

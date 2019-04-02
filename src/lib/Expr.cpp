@@ -223,7 +223,18 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 
 void Expr_Identifier::Compose(Composer& composer)
 {
-	composer.Add_Lookup(*this, GetSymbol());		// [Value]
+	const Symbol* pSymbol = GetSymbol();
+	Value* pValue = Context::GetFrame().Lookup(pSymbol);
+	if (pValue && pValue->IsType(VTYPE_Function)) {
+		const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
+		if (func.IsTypeStatement()) {
+			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
+			pExprCaller->SetExprCar(new Expr_Identifier(pSymbol));
+			func.Compose(composer, *pExprCaller);
+			return;
+		}
+	}
+	composer.Add_Lookup(*this, pSymbol);					// [Value]
 }
 
 void Expr_Identifier::ComposeForAssignment(
