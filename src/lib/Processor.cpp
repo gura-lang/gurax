@@ -31,7 +31,7 @@ Processor* Processor::Create(bool debugFlag)
 void Processor_Normal::RunLoop(const PUnit* pPUnit)
 {
 	if (!pPUnit) return;
-	if (pPUnit->GetPUnitSentinel()) {
+	if (pPUnit->IsBeginQuote()) {
 		const PUnit* pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 		while (pPUnit && pPUnit != pPUnitSentinel) pPUnit = pPUnit->Exec(*this);
@@ -54,7 +54,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	if (!pPUnit) return;
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
-	if (pPUnit->GetPUnitSentinel()) {
+	if (pPUnit->IsBeginQuote()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 	} else {
