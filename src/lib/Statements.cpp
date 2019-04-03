@@ -382,11 +382,12 @@ Gurax_ImplementStatement(return_)
 	composer.Add_Return(exprCaller);
 }
 
-// import(`name)
+// import(`name) {`block?}
 Gurax_DeclareFunction(import)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
 }
 
 Gurax_ImplementFunction(import)

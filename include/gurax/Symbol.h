@@ -50,6 +50,7 @@ public:
 	// Destructor
 	~SymbolList() = default;
 public:
+	bool AddFromExprList(const ExprList& exprList);
 	SymbolList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	template<typename T_Map> static SymbolList CollectKeys(const T_Map& map);
 	bool IsEqualTo(const SymbolList& symbolList) const;

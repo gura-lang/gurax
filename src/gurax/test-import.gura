@@ -1,0 +1,5 @@
+#!./gurax
+import(foo)
+
+Println(foo)
+foo.Func()

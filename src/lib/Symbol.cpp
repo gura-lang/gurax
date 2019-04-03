@@ -79,6 +79,17 @@ void Symbol::PrintAllSymbols()
 //------------------------------------------------------------------------------
 const SymbolList SymbolList::Empty;
 
+bool SymbolList::AddFromExprList(const ExprList& exprList)
+{
+	for (const Expr* pExpr : exprList) {
+		if (!pExpr->IsType<Expr_Identifier>()) {
+			return false;
+		}
+		push_back(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+	}
+	return true;
+}
+
 SymbolList& SymbolList::Sort(SortOrder sortOrder)
 {
 	if (sortOrder == SortOrder::Ascend) {
