@@ -19,5 +19,17 @@ void VType_Module::DoPrepare(Frame& frame)
 //------------------------------------------------------------------------------
 // Value_Module
 //------------------------------------------------------------------------------
+String Value_Module::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str.Printf(":%s>", GetModule().GetDottedSymbol().ToString().c_str());
+	return str;
+}
+
+String Value_Module::ToStringDetail(const StringStyle& ss) const
+{
+	return ToStringDigest(ss);
+}
 
 }
