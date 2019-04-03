@@ -393,10 +393,10 @@ Gurax_ImplementFunction(import)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const Expr& exprName = args.PickExpr();
+	const Expr& name = args.PickExpr();
 	// Function body
 	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
-	if (!pDottedSymbol->AppendFromExpr(exprName)) {
+	if (!pDottedSymbol->AppendFromExpr(name)) {
 		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
 		return Value::nil();
 	}
@@ -420,7 +420,7 @@ Gurax_ImplementFunction(import)
 	}
 	RefPtr<Module> pModule(new Module(pDottedSymbol->Reference(), processor.GetFrameCur().Reference()));
 	processor.PushFrame(pModule->GetFrame().Reference());
-	composer.DoEval(processor);
+	processor.Eval(composer);
 	processor.PopFrame();
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);

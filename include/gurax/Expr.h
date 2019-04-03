@@ -133,7 +133,6 @@ public:
 	void SetPUnitTop(const PUnit* pPUnit) { if (!_pPUnitTop) _pPUnitTop = pPUnit; }
 	const PUnit* GetPUnitTop() const { return _pPUnitTop; }
 public:
-	Value* DoEval(Processor& processor) const;
 	void ComposeOrNil(Composer& composer);
 	Iterator* EachPUnit() const;
 	int CalcIndentLevel() const;

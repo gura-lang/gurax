@@ -64,7 +64,10 @@ public:
 	}
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
-public:
+	void Eval(const PUnit* pPUnit) { RunLoop(pPUnit); }
+	void Eval(const Composer& composer) { RunLoop(composer.GetPUnitFirst()); }
+	Value* Eval(const Expr& expr);
+protected:
 	virtual void RunLoop(const PUnit* pPUnit) = 0;
 };
 
@@ -72,7 +75,7 @@ public:
 // Processor_Normal
 //------------------------------------------------------------------------------
 class Processor_Normal : public Processor {
-public:
+protected:
 	// Virtual function of Processor
 	virtual void RunLoop(const PUnit* pPUnit) override;
 };
@@ -81,7 +84,7 @@ public:
 // Processor_Debug
 //------------------------------------------------------------------------------
 class Processor_Debug : public Processor {
-public:
+protected:
 	// Virtual function of Processor
 	virtual void RunLoop(const PUnit* pPUnit) override;
 };

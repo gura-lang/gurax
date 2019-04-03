@@ -34,7 +34,7 @@ Gurax_ImplementMethod(Expr, Eval)
 {
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
-	return expr.DoEval(processor);
+	return processor.Eval(expr);
 }
 
 //------------------------------------------------------------------------------

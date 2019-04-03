@@ -25,6 +25,13 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
+Value* Processor::Eval(const Expr& expr)
+{
+	if (!expr.GetPUnitTop()) return Value::nil();
+	RunLoop(expr.GetPUnitTop());
+	return Error::IsIssued()? Value::nil() : PopValue();
+}
+
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
@@ -36,6 +43,7 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 		while (pPUnit && pPUnit != pPUnitSentinel) pPUnit = pPUnit->Exec(*this);
 	} else {
+		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		while (pPUnit) pPUnit = pPUnit->Exec(*this);
 	}
 }
@@ -58,6 +66,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
 	} else {
+		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		PrintPUnit(stream, pPUnit);
 		pPUnit = pPUnit->Exec(*this);
 	}

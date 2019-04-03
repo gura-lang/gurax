@@ -35,11 +35,6 @@ void Composer::Flush(bool discardValueFlag)
 	}
 }
 
-void Composer::DoEval(Processor& processor) const
-{
-	processor.RunLoop(GetPUnitFirst());
-}
-
 RefPtr<PUnitFactory> Composer::Add_Value(const Expr& exprSrc, Value* pValue)
 {
 	SetFactory(new PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue));
