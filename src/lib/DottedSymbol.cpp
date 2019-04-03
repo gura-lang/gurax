@@ -62,8 +62,9 @@ bool DottedSymbol::AppendFromString(const char* str)
 }
 
 // Append symbols from Exprs that are chained by member operator ".".
-bool DottedSymbol::AppendFromExpr(const Expr* pExpr)
+bool DottedSymbol::AppendFromExpr(const Expr& expr)
 {
+	const Expr* pExpr = &expr;
 	for (;;) {
 		if (pExpr->IsType<Expr_Member>()) {
 			const Expr_Member* pExprMember = dynamic_cast<const Expr_Member*>(pExpr);

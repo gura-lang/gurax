@@ -536,7 +536,7 @@ bool Parser::ReduceThreeTokens()
 				}
 				do {
 					RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
-					if (!pDottedSymbol->AppendFromExpr(pExprRight.get())) {
+					if (!pDottedSymbol->AppendFromExpr(*pExprRight)) {
 						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 								   "invalid format of dotted-symbol");
 						return false;

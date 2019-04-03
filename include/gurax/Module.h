@@ -22,9 +22,10 @@ protected:
 	RefPtr<Frame> _pFrame;
 public:
 	// Constructor
-	Module() : Module(DottedSymbol::Empty.Reference()) {}
-	Module(DottedSymbol* pDottedSymbol) :
-		_pDottedSymbol(pDottedSymbol), _pHelpProvider(new HelpProvider()), _pFrame(new Frame_ValueMap()) {}
+	Module() = delete;
+	Module(Frame* pFrameOuter) : Module(DottedSymbol::Empty.Reference(), pFrameOuter) {}
+	Module(DottedSymbol* pDottedSymbol, Frame* pFrameOuter) :
+		_pDottedSymbol(pDottedSymbol), _pHelpProvider(new HelpProvider()), _pFrame(new Frame_Module(pFrameOuter)) {}
 	// Copy constructor/operator
 	Module(const Module& src) = delete;
 	Module& operator=(const Module& src) = delete;

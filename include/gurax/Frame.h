@@ -160,6 +160,25 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Frame_Module
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Frame_Module : public Frame_Branch {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Frame_Module);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Frame_Module");
+public:
+	// Constructor
+	explicit Frame_Module(Frame* pFrameOuter);
+public:
+	// Virtual functions of Frame
+	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual Value* Lookup(const Symbol* pSymbol) const override;
+};
+
+//------------------------------------------------------------------------------
 // Frame_Function
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Frame_Function : public Frame_Branch {

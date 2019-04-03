@@ -15,6 +15,7 @@ const ErrorType ErrorType::DividedByZero("divided by zero");
 const ErrorType ErrorType::IndexError("index error");
 const ErrorType ErrorType::InvalidOperation("invalid operation");
 const ErrorType ErrorType::IteratorError("iterator error");
+const ErrorType ErrorType::StreamError("stream error");
 const ErrorType ErrorType::SyntaxError("syntax error");
 const ErrorType ErrorType::TypeError("type error");
 const ErrorType ErrorType::ValueError("value error");

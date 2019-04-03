@@ -103,7 +103,7 @@ public:
 	void Append(const char* str) { _symbolList.push_back(Symbol::Add(str)); }
 	bool AppendFromExprList(const ExprList& exprList);
 	bool AppendFromString(const char* str);
-	bool AppendFromExpr(const Expr* pExpr);
+	bool AppendFromExpr(const Expr& expr);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	bool IsDotted() const { return _symbolList.size() > 1; }
 	bool IsEmpty() const { return _symbolList.empty(); }

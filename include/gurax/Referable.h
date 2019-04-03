@@ -76,6 +76,7 @@ public:
 	T* get() { return _p; }
 	T* get() const { return _p; }
 	T* release() { T* p = _p; _p = nullptr; return p; }
+	T* Reference() const { return _p? _p->Reference() : nullptr; }
 	explicit operator bool() const { return static_cast<bool>(_p); }
 };
 
