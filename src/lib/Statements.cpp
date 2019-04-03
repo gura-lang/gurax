@@ -401,32 +401,8 @@ Gurax_ImplementFunction(import)
 		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
 		return Value::nil();
 	}
-	String fileName = pDottedSymbol->ToString();
-	fileName += ".gura";
-	RefPtr<Stream> pStream(Stream_File::Open(fileName.c_str(), "rt"));
-	if (!pStream) {
-		Error::Issue(ErrorType::StreamError, "failed to open a module file '%s'", fileName.c_str());
-		return Value::nil();
-	}
-	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
-		return Value::nil();
-	}
-	Composer composer;
-	pExprOfRoot->Compose(composer);
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
-		return Value::nil();
-	}
-	RefPtr<Module> pModule(new Module(pDottedSymbol->Reference(), processor.GetFrameCur().Reference()));
-	processor.PushFrame(pModule->GetFrame().Reference());
-	processor.Eval(composer);
-	processor.PopFrame();
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
-		return Value::nil();
-	}
+	RefPtr<Module> pModule(Module::Import(processor, *pDottedSymbol));
+	if (!pModule) return Value::nil();
 	processor.GetFrameCur().Assign(pModule.Reference());
 	return new Value_Module(pModule.release());
 }

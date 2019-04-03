@@ -46,6 +46,7 @@ public:
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
+	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Module& module) const { return this == &module; }
