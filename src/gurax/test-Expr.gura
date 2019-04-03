@@ -1,14 +1,5 @@
 #!./gurax
-PrintPUnit(expr:Expr) = {
-	seqIdOffset = 0
-	punits = expr.EachPUnit()
-	punit = punits.NextValue()
-	seqIdOffset = punit.seqId
-	while (punit) {
-		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
-		punit = punits.NextValue()
-	}
-}
+import(util)
 Println('--------')
 expr = `{
 	f(a, b, c) {
@@ -16,19 +7,19 @@ expr = `{
 	}
 }
 Printf('%s\n', expr)
-PrintPUnit(expr)
+util.PrintPUnit(expr)
 Println('--------')
 expr = `(a)
 Printf('`(%s)\n', expr)
-PrintPUnit(expr)
+util.PrintPUnit(expr)
 Println('--------')
 f(`expr) = {
 	Printf('f(`(%s))\n', expr)
-	PrintPUnit(expr)
+	util.PrintPUnit(expr)
 }
 f(a = 3)
 Println('--------')
 expr = `{
 	while (a < 3) {}
 }
-PrintPUnit(expr)
+util.PrintPUnit(expr)
