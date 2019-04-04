@@ -127,29 +127,31 @@ public:
 	static char ToEscaped(char ch)			{ return _toEscapedTbl[static_cast<UChar>(ch)];		}
 public:
 	String PickChar(size_t idx) const;
-	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const;
 	static const char* Forward(const char* p, size_t nChars = 1, size_t *pnCharsActual = nullptr);
-	UInt64 NextUTF8(const_iterator* pp) const;
+	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const;
 	static UInt64 NextUTF8(const char** pp);
-	UInt32 NextUTF32(const_iterator* pp) const;
+	UInt64 NextUTF8(const_iterator* pp) const;
 	static UInt32 NextUTF32(const char** pp);
+	UInt32 NextUTF32(const_iterator* pp) const;
 public:
-	String& AppendN(const char* str, size_t n);
+	String& AppendNTimes(const char* str, size_t n);
+	String& AppendNChars(const char* str, size_t len);
 	String& AppendUTF8(UInt64 codeUTF8);
 	String& AppendUTF32(UInt32 codeUTF32);
+public:
 	String& PrintfV(const char* format, va_list ap);
 	String& Printf(const char* format, ...);
 	String& PrintFmt(const char* format, const ValueList& valueList);
 public:
-	String MakeQuoted(bool surroundFlag) const { return MakeQuoted(c_str(), surroundFlag); }
 	static String MakeQuoted(const char* str, bool surroundFlag);
+	String MakeQuoted(bool surroundFlag) const { return MakeQuoted(c_str(), surroundFlag); }
 public:
-	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }
 	static Double ToNumber(const char* str, bool* pSuccessFlag = nullptr);
+	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }
 public:
-	size_t CalcHash() const { return CalcHash(c_str(), size()); }
 	static size_t CalcHash(const char* str);
 	static size_t CalcHash(const char* str, size_t len);
+	size_t CalcHash() const { return CalcHash(c_str(), size()); }
 	static bool IsEqualTo(const char* str1, const char* str2)		{ return ::strcmp(str1, str2) == 0; }
 	bool IsEqualTo(const char* str) const							{ return IsEqualTo(c_str(), str); }
 	bool IsEqualTo(const String& str) const							{ return IsEqualTo(c_str(), str.c_str()); }
@@ -229,6 +231,25 @@ public:
 	size_t Length() const { return Length(c_str()); }
 	static size_t Width(const char* str);
 	size_t Width() const { return Width(c_str()); }
+public:
+	// Alignment/Extraction/Replacement
+	static String Center(const char* str, size_t width, const char* padding);
+	String Center(size_t width, const char* padding) { return Center(c_str(), width, padding); }
+	static String LJust(const char* str, size_t width, const char* padding);
+	String LJust(size_t width, const char* padding) { return LJust(c_str(), width, padding); }
+	static String RJust(const char* str, size_t width, const char* padding);
+	String RJust(size_t width, const char* padding) { return RJust(c_str(), width, padding); }
+	static String Left(const char* str, size_t len);
+	String Left(size_t len) { return Left(c_str(), len); }
+	static String Right(const char* str, size_t len);
+	String Right(size_t len) { return Right(c_str(), len); }
+	static String Middle(const char* str, int start, size_t len);
+	String Middle(int start, size_t len) { return Middle(c_str(), start, len); }
+	static String Replace(const char* str, const char* sub, const char* replace,
+						  int nMaxReplace, bool ignoreCaseFlag);
+	String Replace(const char* sub, const char* replace, int nMaxReplace, bool ignoreCaseFlag) {
+		return Replace(c_str(), sub, replace, nMaxReplace, ignoreCaseFlag);
+	}
 };
 
 inline String operator+(const String& v1, const String& v2) {

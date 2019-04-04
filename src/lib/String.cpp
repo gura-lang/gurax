@@ -113,20 +113,6 @@ String String::PickChar(size_t idx) const
 	return str;
 }
 
-String::const_iterator String::Forward(const_iterator p, size_t nChars, size_t *pnCharsActual) const
-{
-	size_t nCharsActual = 0;
-	for ( ; p != end() && nCharsActual < nChars; nCharsActual++) {
-		char ch = *p;
-		p++;
-		if (IsUTF8First(ch)) {
-			while (p != end() && IsUTF8Follower(*p)) p++;
-		}
-	}
-	if (pnCharsActual) *pnCharsActual = nCharsActual;
-	return p;
-}
-
 const char* String::Forward(const char* p, size_t nChars, size_t *pnCharsActual)
 {
 	size_t nCharsActual = 0;
@@ -141,22 +127,18 @@ const char* String::Forward(const char* p, size_t nChars, size_t *pnCharsActual)
 	return p;
 }
 
-UInt64 String::NextUTF8(const_iterator* pp) const
+String::const_iterator String::Forward(const_iterator p, size_t nChars, size_t *pnCharsActual) const
 {
-	const_iterator& p = *pp;
-	UInt64 codeUTF8 = 0x000000000000;
-	if (p != end()) {
+	size_t nCharsActual = 0;
+	for ( ; p != end() && nCharsActual < nChars; nCharsActual++) {
 		char ch = *p;
-		codeUTF8 = static_cast<UChar>(ch);
 		p++;
 		if (IsUTF8First(ch)) {
-			while (p != end() && IsUTF8Follower(*p)) {
-				codeUTF8 = (codeUTF8 << 8) | static_cast<UChar>(*p);
-				p++;
-			}
+			while (p != end() && IsUTF8Follower(*p)) p++;
 		}
 	}
-	return codeUTF8;
+	if (pnCharsActual) *pnCharsActual = nCharsActual;
+	return p;
 }
 
 UInt64 String::NextUTF8(const char** pp)
@@ -177,40 +159,22 @@ UInt64 String::NextUTF8(const char** pp)
 	return codeUTF8;
 }
 
-UInt32 String::NextUTF32(const_iterator* pp) const
+UInt64 String::NextUTF8(const_iterator* pp) const
 {
 	const_iterator& p = *pp;
-	UInt32 codeUTF32 = 0x00000000;
-	if (p == end()) {
-		// nothing to do
-	} else if ((*p & 0x80) == 0x00) {
-		codeUTF32 = static_cast<UChar>(*p);
+	UInt64 codeUTF8 = 0x000000000000;
+	if (p != end()) {
+		char ch = *p;
+		codeUTF8 = static_cast<UChar>(ch);
 		p++;
-	} else {
-		int cntChars = 0;
-		if ((*p & 0xe0) == 0xc0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x1f;
-			cntChars = 1;
-		} else if ((*p & 0xf0) == 0xe0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x0f;
-			cntChars = 2;
-		} else if ((*p & 0xf8) == 0xf0) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x07;
-			cntChars = 3;
-		} else if ((*p & 0xfc) == 0xf8) {
-			codeUTF32 = static_cast<UChar>(*p) & 0x03;
-			cntChars = 4;
-		} else {
-			codeUTF32 = static_cast<UChar>(*p) & 0x01;
-			cntChars = 5;
-		}
-		p++;
-		for (int i = 0; p != end() && i < cntChars &&
-				 (static_cast<UChar>(*p) & 0xc0) == 0x80; ++i, ++p) {
-			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+		if (IsUTF8First(ch)) {
+			while (p != end() && IsUTF8Follower(*p)) {
+				codeUTF8 = (codeUTF8 << 8) | static_cast<UChar>(*p);
+				p++;
+			}
 		}
 	}
-	return codeUTF32;
+	return codeUTF8;
 }
 
 UInt32 String::NextUTF32(const char** pp)
@@ -249,9 +213,61 @@ UInt32 String::NextUTF32(const char** pp)
 	return codeUTF32;
 }
 
-String& String::AppendN(const char* str, size_t n)
+UInt32 String::NextUTF32(const_iterator* pp) const
+{
+	const_iterator& p = *pp;
+	UInt32 codeUTF32 = 0x00000000;
+	if (p == end()) {
+		// nothing to do
+	} else if ((*p & 0x80) == 0x00) {
+		codeUTF32 = static_cast<UChar>(*p);
+		p++;
+	} else {
+		int cntChars = 0;
+		if ((*p & 0xe0) == 0xc0) {
+			codeUTF32 = static_cast<UChar>(*p) & 0x1f;
+			cntChars = 1;
+		} else if ((*p & 0xf0) == 0xe0) {
+			codeUTF32 = static_cast<UChar>(*p) & 0x0f;
+			cntChars = 2;
+		} else if ((*p & 0xf8) == 0xf0) {
+			codeUTF32 = static_cast<UChar>(*p) & 0x07;
+			cntChars = 3;
+		} else if ((*p & 0xfc) == 0xf8) {
+			codeUTF32 = static_cast<UChar>(*p) & 0x03;
+			cntChars = 4;
+		} else {
+			codeUTF32 = static_cast<UChar>(*p) & 0x01;
+			cntChars = 5;
+		}
+		p++;
+		for (int i = 0; p != end() && i < cntChars &&
+				 (static_cast<UChar>(*p) & 0xc0) == 0x80; ++i, ++p) {
+			codeUTF32 = (codeUTF32 << 6) | (static_cast<UChar>(*p) & 0x3f);
+		}
+	}
+	return codeUTF32;
+}
+
+String& String::AppendNTimes(const char* str, size_t n)
 {
 	while (n-- > 0) append(str);
+	return *this;
+}
+
+String& String::AppendNChars(const char* str, size_t len)
+{
+	for ( ; *str != '\0' && len > 0; len--) {
+		int ch = static_cast<UChar>(*str);
+		push_back(*str);
+		str++;
+		if (IsUTF8First(ch)) {
+			while (IsUTF8Follower(*str)) {
+				push_back(*str);
+				str++;
+			}
+		}
+	}
 	return *this;
 }
 
@@ -424,6 +440,109 @@ size_t String::Width(const char* str)
 		}
 	}
 	return width;
+}
+
+String String::Center(const char* str, size_t width, const char* padding)
+{
+	size_t widthBody = Width(str);
+	if (width <= widthBody) return String(str);
+	String rtn;
+	size_t widthRight = (width - widthBody) / 2;
+	size_t widthLeft = width - widthBody - widthRight;
+	while (widthLeft-- > 0) rtn += padding;
+	rtn += str;
+	while (widthRight-- > 0) rtn += padding;
+	return rtn;
+}
+
+String String::LJust(const char* str, size_t width, const char* padding)
+{
+	size_t widthBody = Width(str);
+	if (width <= widthBody) return String(str);
+	String rtn;
+	size_t widthRight = width - widthBody;
+	rtn += str;
+	while (widthRight-- > 0) rtn += padding;
+	return rtn;
+}
+
+String String::RJust(const char* str, size_t width, const char* padding)
+{
+	size_t widthBody = Width(str);
+	if (width <= widthBody) return String(str);
+	String rtn;
+	size_t widthLeft = width - widthBody;
+	while (widthLeft-- > 0) rtn += padding;
+	rtn += str;
+	return rtn;
+}
+
+String String::Left(const char* str, size_t len)
+{
+	String rtn;
+	rtn.AppendNChars(str, len);
+	return rtn;
+}
+
+String String::Right(const char* str, size_t len)
+{
+	size_t lenSrc = Length(str);
+	if (lenSrc > len) {
+		str = Forward(str, lenSrc - len);
+	}
+	return String(str);
+}
+
+String String::Middle(const char* str, int start, size_t len)
+{
+	int lenSrc = static_cast<int>(Length(str));
+	if (start < 0) {
+		start += lenSrc;
+		if (start < 0) start = 0;
+	}
+	if (start >= lenSrc || len == 0) {
+		return String("");
+	} else if (len > 0 && start + len < lenSrc) {
+		str = Forward(str, start);
+		String rtn;
+		rtn.AppendNChars(str, len);
+		return rtn;
+	} else {
+		str = Forward(str, start);
+		return String(str);
+	}
+}
+
+String String::Replace(const char* str, const char* sub, const char* replace,
+					   int nMaxReplace, bool ignoreCaseFlag)
+{
+	String result;
+	int lenSub = static_cast<int>(::strlen(sub));
+	if (lenSub == 0) {
+		if (nMaxReplace != 0) {
+			result += replace;
+			nMaxReplace--;
+		}
+		const char* p = str;
+		for ( ; *p != '\0' && nMaxReplace != 0; p++, nMaxReplace--) {
+			result += *p;
+			result += replace;
+		}
+		result += p;
+	} else {
+		const char* pLeft = str;
+#if 0
+		const char* pRight = ignoreCaseFlag? FindICase(pLeft, sub) : Find(pLeft, sub);
+		for ( ; pRight != nullptr && nMaxReplace != 0;
+			  pRight = FindString(pLeft, sub, ignoreCaseFlag), nMaxReplace--) {
+			result.append(pLeft, pRight - pLeft);
+			result += replace;
+			pLeft = pRight + lenSub;
+		}
+#endif
+		result += pLeft;
+	}
+	return result;
 }
 
 //------------------------------------------------------------------------------
