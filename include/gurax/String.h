@@ -118,7 +118,11 @@ public:
 public:
 	String PickChar(size_t idx) const;
 	static const char* Forward(const char* p, size_t nChars = 1, size_t *pnCharsActual = nullptr);
-	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const;
+	static const_iterator Forward(const_iterator p, const_iterator pEnd,
+								  size_t nChars = 1, size_t *pnCharsActual = nullptr);
+	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const {
+		return Forward(p, end(), nChars, pnCharsActual);
+	}
 	static UInt64 NextUTF8(const char** pp);
 	UInt64 NextUTF8(const_iterator* pp) const;
 	static UInt32 NextUTF32(const char** pp);
