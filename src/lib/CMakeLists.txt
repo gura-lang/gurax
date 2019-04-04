@@ -29,6 +29,7 @@ add_library(guraxcore SHARED
 	Iterators.cpp
 	MemoryPool.cpp
 	Module.cpp
+	OAL.cpp
 	Operator.cpp
 	Operators.cpp
 	Parser.cpp

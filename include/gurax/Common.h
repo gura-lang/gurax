@@ -80,7 +80,7 @@
 // Macros useful for automaton
 //------------------------------------------------------------------------------
 #define Gurax_BeginPushbackRegion() \
-bool gura_pushbackFlag = false; \
+bool gurax_pushbackFlag = false; \
 do { \
 gurax_pushbackFlag = false
 

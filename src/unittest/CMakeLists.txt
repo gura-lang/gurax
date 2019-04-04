@@ -12,6 +12,7 @@ add_executable(unittest
 	test-Help.cpp
 	test-Iterator.cpp
 	test-MemoryPool.cpp
+	test-OAL.cpp
 	test-Parser.cpp
 	test-Random.cpp
 	test-Referable.cpp
