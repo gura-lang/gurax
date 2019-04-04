@@ -51,16 +51,6 @@ public:
 			return str.CalcHash();
 		}
 	};
-	struct CmpChar {
-		int operator()(char ch1, char ch2) const {
-			return static_cast<int>(ch1) - ch2;
-		}
-	};
-	struct CmpCharICase {
-		int operator()(char ch1, char ch2) const {
-			return static_cast<int>(ToUpper(ch1)) - ToUpper(ch2);
-		}
-	};
 public:
 	using CTypes = UInt32;
 	struct CType {
@@ -165,67 +155,36 @@ public:
 	bool IsLessThanICase(const char* str) const						{ return IsLessThanICase(c_str(), str); }
 	bool IsLessThanICase(const String& str) const					{ return IsLessThanICase(c_str(), str.c_str()); }
 public:
-	static const char* Find(const char* str, const char* sub) {
-		return Find_Tmpl<CmpChar>(str, sub);
-	}
-	static const_iterator Find(const_iterator pStr, const_iterator pStrEnd, const char* sub) {
-		return Find_Tmpl<CmpChar>(pStr, pStrEnd, sub);
-	}
+	template<typename T_CharCmp>
+	static const char* Find(const char* str, const char* sub);
+	template<typename T_CharCmp>
+	static const_iterator Find(const_iterator pStr, const_iterator pStrEnd, const char* sub);
+	template<typename T_CharCmp>
 	const_iterator Find(const_iterator pStr, const char* sub) const {
-		return Find_Tmpl<CmpChar>(pStr, end(), sub);
+		return Find<T_CharCmp>(pStr, end(), sub);
 	}
+	template<typename T_CharCmp>
 	const_iterator Find(const char* sub) const {
-		return Find_Tmpl<CmpChar>(begin(), end(), sub);
+		return Find<T_CharCmp>(begin(), end(), sub);
 	}
-	static const char* FindICase(const char* str, const char* sub) {
-		return Find_Tmpl<CmpCharICase>(str, sub);
-	}
-	static const_iterator FindICase(const_iterator pStr, const_iterator pStrEnd, const char* sub) {
-		return Find_Tmpl<CmpCharICase>(pStr, pStrEnd, sub);
-	}
-	const_iterator FindICase(const_iterator pStr, const char* sub) const {
-		return Find_Tmpl<CmpCharICase>(pStr, end(), sub);
-	}
-	const_iterator FindICase(const char* sub) const {
-		return Find_Tmpl<CmpCharICase>(begin(), end(), sub);
-	}
-	static const char* StartsWith(const char* str, const char* sub) {
-		return StartsWith_Tmpl<CmpChar>(str, sub);
-	}
+public:
+	template<typename T_CharCmp>
+	static const char* StartsWith(const char* str, const char* sub);
+	template<typename T_CharCmp>
+	static const_iterator StartsWith(const_iterator pStr, const_iterator pStrEnd, const char* sub);
+	template<typename T_CharCmp>
 	const_iterator StartsWith(const_iterator pStr, const char* sub) const {
-		return StartsWith_Tmpl<CmpChar>(pStr, end(), sub);
+		return StartsWith<T_CharCmp>(pStr, end(), sub);
 	}
-	static const char* StartsWithICase(const char* str, const char* sub) {
-		return StartsWith_Tmpl<CmpCharICase>(str, sub);
+	template<typename T_CharCmp>
+	const_iterator StartsWith(const char* sub) const {
+		return StartsWith<T_CharCmp>(begin(), end(), sub);
 	}
-	const_iterator StartsWithICase(const_iterator pStr, const char* sub) const {
-		return StartsWith_Tmpl<CmpCharICase>(pStr, end(), sub);
-	}
-	static const char* EndsWith(const char* str, const char* sub) {
-		return EndsWith_Tmpl<CmpChar>(str, sub);
-	}
-	static const char* EndsWith(const char* str, size_t posEnd, const char* sub) {
-		return EndsWith_Tmpl<CmpChar>(str, posEnd, sub);
-	}
-	static const char* EndsWithICase(const char* str, const char* sub) {
-		return EndsWith_Tmpl<CmpCharICase>(str, sub);
-	}
-	static const char* EndsWithICase(const char* str, size_t posEnd, const char* sub) {
-		return EndsWith_Tmpl<CmpCharICase>(str, posEnd, sub);
-	}
-private:
-	template<typename CmpChar>
-	static const char* Find_Tmpl(const char* str, const char* sub);
-	template<typename CmpChar>
-	static const_iterator Find_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub);
-	template<typename CmpChar>
-	static const char* StartsWith_Tmpl(const char* str, const char* sub);
-	template<typename CmpChar>
-	static const_iterator StartsWith_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub);
-	template<typename CmpChar>
-	static const char* EndsWith_Tmpl(const char* str, const char* sub);
-	template<typename CmpChar>
-	static const char* EndsWith_Tmpl(const char* str, size_t posEnd, const char* sub);
+public:
+	template<typename T_CharCmp>
+	static const char* EndsWith(const char* str, const char* sub);
+	template<typename T_CharCmp>
+	static const char* EndsWith(const char* str, size_t posEnd, const char* sub);
 public:
 	static size_t Length(const char* str);
 	size_t Length() const { return Length(c_str()); }
@@ -245,10 +204,29 @@ public:
 	String Right(size_t len) { return Right(c_str(), len); }
 	static String Middle(const char* str, int start, size_t len);
 	String Middle(int start, size_t len) { return Middle(c_str(), start, len); }
-	static String Replace(const char* str, const char* sub, const char* replace,
-						  int nMaxReplace, bool ignoreCaseFlag);
-	String Replace(const char* sub, const char* replace, int nMaxReplace, bool ignoreCaseFlag) {
-		return Replace(c_str(), sub, replace, nMaxReplace, ignoreCaseFlag);
+	template<typename T_CharCmp>
+	static String Replace(const char* str, const char* sub, const char* replace);
+	template<typename T_CharCmp>
+	static String Replace(const char* str, const char* sub, const char* replace, int nMaxReplace);
+	template<typename T_CharCmp>
+	String Replace(const char* sub, const char* replace) {
+		return Replace<T_CharCmp>(c_str(), sub, replace);
+	}
+	template<typename T_CharCmp>
+	String Replace(const char* sub, const char* replace, int nMaxReplace) {
+		return Replace<T_CharCmp>(c_str(), sub, replace, nMaxReplace);
+	}
+};
+
+struct CharCase {
+	int operator()(char ch1, char ch2) const {
+		return static_cast<int>(ch1) - ch2;
+	}
+};
+
+struct CharICase {
+	int operator()(char ch1, char ch2) const {
+		return static_cast<int>(String::ToUpper(ch1)) - String::ToUpper(ch2);
 	}
 };
 
@@ -256,50 +234,50 @@ inline String operator+(const String& v1, const String& v2) {
 	return String(static_cast<std::string>(v1) + static_cast<std::string>(v2));
 }
 
-template<typename CmpChar>
-const char* String::Find_Tmpl(const char* str, const char* sub)
+template<typename T_CharCmp>
+const char* String::Find(const char* str, const char* sub)
 {
 	for ( ; *str != '\0'; str++) {
 		const char* p1 = str;
 		const char* p2 = sub;
-		for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) break;
+		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
 		if (*p2 == '\0') return str;
 	}
 	return nullptr;
 }
 
-template<typename CmpChar>
-String::const_iterator String::Find_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub)
+template<typename T_CharCmp>
+String::const_iterator String::Find(const_iterator pStr, const_iterator pStrEnd, const char* sub)
 {
 	for ( ; pStr != pStrEnd; pStr++) {
 		String::const_iterator p1 = pStr;
 		const char* p2 = sub;
-		for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) break;
+		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
 		if (*p2 == '\0') return pStr;
 	}
 	return pStrEnd;
 }
 
-template<typename CmpChar>
-const char* String::StartsWith_Tmpl(const char* str, const char* sub)
+template<typename T_CharCmp>
+const char* String::StartsWith(const char* str, const char* sub)
 {
 	const char* p1 = str;
 	const char* p2 = sub;
-	for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return nullptr;
+	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
 	return p1;
 }
 
-template<typename CmpChar>
-String::const_iterator String::StartsWith_Tmpl(const_iterator pStr, const_iterator pStrEnd, const char* sub)
+template<typename T_CharCmp>
+String::const_iterator String::StartsWith(const_iterator pStr, const_iterator pStrEnd, const char* sub)
 {
 	const_iterator p1 = pStr;
 	const char* p2 = sub;
-	for ( ; p1 != pStrEnd && *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return pStrEnd;
+	for ( ; p1 != pStrEnd && *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return pStrEnd;
 	return p1;
 }
 
-template<typename CmpChar>
-const char* String::EndsWith_Tmpl(const char* str, const char* sub)
+template<typename T_CharCmp>
+const char* String::EndsWith(const char* str, const char* sub)
 {
 	size_t len = ::strlen(sub);
 	const char* p = str + ::strlen(str);
@@ -307,12 +285,12 @@ const char* String::EndsWith_Tmpl(const char* str, const char* sub)
 	p -= len;
 	const char* p1 = p;
 	const char* p2 = sub;
-	for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return nullptr;
+	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
 	return p;
 }
 
-template<typename CmpChar>
-const char* String::EndsWith_Tmpl(const char* str, size_t posEnd, const char* sub)
+template<typename T_CharCmp>
+const char* String::EndsWith(const char* str, size_t posEnd, const char* sub)
 {
 	size_t len = ::strlen(sub);
 	const char* p = String::Forward(str, posEnd);
@@ -320,8 +298,63 @@ const char* String::EndsWith_Tmpl(const char* str, size_t posEnd, const char* su
 	p -= len;
 	const char* p1 = p;
 	const char* p2 = sub;
-	for ( ; *p2 != '\0'; p1++, p2++) if (CmpChar()(*p1, *p2) != 0) return nullptr;
+	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
 	return p;
+}
+
+template<typename T_CharCmp>
+String String::Replace(const char* str, const char* sub, const char* replace)
+{
+	String result;
+	int lenSub = static_cast<int>(::strlen(sub));
+	if (lenSub == 0) {
+		result += replace;
+		const char* p = str;
+		for ( ; *p != '\0'; p++) {
+			result += *p;
+			result += replace;
+		}
+		result += p;
+	} else {
+		const char* pLeft = str;
+		const char* pRight = Find<T_CharCmp>(pLeft, sub);
+		for ( ; pRight != nullptr; pRight = Find<T_CharCmp>(pLeft, sub)) {
+			result.append(pLeft, pRight - pLeft);
+			result += replace;
+			pLeft = pRight + lenSub;
+		}
+		result += pLeft;
+	}
+	return result;
+}
+
+template<typename T_CharCmp>
+String String::Replace(const char* str, const char* sub, const char* replace, int nMaxReplace)
+{
+	String result;
+	int lenSub = static_cast<int>(::strlen(sub));
+	if (lenSub == 0) {
+		if (nMaxReplace != 0) {
+			result += replace;
+			nMaxReplace--;
+		}
+		const char* p = str;
+		for ( ; *p != '\0' && nMaxReplace != 0; p++, nMaxReplace--) {
+			result += *p;
+			result += replace;
+		}
+		result += p;
+	} else {
+		const char* pLeft = str;
+		const char* pRight = Find<T_CharCmp>(pLeft, sub);
+		for ( ; pRight != nullptr && nMaxReplace != 0; pRight = Find<T_CharCmp>(pLeft, sub), nMaxReplace--) {
+			result.append(pLeft, pRight - pLeft);
+			result += replace;
+			pLeft = pRight + lenSub;
+		}
+		result += pLeft;
+	}
+	return result;
 }
 
 //------------------------------------------------------------------------------

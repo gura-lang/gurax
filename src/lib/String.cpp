@@ -513,38 +513,6 @@ String String::Middle(const char* str, int start, size_t len)
 	}
 }
 
-String String::Replace(const char* str, const char* sub, const char* replace,
-					   int nMaxReplace, bool ignoreCaseFlag)
-{
-	String result;
-	int lenSub = static_cast<int>(::strlen(sub));
-	if (lenSub == 0) {
-		if (nMaxReplace != 0) {
-			result += replace;
-			nMaxReplace--;
-		}
-		const char* p = str;
-		for ( ; *p != '\0' && nMaxReplace != 0; p++, nMaxReplace--) {
-			result += *p;
-			result += replace;
-		}
-		result += p;
-	} else {
-		const char* pLeft = str;
-#if 0
-		const char* pRight = ignoreCaseFlag? FindICase(pLeft, sub) : Find(pLeft, sub);
-		for ( ; pRight != nullptr && nMaxReplace != 0;
-			  pRight = FindString(pLeft, sub, ignoreCaseFlag), nMaxReplace--) {
-			result.append(pLeft, pRight - pLeft);
-			result += replace;
-			pLeft = pRight + lenSub;
-		}
-#endif
-		result += pLeft;
-	}
-	return result;
-}
-
 //------------------------------------------------------------------------------
 // StringList
 //------------------------------------------------------------------------------
