@@ -11,6 +11,10 @@ namespace Gurax {
 // OAL
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OAL {
+public:
+	static String ToNativeString(const char* str);
+	static String FromNativeString(const char* str);
+	static String GetCurDir();
 };
 
 }

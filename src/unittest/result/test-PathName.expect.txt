@@ -438,3 +438,13 @@
 'aaa.ext' .. 'aaa', '.ext'
 '/aaa/bbb.ext' .. '/aaa/bbb', '.ext'
 '/aaa/bbb.ccc/' .. '/aaa/bbb.ccc/', ''
+abcdefg          a*               (case) .. OK
+abcdefg          a*efg            (case) .. OK
+abcdefg          a*ef             (case) .. NG
+abcdefg          a?cdefg          (case) .. OK
+abcdefg          a????fg          (case) .. OK
+abcdefg          a????f?          (case) .. OK
+abcdefg          a???f?           (case) .. NG
+abcdefg          A*               (case) .. NG
+abcdefg          A*               (icase) .. OK
+bcdefg           a*               (case) .. NG

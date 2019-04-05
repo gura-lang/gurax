@@ -9,16 +9,16 @@ namespace Gurax {
 // PathName
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
-const char PathName::SepDefault			= SepMSWIN;
+const char PathName::SepPlatform		= SepMSWIN;
 const bool PathName::CaseFlagDefault	= false;
 #elif defined(GURAX_ON_LINUX)
-const char PathName::SepDefault			= SepUNIX;
+const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagDefault	= true;
 #elis defined(GURAX_ON_DARWIN)
-const char PathName::SepDefault			= SepUNIX;
+const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagDefault	= false;
 #else
-const char PathName::SepDefault			= SepUNIX;
+const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagDefault	= false;
 #endif
 
@@ -104,6 +104,32 @@ String PathName::Regulate() const
 	return pathName;
 }
 
+String PathName::JoinBefore(const char* pathName) const
+{
+	String pathNameRtn;
+	if (*pathName) {
+		pathNameRtn += pathName;
+		if (!IsSep(pathNameRtn.back()) && !IsSep(*_pathName)) {
+			pathNameRtn += GetSep();
+		}
+	}
+	pathNameRtn += _pathName;
+	return pathNameRtn;
+}
+
+String PathName::JoinAfter(const char* pathName) const
+{
+	String pathNameRtn;
+	if (*_pathName) {
+		pathNameRtn += _pathName;
+		if (!IsSep(pathNameRtn.back()) && !IsSep(*pathName)) {
+			pathNameRtn += GetSep();
+		}
+	}
+	pathNameRtn += pathName;
+	return pathNameRtn;
+}
+
 void PathName::SplitFileName(String* pDirName, String* pFileName) const
 {
 	const char* p = SeekFileName();
@@ -158,43 +184,59 @@ bool PathName::HasSeparator() const
 	return false;
 }
 
-#if 0
-bool PathName::DoesMatchName(const char *pattern)
+template<typename T_CharCmp>
+bool PathName::DoesMatchSub(const char* pattern, const char* pathName)
 {
-	if (*pattern == '!') {
-		return !DoesMatchNameSub(pattern + 1, fileName, ignoreCaseFlag);
-	}
-	return DoesMatchNameSub(pattern, fileName, ignoreCaseFlag);
-}
-	
-bool PathName::DoesMatchNameSub(const char *pattern, const char *fileName, bool ignoreCaseFlag)
-{
+	T_CharCmp charCmp;
 	if (*pattern == '\0') {
-		return *fileName == '\0';
+		return *pathName == '\0';
 	} else if (*pattern == '*') {
-		return DoesMatchNameSub(pattern + 1, fileName, ignoreCaseFlag) ||
-			(*fileName != '\0' && DoesMatchNameSub(pattern, fileName + 1, ignoreCaseFlag));
+		return DoesMatchSub<T_CharCmp>(pattern + 1, pathName) ||
+			(*pathName != '\0' && DoesMatchSub<T_CharCmp>(pattern, pathName + 1));
 	} else if (*pattern == '?') {
-		return *fileName != '\0' && DoesMatchNameSub(pattern + 1, fileName + 1, ignoreCaseFlag);
+		return *pathName != '\0' && DoesMatchSub<T_CharCmp>(pattern + 1, pathName + 1);
 	} else if (*pattern == '[') {
 		pattern++;
 		if (*pattern == '!') {
 			pattern++;
 			for ( ; *pattern != ']' && *pattern != '\0'; pattern++) {
-				if (CompareChar(*fileName, *pattern, ignoreCaseFlag) == 0) return false;
+				if (charCmp(*pathName, *pattern) == 0) return false;
 			}
 		} else {
 			for ( ; *pattern != ']' && *pattern != '\0'; pattern++) {
-				if (CompareChar(*fileName, *pattern, ignoreCaseFlag) != 0) return false;
+				if (charCmp(*pathName, *pattern) != 0) return false;
 			}
 		}
 		if (*pattern == ']') pattern++;
-		return DoesMatchNameSub(pattern, fileName + 1, ignoreCaseFlag);
+		return DoesMatchSub<T_CharCmp>(pattern, pathName + 1);
 	} else {
-		return CompareChar(*pattern, *fileName, ignoreCaseFlag) == 0 &&
-						DoesMatchNameSub(pattern + 1, fileName + 1, ignoreCaseFlag);
+		return charCmp(*pattern, *pathName) == 0 && DoesMatchSub<T_CharCmp>(pattern + 1, pathName + 1);
 	}
 }
-#endif
+
+bool PathName::DoesMatch(const char* pattern) const
+{
+	if (*pattern == '!') {
+		pattern++;
+		return GetCaseFlag()?
+			!DoesMatchSub<CharCase>(pattern, _pathName) :
+			!DoesMatchSub<CharICase>(pattern, _pathName);
+	}
+	return GetCaseFlag()?
+		DoesMatchSub<CharCase>(pattern, _pathName) :
+		DoesMatchSub<CharICase>(pattern, _pathName);
+}
+
+String PathName::MakeAbsPathName() const
+{
+	String pathName = JoinBefore(OAL::GetCurDir().c_str());
+	return PathName(pathName).Regulate();
+}
+
+bool PathName::IsAbsPathName() const
+{
+	return IsSep(*_pathName) ||
+		(String::IsAlpha(*_pathName) && *(_pathName + 1) == ':');
+}
 
 }
