@@ -49,6 +49,36 @@ public:
 	void SplitFileName(String* pDirName, String* pFileName) const;
 	void SplitBottomName(String* pHeadName, String* pBottomName) const;
 	void SplitExtName(String* pBaseName, String* pExtName) const;
+	String ExtractDirName() const {
+		String dirName;
+		SplitFileName(&dirName, nullptr);
+		return dirName;
+	}
+	String ExtractFileName() const {
+		String fileName;
+		SplitFileName(nullptr, &fileName);
+		return fileName;
+	}
+	String ExtractHeadName() const {
+		String headName;
+		SplitBottomName(&headName, nullptr);
+		return headName;
+	}
+	String ExtractBottomName() const {
+		String bottomName;
+		SplitBottomName(nullptr, &bottomName);
+		return bottomName;
+	}
+	String ExtractBaseName() const {
+		String baseName;
+		SplitExtName(&baseName, nullptr);
+		return baseName;
+	}
+	String ExtractExtName() const {
+		String extName;
+		SplitExtName(nullptr, &extName);
+		return extName;
+	}
 	bool HasWildCard() const;
 	bool HasSeparator() const;
 	const char* SeekFileName() const;
