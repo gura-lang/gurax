@@ -48,10 +48,12 @@ public:
 	void SplitExtName(String* pBaseName, String* pExtName) const;
 	bool HasWildCard() const;
 	bool HasSeparator() const;
+	const char* SeekFileName() const;
 	const char* SeekExtName() const;
 	const char* SeekTerminator() const { return _pathName + ::strlen(_pathName); }
 public:
-	static bool IsSep(char ch) { return ch == SepMSWIN || ch == SepUNIX || ch == ':'; }
+	static bool IsSep(char ch) { return ch == SepMSWIN || ch == SepUNIX; }
+	static bool IsSepEx(char ch) { return IsSep(ch) || ch == ':'; }
 	static bool IsWildCardChar(char ch) {
 		return ch == '*' || ch == '?' || ch == '[' || ch == ']';
 	}

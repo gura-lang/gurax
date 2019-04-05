@@ -31,13 +31,13 @@ String PathName::Regulate() const
 	if (String::IsAlpha(*p) && *(p + 1) == ':') {
 		driveLetter = *p;
 		p += 2;
-		if (IsSep(*p)) {
+		if (IsSepEx(*p)) {
 			prefix += GetSep();
 			p++;
 		}
-		while (IsSep(*p)) p++;
+		while (IsSepEx(*p)) p++;
 	} else {
-		while (IsSep(*p)) {
+		while (IsSepEx(*p)) {
 			prefix += GetSep();
 			p++;
 		}
@@ -50,7 +50,7 @@ String PathName::Regulate() const
 		Gurax_BeginPushbackRegion();
 		switch (stat) {
 		case Stat::Field: {
-			if (IsSep(ch) || ch == '\0') {
+			if (IsSepEx(ch) || ch == '\0') {
 				if (field == ".") {
 					// nothing to do
 				} else if (field == "..") {
@@ -76,7 +76,7 @@ String PathName::Regulate() const
 		case Stat::Sep: {
 			if (ch == '\0') {
 				sepTailFlag = true;
-			} else if (IsSep(ch)) {
+			} else if (IsSepEx(ch)) {
 				// nothing to do
 			} else {
 				Gurax_Pushback();
@@ -98,7 +98,7 @@ String PathName::Regulate() const
 		if (pField != fields.begin()) pathName += GetSep();
 		pathName += *pField;
 	}
-	if (sepTailFlag && !pathName.empty() && !IsSep(pathName[pathName.size() - 1])) {
+	if (sepTailFlag && !pathName.empty() && !IsSepEx(pathName[pathName.size() - 1])) {
 		pathName += GetSep();
 	}
 	return pathName;
@@ -106,8 +106,7 @@ String PathName::Regulate() const
 
 void PathName::SplitFileName(String* pDirName, String* pFileName) const
 {
-	const char* p = SeekTerminator();
-	for ( ; p != _pathName && !IsSep(*(p - 1)); p--) ;
+	const char* p = SeekFileName();
 	if (pDirName) *pDirName = String(_pathName, p);
 	if (pFileName) *pFileName = String(p);
 }
@@ -117,7 +116,7 @@ void PathName::SplitBottomName(String* pHeadName, String* pBottomName) const
 	const char* p = SeekTerminator();
 	if (p != _pathName && IsSep(*(p - 1))) p--;
 	const char* pEnd = p;
-	for ( ; p != _pathName && !IsSep(*(p - 1)); p--) ;
+	for ( ; p != _pathName && !IsSepEx(*(p - 1)); p--) ;
 	if (pHeadName) *pHeadName = String(_pathName, p);
 	if (pBottomName) *pBottomName = String(p, pEnd);
 }
@@ -129,12 +128,19 @@ void PathName::SplitExtName(String* pBaseName, String* pExtName) const
 	if (pExtName) *pExtName = String(p);
 }
 
+const char* PathName::SeekFileName() const
+{
+	const char* p = SeekTerminator();
+	for ( ; p != _pathName && !IsSepEx(*(p - 1)); p--) ;
+	return p;
+}
+
 const char* PathName::SeekExtName() const
 {
 	const char* pTerminator = SeekTerminator();
 	const char* p = pTerminator;
 	if (p == _pathName) return pTerminator;
-	for ( ; p - 1 != _pathName && !IsSep(*(p - 1)); p--) {
+	for ( ; p - 1 != _pathName && !IsSepEx(*(p - 1)); p--) {
 		if (*p == '.') return (*(p - 1) == '.')? pTerminator : p;
 	}
 	return pTerminator;
@@ -148,7 +154,7 @@ bool PathName::HasWildCard() const
 
 bool PathName::HasSeparator() const
 {
-	for (const char* p = _pathName; *p; p++) if (IsSep(*p)) return true;
+	for (const char* p = _pathName; *p; p++) if (IsSepEx(*p)) return true;
 	return false;
 }
 
