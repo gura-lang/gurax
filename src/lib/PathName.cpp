@@ -104,4 +104,91 @@ String PathName::Regulate() const
 	return pathName;
 }
 
+void PathName::SplitFileName(String* pDirName, String* pFileName) const
+{
+	const char* p = SeekTerminator();
+	for ( ; p != _pathName && !IsSep(*(p - 1)); p--) ;
+	if (pDirName) *pDirName = String(_pathName, p);
+	if (pFileName) *pFileName = String(p);
+}
+
+void PathName::SplitBottomName(String* pHeadName, String* pBottomName) const
+{
+	const char* p = SeekTerminator();
+	if (p != _pathName && IsSep(*(p - 1))) p--;
+	const char* pEnd = p;
+	for ( ; p != _pathName && !IsSep(*(p - 1)); p--) ;
+	if (pHeadName) *pHeadName = String(_pathName, p);
+	if (pBottomName) *pBottomName = String(p, pEnd);
+}
+
+void PathName::SplitExtName(String* pBaseName, String* pExtName) const
+{
+	const char* p = SeekExtName();
+	if (pBaseName) *pBaseName = String(_pathName, p);
+	if (pExtName) *pExtName = String(p);
+}
+
+const char* PathName::SeekExtName() const
+{
+	const char* pTerminator = SeekTerminator();
+	const char* p = pTerminator;
+	if (p == _pathName) return pTerminator;
+	for ( ; p - 1 != _pathName && !IsSep(*(p - 1)); p--) {
+		if (*p == '.') return (*(p - 1) == '.')? pTerminator : p;
+	}
+	return pTerminator;
+}
+
+bool PathName::HasWildCard() const
+{
+	for (const char* p = _pathName; *p; p++) if (IsWildCardChar(*p)) return true;
+	return false;
+}
+
+bool PathName::HasSeparator() const
+{
+	for (const char* p = _pathName; *p; p++) if (IsSep(*p)) return true;
+	return false;
+}
+
+#if 0
+bool PathName::DoesMatchName(const char *pattern)
+{
+	if (*pattern == '!') {
+		return !DoesMatchNameSub(pattern + 1, fileName, ignoreCaseFlag);
+	}
+	return DoesMatchNameSub(pattern, fileName, ignoreCaseFlag);
+}
+	
+bool PathName::DoesMatchNameSub(const char *pattern, const char *fileName, bool ignoreCaseFlag)
+{
+	if (*pattern == '\0') {
+		return *fileName == '\0';
+	} else if (*pattern == '*') {
+		return DoesMatchNameSub(pattern + 1, fileName, ignoreCaseFlag) ||
+			(*fileName != '\0' && DoesMatchNameSub(pattern, fileName + 1, ignoreCaseFlag));
+	} else if (*pattern == '?') {
+		return *fileName != '\0' && DoesMatchNameSub(pattern + 1, fileName + 1, ignoreCaseFlag);
+	} else if (*pattern == '[') {
+		pattern++;
+		if (*pattern == '!') {
+			pattern++;
+			for ( ; *pattern != ']' && *pattern != '\0'; pattern++) {
+				if (CompareChar(*fileName, *pattern, ignoreCaseFlag) == 0) return false;
+			}
+		} else {
+			for ( ; *pattern != ']' && *pattern != '\0'; pattern++) {
+				if (CompareChar(*fileName, *pattern, ignoreCaseFlag) != 0) return false;
+			}
+		}
+		if (*pattern == ']') pattern++;
+		return DoesMatchNameSub(pattern, fileName + 1, ignoreCaseFlag);
+	} else {
+		return CompareChar(*pattern, *fileName, ignoreCaseFlag) == 0 &&
+						DoesMatchNameSub(pattern + 1, fileName + 1, ignoreCaseFlag);
+	}
+}
+#endif
+
 }

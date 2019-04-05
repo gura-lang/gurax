@@ -43,8 +43,18 @@ public:
 	bool GetCaseFlag() const { return _caseFlag; }
 public:
 	String Regulate() const;
+	void SplitFileName(String* pDirName, String* pFileName) const;
+	void SplitBottomName(String* pHeadName, String* pBottomName) const;
+	void SplitExtName(String* pBaseName, String* pExtName) const;
+	bool HasWildCard() const;
+	bool HasSeparator() const;
+	const char* SeekExtName() const;
+	const char* SeekTerminator() const { return _pathName + ::strlen(_pathName); }
 public:
-	static bool IsSep(char ch) { return ch == SepMSWIN || ch == SepUNIX; }
+	static bool IsSep(char ch) { return ch == SepMSWIN || ch == SepUNIX || ch == ':'; }
+	static bool IsWildCardChar(char ch) {
+		return ch == '*' || ch == '?' || ch == '[' || ch == ']';
+	}
 };
 
 }
