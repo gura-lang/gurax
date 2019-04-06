@@ -102,7 +102,7 @@ public:
 	void Append(const Symbol* pSymbol) { _symbolList.push_back(pSymbol); }
 	void Append(const char* str) { _symbolList.push_back(Symbol::Add(str)); }
 	bool AppendFromExprList(const ExprList& exprList);
-	bool AppendFromString(const char* str);
+	bool AppendFromString(const char* str, char separator = '.');
 	bool AppendFromExpr(const Expr& expr);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	bool IsDotted() const { return _symbolList.size() > 1; }

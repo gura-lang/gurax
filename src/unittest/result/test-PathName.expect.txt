@@ -454,9 +454,110 @@ aaa              + bbb              -> aaa/bbb
 aaa              + bbb              -> aaa/bbb
 aaa/             + bbb              -> aaa/bbb
 aaa/             + bbb              -> aaa/bbb
-aaa/             + bbb/             -> aaa/bbb/
-aaa/             + bbb/             -> aaa/bbb/
+aaa/             + /bbb             -> aaa/bbb
+aaa/             + /bbb             -> aaa/bbb
 aaa\             + bbb              -> aaa\bbb
 aaa\             + bbb              -> aaa\bbb
-aaa\             + bbb\             -> aaa\bbb\
-aaa\             + bbb\             -> aaa\bbb\
+aaa\             + \bbb             -> aaa\bbb
+aaa\             + \bbb             -> aaa\bbb
+                 +                  -> 
+                 +                  -> 
+aaa              +                  -> aaa
+aaa              +                  -> aaa
+aaa/             +                  -> aaa/
+aaa/             +                  -> aaa/
+                 + bbb              -> bbb
+                 + bbb              -> bbb
+                 + /bbb             -> /bbb
+                 + /bbb             -> /bbb
+======== IsAbsName ========
+                                         .. relative
+/                                        .. absolute
+/aaa                                     .. absolute
+/aaa/                                    .. absolute
+/aaa/bbb                                 .. absolute
+/aaa/bbb/ccc                             .. absolute
+/aaa/..                                  .. absolute
+/aaa/../                                 .. absolute
+/aaa/bbb/..                              .. absolute
+/aaa/bbb/../                             .. absolute
+/aaa/bbb/../..                           .. absolute
+/aaa/bbb/../../                          .. absolute
+/aaa/../ccc                              .. absolute
+/aaa/bbb/../ccc                          .. absolute
+/aaa/bbb/../../ccc                       .. absolute
+/aaa/bbb/ccc/ddd/../../eee/fff/../ggg    .. absolute
+/aaa/.                                   .. absolute
+/aaa/./                                  .. absolute
+/aaa/./bbb/./ccc                         .. absolute
+/aaa/./bbb/./ccc/                        .. absolute
+..                                       .. relative
+/..                                      .. absolute
+/../aaa                                  .. absolute
+/.                                       .. absolute
+/./aaa                                   .. absolute
+aaa                                      .. relative
+aaa/                                     .. relative
+aaa/bbb                                  .. relative
+aaa/bbb/ccc                              .. relative
+aaa/..                                   .. relative
+aaa/../                                  .. relative
+aaa/bbb/..                               .. relative
+aaa/bbb/../                              .. relative
+aaa/bbb/../..                            .. relative
+aaa/bbb/../../                           .. relative
+aaa/../ccc                               .. relative
+aaa/bbb/../ccc                           .. relative
+aaa/bbb/../../ccc                        .. relative
+aaa/bbb/ccc/ddd/../../eee/fff/../ggg     .. relative
+aaa/.                                    .. relative
+aaa/./                                   .. relative
+aaa/./bbb/./ccc                          .. relative
+aaa/./bbb/./ccc/                         .. relative
+C:/                                      .. absolute
+C:/aaa                                   .. absolute
+C:/aaa/                                  .. absolute
+C:/aaa/bbb                               .. absolute
+C:/aaa/bbb/ccc                           .. absolute
+C:/aaa/..                                .. absolute
+C:/aaa/../                               .. absolute
+C:/aaa/bbb/..                            .. absolute
+C:/aaa/bbb/../                           .. absolute
+C:/aaa/bbb/../..                         .. absolute
+C:/aaa/bbb/../../                        .. absolute
+C:/aaa/../ccc                            .. absolute
+C:/aaa/bbb/../ccc                        .. absolute
+C:/aaa/bbb/../../ccc                     .. absolute
+C:/aaa/bbb/ccc/ddd/../../eee/fff/../ggg  .. absolute
+C:/aaa/.                                 .. absolute
+C:/aaa/./                                .. absolute
+C:/aaa/./bbb/./ccc                       .. absolute
+C:/aaa/./bbb/./ccc/                      .. absolute
+C:                                       .. relative
+C:aaa                                    .. relative
+C:aaa/                                   .. relative
+C:aaa/bbb                                .. relative
+C:aaa/bbb/ccc                            .. relative
+C:aaa/..                                 .. relative
+C:aaa/../                                .. relative
+C:aaa/bbb/..                             .. relative
+C:aaa/bbb/../                            .. relative
+C:aaa/bbb/../..                          .. relative
+C:aaa/bbb/../../                         .. relative
+C:aaa/../ccc                             .. relative
+C:aaa/bbb/../ccc                         .. relative
+C:aaa/bbb/../../ccc                      .. relative
+C:aaa/bbb/ccc/ddd/../../eee/fff/../ggg   .. relative
+C:aaa/.                                  .. relative
+C:aaa/./                                 .. relative
+C:aaa/./bbb/./ccc                        .. relative
+C:aaa/./bbb/./ccc/                       .. relative
+.aaa                                     .. relative
+/.aaa                                    .. absolute
+/aaa/.bbb                                .. absolute
+aaa.ext                                  .. relative
+/aaa/bbb.ext                             .. absolute
+/aaa/bbb.ccc/                            .. absolute
+======== MakeAbsName ========
+/Users/ypsitau/gurax/src/unittest/aaa
+/Users/ypsitau/gurax/src/aaa/bbb

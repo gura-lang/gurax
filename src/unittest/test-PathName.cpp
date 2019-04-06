@@ -175,25 +175,43 @@ void Test_Join()
 		const char* pathName2;
 	};
 	static const Info infoTbl[] = {
-		{"aaa",			"bbb"		},
-		{"aaa/",		"bbb"		},
-		{"aaa/",		"bbb/"		},
-		{"aaa\\",		"bbb"		},
-		{"aaa\\",		"bbb\\"		},
+		{ "aaa",		"bbb"		},
+		{ "aaa/",		"bbb"		},
+		{ "aaa/",		"/bbb"		},
+		{ "aaa\\",		"bbb"		},
+		{ "aaa\\",		"\\bbb"		},
+		{ "",			""			},
+		{ "aaa",		""			},
+		{ "aaa/",		""			},
+		{ "",			"bbb"		},
+		{ "",			"/bbb"		},
 	};
 	for (size_t i = 0; i < ArraySizeOf(infoTbl); ++i) {
 		const Info& info = infoTbl[i];
-		do {
-			String rtn = PathName(info.pathName1).JoinAfter(info.pathName2);
-			::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn.c_str());
-		} while (0);
-		do {
-			String rtn = PathName(info.pathName2).JoinBefore(info.pathName1);
-			::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn.c_str());
-		} while (0);
+		String rtn1 = PathName(info.pathName1).JoinAfter(info.pathName2);
+		::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn1.c_str());
+		String rtn2 = PathName(info.pathName2).JoinBefore(info.pathName1);
+		::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn2.c_str());
 	}
 }
 
+void Test_IsAbsName()
+{
+	PrintTitle("IsAbsName");
+	for (size_t i = 0; i < ArraySizeOf(pathNames); ++i) {
+		const char* pathName = pathNames[i];
+		::printf("%-40s .. %s\n", pathName,
+				 PathName(pathName).IsAbsName()? "absolute" : "relative");
+	}
+}
+
+void Test_MakeAbsName()
+{
+	PrintTitle("MakeAbsName");
+	::printf("%s\n", PathName("aaa").MakeAbsName().c_str());
+	::printf("%s\n", PathName("../aaa/bbb").MakeAbsName().c_str());
+}
+		
 Gurax_TesterEntry(PathName)
 {
 	Test_Regulate();
@@ -202,6 +220,8 @@ Gurax_TesterEntry(PathName)
 	Test_SplitExtName();
 	Test_DoesMatch();
 	Test_Join();
+	Test_IsAbsName();
+	//Test_MakeAbsName();
 }
 
 }

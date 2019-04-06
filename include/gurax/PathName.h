@@ -15,7 +15,7 @@ public:
 	static const char SepMSWIN	= '\\';
 	static const char SepUNIX	= '/';
 	static const char SepPlatform;
-	static const bool CaseFlagDefault;
+	static const bool CaseFlagPlatform;
 private:
 	const char* _pathName;
 	char _sep;
@@ -24,8 +24,12 @@ public:
 	// Constructor
 	PathName() = delete;
 	PathName(const char* pathName) :
-		_pathName(pathName), _sep(SepPlatform), _caseFlag(CaseFlagDefault) {}
+		_pathName(pathName), _sep(SepPlatform), _caseFlag(CaseFlagPlatform) {}
 	PathName(const String& pathName) : PathName(pathName.c_str()) {}
+	PathName(const PathName& trait, const char* pathName) :
+		_pathName(pathName), _sep(trait._sep), _caseFlag(trait._caseFlag) {}
+	PathName(const PathName& trait, const String& pathName) :
+		PathName(trait, pathName.c_str()) {}
 	// Copy constructor/operator
 	PathName(const PathName& src) = delete;
 	PathName& operator=(const PathName& src) = delete;
@@ -87,8 +91,8 @@ public:
 	template<typename T_CharCmp>
 	static bool DoesMatchSub(const char* pattern, const char* pathName);
 	bool DoesMatch(const char* pattern) const;
-	String MakeAbsPathName() const;
-	bool IsAbsPathName() const;
+	String MakeAbsName() const;
+	bool IsAbsName() const;
 public:
 	static bool IsSep(char ch) { return ch == SepMSWIN || ch == SepUNIX; }
 	static bool IsSepEx(char ch) { return IsSep(ch) || ch == ':'; }

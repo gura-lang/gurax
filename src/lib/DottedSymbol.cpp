@@ -22,7 +22,7 @@ bool DottedSymbol::AppendFromExprList(const ExprList& exprList)
 }
 
 // Append symbols from a string.
-bool DottedSymbol::AppendFromString(const char* str)
+bool DottedSymbol::AppendFromString(const char* str, char separator)
 {
 	enum class Stat {
 		SymbolFirst,
@@ -43,7 +43,7 @@ bool DottedSymbol::AppendFromString(const char* str)
 			break;
 		}
 		case Stat::SymbolFollower: {
-			if (ch == '.') {
+			if (ch == separator) {
 				Append(Symbol::Add(field));
 				stat = Stat::SymbolFirst;
 			} else if (String::IsSymbolFollower(ch)) {

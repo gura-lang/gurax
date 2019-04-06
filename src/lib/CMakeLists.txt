@@ -81,6 +81,7 @@ add_library(guraxcore SHARED
 	VType_TimeDelta.cpp
 	VType_Undefined.cpp
 	VType_VType.cpp
+	module-sys.cpp
 )
 
 target_link_libraries(guraxcore dl pthread)

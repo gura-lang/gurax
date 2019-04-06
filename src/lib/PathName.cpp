@@ -10,16 +10,16 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
 const char PathName::SepPlatform		= SepMSWIN;
-const bool PathName::CaseFlagDefault	= false;
+const bool PathName::CaseFlagPlatform	= false;
 #elif defined(GURAX_ON_LINUX)
 const char PathName::SepPlatform		= SepUNIX;
-const bool PathName::CaseFlagDefault	= true;
+const bool PathName::CaseFlagPlatform	= true;
 #elis defined(GURAX_ON_DARWIN)
 const char PathName::SepPlatform		= SepUNIX;
-const bool PathName::CaseFlagDefault	= false;
+const bool PathName::CaseFlagPlatform	= false;
 #else
 const char PathName::SepPlatform		= SepUNIX;
-const bool PathName::CaseFlagDefault	= false;
+const bool PathName::CaseFlagPlatform	= false;
 #endif
 
 String PathName::Regulate() const
@@ -109,11 +109,17 @@ String PathName::JoinBefore(const char* pathName) const
 	String pathNameRtn;
 	if (*pathName) {
 		pathNameRtn += pathName;
-		if (!IsSep(pathNameRtn.back()) && !IsSep(*_pathName)) {
-			pathNameRtn += GetSep();
+		if (!*_pathName) {
+			// nothing to do
+		} else if (IsSep(pathNameRtn.back())) {
+			pathNameRtn += IsSep(*_pathName)? _pathName + 1 : _pathName;
+		} else {
+			if (!IsSep(*_pathName)) pathNameRtn += GetSep();
+			pathNameRtn += _pathName;
 		}
+	} else {
+		pathNameRtn += _pathName;
 	}
-	pathNameRtn += _pathName;
 	return pathNameRtn;
 }
 
@@ -122,11 +128,17 @@ String PathName::JoinAfter(const char* pathName) const
 	String pathNameRtn;
 	if (*_pathName) {
 		pathNameRtn += _pathName;
-		if (!IsSep(pathNameRtn.back()) && !IsSep(*pathName)) {
-			pathNameRtn += GetSep();
+		if (!*pathName) {
+			// nothing to do
+		} else if (IsSep(pathNameRtn.back())) {
+			pathNameRtn += IsSep(*pathName)? pathName + 1 : pathName;
+		} else {
+			if (!IsSep(*pathName)) pathNameRtn += GetSep();
+			pathNameRtn += pathName;
 		}
+	} else {
+		pathNameRtn += pathName;
 	}
-	pathNameRtn += pathName;
 	return pathNameRtn;
 }
 
@@ -227,16 +239,17 @@ bool PathName::DoesMatch(const char* pattern) const
 		DoesMatchSub<CharICase>(pattern, _pathName);
 }
 
-String PathName::MakeAbsPathName() const
+String PathName::MakeAbsName() const
 {
+	if (IsAbsName()) return PathName(*this, _pathName).Regulate();
 	String pathName = JoinBefore(OAL::GetCurDir().c_str());
-	return PathName(pathName).Regulate();
+	return PathName(*this, pathName).Regulate();
 }
 
-bool PathName::IsAbsPathName() const
+bool PathName::IsAbsName() const
 {
 	return IsSep(*_pathName) ||
-		(String::IsAlpha(*_pathName) && *(_pathName + 1) == ':');
+		(String::IsAlpha(*_pathName) && *(_pathName + 1) == ':' && IsSep(*(_pathName + 2)));
 }
 
 }
