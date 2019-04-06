@@ -141,6 +141,7 @@ static void Test_SplitExtName()
 
 void Test_DoesMatch()
 {
+	PrintTitle("DoesMatch");
 	struct Info {
 		const char* pathName;
 		const char* pattern;
@@ -166,6 +167,33 @@ void Test_DoesMatch()
 	}
 }
 
+void Test_Join()
+{
+	PrintTitle("JoinAfter/JoinBefore");
+	struct Info {
+		const char* pathName1;
+		const char* pathName2;
+	};
+	static const Info infoTbl[] = {
+		{"aaa",			"bbb"		},
+		{"aaa/",		"bbb"		},
+		{"aaa/",		"bbb/"		},
+		{"aaa\\",		"bbb"		},
+		{"aaa\\",		"bbb\\"		},
+	};
+	for (size_t i = 0; i < ArraySizeOf(infoTbl); ++i) {
+		const Info& info = infoTbl[i];
+		do {
+			String rtn = PathName(info.pathName1).JoinAfter(info.pathName2);
+			::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn.c_str());
+		} while (0);
+		do {
+			String rtn = PathName(info.pathName2).JoinBefore(info.pathName1);
+			::printf("%-16s + %-16s -> %s\n", info.pathName1, info.pathName2, rtn.c_str());
+		} while (0);
+	}
+}
+
 Gurax_TesterEntry(PathName)
 {
 	Test_Regulate();
@@ -173,6 +201,7 @@ Gurax_TesterEntry(PathName)
 	Test_SplitBottomName();
 	Test_SplitExtName();
 	Test_DoesMatch();
+	Test_Join();
 }
 
 }

@@ -438,6 +438,7 @@
 'aaa.ext' .. 'aaa', '.ext'
 '/aaa/bbb.ext' .. '/aaa/bbb', '.ext'
 '/aaa/bbb.ccc/' .. '/aaa/bbb.ccc/', ''
+======== DoesMatch ========
 abcdefg          a*               (case) .. OK
 abcdefg          a*efg            (case) .. OK
 abcdefg          a*ef             (case) .. NG
@@ -448,3 +449,14 @@ abcdefg          a???f?           (case) .. NG
 abcdefg          A*               (case) .. NG
 abcdefg          A*               (icase) .. OK
 bcdefg           a*               (case) .. NG
+======== JoinAfter/JoinBefore ========
+aaa              + bbb              -> aaa/bbb
+aaa              + bbb              -> aaa/bbb
+aaa/             + bbb              -> aaa/bbb
+aaa/             + bbb              -> aaa/bbb
+aaa/             + bbb/             -> aaa/bbb/
+aaa/             + bbb/             -> aaa/bbb/
+aaa\             + bbb              -> aaa\bbb
+aaa\             + bbb              -> aaa\bbb
+aaa\             + bbb\             -> aaa\bbb\
+aaa\             + bbb\             -> aaa\bbb\
