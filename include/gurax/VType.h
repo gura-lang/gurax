@@ -83,13 +83,13 @@ public:
 public:
 	static void PrepareBasic(Frame& frame);
 public:
-	void Prepare(Frame& frameParent) { DoPrepare(frameParent); }
+	void Prepare(Frame& frameOuter) { DoPrepare(frameOuter); }
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 public:
 	// Virtual functions
-	virtual void DoPrepare(Frame& frame) {};
+	virtual void DoPrepare(Frame& frameOuter) {};
 	virtual Value* DoCastFrom(const Value& value) const;
 };
 

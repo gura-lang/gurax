@@ -13,7 +13,7 @@ namespace Gurax {
 class VType_String : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame& frame) override;
+	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value) const override;
 };
 

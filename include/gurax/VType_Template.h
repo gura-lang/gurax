@@ -14,7 +14,7 @@ namespace Gurax {
 class VType_Template : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame& frame) override;
+	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
 extern VType_Template VTYPE_Template;

@@ -14,7 +14,7 @@ namespace Gurax {
 class VType_Index : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame& frame) override;
+	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
 extern VType_Index VTYPE_Index;

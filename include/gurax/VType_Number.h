@@ -13,7 +13,7 @@ namespace Gurax {
 class VType_Number : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame& frame) override;
+	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
 extern VType_Number VTYPE_Number;

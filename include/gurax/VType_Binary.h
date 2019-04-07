@@ -13,7 +13,7 @@ namespace Gurax {
 class VType_Binary : public VType {
 public:
 	using VType::VType;
-	virtual void DoPrepare(Frame& frame) override;
+	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
 extern VType_Binary VTYPE_Binary;
