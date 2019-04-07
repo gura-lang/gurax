@@ -69,6 +69,11 @@ Gurax_EndModuleHeader(sys)
 
 Gurax_BeginModule(sys)
 
+Gurax_ModuleValidate()
+{
+	return true;
+}
+
 Gurax_ModulePrepare()
 {
 }
