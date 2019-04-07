@@ -34,7 +34,7 @@ public:
 	Module& operator=(Module&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Module() = default;
+	virtual ~Module() = default;
 public:
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
@@ -46,6 +46,7 @@ public:
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
+	void Prepare() { DoPrepare(); }
 	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -53,6 +54,9 @@ public:
 	bool IsEqualTo(const Module& module) const { return IsIdentical(module); }
 	bool IsLessThan(const Module& module) const { return this < &module; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+public:
+	// Virtual functions
+	virtual void DoPrepare() {};
 };
 
 }
