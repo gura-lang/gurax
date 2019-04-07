@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Symbol VTYPE_Symbol("Symbol");
 
-void VType_Symbol::DoPrepare(Frame& frame)
+void VType_Symbol::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

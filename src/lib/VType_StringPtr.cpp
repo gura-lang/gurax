@@ -11,10 +11,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_StringPtr VTYPE_StringPtr("StringPtr");
 
-void VType_StringPtr::DoPrepare(Frame& frame)
+void VType_StringPtr::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

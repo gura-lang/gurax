@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_Quote VTYPE_Quote("Quote");
 
-void VType_Quote::DoPrepare(Frame& frame)
+void VType_Quote::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VType::Empty, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 }
 
 Value* VType_Quote::DoCastFrom(const Value& value) const

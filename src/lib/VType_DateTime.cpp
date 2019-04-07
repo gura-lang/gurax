@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_DateTime VTYPE_DateTime("Datetime");
 
-void VType_DateTime::DoPrepare(Frame& frame)
+void VType_DateTime::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

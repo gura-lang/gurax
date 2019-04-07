@@ -48,10 +48,10 @@ Gurax_ImplementPropertyGetter(PUnit, seqId)
 //------------------------------------------------------------------------------
 VType_PUnit VTYPE_PUnit("PUnit");
 
-void VType_PUnit::DoPrepare(Frame& frame)
+void VType_PUnit::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(PUnit, ToString));
 	// Assignment of property

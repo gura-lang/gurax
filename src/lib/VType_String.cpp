@@ -54,10 +54,10 @@ Gurax_ImplementPropertyGetter(String, hoge)
 //------------------------------------------------------------------------------
 VType_String VTYPE_String("String");
 
-void VType_String::DoPrepare(Frame& frame)
+void VType_String::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(String, Len));
 	// Assignment of property

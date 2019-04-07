@@ -29,10 +29,10 @@ Gurax_ImplementMethod(Iterator, NextValue)
 //------------------------------------------------------------------------------
 VType_Iterator VTYPE_Iterator("Iterator");
 
-void VType_Iterator::DoPrepare(Frame& frame)
+void VType_Iterator::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
 }

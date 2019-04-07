@@ -558,6 +558,3 @@ C:aaa/./bbb/./ccc/                       .. relative
 aaa.ext                                  .. relative
 /aaa/bbb.ext                             .. absolute
 /aaa/bbb.ccc/                            .. absolute
-======== MakeAbsName ========
-/Users/ypsitau/gurax/src/unittest/aaa
-/Users/ypsitau/gurax/src/aaa/bbb

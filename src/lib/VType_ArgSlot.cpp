@@ -10,10 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VType_ArgSlot VTYPE_ArgSlot("ArgSlot");
 
-void VType_ArgSlot::DoPrepare(Frame& frame)
+void VType_ArgSlot::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

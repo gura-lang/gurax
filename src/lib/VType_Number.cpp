@@ -34,10 +34,10 @@ Gurax_ImplementPropertyGetter(Number, re)
 //------------------------------------------------------------------------------
 VType_Number VTYPE_Number("Number");
 
-void VType_Number::DoPrepare(Frame& frame)
+void VType_Number::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 	Assign(Gurax_CreateProperty(Number, im));
 	Assign(Gurax_CreateProperty(Number, re));
 }

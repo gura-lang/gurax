@@ -42,10 +42,10 @@ Gurax_ImplementMethod(Expr, Eval)
 //------------------------------------------------------------------------------
 VType_Expr VTYPE_Expr("Expr");
 
-void VType_Expr::DoPrepare(Frame& frame)
+void VType_Expr::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frame.Assign(*this);
+	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));

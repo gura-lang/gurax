@@ -55,11 +55,11 @@ Gurax_ImplementStatement(_dict_)
 //------------------------------------------------------------------------------
 VType_Dict VTYPE_Dict("Dict");
 
-void VType_Dict::DoPrepare(Frame& frame)
+void VType_Dict::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Mutable);
-	frame.Assign(*this);
-	frame.Assign(Gurax_CreateStatement(_dict_));
+	frameOuter.Assign(*this);
+	frameOuter.Assign(Gurax_CreateStatement(_dict_));
 }
 
 //------------------------------------------------------------------------------
