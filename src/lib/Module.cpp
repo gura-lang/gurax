@@ -8,6 +8,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Module
 //------------------------------------------------------------------------------
+bool Module::Prepare(DottedSymbol* pDottedSymbol)
+{
+	SetDottedSymbol(pDottedSymbol);
+	return DoPrepare();
+}
+
+bool Module::Prepare(const char* name, char separator)
+{
+	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+	pDottedSymbol->AppendFromString(name, separator);
+	return Prepare(pDottedSymbol.release());
+}
+
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
 	String fileName = dottedSymbol.ToString();
@@ -28,7 +41,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 		Error::Print(*Stream::CErr);
 		return nullptr;
 	}
-	RefPtr<Module> pModule(new Module(dottedSymbol.Reference(), processor.GetFrameCur().Reference()));
+	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
 	processor.PushFrame(pModule->GetFrame().Reference());
 	processor.Eval(composer);
 	processor.PopFrame();

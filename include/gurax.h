@@ -83,6 +83,7 @@
 #include "gurax/VType_TimeDelta.h"
 #include "gurax/VType_Undefined.h"
 #include "gurax/VType_VType.h"
+#include "../src/module-sys/module-sys.h"
 
 namespace Gurax {
 
