@@ -26,6 +26,7 @@ public:
 	static const ErrorType IndexError;
 	static const ErrorType InvalidOperation;
 	static const ErrorType IteratorError;
+	static const ErrorType ModuleError;
 	static const ErrorType StreamError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;

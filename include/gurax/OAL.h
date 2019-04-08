@@ -12,6 +12,29 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OAL {
 public:
+	class GURAX_DLLDECLARE DynamicLibrary {
+	private:
+#if defined(GURAX_ON_MSWIN)
+		HMODULE _hLibrary;
+#else
+		void *_hLibrary;
+#endif
+	public:
+		// Constructor
+		DynamicLibrary();
+		// Copy constructor/operator
+		DynamicLibrary(const DynamicLibrary& src) = delete;
+		DynamicLibrary& operator=(const DynamicLibrary& src) = delete;
+		// Move constructor/operator
+		DynamicLibrary(DynamicLibrary&& src) = delete;
+		DynamicLibrary& operator=(DynamicLibrary&& src) noexcept = delete;
+		// Destructor
+		~DynamicLibrary() = default;
+	public:
+		bool Open(const char* pathName);
+		void* GetEntry(const char* funcName);
+	};
+public:
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
 	static String GetCurDir();

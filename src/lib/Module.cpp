@@ -27,7 +27,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 	fileName += ".gura";
 	RefPtr<Stream> pStream(Stream_File::Open(fileName.c_str(), "rt"));
 	if (!pStream) {
-		Error::Issue(ErrorType::StreamError, "failed to open a module file '%s'", fileName.c_str());
+		Error::Issue(ErrorType::ModuleError, "failed to open a module file '%s'", fileName.c_str());
 		return nullptr;
 	}
 	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));

@@ -80,6 +80,42 @@ String OAL::GetCurDir()
 	return dirName;
 }
 
+//-----------------------------------------------------------------------------
+// OAL::DynamicLibrary (MSWIN)
+//-----------------------------------------------------------------------------
+OAL::DynamicLibrary::DynamicLibrary() : _hModule(nullptr)
+{
+}
+
+bool OAL::DynamicLibrary::Open(const char* pathName)
+{
+	_hModule = ::LoadLibrary(ToNativeString(pathName).c_str());
+	if (!_hModule) {
+		Error::Issue(ErrorType::ModuleError, "can't open module file '%s'", pathName);
+		return false;
+	}
+	return true;
+}
+
+void* OAL::DynamicLibrary::GetEntry(const char* funcName)
+{
+	if (!_hModule) {
+		Error::Issue(ErrorType::ModuleError, "library has not been opened");
+		return nullptr;
+	}
+	FARPROC pFunc = ::GetProcAddress(_hModule, funcName);
+	if (!pFunc) {
+		String funcNameEx = "_";
+		funcNameEx += funcName;
+		pFunc = ::GetProcAddress(_hModule, funcNameEx.c_str());
+	}
+	if (!pFunc) {
+		sig.SetError(ErrorType::ModuleError, "can't find entry function '%s'", funcName);
+		return nullptr;
+	}
+	return pFunc;
+}
+
 #else
 
 //------------------------------------------------------------------------------
@@ -104,6 +140,34 @@ String OAL::GetCurDir()
 		dirName += PathName::SepPlatform;
 	}
 	return dirName;
+}
+
+//-----------------------------------------------------------------------------
+// OAL::DynamicLibrary (POSIX)
+//-----------------------------------------------------------------------------
+OAL::DynamicLibrary::DynamicLibrary() : _hLibrary(nullptr)
+{
+}
+
+bool OAL::DynamicLibrary::Open(const char* pathName)
+{
+	_hLibrary = dlopen(ToNativeString(pathName).c_str(), RTLD_LAZY);
+	if (_hLibrary == nullptr) {
+		Error::Issue(ErrorType::ModuleError, "%s", dlerror());
+		return false;
+	}
+	dlerror(); // clear any existing error
+	return true;
+}
+
+void* OAL::DynamicLibrary::GetEntry(const char* funcName)
+{
+	void *pFunc = dlsym(_hLibrary, funcName);
+	if (!pFunc) {
+		Error::Issue(ErrorType::ModuleError, "can't find entry function '%s'", funcName);
+		return nullptr;
+	}
+	return pFunc;
 }
 
 #endif
