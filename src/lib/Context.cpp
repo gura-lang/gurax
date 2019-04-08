@@ -21,9 +21,9 @@ void Context::Prepare()
 	Value::PrepareBasic(frame);
 	Functions::PrepareBasic(frame);
 	Statements::PrepareBasic(frame);
-	frame.Assign(Module_path::Create(frame));
-	frame.Assign(Module_re::Create(frame));
-	frame.Assign(Module_sys::Create(frame));
+	frame.Assign(Module_path::Create(frame.Reference()));
+	frame.Assign(Module_re::Create(frame.Reference()));
+	frame.Assign(Module_sys::Create(frame.Reference()));
 }
 
 }

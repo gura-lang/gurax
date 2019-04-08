@@ -17,8 +17,8 @@ public: \
 	using Module::Module; \
 	virtual bool DoPrepare() override; \
 }; \
-inline Module* Create(Frame& frameOuter) { \
-	RefPtr<Module> pModule(new ModuleEx(frameOuter.Reference())); \
+inline Module* Create(Frame* pFrameOuter) { \
+	RefPtr<Module> pModule(new ModuleEx(pFrameOuter));  \
 	return pModule->Prepare(#name, '_')? pModule.release() : nullptr; \
 }
 
@@ -40,9 +40,9 @@ bool Gurax_ModuleValidate() \
 	return Gurax::Module_##name::Validate(); \
 } \
 extern "C" GURAX_DLLEXPORT \
-Gurax::Module* Gurax_ModuleCreate(Gurax::Frame& frame) \
+Gurax::Module* Gurax_ModuleCreate(Gurax::Frame* pFrameOuter) \
 { \
-	return Gurax::Module_##name::Create(frame); \
+	return Gurax::Module_##name::Create(pFrameOuter); \
 } \
 extern "C" GURAX_DLLEXPORT \
 void Gurax_ModuleTerminate(Gurax::Module& module) \
@@ -72,6 +72,10 @@ class Module : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Module);
+public:
+	using T_ModuleValidate	= bool (*)();
+	using T_ModuleCreate	= Module* (*)(Frame* pFrameOuter);
+	using T_ModuleTerminate	= void (*)(Module& module);
 protected:
 	RefPtr<Frame> _pFrame;
 	RefPtr<DottedSymbol> _pDottedSymbol;
@@ -107,6 +111,8 @@ public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);
 	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol);
+	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, Stream& stream);
+	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Module& module) const { return this == &module; }
