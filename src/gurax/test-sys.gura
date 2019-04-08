@@ -1,0 +1,2 @@
+#!./gurax
+sys.cerr.Println('hello')

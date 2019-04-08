@@ -35,6 +35,10 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of value
+	Assign("cin", new Value_Stream(Stream::CIn->Reference()));
+	Assign("cout", new Value_Stream(Stream::COut->Reference()));
+	Assign("cerr", new Value_Stream(Stream::CErr->Reference()));
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
 	return true;
