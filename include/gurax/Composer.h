@@ -40,61 +40,58 @@ public:
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void DoEval(Processor& processor) const;
 public:
-	RefPtr<PUnitFactory> Add_Value(const Expr& exprSrc, Value* pValue);
-	RefPtr<PUnitFactory> Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
-	RefPtr<PUnitFactory> Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
-	RefPtr<PUnitFactory> Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
-	RefPtr<PUnitFactory> Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
-	RefPtr<PUnitFactory> Add_AssignFunction(const Expr& exprSrc, Function* pFunction);
-	RefPtr<PUnitFactory> Add_Cast(const Expr& exprSrc, const VType& vtype);
-	RefPtr<PUnitFactory> Add_GenIterator(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_GenRangeIterator(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_GenCounterIterator(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_Value(const Expr& exprSrc, Value* pValue);
+	void Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
+	void Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
+	void Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
+	void Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
+	void Add_AssignFunction(const Expr& exprSrc, Function* pFunction);
+	void Add_Cast(const Expr& exprSrc, const VType& vtype);
+	void Add_GenIterator(const Expr& exprSrc);
+	void Add_GenRangeIterator(const Expr& exprSrc);
+	void Add_GenCounterIterator(const Expr& exprSrc);
+	void Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
 
-	RefPtr<PUnitFactory> Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
+	void Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
 					   const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
-	RefPtr<PUnitFactory> Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
-	RefPtr<PUnitFactory> Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
-	RefPtr<PUnitFactory> Add_ListElem(const Expr& exprSrc, size_t offset);
-	RefPtr<PUnitFactory> Add_CreateDict(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_DictElem(const Expr& exprSrc, size_t offset);
-	RefPtr<PUnitFactory> Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve);
-	RefPtr<PUnitFactory> Add_FeedIndex(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_IndexGet(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_IndexSet(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
-	RefPtr<PUnitFactory> Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
-	RefPtr<PUnitFactory> Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
-	RefPtr<PUnitFactory> Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
-	RefPtr<PUnitFactory> Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_FeedArgSlot(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_ArgSlotNamed(
+	void Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
+	void Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
+	void Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
+	void Add_ListElem(const Expr& exprSrc, size_t offset);
+	void Add_CreateDict(const Expr& exprSrc);
+	void Add_DictElem(const Expr& exprSrc, size_t offset);
+	void Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve);
+	void Add_FeedIndex(const Expr& exprSrc);
+	void Add_IndexGet(const Expr& exprSrc);
+	void Add_IndexSet(const Expr& exprSrc);
+	void Add_PropGet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	void Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	void Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
+	void Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
+	void Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_FeedArgSlot(const Expr& exprSrc);
+	void Add_ArgSlotNamed(
 		const Expr& exprSrc, const Symbol* pSymbol,
 		Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_FeedArgSlotNamed(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_Call(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
-	RefPtr<PUnitFactory> Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	RefPtr<PUnitFactory> Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
-	RefPtr<PUnitFactory> Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
-	RefPtr<PUnitFactory> Add_PopValue(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_RemoveValue(const Expr& exprSrc, size_t offset);
-	RefPtr<PUnitFactory> Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
-	RefPtr<PUnitFactory> Add_Break(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_Continue(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_Return(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_PushFrame_Block(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_PopFrame(const Expr& exprSrc);
-	RefPtr<PUnitFactory> Add_NoOperation(const Expr& exprSrc);
+	void Add_FeedArgSlotNamed(const Expr& exprSrc);
+	void Add_Call(const Expr& exprSrc);
+	void Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
+	void Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
+	void Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
+	void Add_PopValue(const Expr& exprSrc);
+	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
+	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
+	void Add_Break(const Expr& exprSrc);
+	void Add_Continue(const Expr& exprSrc);
+	void Add_Return(const Expr& exprSrc);
+	void Add_PushFrame_Block(const Expr& exprSrc);
+	void Add_PopFrame(const Expr& exprSrc);
+	void Add_NoOperation(const Expr& exprSrc);
 	void Add_Terminate(const Expr& exprSrc);
-	//void SetDiscardValueFlagAtLast() {
-	//	if (_pPUnitLast) _pPUnitLast->_SetDiscardValueFlag();
-	//}
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;
