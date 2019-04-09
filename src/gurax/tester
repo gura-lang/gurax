@@ -1,0 +1,33 @@
+#!/bin/bash
+cases=
+cases="$cases Dict"
+cases="$cases Expr"
+cases="$cases List"
+cases="$cases for"
+cases="$cases if"
+cases="$cases repeat"
+cases="$cases while"
+
+if [ $# -eq 0 ]; then
+	echo "usage: tester all/casename [update]"
+	exit
+fi
+options=""
+if [ "$1" != "all" ]; then
+	cases="$1"
+	options="--detail"
+fi
+if [ $# -eq 1 ]; then
+	for case in $cases
+	do
+		echo "$case"
+		./gurax test-$case.gura > result/test-$case.result.txt
+		gura ../../script/diff-result.gura $options result/test-$case.expect.txt result/test-$case.result.txt
+	done	
+elif [ "$2" = "update" ]; then
+	for case in $cases
+	do
+		echo "update: $case"
+		./gurax test-$case.gura > result/test-$case.expect.txt
+	done
+fi
