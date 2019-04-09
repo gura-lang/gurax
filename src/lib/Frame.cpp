@@ -109,24 +109,24 @@ Value* Frame_ValueMap::Lookup(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Frame_Root
+// Frame_Basement
 // _pFrameLocal is always nullptr.
 //------------------------------------------------------------------------------
-Frame_Root::Frame_Root() : Frame_Branch(new Frame_ValueMap(), nullptr)
+Frame_Basement::Frame_Basement() : Frame_Branch(new Frame_ValueMap(), nullptr)
 {
 }
 
-void Frame_Root::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_Basement::Assign(const Symbol* pSymbol, Value* pValue)
 {
 	_pFrameOuter->Assign(pSymbol, pValue);
 }
 
-void Frame_Root::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Basement::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	// nothing to do
 }
 
-Value* Frame_Root::Lookup(const Symbol* pSymbol) const
+Value* Frame_Basement::Lookup(const Symbol* pSymbol) const
 {
 	return _pFrameOuter->Lookup(pSymbol);
 }

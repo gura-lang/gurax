@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Basement Basement::_basement;
 
-Basement::Basement() : _pFrame(new Frame_Root())
+Basement::Basement() : _pFrame(new Frame_Basement())
 {
 }
 

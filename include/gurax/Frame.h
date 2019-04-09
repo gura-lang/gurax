@@ -122,17 +122,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Root
+// Frame_Basement
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Root : public Frame_Branch {
+class GURAX_DLLDECLARE Frame_Basement : public Frame_Branch {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Root);
+	Gurax_DeclareReferable(Frame_Basement);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Root");
+	Gurax_MemoryPoolAllocator("Frame_Basement");
 public:
 	// Constructor
-	Frame_Root();
+	Frame_Basement();
 public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
