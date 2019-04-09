@@ -14,11 +14,11 @@ void Composer::Add(PUnit* pPUnit)
 	_pPUnitLast = pPUnit;
 }
 
-const PUnit* Composer::PeekPUnitCont() const
+PUnit* Composer::PeekPUnitCont() const
 {
 	return _pPUnitFactory?
 		_pPUnitFactory->CalcPUnitCont(MemoryPool::Global().chunkPUnit.PeekPointer()) :
-		reinterpret_cast<const PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
+		reinterpret_cast<PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
 }
 
 void Composer::SetFactory(PUnitFactory* pPUnitFactory)

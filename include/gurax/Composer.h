@@ -32,7 +32,7 @@ public:
 	PUnit::SeqId NextSeqId() { return _seqIdCur++; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
-	const PUnit* PeekPUnitCont() const;
+	PUnit* PeekPUnitCont() const;
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
 	void SetFactory(PUnitFactory* pPUnitFactory);

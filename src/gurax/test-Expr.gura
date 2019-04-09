@@ -22,4 +22,5 @@ Println('--------')
 expr = `{
 	while (a < 3) {}
 }
+Printf('%s\n', expr)
 util.PrintPUnit(expr)

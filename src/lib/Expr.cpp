@@ -82,9 +82,11 @@ void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
 
 void Expr::ComposeForArgSlot(Composer& composer)
 {
-	auto pPUnitOfBranch = composer.Add_ArgSlot(*this);				// [Argument]
+	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+	composer.Add_ArgSlot(*this);									// [Argument]
 	SetPUnitTop(composer.PeekPUnitCont());
-	auto pPUnitOfBeginQuote = composer.Add_BeginQuote(*this);		// [Argument]
+	PUnit* pPUnitOfBeginQuote = composer.PeekPUnitCont();
+	composer.Add_BeginQuote(*this);									// [Argument]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	Compose(composer);												// [Argument Any]
 	pPUnitOfBeginQuote->SetPUnitSentinel(composer.PeekPUnitCont());
