@@ -192,8 +192,7 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 2, pDeclArgs.release());		// [Iterator1..n Iterator Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n Iterator]
-		composer.Add_EvalIterator(exprCaller, 0)->
-			SetPUnitBranchDest(composer.PeekPUnitCont());				// [Iterator1..n Iterator Idx]
+		composer.Add_EvalIterator(exprCaller, 0);						// [Iterator1..n Iterator Idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());
 		composer.Flush(true);											// [Iterator1..n Iterator]

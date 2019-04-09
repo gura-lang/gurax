@@ -92,6 +92,7 @@ protected:
 	// Destructor
 	virtual ~PUnitFactory() = default;
 public:
+#if 0
 	void SetPUnitSentinel(const PUnit* pPUnit) {
 		if (_pPUnitCreated) _pPUnitCreated->SetPUnitSentinel(pPUnit);
 	}
@@ -101,6 +102,7 @@ public:
 	void SetPUnitBranchDest(const PUnit* pPUnit) {
 		if (_pPUnitCreated) _pPUnitCreated->SetPUnitBranchDest(pPUnit);
 	}
+#endif
 public:
 	virtual PUnit* CalcPUnitCont(void *p) const = 0;
 	virtual PUnit* Create(bool discardValueFlag) = 0;
