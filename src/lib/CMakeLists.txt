@@ -5,12 +5,12 @@ add_library(guraxcore SHARED
 	ArgSlot.cpp
 	Argument.cpp
 	Attribute.cpp
+	Basement.cpp
 	Binary.cpp
 	Codec.cpp
 	CommandLine.cpp
 	Common.cpp
 	Composer.cpp
-	Context.cpp
 	DateTime.cpp
 	DeclArg.cpp
 	DeclBlock.cpp

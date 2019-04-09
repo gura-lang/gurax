@@ -1,36 +1,36 @@
 //==============================================================================
-// Context.h
+// Basement.h
 //==============================================================================
-#ifndef GURAX_CONTEXT_H
-#define GURAX_CONTEXT_H
+#ifndef GURAX_BASEMENT_H
+#define GURAX_BASEMENT_H
 #include "Frame.h"
 #include "Value.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Context
+// Basement
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Context {
+class GURAX_DLLDECLARE Basement {
 private:
 	RefPtr<Frame> _pFrame;
-	static Context _context;
+	static Basement _basement;
 public:
 	// Constructor
-	Context();
+	Basement();
 	// Copy constructor/operator
-	Context(const Context& src) = delete;
-	Context& operator=(const Context& src) = delete;
+	Basement(const Basement& src) = delete;
+	Basement& operator=(const Basement& src) = delete;
 	// Move constructor/operator
-	Context(Context&& src) = delete;
-	Context& operator=(Context&& src) noexcept = delete;
+	Basement(Basement&& src) = delete;
+	Basement& operator=(Basement&& src) noexcept = delete;
 	// Destructor
-	~Context() = default;
+	~Basement() = default;
 public:
-	void Prepare();
+	void DoPrepare();
 public:
-	static Context& GetGlobal() { return _context; }
-	static Frame& GetFrame() { return *GetGlobal()._pFrame; }
+	static void Prepare() { return _basement.DoPrepare(); }
+	static Frame& GetFrame() { return *_basement._pFrame; }
 };
 
 }

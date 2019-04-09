@@ -14,7 +14,7 @@ Processor::Processor() :
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
 	GetFrameStack().reserve(1024);
-	GetFrameStack().Push(Context::GetFrame().Reference());
+	GetFrameStack().Push(Basement::GetFrame().Reference());
 	PushPUnit(nullptr);
 }
 

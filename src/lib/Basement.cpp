@@ -1,26 +1,26 @@
 //==============================================================================
-// Context.cpp
+// Basement.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Context
+// Basement
 //------------------------------------------------------------------------------
-Context Context::_context;
+Basement Basement::_basement;
 
-Context::Context() : _pFrame(new Frame_Root())
+Basement::Basement() : _pFrame(new Frame_Root())
 {
 }
 
-void Context::Prepare()
+void Basement::DoPrepare()
 {
 	Frame& frame = GetFrame();
 	VType::PrepareBasic(frame);
 	Value::PrepareBasic(frame);
-	Functions::PrepareBasic(frame);
 	Statements::PrepareBasic(frame);
+	Functions::PrepareBasic(frame);
 	frame.Assign(Module_path::Create(frame.Reference()));
 	frame.Assign(Module_re::Create(frame.Reference()));
 	frame.Assign(Module_sys::Create(frame.Reference()));

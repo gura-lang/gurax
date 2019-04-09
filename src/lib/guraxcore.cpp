@@ -21,7 +21,7 @@ void Initialize()
 	Symbol::Bootup();
 	Template::Bootup();
 	Token::Bootup();
-	Context::GetGlobal().Prepare();
+	Basement::Prepare();
 }
 
 }

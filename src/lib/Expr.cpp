@@ -218,7 +218,7 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 void Expr_Identifier::Compose(Composer& composer)
 {
 	const Symbol* pSymbol = GetSymbol();
-	Value* pValue = Context::GetFrame().Lookup(pSymbol);
+	Value* pValue = Basement::GetFrame().Lookup(pSymbol);
 	if (pValue && pValue->IsType(VTYPE_Function)) {
 		const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 		if (func.IsTypeStatement()) {
@@ -786,7 +786,7 @@ void Expr_Caller::Compose(Composer& composer)
 {
 	if (GetExprCar()->IsType<Expr_Identifier>()) {
 		const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprCar())->GetSymbol();
-		Value* pValue = Context::GetFrame().Lookup(pSymbol);
+		Value* pValue = Basement::GetFrame().Lookup(pSymbol);
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {
