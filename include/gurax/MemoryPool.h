@@ -88,14 +88,18 @@ public:
 		size_t _offsetNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
+		void* _pReserved;
 	public:
 		ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin);
 		size_t CountPools() const;
+		void Reserve(size_t bytes);
 		void* Allocate(size_t bytes);
 		void* AllocateBridge();
 		virtual void Deallocate(void* p) {}
 		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	private:
+		void* DoAllocate(size_t bytes);
 	};
 	class ChunkFixed : public Chunk {
 	private:

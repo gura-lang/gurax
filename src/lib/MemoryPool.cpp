@@ -57,7 +57,7 @@ MemoryPool::Pool* MemoryPool::Pool::Create(size_t bytesPoolBuff)
 //-----------------------------------------------------------------------------
 MemoryPool::ChunkPUnit::ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin) :
 	_bytesPoolBuff(bytesPoolBuff), _bytesMargin(bytesMargin), _offsetNext(0),
-	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop)
+	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop), _pReserved(nullptr)
 {}
 
 size_t MemoryPool::ChunkPUnit::CountPools() const
@@ -67,7 +67,22 @@ size_t MemoryPool::ChunkPUnit::CountPools() const
 	return nPools;
 }
 
+void MemoryPool::ChunkPUnit::Reserve(size_t bytes)
+{
+	_pReserved = DoAllocate(bytes);
+}
+
 void* MemoryPool::ChunkPUnit::Allocate(size_t bytes)
+{
+	if (_pReserved) {
+		void* pAllocated = _pReserved;
+		_pReserved = nullptr;
+		return pAllocated;
+	}
+	return DoAllocate(bytes);
+}
+
+void* MemoryPool::ChunkPUnit::DoAllocate(size_t bytes)
 {
 	void* pAllocated = PeekPointer();
 	_offsetNext += bytes;
