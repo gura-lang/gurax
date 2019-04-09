@@ -92,18 +92,7 @@ protected:
 	// Destructor
 	virtual ~PUnitFactory() = default;
 public:
-#if 0
-	void SetPUnitSentinel(const PUnit* pPUnit) {
-		if (_pPUnitCreated) _pPUnitCreated->SetPUnitSentinel(pPUnit);
-	}
-	void SetPUnitCont(const PUnit* pPUnit) {
-		if (_pPUnitCreated) _pPUnitCreated->SetPUnitCont(pPUnit);
-	}
-	void SetPUnitBranchDest(const PUnit* pPUnit) {
-		if (_pPUnitCreated) _pPUnitCreated->SetPUnitBranchDest(pPUnit);
-	}
-#endif
-public:
+	virtual size_t GetPUnitSize() const = 0;
 	virtual PUnit* CalcPUnitCont(void *p) const = 0;
 	virtual PUnit* Create(bool discardValueFlag) = 0;
 };
@@ -204,6 +193,7 @@ private:
 public:
 	PUnitFactory_Value(Expr* pExprSrc, PUnit::SeqId seqId, Value* pValue) :
 		PUnitFactory(pExprSrc, seqId), _pValue(pValue) {}
+	virtual size_t GetPUnitSize() const override { return sizeof(PUnit_Value<false>); }
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Value<false>*>(p) + 1;
 	}
@@ -250,6 +240,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_ValueAndJump<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ValueAndJump<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -290,6 +283,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Lookup<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Lookup<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -332,6 +328,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_AssignToSymbol<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_AssignToSymbol<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -372,6 +371,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _pDeclArg(pDeclArg) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_AssignToDeclArg<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_AssignToDeclArg<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -416,6 +418,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_AssignFunction<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_AssignFunction<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -457,6 +462,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Cast<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Cast<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -490,6 +498,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_GenIterator<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_GenIterator<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -525,6 +536,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_GenRangeIterator<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_GenRangeIterator<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -558,6 +572,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_GenCounterIterator<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_GenCounterIterator<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -599,6 +616,9 @@ public:
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_EvalIterator<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_EvalIterator<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -648,6 +668,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_ForEach<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ForEach<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -688,6 +711,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _pOperator(pOperator) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_UnaryOp<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_UnaryOp<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -730,6 +756,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_BinaryOp<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_BinaryOp<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -770,6 +799,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _sizeReserve(sizeReserve) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_CreateList<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_CreateList<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -812,6 +844,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_ListElem<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ListElem<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -845,6 +880,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_CreateDict<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_CreateDict<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -886,6 +924,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _offset(offset) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_DictElem<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_DictElem<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -931,6 +972,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Index<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Index<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -964,6 +1008,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_FeedIndex<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_FeedIndex<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -999,6 +1046,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_IndexGet<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_IndexGet<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1032,6 +1082,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_IndexSet<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_IndexSet<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1077,6 +1130,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_PropGet<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_PropGet<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1120,6 +1176,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_PropSet<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_PropSet<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1165,6 +1224,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Member<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Member<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1209,6 +1271,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Argument<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Argument<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1248,6 +1313,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_ArgSlot<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ArgSlot<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1282,6 +1350,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_FeedArgSlot<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_FeedArgSlot<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1333,6 +1404,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_ArgSlotNamed<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_ArgSlotNamed<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1368,6 +1442,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_FeedArgSlotNamed<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_FeedArgSlotNamed<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1401,6 +1478,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Call<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Call<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1443,6 +1523,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Jump<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Jump<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1478,6 +1561,9 @@ public:
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_JumpIf<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_JumpIf<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1515,6 +1601,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_JumpIfNot<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_JumpIfNot<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1551,6 +1640,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_NilJumpIf<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_NilJumpIf<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1586,6 +1678,9 @@ public:
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_NilJumpIfNot<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_NilJumpIfNot<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1627,6 +1722,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _pPUnitSentinel(pPUnitSentinel) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_BeginSequence<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_BeginSequence<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1670,6 +1768,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_BeginQuote<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_BeginQuote<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1703,6 +1804,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_PopValue<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_PopValue<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1744,6 +1848,9 @@ public:
 		PUnitFactory(pExprSrc, seqId), _offset(offset) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_RemoveValue<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_RemoveValue<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1789,6 +1896,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_RemoveValues<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_RemoveValues<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1823,6 +1933,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Break<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Break<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1856,6 +1969,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Continue<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Continue<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1892,6 +2008,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Return<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Return<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1925,6 +2044,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_PushFrame_Block<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_PushFrame_Block<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -1960,6 +2082,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_PopFrame<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_PopFrame<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -1994,6 +2119,9 @@ public:
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_NoOperation<false>*>(p) + 1;
 	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_NoOperation<false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -2027,6 +2155,9 @@ public:
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual PUnit* CalcPUnitCont(void* p) const override {
 		return reinterpret_cast<PUnit_Terminate<false>*>(p) + 1;
+	}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Terminate<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
