@@ -93,7 +93,6 @@ protected:
 	virtual ~PUnitFactory() = default;
 public:
 	virtual size_t GetPUnitSize() const = 0;
-	virtual PUnit* CalcPUnitCont(void *p) const = 0;
 	virtual PUnit* Create(bool discardValueFlag) = 0;
 };
 
@@ -194,9 +193,6 @@ public:
 	PUnitFactory_Value(Expr* pExprSrc, PUnit::SeqId seqId, Value* pValue) :
 		PUnitFactory(pExprSrc, seqId), _pValue(pValue) {}
 	virtual size_t GetPUnitSize() const override { return sizeof(PUnit_Value<false>); }
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Value<false>*>(p) + 1;
-	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
@@ -237,9 +233,6 @@ private:
 public:
 	PUnitFactory_ValueAndJump(Expr* pExprSrc, PUnit::SeqId seqId, Value* pValue) :
 		PUnitFactory(pExprSrc, seqId), _pValue(pValue) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_ValueAndJump<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_ValueAndJump<false>);
 	}
@@ -281,9 +274,6 @@ private:
 public:
 	PUnitFactory_Lookup(Expr* pExprSrc, PUnit::SeqId seqId, const Symbol* pSymbol) :
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Lookup<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Lookup<false>);
 	}
@@ -325,9 +315,6 @@ private:
 public:
 	PUnitFactory_AssignToSymbol(Expr* pExprSrc, PUnit::SeqId seqId, const Symbol* pSymbol) :
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_AssignToSymbol<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_AssignToSymbol<false>);
 	}
@@ -369,9 +356,6 @@ private:
 public:
 	PUnitFactory_AssignToDeclArg(Expr* pExprSrc, PUnit::SeqId seqId, DeclArg* pDeclArg) :
 		PUnitFactory(pExprSrc, seqId), _pDeclArg(pDeclArg) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_AssignToDeclArg<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_AssignToDeclArg<false>);
 	}
@@ -415,9 +399,6 @@ private:
 public:
 	PUnitFactory_AssignFunction(Expr* pExprSrc, PUnit::SeqId seqId, Function* pFunction) :
 		PUnitFactory(pExprSrc, seqId), _pFunction(pFunction) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_AssignFunction<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_AssignFunction<false>);
 	}
@@ -459,9 +440,6 @@ private:
 public:
 	PUnitFactory_Cast(Expr* pExprSrc, PUnit::SeqId seqId, const VType& vtype) :
 		PUnitFactory(pExprSrc, seqId), _vtype(vtype) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Cast<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Cast<false>);
 	}
@@ -496,9 +474,6 @@ public:
 public:
 	PUnitFactory_GenIterator(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_GenIterator<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_GenIterator<false>);
 	}
@@ -533,9 +508,6 @@ public:
 public:
 	PUnitFactory_GenRangeIterator(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_GenRangeIterator<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_GenRangeIterator<false>);
 	}
@@ -570,9 +542,6 @@ public:
 public:
 	PUnitFactory_GenCounterIterator(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_GenCounterIterator<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_GenCounterIterator<false>);
 	}
@@ -614,9 +583,6 @@ private:
 public:
 	PUnitFactory_EvalIterator(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_EvalIterator<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_EvalIterator<false>);
 	}
@@ -665,9 +631,6 @@ public:
 		DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest), _offset(offset),
 		_pDeclArgOwner(pDeclArgOwner) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_ForEach<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_ForEach<false>);
 	}
@@ -709,9 +672,6 @@ private:
 public:
 	PUnitFactory_UnaryOp(Expr* pExprSrc, PUnit::SeqId seqId, const Operator* pOperator) :
 		PUnitFactory(pExprSrc, seqId), _pOperator(pOperator) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_UnaryOp<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_UnaryOp<false>);
 	}
@@ -753,9 +713,6 @@ private:
 public:
 	PUnitFactory_BinaryOp(Expr* pExprSrc, PUnit::SeqId seqId, const Operator* pOperator) :
 		PUnitFactory(pExprSrc, seqId), _pOperator(pOperator) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_BinaryOp<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_BinaryOp<false>);
 	}
@@ -797,9 +754,6 @@ private:
 public:
 	PUnitFactory_CreateList(Expr* pExprSrc, PUnit::SeqId seqId, size_t sizeReserve) :
 		PUnitFactory(pExprSrc, seqId), _sizeReserve(sizeReserve) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_CreateList<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_CreateList<false>);
 	}
@@ -841,9 +795,6 @@ private:
 public:
 	PUnitFactory_ListElem(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset) :
 		PUnitFactory(pExprSrc, seqId), _offset(offset) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_ListElem<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_ListElem<false>);
 	}
@@ -878,9 +829,6 @@ public:
 public:
 	PUnitFactory_CreateDict(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_CreateDict<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_CreateDict<false>);
 	}
@@ -922,9 +870,6 @@ private:
 public:
 	PUnitFactory_DictElem(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset) :
 		PUnitFactory(pExprSrc, seqId), _offset(offset) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_DictElem<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_DictElem<false>);
 	}
@@ -969,9 +914,6 @@ private:
 public:
 	PUnitFactory_Index(Expr* pExprSrc, PUnit::SeqId seqId, Attribute* pAttr, size_t sizeReserve) :
 		PUnitFactory(pExprSrc, seqId), _pAttr(pAttr), _sizeReserve(sizeReserve) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Index<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Index<false>);
 	}
@@ -1006,9 +948,6 @@ public:
 public:
 	PUnitFactory_FeedIndex(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_FeedIndex<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_FeedIndex<false>);
 	}
@@ -1043,9 +982,6 @@ public:
 public:
 	PUnitFactory_IndexGet(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_IndexGet<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_IndexGet<false>);
 	}
@@ -1080,9 +1016,6 @@ public:
 public:
 	PUnitFactory_IndexSet(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_IndexSet<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_IndexSet<false>);
 	}
@@ -1127,9 +1060,6 @@ private:
 public:
 	PUnitFactory_PropGet(Expr* pExprSrc, PUnit::SeqId seqId, const Symbol* pSymbol, Attribute* pAttr) :
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol), _pAttr(pAttr) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_PropGet<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_PropGet<false>);
 	}
@@ -1174,9 +1104,6 @@ private:
 public:
 	PUnitFactory_PropSet(Expr* pExprSrc, PUnit::SeqId seqId, const Symbol* pSymbol, Attribute* pAttr) :
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol), _pAttr(pAttr) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_PropSet<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_PropSet<false>);
 	}
@@ -1221,9 +1148,6 @@ private:
 public:
 	PUnitFactory_Member(Expr* pExprSrc, PUnit::SeqId seqId, const Symbol* pSymbol, Attribute* pAttr) :
 		PUnitFactory(pExprSrc, seqId), _pSymbol(pSymbol), _pAttr(pAttr) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Member<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Member<false>);
 	}
@@ -1268,9 +1192,6 @@ private:
 public:
 	PUnitFactory_Argument(Expr* pExprSrc, PUnit::SeqId seqId, Attribute* pAttr, Expr_Block* pExprOfBlock) :
 		PUnitFactory(pExprSrc, seqId), _pAttr(pAttr), _pExprOfBlock(pExprOfBlock) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Argument<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Argument<false>);
 	}
@@ -1310,9 +1231,6 @@ public:
 public:
 	PUnitFactory_ArgSlot(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_ArgSlot<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_ArgSlot<false>);
 	}
@@ -1348,9 +1266,6 @@ private:
 public:
 	PUnitFactory_FeedArgSlot(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_FeedArgSlot<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_FeedArgSlot<false>);
 	}
@@ -1401,9 +1316,6 @@ public:
 							  Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest),
 		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_ArgSlotNamed<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_ArgSlotNamed<false>);
 	}
@@ -1439,9 +1351,6 @@ private:
 public:
 	PUnitFactory_FeedArgSlotNamed(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_FeedArgSlotNamed<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_FeedArgSlotNamed<false>);
 	}
@@ -1476,9 +1385,6 @@ public:
 public:
 	PUnitFactory_Call(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Call<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Call<false>);
 	}
@@ -1520,9 +1426,6 @@ private:
 public:
 	PUnitFactory_Jump(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitCont) :
 		PUnitFactory(pExprSrc, seqId), _pPUnitCont(pPUnitCont) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Jump<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Jump<false>);
 	}
@@ -1559,9 +1462,6 @@ private:
 public:
 	PUnitFactory_JumpIf(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_JumpIf<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_JumpIf<false>);
 	}
@@ -1598,9 +1498,6 @@ private:
 public:
 	PUnitFactory_JumpIfNot(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_JumpIfNot<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_JumpIfNot<false>);
 	}
@@ -1637,9 +1534,6 @@ private:
 public:
 	PUnitFactory_NilJumpIf(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_NilJumpIf<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_NilJumpIf<false>);
 	}
@@ -1676,9 +1570,6 @@ private:
 public:
 	PUnitFactory_NilJumpIfNot(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_NilJumpIfNot<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_NilJumpIfNot<false>);
 	}
@@ -1720,9 +1611,6 @@ private:
 public:
 	PUnitFactory_BeginSequence(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitSentinel) :
 		PUnitFactory(pExprSrc, seqId), _pPUnitSentinel(pPUnitSentinel) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_BeginSequence<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_BeginSequence<false>);
 	}
@@ -1765,9 +1653,6 @@ private:
 public:
 	PUnitFactory_BeginQuote(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitSentinel) :
 		PUnitFactory(pExprSrc, seqId), _pPUnitSentinel(pPUnitSentinel) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_BeginQuote<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_BeginQuote<false>);
 	}
@@ -1802,9 +1687,6 @@ public:
 public:
 	PUnitFactory_PopValue(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_PopValue<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_PopValue<false>);
 	}
@@ -1846,9 +1728,6 @@ private:
 public:
 	PUnitFactory_RemoveValue(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset) :
 		PUnitFactory(pExprSrc, seqId), _offset(offset) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_RemoveValue<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_RemoveValue<false>);
 	}
@@ -1893,9 +1772,6 @@ private:
 public:
 	PUnitFactory_RemoveValues(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset, size_t cnt) :
 		PUnitFactory(pExprSrc, seqId), _offset(offset), _cnt(cnt) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_RemoveValues<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_RemoveValues<false>);
 	}
@@ -1930,9 +1806,6 @@ public:
 public:
 	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Break<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Break<false>);
 	}
@@ -1967,9 +1840,6 @@ public:
 public:
 	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Continue<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Continue<false>);
 	}
@@ -2005,9 +1875,6 @@ public:
 public:
 	PUnitFactory_Return(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Return<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Return<false>);
 	}
@@ -2042,9 +1909,6 @@ public:
 public:
 	PUnitFactory_PushFrame_Block(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_PushFrame_Block<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_PushFrame_Block<false>);
 	}
@@ -2079,9 +1943,6 @@ public:
 public:
 	PUnitFactory_PopFrame(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_PopFrame<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_PopFrame<false>);
 	}
@@ -2116,9 +1977,6 @@ public:
 public:
 	PUnitFactory_NoOperation(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_NoOperation<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_NoOperation<false>);
 	}
@@ -2153,9 +2011,6 @@ public:
 public:
 	PUnitFactory_Terminate(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
-	virtual PUnit* CalcPUnitCont(void* p) const override {
-		return reinterpret_cast<PUnit_Terminate<false>*>(p) + 1;
-	}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Terminate<false>);
 	}
