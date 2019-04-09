@@ -12,6 +12,13 @@ PUnit::PUnit(Expr* pExprSrc, SeqId seqId) : _pExprSrc(pExprSrc), _seqId(seqId)
 {
 }
 
+String PUnit::MakeSeqIdString(int seqIdOffset) const
+{
+	const PUnit* pPUnit = this;
+	for ( ; pPUnit->IsBridge(); pPUnit = pPUnit->GetPUnitNext()) ;
+	return String().Printf((seqIdOffset == 0)? "#%zu" : "##%zu", pPUnit->GetSeqId(seqIdOffset));
+}
+
 void PUnit::AppendInfoToString(String& str, const StringStyle& ss) const
 {
 	if (GetDiscardValueFlag()) {

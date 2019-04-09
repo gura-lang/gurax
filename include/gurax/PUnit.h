@@ -41,9 +41,7 @@ public:
 	String ToString(const StringStyle& ss) const { return ToString(ss, 0); }
 public:
 	size_t GetSeqId(int seqIdOffset = 0) const { return _seqId - seqIdOffset; }
-	String MakeSeqIdString(int seqIdOffset = 0) const {
-		return String().Printf((seqIdOffset == 0)? "#%zu" : "##%zu", GetSeqId(seqIdOffset));
-	}
+	String MakeSeqIdString(int seqIdOffset = 0) const;
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
 public:
