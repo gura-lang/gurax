@@ -17,7 +17,7 @@ void Expr::Bootup()
 
 void Expr::ComposeOrNil(Composer& composer)
 {
-	auto pPUnitMarked = composer.PeekPUnitCont();
+	PUnit* pPUnitMarked = composer.PeekPUnitCont();
 	Compose(composer);
 	if (pPUnitMarked == composer.PeekPUnitCont()) { // when nothing has been yielded
 		composer.Add_Value(*this, Value::nil());

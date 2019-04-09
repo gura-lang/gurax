@@ -1,26 +1,83 @@
 #!./gurax
 import(util)
-Println('--------')
-expr = `{
-	f(a, b, c) {
-		Println(a)
-	}
-}
-Printf('%s\n', expr)
-util.PrintPUnit(expr)
-Println('--------')
-expr = `(a)
-Printf('`(%s)\n', expr)
-util.PrintPUnit(expr)
-Println('--------')
 f(`expr) = {
+	Println('--------')
 	Printf('f(`(%s))\n', expr)
 	util.PrintPUnit(expr)
 }
+f(a)
 f(a = 3)
-Println('--------')
-expr = `{
-	while (a < 3) {}
+f(a + b)
+exprs = []
+exprs = [
+	`{
+		foo
+	}
+	`{
+		foo
+		bar
+	}
+	`{
+		foo = 2
+		bar = 'hello'
+	}
+	`{
+		-foo
+	}
+	`{
+		foo + bar
+	}
+	`{
+		foo.bar
+	}
+	`{
+		foo.bar = 3
+	}
+	`{
+		[1, 2, 3]
+	}
+	`{
+		foo = [1, 2, 3]
+	}
+	`{
+		foo[]
+	}
+	`{
+		foo[2] = 3
+	}
+	`{
+		f(3)
+	}
+	`{
+		f(3, 4, 5)
+	}
+	`{
+		f(3, 4, 5):attr1:attr2
+	}
+	`{
+		f(3, 4, 5) { f1(), f2() }
+	}
+	`{
+		for (a in b) {}
+	}
+	`{
+		for (a in b) {|i| f(i)}
+	}
+	`{
+		while (a < 3) {}
+	}
+	`{
+		while (a < 3) {|i| f(i)}
+	}
+	`{
+		repeat (10) {}
+	}
+	`{
+		repeat (10) {|i| f(i)}
+	}
+]
+for (expr in exprs) {
+	Println('--------')
+	Printf('`%s\n', expr)
+	util.PrintPUnit(expr)
 }
-Printf('%s\n', expr)
-util.PrintPUnit(expr)
