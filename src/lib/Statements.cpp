@@ -166,7 +166,9 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 1, pDeclArgs.release());		// [Iterator1..n Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n]
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n Last]
+		composer.EndRepeaterBlock();
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [Last]
@@ -177,7 +179,9 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 1, pDeclArgs.release());		// [Iterator1..n List]
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n List Elem]
+		composer.EndRepeaterBlock();
 		composer.Add_ListElem(exprCaller, 0);							// [Iterator1..n List]
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
@@ -196,7 +200,9 @@ Gurax_ImplementStatement(for_)
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());
 		composer.Flush(true);											// [Iterator1..n Iterator]
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n Iterator Last]
+		composer.EndRepeaterBlock();
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValues(exprCaller, 1, nIterators + 1);		// [Last]
@@ -251,9 +257,9 @@ Gurax_ImplementStatement(while_)
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());
 		composer.Flush(true);											// [Iterator]
-
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator Last]
-
+		composer.EndRepeaterBlock();
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
@@ -296,7 +302,9 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_EvalIterator(exprCaller, 1);
 		composer.Flush(true);											// [Iterator Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator]
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator Last]
+		composer.EndRepeaterBlock();
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
@@ -317,7 +325,9 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_AssignToDeclArg(exprCaller, (*ppDeclArg)->Reference());
 		composer.Flush(true);											// [Iterator Last]
 		composer.Add_PopValue(exprCaller);								// [Iterator]
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator Last]
+		composer.EndRepeaterBlock();
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValue(exprCaller, 1);						// [Last]
@@ -343,12 +353,19 @@ Gurax_ImplementStatement(break_)
 						 "break-statement takes zero or one argument");
 		return;
 	}
+	if (!composer.HasValidRepeaterInfo()) {
+		Error::IssueWith(ErrorType::ContextError, exprCaller,
+						 "break-statement can be used in a loop");
+		return;
+	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
-		composer.Add_PopValue(exprCaller);
 		pExprCdr->ComposeOrNil(composer);							// [Any]
+	} else {
+		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
-	composer.Add_Break(exprCaller);
+	const PUnit* pPUnitOfBranch = composer.GetRepeaterInfoCur().GetPUnitOfBranch();
+	composer.Add_Break(exprCaller, pPUnitOfBranch);
 }
 
 // continue(value?)
@@ -365,12 +382,19 @@ Gurax_ImplementStatement(continue_)
 						 "continue-statement takes zero or one argument");
 		return;
 	}
+	if (!composer.HasValidRepeaterInfo()) {
+		Error::IssueWith(ErrorType::ContextError, exprCaller,
+						 "continue-statement can be used in a loop");
+		return;
+	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
-		composer.Add_PopValue(exprCaller);
 		pExprCdr->ComposeOrNil(composer);							// [Any]
+	} else {
+		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
-	composer.Add_Continue(exprCaller);
+	const PUnit* pPUnitOfLoop = composer.GetRepeaterInfoCur().GetPUnitOfLoop();
+	composer.Add_Continue(exprCaller, pPUnitOfLoop);
 }
 
 // return(value?)

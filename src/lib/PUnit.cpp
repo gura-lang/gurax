@@ -445,7 +445,7 @@ template<bool discardValueFlag>
 String PUnit_EvalIterator<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("EvalIterator(offsetToIterator=%zu,branch=%s)", GetOffset(),
+	str.Printf("EvalIterator(offsetToIterator=%zu,branchdest=%s)", GetOffset(),
 			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -485,7 +485,7 @@ template<bool discardValueFlag>
 String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ForEach(offsetToIterator=%zu,branch=%s)", GetOffset(),
+	str.Printf("ForEach(offsetToIterator=%zu,branchdest=%s)", GetOffset(),
 			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -1058,7 +1058,7 @@ String PUnit_ArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 	if (GetExprSrc().GetPUnitTop()) {
 		str.Printf(":%s", GetExprSrc().GetPUnitTop()->MakeSeqIdString(seqIdOffset).c_str());
 	}
-	str.Printf(",cont=%s,branch=%s)",
+	str.Printf(",cont=%s,branchdest=%s)",
 			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str(),
 			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
@@ -1155,7 +1155,7 @@ template<bool discardValueFlag>
 String PUnit_ArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ArgSlotNamed(`%s=>%s,cont=%s,branch=%s)", GetSymbol()->GetName(),
+	str.Printf("ArgSlotNamed(`%s=>%s,cont=%s,branchdest=%s)", GetSymbol()->GetName(),
 			   GetExprSrc().ToString(StringStyle().Cram()).c_str(),
 			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str(),
 			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
@@ -1308,7 +1308,7 @@ template<bool discardValueFlag>
 String PUnit_JumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("JumpIf(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("JumpIf(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1345,7 +1345,7 @@ template<bool discardValueFlag>
 String PUnit_JumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("JumpIfNot(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("JumpIfNot(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1383,7 +1383,7 @@ template<bool discardValueFlag>
 String PUnit_NilJumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("NilJumpIf(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("NilJumpIf(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1421,7 +1421,7 @@ template<bool discardValueFlag>
 String PUnit_NilJumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("NilJumpIfNot(branch=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("NilJumpIfNot(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1602,20 +1602,15 @@ PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 const PUnit* PUnit_Break<discardValueFlag>::Exec(Processor& processor) const
 {
-	const PUnit* pPUnit = processor.PopPUnit();
-	// Since nullptr means the end of the processor loop, there's no need to
-	// pop frame or value from their stacks.
-	if (!pPUnit) return nullptr;	
-	processor.PopFrame();
 	if (discardValueFlag) processor.PopValue();
-	return pPUnit->GetPUnitCont();
+	return GetPUnitOfBranch()->GetPUnitBranchDest();
 }
 
 template<bool discardValueFlag>
 String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "Break()";
+	str.Printf("Break(branch=%s)", GetPUnitOfBranch()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1623,9 +1618,9 @@ String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdO
 PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Break<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Break<true>(_pExprSrc.release(), _seqId, _pPUnitOfBranch);
 	} else {
-		_pPUnitCreated = new PUnit_Break<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Break<false>(_pExprSrc.release(), _seqId, _pPUnitOfBranch);
 	}
 	return _pPUnitCreated;
 }
@@ -1638,20 +1633,15 @@ PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 const PUnit* PUnit_Continue<discardValueFlag>::Exec(Processor& processor) const
 {
-	const PUnit* pPUnit = processor.PopPUnit();
-	// Since nullptr means the end of the processor loop, there's no need to
-	// pop frame or value from their stacks.
-	if (!pPUnit) return nullptr;	
-	processor.PopFrame();
 	if (discardValueFlag) processor.PopValue();
-	return pPUnit->GetPUnitCont();
+	return GetPUnitOfLoop();
 }
 
 template<bool discardValueFlag>
 String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "Continue()";
+	str.Printf("Continue(loop=%s)", GetPUnitOfLoop()->MakeSeqIdString(seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1659,9 +1649,9 @@ String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _seqId, _pPUnitOfLoop);
 	} else {
-		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _seqId, _pPUnitOfLoop);
 	}
 	return _pPUnitCreated;
 }

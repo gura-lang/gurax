@@ -1,16 +1,4 @@
-Println(false && false)
-Println(false && true)
-Println(true && false)
-Println(true && true)
-Println(false && false)
-Println(false && 'foo')
-Println('foo' && false)
-Println('foo' && 'bar')
-Println(false || false)
-Println(false || true)
-Println(true || false)
-Println(true || true)
-Println(false || false)
-Println(false || 'foo')
-Println('foo' || false)
-Println('foo' || 'bar')
+repeat (10) {|n|
+	if (n % 2 == 0) { continue }
+	Println(n)
+}

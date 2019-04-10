@@ -122,8 +122,8 @@ public:
 	void Add_PopValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
-	void Add_Break(const Expr& exprSrc);
-	void Add_Continue(const Expr& exprSrc);
+	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch);
+	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop);
 	void Add_Return(const Expr& exprSrc);
 	void Add_PushFrame_Block(const Expr& exprSrc);
 	void Add_PopFrame(const Expr& exprSrc);

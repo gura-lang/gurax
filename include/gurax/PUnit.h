@@ -1784,9 +1784,14 @@ class GURAX_DLLDECLARE PUnit_Break : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitOfBranch;
 public:
 	// Constructor
-	PUnit_Break(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfBranch) :
+		PUnit(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch) {}
+public:
+	const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1801,9 +1806,11 @@ private:
 class PUnitFactory_Break : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Break");
+private:
+	const PUnit* _pPUnitOfBranch;
 public:
-	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId) :
-		PUnitFactory(pExprSrc, seqId) {}
+	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfBranch) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Break<false>);
 	}
@@ -1818,9 +1825,14 @@ class GURAX_DLLDECLARE PUnit_Continue : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitOfLoop;
 public:
 	// Constructor
-	PUnit_Continue(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	PUnit_Continue(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfLoop) :
+		PUnit(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop) {}
+public:
+	const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1835,9 +1847,11 @@ private:
 class PUnitFactory_Continue : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Continue");
+private:
+	const PUnit* _pPUnitOfLoop;
 public:
-	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId) :
-		PUnitFactory(pExprSrc, seqId) {}
+	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfLoop) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Continue<false>);
 	}

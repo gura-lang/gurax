@@ -21,6 +21,7 @@ private:
 public:
 	static const ErrorType ArgumentError;
 	static const ErrorType CodecError;
+	static const ErrorType ContextError;
 	static const ErrorType DeclarationError;
 	static const ErrorType DividedByZero;
 	static const ErrorType IndexError;
