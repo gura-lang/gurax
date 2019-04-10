@@ -111,6 +111,8 @@ public:
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	const char* GetName() const { return _pSymbol->GetName(); }
+	String MakeFullName() const;
 	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }

@@ -5,6 +5,7 @@ cases="$cases Expr"
 cases="$cases List"
 cases="$cases for"
 cases="$cases if"
+cases="$cases math"
 cases="$cases repeat"
 cases="$cases while"
 

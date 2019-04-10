@@ -6,8 +6,67 @@
 Gurax_BeginModule(math)
 
 //------------------------------------------------------------------------------
-// Implementation of function
+// Function_Unary
 //------------------------------------------------------------------------------
+class Function_Unary : public Function {
+private:
+	const Operator* _pOperator;
+public:
+	Function_Unary(const Operator* pOperator);
+	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const override;
+};
+
+Function_Unary::Function_Unary(const Operator* pOperator) :
+	Function(Function::Type::Statement, pOperator->GetSymbol()), _pOperator(pOperator)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+}
+
+void Function_Unary::Compose(Composer& composer, Expr_Caller& exprCaller) const
+{
+	if (exprCaller.CountExprCdr() != 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "function %s takes one argument", MakeFullName().c_str());
+		return;
+	}
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	pExprCdr->ComposeOrNil(composer);							// [Any]
+	composer.Add_UnaryOp(exprCaller, _pOperator);
+}
+
+//------------------------------------------------------------------------------
+// Function_Binary
+//------------------------------------------------------------------------------
+class Function_Binary : public Function {
+private:
+	const Operator* _pOperator;
+public:
+	Function_Binary(const Operator* pOperator);
+	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const override;
+};
+
+Function_Binary::Function_Binary(const Operator* pOperator) :
+	Function(Function::Type::Statement, pOperator->GetSymbol()), _pOperator(pOperator)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("valueL", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("valueR", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+}
+
+void Function_Binary::Compose(Composer& composer, Expr_Caller& exprCaller) const
+{
+	if (exprCaller.CountExprCdr() != 2) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "function %s takes two arguments", MakeFullName().c_str());
+		return;
+	}
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	pExprCdr->ComposeOrNil(composer);							// [Any]
+	pExprCdr = pExprCdr->GetExprNext();
+	pExprCdr->ComposeOrNil(composer);							// [Any]
+	composer.Add_BinaryOp(exprCaller, _pOperator);
+}
 
 //------------------------------------------------------------------------------
 // Entries
@@ -20,7 +79,36 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	//Assign(Gurax_CreateFunction(Exit));
+	Assign(new Function_Unary(Operator::math_Abs));
+	Assign(new Function_Unary(Operator::math_Acos));
+	Assign(new Function_Unary(Operator::math_Arg));
+	Assign(new Function_Unary(Operator::math_Asin));
+	Assign(new Function_Unary(Operator::math_Atan));
+	Assign(new Function_Binary(Operator::math_Atan2));
+	Assign(new Function_Unary(Operator::math_Ceil));
+	Assign(new Function_Unary(Operator::math_Conj));
+	Assign(new Function_Unary(Operator::math_Cos));
+	Assign(new Function_Unary(Operator::math_Cosh));
+	Assign(new Function_Unary(Operator::math_Covariance));
+	Assign(new Function_Unary(Operator::math_Cross));
+	Assign(new Function_Unary(Operator::math_Delta));
+	Assign(new Function_Unary(Operator::math_Dot));
+	Assign(new Function_Unary(Operator::math_Exp));
+	Assign(new Function_Unary(Operator::math_Floor));
+	Assign(new Function_Binary(Operator::math_Hypot));
+	Assign(new Function_Unary(Operator::math_Imag));
+	Assign(new Function_Unary(Operator::math_Log));
+	Assign(new Function_Unary(Operator::math_Log10));
+	Assign(new Function_Unary(Operator::math_Norm));
+	Assign(new Function_Unary(Operator::math_Real));
+	Assign(new Function_Unary(Operator::math_Relu));
+	Assign(new Function_Unary(Operator::math_Sigmoid));
+	Assign(new Function_Unary(Operator::math_Sin));
+	Assign(new Function_Unary(Operator::math_Sinh));
+	Assign(new Function_Unary(Operator::math_Sqrt));
+	Assign(new Function_Unary(Operator::math_Tan));
+	Assign(new Function_Unary(Operator::math_Tanh));
+	Assign(new Function_Unary(Operator::math_Unitstep));
 	return true;
 }
 
