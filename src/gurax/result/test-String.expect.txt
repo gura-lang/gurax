@@ -19,3 +19,9 @@ str.EndsWith('KLMN'):rest .. nil
 str.EndsWith('KLMN'):rest:icase .. klmn
 str.StartsWith('defg', 3):rest .. hijklmn
 str.EndsWith('ghij', 10):rest .. ghijklmn
+str .. abcdefghijklmn
+str.len .. 14
+str.width .. 14
+str .. あいうえおかきくけこ
+str.len .. 10
+str.width .. 20

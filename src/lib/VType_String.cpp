@@ -95,7 +95,7 @@ Gurax_DeclareProperty_R(String, len)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the length of the string in byte.");
+		"Returns the number of characters in the string.");
 }
 
 Gurax_ImplementPropertyGetter(String, len)
@@ -109,7 +109,7 @@ Gurax_DeclareProperty_R(String, width)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the number of characters in the string.");
+		"Returns the string's width when displayed with a fixed-width font.");
 }
 
 Gurax_ImplementPropertyGetter(String, width)

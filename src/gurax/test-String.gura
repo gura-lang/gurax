@@ -27,3 +27,12 @@ tester(`str.EndsWith('KLMN'):rest)
 tester(`str.EndsWith('KLMN'):rest:icase)
 tester(`str.StartsWith('defg', 3):rest)
 tester(`str.EndsWith('ghij', 10):rest)
+
+str = 'abcdefghijklmn'
+tester(`str)
+tester(`str.len)
+tester(`str.width)
+str = 'あいうえおかきくけこ'
+tester(`str)
+tester(`str.len)
+tester(`str.width)
