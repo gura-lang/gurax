@@ -16,9 +16,8 @@ bool Module::Prepare(DottedSymbol* pDottedSymbol)
 
 bool Module::Prepare(const char* name, char separator)
 {
-	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
-	pDottedSymbol->AppendFromString(name, separator);
-	return Prepare(pDottedSymbol.release());
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromString(name, separator));
+	return pDottedSymbol && Prepare(pDottedSymbol.release());
 }
 
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)

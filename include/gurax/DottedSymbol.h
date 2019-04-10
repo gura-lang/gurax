@@ -114,6 +114,19 @@ public:
 		return _symbolList.IsEqualTo(dottedSymbol.GetSymbolList());
 	}
 	DottedSymbol* Clone() const { return new DottedSymbol(*this); }
+public:
+	static DottedSymbol* CreateFromExprList(const ExprList& exprList) {
+		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+		return pDottedSymbol->AppendFromExprList(exprList)? pDottedSymbol.release() : nullptr;
+	}
+	static DottedSymbol* CreateFromString(const char* str, char separator = '.') {
+		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+		return pDottedSymbol->AppendFromString(str, separator)? pDottedSymbol.release() : nullptr;
+	}
+	static DottedSymbol* CreateFromExpr(const Expr& expr) {
+		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
+		return pDottedSymbol->AppendFromExpr(expr)? pDottedSymbol.release() : nullptr;
+	}
 };
 
 }
