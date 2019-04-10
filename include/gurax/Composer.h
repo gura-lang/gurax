@@ -11,12 +11,42 @@ namespace Gurax {
 // Composer
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Composer {
+public:
+	class RepeaterInfo {
+	private:
+		const PUnit* _pPUnitOfLoop;
+		const PUnit* _pPUnitOfBranch;
+	public:
+		// Constructor
+		RepeaterInfo() = default;
+		// Copy constructor/operator
+		RepeaterInfo(const RepeaterInfo& src) = delete;
+		RepeaterInfo& operator=(const RepeaterInfo& src) = delete;
+		// Move constructor/operator
+		RepeaterInfo(RepeaterInfo&& src) = delete;
+		RepeaterInfo& operator=(RepeaterInfo&& src) noexcept = delete;
+		// Destructor
+		virtual ~RepeaterInfo() = default;
+	public:
+		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch) :
+			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch) {}
+		const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
+		const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
+	};
+	class RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
+	};
+	class RepeaterInfoOwner : public RepeaterInfoTbl {
+	public:
+		~RepeaterInfoOwner() { Clear(); }
+		void Clear();
+	};
 private:
 	PUnit::SeqId _seqIdCur;
 	PUnit* _pPUnitFirst;
 	PUnit* _pPUnitLast;
 	PUnitStack _punitStack;
 	RefPtr<PUnitFactory> _pPUnitFactory;
+	RepeaterInfoOwner _repeaterInfoStack;
 public:
 	// Constructor
 	Composer() : _seqIdCur(0), _pPUnitFirst(nullptr), _pPUnitLast(nullptr) {}
@@ -37,8 +67,15 @@ public:
 	void Add(PUnit* pPUnit);
 	void SetFactory(PUnitFactory* pPUnitFactory);
 	void Flush(bool discardValueFlag);
+	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
+	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
+	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch) {
+		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch));
+	}
+	void EndRepeaterBlock() {
+		_repeaterInfoStack.pop_back();
+	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
-	void DoEval(Processor& processor) const;
 public:
 	void Add_Value(const Expr& exprSrc, Value* pValue);
 	void Add_ValueAndJump(const Expr& exprSrc, Value* pValue);

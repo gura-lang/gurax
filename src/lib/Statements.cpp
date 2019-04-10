@@ -231,9 +231,9 @@ Gurax_ImplementStatement(while_)
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_JumpIfNot(exprCaller);								// [Last]
 		composer.Add_PopValue(exprCaller);								// []
-
+		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Last]
-
+		composer.EndRepeaterBlock();
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_NoOperation(exprCaller);

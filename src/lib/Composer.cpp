@@ -294,4 +294,13 @@ Iterator* Composer::EachPUnit() const
 	return new Iterator_EachPUnit(GetPUnitFirst(), nullptr);
 }
 
+//------------------------------------------------------------------------------
+// Composer::RepeaterInfoOwner
+//------------------------------------------------------------------------------
+void Composer::RepeaterInfoOwner::Clear()
+{
+	for (RepeaterInfo* pRepeaterInfo : *this) delete pRepeaterInfo;
+	clear();
+}
+
 }

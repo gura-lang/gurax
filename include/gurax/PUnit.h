@@ -61,6 +61,7 @@ public:
 	virtual const PUnit* GetPUnitSentinel() const { return nullptr; } // only PUnit_BeginQuote returns a valid value.
 	virtual const PUnit* GetPUnitCont() const = 0;
 	virtual const PUnit* GetPUnitNext() const = 0;
+	virtual const PUnit* GetPUnitBranchDest() const { return nullptr; }
 	virtual const PUnit* Exec(Processor& processor) const = 0;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const = 0;
 };
@@ -141,10 +142,9 @@ public:
 	PUnit_Branch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnit(pExprSrc, seqId), _pPUnitBranchDest(pPUnitBranchDest) {}
 public:
-	const PUnit* GetPUnitBranchDest() const { return _pPUnitBranchDest; }
-public:
 	// Virtual function of PUnit
 	virtual void SetPUnitBranchDest(const PUnit* pPUnit) override { _pPUnitBranchDest = pPUnit; }
+	virtual const PUnit* GetPUnitBranchDest() const override { return _pPUnitBranchDest; }
 };
 
 class PUnitFactory_Branch : public PUnitFactory {
