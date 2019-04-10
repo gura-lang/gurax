@@ -1,0 +1,21 @@
+str .. abcdefghijklmn
+str.StartsWith('abcd') .. true
+str.StartsWith('abdd') .. false
+str.StartsWith('ABCD') .. false
+str.StartsWith('ABCD'):icase .. true
+str.EndsWith('klmn') .. true
+str.EndsWith('klmm') .. false
+str.EndsWith('KLMN') .. false
+str.EndsWith('KLMN'):icase .. true
+str.StartsWith('defg', 3) .. true
+str.EndsWith('ghij', 10) .. true
+str.StartsWith('abcd'):rest .. efghijklmn
+str.StartsWith('abdd'):rest .. nil
+str.StartsWith('ABCD'):rest .. nil
+str.StartsWith('ABCD'):rest:icase .. efghijklmn
+str.EndsWith('klmn'):rest .. klmn
+str.EndsWith('klmm'):rest .. nil
+str.EndsWith('KLMN'):rest .. nil
+str.EndsWith('KLMN'):rest:icase .. klmn
+str.StartsWith('defg', 3):rest .. hijklmn
+str.EndsWith('ghij', 10):rest .. ghijklmn

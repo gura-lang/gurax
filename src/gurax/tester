@@ -3,6 +3,7 @@ cases=
 cases="$cases Dict"
 cases="$cases Expr"
 cases="$cases List"
+cases="$cases String"
 cases="$cases for"
 cases="$cases if"
 cases="$cases math"
