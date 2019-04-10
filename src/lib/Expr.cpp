@@ -550,11 +550,9 @@ String Expr_Root::ToString(const StringStyle& ss) const
 			str += '\n';
 		}
 	} else {
-		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			if (firstFlag) {
-				firstFlag = false;
-			} else {
+		const Expr* pExprFirst = GetExprElemFirst();
+		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (pExpr != pExprFirst) {
 				str += ';';
 				if (!ss.IsCram()) str += ' ';
 			}
@@ -590,11 +588,9 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		str += '{';
 		if (HasExprParam()) {
 			str += '|';
-			bool firstFlag = true;
-			for (const Expr* pExpr = GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-				if (firstFlag) {
-					firstFlag = false;
-				} else {
+			const Expr* pExprFirst = GetExprParamFirst();
+			for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+				if (pExpr != pExprFirst) {
 					str += ',';
 					if (!ss.IsCram()) str += ' ';
 				}
@@ -614,11 +610,9 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		str += '{';
 		if (HasExprParam()) {
 			str += '|';
-			bool firstFlag = true;
-			for (const Expr* pExpr = GetExprParamFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-				if (firstFlag) {
-					firstFlag = false;
-				} else {
+			const Expr* pExprFirst = GetExprParamFirst();
+			for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+				if (pExpr != pExprFirst) {
 					str += ',';
 					if (!ss.IsCram()) str += ' ';
 				}
@@ -627,11 +621,9 @@ String Expr_Block::ToString(const StringStyle& ss) const
 			str += '|';
 			if (!ss.IsCram() && HasExprElem()) str += ' ';
 		}
-		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			if (firstFlag) {
-				firstFlag = false;
-			} else {
+		const Expr* pExprFirst = GetExprElemFirst();
+		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (pExpr != pExprFirst) {
 				str += ';';
 				if (!ss.IsCram()) str += ' ';
 			}
@@ -673,11 +665,9 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 		str += ")\n";
 	} else {
 		str += '(';
-		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			if (firstFlag) {
-				firstFlag = false;
-			} else {
+		const Expr* pExprFirst = GetExprElemFirst();
+		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (pExpr != pExprFirst) {
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
@@ -726,11 +716,9 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 		str += "]\n";
 	} else {
 		str += '[';
-		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			if (firstFlag) {
-				firstFlag = false;
-			} else {
+		const Expr* pExprFirst = GetExprElemFirst();
+		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (pExpr != pExprFirst) {
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
@@ -768,11 +756,9 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 	String str;
 	str += _pExprCar->ToString(ss);
 	str += '[';
-	bool firstFlag = true;
-	for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		if (firstFlag) {
-			firstFlag = false;
-		} else {
+	const Expr* pExprFirst = GetExprCdrFirst();
+	for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+		if (pExpr != pExprFirst) {
 			str += ',';
 			if (!ss.IsCram()) str += ' ';
 		}
@@ -851,11 +837,9 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 			str += ' ';
 		}
 		str += '(';
-		bool firstFlag = true;
-		for (const Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			if (firstFlag) {
-				firstFlag = false;
-			} else {
+		const Expr* pExprFirst = GetExprCdrFirst();
+		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (pExpr != pExprFirst) {
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
