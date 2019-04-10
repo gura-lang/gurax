@@ -46,6 +46,7 @@ protected:
 	// Destructor
 	virtual ~HelpProvider() = default;
 public:
+	void AddHelp(const Symbol* pLangCode, String doc);
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc);
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }
 };
@@ -64,6 +65,8 @@ private:
 	String _doc;
 public:
 	// Constructor
+	Help(HelpProvider::WeakPtr *pwHelpProvider, const Symbol* pLangCode, String doc) :
+		_pwHelpProvider(pwHelpProvider), _pLangCode(pLangCode), _doc(std::move(doc)) {}
 	Help(HelpProvider::WeakPtr *pwHelpProvider, const Symbol* pLangCode, String formatName, String doc) :
 		_pwHelpProvider(pwHelpProvider), _pLangCode(pLangCode),
 		_formatName(std::move(formatName)), _doc(std::move(doc)) {}

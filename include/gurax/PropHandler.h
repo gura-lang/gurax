@@ -67,12 +67,13 @@ private:
 	const Symbol* _pSymbol;
 	const VType* _pVTypeResult;
 	Flags _flags;
+	RefPtr<HelpProvider> _pHelpProvider;
 public:
 	// Constructor
 	PropHandler(const Symbol* pSymbol, Flags flags);
 	PropHandler(const char* name, Flags flags) : PropHandler(Symbol::Add(name), flags) {}
 	// Copy constructor/operator
-	PropHandler(const PropHandler& src) : _pSymbol(src._pSymbol) {}
+	PropHandler(const PropHandler& src) = delete;
 	PropHandler& operator=(const PropHandler& src) = delete;
 	// Move constructor/operator
 	PropHandler(PropHandler&& src) = delete;
@@ -82,6 +83,12 @@ protected:
 	virtual ~PropHandler() = default;
 public:
 	void Declare(const VType& vtypeResult, UInt32 flags) { _pVTypeResult = &vtypeResult, _flags |= flags; }
+	void AddHelp(const Symbol* pLangCode, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+	}
+	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+	}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	const Flags GegFlags() const { return _flags; }

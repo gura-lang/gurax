@@ -8,16 +8,83 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#Len()
-Gurax_DeclareMethod(String, Len)
+// String#EndsWith(sub:String, endpos?:Number):[rest,icase]
+Gurax_DeclareMethod(String, EndsWith)
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("endpos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareAttrOpt(Gurax_Symbol(rest));
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns `true` if the string ends with suffix.\n"
+		"\n"
+		"\n"
+		"If attribute `:rest` is specified,\n"
+		"it returns the rest part if the string ends with suffix, or `nil` otherewise.\n"
+		"You can specify a bottom position for the matching by an argument `endpos`.\n"
+		"\n"
+		"With an attribute `:icase`, character cases are ignored while matching.");
 }
 
-Gurax_ImplementMethod(String, Len)
+Gurax_ImplementMethod(String, EndsWith)
 {
 	auto& valueThis = GetValueThis(argument);
-	return new Value_Number(valueThis.GetStringSTL().size());
+	// Arguments
+	ArgPicker args(argument);
+	const char* sub = args.PickString();
+	int pos = args.IsDefined()? args.PickInt() : -1;
+	// Function body
+	const char* str = valueThis.GetString();
+	const char* rtn = nullptr;
+	if (pos < 0) {
+		rtn = argument.IsSet(Gurax_Symbol(icase))?
+			String::EndsWith<CharICase>(str, sub) :
+			String::EndsWith<CharCase>(str, sub);
+	} else {
+		rtn = argument.IsSet(Gurax_Symbol(icase))?
+			String::EndsWith<CharICase>(str, pos, sub) :
+			String::EndsWith<CharCase>(str, pos, sub);
+	}
+	return !argument.IsSet(Gurax_Symbol(rest))? Value::Bool(rtn) :
+		rtn? new Value_String(rtn) : Value::nil();
+}
+
+// String#StartsWith(sub:String, pos?:Number):[rest,icase]
+Gurax_DeclareMethod(String, StartsWith)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("pos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareAttrOpt(Gurax_Symbol(rest));
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the string starts with `sub`.\n"
+		"\n"
+		"If attribute `:rest` is specified,\n"
+		"it returns the rest part if the string starts with prefix, or `nil` otherewise.\n"
+		"You can specify a top position for the matching by an argument `pos`.\n"
+		"\n"
+		"With an attribute `:icase`, character cases are ignored while matching.");
+}
+
+Gurax_ImplementMethod(String, StartsWith)
+{
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* sub = args.PickString();
+	int pos = args.IsDefined()? args.PickInt() : 0;
+	// Function body
+	const char* str = valueThis.GetString();
+	if (pos > 0) str = String::Forward(str, pos);
+	const char* rtn = argument.IsSet(Gurax_Symbol(icase))?
+		String::StartsWith<CharICase>(str, sub) :
+		String::StartsWith<CharCase>(str, sub);
+	return !argument.IsSet(Gurax_Symbol(rest))? Value::Bool(rtn) :
+		rtn? new Value_String(rtn) : Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -26,12 +93,29 @@ Gurax_ImplementMethod(String, Len)
 Gurax_DeclareProperty_R(String, len)
 {
 	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the length of the string in byte.");
 }
 
 Gurax_ImplementPropertyGetter(String, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetStringSTL().size());
+	return new Value_Number(valueThis.GetStringSTL().Length());
+}
+
+Gurax_DeclareProperty_R(String, width)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the number of characters in the string.");
+}
+
+Gurax_ImplementPropertyGetter(String, width)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetStringSTL().Width());
 }
 
 Gurax_DeclareProperty_RW(String, hoge)
@@ -59,9 +143,11 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(String, Len));
+	Assign(Gurax_CreateMethod(String, EndsWith));
+	Assign(Gurax_CreateMethod(String, StartsWith));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(String, len));
+	Assign(Gurax_CreateProperty(String, width));
 }
 
 Value* VType_String::DoCastFrom(const Value& value) const

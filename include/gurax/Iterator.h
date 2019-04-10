@@ -44,6 +44,9 @@ public:
 	bool IsFinite() const { return (GetFlags() & Flag::Finite) != 0; }
 	bool IsLenUndetermined() const { return (GetFlags() & Flag::LenDetermined) == 0; }
 	bool IsLenDetermined() const { return (GetFlags() & Flag::LenDetermined) != 0; }
+	void AddHelp(const Symbol* pLangCode, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

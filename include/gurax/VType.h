@@ -61,6 +61,9 @@ public:
 	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
+	void AddHelp(const Symbol* pLangCode, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

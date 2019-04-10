@@ -98,6 +98,9 @@ protected:
 public:
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	void AddHelp(const Symbol* pLangCode, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

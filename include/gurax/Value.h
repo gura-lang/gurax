@@ -99,6 +99,7 @@ public:
 	static Value* nil()			{ return _pValue_nil->Reference(); }
 	static Value* false_()		{ return _pValue_false_->Reference(); }
 	static Value* true_()		{ return _pValue_true_->Reference(); }
+	static Value* Bool(bool f)	{ return f? true_() : false_(); }
 	static Value* Zero()		{ return _pValue_Zero->Reference(); }
 	static Value* EmptyStr()	{ return _pValue_EmptyStr->Reference(); }
 public:

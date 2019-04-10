@@ -6,6 +6,23 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// List#Each() {`block}
+Gurax_DeclareMethod(List, Each)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementMethod(List, Each)
+{
+	//auto& valueThis = GetValueThis(argument);
+	//return new Value_Number(valueThis.GetStringSTL().size());
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
 VType_List VTYPE_List("List");
@@ -14,6 +31,8 @@ void VType_List::DoPrepare(Frame& frameOuter)
 {
 	SetAttrs(VTYPE_Object, Flag::Mutable);
 	frameOuter.Assign(*this);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(List, Each));
 }
 
 //------------------------------------------------------------------------------

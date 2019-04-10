@@ -148,6 +148,9 @@ public:
 					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Symbol::Add(name), occur, flags);
 	}
+	void AddHelp(const Symbol* pLangCode, String doc) {
+		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}

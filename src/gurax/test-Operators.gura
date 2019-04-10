@@ -1,0 +1,8 @@
+#!./gurax
+exprs = [
+	`(3 + 5)
+	`(false && false)
+]
+for (expr in exprs) {
+	
+}
