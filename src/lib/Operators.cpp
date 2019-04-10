@@ -14,19 +14,25 @@ Gurax_ImplementOpPreUnary(Quote, Expr)
 // Expr && Expr
 Gurax_ImplementOpBinary(AndAnd, Expr, Expr)
 {
-	//const Expr& exprL = dynamic_cast<const Value_Expr&>(valueL).GetExpr();
-	//const Expr& exprR = dynamic_cast<const Value_Expr&>(valueR).GetExpr();
-	//return new Value_Number(numL + numR);
-	return Value::nil();
+	const Expr& exprL = dynamic_cast<const Value_Expr&>(valueL).GetExpr();
+	const Expr& exprR = dynamic_cast<const Value_Expr&>(valueR).GetExpr();
+	RefPtr<Value> pValueL(processor.Eval(exprL));
+	if (Error::IsIssued()) return Value::nil();
+	if (!pValueL->GetBool()) return pValueL.release();
+	RefPtr<Value> pValueR(processor.Eval(exprR));
+	return pValueR.release();
 }
 
 // Expr || Expr
 Gurax_ImplementOpBinary(OrOr, Expr, Expr)
 {
-	//const Expr& exprL = dynamic_cast<const Value_Expr&>(valueL).GetExpr();
-	//const Expr& exprR = dynamic_cast<const Value_Expr&>(valueR).GetExpr();
-	//return new Value_Number(numL + numR);
-	return Value::nil();
+	const Expr& exprL = dynamic_cast<const Value_Expr&>(valueL).GetExpr();
+	const Expr& exprR = dynamic_cast<const Value_Expr&>(valueR).GetExpr();
+	RefPtr<Value> pValueL(processor.Eval(exprL));
+	if (Error::IsIssued()) return Value::nil();
+	if (pValueL->GetBool()) return pValueL.release();
+	RefPtr<Value> pValueR(processor.Eval(exprR));
+	return pValueR.release();
 }
 
 // ~Number

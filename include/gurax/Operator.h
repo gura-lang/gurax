@@ -8,9 +8,9 @@
 #define Gurax_ImplementOpPreUnary(opType, typeName) \
 class OpEntry_##opType##_##typeName : public OpEntry { \
 public: \
-	virtual Value* EvalUnary(const Value& value) const; \
+	virtual Value* EvalUnary(Processor& processor, const Value& value) const; \
 }; \
-Value* OpEntry_##opType##_##typeName::EvalUnary(const Value& value) const
+Value* OpEntry_##opType##_##typeName::EvalUnary(Processor& processor, const Value& value) const
 
 #define Gurax_AssignOpPreUnary(opType, typeName) \
 Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeName())
@@ -18,9 +18,9 @@ Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeNam
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
 public: \
-	virtual Value* EvalBinary(const Value& valueL, const Value& valueR) const; \
+	virtual Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const; \
 }; \
-Value* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(const Value& valueL, const Value& valueR) const
+Value* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 
 #define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
 Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
@@ -140,8 +140,8 @@ public:
 	// Destructor
 	virtual ~OpEntry() = default;
 public:
-	virtual Value* EvalUnary(const Value& value) const ;
-	virtual Value* EvalBinary(const Value& valueL, const Value& valueR) const;
+	virtual Value* EvalUnary(Processor& processor, const Value& value) const ;
+	virtual Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
 };
 
 //------------------------------------------------------------------------------
@@ -306,8 +306,8 @@ public:
 		return _opEntryMap.Lookup(vtypeL, vtypeR);
 	}
 public:
-	Value* EvalUnary(const Value& value) const;
-	Value* EvalBinary(const Value& valueL, const Value& valueR) const;
+	Value* EvalUnary(Processor& processor, const Value& value) const;
+	Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 };

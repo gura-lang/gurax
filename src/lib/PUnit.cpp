@@ -512,7 +512,7 @@ template<bool discardValueFlag>
 const PUnit* PUnit_UnaryOp<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(*pValue));
+	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(processor, *pValue));
 	if (pValueResult->IsUndefined()) return nullptr;
 	if (!discardValueFlag) processor.PushValue(pValueResult.release());
 	return _GetPUnitCont();
@@ -547,7 +547,7 @@ const PUnit* PUnit_BinaryOp<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueRight(processor.PopValue());
 	RefPtr<Value> pValueLeft(processor.PopValue());
-	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(*pValueLeft, *pValueRight));
+	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(processor, *pValueLeft, *pValueRight));
 	if (pValueResult->IsUndefined()) return nullptr;
 	if (!discardValueFlag) processor.PushValue(pValueResult.release());
 	return _GetPUnitCont();

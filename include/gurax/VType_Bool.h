@@ -46,23 +46,24 @@ protected:
 	// Destructor
 	~Value_Bool() = default;
 public:
-	bool GetBool() const { return _flag; } // override Value::GetBool()
-public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return static_cast<size_t>(GetBool());
+		return static_cast<size_t>(GetBool_());
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetBool() == dynamic_cast<const Value_Bool*>(pValue)->GetBool();
+		return IsSameType(pValue) && GetBool_() == dynamic_cast<const Value_Bool*>(pValue)->GetBool_();
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetBool() < dynamic_cast<const Value_Bool*>(pValue)->GetBool() :
+			GetBool_() < dynamic_cast<const Value_Bool*>(pValue)->GetBool_() :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual bool GetBool() const override { return GetBool_(); }
+protected:
+	bool GetBool_() const { return _flag; }
 };
 
 }

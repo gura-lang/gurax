@@ -28,11 +28,13 @@ void Value::PrepareBasic(Frame& frame)
 	frame.Assign("true",	_pValue_true_->Reference());
 }
 
+#if 0
 bool Value::GetBool() const
 {
 	return !(IsUndefined() || IsNil() ||
 			 (IsType(VTYPE_Bool) && !dynamic_cast<const Value_Bool*>(this)->GetBool()));
 }
+#endif
 
 bool Value::IsInstanceOf(const VType& vtype) const
 {

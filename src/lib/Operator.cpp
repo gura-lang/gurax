@@ -99,21 +99,21 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
-Value* Operator::EvalUnary(const Value& value) const
+Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 {
 	if (value.IsUndefined()) return Value::undefined();
 	const OpEntry* pOpEntry = LookupEntry(value.GetVType());
-	if (pOpEntry) return pOpEntry->EvalUnary(value);
+	if (pOpEntry) return pOpEntry->EvalUnary(processor, value);
 	Error::Issue(ErrorType::TypeError, "unsupported unary operation: %s%s",
 				 GetSymbol(), value.GetVType().MakeFullName().c_str());
 	return Value::undefined();
 }
 
-Value* Operator::EvalBinary(const Value& valueL, const Value& valueR) const
+Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
 	if (valueL.IsUndefined() || valueR.IsUndefined()) return Value::undefined();
 	const OpEntry* pOpEntry = LookupEntry(valueL.GetVType(), valueR.GetVType());
-	if (pOpEntry) return pOpEntry->EvalBinary(valueL, valueR);
+	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
 	Error::Issue(ErrorType::TypeError, "unsuppported binary operation: %s %s %s",
 				 valueL.GetVType().MakeFullName().c_str(),
 				 GetSymbol(),
@@ -124,12 +124,12 @@ Value* Operator::EvalBinary(const Value& valueL, const Value& valueR) const
 //------------------------------------------------------------------------------
 // OpEntry
 //------------------------------------------------------------------------------
-Value* OpEntry::EvalUnary(const Value& value) const
+Value* OpEntry::EvalUnary(Processor& processor, const Value& value) const
 {
 	return Value::nil();
 }
 
-Value* OpEntry::EvalBinary(const Value& valueL, const Value& valueR) const
+Value* OpEntry::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
 	return Value::nil();
 }

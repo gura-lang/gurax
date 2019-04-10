@@ -50,6 +50,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return "nil";
 	}
+	virtual bool GetBool() const override { return false; }
 };
 
 }
