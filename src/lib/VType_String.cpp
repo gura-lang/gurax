@@ -34,18 +34,18 @@ Gurax_ImplementMethod(String, EndsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int pos = args.IsDefined()? args.PickInt() : -1;
+	int endpos = args.IsDefined()? args.PickInt() : -1;
 	// Function body
 	const char* str = valueThis.GetString();
 	const char* rtn = nullptr;
-	if (pos < 0) {
+	if (endpos < 0) {
 		rtn = argument.IsSet(Gurax_Symbol(icase))?
 			String::EndsWith<CharICase>(str, sub) :
 			String::EndsWith<CharCase>(str, sub);
 	} else {
 		rtn = argument.IsSet(Gurax_Symbol(icase))?
-			String::EndsWith<CharICase>(str, pos, sub) :
-			String::EndsWith<CharCase>(str, pos, sub);
+			String::EndsWith<CharICase>(str, endpos, sub) :
+			String::EndsWith<CharCase>(str, endpos, sub);
 	}
 	return !argument.IsSet(Gurax_Symbol(rest))? Value::Bool(rtn) :
 		rtn? new Value_String(rtn) : Value::nil();
