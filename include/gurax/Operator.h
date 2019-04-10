@@ -91,36 +91,36 @@ enum class OpType {
 	Union,
 	Xor,
 	// Mathematical functions
-	math_abs,
-	math_acos,
-	math_arg,
-	math_asin,
-	math_atan,
-	math_atan2,
-	math_ceil,
-	math_conj,
-	math_cos,
-	math_cosh,
-	math_covariance,
-	math_cross,
-	math_delta,
-	math_dot,
-	math_exp,
-	math_floor,
-	math_hypot,
-	math_imag,
-	math_log,
-	math_log10,
-	math_norm,
-	math_real,
-	math_relu,
-	math_sigmoid,
-	math_sin,
-	math_sinh,
-	math_sqrt,
-	math_tan,
-	math_tanh,
-	math_unitstep,
+	math_Abs,
+	math_Acos,
+	math_Arg,
+	math_Asin,
+	math_Atan,
+	math_Atan2,
+	math_Ceil,
+	math_Conj,
+	math_Cos,
+	math_Cosh,
+	math_Covariance,
+	math_Cross,
+	math_Delta,
+	math_Dot,
+	math_Exp,
+	math_Floor,
+	math_Hypot,
+	math_Imag,
+	math_Log,
+	math_Log10,
+	math_Norm,
+	math_Real,
+	math_Relu,
+	math_Sigmoid,
+	math_Sin,
+	math_Sinh,
+	math_Sqrt,
+	math_Tan,
+	math_Tanh,
+	math_Unitstep,
 	max,
 };
 
@@ -237,36 +237,36 @@ public:
 	static Operator* Union;
 	static Operator* Xor;
 	// Mathematical functions
-	static Operator* math_abs;
-	static Operator* math_acos;
-	static Operator* math_arg;
-	static Operator* math_asin;
-	static Operator* math_atan;
-	static Operator* math_atan2;
-	static Operator* math_ceil;
-	static Operator* math_conj;
-	static Operator* math_cos;
-	static Operator* math_cosh;
-	static Operator* math_covariance;
-	static Operator* math_cross;
-	static Operator* math_delta;
-	static Operator* math_dot;
-	static Operator* math_exp;
-	static Operator* math_floor;
-	static Operator* math_hypot;
-	static Operator* math_imag;
-	static Operator* math_log;
-	static Operator* math_log10;
-	static Operator* math_norm;
-	static Operator* math_real;
-	static Operator* math_relu;
-	static Operator* math_sigmoid;
-	static Operator* math_sin;
-	static Operator* math_sinh;
-	static Operator* math_sqrt;
-	static Operator* math_tan;
-	static Operator* math_tanh;
-	static Operator* math_unitstep;
+	static Operator* math_Abs;
+	static Operator* math_Acos;
+	static Operator* math_Arg;
+	static Operator* math_Asin;
+	static Operator* math_Atan;
+	static Operator* math_Atan2;
+	static Operator* math_Ceil;
+	static Operator* math_Conj;
+	static Operator* math_Cos;
+	static Operator* math_Cosh;
+	static Operator* math_Covariance;
+	static Operator* math_Cross;
+	static Operator* math_Delta;
+	static Operator* math_Dot;
+	static Operator* math_Exp;
+	static Operator* math_Floor;
+	static Operator* math_Hypot;
+	static Operator* math_Imag;
+	static Operator* math_Log;
+	static Operator* math_Log10;
+	static Operator* math_Norm;
+	static Operator* math_Real;
+	static Operator* math_Relu;
+	static Operator* math_Sigmoid;
+	static Operator* math_Sin;
+	static Operator* math_Sinh;
+	static Operator* math_Sqrt;
+	static Operator* math_Tan;
+	static Operator* math_Tanh;
+	static Operator* math_Unitstep;
 public:
 	// Constructor
 	Operator(OpStyle opStyle, const char* symbol, OpType opType, bool rawFlag = false);

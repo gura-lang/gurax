@@ -81,6 +81,10 @@ add_library(guraxcore SHARED
 	VType_TimeDelta.cpp
 	VType_Undefined.cpp
 	VType_VType.cpp
+	../module-codecs/module-codecs.cpp
+	../module-fs/module-fs.cpp
+	../module-math/module-math.cpp
+	../module-os/module-os.cpp
 	../module-path/module-path.cpp
 	../module-re/module-re.cpp
 	../module-sys/module-sys.cpp
