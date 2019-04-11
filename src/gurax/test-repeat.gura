@@ -1,4 +1,5 @@
 #!./gurax
-repeat (10) {|n|
-	Println('hello', n)
-}
+x = repeat (10):list {'x'}
+Println(x)
+x = repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i}
+Println(x)

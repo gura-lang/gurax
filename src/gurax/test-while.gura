@@ -1,6 +1,8 @@
 #!./gurax
-n = 0
-while (n < 10) {|i|
-	Printf('hello #%d\n', i)
-	n += 1
-}
+n = 10
+x = while (n > 0):list {|i| n -= 1 }
+Println(x)
+n = 10
+x = while (n > 0):list { n -= 1 }
+Println(x)
+//x = while (n > 0):list {|i| n -= 1 }
