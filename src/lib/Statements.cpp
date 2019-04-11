@@ -176,13 +176,16 @@ Gurax_ImplementStatement(for_)
 	} else if (declArgsOfBlock.empty() && createListFlag) {
 		composer.Add_PushFrame_Block(exprCaller);
 		composer.Add_CreateList(exprCaller, 32);						// [Iterator1..n List]
+		PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
+		composer.Add_Jump(exprCaller);
 		PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
+		composer.Add_ListElem(exprCaller, 0);							// [Iterator1..n List]
+		pPUnitOfSkipFirst->SetPUnitCont(composer.PeekPUnitCont());
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 1, pDeclArgs.release());		// [Iterator1..n List]
 		composer.BeginRepeaterBlock(pPUnitOfLoop, pPUnitOfBranch);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Iterator1..n List Elem]
 		composer.EndRepeaterBlock();
-		composer.Add_ListElem(exprCaller, 0);							// [Iterator1..n List]
 		composer.Add_Jump(exprCaller, pPUnitOfLoop);
 		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 		composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [List]
@@ -195,7 +198,9 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 2, pDeclArgs.release());		// [Iterator1..n Iterator Last]
+
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n Iterator]
+
 		composer.Add_EvalIterator(exprCaller, 0);						// [Iterator1..n Iterator Idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());

@@ -1610,7 +1610,8 @@ template<bool discardValueFlag>
 String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Break(branch=%s)", GetPUnitOfBranch()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("Break(branch=%s)", GetPUnitOfBranch()?
+			   GetPUnitOfBranch()->MakeSeqIdString(seqIdOffset).c_str() : "null");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1641,7 +1642,8 @@ template<bool discardValueFlag>
 String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Continue(loop=%s)", GetPUnitOfLoop()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("Continue(loop=%s)", GetPUnitOfLoop()?
+			   GetPUnitOfLoop()->MakeSeqIdString(seqIdOffset).c_str() : "null");
 	AppendInfoToString(str, ss);
 	return str;
 }
