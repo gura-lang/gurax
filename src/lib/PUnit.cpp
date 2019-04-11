@@ -628,6 +628,7 @@ String PUnit_ListElem<discardValueFlag, xlistFlag>::ToString(const StringStyle& 
 {
 	String str;
 	str.Printf("ListElem(offsetToList=%zu)", GetOffset());
+	if (xlistFlag) str += ":xlist";
 	AppendInfoToString(str, ss);
 	return str;
 }
