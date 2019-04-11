@@ -27,7 +27,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_UnaryOp<false>);
 	PrintSizeOf(PUnit_BinaryOp<false>);
 	PrintSizeOf(PUnit_CreateList<false>);
-	PrintSizeOf(PUnit_ListElem<false>);
+	using PUnit_ListElem_ = PUnit_ListElem<false, false>;
+	PrintSizeOf(PUnit_ListElem_);
 	PrintSizeOf(PUnit_CreateDict<false>);
 	PrintSizeOf(PUnit_DictElem<false>);
 	PrintSizeOf(PUnit_Index<false>);

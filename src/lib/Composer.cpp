@@ -110,9 +110,9 @@ void Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReserve)
 	SetFactory(new PUnitFactory_CreateList(exprSrc.Reference(), NextSeqId(), sizeReserve));
 }
 
-void Composer::Add_ListElem(const Expr& exprSrc, size_t offset)
+void Composer::Add_ListElem(const Expr& exprSrc, size_t offset, bool xlistFlag)
 {
-	SetFactory(new PUnitFactory_ListElem(exprSrc.Reference(), NextSeqId(), offset));
+	SetFactory(new PUnitFactory_ListElem(exprSrc.Reference(), NextSeqId(), offset, xlistFlag));
 }
 
 void Composer::Add_CreateDict(const Expr& exprSrc)

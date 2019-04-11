@@ -156,9 +156,9 @@ Gurax_ImplementStatement(for_)
 	}
 	size_t nIterators = pDeclArgs->size();
 	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
-	bool createListFlag =
-		exprCaller.GetAttr().IsSet(Gurax_Symbol(list)) ||
-		exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
+	bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
+	bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
+	bool createListFlag = listFlag || xlistFlag;
 	if (declArgsOfBlock.empty() && !createListFlag) {
 		composer.Add_PushFrame_Block(exprCaller);
 		composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
@@ -179,7 +179,7 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);
 		PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
-		composer.Add_ListElem(exprCaller, 0);							// [Iterator1..n List]
+		composer.Add_ListElem(exprCaller, 0, xlistFlag);				// [Iterator1..n List]
 		pPUnitOfSkipFirst->SetPUnitCont(composer.PeekPUnitCont());
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 1, pDeclArgs.release());		// [Iterator1..n List]
@@ -198,9 +198,7 @@ Gurax_ImplementStatement(for_)
 		PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_ForEach(exprCaller, 2, pDeclArgs.release());		// [Iterator1..n Iterator Last]
-
 		composer.Add_PopValue(exprCaller);								// [Iterator1..n Iterator]
-
 		composer.Add_EvalIterator(exprCaller, 0);						// [Iterator1..n Iterator Idx]
 		composer.Add_AssignToDeclArg(
 			exprCaller, (*ppDeclArg)->Reference());

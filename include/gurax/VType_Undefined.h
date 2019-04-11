@@ -51,6 +51,7 @@ public:
 		return "undefined";
 	}
 	virtual bool GetBool() const override { return false; }
+	virtual bool IsValid() const override { return false; }
 };
 
 }

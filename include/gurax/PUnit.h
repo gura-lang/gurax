@@ -761,7 +761,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_ListElem
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, bool xlistFlag>
 class GURAX_DLLDECLARE PUnit_ListElem : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -790,11 +790,12 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_ListElem");
 private:
 	size_t _offset;
+	bool _xlistFlag;
 public:
-	PUnitFactory_ListElem(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset) :
-		PUnitFactory(pExprSrc, seqId), _offset(offset) {}
+	PUnitFactory_ListElem(Expr* pExprSrc, PUnit::SeqId seqId, size_t offset, bool xlistFlag) :
+		PUnitFactory(pExprSrc, seqId), _offset(offset), _xlistFlag(xlistFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_ListElem<false>);
+		return sizeof(PUnit_ListElem<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

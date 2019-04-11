@@ -94,7 +94,7 @@ public:
 	void Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
 	void Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
-	void Add_ListElem(const Expr& exprSrc, size_t offset);
+	void Add_ListElem(const Expr& exprSrc, size_t offset, bool xlistFlag);
 	void Add_CreateDict(const Expr& exprSrc);
 	void Add_DictElem(const Expr& exprSrc, size_t offset);
 	void Add_Index(const Expr& exprSrc, Attribute* pAttr, size_t sizeReserve);

@@ -8,7 +8,7 @@
 ======== Statement-repeat ========
 #0 GenCounterIterator()
 #1 Value(<Nil>)
-#2 EvalIterator(offsetToIterator=1,branch=#6), DiscardValue()
+#2 EvalIterator(offsetToIterator=1,branchdest=#6), DiscardValue()
 #3 PopValue()
 #4 Value(<Nil>)
 #5 Jump(#2)
@@ -20,7 +20,7 @@
 #1 GenIterator()
 #2 PushFrame_Block()
 #3 Value(<Nil>)
-#4 ForEach(offsetToIterator=1,branch=#8)
+#4 ForEach(offsetToIterator=1,branchdest=#8)
 #5 PopValue()
 #6 Value(<Nil>)
 #7 Jump(#4)
@@ -31,7 +31,7 @@
 ======== Statement-while ========
 #0 Value(<Nil>)
 #1 Lookup(`a)
-#2 JumpIfNot(branch=#6)
+#2 JumpIfNot(branchdest=#6)
 #3 PopValue()
 #4 Value(<Nil>)
 #5 Jump(#1)

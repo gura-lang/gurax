@@ -689,7 +689,7 @@ void Expr_Lister::Compose(Composer& composer)
 	composer.Add_CreateList(*this, nExprs);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ComposeOrNil(composer);							// [List Elem]
-		composer.Add_ListElem(*this, 0);						// [List]
+		composer.Add_ListElem(*this, 0, false);					// [List]
 	}	
 }
 

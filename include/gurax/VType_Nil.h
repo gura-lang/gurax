@@ -51,6 +51,7 @@ public:
 		return "nil";
 	}
 	virtual bool GetBool() const override { return false; }
+	virtual bool IsValid() const override { return false; }
 };
 
 }

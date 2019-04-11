@@ -610,19 +610,21 @@ PUnit* PUnitFactory_CreateList::Create(bool discardValueFlag)
 // Stack View: [List Elem] -> [List] (continue)
 //                         -> []     (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-const PUnit* PUnit_ListElem<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool xlistFlag>
+const PUnit* PUnit_ListElem<discardValueFlag, xlistFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
-	ValueTypedOwner& valueTypedOwner =
-		dynamic_cast<Value_List*>(processor.PeekValue(GetOffset()))->GetValueTypedOwner();
-	valueTypedOwner.Add(pValueElem.release());
+	if (!xlistFlag || pValueElem->IsValid()) {
+		ValueTypedOwner& valueTypedOwner =
+			dynamic_cast<Value_List*>(processor.PeekValue(GetOffset()))->GetValueTypedOwner();
+		valueTypedOwner.Add(pValueElem.release());
+	}
 	if (discardValueFlag) processor.PopValue();
 	return _GetPUnitCont();
 }
 
-template<bool discardValueFlag>
-String PUnit_ListElem<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool xlistFlag>
+String PUnit_ListElem<discardValueFlag, xlistFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ListElem(offsetToList=%zu)", GetOffset());
@@ -632,10 +634,18 @@ String PUnit_ListElem<discardValueFlag>::ToString(const StringStyle& ss, int seq
 
 PUnit* PUnitFactory_ListElem::Create(bool discardValueFlag)
 {
-	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_ListElem<true>(_pExprSrc.release(), _seqId, _offset);
+	if (_xlistFlag) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_ListElem<true, true>(_pExprSrc.release(), _seqId, _offset);
+		} else {
+			_pPUnitCreated = new PUnit_ListElem<false, true>(_pExprSrc.release(), _seqId, _offset);
+		}
 	} else {
-		_pPUnitCreated = new PUnit_ListElem<false>(_pExprSrc.release(), _seqId, _offset);
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_ListElem<true, false>(_pExprSrc.release(), _seqId, _offset);
+		} else {
+			_pPUnitCreated = new PUnit_ListElem<false, false>(_pExprSrc.release(), _seqId, _offset);
+		}
 	}
 	return _pPUnitCreated;
 }
