@@ -151,8 +151,8 @@ Gurax_ImplementStatement(for_)
 		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(*pExprEx->GetExprLeft()));
 		if (!pDeclArg) return;
 		pDeclArgs->push_back(pDeclArg.release());
-		pExprEx->GetExprRight()->ComposeOrNil(composer);				// [Any]
-		composer.Add_GenIterator(exprCaller);							// [Iterator]
+		pExprEx->GetExprRight()->ComposeOrNil(composer);					// [Any]
+		composer.Add_GenIterator(exprCaller);								// [Iterator]
 	}
 	size_t nIterators = pDeclArgs->size();
 	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
@@ -160,8 +160,8 @@ Gurax_ImplementStatement(for_)
 	bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
 	bool createListFlag = listFlag || xlistFlag;
 	if (declArgsOfBlock.empty()) {
+		composer.Add_PushFrame_Block(exprCaller);
 		if (createListFlag) {
-			composer.Add_PushFrame_Block(exprCaller);
 			composer.Add_CreateList(exprCaller, 32);						// [Iterator1..n List=[]]
 			PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
 			composer.Add_Jump(exprCaller);
@@ -176,9 +176,7 @@ Gurax_ImplementStatement(for_)
 			composer.Add_Jump(exprCaller, pPUnitOfLoop);
 			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 			composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [List]
-			composer.Add_PopFrame(exprCaller);
 		} else {
-			composer.Add_PushFrame_Block(exprCaller);
 			composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Last=nil]
 			PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 			PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -190,13 +188,13 @@ Gurax_ImplementStatement(for_)
 			composer.Add_Jump(exprCaller, pPUnitOfLoop);
 			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 			composer.Add_RemoveValues(exprCaller, 1, nIterators);			// [Last]
-			composer.Add_PopFrame(exprCaller);
 		}
+		composer.Add_PopFrame(exprCaller);
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
+		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_GenCounterIterator(exprCaller);						// [Iterator1..n Iterator]
 		if (createListFlag) {
-			composer.Add_PushFrame_Block(exprCaller);
-			composer.Add_GenCounterIterator(exprCaller);					// [Iterator1..n Iterator]
 			composer.Add_CreateList(exprCaller, 32);						// [Iterator1..n Iterator List=[]]
 			PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
 			composer.Add_Jump(exprCaller);
@@ -215,10 +213,7 @@ Gurax_ImplementStatement(for_)
 			composer.Add_Jump(exprCaller, pPUnitOfLoop);
 			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 			composer.Add_RemoveValues(exprCaller, 1, nIterators + 1);		// [List]
-			composer.Add_PopFrame(exprCaller);
 		} else {
-			composer.Add_PushFrame_Block(exprCaller);
-			composer.Add_GenCounterIterator(exprCaller);					// [Iterator1..n Iterator]
 			composer.Add_Value(exprCaller, Value::nil());					// [Iterator1..n Iterator Last=nil]
 			PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 			PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -234,8 +229,8 @@ Gurax_ImplementStatement(for_)
 			composer.Add_Jump(exprCaller, pPUnitOfLoop);
 			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 			composer.Add_RemoveValues(exprCaller, 1, nIterators + 1);		// [Last]
-			composer.Add_PopFrame(exprCaller);
 		}
+		composer.Add_PopFrame(exprCaller);
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "invalid number of block parameters");
@@ -295,9 +290,9 @@ Gurax_ImplementStatement(while_)
 		}
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
+		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_GenCounterIterator(exprCaller);						// [Iterator]
 		if (createListFlag) {
-			composer.Add_PushFrame_Block(exprCaller);
-			composer.Add_GenCounterIterator(exprCaller);					// [Iterator]
 			composer.Add_CreateList(exprCaller, 32);						// [Iterator List=[]]
 			PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
 			composer.Add_Jump(exprCaller);
@@ -316,10 +311,7 @@ Gurax_ImplementStatement(while_)
 			composer.Add_Jump(exprCaller, pPUnitOfLoop);
 			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 			composer.Add_RemoveValue(exprCaller, 1);						// [Last]
-			composer.Add_PopFrame(exprCaller);
 		} else {
-			composer.Add_PushFrame_Block(exprCaller);
-			composer.Add_GenCounterIterator(exprCaller);					// [Iterator]
 			composer.Add_Value(exprCaller, Value::nil());					// [Iterator Last=nil]
 			PUnit* pPUnitOfLoop = composer.PeekPUnitCont();
 			exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);			// [Iterator Last Bool]
@@ -335,8 +327,8 @@ Gurax_ImplementStatement(while_)
 			composer.Add_Jump(exprCaller, pPUnitOfLoop);
 			pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 			composer.Add_RemoveValue(exprCaller, 1);						// [Last]
-			composer.Add_PopFrame(exprCaller);
 		}
+		composer.Add_PopFrame(exprCaller);
 	} else {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "invalid number of block parameters");
