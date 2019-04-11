@@ -62,6 +62,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	if (!pPUnit) return;
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
+	::printf("---- Processor Begin ----\n");
 	if (pPUnit->IsBeginQuote()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
@@ -75,6 +76,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		PrintPUnit(stream, pPUnit);
 		pPUnit = pPUnit->Exec(*this);
 	}
+	::printf("---- Processor End ----\n");
 }
 
 }

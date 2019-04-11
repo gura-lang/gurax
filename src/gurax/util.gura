@@ -1,3 +1,9 @@
+Tester(expr:Expr) = {
+	Printf('%s ..', expr)
+	rtn = expr.Eval()
+	Printf(' %s\n', rtn)
+}
+
 PrintPUnit(expr:Expr) = {
 	seqIdOffset = 0
 	punits = expr.EachPUnit()
