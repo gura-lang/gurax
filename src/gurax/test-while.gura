@@ -1,6 +1,21 @@
 #!./gurax
 import(util)
 
+util.PrintTitle('PUnit')
+exprs = [
+	`while (true) {}
+	`while (true):list {}
+	`while (true):xlist {}
+	`while (true) {|n| nil}
+	`while (true):list {|n| nil}
+	`while (true):xlist {|n| nil}
+]
+for (expr in exprs) {
+	Printf('`%s\n', expr)
+	util.PrintPUnit(expr)
+}
+
+util.PrintTitle('Create list')
 n = 10
 x = while (n > 0):list {|i| n -= 1 }
 Println(x)

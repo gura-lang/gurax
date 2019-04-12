@@ -1,10 +1,80 @@
-hello #0
-hello #1
-hello #2
-hello #3
-hello #4
-hello #5
-hello #6
-hello #7
-hello #8
-hello #9
+======== PUnit ========
+`while (true) {}
+  ##0 Value(<Nil>)
+  ##1 Lookup(`true)
+  ##2 JumpIfNot(branchdest=##6)
+  ##3 PopValue()
+  ##4 Value(<Nil>)
+  ##5 Jump(##1)
+  ##6 NoOperation()
+  ##7 Return()
+`while (true):list {}
+  ##0 CreateList()
+  ##1 Jump(##3)
+  ##2 ListElem(offsetToList=0)
+  ##3 Lookup(`true)
+  ##4 JumpIfNot(branchdest=##7)
+  ##5 Value(<Nil>)
+  ##6 Jump(##2)
+  ##7 NoOperation()
+  ##8 Return()
+`while (true):xlist {}
+  ##0 CreateList()
+  ##1 Jump(##3)
+  ##2 ListElem(offsetToList=0):xlist
+  ##3 Lookup(`true)
+  ##4 JumpIfNot(branchdest=##7)
+  ##5 Value(<Nil>)
+  ##6 Jump(##2)
+  ##7 NoOperation()
+  ##8 Return()
+`while (true) {|n| nil}
+  ##0 PushFrame_Block()
+  ##1 GenCounterIterator()
+  ##2 Value(<Nil>)
+  ##3 Lookup(`true)
+  ##4 JumpIfNot(branchdest=##10)
+  ##5 PopValue()
+  ##6 EvalIterator(offsetToIterator=0,branchdest=##7)
+  ##7 AssignToDeclArg(`n), DiscardValue()
+  ##8 Lookup(`nil)
+  ##9 Jump(##3)
+  ##10 RemoveValue(offset=1)
+  ##11 PopFrame()
+  ##12 Return()
+`while (true):list {|n| nil}
+  ##0 PushFrame_Block()
+  ##1 GenCounterIterator()
+  ##2 CreateList()
+  ##3 Jump(##5)
+  ##4 ListElem(offsetToList=0)
+  ##5 Lookup(`true)
+  ##6 JumpIfNot(branchdest=##11)
+  ##7 EvalIterator(offsetToIterator=1,branchdest=##8)
+  ##8 AssignToDeclArg(`n), DiscardValue()
+  ##9 Lookup(`nil)
+  ##10 Jump(##4)
+  ##11 RemoveValue(offset=1)
+  ##12 PopFrame()
+  ##13 Return()
+`while (true):xlist {|n| nil}
+  ##0 PushFrame_Block()
+  ##1 GenCounterIterator()
+  ##2 CreateList()
+  ##3 Jump(##5)
+  ##4 ListElem(offsetToList=0):xlist
+  ##5 Lookup(`true)
+  ##6 JumpIfNot(branchdest=##11)
+  ##7 EvalIterator(offsetToIterator=1,branchdest=##8)
+  ##8 AssignToDeclArg(`n), DiscardValue()
+  ##9 Lookup(`nil)
+  ##10 Jump(##4)
+  ##11 RemoveValue(offset=1)
+  ##12 PopFrame()
+  ##13 Return()
+======== Create list ========
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+======== Scope test ========
+sum = 55
+i   = original I

@@ -1,5 +1,0 @@
-repeat (10) {|n|
-	if (n % 2 == 0) { continue(0) }
-	//(n % 2 == 0) && continue
-	Println(n)
-}
