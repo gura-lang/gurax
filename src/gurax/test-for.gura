@@ -1,5 +1,16 @@
 #!./gurax
 import(util)
+
+util.PrintTitle('PUnit')
+exprs = [
+	`for (a in b) { nil }
+]
+for (expr in exprs) {
+	Printf('`%s\n', expr)
+	util.PrintPUnit(expr)
+}
+
+util.PrintTitle('Create list')
 tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 x = for (n in tbl):list { if (n % 2 == 0) { continue }; n * 2 }
 Println(x)
