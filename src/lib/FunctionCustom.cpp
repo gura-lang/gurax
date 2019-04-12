@@ -10,17 +10,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Value* FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 {
-	Frame& frame = processor.PushFrame_Function();
-	argument.AssignToFrame(frame);
+	argument.AssignToFrame(processor.PushFrame_Function(*this));
 	argument.SetPUnitCont(GetPUnitBody());
+	// PUnit_Return will do PopFrame().
 	return Value::nil();
 }
 
 Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
-	argument.AssignToFrame(processor.PushFrame_Function());
+	argument.AssignToFrame(processor.PushFrame_Function(*this));
 	processor.Eval(GetPUnitBody());
-	return Error::IsIssued()? Value::nil() : processor.PopValue();
+	RefPtr<Value> pValue(Error::IsIssued()? Value::nil() : processor.PopValue());
+	processor.PopFrame();
+	return pValue.release();
 }
 
 String FunctionCustom::ToString(const StringStyle& ss) const

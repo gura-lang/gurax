@@ -1,3 +1,12 @@
+TestCase(title:String):void {`block} = {
+	PrintTitle(title)
+	block.Eval()
+}
+
+PrintTitle(title:String) = {
+	Printf('======== %s ========\n', title)
+}
+
 Tester(expr:Expr) = {
 	Printf('%s ..', expr)
 	rtn = expr.Eval()

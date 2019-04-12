@@ -1,10 +1,4 @@
-f(a) = Println('a = ', a)
-a = 'original A'
-i = 'original I'
-n = 0
-while (n < 10) {|i|
-	Printf('hello #%d\n', i)
-	n += 1
-}
-Println(a)
-Println(i)
+import(util)
+f() = Println('hello', util)
+a = 3
+f()

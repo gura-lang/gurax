@@ -25,6 +25,20 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
+Frame& Processor::PushFrame_Function(const Function& function)
+{
+	Frame* pFrame = new Frame_Function(function.LockFrameParent());
+	PushFrame(pFrame);
+	return *pFrame;
+}
+
+Frame& Processor::PushFrame_Block()
+{
+	Frame* pFrame = new Frame_Block(GetFrameCur().GetFrameOuter()->Reference());
+	PushFrame(pFrame);
+	return *pFrame;
+}
+
 Value* Processor::Eval(const Expr& expr)
 {
 	if (!expr.GetPUnitTop()) return Value::nil();
@@ -62,7 +76,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	if (!pPUnit) return;
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
-	::printf("---- Processor Begin ----\n");
+	stream.Printf("---- Processor Begin ----\n");
 	if (pPUnit->IsBeginQuote()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
 		pPUnit = pPUnit->GetPUnitCont();	// skip PUnit_BeginQuote
@@ -76,7 +90,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		PrintPUnit(stream, pPUnit);
 		pPUnit = pPUnit->Exec(*this);
 	}
-	::printf("---- Processor End ----\n");
+	stream.Printf("---- Processor End ----\n");
 }
 
 }

@@ -264,7 +264,9 @@ template<bool discardValueFlag>
 const PUnit* PUnit_AssignFunction<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValueAssigned(new Value_Function(GetFunction().Reference()));
+	RefPtr<Function> pFunction(GetFunction().Reference());
+	pFunction->SetFrameParent(frame);
+	RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
 	frame.Assign(GetFunction().GetSymbol(), pValueAssigned->Reference());
 	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
 	return _GetPUnitCont();

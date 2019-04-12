@@ -116,7 +116,7 @@ public:
 	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
-	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
+	Frame* LockFrameParent() const { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	void Declare(const VType& vtypeResult, Flags flags) {
 		GetDeclCallable().SetVTypeResult(vtypeResult);
 		GetDeclCallable().SetFlags(flags);
@@ -164,7 +164,7 @@ public:
 	bool IsLessThan(const Function& function) const { return this < &function; }
 public:
 	// Virtual functions
-	virtual Value* DoCall(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
+	virtual Value* DoCall(Processor& processor, Argument& argument) const;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };
 	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const {}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
