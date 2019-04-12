@@ -1,1 +1,7 @@
 #!./gurax
+import(util)
+
+util.PrintTitle('Recursion')
+Fact(n:Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
+n = 20
+Printf('%d! = %d\n', n, Fact(n))

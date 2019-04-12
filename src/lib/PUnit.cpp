@@ -1684,7 +1684,7 @@ const PUnit* PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 	// pop frame or value from their stacks.
 	if (!pPUnit) return nullptr;	
 	processor.PopFrame();
-	if (discardValueFlag) processor.PopValue();
+	if (pPUnit->GetDiscardValueFlag()) processor.PopValue();
 	return pPUnit->GetPUnitCont();
 }
 
@@ -1693,7 +1693,7 @@ String PUnit_Return<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 {
 	String str;
 	str += "Return()";
-	AppendInfoToString(str, ss);
+	//AppendInfoToString(str, ss);
 	return str;
 }
 

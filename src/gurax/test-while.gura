@@ -9,9 +9,6 @@ x = while (n > 0):list { n -= 1 }
 Println(x)
 //x = while (n > 0):list {|i| n -= 1 }
 
-util.TestCase('a') {
-}
-
 util.PrintTitle('Scope test')
 i = 'original I'
 n = 0
