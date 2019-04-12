@@ -1,4 +1,26 @@
 #!./gurax
+import(util)
+util.PrintTitle('PUnit')
+exprs = [
+	`repeat {}
+	`repeat {|n| nil}
+	`repeat (3) {}
+	`repeat (3) {|n| nil}
+	`repeat ():list {}
+	`repeat ():list {|n| nil}
+	`repeat (3):list {}
+	`repeat (3):list {|n| nil}
+	`repeat ():xlist {}
+	`repeat ():xlist {|n| nil}
+	`repeat (3):xlist {}
+	`repeat (3):xlist {|n| nil}
+]
+for (expr in exprs) {
+	Printf('`%s\n', expr)
+	util.PrintPUnit(expr)
+}
+
+util.PrintTitle('Create list')
 x = repeat (10):list {'x'}
 Println(x)
 x = repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i}
