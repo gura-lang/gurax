@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Composer {
 public:
-	class RepeaterInfo {
+	class GURAX_DLLDECLARE RepeaterInfo {
 	private:
 		const PUnit* _pPUnitOfLoop;
 		const PUnit* _pPUnitOfBranch;

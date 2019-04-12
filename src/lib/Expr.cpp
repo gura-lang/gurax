@@ -303,7 +303,9 @@ void Expr_UnaryOp::Compose(Composer& composer)
 		GetExprChild()->SetPUnitTop(composer.PeekPUnitCont());
 		PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(*this);							// [Any]
+		composer.BeginRepeaterBlock(nullptr, nullptr);
 		GetExprChild()->ComposeOrNil(composer);						// [Any]
+		composer.EndRepeaterBlock();
 		composer.Add_Return(*this);
 		const PUnit* pPUnitCont = composer.PeekPUnitCont();
 		pPUnitOfBranch->SetPUnitCont(pPUnitCont);
@@ -370,7 +372,9 @@ void Expr_BinaryOp::Compose(Composer& composer)
 			GetExprLeft()->SetPUnitTop(composer.PeekPUnitCont());
 			PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
 			composer.Add_BeginSequence(*this);							// [Any]
+			composer.BeginRepeaterBlock(nullptr, nullptr);
 			GetExprLeft()->ComposeOrNil(composer);						// [Any]
+			composer.EndRepeaterBlock();
 			composer.Add_Return(*this);
 			const PUnit* pPUnitCont = composer.PeekPUnitCont();
 			pPUnitOfBranch->SetPUnitCont(pPUnitCont);
@@ -383,7 +387,9 @@ void Expr_BinaryOp::Compose(Composer& composer)
 			GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
 			PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
 			composer.Add_BeginSequence(*this);							// [Any]
+			composer.BeginRepeaterBlock(nullptr, nullptr);
 			GetExprRight()->ComposeOrNil(composer);						// [Any]
+			composer.EndRepeaterBlock();
 			composer.Add_Return(*this);
 			const PUnit* pPUnitCont = composer.PeekPUnitCont();
 			pPUnitOfBranch->SetPUnitCont(pPUnitCont);
@@ -797,7 +803,9 @@ void Expr_Caller::Compose(Composer& composer)
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(*this);
 		GetExprOfBlock()->SetPUnitTop(composer.PeekPUnitCont());
+		composer.BeginRepeaterBlock(nullptr, nullptr);
 		GetExprOfBlock()->ComposeOrNil(composer);
+		composer.EndRepeaterBlock();
 		composer.Add_Return(*this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
