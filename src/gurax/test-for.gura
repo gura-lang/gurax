@@ -3,7 +3,13 @@ import(util)
 
 util.PrintTitle('PUnit')
 exprs = [
-	`for (a in b) { nil }
+	`for (v in tbl) { nil }
+	`for (v in tbl):list { nil }
+	`for (v in tbl):xlist { nil }
+	`for (v in tbl) {|n| nil }
+	`for (v in tbl):list {|n| nil }
+	`for (v in tbl):xlist {|n| nil }
+	`for (v1 in tbl1, v2 in tbl2, v3 in tbl3) { nil }
 ]
 for (expr in exprs) {
 	Printf('`%s\n', expr)

@@ -487,8 +487,9 @@ template<bool discardValueFlag>
 String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ForEach(offsetToIterator=%zu,branchdest=%s)", GetOffset(),
-			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("ForEach(offsetToIterator=%zu,branchdest=%s, decls=[%s])", GetOffset(),
+			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str(),
+			   GetDeclArgOwner().ToString(StringStyle().Digest().Cram()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
