@@ -1,4 +1,0 @@
-import(util)
-f() = Println('hello', util)
-a = 3
-f()

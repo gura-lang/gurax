@@ -1,2 +1,5 @@
 #!./gurax
-sys.cerr.Println('hello')
+sys.cout.Println('Print on cout')
+sys.cerr.Println('Print on cerr')
+sys.Exit(1)
+Println('This message is supporsed not to be displayed.')
