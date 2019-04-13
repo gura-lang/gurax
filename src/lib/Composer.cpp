@@ -34,6 +34,18 @@ void Composer::Flush(bool discardValueFlag)
 	}
 }
 
+void Composer::ComposeAsSequence(Expr& expr)
+{
+	expr.SetPUnitTop(PeekPUnitCont());
+	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
+	Add_BeginSequence(expr);								// [Any]
+	BeginRepeaterBlock(nullptr, nullptr);
+	expr.ComposeOrNil(*this);								// [Any]
+	EndRepeaterBlock();
+	Add_Return(expr);
+	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
+}
+
 void Composer::Add_Value(const Expr& exprSrc, Value* pValue)
 {
 	SetFactory(new PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue));

@@ -76,6 +76,7 @@ public:
 		_repeaterInfoStack.pop_back();
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
+	void ComposeAsSequence(Expr& expr);
 public:
 	void Add_Value(const Expr& exprSrc, Value* pValue);
 	void Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
