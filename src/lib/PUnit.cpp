@@ -135,7 +135,7 @@ String PUnit_ValueAndJump<discardValueFlag>::ToString(const StringStyle& ss, int
 	String str;
 	str.Printf("ValueAndJump(%s,cont=%s)",
 			   GetValue()->ToString(StringStyle().Digest()).c_str(),
-			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str());
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -278,7 +278,7 @@ String PUnit_AssignFunction<discardValueFlag>::ToString(const StringStyle& ss, i
 	String str;
 	str.Printf("AssignFunction(%s,cont=%s)",
 			   GetFunction().ToString(ss).c_str(),
-			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str());
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -448,7 +448,7 @@ String PUnit_EvalIterator<discardValueFlag>::ToString(const StringStyle& ss, int
 {
 	String str;
 	str.Printf("EvalIterator(offsetToIterator=%zu,branchdest=%s)", GetOffset(),
-			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -488,7 +488,7 @@ String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 {
 	String str;
 	str.Printf("ForEach(offsetToIterator=%zu,branchdest=%s, decls=[%s])", GetOffset(),
-			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str(),
+			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
 			   GetDeclArgOwner().ToString(StringStyle().Digest().Cram()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
@@ -1017,7 +1017,11 @@ template<bool discardValueFlag>
 String PUnit_Argument<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "Argument()";
+	if (_pExprOfBlock) {
+		str.Printf("Argument(block=%s)", MakeSeqIdString(_pExprOfBlock->GetPUnitTop(), seqIdOffset).c_str());
+	} else {
+		str += "Argument()";
+	}
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
@@ -1070,11 +1074,11 @@ String PUnit_ArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 	String str;
 	str.Printf("ArgSlot(`(%s)", GetExprSrc().ToString(StringStyle().Cram()).c_str());
 	if (GetExprSrc().GetPUnitTop()) {
-		str.Printf(":%s", GetExprSrc().GetPUnitTop()->MakeSeqIdString(seqIdOffset).c_str());
+		str.Printf(":%s", MakeSeqIdString(GetExprSrc().GetPUnitTop(), seqIdOffset).c_str());
 	}
 	str.Printf(",cont=%s,branchdest=%s)",
-			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str(),
-			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
+			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1171,8 +1175,8 @@ String PUnit_ArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int
 	String str;
 	str.Printf("ArgSlotNamed(`%s=>%s,cont=%s,branchdest=%s)", GetSymbol()->GetName(),
 			   GetExprSrc().ToString(StringStyle().Cram()).c_str(),
-			   _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str(),
-			   GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
+			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1255,7 +1259,7 @@ template<bool discardValueFlag>
 String PUnit_Call<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Call(cont=%s)", _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("Call(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1286,7 +1290,7 @@ template<bool discardValueFlag>
 String PUnit_Jump<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Jump(%s)", _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("Jump(%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	return str;
 }
 
@@ -1322,7 +1326,7 @@ template<bool discardValueFlag>
 String PUnit_JumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("JumpIf(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("JumpIf(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1359,7 +1363,7 @@ template<bool discardValueFlag>
 String PUnit_JumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("JumpIfNot(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("JumpIfNot(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1397,7 +1401,7 @@ template<bool discardValueFlag>
 String PUnit_NilJumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("NilJumpIf(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("NilJumpIf(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1435,7 +1439,7 @@ template<bool discardValueFlag>
 String PUnit_NilJumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("NilJumpIfNot(branchdest=%s)", GetPUnitBranchDest()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("NilJumpIfNot(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1466,7 +1470,7 @@ template<bool discardValueFlag>
 String PUnit_BeginSequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("BeginSequence(exit=%s)", GetPUnitSentinel()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("BeginSequence(exit=%s)", MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1497,7 +1501,7 @@ template<bool discardValueFlag>
 String PUnit_BeginQuote<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("BeginQuote(exit=%s)", GetPUnitSentinel()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("BeginQuote(exit=%s)", MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1624,8 +1628,7 @@ template<bool discardValueFlag>
 String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Break(branch=%s)", GetPUnitOfBranch()?
-			   GetPUnitOfBranch()->MakeSeqIdString(seqIdOffset).c_str() : "null");
+	str.Printf("Break(branch=%s)", MakeSeqIdString(GetPUnitOfBranch(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1656,8 +1659,7 @@ template<bool discardValueFlag>
 String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Continue(loop=%s)", GetPUnitOfLoop()?
-			   GetPUnitOfLoop()->MakeSeqIdString(seqIdOffset).c_str() : "null");
+	str.Printf("Continue(loop=%s)", MakeSeqIdString(GetPUnitOfLoop(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1847,7 +1849,7 @@ const PUnit* PUnit_Bridge::Exec(Processor& processor) const
 String PUnit_Bridge::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Bridge(cont=%s)", _GetPUnitCont()->MakeSeqIdString(seqIdOffset).c_str());
+	str.Printf("Bridge(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }

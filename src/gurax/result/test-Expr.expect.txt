@@ -128,7 +128,7 @@ f(`(a + b))
 --------
 `{f(3, 4, 5) {f1(); f2()}}
   ##0 Lookup(`f)
-  ##1 Argument()
+  ##1 Argument(block=##15)
   ##2 ArgSlot(`(3):##3,cont=##4,branchdest=##6)
   ##3 BeginQuote(exit=##5)
   ##4 Value(<Number:3>)

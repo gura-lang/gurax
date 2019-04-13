@@ -42,6 +42,9 @@ public:
 public:
 	size_t GetSeqId(int seqIdOffset = 0) const { return _seqId - seqIdOffset; }
 	String MakeSeqIdString(int seqIdOffset = 0) const;
+	static String MakeSeqIdString(const PUnit* pPUnit, int seqIdOffset = 0) {
+		return pPUnit? pPUnit->MakeSeqIdString(seqIdOffset) : "null";
+	}
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
 public:
