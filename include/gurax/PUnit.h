@@ -54,7 +54,6 @@ public:
 	}
 public:
 	// Virtual functions
-	virtual bool IsReturn() const { return false; }
 	virtual bool IsBridge() const { return false; }
 	virtual bool IsBeginQuote() const { return false; }
 	virtual bool GetDiscardValueFlag() const = 0;
@@ -1876,7 +1875,6 @@ public:
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual bool IsReturn() const override { return true; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual const PUnit* Exec(Processor& processor) const override;
