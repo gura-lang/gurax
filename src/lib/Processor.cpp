@@ -56,10 +56,10 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 	if (_pPUnitCur->IsBeginQuote()) {
 		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip PUnit_BeginQuote
-		while (_pPUnitCur && _pPUnitCur != pPUnitSentinel) _pPUnitCur = _pPUnitCur->Exec(*this);
+		while (_pPUnitCur && _pPUnitCur != pPUnitSentinel) _pPUnitCur->Exec(*this);
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		while (_pPUnitCur) _pPUnitCur = _pPUnitCur->Exec(*this);
+		while (_pPUnitCur) _pPUnitCur->Exec(*this);
 	}
 }
 
@@ -85,12 +85,12 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		PrintPUnit(stream, _pPUnitCur);
-		_pPUnitCur = _pPUnitCur->Exec(*this);
+		_pPUnitCur->Exec(*this);
 	}
 	while (_pPUnitCur && _pPUnitCur != pPUnitSentinel) {
 		PrintStack(stream);
 		PrintPUnit(stream, _pPUnitCur);
-		_pPUnitCur = _pPUnitCur->Exec(*this);
+		_pPUnitCur->Exec(*this);
 	}
 	stream.Printf("---- Processor End ----\n");
 }
