@@ -1787,12 +1787,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitOfBranch;
+	bool _contFlag;
 public:
 	// Constructor
-	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfBranch) :
-		PUnit(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch) {}
+	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfBranch, bool contFlag) :
+		PUnit(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch), _contFlag(contFlag) {}
 public:
 	const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
+	bool GetContFlag() const { return _contFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1809,9 +1811,10 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Break");
 private:
 	const PUnit* _pPUnitOfBranch;
+	bool _contFlag;
 public:
-	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfBranch) :
-		PUnitFactory(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch) {}
+	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfBranch, bool contFlag) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch), _contFlag(contFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Break<false>);
 	}
@@ -1828,12 +1831,15 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitOfLoop;
+	bool _contFlag;
 public:
 	// Constructor
-	PUnit_Continue(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfLoop) :
-		PUnit(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop) {}
+	PUnit_Continue(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfLoop, bool contFlag) :
+		PUnit(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop), _contFlag(contFlag) {}
 public:
 	const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
+
+	bool GetContFlag() const { return _contFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1850,9 +1856,10 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Continue");
 private:
 	const PUnit* _pPUnitOfLoop;
+	bool _contFlag;
 public:
-	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfLoop) :
-		PUnitFactory(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop) {}
+	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfLoop, bool contFlag) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop), _contFlag(contFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Continue<false>);
 	}

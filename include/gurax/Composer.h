@@ -16,9 +16,14 @@ public:
 	private:
 		const PUnit* _pPUnitOfLoop;
 		const PUnit* _pPUnitOfBranch;
+		bool _contFlag;
 	public:
 		// Constructor
-		RepeaterInfo() = default;
+		RepeaterInfo() = delete;
+		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, bool contFlag) :
+			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch), _contFlag(contFlag){}
+		RepeaterInfo(const RepeaterInfo& src, bool contFlag) :
+			_pPUnitOfLoop(src._pPUnitOfLoop), _pPUnitOfBranch(src._pPUnitOfBranch), _contFlag(contFlag){}
 		// Copy constructor/operator
 		RepeaterInfo(const RepeaterInfo& src) = delete;
 		RepeaterInfo& operator=(const RepeaterInfo& src) = delete;
@@ -28,10 +33,9 @@ public:
 		// Destructor
 		virtual ~RepeaterInfo() = default;
 	public:
-		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch) :
-			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch) {}
 		const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
 		const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
+		bool GetContFlag() const { return _contFlag; }
 	};
 	class RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
 	};
@@ -70,7 +74,7 @@ public:
 	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
 	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
 	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch) {
-		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch));
+		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, true));
 	}
 	void EndRepeaterBlock() {
 		_repeaterInfoStack.pop_back();
@@ -123,8 +127,8 @@ public:
 	void Add_PopValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
-	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch);
-	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop);
+	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch, bool contFlag);
+	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop, bool contFlag);
 	void Add_Return(const Expr& exprSrc);
 	void Add_PushFrame_Block(const Expr& exprSrc);
 	void Add_PopFrame(const Expr& exprSrc);

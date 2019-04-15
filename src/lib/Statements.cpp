@@ -471,7 +471,7 @@ Gurax_ImplementStatement(break_)
 		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
-	composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBranch());
+	composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBranch(), repeaterInfo.GetContFlag());
 }
 
 // continue(value?)
@@ -500,7 +500,7 @@ Gurax_ImplementStatement(continue_)
 		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
-	composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop());
+	composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop(), repeaterInfo.GetContFlag());
 }
 
 // return(value?)

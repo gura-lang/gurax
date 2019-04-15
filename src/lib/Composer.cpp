@@ -254,14 +254,14 @@ void Composer::Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt)
 	SetFactory(new PUnitFactory_RemoveValues(exprSrc.Reference(), NextSeqId(), offset, cnt));
 }
 
-void Composer::Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch)
+void Composer::Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch, bool contFlag)
 {
-	SetFactory(new PUnitFactory_Break(exprSrc.Reference(), NextSeqId(), pPUnitOfBranch));
+	SetFactory(new PUnitFactory_Break(exprSrc.Reference(), NextSeqId(), pPUnitOfBranch, contFlag));
 }
 
-void Composer::Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop)
+void Composer::Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop, bool contFlag)
 {
-	SetFactory(new PUnitFactory_Continue(exprSrc.Reference(), NextSeqId(), pPUnitOfLoop));
+	SetFactory(new PUnitFactory_Continue(exprSrc.Reference(), NextSeqId(), pPUnitOfLoop, contFlag));
 }
 
 void Composer::Add_Return(const Expr& exprSrc)

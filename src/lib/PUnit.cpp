@@ -1645,7 +1645,7 @@ template<bool discardValueFlag>
 void PUnit_Break<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (discardValueFlag) processor.PopValue();
-	processor.SetNext(GetPUnitOfBranch()->GetPUnitBranchDest());
+	processor.SetNext(GetPUnitOfBranch()->GetPUnitBranchDest(), GetContFlag());
 }
 
 template<bool discardValueFlag>
@@ -1660,9 +1660,9 @@ String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdO
 PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Break<true>(_pExprSrc.release(), _seqId, _pPUnitOfBranch);
+		_pPUnitCreated = new PUnit_Break<true>(_pExprSrc.release(), _seqId, _pPUnitOfBranch, _contFlag);
 	} else {
-		_pPUnitCreated = new PUnit_Break<false>(_pExprSrc.release(), _seqId, _pPUnitOfBranch);
+		_pPUnitCreated = new PUnit_Break<false>(_pExprSrc.release(), _seqId, _pPUnitOfBranch, _contFlag);
 	}
 	return _pPUnitCreated;
 }
@@ -1676,7 +1676,7 @@ template<bool discardValueFlag>
 void PUnit_Continue<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (discardValueFlag) processor.PopValue();
-	processor.SetNext(GetPUnitOfLoop());
+	processor.SetNext(GetPUnitOfLoop(), GetContFlag());
 }
 
 template<bool discardValueFlag>
@@ -1691,9 +1691,9 @@ String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _seqId, _pPUnitOfLoop);
+		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _seqId, _pPUnitOfLoop, _contFlag);
 	} else {
-		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _seqId, _pPUnitOfLoop);
+		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _seqId, _pPUnitOfLoop, _contFlag);
 	}
 	return _pPUnitCreated;
 }
