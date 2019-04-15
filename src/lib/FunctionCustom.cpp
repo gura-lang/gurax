@@ -20,9 +20,9 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
 	argument.AssignToFrame(processor.PushFrame_Function(*this));
 	processor.Process(GetPUnitBody());
-	RefPtr<Value> pValue(Error::IsIssued()? Value::nil() : processor.PopValue());
 	processor.PopFrame();
-	return pValue.release();
+	if (Error::IsIssued()) return Value::nil();
+	return processor.PopValue();
 }
 
 String FunctionCustom::ToString(const StringStyle& ss) const
