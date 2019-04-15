@@ -56,9 +56,9 @@ public:
 	Frame& PushFrame_Block();
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
-	void Eval(const PUnit* pPUnit) { RunLoop(pPUnit); }
-	void Eval(const Composer& composer) { RunLoop(composer.GetPUnitFirst()); }
-	Value* Eval(const Expr& expr);
+	void Process(const PUnit* pPUnit) { RunLoop(pPUnit); }
+	void Process(const Composer& composer) { Process(composer.GetPUnitFirst()); }
+	Value* Process(const Expr& expr);
 protected:
 	virtual void RunLoop(const PUnit* pPUnit) = 0;
 };

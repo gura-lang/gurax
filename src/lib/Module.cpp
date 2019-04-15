@@ -41,7 +41,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	if (Error::IsIssued()) return nullptr;
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
 	processor.PushFrame(pModule->GetFrame().Reference());
-	processor.Eval(composer);
+	processor.Process(composer);
 	processor.PopFrame();
 	if (Error::IsIssued()) return nullptr;
 	return pModule.release();

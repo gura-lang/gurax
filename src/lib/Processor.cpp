@@ -39,10 +39,10 @@ Frame& Processor::PushFrame_Block()
 	return *pFrame;
 }
 
-Value* Processor::Eval(const Expr& expr)
+Value* Processor::Process(const Expr& expr)
 {
 	if (!expr.GetPUnitTop()) return Value::nil();
-	RunLoop(expr.GetPUnitTop());
+	Process(expr.GetPUnitTop());
 	return Error::IsIssued()? Value::nil() : PopValue();
 }
 
