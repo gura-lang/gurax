@@ -32,9 +32,12 @@ Gurax_DeclareMethod(Expr, Eval)
 
 Gurax_ImplementMethod(Expr, Eval)
 {
+	// Target
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
-	return processor.Process(expr);
+	// Function body
+	RefPtr<Value> pValue(processor.Process(expr));
+	return pValue.release();
 }
 
 //------------------------------------------------------------------------------
