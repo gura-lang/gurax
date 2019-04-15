@@ -19,6 +19,8 @@ protected:
 	RefPtr<ValueStack> _pValueStack;
 	RefPtr<FrameStack> _pFrameStack;
 	const PUnit* _pPUnitCur;
+	bool _contFlag;
+	bool _resumeFlag;
 public:
 	// Constructor
 	Processor();
@@ -49,9 +51,10 @@ public:
 	void DiscardValue() { Value::Delete(PopValue()); }
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
 	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
-	void ContinueLoop(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
-	void ExitLoop(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
-	void ErrorDone() { _pPUnitCur = nullptr; }
+	void SetNext(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
+	void SetNext(const PUnit* pPUnit, bool contFlag) { _pPUnitCur = pPUnit; _contFlag = contFlag; }
+	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
+	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }

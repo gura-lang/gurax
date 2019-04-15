@@ -9,7 +9,8 @@ namespace Gurax {
 // Processor
 //------------------------------------------------------------------------------
 Processor::Processor() :
-	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()), _pPUnitCur(nullptr)
+	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
+	_pPUnitCur(nullptr), _contFlag(true), _resumeFlag(true)
 {
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
@@ -56,11 +57,12 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 	if (_pPUnitCur->IsBeginQuote()) {
 		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip PUnit_BeginQuote
-		while (_pPUnitCur && _pPUnitCur != pPUnitSentinel) _pPUnitCur->Exec(*this);
+		while (_contFlag && _pPUnitCur != pPUnitSentinel) _pPUnitCur->Exec(*this);
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		while (_pPUnitCur) _pPUnitCur->Exec(*this);
+		while (_contFlag) _pPUnitCur->Exec(*this);
 	}
+	_contFlag = _resumeFlag;
 }
 
 //------------------------------------------------------------------------------
@@ -87,11 +89,12 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		PrintPUnit(stream, _pPUnitCur);
 		_pPUnitCur->Exec(*this);
 	}
-	while (_pPUnitCur && _pPUnitCur != pPUnitSentinel) {
+	while (_contFlag && _pPUnitCur != pPUnitSentinel) {
 		PrintStack(stream);
 		PrintPUnit(stream, _pPUnitCur);
 		_pPUnitCur->Exec(*this);
 	}
+	_contFlag = _resumeFlag;
 	stream.Printf("---- Processor End ----\n");
 }
 
