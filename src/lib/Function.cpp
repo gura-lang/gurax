@@ -20,7 +20,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 	RefPtr<Value> pValue(DoEval(processor, argument));
 	//processor.PopFrame();
 	if (!pPUnitCur->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
-	processor.SetPUnitCur(pPUnitCur->GetPUnitCont());
+	processor.ContinueLoop(pPUnitCur->GetPUnitCont());
 }
 
 String Function::ToString(const StringStyle& ss) const

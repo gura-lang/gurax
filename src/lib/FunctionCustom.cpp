@@ -12,7 +12,7 @@ void FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 {
 	argument.AssignToFrame(processor.PushFrame_Function(*this));
 	processor.PushPUnit(processor.GetPUnitCur());
-	processor.SetPUnitCur(GetPUnitBody());
+	processor.ContinueLoop(GetPUnitBody());
 	// PUnit_Return will do PopFrame().
 }
 

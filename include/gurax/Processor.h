@@ -49,7 +49,9 @@ public:
 	void DiscardValue() { Value::Delete(PopValue()); }
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
 	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
-	void SetPUnitCur(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
+	void ContinueLoop(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
+	void ExitLoop(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
+	void ErrorDone() { _pPUnitCur = nullptr; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
