@@ -14,10 +14,11 @@ class GURAX_DLLDECLARE Processor : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Processor);
-private:
+protected:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
 	RefPtr<FrameStack> _pFrameStack;
+	const PUnit* _pPUnitCur;
 public:
 	// Constructor
 	Processor();
@@ -48,6 +49,8 @@ public:
 	void DiscardValue() { Value::Delete(PopValue()); }
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
 	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
+	void SetPUnitCur(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
+	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
