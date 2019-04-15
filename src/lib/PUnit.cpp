@@ -1274,19 +1274,10 @@ void PUnit_Call<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopValue()));
 	Argument& argument = pValue->GetArgument();
-	RefPtr<Value> pValueResult(argument.DoCall(processor));
+	argument.DoCall(processor);
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.SetPUnitCur(nullptr);
-		return;
-	}
-	if (argument.GetPUnitCont()) {
-		// PUnit_Return is responsible of DiscardValue.
-		processor.PushPUnit(this);
-		processor.SetPUnitCur(argument.GetPUnitCont());
-	} else {
-		if (!discardValueFlag) processor.PushValue(pValueResult.release());
-		processor.SetPUnitCur(_GetPUnitCont());
 	}
 }
 

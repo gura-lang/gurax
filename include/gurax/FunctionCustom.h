@@ -22,7 +22,7 @@ public:
 	const PUnit* GetPUnitBody() const { return _pPUnitBody; }
 public:
 	// Virtual functions of Function
-	virtual Value* DoCall(Processor& processor, Argument& argument) const override;
+	virtual void DoCall(Processor& processor, Argument& argument) const override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 };

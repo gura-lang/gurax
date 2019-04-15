@@ -115,7 +115,7 @@ public:
 	virtual bool GetBool() const { return true; }
 	virtual bool IsValid() const { return true; }
 	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
-	virtual Value* DoCall(Processor& processor, Argument& argument);
+	virtual void DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, Value* pValue);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr);

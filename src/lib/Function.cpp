@@ -13,12 +13,14 @@ String Function::MakeFullName() const
 	return GetName();
 }
 
-Value* Function::DoCall(Processor& processor, Argument& argument) const
+void Function::DoCall(Processor& processor, Argument& argument) const
 {
+	const PUnit* pPUnitCur = processor.GetPUnitCur();
 	//processor.PushFrame_Function(*this);
 	RefPtr<Value> pValue(DoEval(processor, argument));
 	//processor.PopFrame();
-	return pValue.release();
+	if (!pPUnitCur->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
+	processor.SetPUnitCur(pPUnitCur->GetPUnitCont());
 }
 
 String Function::ToString(const StringStyle& ss) const

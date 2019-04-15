@@ -29,7 +29,6 @@ private:
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 	RefPtr<Value_Dict> _pValueOfDict;		// this may be nullptr
 	RefPtr<ArgSlot> _pArgSlotFirst;			// this may be nullptr
-	const PUnit *_pPUnitCont;				// this may be nullptr
 	UInt32 _flags;
 	ArgSlot* _pArgSlotToFeed;
 public:
@@ -87,10 +86,8 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
-	void SetPUnitCont(const PUnit* pPUnit) { _pPUnitCont = pPUnit; }
-	const PUnit* GetPUnitCont() const { return _pPUnitCont; }
 	void AssignToFrame(Frame& frame) const;
-	Value* DoCall(Processor& processor);
+	void DoCall(Processor& processor);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& argument) const { return this == &argument; }

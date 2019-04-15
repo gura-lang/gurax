@@ -11,8 +11,7 @@ namespace Gurax {
 Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 				   Value* pValueThis, Expr_Block* pExprOfBlock) :
 	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _pAttr(pAttr),
-	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock),
-	_pPUnitCont(nullptr), _flags(0), _pArgSlotToFeed(nullptr)
+	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock), _flags(0), _pArgSlotToFeed(nullptr)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
@@ -66,27 +65,27 @@ Function* Argument::CreateFunctionOfBlock(Frame& frameParent, RefPtr<Argument>& 
 	return pFunction;
 }
 
-Value* Argument::DoCall(Processor& processor)
+void Argument::DoCall(Processor& processor)
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (!pArgSlot->HasValidValue()) {
 			Error::Issue(ErrorType::ArgumentError, "not enough argument");
-			return nullptr;
+			return;
 		}
 	}
 	const DeclBlock& declBlock = _pDeclCallable->GetDeclBlock();
 	if (_pExprOfBlock) {
 		if (declBlock.IsOccurZero()) {
 			Error::Issue(ErrorType::ArgumentError, "block is unnecessary");
-			return nullptr;
+			return;
 		}
 	} else {
 		if (declBlock.IsOccurOnce()) {
 			Error::Issue(ErrorType::ArgumentError, "block is necessary");
-			return nullptr;
+			return;
 		}
 	}
-	return GetValueCar().DoCall(processor, *this);
+	GetValueCar().DoCall(processor, *this);
 }
 
 void Argument::AssignToFrame(Frame& frame) const
