@@ -79,6 +79,12 @@ public:
 	void EndRepeaterBlock() {
 		_repeaterInfoStack.pop_back();
 	}
+	void BeginRepeaterExBlock() {
+		_repeaterInfoStack.push_back(new RepeaterInfo(*_repeaterInfoStack.back(), false));
+	}
+	void EndRepeaterExBlock() {
+		_repeaterInfoStack.pop_back();
+	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void ComposeAsSequence(Expr& expr);
 public:
