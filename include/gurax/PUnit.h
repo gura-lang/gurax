@@ -372,23 +372,21 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Function> _pFunction;
-	const PUnit* _pPUnitCont;
 public:
 	// Constructor
 	PUnit_AssignFunction(Expr* pExprSrc, SeqId seqId, Function* pFunction) :
-		PUnit(pExprSrc, seqId), _pFunction(pFunction), _pPUnitCont(this + 1) {}
+		PUnit(pExprSrc, seqId), _pFunction(pFunction) {}
 public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
+	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
 class PUnitFactory_AssignFunction : public PUnitFactory {

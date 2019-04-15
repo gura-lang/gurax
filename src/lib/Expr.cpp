@@ -799,11 +799,12 @@ void Expr_Caller::ComposeForAssignment(
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_AssignFunction(*this, pFunction->Reference());		// [Value]
+	composer.Add_Jump(*this);
 	pFunction->SetPUnitBody(composer.PeekPUnitCont());
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	composer.Add_AssignFunction(*this, pFunction.release());		// [Value]
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

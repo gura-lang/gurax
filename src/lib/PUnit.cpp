@@ -278,7 +278,7 @@ String PUnit_AssignFunction<discardValueFlag>::ToString(const StringStyle& ss, i
 {
 	String str;
 	str.Printf("AssignFunction(%s,cont=%s)",
-			   GetFunction().ToString(ss).c_str(),
+			   GetFunction().ToString(StringStyle().Cram()).c_str(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
