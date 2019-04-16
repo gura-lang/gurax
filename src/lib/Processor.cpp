@@ -26,9 +26,10 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
-Frame& Processor::PushFrame_Function(const Function& function)
+Frame& Processor::PushFrame_Function(const Function& function, bool dynamicScopeFlag)
 {
-	Frame* pFrame = new Frame_Function(function.LockFrameParent());
+	Frame* pFrame = new Frame_Function(
+		dynamicScopeFlag? GetFrameCur().Reference() : function.LockFrameParent());
 	PushFrame(pFrame);
 	return *pFrame;
 }

@@ -60,7 +60,7 @@ public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
 	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
-	Frame& PushFrame_Function(const Function& function);
+	Frame& PushFrame_Function(const Function& function, bool dynamicScopeFlag);
 	Frame& PushFrame_Block();
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }

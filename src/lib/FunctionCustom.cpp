@@ -10,7 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 {
-	argument.AssignToFrame(processor.PushFrame_Function(*this));
+	bool dynamicScopeFlag = false;
+	argument.AssignToFrame(processor.PushFrame_Function(*this, dynamicScopeFlag));
 	processor.PushPUnit(processor.GetPUnitCur());
 	processor.SetNext(GetPUnitBody());
 	// PUnit_Return will do PopFrame().
@@ -18,7 +19,8 @@ void FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 
 Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
-	argument.AssignToFrame(processor.PushFrame_Function(*this));
+	bool dynamicScopeFlag = false;
+	argument.AssignToFrame(processor.PushFrame_Function(*this, dynamicScopeFlag));
 	processor.Process(GetPUnitBody());
 	processor.PopFrame();
 	if (Error::IsIssued()) return Value::nil();
