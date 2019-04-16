@@ -313,7 +313,7 @@ public:
 	Value* EvalUnary(Processor& processor, const Value& value) const;
 	Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const {}
-	virtual void ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const {}
+	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const {}
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
 };
@@ -335,7 +335,7 @@ class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
 public:
 	Operator_AndAnd() : Operator(OpStyle::OpBinary, "&&", OpType::AndAnd, true) {}
 public:
-	virtual void ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const override;
+	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -345,7 +345,7 @@ class GURAX_DLLDECLARE Operator_OrOr : public Operator {
 public:
 	Operator_OrOr() : Operator(OpStyle::OpBinary, "||", OpType::OrOr, true) {}
 public:
-	virtual void ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const override;
+	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
 
 };

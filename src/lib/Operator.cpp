@@ -139,14 +139,14 @@ void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 //------------------------------------------------------------------------------
 // Operator_AndAnd
 //------------------------------------------------------------------------------
-void Operator_AndAnd::ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const
+void Operator_AndAnd::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 {
 }
 
 //------------------------------------------------------------------------------
 // Operator_OrOr
 //------------------------------------------------------------------------------
-void Operator_OrOr::ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const
+void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 {
 }
 
