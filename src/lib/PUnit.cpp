@@ -1757,7 +1757,7 @@ void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 		if (pPUnit->GetDiscardValueFlag()) processor.PopValue();
 		processor.SetNext(pPUnit->GetPUnitCont());
 	} else {
-		processor.SetNext(nullptr, false);
+		processor.SetNext(nullptr, false);	// Set contFlag to false so the Processor loop exits.
 	}
 }
 

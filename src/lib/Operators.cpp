@@ -5,34 +5,6 @@
 
 namespace Gurax {
 
-// `Expr
-Gurax_ImplementOpPreUnary(Quote, Expr)
-{
-	return value.Clone();
-}
-
-// Expr && Expr
-Gurax_ImplementOpBinary(AndAnd, Expr, Expr)
-{
-	const Expr& exprL = dynamic_cast<const Value_Expr&>(valueL).GetExpr();
-	RefPtr<Value> pValueL(processor.Process(exprL));
-	if (!pValueL->GetBool()) return pValueL.release();
-	const Expr& exprR = dynamic_cast<const Value_Expr&>(valueR).GetExpr();
-	RefPtr<Value> pValueR(processor.Process(exprR));
-	return pValueR.release();
-}
-
-// Expr || Expr
-Gurax_ImplementOpBinary(OrOr, Expr, Expr)
-{
-	const Expr& exprL = dynamic_cast<const Value_Expr&>(valueL).GetExpr();
-	RefPtr<Value> pValueL(processor.Process(exprL));
-	if (Error::IsIssued() || pValueL->GetBool()) return pValueL.release();
-	const Expr& exprR = dynamic_cast<const Value_Expr&>(valueR).GetExpr();
-	RefPtr<Value> pValueR(processor.Process(exprR));
-	return pValueR.release();
-}
-
 // ~Number
 Gurax_ImplementOpPreUnary(Inv, Number)
 {
@@ -302,9 +274,6 @@ Gurax_ImplementOpBinary(Xor, Number, Number)
 
 void Operators::Bootup()
 {
-	Gurax_AssignOpPreUnary(Quote,		Expr);
-	Gurax_AssignOpBinary(AndAnd,		Expr, Expr);
-	Gurax_AssignOpBinary(OrOr,			Expr, Expr);
 	Gurax_AssignOpPreUnary(Inv,			Number);
 	Gurax_AssignOpPreUnary(Neg,			Number);
 	Gurax_AssignOpPreUnary(Not,			Number);
