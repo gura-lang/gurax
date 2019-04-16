@@ -136,6 +136,7 @@ String Argument::ToString(const StringStyle& ss) const
 	}
 	str += ')';
 	str += GetAttr().ToString(ss);
+	str += DeclCallable::FlagsToString(GetFlags());
 	if (GetExprOfBlock()) {
 		str += ss.IsCram()? "{" : " {";
 		str += GetDeclCallable().GetDeclBlock().GetSymbol()->GetName();

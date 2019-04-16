@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 void FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 {
-	bool dynamicScopeFlag = false;
+	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.PushFrame_Function(*this, dynamicScopeFlag));
 	processor.PushPUnit(processor.GetPUnitCur());
 	processor.SetNext(GetPUnitBody());
@@ -19,7 +19,7 @@ void FunctionCustom::DoCall(Processor& processor, Argument& argument) const
 
 Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
-	bool dynamicScopeFlag = false;
+	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.PushFrame_Function(*this, dynamicScopeFlag));
 	processor.Process(GetPUnitBody());
 	processor.PopFrame();

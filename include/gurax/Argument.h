@@ -29,7 +29,7 @@ private:
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 	RefPtr<Value_Dict> _pValueOfDict;		// this may be nullptr
 	RefPtr<ArgSlot> _pArgSlotFirst;			// this may be nullptr
-	UInt32 _flags;
+	DeclCallable::Flags _flags;
 	ArgSlot* _pArgSlotToFeed;
 public:
 	// Constructor
@@ -50,7 +50,9 @@ public:
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
+	DeclCallable::Flags GetFlags() const { return _flags; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool IsSet(DeclCallable::Flags flags) const { return (GetFlags() & flags) != 0; }
 	bool IsSet(const Symbol* pSymbol) {
 		return GetDeclCallable().IsSet(pSymbol) || GetAttr().IsSet(pSymbol);
 	}
