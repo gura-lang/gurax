@@ -1,2 +1,9 @@
-======== Recursion ========
-20! = 2432902008176640000
+======== dynamic_scope ========
+[static]  a = external
+[dynamic] a = external
+[static, block]  a = external
+[dynamic, block] a = external
+[static]  a = external
+[dynamic] a = local
+[static, block]  a = external
+[dynamic, block] a = local
