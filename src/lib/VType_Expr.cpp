@@ -36,8 +36,7 @@ Gurax_ImplementMethod(Expr, Eval)
 	auto& valueThis = GetValueThis(argument);
 	const Expr& expr = valueThis.GetExpr();
 	// Function body
-	RefPtr<Value> pValue(processor.Process(expr));
-	return pValue.release();
+	return processor.Process(expr);
 }
 
 //------------------------------------------------------------------------------
