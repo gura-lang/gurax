@@ -14,7 +14,6 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Attribute);
 	PrintSizeOf(DateTime);
 	PrintSizeOf(PUnit_Value<false>);
-	PrintSizeOf(PUnit_ValueAndJump<false>);
 	PrintSizeOf(PUnit_Lookup<false>);
 	PrintSizeOf(PUnit_AssignToSymbol<false>);
 	PrintSizeOf(PUnit_AssignToDeclArg<false>);
@@ -49,6 +48,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_JumpIfNot<false>);
 	PrintSizeOf(PUnit_NilJumpIf<false>);
 	PrintSizeOf(PUnit_NilJumpIfNot<false>);
+	PrintSizeOf(PUnit_KeepJumpIf<false>);
+	PrintSizeOf(PUnit_KeepJumpIfNot<false>);
 	PrintSizeOf(PUnit_BeginQuote<false>);
 	PrintSizeOf(PUnit_PopValue<false>);
 	PrintSizeOf(PUnit_RemoveValue<false>);

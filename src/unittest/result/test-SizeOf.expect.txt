@@ -4,7 +4,6 @@ Argument                         88
 Attribute                        152
 DateTime                         48
 PUnit_Value<false>               32
-PUnit_ValueAndJump<false>        40
 PUnit_Lookup<false>              32
 PUnit_AssignToSymbol<false>      32
 PUnit_AssignToDeclArg<false>     32
@@ -38,6 +37,8 @@ PUnit_JumpIf<false>              32
 PUnit_JumpIfNot<false>           32
 PUnit_NilJumpIf<false>           32
 PUnit_NilJumpIfNot<false>        32
+PUnit_KeepJumpIf<false>          32
+PUnit_KeepJumpIfNot<false>       32
 PUnit_BeginQuote<false>          32
 PUnit_PopValue<false>            24
 PUnit_RemoveValue<false>         32

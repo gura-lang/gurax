@@ -118,39 +118,6 @@ PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_ValueAndJump
-// Stack View: [] -> [Any] (continue)
-//                   []    (discard)
-//------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_ValueAndJump<discardValueFlag>::Exec(Processor& processor) const
-{
-	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
-	processor.SetNext(_GetPUnitCont());
-}
-
-template<bool discardValueFlag>
-String PUnit_ValueAndJump<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
-{
-	String str;
-	str.Printf("ValueAndJump(%s,cont=%s)",
-			   GetValue()->ToString(StringStyle().Digest()).c_str(),
-			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
-	AppendInfoToString(str, ss);
-	return str;
-}
-
-PUnit* PUnitFactory_ValueAndJump::Create(bool discardValueFlag)
-{
-	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_ValueAndJump<true>(_pExprSrc.release(), _seqId, _pValue.release());
-	} else {
-		_pPUnitCreated = new PUnit_ValueAndJump<false>(_pExprSrc.release(), _seqId, _pValue.release());
-	}
-	return _pPUnitCreated;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_Lookup
 // Stack View: [] -> [Any] (continue)
 //                -> []    (discard)

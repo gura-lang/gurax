@@ -51,11 +51,6 @@ void Composer::Add_Value(const Expr& exprSrc, Value* pValue)
 	SetFactory(new PUnitFactory_Value(exprSrc.Reference(), NextSeqId(), pValue));
 }
 
-void Composer::Add_ValueAndJump(const Expr& exprSrc, Value* pValue)
-{
-	SetFactory(new PUnitFactory_ValueAndJump(exprSrc.Reference(), NextSeqId(), pValue));
-}
-
 void Composer::Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol)
 {
 	SetFactory(new PUnitFactory_Lookup(exprSrc.Reference(), NextSeqId(), pSymbol));

@@ -197,49 +197,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_ValueAndJump
-//------------------------------------------------------------------------------
-template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_ValueAndJump : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	RefPtr<Value> _pValue;
-	const PUnit* _pPUnitCont;
-public:
-	// Constructor
-	PUnit_ValueAndJump(Expr* pExprSrc, SeqId seqId, Value* pValue) :
-		PUnit(pExprSrc, seqId), _pValue(pValue), _pPUnitCont(this + 1) {}
-public:
-	const Value* GetValue() const { return _pValue.get(); }
-public:
-	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
-	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
-	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
-private:
-	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
-};
-
-class PUnitFactory_ValueAndJump : public PUnitFactory {
-public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_ValueAndJump");
-private:
-	RefPtr<Value> _pValue;
-public:
-	PUnitFactory_ValueAndJump(Expr* pExprSrc, PUnit::SeqId seqId, Value* pValue) :
-		PUnitFactory(pExprSrc, seqId), _pValue(pValue) {}
-	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_ValueAndJump<false>);
-	}
-	virtual PUnit* Create(bool discardValueFlag) override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_Lookup
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

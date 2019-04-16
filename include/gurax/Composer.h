@@ -89,7 +89,6 @@ public:
 	void ComposeAsSequence(Expr& expr);
 public:
 	void Add_Value(const Expr& exprSrc, Value* pValue);
-	void Add_ValueAndJump(const Expr& exprSrc, Value* pValue);
 	void Add_Lookup(const Expr& exprSrc, const Symbol* pSymbol);
 	void Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
 	void Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
