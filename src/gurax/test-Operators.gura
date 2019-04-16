@@ -1,7 +1,6 @@
 #!./gurax
-//import(util)
+import(util)
 
-/*
 exprs = [
 	`{`a}
 	`{`a; `b; `c}
@@ -17,8 +16,22 @@ for (expr in exprs) {
 	Printf('%s\n', expr)
 	util.PrintPUnit(expr)
 }
-*/
-//Println(true && true)
-//Println(false && false)
-//Println(false && true)
-Println(true && false)
+
+util.Tester(`(true && true))
+util.Tester(`(true && false))
+util.Tester(`(false && true))
+util.Tester(`(false && false))
+util.Tester(`(true || true))
+util.Tester(`(true || false))
+util.Tester(`(false || true))
+util.Tester(`(false || false))
+util.Tester(`('hello' && 'world'))
+util.Tester(`('hello' && false))
+util.Tester(`(false && 'hello'))
+util.Tester(`('hello' && true))
+util.Tester(`(true && 'hello'))
+util.Tester(`('hello' || 'world'))
+util.Tester(`('hello' || false))
+util.Tester(`(false || 'hello'))
+util.Tester(`('hello' || true))
+util.Tester(`(true || 'hello'))
