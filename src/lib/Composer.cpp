@@ -229,6 +229,16 @@ void Composer::Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDe
 	SetFactory(new PUnitFactory_NilJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
+void Composer::Add_KeepJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_KeepJumpIf(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
+void Composer::Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_KeepJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
 void Composer::Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel)
 {
 	SetFactory(new PUnitFactory_BeginSequence(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));

@@ -353,25 +353,12 @@ const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 void Expr_BinaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		do {
-			PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-			composer.Add_ValueAndJump(
-				*this, new Value_Expr(GetExprLeft()->Reference()));		// [Left]
-			composer.ComposeAsSequence(*GetExprLeft());
-			pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-		} while (0);
-		do {
-			PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-			composer.Add_ValueAndJump(
-				*this, new Value_Expr(GetExprRight()->Reference()));	// [Left Right]
-			composer.ComposeAsSequence(*GetExprRight());
-			pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-		} while (0);
+		GetOperator()->ComposeBinary(composer, *this);
 	} else {
 		GetExprLeft()->ComposeOrNil(composer);							// [Left]
 		GetExprRight()->ComposeOrNil(composer);							// [Left Right]
+		composer.Add_BinaryOp(*this, GetOperator());					// [Result]
 	}
-	composer.Add_BinaryOp(*this, GetOperator());						// [Result]
 }
 
 void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)

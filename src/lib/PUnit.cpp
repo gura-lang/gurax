@@ -1479,6 +1479,80 @@ PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_KeepJumpIf
+// Stack View: [Prev Bool] -> [Prev]      (continue)
+//                         -> []          (discard)
+//                         -> [Prev Bool] (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_KeepJumpIf<discardValueFlag>::Exec(Processor& processor) const
+{
+	if (processor.PeekValue(0)->GetBool()) {
+		processor.SetNext(GetPUnitBranchDest());
+	} else {
+		processor.PopValue();
+		if (discardValueFlag) processor.PopValue();
+		processor.SetNext(_GetPUnitCont());
+	}
+}
+
+template<bool discardValueFlag>
+String PUnit_KeepJumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("KeepJumpIf(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_KeepJumpIf::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_KeepJumpIf<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_KeepJumpIf<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_KeepJumpIfNot
+// Stack View: [Prev Bool] -> [Prev]      (continue)
+//                         -> []          (discard)
+//                         -> [Prev Bool] (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_KeepJumpIfNot<discardValueFlag>::Exec(Processor& processor) const
+{
+	if (processor.PeekValue(0)->GetBool()) {
+		processor.PopValue();
+		if (discardValueFlag) processor.PopValue();
+		processor.SetNext(_GetPUnitCont());
+	} else {
+		processor.SetNext(GetPUnitBranchDest());
+	}
+}
+
+template<bool discardValueFlag>
+String PUnit_KeepJumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("KeepJumpIfNot(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_KeepJumpIfNot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_KeepJumpIfNot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_BeginSequence
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)

@@ -128,6 +128,8 @@ public:
 	void Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_KeepJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	void Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	void Add_PopValue(const Expr& exprSrc);

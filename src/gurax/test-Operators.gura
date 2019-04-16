@@ -1,9 +1,14 @@
 #!./gurax
-import(util)
+//import(util)
 
+/*
 exprs = [
 	`{`a}
 	`{`a; `b; `c}
+	`{a && b}
+	`{a && b && c}
+	`{a || b}
+	`{a || b || c}
 	`(3 + 5)
 	`(false && false)
 ]
@@ -12,3 +17,8 @@ for (expr in exprs) {
 	Printf('%s\n', expr)
 	util.PrintPUnit(expr)
 }
+*/
+//Println(true && true)
+//Println(false && false)
+//Println(false && true)
+Println(true && false)
