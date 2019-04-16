@@ -15,7 +15,8 @@ Operator* Operator::Inv				= new Operator(OpStyle::OpPreUnary,		"~",			OpType::I
 Operator* Operator::Neg				= new Operator(OpStyle::OpPreUnary,		"-",			OpType::Neg);
 Operator* Operator::Not				= new Operator(OpStyle::OpPreUnary,		"!",			OpType::Not);
 Operator* Operator::Pos				= new Operator(OpStyle::OpPreUnary,		"+",			OpType::Pos);
-Operator* Operator::Quote			= new Operator(OpStyle::OpPreUnary,		"`",			OpType::Quote, true);
+//Operator* Operator::Quote			= new Operator(OpStyle::OpPreUnary,		"`",			OpType::Quote, true);
+Operator* Operator::Quote			= new Operator_Quote();
 // Post-unary operators
 Operator* Operator::PostMod			= new Operator(OpStyle::OpPostUnary,	"%",			OpType::PostMod);
 Operator* Operator::PostModMod		= new Operator(OpStyle::OpPostUnary,	"%%",			OpType::PostModMod);
@@ -26,7 +27,8 @@ Operator* Operator::PostSeq			= new Operator(OpStyle::OpPostUnary,	"..",			OpTyp
 // Binary operators
 Operator* Operator::Add				= new Operator(OpStyle::OpBinary,		"+",			OpType::Add);
 Operator* Operator::And				= new Operator(OpStyle::OpBinary,		"&",			OpType::And);
-Operator* Operator::AndAnd			= new Operator(OpStyle::OpBinary,		"&&",			OpType::AndAnd, true);
+//Operator* Operator::AndAnd		= new Operator(OpStyle::OpBinary,		"&&",			OpType::AndAnd, true);
+Operator* Operator::AndAnd			= new Operator_AndAnd();
 Operator* Operator::Cmp				= new Operator(OpStyle::OpBinary,		"<=>",			OpType::Cmp);
 Operator* Operator::Concat			= new Operator(OpStyle::OpBinary,		"|+|",			OpType::Concat);
 Operator* Operator::Contains		= new Operator(OpStyle::OpBinary,		"in",			OpType::Contains);
@@ -46,7 +48,8 @@ Operator* Operator::ModMod			= new Operator(OpStyle::OpBinary,		"%%",			OpType::
 Operator* Operator::Mul				= new Operator(OpStyle::OpBinary,		"*",			OpType::Mul);
 Operator* Operator::Ne				= new Operator(OpStyle::OpBinary,		"!=",			OpType::Ne);
 Operator* Operator::Or				= new Operator(OpStyle::OpBinary,		"|",			OpType::Or);
-Operator* Operator::OrOr			= new Operator(OpStyle::OpBinary,		"||",			OpType::OrOr, true);
+//Operator* Operator::OrOr			= new Operator(OpStyle::OpBinary,		"||",			OpType::OrOr, true);
+Operator* Operator::OrOr			= new Operator_OrOr();
 Operator* Operator::Pair			= new Operator(OpStyle::OpBinary,		"=>",			OpType::Pair);
 Operator* Operator::Pow				= new Operator(OpStyle::OpBinary,		"**",			OpType::Pow);
 Operator* Operator::Seq				= new Operator(OpStyle::OpBinary,		"..",			OpType::Seq);
@@ -115,10 +118,30 @@ Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Val
 	const OpEntry* pOpEntry = LookupEntry(valueL.GetVType(), valueR.GetVType());
 	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
 	Error::Issue(ErrorType::TypeError, "unsuppported binary operation: %s %s %s",
-				 valueL.GetVType().MakeFullName().c_str(),
-				 GetSymbol(),
+				 valueL.GetVType().MakeFullName().c_str(), GetSymbol(),
 				 valueR.GetVType().MakeFullName().c_str());
 	return Value::undefined();
+}
+
+//------------------------------------------------------------------------------
+// Operator_Quote
+//------------------------------------------------------------------------------
+void Operator_Quote::ComposeUnary(Composer& composer, Expr& exprChild) const
+{
+}
+
+//------------------------------------------------------------------------------
+// Operator_AndAnd
+//------------------------------------------------------------------------------
+void Operator_AndAnd::ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const
+{
+}
+
+//------------------------------------------------------------------------------
+// Operator_OrOr
+//------------------------------------------------------------------------------
+void Operator_OrOr::ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const
+{
 }
 
 //------------------------------------------------------------------------------

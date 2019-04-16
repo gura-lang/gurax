@@ -1,6 +1,6 @@
 [SizeOf]
 ArgSlot                          40
-Argument                         96
+Argument                         88
 Attribute                        152
 DateTime                         48
 PUnit_Value<false>               32
@@ -8,7 +8,7 @@ PUnit_ValueAndJump<false>        40
 PUnit_Lookup<false>              32
 PUnit_AssignToSymbol<false>      32
 PUnit_AssignToDeclArg<false>     32
-PUnit_AssignFunction<false>      40
+PUnit_AssignFunction<false>      32
 PUnit_Cast<false>                32
 PUnit_GenIterator<false>         24
 PUnit_GenRangeIterator<false>    24

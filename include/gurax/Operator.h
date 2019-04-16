@@ -27,6 +27,7 @@ Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_
 
 namespace Gurax {
 
+class Composer;
 struct TokenType;
 
 //------------------------------------------------------------------------------
@@ -308,8 +309,40 @@ public:
 public:
 	Value* EvalUnary(Processor& processor, const Value& value) const;
 	Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
+	virtual void ComposeUnary(Composer& composer, Expr& exprChild) const {}
+	virtual void ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const {}
 public:
 	static Operator* Lookup(OpType opType) { return _operatorTbl[static_cast<size_t>(opType)]; }
+};
+
+//------------------------------------------------------------------------------
+// Operator_Quote
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Operator_Quote : public Operator {
+public:
+	Operator_Quote() : Operator(OpStyle::OpPreUnary, "`", OpType::Quote, true) {}
+public:
+	virtual void ComposeUnary(Composer& composer, Expr& exprChild) const override;
+};
+
+//------------------------------------------------------------------------------
+// Operator_AndAnd
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
+public:
+	Operator_AndAnd() : Operator(OpStyle::OpBinary, "&&", OpType::AndAnd, true) {}
+public:
+	virtual void ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const override;
+};
+
+//------------------------------------------------------------------------------
+// Operator_OrOr
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Operator_OrOr : public Operator {
+public:
+	Operator_OrOr() : Operator(OpStyle::OpBinary, "||", OpType::OrOr, true) {}
+public:
+	virtual void ComposeBinary(Composer& composer, Expr& exprLeft, Expr& exprRight) const override;
 };
 
 };
