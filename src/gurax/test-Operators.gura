@@ -1,8 +1,14 @@
 #!./gurax
+import(util)
+
 exprs = [
+	`{`a}
+	`{`a; `b; `c}
 	`(3 + 5)
 	`(false && false)
 ]
 for (expr in exprs) {
-	
+	Println('--------')
+	Printf('%s\n', expr)
+	util.PrintPUnit(expr)
 }

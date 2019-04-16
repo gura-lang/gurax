@@ -297,15 +297,11 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo;
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-		composer.Add_ValueAndJump(
-			*this, new Value_Expr(GetExprChild()->Reference()));	// [Any]
-		composer.ComposeAsSequence(*GetExprChild());
-		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+		GetOperator()->ComposeUnary(composer, *this);				// [Result]
 	} else {
 		GetExprChild()->ComposeOrNil(composer);						// [Any]
+		composer.Add_UnaryOp(*this, GetOperator());					// [Result]
 	}
-	composer.Add_UnaryOp(*this, GetOperator());						// [Result]
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const

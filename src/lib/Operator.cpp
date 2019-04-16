@@ -126,8 +126,14 @@ Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Val
 //------------------------------------------------------------------------------
 // Operator_Quote
 //------------------------------------------------------------------------------
-void Operator_Quote::ComposeUnary(Composer& composer, Expr& exprChild) const
+void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 {
+	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+	composer.Add_Jump(expr);
+	composer.ComposeAsSequence(*expr.GetExprChild());
+	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	composer.Add_Value(
+		expr, new Value_Expr(expr.GetExprChild()->Reference()));	// [Result]
 }
 
 //------------------------------------------------------------------------------
