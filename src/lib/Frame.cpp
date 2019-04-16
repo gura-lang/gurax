@@ -184,25 +184,25 @@ Value* Frame_Module::Lookup(const Symbol* pSymbol) const
 }
 
 //------------------------------------------------------------------------------
-// Frame_Function
+// Frame_Scope
 //------------------------------------------------------------------------------
-Frame_Function::Frame_Function(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr)
+Frame_Scope::Frame_Scope(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr)
 {
 }
 
-void Frame_Function::Assign(const Symbol* pSymbol, Value* pValue)
-{
-	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
-	_pFrameLocal->Assign(pSymbol, pValue);
-}
-
-void Frame_Function::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Scope::Assign(const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
 	_pFrameLocal->Assign(pSymbol, pValue);
 }
 
-Value* Frame_Function::Lookup(const Symbol* pSymbol) const
+void Frame_Scope::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+{
+	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
+	_pFrameLocal->Assign(pSymbol, pValue);
+}
+
+Value* Frame_Scope::Lookup(const Symbol* pSymbol) const
 {
 	if (_pFrameLocal) {
 		Value* pValue = _pFrameLocal->Lookup(pSymbol);

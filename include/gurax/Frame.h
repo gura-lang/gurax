@@ -179,17 +179,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Frame_Function
+// Frame_Scope
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Frame_Function : public Frame_Branch {
+class GURAX_DLLDECLARE Frame_Scope : public Frame_Branch {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Frame_Function);
+	Gurax_DeclareReferable(Frame_Scope);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Frame_Function");
+	Gurax_MemoryPoolAllocator("Frame_Scope");
 public:
 	// Constructor
-	explicit Frame_Function(Frame* pFrameOuter);
+	explicit Frame_Scope(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;

@@ -26,17 +26,24 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
-Frame& Processor::PushFrame_Function(const Function& function, bool dynamicScopeFlag)
+Frame& Processor::PushFrame_Block()
 {
-	Frame* pFrame = new Frame_Function(
-		dynamicScopeFlag? GetFrameCur().Reference() : function.LockFrameParent());
+	Frame* pFrame = new Frame_Block(GetFrameCur().Reference());
 	PushFrame(pFrame);
 	return *pFrame;
 }
 
-Frame& Processor::PushFrame_Block()
+Frame& Processor::PushFrame_Scope()
 {
-	Frame* pFrame = new Frame_Block(GetFrameCur().GetFrameOuter()->Reference());
+	Frame* pFrame = new Frame_Scope(GetFrameCur().Reference());
+	PushFrame(pFrame);
+	return *pFrame;
+}
+
+Frame& Processor::PushFrame_Function(const Function& function, bool dynamicScopeFlag)
+{
+	if (dynamicScopeFlag) return PushFrame_Scope();
+	Frame* pFrame = new Frame_Scope(function.LockFrameParent());
 	PushFrame(pFrame);
 	return *pFrame;
 }

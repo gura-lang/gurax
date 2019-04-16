@@ -7,7 +7,7 @@ PrintTitle(title:String) = {
 	Printf('======== %s ========\n', title)
 }
 
-Tester(expr:Expr) = {
+Tester(expr:Expr):dynamic_scope = {
 	Printf('%s ..', expr)
 	rtn = expr.Eval()
 	Printf(' %s\n', rtn)

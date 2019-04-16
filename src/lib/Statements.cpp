@@ -550,6 +550,22 @@ Gurax_ImplementFunction(import)
 	return new Value_Module(pModule.release());
 }
 
+// scope {`block}
+Gurax_DeclareFunction(scope)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	//DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementFunction(scope)
+{
+	processor.PushFrame_Scope();
+	RefPtr<Value> pValue(processor.Process(*argument.GetExprOfBlock()));
+	processor.PopFrame();
+	return pValue.release();
+}
+
 void Statements::PrepareBasic(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(if_));
@@ -562,6 +578,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(continue_));
 	frame.Assign(Gurax_CreateStatement(return_));
 	frame.Assign(Gurax_CreateFunction(import));
+	frame.Assign(Gurax_CreateFunction(scope));
 }
 
 }
