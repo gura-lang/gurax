@@ -23,6 +23,7 @@ class Stream;
 class ArgPicker {
 private:
 	ArgSlot* _pArgSlot;
+	RefPtr<Value> _pValuePicked;
 public:
 	// Constructor
 	ArgPicker(Argument& argument) : _pArgSlot(argument.GetArgSlotFirst()) {}

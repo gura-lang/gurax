@@ -11,9 +11,9 @@ namespace Gurax {
 Value* ArgPicker::PickValue()
 {
 	if (!_pArgSlot) return nullptr;
-	Value* pValue = _pArgSlot->PickValue();
+	_pValuePicked.reset(_pArgSlot->PickValue());
 	_pArgSlot = _pArgSlot->GetNext();
-	return pValue;
+	return _pValuePicked.get();
 }
 
 Stream& ArgPicker::PickStream()

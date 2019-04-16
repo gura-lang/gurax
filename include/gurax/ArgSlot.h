@@ -88,7 +88,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
-	virtual Value* PickValue() const override { return _pValue.get(); }
+	virtual Value* PickValue() const override { return _pValue->Pick(); }
 	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -107,7 +107,7 @@ public:
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
-	virtual Value* PickValue() const override { return _pValue.get(); }
+	virtual Value* PickValue() const override { return _pValue->Pick(); }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
