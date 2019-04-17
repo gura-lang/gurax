@@ -36,7 +36,8 @@ public:
 		Assoc(Gurax_SymbolMark(ColonColon),		MemberMode::MapToList);
 	}
 	static SymbolAssoc* GetInstance() {
-		return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_MemberMode());
+		static SymbolAssoc* pSymbolAssoc = nullptr;
+		return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_MemberMode());
 	}
 };
 

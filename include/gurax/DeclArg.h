@@ -74,7 +74,8 @@ public:
 			Assoc(Gurax_Symbol(w),				Flag::Write);
 		}
 		static SymbolAssoc* GetInstance() {
-			return _pInstance? _pInstance : (_pInstance = new SymbolAssoc_Flag());
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_Flag());
 		}
 	};
 private:

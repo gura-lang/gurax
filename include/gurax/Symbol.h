@@ -194,8 +194,6 @@ public:
 private:
 	MapToAssociated _mapToAssociated;
 	MapToSymbol _mapToSymbol;
-protected:
-	static SymbolAssoc* _pInstance;
 public:
 	void Assoc(const Symbol* pSymbol, T_Associated associated) {
 		_mapToAssociated[pSymbol] = associated;
@@ -210,9 +208,6 @@ public:
 		return (pPair == _mapToSymbol.end())? Symbol::Empty : pPair->second;
 	}
 };
-
-template<typename T_Associated, T_Associated associatedInvalid>
-SymbolAssoc<T_Associated, associatedInvalid>* SymbolAssoc<T_Associated, associatedInvalid>::_pInstance = nullptr;
 
 }
 
