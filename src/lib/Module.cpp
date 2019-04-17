@@ -44,6 +44,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	processor.Process(composer);
 	processor.PopFrame();
 	if (Error::IsIssued()) return nullptr;
+	processor.PopValue();	// discard the last value
 	return pModule.release();
 }
 
