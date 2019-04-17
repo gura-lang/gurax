@@ -1,30 +1,27 @@
 #!./gurax
 import(util)
 
-Fact(n:Number) = nil
-/*
-util.PrintTitle('Recursion')
-Fact(n:Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
-n = 20
-Printf('%d! = %d\n', n, Fact(n))
-*/
+util.TestCase('Recursion') {
+	Fact(n:Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
+	n = 20
+	Printf('%d! = %d\n', n, Fact(n))
+}
 
-util.PrintTitle('dynamic_scope')
-
-f_static() = Println('[static]  a = ', a)
-f_dynamic():dynamic_scope = Println('[dynamic] a = ', a)
-g_static() {`block} = block.Eval()
-g_dynamic():dynamic_scope {`block} = block.Eval()
-
-a = 'external'
-f_static()
-f_dynamic()
-g_static { Println('[static, block]  a = ', a) }
-g_dynamic { Println('[dynamic, block] a = ', a) }
-scope {
-	a = 'local'
+util.TestCase('dynamic_scope') {
+	f_static() = Println('[static]  a = ', a)
+	f_dynamic():dynamic_scope = Println('[dynamic] a = ', a)
+	g_static() {`block} = block.Eval()
+	g_dynamic():dynamic_scope {`block} = block.Eval()
+	a = 'external'
 	f_static()
 	f_dynamic()
 	g_static { Println('[static, block]  a = ', a) }
 	g_dynamic { Println('[dynamic, block] a = ', a) }
+	scope {
+		a = 'local'
+		f_static()
+		f_dynamic()
+		g_static { Println('[static, block]  a = ', a) }
+		g_dynamic { Println('[dynamic, block] a = ', a) }
+	}
 }
