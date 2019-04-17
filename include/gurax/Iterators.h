@@ -20,7 +20,7 @@ public:
 	virtual Flags GetFlags() const override {
 		return Flag::Infinite | Flag::LenUndetermined;
 	}
-	virtual Value* NextValue() override { return _pValue.get(); }
+	virtual Value* NextValue() override { return _pValue->Reference(); }
 	virtual size_t GetLength() const override { return -1; }
 	virtual String ToString(const StringStyle& ss) const override;
 };

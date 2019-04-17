@@ -123,7 +123,7 @@ void Frame_Basement::Assign(const Symbol* pSymbol, Value* pValue)
 
 void Frame_Basement::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
-	// nothing to do
+	Value::Delete(pValue);
 }
 
 Value* Frame_Basement::Lookup(const Symbol* pSymbol) const
@@ -145,7 +145,7 @@ void Frame_VType::Assign(const Symbol* pSymbol, Value* pValue)
 
 void Frame_VType::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
-	// nothing to do
+	Value::Delete(pValue);
 }
 
 Value* Frame_VType::Lookup(const Symbol* pSymbol) const

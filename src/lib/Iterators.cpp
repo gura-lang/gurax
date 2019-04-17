@@ -23,7 +23,7 @@ Value* Iterator_ConstN::NextValue()
 {
 	if (_idx >= _num) return nullptr;
 	_idx++;
-	return _pValue.get();
+	return _pValue->Reference();
 }
 
 String Iterator_ConstN::ToString(const StringStyle& ss) const
@@ -42,7 +42,7 @@ Value* Iterator_Each::NextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++];
+	return valueOwner[_idx++]->Reference();
 }
 
 String Iterator_Each::ToString(const StringStyle& ss) const
