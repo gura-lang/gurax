@@ -16,14 +16,17 @@ public:
 	private:
 		const PUnit* _pPUnitOfLoop;
 		const PUnit* _pPUnitOfBranch;
+		bool _createListFlag;
 		bool _contFlag;
 	public:
 		// Constructor
 		RepeaterInfo() = delete;
-		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, bool contFlag) :
-			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch), _contFlag(contFlag){}
+		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, bool createListFlag, bool contFlag) :
+			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch),
+			_createListFlag(createListFlag), _contFlag(contFlag){}
 		RepeaterInfo(const RepeaterInfo& src, bool contFlag) :
-			_pPUnitOfLoop(src._pPUnitOfLoop), _pPUnitOfBranch(src._pPUnitOfBranch), _contFlag(contFlag){}
+			_pPUnitOfLoop(src._pPUnitOfLoop), _pPUnitOfBranch(src._pPUnitOfBranch),
+			_createListFlag(src._createListFlag),_contFlag(contFlag){}
 		// Copy constructor/operator
 		RepeaterInfo(const RepeaterInfo& src) = delete;
 		RepeaterInfo& operator=(const RepeaterInfo& src) = delete;
@@ -35,6 +38,7 @@ public:
 	public:
 		const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
 		const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
+		bool GetCreateListFlag() const { return _createListFlag; }
 		bool GetContFlag() const { return _contFlag; }
 	};
 	class RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
@@ -73,8 +77,8 @@ public:
 	void Flush(bool discardValueFlag);
 	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
 	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
-	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch) {
-		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, true));
+	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, bool createListFlag) {
+		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, createListFlag, true));
 	}
 	void EndRepeaterBlock() {
 		_repeaterInfoStack.pop_back();

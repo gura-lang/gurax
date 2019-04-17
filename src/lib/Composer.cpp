@@ -39,7 +39,7 @@ void Composer::ComposeAsSequence(Expr& expr)
 	expr.SetPUnitTop(PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
 	Add_BeginSequence(expr);								// [Any]
-	BeginRepeaterBlock(nullptr, nullptr);
+	BeginRepeaterBlock(nullptr, nullptr, false);
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
 	Add_Return(expr);
