@@ -30,9 +30,9 @@ util.Tester(`(for (n in tbl):xlist { (n % 2 == 0) && continue; n * 2 }))
 util.Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue('x') }; n * 2 }))
 util.Tester(`(for (n in tbl):list { (n % 2 == 0) && continue('x'); n * 2 }))
 util.Tester(`(for (n in tbl):list { if (n > 8) { break }; n * 2 }))
-util.Tester(`(for (n in tbl):list { if (n > 8) { break }; n * 2 }))
+//util.Tester(`(for (n in tbl):list { if (n > 8) && break; n * 2 }))
 util.Tester(`(for (n in tbl):xlist { if (n > 8) { break }; n * 2 }))
-util.Tester(`(for (n in tbl):list { if (n > 8) { break }; n * 2 }))
+//util.Tester(`(for (n in tbl):xlist { (n > 8) && break ; n * 2 }))
 /*
 for (n in []) {
 	Printf('%d\n', n)
