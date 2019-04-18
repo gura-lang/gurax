@@ -608,6 +608,18 @@ Gurax_ImplementStatement(scope)
 	composer.Add_PopFrame(exprCaller);
 }
 
+// class(parent?:VType) {`block}
+Gurax_DeclareStatementAlias(class_, "class")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("parent", VTYPE_VType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(class_)
+{
+}
+
 void Statements::PrepareBasic(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(if_));
@@ -621,6 +633,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(return_));
 	frame.Assign(Gurax_CreateFunction(import));
 	frame.Assign(Gurax_CreateStatement(scope));
+	frame.Assign(Gurax_CreateStatement(class_));
 }
 
 }
