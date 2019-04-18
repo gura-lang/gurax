@@ -1809,20 +1809,20 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Break
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<bool discardValueFlag, bool breakPointFlag>
 class GURAX_DLLDECLARE PUnit_Break : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitOfBranch;
+	const PUnit* _pPUnitMarked;
 	bool _contFlag;
 public:
 	// Constructor
-	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfBranch, bool contFlag) :
-		PUnit(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch), _contFlag(contFlag) {}
+	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitMarked, bool contFlag) :
+		PUnit(pExprSrc, seqId), _pPUnitMarked(pPUnitMarked), _contFlag(contFlag) {}
 public:
-	const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
+	const PUnit* GetPUnitMarked() const { return _pPUnitMarked; }
 	bool GetContFlag() const { return _contFlag; }
 public:
 	// Virtual functions of PUnit
@@ -1839,13 +1839,16 @@ class PUnitFactory_Break : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Break");
 private:
-	const PUnit* _pPUnitOfBranch;
+	const PUnit* _pPUnitMarked;
+	bool _breakPointFlag;
 	bool _contFlag;
 public:
-	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfBranch, bool contFlag) :
-		PUnitFactory(pExprSrc, seqId), _pPUnitOfBranch(pPUnitOfBranch), _contFlag(contFlag) {}
+	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId,
+					   const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitMarked(pPUnitMarked),
+		_breakPointFlag(breakPointFlag), _contFlag(contFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_Break<false>);
+		return sizeof(PUnit_Break<false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

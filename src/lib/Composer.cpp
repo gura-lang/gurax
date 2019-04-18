@@ -259,9 +259,9 @@ void Composer::Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt)
 	SetFactory(new PUnitFactory_RemoveValues(exprSrc.Reference(), NextSeqId(), offset, cnt));
 }
 
-void Composer::Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch, bool contFlag)
+void Composer::Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag)
 {
-	SetFactory(new PUnitFactory_Break(exprSrc.Reference(), NextSeqId(), pPUnitOfBranch, contFlag));
+	SetFactory(new PUnitFactory_Break(exprSrc.Reference(), NextSeqId(), pPUnitMarked, breakPointFlag, contFlag));
 }
 
 void Composer::Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop, bool contFlag)

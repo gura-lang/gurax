@@ -1682,29 +1682,45 @@ PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_Break<discardValueFlag>::Exec(Processor& processor) const
+template<bool discardValueFlag, bool breakPointFlag>
+void PUnit_Break<discardValueFlag, breakPointFlag>::Exec(Processor& processor) const
 {
 	if (discardValueFlag) processor.PopValue();
-	processor.SetNext(GetPUnitOfBranch()->GetPUnitBranchDest(), GetContFlag());
+	if (breakPointFlag) {
+		processor.SetNext(GetPUnitMarked(), GetContFlag());
+	} else {
+		processor.SetNext(GetPUnitMarked()->GetPUnitBranchDest(), GetContFlag());
+	}
 }
 
-template<bool discardValueFlag>
-String PUnit_Break<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<bool discardValueFlag, bool breakPointFlag>
+String PUnit_Break<discardValueFlag, breakPointFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Break(branch=%s,contFlag=%s)", MakeSeqIdString(GetPUnitOfBranch(), seqIdOffset).c_str(),
-			   GetContFlag()? "true" : "false");
+	str.Printf("Break(marked=%s,breakPointFlag=%s,contFlag=%s)", MakeSeqIdString(GetPUnitMarked(), seqIdOffset).c_str(),
+			   breakPointFlag? "true" : "false", GetContFlag()? "true" : "false");
 	AppendInfoToString(str, ss);
 	return str;
 }
 
 PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 {
-	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Break<true>(_pExprSrc.release(), _seqId, _pPUnitOfBranch, _contFlag);
+	if (_breakPointFlag) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Break<true, true>(
+				_pExprSrc.release(), _seqId, _pPUnitMarked, _contFlag);
+		} else {
+			_pPUnitCreated = new PUnit_Break<false, true>(
+				_pExprSrc.release(), _seqId, _pPUnitMarked, _contFlag);
+		}
 	} else {
-		_pPUnitCreated = new PUnit_Break<false>(_pExprSrc.release(), _seqId, _pPUnitOfBranch, _contFlag);
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Break<true, false>(
+				_pExprSrc.release(), _seqId, _pPUnitMarked, _contFlag);
+		} else {
+			_pPUnitCreated = new PUnit_Break<false, false>(
+				_pExprSrc.release(), _seqId, _pPUnitMarked, _contFlag);
+		}
 	}
 	return _pPUnitCreated;
 }

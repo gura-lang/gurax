@@ -139,7 +139,7 @@ public:
 	void Add_PopValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
-	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitOfBranch, bool contFlag);
+	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag);
 	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop, bool contFlag);
 	void Add_Return(const Expr& exprSrc);
 	void Add_PushFrame_Block(const Expr& exprSrc);
