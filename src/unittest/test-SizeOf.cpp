@@ -63,6 +63,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(ValueOwner);
 	PrintSizeOf(ValueStack);
 	PrintSizeOf(Value_Any);
+	PrintSizeOf(Value_ArgMapper);
 	PrintSizeOf(Value_ArgSlot);
 	PrintSizeOf(Value_Argument);
 	PrintSizeOf(Value_Attribute);

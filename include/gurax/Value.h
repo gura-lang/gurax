@@ -112,7 +112,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
-	virtual Value* Pick() const { return Reference(); }
+	virtual Value* Pick() { return Reference(); }
 	virtual bool GetBool() const { return true; }
 	virtual bool IsValid() const { return true; }
 	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }

@@ -1,49 +1,48 @@
 //==============================================================================
-// VType_Iterator.h
+// VType_ArgMapper.h
 //==============================================================================
-#ifndef GURAX_VTYPE_ITERATOR_H
-#define GURAX_VTYPE_ITERATOR_H
+#ifndef GURAX_VTYPE_ARGMAPPER_H
+#define GURAX_VTYPE_ARGMAPPER_H
 #include "VType_Object.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Iterator
+// VType_ArgMapper
 //------------------------------------------------------------------------------
-class VType_Iterator : public VType {
+class VType_ArgMapper : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Iterator VTYPE_Iterator;
+extern VType_ArgMapper VTYPE_ArgMapper;
 
 //------------------------------------------------------------------------------
-// Value_Iterator
+// Value_ArgMapper
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Iterator : public Value_Object {
+class GURAX_DLLDECLARE Value_ArgMapper : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Iterator);
+	Gurax_DeclareReferable(Value_ArgMapper);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Iterator");
+	Gurax_MemoryPoolAllocator("Value_ArgMapper");
 protected:
 	RefPtr<Iterator> _pIterator;
 public:
 	// Constructor
-	Value_Iterator() = delete;
-	explicit Value_Iterator(Iterator *pIterator, VType& vtype = VTYPE_Iterator) :
+	Value_ArgMapper() = delete;
+	explicit Value_ArgMapper(Iterator *pIterator, VType& vtype = VTYPE_ArgMapper) :
 		Value_Object(vtype), _pIterator(pIterator) {}
 	// Copy constructor/operator
-	Value_Iterator(const Value_Iterator& src) :
-		Value_Object(src), _pIterator(src._pIterator->Reference()) {}
-	Value_Iterator& operator=(const Value_Iterator& src) = delete;
+	Value_ArgMapper(const Value_ArgMapper& src) = delete;
+	Value_ArgMapper& operator=(const Value_ArgMapper& src) = delete;
 	// Move constructor/operator
-	Value_Iterator(Value_Iterator&& src) = delete;
-	Value_Iterator& operator=(Value_Iterator&& src) noexcept = delete;
+	Value_ArgMapper(Value_ArgMapper&& src) = delete;
+	Value_ArgMapper& operator=(Value_ArgMapper&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Iterator() = default;
+	~Value_ArgMapper() = default;
 public:
 	Iterator& GetIterator() { return *_pIterator; }
 	const Iterator& GetIterator() const { return *_pIterator; }
@@ -55,16 +54,19 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetIterator().IsEqualTo(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator());
+			GetIterator().IsEqualTo(dynamic_cast<const Value_ArgMapper*>(pValue)->GetIterator());
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetIterator().IsLessThan(dynamic_cast<const Value_Iterator*>(pValue)->GetIterator()) :
+			GetIterator().IsLessThan(dynamic_cast<const Value_ArgMapper*>(pValue)->GetIterator()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual Iterator* DoGenIterator() override;
+public:
+	// Virtual functions for runtime process
+	virtual Value* Pick() override { return GetIterator().NextValue(); }
 };
 
 }
