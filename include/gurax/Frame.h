@@ -94,6 +94,8 @@ public:
 protected:
 	ValueMap* _pValueMap;	// RefPtr can not be used here because Value.h hasn't included yet.
 public:
+	static const char* name;
+public:
 	// Constructor
 	Frame_ValueMap();
 protected:
@@ -113,6 +115,8 @@ class GURAX_DLLDECLARE Frame_Branch : public Frame {
 protected:
 	RefPtr<Frame> _pFrameLocal;
 public:
+	static const char* name;
+public:
 	// Constructor
 	Frame_Branch(Frame* pFrameOuter, Frame* pFrameLocal) :
 		Frame(pFrameOuter), _pFrameLocal(pFrameLocal) {}
@@ -130,6 +134,8 @@ public:
 	Gurax_DeclareReferable(Frame_Basement);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Basement");
+public:
+	static const char* name;
 public:
 	// Constructor
 	Frame_Basement();
@@ -150,6 +156,8 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_VType");
 public:
+	static const char* name;
+public:
 	// Constructor
 	explicit Frame_VType(Frame* pFrameOuter);
 public:
@@ -168,6 +176,8 @@ public:
 	Gurax_DeclareReferable(Frame_Module);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Module");
+public:
+	static const char* name;
 public:
 	// Constructor
 	explicit Frame_Module(Frame* pFrameOuter);
@@ -188,6 +198,8 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Scope");
 public:
+	static const char* name;
+public:
 	// Constructor
 	explicit Frame_Scope(Frame* pFrameOuter);
 public:
@@ -206,6 +218,8 @@ public:
 	Gurax_DeclareReferable(Frame_Block);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Frame_Block");
+public:
+	static const char* name;
 public:
 	// Constructor
 	explicit Frame_Block(Frame* pFrameOuter);

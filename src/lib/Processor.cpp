@@ -26,22 +26,6 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
-#if 0
-Frame& Processor::PushFrame_Block()
-{
-	Frame* pFrame = new Frame_Block(GetFrameCur().Reference());
-	PushFrame(pFrame);
-	return *pFrame;
-}
-
-Frame& Processor::PushFrame_Scope()
-{
-	Frame* pFrame = new Frame_Scope(GetFrameCur().Reference());
-	PushFrame(pFrame);
-	return *pFrame;
-}
-#endif
-
 Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicScopeFlag)
 {
 	if (dynamicScopeFlag) return PushFrame<Frame_Scope>();

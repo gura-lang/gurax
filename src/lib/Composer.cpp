@@ -274,11 +274,6 @@ void Composer::Add_Return(const Expr& exprSrc)
 	SetFactory(new PUnitFactory_Return(exprSrc.Reference(), NextSeqId()));
 }
 
-void Composer::Add_PushFrame_Block(const Expr& exprSrc)
-{
-	SetFactory(new PUnitFactory_PushFrame_Block(exprSrc.Reference(), NextSeqId()));
-}
-
 void Composer::Add_PopFrame(const Expr& exprSrc)
 {
 	SetFactory(new PUnitFactory_PopFrame(exprSrc.Reference(), NextSeqId()));

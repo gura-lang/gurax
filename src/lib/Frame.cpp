@@ -80,6 +80,8 @@ void FrameOwner::Clear()
 //------------------------------------------------------------------------------
 // Frame_ValueMap
 //------------------------------------------------------------------------------
+const char* Frame_ValueMap::name = "ValueMap";
+
 Frame_ValueMap::Frame_ValueMap() : Frame(nullptr), _pValueMap(new ValueMap())
 {
 }
@@ -107,11 +109,14 @@ Value* Frame_ValueMap::Lookup(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
+const char* Frame_Branch::name = "Branch";
 
 //------------------------------------------------------------------------------
 // Frame_Basement
 // _pFrameLocal is always nullptr.
 //------------------------------------------------------------------------------
+const char* Frame_Basement::name = "Basement";
+
 Frame_Basement::Frame_Basement() : Frame_Branch(new Frame_ValueMap(), nullptr)
 {
 }
@@ -134,6 +139,8 @@ Value* Frame_Basement::Lookup(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 // Frame_VType
 //------------------------------------------------------------------------------
+const char* Frame_VType::name = "VType";
+
 Frame_VType::Frame_VType(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, new Frame_ValueMap())
 {
 }
@@ -158,6 +165,8 @@ Value* Frame_VType::Lookup(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 // Frame_Module
 //------------------------------------------------------------------------------
+const char* Frame_Module::name = "Module";
+
 Frame_Module::Frame_Module(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr)
 {
 }
@@ -186,6 +195,8 @@ Value* Frame_Module::Lookup(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 // Frame_Scope
 //------------------------------------------------------------------------------
+const char* Frame_Scope::name = "Scope";
+
 Frame_Scope::Frame_Scope(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr)
 {
 }
@@ -214,6 +225,8 @@ Value* Frame_Scope::Lookup(const Symbol* pSymbol) const
 //------------------------------------------------------------------------------
 // Frame_Block
 //------------------------------------------------------------------------------
+const char* Frame_Block::name = "Block";
+
 Frame_Block::Frame_Block(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, new Frame_ValueMap())
 {
 }

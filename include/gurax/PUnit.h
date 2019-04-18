@@ -1934,16 +1934,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PushFrame_Block
+// PUnit_PushFrame
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_PushFrame_Block : public PUnit {
+template<typename T_Frame, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_PushFrame : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 public:
 	// Constructor
-	PUnit_PushFrame_Block(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	PUnit_PushFrame(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1955,14 +1955,15 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_PushFrame_Block : public PUnitFactory {
+template<typename T_Frame>
+class PUnitFactory_PushFrame : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_PushFrame_Block");
+	Gurax_MemoryPoolAllocator("PUnitFactory_PushFrame");
 public:
-	PUnitFactory_PushFrame_Block(Expr* pExprSrc, PUnit::SeqId seqId) :
+	PUnitFactory_PushFrame(Expr* pExprSrc, PUnit::SeqId seqId) :
 		PUnitFactory(pExprSrc, seqId) {}
 	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_PushFrame_Block<false>);
+		return sizeof(PUnit_PushFrame<T_Frame, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

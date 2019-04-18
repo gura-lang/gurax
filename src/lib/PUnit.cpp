@@ -1797,36 +1797,40 @@ PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PushFrame_Block
+// PUnit_PushFrame
 // Stack View: [prev] -> [prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_PushFrame_Block<discardValueFlag>::Exec(Processor& processor) const
+template<typename T_Frame, bool discardValueFlag>
+void PUnit_PushFrame<T_Frame, discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.PushFrame<Frame_Block>();
+	processor.PushFrame<T_Frame>();
 	if (discardValueFlag) processor.PopValue();
 	processor.SetNext(_GetPUnitCont());
 }
 
-template<bool discardValueFlag>
-String PUnit_PushFrame_Block<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<typename T_Frame, bool discardValueFlag>
+String PUnit_PushFrame<T_Frame, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "PushFrame_Block()";
+	str.Printf("PushFrame_%s()", T_Frame::name);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_PushFrame_Block::Create(bool discardValueFlag)
+template<typename T_Frame>
+PUnit* PUnitFactory_PushFrame<T_Frame>::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PushFrame_Block<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PushFrame<T_Frame, true>(_pExprSrc.release(), _seqId);
 	} else {
-		_pPUnitCreated = new PUnit_PushFrame_Block<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PushFrame<T_Frame, false>(_pExprSrc.release(), _seqId);
 	}
 	return _pPUnitCreated;
 }
+
+template class PUnitFactory_PushFrame<Frame_Block>;
+template class PUnitFactory_PushFrame<Frame_Scope>;
 
 //------------------------------------------------------------------------------
 // PUnit_PopFrame

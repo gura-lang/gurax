@@ -160,7 +160,7 @@ Gurax_ImplementStatement(for_)
 	bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
 	bool createListFlag = listFlag || xlistFlag;
 	if (declArgsOfBlock.empty()) {
-		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		if (createListFlag) {
 			composer.Add_CreateList(exprCaller, 32);						// [Iterator1..n List=[]]
 			PUnit* pPUnitOfSkipFirst = composer.PeekPUnitCont();
@@ -197,7 +197,7 @@ Gurax_ImplementStatement(for_)
 		composer.Add_PopFrame(exprCaller);
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
-		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		composer.Add_GenCounterIterator(exprCaller);						// [Iterator1..n Iterator]
 		if (createListFlag) {
 			composer.Add_CreateList(exprCaller, 32);						// [Iterator1..n Iterator List=[]]
@@ -305,7 +305,7 @@ Gurax_ImplementStatement(while_)
 		}
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
-		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		composer.Add_GenCounterIterator(exprCaller);						// [Iterator]
 		if (createListFlag) {
 			composer.Add_CreateList(exprCaller, 32);						// [Iterator List=[]]
@@ -421,7 +421,7 @@ Gurax_ImplementStatement(repeat)
 		}
 	} else if (declArgsOfBlock.size() == 1) {
 		DeclArgOwner::const_iterator ppDeclArg = declArgsOfBlock.begin();
-		composer.Add_PushFrame_Block(exprCaller);
+		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);								// [Any]
 			composer.Add_Cast(exprCaller, VTYPE_Number);					// [Number]
@@ -603,7 +603,9 @@ Gurax_ImplementStatement(scope)
 						 "scope-statement takes no argument");
 		return;
 	}
+	composer.Add_PushFrame<Frame_Scope>(exprCaller);
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+	composer.Add_PopFrame(exprCaller);
 }
 
 void Statements::PrepareBasic(Frame& frame)

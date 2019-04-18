@@ -61,8 +61,6 @@ public:
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
 	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
 	template<typename T_Frame> Frame& PushFrame();
-	//Frame& PushFrame_Block();
-	//Frame& PushFrame_Scope();
 	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }

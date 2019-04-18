@@ -142,7 +142,7 @@ public:
 	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag);
 	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop, bool contFlag);
 	void Add_Return(const Expr& exprSrc);
-	void Add_PushFrame_Block(const Expr& exprSrc);
+	template<typename T_Frame> void Add_PushFrame(const Expr& exprSrc);
 	void Add_PopFrame(const Expr& exprSrc);
 	void Add_NoOperation(const Expr& exprSrc);
 	void Add_Terminate(const Expr& exprSrc);
@@ -150,6 +150,12 @@ public:
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;
 };
+
+template<typename T_Frame>
+void Composer::Add_PushFrame(const Expr& exprSrc)
+{
+	SetFactory(new PUnitFactory_PushFrame<T_Frame>(exprSrc.Reference(), NextSeqId()));
+}
 
 }
 
