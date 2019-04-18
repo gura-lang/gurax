@@ -1804,7 +1804,7 @@ PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_PushFrame_Block<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.PushFrame_Block();
+	processor.PushFrame<Frame_Block>();
 	if (discardValueFlag) processor.PopValue();
 	processor.SetNext(_GetPUnitCont());
 }

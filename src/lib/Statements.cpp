@@ -107,7 +107,7 @@ Gurax_DeclareStatementAlias(else_, "else")
 
 Gurax_ImplementStatement(else_)
 {
-	if (exprCaller.CountExprCdr() != 0) {
+	if (exprCaller.CountExprCdr() > 0) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
 						 "else-statement takes no argument");
 		return;
@@ -589,19 +589,21 @@ Gurax_ImplementFunction(import)
 }
 
 // scope {`block}
-Gurax_DeclareFunction(scope)
+Gurax_DeclareStatement(scope)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	//DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	//DeclareArg("env", VTYPE_Environment, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
-Gurax_ImplementFunction(scope)
+Gurax_ImplementStatement(scope)
 {
-	processor.PushFrame_Scope();
-	RefPtr<Value> pValue(processor.Process(*argument.GetExprOfBlock()));
-	processor.PopFrame();
-	return pValue.release();
+	if (exprCaller.CountExprCdr() > 0) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "scope-statement takes no argument");
+		return;
+	}
+	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 }
 
 void Statements::PrepareBasic(Frame& frame)
@@ -616,7 +618,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(continue_));
 	frame.Assign(Gurax_CreateStatement(return_));
 	frame.Assign(Gurax_CreateFunction(import));
-	frame.Assign(Gurax_CreateFunction(scope));
+	frame.Assign(Gurax_CreateStatement(scope));
 }
 
 }

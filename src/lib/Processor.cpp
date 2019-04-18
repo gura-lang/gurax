@@ -15,7 +15,7 @@ Processor::Processor() :
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
 	GetFrameStack().reserve(1024);
-	GetFrameStack().Push(Basement::GetFrame().Reference());
+	PushFrame(Basement::GetFrame().Reference());
 	PushPUnit(nullptr);
 }
 
@@ -26,6 +26,7 @@ Processor* Processor::Create(bool debugFlag)
 		dynamic_cast<Processor*>(new Processor_Normal());
 }
 
+#if 0
 Frame& Processor::PushFrame_Block()
 {
 	Frame* pFrame = new Frame_Block(GetFrameCur().Reference());
@@ -39,10 +40,11 @@ Frame& Processor::PushFrame_Scope()
 	PushFrame(pFrame);
 	return *pFrame;
 }
+#endif
 
-Frame& Processor::PushFrame_Function(const Function& function, bool dynamicScopeFlag)
+Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicScopeFlag)
 {
-	if (dynamicScopeFlag) return PushFrame_Scope();
+	if (dynamicScopeFlag) return PushFrame<Frame_Scope>();
 	Frame* pFrame = new Frame_Scope(function.LockFrameParent());
 	PushFrame(pFrame);
 	return *pFrame;
