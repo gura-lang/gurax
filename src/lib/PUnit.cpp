@@ -603,7 +603,7 @@ template<bool discardValueFlag, bool xlistFlag>
 void PUnit_ListElem<discardValueFlag, xlistFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
-	if (!xlistFlag || pValueElem->IsValid()) {
+	if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
 		ValueTypedOwner& valueTypedOwner =
 			dynamic_cast<Value_List*>(processor.PeekValue(GetOffset()))->GetValueTypedOwner();
 		valueTypedOwner.Add(pValueElem.release());
