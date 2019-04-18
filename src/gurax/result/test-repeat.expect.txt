@@ -162,5 +162,5 @@
   ##14 PopFrame()
   ##15 Return()
 ======== Create list ========
-['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
-[1, 3, 5, 7, 9]
+repeat (10):list {'x'} .. ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
+repeat (10):xlist {|i| if ((i % 2) == 0) {continue}; i} .. [1, 3, 5, 7, 9]

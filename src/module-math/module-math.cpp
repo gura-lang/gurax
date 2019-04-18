@@ -78,6 +78,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of value
+	Assign("pi", new Value_Number(PI));
 	// Assignment of function
 	Assign(new Function_Unary(Operator::math_Abs));
 	Assign(new Function_Unary(Operator::math_Acos));

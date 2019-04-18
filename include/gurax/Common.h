@@ -153,6 +153,11 @@ using UInt64	= uint64_t;			// unsigned 64bit
 using Float		= float;			// floating-point number 32bit
 using Double	= double;			// floating-point number 64bit
 
+//------------------------------------------------------------------------------
+// Constant
+//------------------------------------------------------------------------------
+extern const Double PI;
+
 }
 
 #endif

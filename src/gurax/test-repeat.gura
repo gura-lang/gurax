@@ -20,8 +20,7 @@ for (expr in exprs) {
 	util.PrintPUnit(expr)
 }
 
-util.PrintTitle('Create list')
-x = repeat (10):list {'x'}
-Println(x)
-x = repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i}
-Println(x)
+util.TestCase('Create list') {
+	util.Tester(`repeat (10):list {'x'})
+	util.Tester(`repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i})
+}
