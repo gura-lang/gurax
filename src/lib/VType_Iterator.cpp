@@ -52,7 +52,7 @@ String Value_Iterator::ToStringDigest(const StringStyle& ss) const
 
 String Value_Iterator::ToStringDetail(const StringStyle& ss) const
 {
-	return GetIterator().ToString(ss);
+	return ToStringDigest(ss);
 }
 
 Iterator* Value_Iterator::DoGenIterator()

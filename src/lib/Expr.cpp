@@ -606,6 +606,13 @@ const Expr::TypeInfo Expr_Iterer::typeInfo;
 
 void Expr_Iterer::Compose(Composer& composer)
 {
+	size_t nExprs = GetExprLinkElem().CountSequence();
+	composer.Add_CreateList(*this, nExprs);						// [List]
+	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeOrNil(composer);							// [List Elem]
+		composer.Add_ListElem(*this, 0, false);					// [List]
+	}	
+	composer.Add_GenIterator(*this);							// [Iterator]
 }
 
 String Expr_Iterer::ToString(const StringStyle& ss) const
