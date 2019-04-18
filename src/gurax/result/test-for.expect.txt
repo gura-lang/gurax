@@ -2,7 +2,7 @@
 `for (v in tbl) {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 Value(<Nil>)
   ##4 ForEach(offsetToIterator=1,branchdest=##8, decls=[v])
   ##5 PopValue()
@@ -14,7 +14,7 @@
 `for (v in tbl):list {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 CreateList()
   ##4 Jump(##8)
   ##5 ListElem(offsetToList=0)
@@ -29,7 +29,7 @@
 `for (v in tbl):xlist {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 CreateList()
   ##4 Jump(##8)
   ##5 ListElem(offsetToList=0):xlist
@@ -48,7 +48,7 @@
   ##3 GenIterator()
   ##4 Lookup(`tbl3)
   ##5 GenIterator()
-  ##6 PushFrame_Block()
+  ##6 PushFrame<Block>()
   ##7 Value(<Nil>)
   ##8 ForEach(offsetToIterator=1,branchdest=##12, decls=[v1,v2,v3])
   ##9 PopValue()
@@ -60,7 +60,7 @@
 `for (v in tbl) {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 GenCounterIterator()
   ##4 Value(<Nil>)
   ##5 ForEach(offsetToIterator=2,branchdest=##11, decls=[v])
@@ -75,7 +75,7 @@
 `for (v in tbl):list {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 GenCounterIterator()
   ##4 CreateList()
   ##5 Jump(##9)
@@ -93,7 +93,7 @@
 `for (v in tbl):xlist {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 GenCounterIterator()
   ##4 CreateList()
   ##5 Jump(##9)
@@ -115,7 +115,7 @@
   ##3 GenIterator()
   ##4 Lookup(`tbl3)
   ##5 GenIterator()
-  ##6 PushFrame_Block()
+  ##6 PushFrame<Block>()
   ##7 GenCounterIterator()
   ##8 Value(<Nil>)
   ##9 ForEach(offsetToIterator=2,branchdest=##15, decls=[v1,v2,v3])
@@ -130,7 +130,7 @@
 `for (v in tbl) {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 Value(<Nil>)
   ##4 ForEach(offsetToIterator=1,branchdest=##8, decls=[v])
   ##5 PopValue()
@@ -142,7 +142,7 @@
 `for (v in tbl):list {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 CreateList()
   ##4 Jump(##8)
   ##5 ListElem(offsetToList=0)
@@ -157,7 +157,7 @@
 `for (v in tbl):xlist {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 CreateList()
   ##4 Jump(##8)
   ##5 ListElem(offsetToList=0):xlist
@@ -176,7 +176,7 @@
   ##3 GenIterator()
   ##4 Lookup(`tbl3)
   ##5 GenIterator()
-  ##6 PushFrame_Block()
+  ##6 PushFrame<Block>()
   ##7 Value(<Nil>)
   ##8 ForEach(offsetToIterator=1,branchdest=##12, decls=[v1,v2,v3])
   ##9 PopValue()
@@ -188,7 +188,7 @@
 `for (v in tbl) {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 GenCounterIterator()
   ##4 Value(<Nil>)
   ##5 ForEach(offsetToIterator=2,branchdest=##11, decls=[v])
@@ -203,7 +203,7 @@
 `for (v in tbl):list {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 GenCounterIterator()
   ##4 CreateList()
   ##5 Jump(##9)
@@ -221,7 +221,7 @@
 `for (v in tbl):xlist {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 GenCounterIterator()
   ##4 CreateList()
   ##5 Jump(##9)
@@ -243,7 +243,7 @@
   ##3 GenIterator()
   ##4 Lookup(`tbl3)
   ##5 GenIterator()
-  ##6 PushFrame_Block()
+  ##6 PushFrame<Block>()
   ##7 GenCounterIterator()
   ##8 Value(<Nil>)
   ##9 ForEach(offsetToIterator=2,branchdest=##15, decls=[v1,v2,v3])
@@ -258,7 +258,7 @@
 `for (v in tbl) {break; 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 Value(<Nil>)
   ##4 ForEach(offsetToIterator=1,branchdest=##10, decls=[v])
   ##5 PopValue()
@@ -272,7 +272,7 @@
 `for (v in tbl):list {break; 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
-  ##2 PushFrame_Block()
+  ##2 PushFrame<Block>()
   ##3 CreateList()
   ##4 Jump(##8)
   ##5 ListElem(offsetToList=0)

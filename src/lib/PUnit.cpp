@@ -1813,7 +1813,7 @@ template<typename T_Frame, bool discardValueFlag>
 String PUnit_PushFrame<T_Frame, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("PushFrame_%s()", T_Frame::name);
+	str.Printf("PushFrame<%s>()", T_Frame::name);
 	AppendInfoToString(str, ss);
 	return str;
 }

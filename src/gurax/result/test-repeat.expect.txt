@@ -9,7 +9,7 @@
   ##6 RemoveValue(offset=1)
   ##7 Return()
 `repeat {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 Value(<Nil>)
   ##3 EvalIterator(offsetToIterator=1,branchdest=##8)
@@ -32,7 +32,7 @@
   ##8 RemoveValue(offset=1)
   ##9 Return()
 `repeat (3) {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 Value(<Number:3>)
   ##2 Cast(Number)
   ##3 GenRangeIterator()
@@ -58,7 +58,7 @@
   ##9 RemoveValue(offset=1)
   ##10 Return()
 `repeat ():list {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 CreateList()
   ##3 Jump(##7)
@@ -87,7 +87,7 @@
   ##11 RemoveValue(offset=1)
   ##12 Return()
 `repeat (3):list {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 Value(<Number:3>)
   ##2 Cast(Number)
   ##3 GenRangeIterator()
@@ -116,7 +116,7 @@
   ##9 RemoveValue(offset=1)
   ##10 Return()
 `repeat ():xlist {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 CreateList()
   ##3 Jump(##7)
@@ -145,7 +145,7 @@
   ##11 RemoveValue(offset=1)
   ##12 Return()
 `repeat (3):xlist {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 Value(<Number:3>)
   ##2 Cast(Number)
   ##3 GenRangeIterator()

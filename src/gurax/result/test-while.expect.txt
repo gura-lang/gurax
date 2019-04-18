@@ -33,7 +33,7 @@
   ##9 NoOperation()
   ##10 Return()
 `while (true) {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 Value(<Nil>)
   ##3 Lookup(`true)
@@ -47,7 +47,7 @@
   ##11 PopFrame()
   ##12 Return()
 `while (true):list {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 CreateList()
   ##3 Jump(##7)
@@ -64,7 +64,7 @@
   ##14 PopFrame()
   ##15 Return()
 `while (true):xlist {|n| nil}
-  ##0 PushFrame_Block()
+  ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 CreateList()
   ##3 Jump(##7)
