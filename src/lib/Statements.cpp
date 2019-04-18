@@ -493,16 +493,21 @@ Gurax_ImplementStatement(break_)
 						 "break-statement can be used in a loop");
 		return;
 	}
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	if (pExprCdr) {
-		pExprCdr->ComposeOrNil(composer);								// [Any]
-	} else {
-		composer.Add_Value(exprCaller, Value::undefined());				// [undefined]
-	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (repeaterInfo.GetPUnitOfBreak()) {
+		if (pExprCdr) {
+			pExprCdr->ComposeOrNil(composer);							// [Any]
+		} else {
+			composer.Add_Value(exprCaller, Value::undefined());			// [undefined]
+		}
 		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBreak(), true, repeaterInfo.GetContFlag());
 	} else {
+		if (pExprCdr) {
+			pExprCdr->ComposeOrNil(composer);							// [Any]
+		} else {
+			composer.Add_Value(exprCaller, Value::nil());				// [nil]
+		}
 		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBranch(), false, repeaterInfo.GetContFlag());
 	}
 }
