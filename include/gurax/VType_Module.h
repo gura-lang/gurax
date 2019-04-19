@@ -65,13 +65,8 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override {
-		return GetModule().GetFrame().Lookup(pSymbol);
-	}
-	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override {
-		GetModule().GetFrame().Assign(pSymbol, pValue.release());
-		return true;
-	}
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override;
+	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 
 }

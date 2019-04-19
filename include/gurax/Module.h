@@ -80,12 +80,12 @@ protected:
 	RefPtr<Frame> _pFrame;
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<PropHandlerMap> _pPropHandlerMap;
 public:
 	// Constructor
 	Module() = delete;
 	Module(Frame* pFrameOuter) : Module(pFrameOuter, DottedSymbol::Empty.Reference()) {}
-	Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
-		_pFrame(new Frame_Module(pFrameOuter)), _pDottedSymbol(pDottedSymbol), _pHelpProvider(new HelpProvider()) {}
+	Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol);
 	// Copy constructor/operator
 	Module(const Module& src) = delete;
 	Module& operator=(const Module& src) = delete;
@@ -106,10 +106,16 @@ public:
 	}
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
+	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
+	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
+	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const {
+		return GetPropHandlerMap().Lookup(pSymbol);
+	}
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
+	void Assign(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);

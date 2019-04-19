@@ -32,4 +32,15 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
+Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
+{
+	return GetModule().GetFrame().Lookup(pSymbol);
+}
+
+bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	GetModule().GetFrame().Assign(pSymbol, pValue.release());
+	return true;
+}
+
 }
