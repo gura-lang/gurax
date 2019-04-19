@@ -45,6 +45,7 @@ public:
 	ValueStack& GetValueStack() { return *_pValueStack; }
 	const ValueStack& GetValueStack() const { return *_pValueStack; }
 	bool IsValueStackEmpty() const { return GetValueStack().empty(); }
+	void ClearValueStack() { GetValueStack().Clear(); }
 	void PushValue(Value* pValue) { GetValueStack().Push(pValue); }
 	Value* PopValue() { return GetValueStack().Pop(); }
 	Value* PeekValue(size_t offset) { return GetValueStack().Peek(offset); }
@@ -60,6 +61,7 @@ public:
 public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
+	void ClearFrameStack() { GetFrameStack().Clear(); }
 	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
 	template<typename T_Frame> Frame& PushFrame();
 	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);

@@ -69,7 +69,9 @@ void RunREPL()
 	::printf("%s\n", Version::GetBanner(false));
 	for (;;) {
 		String strLine;
-		if (!ReadLine(pParser->IsContinued()? "... " : ">>> ", strLine)) break;
+		String prompt;
+		prompt.Printf("%d:%s", pParser->GetLineNo(), pParser->IsContinued()? "... " : ">>> ");
+		if (!ReadLine(prompt.c_str(), strLine)) break;
 		bool blankLineFlag = true;
 		for (char ch : strLine) {
 			if (!String::IsSpace(ch)) {
@@ -80,39 +82,37 @@ void RunREPL()
 		if (blankLineFlag) continue;
 		for (char ch : strLine) {
 			pParser->ParseChar(ch);
-			if (Error::IsIssued()) {
-				Error::Print(*Stream::CErr);
-				return;
+			if (Error::IsIssued()) break;
+		}
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			Error::Clear();
+			continue;
+		}
+		Expr* pExpr = pExprLast? pExprLast->GetExprNext() : exprRoot.GetExprElemFirst();
+		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (!pExpr->DoPrepare()) break;
+			pExpr->Compose(composer);
+			pExprLast = pExpr;
+			composer.Flush(false);
+			if (Error::IsIssued()) break;
+			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
+			const PUnit* pPUnit = pPUnitLast? pPUnitLast->GetPUnitNext() : composer.GetPUnitFirst();
+			if (!pPUnit) continue;
+			pProcessor->SetNext(pPUnit);
+			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
+				pPUnit->Exec(*pProcessor);
+				pPUnitLast = pPUnit;
+				pPUnit = pProcessor->GetPUnitCur();
 			}
-			Expr* pExpr = pExprLast? pExprLast->GetExprNext() : exprRoot.GetExprElemFirst();
-			for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-				if (!pExpr->DoPrepare()) {
-					Error::Print(*Stream::CErr);
-					return;
-				}
-				pExpr->Compose(composer);
-				pExprLast = pExpr;
-				composer.Flush(false);
-				if (Error::IsIssued()) {
-					Error::Print(*Stream::CErr);
-					return;
-				}
-				const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
-				const PUnit* pPUnit = pPUnitLast? pPUnitLast->GetPUnitNext() : composer.GetPUnitFirst();
-				if (!pPUnit) continue;
-				pProcessor->SetNext(pPUnit);
-				while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
-					pPUnit->Exec(*pProcessor);
-					pPUnitLast = pPUnit;
-					pPUnit = pProcessor->GetPUnitCur();
-				}
-				if (Error::IsIssued()) {
-					Error::Print(*Stream::CErr);
-					return;
-				}
-				RefPtr<Value> pValue(pProcessor->PopValue());
-				if (pValue->IsValid()) ::printf("%s\n", pValue->ToString().c_str());
-			}
+			if (Error::IsIssued()) break;
+			RefPtr<Value> pValue(pProcessor->PopValue());
+			if (pValue->IsValid()) ::printf("%s\n", pValue->ToString().c_str());
+		}
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			Error::Clear();
+			pProcessor->ClearValueStack();
 		}
 	}
 }

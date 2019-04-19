@@ -36,6 +36,7 @@ public:
 	static Expr_Root* ParseStream(Stream& stream);
 	static Expr_Root* ParseString(const char* text);
 	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
+	int GetLineNo() const { return _pTokenizer->GetLineNo(); }
 	bool IsContinued() const { return !_pTokenizer->GetTokenStack().IsEmpty(); }
 private:
 	bool ReduceOneToken();
