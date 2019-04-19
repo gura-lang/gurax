@@ -28,7 +28,7 @@ Gurax_ImplementFunction(Exit)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// sys.ps1
+// sys.ps1:String
 Gurax_DeclareModuleProperty_RW(ps1)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -42,6 +42,22 @@ Gurax_ImplementModulePropertyGetter(ps1)
 Gurax_ImplementModulePropertySetter(ps1)
 {
 	Basement::Inst.SetPS1(dynamic_cast<const Value_String&>(value).GetString());
+}
+
+// sys.ps2:String
+Gurax_DeclareModuleProperty_RW(ps2)
+{
+	Declare(VTYPE_String, Flag::None);
+}
+
+Gurax_ImplementModulePropertyGetter(ps2)
+{
+	return new Value_String(Basement::Inst.GetPS2());
+}
+
+Gurax_ImplementModulePropertySetter(ps2)
+{
+	Basement::Inst.SetPS2(dynamic_cast<const Value_String&>(value).GetString());
 }
 
 //------------------------------------------------------------------------------
@@ -62,6 +78,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Exit));
 	// Assignment of property
 	Assign(Gurax_CreateModuleProperty(ps1));
+	Assign(Gurax_CreateModuleProperty(ps2));
 	return true;
 }
 
