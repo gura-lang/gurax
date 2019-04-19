@@ -66,6 +66,7 @@ void RunREPL()
 	Expr_Root& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
 	const PUnit* pPUnitLast = nullptr;
+	::printf("%s\n", Version::GetBanner(false));
 	for (;;) {
 		String strLine;
 		if (!ReadLine(pParser->IsContinued()? "... " : ">>> ", strLine)) break;
