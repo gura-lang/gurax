@@ -52,6 +52,7 @@ add_library(guraxcore SHARED
 	Tokenizer.cpp
 	Unicode-EastAsianWidth.cpp
 	Value.cpp
+	Version.cpp
 	VType.cpp
 	VType_Any.cpp
 	VType_ArgMapper.cpp

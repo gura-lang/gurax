@@ -54,6 +54,7 @@
 #include "gurax/Token.h"
 #include "gurax/Tokenizer.h"
 #include "gurax/Value.h"
+#include "gurax/Version.h"
 #include "gurax/VType.h"
 #include "gurax/VType_Any.h"
 #include "gurax/VType_ArgMapper.h"
