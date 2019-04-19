@@ -103,6 +103,7 @@ void RunREPL()
 			pProcessor->SetNext(pPUnit);
 			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
 				pPUnit->Exec(*pProcessor);
+				if (Error::IsIssued()) break;
 				pPUnitLast = pPUnit;
 				pPUnit = pProcessor->GetPUnitCur();
 			}
@@ -114,6 +115,7 @@ void RunREPL()
 			Error::Print(*Stream::CErr);
 			Error::Clear();
 			pProcessor->ClearValueStack();
+			pProcessor->Resume();
 		}
 	}
 }

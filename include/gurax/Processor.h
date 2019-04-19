@@ -56,6 +56,7 @@ public:
 	void SetNext(const PUnit* pPUnit, bool contFlag) { _pPUnitCur = pPUnit; _contFlag = contFlag; }
 	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
+	void Resume() { _contFlag = true; _resumeFlag = true; }
 	bool GetContFlag() const { return _contFlag; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 public:
