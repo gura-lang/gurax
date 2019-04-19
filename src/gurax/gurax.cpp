@@ -60,10 +60,59 @@ int Main(int argc, char* argv[])
 
 void RunREPL()
 {
+	RefPtr<Parser> pParser(new Parser("*REPL*"));
+	Composer composer;
+	RefPtr<Processor> pProcessor(Processor::Create(true));
+	Expr_Root& exprRoot = pParser->GetExprRoot();
+	Expr* pExprLast = nullptr;
+	const PUnit* pPUnitLast = nullptr;
 	for (;;) {
 		String strLine;
-		ReadLine(">>>", strLine);
-		::printf("%s\n", strLine.c_str());
+		if (!ReadLine(pParser->IsContinued()? "... " : ">>> ", strLine)) break;
+		bool blankLineFlag = true;
+		for (char ch : strLine) {
+			if (!String::IsSpace(ch)) {
+				blankLineFlag = false;
+				break;
+			}
+		}
+		if (blankLineFlag) continue;
+		for (char ch : strLine) {
+			pParser->ParseChar(ch);
+			if (Error::IsIssued()) {
+				Error::Print(*Stream::CErr);
+				return;
+			}
+			Expr* pExpr = pExprLast? pExprLast->GetExprNext() : exprRoot.GetExprElemFirst();
+			for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+				if (!pExpr->DoPrepare()) {
+					Error::Print(*Stream::CErr);
+					return;
+				}
+				pExpr->Compose(composer);
+				pExprLast = pExpr;
+				composer.Flush(false);
+				if (Error::IsIssued()) {
+					Error::Print(*Stream::CErr);
+					return;
+				}
+				const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
+				const PUnit* pPUnit = pPUnitLast? pPUnitLast->GetPUnitNext() : composer.GetPUnitFirst();
+				if (!pPUnit) continue;
+				pProcessor->SetNext(pPUnit);
+				while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
+					pPUnit->Exec(*pProcessor);
+					pPUnitLast = pPUnit;
+					pPUnit = pProcessor->GetPUnitCur();
+				}
+				if (Error::IsIssued()) {
+					Error::Print(*Stream::CErr);
+					return;
+				}
+				RefPtr<Value> pValue(pProcessor->PopValue());
+				if (pValue->IsValid()) ::printf("%s\n", pValue->ToString().c_str());
+			}
+		}
 	}
 }
 
@@ -76,8 +125,8 @@ bool ReadLine(const char* prompt, String& strLine)
 		int chRaw = ::fgetc(stdin);
 		if (chRaw < 0) return false;
 		char ch = static_cast<UChar>(chRaw);
-		if (ch == '\n') break;
 		strLine += ch;
+		if (ch == '\n') break;
 	}
 	return true;
 }
@@ -89,6 +138,7 @@ bool ReadLine(const char* prompt, String& strLine)
 	if (lineBuff[0] != '\0') add_history(lineBuff);
 	strLine = lineBuff;
 	::free(lineBuff);
+	strLine += '\n';
 	return true;
 }
 #endif
