@@ -90,6 +90,7 @@ Gurax_ImplementMethod(String, StartsWith)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// String#len
 Gurax_DeclareProperty_R(String, len)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -104,6 +105,7 @@ Gurax_ImplementPropertyGetter(String, len)
 	return new Value_Number(valueThis.GetStringSTL().Length());
 }
 
+// String#width
 Gurax_DeclareProperty_R(String, width)
 {
 	Declare(VTYPE_Number, Flag::None);

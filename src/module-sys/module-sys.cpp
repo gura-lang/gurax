@@ -26,6 +26,24 @@ Gurax_ImplementFunction(Exit)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// sys.ps1
+Gurax_DeclareModuleProperty_RW(ps1)
+{
+	Declare(VTYPE_String, Flag::None);
+}
+
+Gurax_ImplementModulePropertySetter(ps1)
+{
+}
+
+Gurax_ImplementModulePropertyGetter(ps1)
+{
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -41,6 +59,8 @@ Gurax_ModulePrepare()
 	Assign("cerr", new Value_Stream(Stream::CErr->Reference()));
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
+	// Assignment of property
+	Assign(Gurax_CreateModuleProperty(ps1));
 	return true;
 }
 

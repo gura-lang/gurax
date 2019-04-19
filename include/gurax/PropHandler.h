@@ -7,7 +7,7 @@
 #include "Symbol.h"
 
 //------------------------------------------------------------------------------
-// Macros to declare PropHandler
+// Macros to declare PropHandler for class
 //------------------------------------------------------------------------------
 #define Gurax_DeclarePropertyAlias_R(nameVType, name, strName)	\
 class PropHandler_##nameVType##_##name : public PropHandler { \
@@ -46,6 +46,41 @@ Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const At
 void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const
 
 #define Gurax_CreateProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
+
+//------------------------------------------------------------------------------
+// Macros to declare PropHandler for module
+//------------------------------------------------------------------------------
+#define Gurax_DeclareModulePropertyAlias_R(name, strName)	\
+class PropHandler_##name : public PropHandler { \
+public: \
+	PropHandler_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override {} \
+}; \
+PropHandler_##name::PropHandler_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable)
+
+#define Gurax_DeclareModuleProperty_R(name) Gurax_DeclareModulePropertyAlias_R(name, #name)
+
+#define Gurax_DeclareModulePropertyAlias_RW(name, strName)	\
+class PropHandler_##name : public PropHandler { \
+public: \
+	PropHandler_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override; \
+}; \
+PropHandler_##name::PropHandler_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable | Flag::Writable)
+
+#define Gurax_DeclareModuleProperty_RW(name) Gurax_DeclareModulePropertyAlias_RW(name, #name)
+
+#define Gurax_ImplementModulePropertyGetter(name) \
+Value* PropHandler_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
+
+#define Gurax_ImplementModulePropertySetter(name) \
+void PropHandler_##name::DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const
+
+#define Gurax_CreateModuleProperty(name) (new PropHandler_##name())
 
 namespace Gurax {
 
