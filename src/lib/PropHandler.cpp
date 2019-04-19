@@ -9,7 +9,7 @@ namespace Gurax {
 // PropHandler
 //------------------------------------------------------------------------------
 PropHandler::PropHandler(const Symbol* pSymbol, Flags flags) :
-	_pSymbol(pSymbol), _pVTypeResult(&VTYPE_Undefined), _flags(flags),
+	_pSymbol(pSymbol), _pVType(&VTYPE_Any), _flags(flags),
 	_pHelpProvider(new HelpProvider())
 {
 }

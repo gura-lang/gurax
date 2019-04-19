@@ -81,20 +81,28 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (pPropHandler) {
-		return pPropHandler->IsReadable()? pPropHandler->DoGetValue(*this, attr) : nullptr;
-	}		
-	return GetVType().GetFrame().Lookup(pSymbol);
+	if (!pPropHandler) {
+		return GetVType().GetFrame().Lookup(pSymbol);
+	} else if (pPropHandler->IsReadable()) {
+		return pPropHandler->DoGetValue(*this, attr);
+	} else {
+		return nullptr;
+	}
 }
 
 bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (pPropHandler && pPropHandler->IsWritable()) {
-		pPropHandler->DoSetValue(*this, pValue.release(), attr);
+	if (!pPropHandler) {
+		return false;
+	} else if (pPropHandler->IsWritable()) {
+		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue));
+		if (!pValueCasted) return false;
+		pPropHandler->DoSetValue(*this, *pValueCasted, attr);
 		return true;
+	} else {
+		return false;
 	}
-	return false;
 }
 
 Iterator* Value::DoGenIterator()

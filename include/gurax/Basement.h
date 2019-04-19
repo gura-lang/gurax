@@ -14,7 +14,10 @@ namespace Gurax {
 class GURAX_DLLDECLARE Basement {
 private:
 	RefPtr<Frame> _pFrame;
-	static Basement _basement;
+	String _ps1;
+	String _ps2;
+public:
+	static Basement Inst;
 public:
 	// Constructor
 	Basement();
@@ -27,10 +30,12 @@ public:
 	// Destructor
 	~Basement() = default;
 public:
-	void DoPrepare();
-public:
-	static void Prepare() { return _basement.DoPrepare(); }
-	static Frame& GetFrame() { return *_basement._pFrame; }
+	void Prepare();
+	Frame& GetFrame() { return *_pFrame; }
+	const char* GetPS1() const { return _ps1.c_str(); }
+	const char* GetPS2() const { return _ps2.c_str(); }
+	void SetPS1(const char* ps1) { _ps1 = ps1; }
+	void SetPS2(const char* ps2) { _ps2 = ps2; }
 };
 
 }

@@ -14,7 +14,7 @@ class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
 	PropHandler_##nameVType##_##name(const char* name_ = strName); \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override {} \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
 		return dynamic_cast<Value_##nameVType&>(valueTarget); \
 	} \
@@ -29,7 +29,7 @@ class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
 	PropHandler_##nameVType##_##name(const char* name_ = strName); \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
 		return dynamic_cast<Value_##nameVType&>(valueTarget); \
 	} \
@@ -43,7 +43,7 @@ PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* n
 Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementPropertySetter(nameVType, name) \
-void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const
+void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
 #define Gurax_CreateProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
 
@@ -55,7 +55,7 @@ class PropHandler_##name : public PropHandler { \
 public: \
 	PropHandler_##name(const char* name_ = strName); \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override {} \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropHandler_##name::PropHandler_##name(const char* name_) : \
 	PropHandler(name_, Flag::Readable)
@@ -67,7 +67,7 @@ class PropHandler_##name : public PropHandler { \
 public: \
 	PropHandler_##name(const char* name_ = strName); \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropHandler_##name::PropHandler_##name(const char* name_) : \
 	PropHandler(name_, Flag::Readable | Flag::Writable)
@@ -78,7 +78,7 @@ PropHandler_##name::PropHandler_##name(const char* name_) : \
 Value* PropHandler_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
 
 #define Gurax_ImplementModulePropertySetter(name) \
-void PropHandler_##name::DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const
+void PropHandler_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
 #define Gurax_CreateModuleProperty(name) (new PropHandler_##name())
 
@@ -100,7 +100,7 @@ public:
 	};
 private:
 	const Symbol* _pSymbol;
-	const VType* _pVTypeResult;
+	const VType* _pVType;
 	Flags _flags;
 	RefPtr<HelpProvider> _pHelpProvider;
 public:
@@ -117,7 +117,7 @@ protected:
 	// Destructor
 	virtual ~PropHandler() = default;
 public:
-	void Declare(const VType& vtypeResult, UInt32 flags) { _pVTypeResult = &vtypeResult, _flags |= flags; }
+	void Declare(const VType& vtype, UInt32 flags) { _pVType = &vtype, _flags |= flags; }
 	void AddHelp(const Symbol* pLangCode, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
 	}
@@ -125,14 +125,14 @@ public:
 		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	const VType& GetVTypeResult() const { return *_pVTypeResult; }
+	const VType& GetVType() const { return *_pVType; }
 	const Flags GegFlags() const { return _flags; }
 	bool IsReadable() const { return (_flags & Flag::Readable) != 0; }
 	bool IsWritable() const { return (_flags & Flag::Writable) != 0; }
 public:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;
-	virtual void DoSetValue(Value& valueTarget, Value* pValue, const Attribute& attr) const = 0;
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const = 0;
 };
 
 //------------------------------------------------------------------------------

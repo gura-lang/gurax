@@ -34,13 +34,30 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
-	return GetModule().GetFrame().Lookup(pSymbol);
+	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
+	if (!pPropHandler) {
+		return GetModule().GetFrame().Lookup(pSymbol);
+	} else if (pPropHandler->IsReadable()) {
+		return pPropHandler->DoGetValue(*this, attr);
+	} else {
+		return nullptr;
+	}
 }
 
 bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	GetModule().GetFrame().Assign(pSymbol, pValue.release());
-	return true;
+	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
+	if (!pPropHandler) {
+		GetModule().GetFrame().Assign(pSymbol, pValue.release());
+		return true;
+	} else if (pPropHandler->IsWritable()) {
+		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue));
+		if (!pValueCasted) return false;
+		pPropHandler->DoSetValue(*this, *pValueCasted, attr);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 }

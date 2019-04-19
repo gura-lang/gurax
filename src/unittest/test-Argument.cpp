@@ -34,7 +34,7 @@ static void PrintArgument(const Argument &argument)
 
 Gurax_TesterEntry(Argument)
 {
-	Frame& frame = Basement::GetFrame();
+	Frame& frame = Basement::Inst.GetFrame();
 	do {
 		RefPtr<Argument> pArgument(ComposeArgument("f()"));
 		PrintArgument(*pArgument);

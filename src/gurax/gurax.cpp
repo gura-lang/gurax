@@ -70,7 +70,8 @@ void RunREPL()
 	for (;;) {
 		String strLine;
 		String prompt;
-		prompt.Printf("%d:%s", pParser->GetLineNo(), pParser->IsContinued()? "... " : ">>> ");
+		prompt.Printf("%d:%s", pParser->GetLineNo(),
+					  pParser->IsContinued()? Basement::Inst.GetPS2() : Basement::Inst.GetPS1());
 		if (!ReadLine(prompt.c_str(), strLine)) break;
 		bool blankLineFlag = true;
 		for (char ch : strLine) {

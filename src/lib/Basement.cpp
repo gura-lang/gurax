@@ -8,13 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Basement
 //------------------------------------------------------------------------------
-Basement Basement::_basement;
+Basement Basement::Inst;
 
-Basement::Basement() : _pFrame(new Frame_Basement())
+
+Basement::Basement() : _pFrame(new Frame_Basement()), _ps1(">>> "), _ps2("... ")
 {
 }
 
-void Basement::DoPrepare()
+void Basement::Prepare()
 {
 	Frame& frame = GetFrame();
 	VType::PrepareBasic(frame);

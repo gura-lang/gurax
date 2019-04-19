@@ -220,7 +220,7 @@ const Expr::TypeInfo Expr_Identifier::typeInfo;
 void Expr_Identifier::Compose(Composer& composer)
 {
 	const Symbol* pSymbol = GetSymbol();
-	Value* pValue = Basement::GetFrame().Lookup(pSymbol);
+	Value* pValue = Basement::Inst.GetFrame().Lookup(pSymbol);
 	if (pValue && pValue->IsType(VTYPE_Function)) {
 		const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 		if (func.IsTypeStatement()) {
@@ -751,7 +751,7 @@ void Expr_Caller::Compose(Composer& composer)
 {
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*GetExprCar()));
 	if (pDottedSymbol) {
-		Value* pValue = Basement::GetFrame().Lookup(*pDottedSymbol);
+		Value* pValue = Basement::Inst.GetFrame().Lookup(*pDottedSymbol);
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
 			if (func.IsTypeStatement()) {

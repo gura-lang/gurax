@@ -8,7 +8,7 @@ Gurax_BeginModule(sys)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// Exit(exitCode?:Number):void
+// sys.Exit(exitCode?:Number):void
 Gurax_DeclareFunction(Exit)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -34,13 +34,14 @@ Gurax_DeclareModuleProperty_RW(ps1)
 	Declare(VTYPE_String, Flag::None);
 }
 
-Gurax_ImplementModulePropertySetter(ps1)
-{
-}
-
 Gurax_ImplementModulePropertyGetter(ps1)
 {
-	return Value::nil();
+	return new Value_String(Basement::Inst.GetPS1());
+}
+
+Gurax_ImplementModulePropertySetter(ps1)
+{
+	Basement::Inst.SetPS1(dynamic_cast<const Value_String&>(value).GetString());
 }
 
 //------------------------------------------------------------------------------
