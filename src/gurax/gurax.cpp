@@ -1,9 +1,18 @@
 //==============================================================================
 // gurax.cpp
+// Copyright (C) 2011-2019 ypsitau
 //==============================================================================
 #include "stdafx.h"
+#if defined(GURAX_ON_MSWIN)
+#else
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
 
 namespace Gurax {
+
+bool ReadLine(const char* prompt, String& strLine);
+void RunREPL();
 
 int Main(int argc, char* argv[])
 {
@@ -16,7 +25,7 @@ int Main(int argc, char* argv[])
 		return 1;
 	}
 	if (argc < 2) {
-		Stream::CErr->Printf("usage: gurax file\n");
+		RunREPL();
 		return 1;
 	}
 	const char* fileName = argv[1];
@@ -48,6 +57,41 @@ int Main(int argc, char* argv[])
 	}
 	return 0;
 }
+
+void RunREPL()
+{
+	for (;;) {
+		String strLine;
+		ReadLine(">>>", strLine);
+		::printf("%s\n", strLine.c_str());
+	}
+}
+
+#if defined(GURAX_ON_MSWIN)
+bool ReadLine(const char* prompt, String& strLine)
+{
+	strLine.clear();
+	::printf("%s", prompt);
+	for (;;) {
+		int chRaw = ::fgetc(stdin);
+		if (chRaw < 0) return false;
+		char ch = static_cast<UChar>(chRaw);
+		if (ch == '\n') break;
+		strLine += ch;
+	}
+	return true;
+}
+#else
+bool ReadLine(const char* prompt, String& strLine)
+{
+	char* lineBuff = readline(prompt);
+	if (lineBuff == nullptr) return false;
+	if (lineBuff[0] != '\0') add_history(lineBuff);
+	strLine = lineBuff;
+	::free(lineBuff);
+	return true;
+}
+#endif
 
 }
 
