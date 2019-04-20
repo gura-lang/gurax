@@ -47,6 +47,8 @@ protected:
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
+	static const Symbol* GetSymbol(const Value& value) { return dynamic_cast<const Value_Symbol&>(value).GetSymbol(); }
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

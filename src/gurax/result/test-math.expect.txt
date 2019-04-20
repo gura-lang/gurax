@@ -61,3 +61,5 @@
   ##60 Lookup(`n)
   ##61 UnaryOp(Unitstep)
   ##62 Return()
+math.e .. 2.71828
+math.pi .. 3.14159

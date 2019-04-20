@@ -33,3 +33,5 @@ expr = `{
 	math.Unitstep(n)
 }
 util.PrintPUnit(expr)
+util.Tester(`math.e)
+util.Tester(`math.pi)

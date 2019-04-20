@@ -66,6 +66,26 @@ public:
 	Float GetFloat() const		{ return static_cast<Float>(_num); }
 	Double GetDouble() const	{ return _num; }
 public:
+	static size_t GetSizeT(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetSizeT(); }
+	static Char GetChar(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetChar(); }
+	static UChar GetUChar(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUChar(); }
+	static Short GetShort(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetShort(); }
+	static UShort GetUShort(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUShort(); }
+	static Int GetInt(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetInt(); }
+	static UInt GetUInt(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetUInt(); }
+	static Long GetLong(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetLong(); }
+	static ULong GetULong(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetULong(); }
+	static Int8 GetInt8(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetInt8(); }
+	static UInt8 GetUInt8(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt8(); }
+	static Int16 GetInt16(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetInt16(); }
+	static UInt16 GetUInt16(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt16(); }
+	static Int32 GetInt32(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetInt32(); }
+	static UInt32 GetUInt32(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt32(); }
+	static Int64 GetInt64(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetInt64(); }
+	static UInt64 GetUInt64(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt64(); }
+	static Float GetFloat(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetFloat(); }
+	static Double GetDouble(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetDouble(); }
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetSizeT(); }

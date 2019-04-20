@@ -54,6 +54,13 @@ public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
+	static const char* GetString(const Value& value) {
+		return dynamic_cast<const Value_String&>(value).GetString();
+	}
+	static const String& GetStringSTL(const Value& value) {
+		return dynamic_cast<const Value_String&>(value).GetStringSTL();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
