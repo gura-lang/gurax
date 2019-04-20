@@ -17,12 +17,12 @@ Value& ArgPicker::PickValue()
 
 Stream& ArgPicker::PickStream()
 {
-	return dynamic_cast<Value_Stream&>(PickValue()).GetStream();
+	return Value_Stream::GetStream(PickValue());
 }
 
 Iterator& ArgPicker::PickIterator()
 {
-	return dynamic_cast<Value_Iterator&>(PickValue()).GetIterator();
+	return Value_Iterator::GetIterator(PickValue());
 }
 
 }

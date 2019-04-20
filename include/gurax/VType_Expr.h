@@ -49,6 +49,9 @@ public:
 	Expr& GetExpr() { return *_pExpr; }
 	const Expr& GetExpr() const { return *_pExpr; }
 public:
+	static Expr& GetExpr(Value& value) { return dynamic_cast<Value_Expr&>(value).GetExpr(); }
+	static const Expr& GetExpr(const Value& value) { return dynamic_cast<const Value_Expr&>(value).GetExpr(); }
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

@@ -50,6 +50,13 @@ public:
 	TimeDelta& GetTimeDelta() { return *_pTimeDelta; }
 	const TimeDelta& GetTimeDelta() const { return *_pTimeDelta; }
 public:
+	static TimeDelta& GetTimeDelta(Value& value) {
+		return dynamic_cast<Value_TimeDelta&>(value).GetTimeDelta();
+	}
+	static const TimeDelta& GetTimeDelta(const Value &value) {
+		return dynamic_cast<const Value_TimeDelta&>(value).GetTimeDelta();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

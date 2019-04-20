@@ -50,6 +50,13 @@ public:
 	DateTime& GetDateTime() { return *_pDateTime; }
 	const DateTime& GetDateTime() const { return *_pDateTime; }
 public:
+	static DateTime& GetDateTime(Value& value) {
+		return dynamic_cast<Value_DateTime&>(value).GetDateTime();
+	}
+	static const DateTime& GetDateTime(const Value& value) {
+		return dynamic_cast<const Value_DateTime&>(value).GetDateTime();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

@@ -40,28 +40,28 @@ public:
 public:
 	Value& PickValue();
 	Bool PickBool()					{ return PickValue().GetBool(); }
-	size_t PickSizeT()				{ return dynamic_cast<Value_Number&>(PickValue()).GetSizeT(); }
-	Char PickChar()					{ return dynamic_cast<Value_Number&>(PickValue()).GetChar(); }
-	UChar PickUChar()				{ return dynamic_cast<Value_Number&>(PickValue()).GetUChar(); }
-	Short PickShort()				{ return dynamic_cast<Value_Number&>(PickValue()).GetShort(); }
-	UShort PickUShort()				{ return dynamic_cast<Value_Number&>(PickValue()).GetUShort(); }
-	Int PickInt()					{ return dynamic_cast<Value_Number&>(PickValue()).GetInt(); }
-	UInt PickUInt()					{ return dynamic_cast<Value_Number&>(PickValue()).GetUInt(); }
-	Long PickLong()					{ return dynamic_cast<Value_Number&>(PickValue()).GetLong(); }
-	ULong PickULong()				{ return dynamic_cast<Value_Number&>(PickValue()).GetULong(); }
-	Int8 PickInt8()					{ return dynamic_cast<Value_Number&>(PickValue()).GetInt8(); }
-	UInt8 PickUInt8()				{ return dynamic_cast<Value_Number&>(PickValue()).GetUInt8(); }
-	Int16 PickInt16()				{ return dynamic_cast<Value_Number&>(PickValue()).GetInt16(); }
-	UInt16 PickUInt16()				{ return dynamic_cast<Value_Number&>(PickValue()).GetUInt16(); }
-	Int32 PickInt32()				{ return dynamic_cast<Value_Number&>(PickValue()).GetInt32(); }
-	UInt32 PickUInt32()				{ return dynamic_cast<Value_Number&>(PickValue()).GetUInt32(); }
-	Int64 PickInt64()				{ return dynamic_cast<Value_Number&>(PickValue()).GetInt64(); }
-	UInt64 PickUInt64()				{ return dynamic_cast<Value_Number&>(PickValue()).GetUInt64(); }
-	Float PickFloat()				{ return dynamic_cast<Value_Number&>(PickValue()).GetFloat(); }
-	Double PickDouble()				{ return dynamic_cast<Value_Number&>(PickValue()).GetDouble(); }
-	const Symbol* PickSymbol()		{ return dynamic_cast<Value_Symbol&>(PickValue()).GetSymbol(); }
-	const char* PickString()		{ return dynamic_cast<Value_String&>(PickValue()).GetString(); }
-	const String& PickStringSTL()	{ return dynamic_cast<Value_String&>(PickValue()).GetStringSTL(); }
+	size_t PickSizeT()				{ return Value_Number::GetSizeT(PickValue()); }
+	Char PickChar()					{ return Value_Number::GetChar(PickValue()); }
+	UChar PickUChar()				{ return Value_Number::GetUChar(PickValue()); }
+	Short PickShort()				{ return Value_Number::GetShort(PickValue()); }
+	UShort PickUShort()				{ return Value_Number::GetUShort(PickValue()); }
+	Int PickInt()					{ return Value_Number::GetInt(PickValue()); }
+	UInt PickUInt()					{ return Value_Number::GetUInt(PickValue()); }
+	Long PickLong()					{ return Value_Number::GetLong(PickValue()); }
+	ULong PickULong()				{ return Value_Number::GetULong(PickValue()); }
+	Int8 PickInt8()					{ return Value_Number::GetInt8(PickValue()); }
+	UInt8 PickUInt8()				{ return Value_Number::GetUInt8(PickValue()); }
+	Int16 PickInt16()				{ return Value_Number::GetInt16(PickValue()); }
+	UInt16 PickUInt16()				{ return Value_Number::GetUInt16(PickValue()); }
+	Int32 PickInt32()				{ return Value_Number::GetInt32(PickValue()); }
+	UInt32 PickUInt32()				{ return Value_Number::GetUInt32(PickValue()); }
+	Int64 PickInt64()				{ return Value_Number::GetInt64(PickValue()); }
+	UInt64 PickUInt64()				{ return Value_Number::GetUInt64(PickValue()); }
+	Float PickFloat()				{ return Value_Number::GetFloat(PickValue()); }
+	Double PickDouble()				{ return Value_Number::GetDouble(PickValue()); }
+	const Symbol* PickSymbol()		{ return Value_Symbol::GetSymbol(PickValue()); }
+	const char* PickString()		{ return Value_String::GetString(PickValue()); }
+	const String& PickStringSTL()	{ return Value_String::GetStringSTL(PickValue()); }
 	const ValueList& PickList()		{ return dynamic_cast<Value_List&>(PickValue()).GetValueOwner(); }
 	const Expr& PickExpr()			{ return dynamic_cast<Value_Expr&>(PickValue()).GetExpr(); }
 	DateTime& PickDateTime()		{ return dynamic_cast<Value_DateTime&>(PickValue()).GetDateTime(); }

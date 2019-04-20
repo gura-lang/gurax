@@ -50,6 +50,16 @@ public:
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
 	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
 public:
+	static ValueTypedOwner& GetValueTypedOwner(Value& value) {
+		return dynamic_cast<Value_List&>(value).GetValueTypedOwner();
+	}
+	static const ValueTypedOwner& GetValueTypedOwner(const Value& value) {
+		return dynamic_cast<const Value_List&>(value).GetValueTypedOwner();
+	}
+	static const ValueOwner& GetValueOwner(const Value& value) {
+		return dynamic_cast<const Value_List&>(value).GetValueOwner();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return new Value_List(*this); }
 	virtual size_t DoCalcHash() const override {
