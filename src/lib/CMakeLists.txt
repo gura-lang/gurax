@@ -27,6 +27,7 @@ add_library(guraxcore SHARED
 	Index.cpp
 	Iterator.cpp
 	Iterators.cpp
+	Math.cpp
 	MemoryPool.cpp
 	Module.cpp
 	OAL.cpp

@@ -103,8 +103,8 @@ void RunREPL()
 			pProcessor->SetNext(pPUnit);
 			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
 				pPUnit->Exec(*pProcessor);
-				if (Error::IsIssued()) break;
 				pPUnitLast = pPUnit;
+				if (Error::IsIssued()) break;
 				pPUnit = pProcessor->GetPUnitCur();
 			}
 			if (Error::IsIssued()) break;

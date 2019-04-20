@@ -69,6 +69,35 @@ void Function_Binary::Compose(Composer& composer, Expr_Caller& exprCaller) const
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// math.e:Number
+Gurax_DeclareModuleProperty_R(e)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementModulePropertyGetter(e)
+{
+	static Value* pValue = nullptr;
+	if (!pValue) pValue = new Value_Number(Math::E);
+	return pValue->Reference();
+}
+
+// math.pi:Number
+Gurax_DeclareModuleProperty_R(pi)
+{
+	Declare(VTYPE_Number, Flag::None);
+}
+
+Gurax_ImplementModulePropertyGetter(pi)
+{
+	static Value* pValue = nullptr;
+	if (!pValue) pValue = new Value_Number(Math::PI);
+	return pValue->Reference();
+}
+
+//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
@@ -78,8 +107,6 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	// Assignment of value
-	Assign("pi", new Value_Number(PI));
 	// Assignment of function
 	Assign(new Function_Unary(Operator::math_Abs));
 	Assign(new Function_Unary(Operator::math_Acos));
@@ -111,6 +138,9 @@ Gurax_ModulePrepare()
 	Assign(new Function_Unary(Operator::math_Tan));
 	Assign(new Function_Unary(Operator::math_Tanh));
 	Assign(new Function_Unary(Operator::math_Unitstep));
+	// Assignment of property
+	Assign(Gurax_CreateModuleProperty(e));
+	Assign(Gurax_CreateModuleProperty(pi));
 	return true;
 }
 
