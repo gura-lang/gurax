@@ -244,9 +244,9 @@ void Composer::Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel)
 	SetFactory(new PUnitFactory_BeginQuote(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));
 }
 
-void Composer::Add_PopValue(const Expr& exprSrc)
+void Composer::Add_DiscardValue(const Expr& exprSrc)
 {
-	SetFactory(new PUnitFactory_PopValue(exprSrc.Reference(), NextSeqId()));
+	SetFactory(new PUnitFactory_DiscardValue(exprSrc.Reference(), NextSeqId()));
 }
 
 void Composer::Add_RemoveValue(const Expr& exprSrc, size_t offset)

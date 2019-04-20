@@ -49,6 +49,13 @@ public:
 	Module& GetModule() { return *_pModule; }
 	const Module& GetModule() const { return *_pModule; }
 public:
+	static Module& GetModule(Value& value) {
+		return dynamic_cast<Value_Module&>(value).GetModule();
+	}
+	static const Module& GetModule(const Value& value) {
+		return dynamic_cast<const Value_Module&>(value).GetModule();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

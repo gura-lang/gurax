@@ -48,6 +48,10 @@ protected:
 public:
 	const PUnit* GetPUnit() const { return _pPUnit; }
 public:
+	static const PUnit* GetPUnit(const Value& value) {
+		return dynamic_cast<const Value_PUnit&>(value).GetPUnit();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

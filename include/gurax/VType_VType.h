@@ -48,6 +48,13 @@ public:
 	VType& GetVTypeThis() { return *_pVTypeThis; }
 	const VType& GetVTypeThis() const { return *_pVTypeThis; }
 public:
+	static VType& GetVTypeThis(Value& value) {
+		return dynamic_cast<Value_VType&>(value).GetVTypeThis();
+	}
+	static const VType& GetVTypeThis(const Value& value) {
+		return dynamic_cast<const Value_VType&>(value).GetVTypeThis();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

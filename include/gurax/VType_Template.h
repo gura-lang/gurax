@@ -49,6 +49,13 @@ public:
 	Template& GetTemplate() { return *_pTempl; }
 	const Template& GetTemplate() const { return *_pTempl; }
 public:
+	static Template& GetTemplate(Value& value) {
+		return dynamic_cast<Value_Template&>(value).GetTemplate();
+	}
+	static const Template& GetTemplate(const Value& value) {
+		return dynamic_cast<const Value_Template&>(value).GetTemplate();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

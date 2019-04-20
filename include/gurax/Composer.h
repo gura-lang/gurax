@@ -136,7 +136,7 @@ public:
 	void Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	void Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
-	void Add_PopValue(const Expr& exprSrc);
+	void Add_DiscardValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
 	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag);
