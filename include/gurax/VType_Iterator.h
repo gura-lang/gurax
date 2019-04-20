@@ -48,6 +48,13 @@ public:
 	Iterator& GetIterator() { return *_pIterator; }
 	const Iterator& GetIterator() const { return *_pIterator; }
 public:
+	static Iterator& GetIterator(Value& value) {
+		return dynamic_cast<Value_Iterator&>(value).GetIterator();
+	}
+	static const Iterator& GetIterator(const Value& value) {
+		return dynamic_cast<const Value_Iterator&>(value).GetIterator();
+	}
+public:
 	// Virtual functions of Object
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

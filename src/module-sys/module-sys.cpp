@@ -41,7 +41,7 @@ Gurax_ImplementModulePropertyGetter(ps1)
 
 Gurax_ImplementModulePropertySetter(ps1)
 {
-	Basement::Inst.SetPS1(dynamic_cast<const Value_String&>(value).GetString());
+	Basement::Inst.SetPS1(Value_String::GetString(value));
 }
 
 // sys.ps2:String
@@ -57,7 +57,7 @@ Gurax_ImplementModulePropertyGetter(ps2)
 
 Gurax_ImplementModulePropertySetter(ps2)
 {
-	Basement::Inst.SetPS2(dynamic_cast<const Value_String&>(value).GetString());
+	Basement::Inst.SetPS2(Value_String::GetString(value));
 }
 
 //------------------------------------------------------------------------------

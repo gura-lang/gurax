@@ -49,6 +49,13 @@ public:
 	Stream& GetStream() { return *_pStream; }
 	const Stream& GetStream() const { return *_pStream; }
 public:
+	static Stream& GetStream(Value& value) {
+		return dynamic_cast<Value_Stream&>(value).GetStream();
+	}
+	static const Stream& GetStream(const Value& value) {
+		return dynamic_cast<const Value_Stream&>(value).GetStream();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
