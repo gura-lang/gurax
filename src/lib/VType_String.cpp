@@ -30,6 +30,7 @@ Gurax_DeclareMethod(String, EndsWith)
 
 Gurax_ImplementMethod(String, EndsWith)
 {
+	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
@@ -72,6 +73,7 @@ Gurax_DeclareMethod(String, StartsWith)
 
 Gurax_ImplementMethod(String, StartsWith)
 {
+	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);

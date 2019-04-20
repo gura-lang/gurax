@@ -62,7 +62,7 @@ void RunREPL()
 {
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
 	Composer composer;
-	RefPtr<Processor> pProcessor(Processor::Create(true));
+	RefPtr<Processor> pProcessor(Processor::Create(false));
 	Expr_Root& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
 	const PUnit* pPUnitLast = nullptr;
