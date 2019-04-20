@@ -90,11 +90,11 @@ public:
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetSizeT(); }
 	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetDouble() == dynamic_cast<const Value_Number*>(pValue)->GetDouble();
+		return IsSameType(pValue) && GetDouble() == Value_Number::GetDouble(*pValue);
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetDouble() < dynamic_cast<const Value_Number*>(pValue)->GetDouble() :
+			GetDouble() < Value_Number::GetDouble(*pValue) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;

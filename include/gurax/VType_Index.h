@@ -49,6 +49,13 @@ public:
 	Index& GetIndex() { return *_pIndex; }
 	const Index& GetIndex() const { return *_pIndex; }
 public:
+	static Index& GetIndex(Value& value) {
+		return dynamic_cast<Value_Index&>(value).GetIndex();
+	}
+	static const Index& GetIndex(const Value& value) {
+		return dynamic_cast<const Value_Index&>(value).GetIndex();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

@@ -48,6 +48,13 @@ public:
 	Function& GetFunction() { return *_pFunction; }
 	const Function& GetFunction() const { return *_pFunction; }
 public:
+	static Function& GetFunction(Value& value) {
+		return dynamic_cast<Value_Function&>(value).GetFunction();
+	}
+	static const Function& GetFunction(const Value& value) {
+		return dynamic_cast<const Value_Function&>(value).GetFunction();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

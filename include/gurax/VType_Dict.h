@@ -49,6 +49,13 @@ public:
 	ValueDict& GetValueDict() { return *_pValueDict; }
 	const ValueDict& GetValueDict() const { return *_pValueDict; }
 public:
+	static ValueDict& GetValueDict(Value& value) {
+		return dynamic_cast<Value_Dict&>(value).GetValueDict();
+	}
+	static const ValueDict& GetValueDict(const Value& value) {
+		return dynamic_cast<const Value_Dict&>(value).GetValueDict();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return new Value_Dict(*this); }
 	virtual size_t DoCalcHash() const override { return GetValueDict().CalcHash(); }

@@ -50,6 +50,13 @@ public:
 	Binary& GetBinary() { return _pBinary->GetBinary(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
 public:
+	static Binary& GetBinary(Value& value) {
+		return dynamic_cast<Value_Binary&>(value).GetBinary();
+	}
+	static const Binary& GetBinary(const Value& value) {
+		return dynamic_cast<const Value_Binary&>(value).GetBinary();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

@@ -49,6 +49,13 @@ public:
 	Argument& GetArgument() { return *_pArgument; }
 	const Argument& GetArgument() const { return *_pArgument; }
 public:
+	static Argument& GetArgument(Value& value) {
+		return dynamic_cast<Value_Argument&>(value).GetArgument();
+	}
+	static const Argument& GetArgument(const Value& value) {
+		return dynamic_cast<const Value_Argument&>(value).GetArgument();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

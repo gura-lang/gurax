@@ -47,6 +47,13 @@ public:
 	Iterator& GetIterator() { return *_pIterator; }
 	const Iterator& GetIterator() const { return *_pIterator; }
 public:
+	static Iterator& GetIterator(Value& value) {
+		return dynamic_cast<Value_ArgMapper&>(value).GetIterator();
+	}
+	static const Iterator& GetIterator(const Value& value) {
+		return dynamic_cast<const Value_ArgMapper&>(value).GetIterator();
+	}
+public:
 	// Virtual functions of Object
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
@@ -54,11 +61,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetIterator().IsEqualTo(dynamic_cast<const Value_ArgMapper*>(pValue)->GetIterator());
+			GetIterator().IsEqualTo(Value_ArgMapper::GetIterator(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetIterator().IsLessThan(dynamic_cast<const Value_ArgMapper*>(pValue)->GetIterator()) :
+			GetIterator().IsLessThan(Value_ArgMapper::GetIterator(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;

@@ -49,6 +49,13 @@ public:
 	ArgSlot& GetArgSlot() { return *_pArgSlot; }
 	const ArgSlot& GetArgSlot() const { return *_pArgSlot; }
 public:
+	static ArgSlot& GetArgSlot(Value& value) {
+		return dynamic_cast<Value_ArgSlot&>(value).GetArgSlot();
+	}
+	static const ArgSlot& GetArgSlot(const Value& value) {
+		return dynamic_cast<const Value_ArgSlot&>(value).GetArgSlot();
+	}
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

@@ -344,7 +344,7 @@ template<bool discardValueFlag>
 void PUnit_GenRangeIterator<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	int num = dynamic_cast<Value_Number*>(pValue.get())->GetInt();
+	int num = Value_Number::GetInt(*pValue);
 	RefPtr<Iterator> pIterator(new Iterator_Range(num));
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetNext(_GetPUnitCont());
@@ -409,8 +409,7 @@ PUnit* PUnitFactory_GenCounterIterator::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EvalIterator<discardValueFlag>::Exec(Processor& processor) const
 {
-	Iterator& iterator =
-		dynamic_cast<Value_Iterator*>(processor.PeekValue(GetOffset()))->GetIterator();
+	Iterator& iterator = Value_Iterator::GetIterator(*processor.PeekValue(GetOffset()));
 	RefPtr<Value> pValueElem(iterator.NextValue());
 	if (pValueElem) {
 		if (!discardValueFlag) processor.PushValue(pValueElem.release());
@@ -450,8 +449,7 @@ void PUnit_ForEach<discardValueFlag>::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
 	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
-		Iterator& iterator =
-			dynamic_cast<Value_Iterator*>(processor.PeekValue(offset))->GetIterator();
+		Iterator& iterator = Value_Iterator::GetIterator(*processor.PeekValue(offset));
 		RefPtr<Value> pValueElem(iterator.NextValue());
 		if (!pValueElem) {
 			processor.SetNext(GetPUnitBranchDest());
@@ -604,8 +602,7 @@ void PUnit_ListElem<discardValueFlag, xlistFlag>::Exec(Processor& processor) con
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
 	if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
-		ValueTypedOwner& valueTypedOwner =
-			dynamic_cast<Value_List*>(processor.PeekValue(GetOffset()))->GetValueTypedOwner();
+		ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(*processor.PeekValue(GetOffset()));
 		valueTypedOwner.Add(pValueElem.release());
 	}
 	if (discardValueFlag) processor.PopValue();
@@ -681,8 +678,7 @@ void PUnit_DictElem<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
 	RefPtr<Value> pValueKey(processor.PopValue());
-	ValueDict& valueDict =
-		dynamic_cast<Value_Dict*>(processor.PeekValue(GetOffset()))->GetValueDict();
+	ValueDict& valueDict = Value_Dict::GetValueDict(*processor.PeekValue(GetOffset()));
 	valueDict.Assign(pValueKey.release(), pValueElem.release());
 	if (discardValueFlag) processor.PopValue();
 	processor.SetNext(_GetPUnitCont());
@@ -750,7 +746,7 @@ template<bool discardValueFlag>
 void PUnit_FeedIndex<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	Index& index = dynamic_cast<Value_Index*>(processor.PeekValue(0))->GetIndex();
+	Index& index = Value_Index::GetIndex(*processor.PeekValue(0));
 	index.FeedValue(pValue.release());
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());
@@ -1041,7 +1037,7 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ArgSlot<discardValueFlag>::Exec(Processor& processor) const
 {
-	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
+	Argument& argument = Value_Argument::GetArgument(*processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
 		IssueError(ErrorType::ArgumentError, "too many arguments");
@@ -1097,7 +1093,7 @@ void PUnit_FeedArgSlot<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
-	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
+	Argument& argument = Value_Argument::GetArgument(*processor.PeekValue(0));
 	argument.FeedValue(frame, pValue.release());
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());
@@ -1135,7 +1131,7 @@ PUnit* PUnitFactory_FeedArgSlot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 {
-	Argument& argument = dynamic_cast<Value_Argument*>(processor.PeekValue(0))->GetArgument();
+	Argument& argument = Value_Argument::GetArgument(*processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
 	if (!pArgSlot) {
 		Value_Dict* pValueOfDict = argument.GetValueOfDict();
@@ -1200,7 +1196,8 @@ void PUnit_FeedArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
-	ArgSlot& argSlot = dynamic_cast<Value_ArgSlot*>(processor.PopValue())->GetArgSlot();
+	RefPtr<Value> pValueArgSlot(processor.PopValue());
+	ArgSlot& argSlot = Value_ArgSlot::GetArgSlot(*pValueArgSlot);
 	argSlot.FeedValue(frame, pValue.release());
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());

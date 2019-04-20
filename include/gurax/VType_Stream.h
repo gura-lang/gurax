@@ -63,11 +63,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetStream().IsEqualTo(dynamic_cast<const Value_Stream*>(pValue)->GetStream());
+			GetStream().IsEqualTo(Value_Stream::GetStream(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetStream().IsLessThan(dynamic_cast<const Value_Stream*>(pValue)->GetStream()) :
+			GetStream().IsLessThan(Value_Stream::GetStream(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {

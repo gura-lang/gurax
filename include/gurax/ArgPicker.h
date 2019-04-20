@@ -62,10 +62,10 @@ public:
 	const Symbol* PickSymbol()		{ return Value_Symbol::GetSymbol(PickValue()); }
 	const char* PickString()		{ return Value_String::GetString(PickValue()); }
 	const String& PickStringSTL()	{ return Value_String::GetStringSTL(PickValue()); }
-	const ValueList& PickList()		{ return dynamic_cast<Value_List&>(PickValue()).GetValueOwner(); }
-	const Expr& PickExpr()			{ return dynamic_cast<Value_Expr&>(PickValue()).GetExpr(); }
-	DateTime& PickDateTime()		{ return dynamic_cast<Value_DateTime&>(PickValue()).GetDateTime(); }
-	TimeDelta& PickTimeDelta()		{ return dynamic_cast<Value_TimeDelta&>(PickValue()).GetTimeDelta(); }
+	const ValueList& PickList()		{ return Value_List::GetValueOwner(PickValue()); }
+	const Expr& PickExpr()			{ return Value_Expr::GetExpr(PickValue()); }
+	DateTime& PickDateTime()		{ return Value_DateTime::GetDateTime(PickValue()); }
+	TimeDelta& PickTimeDelta()		{ return Value_TimeDelta::GetTimeDelta(PickValue()); }
 	Stream& PickStream();
 	Iterator& PickIterator();
 };
