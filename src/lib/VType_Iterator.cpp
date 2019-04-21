@@ -8,6 +8,25 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Iterator#Each() {`block}
+Gurax_DeclareMethod(Iterator, Each)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Iterator, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(valueThis.GetIterator().Clone());
+	return pIterator->Each(processor, *argument.GetExprOfBlock());
+}
+
 // Iterator#NextValue()
 Gurax_DeclareMethod(Iterator, NextValue)
 {
@@ -34,6 +53,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Iterator, Each));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
 }
 
