@@ -1,0 +1,9 @@
+#!./gurax
+import(util)
+
+a = 3
+scope {
+	a = 5
+	Println('a = ', a)
+}
+Println('a = ', a)
