@@ -10,15 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock)
 {
-	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
-	if (declArgOwner.size() >= 3) {
-		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
-		return Value::nil();
-	}
-	// Function body
-	Frame& frame = processor.PushFrame<Frame_Scope>();
 	Value* pValueEach = nullptr;
-	RefPtr<Value> pValueRtn;
+	RefPtr<Value> pValueRtn(Value::nil());
+	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
+	Frame& frame = processor.PushFrame<Frame_Scope>();
 	if (declArgOwner.size() == 0) {
 		while ((pValueEach = NextValue()) && processor.GetContFlag()) {
 			pValueRtn.reset(processor.Process(exprOfBlock));
@@ -40,6 +35,8 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock)
 			pValueRtn.reset(processor.Process(exprOfBlock));
 			idx++;
 		}
+	} else {
+		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
 	}
 	processor.PopFrame();
 	if (Error::IsIssued()) return Value::nil();
