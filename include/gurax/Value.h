@@ -4,6 +4,7 @@
 #ifndef GURAX_VALUE_H
 #define GURAX_VALUE_H
 #include "VType.h"
+#include "Iterator.h"
 
 namespace Gurax {
 
@@ -12,7 +13,6 @@ class DeclCallable;
 class Formatter;
 class FormatterFlags;
 class Index;
-class Iterator;
 class Processor;
 
 //------------------------------------------------------------------------------
@@ -142,6 +142,17 @@ protected:
 // ValueList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ValueList : public std::vector<Value*> {
+public:
+	class IteratorIF : public Gurax::IteratorIF {
+	private:
+		const_iterator _ppValue, _ppValueEnd;
+	public:
+		IteratorIF(const ValueList& valueList) :
+			_ppValue(valueList.begin()), _ppValueEnd(valueList.end()) {}
+		virtual Value* NextValue() override {
+			return (_ppValue == _ppValueEnd)? nullptr : *_ppValue++;
+		}
+	};
 public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

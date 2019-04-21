@@ -26,6 +26,7 @@ add_library(guraxcore SHARED
 	Help.cpp
 	Index.cpp
 	Iterator.cpp
+	IteratorIF.cpp
 	Iterators.cpp
 	Math.cpp
 	MemoryPool.cpp

@@ -22,34 +22,9 @@ Gurax_ImplementMethod(List, Each)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	const ValueOwner& valueOwner = valueThis.GetValueOwner();
-	// Block
-	const Expr_Block& exprOfBlock = *argument.GetExprOfBlock();
-	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
-	DeclArg* pDeclArg1st = (declArgOwner.size() >= 1)? declArgOwner[0] : nullptr;
-	DeclArg* pDeclArg2nd = (declArgOwner.size() >= 2)? declArgOwner[1] : nullptr;
-	if (declArgOwner.size() >= 3) {
-		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
-		return Value::nil();
-	}
 	// Function body
-	Frame& frame = processor.PushFrame<Frame_Scope>();
-	size_t idx = 0;
-	for (Value* pValueEach : valueOwner) {
-		if (pDeclArg1st) {
-			frame.Assign(*pDeclArg1st, *pValueEach);
-			if (Error::IsIssued()) return Value::nil();
-		}
-		if (pDeclArg2nd) {
-			RefPtr<Value> pValueIdx(new Value_Number(idx));
-			frame.Assign(*pDeclArg2nd, *pValueIdx);
-			if (Error::IsIssued()) return Value::nil();
-		}
-		RefPtr<Value> pValue(processor.Process(exprOfBlock));
-		idx++;
-	}
-	processor.PopFrame();
-	return Value::nil();
+	ValueList::IteratorIF iteratorIF(valueThis.GetValueOwner());
+	return iteratorIF.Each(processor, *argument.GetExprOfBlock());
 }
 
 //------------------------------------------------------------------------------

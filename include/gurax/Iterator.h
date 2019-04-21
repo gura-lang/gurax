@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_ITERATOR_H
 #define GURAX_ITERATOR_H
+#include "IteratorIF.h"
 #include "Referable.h"
 #include "Help.h"
 
@@ -13,7 +14,7 @@ class Value;
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator : public Referable {
+class GURAX_DLLDECLARE Iterator : public Referable, public IteratorIF {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Iterator);

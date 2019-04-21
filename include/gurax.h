@@ -30,6 +30,7 @@
 #include "gurax/Help.h"
 #include "gurax/Index.h"
 #include "gurax/Iterator.h"
+#include "gurax/IteratorIF.h"
 #include "gurax/Iterators.h"
 #include "gurax/Math.h"
 #include "gurax/MemoryPool.h"
