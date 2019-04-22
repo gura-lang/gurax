@@ -100,7 +100,7 @@ void RunREPL()
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
 			const PUnit* pPUnit = pPUnitLast? pPUnitLast->GetPUnitNext() : composer.GetPUnitFirst();
 			if (!pPUnit) continue;
-			pProcessor->SetNext(pPUnit);
+			pProcessor->SetPUnitNext(pPUnit);
 			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
 				pPUnit->Exec(*pProcessor);
 				pPUnitLast = pPUnit;
@@ -115,7 +115,7 @@ void RunREPL()
 			Error::Print(*Stream::CErr);
 			Error::Clear();
 			pProcessor->ClearValueStack();
-			pProcessor->Resume();
+			pProcessor->ResumeFromError();
 		}
 	}
 }

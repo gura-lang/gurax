@@ -18,7 +18,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	RefPtr<Value> pValue(DoEval(processor, argument));
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
-	processor.SetNext(pPUnitOfCaller->GetPUnitCont());
+	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
 String Function::ToString(const StringStyle& ss) const
