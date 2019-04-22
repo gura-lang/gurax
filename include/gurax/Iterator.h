@@ -60,7 +60,6 @@ public:
 	// Virtual functions
 	virtual Iterator* Clone() const;
 	virtual Flags GetFlags() const = 0;
-	virtual Value* NextValue() = 0;
 	virtual size_t GetLength() const = 0;
 	virtual String ToString(const StringStyle& ss) const;
 };

@@ -12,6 +12,7 @@ VType_ArgSlot VTYPE_ArgSlot("ArgSlot");
 
 void VType_ArgSlot::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

@@ -46,6 +46,7 @@ VType_Expr VTYPE_Expr("Expr");
 
 void VType_Expr::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method

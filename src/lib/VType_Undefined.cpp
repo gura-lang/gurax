@@ -12,6 +12,7 @@ VType_Undefined VTYPE_Undefined("Undefined");
 
 void VType_Undefined::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VType::Empty, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

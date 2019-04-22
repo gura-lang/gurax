@@ -12,6 +12,7 @@ VType_Any VTYPE_Any("Any");
 
 void VType_Any::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VType::Empty, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

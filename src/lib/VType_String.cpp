@@ -144,6 +144,7 @@ VType_String VTYPE_String("String");
 
 void VType_String::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method

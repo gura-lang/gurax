@@ -12,6 +12,7 @@ VType_Member VTYPE_Member("Member");
 
 void VType_Member::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

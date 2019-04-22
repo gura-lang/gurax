@@ -12,6 +12,7 @@ VType_Module VTYPE_Module("Module");
 
 void VType_Module::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

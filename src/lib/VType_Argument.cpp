@@ -12,6 +12,7 @@ VType_Argument VTYPE_Argument("Argument");
 
 void VType_Argument::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

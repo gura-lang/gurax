@@ -12,6 +12,7 @@ VType_Binary VTYPE_Binary("Binary");
 
 void VType_Binary::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

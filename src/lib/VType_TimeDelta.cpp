@@ -12,6 +12,7 @@ VType_TimeDelta VTYPE_TimeDelta("Timedelta");
 
 void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

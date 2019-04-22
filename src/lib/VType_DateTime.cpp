@@ -12,6 +12,7 @@ VType_DateTime VTYPE_DateTime("Datetime");
 
 void VType_DateTime::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

@@ -13,6 +13,7 @@ VType_StringPtr VTYPE_StringPtr("StringPtr");
 
 void VType_StringPtr::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

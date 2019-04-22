@@ -50,6 +50,7 @@ VType_PUnit VTYPE_PUnit("PUnit");
 
 void VType_PUnit::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method

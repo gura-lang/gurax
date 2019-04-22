@@ -50,6 +50,7 @@ VType_Iterator VTYPE_Iterator("Iterator");
 
 void VType_Iterator::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method

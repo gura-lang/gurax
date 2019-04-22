@@ -12,6 +12,7 @@ VType_Index VTYPE_Index("Index");
 
 void VType_Index::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 }

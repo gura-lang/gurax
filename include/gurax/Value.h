@@ -147,11 +147,8 @@ public:
 	private:
 		const_iterator _ppValue, _ppValueEnd;
 	public:
-		IteratorIF(const ValueList& valueList) :
-			_ppValue(valueList.begin()), _ppValueEnd(valueList.end()) {}
-		virtual Value* NextValue() override {
-			return (_ppValue == _ppValueEnd)? nullptr : *_ppValue++;
-		}
+		IteratorIF(const ValueList& valueList);
+		virtual Value* NextValue() override;
 	};
 public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);

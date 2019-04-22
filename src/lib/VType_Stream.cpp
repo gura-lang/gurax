@@ -34,6 +34,7 @@ VType_Stream VTYPE_Stream("Stream");
 
 void VType_Stream::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of method

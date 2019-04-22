@@ -12,6 +12,7 @@ VType_Quote VTYPE_Quote("Quote");
 
 void VType_Quote::DoPrepare(Frame& frameOuter)
 {
+	// VType settings
 	SetAttrs(VType::Empty, Flag::Immutable);
 	frameOuter.Assign(*this);
 }
