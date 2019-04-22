@@ -768,15 +768,6 @@ void Expr_Caller::Compose(Composer& composer)
 	if (GetExprOfBlock()) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(*this);
-#if 0
-		if (composer.HasValidRepeaterInfo()) {
-			composer.BeginRepeaterExBlock();
-			composer.ComposeAsSequence(*GetExprOfBlock());
-			composer.EndRepeaterExBlock();
-		} else {
-			composer.ComposeAsSequence(*GetExprOfBlock());
-		}
-#endif
 		composer.ComposeAsSequence(*GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
