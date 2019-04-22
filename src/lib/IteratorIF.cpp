@@ -17,7 +17,7 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock)
 		for (;;) {
 			RefPtr<Value> pValueEach(NextValue());
 			if (!pValueEach) break;
-			pValueRtn.reset(processor.Process(exprOfBlock));
+			pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 			if (!processor.GetContFlag()) break;
 		}
 	} else if (declArgOwner.size() == 1) {
@@ -26,7 +26,7 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock)
 			if (!pValueEach) break;
 			frame.Assign(*declArgOwner[0], *pValueEach);
 			if (Error::IsIssued()) break;
-			pValueRtn.reset(processor.Process(exprOfBlock));
+			pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 			if (!processor.GetContFlag()) break;
 		}
 	} else if (declArgOwner.size() == 2) {
@@ -39,7 +39,7 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock)
 			RefPtr<Value> pValueIdx(new Value_Number(idx));
 			frame.Assign(*declArgOwner[1], *pValueIdx);
 			if (Error::IsIssued()) break;
-			pValueRtn.reset(processor.Process(exprOfBlock));
+			pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 			if (!processor.GetContFlag()) break;
 			idx++;
 		}

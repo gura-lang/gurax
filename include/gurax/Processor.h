@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE Processor : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Processor);
+public:
+	enum class Event { None, Error, Break, Continue };
 protected:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
@@ -21,6 +23,7 @@ protected:
 	const PUnit* _pPUnitCur;
 	bool _contFlag;
 	bool _resumeFlag;
+	Event _event;
 public:
 	// Constructor
 	Processor();
@@ -60,6 +63,14 @@ public:
 	bool GetContFlag() const { return _contFlag; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 public:
+	void ClearEvent() { _event = Event::None; }
+	void SetEventError() { _event = Event::Error; }
+	void SetEventBreak() { _event = Event::Break; }
+	void SetEventContinue() { _event = Event::Continue; }
+	bool IsEventError() const { return _event == Event::Error; }
+	bool IsEventBreak() const { return _event == Event::Break; }
+	bool IsEventContinue() const { return _event == Event::Continue; }
+public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
 	void ClearFrameStack() { GetFrameStack().Clear(); }
@@ -68,9 +79,8 @@ public:
 	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
-	void Process(const PUnit* pPUnit) { RunLoop(pPUnit); }
-	void Process(const Composer& composer) { Process(composer.GetPUnitFirst()); }
-	Value* Process(const Expr& expr);
+	void ProcessPUnit(const PUnit* pPUnit) { RunLoop(pPUnit); }
+	Value* ProcessExpr(const Expr& expr);
 protected:
 	virtual void RunLoop(const PUnit* pPUnit) = 0;
 };

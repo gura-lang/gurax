@@ -21,8 +21,9 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
-	processor.Process(GetPUnitBody());
+	processor.ProcessPUnit(GetPUnitBody());
 	processor.PopFrame();
+	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
 	return processor.PopValue();
 }

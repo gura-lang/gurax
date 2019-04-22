@@ -49,7 +49,7 @@ int Main(int argc, char* argv[])
 		composer.PrintPUnit();
 	} else {
 		RefPtr<Processor> pProcessor(Processor::Create(cmdLine.GetBool("debug")));
-		pProcessor->Process(composer);
+		pProcessor->ProcessPUnit(composer.GetPUnitFirst());
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			return 1;

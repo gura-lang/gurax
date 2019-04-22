@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Processor::Processor() :
 	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
-	_pPUnitCur(nullptr), _contFlag(true), _resumeFlag(true)
+	_pPUnitCur(nullptr), _contFlag(true), _resumeFlag(true), _event(Event::None)
 {
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
@@ -34,10 +34,10 @@ Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicSco
 	return *pFrame;
 }
 
-Value* Processor::Process(const Expr& expr)
+Value* Processor::ProcessExpr(const Expr& expr)
 {
 	if (!expr.GetPUnitTop()) return Value::nil();
-	Process(expr.GetPUnitTop());
+	ProcessPUnit(expr.GetPUnitTop());
 	return Error::IsIssued()? Value::nil() : PopValue();
 }
 
