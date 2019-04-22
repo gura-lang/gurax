@@ -1,3 +1,65 @@
 #!./gurax
+import(util)
 a = [3, 1, 4, 1, 5, 9, 2, 6]
 Println(a)
+
+util.TestCase('Each') {
+	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+	Println('Each { .. }')
+	tbl.Each {
+		Println('----')
+	}
+	Println('Each {|x| .. }')
+	tbl.Each {|x|
+		Printf('%s\n', x)
+	}
+	Println('Each {|x, i| .. }')
+	tbl.Each {|x, i|
+		Printf('%d %s\n', i, x)
+	}
+	Println('Each {|x| .. }, break at "t"')
+	tbl.Each {|x|
+		Printf('%s\n', x)
+		if (x.StartsWith('t')) { break }
+	}
+	Println('Each {|x| .. }, break at "s"')
+	tbl.Each {|x|
+		Printf('%s\n', x)
+		if (x.StartsWith('s')) { break }
+	}
+	Println('Each {|x| .. }, skip "t"')
+	tbl.Each {|x|
+		if (x.StartsWith('t')) { continue }
+		Printf('%s\n', x)
+	}
+	Println('Each {|x, i| .. }, break at "t"')
+	tbl.Each {|x, i|
+		Printf('%d %s\n', i, x)
+		if (x.StartsWith('t')) { break }
+	}
+	Println('Each {|x, i| .. }, break at "s"')
+	tbl.Each {|x, i|
+		Printf('%d %s\n', i, x)
+		if (x.StartsWith('s')) { break }
+	}
+	Println('Each {|x, i| .. }, skip "t"')
+	tbl.Each {|x, i|
+		if (x.StartsWith('t')) { continue }
+		Printf('%d %s\n', i, x)
+	}
+	Println('Each {|x, i| .. }, break at "t"')
+	tbl.Each {|x, i|
+		Printf('%d %s\n', i, x)
+		x.StartsWith('t') && break
+	}
+	Println('Each {|x, i| .. }, break at "s"')
+	tbl.Each {|x, i|
+		Printf('%d %s\n', i, x)
+		x.StartsWith('s') && break
+	}
+	Println('Each {|x, i| .. }, skip "t"')
+	tbl.Each {|x, i|
+		x.StartsWith('t') && continue
+		Printf('%d %s\n', i, x)
+	}
+}

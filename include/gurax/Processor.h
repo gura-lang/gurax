@@ -15,7 +15,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Processor);
 public:
-	enum class Event { None, Error, Break, Continue };
+	enum class Event { None, Break, Continue };
 protected:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
@@ -59,15 +59,13 @@ public:
 	void SetPUnitNext(const PUnit* pPUnit, bool contFlag) { _pPUnitCur = pPUnit; _contFlag = contFlag; }
 	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
-	void ResumeFromError() { _contFlag = true; _resumeFlag = true; }
+	void ResumeFromError() { _contFlag = true; _resumeFlag = true; _event = Event::None; }
 	bool GetContFlag() const { return _contFlag; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
 public:
 	void ClearEvent() { _event = Event::None; }
-	void SetEventError() { _event = Event::Error; }
 	void SetEventBreak() { _event = Event::Break; }
 	void SetEventContinue() { _event = Event::Continue; }
-	bool IsEventError() const { return _event == Event::Error; }
 	bool IsEventBreak() const { return _event == Event::Break; }
 	bool IsEventContinue() const { return _event == Event::Continue; }
 public:

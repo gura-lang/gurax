@@ -13,36 +13,43 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock)
 	RefPtr<Value> pValueRtn(Value::nil());
 	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
 	Frame& frame = processor.PushFrame<Frame_Scope>();
+	bool contFlag = true;
 	if (declArgOwner.size() == 0) {
-		for (;;) {
+		do {
 			RefPtr<Value> pValueEach(NextValue());
 			if (!pValueEach) break;
 			pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
-			if (!processor.GetContFlag()) break;
-		}
+			if (Error::IsIssued()) break;
+			contFlag = !processor.IsEventBreak();
+			processor.ClearEvent();
+		} while (contFlag);
 	} else if (declArgOwner.size() == 1) {
-		for (;;) {
+		do {
 			RefPtr<Value> pValueEach(NextValue());
 			if (!pValueEach) break;
 			frame.Assign(*declArgOwner[0], *pValueEach);
 			if (Error::IsIssued()) break;
 			pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
-			if (!processor.GetContFlag()) break;
-		}
+			if (Error::IsIssued()) break;
+			contFlag = !processor.IsEventBreak();
+			processor.ClearEvent();
+		} while (contFlag);
 	} else if (declArgOwner.size() == 2) {
 		size_t idx = 0;
-		for (;;) {
+		do {
 			RefPtr<Value> pValueEach(NextValue());
 			if (!pValueEach) break;
 			frame.Assign(*declArgOwner[0], *pValueEach);
 			if (Error::IsIssued()) break;
 			RefPtr<Value> pValueIdx(new Value_Number(idx));
+			idx++;
 			frame.Assign(*declArgOwner[1], *pValueIdx);
 			if (Error::IsIssued()) break;
 			pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
-			if (!processor.GetContFlag()) break;
-			idx++;
-		}
+			if (Error::IsIssued()) break;
+			contFlag = !processor.IsEventBreak();
+			processor.ClearEvent();
+		} while (contFlag);
 	} else {
 		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
 	}
