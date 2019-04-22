@@ -17,19 +17,17 @@ public:
 		const PUnit* _pPUnitOfLoop;
 		const PUnit* _pPUnitOfBranch;
 		const PUnit* _pPUnitOfBreak;
-		bool _contFlag;
 	public:
 		// Constructor
 		RepeaterInfo() = delete;
 		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch,
-					 const PUnit* pPUnitOfBreak, bool contFlag) :
+					 const PUnit* pPUnitOfBreak) :
 			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch),
-			_pPUnitOfBreak(pPUnitOfBreak), _contFlag(contFlag){}
-		RepeaterInfo(const RepeaterInfo& src, bool contFlag) :
-			_pPUnitOfLoop(src._pPUnitOfLoop), _pPUnitOfBranch(src._pPUnitOfBranch),
-			_pPUnitOfBreak(src._pPUnitOfBreak),_contFlag(contFlag){}
+			_pPUnitOfBreak(pPUnitOfBreak) {}
 		// Copy constructor/operator
-		RepeaterInfo(const RepeaterInfo& src) = delete;
+		RepeaterInfo(const RepeaterInfo& src) :
+			_pPUnitOfLoop(src._pPUnitOfLoop), _pPUnitOfBranch(src._pPUnitOfBranch),
+			_pPUnitOfBreak(src._pPUnitOfBreak) {}
 		RepeaterInfo& operator=(const RepeaterInfo& src) = delete;
 		// Move constructor/operator
 		RepeaterInfo(RepeaterInfo&& src) = delete;
@@ -40,7 +38,6 @@ public:
 		const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
 		const PUnit* GetPUnitOfBranch() const { return _pPUnitOfBranch; }
 		const PUnit* GetPUnitOfBreak() const { return _pPUnitOfBreak; }
-		bool GetContFlag() const { return _contFlag; }
 	};
 	class RepeaterInfoTbl : public std::vector<RepeaterInfo*> {
 	};
@@ -79,15 +76,9 @@ public:
 	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
 	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
 	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, const PUnit* pPUnitOfBreak) {
-		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak, true));
+		_repeaterInfoStack.push_back(new RepeaterInfo(pPUnitOfLoop, pPUnitOfBranch, pPUnitOfBreak));
 	}
 	void EndRepeaterBlock() {
-		_repeaterInfoStack.pop_back();
-	}
-	void BeginRepeaterExBlock() {
-		_repeaterInfoStack.push_back(new RepeaterInfo(*_repeaterInfoStack.back(), false));
-	}
-	void EndRepeaterExBlock() {
 		_repeaterInfoStack.pop_back();
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
@@ -139,8 +130,8 @@ public:
 	void Add_DiscardValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
 	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
-	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag);
-	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop, bool contFlag);
+	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool branchDestFlag);
+	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop);
 	void Add_Return(const Expr& exprSrc);
 	template<typename T_Frame> void Add_PushFrame(const Expr& exprSrc);
 	void Add_PopFrame(const Expr& exprSrc);

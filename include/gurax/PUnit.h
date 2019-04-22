@@ -1817,14 +1817,12 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitMarked;
-	bool _contFlag;
 public:
 	// Constructor
-	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitMarked, bool contFlag) :
-		PUnit(pExprSrc, seqId), _pPUnitMarked(pPUnitMarked), _contFlag(contFlag) {}
+	PUnit_Break(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitMarked) :
+		PUnit(pExprSrc, seqId), _pPUnitMarked(pPUnitMarked) {}
 public:
 	const PUnit* GetPUnitMarked() const { return _pPUnitMarked; }
-	bool GetContFlag() const { return _contFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1841,13 +1839,12 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Break");
 private:
 	const PUnit* _pPUnitMarked;
-	bool _breakPointFlag;
-	bool _contFlag;
+	bool _branchDestFlag;
 public:
 	PUnitFactory_Break(Expr* pExprSrc, PUnit::SeqId seqId,
-					   const PUnit* pPUnitMarked, bool breakPointFlag, bool contFlag) :
+					   const PUnit* pPUnitMarked, bool branchDestFlag) :
 		PUnitFactory(pExprSrc, seqId), _pPUnitMarked(pPUnitMarked),
-		_breakPointFlag(breakPointFlag), _contFlag(contFlag) {}
+		_branchDestFlag(branchDestFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Break<false, false>);
 	}
@@ -1864,15 +1861,12 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const PUnit* _pPUnitOfLoop;
-	bool _contFlag;
 public:
 	// Constructor
-	PUnit_Continue(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfLoop, bool contFlag) :
-		PUnit(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop), _contFlag(contFlag) {}
+	PUnit_Continue(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitOfLoop) :
+		PUnit(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop) {}
 public:
 	const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
-
-	bool GetContFlag() const { return _contFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1889,10 +1883,9 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Continue");
 private:
 	const PUnit* _pPUnitOfLoop;
-	bool _contFlag;
 public:
-	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfLoop, bool contFlag) :
-		PUnitFactory(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop), _contFlag(contFlag) {}
+	PUnitFactory_Continue(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitOfLoop) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitOfLoop(pPUnitOfLoop) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Continue<false>);
 	}

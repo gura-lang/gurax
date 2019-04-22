@@ -501,14 +501,14 @@ Gurax_ImplementStatement(break_)
 		} else {
 			composer.Add_Value(exprCaller, Value::undefined());			// [undefined]
 		}
-		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBreak(), true, repeaterInfo.GetContFlag());
+		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBreak(), false);
 	} else {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);							// [Any]
 		} else {
 			composer.Add_Value(exprCaller, Value::nil());				// [nil]
 		}
-		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBranch(), false, repeaterInfo.GetContFlag());
+		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBranch(), true);
 	}
 }
 
@@ -538,7 +538,7 @@ Gurax_ImplementStatement(continue_)
 		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
-	composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop(), repeaterInfo.GetContFlag());
+	composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop());
 }
 
 // return(value?)
