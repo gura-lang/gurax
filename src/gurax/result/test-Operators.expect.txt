@@ -71,6 +71,12 @@ false && false
   ##2 Lookup(`false)
   ##3 NoOperation()
   ##4 Return()
+======== Operator .. ========
+1 .. 10 .. <Iterator:Range:begin=1:end=11:step=1>
+1 .. 1 .. <Iterator:Range:begin=1:end=2:step=1>
+1 .. 0 .. <Iterator:Range:begin=1:end=-1:step=-1>
+1 .. (-10) .. <Iterator:Range:begin=1:end=-11:step=-1>
+======== Operators && and || ========
 true && true .. true
 true && false .. false
 false && true .. false

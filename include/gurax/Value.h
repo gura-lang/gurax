@@ -71,8 +71,6 @@ public:
 	const VType& GetVType() const { return *_pVType; }
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Value* pValue) const { return this == pValue; }
-	bool IsUndefined() const { return IsIdentical(_pValue_undefined); }
-	bool IsNil() const { return IsIdentical(_pValue_nil); }
 	static bool IsIdentical(const Value* pValue1, const Value* pValue2) {
 		return pValue1? pValue1->IsIdentical(pValue2) : (!pValue1 && !pValue2);
 	}
@@ -112,9 +110,12 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
+	virtual bool IsValid() const { return true; }
+	virtual bool IsUndefined() const { return false; }
+	virtual bool IsNil() const { return false; }
+	virtual bool IsIterator() const { return false; }
 	virtual Value* Pick() { return Reference(); }
 	virtual bool GetBool() const { return true; }
-	virtual bool IsValid() const { return true; }
 	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
 	virtual void DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoIndexGet(const Index& index) const;

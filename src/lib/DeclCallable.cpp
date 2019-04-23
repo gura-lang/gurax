@@ -95,7 +95,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		_flags |= flag;
 		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
-	if (!CheckFlagConfliction(_flags)) return false;
+	//if (!CheckFlagConfliction(_flags)) return false;
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	if (pExprOfBlock) {
 		const char* strError = "invalid format of block declaration";

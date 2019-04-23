@@ -50,8 +50,10 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return "undefined";
 	}
-	virtual bool GetBool() const override { return false; }
+	// Virtual functions for runtime process
 	virtual bool IsValid() const override { return false; }
+	virtual bool IsUndefined() const override { return true; }
+	virtual bool GetBool() const override { return false; }
 };
 
 }

@@ -601,8 +601,10 @@ template<bool discardValueFlag, bool xlistFlag>
 void PUnit_ListElem<discardValueFlag, xlistFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
+
 	if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
-		ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
+		ValueTypedOwner& valueTypedOwner =
+			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 		valueTypedOwner.Add(pValueElem.release());
 	}
 	if (discardValueFlag) processor.DiscardValue();

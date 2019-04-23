@@ -227,9 +227,15 @@ Gurax_ImplementOpBinary(Pow, Number, Number)
 // Number .. Number
 Gurax_ImplementOpBinary(Seq, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
-	return new Value_Number(numL + numR);
+	int numL = Value_Number::GetInt(valueL);
+	int numR = Value_Number::GetInt(valueR);
+	int idxBegin = 0, idxEnd = 0, idxStep = 0;
+	if (numL <= numR) {
+		idxBegin = numL, idxEnd = numR + 1, idxStep = 1;
+	} else {
+		idxBegin = numL, idxEnd = numR - 1, idxStep = -1;
+	}
+	return new Value_Iterator(new Iterator_Range(idxBegin, idxEnd, idxStep));
 }
 
 // Number << Number
