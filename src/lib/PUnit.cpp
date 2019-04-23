@@ -601,8 +601,18 @@ template<bool discardValueFlag, bool xlistFlag>
 void PUnit_ListElem<discardValueFlag, xlistFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
-
-	if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
+	if (pValueElem->IsIterator()) {
+		ValueTypedOwner& valueTypedOwner =
+			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
+		Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
+		if (!iterator.MustBeFinite()) return;
+		for (;;) {
+			RefPtr<Value> pValue(iterator.NextValue());
+			if (!pValue) break;
+			if (!xlistFlag || pValue->IsValid()) valueTypedOwner.Add(pValue.release());
+		}
+		
+	} else if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
 		ValueTypedOwner& valueTypedOwner =
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 		valueTypedOwner.Add(pValueElem.release());

@@ -6,29 +6,36 @@
 namespace Gurax {
 
 // ~Number
-Gurax_ImplementOpPreUnary(Inv, Number)
+Gurax_ImplementOpUnary(Inv, Number)
 {
 	Int num = Value_Number::GetInt(value);
 	return new Value_Number(~num);
 }
 
 // -Number
-Gurax_ImplementOpPreUnary(Neg, Number)
+Gurax_ImplementOpUnary(Neg, Number)
 {
 	Double num = Value_Number::GetDouble(value);
 	return new Value_Number(-num);
 }
 
 // !Number
-Gurax_ImplementOpPreUnary(Not, Number)
+Gurax_ImplementOpUnary(Not, Number)
 {
 	return Value::false_();
 }
 
 // +Number
-Gurax_ImplementOpPreUnary(Pos, Number)
+Gurax_ImplementOpUnary(Pos, Number)
 {
 	return value.Clone();
+}
+
+// Number ..
+Gurax_ImplementOpUnary(PostSeq, Number)
+{
+	int num = Value_Number::GetInt(value);
+	return new Value_Iterator(new Iterator_Counter(num, 1));
 }
 
 // Number + Number
@@ -280,10 +287,11 @@ Gurax_ImplementOpBinary(Xor, Number, Number)
 
 void Operators::Bootup()
 {
-	Gurax_AssignOpPreUnary(Inv,			Number);
-	Gurax_AssignOpPreUnary(Neg,			Number);
-	Gurax_AssignOpPreUnary(Not,			Number);
-	Gurax_AssignOpPreUnary(Pos,			Number);
+	Gurax_AssignOpUnary(Inv,			Number);
+	Gurax_AssignOpUnary(Neg,			Number);
+	Gurax_AssignOpUnary(Not,			Number);
+	Gurax_AssignOpUnary(Pos,			Number);
+	Gurax_AssignOpUnary(PostSeq,		Number);
 	Gurax_AssignOpBinary(Add,			Number, Number);
 	Gurax_AssignOpBinary(And,			Number, Number);
 	Gurax_AssignOpBinary(Cmp,			Number, Number);

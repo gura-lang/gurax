@@ -8,6 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
+bool Iterator::MustBeFinite() const
+{
+	if (IsFinite()) return true;
+	Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
+	return false;
+}
+
 Iterator* Iterator::Clone() const
 {
 	//*********************

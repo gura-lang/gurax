@@ -43,6 +43,7 @@ protected:
 public:
 	bool IsInfinite() const { return (GetFlags() & Flag::Finite) == 0; }
 	bool IsFinite() const { return (GetFlags() & Flag::Finite) != 0; }
+	bool MustBeFinite() const;
 	bool IsLenUndetermined() const { return (GetFlags() & Flag::LenDetermined) == 0; }
 	bool IsLenDetermined() const { return (GetFlags() & Flag::LenDetermined) != 0; }
 	void AddHelp(const Symbol* pLangCode, String doc) {

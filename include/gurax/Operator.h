@@ -5,16 +5,22 @@
 #define GURAX_OPERATOR_H
 #include "Value.h"
 
-#define Gurax_ImplementOpPreUnary(opType, typeName) \
+//------------------------------------------------------------------------------
+// Macros to implement unary operators
+//------------------------------------------------------------------------------
+#define Gurax_ImplementOpUnary(opType, typeName) \
 class OpEntry_##opType##_##typeName : public OpEntry { \
 public: \
 	virtual Value* EvalUnary(Processor& processor, const Value& value) const; \
 }; \
 Value* OpEntry_##opType##_##typeName::EvalUnary(Processor& processor, const Value& value) const
 
-#define Gurax_AssignOpPreUnary(opType, typeName) \
+#define Gurax_AssignOpUnary(opType, typeName) \
 Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeName())
 
+//------------------------------------------------------------------------------
+// Macros to implement binary operators
+//------------------------------------------------------------------------------
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
 public: \
