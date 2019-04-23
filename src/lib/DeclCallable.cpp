@@ -95,6 +95,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		_flags |= flag;
 		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
+	if (!CheckFlagConfliction(_flags)) return false;
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	if (pExprOfBlock) {
 		const char* strError = "invalid format of block declaration";
@@ -161,6 +162,37 @@ bool DeclCallable::CheckAttribute(const Attribute& attr) const
 			Error::Issue(ErrorType::ArgumentError, "unacceptable attribute symbol: %s", pSymbol->GetName());
 			return false;
 		}
+	}
+	return true;
+}
+
+bool DeclCallable::CheckFlagConfliction(Flags flags)
+{
+	int cnt = 0;
+	if (flags & Flag::Map) cnt++;
+	if (flags & Flag::NoMap) cnt++;
+	if (cnt > 1) {
+		Error::Issue(ErrorType::ArgumentError,
+					 "attribute :map and :nomap can not be specified together");
+		return false;
+	}
+	cnt = 0;
+	if (flags & Flag::Public) cnt++;
+	if (flags & Flag::Private) cnt++;
+	if (cnt > 1) {
+		Error::Issue(ErrorType::ArgumentError,
+					 "attribute :public and :private can not be specified together");
+		return false;
+	}
+	cnt = 0;
+	if (flags & Flag::List) cnt++;
+	if (flags & Flag::XList) cnt++;
+	if (flags & Flag::Iter) cnt++;
+	if (flags & Flag::XIter) cnt++;
+	if (cnt > 1) {
+		Error::Issue(ErrorType::ArgumentError,
+					 "attribute :list, :xlist, :iter and :xiter can not be specified together");
+		return false;
 	}
 	return true;
 }

@@ -1,1 +1,101 @@
 [3, 1, 4, 1, 5, 9, 2, 6]
+======== Each ========
+Each { .. }
+----
+----
+----
+----
+----
+----
+----
+----
+----
+----
+----
+Each {|x| .. }
+zero
+one
+two
+three
+four
+five
+six
+seven
+eight
+nine
+ten
+Each {|x, i| .. }
+0 zero
+1 one
+2 two
+3 three
+4 four
+5 five
+6 six
+7 seven
+8 eight
+9 nine
+10 ten
+Each {|x| .. }, break at "t"
+zero
+one
+two
+Each {|x| .. }, break at "s"
+zero
+one
+two
+three
+four
+five
+six
+Each {|x| .. }, skip "t"
+zero
+one
+four
+five
+six
+seven
+eight
+nine
+Each {|x, i| .. }, break at "t"
+0 zero
+1 one
+2 two
+Each {|x, i| .. }, break at "s"
+0 zero
+1 one
+2 two
+3 three
+4 four
+5 five
+6 six
+Each {|x, i| .. }, skip "t"
+0 zero
+1 one
+4 four
+5 five
+6 six
+7 seven
+8 eight
+9 nine
+Each {|x, i| .. }, break at "t"
+0 zero
+1 one
+2 two
+Each {|x, i| .. }, break at "s"
+0 zero
+1 one
+2 two
+3 three
+4 four
+5 five
+6 six
+Each {|x, i| .. }, skip "t"
+0 zero
+1 one
+4 four
+5 five
+6 six
+7 seven
+8 eight
+9 nine

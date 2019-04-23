@@ -24,7 +24,7 @@ Gurax_ImplementMethod(Iterator, Each)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	RefPtr<Iterator> pIterator(valueThis.GetIterator().Clone());
-	return pIterator->Each(processor, *argument.GetExprOfBlock());
+	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
 
 // Iterator#NextValue()

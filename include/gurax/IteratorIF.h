@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_ITERATORIF_H
 #define GURAX_ITERATORIF_H
-#include "Referable.h"
+#include "DeclCallable.h"
 
 namespace Gurax {
 
@@ -16,7 +16,7 @@ class Expr_Block;
 //------------------------------------------------------------------------------
 class IteratorIF {
 public:
-	Value* Each(Processor& processor, const Expr_Block& exprOfBlock);
+	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
 public:
 	virtual Value* NextValue() = 0;
 };

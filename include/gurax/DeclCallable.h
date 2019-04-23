@@ -119,6 +119,7 @@ public:
 	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetAttr().IsSetOpt(pSymbol); }
 	bool CheckAttribute(const Attribute& attr) const;
+	static bool CheckFlagConfliction(Flags flags);
 	const Symbol* GetSymbolOfDict() const { return _pSymbolOfDict; }
 	const Symbol* GetSymbolOfAccessor() const { return _pSymbolOfAccessor; }
 	bool IsDeclaredSymbol(const Symbol* pSymbol) {

@@ -8,10 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// List#Each() {`block}
+// List#Each():[list.xlist,iter,xiter] {`block}
 Gurax_DeclareMethod(List, Each)
 {
 	Declare(VTYPE_Any, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(list));
+	DeclareAttrOpt(Gurax_Symbol(xlist));
+	DeclareAttrOpt(Gurax_Symbol(iter));
+	DeclareAttrOpt(Gurax_Symbol(xiter));
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -24,7 +28,7 @@ Gurax_ImplementMethod(List, Each)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	ValueList::IteratorIF iteratorIF(valueThis.GetValueOwner());
-	return iteratorIF.Each(processor, *argument.GetExprOfBlock());
+	return iteratorIF.Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
 
 //------------------------------------------------------------------------------
