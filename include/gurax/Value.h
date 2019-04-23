@@ -114,7 +114,8 @@ public:
 	virtual bool IsUndefined() const { return false; }
 	virtual bool IsNil() const { return false; }
 	virtual bool IsIterator() const { return false; }
-	virtual Value* Pick() { return Reference(); }
+	virtual bool ReadyToPickValue() { return true; }
+	virtual Value* PickValue() { return Reference(); }
 	virtual bool GetBool() const { return true; }
 	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
 	virtual void DoCall(Processor& processor, Argument& argument);

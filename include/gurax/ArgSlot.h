@@ -48,7 +48,7 @@ public:
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
 	void AssignToFrame(Frame& frame) const {
 		if (IsDefined()) {
-			frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue()->Reference());;
+			frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
 		}
 	}
 public:
@@ -62,6 +62,7 @@ public:
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) = 0;
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
+	virtual bool ReadyToPickValue() const = 0;
 	virtual Value* PickValue() const = 0;
 	virtual bool IsDefined() const = 0;
 	virtual bool IsVacant() const = 0;
@@ -88,7 +89,8 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
-	virtual Value* PickValue() const override { return _pValue->Pick(); }
+	virtual bool ReadyToPickValue() const override { return _pValue->ReadyToPickValue(); }
+	virtual Value* PickValue() const override { return _pValue->PickValue(); }
 	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -107,7 +109,8 @@ public:
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
-	virtual Value* PickValue() const override { return _pValue->Pick(); }
+	virtual bool ReadyToPickValue() const override { return _pValue->ReadyToPickValue(); }
+	virtual Value* PickValue() const override { return _pValue->PickValue(); }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -191,6 +194,7 @@ public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
+	virtual bool ReadyToPickValue() const override { return true; }
 	virtual Value* PickValue() const override { return Value::nil(); }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }

@@ -29,6 +29,7 @@ public:
 	Gurax_MemoryPoolAllocator("Value_ArgMapper");
 protected:
 	RefPtr<Iterator> _pIterator;
+	RefPtr<Value> _pValue;
 public:
 	// Constructor
 	Value_ArgMapper() = delete;
@@ -73,7 +74,11 @@ public:
 	virtual Iterator* DoGenIterator() override;
 public:
 	// Virtual functions for runtime process
-	virtual Value* Pick() override { return GetIterator().NextValue(); }
+	virtual bool ReadyToPickValue() override {
+		_pValue.reset(GetIterator().NextValue());
+		return !!_pValue;
+	}
+	virtual Value* PickValue() override { return _pValue.Reference(); }
 };
 
 }
