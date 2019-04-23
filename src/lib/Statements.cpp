@@ -502,13 +502,20 @@ Gurax_ImplementStatement(break_)
 			composer.Add_Value(exprCaller, Value::undefined());			// [undefined]
 		}
 		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBreak(), false);
-	} else {
+	} else if (repeaterInfo.GetPUnitOfBranch()) {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);							// [Any]
 		} else {
 			composer.Add_Value(exprCaller, Value::nil());				// [nil]
 		}
 		composer.Add_Break(exprCaller, repeaterInfo.GetPUnitOfBranch(), true);
+	} else { // both PUnitOfBreak and PUnitOfBranch are nullptr
+		if (pExprCdr) {
+			pExprCdr->ComposeOrNil(composer);							// [Any]
+		} else {
+			composer.Add_Value(exprCaller, Value::undefined());			// [undefined]
+		}
+		composer.Add_Break(exprCaller, nullptr, false);
 	}
 }
 
@@ -531,14 +538,23 @@ Gurax_ImplementStatement(continue_)
 						 "continue-statement can be used in a loop");
 		return;
 	}
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
-	if (pExprCdr) {
-		pExprCdr->ComposeOrNil(composer);							// [Any]
-	} else {
-		composer.Add_Value(exprCaller, Value::nil());				// [nil]
-	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
-	composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop());
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	if (repeaterInfo.GetPUnitOfLoop()) {
+		if (pExprCdr) {
+			pExprCdr->ComposeOrNil(composer);							// [Any]
+		} else {
+			composer.Add_Value(exprCaller, Value::nil());				// [nil]
+		}
+		composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop());
+	} else {
+		if (pExprCdr) {
+			pExprCdr->ComposeOrNil(composer);							// [Any]
+		} else {
+			composer.Add_Value(exprCaller, Value::undefined());			// [undefined]
+		}
+		composer.Add_Continue(exprCaller, repeaterInfo.GetPUnitOfLoop());
+	}
 }
 
 // return(value?)
