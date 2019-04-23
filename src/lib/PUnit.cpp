@@ -34,6 +34,13 @@ void PUnit::Print(const StringStyle& ss, int seqIdOffset) const
 				  MakeSeqIdString(seqIdOffset).c_str(), ToString(ss, seqIdOffset).c_str());
 }
 
+void PUnit::Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel, const StringStyle& ss, int seqIdOffset)
+{
+	for ( ; pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext()) {
+		pPUnit->Print(ss, seqIdOffset);
+	}
+}
+
 //------------------------------------------------------------------------------
 // PUnitFactory
 //------------------------------------------------------------------------------

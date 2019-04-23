@@ -100,6 +100,7 @@ void RunREPL()
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
 			const PUnit* pPUnit = pPUnitLast? pPUnitLast->GetPUnitNext() : composer.GetPUnitFirst();
 			if (!pPUnit) continue;
+			//PUnit::Print(pPUnit, pPUnitSentinel);
 			pProcessor->SetPUnitNext(pPUnit);
 			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
 				pPUnit->Exec(*pProcessor);

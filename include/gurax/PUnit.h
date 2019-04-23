@@ -47,6 +47,8 @@ public:
 	}
 	void AppendInfoToString(String& str, const StringStyle& ss) const;
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
+	static void Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel,
+					  const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0);
 public:
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {
