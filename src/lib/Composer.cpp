@@ -36,7 +36,7 @@ void Composer::Flush(bool discardValueFlag)
 
 void Composer::ComposeAsSequence(Expr& expr)
 {
-	expr.SetPUnitTop(PeekPUnitCont());
+	expr.SetPUnitFirst(PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
 	Add_BeginSequence(expr);								// [Any]
 	BeginRepeaterBlock(nullptr, nullptr, nullptr);

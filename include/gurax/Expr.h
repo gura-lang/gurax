@@ -95,12 +95,12 @@ protected:
 	RefPtr<Expr> _pExprNext;
 	RefPtr<WeakPtr> _pwExprPrev;
 	RefPtr<WeakPtr> _pwExprParent;
-	const PUnit* _pPUnitTop;
+	const PUnit* _pPUnitFirst;
 public:
 	static const Expr* Empty;
 public:
 	// Constructor
-	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo), _pPUnitTop(nullptr) {}
+	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo), _pPUnitFirst(nullptr) {}
 	// Copy constructor/operator
 	Expr(const Expr& src) = delete;
 	Expr& operator=(const Expr& src) = delete;
@@ -131,8 +131,8 @@ public:
 	Expr* LockExprPrev() const { return _pwExprPrev? _pwExprPrev->Lock() : nullptr; }
 	void SetExprParent(const Expr* pExprParent) { _pwExprParent.reset(pExprParent->GetWeakPtr()); }
 	Expr* LockExprParent() const { return _pwExprParent? _pwExprParent->Lock() : nullptr; }
-	void SetPUnitTop(const PUnit* pPUnit) { if (!_pPUnitTop) _pPUnitTop = pPUnit; }
-	const PUnit* GetPUnitTop() const { return _pPUnitTop; }
+	void SetPUnitFirst(const PUnit* pPUnit) { if (!_pPUnitFirst) _pPUnitFirst = pPUnit; }
+	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
 public:
 	void ComposeOrNil(Composer& composer);
 	Iterator* EachPUnit() const;

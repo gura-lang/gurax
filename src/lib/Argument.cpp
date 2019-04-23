@@ -53,7 +53,7 @@ Function* Argument::CreateFunctionOfBlock(Frame& frameParent) const
 					  Function::Type::Function,
 					  GetExprOfBlock()->GetDeclCallable().GetDeclBlock().GetSymbol(),
 					  GetExprOfBlock()->GetDeclCallable().Reference(),
-					  GetExprOfBlock()->GetPUnitTop()));
+					  GetExprOfBlock()->GetPUnitFirst()));
 	pFunction->SetFrameParent(frameParent);
 	return pFunction.release();
 }
@@ -113,7 +113,7 @@ void Argument::AssignToFrame(Frame& frame) const
 			RefPtr<FunctionCustom>
 				pFunction(new FunctionCustom(
 							  Function::Type::Function, pSymbol, GetExprOfBlock()->GetDeclCallable().Reference(),
-							  GetExprOfBlock()->GetPUnitTop()));
+							  GetExprOfBlock()->GetPUnitFirst()));
 			frame.Assign(pFunction.release());
 		}
 	}

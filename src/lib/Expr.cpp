@@ -27,7 +27,7 @@ void Expr::ComposeOrNil(Composer& composer)
 Iterator* Expr::EachPUnit() const
 {
 	const PUnit* pPUnitSentinel = nullptr;
-	const PUnit* pPUnit = GetPUnitTop();
+	const PUnit* pPUnit = GetPUnitFirst();
 	if (!pPUnit) {
 		// nothing to do
 	} else if (pPUnit->GetPUnitSentinel()) {
@@ -84,7 +84,7 @@ void Expr::ComposeForArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_ArgSlot(*this);									// [Argument]
-	SetPUnitTop(composer.PeekPUnitCont());
+	SetPUnitFirst(composer.PeekPUnitCont());
 	PUnit* pPUnitOfBeginQuote = composer.PeekPUnitCont();
 	composer.Add_BeginQuote(*this);									// [Argument]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
@@ -376,7 +376,7 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_ArgSlotNamed(
 		*this, pSymbol, GetExprRight()->Reference());					// [Argument ArgSlot]
-	GetExprRight()->SetPUnitTop(composer.PeekPUnitCont());
+	GetExprRight()->SetPUnitFirst(composer.PeekPUnitCont());
 	PUnit* pPUnitOfBeginQuote = composer.PeekPUnitCont();
 	composer.Add_BeginQuote(*this);										// [Argument ArgSlot]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
@@ -499,6 +499,7 @@ const Expr::TypeInfo Expr_Root::typeInfo;
 
 void Expr_Root::Compose(Composer& composer)
 {
+	SetPUnitFirst(composer.PeekPUnitCont());
 	ComposeSequence(composer, GetExprElemFirst());						// [Any]
 	composer.Add_Return(*this);
 	composer.Add_Terminate(*this);

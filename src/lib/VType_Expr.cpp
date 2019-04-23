@@ -66,8 +66,8 @@ String Value_Expr::ToStringDigest(const StringStyle& ss) const
 	str += ":`(";
 	str += GetExpr().ToString(StringStyle().Cram());
 	str += ")";
-	if (GetExpr().GetPUnitTop()) {
-		str.Printf(":PUnit#%zu", GetExpr().GetPUnitTop()->GetSeqId());
+	if (GetExpr().GetPUnitFirst()) {
+		str.Printf(":PUnit#%zu", GetExpr().GetPUnitFirst()->GetSeqId());
 	}
 	str += ">";
 	return str;

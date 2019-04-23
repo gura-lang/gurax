@@ -1027,7 +1027,7 @@ String PUnit_Argument<discardValueFlag>::ToString(const StringStyle& ss, int seq
 {
 	String str;
 	if (_pExprOfBlock) {
-		str.Printf("Argument(block=%s)", MakeSeqIdString(_pExprOfBlock->GetPUnitTop(), seqIdOffset).c_str());
+		str.Printf("Argument(block=%s)", MakeSeqIdString(_pExprOfBlock->GetPUnitFirst(), seqIdOffset).c_str());
 	} else {
 		str += "Argument()";
 	}
@@ -1083,8 +1083,8 @@ String PUnit_ArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 {
 	String str;
 	str.Printf("ArgSlot(`(%s)", GetExprSrc().ToString(StringStyle().Cram()).c_str());
-	if (GetExprSrc().GetPUnitTop()) {
-		str.Printf(":%s", MakeSeqIdString(GetExprSrc().GetPUnitTop(), seqIdOffset).c_str());
+	if (GetExprSrc().GetPUnitFirst()) {
+		str.Printf(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
 	str.Printf(",cont=%s,branchdest=%s)",
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
