@@ -36,7 +36,7 @@ void PUnit::Print(const StringStyle& ss, int seqIdOffset) const
 
 void PUnit::Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel, const StringStyle& ss, int seqIdOffset)
 {
-	for ( ; pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext()) {
+	for ( ; pPUnit && pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext()) {
 		pPUnit->Print(ss, seqIdOffset);
 	}
 }

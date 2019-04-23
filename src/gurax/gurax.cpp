@@ -92,7 +92,8 @@ void RunREPL()
 		}
 		Expr* pExpr = pExprLast? pExprLast->GetExprNext() : exprRoot.GetExprElemFirst();
 		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-			if (!pExpr->DoPrepare()) break;
+			if (!pExpr->Prepare()) break;
+			if (Error::IsIssued()) break;
 			pExpr->Compose(composer);
 			pExprLast = pExpr;
 			composer.Flush(false);
