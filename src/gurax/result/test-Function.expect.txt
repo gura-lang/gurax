@@ -9,3 +9,12 @@
 [dynamic] a = local
 [static, block]  a = external
 [dynamic, block] a = local
+======== Named argument ========
+%{`d1 => 1, `d2 => 2, `d3 => 3}
+<Function:f1>((<Dict:3items>)%)
+%{`d1 => 1, `d2 => 2, `d3 => 3}
+<Function:f2>(a => <Number:10>, b => <Number:20>, c => <Number:30>, (<Dict:3items>)%)
+%{`d1 => 1, `d2 => 2, `d3 => 3}
+<Function:f2>(a => <Number:10>, b => <Number:20>, c => <Number:30>, (<Dict:3items>)%)
+%{`d1 => 1, `d2 => 2, `d3 => 3}
+<Function:f2>(a => <Number:30>, b => <Number:10>, c => <Number:20>, (<Dict:3items>)%)

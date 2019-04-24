@@ -25,3 +25,18 @@ util.TestCase('dynamic_scope') {
 		g_dynamic { Println('[dynamic, block] a = ', a) }
 	}
 }
+
+util.TestCase('Named argument') {
+	f1(dict%, arg%%) = {
+		Println(dict)
+		Println(arg)
+	}
+	f2(a, b, c, dict%, arg%%) = {
+		Println(dict)
+		Println(arg)
+	}
+	f1(d1 => 1, d2 => 2, d3 => 3)
+	f2(10, 20, 30, d1 => 1, d2 => 2, d3 => 3)
+	f2(a => 10, b => 20, c => 30, d1 => 1, d2 => 2, d3 => 3)
+	f2(b => 10, c => 20, a => 30, d1 => 1, d2 => 2, d3 => 3)
+}
