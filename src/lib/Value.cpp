@@ -449,7 +449,7 @@ String ValueDict::ToString(const StringStyle& ss) const
 	RefPtr<ValueOwner> pKeys(GetKeys());
 	pKeys->Sort();
 	String str;
-	str += "{";
+	str += "%{";
 	for (auto ppValueKey = pKeys->begin(); ppValueKey != pKeys->end(); ppValueKey++) {
 		const Value* pValueKey = *ppValueKey;
 		Value* pValue = Lookup(pValueKey);

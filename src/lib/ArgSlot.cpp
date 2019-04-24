@@ -81,6 +81,7 @@ void ArgSlot_Dict::FeedValue(Frame& frame, RefPtr<Value> pValue)
 String ArgSlot_Dict::ToString(const StringStyle& ss) const
 {
 	String str;
+	str += GetValue().ToString(ss);
 	return str;
 }
 
