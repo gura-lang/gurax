@@ -126,6 +126,8 @@ public:
 		return GetDeclArgOwner().FindBySymbol(pSymbol) ||
 			GetSymbolOfDict()->IsIdentical(pSymbol) || GetSymbolOfAccessor()->IsIdentical(pSymbol);
 	}
+	bool IsResultVoid() const { return GetVTypeResult().IsNil(); }
+	bool IsResultReduce() const { return IsSet(Flag::Reduce); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclCallable& declCaller) const { return this == &declCaller; }

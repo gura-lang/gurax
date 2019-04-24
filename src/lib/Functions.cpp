@@ -88,7 +88,7 @@ Gurax_ImplementFunction(Println)
 // Hoge(a:Number, b:Number):map
 Gurax_DeclareFunction(Hoge)
 {
-	Declare(VTYPE_Nil, Flag::Map);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("a", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("b", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 }

@@ -17,9 +17,28 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	if (argument.IsMapMode(Argument::MapMode::ToList)) {
-		while (argument.ReadyToPickValue()) {
-			RefPtr<Value> pValue(DoEval(processor, argument));
-			//if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
+		if (pPUnitOfCaller->GetDiscardValueFlag()) {
+			while (argument.ReadyToPickValue()) {
+				Value::Delete(DoEval(processor, argument));
+			}
+		} else if (GetDeclCallable().IsResultVoid()) {
+			while (argument.ReadyToPickValue()) {
+				Value::Delete(DoEval(processor, argument));
+			}
+			processor.PushValue(Value::nil());
+		} else if (GetDeclCallable().IsResultReduce()) {
+			RefPtr<Value> pValueRtn(Value::nil());
+			while (argument.ReadyToPickValue()) {
+				pValueRtn.reset(DoEval(processor, argument));
+			}
+			processor.PushValue(pValueRtn.release());
+		} else {
+			RefPtr<Value_List> pValueRtn(new Value_List());
+			ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+			while (argument.ReadyToPickValue()) {
+				valueTypedOwner.Add(DoEval(processor, argument));
+			}
+			processor.PushValue(pValueRtn.release());
 		}
 	} else {
 		RefPtr<Value> pValue(DoEval(processor, argument));

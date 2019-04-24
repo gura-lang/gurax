@@ -92,6 +92,8 @@ public:
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 public:
 	// Virtual functions
+	virtual bool IsNil() const { return false; }
+	virtual bool IsUndefined() const { return false; }
 	virtual bool IsList() const { return false; }
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsListOrIterator() const { return false; }

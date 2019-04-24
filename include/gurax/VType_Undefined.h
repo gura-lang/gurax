@@ -13,6 +13,7 @@ namespace Gurax {
 class VType_Undefined : public VType {
 public:
 	using VType::VType;
+	virtual bool IsUndefined() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 

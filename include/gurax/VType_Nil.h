@@ -13,6 +13,7 @@ namespace Gurax {
 class VType_Nil : public VType {
 public:
 	using VType::VType;
+	virtual bool IsNil() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
