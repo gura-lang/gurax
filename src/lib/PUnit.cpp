@@ -1156,8 +1156,7 @@ void PUnit_ArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 		Value_Dict* pValueOfDict = argument.GetValueOfDict();
 		if (pValueOfDict) {
 			processor.PushValue(
-				new Value_ArgSlot(
-					new ArgSlot_Dict(pValueOfDict->GetValueDict().Reference(), GetSymbol())));
+				new Value_ArgSlot(new ArgSlot_Dict(pValueOfDict->Reference(), GetSymbol())));
 			processor.SetPUnitNext(_GetPUnitCont());
 		} else {
 			IssueError(ErrorType::ArgumentError, "can't find the specified argument: %s", GetSymbol()->GetName());

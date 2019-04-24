@@ -120,8 +120,8 @@ class GURAX_DLLDECLARE ArgSlot_Dict : public ArgSlot {
 protected:
 	const Symbol* _pSymbol;
 public:
-	ArgSlot_Dict(ValueDict* pValueDict, const Symbol* pSymbol) :
-		ArgSlot(DeclArg::Empty->Reference(), new Value_Dict()), _pSymbol(pSymbol) {}
+	ArgSlot_Dict(Value_Dict* pValueOfDict, const Symbol* pSymbol) :
+		ArgSlot(DeclArg::Empty->Reference(), pValueOfDict), _pSymbol(pSymbol) {}
 protected:
 	Value_Dict& GetValue() { return dynamic_cast<Value_Dict&>(*_pValue); }
 	const Value_Dict& GetValue() const { return dynamic_cast<const Value_Dict&>(*_pValue); }
