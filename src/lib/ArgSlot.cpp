@@ -75,6 +75,7 @@ void ArgSlot_Dict::ResetValue()
 
 void ArgSlot_Dict::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
+	::printf("check\n");
 	GetValue().GetValueDict().Assign(new Value_Symbol(_pSymbol), pValue.release());
 }
 
