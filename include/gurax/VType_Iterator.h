@@ -72,6 +72,7 @@ public:
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
+	virtual bool IsIterable() const override { return true; }
 	virtual bool IsIterator() const override { return true; }
 	virtual Iterator* DoGenIterator() override;
 };

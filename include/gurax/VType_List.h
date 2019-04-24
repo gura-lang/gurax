@@ -76,6 +76,9 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+public:
+	virtual bool IsIterable() const override { return true; }
+	virtual bool IsList() const override { return true; }
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, Value* pValue) override;
 	virtual Iterator* DoGenIterator() override;

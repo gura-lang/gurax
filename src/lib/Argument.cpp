@@ -15,13 +15,14 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
+	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
 	if (ppDeclArg != declArgOwner.end()) {
 		DeclArg* pDeclArg = *ppDeclArg++;
-		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));
+		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference(), _flags));
 		ArgSlot* pArgSlotLast = _pArgSlotFirst.get();
 		while (ppDeclArg != declArgOwner.end()) {
 			DeclArg* pDeclArg = *ppDeclArg++;
-			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference());
+			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference(), _flags);
 			pArgSlotLast->SetNext(pArgSlot);
 			pArgSlotLast = pArgSlot;
 		}			
@@ -29,7 +30,6 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	if (!_pDeclCallable->GetSymbolOfDict()->IsEmpty()) {
 		_pValueOfDict.reset(new Value_Dict());
 	}
-	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
 	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 

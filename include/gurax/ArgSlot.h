@@ -23,10 +23,11 @@ public:
 protected:
 	RefPtr<DeclArg> _pDeclArg;
 	RefPtr<Value> _pValue;
+	DeclCallable::Flags _flags;
 	RefPtr<ArgSlot> _pArgSlotNext;
 public:
 	// Constructor
-	ArgSlot(DeclArg* pDeclArg, Value* pValue) : _pDeclArg(pDeclArg), _pValue(pValue) {}
+	ArgSlot(DeclArg* pDeclArg, Value* pValue, DeclCallable::Flags flags) : _pDeclArg(pDeclArg), _pValue(pValue), _flags(flags) {}
 	// Copy constructor/operator
 	ArgSlot(const ArgSlot& src) = delete;
 	ArgSlot& operator=(const ArgSlot& src) = delete;
@@ -41,6 +42,7 @@ public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 	Value& GetValue() { return *_pValue; }
 	const Value& GetValue() const { return *_pValue; }
+	DeclCallable::Flags GetFlags() const { return _flags; }
 	bool IsVType(const VType& vtype) const { return _pDeclArg->IsVType(vtype); }
 	bool IsMatched(const Symbol* pSymbol) const {
 		return GetDeclArg().GetSymbol()->IsIdentical(pSymbol);
@@ -76,7 +78,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlotFactory {
 public:
-	virtual ArgSlot* Create(DeclArg* pDeclArg) const = 0;
+	virtual ArgSlot* Create(DeclArg* pDeclArg, DeclCallable::Flags flags) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -84,7 +86,8 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_Single : public ArgSlot {
 public:
-	explicit ArgSlot_Single(DeclArg* pDeclArg) : ArgSlot(pDeclArg, Value::undefined()) {}
+	explicit ArgSlot_Single(DeclArg* pDeclArg, DeclCallable::Flags flags) :
+		ArgSlot(pDeclArg, Value::undefined(), flags) {}
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
@@ -99,7 +102,8 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_Multiple : public ArgSlot {
 public:
-	explicit ArgSlot_Multiple(DeclArg* pDeclArg) : ArgSlot(pDeclArg, new Value_List()) {}
+	explicit ArgSlot_Multiple(DeclArg* pDeclArg, DeclCallable::Flags flags) :
+		ArgSlot(pDeclArg, new Value_List(), flags) {}
 protected:
 	Value_List& GetValue() { return dynamic_cast<Value_List&>(*_pValue); }
 	const Value_List& GetValue() const { return dynamic_cast<const Value_List&>(*_pValue); }
@@ -121,7 +125,7 @@ protected:
 	const Symbol* _pSymbol;
 public:
 	ArgSlot_Dict(Value_Dict* pValueOfDict, const Symbol* pSymbol) :
-		ArgSlot(DeclArg::Empty->Reference(), pValueOfDict), _pSymbol(pSymbol) {}
+		ArgSlot(DeclArg::Empty->Reference(), pValueOfDict, DeclCallable::Flag::None), _pSymbol(pSymbol) {}
 protected:
 	Value_Dict& GetValue() { return dynamic_cast<Value_Dict&>(*_pValue); }
 	const Value_Dict& GetValue() const { return dynamic_cast<const Value_Dict&>(*_pValue); }
@@ -142,12 +146,14 @@ class GURAX_DLLDECLARE ArgSlot_Once : public ArgSlot_Single {
 public:
 	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
-		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_Once(pDeclArg); }
+		virtual ArgSlot* Create(DeclArg* pDeclArg, DeclCallable::Flags flags) const {
+			return new ArgSlot_Once(pDeclArg, flags);
+		}
 	};
 public:
 	static const Factory factory;
 public:
-	ArgSlot_Once(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
+	ArgSlot_Once(DeclArg* pDeclArg, DeclCallable::Flags flags) : ArgSlot_Single(pDeclArg, flags) {}
 	virtual bool HasValidValue() const override { return !_pValue->IsUndefined(); }
 };
 
@@ -158,12 +164,14 @@ class GURAX_DLLDECLARE ArgSlot_ZeroOrOnce : public ArgSlot_Single {
 public:
 	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
-		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_ZeroOrOnce(pDeclArg); }
+		virtual ArgSlot* Create(DeclArg* pDeclArg, DeclCallable::Flags flags) const {
+			return new ArgSlot_ZeroOrOnce(pDeclArg, flags);
+		}
 	};
 public:
 	static const Factory factory;
 public:
-	ArgSlot_ZeroOrOnce(DeclArg* pDeclArg) : ArgSlot_Single(pDeclArg) {}
+	ArgSlot_ZeroOrOnce(DeclArg* pDeclArg, DeclCallable::Flags flags) : ArgSlot_Single(pDeclArg, flags) {}
 	virtual bool HasValidValue() const override { return true; }
 };
 
@@ -174,12 +182,14 @@ class GURAX_DLLDECLARE ArgSlot_ZeroOrMore : public ArgSlot_Multiple {
 public:
 	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
-		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_ZeroOrMore(pDeclArg); }
+		virtual ArgSlot* Create(DeclArg* pDeclArg, DeclCallable::Flags flags) const {
+			return new ArgSlot_ZeroOrMore(pDeclArg, flags);
+		}
 	};
 public:
 	static const Factory factory;
 public:
-	ArgSlot_ZeroOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
+	ArgSlot_ZeroOrMore(DeclArg* pDeclArg, DeclCallable::Flags flags) : ArgSlot_Multiple(pDeclArg, flags) {}
 	virtual bool HasValidValue() const override { return true; }
 };
 
@@ -190,12 +200,14 @@ class GURAX_DLLDECLARE ArgSlot_OnceOrMore : public ArgSlot_Multiple {
 public:
 	class GURAX_DLLDECLARE Factory : public ArgSlotFactory {
 	public:
-		virtual ArgSlot* Create(DeclArg* pDeclArg) const { return new ArgSlot_OnceOrMore(pDeclArg); }
+		virtual ArgSlot* Create(DeclArg* pDeclArg, DeclCallable::Flags flags) const {
+			return new ArgSlot_OnceOrMore(pDeclArg, flags);
+		}
 	};
 public:
 	static const Factory factory;
 public:
-	ArgSlot_OnceOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
+	ArgSlot_OnceOrMore(DeclArg* pDeclArg, DeclCallable::Flags flags) : ArgSlot_Multiple(pDeclArg, flags) {}
 	virtual bool HasValidValue() const override { return !GetValue().GetValueTypedOwner().IsEmpty(); }
 };
 
