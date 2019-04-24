@@ -18,11 +18,11 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_flags = GetDeclCallable().GetFlags() | DeclCallable::SymbolsToFlags(GetAttr().GetSymbols());
 	if (ppDeclArg != declArgOwner.end()) {
 		DeclArg* pDeclArg = *ppDeclArg++;
-		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference(), _flags));
+		_pArgSlotFirst.reset(pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference()));
 		ArgSlot* pArgSlotLast = _pArgSlotFirst.get();
 		while (ppDeclArg != declArgOwner.end()) {
 			DeclArg* pDeclArg = *ppDeclArg++;
-			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference(), _flags);
+			ArgSlot* pArgSlot = pDeclArg->GetArgSlotFactory().Create(pDeclArg->Reference());
 			pArgSlotLast->SetNext(pArgSlot);
 			pArgSlotLast = pArgSlot;
 		}			
