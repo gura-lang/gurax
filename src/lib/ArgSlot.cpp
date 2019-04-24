@@ -46,14 +46,14 @@ String ArgSlot_Single::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 void ArgSlot_Multiple::ResetValue()
 {
-	_pValue->GetValueTypedOwner().Clear();
+	GetValue().GetValueTypedOwner().Clear();
 }
 
 void ArgSlot_Multiple::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
 	pValue.reset(GetDeclArg().Cast(frame, *pValue));
 	if (Error::IsIssued()) return;
-	_pValue->GetValueTypedOwner().Add(pValue.release());
+	GetValue().GetValueTypedOwner().Add(pValue.release());
 }
 
 String ArgSlot_Multiple::ToString(const StringStyle& ss) const
@@ -61,7 +61,26 @@ String ArgSlot_Multiple::ToString(const StringStyle& ss) const
 	String str;
 	str += GetDeclArg().GetSymbol()->GetName();
 	str += ss.IsCram()? "=>" : " => ";
-	str += _pValue->GetValueOwner().ToString(ss);
+	str += GetValue().GetValueOwner().ToString(ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// ArgSlot_Dict
+//------------------------------------------------------------------------------
+void ArgSlot_Dict::ResetValue()
+{
+	GetValue().GetValueDict().Clear();
+}
+
+void ArgSlot_Dict::FeedValue(Frame& frame, RefPtr<Value> pValue)
+{
+	GetValue().GetValueDict().Assign(new Value_Symbol(_pSymbol), pValue.release());
+}
+
+String ArgSlot_Dict::ToString(const StringStyle& ss) const
+{
+	String str;
 	return str;
 }
 
@@ -84,24 +103,5 @@ const ArgSlot_ZeroOrMore::Factory ArgSlot_ZeroOrMore::factory;
 // ArgSlot_OnceOrMore
 //------------------------------------------------------------------------------
 const ArgSlot_OnceOrMore::Factory ArgSlot_OnceOrMore::factory;
-
-//------------------------------------------------------------------------------
-// ArgSlot_Dict
-//------------------------------------------------------------------------------
-void ArgSlot_Dict::ResetValue()
-{
-	_pValueDict->Clear();
-}
-
-void ArgSlot_Dict::FeedValue(Frame& frame, RefPtr<Value> pValue)
-{
-	_pValueDict->Assign(new Value_Symbol(_pSymbol), pValue.release());
-}
-
-String ArgSlot_Dict::ToString(const StringStyle& ss) const
-{
-	String str;
-	return str;
-}
 
 }

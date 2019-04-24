@@ -1,5 +1,5 @@
 [SizeOf]
-ArgSlot                          40
+ArgSlot                          48
 Argument                         88
 Attribute                        152
 DateTime                         48
@@ -40,7 +40,7 @@ PUnit_NilJumpIfNot<false>        32
 PUnit_KeepJumpIf<false>          32
 PUnit_KeepJumpIfNot<false>       32
 PUnit_BeginQuote<false>          32
-PUnit_PopValue<false>            24
+PUnit_DiscardValue<false>        24
 PUnit_RemoveValue<false>         32
 PUnit_Return<false>              24
 PUnit_PopFrame<false>            24
@@ -51,7 +51,7 @@ TimeDelta                        24
 ValueOwner                       40
 ValueStack                       40
 Value_Any                        32
-Value_ArgMapper                  40
+Value_ArgMapper                  48
 Value_ArgSlot                    40
 Value_Argument                   40
 Value_Attribute                  40

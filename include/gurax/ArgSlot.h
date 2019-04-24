@@ -5,6 +5,7 @@
 #define GURAX_ARGSLOT_H
 #include "Referable.h"
 #include "Attribute.h"
+#include "VType_Dict.h"
 #include "VType_List.h"
 #include "DeclCallable.h"
 
@@ -21,10 +22,11 @@ public:
 	Gurax_MemoryPoolAllocator("ArgSlot");
 protected:
 	RefPtr<DeclArg> _pDeclArg;
+	RefPtr<Value> _pValue;
 	RefPtr<ArgSlot> _pArgSlotNext;
 public:
 	// Constructor
-	explicit ArgSlot(DeclArg* pDeclArg) : _pDeclArg(pDeclArg) {}
+	ArgSlot(DeclArg* pDeclArg, Value* pValue) : _pDeclArg(pDeclArg), _pValue(pValue) {}
 	// Copy constructor/operator
 	ArgSlot(const ArgSlot& src) = delete;
 	ArgSlot& operator=(const ArgSlot& src) = delete;
@@ -37,6 +39,8 @@ protected:
 public:
 	DeclArg& GetDeclArg() { return *_pDeclArg; }
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
+	Value& GetValue() { return *_pValue; }
+	const Value& GetValue() const { return *_pValue; }
 	bool IsVType(const VType& vtype) const { return _pDeclArg->IsVType(vtype); }
 	bool IsMatched(const Symbol* pSymbol) const {
 		return GetDeclArg().GetSymbol()->IsIdentical(pSymbol);
@@ -46,10 +50,10 @@ public:
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
+	bool ReadyToPickValue() const { return _pValue->ReadyToPickValue(); }
+	Value* PickValue() const { return _pValue->PickValue(); }
 	void AssignToFrame(Frame& frame) const {
-		if (IsDefined()) {
-			frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
-		}
+		if (IsDefined()) frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -62,8 +66,6 @@ public:
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) = 0;
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
-	virtual bool ReadyToPickValue() const = 0;
-	virtual Value* PickValue() const = 0;
 	virtual bool IsDefined() const = 0;
 	virtual bool IsVacant() const = 0;
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const = 0;
@@ -81,16 +83,12 @@ public:
 // ArgSlot_Single
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_Single : public ArgSlot {
-protected:
-	RefPtr<Value> _pValue;
 public:
-	ArgSlot_Single(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(Value::undefined()) {}
+	explicit ArgSlot_Single(DeclArg* pDeclArg) : ArgSlot(pDeclArg, Value::undefined()) {}
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
-	virtual bool ReadyToPickValue() const override { return _pValue->ReadyToPickValue(); }
-	virtual Value* PickValue() const override { return _pValue->PickValue(); }
 	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -100,19 +98,40 @@ public:
 // ArgSlot_Multiple
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ArgSlot_Multiple : public ArgSlot {
-protected:
-	RefPtr<Value_List> _pValue;
 public:
-	ArgSlot_Multiple(DeclArg* pDeclArg) : ArgSlot(pDeclArg), _pValue(new Value_List()) {}
+	explicit ArgSlot_Multiple(DeclArg* pDeclArg) : ArgSlot(pDeclArg, new Value_List()) {}
+protected:
+	Value_List& GetValue() { return dynamic_cast<Value_List&>(*_pValue); }
+	const Value_List& GetValue() const { return dynamic_cast<const Value_List&>(*_pValue); }
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
 	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
-	virtual bool ReadyToPickValue() const override { return _pValue->ReadyToPickValue(); }
-	virtual Value* PickValue() const override { return _pValue->PickValue(); }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// ArgSlot_Dict
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ArgSlot_Dict : public ArgSlot {
+protected:
+	const Symbol* _pSymbol;
+public:
+	ArgSlot_Dict(ValueDict* pValueDict, const Symbol* pSymbol) :
+		ArgSlot(DeclArg::Empty->Reference(), new Value_Dict()), _pSymbol(pSymbol) {}
+protected:
+	Value_Dict& GetValue() { return dynamic_cast<Value_Dict&>(*_pValue); }
+	const Value_Dict& GetValue() const { return dynamic_cast<const Value_Dict&>(*_pValue); }
+public:
+	// Virtual functions of ArgSlot
+	virtual void ResetValue() override;
+	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
+	virtual bool IsDefined() const override { return true; }
+	virtual bool IsVacant() const override { return true; }
+	virtual bool HasValidValue() const override { return true; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -177,29 +196,7 @@ public:
 	static const Factory factory;
 public:
 	ArgSlot_OnceOrMore(DeclArg* pDeclArg) : ArgSlot_Multiple(pDeclArg) {}
-	virtual bool HasValidValue() const override { return !_pValue->GetValueTypedOwner().IsEmpty(); }
-};
-
-//------------------------------------------------------------------------------
-// ArgSlot_Dict
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ArgSlot_Dict : public ArgSlot {
-protected:
-	RefPtr<ValueDict> _pValueDict;
-	const Symbol* _pSymbol;
-public:
-	ArgSlot_Dict(ValueDict* pValueDict, const Symbol* pSymbol) :
-		ArgSlot(DeclArg::Empty->Reference()), _pValueDict(pValueDict), _pSymbol(pSymbol) {}
-public:
-	// Virtual functions of ArgSlot
-	virtual void ResetValue() override;
-	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
-	virtual bool ReadyToPickValue() const override { return true; }
-	virtual Value* PickValue() const override { return Value::nil(); }
-	virtual bool IsDefined() const override { return true; }
-	virtual bool IsVacant() const override { return true; }
-	virtual bool HasValidValue() const override { return true; }
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual bool HasValidValue() const override { return !GetValue().GetValueTypedOwner().IsEmpty(); }
 };
 
 }
