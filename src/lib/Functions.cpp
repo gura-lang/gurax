@@ -85,12 +85,31 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
+// Hoge(a:Number, b:Number):map
+Gurax_DeclareFunction(Hoge)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("a", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("b", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementFunction(Hoge)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Double a = args.PickDouble();
+	Double b = args.PickDouble();
+	// Function body
+	return new Value_Number(a + b);
+}
+
 void Functions::PrepareBasic(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Format));
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));
 	frame.Assign(Gurax_CreateFunction(Println));
+	frame.Assign(Gurax_CreateFunction(Hoge));
 }
 
 }

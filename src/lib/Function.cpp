@@ -16,8 +16,15 @@ String Function::MakeFullName() const
 void Function::DoCall(Processor& processor, Argument& argument) const
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
-	RefPtr<Value> pValue(DoEval(processor, argument));
-	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
+	if (argument.IsMapMode(Argument::MapMode::ToList)) {
+		while (argument.ReadyToPickValue()) {
+			RefPtr<Value> pValue(DoEval(processor, argument));
+			//if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
+		}
+	} else {
+		RefPtr<Value> pValue(DoEval(processor, argument));
+		if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
+	}
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
