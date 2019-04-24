@@ -78,7 +78,7 @@ String Value_Iterator::ToStringDetail(const StringStyle& ss) const
 
 bool Value_Iterator::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const
 {
-	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map) != DeclCallable::Flag::Map)) {
+	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map)) != DeclCallable::Flag::Map) {
 		return false;
 	}
 	if (declArg.GetVType().IsListOrIterator()) return false;

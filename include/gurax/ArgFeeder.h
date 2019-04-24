@@ -12,10 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class ArgFeeder {
 private:
+	Argument& _argument;
 	ArgSlot* _pArgSlot;
 public:
 	// Constructor
-	ArgFeeder(Argument& argument) : _pArgSlot(argument.GetArgSlotFirst()) {
+	ArgFeeder(Argument& argument) : _argument(argument), _pArgSlot(argument.GetArgSlotFirst()) {
 		argument.ResetAllValues();
 	}
 	// Copy constructor/operator

@@ -63,7 +63,7 @@ String Value_List::ToStringDetail(const StringStyle& ss) const
 
 bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const
 {
-	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map) != DeclCallable::Flag::Map)) {
+	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map)) != DeclCallable::Flag::Map) {
 		return false;
 	}
 	if (declArg.GetVType().IsListOrIterator()) return false;

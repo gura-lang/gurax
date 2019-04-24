@@ -1168,7 +1168,7 @@ void PUnit_ArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		Frame& frame = processor.GetFrameCur();
-		pArgSlot->FeedValue(frame, new Value_Expr(GetExprAssigned()->Reference()));
+		pArgSlot->FeedValue(argument, frame, new Value_Expr(GetExprAssigned()->Reference()));
 		if (Error::IsIssued()) {
 			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			processor.ErrorDone();
@@ -1215,8 +1215,9 @@ void PUnit_FeedArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueArgSlot(processor.PopValue());
+	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot& argSlot = Value_ArgSlot::GetArgSlot(*pValueArgSlot);
-	argSlot.FeedValue(frame, pValue.release());
+	argSlot.FeedValue(argument, frame, pValue.release());
 	if (Error::IsIssued()) {
 		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();

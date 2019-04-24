@@ -65,7 +65,7 @@ public:
 public:
 	// Virtual functions
 	virtual void ResetValue() = 0;
-	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) = 0;
+	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) = 0;
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
 	virtual bool IsDefined() const = 0;
@@ -91,7 +91,7 @@ public:
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
-	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
+	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
 	virtual bool IsDefined() const override { return !_pValue->IsUndefined(); }
 	virtual bool IsVacant() const override { return _pValue->IsUndefined(); }
 	virtual String ToString(const StringStyle& ss) const override;
@@ -110,7 +110,7 @@ protected:
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
-	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
+	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
 	virtual ArgSlot* Advance() override { return this; }
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
@@ -132,7 +132,7 @@ protected:
 public:
 	// Virtual functions of ArgSlot
 	virtual void ResetValue() override;
-	virtual void FeedValue(Frame& frame, RefPtr<Value> pValue) override;
+	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) override;
 	virtual bool IsDefined() const override { return true; }
 	virtual bool IsVacant() const override { return true; }
 	virtual bool HasValidValue() const override { return true; }

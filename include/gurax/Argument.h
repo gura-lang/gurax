@@ -79,7 +79,7 @@ public:
 	void ResetAllValues();
 	void FeedValue(Frame& frame, Value* pValue) {
 		if (!_pArgSlotToFeed) return;
-		_pArgSlotToFeed->FeedValue(frame, pValue);
+		_pArgSlotToFeed->FeedValue(*this, frame, pValue);
 		_pArgSlotToFeed = _pArgSlotToFeed->Advance();
 	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {

@@ -25,7 +25,7 @@ void ArgSlot_Single::ResetValue()
 	_pValue.reset(Value::undefined());
 }
 
-void ArgSlot_Single::FeedValue(Frame& frame, RefPtr<Value> pValue)
+void ArgSlot_Single::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
 	if (pValue->IsMappable(GetDeclArg(), GetFlags())) {
 		_pValue.reset(new Value_ArgMapper(pValue->DoGenIterator()));
@@ -53,7 +53,7 @@ void ArgSlot_Multiple::ResetValue()
 	GetValue().GetValueTypedOwner().Clear();
 }
 
-void ArgSlot_Multiple::FeedValue(Frame& frame, RefPtr<Value> pValue)
+void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
 	pValue.reset(GetDeclArg().Cast(frame, *pValue));
 	if (Error::IsIssued()) return;
@@ -77,7 +77,7 @@ void ArgSlot_Dict::ResetValue()
 	GetValue().GetValueDict().Clear();
 }
 
-void ArgSlot_Dict::FeedValue(Frame& frame, RefPtr<Value> pValue)
+void ArgSlot_Dict::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
 	GetValue().GetValueDict().Assign(new Value_Symbol(_pSymbol), pValue.release());
 }
