@@ -24,8 +24,8 @@ public:
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None				= 0;
-		static const Flags Map				= 1 << 0;	// :map
-		static const Flags NoMap			= 1 << 1;	// :nomap
+		static const Flags Map				= 1 << 0;	// :map .. must be here
+		static const Flags NoMap			= 1 << 1;	// :nomap .. must be here
 		static const Flags Closure			= 1 << 2;	// :closure
 		static const Flags CutExtraArgs		= 1 << 3;	// :cut_extra_args
 		static const Flags DynamicScope		= 1 << 4;	// :dynamic_scope

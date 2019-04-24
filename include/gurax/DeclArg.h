@@ -22,9 +22,9 @@ public:
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None		= 0;
-		static const Flags ListVar	= 1 << 0;	// :listvar
-		static const Flags Map		= 1 << 1;	// :map
-		static const Flags NoMap	= 1 << 2;	// :nomap
+		static const Flags Map		= 1 << 0;	// :map .. must be here
+		static const Flags NoMap	= 1 << 1;	// :nomap .. must be here
+		static const Flags ListVar	= 1 << 2;	// :listvar
 		static const Flags NoCast	= 1 << 3;	// :nocast
 		static const Flags Nil		= 1 << 4;	// :nil
 		static const Flags Read		= 1 << 5;	// :r

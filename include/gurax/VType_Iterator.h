@@ -13,6 +13,8 @@ namespace Gurax {
 class VType_Iterator : public VType {
 public:
 	using VType::VType;
+	virtual bool IsIterator() const override { return true; }
+	virtual bool IsListOrIterator() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
@@ -74,6 +76,7 @@ public:
 	// Virtual functions for runtime process
 	virtual bool IsIterable() const override { return true; }
 	virtual bool IsIterator() const override { return true; }
+	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const override;
 	virtual Iterator* DoGenIterator() override;
 };
 

@@ -13,6 +13,8 @@ namespace Gurax {
 class VType_List : public VType {
 public:
 	using VType::VType;
+	virtual bool IsList() const override { return true; }
+	virtual bool IsListOrIterator() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
@@ -79,6 +81,7 @@ public:
 public:
 	virtual bool IsIterable() const override { return true; }
 	virtual bool IsList() const override { return true; }
+	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const override;
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, Value* pValue) override;
 	virtual Iterator* DoGenIterator() override;

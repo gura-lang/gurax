@@ -92,6 +92,9 @@ public:
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 public:
 	// Virtual functions
+	virtual bool IsList() const { return false; }
+	virtual bool IsIterator() const { return false; }
+	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
 	virtual Value* DoCastFrom(const Value& value) const;
 };

@@ -61,6 +61,15 @@ String Value_List::ToStringDetail(const StringStyle& ss) const
 	return GetValueOwner().ToString(ss);
 }
 
+bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const
+{
+	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map) != DeclCallable::Flag::Map)) {
+		return false;
+	}
+	if (declArg.GetVType().IsListOrIterator()) return false;
+	return true;
+}
+
 Value* Value_List::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();

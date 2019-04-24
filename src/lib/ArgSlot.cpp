@@ -27,9 +27,13 @@ void ArgSlot_Single::ResetValue()
 
 void ArgSlot_Single::FeedValue(Frame& frame, RefPtr<Value> pValue)
 {
-	pValue.reset(GetDeclArg().Cast(frame, *pValue));
-	if (Error::IsIssued()) return;
-	_pValue.reset(pValue.release());
+	if (pValue->IsMappable(GetDeclArg(), GetFlags())) {
+		_pValue.reset(new Value_ArgMapper(pValue->DoGenIterator()));
+	} else {
+		pValue.reset(GetDeclArg().Cast(frame, *pValue));
+		if (Error::IsIssued()) return;
+		_pValue.reset(pValue.release());
+	}
 }
 
 String ArgSlot_Single::ToString(const StringStyle& ss) const
