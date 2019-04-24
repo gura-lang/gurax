@@ -11,7 +11,8 @@ namespace Gurax {
 Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 				   Value* pValueThis, Expr_Block* pExprOfBlock) :
 	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _pAttr(pAttr),
-	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock), _flags(0), _pArgSlotToFeed(nullptr)
+	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock), _flags(0), _pArgSlotToFeed(nullptr),
+	_mapMode(MapMode::None)
 {
 	const DeclArgOwner &declArgOwner = _pDeclCallable->GetDeclArgOwner();
 	DeclArgOwner::const_iterator ppDeclArg = declArgOwner.begin();
@@ -86,6 +87,14 @@ void Argument::DoCall(Processor& processor)
 		}
 	}
 	GetValueCar().DoCall(processor, *this);
+}
+
+bool Argument::ReadyToPickValue()
+{
+	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		if (!pArgSlot->ReadyToPickValue()) return false;
+	}
+	return true;
 }
 
 void Argument::AssignToFrame(Frame& frame) const

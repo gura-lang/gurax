@@ -77,6 +77,7 @@ public:
 	virtual bool IsIterable() const override { return true; }
 	virtual bool IsIterator() const override { return true; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const override;
+	virtual void UpdateMapMode(Argument& argument) const override;
 	virtual Iterator* DoGenIterator() override;
 };
 

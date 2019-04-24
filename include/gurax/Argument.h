@@ -21,6 +21,8 @@ public:
 	Gurax_DeclareReferable(Argument);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Argument");
+public:
+	enum class MapMode { None, ToIter, ToList, };
 private:
 	RefPtr<Value> _pValueCar;
 	RefPtr<DeclCallable> _pDeclCallable;
@@ -31,6 +33,7 @@ private:
 	RefPtr<ArgSlot> _pArgSlotFirst;			// this may be nullptr
 	DeclCallable::Flags _flags;
 	ArgSlot* _pArgSlotToFeed;
+	MapMode _mapMode;
 public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
@@ -76,6 +79,8 @@ public:
 	}
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
+	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
+	bool IsMapMode(MapMode mapMode) { return _mapMode == mapMode; }
 	void ResetAllValues();
 	void FeedValue(Frame& frame, Value* pValue) {
 		if (!_pArgSlotToFeed) return;
@@ -88,6 +93,7 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
+	bool ReadyToPickValue();
 	void AssignToFrame(Frame& frame) const;
 	void DoCall(Processor& processor);
 public:

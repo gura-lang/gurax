@@ -70,6 +70,11 @@ bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) c
 	return true;
 }
 
+void Value_List::UpdateMapMode(Argument& argument) const
+{
+	if (argument.IsMapMode(Argument::MapMode::None)) argument.SetMapMode(Argument::MapMode::ToList);
+}
+
 Value* Value_List::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();

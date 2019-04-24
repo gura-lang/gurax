@@ -28,6 +28,7 @@ void ArgSlot_Single::ResetValue()
 void ArgSlot_Single::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
 	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
+		pValue->UpdateMapMode(argument);
 		_pValue.reset(new Value_ArgMapper(pValue->DoGenIterator()));
 	} else {
 		pValue.reset(GetDeclArg().Cast(frame, *pValue));

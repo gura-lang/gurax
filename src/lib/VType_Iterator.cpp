@@ -85,6 +85,11 @@ bool Value_Iterator::IsMappable(const DeclArg& declArg, DeclCallable::Flags flag
 	return true;
 }
 
+void Value_Iterator::UpdateMapMode(Argument& argument) const
+{
+	argument.SetMapMode(Argument::MapMode::ToIter);
+}
+
 Iterator* Value_Iterator::DoGenIterator()
 {
 	return GetIterator().Clone();
