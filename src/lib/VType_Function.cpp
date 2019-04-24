@@ -20,6 +20,19 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Function
 //------------------------------------------------------------------------------
+String Value_Function::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str.Printf(":%s>", GetFunction().MakeFullName().c_str());
+	return str;
+}
+
+String Value_Function::ToStringDetail(const StringStyle& ss) const
+{
+	return GetFunction().ToString(ss);
+}
+
 const DeclCallable* Value_Function::GetDeclCallable() const
 {
 	return &GetFunction().GetDeclCallable();
