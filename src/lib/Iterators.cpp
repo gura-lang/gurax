@@ -77,9 +77,12 @@ Iterator_ImplicitMap::Iterator_ImplicitMap(Processor* pProcessor, Function* pFun
 	_flags(Flag::None), _len(0)
 {
 	ArgSlot* pArgSlot = GetArgument().GetArgSlotFirst();
+	_flags = Flag::Finite | Flag::LenDetermined;
+	_len = static_cast<size_t>(-1);
 	for ( ; pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		
+		pArgSlot->UpdateIteratorInfo(_flags, _len);
 	}
+	if (!(_flags & Flag::LenDetermined)) _len = 0;
 }
 
 Value* Iterator_ImplicitMap::NextValue()

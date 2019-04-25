@@ -108,9 +108,7 @@ public:
 	Argument& GetArgument() { return *_pArgument; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
-	}
+	virtual Flags GetFlags() const override { return _flags; }
 	virtual Value* NextValue() override;
 	virtual size_t GetLength() const override { return _len; }
 	virtual String ToString(const StringStyle& ss) const override;

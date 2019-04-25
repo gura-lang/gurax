@@ -42,7 +42,10 @@ Iterator* Value_ArgMapper::DoGenIterator()
 
 void Value_ArgMapper::UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const
 {
-	//GetIterator().GetFlags()
+	flags &= GetIterator().GetFlags();
+	if (GetIterator().IsLenDetermined()) {
+		len = std::min(len, GetIterator().GetLength());
+	}
 }
 
 }
