@@ -70,6 +70,32 @@ String Iterator_Each::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_ImplicitMap
+//------------------------------------------------------------------------------
+Iterator_ImplicitMap::Iterator_ImplicitMap(Processor* pProcessor, Function* pFunction, Argument* pArgument) :
+	_pProcessor(pProcessor), _pFunction(pFunction), _pArgument(pArgument),
+	_flags(Flag::None), _len(0)
+{
+	ArgSlot* pArgSlot = GetArgument().GetArgSlotFirst();
+	for ( ; pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		
+	}
+}
+
+Value* Iterator_ImplicitMap::NextValue()
+{
+	if (!GetArgument().ReadyToPickValue()) return nullptr;
+	return GetFunction().DoEval(GetProcessor(), GetArgument());
+}
+
+String Iterator_ImplicitMap::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("ImplicitMap");
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Range
 //------------------------------------------------------------------------------
 Value* Iterator_Range::NextValue()

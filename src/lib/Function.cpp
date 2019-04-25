@@ -45,8 +45,9 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else { // argument.IsMapMode(Argument::MapMode::ToIter)
-		
-		processor.PushValue(Value::nil());
+		RefPtr<Iterator> pIterator(
+			new Iterator_ImplicitMap(processor.Reference(), Reference(), argument.Reference()));
+		processor.PushValue(new Value_Iterator(pIterator.release()));
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	}
 }

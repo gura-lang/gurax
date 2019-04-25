@@ -21,6 +21,7 @@ public:
 public:
 	using Flags = UInt32;
 	struct Flag {
+		static const Flags None				= 0;
 		static const Flags Infinite			= (0 << 0);
 		static const Flags Finite			= (1 << 0);
 		static const Flags LenUndetermined	= (0 << 1);

@@ -76,6 +76,7 @@ private:
 	size_t _idx;
 public:
 	Iterator_Each(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner), _idx(0) {}
+public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
 	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
@@ -86,6 +87,32 @@ public:
 	}
 	virtual Value* NextValue() override;
 	virtual size_t GetLength() const override { return GetValueOwner().size(); }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_ImplicitMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_ImplicitMap : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Function> _pFunction;
+	RefPtr<Argument> _pArgument;
+	Flags _flags;
+	size_t _len;
+public:
+	Iterator_ImplicitMap(Processor* pProcessor, Function* pFunction, Argument* pArgument);
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Function& GetFunction() { return *_pFunction; }
+	Argument& GetArgument() { return *_pArgument; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override { return _len; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
