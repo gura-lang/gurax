@@ -64,6 +64,7 @@ public:
 	// Virtual functions for runtime process
 	virtual bool ReadyToPickValue() override;
 	virtual Value* PickValue() override { return _pValuePicked->Reference(); }
+	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const override;
 };
 
 }

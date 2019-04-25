@@ -44,4 +44,11 @@ bool Value_ArgMapper_Multiple::ReadyToPickValue()
 	return true;
 }
 
+void Value_ArgMapper_Multiple::UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const
+{
+	for (Value* pValue : GetValueOwner()) {
+		pValue->UpdateIteratorInfo(flags, len);
+	}
+}
+
 }

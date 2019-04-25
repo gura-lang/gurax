@@ -53,6 +53,9 @@ public:
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
 	bool ReadyToPickValue() const { return _pValue->ReadyToPickValue(); }
 	Value* PickValue() const { return _pValue->PickValue(); }
+	void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {
+		_pValue->UpdateIteratorInfo(flags, len);
+	}
 	void AssignToFrame(Frame& frame) const {
 		if (IsDefined()) frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
 	}

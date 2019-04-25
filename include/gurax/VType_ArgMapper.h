@@ -79,6 +79,7 @@ public:
 		return !!_pValue;
 	}
 	virtual Value* PickValue() override { return _pValue.Reference(); }
+	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const override;
 };
 
 }

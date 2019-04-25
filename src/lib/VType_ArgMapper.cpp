@@ -40,4 +40,9 @@ Iterator* Value_ArgMapper::DoGenIterator()
 	return GetIterator().Clone();
 }
 
+void Value_ArgMapper::UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const
+{
+	//GetIterator().GetFlags()
+}
+
 }

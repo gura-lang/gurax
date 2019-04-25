@@ -120,6 +120,7 @@ public:
 	virtual void UpdateMapMode(Argument& argument) const {}
 	virtual bool ReadyToPickValue() { return true; }
 	virtual Value* PickValue() { return Reference(); }
+	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {}
 	virtual bool GetBool() const { return true; }
 	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
 	virtual void DoCall(Processor& processor, Argument& argument);
