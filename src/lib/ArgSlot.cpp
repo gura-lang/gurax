@@ -58,9 +58,8 @@ void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value>
 {
 	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
 		if (GetValue().IsList()) {
-			RefPtr<Value> pValueNew(new Value_ArgMapper_Multiple(
-										GetValue().GetValueTypedOwner().Reference()));
-			SetValue(pValueNew.release());
+			// Replace List with ArgMapper_Multiple.
+			SetValue(new Value_ArgMapper_Multiple(GetValue().GetValueTypedOwner().Reference()));
 		}
 		pValue->UpdateMapMode(argument);
 		GetValue().GetValueTypedOwner().Add(new Value_ArgMapper(pValue->DoGenIterator()));
