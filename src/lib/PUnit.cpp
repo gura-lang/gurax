@@ -1003,6 +1003,20 @@ PUnit* PUnitFactory_Member::Create(bool discardValueFlag)
 //                   -> []              (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
+PUnit_Argument<discardValueFlag>::PUnit_Argument(
+	Expr* pExprSrc, SeqId seqId, const Attribute& attr, Expr_Block* pExprOfBlock) :
+	PUnit(pExprSrc, seqId), _pAttr(new Attribute()), _flags(DeclCallable::Flag::None),
+	_pExprOfBlock(pExprOfBlock)
+{
+	for (const Symbol* pSymbol : attr.GetSymbols()) {
+		DeclCallable::Flags flag = DeclCallable::SymbolToFlag(pSymbol);
+		_flags |= flag;
+		if (!flag) _pAttr->AddSymbol(pSymbol);
+	}
+	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
+}
+
+template<bool discardValueFlag>
 void PUnit_Argument<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValueCar(processor.PopValue());
@@ -1016,7 +1030,8 @@ void PUnit_Argument<discardValueFlag>::Exec(Processor& processor) const
 	} else {
 		RefPtr<Argument> pArgument(
 			new Argument(pValueCar.release(), pDeclCallable->Reference(),
-						 GetAttr().Reference(), Value::nil(), Expr_Block::Reference(GetExprOfBlock())));
+						 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::nil(),
+						 Expr_Block::Reference(GetExprOfBlock())));
 		if (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
 		processor.SetPUnitNext(_GetPUnitCont());
 	}
@@ -1040,10 +1055,10 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_Argument<true>(
-			_pExprSrc.release(), _seqId, _pAttr.release(), _pExprOfBlock.release());
+			_pExprSrc.release(), _seqId, *_pAttr, _pExprOfBlock.release());
 	} else {
 		_pPUnitCreated = new PUnit_Argument<false>(
-			_pExprSrc.release(), _seqId, _pAttr.release(), _pExprOfBlock.release());
+			_pExprSrc.release(), _seqId, *_pAttr, _pExprOfBlock.release());
 	}
 	return _pPUnitCreated;
 }

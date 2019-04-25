@@ -1122,13 +1122,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Attribute> _pAttr;
+	DeclCallable::Flags _flags;
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 public:
 	// Constructor
-	PUnit_Argument(Expr* pExprSrc, SeqId seqId, Attribute* pAttr, Expr_Block* pExprOfBlock) :
-		PUnit(pExprSrc, seqId), _pAttr(pAttr), _pExprOfBlock(pExprOfBlock) {}
+	PUnit_Argument(Expr* pExprSrc, SeqId seqId, const Attribute& attr, Expr_Block* pExprOfBlock);
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
+	DeclCallable::Flags GetFlags() const { return _flags; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 public:
 	// Virtual functions of PUnit

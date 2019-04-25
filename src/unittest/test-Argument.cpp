@@ -23,8 +23,8 @@ static DeclCallable* ComposeDeclCallable(const char* src)
 
 static Argument* ComposeArgument(const char* src)
 {
-	return new Argument(Value::nil(), ComposeDeclCallable(src),
-						Attribute::Empty->Reference(), Value::nil(), nullptr);
+	return new Argument(Value::nil(), ComposeDeclCallable(src), Attribute::Empty->Reference(),
+						DeclCallable::Flag::None, Value::nil(), nullptr);
 }
 
 static void PrintArgument(const Argument &argument)

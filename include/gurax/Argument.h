@@ -27,19 +27,20 @@ private:
 	RefPtr<Value> _pValueCar;
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<Attribute> _pAttr;
+	DeclCallable::Flags _flags;
 	RefPtr<Value> _pValueThis;				// this may be nullptr
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 	RefPtr<Value_Dict> _pValueOfDict;		// this may be nullptr
 	RefPtr<ArgSlot> _pArgSlotFirst;			// this may be nullptr
-	DeclCallable::Flags _flags;
 	ArgSlot* _pArgSlotToFeed;
 	MapMode _mapMode;
 public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
-			 Value* pValueThis, Expr_Block* pExprOfBlock);
+			 DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock);
 	Argument(DeclCallable* pDeclCallable) :
-		Argument(Value::nil(), pDeclCallable, Attribute::Empty->Reference(), Value::nil(), nullptr) {}
+		Argument(Value::nil(), pDeclCallable, Attribute::Empty->Reference(),
+				 DeclCallable::Flag::None, Value::nil(), nullptr) {}
 	Argument(const Function& function);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
