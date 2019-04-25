@@ -41,6 +41,7 @@ public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 	Value& GetValue() { return *_pValue; }
 	const Value& GetValue() const { return *_pValue; }
+	void SetValue(Value* pValue) { _pValue.reset(pValue); }
 	bool IsVType(const VType& vtype) const { return _pDeclArg->IsVType(vtype); }
 	bool IsMatched(const Symbol* pSymbol) const {
 		return GetDeclArg().GetSymbol()->IsIdentical(pSymbol);

@@ -28,12 +28,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_ArgMapper_Multiple");
 protected:
-	RefPtr<Value_List> _pValue;
+	RefPtr<Value_List> _pValuePicked;
 public:
 	// Constructor
 	Value_ArgMapper_Multiple() = delete;
 	explicit Value_ArgMapper_Multiple(ValueTypedOwner* pValueTypedOwner, VType& vtype = VTYPE_ArgMapper_Multiple) :
-		Value_List(pValueTypedOwner, vtype), _pValue(new Value_List()) {}
+		Value_List(pValueTypedOwner, vtype), _pValuePicked(new Value_List()) {}
 	// Copy constructor/operator
 	Value_ArgMapper_Multiple(const Value_ArgMapper_Multiple& src) = delete;
 	Value_ArgMapper_Multiple& operator=(const Value_ArgMapper_Multiple& src) = delete;
@@ -63,7 +63,7 @@ public:
 public:
 	// Virtual functions for runtime process
 	virtual bool ReadyToPickValue() override;
-	virtual Value* PickValue() override;
+	virtual Value* PickValue() override { return _pValuePicked->Reference(); }
 };
 
 }
