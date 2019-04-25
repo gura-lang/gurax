@@ -8,10 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Functions
 //------------------------------------------------------------------------------
-// Format(format:String, values*):String
+// Format(format:String, values*):String:map
 Gurax_DeclareFunction(Format)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
@@ -29,10 +29,10 @@ Gurax_ImplementFunction(Format)
 	return new Value_String(str);
 }
 
-// Print(str*:String):void
+// Print(str*:String):void:map
 Gurax_DeclareFunction(Print)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("str", VTYPE_String, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
@@ -47,10 +47,10 @@ Gurax_ImplementFunction(Print)
 	return Value::nil();
 }
 
-// Printf(format:String, values*):void
+// Printf(format:String, values*):void:map
 Gurax_DeclareFunction(Printf)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
@@ -67,10 +67,10 @@ Gurax_ImplementFunction(Printf)
 	return Value::nil();
 }
 
-// Println(objs*):void
+// Println(objs*):void:map
 Gurax_DeclareFunction(Println)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
 }
 
