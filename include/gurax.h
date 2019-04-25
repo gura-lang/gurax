@@ -60,6 +60,7 @@
 #include "gurax/VType.h"
 #include "gurax/VType_Any.h"
 #include "gurax/VType_ArgMapper.h"
+#include "gurax/VType_ArgMapper_Multiple.h"
 #include "gurax/VType_ArgSlot.h"
 #include "gurax/VType_Argument.h"
 #include "gurax/VType_Attribute.h"

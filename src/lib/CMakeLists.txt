@@ -58,6 +58,7 @@ add_library(guraxcore SHARED
 	VType.cpp
 	VType_Any.cpp
 	VType_ArgMapper.cpp
+	VType_ArgMapper_Multiple.cpp
 	VType_ArgSlot.cpp
 	VType_Argument.cpp
 	VType_Attribute.cpp

@@ -23,6 +23,7 @@ void VType::PrepareBasic(Frame& frame)
 	VTYPE_Object.Prepare(frame);
 	VTYPE_Any.Prepare(frame);
 	VTYPE_ArgMapper.Prepare(frame);
+	VTYPE_ArgMapper_Multiple.Prepare(frame);
 	VTYPE_ArgSlot.Prepare(frame);
 	VTYPE_Argument.Prepare(frame);
 	VTYPE_Attribute.Prepare(frame);
