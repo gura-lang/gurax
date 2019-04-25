@@ -10,7 +10,7 @@ PrintTitle(title:String) = {
 Tester(expr:Expr):dynamic_scope = {
 	Printf('%s ..', expr)
 	rtn = expr.Eval()
-	Printf(' %s\n', rtn)
+	Printf(' %s\n', rtn):nomap
 }
 
 PrintPUnit(expr:Expr) = {

@@ -18,10 +18,10 @@ for (expr in exprs) {
 util.PrintTitle('Create list')
 n = 10
 x = while (n > 0):list {|i| n -= 1 }
-Println(x)
+Println(x):nomap
 n = 10
 x = while (n > 0):list { n -= 1 }
-Println(x)
+Println(x):nomap
 //x = while (n > 0):list {|i| n -= 1 }
 
 util.PrintTitle('Scope test')

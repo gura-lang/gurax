@@ -56,8 +56,7 @@ void ArgSlot_Multiple::ResetValue()
 
 void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
 {
-	if (false) {
-	//if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
+	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
 		if (GetValue().IsList()) {
 			RefPtr<Value> pValueNew(new Value_ArgMapper_Multiple(
 										GetValue().GetValueTypedOwner().Reference()));
