@@ -17,23 +17,25 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
 	if (argument.IsMapMode(Argument::MapMode::None)) {
-		RefPtr<Value> pValue(DoEval(processor, argument));
-		if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
+		DoExec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
 		while (argument.ReadyToPickValue()) {
 			Value::Delete(DoEval(processor, argument));
 		}
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultVoid()) {
 		while (argument.ReadyToPickValue()) {
 			Value::Delete(DoEval(processor, argument));
 		}
 		processor.PushValue(Value::nil());
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultReduce()) {
 		RefPtr<Value> pValueRtn(Value::nil());
 		while (argument.ReadyToPickValue()) {
 			pValueRtn.reset(DoEval(processor, argument));
 		}
 		processor.PushValue(pValueRtn.release());
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else if (argument.IsMapMode(Argument::MapMode::ToList)) {
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
@@ -41,9 +43,19 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			valueTypedOwner.Add(DoEval(processor, argument));
 		}
 		processor.PushValue(pValueRtn.release());
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else { // argument.IsMapMode(Argument::MapMode::ToIter)
 		
+		processor.PushValue(Value::nil());
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	}
+}
+
+void Function::DoExec(Processor& processor, Argument& argument) const
+{
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
+	RefPtr<Value> pValue(DoEval(processor, argument));
+	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 

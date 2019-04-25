@@ -46,6 +46,28 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Counter
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Counter : public Iterator {
+private:
+	int _idxBegin;
+	int _idxStep;
+	int _idx;
+public:
+	Iterator_Counter(int idxBegin, int idxStep) :
+		_idxBegin(idxBegin), _idxStep(idxStep), _idx(idxBegin) {}
+	Iterator_Counter() : Iterator_Counter(0, 1) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Infinite | Flag::LenUndetermined;
+	}
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override { return -1; }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Each : public Iterator {
@@ -86,28 +108,6 @@ public:
 	}
 	virtual Value* NextValue() override;
 	virtual size_t GetLength() const override { return (_idxEnd - _idxBegin) / _idxStep; }
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_Counter
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Counter : public Iterator {
-private:
-	int _idxBegin;
-	int _idxStep;
-	int _idx;
-public:
-	Iterator_Counter(int idxBegin, int idxStep) :
-		_idxBegin(idxBegin), _idxStep(idxStep), _idx(idxBegin) {}
-	Iterator_Counter() : Iterator_Counter(0, 1) {}
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Infinite | Flag::LenUndetermined;
-	}
-	virtual Value* NextValue() override;
-	virtual size_t GetLength() const override { return -1; }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

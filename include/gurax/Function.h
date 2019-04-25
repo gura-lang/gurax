@@ -157,6 +157,7 @@ public:
 	void DoEvalVoid(Processor& processor, Argument& argument) const {
 		Value::Delete(DoEval(processor, argument));
 	}
+	void DoCall(Processor& processor, Argument& argument) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Function& function) const { return this == &function; }
@@ -164,7 +165,7 @@ public:
 	bool IsLessThan(const Function& function) const { return this < &function; }
 public:
 	// Virtual functions
-	virtual void DoCall(Processor& processor, Argument& argument) const;
+	virtual void DoExec(Processor& processor, Argument& argument) const;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };
 	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const {}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;

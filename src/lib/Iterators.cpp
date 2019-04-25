@@ -36,6 +36,23 @@ String Iterator_ConstN::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_Counter
+//------------------------------------------------------------------------------
+Value* Iterator_Counter::NextValue()
+{
+	Value* pValue = new Value_Number(_idx);
+	_idx += _idxStep;
+	return pValue;
+}
+
+String Iterator_Counter::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("Counter:begin=%d:step=%d", _idxBegin, _idxStep);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
 Value* Iterator_Each::NextValue()
@@ -67,23 +84,6 @@ String Iterator_Range::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("Range:begin=%d:end=%d:step=%d", _idxBegin, _idxEnd, _idxStep);
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// Iterator_Counter
-//------------------------------------------------------------------------------
-Value* Iterator_Counter::NextValue()
-{
-	Value* pValue = new Value_Number(_idx);
-	_idx += _idxStep;
-	return pValue;
-}
-
-String Iterator_Counter::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("Counter:begin=%d:step=%d", _idxBegin, _idxStep);
 	return str;
 }
 

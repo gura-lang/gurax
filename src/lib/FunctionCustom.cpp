@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // FunctionCustom
 //------------------------------------------------------------------------------
-void FunctionCustom::DoCall(Processor& processor, Argument& argument) const
+void FunctionCustom::DoExec(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
