@@ -60,9 +60,9 @@ void PUnitList::Print() const
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// Iterator_EachPUnit
+// Iterator_PUnit
 //------------------------------------------------------------------------------
-Value* Iterator_EachPUnit::NextValue()
+Value* Iterator_PUnit::NextValue()
 {
 	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
 	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
@@ -72,7 +72,7 @@ Value* Iterator_EachPUnit::NextValue()
 	return pValue.release();
 }
 
-size_t Iterator_EachPUnit::GetLength() const
+size_t Iterator_PUnit::GetLength() const
 {
 	const PUnit* pPUnit = _pPUnit;
 	if (!pPUnit || _pPUnit == _pPUnitSentinel) return 0;
@@ -82,10 +82,10 @@ size_t Iterator_EachPUnit::GetLength() const
 	return cnt;
 }
 
-String Iterator_EachPUnit::ToString(const StringStyle& ss) const
+String Iterator_PUnit::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "EachPUnit";
+	str += "PUnit";
 	return str;
 }
 

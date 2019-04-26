@@ -8,18 +8,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// List#Each():[list.xlist,iter,xiter] {`block}
+// List#Each() {`block}
 Gurax_DeclareMethod(List, Each)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(list));
-	DeclareAttrOpt(Gurax_Symbol(xlist));
-	DeclareAttrOpt(Gurax_Symbol(iter));
-	DeclareAttrOpt(Gurax_Symbol(xiter));
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Repeats the process in `block` for each element in the target iterable instance.\n"
+		"The `block` takes block parameters in one of the following forms:\n"
+		"\n"
+		"- `iterable#Each { .. }` .. no parameter\n"
+		"- `iterable#Each {|elem| .. }` .. Element instance\n"
+		"- `iterable#Each {|elem, idx| .. }` .. Element instance and index counter\n");
 }
 
 Gurax_ImplementMethod(List, Each)
@@ -27,8 +28,8 @@ Gurax_ImplementMethod(List, Each)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	ValueList::IteratorIF iteratorIF(valueThis.GetValueOwner());
-	return iteratorIF.Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
+	RefPtr<Iterator> pIterator(valueThis.DoGenIterator());
+	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
 
 //------------------------------------------------------------------------------
@@ -99,7 +100,7 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 
 Iterator* Value_List::DoGenIterator()
 {
-	return new Iterator_Each(GetValueTypedOwner().Reference());
+	return new Iterator_ListElem(GetValueTypedOwner().Reference());
 }
 
 }

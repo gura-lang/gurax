@@ -118,14 +118,14 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_EachPUnit
+// Iterator_PUnit
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachPUnit : public Iterator {
+class GURAX_DLLDECLARE Iterator_PUnit : public Iterator {
 private:
 	const PUnit* _pPUnit;
 	const PUnit* _pPUnitSentinel;
 public:
-	Iterator_EachPUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel) :
+	Iterator_PUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel) :
 		_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel) {}
 public:
 	// Virtual functions of Iterator

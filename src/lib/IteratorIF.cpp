@@ -14,13 +14,15 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock, Dec
 	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
 	Frame& frame = processor.PushFrame<Frame_Scope>();
 	bool listFlag = false;
+	bool iterFlag = false;
 	bool contFlag = true;
 	if (declArgOwner.size() == 0) {
+		// iterable#Each { .. }
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 			do {
-				RefPtr<Value> pValueEach(NextValue());
-				if (!pValueEach) break;
+				RefPtr<Value> pValueElem(NextValue());
+				if (!pValueElem) break;
 				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.
@@ -31,10 +33,12 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock, Dec
 				processor.ClearEvent();
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueTypedOwner.release()));
+		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
+
 		} else {
 			do {
-				RefPtr<Value> pValueEach(NextValue());
-				if (!pValueEach) break;
+				RefPtr<Value> pValueElem(NextValue());
+				if (!pValueElem) break;
 				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
 				contFlag = !processor.IsEventBreak();
@@ -42,12 +46,13 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock, Dec
 			} while (contFlag);
 		}
 	} else if (declArgOwner.size() == 1) {
+		// iterable#Each {|elem| .. }
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 			do {
-				RefPtr<Value> pValueEach(NextValue());
-				if (!pValueEach) break;
-				frame.Assign(*declArgOwner[0], *pValueEach);
+				RefPtr<Value> pValueElem(NextValue());
+				if (!pValueElem) break;
+				frame.Assign(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
@@ -59,11 +64,13 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock, Dec
 				processor.ClearEvent();
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueTypedOwner.release()));
+		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
+
 		} else {
 			do {
-				RefPtr<Value> pValueEach(NextValue());
-				if (!pValueEach) break;
-				frame.Assign(*declArgOwner[0], *pValueEach);
+				RefPtr<Value> pValueElem(NextValue());
+				if (!pValueElem) break;
+				frame.Assign(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
@@ -72,13 +79,14 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock, Dec
 			} while (contFlag);
 		}
 	} else if (declArgOwner.size() == 2) {
+		// iterable#Each {|elem, idx| .. }
 		size_t idx = 0;
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 			do {
-				RefPtr<Value> pValueEach(NextValue());
-				if (!pValueEach) break;
-				frame.Assign(*declArgOwner[0], *pValueEach);
+				RefPtr<Value> pValueElem(NextValue());
+				if (!pValueElem) break;
+				frame.Assign(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValueIdx(new Value_Number(idx));
 				idx++;
@@ -94,11 +102,13 @@ Value* IteratorIF::Each(Processor& processor, const Expr_Block& exprOfBlock, Dec
 				processor.ClearEvent();
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueTypedOwner.release()));
+		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
+
 		} else {
 			do {
-				RefPtr<Value> pValueEach(NextValue());
-				if (!pValueEach) break;
-				frame.Assign(*declArgOwner[0], *pValueEach);
+				RefPtr<Value> pValueElem(NextValue());
+				if (!pValueElem) break;
+				frame.Assign(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValueIdx(new Value_Number(idx));
 				idx++;

@@ -68,14 +68,14 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Each
+// Iterator_ListElem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+class GURAX_DLLDECLARE Iterator_ListElem : public Iterator {
 private:
 	RefPtr<ValueTypedOwner> _pValueTypedOwner;
 	size_t _idx;
 public:
-	Iterator_Each(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner), _idx(0) {}
+	Iterator_ListElem(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner), _idx(0) {}
 public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }

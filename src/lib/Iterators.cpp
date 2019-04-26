@@ -53,19 +53,19 @@ String Iterator_Counter::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Each
+// Iterator_ListElem
 //------------------------------------------------------------------------------
-Value* Iterator_Each::NextValue()
+Value* Iterator_ListElem::NextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	if (_idx >= valueOwner.size()) return nullptr;
 	return valueOwner[_idx++]->Reference();
 }
 
-String Iterator_Each::ToString(const StringStyle& ss) const
+String Iterator_ListElem::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Each:n=%zu", GetValueOwner().size());
+	str.Printf("ListElem:n=%zu", GetValueOwner().size());
 	return str;
 }
 
