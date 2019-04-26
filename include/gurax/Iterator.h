@@ -3,18 +3,19 @@
 //==============================================================================
 #ifndef GURAX_ITERATOR_H
 #define GURAX_ITERATOR_H
-#include "IteratorIF.h"
 #include "Referable.h"
 #include "Help.h"
+#include "DeclCallable.h"
 
 namespace Gurax {
 
 class Value;
+class Processor;
 
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator : public Referable, public IteratorIF {
+class GURAX_DLLDECLARE Iterator : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Iterator);
@@ -59,9 +60,12 @@ public:
 	bool IsLessThan(const Iterator& iterator) const { return this < &iterator; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
+	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
+public:
 	// Virtual functions
 	virtual Iterator* Clone() const;
 	virtual Flags GetFlags() const = 0;
+	virtual Value* NextValue() = 0;
 	virtual size_t GetLength() const = 0;
 	virtual String ToString(const StringStyle& ss) const;
 };

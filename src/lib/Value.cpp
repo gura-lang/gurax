@@ -211,22 +211,6 @@ String ValueList::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// ValueList::IteratorIF
-//------------------------------------------------------------------------------
-ValueList::IteratorIF::IteratorIF(const ValueList& valueList) :
-	_ppValue(valueList.begin()), _ppValueEnd(valueList.end())
-{
-}
-
-Value* ValueList::IteratorIF::NextValue()
-{
-	if (_ppValue == _ppValueEnd) return nullptr;
-	Value* pValueRtn = (*_ppValue)->Reference();
-	_ppValue++;
-	return pValueRtn;
-}
-
-//------------------------------------------------------------------------------
 // ValueOwner
 //------------------------------------------------------------------------------
 void ValueOwner::Clear()

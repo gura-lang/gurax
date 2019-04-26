@@ -5,11 +5,11 @@
 #define GURAX_VALUE_H
 #include "VType.h"
 #include "Iterator.h"
+#include "DeclCallable.h"
 
 namespace Gurax {
 
 class Argument;
-class DeclCallable;
 class Formatter;
 class FormatterFlags;
 class Index;
@@ -149,14 +149,6 @@ protected:
 // ValueList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ValueList : public std::vector<Value*> {
-public:
-	class IteratorIF : public Gurax::IteratorIF {
-	private:
-		const_iterator _ppValue, _ppValueEnd;
-	public:
-		IteratorIF(const ValueList& valueList);
-		virtual Value* NextValue() override;
-	};
 public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
