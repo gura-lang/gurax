@@ -43,6 +43,7 @@ void Composer::ComposeAsSequence(Expr& expr)
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
 	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
+	Add_EndSequence(expr);
 }
 
 void Composer::Add_Value(const Expr& exprSrc, Value* pValue)
