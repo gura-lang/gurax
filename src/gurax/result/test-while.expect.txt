@@ -7,7 +7,6 @@
   ##4 Value(<Nil>)
   ##5 Jump(##1)
   ##6 NoOperation()
-  ##7 Return()
 `while (true):list {}
   ##0 CreateList()
   ##1 Jump(##5)
@@ -19,7 +18,6 @@
   ##7 Value(<Nil>)
   ##8 Jump(##4)
   ##9 NoOperation()
-  ##10 Return()
 `while (true):xlist {}
   ##0 CreateList()
   ##1 Jump(##5)
@@ -31,7 +29,6 @@
   ##7 Value(<Nil>)
   ##8 Jump(##4)
   ##9 NoOperation()
-  ##10 Return()
 `while (true) {|n| nil}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
@@ -45,7 +42,6 @@
   ##9 Jump(##3)
   ##10 RemoveValue(offset=1)
   ##11 PopFrame()
-  ##12 Return()
 `while (true):list {|n| nil}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
@@ -62,7 +58,6 @@
   ##12 Jump(##6)
   ##13 RemoveValue(offset=1)
   ##14 PopFrame()
-  ##15 Return()
 `while (true):xlist {|n| nil}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
@@ -79,7 +74,6 @@
   ##12 Jump(##6)
   ##13 RemoveValue(offset=1)
   ##14 PopFrame()
-  ##15 Return()
 ======== Create list ========
 [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]

@@ -1,36 +1,29 @@
 --------
 {`a}
-  ##0 Jump(##4)
-  ##1 BeginSequence(exit=##4)
+  ##0 Jump(##3)
+  ##1 BeginQuote(exit=##3)
   ##2 Lookup(`a)
-  ##3 Return()
-  ##4 Value(<Expr:`(a):PUnit#11>)
-  ##5 Return()
+  ##3 Value(<Expr:`(a):PUnit#11>)
 --------
 {`a; `b; `c}
-  ##0 Jump(##4)
-  ##1 BeginSequence(exit=##4)
+  ##0 Jump(##3)
+  ##1 BeginQuote(exit=##3)
   ##2 Lookup(`a)
-  ##3 Return()
-  ##4 Value(<Expr:`(a):PUnit#21>), DiscardValue()
-  ##5 Jump(##9)
-  ##6 BeginSequence(exit=##9)
-  ##7 Lookup(`b)
-  ##8 Return()
-  ##9 Value(<Expr:`(b):PUnit#26>), DiscardValue()
-  ##10 Jump(##14)
-  ##11 BeginSequence(exit=##14)
-  ##12 Lookup(`c)
-  ##13 Return()
-  ##14 Value(<Expr:`(c):PUnit#31>)
-  ##15 Return()
+  ##3 Value(<Expr:`(a):PUnit#19>), DiscardValue()
+  ##4 Jump(##7)
+  ##5 BeginQuote(exit=##7)
+  ##6 Lookup(`b)
+  ##7 Value(<Expr:`(b):PUnit#23>), DiscardValue()
+  ##8 Jump(##11)
+  ##9 BeginQuote(exit=##11)
+  ##10 Lookup(`c)
+  ##11 Value(<Expr:`(c):PUnit#27>)
 --------
 {a && b}
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
-  ##4 Return()
 --------
 {(a && b) && c}
   ##0 Lookup(`a)
@@ -40,14 +33,12 @@
   ##4 KeepJumpIfNot(branchdest=##6)
   ##5 Lookup(`c)
   ##6 NoOperation()
-  ##7 Return()
 --------
 {a || b}
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
-  ##4 Return()
 --------
 {(a || b) || c}
   ##0 Lookup(`a)
@@ -57,20 +48,17 @@
   ##4 KeepJumpIf(branchdest=##6)
   ##5 Lookup(`c)
   ##6 NoOperation()
-  ##7 Return()
 --------
 3 + 5
   ##0 Value(<Number:3>)
   ##1 Value(<Number:5>)
   ##2 BinaryOp(+)
-  ##3 Return()
 --------
 false && false
   ##0 Lookup(`false)
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`false)
   ##3 NoOperation()
-  ##4 Return()
 ======== Operator .. ========
 1 .. 10 .. <Iterator:Range:begin=1:end=11:step=1>
 1 .. 1 .. <Iterator:Range:begin=1:end=2:step=1>

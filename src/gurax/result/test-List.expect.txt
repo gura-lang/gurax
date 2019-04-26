@@ -99,3 +99,5 @@ Each {|x, i| .. }, skip "t"
 7 seven
 8 eight
 9 nine
+======== Each with :list ========
+tbl.Each():list {|x| x} .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']

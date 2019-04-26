@@ -38,11 +38,10 @@ void Composer::ComposeAsSequence(Expr& expr)
 {
 	expr.SetPUnitFirst(PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
-	Add_BeginSequence(expr);								// [Any]
+	Add_BeginQuote(expr);									// [Any]
 	BeginRepeaterBlock(nullptr, nullptr, nullptr);
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
-	Add_Return(expr);
 	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
 }
 

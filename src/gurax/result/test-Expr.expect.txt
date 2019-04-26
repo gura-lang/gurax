@@ -13,41 +13,34 @@ f(`(a + b))
 --------
 `{foo}
   ##0 Lookup(`foo)
-  ##1 Return()
 --------
 `{foo; bar}
   ##0 Lookup(`foo), DiscardValue()
   ##1 Lookup(`bar)
-  ##2 Return()
 --------
 `{foo = 2; bar = 'hello'}
   ##0 Value(<Number:2>)
   ##1 AssignToSymbol(`foo), DiscardValue()
   ##2 Value(<String:'hello'>)
   ##3 AssignToSymbol(`bar)
-  ##4 Return()
 --------
 `{-foo}
   ##0 Lookup(`foo)
   ##1 UnaryOp(-)
-  ##2 Return()
 --------
 `{foo + bar}
   ##0 Lookup(`foo)
   ##1 Lookup(`bar)
   ##2 BinaryOp(+)
-  ##3 Return()
 --------
 `{foo.bar}
   ##0 Lookup(`foo)
   ##1 Member(`bar)
-  ##2 Return()
 --------
 `{foo.bar = 3}
   ##0 Lookup(`foo)
   ##1 Value(<Number:3>)
   ##2 PropSet(`bar)
-  ##3 Return()
 --------
 `{[1, 2, 3]}
   ##0 CreateList()
@@ -57,7 +50,6 @@ f(`(a + b))
   ##4 ListElem(offsetToList=0)
   ##5 Value(<Number:3>)
   ##6 ListElem(offsetToList=0)
-  ##7 Return()
 --------
 `{foo = [1, 2, 3]}
   ##0 CreateList()
@@ -68,17 +60,14 @@ f(`(a + b))
   ##5 Value(<Number:3>)
   ##6 ListElem(offsetToList=0)
   ##7 AssignToSymbol(`foo)
-  ##8 Return()
 --------
 `{foo[]}
   ##0 Lookup(`foo)
   ##1 CreateIndex()
   ##2 IndexGet()
-  ##3 Return()
 --------
 `{foo[2] = 3}
   ##0 Value(<Nil>)
-  ##1 Return()
 --------
 `{f(3)}
   ##0 Lookup(`f)
@@ -88,7 +77,6 @@ f(`(a + b))
   ##4 Value(<Number:3>)
   ##5 FeedArgSlot()
   ##6 Call(cont=##7)
-  ##7 Return()
 --------
 `{f(3, 4, 5)}
   ##0 Lookup(`f)
@@ -106,7 +94,6 @@ f(`(a + b))
   ##12 Value(<Number:5>)
   ##13 FeedArgSlot()
   ##14 Call(cont=##15)
-  ##15 Return()
 --------
 `{f(3, 4, 5):attr1:attr2}
   ##0 Lookup(`f)
@@ -124,7 +111,6 @@ f(`(a + b))
   ##12 Value(<Number:5>)
   ##13 FeedArgSlot()
   ##14 Call(cont=##15)
-  ##15 Return()
 --------
 `{f(3, 4, 5) {f1(); f2()}}
   ##0 Lookup(`f)
@@ -141,17 +127,15 @@ f(`(a + b))
   ##11 BeginQuote(exit=##13)
   ##12 Value(<Number:5>)
   ##13 FeedArgSlot()
-  ##14 Jump(##23)
-  ##15 BeginSequence(exit=##23)
+  ##14 Jump(##22)
+  ##15 BeginQuote(exit=##22)
   ##16 Lookup(`f1)
   ##17 Argument()
   ##18 Call(cont=##19), DiscardValue()
   ##19 Lookup(`f2)
   ##20 Argument()
   ##21 Call(cont=##22)
-  ##22 Return()
-  ##23 Call(cont=##24)
-  ##24 Return()
+  ##22 Call(cont=##23)
 --------
 `{for (a in b) {}}
   ##0 Lookup(`b)
@@ -164,7 +148,6 @@ f(`(a + b))
   ##7 Jump(##4)
   ##8 RemoveValues(offset=1,count=1)
   ##9 PopFrame()
-  ##10 Return()
 --------
 `{for (a in b) {|i| f(i)}}
   ##0 Lookup(`b)
@@ -186,7 +169,6 @@ f(`(a + b))
   ##16 Jump(##5)
   ##17 RemoveValues(offset=1,count=2)
   ##18 PopFrame()
-  ##19 Return()
 --------
 `{while (a < 3) {}}
   ##0 Value(<Nil>)
@@ -198,7 +180,6 @@ f(`(a + b))
   ##6 Value(<Nil>)
   ##7 Jump(##1)
   ##8 NoOperation()
-  ##9 Return()
 --------
 `{while (a < 3) {|i| f(i)}}
   ##0 PushFrame<Block>()
@@ -221,7 +202,6 @@ f(`(a + b))
   ##17 Jump(##3)
   ##18 RemoveValue(offset=1)
   ##19 PopFrame()
-  ##20 Return()
 --------
 `{repeat (10) {}}
   ##0 Value(<Number:10>)
@@ -233,7 +213,6 @@ f(`(a + b))
   ##6 Value(<Nil>)
   ##7 Jump(##4)
   ##8 RemoveValue(offset=1)
-  ##9 Return()
 --------
 `{repeat (10) {|i| f(i)}}
   ##0 PushFrame<Block>()
@@ -254,4 +233,3 @@ f(`(a + b))
   ##15 Jump(##5)
   ##16 RemoveValue(offset=1)
   ##17 PopFrame()
-  ##18 Return()

@@ -10,7 +10,6 @@
   ##7 Jump(##4)
   ##8 RemoveValues(offset=1,count=1)
   ##9 PopFrame()
-  ##10 Return()
 `for (v in tbl):list {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -25,7 +24,6 @@
   ##10 Jump(##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-  ##13 Return()
 `for (v in tbl):xlist {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -40,7 +38,6 @@
   ##10 Jump(##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-  ##13 Return()
 `for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
@@ -56,7 +53,6 @@
   ##11 Jump(##8)
   ##12 RemoveValues(offset=1,count=3)
   ##13 PopFrame()
-  ##14 Return()
 `for (v in tbl) {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -71,7 +67,6 @@
   ##10 Jump(##5)
   ##11 RemoveValues(offset=1,count=2)
   ##12 PopFrame()
-  ##13 Return()
 `for (v in tbl):list {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -89,7 +84,6 @@
   ##13 Jump(##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-  ##16 Return()
 `for (v in tbl):xlist {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -107,7 +101,6 @@
   ##13 Jump(##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-  ##16 Return()
 `for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n|}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
@@ -126,7 +119,6 @@
   ##14 Jump(##9)
   ##15 RemoveValues(offset=1,count=4)
   ##16 PopFrame()
-  ##17 Return()
 `for (v in tbl) {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -138,7 +130,6 @@
   ##7 Jump(##4)
   ##8 RemoveValues(offset=1,count=1)
   ##9 PopFrame()
-  ##10 Return()
 `for (v in tbl):list {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -153,7 +144,6 @@
   ##10 Jump(##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-  ##13 Return()
 `for (v in tbl):xlist {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -168,7 +158,6 @@
   ##10 Jump(##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-  ##13 Return()
 `for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {1}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
@@ -184,7 +173,6 @@
   ##11 Jump(##8)
   ##12 RemoveValues(offset=1,count=3)
   ##13 PopFrame()
-  ##14 Return()
 `for (v in tbl) {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -199,7 +187,6 @@
   ##10 Jump(##5)
   ##11 RemoveValues(offset=1,count=2)
   ##12 PopFrame()
-  ##13 Return()
 `for (v in tbl):list {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -217,7 +204,6 @@
   ##13 Jump(##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-  ##16 Return()
 `for (v in tbl):xlist {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -235,7 +221,6 @@
   ##13 Jump(##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-  ##16 Return()
 `for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n| 1}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
@@ -254,7 +239,6 @@
   ##14 Jump(##9)
   ##15 RemoveValues(offset=1,count=4)
   ##16 PopFrame()
-  ##17 Return()
 `for (v in tbl) {break; 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -268,7 +252,6 @@
   ##9 Jump(##4)
   ##10 RemoveValues(offset=1,count=1)
   ##11 PopFrame()
-  ##12 Return()
 `for (v in tbl):list {break; 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
@@ -285,7 +268,6 @@
   ##12 Jump(##7)
   ##13 RemoveValues(offset=1,count=1)
   ##14 PopFrame()
-  ##15 Return()
 ======== Create list ========
 tbl .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 for (n in tbl):list {n} .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
