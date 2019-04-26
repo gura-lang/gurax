@@ -81,7 +81,9 @@ public:
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
 	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
-	bool IsMapMode(MapMode mapMode) { return _mapMode == mapMode; }
+	bool IsMapNone() const { return _mapMode == MapMode::None; }
+	bool IsMapToList() const { return _mapMode == MapMode::ToList; }
+	bool IsMapToIter() const { return _mapMode == MapMode::ToIter; }
 	void ResetAllValues();
 	void FeedValue(Frame& frame, Value* pValue) {
 		if (!_pArgSlotToFeed) return;

@@ -16,7 +16,7 @@ String Function::MakeFullName() const
 void Function::DoCall(Processor& processor, Argument& argument) const
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
-	if (argument.IsMapMode(Argument::MapMode::None)) {
+	if (argument.IsMapNone()) {
 		DoExec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
 		while (argument.ReadyToPickValue()) {
@@ -36,7 +36,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
-	} else if (argument.IsMapMode(Argument::MapMode::ToList)) {
+	} else if (argument.IsMapToList()) {
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		while (argument.ReadyToPickValue()) {
@@ -44,7 +44,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
-	} else { // argument.IsMapMode(Argument::MapMode::ToIter)
+	} else { // argument.IsMapToIter()
 		RefPtr<Iterator> pIterator(
 			new Iterator_ImplicitMap(processor.Reference(), Reference(), argument.Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
