@@ -125,7 +125,6 @@ public:
 	void Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_KeepJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	void Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
 	void Add_DiscardValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
