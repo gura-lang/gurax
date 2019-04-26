@@ -63,3 +63,7 @@ util.TestCase('Each') {
 		Printf('%d %s\n', i, x)
 	}
 }
+util.TestCase('Each with :list') {
+	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+	util.Tester(`tbl.Each():list {|x| x})
+}
