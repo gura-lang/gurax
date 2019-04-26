@@ -1,21 +1,21 @@
 --------
 {`a}
   ##0 Jump(##3)
-  ##1 BeginQuote(exit=##3)
+  ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)
   ##3 Value(<Expr:`(a):PUnit#11>)
 --------
 {`a; `b; `c}
   ##0 Jump(##3)
-  ##1 BeginQuote(exit=##3)
+  ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)
   ##3 Value(<Expr:`(a):PUnit#19>), DiscardValue()
   ##4 Jump(##7)
-  ##5 BeginQuote(exit=##7)
+  ##5 BeginSequence(sentinel=##7)
   ##6 Lookup(`b)
   ##7 Value(<Expr:`(b):PUnit#23>), DiscardValue()
   ##8 Jump(##11)
-  ##9 BeginQuote(exit=##11)
+  ##9 BeginSequence(sentinel=##11)
   ##10 Lookup(`c)
   ##11 Value(<Expr:`(c):PUnit#27>)
 --------

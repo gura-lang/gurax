@@ -32,7 +32,7 @@ Iterator* Expr::EachPUnit() const
 		// nothing to do
 	} else if (pPUnit->GetPUnitSentinel()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
-		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence or BeginQuote
+		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence
 	}
 	return new Iterator_PUnit(pPUnit, pPUnitSentinel);
 }
@@ -85,11 +85,11 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_ArgSlot(*this);									// [Argument]
 	SetPUnitFirst(composer.PeekPUnitCont());
-	PUnit* pPUnitOfBeginQuote = composer.PeekPUnitCont();
-	composer.Add_BeginQuote(*this);									// [Argument]
+	PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
+	composer.Add_BeginSequence(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	Compose(composer);												// [Argument Any]
-	pPUnitOfBeginQuote->SetPUnitSentinel(composer.PeekPUnitCont());
+	pPUnitOfBeginSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlot(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 }
@@ -377,11 +377,11 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 	composer.Add_ArgSlotNamed(
 		*this, pSymbol, GetExprRight()->Reference());					// [Argument ArgSlot]
 	GetExprRight()->SetPUnitFirst(composer.PeekPUnitCont());
-	PUnit* pPUnitOfBeginQuote = composer.PeekPUnitCont();
-	composer.Add_BeginQuote(*this);										// [Argument ArgSlot]
+	PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
+	composer.Add_BeginSequence(*this);									// [Argument ArgSlot]
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
-	pPUnitOfBeginQuote->SetPUnitSentinel(composer.PeekPUnitCont());
+	pPUnitOfBeginSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlotNamed(*this);								// [Argument]
 	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
 }

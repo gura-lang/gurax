@@ -1551,32 +1551,32 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_BeginQuote
+// PUnit_BeginSequence
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_BeginQuote<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_BeginSequence<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
-String PUnit_BeginQuote<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_BeginSequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("BeginQuote(exit=%s)", MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
+	str.Printf("BeginSequence(sentinel=%s)", MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_BeginQuote::Create(bool discardValueFlag)
+PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_BeginQuote<true>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
+		_pPUnitCreated = new PUnit_BeginSequence<true>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
 	} else {
-		_pPUnitCreated = new PUnit_BeginQuote<false>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
+		_pPUnitCreated = new PUnit_BeginSequence<false>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
 	}
 	return _pPUnitCreated;
 }

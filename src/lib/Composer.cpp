@@ -38,7 +38,7 @@ void Composer::ComposeAsSequence(Expr& expr)
 {
 	expr.SetPUnitFirst(PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
-	Add_BeginQuote(expr);									// [Any]
+	Add_BeginSequence(expr);								// [Any]
 	BeginRepeaterBlock(nullptr, nullptr, nullptr);
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
@@ -233,9 +233,9 @@ void Composer::Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchD
 	SetFactory(new PUnitFactory_KeepJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
-void Composer::Add_BeginQuote(const Expr& exprSrc, const PUnit* pPUnitSentinel)
+void Composer::Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel)
 {
-	SetFactory(new PUnitFactory_BeginQuote(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));
+	SetFactory(new PUnitFactory_BeginSequence(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));
 }
 
 void Composer::Add_DiscardValue(const Expr& exprSrc)
