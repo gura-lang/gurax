@@ -56,7 +56,7 @@ public:
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
 	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
-	void SetPUnitNext(const PUnit* pPUnit, bool contFlag) { _pPUnitCur = pPUnit; _contFlag = contFlag; }
+	void BreakLoop() { _pPUnitCur = nullptr; _contFlag = false, _resumeFlag = true; }
 	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void ResumeFromError() { _contFlag = true; _resumeFlag = true; _event = Event::None; }

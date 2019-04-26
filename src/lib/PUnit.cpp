@@ -1694,7 +1694,7 @@ void PUnit_Break<discardValueFlag, branchDestFlag>::Exec(Processor& processor) c
 		}
 	} else {
 		processor.SetEventBreak();
-		processor.SetPUnitNext(nullptr, false);	// Set contFlag to false so the Processor loop exits.
+		processor.BreakLoop();
 	}
 }
 
@@ -1739,7 +1739,7 @@ void PUnit_Continue<discardValueFlag>::Exec(Processor& processor) const
 		processor.SetPUnitNext(GetPUnitOfLoop());
 	} else {
 		processor.SetEventContinue();
-		processor.SetPUnitNext(nullptr, false);	// Set contFlag to false so the Processor loop exits.
+		processor.BreakLoop();
 	}
 }
 
@@ -1778,7 +1778,7 @@ void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 		if (pPUnit->GetDiscardValueFlag()) processor.DiscardValue();
 		processor.SetPUnitNext(pPUnit->GetPUnitCont());
 	} else {
-		processor.SetPUnitNext(nullptr, false);	// Set contFlag to false so the Processor loop exits.
+		processor.BreakLoop();
 	}
 }
 
