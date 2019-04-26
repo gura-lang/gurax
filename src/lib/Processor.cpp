@@ -16,7 +16,7 @@ Processor::Processor() :
 	GetValueStack().reserve(1024);
 	GetFrameStack().reserve(1024);
 	PushFrame(Basement::Inst.GetFrame().Reference());
-	PushPUnit(nullptr);
+	//PushPUnit(nullptr);
 }
 
 Processor* Processor::Create(bool debugFlag)
@@ -51,7 +51,11 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 	if (_pPUnitCur->IsBeginSequence()) {
 		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip PUnit_BeginSequence
-		while (_contFlag && _pPUnitCur != pPUnitSentinel) _pPUnitCur->Exec(*this);
+		if (pPUnitSentinel->IsEndSequence()) {
+			while (_contFlag) _pPUnitCur->Exec(*this);
+		} else {
+			while (_contFlag && _pPUnitCur != pPUnitSentinel) _pPUnitCur->Exec(*this);
+		}
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		while (_contFlag) _pPUnitCur->Exec(*this);
@@ -78,6 +82,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	if (_pPUnitCur->IsBeginSequence()) {
 		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
 		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip PUnit_BeginSequence
+		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
 		PrintPUnit(stream, _pPUnitCur);
