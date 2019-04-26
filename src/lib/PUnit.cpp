@@ -1582,6 +1582,35 @@ PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_EndSequence
+// Stack View: [Prev] -> [Prev] (always)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_EndSequence<discardValueFlag>::Exec(Processor& processor) const
+{
+	processor.BreakLoop();
+}
+
+template<bool discardValueFlag>
+String PUnit_EndSequence<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "EndSequence()";
+	//AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_EndSequence::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_EndSequence<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_EndSequence<false>(_pExprSrc.release(), _seqId);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_DiscardValue
 // Stack View: [Prev Any] -> [Prev] (continue)
 //                        -> []     (discard)

@@ -238,6 +238,11 @@ void Composer::Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentine
 	SetFactory(new PUnitFactory_BeginSequence(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));
 }
 
+void Composer::Add_EndSequence(const Expr& exprSrc)
+{
+	SetFactory(new PUnitFactory_EndSequence(exprSrc.Reference(), NextSeqId()));
+}
+
 void Composer::Add_DiscardValue(const Expr& exprSrc)
 {
 	SetFactory(new PUnitFactory_DiscardValue(exprSrc.Reference(), NextSeqId()));

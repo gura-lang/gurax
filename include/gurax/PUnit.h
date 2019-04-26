@@ -58,6 +58,7 @@ public:
 	// Virtual functions
 	virtual bool IsBridge() const { return false; }
 	virtual bool IsBeginSequence() const { return false; }
+	virtual bool IsEndSequence() const { return false; }
 	virtual bool GetDiscardValueFlag() const = 0;
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
@@ -1646,6 +1647,41 @@ public:
 		PUnitFactory(pExprSrc, seqId), _pPUnitSentinel(pPUnitSentinel) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_BeginSequence<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_EndSequence
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_EndSequence : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_EndSequence(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool IsEndSequence() const override { return true; }
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return nullptr; }
+};
+
+class PUnitFactory_EndSequence : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_EndSequence");
+public:
+	PUnitFactory_EndSequence(Expr* pExprSrc, PUnit::SeqId seqId) :
+		PUnitFactory(pExprSrc, seqId) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_EndSequence<false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
