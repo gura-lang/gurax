@@ -567,6 +567,46 @@ PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Import
+// Stack View: [] -> [Any] (continue)
+//                -> []    (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
+{
+#if 0
+	Frame& frame = processor.GetFrameCur();
+	const Value* pValue = frame.Import(GetSymbol());
+	if (pValue) {
+		if (!discardValueFlag) processor.PushValue(pValue->Reference());
+		processor.SetPUnitNext(_GetPUnitCont());
+	} else {
+		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+		processor.ErrorDone();
+	}
+#endif
+}
+
+template<bool discardValueFlag>
+String PUnit_Import<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("Import(`%s)", GetDottedSymbol().ToString().c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Import<true>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release());
+	} else {
+		_pPUnitCreated = new PUnit_Import<false>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_CreateList
 // Stack View: [] -> [List] (continue)
 //                -> []     (discard)

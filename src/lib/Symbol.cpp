@@ -90,6 +90,17 @@ bool SymbolList::AddFromExprList(const ExprList& exprList)
 	return true;
 }
 
+bool SymbolList::AddFromExprLink(const ExprLink& exprLink)
+{
+	for (const Expr* pExpr = exprLink.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		if (!pExpr->IsType<Expr_Identifier>()) {
+			return false;
+		}
+		push_back(dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol());
+	}
+	return true;
+}
+
 SymbolList& SymbolList::Sort(SortOrder sortOrder)
 {
 	if (sortOrder == SortOrder::Ascend) {

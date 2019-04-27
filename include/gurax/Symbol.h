@@ -29,6 +29,7 @@ namespace Gurax {
 class Symbol; 
 class Expr;
 class ExprList;
+class ExprLink;
 
 //------------------------------------------------------------------------------
 // SymbolList
@@ -50,7 +51,16 @@ public:
 	// Destructor
 	~SymbolList() = default;
 public:
+	static SymbolList* CreateFromExprList(const ExprList& exprList) {
+		std::unique_ptr<SymbolList> pSymbolList(new SymbolList());
+		return pSymbolList->AddFromExprList(exprList)? pSymbolList.release() : nullptr;
+	}
+	static SymbolList* CreateFromExprLink(const ExprLink& exprLink) {
+		std::unique_ptr<SymbolList> pSymbolList(new SymbolList());
+		return pSymbolList->AddFromExprLink(exprLink)? pSymbolList.release() : nullptr;
+	}
 	bool AddFromExprList(const ExprList& exprList);
+	bool AddFromExprLink(const ExprLink& exprLink);
 	SymbolList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	template<typename T_Map> static SymbolList CollectKeys(const T_Map& map);
 	bool IsEqualTo(const SymbolList& symbolList) const;

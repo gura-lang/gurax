@@ -580,6 +580,38 @@ Gurax_ImplementStatement(return_)
 }
 
 // import(`name) {`block?}
+Gurax_DeclareStatement(import2)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(import2)
+{
+	if (exprCaller.CountExprCdr() != 1) {
+		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
+						 "import-statement takes one argument");
+		return;
+	}
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprCdr));
+	if (!pDottedSymbol) {
+		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
+		return;
+	}
+	std::unique_ptr<SymbolList> pSymbolList;
+	if (exprCaller.HasExprOfBlock()) {
+		pSymbolList.reset(SymbolList::CreateFromExprLink(exprCaller.GetExprOfBlock()->GetExprLinkElem()));
+		if (!pSymbolList) {
+			Error::Issue(ErrorType::SyntaxError, "invalid format of symbol list");
+			return;
+		}
+	}
+	composer.Add_Import(exprCaller, pDottedSymbol.release(), pSymbolList.release());
+}
+
+// import(`name) {`block?}
 Gurax_DeclareFunction(import)
 {
 	Declare(VTYPE_Nil, Flag::None);

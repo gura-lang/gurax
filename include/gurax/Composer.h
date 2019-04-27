@@ -99,6 +99,7 @@ public:
 					   const PUnit* pPUnitBranchDest = nullptr);
 	void Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
+	void Add_Import(const Expr& exprSrc, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList);
 	void Add_CreateList(const Expr& exprSrc, size_t sizeReserve);
 	void Add_ListElem(const Expr& exprSrc, size_t offset, bool xlistFlag);
 	void Add_CreateDict(const Expr& exprSrc);

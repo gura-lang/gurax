@@ -678,6 +678,50 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Import
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_Import : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	RefPtr<DottedSymbol> _pDottedSymbol;
+	std::unique_ptr<SymbolList> _pSymbolList;
+public:
+	// Constructor
+	PUnit_Import(Expr* pExprSrc, SeqId seqId, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList) :
+		PUnit(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList) {}
+public:
+	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	const SymbolList* GetSymbolList() { return _pSymbolList.get(); }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_Import : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_Import");
+private:
+	RefPtr<DottedSymbol> _pDottedSymbol;
+	std::unique_ptr<SymbolList> _pSymbolList;
+public:
+	PUnitFactory_Import(Expr* pExprSrc, PUnit::SeqId seqId, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList) :
+		PUnitFactory(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_Import<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_CreateList
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

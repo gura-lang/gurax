@@ -112,6 +112,11 @@ void Composer::Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator)
 	SetFactory(new PUnitFactory_BinaryOp(exprSrc.Reference(), NextSeqId(), pOperator));
 }
 
+void Composer::Add_Import(const Expr& exprSrc, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList)
+{
+	SetFactory(new PUnitFactory_Import(exprSrc.Reference(), NextSeqId(), pDottedSymbol, pSymbolList));
+}
+
 void Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReserve)
 {
 	SetFactory(new PUnitFactory_CreateList(exprSrc.Reference(), NextSeqId(), sizeReserve));
