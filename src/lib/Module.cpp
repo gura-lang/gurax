@@ -28,14 +28,15 @@ bool Module::Prepare(const char* name, char separator)
 
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
-	String pathName;
-	const char* extNames[] = {".gura", ".gurd"};
-
+	RefPtr<Module> pModule;
 	String fileName = dottedSymbol.ToString();
 	String baseName = fileName;
-	pathName = baseName;
-	pathName += extNames[0];
-	return ImportScript(processor, dottedSymbol, pathName.c_str());
+	String pathName = baseName;
+	pathName += ".gura";
+	pModule.reset(ImportScript(processor, dottedSymbol, pathName.c_str()));
+	if (!pModule) return nullptr;
+	
+	return pModule.release();
 }
 
 Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)
