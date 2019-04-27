@@ -81,6 +81,7 @@ protected:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	RefPtr<HelpProvider> _pHelpProvider;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
+	String _pathName;
 public:
 	// Constructor
 	Module() = delete;
@@ -98,6 +99,8 @@ protected:
 public:
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	void SetPathName(const char* pathName) { _pathName = pathName; }
+	const char* GetPathName() const { return _pathName.c_str(); }
 	void AddHelp(const Symbol* pLangCode, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
 	}

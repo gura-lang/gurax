@@ -28,8 +28,13 @@ bool Module::Prepare(const char* name, char separator)
 
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
-	String pathName = dottedSymbol.ToString();
-	pathName += ".gura";
+	String pathName;
+	const char* extNames[] = {".gura", ".gurd"};
+
+	String fileName = dottedSymbol.ToString();
+	String baseName = fileName;
+	pathName = baseName;
+	pathName += extNames[0];
 	return ImportScript(processor, dottedSymbol, pathName.c_str());
 }
 
@@ -52,6 +57,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	processor.ClearEvent();
 	if (Error::IsIssued()) return nullptr;
 	processor.PopValue();	// discard the last value
+	pModule->SetPathName(pathName);
 	return pModule.release();
 }
 
@@ -75,7 +81,10 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	//auto ModuleTerminate = reinterpret_cast<ModuleTerminateT>(GetEntry(dll, "Gurax_ModuleTerminate"));
 	//if (!ModuleTerminate) return nullptr;
 	if (!ModuleValidate()) return nullptr;
-	return ModuleCreate(processor.GetFrameCur().Reference());
+	RefPtr<Module> pModule(ModuleCreate(processor.GetFrameCur().Reference()));
+	if (!pModule) return nullptr;
+	pModule->SetPathName(pathName);
+	return pModule.release();
 }
 
 String Module::ToString(const StringStyle& ss) const
