@@ -568,23 +568,20 @@ PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_Import
-// Stack View: [] -> [Any] (continue)
+// Stack View: [] -> [Module] (continue)
 //                -> []    (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
-#if 0
-	Frame& frame = processor.GetFrameCur();
-	const Value* pValue = frame.Import(GetSymbol());
-	if (pValue) {
-		if (!discardValueFlag) processor.PushValue(pValue->Reference());
+	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
+	if (pModule) {
+		processor.GetFrameCur().Assign(pModule.Reference());
+		if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
-		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		processor.ErrorDone();
 	}
-#endif
 }
 
 template<bool discardValueFlag>

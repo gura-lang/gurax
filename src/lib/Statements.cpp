@@ -580,14 +580,14 @@ Gurax_ImplementStatement(return_)
 }
 
 // import(`name) {`block?}
-Gurax_DeclareStatement(import2)
+Gurax_DeclareStatement(import)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
 }
 
-Gurax_ImplementStatement(import2)
+Gurax_ImplementStatement(import)
 {
 	if (exprCaller.CountExprCdr() != 1) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
@@ -611,6 +611,7 @@ Gurax_ImplementStatement(import2)
 	composer.Add_Import(exprCaller, pDottedSymbol.release(), pSymbolList.release());
 }
 
+#if 0
 // import(`name) {`block?}
 Gurax_DeclareFunction(import)
 {
@@ -635,6 +636,7 @@ Gurax_ImplementFunction(import)
 	processor.GetFrameCur().Assign(pModule.Reference());
 	return new Value_Module(pModule.release());
 }
+#endif
 
 // scope {`block}
 Gurax_DeclareStatement(scope)
@@ -679,7 +681,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(break_));
 	frame.Assign(Gurax_CreateStatement(continue_));
 	frame.Assign(Gurax_CreateStatement(return_));
-	frame.Assign(Gurax_CreateFunction(import));
+	frame.Assign(Gurax_CreateStatement(import));
 	frame.Assign(Gurax_CreateStatement(scope));
 	frame.Assign(Gurax_CreateStatement(class_));
 }
