@@ -28,6 +28,32 @@ Gurax_ImplementFunction(Exit)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// sys.path[]:String
+Gurax_DeclareModuleProperty_RW(path)
+{
+	Declare(VTYPE_String, Flag::ListVar);
+}
+
+Gurax_ImplementModulePropertyGetter(path)
+{
+	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+	for (const String& dirName : Basement::Inst.GetPathList()) {
+		pValues->Add(new Value_String(dirName));
+	}
+	return new Value_List(pValues.release());
+}
+
+Gurax_ImplementModulePropertySetter(path)
+{
+	StringList pathList;
+	const ValueOwner& values = Value_List::GetValueTypedOwner(value).GetValueOwner();
+	pathList.reserve(values.size());
+	for (const Value* pValue : values) {
+		pathList.push_back(Value_String::GetString(*pValue));
+	}
+	Basement::Inst.SetPathList(pathList);
+}
+
 // sys.ps1:String
 Gurax_DeclareModuleProperty_RW(ps1)
 {
@@ -77,6 +103,7 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
 	// Assignment of property
+	Assign(Gurax_CreateModuleProperty(path));
 	Assign(Gurax_CreateModuleProperty(ps1));
 	Assign(Gurax_CreateModuleProperty(ps2));
 	return true;

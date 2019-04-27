@@ -52,7 +52,7 @@ bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const 
 		GetModule().GetFrame().Assign(pSymbol, pValue.release());
 		return true;
 	} else if (pPropHandler->IsWritable()) {
-		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue));
+		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue, pPropHandler->GetListVarFlag()));
 		if (!pValueCasted) return false;
 		pPropHandler->DoSetValue(*this, *pValueCasted, attr);
 		return true;

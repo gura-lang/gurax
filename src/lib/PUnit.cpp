@@ -277,7 +277,7 @@ template<bool discardValueFlag>
 void PUnit_Cast<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue));
+	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetListVarFlag()));
 	if (pValueCasted) {
 		if (!discardValueFlag) processor.PushValue(pValueCasted.release());
 		processor.SetPUnitNext(_GetPUnitCont());
@@ -298,9 +298,9 @@ String PUnit_Cast<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOf
 PUnit* PUnitFactory_Cast::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Cast<true>(_pExprSrc.release(), _seqId, _vtype);
+		_pPUnitCreated = new PUnit_Cast<true>(_pExprSrc.release(), _seqId, _vtype, _listVarFlag);
 	} else {
-		_pPUnitCreated = new PUnit_Cast<false>(_pExprSrc.release(), _seqId, _vtype);
+		_pPUnitCreated = new PUnit_Cast<false>(_pExprSrc.release(), _seqId, _vtype, _listVarFlag);
 	}
 	return _pPUnitCreated;
 }

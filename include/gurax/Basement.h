@@ -16,6 +16,7 @@ private:
 	RefPtr<Frame> _pFrame;
 	String _ps1;
 	String _ps2;
+	StringList _pathList;
 public:
 	static Basement Inst;
 public:
@@ -36,6 +37,8 @@ public:
 	const char* GetPS2() const { return _ps2.c_str(); }
 	void SetPS1(const char* ps1) { _ps1 = ps1; }
 	void SetPS2(const char* ps2) { _ps2 = ps2; }
+	void SetPathList(const StringList& pathList) { _pathList = pathList; }
+	const StringList& GetPathList() const { return _pathList; }
 };
 
 }

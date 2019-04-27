@@ -117,6 +117,7 @@ public:
 	bool IsOccurZeroOrMore() const { return GetOccur().IsIdentical(Occur::ZeroOrMore); }
 	bool IsOccurOnceOrMore() const { return GetOccur().IsIdentical(Occur::OnceOrMore); }
 	Flags GetFlags() const { return _flags; }
+	bool GetListVarFlag() const { return _flags & Flag::ListVar; }
 	const Expr* GetExprDefault() const { return _pExprDefault.get(); }
 	static DeclArg* CreateFromExpr(const Expr& expr);
 	bool FixVType(Frame& frame);

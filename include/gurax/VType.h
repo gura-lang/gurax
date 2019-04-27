@@ -77,7 +77,7 @@ public:
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
-	Value* Cast(const Value& value) const;
+	Value* Cast(const Value& value, bool listVarFlag) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }

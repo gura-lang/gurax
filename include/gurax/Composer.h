@@ -89,7 +89,7 @@ public:
 	void Add_AssignToSymbol(const Expr& exprSrc, const Symbol* pSymbol);
 	void Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg);
 	void Add_AssignFunction(const Expr& exprSrc, Function* pFunction);
-	void Add_Cast(const Expr& exprSrc, const VType& vtype);
+	void Add_Cast(const Expr& exprSrc, const VType& vtype, bool listVarFlag);
 	void Add_GenIterator(const Expr& exprSrc);
 	void Add_GenRangeIterator(const Expr& exprSrc);
 	void Add_GenCounterIterator(const Expr& exprSrc);

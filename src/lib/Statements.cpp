@@ -379,7 +379,7 @@ Gurax_ImplementStatement(repeat)
 	if (declArgsOfBlock.empty()) {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);								// [Any]
-			composer.Add_Cast(exprCaller, VTYPE_Number);					// [Number]
+			composer.Add_Cast(exprCaller, VTYPE_Number, false);				// [Number]
 			composer.Add_GenRangeIterator(exprCaller);						// [Iterator]
 		} else {
 			composer.Add_GenCounterIterator(exprCaller);					// [Iterator]
@@ -424,7 +424,7 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);								// [Any]
-			composer.Add_Cast(exprCaller, VTYPE_Number);					// [Number]
+			composer.Add_Cast(exprCaller, VTYPE_Number, false);				// [Number]
 			composer.Add_GenRangeIterator(exprCaller);						// [Iterator]
 		} else {
 			composer.Add_GenCounterIterator(exprCaller);					// [Iterator]

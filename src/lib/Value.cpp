@@ -96,7 +96,7 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 	if (!pPropHandler) {
 		return false;
 	} else if (pPropHandler->IsWritable()) {
-		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue));
+		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue, pPropHandler->GetListVarFlag()));
 		if (!pValueCasted) return false;
 		pPropHandler->DoSetValue(*this, *pValueCasted, attr);
 		return true;

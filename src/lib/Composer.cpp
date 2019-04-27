@@ -71,9 +71,9 @@ void Composer::Add_AssignFunction(const Expr& exprSrc, Function* pFunction)
 	SetFactory(new PUnitFactory_AssignFunction(exprSrc.Reference(), NextSeqId(), pFunction));
 }
 
-void Composer::Add_Cast(const Expr& exprSrc, const VType& vtype)
+void Composer::Add_Cast(const Expr& exprSrc, const VType& vtype, bool listVarFlag)
 {
-	SetFactory(new PUnitFactory_Cast(exprSrc.Reference(), NextSeqId(), vtype));
+	SetFactory(new PUnitFactory_Cast(exprSrc.Reference(), NextSeqId(), vtype, listVarFlag));
 }
 
 void Composer::Add_GenIterator(const Expr& exprSrc)

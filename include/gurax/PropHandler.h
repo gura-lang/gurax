@@ -97,6 +97,7 @@ public:
 		static const Flags None				= 0;
 		static const Flags Readable			= (1 << 0);
 		static const Flags Writable			= (1 << 1);
+		static const Flags ListVar			= (1 << 2);
 	};
 private:
 	const Symbol* _pSymbol;
@@ -129,6 +130,7 @@ public:
 	const Flags GegFlags() const { return _flags; }
 	bool IsReadable() const { return (_flags & Flag::Readable) != 0; }
 	bool IsWritable() const { return (_flags & Flag::Writable) != 0; }
+	bool GetListVarFlag() const { return _flags & Flag::ListVar; }
 public:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;

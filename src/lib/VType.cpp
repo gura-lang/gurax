@@ -79,15 +79,46 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 	return nullptr;
 }
 
-Value* VType::Cast(const Value& value) const
+Value* VType::Cast(const Value& value, bool listVarFlag) const
 {
-	if (value.IsInstanceOf(*this)) return value.Reference();
-	Value* pValueCasted = DoCastFrom(value);
-	if (!pValueCasted) {
+	auto IssueError = [](const VType& vtype, const Value& value) {
 		Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",
-					 value.GetVType().MakeFullName().c_str(), MakeFullName().c_str());
+					 value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+	};
+	if (listVarFlag) {
+		if (!value.IsType(VTYPE_List)) {
+			Error::Issue(ErrorType::ValueError, "must be a list value");
+			return nullptr;
+		}
+		const ValueTypedOwner& values = dynamic_cast<const Value_List&>(value).GetValueTypedOwner();
+
+		// type check
+
+		RefPtr<ValueTypedOwner> pValuesCasted(new ValueTypedOwner());
+		pValuesCasted->Reserve(values.GetSize());
+		for (const Value* pValueElem : values.GetValueOwner()) {
+			if (pValueElem->IsInstanceOf(*this)) {
+				pValuesCasted->Add(pValueElem->Reference());
+			} else {
+				RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem));
+				if (!pValueElemCasted) {
+					IssueError(*this, *pValueElem);
+					return nullptr;
+				}
+				pValuesCasted->Add(pValueElemCasted.release());
+			}
+		}
+		return new Value_List(pValuesCasted.release());
+	} else if (value.IsInstanceOf(*this)) {
+		return value.Reference();
+	} else {
+		RefPtr<Value> pValueCasted(DoCastFrom(value));
+		if (!pValueCasted) {
+			IssueError(*this, value);
+			return nullptr;
+		}
+		return pValueCasted.release();
 	}
-	return pValueCasted;
 }
 
 Value* VType::DoCastFrom(const Value& value) const
