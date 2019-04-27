@@ -73,9 +73,9 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Module);
 public:
-	using T_ModuleValidate	= bool (*)();
-	using T_ModuleCreate	= Module* (*)(Frame* pFrameOuter);
-	using T_ModuleTerminate	= void (*)(Module& module);
+	using ModuleValidateT	= bool (*)();
+	using ModuleCreateT		= Module* (*)(Frame* pFrameOuter);
+	using ModuleTerminateT	= void (*)(Module& module);
 protected:
 	RefPtr<Frame> _pFrame;
 	RefPtr<DottedSymbol> _pDottedSymbol;
@@ -120,7 +120,7 @@ public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);
 	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol);
-	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, Stream& stream);
+	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

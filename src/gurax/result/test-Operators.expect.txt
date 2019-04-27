@@ -4,24 +4,24 @@
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)
   ##3 EndSequence()
-  ##4 Value(<Expr:`(a):PUnit#11>)
+  ##4 Value(<Expr:`(a):PUnit#5>)
 --------
 {`a; `b; `c}
   ##0 Jump(##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)
   ##3 EndSequence()
-  ##4 Value(<Expr:`(a):PUnit#21>), DiscardValue()
+  ##4 Value(<Expr:`(a):PUnit#15>), DiscardValue()
   ##5 Jump(##9)
   ##6 BeginSequence(sentinel=##8)
   ##7 Lookup(`b)
   ##8 EndSequence()
-  ##9 Value(<Expr:`(b):PUnit#26>), DiscardValue()
+  ##9 Value(<Expr:`(b):PUnit#20>), DiscardValue()
   ##10 Jump(##14)
   ##11 BeginSequence(sentinel=##13)
   ##12 Lookup(`c)
   ##13 EndSequence()
-  ##14 Value(<Expr:`(c):PUnit#31>)
+  ##14 Value(<Expr:`(c):PUnit#25>)
 --------
 {a && b}
   ##0 Lookup(`a)

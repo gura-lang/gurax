@@ -28,19 +28,19 @@ bool Module::Prepare(const char* name, char separator)
 
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
-	String fileName = dottedSymbol.ToString();
-	fileName += ".gura";
-	RefPtr<Stream> pStream(Stream_File::Open(fileName.c_str(), "rt"));
-	if (!pStream) {
-		Error::Issue(ErrorType::ModuleError, "failed to open a module file '%s'", fileName.c_str());
-		return nullptr;
-	}
-	return ImportScript(processor, dottedSymbol, *pStream);
+	String pathName = dottedSymbol.ToString();
+	pathName += ".gura";
+	return ImportScript(processor, dottedSymbol, pathName.c_str());
 }
 
-Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, Stream& stream)
+Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)
 {
-	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(stream));
+	RefPtr<Stream> pStream(Stream_File::Open(pathName, "rt"));
+	if (!pStream) {
+		Error::Issue(ErrorType::ModuleError, "failed to open a module file '%s'", pathName);
+		return nullptr;
+	}
+	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
 	if (Error::IsIssued()) return nullptr;
 	Composer composer;
 	pExprOfRoot->Compose(composer);
@@ -57,14 +57,24 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 
 Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)
 {
-	const char* funcName = "Gurax_ModuleCreate";
-	OAL::DynamicLibrary dll;
-	if (!dll.Open(pathName)) return nullptr;
-	auto ModuleCreate = reinterpret_cast<T_ModuleCreate>(dll.GetEntry(funcName));
-	if (!ModuleCreate) {
+	auto GetEntry = [](OAL::DynamicLibrary& dll, const char* funcName) -> void* {
+		void* pFunc = dll.GetEntry(funcName);
+		if (pFunc) return pFunc;
 		Error::Issue(ErrorType::ModuleError, "missing function '%s'", funcName);
 		return nullptr;
+	};
+	OAL::DynamicLibrary dll;
+	if (!dll.Open(pathName)) {
+		Error::Issue(ErrorType::ModuleError, "failed to open a module file '%s'", pathName);
+		return nullptr;
 	}
+	auto ModuleValidate = reinterpret_cast<ModuleValidateT>(GetEntry(dll, "Gurax_ModuleValidate"));
+	if (!ModuleValidate) return nullptr;
+	auto ModuleCreate = reinterpret_cast<ModuleCreateT>(GetEntry(dll, "Gurax_ModuleCreate"));
+	if (!ModuleCreate) return nullptr;
+	//auto ModuleTerminate = reinterpret_cast<ModuleTerminateT>(GetEntry(dll, "Gurax_ModuleTerminate"));
+	//if (!ModuleTerminate) return nullptr;
+	if (!ModuleValidate()) return nullptr;
 	return ModuleCreate(processor.GetFrameCur().Reference());
 }
 
