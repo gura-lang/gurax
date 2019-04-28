@@ -576,7 +576,19 @@ void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
 	if (pModule) {
-		processor.GetFrameCur().Assign(pModule.Reference());
+		if (GetSymbolList() && !GetSymbolList()->empty()) {
+			const SymbolList& symbolList = *GetSymbolList();
+			for (const Symbol* pSymbol : symbolList) {
+				Value* pValue = pModule->GetFrame().Lookup(pSymbol);
+				if (!pValue) {
+					Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", pSymbol);
+					return;
+				}
+				processor.GetFrameCur().Assign(pSymbol, pValue->Reference());
+			}
+		} else {
+			processor.GetFrameCur().Assign(pModule.Reference());
+		}
 		if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {

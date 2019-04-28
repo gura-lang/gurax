@@ -697,7 +697,7 @@ public:
 		PUnit(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList) {}
 public:
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
-	const SymbolList* GetSymbolList() { return _pSymbolList.get(); }
+	const SymbolList* GetSymbolList() const { return _pSymbolList.get(); }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
