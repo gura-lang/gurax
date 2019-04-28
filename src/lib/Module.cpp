@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Module
 //------------------------------------------------------------------------------
+ModuleMap Module::_moduleMap;
+
 Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 	_pFrame(new Frame_Module(pFrameOuter)), _pDottedSymbol(pDottedSymbol),
 	_pHelpProvider(new HelpProvider()), _pPropHandlerMap(new PropHandlerMap())
@@ -33,9 +35,11 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 	String baseName = fileName;
 	String pathName = baseName;
 	pathName += ".gura";
+	pModule.reset(_moduleMap.Lookup(pathName));
+	if (pModule) return pModule.release();
 	pModule.reset(ImportScript(processor, dottedSymbol, pathName.c_str()));
 	if (!pModule) return nullptr;
-	
+	_moduleMap.Assign(pModule.Reference());
 	return pModule.release();
 }
 
@@ -91,6 +95,27 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 String Module::ToString(const StringStyle& ss) const
 {
 	return GetDottedSymbol().ToString(ss);
+}
+
+//------------------------------------------------------------------------------
+// ModuleMap
+//------------------------------------------------------------------------------
+void ModuleMap::Clear()
+{
+	for (auto& pair : *this) Module::Delete(pair.second);
+	clear();
+}
+
+void ModuleMap::Assign(Module* pModule)
+{
+	const char* pathName = pModule->GetPathName();
+	iterator pPair = find(pathName);
+	if (pPair == end()) {
+		emplace(pathName, pModule);
+	} else {
+		Module::Delete(pPair->second);
+		pPair->second = pModule;
+	}
 }
 
 }

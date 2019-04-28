@@ -65,10 +65,28 @@ void Terminate(Module& module)
 
 namespace Gurax {
 
+class ModuleMap;
+
+//------------------------------------------------------------------------------
+// ModuleMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ModuleMap :
+		public std::unordered_map<String, Module*, String::Hash, String::EqualTo> {
+public:
+	~ModuleMap() { Clear(); }
+public:
+	void Clear();
+	void Assign(Module* pModule);
+	Module* Lookup(const String& pathName) const {
+		auto pPair = find(pathName);
+		return (pPair == end())? nullptr : pPair->second;
+	}
+};
+
 //------------------------------------------------------------------------------
 // Module
 //------------------------------------------------------------------------------
-class Module : public Referable {
+class GURAX_DLLDECLARE Module : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Module);
@@ -82,6 +100,8 @@ protected:
 	RefPtr<HelpProvider> _pHelpProvider;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 	String _pathName;
+private:
+	static ModuleMap _moduleMap;
 public:
 	// Constructor
 	Module() = delete;
@@ -135,6 +155,8 @@ public:
 	// Virtual functions
 	virtual bool DoPrepare() { return true; };
 };
+
+
 
 }
 
