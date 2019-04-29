@@ -80,6 +80,22 @@ String OAL::GetCurDir()
 	return dirName;
 }
 
+bool OAL::DoesExistDir(const char *pathName)
+{
+	WIN32_FILE_ATTRIBUTE_DATA attrData;
+	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
+							  GetFileExInfoStandard, &attrData) == 0) return false;
+	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
+}
+
+bool OAL::DoesExistFile(const char *pathName)
+{
+	WIN32_FILE_ATTRIBUTE_DATA attrData;
+	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
+							  GetFileExInfoStandard, &attrData) == 0) return false;
+	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) == 0;
+}
+
 //-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (MSWIN)
 //-----------------------------------------------------------------------------
@@ -140,6 +156,20 @@ String OAL::GetCurDir()
 		dirName += PathName::SepPlatform;
 	}
 	return dirName;
+}
+
+bool OAL::DoesExistDir(const char* pathName)
+{
+	struct stat stat;
+	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
+	return S_ISDIR(stat.st_mode);
+}
+
+bool OAL::DoesExistFile(const char* pathName)
+{
+	struct stat stat;
+	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
+	return S_ISREG(stat.st_mode);
 }
 
 //-----------------------------------------------------------------------------

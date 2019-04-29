@@ -30,14 +30,38 @@ bool Module::Prepare(const char* name, char separator)
 
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
+	enum class Type { None, Script, Compressed, Binary } type = Type::None;
 	RefPtr<Module> pModule;
 	String fileName = dottedSymbol.ToString();
-	String baseName = fileName;
-	String pathName = baseName;
-	pathName += ".gura";
+	String pathName;
+	for (const String& dirName : Basement::Inst.GetPathList()) {
+		String baseName = PathName(dirName).JoinAfter(fileName.c_str());
+		baseName = PathName(baseName).MakeAbsName();
+		pathName = baseName;
+		pathName += ".gura";
+		if (OAL::DoesExistFile(pathName.c_str())) {
+			type = Type::Script;
+			break;
+		}
+		pathName = baseName;
+		pathName += ".gurc";
+		if (OAL::DoesExistFile(pathName.c_str())) {
+			type = Type::Compressed;
+			break;
+		}
+		pathName = baseName;
+		pathName += ".gurd";
+		if (OAL::DoesExistFile(pathName.c_str())) {
+			type = Type::Binary;
+			break;
+		}
+	}
 	pModule.reset(_moduleMap.Lookup(pathName));
 	if (pModule) return pModule.release();
-	pModule.reset(ImportScript(processor, dottedSymbol, pathName.c_str()));
+	pModule.reset((type == Type::Script)? ImportScript(processor, dottedSymbol, pathName.c_str()) :
+				  (type == Type::Compressed)? ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
+				  (type == Type::Binary)? ImportBinary(processor, dottedSymbol, pathName.c_str()) :
+				  nullptr);
 	if (!pModule) return nullptr;
 	_moduleMap.Assign(pModule.Reference());
 	return pModule.release();
@@ -64,6 +88,12 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	processor.PopValue();	// discard the last value
 	pModule->SetPathName(pathName);
 	return pModule.release();
+}
+
+Module* Module::ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)
+{
+	Error::Issue(ErrorType::ModuleError, "can't import a compressed script");
+	return nullptr;
 }
 
 Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)

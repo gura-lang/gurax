@@ -144,6 +144,7 @@ public:
 	bool Prepare(const char* name, char separator);
 	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol);
 	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
+	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

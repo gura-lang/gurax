@@ -38,6 +38,8 @@ public:
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
 	static String GetCurDir();
+	static bool DoesExistDir(const char* pathName);
+	static bool DoesExistFile(const char* pathName);
 };
 
 }
