@@ -691,13 +691,15 @@ public:
 private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	std::unique_ptr<SymbolList> _pSymbolList;
+	bool _mixInFlag;
 public:
 	// Constructor
-	PUnit_Import(Expr* pExprSrc, SeqId seqId, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList) :
-		PUnit(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList) {}
+	PUnit_Import(Expr* pExprSrc, SeqId seqId, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag) :
+		PUnit(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
 public:
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	const SymbolList* GetSymbolList() const { return _pSymbolList.get(); }
+	bool GetMixInFlag() const { return _mixInFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -715,9 +717,10 @@ public:
 private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	std::unique_ptr<SymbolList> _pSymbolList;
+	bool _mixInFlag;
 public:
-	PUnitFactory_Import(Expr* pExprSrc, PUnit::SeqId seqId, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList) :
-		PUnitFactory(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList) {}
+	PUnitFactory_Import(Expr* pExprSrc, PUnit::SeqId seqId, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag) :
+		PUnitFactory(pExprSrc, seqId), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_Import<false>);
 	}

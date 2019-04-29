@@ -600,43 +600,26 @@ Gurax_ImplementStatement(import)
 		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
 		return;
 	}
-	std::unique_ptr<SymbolList> pSymbolList;
+	bool mixInFlag = false;
+	std::unique_ptr<SymbolList> pSymbolList(new SymbolList());
 	if (exprCaller.HasExprOfBlock()) {
-		pSymbolList.reset(SymbolList::CreateFromExprLink(exprCaller.GetExprOfBlock()->GetExprLinkElem()));
-		if (!pSymbolList) {
-			Error::Issue(ErrorType::SyntaxError, "invalid format of symbol list");
-			return;
+		const Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
+		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (!pExpr->IsType<Expr_Identifier>()) {
+				Error::Issue(ErrorType::ModuleError, "the block of import statement must contain symbols");
+				return;
+			}
+			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol();
+			if (pSymbolList->DoesContain(pSymbol)) {
+				Error::Issue(ErrorType::ModuleError, "duplicated symbol: %s", pSymbol->GetName());
+				return;
+			}
+			pSymbolList->push_back(pSymbol);
 		}
+		mixInFlag = pSymbolList->DoesContain(Gurax_SymbolMark(Mul));
 	}
-	composer.Add_Import(exprCaller, pDottedSymbol.release(), pSymbolList.release());
+	composer.Add_Import(exprCaller, pDottedSymbol.release(), pSymbolList.release(), mixInFlag);
 }
-
-#if 0
-// import(`name) {`block?}
-Gurax_DeclareFunction(import)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
-}
-
-Gurax_ImplementFunction(import)
-{
-	// Arguments
-	ArgPicker args(argument);
-	const Expr& name = args.PickExpr();
-	// Function body
-	RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol());
-	if (!pDottedSymbol->AppendFromExpr(name)) {
-		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
-		return Value::nil();
-	}
-	RefPtr<Module> pModule(Module::Import(processor, *pDottedSymbol));
-	if (!pModule) return Value::nil();
-	processor.GetFrameCur().Assign(pModule.Reference());
-	return new Value_Module(pModule.release());
-}
-#endif
 
 // scope {`block}
 Gurax_DeclareStatement(scope)

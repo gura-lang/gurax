@@ -576,7 +576,9 @@ void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
 	if (pModule) {
-		if (GetSymbolList() && !GetSymbolList()->empty()) {
+		if (GetMixInFlag()) {
+			
+		} else if (GetSymbolList() && !GetSymbolList()->empty()) {
 			const SymbolList& symbolList = *GetSymbolList();
 			for (const Symbol* pSymbol : symbolList) {
 				Value* pValue = pModule->GetFrame().Lookup(pSymbol);
@@ -608,9 +610,9 @@ String PUnit_Import<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Import<true>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release());
+		_pPUnitCreated = new PUnit_Import<true>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
 	} else {
-		_pPUnitCreated = new PUnit_Import<false>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release());
+		_pPUnitCreated = new PUnit_Import<false>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
 	}
 	return _pPUnitCreated;
 }

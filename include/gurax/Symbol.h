@@ -64,6 +64,9 @@ public:
 	SymbolList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	template<typename T_Map> static SymbolList CollectKeys(const T_Map& map);
 	bool IsEqualTo(const SymbolList& symbolList) const;
+	bool DoesContain(const Symbol* pSymbol) const {
+		return std::find(begin(), end(), pSymbol) != end();
+	}
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
