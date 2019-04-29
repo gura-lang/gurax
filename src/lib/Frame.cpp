@@ -106,6 +106,29 @@ Value* Frame_ValueMap::Lookup(const Symbol* pSymbol) const
 	return _pValueMap->Lookup(pSymbol);
 }
 
+bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
+{
+	if (overwriteFlag) {
+		for (auto pair : *_pValueMap) {
+			const Symbol* pSymbol = pair.first;
+			const Value* pValue = pair.second;
+			frameDst.Assign(pSymbol, pValue->Reference());
+		}
+	} else {
+		for (auto pair : *_pValueMap) {
+			const Symbol* pSymbol = pair.first;
+			const Value* pValue = pair.second;
+			if (frameDst.Lookup(pSymbol)) {
+				Error::Issue(ErrorType::ValueError,
+							 "can't overwrite the symbol: %s", pSymbol->GetName());
+				return false;
+			}
+			frameDst.Assign(pSymbol, pValue->Reference());
+		}
+	}
+	return true;
+}
+
 //------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------

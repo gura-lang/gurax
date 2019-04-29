@@ -577,7 +577,7 @@ void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
 	if (pModule) {
 		if (GetMixInFlag()) {
-			
+			if (!pModule->GetFrame().ExportTo(processor.GetFrameCur(), false)) return;
 		} else if (GetSymbolList() && !GetSymbolList()->empty()) {
 			const SymbolList& symbolList = *GetSymbolList();
 			for (const Symbol* pSymbol : symbolList) {

@@ -51,6 +51,7 @@ public:
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* Lookup(const Symbol* pSymbol) const = 0;
+	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -106,6 +107,7 @@ public:
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -123,6 +125,9 @@ public:
 public:
 	void SetFrameLocal(Frame* pFrame) { _pFrameLocal.reset(pFrame); }
 	const Frame* GetFrameLocal() const { return _pFrameLocal.get(); }
+	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override {
+		return GetFrameLocal()? GetFrameLocal()->ExportTo(frameDst, overwriteFlag) : true;
+	}
 };
 
 //------------------------------------------------------------------------------
