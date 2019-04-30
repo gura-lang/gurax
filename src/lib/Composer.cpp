@@ -8,6 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Composer
 //------------------------------------------------------------------------------
+Composer::Composer(bool replFlag) :
+	_replFlag(replFlag), _seqIdCur(0), _pPUnitFirst(nullptr), _pPUnitLast(nullptr)
+{
+}
+
 void Composer::Add(PUnit* pPUnit)
 {
 	if (!_pPUnitFirst) _pPUnitFirst = pPUnit;
@@ -16,18 +21,23 @@ void Composer::Add(PUnit* pPUnit)
 
 PUnit* Composer::PeekPUnitCont() const
 {
-	return reinterpret_cast<PUnit*>(MemoryPool::Global().chunkPUnit.PeekPointer());
+	MemoryPool::Global().SwitchChunkPUnit(_replFlag);
+	return reinterpret_cast<PUnit*>(MemoryPool::Global().GetChunkPUnit().PeekPointer());
 }
 
 void Composer::SetFactory(PUnitFactory* pPUnitFactory)
 {
-	if (_pPUnitFactory) Add(_pPUnitFactory->Create(false));
-	MemoryPool::Global().chunkPUnit.Reserve(pPUnitFactory->GetPUnitSize());
+	MemoryPool::Global().SwitchChunkPUnit(_replFlag);
+	if (_pPUnitFactory) {
+		Add(_pPUnitFactory->Create(false));
+	}
+	MemoryPool::Global().GetChunkPUnit().Reserve(pPUnitFactory->GetPUnitSize());
 	_pPUnitFactory.reset(pPUnitFactory);
 }
 
 void Composer::Flush(bool discardValueFlag)
 {
+	MemoryPool::Global().SwitchChunkPUnit(_replFlag);
 	if (_pPUnitFactory) {
 		Add(_pPUnitFactory->Create(discardValueFlag));
 		_pPUnitFactory.reset(nullptr);

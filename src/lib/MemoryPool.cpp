@@ -11,23 +11,23 @@ namespace Gurax {
 MemoryPool MemoryPool::_memoryPoolGlobal;
 
 MemoryPool::MemoryPool() :
-	chunkPUnit(64 * 65536, 64 * 2), chunkSmall(64, 65536),
-	//chunkPUnit(64 * 8, 64 * 2), chunkSmall(64, 65536),
-	chunkMedium(128, 65536), chunkLarge(192, 65536), chunkVariable()
+	_chunkPUnitProg(64 * 65536, 64 * 2), _chunkPUnitREPL(64 * 256, 64 * 2),
+	_chunkSmall(64, 65536), _chunkMedium(128, 65536), _chunkLarge(192, 65536), _chunkVariable()
 {
+	SwitchChunkPUnit(false);
 }
 
 void* MemoryPool::Allocate(size_t bytes, const char* ownerName)
 {
 	//Stream::COut->Printf("MemoryPool::DoAllocate(%ldbytes, \"%s\")\n", bytes, ownerName);
-	if (bytes <= chunkSmall.GetBytesBlock()) {
-		return chunkSmall.Allocate(ownerName);
-	} else if (bytes <= chunkMedium.GetBytesBlock()) {
-		return chunkMedium.Allocate(ownerName);
-	} else if (bytes <= chunkLarge.GetBytesBlock()) {
-		return chunkLarge.Allocate(ownerName);
+	if (bytes <= GetChunkSmall().GetBytesBlock()) {
+		return GetChunkSmall().Allocate(ownerName);
+	} else if (bytes <= GetChunkMedium().GetBytesBlock()) {
+		return GetChunkMedium().Allocate(ownerName);
+	} else if (bytes <= GetChunkLarge().GetBytesBlock()) {
+		return GetChunkLarge().Allocate(ownerName);
 	} else {
-		return chunkVariable.Allocate(bytes, ownerName);
+		return GetChunkVariable().Allocate(bytes, ownerName);
 	}
 }
 

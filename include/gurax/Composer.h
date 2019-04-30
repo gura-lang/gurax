@@ -47,6 +47,7 @@ public:
 		void Clear();
 	};
 private:
+	bool _replFlag;
 	PUnit::SeqId _seqIdCur;
 	PUnit* _pPUnitFirst;
 	PUnit* _pPUnitLast;
@@ -55,7 +56,7 @@ private:
 	RepeaterInfoOwner _repeaterInfoStack;
 public:
 	// Constructor
-	Composer() : _seqIdCur(0), _pPUnitFirst(nullptr), _pPUnitLast(nullptr) {}
+	Composer(bool replFlag = false);
 	// Copy constructor/operator
 	Composer(const Composer& src) = delete;
 	Composer& operator=(const Composer& src) = delete;

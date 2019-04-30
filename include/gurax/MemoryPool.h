@@ -18,13 +18,13 @@ static void operator delete(void* p) { \
 
 #define Gurax_MemoryPoolAllocator_PUnit() \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().chunkPUnit.Allocate(bytes);	\
+	return MemoryPool::Global().GetChunkPUnit().Allocate(bytes);	\
 } \
 static void operator delete(void* p) {}
 
 #define Gurax_MemoryPoolAllocator_Small(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().chunkSmall.Allocate(ownerName);	\
+	return MemoryPool::Global().GetChunkSmall().Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p);	\
@@ -32,7 +32,7 @@ static void operator delete(void* p) { \
 
 #define Gurax_MemoryPoolAllocator_Medium(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().chunkMedium.Allocate(ownerName);	\
+	return MemoryPool::Global().GetChunkMedium().Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p);	\
@@ -40,7 +40,7 @@ static void operator delete(void* p) { \
 
 #define Gurax_MemoryPoolAllocator_Large(ownerName) \
 static void *operator new(size_t bytes) { \
-	return MemoryPool::Global().chunkLarge.Allocate(ownerName);	\
+	return MemoryPool::Global().GetChunkLarge().Allocate(ownerName);	\
 } \
 static void operator delete(void* p) { \
 	MemoryPool::Deallocate(p);	\
@@ -129,11 +129,13 @@ public:
 private:
 	static MemoryPool _memoryPoolGlobal;
 public:
-	ChunkPUnit chunkPUnit;
-	ChunkFixed chunkSmall;
-	ChunkFixed chunkMedium;
-	ChunkFixed chunkLarge;
-	ChunkVariable chunkVariable;
+	ChunkPUnit* _pChunkPUnit;
+	ChunkPUnit _chunkPUnitProg;
+	ChunkPUnit _chunkPUnitREPL;
+	ChunkFixed _chunkSmall;
+	ChunkFixed _chunkMedium;
+	ChunkFixed _chunkLarge;
+	ChunkVariable _chunkVariable;
 public:
 	// Constructor
 	MemoryPool();
@@ -149,6 +151,14 @@ public:
 	static MemoryPool& Global() { return _memoryPoolGlobal; }
 	void* Allocate(size_t bytes, const char* ownerName);
 	static void Deallocate(void* p);
+	void SwitchChunkPUnit(bool replFlag) {
+		_pChunkPUnit = replFlag? &_chunkPUnitREPL : &_chunkPUnitProg;
+	}
+	ChunkPUnit& GetChunkPUnit() { return *_pChunkPUnit; }
+	ChunkFixed& GetChunkSmall() { return _chunkSmall; }
+	ChunkFixed& GetChunkMedium() { return _chunkMedium; }
+	ChunkFixed& GetChunkLarge() { return _chunkLarge; }
+	ChunkVariable& GetChunkVariable() { return _chunkVariable; }
 };
 
 //-----------------------------------------------------------------------------

@@ -2118,7 +2118,7 @@ class GURAX_DLLDECLARE PUnit_Bridge : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	static void *operator new(size_t bytes) {
-		return MemoryPool::Global().chunkPUnit.AllocateBridge();
+		return MemoryPool::Global().GetChunkPUnit().AllocateBridge();
 	}
 	static void operator delete(void* p) {}
 private:

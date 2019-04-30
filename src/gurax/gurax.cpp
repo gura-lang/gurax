@@ -61,7 +61,7 @@ int Main(int argc, char* argv[])
 void RunREPL()
 {
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
-	Composer composer;
+	Composer composer(true);
 	RefPtr<Processor> pProcessor(Processor::Create(false));
 	Expr_Root& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
