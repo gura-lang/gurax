@@ -60,8 +60,9 @@ public:
 	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
 	void ResumeFromError() { _contFlag = true; _resumeFlag = true; _event = Event::None; }
-	bool GetContFlag() const { return _contFlag; }
 	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
+	bool GetContFlag() const { return _contFlag; }
+	bool GetResumeFlag() const { return _resumeFlag; }
 public:
 	void ClearEvent() { _event = Event::None; }
 	void SetEventBreak() { _event = Event::Break; }
@@ -79,6 +80,8 @@ public:
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 	void ProcessPUnit(const PUnit* pPUnit) { RunLoop(pPUnit); }
 	Value* ProcessExpr(const Expr& expr);
+public:
+	void Print() const;
 protected:
 	virtual void RunLoop(const PUnit* pPUnit) = 0;
 };

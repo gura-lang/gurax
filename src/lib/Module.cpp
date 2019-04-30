@@ -80,13 +80,13 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	pExprOfRoot->Compose(composer);
 	if (Error::IsIssued()) return nullptr;
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
+	pModule->SetPathName(pathName);
 	processor.PushFrame(pModule->GetFrame().Reference());
 	processor.ProcessPUnit(composer.GetPUnitFirst());
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return nullptr;
-	processor.PopValue();	// discard the last value
-	pModule->SetPathName(pathName);
+	processor.DiscardValue();	// discard the last value
 	return pModule.release();
 }
 

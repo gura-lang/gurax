@@ -41,6 +41,18 @@ Value* Processor::ProcessExpr(const Expr& expr)
 	return Error::IsIssued()? Value::nil() : PopValue();
 }
 
+void Processor::Print() const
+{
+	Stream& stream = *Stream::COut;
+	stream.Printf("PUnitStack: %zupcs\n", GetPUnitStack().size());
+	stream.Printf("ValueStack: %zupcs\n", GetValueStack().size());
+	stream.Printf("FrameStack: %zupcs\n", GetFrameStack().size());
+	stream.Printf("PUnitCur: %s\n", GetPUnitCur()? GetPUnitCur()->ToString().c_str() : "null");
+	stream.Printf("contFlag=%s, resumeFlag=%s, event=%s\n",
+				  GetContFlag()? "true" : "false", GetResumeFlag()? "true" : "false",
+				  IsEventBreak()? "Break" : IsEventContinue()? "Continue" : "None");
+}
+
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
