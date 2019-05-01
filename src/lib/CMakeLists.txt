@@ -66,6 +66,7 @@ add_library(guraxcore SHARED
 	VType_DateTime.cpp
 	VType_Dict.cpp
 	VType_Expr.cpp
+	VType_Frame.cpp
 	VType_Function.cpp
 	VType_Index.cpp
 	VType_Iterator.cpp

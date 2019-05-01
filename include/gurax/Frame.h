@@ -52,6 +52,12 @@ public:
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* Lookup(const Symbol* pSymbol) const = 0;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Frame& frame) const { return this == &frame; }
+	bool IsEqualTo(const Frame& frame) const { return IsIdentical(frame); }
+	bool IsLessThan(const Frame& frame) const { return this < &frame; }
+	//String ToString() const { return ToString(StringStyle::Empty); }
 };
 
 //------------------------------------------------------------------------------

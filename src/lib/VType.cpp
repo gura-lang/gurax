@@ -32,6 +32,7 @@ void VType::PrepareBasic(Frame& frame)
 	VTYPE_DateTime.Prepare(frame);
 	VTYPE_Dict.Prepare(frame);
 	VTYPE_Expr.Prepare(frame);
+	VTYPE_Frame.Prepare(frame);
 	VTYPE_Function.Prepare(frame);
 	VTYPE_Iterator.Prepare(frame);
 	VTYPE_VType.Prepare(frame);

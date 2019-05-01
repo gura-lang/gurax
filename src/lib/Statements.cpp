@@ -582,7 +582,7 @@ Gurax_ImplementStatement(return_)
 // import(`name) {`block?}
 Gurax_DeclareStatement(import)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Module, Flag::None);
 	DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
 }
@@ -624,7 +624,7 @@ Gurax_ImplementStatement(import)
 // scope {`block}
 Gurax_DeclareStatement(scope)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	//DeclareArg("env", VTYPE_Environment, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
@@ -644,12 +644,24 @@ Gurax_ImplementStatement(scope)
 // class(parent?:VType) {`block}
 Gurax_DeclareStatementAlias(class_, "class")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_VType, Flag::None);
 	DeclareArg("parent", VTYPE_VType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
 Gurax_ImplementStatement(class_)
+{
+}
+
+// dir(frame?:Frame):void
+Gurax_DeclareStatement(dir)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("env", VTYPE_VType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(dir)
 {
 }
 
@@ -667,6 +679,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(import));
 	frame.Assign(Gurax_CreateStatement(scope));
 	frame.Assign(Gurax_CreateStatement(class_));
+	frame.Assign(Gurax_CreateStatement(dir));
 }
 
 }

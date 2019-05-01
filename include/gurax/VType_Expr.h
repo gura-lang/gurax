@@ -33,7 +33,7 @@ protected:
 public:
 	// Constructor
 	Value_Expr() = delete;
-	explicit Value_Expr(Expr *pExpr, VType& vtype = VTYPE_Expr) :
+	explicit Value_Expr(Expr* pExpr, VType& vtype = VTYPE_Expr) :
 		Value_Object(vtype), _pExpr(pExpr) {}
 	// Copy constructor/operator
 	Value_Expr(const Value_Expr& src) :
