@@ -17,6 +17,7 @@ void Composer::Add(PUnit* pPUnit)
 {
 	if (!_pPUnitFirst) _pPUnitFirst = pPUnit;
 	_pPUnitLast = pPUnit;
+	if (_replFlag) new PUnit_REPLEnd(); // automatically deleted when a new PUnit is allocated
 }
 
 PUnit* Composer::PeekPUnitCont() const

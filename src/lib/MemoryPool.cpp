@@ -98,7 +98,7 @@ void* MemoryPool::ChunkPUnit::DoAllocate(size_t bytes)
 }
 
 // Allocator that is exclusively used for PUnit_REPLEnd and PUnit_Bridge
-void* MemoryPool::ChunkPUnit::AllocateTemporary()
+void* MemoryPool::ChunkPUnit::AllocateGhost()
 {
 	return PeekPointer();
 }

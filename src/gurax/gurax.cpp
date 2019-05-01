@@ -109,15 +109,16 @@ void RunREPL()
 				if (Error::IsIssued()) break;
 				pPUnit = pProcessor->GetPUnitCur();
 			}
-			if (Error::IsIssued()) break;
-			RefPtr<Value> pValue(pProcessor->PopValue());
-			if (pValue->IsValid()) ::printf("%s\n", pValue->ToString().c_str());
-		}
-		if (Error::IsIssued()) {
-			Error::Print(*Stream::CErr);
-			Error::Clear();
-			pProcessor->ClearValueStack();
-			pProcessor->ResumeFromError();
+			if (Error::IsIssued()) {
+				Error::Print(*Stream::CErr);
+				Error::Clear();
+				pProcessor->ClearValueStack();
+				pProcessor->ResumeFromError();
+				break;
+			} else {
+				RefPtr<Value> pValue(pProcessor->PopValue());
+				if (pValue->IsValid()) ::printf("%s\n", pValue->ToString().c_str());
+			}
 		}
 	}
 }

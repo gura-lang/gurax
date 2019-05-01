@@ -2118,7 +2118,7 @@ class GURAX_DLLDECLARE PUnit_REPLEnd : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	static void *operator new(size_t bytes) {
-		return MemoryPool::Global().GetChunkPUnit().AllocateTemporary();
+		return MemoryPool::Global().GetChunkPUnit().AllocateGhost();
 	}
 	static void operator delete(void* p) {}
 public:
@@ -2142,7 +2142,7 @@ class GURAX_DLLDECLARE PUnit_Bridge : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	static void *operator new(size_t bytes) {
-		return MemoryPool::Global().GetChunkPUnit().AllocateTemporary();
+		return MemoryPool::Global().GetChunkPUnit().AllocateGhost();
 	}
 	static void operator delete(void* p) {}
 private:

@@ -94,7 +94,7 @@ public:
 		size_t CountPools() const;
 		void Reserve(size_t bytes);
 		void* Allocate(size_t bytes);
-		void* AllocateTemporary();
+		void* AllocateGhost();
 		virtual void Deallocate(void* p) {}
 		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
