@@ -2112,13 +2112,37 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_REPLEnd
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PUnit_REPLEnd : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	static void *operator new(size_t bytes) {
+		return MemoryPool::Global().GetChunkPUnit().AllocateTemporary();
+	}
+	static void operator delete(void* p) {}
+public:
+	// Constructor
+	PUnit_REPLEnd() : PUnit(Expr::Empty->Reference(), 0) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return false; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return nullptr; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return nullptr; }
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Bridge
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Bridge : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	static void *operator new(size_t bytes) {
-		return MemoryPool::Global().GetChunkPUnit().AllocateBridge();
+		return MemoryPool::Global().GetChunkPUnit().AllocateTemporary();
 	}
 	static void operator delete(void* p) {}
 private:

@@ -2012,6 +2012,22 @@ PUnit* PUnitFactory_Terminate::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_REPLEnd
+// Stack View: [] -> []
+//------------------------------------------------------------------------------
+void PUnit_REPLEnd::Exec(Processor& processor) const
+{
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+String PUnit_REPLEnd::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("REPLEnd()");
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Bridge
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
