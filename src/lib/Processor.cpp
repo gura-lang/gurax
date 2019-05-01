@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Processor::Processor() :
 	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
-	_pPUnitCur(nullptr), _contFlag(true), _resumeFlag(true), _event(Event::None)
+	_pPUnitNext(nullptr), _contFlag(true), _resumeFlag(true), _event(Event::None)
 {
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
@@ -47,7 +47,7 @@ void Processor::Print() const
 	stream.Printf("PUnitStack: %zupcs\n", GetPUnitStack().size());
 	stream.Printf("ValueStack: %zupcs\n", GetValueStack().size());
 	stream.Printf("FrameStack: %zupcs\n", GetFrameStack().size());
-	stream.Printf("PUnitCur: %s\n", GetPUnitCur()? GetPUnitCur()->ToString().c_str() : "null");
+	stream.Printf("PUnitNext: %s\n", GetPUnitNext()? GetPUnitNext()->ToString().c_str() : "null");
 	stream.Printf("contFlag=%s, resumeFlag=%s, event=%s\n",
 				  GetContFlag()? "true" : "false", GetResumeFlag()? "true" : "false",
 				  IsEventBreak()? "Break" : IsEventContinue()? "Continue" : "None");
@@ -58,19 +58,19 @@ void Processor::Print() const
 //------------------------------------------------------------------------------
 void Processor_Normal::RunLoop(const PUnit* pPUnit)
 {
-	_pPUnitCur = pPUnit;
-	if (!_pPUnitCur) return;
-	if (_pPUnitCur->IsBeginSequence()) {
-		const PUnit* pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
-		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip PUnit_BeginSequence
+	_pPUnitNext = pPUnit;
+	if (!_pPUnitNext) return;
+	if (_pPUnitNext->IsBeginSequence()) {
+		const PUnit* pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
+		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip PUnit_BeginSequence
 		if (pPUnitSentinel->IsEndSequence()) {
-			while (_contFlag) _pPUnitCur->Exec(*this);
+			while (_contFlag) _pPUnitNext->Exec(*this);
 		} else {
-			while (_contFlag && _pPUnitCur != pPUnitSentinel) _pPUnitCur->Exec(*this);
+			while (_contFlag && _pPUnitNext != pPUnitSentinel) _pPUnitNext->Exec(*this);
 		}
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		while (_contFlag) _pPUnitCur->Exec(*this);
+		while (_contFlag) _pPUnitNext->Exec(*this);
 	}
 	_contFlag = _resumeFlag;
 }
@@ -86,24 +86,24 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	auto PrintStack = [this](Stream& stream) {
 		stream.Printf("%s\n", GetValueStack().ToString(StringStyle().Digest()).c_str());
 	};
-	_pPUnitCur = pPUnit;
-	if (!_pPUnitCur) return;
+	_pPUnitNext = pPUnit;
+	if (!_pPUnitNext) return;
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
 	stream.Printf("---- Processor Begin ----\n");
-	if (_pPUnitCur->IsBeginSequence()) {
-		pPUnitSentinel = _pPUnitCur->GetPUnitSentinel();
-		_pPUnitCur = _pPUnitCur->GetPUnitCont();	// skip PUnit_BeginSequence
+	if (_pPUnitNext->IsBeginSequence()) {
+		pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
+		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip PUnit_BeginSequence
 		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		PrintPUnit(stream, _pPUnitCur);
-		_pPUnitCur->Exec(*this);
+		PrintPUnit(stream, _pPUnitNext);
+		_pPUnitNext->Exec(*this);
 	}
-	while (_contFlag && _pPUnitCur != pPUnitSentinel) {
+	while (_contFlag && _pPUnitNext != pPUnitSentinel) {
 		PrintStack(stream);
-		PrintPUnit(stream, _pPUnitCur);
-		_pPUnitCur->Exec(*this);
+		PrintPUnit(stream, _pPUnitNext);
+		_pPUnitNext->Exec(*this);
 	}
 	_contFlag = _resumeFlag;
 	stream.Printf("---- Processor End ----\n");

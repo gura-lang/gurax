@@ -15,7 +15,7 @@ String Function::MakeFullName() const
 
 void Function::DoCall(Processor& processor, Argument& argument) const
 {
-	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
+	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	if (argument.IsMapNone()) {
 		DoExec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
@@ -54,7 +54,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 
 void Function::DoExec(Processor& processor, Argument& argument) const
 {
-	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
+	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	RefPtr<Value> pValue(DoEval(processor, argument));
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());

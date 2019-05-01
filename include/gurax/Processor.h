@@ -20,7 +20,7 @@ protected:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
 	RefPtr<FrameStack> _pFrameStack;
-	const PUnit* _pPUnitCur;
+	const PUnit* _pPUnitNext;
 	bool _contFlag;
 	bool _resumeFlag;
 	Event _event;
@@ -55,12 +55,12 @@ public:
 	void DiscardValue() { Value::Delete(PopValue()); }
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
 	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
-	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitCur = pPUnit; }
-	void BreakLoop() { _pPUnitCur = nullptr; _contFlag = false, _resumeFlag = true; }
-	void ErrorDone() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
-	void Terminate() { _pPUnitCur = nullptr; _contFlag = false; _resumeFlag = false; }
+	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
+	void BreakLoop() { _pPUnitNext = nullptr; _contFlag = false, _resumeFlag = true; }
+	void ErrorDone() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
+	void Terminate() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
 	void ResumeFromError() { _contFlag = true; _resumeFlag = true; _event = Event::None; }
-	const PUnit* GetPUnitCur() const { return _pPUnitCur; }
+	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 	bool GetContFlag() const { return _contFlag; }
 	bool GetResumeFlag() const { return _resumeFlag; }
 public:

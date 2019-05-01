@@ -60,13 +60,14 @@ int Main(int argc, char* argv[])
 
 void RunREPL()
 {
+	Stream& stream = *Stream::COut;
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
 	Composer composer(true);
 	RefPtr<Processor> pProcessor(Processor::Create(false));
 	Expr_Root& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
-	const PUnit* pPUnitLast = nullptr;
-	::printf("%s\n", Version::GetBanner(false));
+	const PUnit* pPUnit = nullptr;
+	stream.Printf("%s\n", Version::GetBanner(false));
 	for (;;) {
 		String strLine;
 		String prompt;
@@ -99,25 +100,24 @@ void RunREPL()
 			composer.Flush(false);
 			if (Error::IsIssued()) break;
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
-			const PUnit* pPUnit = pPUnitLast? pPUnitLast->GetPUnitNext() : composer.GetPUnitFirst();
-			if (!pPUnit) continue;
+			if (!pPUnit && !(pPUnit = composer.GetPUnitFirst())) continue;
 			//PUnit::Print(pPUnit, pPUnitSentinel);
 			pProcessor->SetPUnitNext(pPUnit);
 			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
 				pPUnit->Exec(*pProcessor);
-				pPUnitLast = pPUnit;
+				pPUnit = pProcessor->GetPUnitNext();
 				if (Error::IsIssued()) break;
-				pPUnit = pProcessor->GetPUnitCur();
 			}
 			if (Error::IsIssued()) {
 				Error::Print(*Stream::CErr);
 				Error::Clear();
 				pProcessor->ClearValueStack();
 				pProcessor->ResumeFromError();
+				pPUnit = composer.PeekPUnitCont();
 				break;
 			} else {
 				RefPtr<Value> pValue(pProcessor->PopValue());
-				if (pValue->IsValid()) ::printf("%s\n", pValue->ToString().c_str());
+				if (pValue->IsValid()) stream.Printf("%s\n", pValue->ToString().c_str());
 			}
 		}
 	}
