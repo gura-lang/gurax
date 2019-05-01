@@ -23,7 +23,15 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 
 Value* VType_Frame::DoCastFrom(const Value& value) const
 {
-	return Value::nil();
+	RefPtr<Frame> pFrame;
+	if (value.IsType(VTYPE_Module)) {
+		pFrame.reset(dynamic_cast<const Value_Module&>(value).GetModule().GetFrame().Reference());
+	} else if (value.IsType(VTYPE_VType)) {
+		pFrame.reset(dynamic_cast<const Value_VType&>(value).GetVType().GetFrame().Reference());
+	} else {
+		return nullptr;
+	}
+	return new Value_Frame(pFrame.release());
 }
 
 //------------------------------------------------------------------------------

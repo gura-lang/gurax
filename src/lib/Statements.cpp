@@ -653,16 +653,26 @@ Gurax_ImplementStatement(class_)
 {
 }
 
-// dir(frame?:Frame):void
-Gurax_DeclareStatement(dir)
+// dir(frame?:Frame)
+Gurax_DeclareFunction(dir)
 {
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("env", VTYPE_VType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("frame", VTYPE_Frame, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 }
 
-Gurax_ImplementStatement(dir)
+Gurax_ImplementFunction(dir)
 {
+	// Arguments
+	ArgPicker args(argument);
+	const Frame& frame = args.IsDefined()? Value_Frame::GetFrame(args.PickValue()) : Basement::Inst.GetFrame();
+	// Function body
+	SymbolList symbolList;
+	frame.GatherSymbol(symbolList);
+	symbolList.Sort();
+	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+	pValues->Reserve(symbolList.size());
+	for (const Symbol* pSymbol : symbolList) pValues->Add(new Value_Symbol(pSymbol));
+	return new Value_List(pValues.release());
 }
 
 void Statements::PrepareBasic(Frame& frame)
@@ -679,7 +689,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(import));
 	frame.Assign(Gurax_CreateStatement(scope));
 	frame.Assign(Gurax_CreateStatement(class_));
-	frame.Assign(Gurax_CreateStatement(dir));
+	frame.Assign(Gurax_CreateFunction(dir));
 }
 
 }

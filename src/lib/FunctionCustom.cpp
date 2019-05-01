@@ -31,7 +31,7 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 String FunctionCustom::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += GetSymbol()->GetName();
+	str += MakeFullName();
 	str += GetDeclCallable().ToString(ss);
 	str += ss.IsCram()? "=" : " = ";
 	if (GetPUnitBody()) {

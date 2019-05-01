@@ -10,7 +10,17 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Function::MakeFullName() const
 {
-	return GetName();
+	String str;
+	RefPtr<Frame> pFrame(LockFrameParent());
+	if (pFrame) {
+		const DottedSymbol* pDottedSymbol = pFrame->GetDottedSymbol();
+		if (pDottedSymbol) {
+			str += pDottedSymbol->ToString();
+			str += ".";
+		}
+	}
+	str += GetName();
+	return str;
 }
 
 void Function::DoCall(Processor& processor, Argument& argument) const

@@ -11,7 +11,8 @@ namespace Gurax {
 ModuleMap Module::_moduleMap;
 
 Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
-	_pFrame(new Frame_Module(pFrameOuter)), _pDottedSymbol(pDottedSymbol),
+	_pFrame(new Frame_Module(pFrameOuter, pDottedSymbol->Reference())),
+	_pDottedSymbol(pDottedSymbol),
 	_pHelpProvider(new HelpProvider()), _pPropHandlerMap(new PropHandlerMap())
 {
 }

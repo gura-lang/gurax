@@ -129,6 +129,14 @@ bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 	return true;
 }
 
+void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
+{
+	for (auto pair : *_pValueMap) {
+		const Symbol* pSymbol = pair.first;
+		symbolList.push_back(pSymbol);
+	}
+}
+
 //------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
@@ -159,6 +167,11 @@ Value* Frame_Basement::Lookup(const Symbol* pSymbol) const
 	return _pFrameOuter->Lookup(pSymbol);
 }
 
+void Frame_Basement::GatherSymbol(SymbolList& symbolList) const
+{
+	_pFrameOuter->GatherSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_VType
 //------------------------------------------------------------------------------
@@ -185,12 +198,18 @@ Value* Frame_VType::Lookup(const Symbol* pSymbol) const
 	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
 }
 
+void Frame_VType::GatherSymbol(SymbolList& symbolList) const
+{
+	_pFrameLocal->GatherSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_Module
 //------------------------------------------------------------------------------
 const char* Frame_Module::name = "Module";
 
-Frame_Module::Frame_Module(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr)
+Frame_Module::Frame_Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
+	Frame_Branch(pFrameOuter, nullptr), _pDottedSymbol(pDottedSymbol)
 {
 }
 
@@ -213,6 +232,11 @@ Value* Frame_Module::Lookup(const Symbol* pSymbol) const
 		if (pValue) return pValue;
 	}
 	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
+}
+
+void Frame_Module::GatherSymbol(SymbolList& symbolList) const
+{
+	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
 }
 
 //------------------------------------------------------------------------------
@@ -245,6 +269,11 @@ Value* Frame_Scope::Lookup(const Symbol* pSymbol) const
 	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
 }
 
+void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
+{
+	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_Block
 //------------------------------------------------------------------------------
@@ -269,6 +298,11 @@ Value* Frame_Block::Lookup(const Symbol* pSymbol) const
 	Value* pValue = _pFrameLocal->Lookup(pSymbol);
 	if (pValue) return pValue;
 	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
+}
+
+void Frame_Block::GatherSymbol(SymbolList& symbolList) const
+{
+	_pFrameLocal->GatherSymbol(symbolList);
 }
 
 }
