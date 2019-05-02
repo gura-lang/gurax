@@ -585,7 +585,9 @@ Gurax_ImplementStatement(scope)
 	if (pExprCdr) {
 		pExprCdr->ComposeOrNil(composer);									// [Any]
 		composer.Add_Cast(exprCaller, VTYPE_Frame, false);					// [Frame]
-		
+		composer.Add_PushFrameFromStack(exprCaller);
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+		composer.Add_PopFrame(exprCaller);
 	} else {	
 		composer.Add_PushFrame<Frame_Scope>(exprCaller);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
