@@ -194,6 +194,25 @@ const DeclArg::Occur DeclArg::Occur::OnceOrMore	("+",	ArgSlot_OnceOrMore::factor
 //------------------------------------------------------------------------------
 // DeclArgList
 //------------------------------------------------------------------------------
+bool DeclArgList::IsValidArgNum(size_t nArgs) const
+{
+	size_t nMin = 0;
+	for (const DeclArg* pDeclArg : *this) {
+		if (pDeclArg->IsOccurOnce() || pDeclArg->IsOccurOnceOrMore()) {
+			nMin++;
+		} else {
+			break;
+		}
+	}
+	if (nArgs < nMin) return false;
+	if (!empty()) {
+		const DeclArg* pDeclArg = back();
+		if (!(pDeclArg->IsOccurZeroOrMore() || pDeclArg->IsOccurOnceOrMore() || 
+			  nArgs <= size())) return false;
+	}
+	return true;
+}
+
 DeclArg* DeclArgList::FindBySymbol(const Symbol* pSymbol) const
 {
 	for (DeclArg* pDeclArg : *this) {

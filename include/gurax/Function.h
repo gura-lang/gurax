@@ -16,14 +16,14 @@
 class Statement_##name : public Function { \
 public: \
 	Statement_##name(const char* name_ = strName); \
-	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const override; \
+	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override; \
 }; \
 Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
 
 #define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
 
 #define Gurax_ImplementStatement(name) \
-void Statement_##name::Compose(Composer& composer, Expr_Caller& exprCaller) const
+void Statement_##name::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 
 #define Gurax_CreateStatement(name) (new Statement_##name())
 
@@ -158,6 +158,7 @@ public:
 		Value::Delete(DoEval(processor, argument));
 	}
 	void DoCall(Processor& processor, Argument& argument) const;
+	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Function& function) const { return this == &function; }
@@ -167,7 +168,7 @@ public:
 	// Virtual functions
 	virtual void DoExec(Processor& processor, Argument& argument) const;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };
-	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const {}
+	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const {}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

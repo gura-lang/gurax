@@ -142,6 +142,7 @@ public:
 //------------------------------------------------------------------------------
 class DeclArgList : public std::vector<DeclArg*> {
 public:
+	bool IsValidArgNum(size_t nArgs) const;
 	DeclArg* FindBySymbol(const Symbol* pSymbol) const;
 	String ToString(const StringStyle& ss) const;
 };

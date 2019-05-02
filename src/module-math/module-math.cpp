@@ -13,7 +13,7 @@ private:
 	const Operator* _pOperator;
 public:
 	Function_Unary(const Operator* pOperator);
-	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const override;
+	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override;
 };
 
 Function_Unary::Function_Unary(const Operator* pOperator) :
@@ -23,7 +23,7 @@ Function_Unary::Function_Unary(const Operator* pOperator) :
 	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 }
 
-void Function_Unary::Compose(Composer& composer, Expr_Caller& exprCaller) const
+void Function_Unary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 {
 	if (exprCaller.CountExprCdr() != 1) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
@@ -43,7 +43,7 @@ private:
 	const Operator* _pOperator;
 public:
 	Function_Binary(const Operator* pOperator);
-	virtual void Compose(Composer& composer, Expr_Caller& exprCaller) const override;
+	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override;
 };
 
 Function_Binary::Function_Binary(const Operator* pOperator) :
@@ -54,7 +54,7 @@ Function_Binary::Function_Binary(const Operator* pOperator) :
 	DeclareArg("valueR", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 }
 
-void Function_Binary::Compose(Composer& composer, Expr_Caller& exprCaller) const
+void Function_Binary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 {
 	if (exprCaller.CountExprCdr() != 2) {
 		Error::IssueWith(ErrorType::ArgumentError, exprCaller,

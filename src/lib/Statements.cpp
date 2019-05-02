@@ -41,11 +41,6 @@ Gurax_ImplementStatement(if_)
 			return;
 		}
 	}
-	if (exprCaller.CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "if-statement takes one argument");
-		return;
-	}
 	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
@@ -75,11 +70,6 @@ Gurax_DeclareStatementAlias(elsif, "elsif")
 
 Gurax_ImplementStatement(elsif)
 {
-	if (exprCaller.CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "elsif-statement takes one argument");
-		return;
-	}
 	exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Bool]
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
@@ -107,11 +97,6 @@ Gurax_DeclareStatementAlias(else_, "else")
 
 Gurax_ImplementStatement(else_)
 {
-	if (exprCaller.CountExprCdr() > 0) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "else-statement takes no argument");
-		return;
-	}
 	if (exprCaller.HasExprTrailer()) {
 		Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 						 "invalid format of if-elsif-else sequence");
@@ -120,21 +105,16 @@ Gurax_ImplementStatement(else_)
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 }
 
-// for (`cond) {`block}
+// for (`cond+) {`block}
 Gurax_DeclareStatementAlias(for_, "for")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
 Gurax_ImplementStatement(for_)
 {
-	if (exprCaller.CountExprCdr() < 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "for-statement takes more than one argument");
-		return;
-	}
 	std::unique_ptr<DeclArgOwner> pDeclArgs(new DeclArgOwner());
 	for (Expr* pExpr = exprCaller.GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_BinaryOp>()) {
@@ -258,11 +238,6 @@ Gurax_DeclareStatementAlias(while_, "while")
 
 Gurax_ImplementStatement(while_)
 {
-	if (exprCaller.CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "while-statement takes one argument");
-		return;
-	}
 	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
 	bool xlistFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xlist));
@@ -366,11 +341,6 @@ Gurax_DeclareStatement(repeat)
 
 Gurax_ImplementStatement(repeat)
 {
-	if (exprCaller.CountExprCdr() > 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "repeat-statement takes zero or one argument");
-		return;
-	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 	bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
@@ -483,11 +453,6 @@ Gurax_DeclareStatementAlias(break_, "break")
 
 Gurax_ImplementStatement(break_)
 {
-	if (exprCaller.CountExprCdr() > 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "break-statement takes zero or one argument");
-		return;
-	}
 	if (!composer.HasValidRepeaterInfo()) {
 		Error::IssueWith(ErrorType::ContextError, exprCaller,
 						 "break-statement can be used in a loop");
@@ -528,11 +493,6 @@ Gurax_DeclareStatementAlias(continue_, "continue")
 
 Gurax_ImplementStatement(continue_)
 {
-	if (exprCaller.CountExprCdr() > 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "continue-statement takes zero or one argument");
-		return;
-	}
 	if (!composer.HasValidRepeaterInfo()) {
 		Error::IssueWith(ErrorType::ContextError, exprCaller,
 						 "continue-statement can be used in a loop");
@@ -566,11 +526,6 @@ Gurax_DeclareStatementAlias(return_, "return")
 
 Gurax_ImplementStatement(return_)
 {
-	if (exprCaller.CountExprCdr() > 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "return-statement takes zero or one argument");
-		return;
-	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
 		composer.Add_DiscardValue(exprCaller);
@@ -589,11 +544,6 @@ Gurax_DeclareStatement(import)
 
 Gurax_ImplementStatement(import)
 {
-	if (exprCaller.CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "import-statement takes one argument");
-		return;
-	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprCdr));
 	if (!pDottedSymbol) {
@@ -631,11 +581,6 @@ Gurax_DeclareStatement(scope)
 
 Gurax_ImplementStatement(scope)
 {
-	if (exprCaller.CountExprCdr() > 0) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "scope-statement takes no argument");
-		return;
-	}
 	composer.Add_PushFrame<Frame_Scope>(exprCaller);
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 	composer.Add_PopFrame(exprCaller);
