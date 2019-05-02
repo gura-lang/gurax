@@ -136,6 +136,7 @@ public:
 	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop);
 	void Add_Return(const Expr& exprSrc);
 	template<typename T_Frame> void Add_PushFrame(const Expr& exprSrc);
+	void Add_PushFrameFromStack(const Expr& exprSrc);
 	void Add_PopFrame(const Expr& exprSrc);
 	void Add_NoOperation(const Expr& exprSrc);
 	void Add_Terminate(const Expr& exprSrc);

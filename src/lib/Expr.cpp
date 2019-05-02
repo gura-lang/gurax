@@ -754,7 +754,7 @@ void Expr_Caller::Compose(Composer& composer)
 	if (pDottedSymbol) {
 		Value* pValue = Basement::Inst.GetFrame().Lookup(*pDottedSymbol);
 		if (pValue && pValue->IsType(VTYPE_Function)) {
-			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
+			const Function& func = Value_Function::GetFunction(*pValue);
 			if (func.IsTypeStatement()) {
 				func.Compose(composer, *this);						// [Result]
 				return;

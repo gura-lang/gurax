@@ -2010,6 +2010,40 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_PushFrameFromStack
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_PushFrameFromStack : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_PushFrameFromStack(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_PushFrameFromStack : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_PushFrameFromStack");
+public:
+	PUnitFactory_PushFrameFromStack(Expr* pExprSrc, PUnit::SeqId seqId) :
+		PUnitFactory(pExprSrc, seqId) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_PushFrameFromStack<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_PopFrame
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

@@ -571,19 +571,26 @@ Gurax_ImplementStatement(import)
 	composer.Add_Import(exprCaller, pDottedSymbol.release(), pSymbolList.release(), mixInFlag);
 }
 
-// scope {`block}
+// scope(frame?:Frame) {`block}
 Gurax_DeclareStatement(scope)
 {
 	Declare(VTYPE_Any, Flag::None);
-	//DeclareArg("env", VTYPE_Environment, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("frame", VTYPE_Frame, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
 Gurax_ImplementStatement(scope)
 {
-	composer.Add_PushFrame<Frame_Scope>(exprCaller);
-	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
-	composer.Add_PopFrame(exprCaller);
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	if (pExprCdr) {
+		pExprCdr->ComposeOrNil(composer);									// [Any]
+		composer.Add_Cast(exprCaller, VTYPE_Frame, false);					// [Frame]
+		
+	} else {	
+		composer.Add_PushFrame<Frame_Scope>(exprCaller);
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
+		composer.Add_PopFrame(exprCaller);
+	}
 }
 
 // class(parent?:VType) {`block}

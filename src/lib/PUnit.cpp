@@ -1918,6 +1918,39 @@ template class PUnitFactory_PushFrame<Frame_Block>;
 template class PUnitFactory_PushFrame<Frame_Scope>;
 
 //------------------------------------------------------------------------------
+// PUnit_PushFrameFromStack
+// Stack View: [prev frame] -> [prev] (continue)
+//                          -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_PushFrameFromStack<discardValueFlag>::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	processor.PushFrame(Value_Frame::GetFrame(*pValue).Reference());
+	if (discardValueFlag) processor.DiscardValue();
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_PushFrameFromStack<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("PushFrameFromStack()");
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_PushFrameFromStack::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_PushFrameFromStack<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_PushFrameFromStack<false>(_pExprSrc.release(), _seqId);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_PopFrame
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
