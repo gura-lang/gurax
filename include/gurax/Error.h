@@ -35,6 +35,11 @@ public:
 public:
 	ErrorType(const String& name) : _name(name) {}
 	const char* GetName() const { return _name.c_str(); }
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ErrorType& errorType) const { return this == &errorType; }
+	bool IsEqualTo(const ErrorType& errorType) const { return IsIdentical(errorType); }
+	bool IsLessThan(const ErrorType& errorType) const { return ::strcmp(GetName(), errorType.GetName()) < 0; }
 };
 
 //------------------------------------------------------------------------------

@@ -126,6 +126,29 @@ Gurax_ImplementStatement(else_)
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 }
 
+// try {`block}
+Gurax_DeclareStatementAlias(try_, "try")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(try_)
+{
+}
+
+// catch(errorType?:ErrorType) {`block}
+Gurax_DeclareStatementAlias(catch_, "catch")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(catch_)
+{
+}
+
 // for (`cond+) {`block}
 Gurax_DeclareStatementAlias(for_, "for")
 {
@@ -655,6 +678,8 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(if_));
 	frame.Assign(Gurax_CreateStatement(elsif));
 	frame.Assign(Gurax_CreateStatement(else_));
+	frame.Assign(Gurax_CreateStatement(try_));
+	frame.Assign(Gurax_CreateStatement(catch_));
 	frame.Assign(Gurax_CreateStatement(for_));
 	frame.Assign(Gurax_CreateStatement(while_));
 	frame.Assign(Gurax_CreateStatement(repeat));
