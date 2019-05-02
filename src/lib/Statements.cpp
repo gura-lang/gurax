@@ -14,6 +14,15 @@ Gurax_DeclareStatementAlias(if_, "if")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specifies an \"if\" block within a sequence of `if-elsif-else`.\n"
+		"\n"
+		"If the result of `cond` is determined as `true`, the block would be executed,\n"
+		"and its evaluation result would become the returned value of the statement.\n"
+		"\n"
+		"Otherwise, if the statement is followed by a trailer such as `elsif` and `else`, that would be evaluated.\n"
+		"If no trailer exists, the satement returns `nil` value.\n");
 }
 
 Gurax_ImplementStatement(if_)
@@ -66,6 +75,15 @@ Gurax_DeclareStatementAlias(elsif, "elsif")
 	Declare(VTYPE_Any, Flag::Trailer);
 	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specifies an \"elsif\" block within a sequence of `if-elsif-else`.\n"
+		"\n"
+		"If the result of `cond` is determined as `true`, the block would be executed,\n"
+		"and its evaluation result would become the returned value of the statement.\n"
+		"\n"
+		"Otherwise, if the statement is followed by a trailer such as `elsif` and `else`, that would be evaluated.\n"
+		"If no trailer exists, the statement returns `nil` value.\n");
 }
 
 Gurax_ImplementStatement(elsif)
@@ -93,6 +111,9 @@ Gurax_DeclareStatementAlias(else_, "else")
 {
 	Declare(VTYPE_Any, Flag::Trailer);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specifies an \"else\" block within a sequence of `if-elsif-else` or `try-catch-else-finally`.\n");
 }
 
 Gurax_ImplementStatement(else_)
