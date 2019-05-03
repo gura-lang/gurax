@@ -58,6 +58,12 @@ void PUnitList::Print() const
 //------------------------------------------------------------------------------
 // PUnitStack
 //------------------------------------------------------------------------------
+void PUnitStack::Shrink(size_t cnt)
+{
+	if (cnt >= size()) return;
+	auto ppPUnitBegin = begin() + cnt;
+	erase(ppPUnitBegin, end());
+}
 
 //------------------------------------------------------------------------------
 // Iterator_PUnit

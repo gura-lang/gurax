@@ -336,6 +336,16 @@ void ValueStack::Remove(size_t offset, size_t cnt)
 	erase(ppValueBegin, ppValueEnd);
 }
 
+void ValueStack::Shrink(size_t cnt)
+{
+	if (cnt >= size()) return;
+	iterator ppValueBegin = begin() + cnt;
+	for (iterator ppValue = ppValueBegin; ppValue != end(); ppValue++) {
+		Value::Delete(*ppValue);
+	}
+	erase(ppValueBegin, end());
+}
+
 //------------------------------------------------------------------------------
 // ValueMap
 //------------------------------------------------------------------------------

@@ -116,6 +116,7 @@ public:
 	const PUnit* Peek(int offset) { return *(rbegin() + offset); }
 	void Push(const PUnit* pPUnit) { push_back(pPUnit); }
 	const PUnit* Pop() { const PUnit* pPUnit = back(); pop_back(); return pPUnit; }
+	void Shrink(size_t cnt);
 };
 
 //------------------------------------------------------------------------------

@@ -253,6 +253,7 @@ public:
 	Value* Pop() { Value* pValue = back(); pop_back(); return pValue; }
 	void Remove(size_t offset);
 	void Remove(size_t offset, size_t cnt);
+	void Shrink(size_t cnt);
 };
 
 //------------------------------------------------------------------------------

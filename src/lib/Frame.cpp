@@ -76,6 +76,15 @@ void FrameOwner::Clear()
 //------------------------------------------------------------------------------
 // FrameStack
 //------------------------------------------------------------------------------
+void FrameStack::Shrink(size_t cnt)
+{
+	if (cnt >= size()) return;
+	auto ppFrameBegin = begin() + cnt;
+	for (iterator ppFrame = ppFrameBegin; ppFrame != end(); ppFrame++) {
+		Frame::Delete(*ppFrame);
+	}
+	erase(ppFrameBegin, end());
+}
 
 //------------------------------------------------------------------------------
 // Frame_ValueMap
