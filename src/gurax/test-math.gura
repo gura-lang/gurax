@@ -1,5 +1,6 @@
 #!./gurax
-import(util)
+import(util) {*}
+
 expr = `{
 	math.Abs(n)
 	math.Acos(n)
@@ -32,6 +33,6 @@ expr = `{
 	math.Tanh(n)
 	math.Unitstep(n)
 }
-util.PrintPUnit(expr)
-util.Tester(`math.e)
-util.Tester(`math.pi)
+PrintPUnit(expr)
+Tester(`math.e)
+Tester(`math.pi)

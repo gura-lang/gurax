@@ -1,7 +1,7 @@
 #!./gurax
-import(util)
+import(util) {*}
 
-util.PrintTitle('PUnit')
+PrintTitle('PUnit')
 exprs = [
 	`for (v in tbl) {}
 	`for (v in tbl):list {}
@@ -25,34 +25,34 @@ exprs = [
 ]
 for (expr in exprs) {
 	Printf('`%s\n', expr)
-	util.PrintPUnit(expr)
+	PrintPUnit(expr)
 }
 
-util.PrintTitle('Create list')
+PrintTitle('Create list')
 tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
-util.Tester(`tbl)
-util.Tester(`(for (n in tbl):list { n }))
-util.Tester(`(for (n in tbl):list {|i| n + i}))
-util.Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue }; n }))
-util.Tester(`(for (n in tbl):list { (n % 2 == 0) && continue; n }))
-util.Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue }; n }))
-util.Tester(`(for (n in tbl):list { (n % 2 == 0) && continue; n }))
-util.Tester(`(for (n in tbl):xlist { if (n % 2 == 0) { continue }; n }))
-util.Tester(`(for (n in tbl):xlist { (n % 2 == 0) && continue; n }))
-util.Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue('x') }; n }))
-util.Tester(`(for (n in tbl):list { (n % 2 == 0) && continue('x'); n }))
-util.Tester(`(for (n in tbl):list { if (n > 8) { break }; n }))
-util.Tester(`(for (n in tbl):list { (n > 8) && break; n }))
-util.Tester(`(for (n in tbl):list { if (n > 8) { break('end') }; n }))
-util.Tester(`(for (n in tbl):list { (n > 8) && break('end'); n }))
-util.Tester(`(for (n in tbl):list { if (n > 8) { break(nil) }; n }))
-util.Tester(`(for (n in tbl):list { (n > 8) && break(nil); n }))
-util.Tester(`(for (n in tbl):xlist { if (n > 8) { break }; n }))
-util.Tester(`(for (n in tbl):xlist { (n > 8) && break ; n }))
-util.Tester(`(for (n in tbl):xlist { if (n > 8) { break('end') }; n }))
-util.Tester(`(for (n in tbl):xlist { (n > 8) && break('end') ; n }))
-util.Tester(`(for (n in tbl):xlist { if (n > 8) { break(nil) }; n }))
-util.Tester(`(for (n in tbl):xlist { (n > 8) && break(nil) ; n }))
+Tester(`tbl)
+Tester(`(for (n in tbl):list { n }))
+Tester(`(for (n in tbl):list {|i| n + i}))
+Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue }; n }))
+Tester(`(for (n in tbl):list { (n % 2 == 0) && continue; n }))
+Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue }; n }))
+Tester(`(for (n in tbl):list { (n % 2 == 0) && continue; n }))
+Tester(`(for (n in tbl):xlist { if (n % 2 == 0) { continue }; n }))
+Tester(`(for (n in tbl):xlist { (n % 2 == 0) && continue; n }))
+Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue('x') }; n }))
+Tester(`(for (n in tbl):list { (n % 2 == 0) && continue('x'); n }))
+Tester(`(for (n in tbl):list { if (n > 8) { break }; n }))
+Tester(`(for (n in tbl):list { (n > 8) && break; n }))
+Tester(`(for (n in tbl):list { if (n > 8) { break('end') }; n }))
+Tester(`(for (n in tbl):list { (n > 8) && break('end'); n }))
+Tester(`(for (n in tbl):list { if (n > 8) { break(nil) }; n }))
+Tester(`(for (n in tbl):list { (n > 8) && break(nil); n }))
+Tester(`(for (n in tbl):xlist { if (n > 8) { break }; n }))
+Tester(`(for (n in tbl):xlist { (n > 8) && break ; n }))
+Tester(`(for (n in tbl):xlist { if (n > 8) { break('end') }; n }))
+Tester(`(for (n in tbl):xlist { (n > 8) && break('end') ; n }))
+Tester(`(for (n in tbl):xlist { if (n > 8) { break(nil) }; n }))
+Tester(`(for (n in tbl):xlist { (n > 8) && break(nil) ; n }))
 /*
 for (n in []) {
 	Printf('%d\n', n)

@@ -1,9 +1,9 @@
 #!./gurax
-import(util)
+import(util) {*}
 
-util.TestCase('Create Iterator') {
-	util.Tester(`(3))
-	util.Tester(`())
-	util.Tester(`(3,))
-	util.Tester(`(3, 1, 4, 1, 5, 9, 2, 6, 5, 3))
+TestCase('Create Iterator') {
+	Tester(`(3))
+	Tester(`())
+	Tester(`(3,))
+	Tester(`(3, 1, 4, 1, 5, 9, 2, 6, 5, 3))
 }

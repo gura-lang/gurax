@@ -1,5 +1,5 @@
 #!./gurax
-import(util)
+import(util) {*}
 
 exprs = [
 	`{`a}
@@ -14,34 +14,33 @@ exprs = [
 for (expr in exprs) {
 	Println('--------')
 	Printf('%s\n', expr)
-	util.PrintPUnit(expr)
+	PrintPUnit(expr)
 }
 
-util.TestCase('Operator ..') {
-	util.Tester(`(1..10))
-	util.Tester(`(1..1))
-	util.Tester(`(1..0))
-	util.Tester(`(1..-10))
+TestCase('Operator ..') {
+	Tester(`(1..10))
+	Tester(`(1..1))
+	Tester(`(1..0))
+	Tester(`(1..-10))
 }
 
-util.TestCase('Operators && and ||') {
-	util.Tester(`(true && true))
-	util.Tester(`(true && false))
-	util.Tester(`(false && true))
-	util.Tester(`(false && false))
-	util.Tester(`(true || true))
-	util.Tester(`(true || false))
-	util.Tester(`(false || true))
-	util.Tester(`(false || false))
-	util.Tester(`('hello' && 'world'))
-	util.Tester(`('hello' && false))
-	util.Tester(`(false && 'hello'))
-	util.Tester(`('hello' && true))
-	util.Tester(`(true && 'hello'))
-	util.Tester(`('hello' || 'world'))
-	util.Tester(`('hello' || false))
-	util.Tester(`(false || 'hello'))
-	util.Tester(`('hello' || true))
-	util.Tester(`(true || 'hello'))
+TestCase('Operators && and ||') {
+	Tester(`(true && true))
+	Tester(`(true && false))
+	Tester(`(false && true))
+	Tester(`(false && false))
+	Tester(`(true || true))
+	Tester(`(true || false))
+	Tester(`(false || true))
+	Tester(`(false || false))
+	Tester(`('hello' && 'world'))
+	Tester(`('hello' && false))
+	Tester(`(false && 'hello'))
+	Tester(`('hello' && true))
+	Tester(`(true && 'hello'))
+	Tester(`('hello' || 'world'))
+	Tester(`('hello' || false))
+	Tester(`(false || 'hello'))
+	Tester(`('hello' || true))
+	Tester(`(true || 'hello'))
 }
-

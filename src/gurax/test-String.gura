@@ -1,33 +1,38 @@
 #!./gurax
-import(util)
-str = 'abcdefghijklmn'
-util.Tester(`str)
-util.Tester(`str.StartsWith('abcd'))
-util.Tester(`str.StartsWith('abdd'))
-util.Tester(`str.StartsWith('ABCD'))
-util.Tester(`str.StartsWith('ABCD'):icase)
-util.Tester(`str.EndsWith('klmn'))
-util.Tester(`str.EndsWith('klmm'))
-util.Tester(`str.EndsWith('KLMN'))
-util.Tester(`str.EndsWith('KLMN'):icase)
-util.Tester(`str.StartsWith('defg', 3))
-util.Tester(`str.EndsWith('ghij', 10))
-util.Tester(`str.StartsWith('abcd'):rest)
-util.Tester(`str.StartsWith('abdd'):rest)
-util.Tester(`str.StartsWith('ABCD'):rest)
-util.Tester(`str.StartsWith('ABCD'):rest:icase)
-util.Tester(`str.EndsWith('klmn'):rest)
-util.Tester(`str.EndsWith('klmm'):rest)
-util.Tester(`str.EndsWith('KLMN'):rest)
-util.Tester(`str.EndsWith('KLMN'):rest:icase)
-util.Tester(`str.StartsWith('defg', 3):rest)
-util.Tester(`str.EndsWith('ghij', 10):rest)
+import(util) {*}
 
-str = 'abcdefghijklmn'
-util.Tester(`str)
-util.Tester(`str.len)
-util.Tester(`str.width)
-str = 'あいうえおかきくけこ'
-util.Tester(`str)
-util.Tester(`str.len)
-util.Tester(`str.width)
+TestCase('String#StartsWith(), String#EndsWith()') {
+	str = 'abcdefghijklmn'
+	Tester(`str)
+	Tester(`str.StartsWith('abcd'))
+	Tester(`str.StartsWith('abdd'))
+	Tester(`str.StartsWith('ABCD'))
+	Tester(`str.StartsWith('ABCD'):icase)
+	Tester(`str.EndsWith('klmn'))
+	Tester(`str.EndsWith('klmm'))
+	Tester(`str.EndsWith('KLMN'))
+	Tester(`str.EndsWith('KLMN'):icase)
+	Tester(`str.StartsWith('defg', 3))
+	Tester(`str.EndsWith('ghij', 10))
+	Tester(`str.StartsWith('abcd'):rest)
+	Tester(`str.StartsWith('abdd'):rest)
+	Tester(`str.StartsWith('ABCD'):rest)
+	Tester(`str.StartsWith('ABCD'):rest:icase)
+	Tester(`str.EndsWith('klmn'):rest)
+	Tester(`str.EndsWith('klmm'):rest)
+	Tester(`str.EndsWith('KLMN'):rest)
+	Tester(`str.EndsWith('KLMN'):rest:icase)
+	Tester(`str.StartsWith('defg', 3):rest)
+	Tester(`str.EndsWith('ghij', 10):rest)
+}
+TestCase('String#len, String#width') {
+	str = 'abcdefghijklmn'
+	Tester(`str)
+	Tester(`str.len)
+	Tester(`str.width)
+	str = 'あいうえおかきくけこ'
+	Tester(`str)
+	Tester(`str.len)
+	Tester(`str.width)
+}
+

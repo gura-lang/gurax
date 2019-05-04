@@ -1,6 +1,6 @@
 #!./gurax
-import(util)
-util.PrintTitle('PUnit')
+import(util) {*}
+PrintTitle('PUnit')
 exprs = [
 	`repeat {}
 	`repeat {|n| nil}
@@ -17,10 +17,10 @@ exprs = [
 ]
 for (expr in exprs) {
 	Printf('`%s\n', expr)
-	util.PrintPUnit(expr)
+	PrintPUnit(expr)
 }
 
-util.TestCase('Create list') {
-	util.Tester(`repeat (10):list {'x'})
-	util.Tester(`repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i})
+TestCase('Create list') {
+	Tester(`repeat (10):list {'x'})
+	Tester(`repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i})
 }

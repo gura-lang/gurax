@@ -1,7 +1,7 @@
 #!./gurax
-import(util)
+import(util) {*}
 
-util.PrintTitle('PUnit')
+PrintTitle('PUnit')
 exprs = [
 	`while (true) {}
 	`while (true):list {}
@@ -12,10 +12,10 @@ exprs = [
 ]
 for (expr in exprs) {
 	Printf('`%s\n', expr)
-	util.PrintPUnit(expr)
+	PrintPUnit(expr)
 }
 
-util.PrintTitle('Create list')
+PrintTitle('Create list')
 n = 10
 x = while (n > 0):list {|i| n -= 1 }
 Println(x):nomap
@@ -24,7 +24,7 @@ x = while (n > 0):list { n -= 1 }
 Println(x):nomap
 //x = while (n > 0):list {|i| n -= 1 }
 
-util.PrintTitle('Scope test')
+PrintTitle('Scope test')
 i = 'original I'
 n = 0
 sum = 0

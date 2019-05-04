@@ -1,13 +1,13 @@
 #!./gurax
-import(util)
+import(util) {*}
 
-util.TestCase('Recursion') {
+TestCase('Recursion') {
 	Fact(n:Number) = if (n <= 1) { 1 } else { n * Fact(n - 1) }
 	n = 20
 	Printf('%d! = %d\n', n, Fact(n))
 }
 
-util.TestCase('dynamic_scope') {
+TestCase('dynamic_scope') {
 	f_static() = Println('[static]  a = ', a)
 	f_dynamic():dynamic_scope = Println('[dynamic] a = ', a)
 	g_static() {`block} = block.Eval()
@@ -26,7 +26,7 @@ util.TestCase('dynamic_scope') {
 	}
 }
 
-util.TestCase('Named argument') {
+TestCase('Named argument') {
 	f1(dict%, arg%%) = {
 		Println(dict)
 		Println(arg)
@@ -41,7 +41,7 @@ util.TestCase('Named argument') {
 	f2(b => 10, c => 20, a => 30, d1 => 1, d2 => 2, d3 => 3)
 }
 
-util.TestCase('Cast of list value') {
+TestCase('Cast of list value') {
 	f(a[]:Number) = Println(a):nomap
 	g(a[]:String) = Println(a):nomap
 	f([1, 2, 3])

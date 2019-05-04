@@ -1,3 +1,4 @@
+======== String#StartsWith(), String#EndsWith() ========
 str .. abcdefghijklmn
 str.StartsWith('abcd') .. true
 str.StartsWith('abdd') .. false
@@ -19,6 +20,7 @@ str.EndsWith('KLMN'):rest .. nil
 str.EndsWith('KLMN'):rest:icase .. klmn
 str.StartsWith('defg', 3):rest .. hijklmn
 str.EndsWith('ghij', 10):rest .. ghijklmn
+======== String#len, String#width ========
 str .. abcdefghijklmn
 str.len .. 14
 str.width .. 14

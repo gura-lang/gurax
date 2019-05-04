@@ -1,4 +1,6 @@
 #!./gurax
+import(util) {*}
+
 sys.cout.Println('Print on cout')
 sys.cerr.Println('Print on cerr')
 sys.Exit(1)

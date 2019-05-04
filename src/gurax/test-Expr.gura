@@ -1,9 +1,9 @@
 #!./gurax
-import(util)
+import(util) {*}
 f(`expr) = {
 	Println('--------')
 	Printf('f(`(%s))\n', expr)
-	util.PrintPUnit(expr)
+	PrintPUnit(expr)
 }
 f(a)
 f(a = 3)
@@ -79,5 +79,5 @@ exprs = [
 for (expr in exprs) {
 	Println('--------')
 	Printf('`%s\n', expr)
-	util.PrintPUnit(expr)
+	PrintPUnit(expr)
 }

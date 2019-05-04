@@ -1,5 +1,5 @@
 #!./gurax
-import(util)
+import(util) {*}
 
 a = 3
 scope {
