@@ -1,33 +1,36 @@
 #!./gurax
 import(util) {*}
 
-PrintTitle('PUnit')
-exprs = [
-	`while (true) {}
-	`while (true):list {}
-	`while (true):xlist {}
-	`while (true) {|n| nil}
-	`while (true):list {|n| nil}
-	`while (true):xlist {|n| nil}
-]
-for (expr in exprs) {
-	Printf('`%s\n', expr)
-	PrintPUnit(expr)
+TestCase('PUnit') {
+	exprs = [
+		`while (true) {}
+		`while (true):list {}
+		`while (true):xlist {}
+		`while (true) {|n| nil}
+		`while (true):list {|n| nil}
+		`while (true):xlist {|n| nil}
+	]
+	for (expr in exprs) {
+		Printf('`%s\n', expr)
+		PrintPUnit(expr)
+	}
 }
 
-PrintTitle('Create list')
-n = 10
-x = while (n > 0):list {|i| n -= 1 }
-Println(x):nomap
-n = 10
-x = while (n > 0):list { n -= 1 }
-Println(x):nomap
-//x = while (n > 0):list {|i| n -= 1 }
+TestCase('Create list') {
+	n = 10
+	x = while (n > 0):list {|i| n -= 1 }
+	Println(x):nomap
+	n = 10
+	x = while (n > 0):list { n -= 1 }
+	Println(x):nomap
+	//x = while (n > 0):list {|i| n -= 1 }
+}
 
-PrintTitle('Scope test')
-i = 'original I'
-n = 0
-sum = 0
-while (n <= 10) {|i| sum += i, n += 1}
-Println('sum = ', sum)
-Println('i   = ', i)
+TestCase('Scope test') {
+	i = 'original I'
+	n = 0
+	sum = 0
+	while (n <= 10) {|i| sum += i, n += 1}
+	Println('sum = ', sum)
+	Println('i   = ', i)
+}

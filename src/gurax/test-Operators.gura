@@ -1,20 +1,22 @@
 #!./gurax
 import(util) {*}
 
-exprs = [
-	`{`a}
-	`{`a; `b; `c}
-	`{a && b}
-	`{a && b && c}
-	`{a || b}
-	`{a || b || c}
-	`(3 + 5)
-	`(false && false)
-]
-for (expr in exprs) {
-	Println('--------')
-	Printf('%s\n', expr)
-	PrintPUnit(expr)
+TestCase('PUnit') {
+	exprs = [
+		`{`a}
+		`{`a; `b; `c}
+		`{a && b}
+		`{a && b && c}
+		`{a || b}
+		`{a || b || c}
+		`(3 + 5)
+		`(false && false)
+	]
+	for (expr in exprs) {
+		Println('--------')
+		Printf('%s\n', expr)
+		PrintPUnit(expr)
+	}
 }
 
 TestCase('Operator ..') {
