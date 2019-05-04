@@ -1608,6 +1608,156 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_JumpIfNoCatch
+// Stack View: [Prev ErrorType] -> [Prev]  (continue)
+//                              -> []      (discard)
+//                              -> [Prev]  (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
+	const Error* pError = Error::GetLastError();
+	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
+		if (discardValueFlag) processor.DiscardValue();
+		processor.SetPUnitNext(_GetPUnitCont());
+	} else {
+		processor.SetPUnitNext(GetPUnitBranchDest());
+	}
+}
+
+template<bool discardValueFlag>
+String PUnit_JumpIfNoCatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("JumpIfNoCatch(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_JumpIfNoCatch<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_JumpIfNoCatch<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_JumpIfNoCatchAny
+// Stack View: [Prev] -> [Prev]  (continue)
+//                    -> []      (discard)
+//                    -> [Prev]  (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
+{
+	if (Error::IsIssued()) {
+		if (discardValueFlag) processor.DiscardValue();
+		processor.SetPUnitNext(_GetPUnitCont());
+	} else {
+		processor.SetPUnitNext(GetPUnitBranchDest());
+	}
+}
+
+template<bool discardValueFlag>
+String PUnit_JumpIfNoCatchAny<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("JumpIfNoCatchAny(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_NilJumpIfNoCatch
+// Stack View: [Prev ErrorType] -> [Prev]  (continue)
+//                              -> []      (discard)
+//                              -> [Prev]  (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_NilJumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
+{
+	RefPtr<Value> pValue(processor.PopValue());
+	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
+	const Error* pError = Error::GetLastError();
+	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
+		if (discardValueFlag) processor.DiscardValue();
+		processor.SetPUnitNext(_GetPUnitCont());
+	} else {
+		processor.SetPUnitNext(GetPUnitBranchDest());
+	}
+}
+
+template<bool discardValueFlag>
+String PUnit_NilJumpIfNoCatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("NilJumpIfNoCatch(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_NilJumpIfNoCatch::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatch<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatch<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_NilJumpIfNoCatchAny
+// Stack View: [Prev] -> [Prev]  (continue)
+//                    -> []      (discard)
+//                    -> [Prev]  (branch)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_NilJumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
+{
+	if (Error::IsIssued()) {
+		if (discardValueFlag) processor.DiscardValue();
+		processor.SetPUnitNext(_GetPUnitCont());
+	} else {
+		processor.SetPUnitNext(GetPUnitBranchDest());
+	}
+}
+
+template<bool discardValueFlag>
+String PUnit_NilJumpIfNoCatchAny<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("NilJumpIfNoCatchAny(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_NilJumpIfNoCatchAny::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_BeginSequence
 // Stack View: [Prev] -> [Prev] (continue)
 //                       []     (discard)

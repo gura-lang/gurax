@@ -250,6 +250,26 @@ void Composer::Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchD
 	SetFactory(new PUnitFactory_KeepJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
+void Composer::Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_JumpIfNoCatch(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
+void Composer::Add_JumpIfNoCatchAny(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_JumpIfNoCatchAny(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
+void Composer::Add_NilJumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_NilJumpIfNoCatch(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
+void Composer::Add_NilJumpIfNoCatchAny(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_NilJumpIfNoCatchAny(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
 void Composer::Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel)
 {
 	SetFactory(new PUnitFactory_BeginSequence(exprSrc.Reference(), NextSeqId(), pPUnitSentinel));

@@ -1661,6 +1661,150 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_JumpIfNoCatch
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_JumpIfNoCatch : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_JumpIfNoCatch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_JumpIfNoCatch : public PUnitFactory_Branch {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatch");
+private:
+public:
+	PUnitFactory_JumpIfNoCatch(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_JumpIfNoCatch<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_JumpIfNoCatchAny
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_JumpIfNoCatchAny : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_JumpIfNoCatchAny(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_JumpIfNoCatchAny : public PUnitFactory_Branch {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatchAny");
+private:
+public:
+	PUnitFactory_JumpIfNoCatchAny(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_JumpIfNoCatchAny<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_NilJumpIfNoCatch
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_NilJumpIfNoCatch : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_NilJumpIfNoCatch(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_NilJumpIfNoCatch : public PUnitFactory_Branch {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNoCatch");
+private:
+public:
+	PUnitFactory_NilJumpIfNoCatch(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_NilJumpIfNoCatch<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_NilJumpIfNoCatchAny
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_NilJumpIfNoCatchAny : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_NilJumpIfNoCatchAny(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_NilJumpIfNoCatchAny : public PUnitFactory_Branch {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNoCatchAny");
+private:
+public:
+	PUnitFactory_NilJumpIfNoCatchAny(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_NilJumpIfNoCatchAny<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_BeginSequence
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

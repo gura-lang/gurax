@@ -135,6 +135,40 @@ Gurax_DeclareStatementAlias(try_, "try")
 
 Gurax_ImplementStatement(try_)
 {
+	SymbolList symbols;
+	if (const Expr* pExprError = exprCaller.GetTrailerSymbols(symbols)) {
+		Error::IssueWith(ErrorType::SyntaxError, *pExprError,
+						 "invalid format of try-catch-else-finally sequence");
+		return;
+	}
+	if (!symbols.empty()) {
+		auto ppSymbol = symbols.begin();
+		for ( ; ppSymbol + 1 != symbols.end(); ppSymbol++) {
+			const Symbol* pSymbol = *ppSymbol;
+			if (!(pSymbol->IsIdentical(Gurax_Symbol(catch_)) || pSymbol->IsIdentical(Gurax_Symbol(else_)))) {
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
+								 "invalid format of try-catch-else-finally sequence");
+				return;
+			}
+		}
+		const Symbol* pSymbol = *ppSymbol;
+		if (!(pSymbol->IsIdentical(Gurax_Symbol(catch_)) || pSymbol->IsIdentical(Gurax_Symbol(else_)) ||
+			  pSymbol->IsIdentical(Gurax_Symbol(finally)))) {
+			Error::IssueWith(ErrorType::SyntaxError, exprCaller,
+							 "invalid format of try-catch-else-finally sequence");
+			return;
+		}
+	}
+	if (exprCaller.HasExprTrailer()) {
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+		composer.Add_Jump(exprCaller);									// [Any]
+		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
+		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	} else {
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+	}
+	composer.Add_NoOperation(exprCaller);								// [Any]
 }
 
 // catch(errorType?:ErrorType) {`block}
@@ -146,6 +180,52 @@ Gurax_DeclareStatementAlias(catch_, "catch")
 }
 
 Gurax_ImplementStatement(catch_)
+{
+	if (exprCaller.GetExprCdrFirst()) {
+		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Any]
+		composer.Add_Cast(exprCaller, VTYPE_ErrorType, false);				// [ErrorType]
+		if (exprCaller.HasExprTrailer()) {
+			PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+			composer.Add_JumpIfNoCatch(exprCaller);							// []
+			exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+			PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
+			composer.Add_Jump(exprCaller);									// [Any]
+			pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+			exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
+			pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
+		} else {
+			PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+			composer.Add_NilJumpIfNoCatch(exprCaller);						// [] or [nil]
+			exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+			pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		}
+	} else {
+		if (exprCaller.HasExprTrailer()) {
+			PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+			composer.Add_JumpIfNoCatchAny(exprCaller);						// []
+			exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+			PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
+			composer.Add_Jump(exprCaller);									// [Any]
+			pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+			exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
+			pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
+		} else {
+			PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+			composer.Add_NilJumpIfNoCatchAny(exprCaller);					// [] or [nil]
+			exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+			pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		}
+	}
+}
+
+// finally {`block}
+Gurax_DeclareStatement(finally)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(finally)
 {
 }
 
@@ -680,6 +760,7 @@ void Statements::PrepareBasic(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(else_));
 	frame.Assign(Gurax_CreateStatement(try_));
 	frame.Assign(Gurax_CreateStatement(catch_));
+	frame.Assign(Gurax_CreateStatement(finally));
 	frame.Assign(Gurax_CreateStatement(for_));
 	frame.Assign(Gurax_CreateStatement(while_));
 	frame.Assign(Gurax_CreateStatement(repeat));
