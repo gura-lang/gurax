@@ -60,7 +60,7 @@ public:
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetSymbol()->IsLessThan_UniqId(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol()) :
+			GetSymbol()->IsLessThan_Name(Value_Symbol::GetSymbol(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {

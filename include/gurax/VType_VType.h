@@ -69,9 +69,8 @@ public:
 			GetVTypeThis().IsLessThan(dynamic_cast<const Value_VType*>(pValue)->GetVTypeThis()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetVTypeThis().ToString(ss);
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override {
 		return GetVTypeThis().GetFrame().Lookup(pSymbol);
 	}

@@ -590,7 +590,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 		const Expr* pExprFirst = GetExprElemFirst();
 		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
 			if (pExpr != pExprFirst) {
-				str += ';';
+				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
 			str += pExpr->ToString(ss);

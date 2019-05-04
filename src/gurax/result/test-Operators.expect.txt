@@ -7,7 +7,7 @@
   ##3 EndSequence()
   ##4 Value(<Expr:`(a):PUnit#13>)
 --------
-{`a; `b; `c}
+{`a, `b, `c}
   ##0 Jump(##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)

@@ -14,11 +14,11 @@ f(`(a + b))
 `{foo}
   ##0 Lookup(`foo)
 --------
-`{foo; bar}
+`{foo, bar}
   ##0 Lookup(`foo), DiscardValue()
   ##1 Lookup(`bar)
 --------
-`{foo = 2; bar = 'hello'}
+`{foo = 2, bar = 'hello'}
   ##0 Value(<Number:2>)
   ##1 AssignToSymbol(`foo), DiscardValue()
   ##2 Value(<String:'hello'>)
@@ -112,7 +112,7 @@ f(`(a + b))
   ##13 FeedArgSlot()
   ##14 Call(cont=##15)
 --------
-`{f(3, 4, 5) {f1(); f2()}}
+`{f(3, 4, 5) {f1(), f2()}}
   ##0 Lookup(`f)
   ##1 Argument(block=##15)
   ##2 ArgSlot(`(3):##3,cont=##4,branchdest=##6)

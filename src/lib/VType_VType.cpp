@@ -20,5 +20,19 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_VType
 //------------------------------------------------------------------------------
+String Value_VType::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str += ":";
+	str += GetVTypeThis().MakeFullName();
+	str += ">";
+	return str;
+}
+
+String Value_VType::ToStringDetail(const StringStyle& ss) const
+{
+	return GetVTypeThis().MakeFullName();
+}
 
 }

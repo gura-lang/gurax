@@ -54,6 +54,42 @@ Gurax_ImplementStatement(_dict_)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Dict#keys
+Gurax_DeclareProperty_R(Dict, keys)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a list of keys.");
+}
+
+Gurax_ImplementPropertyGetter(Dict, keys)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<ValueOwner> pValueOwner(valueThis.GetValueDict().GetKeys());
+	pValueOwner->Sort();
+	VType* pVType = pValueOwner->GetVTypeOfElems();
+	return new Value_List(new ValueTypedOwner(pVType, pValueOwner.release()));
+}
+
+// Dict#len
+Gurax_DeclareProperty_R(Dict, len)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the number of elements in the list.");
+}
+
+Gurax_ImplementPropertyGetter(Dict, len)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetValueDict().size());
+}
+
+//------------------------------------------------------------------------------
 // VType_Dict
 //------------------------------------------------------------------------------
 VType_Dict VTYPE_Dict("Dict");
@@ -65,6 +101,9 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 	frameOuter.Assign(*this);
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_dict_));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Dict, len));
+	Assign(Gurax_CreateProperty(Dict, keys));
 }
 
 //------------------------------------------------------------------------------

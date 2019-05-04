@@ -239,7 +239,7 @@
   ##14 Jump(##9)
   ##15 RemoveValues(offset=1,count=4)
   ##16 PopFrame()
-`for (v in tbl) {break; 1}
+`for (v in tbl) {break, 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -252,7 +252,7 @@
   ##9 Jump(##4)
   ##10 RemoveValues(offset=1,count=1)
   ##11 PopFrame()
-`for (v in tbl):list {break; 1}
+`for (v in tbl):list {break, 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -272,23 +272,23 @@
 tbl .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 for (n in tbl):list {n} .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 for (n in tbl):list {|i| n + i} .. [3, 2, 6, 4, 9, 14, 8, 13, 13, 12, 15, 19]
-for (n in tbl):list {if ((n % 2) == 0) {continue}; n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
-for (n in tbl):list {((n % 2) == 0) && continue; n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
-for (n in tbl):list {if ((n % 2) == 0) {continue}; n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
-for (n in tbl):list {((n % 2) == 0) && continue; n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
-for (n in tbl):xlist {if ((n % 2) == 0) {continue}; n} .. [3, 1, 1, 5, 9, 5, 3, 5]
-for (n in tbl):xlist {((n % 2) == 0) && continue; n} .. [3, 1, 1, 5, 9, 5, 3, 5]
-for (n in tbl):list {if ((n % 2) == 0) {continue('x')}; n} .. [3, 1, 'x', 1, 5, 9, 'x', 'x', 5, 3, 5, 'x']
-for (n in tbl):list {((n % 2) == 0) && continue('x'); n} .. [3, 1, 'x', 1, 5, 9, 'x', 'x', 5, 3, 5, 'x']
-for (n in tbl):list {if (n > 8) {break}; n} .. [3, 1, 4, 1, 5]
-for (n in tbl):list {(n > 8) && break; n} .. [3, 1, 4, 1, 5]
-for (n in tbl):list {if (n > 8) {break('end')}; n} .. [3, 1, 4, 1, 5, 'end']
-for (n in tbl):list {(n > 8) && break('end'); n} .. [3, 1, 4, 1, 5, 'end']
-for (n in tbl):list {if (n > 8) {break(nil)}; n} .. [3, 1, 4, 1, 5, nil]
-for (n in tbl):list {(n > 8) && break(nil); n} .. [3, 1, 4, 1, 5, nil]
-for (n in tbl):xlist {if (n > 8) {break}; n} .. [3, 1, 4, 1, 5]
-for (n in tbl):xlist {(n > 8) && break; n} .. [3, 1, 4, 1, 5]
-for (n in tbl):xlist {if (n > 8) {break('end')}; n} .. [3, 1, 4, 1, 5, 'end']
-for (n in tbl):xlist {(n > 8) && break('end'); n} .. [3, 1, 4, 1, 5, 'end']
-for (n in tbl):xlist {if (n > 8) {break(nil)}; n} .. [3, 1, 4, 1, 5]
-for (n in tbl):xlist {(n > 8) && break(nil); n} .. [3, 1, 4, 1, 5]
+for (n in tbl):list {if ((n % 2) == 0) {continue}, n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
+for (n in tbl):list {((n % 2) == 0) && continue, n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
+for (n in tbl):list {if ((n % 2) == 0) {continue}, n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
+for (n in tbl):list {((n % 2) == 0) && continue, n} .. [3, 1, nil, 1, 5, 9, nil, nil, 5, 3, 5, nil]
+for (n in tbl):xlist {if ((n % 2) == 0) {continue}, n} .. [3, 1, 1, 5, 9, 5, 3, 5]
+for (n in tbl):xlist {((n % 2) == 0) && continue, n} .. [3, 1, 1, 5, 9, 5, 3, 5]
+for (n in tbl):list {if ((n % 2) == 0) {continue('x')}, n} .. [3, 1, 'x', 1, 5, 9, 'x', 'x', 5, 3, 5, 'x']
+for (n in tbl):list {((n % 2) == 0) && continue('x'), n} .. [3, 1, 'x', 1, 5, 9, 'x', 'x', 5, 3, 5, 'x']
+for (n in tbl):list {if (n > 8) {break}, n} .. [3, 1, 4, 1, 5]
+for (n in tbl):list {(n > 8) && break, n} .. [3, 1, 4, 1, 5]
+for (n in tbl):list {if (n > 8) {break('end')}, n} .. [3, 1, 4, 1, 5, 'end']
+for (n in tbl):list {(n > 8) && break('end'), n} .. [3, 1, 4, 1, 5, 'end']
+for (n in tbl):list {if (n > 8) {break(nil)}, n} .. [3, 1, 4, 1, 5, nil]
+for (n in tbl):list {(n > 8) && break(nil), n} .. [3, 1, 4, 1, 5, nil]
+for (n in tbl):xlist {if (n > 8) {break}, n} .. [3, 1, 4, 1, 5]
+for (n in tbl):xlist {(n > 8) && break, n} .. [3, 1, 4, 1, 5]
+for (n in tbl):xlist {if (n > 8) {break('end')}, n} .. [3, 1, 4, 1, 5, 'end']
+for (n in tbl):xlist {(n > 8) && break('end'), n} .. [3, 1, 4, 1, 5, 'end']
+for (n in tbl):xlist {if (n > 8) {break(nil)}, n} .. [3, 1, 4, 1, 5]
+for (n in tbl):xlist {(n > 8) && break(nil), n} .. [3, 1, 4, 1, 5]

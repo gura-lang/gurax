@@ -1,4 +1,12 @@
-[3, 1, 4, 1, 5, 9, 2, 6]
+======== Initializer ========
+[3, 1, 4, 1, 5, 9, 2, 6] .. [3, 1, 4, 1, 5, 9, 2, 6]
+======== Properties ========
+tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+tbl.len .. 11
+[].vtypeOfElem .. Undefined
+['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. String
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. Number
+['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. Any
 ======== Each ========
 Each { .. }
 ----
@@ -102,12 +110,12 @@ Each {|x, i| .. }, skip "t"
 ======== Each with :list ========
 tbl.Each():list {|x| x} .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl.Each():xlist {|x| if (x.StartsWith('t')) {x}} .. ['two', 'three', 'ten']
-tbl.Each():list {|x| if (x.StartsWith('t')) {break}; x} .. ['zero', 'one']
-tbl.Each():list {|x| if (x.StartsWith('t')) {break('end')}; x} .. ['zero', 'one', 'end']
-tbl.Each():list {|x| if (x.StartsWith('t')) {continue}; x} .. ['zero', 'one', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-tbl.Each():list {|x| if (x.StartsWith('t')) {continue('x')}; x} .. ['zero', 'one', 'x', 'x', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'x']
+tbl.Each():list {|x| if (x.StartsWith('t')) {break}, x} .. ['zero', 'one']
+tbl.Each():list {|x| if (x.StartsWith('t')) {break('end')}, x} .. ['zero', 'one', 'end']
+tbl.Each():list {|x| if (x.StartsWith('t')) {continue}, x} .. ['zero', 'one', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+tbl.Each():list {|x| if (x.StartsWith('t')) {continue('x')}, x} .. ['zero', 'one', 'x', 'x', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'x']
 tbl.Each():xlist {|x, i| if (x.StartsWith('t')) {Format('%d-%s', i, x)}} .. ['2-two', '3-three', '10-ten']
-tbl.Each():list {|x, i| if (x.StartsWith('t')) {break}; Format('%d-%s', i, x)} .. ['0-zero', '1-one']
-tbl.Each():list {|x, i| if (x.StartsWith('t')) {break('end')}; Format('%d-%s', i, x)} .. ['0-zero', '1-one', 'end']
-tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue}; Format('%d-%s', i, x)} .. ['0-zero', '1-one', '4-four', '5-five', '6-six', '7-seven', '8-eight', '9-nine']
-tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue('x')}; Format('%d-%s', i, x)} .. ['0-zero', '1-one', 'x', 'x', '4-four', '5-five', '6-six', '7-seven', '8-eight', '9-nine', 'x']
+tbl.Each():list {|x, i| if (x.StartsWith('t')) {break}, Format('%d-%s', i, x)} .. ['0-zero', '1-one']
+tbl.Each():list {|x, i| if (x.StartsWith('t')) {break('end')}, Format('%d-%s', i, x)} .. ['0-zero', '1-one', 'end']
+tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue}, Format('%d-%s', i, x)} .. ['0-zero', '1-one', '4-four', '5-five', '6-six', '7-seven', '8-eight', '9-nine']
+tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue('x')}, Format('%d-%s', i, x)} .. ['0-zero', '1-one', 'x', 'x', '4-four', '5-five', '6-six', '7-seven', '8-eight', '9-nine', 'x']

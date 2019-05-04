@@ -63,11 +63,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetArgSlot().IsEqualTo(dynamic_cast<const Value_ArgSlot*>(pValue)->GetArgSlot());
+			GetArgSlot().IsEqualTo(Value_ArgSlot::GetArgSlot(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetArgSlot().IsLessThan(dynamic_cast<const Value_ArgSlot*>(pValue)->GetArgSlot()) :
+			GetArgSlot().IsLessThan(Value_ArgSlot::GetArgSlot(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {

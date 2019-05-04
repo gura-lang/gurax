@@ -58,7 +58,7 @@ public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
-	Frame* LockFrameParent() { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
+	Frame* LockFrameParent() const { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, String doc) {

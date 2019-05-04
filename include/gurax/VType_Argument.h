@@ -63,11 +63,11 @@ public:
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetArgument().IsEqualTo(dynamic_cast<const Value_Argument*>(pValue)->GetArgument());
+			GetArgument().IsEqualTo(Value_Argument::GetArgument(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetArgument().IsLessThan(dynamic_cast<const Value_Argument*>(pValue)->GetArgument()) :
+			GetArgument().IsLessThan(Value_Argument::GetArgument(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {

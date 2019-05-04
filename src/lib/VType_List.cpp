@@ -33,6 +33,39 @@ Gurax_ImplementMethod(List, Each)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// List#len
+Gurax_DeclareProperty_R(List, len)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the number of elements in the list.");
+}
+
+Gurax_ImplementPropertyGetter(List, len)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetValueOwner().size());
+}
+
+// List#vtypeOfElem
+Gurax_DeclareProperty_R(List, vtypeOfElem)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the value type of elements in the list.");
+}
+
+Gurax_ImplementPropertyGetter(List, vtypeOfElem)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_VType(*valueThis.GetValueTypedOwner().GetVTypeOfElems());
+}
+
+//------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
 VType_List VTYPE_List("List");
@@ -44,6 +77,9 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(List, Each));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(List, len));
+	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 }
 
 //------------------------------------------------------------------------------

@@ -151,6 +151,7 @@ protected:
 class GURAX_DLLDECLARE ValueList : public std::vector<Value*> {
 public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	VType* GetVTypeOfElems() const;
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }
 	bool IsEqualTo(const ValueList& valueList) const { return IsIdentical(valueList); }
@@ -203,7 +204,7 @@ private:
 public:
 	// Constructor
 	ValueTypedOwner();
-	ValueTypedOwner(VType *pVTypeOfElems, ValueOwner* pValueOwner) :
+	ValueTypedOwner(VType* pVTypeOfElems, ValueOwner* pValueOwner) :
 		_pVTypeOfElems(pVTypeOfElems), _pValueOwner(pValueOwner) {}
 	// Copy constructor/operator
 	ValueTypedOwner(const ValueTypedOwner& src) = delete;
@@ -241,6 +242,7 @@ public:
 	}
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
+	VType* GetVTypeOfElems() const { return _pVTypeOfElems; }
 };
 
 //------------------------------------------------------------------------------
