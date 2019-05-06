@@ -79,11 +79,11 @@ void FrameOwner::Clear()
 void FrameStack::Shrink(size_t cnt)
 {
 	if (cnt >= size()) return;
-	auto ppFrameBegin = begin() + cnt;
-	for (iterator ppFrame = ppFrameBegin; ppFrame != end(); ppFrame++) {
+	auto ppFrameEnd = rbegin() + size() - cnt;
+	for (auto ppFrame = rbegin(); ppFrame != ppFrameEnd; ppFrame++) {
 		Frame::Delete(*ppFrame);
 	}
-	erase(ppFrameBegin, end());
+	erase(begin() + cnt, end());
 }
 
 //------------------------------------------------------------------------------

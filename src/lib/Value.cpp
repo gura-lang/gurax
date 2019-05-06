@@ -245,7 +245,7 @@ ValueOwner* ValueOwner::CloneDeep() const
 
 void ValueOwner::Set(size_t pos, Value* pValue)
 {
-	iterator ppValue = begin() + pos;
+	auto ppValue = begin() + pos;
 	Value::Delete(*ppValue);
 	*ppValue = pValue;
 }
@@ -332,7 +332,7 @@ void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 //------------------------------------------------------------------------------
 void ValueStack::Remove(size_t offset)
 {
-	iterator ppValue = begin() + size() - (offset + 1);
+	auto ppValue = begin() + size() - (offset + 1);
 	Value* pValue = *ppValue;
 	erase(ppValue);
 	Value::Delete(pValue);
@@ -340,9 +340,9 @@ void ValueStack::Remove(size_t offset)
 
 void ValueStack::Remove(size_t offset, size_t cnt)
 {
-	iterator ppValueBegin = begin() + size() - (offset + cnt);
-	iterator ppValueEnd = ppValueBegin + cnt;
-	for (iterator ppValue = ppValueBegin; ppValue != ppValueEnd; ppValue++) {
+	auto ppValueBegin = begin() + size() - (offset + cnt);
+	auto ppValueEnd = ppValueBegin + cnt;
+	for (auto ppValue = ppValueBegin; ppValue != ppValueEnd; ppValue++) {
 		Value::Delete(*ppValue);
 	}
 	erase(ppValueBegin, ppValueEnd);
@@ -351,11 +351,11 @@ void ValueStack::Remove(size_t offset, size_t cnt)
 void ValueStack::Shrink(size_t cnt)
 {
 	if (cnt >= size()) return;
-	iterator ppValueBegin = begin() + cnt;
-	for (iterator ppValue = ppValueBegin; ppValue != end(); ppValue++) {
+	auto ppValueEnd = rbegin() + size() - cnt;
+	for (auto ppValue = rbegin(); ppValue != ppValueEnd; ppValue++) {
 		Value::Delete(*ppValue);
 	}
-	erase(ppValueBegin, end());
+	erase(begin() + cnt, end());
 }
 
 //------------------------------------------------------------------------------
@@ -369,7 +369,7 @@ void ValueMap::Clear()
 
 void ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
 {
-	iterator pPair = find(pSymbol);
+	auto pPair = find(pSymbol);
 	if (pPair == end()) {
 		emplace(pSymbol, pValue);
 	} else {
@@ -432,7 +432,7 @@ ValueDict* ValueDict::CloneDeep() const
 
 void ValueDict::Assign(Value* pValueKey, Value* pValue)
 {
-	iterator pPair = find(pValueKey);
+	auto pPair = find(pValueKey);
 	if (pPair == end()) {
 		emplace(pValueKey, pValue);
 	} else {

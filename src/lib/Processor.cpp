@@ -54,6 +54,43 @@ void Processor::Print() const
 }
 
 //------------------------------------------------------------------------------
+// Processor::ExceptionInfo
+//------------------------------------------------------------------------------
+Processor::ExceptionInfo::ExceptionInfo(const Processor& processor, const PUnit* pPUnitCatch) :
+	_sizePUnitStack(processor.GetPUnitStack().size()),
+	_sizeValueStack(processor.GetValueStack().size()),
+	_sizeFrameStack(processor.GetFrameStack().size()),
+	_pPUnitCatch(pPUnitCatch)
+{}
+
+void Processor::ExceptionInfo::UpdateProcessor(Processor& processor)
+{
+	processor.GetPUnitStack().Shrink(_sizePUnitStack);
+	processor.GetValueStack().Shrink(_sizeValueStack);
+	processor.GetFrameStack().Shrink(_sizeFrameStack);
+	processor.SetPUnitNext(_pPUnitCatch);
+}
+
+//------------------------------------------------------------------------------
+// Processor::ExceptionInfoStack
+//------------------------------------------------------------------------------
+void Processor::ExceptionInfoStack::Clear()
+{
+	for (ExceptionInfo* pExceptionInfo : *this) delete pExceptionInfo;
+	clear();
+}
+
+void Processor::ExceptionInfoStack::Shrink(size_t cnt)
+{
+	if (cnt >= size()) return;
+	auto ppExceptionInfoEnd = rbegin() + size() - cnt;
+	for (auto ppExceptionInfo = rbegin(); ppExceptionInfo != ppExceptionInfoEnd; ppExceptionInfo++) {
+		delete *ppExceptionInfo;
+	}
+	erase(begin() + cnt, end());
+}
+
+//------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
 void Processor_Normal::RunLoop(const PUnit* pPUnit)

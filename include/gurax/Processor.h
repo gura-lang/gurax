@@ -16,10 +16,41 @@ public:
 	Gurax_DeclareReferable(Processor);
 public:
 	enum class Event { None, Break, Continue };
+	class ExceptionInfo {
+	private:
+		size_t _sizePUnitStack;
+		size_t _sizeValueStack;
+		size_t _sizeFrameStack;
+		const PUnit* _pPUnitCatch;
+	public:
+		// Constructor
+		ExceptionInfo(const Processor& processor, const PUnit* pPUnitCatch);
+		// Copy constructor/operator
+		ExceptionInfo(const ExceptionInfo& src) = delete;
+		ExceptionInfo& operator=(const ExceptionInfo& src) = delete;
+		// Move constructor/operator
+		ExceptionInfo(ExceptionInfo&& src) = delete;
+		ExceptionInfo& operator=(ExceptionInfo&& src) noexcept = delete;
+		// Destructor
+		~ExceptionInfo() = default;
+	public:
+		void UpdateProcessor(Processor& processor);
+	};
+	class ExceptionInfoStack : public std::vector<ExceptionInfo*> {
+	public:
+		~ExceptionInfoStack() { Clear(); }
+		void Clear();
+		ExceptionInfo* Peek(int offset) { return *(rbegin() + offset); }
+		void Push(ExceptionInfo* pExceptionInfo) { push_back(pExceptionInfo); }
+		ExceptionInfo* Pop() { ExceptionInfo* pExceptionInfo = back(); pop_back(); return pExceptionInfo; }
+		void Discard() { delete back(); pop_back(); }
+		void Shrink(size_t cnt);
+	};
 protected:
 	PUnitStack _punitStack;
 	RefPtr<ValueStack> _pValueStack;
 	RefPtr<FrameStack> _pFrameStack;
+	ExceptionInfoStack _exceptionInfoStack;
 	const PUnit* _pPUnitNext;
 	bool _contFlag;
 	bool _resumeFlag;
@@ -55,6 +86,19 @@ public:
 	void DiscardValue() { Value::Delete(PopValue()); }
 	void RemoveValue(size_t offset) { GetValueStack().Remove(offset); }
 	void RemoveValues(size_t offset, size_t cnt) { GetValueStack().Remove(offset, cnt); }
+public:
+	FrameStack& GetFrameStack() { return *_pFrameStack; }
+	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
+	void ClearFrameStack() { GetFrameStack().Clear(); }
+	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
+	template<typename T_Frame> Frame& PushFrame();
+	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);
+	void PopFrame() { GetFrameStack().Pop(); }
+	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
+public:
+	ExceptionInfoStack& GetExceptionInfoStack() { return _exceptionInfoStack; }
+	const ExceptionInfoStack& GetExceptionInfoStack() const { return _exceptionInfoStack; }
+public:
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	void BreakLoop() { _pPUnitNext = nullptr; _contFlag = false, _resumeFlag = true; }
 	void ErrorDone() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
@@ -70,14 +114,6 @@ public:
 	bool IsEventBreak() const { return _event == Event::Break; }
 	bool IsEventContinue() const { return _event == Event::Continue; }
 public:
-	FrameStack& GetFrameStack() { return *_pFrameStack; }
-	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
-	void ClearFrameStack() { GetFrameStack().Clear(); }
-	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
-	template<typename T_Frame> Frame& PushFrame();
-	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);
-	void PopFrame() { GetFrameStack().Pop(); }
-	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
 	void ProcessPUnit(const PUnit* pPUnit) { RunLoop(pPUnit); }
 	Value* ProcessExpr(const Expr& expr);
 public:
