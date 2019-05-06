@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType
 //------------------------------------------------------------------------------
-VType::SeqId VType::_seqIdNext = 1;
+VType::UniqId VType::_uniqIdNext = 1;
 VType VType::Empty("");
 
 VType::VType(const char* name) :
-	_seqId(_seqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
+	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0),
 	_pFrame(new Frame_VType(nullptr)), _pPropHandlerMap(new PropHandlerMap())
 {

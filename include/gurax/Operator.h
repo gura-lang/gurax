@@ -181,9 +181,9 @@ public:
 		return Lookup(GenKey(vtypeL, vtypeR));
 	}
 public:
-	static UInt64 GenKey(const VType& vtype) { return vtype.GetSeqId(); }
+	static UInt64 GenKey(const VType& vtype) { return vtype.GetUniqId(); }
 	static UInt64 GenKey(const VType& vtypeL, const VType& vtypeR) {
-		return (static_cast<UInt64>(vtypeL.GetSeqId()) << 32) + vtypeR.GetSeqId();
+		return (static_cast<UInt64>(vtypeL.GetUniqId()) << 32) + vtypeR.GetUniqId();
 	}
 };
 
