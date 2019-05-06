@@ -161,7 +161,7 @@ public:
 	}
 	bool IsEqualTo(const Symbol* pSymbol) const { return IsIdentical(pSymbol); }
 	bool IsLessThan_UniqId(const Symbol* pSymbol) const { return GetUniqId() < pSymbol->GetUniqId(); }
-	bool IsLessThan_Name(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
+	//bool IsLessThan_Name(const Symbol* pSymbol) const { return ::strcmp(GetName(), pSymbol->GetName()) < 0; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsEmpty() const { return IsIdentical(Empty); }
