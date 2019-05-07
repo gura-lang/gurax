@@ -101,13 +101,28 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 		const PUnit* pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
 		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip PUnit_BeginSequence
 		if (pPUnitSentinel->IsEndSequence()) {
-			while (_contFlag) _pPUnitNext->Exec(*this);
+			do {
+				while (_contFlag) {
+					_pPUnitNext->Exec(*this);
+				}
+				
+			} while (_contFlag);
 		} else {
-			while (_contFlag && _pPUnitNext != pPUnitSentinel) _pPUnitNext->Exec(*this);
+			do {
+				while (_contFlag && _pPUnitNext != pPUnitSentinel) {
+					_pPUnitNext->Exec(*this);
+				}
+				
+			} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 		}
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		while (_contFlag) _pPUnitNext->Exec(*this);
+		do {
+			while (_contFlag) {
+				_pPUnitNext->Exec(*this);
+			}
+			
+		} while (_contFlag);
 	}
 	_contFlag = _resumeFlag;
 }
@@ -137,11 +152,14 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		PrintPUnit(stream, _pPUnitNext);
 		_pPUnitNext->Exec(*this);
 	}
-	while (_contFlag && _pPUnitNext != pPUnitSentinel) {
-		PrintStack(stream);
-		PrintPUnit(stream, _pPUnitNext);
-		_pPUnitNext->Exec(*this);
-	}
+	do {
+		while (_contFlag && _pPUnitNext != pPUnitSentinel) {
+			PrintStack(stream);
+			PrintPUnit(stream, _pPUnitNext);
+			_pPUnitNext->Exec(*this);
+		}
+		
+	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 	_contFlag = _resumeFlag;
 	stream.Printf("---- Processor End ----\n");
 }
