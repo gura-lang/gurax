@@ -12,6 +12,24 @@ Gurax_BeginModule(error)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+// error.Raise(errorType:ErrorType):void
+Gurax_DeclareFunction(Raise)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("msg", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementFunction(Raise)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const ErrorType& errorType = Value_ErrorType::GetErrorType(args.PickValue());
+	const char* msg = args.PickString();
+	// Function body
+	Error::Issue(errorType, "%s", msg);
+	return Value::nil();
+}
 
 //------------------------------------------------------------------------------
 // Implementation of property
@@ -40,6 +58,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of function
+	Assign(Gurax_CreateFunction(Raise));
 	// Assignment of property
 	Assign(Gurax_CreateModuleProperty(ArgumentError));
 	Assign(Gurax_CreateModuleProperty(CodecError));
