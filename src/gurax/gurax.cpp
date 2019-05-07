@@ -110,9 +110,8 @@ void RunREPL()
 			}
 			if (Error::IsIssued()) {
 				Error::Print(*Stream::CErr);
-				Error::Clear();
 				pProcessor->ClearValueStack();
-				pProcessor->ResumeFromError();
+				pProcessor->ClearError();
 				pPUnit = composer.PeekPUnitCont();
 				break;
 			} else {

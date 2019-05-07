@@ -41,6 +41,14 @@ Value* Processor::ProcessExpr(const Expr& expr)
 	return Error::IsIssued()? Value::nil() : PopValue();
 }
 
+void Processor::ClearError()
+{
+	Error::Clear();
+	_contFlag = true;
+	_resumeFlag = true;
+	_event = Event::None;
+}
+
 void Processor::Print() const
 {
 	Stream& stream = *Stream::COut;
@@ -105,6 +113,7 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 				while (_contFlag) {
 					_pPUnitNext->Exec(*this);
 				}
+				if (!Error::IsIssued()) break;
 				
 			} while (_contFlag);
 		} else {
@@ -112,6 +121,7 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 				while (_contFlag && _pPUnitNext != pPUnitSentinel) {
 					_pPUnitNext->Exec(*this);
 				}
+				if (!Error::IsIssued()) break;
 				
 			} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 		}
@@ -121,6 +131,7 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 			while (_contFlag) {
 				_pPUnitNext->Exec(*this);
 			}
+			if (!Error::IsIssued()) break;
 			
 		} while (_contFlag);
 	}
@@ -158,7 +169,9 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 			PrintPUnit(stream, _pPUnitNext);
 			_pPUnitNext->Exec(*this);
 		}
+		if (!Error::IsIssued()) break;
 		
+		ClearError();
 	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 	_contFlag = _resumeFlag;
 	stream.Printf("---- Processor End ----\n");

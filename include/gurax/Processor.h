@@ -103,7 +103,7 @@ public:
 	void BreakLoop() { _pPUnitNext = nullptr; _contFlag = false, _resumeFlag = true; }
 	void ErrorDone() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
-	void ResumeFromError() { _contFlag = true; _resumeFlag = true; _event = Event::None; }
+	void ClearError();
 	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 	bool GetContFlag() const { return _contFlag; }
 	bool GetResumeFlag() const { return _resumeFlag; }

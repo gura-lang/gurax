@@ -175,7 +175,7 @@ Gurax_ImplementStatement(try_)
 Gurax_DeclareStatementAlias(catch_, "catch")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 }
 
