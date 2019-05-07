@@ -8,19 +8,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ErrorType
 //------------------------------------------------------------------------------
-const ErrorType ErrorType::ArgumentError("argument error");
-const ErrorType ErrorType::CodecError("codec error");
-const ErrorType ErrorType::ContextError("context error");
-const ErrorType ErrorType::DeclarationError("declaration error");
-const ErrorType ErrorType::DividedByZero("divided by zero");
-const ErrorType ErrorType::IndexError("index error");
-const ErrorType ErrorType::InvalidOperation("invalid operation");
-const ErrorType ErrorType::IteratorError("iterator error");
-const ErrorType ErrorType::ModuleError("module error");
-const ErrorType ErrorType::StreamError("stream error");
-const ErrorType ErrorType::SyntaxError("syntax error");
-const ErrorType ErrorType::TypeError("type error");
-const ErrorType ErrorType::ValueError("value error");
+const ErrorType ErrorType::ArgumentError	("ArgumentError",		"argument error");
+const ErrorType ErrorType::CodecError		("CodecError",			"codec error");
+const ErrorType ErrorType::ContextError		("ContextError",		"context error");
+const ErrorType ErrorType::DeclarationError	("DeclarationError",	"declaration error");
+const ErrorType ErrorType::DividedByZero	("DividedByZero",		"divided by zero");
+const ErrorType ErrorType::IndexError		("IndexError",			"index error");
+const ErrorType ErrorType::InvalidOperation	("InvalidOperation",	"invalid operation");
+const ErrorType ErrorType::IteratorError	("IteratorError",		"iterator error");
+const ErrorType ErrorType::ModuleError		("ModuleError",			"module error");
+const ErrorType ErrorType::StreamError		("StreamError",			"stream error");
+const ErrorType ErrorType::SyntaxError		("SyntaxError",			"syntax error");
+const ErrorType ErrorType::TypeError		("TypeError",			"type error");
+const ErrorType ErrorType::ValueError		("ValueError",			"value error");
 
 //------------------------------------------------------------------------------
 // Error
@@ -66,7 +66,7 @@ String Error::MakeMessage() const
 			str.Printf(":%d:%d: ", _lineNoTop, _lineNoBtm);
 		}
 	}
-	str += _errorType.GetName();
+	str += _errorType.GetDispName();
 	str += ": ";
 	str += _text;
 	return str;

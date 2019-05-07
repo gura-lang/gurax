@@ -18,6 +18,7 @@ class Stream;
 class ErrorType {
 private:
 	String _name;
+	String _dispName;
 public:
 	static const ErrorType ArgumentError;
 	static const ErrorType CodecError;
@@ -33,8 +34,9 @@ public:
 	static const ErrorType TypeError;
 	static const ErrorType ValueError;
 public:
-	ErrorType(const String& name) : _name(name) {}
+	ErrorType(const String& name, const String& dispName) : _name(name), _dispName(dispName) {}
 	const char* GetName() const { return _name.c_str(); }
+	const char* GetDispName() const { return _dispName.c_str(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ErrorType& errorType) const { return this == &errorType; }

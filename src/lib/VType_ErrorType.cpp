@@ -36,7 +36,7 @@ String Value_ErrorType::ToStringDigest(const StringStyle& ss) const
 
 String Value_ErrorType::ToStringDetail(const StringStyle& ss) const
 {
-	return GetErrorType().GetName();
+	return ToStringDigest(ss);
 }
 
 }
