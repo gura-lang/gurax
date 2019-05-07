@@ -116,7 +116,7 @@ public:
 	template<typename... Args>
 	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
-		_pErrorOwnerGlobal->SetSilentFlag();
+		_pErrorOwnerGlobal->SetSilentFlag(); // suppress error in String::Printf()
 		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
 		_errorIssuedFlag = true;
@@ -125,7 +125,7 @@ public:
 	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName,
 						int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
-		_pErrorOwnerGlobal->SetSilentFlag();
+		_pErrorOwnerGlobal->SetSilentFlag(); // suppress error in String::Printf()
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();
@@ -134,7 +134,7 @@ public:
 	template<typename... Args>
 	static void IssueWith(const ErrorType& errorType, const Expr& expr, const char* format, const Args&... args) {
 		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
-		_pErrorOwnerGlobal->SetSilentFlag();
+		_pErrorOwnerGlobal->SetSilentFlag(); // suppress error in String::Printf()
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, expr.Reference(), String().Printf(format, args...)));
 		_pErrorOwnerGlobal->ClearSilentFlag();

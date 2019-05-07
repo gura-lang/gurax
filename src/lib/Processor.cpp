@@ -164,14 +164,30 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		_pPUnitNext->Exec(*this);
 	}
 	do {
+		//GetExceptionInfoStack().Push(nullptr);
+
 		while (_contFlag && _pPUnitNext != pPUnitSentinel) {
 			PrintStack(stream);
 			PrintPUnit(stream, _pPUnitNext);
 			_pPUnitNext->Exec(*this);
 		}
-		if (!Error::IsIssued()) break;
+#if 0
+		if (!Error::IsIssued()) {
+			for (;;) {
+				std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
+				if (!pExceptionInfo) break;
+			}
+			break;
+		}
+
+		for (;;) {
+			std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
+			if (!pExceptionInfo) break;
+			
+		}
 		
 		ClearError();
+#endif
 	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 	_contFlag = _resumeFlag;
 	stream.Printf("---- Processor End ----\n");
