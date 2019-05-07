@@ -24,6 +24,7 @@ void Basement::Prepare()
 	Statements::PrepareBasic(frame);
 	Functions::PrepareBasic(frame);
 	frame.Assign(Module_codecs::Create(frame.Reference()));
+	frame.Assign(Module_error::Create(frame.Reference()));
 	frame.Assign(Module_fs::Create(frame.Reference()));
 	frame.Assign(Module_math::Create(frame.Reference()));
 	frame.Assign(Module_os::Create(frame.Reference()));

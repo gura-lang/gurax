@@ -88,6 +88,7 @@ add_library(guraxcore SHARED
 	VType_Undefined.cpp
 	VType_VType.cpp
 	../module-codecs/module-codecs.cpp
+	../module-error/module-error.cpp
 	../module-fs/module-fs.cpp
 	../module-math/module-math.cpp
 	../module-os/module-os.cpp
