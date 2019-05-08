@@ -1608,12 +1608,12 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_HandleException
+// PUnit_PushExceptionInfo
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_HandleException<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_PushExceptionInfo<discardValueFlag>::Exec(Processor& processor) const
 {
 	processor.PushExceptionInfo(GetPUnitBranchDest());
 	if (discardValueFlag) processor.DiscardValue();
@@ -1621,20 +1621,52 @@ void PUnit_HandleException<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_HandleException<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_PushExceptionInfo<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("HandleException(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Printf("PushExceptionInfo(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_HandleException::Create(bool discardValueFlag)
+PUnit* PUnitFactory_PushExceptionInfo::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_HandleException<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_PushExceptionInfo<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_HandleException<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_PushExceptionInfo<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PopExceptionInfo
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_PopExceptionInfo<discardValueFlag>::Exec(Processor& processor) const
+{
+	processor.PopExceptionInfo();
+	if (discardValueFlag) processor.DiscardValue();
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_PopExceptionInfo<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("PopExceptionInfo()");
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_PopExceptionInfo::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_PopExceptionInfo<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_PopExceptionInfo<false>(_pExprSrc.release(), _seqId);
 	}
 	return _pPUnitCreated;
 }

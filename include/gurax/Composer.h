@@ -127,7 +127,8 @@ public:
 	void Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_KeepJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_HandleException(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_PushExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_PopExceptionInfo(const Expr& exprSrc);
 	void Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_JumpIfNoCatchAny(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_NilJumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
