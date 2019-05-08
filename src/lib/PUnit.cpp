@@ -1158,7 +1158,8 @@ String PUnit_ArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 	if (GetExprSrc().GetPUnitFirst()) {
 		str.Printf(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
-	str.Printf(",cont=%s,branchdest=%s)",
+	str.Printf(",sentinel=%s,cont=%s,branchdest=%s)",
+			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
@@ -1257,8 +1258,9 @@ template<bool discardValueFlag>
 String PUnit_ArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("ArgSlotNamed(`%s,cont=%s,branchdest=%s)",
+	str.Printf("ArgSlotNamed(`%s,sentinel=%s,cont=%s,branchdest=%s)",
 			   GetExprSrc().ToString(StringStyle().Cram()).c_str(),
+			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);

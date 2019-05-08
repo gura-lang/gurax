@@ -82,16 +82,17 @@ void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
 
 void Expr::ComposeForArgSlot(Composer& composer)
 {
-	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	composer.Add_ArgSlot(*this);									// [Argument]
-	SetPUnitFirst(composer.PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
 	composer.Add_BeginSequence(*this);								// [Argument]
-	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	pPUnitOfArgSlot->SetPUnitCont(composer.PeekPUnitCont());
 	Compose(composer);												// [Argument Any]
+	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	pPUnitOfBeginSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlot(*this);								// [Argument]
-	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitFirst(pPUnitOfBeginSequence);
 }
 
 void Expr::ComposeForAssignment(
@@ -373,17 +374,18 @@ void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
 		return;
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
-	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	composer.Add_ArgSlotNamed(
 		*this, pSymbol, GetExprRight()->Reference());					// [Argument ArgSlot]
-	GetExprRight()->SetPUnitFirst(composer.PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = composer.PeekPUnitCont();
 	composer.Add_BeginSequence(*this);									// [Argument ArgSlot]
-	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	pPUnitOfArgSlot->SetPUnitCont(composer.PeekPUnitCont());
 	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
+	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	pPUnitOfBeginSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_FeedArgSlotNamed(*this);								// [Argument]
-	pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	GetExprRight()->SetPUnitFirst(pPUnitOfBeginSequence);
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
