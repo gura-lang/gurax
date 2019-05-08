@@ -1218,26 +1218,24 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const PUnit* _pPUnitCont;
 	const PUnit* _pPUnitSentinel;
 public:
 	// Constructor
 	PUnit_ArgSlot(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1),
-		_pPUnitCont(this + 1), _pPUnitSentinel(this + 1) {}
+		_pPUnitSentinel(this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
-	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
+	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
 class PUnitFactory_ArgSlot : public PUnitFactory_Branch {
@@ -1298,15 +1296,13 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
-	const PUnit* _pPUnitCont;
 	const PUnit* _pPUnitSentinel;
 public:
 	// Constructor
 	PUnit_ArgSlotNamed(Expr* pExprSrc, SeqId seqId, const Symbol* pSymbol,
 					   Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1),
-		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned),
-		_pPUnitCont(this + 1), _pPUnitSentinel(this + 1) {}
+		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitSentinel(this + 1) {}
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
@@ -1315,14 +1311,13 @@ public:
 	virtual bool IsBeginSequence() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) override { _pPUnitSentinel = pPUnit; }
-	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitSentinel() const override { return _pPUnitSentinel; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
+	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
 class PUnitFactory_ArgSlotNamed : public PUnitFactory_Branch {
