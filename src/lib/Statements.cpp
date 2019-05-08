@@ -160,11 +160,14 @@ Gurax_ImplementStatement(try_)
 		}
 	}
 	if (exprCaller.HasExprTrailer()) {
+		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		composer.Add_HandleException(exprCaller);						// [Any]
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
-		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);									// [Any]
+		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
-		pPUnitOfBranch->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 	}
