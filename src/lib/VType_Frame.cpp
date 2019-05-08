@@ -29,7 +29,7 @@ Value* VType_Frame::DoCastFrom(const Value& value) const
 	} else if (value.IsType(VTYPE_VType)) {
 		pFrame.reset(Value_VType::GetVTypeThis(value).GetFrame().Reference());
 	} else {
-		return nullptr;
+		pFrame.reset(value.GetVType().GetFrame().Reference());
 	}
 	return new Value_Frame(pFrame.release());
 }
