@@ -18,6 +18,29 @@
 <Function:f2>(a => <Number:10>, b => <Number:20>, c => <Number:30>, (<Dict:3items>)%)
 %{`d1 => 1, `d2 => 2, `d3 => 3}
 <Function:f2>(a => <Number:30>, b => <Number:10>, c => <Number:20>, (<Dict:3items>)%)
-======== Cast of list value ========
+======== Cast of List Value ========
 [1, 2, 3]
 ['1', '2', '3']
+======== Quoted Value ========
+3
+  ##0 Value(<Number:3>)
+'str'
+  ##0 Value(<String:'str'>)
+v
+  ##0 Lookup(`v)
+v = 2
+  ##0 Value(<Number:2>)
+  ##1 AssignToSymbol(`v)
+g(a, b, c)
+  ##0 Lookup(`g)
+  ##1 Argument()
+  ##2 ArgSlot(`(a):##2,sentinel=##4,branchdest=##5)
+  ##3 Lookup(`a)
+  ##4 FeedArgSlot()
+  ##5 ArgSlot(`(b):##5,sentinel=##7,branchdest=##8)
+  ##6 Lookup(`b)
+  ##7 FeedArgSlot()
+  ##8 ArgSlot(`(c):##8,sentinel=##10,branchdest=##11)
+  ##9 Lookup(`c)
+  ##10 FeedArgSlot()
+  ##11 Call(cont=##12)
