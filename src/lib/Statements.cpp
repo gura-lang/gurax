@@ -163,15 +163,16 @@ Gurax_ImplementStatement(try_)
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
 		composer.Add_PushExceptionInfo(exprCaller);						// [Any]
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
+		composer.Add_PopExceptionInfo(exprCaller);						// [Any]
 		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);									// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
+		composer.Add_NoOperation(exprCaller);							// [Any]
 	} else {
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 	}
-	composer.Add_NoOperation(exprCaller);								// [Any]
 }
 
 // catch(errorType?:ErrorType) {`block}
