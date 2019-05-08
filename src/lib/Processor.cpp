@@ -107,7 +107,7 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 	if (!_pPUnitNext) return;
 	if (_pPUnitNext->IsBeginSequence()) {
 		const PUnit* pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
-		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip PUnit_BeginSequence/ArgSlot/ArgSlotNamed
+		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsEndSequence()) {
 			do {
 				while (_contFlag) {
@@ -156,7 +156,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	stream.Printf("---- Processor Begin ----\n");
 	if (_pPUnitNext->IsBeginSequence()) {
 		pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
-		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip PUnit_BeginSequence/ArgSlot/ArgSlotNamed
+		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop

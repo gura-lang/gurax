@@ -28,11 +28,9 @@ Iterator* Expr::EachPUnit() const
 {
 	const PUnit* pPUnitSentinel = nullptr;
 	const PUnit* pPUnit = GetPUnitFirst();
-	if (!pPUnit) {
-		// nothing to do
-	} else if (pPUnit->GetPUnitSentinel()) {
+	if (pPUnit && pPUnit->GetPUnitSentinel()) {
 		pPUnitSentinel = pPUnit->GetPUnitSentinel();
-		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence
+		pPUnit = pPUnit->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 	}
 	return new Iterator_PUnit(pPUnit, pPUnitSentinel);
 }
