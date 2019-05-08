@@ -1608,6 +1608,39 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_HandleException
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_HandleException<discardValueFlag>::Exec(Processor& processor) const
+{
+
+
+	if (discardValueFlag) processor.DiscardValue();
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_HandleException<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("HandleException(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_HandleException::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_HandleException<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	} else {
+		_pPUnitCreated = new PUnit_HandleException<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatch
 // Stack View: [Prev ErrorType] -> [Prev]  (continue)
 //                              -> []      (discard)

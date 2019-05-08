@@ -250,6 +250,11 @@ void Composer::Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchD
 	SetFactory(new PUnitFactory_KeepJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
+void Composer::Add_HandleException(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+{
+	SetFactory(new PUnitFactory_HandleException(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+}
+
 void Composer::Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
 	SetFactory(new PUnitFactory_JumpIfNoCatch(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));

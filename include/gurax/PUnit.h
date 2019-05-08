@@ -1661,6 +1661,42 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_HandleException
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_HandleException : public PUnit_Branch {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	PUnit_HandleException(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pExprSrc, seqId, pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_HandleException : public PUnitFactory_Branch {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_HandleException");
+private:
+public:
+	PUnitFactory_HandleException(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitBranchDest) :
+		PUnitFactory_Branch(pExprSrc, seqId, pPUnitBranchDest) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_HandleException<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatch
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

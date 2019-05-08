@@ -1,6 +1,6 @@
 [SizeOf]
 ArgSlot                          48
-Argument                         88
+Argument                         96
 Attribute                        152
 DateTime                         48
 PUnit_Value<false>               32
@@ -8,7 +8,7 @@ PUnit_Lookup<false>              32
 PUnit_AssignToSymbol<false>      32
 PUnit_AssignToDeclArg<false>     32
 PUnit_AssignFunction<false>      32
-PUnit_Cast<false>                32
+PUnit_Cast<false>                40
 PUnit_GenIterator<false>         24
 PUnit_GenRangeIterator<false>    24
 PUnit_EvalIterator<false>        40
@@ -26,7 +26,7 @@ PUnit_IndexSet<false>            24
 PUnit_PropGet<false>             40
 PUnit_PropSet<false>             40
 PUnit_Member<false>              40
-PUnit_Argument<false>            40
+PUnit_Argument<false>            48
 PUnit_ArgSlot<false>             40
 PUnit_FeedArgSlot<false>         24
 PUnit_ArgSlotNamed<false>        56
@@ -39,7 +39,12 @@ PUnit_NilJumpIf<false>           32
 PUnit_NilJumpIfNot<false>        32
 PUnit_KeepJumpIf<false>          32
 PUnit_KeepJumpIfNot<false>       32
-PUnit_BeginQuote<false>          32
+PUnit_HandleException<false>     32
+PUnit_JumpIfNoCatch<false>       32
+PUnit_JumpIfNoCatchAny<false>    32
+PUnit_NilJumpIfNoCatch<false>    32
+PUnit_NilJumpIfNoCatchAny<false> 32
+PUnit_BeginSequence<false>       32
 PUnit_DiscardValue<false>        24
 PUnit_RemoveValue<false>         32
 PUnit_Return<false>              24
