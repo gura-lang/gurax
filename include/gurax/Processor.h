@@ -98,6 +98,10 @@ public:
 public:
 	ExceptionInfoStack& GetExceptionInfoStack() { return _exceptionInfoStack; }
 	const ExceptionInfoStack& GetExceptionInfoStack() const { return _exceptionInfoStack; }
+	void PushExceptionInfo(const PUnit* pPUnitCatch) {
+		GetExceptionInfoStack().Push(new ExceptionInfo(*this, pPUnitCatch));
+	}
+	ExceptionInfo* PopExceptionInfo() { return GetExceptionInfoStack().Pop(); }
 public:
 	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
 	void BreakLoop() { _pPUnitNext = nullptr; _contFlag = false, _resumeFlag = true; }

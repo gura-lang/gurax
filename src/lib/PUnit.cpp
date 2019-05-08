@@ -1615,8 +1615,7 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_HandleException<discardValueFlag>::Exec(Processor& processor) const
 {
-
-
+	processor.PushExceptionInfo(GetPUnitBranchDest());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -1688,7 +1687,7 @@ PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (Error::IsIssued()) {
+	if (Error::GetLastError()) {
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
@@ -1763,7 +1762,7 @@ PUnit* PUnitFactory_NilJumpIfNoCatch::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (Error::IsIssued()) {
+	if (Error::GetLastError()) {
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
