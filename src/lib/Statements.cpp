@@ -198,9 +198,11 @@ Gurax_ImplementStatement(catch_)
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
 		composer.Add_JumpIfNoCatch(exprCaller);								// []
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
-
+		if (pDeclArg) {
+			//composer.Add_AssignToDeclArg(exprCaller, pDeclArg->Reference());
+			//composer.Flush(true);
+		}
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
-
 		composer.Add_PopFrame(exprCaller);
 		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);										// [Any]
@@ -217,7 +219,6 @@ Gurax_ImplementStatement(catch_)
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
 
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
-
 		composer.Add_PopFrame(exprCaller);
 		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
 		composer.Add_Jump(exprCaller);										// [Any]
@@ -230,7 +231,6 @@ Gurax_ImplementStatement(catch_)
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
 
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
-
 		composer.Add_PopFrame(exprCaller);
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 	}

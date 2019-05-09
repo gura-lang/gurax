@@ -237,6 +237,40 @@ PUnit* PUnitFactory_AssignToDeclArg::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_AssignErrorToDeclArg
+// Stack View: [] -> [Assigned] (continue)
+//                   []         (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_AssignErrorToDeclArg<discardValueFlag>::Exec(Processor& processor) const
+{
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Value> pValueAssigned(new Value_Error(Error::GetLastError()->Reference()));
+	frame.Assign(*_pDeclArg, *pValueAssigned);
+	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_AssignErrorToDeclArg<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("AssignErrorToDeclArg(`%s)", GetDeclArg().ToString(ss).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_AssignErrorToDeclArg::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_AssignErrorToDeclArg<true>(_pExprSrc.release(), _seqId, _pDeclArg.release());
+	} else {
+		_pPUnitCreated = new PUnit_AssignErrorToDeclArg<false>(_pExprSrc.release(), _seqId, _pDeclArg.release());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_AssignFunction
 // Stack View: [] -> [Function] (continue)
 //                -> []         (discard)
