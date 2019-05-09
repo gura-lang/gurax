@@ -112,6 +112,8 @@ public:
 	void ErrorDone() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
 	void ClearError();
+	void PrepareExceptionHandling();
+	bool DoExceptionHandling();
 	bool GetContFlag() const { return _contFlag; }
 	bool GetResumeFlag() const { return _resumeFlag; }
 public:
