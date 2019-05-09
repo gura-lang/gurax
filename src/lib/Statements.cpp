@@ -196,11 +196,13 @@ Gurax_ImplementStatement(catch_)
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Any]
 		composer.Add_Cast(exprCaller, VTYPE_ErrorType, false);				// [ErrorType]
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_JumpIfNoCatch(exprCaller);								// []
+		composer.Add_JumpIfNoCatch(exprCaller);								// [Error] or []
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		if (pDeclArg) {
-			composer.Add_AssignErrorToDeclArg(exprCaller, pDeclArg->Reference());
+			composer.Add_AssignToDeclArg(exprCaller, pDeclArg->Reference());
 			composer.Flush(true);											// []
+		} else {
+			composer.Add_DiscardValue(exprCaller);							// []
 		}
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 		composer.Add_PopFrame(exprCaller);
@@ -215,11 +217,13 @@ Gurax_ImplementStatement(catch_)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_JumpIfNoCatchAny(exprCaller);							// []
+		composer.Add_JumpIfNoCatchAny(exprCaller);							// [Error] or []
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		if (pDeclArg) {
-			composer.Add_AssignErrorToDeclArg(exprCaller, pDeclArg->Reference());
+			composer.Add_AssignToDeclArg(exprCaller, pDeclArg->Reference());
 			composer.Flush(true);											// []
+		} else {
+			composer.Add_DiscardValue(exprCaller);							// []
 		}
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 		composer.Add_PopFrame(exprCaller);
@@ -230,11 +234,13 @@ Gurax_ImplementStatement(catch_)
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_NilJumpIfNoCatchAny(exprCaller);						// [] or [nil]
+		composer.Add_NilJumpIfNoCatchAny(exprCaller);						// [Error] or [nil]
 		composer.Add_PushFrame<Frame_Block>(exprCaller);
 		if (pDeclArg) {
-			composer.Add_AssignErrorToDeclArg(exprCaller, pDeclArg->Reference());
+			composer.Add_AssignToDeclArg(exprCaller, pDeclArg->Reference());
 			composer.Flush(true);											// []
+		} else {
+			composer.Add_DiscardValue(exprCaller);							// []
 		}
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 		composer.Add_PopFrame(exprCaller);

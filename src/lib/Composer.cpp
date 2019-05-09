@@ -77,11 +77,6 @@ void Composer::Add_AssignToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg)
 	SetFactory(new PUnitFactory_AssignToDeclArg(exprSrc.Reference(), NextSeqId(), pDeclArg));
 }
 
-void Composer::Add_AssignErrorToDeclArg(const Expr& exprSrc, DeclArg* pDeclArg)
-{
-	SetFactory(new PUnitFactory_AssignErrorToDeclArg(exprSrc.Reference(), NextSeqId(), pDeclArg));
-}
-
 void Composer::Add_AssignFunction(const Expr& exprSrc, Function* pFunction)
 {
 	SetFactory(new PUnitFactory_AssignFunction(exprSrc.Reference(), NextSeqId(), pFunction));

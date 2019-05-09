@@ -324,47 +324,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AssignErrorToDeclArg
-//------------------------------------------------------------------------------
-template<bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_AssignErrorToDeclArg : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	RefPtr<DeclArg> _pDeclArg;
-public:
-	// Constructor
-	PUnit_AssignErrorToDeclArg(Expr* pExprSrc, SeqId seqId, DeclArg* pDeclArg) :
-		PUnit(pExprSrc, seqId), _pDeclArg(pDeclArg) {}
-public:
-	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
-public:
-	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
-	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
-private:
-	const PUnit* _GetPUnitCont() const { return this + 1; }
-};
-
-class PUnitFactory_AssignErrorToDeclArg : public PUnitFactory {
-public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_AssignErrorToDeclArg");
-private:
-	RefPtr<DeclArg> _pDeclArg;
-public:
-	PUnitFactory_AssignErrorToDeclArg(Expr* pExprSrc, PUnit::SeqId seqId, DeclArg* pDeclArg) :
-		PUnitFactory(pExprSrc, seqId), _pDeclArg(pDeclArg) {}
-	virtual size_t GetPUnitSize() const override {
-		return sizeof(PUnit_AssignErrorToDeclArg<false>);
-	}
-	virtual PUnit* Create(bool discardValueFlag) override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_AssignFunction
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

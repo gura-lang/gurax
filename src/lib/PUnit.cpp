@@ -237,40 +237,6 @@ PUnit* PUnitFactory_AssignToDeclArg::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AssignErrorToDeclArg
-// Stack View: [] -> [Assigned] (continue)
-//                   []         (discard)
-//------------------------------------------------------------------------------
-template<bool discardValueFlag>
-void PUnit_AssignErrorToDeclArg<discardValueFlag>::Exec(Processor& processor) const
-{
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValueAssigned(new Value_Error(Error::GetLastError()->Reference()));
-	frame.Assign(*_pDeclArg, *pValueAssigned);
-	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
-	processor.SetPUnitNext(_GetPUnitCont());
-}
-
-template<bool discardValueFlag>
-String PUnit_AssignErrorToDeclArg<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
-{
-	String str;
-	str.Printf("AssignErrorToDeclArg(`%s)", GetDeclArg().ToString(ss).c_str());
-	AppendInfoToString(str, ss);
-	return str;
-}
-
-PUnit* PUnitFactory_AssignErrorToDeclArg::Create(bool discardValueFlag)
-{
-	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_AssignErrorToDeclArg<true>(_pExprSrc.release(), _seqId, _pDeclArg.release());
-	} else {
-		_pPUnitCreated = new PUnit_AssignErrorToDeclArg<false>(_pExprSrc.release(), _seqId, _pDeclArg.release());
-	}
-	return _pPUnitCreated;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_AssignFunction
 // Stack View: [] -> [Function] (continue)
 //                -> []         (discard)
@@ -1707,9 +1673,9 @@ PUnit* PUnitFactory_PopExceptionInfo::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatch
-// Stack View: [Prev ErrorType] -> [Prev]  (continue)
-//                              -> []      (discard)
-//                              -> [Prev]  (branch)
+// Stack View: [ErrorType] -> [Error] (continue)
+//                         -> []      (discard)
+//                         -> []      (branch)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
@@ -1718,8 +1684,8 @@ void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
 	const Error* pError = Error::GetLastError();
 	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
+		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
 		Error::Clear();
-		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
 		processor.SetPUnitNext(GetPUnitBranchDest());
@@ -1747,16 +1713,17 @@ PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_JumpIfNoCatchAny
-// Stack View: [Prev] -> [Prev]  (continue)
-//                    -> []      (discard)
-//                    -> [Prev]  (branch)
+// Stack View: [] -> [Error] (continue)
+//                -> []      (discard)
+//                -> []      (branch)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (Error::GetLastError()) {
+	const Error* pError = Error::GetLastError();
+	if (pError) {
+		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
 		Error::Clear();
-		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
 		processor.SetPUnitNext(GetPUnitBranchDest());
@@ -1784,9 +1751,9 @@ PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIfNoCatch
-// Stack View: [Prev ErrorType] -> [Prev]  (continue)
-//                              -> []      (discard)
-//                              -> [Prev]  (branch)
+// Stack View: [ErrorType] -> [Error] (continue)
+//                         -> []      (discard)
+//                         -> [nil]   (branch)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
@@ -1795,10 +1762,11 @@ void PUnit_NilJumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
 	const Error* pError = Error::GetLastError();
 	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
+		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
 		Error::Clear();
-		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
+		processor.PushValue(Value::nil());
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
 }
@@ -1824,18 +1792,20 @@ PUnit* PUnitFactory_NilJumpIfNoCatch::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_NilJumpIfNoCatchAny
-// Stack View: [Prev] -> [Prev]  (continue)
-//                    -> []      (discard)
-//                    -> [Prev]  (branch)
+// Stack View: [] -> [Error] (continue)
+//                -> []      (discard)
+//                -> [nil]   (branch)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (Error::GetLastError()) {
+	const Error* pError = Error::GetLastError();
+	if (pError) {
+		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
 		Error::Clear();
-		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
+		processor.PushValue(Value::nil());
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
 }
