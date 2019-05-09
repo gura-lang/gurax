@@ -103,12 +103,14 @@ public:
 	}
 	ExceptionInfo* PopExceptionInfo() { return GetExceptionInfoStack().Pop(); }
 public:
-	void SetPUnitNext(const PUnit* pPUnit) { _pPUnitNext = pPUnit; }
-	void BreakLoop() { _pPUnitNext = nullptr; _contFlag = false, _resumeFlag = true; }
+	void SetPUnitNext(const PUnit* pPUnitNext) { _pPUnitNext = pPUnitNext; }
+	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
+	void ExitRunLoop(const PUnit* pPUnitNext = nullptr) {
+		_pPUnitNext = pPUnitNext; _contFlag = false, _resumeFlag = true;
+	}
 	void ErrorDone() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
 	void Terminate() { _pPUnitNext = nullptr; _contFlag = false; _resumeFlag = false; }
 	void ClearError();
-	const PUnit* GetPUnitNext() const { return _pPUnitNext; }
 	bool GetContFlag() const { return _contFlag; }
 	bool GetResumeFlag() const { return _resumeFlag; }
 public:

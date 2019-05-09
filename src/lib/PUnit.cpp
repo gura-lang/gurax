@@ -1859,7 +1859,7 @@ PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EndSequence<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.BreakLoop();
+	processor.ExitRunLoop();
 }
 
 template<bool discardValueFlag>
@@ -1994,7 +1994,7 @@ void PUnit_Break<discardValueFlag, branchDestFlag>::Exec(Processor& processor) c
 		}
 	} else {
 		processor.SetEventBreak();
-		processor.BreakLoop();
+		processor.ExitRunLoop();
 	}
 }
 
@@ -2039,7 +2039,7 @@ void PUnit_Continue<discardValueFlag>::Exec(Processor& processor) const
 		processor.SetPUnitNext(GetPUnitOfLoop());
 	} else {
 		processor.SetEventContinue();
-		processor.BreakLoop();
+		processor.ExitRunLoop();
 	}
 }
 
@@ -2078,7 +2078,7 @@ void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 		if (pPUnit->GetDiscardValueFlag()) processor.DiscardValue();
 		processor.SetPUnitNext(pPUnit->GetPUnitCont());
 	} else {
-		processor.BreakLoop();
+		processor.ExitRunLoop();
 	}
 }
 
