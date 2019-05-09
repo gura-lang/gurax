@@ -2064,21 +2064,21 @@ PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_Miscatch
-// Stack View: [Prev] -> [Prev] (continue)
-//                    -> []     (discard)
+// Stack View: [] -> [Any] (continue)
+//                -> []    (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 void PUnit_Miscatch<discardValueFlag>::Exec(Processor& processor) const
 {
-	if (discardValueFlag) processor.DiscardValue();
-	processor.ExitRunLoop();
+	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
+	processor.ExitRunLoop(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
 String PUnit_Miscatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Miscatch()");
+	str.Printf("Miscatch(%s)", GetValue()->ToString(StringStyle().Digest()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2086,9 +2086,9 @@ String PUnit_Miscatch<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Miscatch::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Miscatch<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Miscatch<true>(_pExprSrc.release(), _seqId, _pValue.release());
 	} else {
-		_pPUnitCreated = new PUnit_Miscatch<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Miscatch<false>(_pExprSrc.release(), _seqId, _pValue.release());
 	}
 	return _pPUnitCreated;
 }

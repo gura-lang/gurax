@@ -197,8 +197,7 @@ Gurax_ImplementStatement(catch_)
 		if (exprCaller.HasExprTrailer()) {
 			exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
 		} else {
-			composer.Add_Value(exprCaller, Value::nil());					// [nil]
-			
+			composer.Add_Miscatch(exprCaller, Value::nil());				// [nil]
 		}
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
 	} else {

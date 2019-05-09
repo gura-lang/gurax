@@ -315,9 +315,9 @@ void Composer::Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop)
 	SetFactory(new PUnitFactory_Continue(exprSrc.Reference(), NextSeqId(), pPUnitOfLoop));
 }
 
-void Composer::Add_Miscatch(const Expr& exprSrc)
+void Composer::Add_Miscatch(const Expr& exprSrc, Value* pValue)
 {
-	SetFactory(new PUnitFactory_Miscatch(exprSrc.Reference(), NextSeqId()));
+	SetFactory(new PUnitFactory_Miscatch(exprSrc.Reference(), NextSeqId(), pValue));
 }
 
 void Composer::Add_Return(const Expr& exprSrc)

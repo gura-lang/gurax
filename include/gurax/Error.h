@@ -112,6 +112,7 @@ public:
 	}
 	static ErrorOwner& GetErrorOwner() { return *_pErrorOwnerGlobal; }
 	static bool IsIssued() { return _errorIssuedFlag; }
+	static void ClearIssuedFlag() { _errorIssuedFlag = false; }
 	static void Clear();
 	template<typename... Args>
 	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {

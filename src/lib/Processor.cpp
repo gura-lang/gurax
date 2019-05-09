@@ -154,6 +154,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
 	stream.Printf("---- Processor Begin ----\n");
+	GetExceptionInfoStack().Push(nullptr);
 	if (_pPUnitNext->IsBeginSequence()) {
 		pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
 		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
@@ -164,30 +165,24 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		_pPUnitNext->Exec(*this);
 	}
 	do {
-		//GetExceptionInfoStack().Push(nullptr);
-
 		while (_contFlag && _pPUnitNext != pPUnitSentinel) {
 			PrintStack(stream);
 			PrintPUnit(stream, _pPUnitNext);
 			_pPUnitNext->Exec(*this);
 		}
-#if 0
-		if (!Error::IsIssued()) {
+		if (Error::GetLastError()) {
+			std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
+			if (!pExceptionInfo) break;
+			Error::ClearIssuedFlag();
+			_contFlag = _resumeFlag = true;
+			pExceptionInfo->UpdateProcessor(*this);
+		} else {
 			for (;;) {
 				std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
 				if (!pExceptionInfo) break;
 			}
 			break;
 		}
-
-		for (;;) {
-			std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
-			if (!pExceptionInfo) break;
-			
-		}
-		
-		ClearError();
-#endif
 	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 	_contFlag = _resumeFlag;
 	stream.Printf("---- Processor End ----\n");
