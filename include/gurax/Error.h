@@ -143,6 +143,11 @@ public:
 		_errorIssuedFlag = true;
 	}
 	static void Print(Stream& stream);
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Error& error) const { return this == &error; }
+	bool IsEqualTo(const Error& error) const { return IsIdentical(error); }
+	bool IsLessThan(const Error& error) const { return ::strcmp(GetErrorType().GetName(), GetErrorType().GetName()) < 0; }
 };
 
 }

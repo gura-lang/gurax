@@ -82,6 +82,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Value_Bool);
 	PrintSizeOf(Value_DateTime);
 	PrintSizeOf(Value_Dict);
+	PrintSizeOf(Value_Error);
+	PrintSizeOf(Value_ErrorType);
 	PrintSizeOf(Value_Expr);
 	PrintSizeOf(Value_Function);
 	PrintSizeOf(Value_Index);

@@ -50,7 +50,7 @@ PUnit_DiscardValue<false>        24
 PUnit_RemoveValue<false>         32
 PUnit_Break_                     32
 PUnit_Continue<false>            32
-PUnit_Miscatch<false>            24
+PUnit_Miscatch<false>            32
 PUnit_Return<false>              24
 PUnit_PushFrame_                 24
 PUnit_PopFrame<false>            24
@@ -69,6 +69,8 @@ Value_Binary                     40
 Value_Bool                       40
 Value_DateTime                   40
 Value_Dict                       40
+Value_Error                      40
+Value_ErrorType                  40
 Value_Expr                       40
 Value_Function                   40
 Value_Index                      40

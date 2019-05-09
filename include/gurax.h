@@ -67,6 +67,7 @@
 #include "gurax/VType_Bool.h"
 #include "gurax/VType_DateTime.h"
 #include "gurax/VType_Dict.h"
+#include "gurax/VType_Error.h"
 #include "gurax/VType_ErrorType.h"
 #include "gurax/VType_Expr.h"
 #include "gurax/VType_Frame.h"
