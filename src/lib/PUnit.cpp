@@ -2063,6 +2063,37 @@ PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Miscatch
+// Stack View: [Prev] -> [Prev] (continue)
+//                    -> []     (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_Miscatch<discardValueFlag>::Exec(Processor& processor) const
+{
+	if (discardValueFlag) processor.DiscardValue();
+	processor.ExitRunLoop();
+}
+
+template<bool discardValueFlag>
+String PUnit_Miscatch<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("Miscatch()");
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Miscatch::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_Miscatch<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_Miscatch<false>(_pExprSrc.release(), _seqId);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Return
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)

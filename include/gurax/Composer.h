@@ -140,6 +140,7 @@ public:
 	void Add_RemoveValues(const Expr& exprSrc, size_t offset, size_t cnt);
 	void Add_Break(const Expr& exprSrc, const PUnit* pPUnitMarked, bool branchDestFlag);
 	void Add_Continue(const Expr& exprSrc, const PUnit* pPUnitOfLoop);
+	void Add_Miscatch(const Expr& exprSrc);
 	void Add_Return(const Expr& exprSrc);
 	template<typename T_Frame> void Add_PushFrame(const Expr& exprSrc);
 	void Add_PushFrameFromStack(const Expr& exprSrc);

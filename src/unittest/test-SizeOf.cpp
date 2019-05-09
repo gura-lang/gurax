@@ -59,8 +59,13 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_BeginSequence<false>);
 	PrintSizeOf(PUnit_DiscardValue<false>);
 	PrintSizeOf(PUnit_RemoveValue<false>);
+	using PUnit_Break_ = PUnit_Break<false, false>;
+	PrintSizeOf(PUnit_Break_);
+	PrintSizeOf(PUnit_Continue<false>);
+	PrintSizeOf(PUnit_Miscatch<false>);
 	PrintSizeOf(PUnit_Return<false>);
-	//PrintSizeOf(PUnit_PushFrame_Block<false>);
+	using PUnit_PushFrame_ = PUnit_PushFrame<Frame_Block, false>;
+	PrintSizeOf(PUnit_PushFrame_);
 	PrintSizeOf(PUnit_PopFrame<false>);
 	PrintSizeOf(PUnit_Terminate<false>);
 	PrintSizeOf(PUnit_Bridge);
