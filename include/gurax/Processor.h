@@ -45,6 +45,7 @@ public:
 		ExceptionInfo* Pop() { ExceptionInfo* pExceptionInfo = back(); pop_back(); return pExceptionInfo; }
 		void Discard() { delete back(); pop_back(); }
 		void Shrink(size_t cnt);
+		void ShrinkUntilNull();
 	};
 protected:
 	PUnitStack _punitStack;

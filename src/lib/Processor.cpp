@@ -98,6 +98,14 @@ void Processor::ExceptionInfoStack::Shrink(size_t cnt)
 	erase(begin() + cnt, end());
 }
 
+void Processor::ExceptionInfoStack::ShrinkUntilNull()
+{
+	for (;;) {
+		std::unique_ptr<ExceptionInfo> pExceptionInfo(Pop());
+		if (!pExceptionInfo) break;
+	}
+}
+
 //------------------------------------------------------------------------------
 // Processor_Normal
 //------------------------------------------------------------------------------
@@ -177,10 +185,7 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 			_contFlag = _resumeFlag = true;
 			pExceptionInfo->UpdateProcessor(*this);
 		} else {
-			for (;;) {
-				std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
-				if (!pExceptionInfo) break;
-			}
+			GetExceptionInfoStack().ShrinkUntilNull();
 			break;
 		}
 	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
