@@ -58,11 +58,15 @@ bool Processor::DoExceptionHandling()
 {
 	if (Error::GetLastError()) {
 		std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
-		if (!pExceptionInfo) return false;
-		Error::ClearIssuedFlag();
-		_contFlag = _resumeFlag = true;
-		pExceptionInfo->UpdateProcessor(*this);
-		return true;
+		if (pExceptionInfo) {
+			Error::ClearIssuedFlag();
+			_contFlag = _resumeFlag = true;
+			pExceptionInfo->UpdateProcessor(*this);
+			return true;
+		} else {
+			Error::SetIssuedFlag();
+			return false;
+		}
 	} else {
 		GetExceptionInfoStack().ShrinkUntilNull();
 		return false;

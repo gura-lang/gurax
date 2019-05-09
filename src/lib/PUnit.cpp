@@ -1684,6 +1684,7 @@ void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
 	const Error* pError = Error::GetLastError();
 	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
+		Error::Clear();
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
@@ -1720,6 +1721,7 @@ template<bool discardValueFlag>
 void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (Error::GetLastError()) {
+		Error::Clear();
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
@@ -1759,6 +1761,7 @@ void PUnit_NilJumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
 	const Error* pError = Error::GetLastError();
 	if (pError && pError->GetErrorType().IsIdentical(errorType)) {
+		Error::Clear();
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
@@ -1795,6 +1798,7 @@ template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
 	if (Error::GetLastError()) {
+		Error::Clear();
 		if (discardValueFlag) processor.DiscardValue();
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
