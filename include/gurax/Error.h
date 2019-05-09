@@ -57,14 +57,14 @@ public:
 //------------------------------------------------------------------------------
 class ErrorOwner : public ErrorList {
 private:
-	bool _silentFlag;
+	bool _suppressFlag;
 public:
-	ErrorOwner() : _silentFlag(false) {}
+	ErrorOwner() : _suppressFlag(false) {}
 	~ErrorOwner() { Clear(); }
 	void Clear();
-	void SetSilentFlag() { _silentFlag = true; }
-	void ClearSilentFlag() { _silentFlag = false; }
-	bool GetSilentFlag() const { return _silentFlag; }
+	void SetSuppressFlag() { _suppressFlag = true; }
+	void ClearSuppressFlag() { _suppressFlag = false; }
+	bool GetSuppressFlag() const { return _suppressFlag; }
 };
 
 //------------------------------------------------------------------------------
@@ -117,37 +117,44 @@ public:
 	static void Clear();
 	template<typename... Args>
 	static void Issue(const ErrorType& errorType, const char* const format, const Args&... args) {
-		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
-		_pErrorOwnerGlobal->SetSilentFlag(); // suppress error in String::Printf()
+		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
 		_pErrorOwnerGlobal->push_back(new Error(errorType, String().Printf(format, args...)));
-		_pErrorOwnerGlobal->ClearSilentFlag();
+		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
 	static void IssueAt(const ErrorType& errorType, StringReferable* pFileName,
 						int lineNoTop, int lineNoBtm, const char* const format, const Args&... args) {
-		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
-		_pErrorOwnerGlobal->SetSilentFlag(); // suppress error in String::Printf()
+		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, pFileName, lineNoTop, lineNoBtm, String().Printf(format, args...)));
-		_pErrorOwnerGlobal->ClearSilentFlag();
+		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
 	template<typename... Args>
 	static void IssueWith(const ErrorType& errorType, const Expr& expr, const char* format, const Args&... args) {
-		if (_pErrorOwnerGlobal->GetSilentFlag()) return;
-		_pErrorOwnerGlobal->SetSilentFlag(); // suppress error in String::Printf()
+		if (_pErrorOwnerGlobal->GetSuppressFlag()) return;
+		_pErrorOwnerGlobal->SetSuppressFlag(); // suppress error in String::Printf()
 		_pErrorOwnerGlobal->push_back(
 			new Error(errorType, expr.Reference(), String().Printf(format, args...)));
-		_pErrorOwnerGlobal->ClearSilentFlag();
+		_pErrorOwnerGlobal->ClearSuppressFlag();
 		_errorIssuedFlag = true;
 	}
 	static void Print(Stream& stream);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Error& error) const { return this == &error; }
-	bool IsEqualTo(const Error& error) const { return IsIdentical(error); }
-	bool IsLessThan(const Error& error) const { return ::strcmp(GetErrorType().GetName(), GetErrorType().GetName()) < 0; }
+	bool IsEqualTo(const Error& error) const {
+		return GetErrorType().IsEqualTo(error.GetErrorType()) &&
+			::strcmp(GetText(), error.GetText()) == 0;
+	}
+	bool IsLessThan(const Error& error) const {
+		return GetErrorType().IsEqualTo(error.GetErrorType())?
+			::strcmp(GetText(), error.GetText()) < 0 :
+			GetErrorType().IsLessThan(error.GetErrorType());
+	}
 };
 
 }
