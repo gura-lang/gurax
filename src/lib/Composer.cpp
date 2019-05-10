@@ -36,7 +36,7 @@ void Composer::SetFactory(PUnitFactory* pPUnitFactory)
 	_pPUnitFactory.reset(pPUnitFactory);
 }
 
-void Composer::Flush_(bool discardValueFlag)
+void Composer::_Flush(bool discardValueFlag)
 {
 	MemoryPool::Global().SwitchChunkPUnit(_replFlag);
 	if (_pPUnitFactory) {
@@ -255,9 +255,9 @@ void Composer::Add_PushExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitBra
 	SetFactory(new PUnitFactory_PushExceptionInfo(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
-void Composer::Add_PopExceptionInfo(const Expr& exprSrc)
+void Composer::Add_PopExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitCont)
 {
-	SetFactory(new PUnitFactory_PopExceptionInfo(exprSrc.Reference(), NextSeqId()));
+	SetFactory(new PUnitFactory_PopExceptionInfo(exprSrc.Reference(), NextSeqId(), pPUnitCont));
 }
 
 void Composer::Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest)

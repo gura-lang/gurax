@@ -73,8 +73,8 @@ public:
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
 	void SetFactory(PUnitFactory* pPUnitFactory);
-	void Flush() { Flush_(false); }
-	void FlushDiscard() { Flush_(true); }
+	void Flush() { _Flush(false); }
+	void FlushDiscard() { _Flush(true); }
 	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
 	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
 	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, const PUnit* pPUnitOfBreak) {
@@ -129,7 +129,7 @@ public:
 	void Add_KeepJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_PushExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_PopExceptionInfo(const Expr& exprSrc);
+	void Add_PopExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
 	void Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_JumpIfNoCatchAny(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
 	void Add_NilJumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
@@ -152,7 +152,7 @@ public:
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;
 private:
-	void Flush_(bool discardValueFlag);
+	void _Flush(bool discardValueFlag);
 };
 
 template<typename T_Frame>

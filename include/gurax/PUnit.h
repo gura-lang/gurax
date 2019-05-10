@@ -1708,26 +1708,33 @@ class GURAX_DLLDECLARE PUnit_PopExceptionInfo : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const PUnit* _pPUnitCont;
 public:
 	// Constructor
-	PUnit_PopExceptionInfo(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+	PUnit_PopExceptionInfo(Expr* pExprSrc, SeqId seqId, const PUnit* pPUnitCont) :
+		PUnit(pExprSrc, seqId), _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual void SetPUnitCont(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
+	virtual void SetPUnitBranchDest(const PUnit* pPUnit) override { _pPUnitCont = pPUnit; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
 	virtual void Exec(Processor& processor) const override;
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
-	const PUnit* _GetPUnitCont() const { return this + 1; }
+	const PUnit* _GetPUnitCont() const { return _pPUnitCont; }
 };
 
 class PUnitFactory_PopExceptionInfo : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_PopExceptionInfo");
+private:
+	const PUnit* _pPUnitCont;
 public:
-	PUnitFactory_PopExceptionInfo(Expr* pExprSrc, PUnit::SeqId seqId) :
-		PUnitFactory(pExprSrc, seqId) {}
+	PUnitFactory_PopExceptionInfo(Expr* pExprSrc, PUnit::SeqId seqId, const PUnit* pPUnitCont) :
+		PUnitFactory(pExprSrc, seqId), _pPUnitCont(pPUnitCont) {}
 	virtual size_t GetPUnitSize() const override {
 		return sizeof(PUnit_PopExceptionInfo<false>);
 	}

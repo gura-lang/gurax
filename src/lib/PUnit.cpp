@@ -1369,7 +1369,7 @@ template<bool discardValueFlag>
 String PUnit_Jump<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Jump(%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+	str.Printf("Jump(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	return str;
 }
 
@@ -1656,7 +1656,7 @@ template<bool discardValueFlag>
 String PUnit_PopExceptionInfo<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("PopExceptionInfo()");
+	str.Printf("PopExceptionInfo(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1664,9 +1664,9 @@ String PUnit_PopExceptionInfo<discardValueFlag>::ToString(const StringStyle& ss,
 PUnit* PUnitFactory_PopExceptionInfo::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PopExceptionInfo<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PopExceptionInfo<true>(_pExprSrc.release(), _seqId, _pPUnitCont);
 	} else {
-		_pPUnitCreated = new PUnit_PopExceptionInfo<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PopExceptionInfo<false>(_pExprSrc.release(), _seqId, _pPUnitCont);
 	}
 	return _pPUnitCreated;
 }

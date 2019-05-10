@@ -1,24 +1,24 @@
 ======== PUnit ========
 --------
 {`a}
-  ##0 Jump(##4)
+  ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)
   ##3 EndSequence()
   ##4 Value(<Expr:`(a):PUnit#12>)
 --------
 {`a, `b, `c}
-  ##0 Jump(##4)
+  ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`a)
   ##3 EndSequence()
   ##4 Value(<Expr:`(a):PUnit#22>), DiscardValue()
-  ##5 Jump(##9)
+  ##5 Jump(cont=##9)
   ##6 BeginSequence(sentinel=##8)
   ##7 Lookup(`b)
   ##8 EndSequence()
   ##9 Value(<Expr:`(b):PUnit#27>), DiscardValue()
-  ##10 Jump(##14)
+  ##10 Jump(cont=##14)
   ##11 BeginSequence(sentinel=##13)
   ##12 Lookup(`c)
   ##13 EndSequence()
