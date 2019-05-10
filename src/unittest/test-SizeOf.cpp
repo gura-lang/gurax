@@ -50,8 +50,8 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_NilJumpIfNot<false>);
 	PrintSizeOf(PUnit_KeepJumpIf<false>);
 	PrintSizeOf(PUnit_KeepJumpIfNot<false>);
-	PrintSizeOf(PUnit_PushExceptionInfo<false>);
-	PrintSizeOf(PUnit_PopExceptionInfo<false>);
+	PrintSizeOf(PUnit_BeginTryBlock<false>);
+	PrintSizeOf(PUnit_EndTryBlock<false>);
 	PrintSizeOf(PUnit_JumpIfNoCatch<false>);
 	PrintSizeOf(PUnit_JumpIfNoCatchAny<false>);
 	PrintSizeOf(PUnit_NilJumpIfNoCatch<false>);

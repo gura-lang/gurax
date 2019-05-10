@@ -39,8 +39,8 @@ PUnit_NilJumpIf<false>           32
 PUnit_NilJumpIfNot<false>        32
 PUnit_KeepJumpIf<false>          32
 PUnit_KeepJumpIfNot<false>       32
-PUnit_PushExceptionInfo<false>   32
-PUnit_PopExceptionInfo<false>    24
+PUnit_BeginTryBlock<false>       32
+PUnit_EndTryBlock<false>         32
 PUnit_JumpIfNoCatch<false>       32
 PUnit_JumpIfNoCatchAny<false>    32
 PUnit_NilJumpIfNoCatch<false>    32

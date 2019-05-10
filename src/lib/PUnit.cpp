@@ -1608,65 +1608,65 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PushExceptionInfo
+// PUnit_BeginTryBlock
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_PushExceptionInfo<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_BeginTryBlock<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.PushExceptionInfo(GetPUnitBranchDest());
+	processor.BeginTryBlock(GetPUnitBranchDest());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
-String PUnit_PushExceptionInfo<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_BeginTryBlock<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("PushExceptionInfo(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+	str.Printf("BeginTryBlock(branchdest=%s)", MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_PushExceptionInfo::Create(bool discardValueFlag)
+PUnit* PUnitFactory_BeginTryBlock::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PushExceptionInfo<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginTryBlock<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_PushExceptionInfo<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginTryBlock<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PopExceptionInfo
+// PUnit_EndTryBlock
 // Stack View: [Prev] -> [Prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_PopExceptionInfo<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_EndTryBlock<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.PopExceptionInfo();
+	processor.EndTryBlock();
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 template<bool discardValueFlag>
-String PUnit_PopExceptionInfo<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_EndTryBlock<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("PopExceptionInfo(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+	str.Printf("EndTryBlock(cont=%s)", MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_PopExceptionInfo::Create(bool discardValueFlag)
+PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PopExceptionInfo<true>(_pExprSrc.release(), _seqId, _pPUnitCont);
+		_pPUnitCreated = new PUnit_EndTryBlock<true>(_pExprSrc.release(), _seqId, _pPUnitCont);
 	} else {
-		_pPUnitCreated = new PUnit_PopExceptionInfo<false>(_pExprSrc.release(), _seqId, _pPUnitCont);
+		_pPUnitCreated = new PUnit_EndTryBlock<false>(_pExprSrc.release(), _seqId, _pPUnitCont);
 	}
 	return _pPUnitCreated;
 }

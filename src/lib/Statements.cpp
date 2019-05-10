@@ -161,10 +161,10 @@ Gurax_ImplementStatement(try_)
 	}
 	if (exprCaller.HasExprTrailer()) {
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
-		composer.Add_PushExceptionInfo(exprCaller);						// [Any]
+		composer.Add_BeginTryBlock(exprCaller);							// [Any]
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);			// [Any]
 		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
-		composer.Add_PopExceptionInfo(exprCaller);						// [Any]
+		composer.Add_EndTryBlock(exprCaller);							// [Any]
 		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
 		exprCaller.GetExprTrailer()->ComposeOrNil(composer);			// [Any]
 		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());

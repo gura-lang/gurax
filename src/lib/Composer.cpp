@@ -250,14 +250,14 @@ void Composer::Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchD
 	SetFactory(new PUnitFactory_KeepJumpIfNot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
-void Composer::Add_PushExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+void Composer::Add_BeginTryBlock(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	SetFactory(new PUnitFactory_PushExceptionInfo(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+	SetFactory(new PUnitFactory_BeginTryBlock(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
-void Composer::Add_PopExceptionInfo(const Expr& exprSrc, const PUnit* pPUnitCont)
+void Composer::Add_EndTryBlock(const Expr& exprSrc, const PUnit* pPUnitCont)
 {
-	SetFactory(new PUnitFactory_PopExceptionInfo(exprSrc.Reference(), NextSeqId(), pPUnitCont));
+	SetFactory(new PUnitFactory_EndTryBlock(exprSrc.Reference(), NextSeqId(), pPUnitCont));
 }
 
 void Composer::Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest)

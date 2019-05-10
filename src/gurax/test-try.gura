@@ -6,6 +6,7 @@ TestCase('PUnit') {
 		`try { f() }
 		`try { f() } catch { g() }
 		`try { f() } catch {|e| g() }
+		`try { f() } catch(Error.SyntaxError) {|e| g() }
 	]
 	for (expr in exprs) {
 		Printf('`%s\n', expr)
