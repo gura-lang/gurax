@@ -35,4 +35,15 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 	return GetVTypeThis().MakeFullName();
 }
 
+Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
+{
+	return GetVTypeThis().GetFrame().Lookup(pSymbol);
+}
+
+bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
+	return true;
+}
+
 }

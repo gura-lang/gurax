@@ -122,21 +122,6 @@ Gurax_ImplementPropertyGetter(String, width)
 	return new Value_Number(valueThis.GetStringSTL().Width());
 }
 
-Gurax_DeclareProperty_RW(String, hoge)
-{
-	Declare(VTYPE_Number, Flag::None);
-}
-
-Gurax_ImplementPropertySetter(String, hoge)
-{
-}
-
-Gurax_ImplementPropertyGetter(String, hoge)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetStringSTL().size());
-}
-
 //------------------------------------------------------------------------------
 // VType_String
 //------------------------------------------------------------------------------

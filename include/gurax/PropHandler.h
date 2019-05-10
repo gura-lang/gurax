@@ -7,7 +7,7 @@
 #include "Symbol.h"
 
 //------------------------------------------------------------------------------
-// Macros to declare PropHandler for class
+// Macros to declare PropHandler for instance
 //------------------------------------------------------------------------------
 #define Gurax_DeclarePropertyAlias_R(nameVType, name, strName)	\
 class PropHandler_##nameVType##_##name : public PropHandler { \
@@ -46,6 +46,47 @@ Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const At
 void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 
 #define Gurax_CreateProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
+
+//------------------------------------------------------------------------------
+// Macros to declare PropHandler for class
+//------------------------------------------------------------------------------
+#define Gurax_DeclareClassPropertyAlias_R(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable | Flag::OfClass)
+
+#define Gurax_DeclareClassProperty_R(nameVType, name) Gurax_DeclareClassPropertyAlias_R(nameVType, name, #name)
+
+#define Gurax_DeclareClassPropertyAlias_RW(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::Readable | Flag::Writable | Flag::OfClass)
+
+#define Gurax_DeclareClassProperty_RW(nameVType, name) Gurax_DeclareClassPropertyAlias_RW(nameVType, name, #name)
+
+#define Gurax_ImplementClassPropertyGetter(nameVType, name) \
+Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
+
+#define Gurax_ImplementClassPropertySetter(nameVType, name) \
+void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+
+#define Gurax_CreateClassProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
 
 //------------------------------------------------------------------------------
 // Macros to declare PropHandler for module
@@ -98,6 +139,7 @@ public:
 		static const Flags Readable			= (1 << 0);
 		static const Flags Writable			= (1 << 1);
 		static const Flags ListVar			= (1 << 2);
+		static const Flags OfClass			= (1 << 3);
 	};
 private:
 	const Symbol* _pSymbol;
@@ -130,6 +172,7 @@ public:
 	const Flags GegFlags() const { return _flags; }
 	bool IsReadable() const { return (_flags & Flag::Readable) != 0; }
 	bool IsWritable() const { return (_flags & Flag::Writable) != 0; }
+	bool IsOfClass() const { return (_flags & Flag::OfClass) != 0; }
 	bool GetListVarFlag() const { return _flags & Flag::ListVar; }
 public:
 	// Virtual functions

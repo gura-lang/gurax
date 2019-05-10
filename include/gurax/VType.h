@@ -34,6 +34,7 @@ protected:
 	RefPtr<Frame_VType> _pFrame;
 	RefPtr<Frame::WeakPtr> _pwFrameParent;		// may be nullptr
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
+	RefPtr<PropHandlerMap> _pPropHandlerMapOfClass;
 private:
 	static UniqId _uniqIdNext;
 	static const UniqId UniqId_Invalid = 0;
@@ -74,15 +75,20 @@ public:
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
+	PropHandlerMap& GetPropHandlerMapOfClass() { return *_pPropHandlerMapOfClass; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
+	const PropHandlerMap& GetPropHandlerMapOfClass() const { return *_pPropHandlerMapOfClass; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
+	const PropHandler* LookupPropHandlerOfClass(const Symbol* pSymbol) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value, bool listVarFlag) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
-	void Assign(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
+	void Assign(PropHandler* pPropHandler) {
+		(pPropHandler->IsOfClass()? GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
+	}
 public:
 	static void PrepareBasic(Frame& frame);
 public:
