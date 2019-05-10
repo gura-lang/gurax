@@ -97,6 +97,9 @@ Processor::ExceptionInfo::ExceptionInfo(const Processor& processor, const PUnit*
 
 void Processor::ExceptionInfo::UpdateProcessor(Processor& processor)
 {
+	//::printf("PUnitStack: %zu->%zu, ", processor.GetPUnitStack().size(), _sizePUnitStack);
+	//::printf("ValueStack: %zu->%zu, ", processor.GetValueStack().size(), _sizeValueStack);
+	//::printf("FrameStack: %zu->%zu\n", processor.GetFrameStack().size(), _sizeFrameStack);
 	processor.GetPUnitStack().Shrink(_sizePUnitStack);
 	processor.GetValueStack().Shrink(_sizeValueStack);
 	processor.GetFrameStack().Shrink(_sizeFrameStack);
