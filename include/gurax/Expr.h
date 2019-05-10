@@ -146,7 +146,7 @@ public:
 	}
 	static size_t CountSequence(const Expr* pExpr);
 	static void ComposeForArgSlot(Composer& composer, Expr* pExpr);
-	static void ComposeSequence(Composer& composer, Expr* pExpr);
+	void ComposeSequence(Composer& composer, Expr* pExpr) const;
 public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;

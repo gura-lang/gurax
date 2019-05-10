@@ -56,8 +56,9 @@ size_t Expr::CountSequence(const Expr* pExpr)
 	return nExprs;
 }
 
-void Expr::ComposeSequence(Composer& composer, Expr* pExpr)
+void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 {
+	PUnit* pPUnitMarked = composer.PeekPUnitCont();
 	if (pExpr) {
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
@@ -66,6 +67,9 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr)
 		composer.Flush(true);
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
+	}
+	if (pPUnitMarked == composer.PeekPUnitCont()) { // when nothing has been yielded
+		composer.Add_Value(*this, Value::nil());
 	}
 	// [Value]
 }
