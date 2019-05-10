@@ -12,6 +12,51 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Error#errorType
+Gurax_DeclareProperty_R(Error, errorType)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an `ErrorType` instance associated with the error.\n");
+}
+
+Gurax_ImplementPropertyGetter(Error, errorType)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_ErrorType(valueThis.GetError().GetErrorType());
+}
+
+// Error#expr
+Gurax_DeclareProperty_R(Error, expr)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an `Expr` instance that caused the error.\n");
+}
+
+Gurax_ImplementPropertyGetter(Error, expr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Expr(valueThis.GetError().GetExpr().Reference());
+}
+
+// Error#fileName
+Gurax_DeclareProperty_R(Error, fileName)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the name of a file in which the error happened.");
+}
+
+Gurax_ImplementPropertyGetter(Error, fileName)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetError().GetFileName());
+}
+
 // Error#lineNo
 Gurax_DeclareProperty_R(Error, lineNo)
 {
@@ -68,6 +113,9 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Error, errorType));
+	Assign(Gurax_CreateProperty(Error, expr));
+	Assign(Gurax_CreateProperty(Error, fileName));
 	Assign(Gurax_CreateProperty(Error, lineNo));
 	Assign(Gurax_CreateProperty(Error, lineNoBtm));
 	Assign(Gurax_CreateProperty(Error, text));

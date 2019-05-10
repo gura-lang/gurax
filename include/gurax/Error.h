@@ -104,6 +104,7 @@ public:
 	const Expr& GetExpr() const { return *_pExpr; }
 	void SetExpr(const Expr& expr);
 	const ErrorType& GetErrorType() const { return _errorType; }
+	const char* GetFileName() const { return _pFileName? _pFileName->GetString() : ""; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	const char* GetText() const { return _text.c_str(); }
