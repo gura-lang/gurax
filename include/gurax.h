@@ -91,7 +91,6 @@
 #include "gurax/VType_Undefined.h"
 #include "gurax/VType_VType.h"
 #include "../src/module-codecs/module-codecs.h"
-#include "../src/module-error/module-error.h"
 #include "../src/module-fs/module-fs.h"
 #include "../src/module-math/module-math.h"
 #include "../src/module-os/module-os.h"
