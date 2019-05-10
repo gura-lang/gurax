@@ -3,6 +3,13 @@
 //==============================================================================
 #include "stdafx.h"
 
+#define ImplementErrorTypeProperty(name) \
+Gurax_DeclareClassProperty_R(Error, name) { \
+	Declare(VTYPE_ErrorType, Flag::None); \
+	AddHelp(Gurax_Symbol(en), "An `ErrorType` instance of `" #name "`."); \
+} \
+Gurax_ImplementClassPropertyGetter(Error, name) { return new Value_ErrorType(ErrorType::name); }
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -105,19 +112,19 @@ Gurax_ImplementPropertyGetter(Error, text)
 //------------------------------------------------------------------------------
 // Implementation of class property
 //------------------------------------------------------------------------------
-// Error.SyntaxError
-Gurax_DeclareClassProperty_R(Error, SyntaxError)
-{
-	Declare(VTYPE_ErrorType, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `ErrorType` instance of `SyntaxError`.");
-}
-
-Gurax_ImplementClassPropertyGetter(Error, SyntaxError)
-{
-	return new Value_ErrorType(ErrorType::SyntaxError);
-}
+ImplementErrorTypeProperty(ArgumentError)
+ImplementErrorTypeProperty(CodecError)
+ImplementErrorTypeProperty(ContextError)
+ImplementErrorTypeProperty(DeclarationError)
+ImplementErrorTypeProperty(DividedByZero)
+ImplementErrorTypeProperty(IndexError)
+ImplementErrorTypeProperty(InvalidOperation)
+ImplementErrorTypeProperty(IteratorError)
+ImplementErrorTypeProperty(ModuleError)
+ImplementErrorTypeProperty(StreamError)
+ImplementErrorTypeProperty(SyntaxError)
+ImplementErrorTypeProperty(TypeError)
+ImplementErrorTypeProperty(ValueError)
 
 //------------------------------------------------------------------------------
 // VType_Error
@@ -137,7 +144,19 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Error, lineNoBtm));
 	Assign(Gurax_CreateProperty(Error, text));
 	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(Error, ArgumentError));
+	Assign(Gurax_CreateClassProperty(Error, CodecError));
+	Assign(Gurax_CreateClassProperty(Error, ContextError));
+	Assign(Gurax_CreateClassProperty(Error, DeclarationError));
+	Assign(Gurax_CreateClassProperty(Error, DividedByZero));
+	Assign(Gurax_CreateClassProperty(Error, IndexError));
+	Assign(Gurax_CreateClassProperty(Error, InvalidOperation));
+	Assign(Gurax_CreateClassProperty(Error, IteratorError));
+	Assign(Gurax_CreateClassProperty(Error, ModuleError));
+	Assign(Gurax_CreateClassProperty(Error, StreamError));
 	Assign(Gurax_CreateClassProperty(Error, SyntaxError));
+	Assign(Gurax_CreateClassProperty(Error, TypeError));
+	Assign(Gurax_CreateClassProperty(Error, ValueError));
 }
 
 //------------------------------------------------------------------------------
