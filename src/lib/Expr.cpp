@@ -64,7 +64,7 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 		pExpr = pExpr->GetExprNext();
 	}
 	while (pExpr) {
-		composer.Flush(true);
+		composer.FlushDiscard();
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
@@ -121,7 +121,7 @@ void ExprList::Compose(Composer& composer)
 	}
 	while (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
-		composer.Flush(true);
+		composer.FlushDiscard();
 		pExpr->Compose(composer);
 	}
 	// [Value]

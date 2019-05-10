@@ -73,7 +73,8 @@ public:
 	void Begin() { _pPUnitLast = nullptr; }
 	void Add(PUnit* pPUnit);
 	void SetFactory(PUnitFactory* pPUnitFactory);
-	void Flush(bool discardValueFlag);
+	void Flush() { Flush_(false); }
+	void FlushDiscard() { Flush_(true); }
 	bool HasValidRepeaterInfo() const { return !_repeaterInfoStack.empty(); }
 	const RepeaterInfo& GetRepeaterInfoCur() const { return *_repeaterInfoStack.back(); }
 	void BeginRepeaterBlock(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch, const PUnit* pPUnitOfBreak) {
@@ -150,6 +151,8 @@ public:
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;
+private:
+	void Flush_(bool discardValueFlag);
 };
 
 template<typename T_Frame>

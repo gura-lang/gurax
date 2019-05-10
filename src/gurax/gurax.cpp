@@ -97,7 +97,7 @@ void RunREPL()
 			if (Error::IsIssued()) break;
 			pExpr->Compose(composer);
 			pExprLast = pExpr;
-			composer.Flush(false);
+			composer.Flush();
 			if (Error::IsIssued()) break;
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
 			if (!pPUnit && !(pPUnit = composer.GetPUnitFirst())) continue;

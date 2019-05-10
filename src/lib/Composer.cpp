@@ -36,7 +36,7 @@ void Composer::SetFactory(PUnitFactory* pPUnitFactory)
 	_pPUnitFactory.reset(pPUnitFactory);
 }
 
-void Composer::Flush(bool discardValueFlag)
+void Composer::Flush_(bool discardValueFlag)
 {
 	MemoryPool::Global().SwitchChunkPUnit(_replFlag);
 	if (_pPUnitFactory) {
@@ -343,7 +343,7 @@ void Composer::Add_NoOperation(const Expr& exprSrc)
 void Composer::Add_Terminate(const Expr& exprSrc)
 {
 	SetFactory(new PUnitFactory_Terminate(exprSrc.Reference(), NextSeqId()));
-	Flush(false);
+	Flush();
 }
 
 void Composer::Print() const
