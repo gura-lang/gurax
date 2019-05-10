@@ -17,6 +17,28 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
+// Error.Raise(errorType:ErrorType):void
+Gurax_DeclareClassMethod(Error, Raise)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("msg", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementClassMethod(Error, Raise)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const ErrorType& errorType = Value_ErrorType::GetErrorType(args.PickValue());
+	const char* msg = args.PickString();
+	// Function body
+	Error::Issue(errorType, "%s", msg);
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Error#errorType
@@ -136,6 +158,8 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	frameOuter.Assign(*this);
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(Error, Raise));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Error, errorType));
 	Assign(Gurax_CreateProperty(Error, expr));

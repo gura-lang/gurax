@@ -62,6 +62,25 @@ Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argum
 
 #define Gurax_CreateMethod(nameVType, name) (new Method_##nameVType##_##name())
 
+// Declaration/implementation/creation of Class Method
+#define Gurax_DeclareClassMethodAlias(nameVType, name, strName)	\
+class Method_##nameVType##_##name : public Function { \
+public: \
+	Method_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
+	static Value_##nameVType& GetValueThis(Argument& argument) { \
+		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
+	} \
+}; \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Function::Type::ClassMethod, name_) \
+
+#define Gurax_DeclareClassMethod(nameVType, name) Gurax_DeclareClassMethodAlias(nameVType, name, #name)
+
+#define Gurax_ImplementClassMethod(nameVType, name) \
+Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
+
+#define Gurax_CreateClassMethod(nameVType, name) (new Method_##nameVType##_##name())
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -72,7 +91,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
 public:
-	enum class Type { Statement, Function, Method };
+	enum class Type { Statement, Function, Method, ClassMethod };
 	using Flags = DeclCallable::Flags;
 	using Flag = DeclCallable::Flag;
 protected:
@@ -110,6 +129,7 @@ public:
 	bool IsTypeStatement() const { return _type == Type::Statement; }
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
+	bool IsTypeClassMethod() const { return _type == Type::ClassMethod; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	String MakeFullName() const;
