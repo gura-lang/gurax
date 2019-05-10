@@ -1,4 +1,18 @@
 #!./gurax
+import(util) {*}
+
+TestCase('PUnit') {
+	exprs = [
+		`try { f() }
+		`try { f() } catch { g() }
+		`try { f() } catch {|e| g() }
+	]
+	for (expr in exprs) {
+		Printf('`%s\n', expr)
+		PrintPUnit(expr)
+	}
+}
+sys.Exit()
 try {
 	Error.Raise(Error.SyntaxError, 'message')
 	Println('*skipped*')
