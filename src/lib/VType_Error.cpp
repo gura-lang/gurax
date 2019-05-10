@@ -18,7 +18,7 @@ Gurax_DeclareProperty_R(Error, errorType)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns an `ErrorType` instance associated with the error.\n");
+		"An `ErrorType` instance associated with the error.\n");
 }
 
 Gurax_ImplementPropertyGetter(Error, errorType)
@@ -33,7 +33,7 @@ Gurax_DeclareProperty_R(Error, expr)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns an `Expr` instance that caused the error.\n");
+		"An `Expr` instance that caused the error.\n");
 }
 
 Gurax_ImplementPropertyGetter(Error, expr)
@@ -48,7 +48,7 @@ Gurax_DeclareProperty_R(Error, fileName)
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the name of a file in which the error happened.");
+		"The name of a file in which the error happened.");
 }
 
 Gurax_ImplementPropertyGetter(Error, fileName)
@@ -63,7 +63,7 @@ Gurax_DeclareProperty_R(Error, lineNo)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the line number at which the error happened.");
+		"The line number at which the error happened.");
 }
 
 Gurax_ImplementPropertyGetter(Error, lineNo)
@@ -78,7 +78,7 @@ Gurax_DeclareProperty_R(Error, lineNoBtm)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the last line number of the expression region that causes the error.");
+		"The last line number of the expression region that causes the error.");
 }
 
 Gurax_ImplementPropertyGetter(Error, lineNoBtm)
@@ -93,13 +93,30 @@ Gurax_DeclareProperty_R(Error, text)
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the text of the error.");
+		"The text of the error.");
 }
 
 Gurax_ImplementPropertyGetter(Error, text)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_String(valueThis.GetError().GetText());
+}
+
+//------------------------------------------------------------------------------
+// Implementation of class property
+//------------------------------------------------------------------------------
+// Error.SyntaxError
+Gurax_DeclareClassProperty_R(Error, SyntaxError)
+{
+	Declare(VTYPE_ErrorType, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `ErrorType` instance of `SyntaxError`.");
+}
+
+Gurax_ImplementClassPropertyGetter(Error, SyntaxError)
+{
+	return new Value_ErrorType(ErrorType::SyntaxError);
 }
 
 //------------------------------------------------------------------------------
@@ -119,6 +136,8 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Error, lineNo));
 	Assign(Gurax_CreateProperty(Error, lineNoBtm));
 	Assign(Gurax_CreateProperty(Error, text));
+	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(Error, SyntaxError));
 }
 
 //------------------------------------------------------------------------------

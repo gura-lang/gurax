@@ -13,8 +13,8 @@ VType VType::Empty("");
 
 VType::VType(const char* name) :
 	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
-	_pSymbol(Symbol::Add(name)), _flags(0),
-	_pFrame(new Frame_VType(nullptr)), _pPropHandlerMap(new PropHandlerMap())
+	_pSymbol(Symbol::Add(name)), _flags(0), _pFrame(new Frame_VType(nullptr)),
+	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
 {
 }
 
@@ -87,6 +87,15 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 {
 	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInherited()) {
 		const PropHandler* pPropHandler = pVType->GetPropHandlerMap().Lookup(pSymbol);
+		if (pPropHandler) return pPropHandler;
+	}
+	return nullptr;
+}
+
+const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
+{
+	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInherited()) {
+		const PropHandler* pPropHandler = pVType->GetPropHandlerMapOfClass().Lookup(pSymbol);
 		if (pPropHandler) return pPropHandler;
 	}
 	return nullptr;
