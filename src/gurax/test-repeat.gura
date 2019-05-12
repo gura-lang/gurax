@@ -16,7 +16,7 @@ TestCase('PUnit') {
 		`repeat (3):xlist {}
 		`repeat (3):xlist {|n| nil}
 	]
-	for (expr in exprs) {
+	exprs.Each {|expr|
 		Printf('`%s\n', expr)
 		PrintPUnit(expr)
 	}

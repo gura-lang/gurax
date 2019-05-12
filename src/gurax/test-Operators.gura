@@ -12,7 +12,7 @@ TestCase('PUnit') {
 		`(3 + 5)
 		`(false && false)
 	]
-	for (expr in exprs) {
+	exprs.Each {|expr|
 		Println('--------')
 		Printf('%s\n', expr)
 		PrintPUnit(expr)

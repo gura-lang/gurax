@@ -76,7 +76,7 @@ exprs = [
 		repeat (10) {|i| f(i)}
 	}
 ]
-for (expr in exprs) {
+exprs.Each {|expr|
 	Println('--------')
 	Printf('`%s\n', expr)
 	PrintPUnit(expr)

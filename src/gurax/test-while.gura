@@ -10,7 +10,7 @@ TestCase('PUnit') {
 		`while (true):list {|n| nil}
 		`while (true):xlist {|n| nil}
 	]
-	for (expr in exprs) {
+	exprs.Each {|expr|
 		Printf('`%s\n', expr)
 		PrintPUnit(expr)
 	}
