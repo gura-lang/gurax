@@ -3,36 +3,39 @@ import(util) {*}
 
 TestCase('String#StartsWith(), String#EndsWith()') {
 	str = 'abcdefghijklmn'
-	Tester(`str)
-	Tester(`str.StartsWith('abcd'))
-	Tester(`str.StartsWith('abdd'))
-	Tester(`str.StartsWith('ABCD'))
-	Tester(`str.StartsWith('ABCD'):icase)
-	Tester(`str.EndsWith('klmn'))
-	Tester(`str.EndsWith('klmm'))
-	Tester(`str.EndsWith('KLMN'))
-	Tester(`str.EndsWith('KLMN'):icase)
-	Tester(`str.StartsWith('defg', 3))
-	Tester(`str.EndsWith('ghij', 10))
-	Tester(`str.StartsWith('abcd'):rest)
-	Tester(`str.StartsWith('abdd'):rest)
-	Tester(`str.StartsWith('ABCD'):rest)
-	Tester(`str.StartsWith('ABCD'):rest:icase)
-	Tester(`str.EndsWith('klmn'):rest)
-	Tester(`str.EndsWith('klmm'):rest)
-	Tester(`str.EndsWith('KLMN'):rest)
-	Tester(`str.EndsWith('KLMN'):rest:icase)
-	Tester(`str.StartsWith('defg', 3):rest)
-	Tester(`str.EndsWith('ghij', 10):rest)
+	exprs = [
+		`str
+		`str.StartsWith('abcd')
+		`str.StartsWith('abdd')
+		`str.StartsWith('ABCD')
+		`str.StartsWith('ABCD'):icase
+		`str.EndsWith('klmn')
+		`str.EndsWith('klmm')
+		`str.EndsWith('KLMN')
+		`str.EndsWith('KLMN'):icase
+		`str.StartsWith('defg', 3)
+		`str.EndsWith('ghij', 10)
+		`str.StartsWith('abcd'):rest
+		`str.StartsWith('abdd'):rest
+		`str.StartsWith('ABCD'):rest
+		`str.StartsWith('ABCD'):rest:icase
+		`str.EndsWith('klmn'):rest
+		`str.EndsWith('klmm'):rest
+		`str.EndsWith('KLMN'):rest
+		`str.EndsWith('KLMN'):rest:icase
+		`str.StartsWith('defg', 3):rest
+		`str.EndsWith('ghij', 10):rest
+	]
+	Tester(exprs)
 }
 TestCase('String#len, String#width') {
+	exprs = [
+		`str
+		`str.len
+		`str.width
+	]
 	str = 'abcdefghijklmn'
-	Tester(`str)
-	Tester(`str.len)
-	Tester(`str.width)
+	Tester(exprs)
 	str = 'あいうえおかきくけこ'
-	Tester(`str)
-	Tester(`str.len)
-	Tester(`str.width)
+	Tester(exprs)
 }
-
