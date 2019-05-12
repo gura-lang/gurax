@@ -27,10 +27,10 @@ PUnit_PropGet<false>             40
 PUnit_PropSet<false>             40
 PUnit_Member<false>              40
 PUnit_Argument<false>            48
-PUnit_ArgSlot<false>             40
-PUnit_FeedArgSlot<false>         24
-PUnit_ArgSlotNamed<false>        56
-PUnit_FeedArgSlotNamed<false>    24
+PUnit_BeginArgSlot<false>        40
+PUnit_EndArgSlot<false>          24
+PUnit_BeginArgSlotNamed<false>   56
+PUnit_EndArgSlotNamed<false>     24
 PUnit_Call<false>                24
 PUnit_Jump<false>                32
 PUnit_JumpIf<false>              32
@@ -46,6 +46,7 @@ PUnit_JumpIfNoCatchAny<false>    32
 PUnit_NilJumpIfNoCatch<false>    32
 PUnit_NilJumpIfNoCatchAny<false> 32
 PUnit_BeginSequence<false>       32
+PUnit_EndSequence<false>         24
 PUnit_DiscardValue<false>        24
 PUnit_RemoveValue<false>         32
 PUnit_Break_                     32

@@ -38,10 +38,10 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_PropSet<false>);
 	PrintSizeOf(PUnit_Member<false>);
 	PrintSizeOf(PUnit_Argument<false>);
-	PrintSizeOf(PUnit_ArgSlot<false>);
-	PrintSizeOf(PUnit_FeedArgSlot<false>);
-	PrintSizeOf(PUnit_ArgSlotNamed<false>);
-	PrintSizeOf(PUnit_FeedArgSlotNamed<false>);
+	PrintSizeOf(PUnit_BeginArgSlot<false>);
+	PrintSizeOf(PUnit_EndArgSlot<false>);
+	PrintSizeOf(PUnit_BeginArgSlotNamed<false>);
+	PrintSizeOf(PUnit_EndArgSlotNamed<false>);
 	PrintSizeOf(PUnit_Call<false>);
 	PrintSizeOf(PUnit_Jump<false>);
 	PrintSizeOf(PUnit_JumpIf<false>);
@@ -57,6 +57,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_NilJumpIfNoCatch<false>);
 	PrintSizeOf(PUnit_NilJumpIfNoCatchAny<false>);
 	PrintSizeOf(PUnit_BeginSequence<false>);
+	PrintSizeOf(PUnit_EndSequence<false>);
 	PrintSizeOf(PUnit_DiscardValue<false>);
 	PrintSizeOf(PUnit_RemoveValue<false>);
 	using PUnit_Break_ = PUnit_Break<false, false>;

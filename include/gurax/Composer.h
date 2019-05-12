@@ -114,12 +114,12 @@ public:
 	void Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
 	void Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
 	void Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
-	void Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_FeedArgSlot(const Expr& exprSrc);
-	void Add_ArgSlotNamed(
+	void Add_BeginArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_EndArgSlot(const Expr& exprSrc);
+	void Add_BeginArgSlotNamed(
 		const Expr& exprSrc, const Symbol* pSymbol,
 		Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_FeedArgSlotNamed(const Expr& exprSrc);
+	void Add_EndArgSlotNamed(const Expr& exprSrc);
 	void Add_Call(const Expr& exprSrc);
 	void Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
 	void Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);

@@ -188,26 +188,26 @@ void Composer::Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* p
 	SetFactory(new PUnitFactory_Argument(exprSrc.Reference(), NextSeqId(), pAttr, pExprOfBlock));
 }
 
-void Composer::Add_ArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
+void Composer::Add_BeginArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest)
 {
-	SetFactory(new PUnitFactory_ArgSlot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
+	SetFactory(new PUnitFactory_BeginArgSlot(exprSrc.Reference(), NextSeqId(), pPUnitBranchDest));
 }
 
-void Composer::Add_FeedArgSlot(const Expr& exprSrc)
+void Composer::Add_EndArgSlot(const Expr& exprSrc)
 {
-	SetFactory(new PUnitFactory_FeedArgSlot(exprSrc.Reference(), NextSeqId()));
+	SetFactory(new PUnitFactory_EndArgSlot(exprSrc.Reference(), NextSeqId()));
 }
 
-void Composer::Add_ArgSlotNamed(
+void Composer::Add_BeginArgSlotNamed(
 	const Expr& exprSrc, const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest)
 {
-	SetFactory(new PUnitFactory_ArgSlotNamed(
+	SetFactory(new PUnitFactory_BeginArgSlotNamed(
 				   exprSrc.Reference(), NextSeqId(), pSymbol, pExprAssigned, pPUnitBranchDest));
 }
 
-void Composer::Add_FeedArgSlotNamed(const Expr& exprSrc)
+void Composer::Add_EndArgSlotNamed(const Expr& exprSrc)
 {
-	SetFactory(new PUnitFactory_FeedArgSlotNamed(exprSrc.Reference(), NextSeqId()));
+	SetFactory(new PUnitFactory_EndArgSlotNamed(exprSrc.Reference(), NextSeqId()));
 }
 
 void Composer::Add_Call(const Expr& exprSrc)

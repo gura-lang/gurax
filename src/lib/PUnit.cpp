@@ -1121,12 +1121,12 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_ArgSlot
+// PUnit_BeginArgSlot
 // Stack View: [Argument(Car)] -> [Argument(Car)] (continue)
 //                             -> [Argument(Car)] (branch)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_ArgSlot<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
@@ -1151,7 +1151,7 @@ void PUnit_ArgSlot<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_ArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_BeginArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ArgSlot(`(%s)", GetExprSrc().ToString(StringStyle().Cram()).c_str());
@@ -1165,22 +1165,22 @@ String PUnit_ArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 	return str;
 }
 
-PUnit* PUnitFactory_ArgSlot::Create(bool discardValueFlag)
+PUnit* PUnitFactory_BeginArgSlot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_ArgSlot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginArgSlot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_ArgSlot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginArgSlot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_FeedArgSlot
+// PUnit_EndArgSlot
 // Stack View: [Argument(Car) Any] -> [Argument(Car)] (continue)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_FeedArgSlot<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_EndArgSlot<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
@@ -1195,7 +1195,7 @@ void PUnit_FeedArgSlot<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_FeedArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_EndArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "FeedArgSlot()";
@@ -1203,24 +1203,24 @@ String PUnit_FeedArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int 
 	return str;
 }
 
-PUnit* PUnitFactory_FeedArgSlot::Create(bool discardValueFlag)
+PUnit* PUnitFactory_EndArgSlot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_FeedArgSlot<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlot<true>(_pExprSrc.release(), _seqId);
 	} else {
-		_pPUnitCreated = new PUnit_FeedArgSlot<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlot<false>(_pExprSrc.release(), _seqId);
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_ArgSlotNamed
+// PUnit_BeginArgSlotNamed
 // Stack View: [Argument(Car)] -> [Argument(Car) ArgSlot] (continue)
 //                             -> [Argument(Car)]         (discard)
 //                             -> [Argument(Car)]         (branch)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_ArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_BeginArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
@@ -1254,7 +1254,7 @@ void PUnit_ArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_ArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_BeginArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ArgSlotNamed(`%s,sentinel=%s,branchdest=%s)",
@@ -1265,24 +1265,24 @@ String PUnit_ArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int
 	return str;
 }
 
-PUnit* PUnitFactory_ArgSlotNamed::Create(bool discardValueFlag)
+PUnit* PUnitFactory_BeginArgSlotNamed::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_ArgSlotNamed<true>(
+		_pPUnitCreated = new PUnit_BeginArgSlotNamed<true>(
 			_pExprSrc.release(), _seqId, _pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_ArgSlotNamed<false>(
+		_pPUnitCreated = new PUnit_BeginArgSlotNamed<false>(
 			_pExprSrc.release(), _seqId, _pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_FeedArgSlotNamed
+// PUnit_EndArgSlotNamed
 // Stack View: [Argument ArgSlot Any] -> [Argument] (continue)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_FeedArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_EndArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
@@ -1299,7 +1299,7 @@ void PUnit_FeedArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_FeedArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_EndArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "FeedArgSlotNamed()";
@@ -1307,12 +1307,12 @@ String PUnit_FeedArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss,
 	return str;
 }
 
-PUnit* PUnitFactory_FeedArgSlotNamed::Create(bool discardValueFlag)
+PUnit* PUnitFactory_EndArgSlotNamed::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_FeedArgSlotNamed<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlotNamed<true>(_pExprSrc.release(), _seqId);
 	} else {
-		_pPUnitCreated = new PUnit_FeedArgSlotNamed<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlotNamed<false>(_pExprSrc.release(), _seqId);
 	}
 	return _pPUnitCreated;
 }
