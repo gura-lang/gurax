@@ -13,7 +13,7 @@ Tester(expr:Expr):void:dynamic_scope:map = {
 	Printf(' %s\n', rtn):nomap
 }
 
-PrintPUnit(expr:Expr) = {
+PrintPUnit(expr:Expr):void:map = {
 	seqIdOffset = 0
 	punits = expr.EachPUnit()
 	punit = punits.NextValue()
