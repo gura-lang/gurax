@@ -1257,8 +1257,8 @@ template<bool discardValueFlag>
 String PUnit_BeginArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("BeginArgSlotNamed(`%s,sentinel=%s,branchdest=%s)",
-			   GetExprSrc().ToString(StringStyle().Cram()).c_str(),
+	str.Printf("BeginArgSlotNamed(`%s,symbol=%s,sentinel=%s,branchdest=%s)",
+			   GetExprSrc().ToString(StringStyle().Cram()).c_str(), GetSymbol()->GetName(),
 			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
 			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
