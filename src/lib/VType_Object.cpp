@@ -42,6 +42,8 @@ Gurax_ImplementMethod(Object, ToString)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Function body
+	if (valueThis.IsInstanceOf(VTYPE_String)) return valueThis.Reference();
 	return new Value_String(valueThis.ToString());
 }
 

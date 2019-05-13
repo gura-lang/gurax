@@ -27,3 +27,30 @@ str.width .. 14
 str .. あいうえおかきくけこ
 str.len .. 10
 str.width .. 20
+======== String#Find() ========
+str .. abcdefghijklmn
+str.Find('a') .. 0
+str.Find('d') .. 3
+str.Find('n') .. 13
+str.Find('z') .. nil
+str.Find('a', 1) .. nil
+str.Find('d', 1) .. 3
+str.Find('n', 1) .. 13
+str.Find('a', 6) .. nil
+str.Find('d', 6) .. nil
+str.Find('n', 6) .. 13
+str.Find('abcd') .. 0
+str.Find('defg') .. 3
+str.Find('deff') .. nil
+str.Find('ABCD') .. nil
+str.Find('DEFG') .. nil
+str.Find('ABCD'):icase .. 0
+str.Find('DEFG'):icase .. 3
+str .. あいうえおかきくけこ
+str.Find('あ') .. 0
+str.Find('お') .. 4
+str.Find('こ') .. 9
+str.Find('ん') .. nil
+str.Find('あいうえ') .. 0
+str.Find('おかきく') .. 4
+str.Find('おかきき') .. nil

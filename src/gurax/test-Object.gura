@@ -1,0 +1,23 @@
+#!./gurax
+import(util) {*}
+
+TestCase('Object#ToString()') {
+	Tester(`math.e.ToString())
+	Tester(`true.ToString())
+	Tester(`Printf.ToString())
+	Tester(`%{}.ToString())
+	Tester(`'hello'.ToString())
+}
+
+TestCase('Object#IsInstanceOf()') {
+	Tester(`math.e.IsInstanceOf(Number))
+	Tester(`math.e.IsInstanceOf(Bool))
+	Tester(`true.IsInstanceOf(Bool))
+	Tester(`true.IsInstanceOf(Number))
+	Tester(`Printf.IsInstanceOf(Function))
+	Tester(`Printf.IsInstanceOf(Number))
+	Tester(`%{}.IsInstanceOf(Dict))
+	Tester(`%{}.IsInstanceOf(Number))
+	Tester(`'hello'.IsInstanceOf(String))
+	Tester(`'hello'.IsInstanceOf(Number))
+}

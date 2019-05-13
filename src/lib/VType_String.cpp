@@ -8,10 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#EndsWith(sub:String, endpos?:Number):[rest,icase]
+// String#EndsWith(sub:String, endpos?:Number):map:[rest,icase]
 Gurax_DeclareMethod(String, EndsWith)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("endpos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rest));
@@ -19,7 +19,6 @@ Gurax_DeclareMethod(String, EndsWith)
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns `true` if the string ends with suffix.\n"
-		"\n"
 		"\n"
 		"If attribute `:rest` is specified,\n"
 		"it returns the rest part if the string ends with suffix, or `nil` otherewise.\n"
@@ -52,10 +51,46 @@ Gurax_ImplementMethod(String, EndsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
-// String#StartsWith(sub:String, pos?:Number):[rest,icase]
+// String#Find(sub:String, pos?:Number):map:[icase,rev]
+Gurax_DeclareMethod(String, Find)
+{
+	Declare(VTYPE_Any, Flag::Map);
+	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("endpos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareAttrOpt(Gurax_Symbol(rev));
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns the position where the specified sub-string is found in the string.\n"
+		"In the case the sub-string is not found, it returns `nil`.\n"
+		"\n"
+		"The argument `pos` specifies the position where the search starts.\n"
+		"\n"
+		"With the attribute `:icase`, character cases are ignored while matching."
+		"\n"
+		"If the attribute `:rev` is specified, the search starts from the end of the string.");
+}
+
+Gurax_ImplementMethod(String, Find)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* sub = args.PickString();
+	int pos = args.IsDefined()? args.PickInt() : 0;
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	String::const_iterator pStr = str.Forward(pos);
+	String::const_iterator pFound = argument.IsSet(Gurax_Symbol(icase))?
+		str.Find<CharICase>(pStr, sub) : str.Find<CharCase>(pStr, sub);
+	return (pFound == str.end())? Value::nil() : new Value_Number(str.CalcPos(pFound));
+}
+
+// String#StartsWith(sub:String, pos?:Number):map:[rest,icase]
 Gurax_DeclareMethod(String, StartsWith)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareArg("pos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rest));
@@ -134,6 +169,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(String, EndsWith));
+	Assign(Gurax_CreateMethod(String, Find));
 	Assign(Gurax_CreateMethod(String, StartsWith));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(String, len));

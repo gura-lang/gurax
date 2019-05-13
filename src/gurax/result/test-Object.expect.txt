@@ -1,0 +1,17 @@
+======== Object#ToString() ========
+math.e.ToString() .. 2.71828
+true.ToString() .. true
+Printf.ToString() .. Printf(format:String, values*:Any):map
+% {}.ToString() .. %{}
+'hello'.ToString() .. hello
+======== Object#IsInstanceOf() ========
+math.e.IsInstanceOf(Number) .. true
+math.e.IsInstanceOf(Bool) .. false
+true.IsInstanceOf(Bool) .. true
+true.IsInstanceOf(Number) .. false
+Printf.IsInstanceOf(Function) .. true
+Printf.IsInstanceOf(Number) .. false
+% {}.IsInstanceOf(Dict) .. true
+% {}.IsInstanceOf(Number) .. false
+'hello'.IsInstanceOf(String) .. true
+'hello'.IsInstanceOf(Number) .. false

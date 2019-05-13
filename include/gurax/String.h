@@ -123,6 +123,9 @@ public:
 	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const {
 		return Forward(p, end(), nChars, pnCharsActual);
 	}
+	const_iterator Forward(size_t nChars = 1, size_t *pnCharsActual = nullptr) const {
+		return Forward(begin(), end(), nChars, pnCharsActual);
+	}
 	static UInt64 NextUTF8(const char** pp);
 	UInt64 NextUTF8(const_iterator* pp) const;
 	static UInt32 NextUTF32(const char** pp);
@@ -192,6 +195,9 @@ public:
 public:
 	static size_t Length(const char* str);
 	size_t Length() const { return Length(c_str()); }
+	static size_t CalcPos(const char* str, const char* sub);
+	static size_t CalcPos(const_iterator pStr, const_iterator pStrSub);
+	size_t CalcPos(const_iterator pStrSub) const { return CalcPos(begin(), pStrSub); }
 	static size_t Width(const char* str);
 	size_t Width() const { return Width(c_str()); }
 public:

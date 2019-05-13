@@ -416,7 +416,31 @@ size_t String::CalcHash(const char* str, size_t len)
 size_t String::Length(const char* str)
 {
 	size_t len = 0;
-	for (const char* p = str ; *p != '\0'; len++) {
+	for (const char* p = str; *p != '\0'; len++) {
+		char ch = *p++;
+		if (IsUTF8First(ch)) {
+			while (IsUTF8Follower(*p)) p++;
+		}
+	}
+	return len;
+}
+
+size_t String::CalcPos(const char* str, const char* sub)
+{
+	size_t len = 0;
+	for (const char* p = str; *p != '\0' && p != sub; len++) {
+		char ch = *p++;
+		if (IsUTF8First(ch)) {
+			while (IsUTF8Follower(*p)) p++;
+		}
+	}
+	return len;
+}
+
+size_t String::CalcPos(const_iterator pStr, const_iterator pStrSub)
+{
+	size_t len = 0;
+	for (const_iterator p = pStr; p != pStrSub; len++) {
 		char ch = *p++;
 		if (IsUTF8First(ch)) {
 			while (IsUTF8Follower(*p)) p++;

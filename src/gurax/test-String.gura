@@ -39,3 +39,39 @@ TestCase('String#len, String#width') {
 	str = 'あいうえおかきくけこ'
 	Tester(exprs)
 }
+TestCase('String#Find()') {
+	str = 'abcdefghijklmn'
+	exprs = [
+		`str
+		`str.Find('a')
+		`str.Find('d')
+		`str.Find('n')
+		`str.Find('z')
+		`str.Find('a', 1)
+		`str.Find('d', 1)
+		`str.Find('n', 1)
+		`str.Find('a', 6)
+		`str.Find('d', 6)
+		`str.Find('n', 6)
+		`str.Find('abcd')
+		`str.Find('defg')
+		`str.Find('deff')
+		`str.Find('ABCD')
+		`str.Find('DEFG')
+		`str.Find('ABCD'):icase
+		`str.Find('DEFG'):icase
+	]
+	Tester(exprs)
+	str = 'あいうえおかきくけこ'
+	exprs = [
+		`str
+		`str.Find('あ')
+		`str.Find('お')
+		`str.Find('こ')
+		`str.Find('ん')
+		`str.Find('あいうえ')
+		`str.Find('おかきく')
+		`str.Find('おかきき')
+	]
+	Tester(exprs)
+}
