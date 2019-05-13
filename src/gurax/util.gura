@@ -9,8 +9,13 @@ PrintTitle(title:String) = {
 
 Tester(expr:Expr):void:dynamic_scope:map = {
 	Printf('%s ..', expr)
-	rtn = expr.Eval()
-	Printf(' %s\n', rtn):nomap
+	try {
+		rtn = expr.Eval().ToString()
+		//Printf('%s%s\n', Cond(rtn.ToString().Find('\n'), '\n', ' '), rtn):nomap
+		Printf('%s%s\n', ' ', rtn):nomap
+	} catch {|e|
+		Println(' ', e.text)
+	}
 }
 
 PrintPUnit(expr:Expr):void:map = {
