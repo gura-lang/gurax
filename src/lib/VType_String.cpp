@@ -17,7 +17,7 @@ Gurax_DeclareMethod(String, EndsWith)
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
-		Gurax_Symbol(en), 
+		Gurax_Symbol(en),
 		"Returns `true` if the string ends with suffix.\n"
 		"\n"
 		"If attribute `:rest` is specified,\n"
