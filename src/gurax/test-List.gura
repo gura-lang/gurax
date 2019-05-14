@@ -1,8 +1,39 @@
 #!./gurax
 import(util) {*}
 
+TestCase('PUnit') {
+	exprs = [
+		`[]
+		`[1]
+		`[1, 2, 3]
+		`(foo = [])
+		`(foo = [1])
+		`(foo = [1, 2, 3])
+		`foo[]
+		`(foo[0])
+		`(foo[0, 2])
+		`(foo[0, 2, 6])
+	]
+	exprs.Each {|expr|
+		Printf('`%s\n', expr)
+		PrintPUnit(expr)
+	}
+}
+
 TestCase('Initializer') {
 	Tester(`[3, 1, 4, 1, 5, 9, 2, 6])
+}
+
+TestCase('Get') {
+	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+	Tester(`tbl)
+	Tester(`tbl[0])
+	Tester(`tbl[1])
+	Tester(`tbl[2])
+	Tester(`tbl[10])
+	Tester(`tbl[11])
+	Tester(`tbl[0, 1]);
+	Tester(`tbl[0, 1, 4, 10]);
 }
 
 TestCase('Properties') {

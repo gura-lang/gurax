@@ -709,7 +709,7 @@ void Expr_Indexer::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(*this, GetAttr().Reference(), nExprs);	// [Index(Car)]
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);							// [Index(Car) Assigned]
+		pExpr->ComposeOrNil(composer);							// [Index(Car) Cdr]
 		composer.Add_FeedIndex(*this);							// [Index(Car)]
 	}
 	composer.Add_IndexGet(*this);								// [Elems]
@@ -718,6 +718,19 @@ void Expr_Indexer::Compose(Composer& composer)
 void Expr_Indexer::ComposeForAssignment(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
+	GetExprCar()->ComposeOrNil(composer);						// [Car]
+	size_t nExprs = GetExprLinkCdr().CountSequence();
+	composer.Add_Index(*this, GetAttr().Reference(), nExprs);	// [Index(Car)]
+	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeOrNil(composer);							// [Index(Car) Cdr]
+		composer.Add_FeedIndex(*this);							// [Index(Car)]
+	}
+	if (pOperator) {
+		
+	} else {
+		pExprAssigned->ComposeOrNil(composer);					// [Index(Car) Elems]
+	}
+	composer.Add_IndexSet(*this);								// [Elems]
 }
 
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const

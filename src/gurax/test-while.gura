@@ -9,6 +9,8 @@ TestCase('PUnit') {
 		`while (true) {|n| nil}
 		`while (true):list {|n| nil}
 		`while (true):xlist {|n| nil}
+		`while (a < 3) {}
+		`while (a < 3) {|i| f(i)}
 	]
 	exprs.Each {|expr|
 		Printf('`%s\n', expr)

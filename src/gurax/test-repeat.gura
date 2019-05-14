@@ -15,6 +15,7 @@ TestCase('PUnit') {
 		`repeat ():xlist {|n| nil}
 		`repeat (3):xlist {}
 		`repeat (3):xlist {|n| nil}
+		`repeat (3) {|i| f(i)}
 	]
 	exprs.Each {|expr|
 		Printf('`%s\n', expr)

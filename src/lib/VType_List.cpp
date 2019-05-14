@@ -117,10 +117,18 @@ Value* Value_List::DoIndexGet(const Index& index) const
 	if (valuesIndex.size() == 1) {
 		const Value* pValueIndex = valuesIndex.front();
 		Value* pValue = nullptr;
-		if (GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return pValue;
+		if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return Value::nil();
+		return pValue;
 	} else {
+		RefPtr<ValueTypedOwner> pValuesRtn(new ValueTypedOwner());
+		pValuesRtn->Reserve(valuesIndex.size());
+		for (const Value* pValueIndex : valuesIndex) {
+			Value* pValue = nullptr;
+			if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return Value::nil();
+			pValuesRtn->Add(pValue);
+		}
+		return new Value_List(pValuesRtn.release());
 	}
-	return Value::nil();
 }
 
 void Value_List::DoIndexSet(const Index& index, Value* pValue)
@@ -130,6 +138,7 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 		const Value* pValueIndex = valuesIndex.front();
 		GetValueTypedOwner().IndexSet(pValueIndex, pValue);
 	} else {
+		
 	}
 }
 

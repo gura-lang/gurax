@@ -798,7 +798,7 @@ template<bool discardValueFlag>
 String PUnit_Index<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "CreateIndex()";
+	str += "Index()";
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;

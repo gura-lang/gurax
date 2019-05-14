@@ -149,6 +149,24 @@
   ##12 Jump(cont=##8)
   ##13 RemoveValue(offset=1)
   ##14 PopFrame()
+`repeat (3) {|i| f(i)}
+  ##0 PushFrame<Block>()
+  ##1 Value(<Number:3>)
+  ##2 Cast(Number)
+  ##3 GenRangeIterator()
+  ##4 Value(<Nil>)
+  ##5 EvalIterator(offsetToIterator=1,branchdest=##15)
+  ##6 AssignToDeclArg(`i), DiscardValue()
+  ##7 DiscardValue()
+  ##8 Lookup(`f)
+  ##9 Argument()
+  ##10 BeginArgSlot(`i:##10,sentinel=##12,branchdest=##13)
+  ##11 Lookup(`i)
+  ##12 EndArgSlot()
+  ##13 Call(cont=##14)
+  ##14 Jump(cont=##5)
+  ##15 RemoveValue(offset=1)
+  ##16 PopFrame()
 ======== Create list ========
 repeat (10):list {'x'} .. ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
 repeat (10):xlist {|i| if ((i % 2) == 0) {continue}, i} .. [1, 3, 5, 7, 9]

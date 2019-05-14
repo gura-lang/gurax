@@ -1,36 +1,209 @@
 ======== PUnit ========
 --------
-{`a}
-  ##0 Jump(cont=##4)
-  ##1 BeginSequence(sentinel=##3)
-  ##2 Lookup(`a)
-  ##3 EndSequence()
-  ##4 Value(<Expr:`(a):PUnit#12>)
+~a
+  ##0 Lookup(`a)
+  ##1 UnaryOp(~)
 --------
-{`a, `b, `c}
-  ##0 Jump(cont=##4)
-  ##1 BeginSequence(sentinel=##3)
-  ##2 Lookup(`a)
-  ##3 EndSequence()
-  ##4 Value(<Expr:`(a):PUnit#22>), DiscardValue()
-  ##5 Jump(cont=##9)
-  ##6 BeginSequence(sentinel=##8)
-  ##7 Lookup(`b)
-  ##8 EndSequence()
-  ##9 Value(<Expr:`(b):PUnit#27>), DiscardValue()
-  ##10 Jump(cont=##14)
-  ##11 BeginSequence(sentinel=##13)
-  ##12 Lookup(`c)
-  ##13 EndSequence()
-  ##14 Value(<Expr:`(c):PUnit#32>)
+-a
+  ##0 Lookup(`a)
+  ##1 UnaryOp(-)
 --------
-{a && b}
+!a
+  ##0 Lookup(`a)
+  ##1 UnaryOp(!)
+--------
++a
+  ##0 Lookup(`a)
+  ##1 UnaryOp(+)
+--------
+a%
+  ##0 Lookup(`a)
+  ##1 UnaryOp(%)
+--------
+a%%
+  ##0 Lookup(`a)
+  ##1 UnaryOp(%%)
+--------
+a*
+  ##0 Lookup(`a)
+  ##1 UnaryOp(*)
+--------
+a+
+  ##0 Lookup(`a)
+  ##1 UnaryOp(+)
+--------
+a?
+  ##0 Lookup(`a)
+  ##1 UnaryOp(?)
+--------
+a..
+  ##0 Lookup(`a)
+  ##1 UnaryOp(..)
+--------
+a + b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(+)
+--------
+a & b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(&)
+--------
+a && b
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
 --------
-{(a && b) && c}
+a <=> b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(<=>)
+--------
+a |+| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|+|)
+--------
+a in b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(in)
+--------
+a |^| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|^|)
+--------
+a |-| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|-|)
+--------
+a / b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(/)
+--------
+a |.| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|.|)
+--------
+a == b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(==)
+--------
+a |*| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|*|)
+--------
+a >= b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(>=)
+--------
+a > b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(>)
+--------
+a |&| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|&|)
+--------
+a <= b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(<=)
+--------
+a < b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(<)
+--------
+a % b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(%)
+--------
+a %% b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(%%)
+--------
+a * b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(*)
+--------
+a != b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(!=)
+--------
+a | b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|)
+--------
+a || b
+  ##0 Lookup(`a)
+  ##1 KeepJumpIf(branchdest=##3)
+  ##2 Lookup(`b)
+  ##3 NoOperation()
+--------
+a => b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(=>)
+--------
+a ** b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(**)
+--------
+a .. b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(..)
+--------
+a << b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(<<)
+--------
+a >> b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(>>)
+--------
+a - b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(-)
+--------
+a ||| b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(|||)
+--------
+a ^ b
+  ##0 Lookup(`a)
+  ##1 Lookup(`b)
+  ##2 BinaryOp(^)
+--------
+a && b
+  ##0 Lookup(`a)
+  ##1 KeepJumpIfNot(branchdest=##3)
+  ##2 Lookup(`b)
+  ##3 NoOperation()
+--------
+(a && b) && c
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`b)
@@ -39,13 +212,22 @@
   ##5 Lookup(`c)
   ##6 NoOperation()
 --------
-{a || b}
+a && (b && c)
+  ##0 Lookup(`a)
+  ##1 KeepJumpIfNot(branchdest=##6)
+  ##2 Lookup(`b)
+  ##3 KeepJumpIfNot(branchdest=##5)
+  ##4 Lookup(`c)
+  ##5 NoOperation()
+  ##6 NoOperation()
+--------
+a || b
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
 --------
-{(a || b) || c}
+(a || b) || c
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##3)
   ##2 Lookup(`b)
@@ -54,10 +236,14 @@
   ##5 Lookup(`c)
   ##6 NoOperation()
 --------
-3 + 5
-  ##0 Value(<Number:3>)
-  ##1 Value(<Number:5>)
-  ##2 BinaryOp(+)
+a || (b || c)
+  ##0 Lookup(`a)
+  ##1 KeepJumpIf(branchdest=##6)
+  ##2 Lookup(`b)
+  ##3 KeepJumpIf(branchdest=##5)
+  ##4 Lookup(`c)
+  ##5 NoOperation()
+  ##6 NoOperation()
 --------
 false && false
   ##0 Lookup(`false)

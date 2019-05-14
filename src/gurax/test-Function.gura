@@ -7,6 +7,8 @@ TestCase('PUnit') {
 		`f(1)
 		`f(1, 2)
 		`f(1, 2, 3, 4, 5)
+		`f(1, 2, 3, 4, 5):attr1:attr2
+		`f(1, 2) { f1(), f2() }
 		`f(a)
 		`f(a, b)
 		`f(a, b, c, d, e)
