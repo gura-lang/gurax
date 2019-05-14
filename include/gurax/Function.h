@@ -99,7 +99,7 @@ protected:
 	const Symbol* _pSymbol;
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<HelpProvider> _pHelpProvider;
-	RefPtr<Frame::WeakPtr> _pwFrameParent;
+	RefPtr<Frame::WeakPtr> _pwFrameOuter;
 public:
 	// Constructor
 	Function(Type type) :
@@ -135,8 +135,8 @@ public:
 	String MakeFullName() const;
 	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
-	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
-	Frame* LockFrameParent() const { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
+	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
+	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
 	void Declare(const VType& vtypeResult, Flags flags) {
 		GetDeclCallable().SetVTypeResult(vtypeResult);
 		GetDeclCallable().SetFlags(flags);

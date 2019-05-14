@@ -29,7 +29,7 @@ Processor* Processor::Create(bool debugFlag)
 Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicScopeFlag)
 {
 	if (dynamicScopeFlag) return PushFrame<Frame_Scope>();
-	Frame* pFrame = new Frame_Scope(function.LockFrameParent());
+	Frame* pFrame = new Frame_Scope(function.LockFrameOuter());
 	PushFrame(pFrame);
 	return *pFrame;
 }

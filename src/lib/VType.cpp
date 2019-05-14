@@ -70,7 +70,7 @@ void VType::SetAttrs(VType& vtypeInherited, Flags flags)
 String VType::MakeFullName() const
 {
 	String str;
-	RefPtr<Frame> pFrame(LockFrameParent());
+	RefPtr<Frame> pFrame(LockFrameOuter());
 	if (pFrame) {
 		const DottedSymbol* pDottedSymbol = pFrame->GetDottedSymbol();
 		if (pDottedSymbol) {

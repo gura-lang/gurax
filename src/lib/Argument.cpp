@@ -45,7 +45,7 @@ void Argument::ResetAllValues()
 	if (_pValueOfDict) _pValueOfDict->GetValueDict().Clear();
 }
 
-Function* Argument::CreateFunctionOfBlock(Frame& frameParent) const
+Function* Argument::CreateFunctionOfBlock(Frame& frameOuter) const
 {
 	if (!GetExprOfBlock()) return nullptr;
 	RefPtr<FunctionCustom>
@@ -54,13 +54,13 @@ Function* Argument::CreateFunctionOfBlock(Frame& frameParent) const
 					  GetExprOfBlock()->GetDeclCallable().GetDeclBlock().GetSymbol(),
 					  GetExprOfBlock()->GetDeclCallable().Reference(),
 					  GetExprOfBlock()->GetPUnitFirst()));
-	pFunction->SetFrameParent(frameParent);
+	pFunction->SetFrameOuter(frameOuter);
 	return pFunction.release();
 }
 
-Function* Argument::CreateFunctionOfBlock(Frame& frameParent, RefPtr<Argument>& pArgument) const
+Function* Argument::CreateFunctionOfBlock(Frame& frameOuter, RefPtr<Argument>& pArgument) const
 {
-	Function* pFunction = CreateFunctionOfBlock(frameParent);
+	Function* pFunction = CreateFunctionOfBlock(frameOuter);
 	if (pFunction) pArgument.reset(new Argument(*pFunction));
 	return pFunction;
 }

@@ -11,7 +11,7 @@ namespace Gurax {
 String Function::MakeFullName() const
 {
 	String str;
-	RefPtr<Frame> pFrame(LockFrameParent());
+	RefPtr<Frame> pFrame(LockFrameOuter());
 	if (pFrame) {
 		const DottedSymbol* pDottedSymbol = pFrame->GetDottedSymbol();
 		if (pDottedSymbol) {

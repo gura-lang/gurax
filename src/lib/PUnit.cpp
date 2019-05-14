@@ -246,7 +246,7 @@ void PUnit_AssignFunction<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Function> pFunction(GetFunction().Reference());
-	pFunction->SetFrameParent(frame);
+	pFunction->SetFrameOuter(frame);
 	RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
 	frame.Assign(GetFunction().GetSymbol(), pValueAssigned->Reference());
 	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());

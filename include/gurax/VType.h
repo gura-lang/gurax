@@ -32,7 +32,7 @@ protected:
 	const Symbol* _pSymbol;
 	Flags _flags;
 	RefPtr<Frame_VType> _pFrame;
-	RefPtr<Frame::WeakPtr> _pwFrameParent;		// may be nullptr
+	RefPtr<Frame::WeakPtr> _pwFrameOuter;		// may be nullptr
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 	RefPtr<PropHandlerMap> _pPropHandlerMapOfClass;
 private:
@@ -58,8 +58,8 @@ public:
 	VType* GetVTypeInherited() const { return _pVTypeInherited; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
-	void SetFrameParent(Frame& frameParent) { _pwFrameParent.reset(frameParent.GetWeakPtr()); }
-	Frame* LockFrameParent() const { return _pwFrameParent? _pwFrameParent->Lock() : nullptr; }
+	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
+	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, String doc) {
