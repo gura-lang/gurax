@@ -32,6 +32,8 @@ public:
 	~Basement() = default;
 public:
 	void Prepare();
+	void PrepareVType(Frame& frame);
+	void PrepareValue(Frame& frame);
 	Frame& GetFrame() { return *_pFrame; }
 	const char* GetPS1() const { return _ps1.c_str(); }
 	const char* GetPS2() const { return _ps2.c_str(); }

@@ -158,7 +158,7 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
-void Functions::PrepareBasic(Frame& frame)
+void Functions::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Format));
 	frame.Assign(Gurax_CreateFunction(Print));

@@ -90,8 +90,6 @@ public:
 		(pPropHandler->IsOfClass()? GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
 	}
 public:
-	static void PrepareBasic(Frame& frame);
-public:
 	void Prepare(Frame& frameOuter);
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }

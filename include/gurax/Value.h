@@ -45,6 +45,7 @@ public:
 		}
 	};
 private:
+	// These values are initialized by Value::CreateConstant().
 	static const Value* _pValue_undefined;
 	static const Value* _pValue_nil;
 	static const Value* _pValue_false_;
@@ -91,7 +92,7 @@ public:
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
-	static void PrepareBasic(Frame& frame);
+	static void CreateConstant();
 public:
 	static Value* undefined()	{ return _pValue_undefined->Reference(); }
 	static Value* nil()			{ return _pValue_nil->Reference(); }

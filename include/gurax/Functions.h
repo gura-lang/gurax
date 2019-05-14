@@ -9,7 +9,7 @@ namespace Gurax {
 
 class Functions {
 public:
-	static void PrepareBasic(Frame& frame);
+	static void AssignToBasement(Frame& frame);
 };
 
 }

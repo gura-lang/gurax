@@ -785,7 +785,7 @@ Gurax_ImplementFunction(dir)
 	return new Value_List(pValues.release());
 }
 
-void Statements::PrepareBasic(Frame& frame)
+void Statements::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(if_));
 	frame.Assign(Gurax_CreateStatement(elsif));
