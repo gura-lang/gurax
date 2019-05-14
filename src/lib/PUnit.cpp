@@ -1154,7 +1154,8 @@ template<bool discardValueFlag>
 String PUnit_BeginArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("BeginArgSlot(`(%s)", GetExprSrc().ToString(StringStyle().Cram()).c_str());
+	RefPtr<Expr> pExpr(new Expr_UnaryOp(GetExprSrc().Reference(), Operator::Quote));
+	str.Printf("BeginArgSlot(%s", pExpr->ToString(StringStyle().Cram()).c_str());
 	if (GetExprSrc().GetPUnitFirst()) {
 		str.Printf(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
