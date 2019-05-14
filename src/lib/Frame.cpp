@@ -35,7 +35,7 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 	}
 }
 
-bool Frame::Assign(DeclArg& declArg, const Value& value)
+bool Frame::AssignWithCast(DeclArg& declArg, const Value& value)
 {
 	RefPtr<Value> pValueCasted(declArg.Cast(*this, value));
 	if (!pValueCasted) return false;

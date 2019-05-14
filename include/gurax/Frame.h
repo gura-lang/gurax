@@ -41,7 +41,7 @@ public:
 	Value* Lookup(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
 	bool Assign(const DottedSymbol& dottedSymbol, Value* pValue);
 	void Assign(const char* name, Value* pValue) { Assign(Symbol::Add(name), pValue); }
-	bool Assign(DeclArg& declArg, const Value& value);
+	bool AssignWithCast(DeclArg& declArg, const Value& value);
 	bool Assign(Module* pModule);
 	void Assign(VType& vtype);
 	void Assign(Function* pFunction);

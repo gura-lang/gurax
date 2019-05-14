@@ -213,7 +213,7 @@ void PUnit_AssignToDeclArg<discardValueFlag>::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	frame.Assign(*_pDeclArg, *pValueAssigned);
+	frame.AssignWithCast(*_pDeclArg, *pValueAssigned);
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -468,7 +468,7 @@ void PUnit_ForEach<discardValueFlag>::Exec(Processor& processor) const
 			processor.SetPUnitNext(GetPUnitBranchDest());
 			return;
 		}
-		frame.Assign(*pDeclArg, *pValueElem);
+		frame.AssignWithCast(*pDeclArg, *pValueElem);
 		offset--;
 	}
 	processor.SetPUnitNext(_GetPUnitCont());

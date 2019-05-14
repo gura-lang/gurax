@@ -52,7 +52,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
-				frame.Assign(*declArgOwner[0], *pValueElem);
+				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
@@ -70,7 +70,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
-				frame.Assign(*declArgOwner[0], *pValueElem);
+				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
@@ -86,11 +86,11 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
-				frame.Assign(*declArgOwner[0], *pValueElem);
+				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValueIdx(new Value_Number(idx));
 				idx++;
-				frame.Assign(*declArgOwner[1], *pValueIdx);
+				frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
@@ -108,11 +108,11 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
-				frame.Assign(*declArgOwner[0], *pValueElem);
+				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
 				if (Error::IsIssued()) break;
 				RefPtr<Value> pValueIdx(new Value_Number(idx));
 				idx++;
-				frame.Assign(*declArgOwner[1], *pValueIdx);
+				frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
 				if (Error::IsIssued()) break;
 				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
