@@ -14,7 +14,6 @@ void VType_ArgMapper_Multiple::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_List, Flag::Immutable);
-	frameOuter.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

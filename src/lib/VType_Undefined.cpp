@@ -32,7 +32,6 @@ void VType_Undefined::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VType::Empty, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Undefined, ToString));
 }

@@ -14,7 +14,6 @@ void VType_Nil::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 }
 
 //------------------------------------------------------------------------------

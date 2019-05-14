@@ -98,7 +98,6 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Mutable);
-	frameOuter.Assign(*this);
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_dict_));
 	// Assignment of property

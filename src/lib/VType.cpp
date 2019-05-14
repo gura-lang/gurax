@@ -54,6 +54,12 @@ void VType::PrepareBasic(Frame& frame)
 	VTYPE_Undefined.Prepare(frame);
 }
 
+void VType::Prepare(Frame& frameOuter)
+{
+	DoPrepare(frameOuter);
+	frameOuter.Assign(*this);
+}
+
 void VType::SetAttrs(VType& vtypeInherited, Flags flags)
 {
 	_pVTypeInherited = &vtypeInherited;

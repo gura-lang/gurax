@@ -50,7 +50,6 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));

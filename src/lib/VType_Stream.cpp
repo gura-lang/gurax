@@ -91,7 +91,6 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));

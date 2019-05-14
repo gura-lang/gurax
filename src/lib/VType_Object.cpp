@@ -56,7 +56,6 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VType::Empty, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
 	Assign(Gurax_CreateMethod(Object, ToString));

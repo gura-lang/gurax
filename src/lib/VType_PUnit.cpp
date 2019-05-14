@@ -52,7 +52,6 @@ void VType_PUnit::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(PUnit, ToString));
 	// Assignment of property

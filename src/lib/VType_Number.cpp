@@ -38,7 +38,6 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Number, im));
 	Assign(Gurax_CreateProperty(Number, re));

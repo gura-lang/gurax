@@ -157,7 +157,6 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Error, Raise));
 	// Assignment of property

@@ -18,7 +18,6 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 }
 
 Value* VType_Frame::DoCastFrom(const Value& value) const

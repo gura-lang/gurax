@@ -52,7 +52,6 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
-	frameOuter.Assign(*this);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Iterator, Each));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
