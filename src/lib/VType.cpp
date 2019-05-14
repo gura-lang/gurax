@@ -56,8 +56,8 @@ void VType::PrepareBasic(Frame& frame)
 
 void VType::Prepare(Frame& frameOuter)
 {
-	DoPrepare(frameOuter);
 	frameOuter.Assign(*this);
+	DoPrepare(frameOuter);
 }
 
 void VType::SetAttrs(VType& vtypeInherited, Flags flags)
