@@ -107,8 +107,7 @@ Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 	pOpEntry = LookupEntry(VTYPE_Any);
 	if (pOpEntry) return pOpEntry->EvalUnary(processor, value);
 	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
-				 IsMathUnary()? "math" : "unary",
-				 ToString(value.GetVType()).c_str());
+				 IsMathUnary()? "math" : "unary", ToString(value.GetVType()).c_str());
 	return Value::undefined();
 }
 
@@ -124,8 +123,7 @@ Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Val
 	pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any);
 	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
 	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
-				 IsMathBinary()? "math" : "binary",
-				 ToString(valueL.GetVType(), valueR.GetVType()).c_str());
+				 IsMathBinary()? "math" : "binary", ToString(valueL.GetVType(), valueR.GetVType()).c_str());
 	return Value::undefined();
 }
 
