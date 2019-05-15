@@ -29,6 +29,7 @@ public:
 	static const ErrorType InvalidOperation;
 	static const ErrorType IteratorError;
 	static const ErrorType ModuleError;
+	static const ErrorType PropertyError;
 	static const ErrorType StreamError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;

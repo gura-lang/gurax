@@ -941,7 +941,9 @@ void PUnit_PropGet<discardValueFlag>::Exec(Processor& processor) const
 	Value& valueTarget = processor.PeekValue(0);
 	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+		IssueError(ErrorType::PropertyError,
+				   "value type '%s' doesn't have a property named '%s'",
+				   valueTarget.GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp->Reference());
@@ -980,7 +982,8 @@ void PUnit_PropSet<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
-		IssueError(ErrorType::ValueError, "failed to set value to symbol '%s'", GetSymbol()->GetName());
+		IssueError(ErrorType::PropertyError,
+				   "failed to set value to symbol '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp.release());
@@ -1020,7 +1023,9 @@ void PUnit_Member<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+		IssueError(ErrorType::PropertyError,
+				   "value type '%s' doesn't have a property named '%s'",
+				   pValueTarget->GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (discardValueFlag) {
@@ -1080,7 +1085,7 @@ void PUnit_Argument<discardValueFlag>::Exec(Processor& processor) const
 	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallable();
 	if (!pDeclCallable) {
 		IssueError(ErrorType::ValueError,
-				   "value type %s can not be called", pValueCar->GetVType().MakeFullName().c_str());
+				   "value type '%s' can not be called", pValueCar->GetVType().MakeFullName().c_str());
 		processor.ErrorDone();
 	} else if (!pDeclCallable->CheckAttribute(GetAttr())) {
 		processor.ErrorDone();

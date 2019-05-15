@@ -17,6 +17,7 @@ const ErrorType ErrorType::IndexError		("IndexError",			"index error");
 const ErrorType ErrorType::InvalidOperation	("InvalidOperation",	"invalid operation");
 const ErrorType ErrorType::IteratorError	("IteratorError",		"iterator error");
 const ErrorType ErrorType::ModuleError		("ModuleError",			"module error");
+const ErrorType ErrorType::PropertyError	("PropertyError",		"property error");
 const ErrorType ErrorType::StreamError		("StreamError",			"stream error");
 const ErrorType ErrorType::SyntaxError		("SyntaxError",			"syntax error");
 const ErrorType ErrorType::TypeError		("TypeError",			"type error");

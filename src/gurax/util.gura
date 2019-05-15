@@ -22,9 +22,11 @@ PrintPUnit(expr:Expr):void:map = {
 	seqIdOffset = 0
 	punits = expr.EachPUnit()
 	punit = punits.NextValue()
-	seqIdOffset = punit.seqId
-	while (punit) {
-		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
-		punit = punits.NextValue()
+	if (punit) {
+		seqIdOffset = punit.seqId
+		while (punit) {
+			Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
+			punit = punits.NextValue()
+		}
 	}
 }

@@ -19,6 +19,12 @@ Gurax_ImplementOpUnary(Neg, Number)
 	return new Value_Number(-num);
 }
 
+// !Nil
+Gurax_ImplementOpUnary(Not, Nil)
+{
+	return Value::true_();
+}
+
 // !Number
 Gurax_ImplementOpUnary(Not, Number)
 {
@@ -289,6 +295,7 @@ void Operators::Bootup()
 {
 	Gurax_AssignOpUnary(Inv,			Number);
 	Gurax_AssignOpUnary(Neg,			Number);
+	Gurax_AssignOpUnary(Not,			Nil);
 	Gurax_AssignOpUnary(Not,			Number);
 	Gurax_AssignOpUnary(Pos,			Number);
 	Gurax_AssignOpUnary(PostSeq,		Number);

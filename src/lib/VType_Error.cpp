@@ -143,6 +143,7 @@ ImplementErrorTypeProperty(IndexError)
 ImplementErrorTypeProperty(InvalidOperation)
 ImplementErrorTypeProperty(IteratorError)
 ImplementErrorTypeProperty(ModuleError)
+ImplementErrorTypeProperty(PropertyError)
 ImplementErrorTypeProperty(StreamError)
 ImplementErrorTypeProperty(SyntaxError)
 ImplementErrorTypeProperty(TypeError)
@@ -176,6 +177,7 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassProperty(Error, InvalidOperation));
 	Assign(Gurax_CreateClassProperty(Error, IteratorError));
 	Assign(Gurax_CreateClassProperty(Error, ModuleError));
+	Assign(Gurax_CreateClassProperty(Error, PropertyError));
 	Assign(Gurax_CreateClassProperty(Error, StreamError));
 	Assign(Gurax_CreateClassProperty(Error, SyntaxError));
 	Assign(Gurax_CreateClassProperty(Error, TypeError));
