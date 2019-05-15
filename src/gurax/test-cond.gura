@@ -1,14 +1,10 @@
 #!./gurax
 import(util) {*}
 
-TestCasePUnit(exprs[]:Expr) = {
-	exprs.Each {|expr|
-		Printf('`%s\n', expr)
-		PrintPUnit(expr)
-	}
+TestCase('PUnit') {
+	exprs = [
+		`cond(a, b)
+		`cond(a, b, c)
+	]
+	PrintPUnitWithLabel(exprs)
 }
-
-TestCasePUnit([
-	`cond(a, b)
-	`cond(a, b, c)
-])
