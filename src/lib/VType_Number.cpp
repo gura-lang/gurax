@@ -11,6 +11,9 @@ namespace Gurax {
 Gurax_DeclareProperty_R(Number, im)
 {
 	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The imaginary part of the number. Always returns zero.");
 }
 
 Gurax_ImplementPropertyGetter(Number, im)
@@ -21,6 +24,9 @@ Gurax_ImplementPropertyGetter(Number, im)
 Gurax_DeclareProperty_R(Number, re)
 {
 	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The real part of the number. Always returns the number itself.");
 }
 
 Gurax_ImplementPropertyGetter(Number, re)

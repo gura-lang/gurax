@@ -6,12 +6,34 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+Gurax_DeclareProperty_R(Expr, children)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An iterator that returns `Expr` instance of the child elements.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, children)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachChild());
+	if (pIterator) return new Value_Iterator(pIterator.release());
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Expr#EachPUnit()
 Gurax_DeclareMethod(Expr, EachPUnit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an iterator that enumerates `PUnit` instances stored in the target `Expr`.\n");
 }
 
 Gurax_ImplementMethod(Expr, EachPUnit)
@@ -28,6 +50,9 @@ Gurax_ImplementMethod(Expr, EachPUnit)
 Gurax_DeclareMethod(Expr, Eval)
 {
 	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Evaluates the target `Expr` and returns its result value.");
 }
 
 Gurax_ImplementMethod(Expr, Eval)
@@ -50,6 +75,8 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Expr, children));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));

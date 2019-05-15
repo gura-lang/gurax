@@ -8,6 +8,47 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Statements
 //------------------------------------------------------------------------------
+// cond (`cond, `exprTrue, `exprFalse?)
+Gurax_DeclareStatement(cond)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("exprTrue", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("exprFalse", VTYPE_Quote, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Evaluates `exprTrue` and returns its result if `cond` is determined as `true`, and does `exprFalse` otherwise.\n"
+		"If `exprFalse` is omitted, it returns `nil` when `cond` turns out to be `false`.\n"
+		"\n"
+		"This statement behaves the same as `if` being used like below:\n"
+		"\n"
+		"    if (cond) {exprTrue) else {exprFalse}\n");
+}
+
+Gurax_ImplementStatement(cond)
+{
+	Expr* pExprCond = exprCaller.GetExprCdrFirst();
+	Expr* pExprTrue = pExprCond->GetExprNext();
+	Expr* pExprFalse = pExprTrue->GetExprNext();
+	pExprCond->ComposeOrNil(composer);									// [Bool]
+	if (pExprFalse) {	// cond (cond, exprTrue, exprFalse)
+		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		composer.Add_JumpIfNot(exprCaller);								// []
+		pExprTrue->ComposeOrNil(composer);								// [Any]
+		PUnit* pPUnitOfBranch2 = composer.PeekPUnitCont();
+		composer.Add_Jump(exprCaller);									// [Any]
+		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+		pExprFalse->ComposeOrNil(composer);								// [Any]
+		pPUnitOfBranch2->SetPUnitBranchDest(composer.PeekPUnitCont());
+	} else {			// cond (cond, exprTrue)
+		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
+		composer.Add_NilJumpIfNot(exprCaller);							// [] or [nil]
+		pExprTrue->ComposeOrNil(composer);								// [Any]
+		pPUnitOfBranch1->SetPUnitBranchDest(composer.PeekPUnitCont());
+	}
+	composer.Add_NoOperation(exprCaller);								// [Any]
+}
+
 // if (`cond) {`block}
 Gurax_DeclareStatementAlias(if_, "if")
 {
@@ -787,6 +828,7 @@ Gurax_ImplementFunction(dir)
 
 void Statements::AssignToBasement(Frame& frame)
 {
+	frame.Assign(Gurax_CreateStatement(cond));
 	frame.Assign(Gurax_CreateStatement(if_));
 	frame.Assign(Gurax_CreateStatement(elsif));
 	frame.Assign(Gurax_CreateStatement(else_));

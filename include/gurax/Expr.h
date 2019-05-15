@@ -156,6 +156,7 @@ public:
 	virtual void ComposeForArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
+	virtual Iterator* EachChild() const { return nullptr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
@@ -333,6 +334,7 @@ public:
 		if (!_pExprLinkElem->Traverse(visitor)) return false;
 		return true;
 	}
+	virtual Iterator* EachChild() const override;
 };
 
 //------------------------------------------------------------------------------
@@ -743,6 +745,24 @@ public:
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Expr
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Expr : public Iterator {
+private:
+	RefPtr<ExprLink> _pExprLinkElem;
+	const Expr* _pExprCur;
+public:
+	Iterator_Expr(ExprLink* pExprLinkElem) :
+		_pExprLinkElem(pExprLinkElem), _pExprCur(_pExprLinkElem->GetExprFirst()) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

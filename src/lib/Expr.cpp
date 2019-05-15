@@ -187,6 +187,11 @@ void Expr_Collector::AddExprElem(Expr* pExprElem)
 	_pExprLinkElem->AddExpr(pExprElem);
 }
 
+Iterator* Expr_Collector::EachChild() const
+{
+	return new Iterator_Expr(_pExprLinkElem->Reference());
+}
+
 //------------------------------------------------------------------------------
 // Expr_Composite
 //------------------------------------------------------------------------------
@@ -881,6 +886,29 @@ const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
 		pExpr = pExprEx->GetExprTrailer();
 	}
 	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_Expr
+//------------------------------------------------------------------------------
+Value* Iterator_Expr::NextValue()
+{
+	if (!_pExprCur) return nullptr;
+	RefPtr<Value> pValue(new Value_Expr(_pExprCur->Reference()));
+	_pExprCur = _pExprCur->GetExprNext();
+	return pValue.release();
+}
+
+size_t Iterator_Expr::GetLength() const
+{
+	return _pExprLinkElem->CountSequence();
+}
+
+String Iterator_Expr::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "Expr";
+	return str;
 }
 
 }
