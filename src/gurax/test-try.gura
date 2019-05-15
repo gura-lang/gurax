@@ -8,10 +8,7 @@ TestCase('PUnit') {
 		`try { f() } catch {|e| g() }
 		`try { f() } catch(Error.SyntaxError) {|e| g() }
 	]
-	exprs.Each {|expr|
-		Printf('`%s\n', expr)
-		PrintPUnit(expr)
-	}
+	PrintPUnitWithLabel(exprs)
 }
 sys.Exit()
 try {

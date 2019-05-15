@@ -60,11 +60,13 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 {
 	PUnit* pPUnitMarked = composer.PeekPUnitCont();
 	if (pExpr) {
+		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
 	while (pExpr) {
 		composer.FlushDiscard();
+		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
@@ -117,11 +119,13 @@ void ExprList::Compose(Composer& composer)
 	auto ppExpr = begin();
 	if (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
+		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 	}
 	while (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
 		composer.FlushDiscard();
+		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 	}
 	// [Value]

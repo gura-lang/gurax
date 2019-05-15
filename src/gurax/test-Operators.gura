@@ -52,11 +52,7 @@ TestCase('PUnit') {
 		`(a || (b || c))
 		`(false && false)
 	]
-	exprs.Each {|expr|
-		Println('--------')
-		Printf('%s\n', expr)
-		PrintPUnit(expr)
-	}
+	PrintPUnitWithLabel(exprs)
 }
 
 TestCase('Error Message') {

@@ -1,5 +1,5 @@
 ======== PUnit ========
-`while (true) {}
+while (true) {}
   ##0 Value(<Nil>)
   ##1 Lookup(`true)
   ##2 JumpIfNot(branchdest=##6)
@@ -7,7 +7,7 @@
   ##4 Value(<Nil>)
   ##5 Jump(cont=##1)
   ##6 NoOperation()
-`while (true):list {}
+while (true):list {}
   ##0 CreateList()
   ##1 Jump(cont=##5)
   ##2 ListElem(offsetToList=0)
@@ -18,7 +18,7 @@
   ##7 Value(<Nil>)
   ##8 Jump(cont=##4)
   ##9 NoOperation()
-`while (true):xlist {}
+while (true):xlist {}
   ##0 CreateList()
   ##1 Jump(cont=##5)
   ##2 ListElem(offsetToList=0):xlist
@@ -29,7 +29,7 @@
   ##7 Value(<Nil>)
   ##8 Jump(cont=##4)
   ##9 NoOperation()
-`while (true) {|n| nil}
+while (true) {|n| nil}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 Value(<Nil>)
@@ -42,7 +42,7 @@
   ##9 Jump(cont=##3)
   ##10 RemoveValue(offset=1)
   ##11 PopFrame()
-`while (true):list {|n| nil}
+while (true):list {|n| nil}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 CreateList()
@@ -58,7 +58,7 @@
   ##12 Jump(cont=##6)
   ##13 RemoveValue(offset=1)
   ##14 PopFrame()
-`while (true):xlist {|n| nil}
+while (true):xlist {|n| nil}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 CreateList()
@@ -74,7 +74,7 @@
   ##12 Jump(cont=##6)
   ##13 RemoveValue(offset=1)
   ##14 PopFrame()
-`while (a < 3) {}
+while (a < 3) {}
   ##0 Value(<Nil>)
   ##1 Lookup(`a)
   ##2 Value(<Number:3>)
@@ -84,7 +84,7 @@
   ##6 Value(<Nil>)
   ##7 Jump(cont=##1)
   ##8 NoOperation()
-`while (a < 3) {|i| f(i)}
+while (a < 3) {|i| f(i)}
   ##0 PushFrame<Block>()
   ##1 GenCounterIterator()
   ##2 Value(<Nil>)

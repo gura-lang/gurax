@@ -1,11 +1,11 @@
 ======== PUnit ========
-`[]
+[]
   ##0 CreateList()
-`[1]
+[1]
   ##0 CreateList()
   ##1 Value(<Number:1>)
   ##2 ListElem(offsetToList=0)
-`[1, 2, 3]
+[1, 2, 3]
   ##0 CreateList()
   ##1 Value(<Number:1>)
   ##2 ListElem(offsetToList=0)
@@ -13,15 +13,15 @@
   ##4 ListElem(offsetToList=0)
   ##5 Value(<Number:3>)
   ##6 ListElem(offsetToList=0)
-`foo = []
+foo = []
   ##0 CreateList()
   ##1 AssignToSymbol(`foo)
-`foo = [1]
+foo = [1]
   ##0 CreateList()
   ##1 Value(<Number:1>)
   ##2 ListElem(offsetToList=0)
   ##3 AssignToSymbol(`foo)
-`foo = [1, 2, 3]
+foo = [1, 2, 3]
   ##0 CreateList()
   ##1 Value(<Number:1>)
   ##2 ListElem(offsetToList=0)
@@ -30,17 +30,17 @@
   ##5 Value(<Number:3>)
   ##6 ListElem(offsetToList=0)
   ##7 AssignToSymbol(`foo)
-`foo[]
+foo[]
   ##0 Lookup(`foo)
   ##1 Index()
   ##2 IndexGet()
-`foo[0]
+foo[0]
   ##0 Lookup(`foo)
   ##1 Index()
   ##2 Value(<Number:0>)
   ##3 FeedIndex()
   ##4 IndexGet()
-`foo[0, 2]
+foo[0, 2]
   ##0 Lookup(`foo)
   ##1 Index()
   ##2 Value(<Number:0>)
@@ -48,7 +48,7 @@
   ##4 Value(<Number:2>)
   ##5 FeedIndex()
   ##6 IndexGet()
-`foo[0, 2, 6]
+foo[0, 2, 6]
   ##0 Lookup(`foo)
   ##1 Index()
   ##2 Value(<Number:0>)

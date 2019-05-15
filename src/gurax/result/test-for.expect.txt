@@ -1,5 +1,5 @@
 ======== PUnit ========
-`for (v in tbl) {}
+for (v in tbl) {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -10,7 +10,7 @@
   ##7 Jump(cont=##4)
   ##8 RemoveValues(offset=1,count=1)
   ##9 PopFrame()
-`for (v in tbl):list {}
+for (v in tbl):list {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -24,7 +24,7 @@
   ##10 Jump(cont=##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-`for (v in tbl):xlist {}
+for (v in tbl):xlist {}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -38,7 +38,7 @@
   ##10 Jump(cont=##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-`for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {}
+for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
   ##2 Lookup(`tbl2)
@@ -53,7 +53,7 @@
   ##11 Jump(cont=##8)
   ##12 RemoveValues(offset=1,count=3)
   ##13 PopFrame()
-`for (v in tbl) {|n|}
+for (v in tbl) {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -67,7 +67,7 @@
   ##10 Jump(cont=##5)
   ##11 RemoveValues(offset=1,count=2)
   ##12 PopFrame()
-`for (v in tbl):list {|n|}
+for (v in tbl):list {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -84,7 +84,7 @@
   ##13 Jump(cont=##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-`for (v in tbl):xlist {|n|}
+for (v in tbl):xlist {|n|}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -101,7 +101,7 @@
   ##13 Jump(cont=##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-`for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n|}
+for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n|}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
   ##2 Lookup(`tbl2)
@@ -119,7 +119,7 @@
   ##14 Jump(cont=##9)
   ##15 RemoveValues(offset=1,count=4)
   ##16 PopFrame()
-`for (v in tbl) {1}
+for (v in tbl) {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -130,7 +130,7 @@
   ##7 Jump(cont=##4)
   ##8 RemoveValues(offset=1,count=1)
   ##9 PopFrame()
-`for (v in tbl):list {1}
+for (v in tbl):list {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -144,7 +144,7 @@
   ##10 Jump(cont=##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-`for (v in tbl):xlist {1}
+for (v in tbl):xlist {1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -158,7 +158,7 @@
   ##10 Jump(cont=##7)
   ##11 RemoveValues(offset=1,count=1)
   ##12 PopFrame()
-`for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {1}
+for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {1}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
   ##2 Lookup(`tbl2)
@@ -173,7 +173,7 @@
   ##11 Jump(cont=##8)
   ##12 RemoveValues(offset=1,count=3)
   ##13 PopFrame()
-`for (v in tbl) {|n| 1}
+for (v in tbl) {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -187,7 +187,7 @@
   ##10 Jump(cont=##5)
   ##11 RemoveValues(offset=1,count=2)
   ##12 PopFrame()
-`for (v in tbl):list {|n| 1}
+for (v in tbl):list {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -204,7 +204,7 @@
   ##13 Jump(cont=##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-`for (v in tbl):xlist {|n| 1}
+for (v in tbl):xlist {|n| 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -221,7 +221,7 @@
   ##13 Jump(cont=##8)
   ##14 RemoveValues(offset=1,count=2)
   ##15 PopFrame()
-`for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n| 1}
+for (v1 in tbl1, v2 in tbl2, v3 in tbl3) {|n| 1}
   ##0 Lookup(`tbl1)
   ##1 GenIterator()
   ##2 Lookup(`tbl2)
@@ -239,7 +239,7 @@
   ##14 Jump(cont=##9)
   ##15 RemoveValues(offset=1,count=4)
   ##16 PopFrame()
-`for (v in tbl) {break, 1}
+for (v in tbl) {break, 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()
@@ -252,7 +252,7 @@
   ##9 Jump(cont=##4)
   ##10 RemoveValues(offset=1,count=1)
   ##11 PopFrame()
-`for (v in tbl):list {break, 1}
+for (v in tbl):list {break, 1}
   ##0 Lookup(`tbl)
   ##1 GenIterator()
   ##2 PushFrame<Block>()

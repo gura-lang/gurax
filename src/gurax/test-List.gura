@@ -14,10 +14,7 @@ TestCase('PUnit') {
 		`(foo[0, 2])
 		`(foo[0, 2, 6])
 	]
-	exprs.Each {|expr|
-		Printf('`%s\n', expr)
-		PrintPUnit(expr)
-	}
+	PrintPUnitWithLabel(exprs)
 }
 
 TestCase('Initializer') {

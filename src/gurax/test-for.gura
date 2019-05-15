@@ -23,10 +23,7 @@ TestCase('PUnit') {
 		`for (v in tbl) { break, 1 }
 		`for (v in tbl):list { break, 1 }
 	]
-	exprs.Each {|expr|
-		Printf('`%s\n', expr)
-		PrintPUnit(expr)
-	}
+	PrintPUnitWithLabel(exprs)
 }
 
 TestCase('Create list') {

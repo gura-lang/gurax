@@ -12,10 +12,7 @@ TestCase('PUnit') {
 		`while (a < 3) {}
 		`while (a < 3) {|i| f(i)}
 	]
-	exprs.Each {|expr|
-		Printf('`%s\n', expr)
-		PrintPUnit(expr)
-	}
+	PrintPUnitWithLabel(exprs)
 }
 
 TestCase('Create list') {

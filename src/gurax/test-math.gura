@@ -34,10 +34,7 @@ TestCase('PUnit') {
 		`math.Tanh(n)
 		`math.Unitstep(n)
 	]
-	exprs.Each {|expr|
-		Printf('`%s\n', expr)
-		PrintPUnit(expr)
-	}
+	PrintPUnitWithLabel(exprs)
 }
 Tester(`math.e)
 Tester(`math.pi)

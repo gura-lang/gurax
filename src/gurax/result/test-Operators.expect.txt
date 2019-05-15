@@ -1,208 +1,165 @@
 ======== PUnit ========
---------
 ~a
   ##0 Lookup(`a)
   ##1 UnaryOp(~)
---------
 -a
   ##0 Lookup(`a)
   ##1 UnaryOp(-)
---------
 !a
   ##0 Lookup(`a)
   ##1 UnaryOp(!)
---------
 +a
   ##0 Lookup(`a)
   ##1 UnaryOp(+)
---------
 a%
   ##0 Lookup(`a)
   ##1 UnaryOp(%)
---------
 a%%
   ##0 Lookup(`a)
   ##1 UnaryOp(%%)
---------
 a*
   ##0 Lookup(`a)
   ##1 UnaryOp(*)
---------
 a+
   ##0 Lookup(`a)
   ##1 UnaryOp(+)
---------
 a?
   ##0 Lookup(`a)
   ##1 UnaryOp(?)
---------
 a..
   ##0 Lookup(`a)
   ##1 UnaryOp(..)
---------
 a + b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(+)
---------
 a & b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(&)
---------
 a && b
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
---------
 a <=> b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(<=>)
---------
 a |+| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|+|)
---------
 a in b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(in)
---------
 a |^| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|^|)
---------
 a |-| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|-|)
---------
 a / b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(/)
---------
 a |.| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|.|)
---------
 a == b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(==)
---------
 a |*| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|*|)
---------
 a >= b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(>=)
---------
 a > b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(>)
---------
 a |&| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|&|)
---------
 a <= b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(<=)
---------
 a < b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(<)
---------
 a % b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(%)
---------
 a %% b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(%%)
---------
 a * b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(*)
---------
 a != b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(!=)
---------
 a | b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|)
---------
 a || b
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
---------
 a => b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(=>)
---------
 a ** b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(**)
---------
 a .. b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(..)
---------
 a << b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(<<)
---------
 a >> b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(>>)
---------
 a - b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(-)
---------
 a ||| b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(|||)
---------
 a ^ b
   ##0 Lookup(`a)
   ##1 Lookup(`b)
   ##2 BinaryOp(^)
---------
 a && b
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
---------
 (a && b) && c
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##3)
@@ -211,7 +168,6 @@ a && b
   ##4 KeepJumpIfNot(branchdest=##6)
   ##5 Lookup(`c)
   ##6 NoOperation()
---------
 a && (b && c)
   ##0 Lookup(`a)
   ##1 KeepJumpIfNot(branchdest=##6)
@@ -220,13 +176,11 @@ a && (b && c)
   ##4 Lookup(`c)
   ##5 NoOperation()
   ##6 NoOperation()
---------
 a || b
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##3)
   ##2 Lookup(`b)
   ##3 NoOperation()
---------
 (a || b) || c
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##3)
@@ -235,7 +189,6 @@ a || b
   ##4 KeepJumpIf(branchdest=##6)
   ##5 Lookup(`c)
   ##6 NoOperation()
---------
 a || (b || c)
   ##0 Lookup(`a)
   ##1 KeepJumpIf(branchdest=##6)
@@ -244,7 +197,6 @@ a || (b || c)
   ##4 Lookup(`c)
   ##5 NoOperation()
   ##6 NoOperation()
---------
 false && false
   ##0 Lookup(`false)
   ##1 KeepJumpIfNot(branchdest=##3)

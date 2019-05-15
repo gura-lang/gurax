@@ -29,3 +29,8 @@ PrintPUnit(expr:Expr):void:map = {
 		punit = punits.NextValue()
 	}
 }
+
+PrintPUnitWithLabel(expr:Expr):void:map = {
+	Printf('%s\n', expr)
+	PrintPUnit(expr)
+}
