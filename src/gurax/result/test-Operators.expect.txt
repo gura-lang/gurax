@@ -250,6 +250,14 @@ false && false
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`false)
   ##3 NoOperation()
+======== Operator ! ========
+!nil .. true
+!false .. true
+!true .. false
+!0 .. false
+!1 .. false
+!'' .. false
+![] .. false
 ======== Operator .. ========
 1 .. 10 .. <Iterator:Range:begin=1:end=11:step=1>
 1 .. 1 .. <Iterator:Range:begin=1:end=2:step=1>

@@ -46,6 +46,8 @@ protected:
 	// Destructor
 	~Value_Bool() = default;
 public:
+	static size_t GetBool(const Value& value) { return dynamic_cast<const Value_Bool&>(value).GetBool_(); }
+public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {

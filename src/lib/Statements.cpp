@@ -725,8 +725,9 @@ Gurax_ImplementStatement(return_)
 {
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
-		composer.Add_DiscardValue(exprCaller);
 		pExprCdr->ComposeOrNil(composer);							// [Any]
+	} else {
+		composer.Add_Value(exprCaller, Value::nil());				// [nil]
 	}
 	composer.Add_Return(exprCaller);
 }

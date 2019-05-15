@@ -59,6 +59,16 @@ TestCase('PUnit') {
 	}
 }
 
+TestCase('Operator !') {
+	Tester(`(!nil))
+	Tester(`(!false))
+	Tester(`(!true))
+	Tester(`(!0))
+	Tester(`(!1))
+	Tester(`(!''))
+	Tester(`(![]))
+}
+
 TestCase('Operator ..') {
 	Tester(`(1..10))
 	Tester(`(1..1))

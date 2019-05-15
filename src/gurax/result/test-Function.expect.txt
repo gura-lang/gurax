@@ -149,6 +149,9 @@
   ##15 Value(<Number:5>)
   ##16 EndArgSlotNamed()
   ##17 Call(cont=##18)
+======== return ========
+f() .. nil
+g() .. 3
 ======== Recursion ========
 20! = 2432902008176640000
 ======== dynamic_scope ========

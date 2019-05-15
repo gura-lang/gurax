@@ -19,16 +19,10 @@ Gurax_ImplementOpUnary(Neg, Number)
 	return new Value_Number(-num);
 }
 
-// !Nil
-Gurax_ImplementOpUnary(Not, Nil)
+// !Any
+Gurax_ImplementOpUnary(Not, Any)
 {
-	return Value::true_();
-}
-
-// !Number
-Gurax_ImplementOpUnary(Not, Number)
-{
-	return Value::false_();
+	return value.GetBool()? Value::false_() : Value::true_();
 }
 
 // +Number
@@ -295,8 +289,7 @@ void Operators::Bootup()
 {
 	Gurax_AssignOpUnary(Inv,			Number);
 	Gurax_AssignOpUnary(Neg,			Number);
-	Gurax_AssignOpUnary(Not,			Nil);
-	Gurax_AssignOpUnary(Not,			Number);
+	Gurax_AssignOpUnary(Not,			Any);
 	Gurax_AssignOpUnary(Pos,			Number);
 	Gurax_AssignOpUnary(PostSeq,		Number);
 	Gurax_AssignOpBinary(Add,			Number, Number);
