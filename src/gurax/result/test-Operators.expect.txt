@@ -250,6 +250,12 @@ false && false
   ##1 KeepJumpIfNot(branchdest=##3)
   ##2 Lookup(`false)
   ##3 NoOperation()
+======== Error Message ========
++nil .. unsupported unary operation: +Nil
+nil* .. unsupported unary operation: Nil*
+nil + nil .. unsuppported binary operation: Nil + Nil
+math.Sin(nil) .. unsupported math operation: math.Sin(Nil)
+math.Atan2(nil, nil) .. unsuppported math operation: math.Atan2(Nil, Nil)
 ======== Operator ! ========
 !nil .. true
 !false .. true

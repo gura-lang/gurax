@@ -59,6 +59,14 @@ TestCase('PUnit') {
 	}
 }
 
+TestCase('Error Message') {
+	Tester(`(+nil))
+	Tester(`(nil*))
+	Tester(`(nil + nil))
+	Tester(`math.Sin(nil))
+	Tester(`math.Atan2(nil, nil))
+}
+
 TestCase('Operator !') {
 	Tester(`(!nil))
 	Tester(`(!false))

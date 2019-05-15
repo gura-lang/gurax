@@ -106,8 +106,9 @@ Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 	if (pOpEntry) return pOpEntry->EvalUnary(processor, value);
 	pOpEntry = LookupEntry(VTYPE_Any);
 	if (pOpEntry) return pOpEntry->EvalUnary(processor, value);
-	Error::Issue(ErrorType::TypeError, "unsupported unary operation: %s%s",
-				 GetSymbol(), value.GetVType().MakeFullName().c_str());
+	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
+				 IsMathUnary()? "math" : "unary",
+				 ToString(value.GetVType()).c_str());
 	return Value::undefined();
 }
 
@@ -122,10 +123,34 @@ Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Val
 	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
 	pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any);
 	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
-	Error::Issue(ErrorType::TypeError, "unsuppported binary operation: %s %s %s",
-				 valueL.GetVType().MakeFullName().c_str(), GetSymbol(),
-				 valueR.GetVType().MakeFullName().c_str());
+	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
+				 IsMathBinary()? "math" : "binary",
+				 ToString(valueL.GetVType(), valueR.GetVType()).c_str());
 	return Value::undefined();
+}
+
+String Operator::ToString(const VType& vtype) const
+{
+	String str;
+	if (IsOpPreUnary()) {
+		str.Printf("%s%s", GetSymbol(), vtype.MakeFullName().c_str());
+	} else if (IsOpPostUnary()) {
+		str.Printf("%s%s", vtype.MakeFullName().c_str(), GetSymbol());
+	} else if (IsMathUnary()) {
+		str.Printf("math.%s(%s)", GetSymbol(), vtype.MakeFullName().c_str());
+	}
+	return str;
+}
+
+String Operator::ToString(const VType& vtypeL, const VType& vtypeR) const
+{
+	String str;
+	if (IsOpBinary()) {
+		str.Printf("%s %s %s", vtypeL.MakeFullName().c_str(), GetSymbol(), vtypeR.MakeFullName().c_str());
+	} else if (IsMathBinary()) {
+		str.Printf("math.%s(%s, %s)", GetSymbol(), vtypeL.MakeFullName().c_str(), vtypeR.MakeFullName().c_str());
+	}
+	return str;
 }
 
 //------------------------------------------------------------------------------

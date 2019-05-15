@@ -318,6 +318,8 @@ public:
 public:
 	Value* EvalUnary(Processor& processor, const Value& value) const;
 	Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
+	String ToString(const VType& vtype) const;
+	String ToString(const VType& vtypeL, const VType& vtypeR) const;
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const {}
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const {}
 public:
