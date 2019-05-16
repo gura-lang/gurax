@@ -1,0 +1,11 @@
+======== PUnit ========
+import(a)
+  ##0 Import(`a)
+import(a) {*}
+  ##0 Import(`a)
+import(a) {sym1, sym2, sym3, sym4}
+  ##0 Import(`a)
+======== Basic Test ========
+dir(foo) .. [`Func1, `Func2, `Func3, `Func4, `Func5, `var1, `var2, `var3, `var4, `var5]
+======== Error ========
+import(bar) .. can't find a module named 'bar'

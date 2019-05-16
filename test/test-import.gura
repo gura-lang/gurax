@@ -1,0 +1,22 @@
+#!./gurax
+sys.path = ['.', 'test-import']
+import(util) {*}
+
+TestCase('PUnit') {
+	exprs = [
+		`import(a)
+		`import(a) {*}
+		`import(a) {sym1, sym2, sym3, sym4}
+	]
+	PrintPUnitWithLabel(exprs)
+}
+
+TestCase('Basic Test') {
+	import(foo)
+	Tester(`dir(foo))
+	//Println(foo.Func1)
+}
+
+TestCase('Error') {
+	Tester(`import(bar))
+}

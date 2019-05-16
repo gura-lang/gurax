@@ -9,6 +9,7 @@ cases="$cases String"
 cases="$cases cond"
 cases="$cases for"
 cases="$cases if"
+cases="$cases import"
 cases="$cases math"
 cases="$cases repeat"
 cases="$cases value"
@@ -28,7 +29,7 @@ if [ $# -eq 1 ]; then
 	do
 		echo "$case"
 		./gurax test-$case.gura > result/test-$case.result.txt
-		gura ../../script/diff-result.gura $options result/test-$case.expect.txt result/test-$case.result.txt
+		gura ../script/diff-result.gura $options result/test-$case.expect.txt result/test-$case.result.txt
 	done	
 elif [ "$2" = "update" ]; then
 	for case in $cases

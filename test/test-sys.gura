@@ -1,0 +1,14 @@
+#!./gurax
+import(util) {*}
+
+TestCase('Streams') {
+	Tester(`sys.cin)
+	Tester(`sys.cerr)
+	Tester(`sys.cout)
+	sys.cout.Println('print message on sys.cout')
+}
+
+TestCase('sys.Exit()') {
+	sys.Exit(1)
+	Println('This message is supporsed not to be displayed.')
+}

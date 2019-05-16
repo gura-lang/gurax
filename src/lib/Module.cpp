@@ -56,6 +56,11 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 			break;
 		}
 	}
+	if (type == Type::None) {
+		Error::Issue(ErrorType::ImportError,
+					 "can't find a module named '%s'", dottedSymbol.ToString().c_str());
+		return nullptr;
+	}
 	do {
 		Module* pModuleExist = _moduleMap.Lookup(pathName);
 		if (pModuleExist) return pModuleExist->Reference();

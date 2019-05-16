@@ -1,7 +1,102 @@
-#!../build/gurax/gurax
-//Printf('%d\n', ~3)
-f(`x) = {
-	Println(x)
+#!./gurax
+import(util) {*}
+
+TestCase('PUnit') {
+	exprs = [
+		`(~a)
+		`(-a)
+		`(!a)
+		`(+a)
+		`(a%)
+		`(a%%)
+		`(a*)
+		`(a+)
+		`(a?)
+		`(a..)
+		`(a + b)
+		`(a & b)
+		`(a && b)
+		`(a <=> b)
+		`(a |+| b)
+		`(a in b)
+		`(a |^| b)
+		`(a |-| b)
+		`(a / b)
+		`(a |.| b)
+		`(a == b)
+		`(a |*| b)
+		`(a >= b)
+		`(a > b)
+		`(a |&| b)
+		`(a <= b)
+		`(a < b)
+		`(a % b)
+		`(a %% b)
+		`(a * b)
+		`(a !=  b)
+		`(a | b)
+		`(a || b)
+		`(a => b)
+		`(a ** b)
+		`(a .. b)
+		`(a << b)
+		`(a >> b)
+		`(a - b)
+		`(a ||| b)
+		`(a ^ b)
+		`(a && b)
+		`(a && b && c)
+		`(a && (b && c))
+		`(a || b)
+		`(a || b || c)
+		`(a || (b || c))
+		`(false && false)
+	]
+	PrintPUnitWithLabel(exprs)
 }
 
-f(3 + 4)
+TestCase('Error Message') {
+	Tester(`(+nil))
+	Tester(`(nil*))
+	Tester(`(nil + nil))
+	Tester(`math.Sin(nil))
+	Tester(`math.Atan2(nil, nil))
+}
+
+TestCase('Operator !') {
+	Tester(`(!nil))
+	Tester(`(!false))
+	Tester(`(!true))
+	Tester(`(!0))
+	Tester(`(!1))
+	Tester(`(!''))
+	Tester(`(![]))
+}
+
+TestCase('Operator ..') {
+	Tester(`(1..10))
+	Tester(`(1..1))
+	Tester(`(1..0))
+	Tester(`(1..-10))
+}
+
+TestCase('Operators && and ||') {
+	Tester(`(true && true))
+	Tester(`(true && false))
+	Tester(`(false && true))
+	Tester(`(false && false))
+	Tester(`(true || true))
+	Tester(`(true || false))
+	Tester(`(false || true))
+	Tester(`(false || false))
+	Tester(`('hello' && 'world'))
+	Tester(`('hello' && false))
+	Tester(`(false && 'hello'))
+	Tester(`('hello' && true))
+	Tester(`(true && 'hello'))
+	Tester(`('hello' || 'world'))
+	Tester(`('hello' || false))
+	Tester(`(false || 'hello'))
+	Tester(`('hello' || true))
+	Tester(`(true || 'hello'))
+}

@@ -100,5 +100,19 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Stream
 //------------------------------------------------------------------------------
+String Value_Stream::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str += ":";
+	str += GetStream().ToString();
+	str += ">";
+	return str;
+}
+
+String Value_Stream::ToStringDetail(const StringStyle& ss) const
+{
+	return ToStringDigest(ss);
+}
 
 }
