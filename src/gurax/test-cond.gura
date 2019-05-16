@@ -5,6 +5,19 @@ TestCase('PUnit') {
 	exprs = [
 		`cond(a, b)
 		`cond(a, b, c)
+		`cond(a, f(v1, v2, v3))
+		`cond(a, f(v1, v2, v3), g(v1, v2, v3))
 	]
 	PrintPUnitWithLabel(exprs)
+}
+
+TestCase('Basic Test') {
+	Tester(`cond(true, 3))
+	Tester(`cond(false, 3))
+	Tester(`cond(true, 3, 5))
+	Tester(`cond(false, 3, 5))
+	Tester(`cond(true, 'true', 'false'))
+	Tester(`cond(false, 'true', 'false'))
+	Tester(`{x = y = 0, v = cond(true, x += 1, y += 3), [v, x, y]})
+	Tester(`{x = y = 0, v = cond(false, x += 1, y += 3), [v, x, y]})
 }
