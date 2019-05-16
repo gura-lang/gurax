@@ -1,3 +1,4 @@
+#!/usr/bin/env gurax
 TestCase(title:String):void {`block} = {
 	PrintTitle(title)
 	block.Eval()

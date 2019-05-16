@@ -1,4 +1,4 @@
-#!./gurax
+#!/usr/bin/env gurax
 /*
 a = 5
 if (a == 0) {

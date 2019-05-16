@@ -32,13 +32,13 @@ if [ $# -eq 1 ]; then
 	for case in $cases
 	do
 		echo "$case"
-		./gurax test-$case.gura > result/test-$case.result.txt
+		gurax test-$case.gura > result/test-$case.result.txt
 		gura ../script/diff-result.gura $options result/test-$case.expect.txt result/test-$case.result.txt
 	done	
 elif [ "$2" = "update" ]; then
 	for case in $cases
 	do
 		echo "update: $case"
-		./gurax test-$case.gura > result/test-$case.expect.txt
+		gurax test-$case.gura > result/test-$case.expect.txt
 	done
 fi

@@ -1,4 +1,4 @@
-#!./gurax
+#!/usr/bin/env gurax
 import(util) {*}
 
 TestCase('Initializer') {

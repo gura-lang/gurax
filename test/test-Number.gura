@@ -1,4 +1,4 @@
-#!../build/gurax/gurax
+#!/usr/bin/env gurax
 import(util) {*}
 
 TestCase('Number#re and Number#im') {

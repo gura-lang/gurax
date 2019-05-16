@@ -1,4 +1,4 @@
-#!./gurax
+#!/usr/bin/env gurax
 sys.path = ['.', 'test-import']
 import(util) {*}
 
