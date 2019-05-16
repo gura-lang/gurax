@@ -130,12 +130,13 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	return pModule.release();
 }
 
-bool Module::AssignToFrame(Frame& frame, const SymbolList* pSymbolList, bool mixInFlag) const
+bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag) const
 {
-	if (mixInFlag) return GetFrame().ExportTo(frame, false);
+	Frame& frameCur = processor.GetFrameCur();
+	if (mixInFlag) return GetFrame().ExportTo(frameCur, false);
 	if (pSymbolList && !pSymbolList->empty()) {
 		for (const Symbol* pSymbol : *pSymbolList) {
-			if (frame.Lookup(pSymbol)) {
+			if (frameCur.Lookup(pSymbol)) {
 				Error::Issue(ErrorType::ImportError,
 							 "the symbol '%s' is already assigned in the current frame",
 							 pSymbol->GetName());
@@ -148,14 +149,14 @@ bool Module::AssignToFrame(Frame& frame, const SymbolList* pSymbolList, bool mix
 							 GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
 				return false;
 			}
-			frame.Assign(pSymbol, pValue->Reference());
+			frameCur.Assign(pSymbol, pValue->Reference());
 		}
 		return true;
 	}
 	if (GetDottedSymbol().IsDotted()) {
 		
 	}			
-	frame.Assign(Reference());
+	frameCur.Assign(Reference());
 	return true;
 }
 

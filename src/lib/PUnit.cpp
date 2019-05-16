@@ -582,7 +582,7 @@ void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
 	if (pModule) {
-		pModule->AssignToFrame(processor.GetFrameCur(), GetSymbolList(), GetMixInFlag());
+		pModule->AssignToFrame(processor, GetSymbolList(), GetMixInFlag());
 		if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {

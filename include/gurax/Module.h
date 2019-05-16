@@ -146,7 +146,7 @@ public:
 	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
-	bool AssignToFrame(Frame& frame, const SymbolList* pSymbolList, bool mixInFlag) const;
+	bool AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Module& module) const { return this == &module; }
