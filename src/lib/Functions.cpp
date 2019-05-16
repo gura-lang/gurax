@@ -8,6 +8,28 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Functions
 //------------------------------------------------------------------------------
+// dir(frame?:Frame)
+Gurax_DeclareFunction(dir)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("frame", VTYPE_Frame, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+}
+
+Gurax_ImplementFunction(dir)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Frame& frame = args.IsDefined()? Value_Frame::GetFrame(args.PickValue()) : Basement::Inst.GetFrame();
+	// Function body
+	SymbolList symbolList;
+	frame.GatherSymbol(symbolList);
+	symbolList.Sort();
+	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+	pValues->Reserve(symbolList.size());
+	for (const Symbol* pSymbol : symbolList) pValues->Add(new Value_Symbol(pSymbol));
+	return new Value_List(pValues.release());
+}
+
 // Format(format:String, values*):String:map
 Gurax_DeclareFunction(Format)
 {
@@ -160,6 +182,7 @@ Gurax_ImplementFunction(Println)
 
 void Functions::AssignToBasement(Frame& frame)
 {
+	frame.Assign(Gurax_CreateFunction(dir));
 	frame.Assign(Gurax_CreateFunction(Format));
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));
