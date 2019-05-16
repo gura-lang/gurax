@@ -1,0 +1,4 @@
+======== Number#re and Number#im ========
+a .. 3
+a.re .. 3
+a.im .. 0

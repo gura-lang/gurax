@@ -1,4 +1,9 @@
 #!../build/gurax/gurax
-a = 3
-Println(a.re)
-Println(a.im)
+import(util) {*}
+
+TestCase('Number#re and Number#im') {
+	a = 3
+	Tester(`a)
+	Tester(`a.re)
+	Tester(`a.im)
+}

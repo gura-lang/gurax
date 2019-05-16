@@ -9,6 +9,6 @@ TestCase('Streams') {
 }
 
 TestCase('sys.Exit()') {
-	sys.Exit(1)
-	Println('This message is supporsed not to be displayed.')
+	sys.Exit(0)
+	Println('This message must not be shown.')
 }

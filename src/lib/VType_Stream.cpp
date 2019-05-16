@@ -105,7 +105,7 @@ String Value_Stream::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetStream().ToString();
+	str += GetStream().GetName();
 	str += ">";
 	return str;
 }
