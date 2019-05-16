@@ -582,29 +582,7 @@ void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
 	if (pModule) {
-		if (GetMixInFlag()) {
-			if (!pModule->GetFrame().ExportTo(processor.GetFrameCur(), false)) return;
-		} else if (GetSymbolList() && !GetSymbolList()->empty()) {
-			const SymbolList& symbolList = *GetSymbolList();
-			for (const Symbol* pSymbol : symbolList) {
-				if (processor.GetFrameCur().Lookup(pSymbol)) {
-					Error::Issue(ErrorType::ImportError,
-								 "the symbol '%s' is already assigned in the current frame",
-								 pSymbol->GetName());
-					return;
-				}
-				Value* pValue = pModule->GetFrame().Lookup(pSymbol);
-				if (!pValue) {
-					Error::Issue(ErrorType::ImportError,
-								 "module %s doesn't have a symbol named '%s'",
-								 pModule->GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
-					return;
-				}
-				processor.GetFrameCur().Assign(pSymbol, pValue->Reference());
-			}
-		} else {
-			processor.GetFrameCur().Assign(pModule.Reference());
-		}
+		pModule->AssignToFrame(processor.GetFrameCur(), GetSymbolList(), GetMixInFlag());
 		if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
