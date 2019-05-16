@@ -11,10 +11,9 @@ Tester(expr:Expr):void:dynamic_scope:map = {
 	Printf('%s ..', expr)
 	try {
 		rtn = expr.Eval().ToString()
-		//Printf('%s%s\n', Cond(rtn.ToString().Find('\n'), '\n', ' '), rtn):nomap
-		Printf('%s%s\n', ' ', rtn):nomap
+		Printf(cond(rtn.ToString().Find('\n'), '\n%s\n', ' %s\n'), rtn):nomap
 	} catch {|e|
-		Println(' ', e.text)
+		Printf(' %s\n', e.text)
 	}
 }
 
