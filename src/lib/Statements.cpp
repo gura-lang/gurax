@@ -754,12 +754,14 @@ Gurax_ImplementStatement(import)
 		const Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
 		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 			if (!pExpr->IsType<Expr_Identifier>()) {
-				Error::Issue(ErrorType::ModuleError, "the block of import statement must contain symbols");
+				Error::Issue(ErrorType::ImportError,
+							 "the block of import statement must contain symbols");
 				return;
 			}
 			const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExpr)->GetSymbol();
 			if (pSymbolList->DoesContain(pSymbol)) {
-				Error::Issue(ErrorType::ModuleError, "duplicated symbol: %s", pSymbol->GetName());
+				Error::Issue(ErrorType::ImportError,
+							 "duplicated symbol in the import's block: %s", pSymbol->GetName());
 				return;
 			}
 			pSymbolList->push_back(pSymbol);

@@ -39,7 +39,7 @@ public:
 	const char* GetPS2() const { return _ps2.c_str(); }
 	void SetPS1(const char* ps1) { _ps1 = ps1; }
 	void SetPS2(const char* ps2) { _ps2 = ps2; }
-	void SetPathList(const StringList& pathList) { _pathList = pathList; }
+	StringList& GetPathList() { return _pathList; }
 	const StringList& GetPathList() const { return _pathList; }
 };
 

@@ -32,7 +32,6 @@ bool Module::Prepare(const char* name, char separator)
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
 	enum class Type { None, Script, Compressed, Binary } type = Type::None;
-	RefPtr<Module> pModule;
 	String fileName = dottedSymbol.ToString();
 	String pathName;
 	for (const String& dirName : Basement::Inst.GetPathList()) {
@@ -57,12 +56,15 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 			break;
 		}
 	}
-	pModule.reset(_moduleMap.Lookup(pathName));
-	if (pModule) return pModule.release();
-	pModule.reset((type == Type::Script)? ImportScript(processor, dottedSymbol, pathName.c_str()) :
-				  (type == Type::Compressed)? ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
-				  (type == Type::Binary)? ImportBinary(processor, dottedSymbol, pathName.c_str()) :
-				  nullptr);
+	do {
+		Module* pModuleExist = _moduleMap.Lookup(pathName);
+		if (pModuleExist) return pModuleExist->Reference();
+	} while (0);
+	RefPtr<Module> pModule(
+		(type == Type::Script)? ImportScript(processor, dottedSymbol, pathName.c_str()) :
+		(type == Type::Compressed)? ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
+		(type == Type::Binary)? ImportBinary(processor, dottedSymbol, pathName.c_str()) :
+		nullptr);
 	if (!pModule) return nullptr;
 	_moduleMap.Assign(pModule.Reference());
 	return pModule.release();
@@ -72,7 +74,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 {
 	RefPtr<Stream> pStream(Stream_File::Open(pathName, "rt"));
 	if (!pStream) {
-		Error::Issue(ErrorType::ModuleError, "failed to open a module file '%s'", pathName);
+		Error::Issue(ErrorType::ImportError, "failed to open a module file '%s'", pathName);
 		return nullptr;
 	}
 	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
@@ -93,7 +95,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 
 Module* Module::ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)
 {
-	Error::Issue(ErrorType::ModuleError, "can't import a compressed script");
+	Error::Issue(ErrorType::ImportError, "can't import a compressed script");
 	return nullptr;
 }
 
@@ -102,12 +104,12 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	auto GetEntry = [](OAL::DynamicLibrary& dll, const char* funcName) -> void* {
 		void* pFunc = dll.GetEntry(funcName);
 		if (pFunc) return pFunc;
-		Error::Issue(ErrorType::ModuleError, "missing function '%s'", funcName);
+		Error::Issue(ErrorType::ImportError, "missing function '%s'", funcName);
 		return nullptr;
 	};
 	OAL::DynamicLibrary dll;
 	if (!dll.Open(pathName)) {
-		Error::Issue(ErrorType::ModuleError, "failed to open a module file '%s'", pathName);
+		Error::Issue(ErrorType::ImportError, "failed to open a module file '%s'", pathName);
 		return nullptr;
 	}
 	auto ModuleValidate = reinterpret_cast<ModuleValidateT>(GetEntry(dll, "Gurax_ModuleValidate"));

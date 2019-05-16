@@ -37,7 +37,9 @@ Gurax_DeclareModuleProperty_RW(path)
 Gurax_ImplementModulePropertyGetter(path)
 {
 	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
-	for (const String& dirName : Basement::Inst.GetPathList()) {
+	const StringList& pathList = Basement::Inst.GetPathList();
+	pValues->Reserve(pathList.size());
+	for (const String& dirName : pathList) {
 		pValues->Add(new Value_String(dirName));
 	}
 	return new Value_List(pValues.release());
@@ -45,13 +47,13 @@ Gurax_ImplementModulePropertyGetter(path)
 
 Gurax_ImplementModulePropertySetter(path)
 {
-	StringList pathList;
 	const ValueOwner& values = Value_List::GetValueTypedOwner(value).GetValueOwner();
+	StringList& pathList = Basement::Inst.GetPathList();
+	pathList.clear();
 	pathList.reserve(values.size());
 	for (const Value* pValue : values) {
-		pathList.push_back(Value_String::GetString(*pValue));
+		pathList.push_back(Value_String::GetStringSTL(*pValue));
 	}
-	Basement::Inst.SetPathList(pathList);
 }
 
 // sys.ps1:String

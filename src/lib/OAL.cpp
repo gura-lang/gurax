@@ -107,7 +107,7 @@ bool OAL::DynamicLibrary::Open(const char* pathName)
 {
 	_hModule = ::LoadLibrary(ToNativeString(pathName).c_str());
 	if (!_hModule) {
-		Error::Issue(ErrorType::ModuleError, "can't open module file '%s'", pathName);
+		Error::Issue(ErrorType::ImportError, "can't open module file '%s'", pathName);
 		return false;
 	}
 	return true;
@@ -116,7 +116,7 @@ bool OAL::DynamicLibrary::Open(const char* pathName)
 void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 {
 	if (!_hModule) {
-		Error::Issue(ErrorType::ModuleError, "library has not been opened");
+		Error::Issue(ErrorType::ImportError, "library has not been opened");
 		return nullptr;
 	}
 	FARPROC pFunc = ::GetProcAddress(_hModule, funcName);
@@ -126,7 +126,7 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 		pFunc = ::GetProcAddress(_hModule, funcNameEx.c_str());
 	}
 	if (!pFunc) {
-		sig.SetError(ErrorType::ModuleError, "can't find entry function '%s'", funcName);
+		sig.SetError(ErrorType::ImportError, "can't find entry function '%s'", funcName);
 		return nullptr;
 	}
 	return pFunc;
@@ -183,7 +183,7 @@ bool OAL::DynamicLibrary::Open(const char* pathName)
 {
 	_hLibrary = dlopen(ToNativeString(pathName).c_str(), RTLD_LAZY);
 	if (_hLibrary == nullptr) {
-		Error::Issue(ErrorType::ModuleError, "%s", dlerror());
+		Error::Issue(ErrorType::ImportError, "%s", dlerror());
 		return false;
 	}
 	dlerror(); // clear any existing error
@@ -194,7 +194,7 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 {
 	void *pFunc = dlsym(_hLibrary, funcName);
 	if (!pFunc) {
-		Error::Issue(ErrorType::ModuleError, "can't find entry function '%s'", funcName);
+		Error::Issue(ErrorType::ImportError, "can't find entry function '%s'", funcName);
 		return nullptr;
 	}
 	return pFunc;

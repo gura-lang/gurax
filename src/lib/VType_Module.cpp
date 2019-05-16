@@ -23,7 +23,9 @@ String Value_Module::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%s>", GetModule().GetDottedSymbol().ToString().c_str());
+	str.Printf(":%s:%s>",
+			   GetModule().GetDottedSymbol().ToString().c_str(),
+			   GetModule().GetPathName());
 	return str;
 }
 
