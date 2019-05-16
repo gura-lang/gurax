@@ -10,13 +10,14 @@ TestCase('PUnit') {
 	]
 	PrintPUnitWithLabel(exprs)
 }
-sys.Exit()
+
 try {
 	Error.Raise(Error.SyntaxError, 'message')
 	Println('*skipped*')
 } catch {|e|
 	Println(e)
 }
+
 try {
 	try {
 		Error.Raise(Error.SyntaxError, 'message')
@@ -27,6 +28,7 @@ try {
 } catch {|e|
 	Println(e)
 }
+
 try {
 	try {
 		try {
@@ -43,7 +45,6 @@ try {
 	Println(e)
 }
 
-
 try {
 	scope {
 		Error.Raise(Error.SyntaxError, 'message')
@@ -51,6 +52,7 @@ try {
 } catch {|e|
 	Println(e)
 }
+
 try {
 	scope {
 		scope {
@@ -62,25 +64,30 @@ try {
 } catch {|e|
 	Println(e)
 }
+
 f1() = Error.Raise(Error.SyntaxError, 'message')
 f2() = f1()
 f3() = f2()
 f4() = f3()
+
 try {
 	f1()
 } catch {|e|
 	Println(e)
 }
+
 try {
 	f2()
 } catch {|e|
 	Println(e)
 }
+
 try {
 	f3()
 } catch {|e|
 	Println(e)
 }
+
 try {
 	f4()
 } catch {|e|

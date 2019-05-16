@@ -1,0 +1,58 @@
+======== PUnit ========
+try {f()}
+  ##0 Lookup(`f)
+  ##1 Argument()
+  ##2 Call(cont=##3)
+try {f()} catch {g()}
+  ##0 BeginTryBlock(branchdest=##5)
+  ##1 Lookup(`f)
+  ##2 Argument()
+  ##3 Call(cont=##4)
+  ##4 EndTryBlock(cont=##9)
+  ##5 NilJumpIfNoCatchAny(branchdest=##9), DiscardValue()
+  ##6 Lookup(`g)
+  ##7 Argument()
+  ##8 Call(cont=##9)
+  ##9 NoOperation()
+try {f()} catch {|e| g()}
+  ##0 BeginTryBlock(branchdest=##5)
+  ##1 Lookup(`f)
+  ##2 Argument()
+  ##3 Call(cont=##4)
+  ##4 EndTryBlock(cont=##12)
+  ##5 NilJumpIfNoCatchAny(branchdest=##12)
+  ##6 PushFrame<Block>()
+  ##7 AssignToDeclArg(`e), DiscardValue()
+  ##8 Lookup(`g)
+  ##9 Argument()
+  ##10 Call(cont=##11)
+  ##11 PopFrame()
+  ##12 NoOperation()
+try {f()} catch(Error.SyntaxError) {|e| g()}
+  ##0 BeginTryBlock(branchdest=##5)
+  ##1 Lookup(`f)
+  ##2 Argument()
+  ##3 Call(cont=##4)
+  ##4 EndTryBlock(cont=##17)
+  ##5 Lookup(`Error)
+  ##6 Member(`SyntaxError)
+  ##7 Cast(ErrorType)
+  ##8 JumpIfNoCatch(branchdest=##16)
+  ##9 PushFrame<Block>()
+  ##10 AssignToDeclArg(`e), DiscardValue()
+  ##11 Lookup(`g)
+  ##12 Argument()
+  ##13 Call(cont=##14)
+  ##14 PopFrame()
+  ##15 Jump(cont=##17)
+  ##16 Miscatch(<Nil>)
+  ##17 NoOperation()
+<Error:SyntaxError:test-try.gura:15>
+<Error:SyntaxError:test-try.gura:23>
+<Error:SyntaxError:test-try.gura:35>
+<Error:SyntaxError:test-try.gura:50>
+<Error:SyntaxError:test-try.gura:60>
+<Error:SyntaxError:test-try.gura:68>
+<Error:SyntaxError:test-try.gura:68>
+<Error:SyntaxError:test-try.gura:68>
+<Error:SyntaxError:test-try.gura:68>

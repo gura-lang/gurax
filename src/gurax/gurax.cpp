@@ -29,7 +29,7 @@ int Main(int argc, char* argv[])
 		return 1;
 	}
 	const char* fileName = argv[1];
-	RefPtr<Stream> pStream(Stream_File::Open(fileName, "rt"));
+	RefPtr<Stream> pStream(Stream_File::Open(PathName(fileName).MakeAbsName().c_str(), "rt"));
 	if (!pStream) {
 		Stream::CErr->Printf("failed to open file '%s'\n", fileName);
 		return 1;
