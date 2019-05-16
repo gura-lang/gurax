@@ -1,5 +1,5 @@
 #!/usr/bin/env gurax
-import(util) {*}
+import(util.tester) {*}
 
 TestCase('PUnit') {
 	exprs = [

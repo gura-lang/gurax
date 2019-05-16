@@ -1,4 +1,5 @@
 #!/usr/bin/env gurax
+import(util.tester)
 /*
 a = 5
 if (a == 0) {
