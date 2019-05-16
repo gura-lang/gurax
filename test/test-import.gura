@@ -17,6 +17,15 @@ TestCase('Basic Test') {
 	//Println(foo.Func1)
 }
 
+TestCase('Dotted Symbol') {
+	import(foo.sub1.sub2)
+	Tester(`dir(foo))
+	Tester(`dir(foo.sub1))
+	Tester(`dir(foo.sub1.sub2))
+}
+
 TestCase('Error') {
 	Tester(`import(bar))
+	foo = 3
+	Tester(`import(foo.sub1))
 }

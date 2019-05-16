@@ -153,10 +153,23 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 		}
 		return true;
 	}
-	if (GetDottedSymbol().IsDotted()) {
-		
+	size_t nSymbolsAll = GetDottedSymbol().GetLength();
+	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
+		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(GetDottedSymbol(), nSymbols));
+		if (frameCur.Lookup(*pDottedSymbol)) continue;
+		RefPtr<Module> pModule(Module::Import(processor, *pDottedSymbol));
+		if (!pModule) return false;
+		if (!frameCur.Assign(pModule.release())) {
+			Error::Issue(ErrorType::ImportError,
+						 "failed to assign module %s", pDottedSymbol->ToString().c_str());
+			return false;
+		}
 	}			
-	frameCur.Assign(Reference());
+	if (!frameCur.Assign(Reference())) {
+		Error::Issue(ErrorType::ImportError,
+					 "failed to assign module %s", GetDottedSymbol().ToString().c_str());
+		return false;
+	}
 	return true;
 }
 

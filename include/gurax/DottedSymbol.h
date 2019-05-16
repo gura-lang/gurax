@@ -84,6 +84,8 @@ public:
 		_symbolList.push_back(Symbol::Add(str3)); _symbolList.push_back(Symbol::Add(str4));
 		_symbolList.push_back(Symbol::Add(str5)); _symbolList.push_back(Symbol::Add(str6));
 	}
+	DottedSymbol(const DottedSymbol& src, size_t nSymbols) :
+		_symbolList(src._symbolList.begin(), src._symbolList.begin() + nSymbols) {}
 	explicit DottedSymbol(std::initializer_list<const Symbol*> initList) : _symbolList(initList) {}
 	// Copy constructor/operator
 	DottedSymbol(const DottedSymbol& src) : _symbolList(src._symbolList) {}
@@ -105,6 +107,7 @@ public:
 	bool AppendFromString(const char* str, char separator = '.');
 	bool AppendFromExpr(const Expr& expr);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	size_t GetLength() const { return _symbolList.size(); }
 	bool IsDotted() const { return _symbolList.size() > 1; }
 	bool IsEmpty() const { return _symbolList.empty(); }
 	bool IsEqualTo(const Symbol* pSymbol) const {
