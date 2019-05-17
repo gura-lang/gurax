@@ -56,7 +56,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else { // argument.IsMapToIter()
 		RefPtr<Iterator> pIterator(
-			new Iterator_ImplicitMap(processor.Reference(), Reference(), argument.Reference()));
+			new Iterator_FunctionImpMap(processor.Reference(), Reference(), argument.Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	}

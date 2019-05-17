@@ -70,9 +70,45 @@ String Iterator_ListElem::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_ImplicitMap
+// Iterator_UnaryOpImpMap
 //------------------------------------------------------------------------------
-Iterator_ImplicitMap::Iterator_ImplicitMap(Processor* pProcessor, Function* pFunction, Argument* pArgument) :
+Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValue) :
+	_pProcessor(pProcessor), _pOperator(pOperator), _pOpEntry(&OpEntry::Empty), _pValue(pValue),
+	_pVTypePrev(&VTYPE_Undefined), _flags(Flag::None), _len(0)
+{
+	_flags = Flag::Finite | Flag::LenDetermined;
+	_len = static_cast<size_t>(-1);
+	_pValue->UpdateIteratorInfo(_flags, _len);
+	if (!(_flags & Flag::LenDetermined)) _len = 0;
+}
+
+Value* Iterator_UnaryOpImpMap::NextValue()
+{
+	if (!_pValue->ReadyToPickValue()) return nullptr;
+	RefPtr<Value> pValueEach(_pValue->PickValue());
+	const VType& vtype = pValueEach->GetVType();
+	if (!vtype.IsIdentical(*_pVTypePrev)) {
+		if (!(_pOpEntry = _pOperator->LookupEntry(vtype)) &&
+			!(_pOpEntry = _pOperator->LookupEntry(VTYPE_Any))) {
+			Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
+						 _pOperator->IsMathUnary()? "math" : "unary", _pOperator->ToString(vtype).c_str());
+			return nullptr;
+		}
+	}
+	return _pOpEntry->EvalUnary(GetProcessor(), *pValueEach);
+}
+
+String Iterator_UnaryOpImpMap::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("UnaryOpImpMap");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_FunctionImpMap
+//------------------------------------------------------------------------------
+Iterator_FunctionImpMap::Iterator_FunctionImpMap(Processor* pProcessor, Function* pFunction, Argument* pArgument) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pArgument(pArgument),
 	_flags(Flag::None), _len(0)
 {
@@ -85,16 +121,16 @@ Iterator_ImplicitMap::Iterator_ImplicitMap(Processor* pProcessor, Function* pFun
 	if (!(_flags & Flag::LenDetermined)) _len = 0;
 }
 
-Value* Iterator_ImplicitMap::NextValue()
+Value* Iterator_FunctionImpMap::NextValue()
 {
 	if (!GetArgument().ReadyToPickValue()) return nullptr;
 	return GetFunction().DoEval(GetProcessor(), GetArgument());
 }
 
-String Iterator_ImplicitMap::ToString(const StringStyle& ss) const
+String Iterator_FunctionImpMap::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("ImplicitMap");
+	str.Printf("FunctionImpMap");
 	return str;
 }
 

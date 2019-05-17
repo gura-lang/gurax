@@ -99,6 +99,16 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
+OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
+{
+	return nullptr;
+}
+
+OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const
+{
+	return nullptr;
+}
+
 Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 {
 	if (value.IsUndefined()) return Value::undefined();
@@ -193,6 +203,8 @@ void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 //------------------------------------------------------------------------------
 // OpEntry
 //------------------------------------------------------------------------------
+const OpEntry OpEntry::Empty;
+
 Value* OpEntry::EvalUnary(Processor& processor, const Value& value) const
 {
 	return Value::nil();

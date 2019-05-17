@@ -91,9 +91,34 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_ImplicitMap
+// Iterator_UnaryOpImpMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_ImplicitMap : public Iterator {
+class GURAX_DLLDECLARE Iterator_UnaryOpImpMap : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	const Operator* _pOperator;
+	const OpEntry* _pOpEntry;
+	RefPtr<Value> _pValue;
+	const VType* _pVTypePrev;
+	Flags _flags;
+	size_t _len;
+public:
+	Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValue);
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Value& GetValue() { return *_pValue; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return _flags; }
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override { return _len; }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_FunctionImpMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_FunctionImpMap : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Function> _pFunction;
@@ -101,7 +126,7 @@ private:
 	Flags _flags;
 	size_t _len;
 public:
-	Iterator_ImplicitMap(Processor* pProcessor, Function* pFunction, Argument* pArgument);
+	Iterator_FunctionImpMap(Processor* pProcessor, Function* pFunction, Argument* pArgument);
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Function& GetFunction() { return *_pFunction; }
