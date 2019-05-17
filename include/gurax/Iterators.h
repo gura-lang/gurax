@@ -116,6 +116,34 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_BinaryOpImpMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_BinaryOpImpMap : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	const Operator* _pOperator;
+	const OpEntry* _pOpEntry;
+	RefPtr<Value> _pValueL;
+	RefPtr<Value> _pValueR;
+	const VType* _pVTypePrevL;
+	const VType* _pVTypePrevR;
+	Flags _flags;
+	size_t _len;
+public:
+	Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValueL, Value* pValueR);
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Value& GetValueL() { return *_pValueL; }
+	Value& GetValueR() { return *_pValueR; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return _flags; }
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override { return _len; }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_FunctionImpMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_FunctionImpMap : public Iterator {

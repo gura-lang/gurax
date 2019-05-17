@@ -99,23 +99,25 @@ const TokenType& Operator::GetTokenType() const
 	return TokenType::OpTypeToTokenType(_opType);
 }
 
-OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
+const OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
 {
-	OpEntry* pOpEntry = nullptr;
+	const OpEntry* pOpEntry = nullptr;
 	if ((pOpEntry = LookupEntry(vtype))) return pOpEntry;
 	if ((pOpEntry = LookupEntry(VTYPE_Any))) return pOpEntry;
+	if (vtype.IsIdentical(VTYPE_Undefined)) return &OpEntry::Empty;
 	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
 				 IsMathUnary()? "math" : "unary", ToString(vtype).c_str());
 	return nullptr;
 }
 
-OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const
+const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const
 {
-	OpEntry* pOpEntry = nullptr;
+	const OpEntry* pOpEntry = nullptr;
 	if ((pOpEntry = LookupEntry(vtypeL, vtypeR))) return pOpEntry;
 	if ((pOpEntry = LookupEntry(vtypeL, VTYPE_Any))) return pOpEntry;
 	if ((pOpEntry = LookupEntry(VTYPE_Any, vtypeR))) return pOpEntry;
 	if ((pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any))) return pOpEntry;
+	if (vtypeL.IsIdentical(VTYPE_Undefined) || vtypeR.IsIdentical(VTYPE_Undefined)) return &OpEntry::Empty;
 	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
 				 IsMathBinary()? "math" : "binary", ToString(vtypeL, vtypeR).c_str());
 	return nullptr;
@@ -123,15 +125,18 @@ OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) co
 
 Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 {
-	//if (value.IsUndefined()) return Value::undefined();
-	OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
-	return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
+	if (value.IsList()) {
+	} else if (value.IsIterator()) {
+	} else {
+		const OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
+		return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
+	}
+	return Value::nil();
 }
 
 Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
-	//if (valueL.IsUndefined() || valueR.IsUndefined()) return Value::undefined();
-	OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
+	const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
 	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 
@@ -205,12 +210,12 @@ const OpEntry OpEntry::Empty;
 
 Value* OpEntry::EvalUnary(Processor& processor, const Value& value) const
 {
-	return Value::nil();
+	return Value::undefined();
 }
 
 Value* OpEntry::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
-	return Value::nil();
+	return Value::undefined();
 }
 
 //------------------------------------------------------------------------------

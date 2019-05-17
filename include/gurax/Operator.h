@@ -317,8 +317,8 @@ public:
 	OpEntry* LookupEntry(const VType& vtypeL, const VType& vtypeR) const {
 		return _opEntryMap.Lookup(vtypeL, vtypeR);
 	}
-	OpEntry* FindMatchedEntry(const VType& vtype) const;
-	OpEntry* FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const;
+	const OpEntry* FindMatchedEntry(const VType& vtype) const;
+	const OpEntry* FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const;
 public:
 	Value* EvalUnary(Processor& processor, const Value& value) const;
 	Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
