@@ -101,40 +101,38 @@ const TokenType& Operator::GetTokenType() const
 
 OpEntry* Operator::FindMatchedEntry(const VType& vtype) const
 {
+	OpEntry* pOpEntry = nullptr;
+	if ((pOpEntry = LookupEntry(vtype))) return pOpEntry;
+	if ((pOpEntry = LookupEntry(VTYPE_Any))) return pOpEntry;
+	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
+				 IsMathUnary()? "math" : "unary", ToString(vtype).c_str());
 	return nullptr;
 }
 
 OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const
 {
+	OpEntry* pOpEntry = nullptr;
+	if ((pOpEntry = LookupEntry(vtypeL, vtypeR))) return pOpEntry;
+	if ((pOpEntry = LookupEntry(vtypeL, VTYPE_Any))) return pOpEntry;
+	if ((pOpEntry = LookupEntry(VTYPE_Any, vtypeR))) return pOpEntry;
+	if ((pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any))) return pOpEntry;
+	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
+				 IsMathBinary()? "math" : "binary", ToString(vtypeL, vtypeR).c_str());
 	return nullptr;
 }
 
 Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 {
-	if (value.IsUndefined()) return Value::undefined();
-	const OpEntry* pOpEntry = LookupEntry(value.GetVType());
-	if (pOpEntry) return pOpEntry->EvalUnary(processor, value);
-	pOpEntry = LookupEntry(VTYPE_Any);
-	if (pOpEntry) return pOpEntry->EvalUnary(processor, value);
-	Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
-				 IsMathUnary()? "math" : "unary", ToString(value.GetVType()).c_str());
-	return Value::undefined();
+	//if (value.IsUndefined()) return Value::undefined();
+	OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
+	return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 }
 
 Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
-	if (valueL.IsUndefined() || valueR.IsUndefined()) return Value::undefined();
-	const OpEntry* pOpEntry = LookupEntry(valueL.GetVType(), valueR.GetVType());
-	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
-	pOpEntry = LookupEntry(valueL.GetVType(), VTYPE_Any);
-	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
-	pOpEntry = LookupEntry(VTYPE_Any, valueR.GetVType());
-	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
-	pOpEntry = LookupEntry(VTYPE_Any, VTYPE_Any);
-	if (pOpEntry) return pOpEntry->EvalBinary(processor, valueL, valueR);
-	Error::Issue(ErrorType::TypeError, "unsuppported %s operation: %s",
-				 IsMathBinary()? "math" : "binary", ToString(valueL.GetVType(), valueR.GetVType()).c_str());
-	return Value::undefined();
+	//if (valueL.IsUndefined() || valueR.IsUndefined()) return Value::undefined();
+	OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
+	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 
 String Operator::ToString(const VType& vtype) const

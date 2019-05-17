@@ -88,12 +88,7 @@ Value* Iterator_UnaryOpImpMap::NextValue()
 	RefPtr<Value> pValueEach(_pValue->PickValue());
 	const VType& vtype = pValueEach->GetVType();
 	if (!vtype.IsIdentical(*_pVTypePrev)) {
-		if (!(_pOpEntry = _pOperator->LookupEntry(vtype)) &&
-			!(_pOpEntry = _pOperator->LookupEntry(VTYPE_Any))) {
-			Error::Issue(ErrorType::TypeError, "unsupported %s operation: %s",
-						 _pOperator->IsMathUnary()? "math" : "unary", _pOperator->ToString(vtype).c_str());
-			return nullptr;
-		}
+		if (!(_pOpEntry = _pOperator->FindMatchedEntry(vtype))) return nullptr;
 	}
 	return _pOpEntry->EvalUnary(GetProcessor(), *pValueEach);
 }
