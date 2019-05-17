@@ -126,18 +126,59 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 {
 	if (value.IsList()) {
+		RefPtr<Iterator> pIterator(
+			new Iterator_UnaryOpImpMap(
+				processor.Reference(), this,
+				new Value_ArgMapper(value.DoGenIterator())));
+		RefPtr<Value_List> pValueRtn(new Value_List());
+		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+		for (;;) {
+			RefPtr<Value> pValue(pIterator->NextValue());
+			if (!pValue) break;
+			valueTypedOwner.Add(pValue.release());
+		}
+		if (Error::IsIssued()) return Value::nil();
+		return pValueRtn.release();
 	} else if (value.IsIterator()) {
+		RefPtr<Iterator> pIterator(
+			new Iterator_UnaryOpImpMap(
+				processor.Reference(), this,
+				new Value_ArgMapper(value.DoGenIterator())));
+		return new Value_Iterator(pIterator.release());
 	} else {
 		const OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
 		return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 	}
-	return Value::nil();
 }
 
 Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
-	const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
-	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
+	if (valueL.IsIterator() || valueR.IsIterator()) {
+		RefPtr<Iterator> pIterator(
+			new Iterator_BinaryOpImpMap(
+				processor.Reference(), this,
+				valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
+				valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
+		return new Value_Iterator(pIterator.release());
+	} else if (valueL.IsList() || valueR.IsList()) {
+		RefPtr<Iterator> pIterator(
+			new Iterator_BinaryOpImpMap(
+				processor.Reference(), this,
+				valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
+				valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
+		RefPtr<Value_List> pValueRtn(new Value_List());
+		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+		for (;;) {
+			RefPtr<Value> pValue(pIterator->NextValue());
+			if (!pValue) break;
+			valueTypedOwner.Add(pValue.release());
+		}
+		if (Error::IsIssued()) return Value::nil();
+		return pValueRtn.release();
+	} else {
+		const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
+		return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
+	}
 }
 
 String Operator::ToString(const VType& vtype) const

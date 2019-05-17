@@ -34,7 +34,7 @@ String Value_ArgMapper::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
-Iterator* Value_ArgMapper::DoGenIterator()
+Iterator* Value_ArgMapper::DoGenIterator() const
 {
 	return GetIterator().Clone();
 }

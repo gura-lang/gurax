@@ -89,7 +89,7 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 	argument.SetMapMode(Argument::MapMode::ToIter);
 }
 
-Iterator* Value_Iterator::DoGenIterator()
+Iterator* Value_Iterator::DoGenIterator() const
 {
 	return GetIterator().Clone();
 }

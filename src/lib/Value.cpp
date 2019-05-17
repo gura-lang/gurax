@@ -94,7 +94,7 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 	}
 }
 
-Iterator* Value::DoGenIterator()
+Iterator* Value::DoGenIterator() const
 {
 	Error::Issue(ErrorType::IteratorError,
 				 "value type %s can not generate iterator", GetVType().MakeFullName().c_str());

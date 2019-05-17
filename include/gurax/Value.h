@@ -129,7 +129,7 @@ public:
 	virtual void DoIndexSet(const Index& index, Value* pValue);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr);
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
-	virtual Iterator* DoGenIterator();
+	virtual Iterator* DoGenIterator() const;
 public:
 	// Virtual functions for Formatter
 	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const;

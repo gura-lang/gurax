@@ -215,7 +215,7 @@ math.Atan2(nil, nil) .. unsuppported math operation: math.Atan2(Nil, Nil)
 !0 .. false
 !1 .. false
 !'' .. false
-![] .. false
+![] .. []
 ======== Operator .. ========
 1 .. 10 .. <Iterator:Range:begin=1:end=11:step=1>
 1 .. 1 .. <Iterator:Range:begin=1:end=2:step=1>

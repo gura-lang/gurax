@@ -71,7 +71,7 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
-	virtual Iterator* DoGenIterator() override;
+	virtual Iterator* DoGenIterator() const override;
 public:
 	// Virtual functions for runtime process
 	virtual bool ReadyToPickValue() override {
