@@ -3,6 +3,7 @@ cases=
 cases="$cases Dict"
 cases="$cases Expr"
 cases="$cases Function"
+cases="$cases ImplicitMapping"
 cases="$cases List"
 cases="$cases Number"
 cases="$cases Object"
