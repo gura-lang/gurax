@@ -5,6 +5,7 @@
 #define GURAX_STREAM_H
 #include "DateTime.h"
 #include "Formatter.h"
+#include "StringPicker.h"
 
 namespace Gurax {
 
@@ -68,11 +69,13 @@ protected:
 public:
 	static void Bootup();
 	Stream& Print(const char* str);
-	Stream& Print(const StringList& strList);
-	Stream& Print(const ValueList& valueList);
+	Stream& Print(StringPicker&& strPicker);
+	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }
+	Stream& Print(const ValueList& valueList) { return Print(StringPicker_ValueList(valueList)); }
 	Stream& Println(const char* str);
-	Stream& Println(const StringList& strList);
-	Stream& Println(const ValueList& valueList);
+	Stream& Println(StringPicker&& strPicker);
+	Stream& Println(const StringList& strList) { return Println(StringPicker_StringList(strList)); }
+	Stream& Println(const ValueList& valueList) { return Println(StringPicker_ValueList(valueList)); }
 	Stream& Println() { PutChar('\n'); return *this; }
 	Stream& PrintfV(const char* format, va_list ap);
 	Stream& Printf(const char* format, ...);

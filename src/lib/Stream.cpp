@@ -25,19 +25,9 @@ Stream& Stream::Print(const char* str)
 	return *this;
 }
 
-Stream& Stream::Print(const StringList& strList)
+Stream& Stream::Print(StringPicker&& strPicker)
 {
-	for (const String& str : strList) Print(str.c_str());
-	return *this;
-}
-
-Stream& Stream::Print(const ValueList& valueList)
-{
-	for (auto pValue : valueList) {
-		Print(pValue->IsInstanceOf(VTYPE_String)?
-			  dynamic_cast<const Value_String*>(pValue)->GetString() :
-			  pValue->ToString().c_str());
-	}
+	while (const char* str = strPicker.Pick()) Print(str);
 	return *this;
 }
 
@@ -48,16 +38,9 @@ Stream& Stream::Println(const char* str)
 	return *this;
 }
 
-Stream& Stream::Println(const StringList& strList)
+Stream& Stream::Println(StringPicker&& strPicker)
 {
-	Print(strList);
-	PutChar('\n');
-	return *this;
-}
-
-Stream& Stream::Println(const ValueList& valueList)
-{
-	Print(valueList);
+	Print(std::move(strPicker));
 	PutChar('\n');
 	return *this;
 }
