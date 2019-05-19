@@ -172,6 +172,16 @@ bool OAL::DoesExistFile(const char* pathName)
 	return S_ISREG(stat.st_mode);
 }
 
+int OAL::ExecProgram(
+	const char* pathName, StringPicker&& args,
+	Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag)
+{
+	
+
+
+	return 0;
+}
+
 //-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (POSIX)
 //-----------------------------------------------------------------------------

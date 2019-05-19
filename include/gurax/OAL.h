@@ -4,6 +4,7 @@
 #ifndef GURAX_OAL_H
 #define GURAX_OAL_H
 #include "Common.h"
+#include "StringPicker.h"
 
 namespace Gurax {
 
@@ -40,6 +41,19 @@ public:
 	static String GetCurDir();
 	static bool DoesExistDir(const char* pathName);
 	static bool DoesExistFile(const char* pathName);
+	static int ExecProgram(
+		const char* pathName, StringPicker&& args,
+		Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag);
+	static int ExecProgram(
+		const char* pathName, const ValueList& args,
+		Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag) {
+		return ExecProgram(pathName, StringPicker_ValueList(args), streamCIn, streamCOut, streamCErr, forkFlag);
+	}
+	static int ExecProgram(
+		const char* pathName, const StringList& args,
+		Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag) {
+		return ExecProgram(pathName, StringPicker_StringList(args), streamCIn, streamCOut, streamCErr, forkFlag);
+	}
 };
 
 }
