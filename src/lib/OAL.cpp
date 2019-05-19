@@ -45,11 +45,11 @@ namespace Gurax {
 String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
 {
 	int cchWideChar = ::MultiByteToWideChar(codePageSrc, 0, str, -1, nullptr, 0);
-	WCHAR *wcharBuff = new WCHAR [cchWideChar + 1];
+	WCHAR* wcharBuff = new WCHAR [cchWideChar + 1];
 	::MultiByteToWideChar(codePageSrc, 0, str, -1, wcharBuff, cchWideChar);
 	int cchMultiByte = ::WideCharToMultiByte(codePageDst, 0,
 				wcharBuff, cchWideChar, nullptr, 0, nullptr, nullptr);
-	char *charBuff = new char [cchMultiByte + 1];
+	char* charBuff = new char [cchMultiByte + 1];
 	::WideCharToMultiByte(codePageDst, 0,
 				wcharBuff, cchWideChar, charBuff, cchMultiByte, nullptr, nullptr);
 	charBuff[cchMultiByte] = '\0';
@@ -80,7 +80,7 @@ String OAL::GetCurDir()
 	return dirName;
 }
 
-bool OAL::DoesExistDir(const char *pathName)
+bool OAL::DoesExistDir(const char* pathName)
 {
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
 	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
@@ -88,7 +88,7 @@ bool OAL::DoesExistDir(const char *pathName)
 	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
 }
 
-bool OAL::DoesExistFile(const char *pathName)
+bool OAL::DoesExistFile(const char* pathName)
 {
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
 	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
@@ -149,7 +149,7 @@ String OAL::FromNativeString(const char* str)
 
 String OAL::GetCurDir()
 {
-	char *rtn = ::getcwd(nullptr, 0);
+	char* rtn = ::getcwd(nullptr, 0);
 	String dirName = FromNativeString(rtn);
 	::free(rtn);
 	if (dirName.empty() || !PathName::IsSep(dirName.back())) {
@@ -192,7 +192,7 @@ bool OAL::DynamicLibrary::Open(const char* pathName)
 
 void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 {
-	void *pFunc = dlsym(_hLibrary, funcName);
+	void* pFunc = dlsym(_hLibrary, funcName);
 	if (!pFunc) {
 		Error::Issue(ErrorType::ImportError, "can't find entry function '%s'", funcName);
 		return nullptr;
