@@ -13,6 +13,9 @@ Gurax_DeclareFunction(Exit)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("exitCode", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementFunction(Exit)
