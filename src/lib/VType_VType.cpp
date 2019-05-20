@@ -34,6 +34,16 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 	return GetVTypeThis().MakeFullName();
 }
 
+const DeclCallable* Value_VType::GetDeclCallable() const
+{
+	return GetVTypeThis().GetDeclCallable();
+}
+
+void Value_VType::DoCall(Processor& processor, Argument& argument)
+{
+	GetVTypeThis().DoCall(processor, argument);
+}
+
 Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandlerOfClass(pSymbol);

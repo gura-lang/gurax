@@ -8,23 +8,24 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#EndsWith(sub:String, endpos?:Number):map:[rest,icase]
+// String#EndsWith(sub:String, posEnd?:Number):map:[rest,icase]
 Gurax_DeclareMethod(String, EndsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("endpos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("posEnd", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the string ends with suffix.\n"
+		"Returns `true` if the string ends with the specified suffix `sub`.\n"
 		"\n"
-		"If attribute `:rest` is specified,\n"
-		"it returns the rest part if the string ends with suffix, or `nil` otherewise.\n"
-		"You can specify a bottom position for the matching by an argument `endpos`.\n"
+		"The optional argument `posEnd` specifies the bottom position of the string where the matching starts.\n"
 		"\n"
-		"With an attribute `:icase`, character cases are ignored while matching.");
+		"If the attribute `:rest` is specified,\n"
+		"it returns the rest part if the string ends with the specified suffix, and `nil` otherewise.\n"
+		"\n"
+		"When the attribute `:icase` is specified, character cases are ignored.\n");
 }
 
 Gurax_ImplementMethod(String, EndsWith)
@@ -56,7 +57,7 @@ Gurax_DeclareMethod(String, Find)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("endpos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("pos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rev));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(

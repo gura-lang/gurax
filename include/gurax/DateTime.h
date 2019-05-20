@@ -57,6 +57,17 @@ protected:
 	// Destructor
 	virtual ~DateTime() = default;
 public:
+	Int16 GetYear() const { return _year; }
+	Int8 GetMonth() const { return _month; }
+	Int8 GeDay() const { return _day; }
+	Int32 GetSec() const { return _sec; }
+	Int32 GetUSec() const { return _usec; }
+	void SetYear(Int16 year) { _year = year; }
+	void SetMonth(Int8 month) { _month = month; }
+	void SeDay(Int8 day) { _day = day; }
+	void SetSec(Int32 sec) { _sec = sec; }
+	void SetUSec(Int32 usec) { _usec = usec; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DateTime& dateTime) const { return this == &dateTime; }
 	bool IsEqualTo(const DateTime& dateTime) const { return IsIdentical(dateTime); }

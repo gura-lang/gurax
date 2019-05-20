@@ -12,6 +12,10 @@
 
 namespace Gurax {
 
+class Argument;
+class DeclCallable;
+class Processor;
+
 //------------------------------------------------------------------------------
 // VType
 //------------------------------------------------------------------------------
@@ -104,6 +108,8 @@ public:
 	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
 	virtual Value* DoCastFrom(const Value& value) const;
+	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
+	virtual void DoCall(Processor& processor, Argument& argument);
 };
 
 //------------------------------------------------------------------------------

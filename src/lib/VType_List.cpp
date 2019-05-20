@@ -41,7 +41,7 @@ Gurax_DeclareProperty_R(List, len)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the number of elements in the list.");
+		"The number of elements in the list.");
 }
 
 Gurax_ImplementPropertyGetter(List, len)
@@ -56,7 +56,7 @@ Gurax_DeclareProperty_R(List, vtypeOfElem)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the value type of elements in the list.");
+		"The value type of elements in the list.");
 }
 
 Gurax_ImplementPropertyGetter(List, vtypeOfElem)

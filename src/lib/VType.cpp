@@ -118,6 +118,12 @@ Value* VType::DoCastFrom(const Value& value) const
 	return nullptr;
 }
 
+void VType::DoCall(Processor& processor, Argument& argument)
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s does not have a constructor", MakeFullName().c_str());
+}
+
 //------------------------------------------------------------------------------
 // VTypeMap
 //------------------------------------------------------------------------------

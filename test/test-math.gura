@@ -36,5 +36,8 @@ TestCase('PUnit') {
 	]
 	PrintPUnitWithLabel(exprs)
 }
-Tester(`math.e)
-Tester(`math.pi)
+
+TestCase('Constant') {
+	Tester(`math.e)
+	Tester(`math.pi)
+}

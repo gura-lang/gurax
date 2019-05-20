@@ -19,6 +19,13 @@ TestCase('PUnit') {
 	PrintPUnitWithLabel(exprs)
 }
 
+TestCase('Property') {
+	func() = {}
+	Tester(`func.name)
+	Tester(`func.type)
+	Tester(`String.Find.type)
+}
+
 TestCase('return') {
 	f() = return
 	g() = return(3)

@@ -149,6 +149,10 @@ f(a => 1, b => 2, c => 3, d => 4, e => 5)
   ##15 Value(<Number:5>)
   ##16 EndArgSlotNamed()
   ##17 Call(cont=##18)
+======== Property ========
+func.name .. func
+func.type .. `function
+String.Find.type .. `method
 ======== return ========
 f() .. nil
 g() .. 3
