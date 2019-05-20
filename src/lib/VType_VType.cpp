@@ -39,7 +39,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandlerOfClass(pSymbol);
 	if (!pPropHandler) {
 		return GetVTypeThis().GetFrame().Lookup(pSymbol);
-	} else if (pPropHandler->IsReadable()) {
+	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		return pPropHandler->DoGetValue(*this, attr);
 	} else {
 		return nullptr;
@@ -52,8 +52,9 @@ bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const A
 	if (!pPropHandler) {
 		GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
 		return true;
-	} else if (pPropHandler->IsWritable()) {
-		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(*pValue, pPropHandler->GetListVarFlag()));
+	} else if (pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(
+									   *pValue, pPropHandler->IsSet(PropHandler::Flag::ListVar)));
 		if (!pValueCasted) return false;
 		pPropHandler->DoSetValue(*this, *pValueCasted, attr);
 		return true;

@@ -87,7 +87,8 @@ public:
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
 	void Assign(PropHandler* pPropHandler) {
-		(pPropHandler->IsOfClass()? GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
+		(pPropHandler->IsSet(PropHandler::Flag::OfClass)?
+		 GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
 	}
 public:
 	void Prepare(Frame& frameOuter);

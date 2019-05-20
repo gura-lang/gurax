@@ -39,10 +39,44 @@ Gurax_DeclareModuleProperty_RW(cin)
 
 Gurax_ImplementModulePropertyGetter(cin)
 {
+	return new Value_Stream(Basement::Inst.GetStreamCIn().Reference());
 }
 
 Gurax_ImplementModulePropertySetter(cin)
 {
+	Basement::Inst.SetStreamCIn(Value_Stream::GetStream(value).Reference());
+}
+
+// sys.cout
+Gurax_DeclareModuleProperty_RW(cout)
+{
+	Declare(VTYPE_Stream, Flag::None);
+}
+
+Gurax_ImplementModulePropertyGetter(cout)
+{
+	return new Value_Stream(Basement::Inst.GetStreamCOut().Reference());
+}
+
+Gurax_ImplementModulePropertySetter(cout)
+{
+	Basement::Inst.SetStreamCOut(Value_Stream::GetStream(value).Reference());
+}
+
+// sys.cerr
+Gurax_DeclareModuleProperty_RW(cerr)
+{
+	Declare(VTYPE_Stream, Flag::None);
+}
+
+Gurax_ImplementModulePropertyGetter(cerr)
+{
+	return new Value_Stream(Basement::Inst.GetStreamCErr().Reference());
+}
+
+Gurax_ImplementModulePropertySetter(cerr)
+{
+	Basement::Inst.SetStreamCErr(Value_Stream::GetStream(value).Reference());
 }
 
 // sys.path[]:String
@@ -115,13 +149,12 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	// Assignment of value
-	Assign("cin", new Value_Stream(Stream::CIn->Reference()));
-	Assign("cout", new Value_Stream(Stream::COut->Reference()));
-	Assign("cerr", new Value_Stream(Stream::CErr->Reference()));
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
 	// Assignment of property
+	Assign(Gurax_CreateModuleProperty(cin));
+	Assign(Gurax_CreateModuleProperty(cout));
+	Assign(Gurax_CreateModuleProperty(cerr));
 	Assign(Gurax_CreateModuleProperty(path));
 	Assign(Gurax_CreateModuleProperty(ps1));
 	Assign(Gurax_CreateModuleProperty(ps2));

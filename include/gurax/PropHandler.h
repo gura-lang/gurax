@@ -169,11 +169,8 @@ public:
 	}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVType() const { return *_pVType; }
-	const Flags GegFlags() const { return _flags; }
-	bool IsReadable() const { return (_flags & Flag::Readable) != 0; }
-	bool IsWritable() const { return (_flags & Flag::Writable) != 0; }
-	bool IsOfClass() const { return (_flags & Flag::OfClass) != 0; }
-	bool GetListVarFlag() const { return _flags & Flag::ListVar; }
+	const Flags GetFlags() const { return _flags; }
+	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
 public:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;

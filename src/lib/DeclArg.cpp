@@ -141,7 +141,8 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 					 "unknown value type: %s", GetDottedSymbol().ToString().c_str());
 		return nullptr;
 	}
-	return GetVType().Cast(value, GetListVarFlag());
+	
+	return GetVType().Cast(value, IsSet(Flag::ListVar));
 }
 
 String DeclArg::FlagsToString(Flags flags)
