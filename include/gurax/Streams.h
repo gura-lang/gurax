@@ -8,6 +8,22 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Stream_Dumb
+//------------------------------------------------------------------------------
+class Stream_Dumb : public Stream {
+public:
+	Stream_Dumb() {}
+	virtual bool IsDumb() const { return true; }
+	virtual const char* GetName() const { return "dumb"; };
+	virtual const char* GetIdentifier() const { return "dumb"; }
+	virtual void Close() {}
+	virtual int GetChar() { return 0; }
+	virtual bool PutChar(char ch) { return true; }
+	virtual size_t Read(void* buff, size_t len) { ::memset(buff, 0x00, len); return len; }
+	virtual size_t Write(const void* buff, size_t len) { return len; }
+};
+
+//------------------------------------------------------------------------------
 // Stream_File
 //------------------------------------------------------------------------------
 class Stream_File : public Stream {
@@ -26,9 +42,9 @@ public:
 		if (_closeAtDeletionFlag) ::fclose(_fp);
 	}
 	static Stream* Open(const char* fileName, const char* mode);
-	virtual void Close() { ::fclose(_fp); }
 	virtual const char* GetName() const { return _name.c_str(); };
 	virtual const char* GetIdentifier() const { return _identifier.c_str(); }
+	virtual void Close() { ::fclose(_fp); }
 	virtual int GetChar() { return ::fgetc(_fp); }
 	virtual bool PutChar(char ch) { ::fputc(ch, _fp); return true; }
 	virtual size_t Read(void* buff, size_t len) {

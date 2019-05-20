@@ -32,6 +32,15 @@ TestCase('Recursion') {
 	Printf('%d! = %d\n', n, Fact(n))
 }
 
+TestCase('nil attribute') {
+	f(a:Number) = a
+	g(a:Number:nil) = a
+	Tester(`f)
+	Tester(`g)
+	Tester(`f(nil))
+	Tester(`g(nil))
+}
+
 TestCase('dynamic_scope') {
 	f_static() = Println('[static]  a = ', a)
 	f_dynamic():dynamic_scope = Println('[dynamic] a = ', a)

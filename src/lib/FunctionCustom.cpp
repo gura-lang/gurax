@@ -33,12 +33,14 @@ String FunctionCustom::ToString(const StringStyle& ss) const
 	String str;
 	str += MakeFullName();
 	str += GetDeclCallable().ToString(ss);
+#if 0
 	str += ss.IsCram()? "=" : " = ";
 	if (GetPUnitBody()) {
 		str.Printf("#%zu", GetPUnitBody()->GetSeqId());
 	} else {
 		str += "null";
 	}
+#endif
 	return str;
 }
 

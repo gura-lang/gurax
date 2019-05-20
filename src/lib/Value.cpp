@@ -73,7 +73,7 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 	if (!pPropHandler) {
 		return GetVType().GetFrame().Lookup(pSymbol);
 	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
-		return pPropHandler->DoGetValue(*this, attr);
+		return pPropHandler->GetValue(*this, attr);
 	} else {
 		return nullptr;
 	}
@@ -85,11 +85,7 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 	if (!pPropHandler) {
 		return false;
 	} else if (pPropHandler->IsSet(PropHandler::Flag::Writable)) {
-		RefPtr<Value> pValueCasted(pPropHandler->GetVType().Cast(
-									   *pValue, pPropHandler->IsSet(PropHandler::Flag::ListVar)));
-		if (!pValueCasted) return false;
-		pPropHandler->DoSetValue(*this, *pValueCasted, attr);
-		return true;
+		return pPropHandler->SetValue(*this, *pValue, attr);
 	} else {
 		return false;
 	}

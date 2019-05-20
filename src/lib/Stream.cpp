@@ -8,12 +8,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Stream
 //------------------------------------------------------------------------------
+RefPtr<Stream> Stream::Dumb;
 RefPtr<Stream> Stream::CIn;
 RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
 void Stream::Bootup()
 {
+	Dumb.reset(new Stream_Dumb());
 	CIn.reset(new Stream_File(stdin, false, "CIn"));
 	COut.reset(new Stream_File(stdout, false, "COut"));
 	CErr.reset(new Stream_File(stderr, false, "CErr"));

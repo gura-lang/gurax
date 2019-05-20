@@ -14,6 +14,14 @@ PropHandler::PropHandler(const Symbol* pSymbol, Flags flags) :
 {
 }
 
+bool PropHandler::SetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+{
+	RefPtr<Value> pValueCasted(GetVType().Cast(value, IsSet(Flag::ListVar)));
+	if (!pValueCasted) return false;
+	DoSetValue(valueTarget, *pValueCasted, attr);
+	return true;
+}
+
 //------------------------------------------------------------------------------
 // PropHandlerMap
 //------------------------------------------------------------------------------

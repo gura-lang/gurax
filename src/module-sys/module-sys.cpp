@@ -34,7 +34,7 @@ Gurax_ImplementFunction(Exit)
 // sys.cin
 Gurax_DeclareModuleProperty_RW(cin)
 {
-	Declare(VTYPE_Stream, Flag::None);
+	Declare(VTYPE_Stream, Flag::Nil);
 }
 
 Gurax_ImplementModulePropertyGetter(cin)
@@ -50,7 +50,7 @@ Gurax_ImplementModulePropertySetter(cin)
 // sys.cout
 Gurax_DeclareModuleProperty_RW(cout)
 {
-	Declare(VTYPE_Stream, Flag::None);
+	Declare(VTYPE_Stream, Flag::Nil);
 }
 
 Gurax_ImplementModulePropertyGetter(cout)
@@ -66,7 +66,7 @@ Gurax_ImplementModulePropertySetter(cout)
 // sys.cerr
 Gurax_DeclareModuleProperty_RW(cerr)
 {
-	Declare(VTYPE_Stream, Flag::None);
+	Declare(VTYPE_Stream, Flag::Nil);
 }
 
 Gurax_ImplementModulePropertyGetter(cerr)

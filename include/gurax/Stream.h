@@ -51,6 +51,7 @@ public:
 		inline Info() : uid(0), gid(0), flags(Flag::None), flagsMask(Flag::None) {}
 	};
 public:
+	static RefPtr<Stream> Dumb;
 	static RefPtr<Stream> CIn;
 	static RefPtr<Stream> COut;
 	static RefPtr<Stream> CErr;
@@ -83,6 +84,7 @@ public:
 	bool ReadLine(String& str, bool includeEOLFlag);
 	bool ReadLines(StringList& strList, bool includeEOLFlag);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
+	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
 	virtual void Close() = 0;

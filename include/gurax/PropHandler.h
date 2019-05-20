@@ -13,11 +13,12 @@
 class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
 	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
 		return dynamic_cast<Value_##nameVType&>(valueTarget); \
 	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
 	PropHandler(name_, Flag::Readable)
@@ -28,11 +29,12 @@ PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* n
 class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
 	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
 		return dynamic_cast<Value_##nameVType&>(valueTarget); \
 	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
 	PropHandler(name_, Flag::Readable | Flag::Writable)
@@ -54,11 +56,12 @@ void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Valu
 class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
 	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
 		return dynamic_cast<Value_##nameVType&>(valueTarget); \
 	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
 	PropHandler(name_, Flag::Readable | Flag::OfClass)
@@ -69,11 +72,12 @@ PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* n
 class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
 	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
 		return dynamic_cast<Value_##nameVType&>(valueTarget); \
 	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
 	PropHandler(name_, Flag::Readable | Flag::Writable | Flag::OfClass)
@@ -95,6 +99,7 @@ void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Valu
 class PropHandler_##name : public PropHandler { \
 public: \
 	PropHandler_##name(const char* name_ = strName); \
+protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
@@ -107,6 +112,7 @@ PropHandler_##name::PropHandler_##name(const char* name_) : \
 class PropHandler_##name : public PropHandler { \
 public: \
 	PropHandler_##name(const char* name_ = strName); \
+protected: \
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
@@ -140,6 +146,7 @@ public:
 		static const Flags Writable			= (1 << 1);
 		static const Flags ListVar			= (1 << 2);
 		static const Flags OfClass			= (1 << 3);
+		static const Flags Nil				= (1 << 4);
 	};
 private:
 	const Symbol* _pSymbol;
@@ -171,7 +178,11 @@ public:
 	const VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }
 	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
-public:
+	Value* GetValue(Value& valueTarget, const Attribute& attr) const {
+		return DoGetValue(valueTarget, attr);
+	}
+	bool SetValue(Value& valueTarget, const Value& value, const Attribute& attr) const;
+protected:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const = 0;
