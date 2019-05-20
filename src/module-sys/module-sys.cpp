@@ -39,12 +39,14 @@ Gurax_DeclareModuleProperty_RW(cin)
 
 Gurax_ImplementModulePropertyGetter(cin)
 {
-	return new Value_Stream(Basement::Inst.GetStreamCIn().Reference());
+	Stream& stream = Basement::Inst.GetStreamCIn();
+	return stream.IsDumb()? Value::nil() : new Value_Stream(stream.Reference());
 }
 
 Gurax_ImplementModulePropertySetter(cin)
 {
-	Basement::Inst.SetStreamCIn(Value_Stream::GetStream(value).Reference());
+	Basement::Inst.SetStreamCIn(
+		value.IsNil()? Stream::Dumb->Reference() : Value_Stream::GetStream(value).Reference());
 }
 
 // sys.cout
@@ -55,12 +57,14 @@ Gurax_DeclareModuleProperty_RW(cout)
 
 Gurax_ImplementModulePropertyGetter(cout)
 {
-	return new Value_Stream(Basement::Inst.GetStreamCOut().Reference());
+	Stream& stream = Basement::Inst.GetStreamCOut();
+	return stream.IsDumb()? Value::nil() : new Value_Stream(stream.Reference());
 }
 
 Gurax_ImplementModulePropertySetter(cout)
 {
-	Basement::Inst.SetStreamCOut(Value_Stream::GetStream(value).Reference());
+	Basement::Inst.SetStreamCOut(
+		value.IsNil()? Stream::Dumb->Reference() : Value_Stream::GetStream(value).Reference());
 }
 
 // sys.cerr
@@ -71,12 +75,14 @@ Gurax_DeclareModuleProperty_RW(cerr)
 
 Gurax_ImplementModulePropertyGetter(cerr)
 {
-	return new Value_Stream(Basement::Inst.GetStreamCErr().Reference());
+	Stream& stream = Basement::Inst.GetStreamCErr();
+	return stream.IsDumb()? Value::nil() : new Value_Stream(stream.Reference());
 }
 
 Gurax_ImplementModulePropertySetter(cerr)
 {
-	Basement::Inst.SetStreamCErr(Value_Stream::GetStream(value).Reference());
+	Basement::Inst.SetStreamCErr(
+		value.IsNil()? Stream::Dumb->Reference() : Value_Stream::GetStream(value).Reference());
 }
 
 // sys.path[]:String
