@@ -27,8 +27,11 @@ Gurax_ImplementFunction(Exec)
 	const char* pathName = args.PickString();
 	const ValueList& valList = Value_List::GetValueOwner(args.PickValue());
 	// Function body
-	//OAL::ExecProgram(pathName, valList);
-	//std::exit(exitCode);
+	Stream& streamCIn = Basement::Inst.GetStreamCIn();
+	Stream& streamCOut = Basement::Inst.GetStreamCOut();
+	Stream& streamCErr = Basement::Inst.GetStreamCErr();
+	bool forkFlag = argument.IsSet(Gurax_Symbol(fork));
+	OAL::ExecProgram(pathName, valList, &streamCIn, &streamCOut, &streamCErr, forkFlag);
 	return Value::nil();
 }
 
@@ -43,7 +46,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	//Assign(Gurax_CreateFunction(Exit));
+	Assign(Gurax_CreateFunction(Exec));
 	return true;
 }
 

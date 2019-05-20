@@ -31,6 +31,20 @@ Gurax_ImplementFunction(Exit)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// sys.cin
+Gurax_DeclareModuleProperty_RW(cin)
+{
+	Declare(VTYPE_Stream, Flag::None);
+}
+
+Gurax_ImplementModulePropertyGetter(cin)
+{
+}
+
+Gurax_ImplementModulePropertySetter(cin)
+{
+}
+
 // sys.path[]:String
 Gurax_DeclareModuleProperty_RW(path)
 {

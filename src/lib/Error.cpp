@@ -16,6 +16,7 @@ const ErrorType ErrorType::DividedByZero	("DividedByZero",		"divided by zero");
 const ErrorType ErrorType::ImportError		("ImportError",			"import error");
 const ErrorType ErrorType::IndexError		("IndexError",			"index error");
 const ErrorType ErrorType::InvalidOperation	("InvalidOperation",	"invalid operation");
+const ErrorType ErrorType::IOError			("IOError",				"I/O error");
 const ErrorType ErrorType::IteratorError	("IteratorError",		"iterator error");
 const ErrorType ErrorType::PropertyError	("PropertyError",		"property error");
 const ErrorType ErrorType::StreamError		("StreamError",			"stream error");

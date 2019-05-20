@@ -37,6 +37,17 @@ typedef int mode_t;
 
 namespace Gurax {
 
+void AppendCmdLine(String& cmdLine, const char* arg)
+{
+	if (::strchr(arg, ' ')) {
+		cmdLine += '"';
+		cmdLine += arg;
+		cmdLine += '"';
+	} else {
+		cmdLine += arg;
+	}
+}
+
 #if defined(GURAX_ON_MSWIN)
 
 //------------------------------------------------------------------------------
@@ -174,84 +185,85 @@ bool OAL::DoesExistFile(const char* pathName)
 
 int OAL::ExecProgram(
 	const char* pathName, StringPicker&& args,
-	Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag)
+	Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag)
 {
 	int exitCode = 0;
-#if 0
 	pid_t pid = 0;
 	RefPtr<Memory> pMemory(new MemoryHeap(32768));
-	char *argv[4];
+	std::array<char*, 4> argv;
 	argv[0] = ::strdup("/bin/sh");
 	argv[1] = ::strdup("-c");
 	String cmdLine;
 	cmdLine = ToNativeString(pathName);
-	foreach_const (ValueList, pValue, valList) {
+	while (const char* arg = args.Pick()) {
 		cmdLine += " ";
-		AppendCmdLine(cmdLine, ToNativeString(pValue->GetString()).c_str());
+		AppendCmdLine(cmdLine, ToNativeString(arg).c_str());
 	}
 	argv[2] = ::strdup(cmdLine.c_str());
 	argv[3] = nullptr;
 	if (forkFlag) {
 		pid_t pid = ::fork();
 		if (pid == 0) {
-			::execv("/bin/sh", argv);
+			::execv("/bin/sh", argv.data());
 			::exit(1);
 		}
 		goto done;
 	}
-	int fdsStdin[2];
-	int fdsStdout[2];
-	int fdsStderr[2];
-	if (::pipe(fdsStdin) < 0 || ::pipe(fdsStdout) < 0 || ::pipe(fdsStderr) < 0) {
-		Error::Issue(ERR_IOError, "failed to create pipes");
+	int fdsCIn[2];
+	int fdsCOut[2];
+	int fdsCErr[2];
+	if (::pipe(fdsCIn) < 0 || ::pipe(fdsCOut) < 0 || ::pipe(fdsCErr) < 0) {
+		Error::Issue(ErrorType::IOError, "failed to create pipes");
 		goto done;
 	}
 	pid = ::fork();
 	if (pid == 0) {
-		::dup2(fdsStdin[0], 0);
-		::dup2(fdsStdout[1], 1);
-		::dup2(fdsStderr[1], 2);
+		::dup2(fdsCIn[0], 0);
+		::dup2(fdsCOut[1], 1);
+		::dup2(fdsCErr[1], 2);
 		for (int i = 0; i < 2; i++) {
-			::close(fdsStdin[i]);
-			::close(fdsStdout[i]);
-			::close(fdsStderr[i]);
+			::close(fdsCIn[i]);
+			::close(fdsCOut[i]);
+			::close(fdsCErr[i]);
 		}
-		::execv("/bin/sh", argv);
+		::execv("/bin/sh", argv.data());
 		::exit(1);
 	}
 	fd_set fdsRead;
 	for (;;) {
-		if (pStreamStdin != nullptr && !pStreamStdin->GetBlocking()) {
+#if 0
+		if (pStreamCIn && !pStreamCIn->GetBlocking()) {
 			char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
-			size_t bytesRead = pStreamStdin->Read(sig, buff, pMemory->GetSize());
+			size_t bytesRead = pStreamCIn->Read(sig, buff, pMemory->GetSize());
 			if (sig.IsSignalled()) goto done;
 			if (bytesRead == 0) {
-				::close(fdsStdin[1]);
+				::close(fdsCIn[1]);
 			} else {
-				::write(fdsStdin[1], buff, bytesRead);
+				::write(fdsCIn[1], buff, bytesRead);
 			}
 		}
+#endif
 		timeval tv;
 		::memset(&tv, 0x00, sizeof(tv));
 		tv.tv_sec = 0;
 		tv.tv_usec = 100 * 1000;
 		FD_ZERO(&fdsRead);
-		if (pStreamStdout != nullptr) FD_SET(fdsStdout[0], &fdsRead);
-		if (pStreamStderr != nullptr) FD_SET(fdsStderr[0], &fdsRead);
-		::select(ChooseMax(fdsStdout[0], fdsStderr[0]) + 1, &fdsRead, nullptr, nullptr, &tv);
+		if (pStreamCOut) FD_SET(fdsCOut[0], &fdsRead);
+		if (pStreamCErr) FD_SET(fdsCErr[0], &fdsRead);
+		::select(std::max(fdsCOut[0], fdsCErr[0]) + 1, &fdsRead, nullptr, nullptr, &tv);
 		bool idleFlag = true;
-		if (FD_ISSET(fdsStdout[0], &fdsRead)) {
+		if (FD_ISSET(fdsCOut[0], &fdsRead)) {
 			idleFlag = false;
 			char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
-			size_t bytesRead = ::read(fdsStdout[0], buff, pMemory->GetSize());
-			pStreamStdout->Write(buff, bytesRead);
+			size_t bytesRead = ::read(fdsCOut[0], buff, pMemory->GetSize());
+			pStreamCOut->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}
-		if (FD_ISSET(fdsStderr[0], &fdsRead)) {
+		if (FD_ISSET(fdsCErr[0], &fdsRead)) {
 			idleFlag = false;
 			char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
-			size_t bytesRead = ::read(fdsStderr[0], buff, pMemory->GetSize());
-			pStreamStderr->Write(buff, bytesRead);
+			size_t bytesRead = ::read(fdsCErr[0], buff, pMemory->GetSize());
+			pStreamCErr->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}
 		if (idleFlag) {
@@ -264,13 +276,12 @@ int OAL::ExecProgram(
 		}
 	}
 	for (int i = 0; i < 2; i++) {
-		::close(fdsStdin[i]);	// fdsStdin[1] may already have been closed.
-		::close(fdsStdout[i]);
-		::close(fdsStderr[i]);
+		::close(fdsCIn[i]);	// fdsCIn[1] may already have been closed.
+		::close(fdsCOut[i]);
+		::close(fdsCErr[i]);
 	}
 done:
-	for (size_t i = 0; i < ArraySizeOf(argv); i++) ::free(argv[i]);
-#endif
+	for (char* arg : argv) ::free(arg);
 	return exitCode;
 }
 

@@ -23,6 +23,9 @@ void Basement::Prepare()
 	PrepareValue(frame);
 	Statements::AssignToBasement(frame);
 	Functions::AssignToBasement(frame);
+	SetStreamCIn(Stream::CIn->Reference());
+	SetStreamCOut(Stream::COut->Reference());
+	SetStreamCErr(Stream::CErr->Reference());
 	frame.Assign(Module_codecs::Create(frame.Reference()));
 	frame.Assign(Module_fs::Create(frame.Reference()));
 	frame.Assign(Module_math::Create(frame.Reference()));

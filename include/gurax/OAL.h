@@ -43,16 +43,16 @@ public:
 	static bool DoesExistFile(const char* pathName);
 	static int ExecProgram(
 		const char* pathName, StringPicker&& args,
-		Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag);
+		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag);
 	static int ExecProgram(
 		const char* pathName, const ValueList& args,
-		Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag) {
-		return ExecProgram(pathName, StringPicker_ValueList(args), streamCIn, streamCOut, streamCErr, forkFlag);
+		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {
+		return ExecProgram(pathName, StringPicker_ValueList(args), pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
 	}
 	static int ExecProgram(
 		const char* pathName, const StringList& args,
-		Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag) {
-		return ExecProgram(pathName, StringPicker_StringList(args), streamCIn, streamCOut, streamCErr, forkFlag);
+		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {
+		return ExecProgram(pathName, StringPicker_StringList(args), pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
 	}
 };
 
