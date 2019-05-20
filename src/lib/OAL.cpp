@@ -176,10 +176,102 @@ int OAL::ExecProgram(
 	const char* pathName, StringPicker&& args,
 	Stream& streamCIn, Stream& streamCOut, Stream& streamCErr, bool forkFlag)
 {
-	
-
-
-	return 0;
+	int exitCode = 0;
+#if 0
+	pid_t pid = 0;
+	RefPtr<Memory> pMemory(new MemoryHeap(32768));
+	char *argv[4];
+	argv[0] = ::strdup("/bin/sh");
+	argv[1] = ::strdup("-c");
+	String cmdLine;
+	cmdLine = ToNativeString(pathName);
+	foreach_const (ValueList, pValue, valList) {
+		cmdLine += " ";
+		AppendCmdLine(cmdLine, ToNativeString(pValue->GetString()).c_str());
+	}
+	argv[2] = ::strdup(cmdLine.c_str());
+	argv[3] = nullptr;
+	if (forkFlag) {
+		pid_t pid = ::fork();
+		if (pid == 0) {
+			::execv("/bin/sh", argv);
+			::exit(1);
+		}
+		goto done;
+	}
+	int fdsStdin[2];
+	int fdsStdout[2];
+	int fdsStderr[2];
+	if (::pipe(fdsStdin) < 0 || ::pipe(fdsStdout) < 0 || ::pipe(fdsStderr) < 0) {
+		Error::Issue(ERR_IOError, "failed to create pipes");
+		goto done;
+	}
+	pid = ::fork();
+	if (pid == 0) {
+		::dup2(fdsStdin[0], 0);
+		::dup2(fdsStdout[1], 1);
+		::dup2(fdsStderr[1], 2);
+		for (int i = 0; i < 2; i++) {
+			::close(fdsStdin[i]);
+			::close(fdsStdout[i]);
+			::close(fdsStderr[i]);
+		}
+		::execv("/bin/sh", argv);
+		::exit(1);
+	}
+	fd_set fdsRead;
+	for (;;) {
+		if (pStreamStdin != nullptr && !pStreamStdin->GetBlocking()) {
+			char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
+			size_t bytesRead = pStreamStdin->Read(sig, buff, pMemory->GetSize());
+			if (sig.IsSignalled()) goto done;
+			if (bytesRead == 0) {
+				::close(fdsStdin[1]);
+			} else {
+				::write(fdsStdin[1], buff, bytesRead);
+			}
+		}
+		timeval tv;
+		::memset(&tv, 0x00, sizeof(tv));
+		tv.tv_sec = 0;
+		tv.tv_usec = 100 * 1000;
+		FD_ZERO(&fdsRead);
+		if (pStreamStdout != nullptr) FD_SET(fdsStdout[0], &fdsRead);
+		if (pStreamStderr != nullptr) FD_SET(fdsStderr[0], &fdsRead);
+		::select(ChooseMax(fdsStdout[0], fdsStderr[0]) + 1, &fdsRead, nullptr, nullptr, &tv);
+		bool idleFlag = true;
+		if (FD_ISSET(fdsStdout[0], &fdsRead)) {
+			idleFlag = false;
+			char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
+			size_t bytesRead = ::read(fdsStdout[0], buff, pMemory->GetSize());
+			pStreamStdout->Write(buff, bytesRead);
+			if (Error::IsIssued()) goto done;
+		}
+		if (FD_ISSET(fdsStderr[0], &fdsRead)) {
+			idleFlag = false;
+			char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
+			size_t bytesRead = ::read(fdsStderr[0], buff, pMemory->GetSize());
+			pStreamStderr->Write(buff, bytesRead);
+			if (Error::IsIssued()) goto done;
+		}
+		if (idleFlag) {
+			int status;
+			int rtn = waitpid(pid, &status, WNOHANG);
+			if (rtn > 0 && WIFEXITED(status)) {
+				exitCode = WEXITSTATUS(status);
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < 2; i++) {
+		::close(fdsStdin[i]);	// fdsStdin[1] may already have been closed.
+		::close(fdsStdout[i]);
+		::close(fdsStderr[i]);
+	}
+done:
+	for (size_t i = 0; i < ArraySizeOf(argv); i++) ::free(argv[i]);
+#endif
+	return exitCode;
 }
 
 //-----------------------------------------------------------------------------

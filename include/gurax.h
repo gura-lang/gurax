@@ -32,6 +32,7 @@
 #include "gurax/Iterator.h"
 #include "gurax/Iterators.h"
 #include "gurax/Math.h"
+#include "gurax/Memory.h"
 #include "gurax/MemoryPool.h"
 #include "gurax/OAL.h"
 #include "gurax/Operator.h"
