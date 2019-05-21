@@ -30,14 +30,14 @@ Gurax_ImplementFunction(DateTime)
 {
 	// Arguments
 	ArgPicker args(argument);
-	UInt16 year	= args.IsDefined()? args.PickUInt16() : 1970;
-	UInt8 month	= args.IsDefined()? args.PickUInt8() : 1;
-	UInt8 day	= args.IsDefined()? args.PickUInt8() : 1;
-	UInt8 hour	= args.IsDefined()? args.PickUInt8() : 0;
-	UInt8 min	= args.IsDefined()? args.PickUInt8() : 0;
-	UInt8 sec	= args.IsDefined()? args.PickUInt8() : 0;
-	UInt32 usec	= args.IsDefined()? args.PickUInt32() : 0;
-	bool validOffsetFlag = args.IsDefined();
+	UInt16 year	= args.IsValid()? args.PickUInt16() : 1970;
+	UInt8 month	= args.IsValid()? args.PickUInt8() : 1;
+	UInt8 day	= args.IsValid()? args.PickUInt8() : 1;
+	UInt8 hour	= args.IsValid()? args.PickUInt8() : 0;
+	UInt8 min	= args.IsValid()? args.PickUInt8() : 0;
+	UInt8 sec	= args.IsValid()? args.PickUInt8() : 0;
+	UInt32 usec	= args.IsValid()? args.PickUInt32() : 0;
+	bool validOffsetFlag = args.IsValid();
 	Int32 minsOff = validOffsetFlag? args.PickInt32() : 0;
 	// Function body
 	RefPtr<DateTime> pDateTime(new DateTime(year, month, day, DateTime::CalcSecInDay(hour, min, sec), usec));

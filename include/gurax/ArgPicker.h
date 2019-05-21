@@ -24,9 +24,10 @@ class ArgPicker {
 private:
 	ArgSlot* _pArgSlot;
 	RefPtr<Value> _pValuePicked;
+	bool _peekedFlag;
 public:
 	// Constructor
-	ArgPicker(Argument& argument) : _pArgSlot(argument.GetArgSlotFirst()) {}
+	ArgPicker(Argument& argument) : _pArgSlot(argument.GetArgSlotFirst()), _peekedFlag(false) {}
 	// Copy constructor/operator
 	ArgPicker(const ArgPicker& src) = delete;
 	ArgPicker& operator=(const ArgPicker& src) = delete;
@@ -37,7 +38,9 @@ public:
 	~ArgPicker() = default;
 public:
 	bool IsDefined() const { return _pArgSlot && _pArgSlot->IsDefined(); }
+	bool IsValid();
 public:
+	Value& PeekValue();
 	Value& PickValue();
 	Bool PickBool()					{ return PickValue().GetBool(); }
 	size_t PickSizeT()				{ return Value_Number::GetSizeT(PickValue()); }

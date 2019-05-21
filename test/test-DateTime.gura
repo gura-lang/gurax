@@ -3,4 +3,12 @@ import(util.tester) {*}
 
 TestCase('Constructor') {
 	Tester(`DateTime())
+	Tester(`DateTime(2019))
+	Tester(`DateTime(2019, 5))
+	Tester(`DateTime(2019, 5, 21))
+	Tester(`DateTime(2019, 5, 21, 8))
+	Tester(`DateTime(2019, 5, 21, 8, 23))
+	Tester(`DateTime(2019, 5, 21, 8, 23, 42))
+	Tester(`DateTime(2019, 5, nil, 8, nil, 42))
+	Tester(`DateTime(2019, nil, nil, nil, nil, 42))
 }

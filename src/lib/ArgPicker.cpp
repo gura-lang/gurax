@@ -8,10 +8,32 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ArgPicker
 //------------------------------------------------------------------------------
+bool ArgPicker::IsValid()
+{
+	if (IsDefined()) {
+		if (PeekValue().IsValid()) return true;
+		_pArgSlot = _pArgSlot->GetNext();
+		_peekedFlag = false;
+	}
+	return false;
+}
+
+Value& ArgPicker::PeekValue()
+{
+	if (!_peekedFlag) {
+		_pValuePicked.reset(_pArgSlot->PickValue());
+		_peekedFlag = true;
+	}
+	return *_pValuePicked;
+}
+
 Value& ArgPicker::PickValue()
 {
-	_pValuePicked.reset(_pArgSlot->PickValue());
+	if (!_peekedFlag) {
+		_pValuePicked.reset(_pArgSlot->PickValue());
+	}
 	_pArgSlot = _pArgSlot->GetNext();
+	_peekedFlag = false;
 	return *_pValuePicked;
 }
 
