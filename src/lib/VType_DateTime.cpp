@@ -8,19 +8,38 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// DateTime()
+// DateTime(year?:Number, month?:Number, day?:Number,
+//	hour?:Number, min?:Number, sec?:Number, usec?:Number, minsOff?:Number)
 Gurax_DeclareFunction(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
+	DeclareArg("year", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("month", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("day", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("hour", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("min", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("sec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("usec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("minsOff", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Creates a `DateTime` instance.");
 }
 
 Gurax_ImplementFunction(DateTime)
 {
 	// Arguments
-	//ArgPicker args(argument);
+#if 0
+	ArgPicker args(argument);
+	UInt16 year = args.IsDefined()? args.PickUInt16() : 0;
+	UInt8 month = args.IsDefined()? args.PickUInt8() : 0;
+	UInt8 day = args.IsDefined()? args.PickUInt8() : 0;
+	UInt8 hour = args.IsDefined()? args.PickUInt8() : 0;
+	UInt8 min = args.IsDefined()? args.PickUInt8() : 0;
+	UInt8 sec = args.IsDefined()? args.PickUInt8() : 0;
+	UInt32 usec = args.IsDefined()? args.PickUInt32() : 0;
+	UInt32 secsOff = args.IsDefined()? args.PickUInt32() : 0;
+#endif
 	// Function body
 	return new Value_DateTime(new DateTime());
 }
