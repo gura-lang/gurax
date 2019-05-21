@@ -71,6 +71,7 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual bool IsCallable() const override;
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override;

@@ -101,6 +101,10 @@ protected:
 	RefPtr<HelpProvider> _pHelpProvider;
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;
 public:
+	static RefPtr<Function> Empty;
+public:
+	static void Bootup();
+public:
 	// Constructor
 	Function(Type type) :
 		Function(type, Symbol::Empty, new DeclCallable(), new HelpProvider()) {}
@@ -186,6 +190,7 @@ public:
 	bool IsLessThan(const Function& function) const { return this < &function; }
 public:
 	// Virtual functions
+	virtual bool IsEmpty() const { return false; }
 	virtual void DoExec(Processor& processor, Argument& argument) const;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const {}

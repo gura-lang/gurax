@@ -56,6 +56,8 @@ public:
 	static RefPtr<Stream> COut;
 	static RefPtr<Stream> CErr;
 public:
+	static void Bootup();
+public:
 	// Constructor
 	Stream() {}
 	// Copy constructor/operator
@@ -68,7 +70,6 @@ protected:
 	// Destructor
 	virtual ~Stream() = default;
 public:
-	static void Bootup();
 	Stream& Print(const char* str);
 	Stream& Print(StringPicker&& strPicker);
 	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }

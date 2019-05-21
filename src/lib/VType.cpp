@@ -14,7 +14,8 @@ VType VType::Empty("");
 VType::VType(const char* name) :
 	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
 	_pSymbol(Symbol::Add(name)), _flags(0), _pFrame(new Frame_VType(nullptr)),
-	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
+	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap()),
+	_pConstructor(Function::Empty.Reference())
 {
 }
 
@@ -116,12 +117,6 @@ Value* VType::Cast(const Value& value, bool listVarFlag) const
 Value* VType::DoCastFrom(const Value& value) const
 {
 	return nullptr;
-}
-
-void VType::DoCall(Processor& processor, Argument& argument)
-{
-	Error::Issue(ErrorType::ValueError,
-				 "value type %s does not have a constructor", MakeFullName().c_str());
 }
 
 //------------------------------------------------------------------------------

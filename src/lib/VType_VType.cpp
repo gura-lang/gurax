@@ -34,14 +34,28 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 	return GetVTypeThis().MakeFullName();
 }
 
+bool Value_VType::IsCallable() const
+{
+	//const Function& constructor = GetVTypeThis().GetConstructor();
+	//return !constructor.IsEmpty();
+	return false;
+}
+
 const DeclCallable* Value_VType::GetDeclCallable() const
 {
-	return GetVTypeThis().GetDeclCallable();
+	const Function& constructor = GetVTypeThis().GetConstructor();
+	if (constructor.IsEmpty()) {
+		Error::Issue(ErrorType::ValueError,
+					 "value type %s does not have a constructor", GetVTypeThis().MakeFullName().c_str());
+		return nullptr;
+	}
+	return &constructor.GetDeclCallable();
 }
 
 void Value_VType::DoCall(Processor& processor, Argument& argument)
 {
-	GetVTypeThis().DoCall(processor, argument);
+	const Function& constructor = GetVTypeThis().GetConstructor();
+	constructor.DoCall(processor, argument);
 }
 
 Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)

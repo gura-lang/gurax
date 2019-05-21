@@ -88,7 +88,6 @@ public:
 		return ss.IsDigest()? ToStringDigest(ss) : ToStringDetail(ss);
 	}
 public:
-	bool IsCallable() const { return GetDeclCallable() != nullptr; }
 	bool IsMutable() const { return GetVType().IsMutable(); }
 	bool IsImmutable() const { return GetVType().IsImmutable(); }
 public:
@@ -123,8 +122,9 @@ public:
 	virtual Value* PickValue() { return Reference(); }
 	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {}
 	virtual bool GetBool() const { return true; }
-	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
-	virtual void DoCall(Processor& processor, Argument& argument);
+	virtual bool IsCallable() const { return false; }
+	virtual const DeclCallable* GetDeclCallable() const;
+	virtual void DoCall(Processor& processor, Argument& argument) {}
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, Value* pValue);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr);

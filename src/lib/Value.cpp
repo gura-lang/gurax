@@ -48,10 +48,11 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Printf(":%p", this);
 }
 
-void Value::DoCall(Processor& processor, Argument& argument)
+const DeclCallable* Value::GetDeclCallable() const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be called", GetVType().MakeFullName().c_str());
+				 "value type '%s' can not be called", GetVType().MakeFullName().c_str());
+	return nullptr;
 }
 
 Value* Value::DoIndexGet(const Index& index) const

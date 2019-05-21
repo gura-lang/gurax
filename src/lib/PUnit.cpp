@@ -1070,8 +1070,6 @@ void PUnit_Argument<discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueCar(processor.PopValue());
 	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallable();
 	if (!pDeclCallable) {
-		IssueError(ErrorType::ValueError,
-				   "value type '%s' can not be called", pValueCar->GetVType().MakeFullName().c_str());
 		processor.ErrorDone();
 	} else if (!pDeclCallable->CheckAttribute(GetAttr())) {
 		processor.ErrorDone();

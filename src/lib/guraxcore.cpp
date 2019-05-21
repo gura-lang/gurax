@@ -14,6 +14,7 @@ void Initialize()
 	DeclCallable::Bootup();
 	Error::Bootup();
 	Expr::Bootup();
+	Function::Bootup();
 	Operators::Bootup();
 	Random::Bootup();
 	String::Bootup();

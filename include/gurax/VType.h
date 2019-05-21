@@ -39,6 +39,7 @@ protected:
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;		// may be nullptr
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 	RefPtr<PropHandlerMap> _pPropHandlerMapOfClass;
+	RefPtr<Function> _pConstructor;
 private:
 	static UniqId _uniqIdNext;
 	static const UniqId UniqId_Invalid = 0;
@@ -84,6 +85,8 @@ public:
 	const PropHandlerMap& GetPropHandlerMapOfClass() const { return *_pPropHandlerMapOfClass; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
 	const PropHandler* LookupPropHandlerOfClass(const Symbol* pSymbol) const;
+	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
+	const Function& GetConstructor() const { return *_pConstructor; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value, bool listVarFlag) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
@@ -108,8 +111,6 @@ public:
 	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
 	virtual Value* DoCastFrom(const Value& value) const;
-	virtual const DeclCallable* GetDeclCallable() const { return nullptr; }
-	virtual void DoCall(Processor& processor, Argument& argument);
 };
 
 //------------------------------------------------------------------------------

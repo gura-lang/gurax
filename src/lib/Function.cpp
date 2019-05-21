@@ -8,6 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Function
 //------------------------------------------------------------------------------
+RefPtr<Function> Function::Empty;
+
+void Function::Bootup()
+{
+	Empty = new Function_Empty();
+}
+
 String Function::MakeFullName() const
 {
 	String str;
