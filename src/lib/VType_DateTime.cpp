@@ -6,6 +6,26 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// DateTime()
+Gurax_DeclareFunction(DateTime)
+{
+	Declare(VTYPE_DateTime, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(DateTime)
+{
+	// Arguments
+	//ArgPicker args(argument);
+	// Function body
+	return new Value_DateTime(new DateTime());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // DateTime#year
@@ -38,6 +58,7 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	SetConstructor(Gurax_CreateFunction(DateTime));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DateTime, year));
 }
@@ -45,5 +66,19 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_DateTime
 //------------------------------------------------------------------------------
+String Value_DateTime::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str += ":";
+	str += GetDateTime().ToString(ss);
+	str += ">";
+	return str;
+}
+
+String Value_DateTime::ToStringDetail(const StringStyle& ss) const
+{
+	return GetDateTime().ToString(ss);
+}
 
 }

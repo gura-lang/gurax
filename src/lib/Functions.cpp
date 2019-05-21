@@ -13,6 +13,9 @@ Gurax_DeclareFunction(dir)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("frame", VTYPE_Frame, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementFunction(dir)
