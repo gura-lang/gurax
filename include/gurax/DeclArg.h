@@ -44,7 +44,7 @@ public:
 	public:
 		// Constructor
 		explicit Occur(const char* marker, const ArgSlotFactory& argSlotFactory) :
-		_marker(marker), _argSlotFactory(argSlotFactory) {}
+			_marker(marker), _argSlotFactory(argSlotFactory) {}
 		// Copy constructor/operator
 		Occur(const Occur& src) = delete;
 		Occur& operator=(const Occur& src) = delete;

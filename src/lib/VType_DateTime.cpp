@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // DateTime(year?:Number, month?:Number, day?:Number,
-//	hour?:Number, min?:Number, sec?:Number, usec?:Number, minsOff?:Number)
+//          hour?:Number, min?:Number, sec?:Number, usec?:Number, minsOff?:Number)
 Gurax_DeclareFunction(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
@@ -29,19 +29,22 @@ Gurax_DeclareFunction(DateTime)
 Gurax_ImplementFunction(DateTime)
 {
 	// Arguments
-#if 0
 	ArgPicker args(argument);
-	UInt16 year = args.IsDefined()? args.PickUInt16() : 0;
-	UInt8 month = args.IsDefined()? args.PickUInt8() : 0;
-	UInt8 day = args.IsDefined()? args.PickUInt8() : 0;
-	UInt8 hour = args.IsDefined()? args.PickUInt8() : 0;
-	UInt8 min = args.IsDefined()? args.PickUInt8() : 0;
-	UInt8 sec = args.IsDefined()? args.PickUInt8() : 0;
-	UInt32 usec = args.IsDefined()? args.PickUInt32() : 0;
-	UInt32 secsOff = args.IsDefined()? args.PickUInt32() : 0;
-#endif
+	UInt16 year	= args.IsDefined()? args.PickUInt16() : 1970;
+	UInt8 month	= args.IsDefined()? args.PickUInt8() : 1;
+	UInt8 day	= args.IsDefined()? args.PickUInt8() : 1;
+	UInt8 hour	= args.IsDefined()? args.PickUInt8() : 0;
+	UInt8 min	= args.IsDefined()? args.PickUInt8() : 0;
+	UInt8 sec	= args.IsDefined()? args.PickUInt8() : 0;
+	UInt32 usec	= args.IsDefined()? args.PickUInt32() : 0;
+	bool validOffsetFlag = args.IsDefined();
+	Int32 minsOff = validOffsetFlag? args.PickInt32() : 0;
 	// Function body
-	return new Value_DateTime(new DateTime());
+	RefPtr<DateTime> pDateTime(new DateTime(year, month, day, DateTime::CalcSecInDay(hour, min, sec), usec));
+	if (validOffsetFlag) {
+		pDateTime->SetMinsOffset(minsOff);
+	}
+	return new Value_DateTime(pDateTime.release());
 }
 
 //------------------------------------------------------------------------------
@@ -65,9 +68,134 @@ Gurax_ImplementPropertyGetter(DateTime, year)
 Gurax_ImplementPropertySetter(DateTime, year)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetYear(Value_Number::GetInt16(value));
+	valueThis.GetDateTime().SetYear(Value_Number::GetUInt16(value));
 }
 
+// DateTime#month
+Gurax_DeclareProperty_RW(DateTime, month)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The month value of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, month)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetMonth());
+}
+
+Gurax_ImplementPropertySetter(DateTime, month)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetDateTime().SetMonth(Value_Number::GetUInt8(value));
+}
+
+// DateTime#day
+Gurax_DeclareProperty_RW(DateTime, day)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The day value of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, day)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetDay());
+}
+
+Gurax_ImplementPropertySetter(DateTime, day)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetDateTime().SetDay(Value_Number::GetUInt8(value));
+}
+
+// DateTime#hour
+Gurax_DeclareProperty_RW(DateTime, hour)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The hour value of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, hour)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetHour());
+}
+
+Gurax_ImplementPropertySetter(DateTime, hour)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetDateTime().SetHour(Value_Number::GetUInt8(value));
+}
+
+// DateTime#min
+Gurax_DeclareProperty_RW(DateTime, min)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The minute value of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, min)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetMin());
+}
+
+Gurax_ImplementPropertySetter(DateTime, min)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetDateTime().SetMin(Value_Number::GetUInt8(value));
+}
+
+// DateTime#sec
+Gurax_DeclareProperty_RW(DateTime, sec)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The second value of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, sec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetSec());
+}
+
+Gurax_ImplementPropertySetter(DateTime, sec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetDateTime().SetSec(Value_Number::GetUInt8(value));
+}
+
+// DateTime#usec
+Gurax_DeclareProperty_RW(DateTime, usec)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The micro second value of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, usec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetUSec());
+}
+
+Gurax_ImplementPropertySetter(DateTime, usec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetDateTime().SetUSec(Value_Number::GetUInt8(value));
+}
 //------------------------------------------------------------------------------
 // VType_DateTime
 //------------------------------------------------------------------------------
@@ -80,6 +208,12 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	SetConstructor(Gurax_CreateFunction(DateTime));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DateTime, year));
+	Assign(Gurax_CreateProperty(DateTime, month));
+	Assign(Gurax_CreateProperty(DateTime, day));
+	Assign(Gurax_CreateProperty(DateTime, hour));
+	Assign(Gurax_CreateProperty(DateTime, min));
+	Assign(Gurax_CreateProperty(DateTime, sec));
+	Assign(Gurax_CreateProperty(DateTime, usec));
 }
 
 //------------------------------------------------------------------------------
