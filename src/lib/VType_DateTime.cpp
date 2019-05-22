@@ -196,6 +196,30 @@ Gurax_ImplementPropertySetter(DateTime, usec)
 	auto& valueThis = GetValueThis(valueTarget);
 	valueThis.GetDateTime().SetUSec(Value_Number::GetUInt8(value));
 }
+
+//------------------------------------------------------------------------------
+// Operator
+//------------------------------------------------------------------------------
+// DateTime + TimeDelta
+Gurax_ImplementOpBinary(Add, DateTime, TimeDelta)
+{
+	const DateTime& dt = Value_DateTime::GetDateTime(valueL);
+	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
+	RefPtr<DateTime> pDt(new DateTime(dt));
+	*pDt += td;
+	return new Value_DateTime(pDt.release());
+}
+
+// DateTime - TimeDelta
+Gurax_ImplementOpBinary(Sub, DateTime, TimeDelta)
+{
+	const DateTime& dt = Value_DateTime::GetDateTime(valueL);
+	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
+	RefPtr<DateTime> pDt(new DateTime(dt));
+	*pDt -= td;
+	return new Value_DateTime(pDt.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_DateTime
 //------------------------------------------------------------------------------
@@ -214,6 +238,9 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(DateTime, min));
 	Assign(Gurax_CreateProperty(DateTime, sec));
 	Assign(Gurax_CreateProperty(DateTime, usec));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Add,			DateTime, TimeDelta);
+	Gurax_AssignOpBinary(Sub,			DateTime, TimeDelta);
 }
 
 //------------------------------------------------------------------------------

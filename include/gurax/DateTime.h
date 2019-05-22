@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class TimeDelta;
+
 //------------------------------------------------------------------------------
 // DateTime
 //------------------------------------------------------------------------------
@@ -79,9 +81,25 @@ public:
 	void InvalidateOffset() { _tz.validFlag = false, _tz.secsOffset = 0; }
 	void SetSecsOffset(UInt32 secsOffset) { _tz.validFlag = true, _tz.secsOffset = secsOffset; }
 	void SetMinsOffset(UInt32 minsOffset) { _tz.validFlag = true, _tz.secsOffset = minsOffset * 60; }
+public:
+	DateTime& operator+=(const TimeDelta& td);
+	DateTime& operator-=(const TimeDelta& td);
+	TimeDelta* operator-(const DateTime& dt);
+public:
+	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
 	static UInt32 CalcSecInDay(UInt8 hour, UInt8 min, UInt8 sec) {
 		return static_cast<UInt32>(hour) * 3600 + static_cast<UInt32>(min) * 60 + sec;
 	}
+	static bool IsLeapYear(UInt16 year) {
+		return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
+	}
+	static UInt16 GetDaysOfYear(UInt16 year) {
+		return IsLeapYear(year)? 366 : 365;
+	}
+	static UInt16 GetDayOfYear(UInt16 year, UInt8 month, UInt8 day);
+	static void DayOfYearToMonthDay(UInt16 year, UInt16 dayOfYear, UInt8* pMonth, UInt8* pDay);
+	static UInt8 GetDayOfWeek(UInt16 year, UInt8 month, UInt8 day);
+	static UInt8 GetDaysOfMonth(UInt16 year, UInt8 month);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DateTime& dateTime) const { return this == &dateTime; }
