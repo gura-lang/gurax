@@ -65,18 +65,6 @@ UInt8 DateTime::GetDaysOfMonth(UInt16 year, UInt8 month)
 	return (IsLeapYear(year)? daysTbl_Leap : daysTbl_Normal)[static_cast<int>(month)];
 }
 
-UInt16 DateTime::GetDayOfYear(UInt16 year, UInt8 month, UInt8 day)
-{
-	static const UInt16 offsetTbl_Normal[] = {
-		0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334,
-	};
-	static const UInt16 offsetTbl_Leap[] = {
-		0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335,
-	};
-	if (day < 1 || month < 1 || month > 12) return -1;
-	return (IsLeapYear(year)? offsetTbl_Leap : offsetTbl_Normal)[static_cast<int>(month)] + day - 1;
-}
-
 void DateTime::DayOfYearToMonthDay(UInt16 year, UInt16 dayOfYear, UInt8* pMonth, UInt8* pDay)
 {
 	static const UInt16 offsetTbl_Normal[] = {
@@ -91,6 +79,18 @@ void DateTime::DayOfYearToMonthDay(UInt16 year, UInt16 dayOfYear, UInt8* pMonth,
 	i--;
 	*pMonth = static_cast<UInt8>(i + 1);
 	*pDay = static_cast<UInt8>(dayOfYear - offsetTbl[i] + 1);
+}
+
+UInt16 DateTime::GetDayOfYear(UInt16 year, UInt8 month, UInt8 day)
+{
+	static const UInt16 offsetTbl_Normal[] = {
+		0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334,
+	};
+	static const UInt16 offsetTbl_Leap[] = {
+		0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335,
+	};
+	if (day < 1 || month < 1 || month > 12) return -1;
+	return (IsLeapYear(year)? offsetTbl_Leap : offsetTbl_Normal)[static_cast<int>(month)] + day - 1;
 }
 
 // Zeller's congruence. treat 0 as Sunday
@@ -136,11 +136,28 @@ TimeDelta DateTime::Minus(const DateTime &dt) const
 }
 #endif
 
+String DateTime::GetTZOffsetStr(bool colonFlag) const
+{
+	if (!HasOffset()) return "";
+	Int32 minsOffset = GetMinsOffset();
+	if (minsOffset == 0) return "Z";
+	String str;
+	if (minsOffset < 0) {
+		minsOffset = -minsOffset;
+		str += "-";
+	} else {
+		str += "+";
+	}
+	str.Printf(colonFlag? "%02d:%02d" : "%02d%02d", minsOffset / 60, minsOffset % 60);
+	return str;
+}
+
 String DateTime::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("%04d-%02d-%02d %02d:%02d:%02d",
 			   GetYear(), GetMonth(), GetDay(), GetHour(), GetMin(), GetSec());
+	str += GetTZOffsetStr(true);
 	return str;
 }
 

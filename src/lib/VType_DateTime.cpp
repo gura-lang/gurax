@@ -77,7 +77,7 @@ Gurax_DeclareProperty_RW(DateTime, month)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The month value of the date.");
+		"A number between 1 and 12 that represents the month value of the date.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, month)
@@ -98,7 +98,7 @@ Gurax_DeclareProperty_RW(DateTime, day)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The day value of the date.");
+		"A number between 1 and 31 that represents the day value of the date.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, day)
@@ -119,7 +119,7 @@ Gurax_DeclareProperty_RW(DateTime, hour)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The hour value of the date.");
+		"A number between 0 and 23 that represents the hour value the time.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, hour)
@@ -140,7 +140,7 @@ Gurax_DeclareProperty_RW(DateTime, min)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The minute value of the date.");
+		"A number between 0 and 59 that represents the minute value of the time.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, min)
@@ -161,7 +161,7 @@ Gurax_DeclareProperty_RW(DateTime, sec)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The second value of the date.");
+		"A number between 0 and 59 that represents the second value of the time.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, sec)
@@ -182,7 +182,7 @@ Gurax_DeclareProperty_RW(DateTime, usec)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The micro second value of the date.");
+		"A number between 0 and 999999 that represents the micro-second value of the time.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, usec)
@@ -195,6 +195,88 @@ Gurax_ImplementPropertySetter(DateTime, usec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	valueThis.GetDateTime().SetUSec(Value_Number::GetUInt8(value));
+}
+
+// DateTime#minsOff
+Gurax_DeclareProperty_RW(DateTime, minsOff)
+{
+	Declare(VTYPE_Number, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The time-zone offset of the time in minute.\n"
+		"Returns `nil` if the `DateTime` instance has no information about time offset. ");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, minsOff)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const DateTime& dateTime = valueThis.GetDateTime();
+	return dateTime.HasOffset()? new Value_Number(dateTime.GetMinsOffset()) : Value::nil();
+}
+
+Gurax_ImplementPropertySetter(DateTime, minsOff)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	DateTime& dateTime = valueThis.GetDateTime();
+	if (value.IsValid()) {
+		dateTime.SetMinsOffset(Value_Number::GetInt32(value));
+	} else {
+		dateTime.InvalidateOffset();
+	}
+}
+
+// DateTime#wday
+Gurax_DeclareProperty_R(DateTime, wday)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A number from 0 to 6 that corresponds to the week of the date from Sunday to Saturday.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, wday)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetDayOfWeek());
+}
+
+// DateTime#week
+Gurax_DeclareProperty_R(DateTime, week)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The symbol that represents the week of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, week)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	UInt8 dayOfWeek = valueThis.GetDateTime().GetDayOfWeek();
+	const Symbol *pSymbol =
+		(dayOfWeek == 0)? Gurax_Symbol(sunday) :
+		(dayOfWeek == 1)? Gurax_Symbol(monday) :
+		(dayOfWeek == 2)? Gurax_Symbol(tuesday) :
+		(dayOfWeek == 3)? Gurax_Symbol(wednesday) :
+		(dayOfWeek == 4)? Gurax_Symbol(thursday) :
+		(dayOfWeek == 5)? Gurax_Symbol(friday) :
+		(dayOfWeek == 6)? Gurax_Symbol(saturday) : Symbol::Empty;
+	return new Value_Symbol(pSymbol);
+}
+
+// DateTime#yday
+Gurax_DeclareProperty_R(DateTime, yday)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The day offset from the beginning of the year that starts from zero.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, yday)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetDayOfYear());
 }
 
 //------------------------------------------------------------------------------
@@ -238,9 +320,13 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(DateTime, min));
 	Assign(Gurax_CreateProperty(DateTime, sec));
 	Assign(Gurax_CreateProperty(DateTime, usec));
+	Assign(Gurax_CreateProperty(DateTime, minsOff));
+	Assign(Gurax_CreateProperty(DateTime, wday));
+	Assign(Gurax_CreateProperty(DateTime, week));
+	Assign(Gurax_CreateProperty(DateTime, yday));
 	// Assignment of operator
-	Gurax_AssignOpBinary(Add,			DateTime, TimeDelta);
-	Gurax_AssignOpBinary(Sub,			DateTime, TimeDelta);
+	Gurax_AssignOpBinary(Add, DateTime, TimeDelta);
+	Gurax_AssignOpBinary(Sub, DateTime, TimeDelta);
 }
 
 //------------------------------------------------------------------------------

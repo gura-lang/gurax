@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE TimeDelta : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(TimeDelta);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("TimeDelta");
 private:
 	Int32 _days;	// -999999999 <= _days <= 999999999
 	Int32 _secs;	// 0 <= _secs <= 3600 * 24 - 1

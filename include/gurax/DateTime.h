@@ -16,6 +16,8 @@ class GURAX_DLLDECLARE DateTime : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(DateTime);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("DateTime");
 private:
 	UInt16 _year;
 	UInt8 _month;
@@ -67,9 +69,12 @@ public:
 	UInt8 GetSec() const { return GetSecInDay() % 60; }
 	UInt32 GetSecInDay() const { return _secInDay; }
 	UInt32 GetUSec() const { return _usec; }
-	bool ExistsOffset() const { return _tz.validFlag; }
+	bool HasOffset() const { return _tz.validFlag; }
 	Int32 GetSecsOffset() const { return _tz.secsOffset; }
 	Int32 GetMinsOffset() const { return _tz.secsOffset / 60; }
+	UInt16 GetDayOfYear() const { return GetDayOfYear(_year, _month, _day); }
+	UInt8 GetDayOfWeek() const { return GetDayOfWeek(_year, _month, _day); }
+	UInt8 GetDaysOfMonth() const { return GetDaysOfMonth(_year, _month); }
 	void SetYear(UInt16 year) { _year = year; }
 	void SetMonth(UInt8 month) { _month = month; }
 	void SetDay(UInt8 day) { _day = day; }
@@ -79,14 +84,15 @@ public:
 	void SetSecInDay(UInt32 secInDay) { _secInDay = secInDay; }
 	void SetUSec(UInt32 usec) { _usec = usec; }
 	void InvalidateOffset() { _tz.validFlag = false, _tz.secsOffset = 0; }
-	void SetSecsOffset(UInt32 secsOffset) { _tz.validFlag = true, _tz.secsOffset = secsOffset; }
-	void SetMinsOffset(UInt32 minsOffset) { _tz.validFlag = true, _tz.secsOffset = minsOffset * 60; }
+	void SetSecsOffset(Int32 secsOffset) { _tz.validFlag = true, _tz.secsOffset = secsOffset; }
+	void SetMinsOffset(Int32 minsOffset) { _tz.validFlag = true, _tz.secsOffset = minsOffset * 60; }
 public:
 	DateTime& operator+=(const TimeDelta& td);
 	DateTime& operator-=(const TimeDelta& td);
 	TimeDelta* operator-(const DateTime& dt);
 public:
 	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
+	String GetTZOffsetStr(bool colonFlag) const;
 	static UInt32 CalcSecInDay(UInt8 hour, UInt8 min, UInt8 sec) {
 		return static_cast<UInt32>(hour) * 3600 + static_cast<UInt32>(min) * 60 + sec;
 	}
@@ -96,8 +102,8 @@ public:
 	static UInt16 GetDaysOfYear(UInt16 year) {
 		return IsLeapYear(year)? 366 : 365;
 	}
-	static UInt16 GetDayOfYear(UInt16 year, UInt8 month, UInt8 day);
 	static void DayOfYearToMonthDay(UInt16 year, UInt16 dayOfYear, UInt8* pMonth, UInt8* pDay);
+	static UInt16 GetDayOfYear(UInt16 year, UInt8 month, UInt8 day);
 	static UInt8 GetDayOfWeek(UInt16 year, UInt8 month, UInt8 day);
 	static UInt8 GetDaysOfMonth(UInt16 year, UInt8 month);
 public:
