@@ -69,7 +69,8 @@ void Argument::DoCall(Processor& processor)
 {
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (!pArgSlot->HasValidValue()) {
-			Error::Issue(ErrorType::ArgumentError, "not enough argument");
+			Error::Issue(ErrorType::ArgumentError, "lacking value for argument '%s'",
+						 pArgSlot->GetDeclArg().GetSymbol()->GetName());
 			return;
 		}
 	}
