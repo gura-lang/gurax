@@ -19,6 +19,32 @@ TestCase('PUnit') {
 	PrintPUnitWithLabel(exprs)
 }
 
+TestCase('Default Value') {
+	f(a => 'def-A', b => 'def-B', c => 'def-C') = Format('a=%s, b=%s, c=%s', a, b, c)
+	Tester(`f)
+	Tester(`f())
+	Tester(`f(1))
+	Tester(`f(1, 2))
+	Tester(`f(1, 2, 3))
+	Tester(`f(a => 1))
+	Tester(`f(b => 2))
+	Tester(`f(c => 3))
+	Tester(`f(a => 1, c => 3))
+}
+
+TestCase('Optional Argument') {
+	f(a?, b?, c?) = Format('a=%s, b=%s, c=%s', a, b, c)
+	Tester(`f)
+	Tester(`f())
+	Tester(`f(1))
+	Tester(`f(1, 2))
+	Tester(`f(1, 2, 3))
+	Tester(`f(a => 1))
+	Tester(`f(b => 2))
+	Tester(`f(c => 3))
+	Tester(`f(a => 1, c => 3))
+}
+
 TestCase('Property') {
 	func() = {}
 	Tester(`func.name)

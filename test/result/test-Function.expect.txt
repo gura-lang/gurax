@@ -149,12 +149,32 @@ f(a => 1, b => 2, c => 3, d => 4, e => 5)
   ##15 Value(<Number:5>)
   ##16 EndArgSlotNamed()
   ##17 Call(cont=##18)
+======== Default Value ========
+f .. f(a => 'def-A', b => 'def-B', c => 'def-C')
+f() .. a=def-A, b=def-B, c=def-C
+f(1) .. a=1, b=def-B, c=def-C
+f(1, 2) .. a=1, b=2, c=def-C
+f(1, 2, 3) .. a=1, b=2, c=3
+f(a => 1) .. a=1, b=def-B, c=def-C
+f(b => 2) .. a=def-A, b=2, c=def-C
+f(c => 3) .. a=def-A, b=def-B, c=3
+f(a => 1, c => 3) .. a=1, b=def-B, c=3
+======== Optional Argument ========
+f .. f(a?, b?, c?)
+f() .. a=<Undefined>, b=<Undefined>, c=<Undefined>
+f(1) .. a=1, b=<Undefined>, c=<Undefined>
+f(1, 2) .. a=1, b=2, c=<Undefined>
+f(1, 2, 3) .. a=1, b=2, c=3
+f(a => 1) .. a=1, b=<Undefined>, c=<Undefined>
+f(b => 2) .. a=<Undefined>, b=2, c=<Undefined>
+f(c => 3) .. a=<Undefined>, b=<Undefined>, c=3
+f(a => 1, c => 3) .. a=1, b=<Undefined>, c=3
 ======== Property ========
 func.name .. func
 func.type .. `function
 String.Find.type .. `method
 ======== return ========
-f() .. nil
+f() .. <Nil>
 g() .. 3
 ======== Recursion ========
 20! = 2432902008176640000
@@ -162,7 +182,7 @@ g() .. 3
 f .. f(a:Number)
 g .. g(a:Number:nil)
 f(nil) .. failed to cast from Nil to Number
-g(nil) .. nil
+g(nil) .. <Nil>
 ======== dynamic_scope ========
 [static]  a = external
 [dynamic] a = external
