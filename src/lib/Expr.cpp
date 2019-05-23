@@ -810,8 +810,18 @@ void Expr_Caller::ComposeForAssignment(
 	pFunction->SetPUnitBody(composer.PeekPUnitCont());
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);
-	
-
+	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		if (!pExpr->IsType<Expr_BinaryOp>()) continue;
+		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
+		if (!pExprEx->GetOperator()->IsType(OpType::Pair)) continue;
+		Expr* pExprDefaultArg = pExprEx->GetExprRight();
+		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
+		composer.Add_BeginSequence(*pExprDefaultArg);
+		pExprDefaultArg->ComposeOrNil(composer);
+		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
+		composer.Add_EndSequence(*pExprDefaultArg);
+		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
+	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	composer.Add_AssignFunction(*this, pFunction.release());		// [Value]
 }
