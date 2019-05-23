@@ -57,7 +57,7 @@ public:
 		_pValue->UpdateIteratorInfo(flags, len);
 	}
 	void AssignToFrame(Frame& frame) const {
-		if (IsDefined()) frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
+		frame.AssignFromArgument(GetDeclArg().GetSymbol(), PickValue());;
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 bool ArgPicker::IsValid()
 {
-	if (IsDefined()) {
+	if (_pArgSlot) {
 		if (PeekValue().IsValid()) return true;
 		_pArgSlot = _pArgSlot->GetNext();
 		_peekedFlag = false;

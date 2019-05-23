@@ -48,9 +48,7 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return "undefined";
-	}
+	virtual String ToStringDetail(const StringStyle& ss) const override { return ToStringDigest(ss); }
 	// Virtual functions for runtime process
 	virtual bool IsValid() const override { return false; }
 	virtual bool IsUndefined() const override { return true; }
