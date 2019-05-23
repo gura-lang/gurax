@@ -31,7 +31,8 @@ String Value_VType::ToStringDigest(const StringStyle& ss) const
 
 String Value_VType::ToStringDetail(const StringStyle& ss) const
 {
-	return GetVTypeThis().MakeFullName();
+	const Function& constructor = GetVTypeThis().GetConstructor();
+	return constructor.IsEmpty()? GetVTypeThis().MakeFullName() : constructor.ToString();
 }
 
 bool Value_VType::IsCallable() const
