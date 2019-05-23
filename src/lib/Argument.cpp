@@ -73,6 +73,7 @@ void Argument::DoCall(Processor& processor)
 		} else if (const Expr* pExprDefault = pArgSlot->GetDeclArg().GetExprDefault()) {
 			RefPtr<Value> pValue(processor.ProcessExpr(*pExprDefault));
 			if (Error::IsIssued()) return;
+			//RefPtr<Value> pValue(Value::Zero());
 			pArgSlot->FeedValue(*this, processor.GetFrameCur(), pValue.release());
 		} else {
 			Error::Issue(ErrorType::ArgumentError, "lacking value for argument '%s'",

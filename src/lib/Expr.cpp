@@ -816,10 +816,11 @@ void Expr_Caller::ComposeForAssignment(
 		if (!pExprEx->GetOperator()->IsType(OpType::Pair)) continue;
 		Expr* pExprDefaultArg = pExprEx->GetExprRight();
 		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
-		composer.Add_BeginSequence(*pExprDefaultArg);
+		//composer.Add_BeginSequence(*pExprDefaultArg);
 		pExprDefaultArg->ComposeOrNil(composer);
-		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_EndSequence(*pExprDefaultArg);
+		//pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
+		//composer.Add_EndSequence(*pExprDefaultArg);
+		composer.Add_Return(*pExprDefaultArg);
 		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
