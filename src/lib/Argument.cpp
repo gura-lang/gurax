@@ -67,8 +67,14 @@ Function* Argument::CreateFunctionOfBlock(Frame& frameOuter, RefPtr<Argument>& p
 
 void Argument::DoCall(Processor& processor)
 {
-	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		if (!pArgSlot->HasValidValue()) {
+	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
+		if (pArgSlot->HasValidValue()) {
+			// nothing to do
+		} else if (const Expr* pExprDefault = pArgSlot->GetDeclArg().GetExprDefault()) {
+			RefPtr<Value> pValue(processor.ProcessExpr(*pExprDefault));
+			if (Error::IsIssued()) return;
+			pArgSlot->FeedValue(*this, processor.GetFrameCur(), pValue.release());
+		} else {
 			Error::Issue(ErrorType::ArgumentError, "lacking value for argument '%s'",
 						 pArgSlot->GetDeclArg().GetSymbol()->GetName());
 			return;

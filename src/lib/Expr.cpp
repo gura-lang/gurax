@@ -60,13 +60,11 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 {
 	PUnit* pPUnitMarked = composer.PeekPUnitCont();
 	if (pExpr) {
-		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
 	while (pExpr) {
 		composer.FlushDiscard();
-		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
@@ -119,13 +117,11 @@ void ExprList::Compose(Composer& composer)
 	auto ppExpr = begin();
 	if (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
-		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 	}
 	while (ppExpr != end()) {
 		Expr* pExpr = *ppExpr++;
 		composer.FlushDiscard();
-		//pExpr->SetPUnitFirst(composer.PeekPUnitCont());
 		pExpr->Compose(composer);
 	}
 	// [Value]
@@ -797,11 +793,13 @@ void Expr_Caller::ComposeForAssignment(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
 	if (pOperator) {
-		Error::IssueWith(ErrorType::SyntaxError, *this, "operator can not be applied in function assigment");
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in function assigment");
 		return;
 	}
 	if (!GetExprCar()->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "identifier is expected");
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
@@ -812,6 +810,8 @@ void Expr_Caller::ComposeForAssignment(
 	pFunction->SetPUnitBody(composer.PeekPUnitCont());
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);
+	
+
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	composer.Add_AssignFunction(*this, pFunction.release());		// [Value]
 }
