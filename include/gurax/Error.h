@@ -31,6 +31,7 @@ public:
 	static const ErrorType IOError;
 	static const ErrorType IteratorError;
 	static const ErrorType PropertyError;
+	static const ErrorType RangeError;
 	static const ErrorType StreamError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;

@@ -44,13 +44,25 @@ public:
 	Int8 GetMins() const		{ return static_cast<Int8>((_secs / 60) % 60); }	// 0-59
 	Int8 GetSecs() const		{ return static_cast<Int8>(_secs % 60); }			// 0-59
 	Int32 GetSecsRaw() const	{ return _secs; }
+	Int32 GetMSecs() const		{ return _usecs / 1000; }
 	Int32 GetUSecs() const		{ return _usecs; }
+public:
+	void SetDays(Int32 days)	{ _days = days;	}
+	void SetHours(Int32 hours)	{ _secs = CalcSecsRaw(hours, GetMins(), GetSecs()); Regulate(); }
+	void SetMins(Int32 mins)	{ _secs = CalcSecsRaw(GetHours(), mins, GetSecs()); Regulate(); }
+	void SetSecs(Int32 secs)	{ _secs = CalcSecsRaw(GetHours(), GetMins(), secs); Regulate(); }
+	void SetSecsRaw(Int32 secs)	{ _secs = secs; Regulate(); }
+	void SetMSecs(Int32 msecs)	{ _usecs = msecs * 1000; Regulate(); }
+	void SetUSecs(Int32 usecs)	{ _usecs = usecs; Regulate(); }
 public:
 	TimeDelta& operator+=(const TimeDelta& td);
 	TimeDelta& operator-=(const TimeDelta& td);
 public:
 	void Regulate();
 	static int Compare(const TimeDelta& td1, const TimeDelta& td2);
+	static Int32 CalcSecsRaw(Int32 hours, Int32 mins, Int32 secs) {
+		return hours * 3600 + mins * 60 + secs;
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TimeDelta& timeDelta) const { return this == &timeDelta; }

@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // DateTime(year?:Number, month?:Number, day?:Number,
-//          hour?:Number, min?:Number, sec?:Number, usec?:Number, minsOff?:Number)
+//          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number)
 Gurax_DeclareFunction(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
@@ -19,6 +19,7 @@ Gurax_DeclareFunction(DateTime)
 	DeclareArg("hour", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("min", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("sec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("msec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("usec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("minsOff", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	AddHelp(
@@ -36,11 +37,14 @@ Gurax_ImplementFunction(DateTime)
 	UInt8 hour	= args.IsValid()? args.PickUInt8() : 0;
 	UInt8 min	= args.IsValid()? args.PickUInt8() : 0;
 	UInt8 sec	= args.IsValid()? args.PickUInt8() : 0;
-	UInt32 usec	= args.IsValid()? args.PickUInt32() : 0;
+	UInt16 msec	= args.IsValid()? args.PickUInt16() : 0;
+	UInt16 usec	= args.IsValid()? args.PickUInt16() : 0;
 	bool validOffsetFlag = args.IsValid();
 	Int32 minsOff = validOffsetFlag? args.PickInt32() : 0;
 	// Function body
-	RefPtr<DateTime> pDateTime(new DateTime(year, month, day, DateTime::CalcSecInDay(hour, min, sec), usec));
+	RefPtr<DateTime> pDateTime(
+		new DateTime(year, month, day, DateTime::CalcSecInDay(hour, min, sec),
+					 DateTime::CalcUSecRaw(msec, usec)));
 	if (validOffsetFlag) {
 		pDateTime->SetMinsOffset(minsOff);
 	}
@@ -68,7 +72,9 @@ Gurax_ImplementPropertyGetter(DateTime, year)
 Gurax_ImplementPropertySetter(DateTime, year)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetYear(Value_Number::GetUInt16(value));
+	Int num = Value_Number::GetInt(value, 0, 9999);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetYear(static_cast<UInt16>(num));
 }
 
 // DateTime#month
@@ -89,7 +95,9 @@ Gurax_ImplementPropertyGetter(DateTime, month)
 Gurax_ImplementPropertySetter(DateTime, month)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetMonth(Value_Number::GetUInt8(value));
+	Int num = Value_Number::GetInt(value, 1, 12);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetMonth(static_cast<UInt8>(num));
 }
 
 // DateTime#day
@@ -110,7 +118,9 @@ Gurax_ImplementPropertyGetter(DateTime, day)
 Gurax_ImplementPropertySetter(DateTime, day)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetDay(Value_Number::GetUInt8(value));
+	Int num = Value_Number::GetInt(value, 1, 31);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetDay(static_cast<UInt8>(num));
 }
 
 // DateTime#hour
@@ -131,7 +141,9 @@ Gurax_ImplementPropertyGetter(DateTime, hour)
 Gurax_ImplementPropertySetter(DateTime, hour)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetHour(Value_Number::GetUInt8(value));
+	Int num = Value_Number::GetInt(value, 0, 23);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetHour(static_cast<UInt8>(num));
 }
 
 // DateTime#min
@@ -152,7 +164,9 @@ Gurax_ImplementPropertyGetter(DateTime, min)
 Gurax_ImplementPropertySetter(DateTime, min)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetMin(Value_Number::GetUInt8(value));
+	Int num = Value_Number::GetInt(value, 0, 59);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetMin(static_cast<UInt8>(num));
 }
 
 // DateTime#sec
@@ -173,7 +187,32 @@ Gurax_ImplementPropertyGetter(DateTime, sec)
 Gurax_ImplementPropertySetter(DateTime, sec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetSec(Value_Number::GetUInt8(value));
+	Int num = Value_Number::GetInt(value, 0, 59);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetSec(static_cast<UInt8>(num));
+}
+
+// DateTime#msec
+Gurax_DeclareProperty_RW(DateTime, msec)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A number between 0 and 999 that represents the milli-second value of the time.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, msec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().GetMSec());
+}
+
+Gurax_ImplementPropertySetter(DateTime, msec)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	Int num = Value_Number::GetInt(value, 0, 999);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetMSec(static_cast<UInt16>(num));
 }
 
 // DateTime#usec
@@ -182,7 +221,7 @@ Gurax_DeclareProperty_RW(DateTime, usec)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"A number between 0 and 999999 that represents the micro-second value of the time.");
+		"A number between 0 and 999 that represents the micro-second value of the time.");
 }
 
 Gurax_ImplementPropertyGetter(DateTime, usec)
@@ -194,7 +233,9 @@ Gurax_ImplementPropertyGetter(DateTime, usec)
 Gurax_ImplementPropertySetter(DateTime, usec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetDateTime().SetUSec(Value_Number::GetUInt8(value));
+	Int num = Value_Number::GetInt(value, 0, 999);
+	if (Error::IsIssued()) return;
+	valueThis.GetDateTime().SetUSec(static_cast<UInt16>(num));
 }
 
 // DateTime#minsOff
@@ -252,16 +293,22 @@ Gurax_DeclareProperty_R(DateTime, week)
 Gurax_ImplementPropertyGetter(DateTime, week)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	UInt8 dayOfWeek = valueThis.GetDateTime().GetDayOfWeek();
-	const Symbol *pSymbol =
-		(dayOfWeek == 0)? Gurax_Symbol(sunday) :
-		(dayOfWeek == 1)? Gurax_Symbol(monday) :
-		(dayOfWeek == 2)? Gurax_Symbol(tuesday) :
-		(dayOfWeek == 3)? Gurax_Symbol(wednesday) :
-		(dayOfWeek == 4)? Gurax_Symbol(thursday) :
-		(dayOfWeek == 5)? Gurax_Symbol(friday) :
-		(dayOfWeek == 6)? Gurax_Symbol(saturday) : Symbol::Empty;
-	return new Value_Symbol(pSymbol);
+	return new Value_Symbol(valueThis.GetDateTime().GetSymbolOfWeek());
+}
+
+// DateTime#weekShort
+Gurax_DeclareProperty_R(DateTime, weekShort)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The short symbol that represents the week of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, weekShort)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetDateTime().GetSymbolShortOfWeek());
 }
 
 // DateTime#yday
@@ -277,6 +324,21 @@ Gurax_ImplementPropertyGetter(DateTime, yday)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetDateTime().GetDayOfYear());
+}
+
+// DateTime#utc
+Gurax_DeclareProperty_R(DateTime, utc)
+{
+	Declare(VTYPE_DateTime, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The `DateTime` instance that represents the UTC of the target.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, utc)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_DateTime(valueThis.GetDateTime().ToUTC());
 }
 
 //------------------------------------------------------------------------------
@@ -302,6 +364,15 @@ Gurax_ImplementOpBinary(Sub, DateTime, TimeDelta)
 	return new Value_DateTime(pDt.release());
 }
 
+// DateTime - DateTime
+Gurax_ImplementOpBinary(Sub, DateTime, DateTime)
+{
+	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
+	RefPtr<TimeDelta> pTd(dt1 - dt2);
+	return new Value_TimeDelta(pTd.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_DateTime
 //------------------------------------------------------------------------------
@@ -323,10 +394,13 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(DateTime, minsOff));
 	Assign(Gurax_CreateProperty(DateTime, wday));
 	Assign(Gurax_CreateProperty(DateTime, week));
+	Assign(Gurax_CreateProperty(DateTime, weekShort));
 	Assign(Gurax_CreateProperty(DateTime, yday));
+	Assign(Gurax_CreateProperty(DateTime, utc));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, DateTime, TimeDelta);
 	Gurax_AssignOpBinary(Sub, DateTime, TimeDelta);
+	Gurax_AssignOpBinary(Sub, DateTime, DateTime);
 }
 
 //------------------------------------------------------------------------------

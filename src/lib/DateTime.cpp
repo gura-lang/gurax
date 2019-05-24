@@ -20,17 +20,31 @@ DateTime& DateTime::operator-=(const TimeDelta& td)
 	return *this;
 }
 
-TimeDelta* DateTime::operator-(const DateTime& dt)
+TimeDelta* DateTime::operator-(const DateTime& dt) const
 {
-	return nullptr;
+	RefPtr<DateTime> pDt1(ToUTC());
+	RefPtr<DateTime> pDt2(dt.ToUTC());
+	Int32 daysDiff = pDt1->GetDayOfYear() - pDt2->GetDayOfYear();
+	if (pDt1->GetYear() < pDt2->GetYear()) {
+		for (UInt16 year = pDt1->GetYear(); year < pDt2->GetYear(); year++) {
+			daysDiff -= GetDaysOfYear(year);
+		}
+	} else if (pDt1->GetYear() > pDt2->GetYear()) {
+		for (UInt16 year = pDt1->GetYear() - 1; year >= pDt2->GetYear(); year--) {
+			daysDiff += GetDaysOfYear(year);
+		}
+	}
+	Int32 secsDiff = pDt1->GetSecInDay() - pDt2->GetSecInDay();
+	Int32 usecsDiff = pDt1->GetUSec() - pDt2->GetUSec();
+	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
 }
 
 void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 {
 	Int32 dayOfYear = GetDayOfYear(_year, _month, _day);
-	_usec += usecs;
-	if (_usec >= 1000000) {
-		_usec -= 1000000;
+	_usecRaw += usecs;
+	if (_usecRaw >= 1000000) {
+		_usecRaw -= 1000000;
 		_secInDay++;
 	}
 	_secInDay += secs;
@@ -51,6 +65,15 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 		}
 	}
 	DayOfYearToMonthDay(_year, static_cast<Int16>(dayOfYear), &_month, &_day);
+}
+
+DateTime* DateTime::ToUTC() const
+{
+	if (!HasOffset()) return Clone();
+	RefPtr<DateTime> pDt(Clone());
+	pDt->AddDelta(0, GetSecsOffset(), 0);
+	pDt->SetSecsOffset(0);
+	return pDt.release();
 }
 
 UInt8 DateTime::GetDaysOfMonth(UInt16 year, UInt8 month)
@@ -108,33 +131,31 @@ UInt8 DateTime::GetDayOfWeek(UInt16 year, UInt8 month, UInt8 day)
 	return (rtn + 6) % 7;
 }
 
-#if 0
-
-TimeDelta DateTime::Minus(const DateTime &dt) const
+const Symbol* DateTime::GetSymbolOfWeek(UInt16 year, UInt8 month, UInt8 day)
 {
-	DateTime dt1, dt2;
-	if (HasTZOffset() && dt.HasTZOffset()) {
-		dt1 = ToUTC();
-		dt2 = dt.ToUTC();
-	} else {
-		dt1 = *this;
-		dt2 = dt;
-	}
-	Int32 daysDiff = dt1.GetDayOfYear() - dt2.GetDayOfYear();
-	if (dt1.GetYear() < dt2.GetYear()) {
-		for (UInt16 year = dt1.GetYear(); year < dt2.GetYear(); year++) {
-			daysDiff -= GetDaysOfYear(year);
-		}
-	} else if (dt1.GetYear() > dt2.GetYear()) {
-		for (UInt16 year = dt1.GetYear() - 1; year >= dt2.GetYear(); year--) {
-			daysDiff += GetDaysOfYear(year);
-		}
-	}
-	Int32 secsDiff = dt1.GetSecRaw() - dt2.GetSecRaw();
-	Int32 usecsDiff = dt1.GetUSec() - dt2.GetUSec();
-	return TimeDelta(daysDiff, secsDiff, usecsDiff);
+	UInt8 dayOfWeek = GetDayOfWeek(year, month, day);
+	return
+		(dayOfWeek == 0)? Gurax_Symbol(Sunday) :
+		(dayOfWeek == 1)? Gurax_Symbol(Monday) :
+		(dayOfWeek == 2)? Gurax_Symbol(Tuesday) :
+		(dayOfWeek == 3)? Gurax_Symbol(Wednesday) :
+		(dayOfWeek == 4)? Gurax_Symbol(Thursday) :
+		(dayOfWeek == 5)? Gurax_Symbol(Friday) :
+		(dayOfWeek == 6)? Gurax_Symbol(Saturday) : Symbol::Empty;
 }
-#endif
+
+const Symbol* DateTime::GetSymbolShortOfWeek(UInt16 year, UInt8 month, UInt8 day)
+{
+	UInt8 dayOfWeek = GetDayOfWeek(year, month, day);
+	return
+		(dayOfWeek == 0)? Gurax_Symbol(Sun) :
+		(dayOfWeek == 1)? Gurax_Symbol(Mon) :
+		(dayOfWeek == 2)? Gurax_Symbol(Tue) :
+		(dayOfWeek == 3)? Gurax_Symbol(Wed) :
+		(dayOfWeek == 4)? Gurax_Symbol(Thu) :
+		(dayOfWeek == 5)? Gurax_Symbol(Fri) :
+		(dayOfWeek == 6)? Gurax_Symbol(Sat) : Symbol::Empty;
+}
 
 String DateTime::GetTZOffsetStr(bool colonFlag) const
 {
@@ -155,8 +176,8 @@ String DateTime::GetTZOffsetStr(bool colonFlag) const
 String DateTime::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%04d-%02d-%02d %02d:%02d:%02d",
-			   GetYear(), GetMonth(), GetDay(), GetHour(), GetMin(), GetSec());
+	str.Printf("%04d-%02d-%02d %02d:%02d:%02d.%03d",
+			   GetYear(), GetMonth(), GetDay(), GetHour(), GetMin(), GetSec(), GetMSec());
 	str += GetTZOffsetStr(true);
 	return str;
 }

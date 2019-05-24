@@ -61,8 +61,8 @@ int TimeDelta::Compare(const TimeDelta& td1, const TimeDelta& td2)
 String TimeDelta::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%ddays,%dsecs(%02d:%02d:%02d),%dusecs",
-		GetDays(), GetSecsRaw(), GetHours(), GetMins(), GetSecs(), GetUSecs());
+	str.Printf("%ddays,%02d:%02d:%02d.%03d",
+		GetDays(), GetHours(), GetMins(), GetSecs(), GetMSecs());
 	return str;
 }
 

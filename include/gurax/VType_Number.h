@@ -65,6 +65,7 @@ public:
 	UInt64 GetUInt64() const	{ return static_cast<UInt64>(_num); }
 	Float GetFloat() const		{ return static_cast<Float>(_num); }
 	Double GetDouble() const	{ return _num; }
+	Int GetInt(Int numMin, Int numMax) const;
 public:
 	static size_t GetSizeT(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetSizeT(); }
 	static Char GetChar(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetChar(); }
@@ -85,6 +86,9 @@ public:
 	static UInt64 GetUInt64(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt64(); }
 	static Float GetFloat(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetFloat(); }
 	static Double GetDouble(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetDouble(); }
+	static Int GetInt(const Value& value, Int numMin, Int numMax) {
+		return dynamic_cast<const Value_Number&>(value).GetInt(numMin, numMax);
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

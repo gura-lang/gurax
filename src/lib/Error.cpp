@@ -19,6 +19,7 @@ const ErrorType ErrorType::InvalidOperation	("InvalidOperation",	"invalid operat
 const ErrorType ErrorType::IOError			("IOError",				"I/O error");
 const ErrorType ErrorType::IteratorError	("IteratorError",		"iterator error");
 const ErrorType ErrorType::PropertyError	("PropertyError",		"property error");
+const ErrorType ErrorType::RangeError		("RangeError",			"range error");
 const ErrorType ErrorType::StreamError		("StreamError",			"stream error");
 const ErrorType ErrorType::SyntaxError		("SyntaxError",			"syntax error");
 const ErrorType ErrorType::TypeError		("TypeError",			"type error");
