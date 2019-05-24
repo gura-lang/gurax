@@ -58,7 +58,7 @@ cond(a, f(v1, v2, v3), g(v1, v2, v3))
   ##27 NoOperation()
 ======== Basic Test ========
 cond(true, 3) .. 3
-cond(false, 3) .. nil
+cond(false, 3) .. <Nil>
 cond(true, 3, 5) .. 3
 cond(false, 3, 5) .. 5
 cond(true, 'true', 'false') .. true

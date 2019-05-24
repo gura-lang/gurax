@@ -11,12 +11,12 @@ str.EndsWith('KLMN'):icase .. true
 str.StartsWith('defg', 3) .. true
 str.EndsWith('ghij', 10) .. true
 str.StartsWith('abcd'):rest .. efghijklmn
-str.StartsWith('abdd'):rest .. nil
-str.StartsWith('ABCD'):rest .. nil
+str.StartsWith('abdd'):rest .. <Nil>
+str.StartsWith('ABCD'):rest .. <Nil>
 str.StartsWith('ABCD'):rest:icase .. efghijklmn
 str.EndsWith('klmn'):rest .. klmn
-str.EndsWith('klmm'):rest .. nil
-str.EndsWith('KLMN'):rest .. nil
+str.EndsWith('klmm'):rest .. <Nil>
+str.EndsWith('KLMN'):rest .. <Nil>
 str.EndsWith('KLMN'):rest:icase .. klmn
 str.StartsWith('defg', 3):rest .. hijklmn
 str.EndsWith('ghij', 10):rest .. ghijklmn
@@ -32,25 +32,25 @@ str .. abcdefghijklmn
 str.Find('a') .. 0
 str.Find('d') .. 3
 str.Find('n') .. 13
-str.Find('z') .. nil
-str.Find('a', 1) .. nil
+str.Find('z') .. <Nil>
+str.Find('a', 1) .. <Nil>
 str.Find('d', 1) .. 3
 str.Find('n', 1) .. 13
-str.Find('a', 6) .. nil
-str.Find('d', 6) .. nil
+str.Find('a', 6) .. <Nil>
+str.Find('d', 6) .. <Nil>
 str.Find('n', 6) .. 13
 str.Find('abcd') .. 0
 str.Find('defg') .. 3
-str.Find('deff') .. nil
-str.Find('ABCD') .. nil
-str.Find('DEFG') .. nil
+str.Find('deff') .. <Nil>
+str.Find('ABCD') .. <Nil>
+str.Find('DEFG') .. <Nil>
 str.Find('ABCD'):icase .. 0
 str.Find('DEFG'):icase .. 3
 str .. あいうえおかきくけこ
 str.Find('あ') .. 0
 str.Find('お') .. 4
 str.Find('こ') .. 9
-str.Find('ん') .. nil
+str.Find('ん') .. <Nil>
 str.Find('あいうえ') .. 0
 str.Find('おかきく') .. 4
-str.Find('おかきき') .. nil
+str.Find('おかきき') .. <Nil>

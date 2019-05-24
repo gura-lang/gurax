@@ -52,15 +52,6 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Number
 //------------------------------------------------------------------------------
-Int Value_Number::GetInt(Int numMin, Int numMax) const
-{
-	Int num = GetInt();
-	if (num < numMin || numMax < num) {
-		Error::Issue(ErrorType::RangeError, "the number must be between &d and %d", numMin, numMax);
-	}
-	return num;
-}
-
 String Value_Number::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
