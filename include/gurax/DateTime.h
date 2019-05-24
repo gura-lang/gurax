@@ -99,6 +99,12 @@ public:
 	DateTime& operator+=(const TimeDelta& td);
 	DateTime& operator-=(const TimeDelta& td);
 	TimeDelta* operator-(const DateTime& dt) const;
+	bool operator==(const DateTime& dt) const;
+	bool operator!=(const DateTime& dt) const;
+	bool operator<(const DateTime& dt) const;
+	bool operator<=(const DateTime& dt) const;
+	bool operator>(const DateTime& dt) const;
+	bool operator>=(const DateTime& dt) const;
 public:
 	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
 	DateTime* ToUTC() const;

@@ -58,6 +58,12 @@ public:
 	TimeDelta* operator-() const;
 	TimeDelta& operator+=(const TimeDelta& td);
 	TimeDelta& operator-=(const TimeDelta& td);
+	bool operator==(const TimeDelta& td) const;
+	bool operator!=(const TimeDelta& td) const;
+	bool operator<(const TimeDelta& td) const;
+	bool operator<=(const TimeDelta& td) const;
+	bool operator>(const TimeDelta& td) const;
+	bool operator>=(const TimeDelta& td) const;
 public:
 	void Regulate();
 	static int Compare(const TimeDelta& td1, const TimeDelta& td2);

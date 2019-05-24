@@ -39,6 +39,39 @@ TimeDelta* DateTime::operator-(const DateTime& dt) const
 	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
 }
 
+bool DateTime::operator==(const DateTime& dt) const
+{
+	return GetYear() == dt.GetYear() && GetMonth() == dt.GetMonth() && GetDay() == dt.GetDay() &&
+		GetSecInDay() == dt.GetSecInDay() && GetUSecRaw() == dt.GetUSecRaw();
+}
+
+bool DateTime::operator!=(const DateTime& dt) const
+{
+	return !operator==(dt);
+}
+
+bool DateTime::operator<(const DateTime& dt) const
+{
+	return GetYear() < dt.GetYear() || GetMonth() < dt.GetMonth() || GetDay() < dt.GetDay() ||
+		GetSecInDay() < dt.GetSecInDay() || GetUSecRaw() < dt.GetUSecRaw();
+}
+
+bool DateTime::operator<=(const DateTime& dt) const
+{
+	return !operator>(dt);
+}
+
+bool DateTime::operator>(const DateTime& dt) const
+{
+	return GetYear() > dt.GetYear() || GetMonth() > dt.GetMonth() || GetDay() > dt.GetDay() ||
+		GetSecInDay() > dt.GetSecInDay() || GetUSecRaw() > dt.GetUSecRaw();
+}
+
+bool DateTime::operator>=(const DateTime& dt) const
+{
+	return !operator<(dt);
+}
+
 void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 {
 	Int32 dayOfYear = GetDayOfYear(_year, _month, _day);

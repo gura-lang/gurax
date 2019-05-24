@@ -217,6 +217,88 @@ Gurax_ImplementOpBinary(Sub, TimeDelta, TimeDelta)
 	return new Value_TimeDelta(pTd.release());
 }
 
+// TimeDelta * Number
+Gurax_ImplementOpBinary(Mul, TimeDelta, Number)
+{
+	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
+	int num = Value_Number::GetInt(valueR);
+	RefPtr<TimeDelta> pTd(new TimeDelta(td));
+	//*pTd *= num;
+	return new Value_TimeDelta(pTd.release());
+}
+
+// Number * TimeDelta
+Gurax_ImplementOpBinary(Mul, Number, TimeDelta)
+{
+	int num = Value_Number::GetInt(valueL);
+	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
+	RefPtr<TimeDelta> pTd(new TimeDelta(td));
+	//*pTd *= num;
+	return new Value_TimeDelta(pTd.release());
+}
+
+// TimeDelta / Number
+Gurax_ImplementOpBinary(Div, TimeDelta, Number)
+{
+	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
+	int num = Value_Number::GetInt(valueR);
+	if (num == 0) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
+	RefPtr<TimeDelta> pTd(new TimeDelta(td));
+	//*pTd /= num;
+	return new Value_TimeDelta(pTd.release());
+}
+
+// TimeDelta == TimeDelta
+Gurax_ImplementOpBinary(Eq, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	return new Value_Bool(td1 == td2);
+}
+
+// TimeDelta != TimeDelta
+Gurax_ImplementOpBinary(Ne, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	return new Value_Bool(td1 != td2);
+}
+
+// TimeDelta < TimeDelta
+Gurax_ImplementOpBinary(Lt, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	return new Value_Bool(td1 < td2);
+}
+
+// TimeDelta <= TimeDelta
+Gurax_ImplementOpBinary(Le, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	return new Value_Bool(td1 <= td2);
+}
+
+// TimeDelta > TimeDelta
+Gurax_ImplementOpBinary(Gt, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	return new Value_Bool(td1 > td2);
+}
+
+// TimeDelta >= TimeDelta
+Gurax_ImplementOpBinary(Ge, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	return new Value_Bool(td1 >= td2);
+}
+
 //------------------------------------------------------------------------------
 // VType_TimeDelta
 //------------------------------------------------------------------------------
@@ -239,6 +321,15 @@ void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpUnary(Neg, TimeDelta);
 	Gurax_AssignOpBinary(Add, TimeDelta, TimeDelta);
 	Gurax_AssignOpBinary(Sub, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Mul, TimeDelta, Number);
+	Gurax_AssignOpBinary(Mul, Number, TimeDelta);
+	Gurax_AssignOpBinary(Div, TimeDelta, Number);
+	Gurax_AssignOpBinary(Eq, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Ne, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Lt, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Le, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Gt, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Ge, TimeDelta, TimeDelta);
 }
 
 //------------------------------------------------------------------------------

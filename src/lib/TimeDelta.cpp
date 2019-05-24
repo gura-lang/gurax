@@ -37,6 +37,36 @@ TimeDelta& TimeDelta::operator-=(const TimeDelta& td)
 	return *this;
 }
 
+bool TimeDelta::operator==(const TimeDelta& td) const
+{
+	return _days == td._days && _secs == td._secs && _usecs == td._usecs;
+}
+
+bool TimeDelta::operator!=(const TimeDelta& td) const
+{
+	return !operator==(td);
+}
+
+bool TimeDelta::operator<(const TimeDelta& td) const
+{
+	return _days < td._days || _secs < td._secs || _usecs < td._usecs;
+}
+
+bool TimeDelta::operator<=(const TimeDelta& td) const
+{
+	return !operator>(td);
+}
+
+bool TimeDelta::operator>(const TimeDelta& td) const
+{
+	return _days > td._days || _secs > td._secs || _usecs > td._usecs;
+}
+
+bool TimeDelta::operator>=(const TimeDelta& td) const
+{
+	return !operator<(td);
+}
+
 void TimeDelta::Regulate()
 {
 	_secs += _usecs / 1000000;

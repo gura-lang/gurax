@@ -381,6 +381,54 @@ Gurax_ImplementOpBinary(Sub, DateTime, DateTime)
 	return new Value_TimeDelta(pTd.release());
 }
 
+// DateTime == DateTime
+Gurax_ImplementOpBinary(Eq, DateTime, DateTime)
+{
+	const DateTime& td1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& td2 = Value_DateTime::GetDateTime(valueR);
+	return new Value_Bool(td1 == td2);
+}
+
+// DateTime != DateTime
+Gurax_ImplementOpBinary(Ne, DateTime, DateTime)
+{
+	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
+	return new Value_Bool(dt1 != dt2);
+}
+
+// DateTime < DateTime
+Gurax_ImplementOpBinary(Lt, DateTime, DateTime)
+{
+	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
+	return new Value_Bool(dt1 < dt2);
+}
+
+// DateTime <= DateTime
+Gurax_ImplementOpBinary(Le, DateTime, DateTime)
+{
+	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
+	return new Value_Bool(dt1 <= dt2);
+}
+
+// DateTime > DateTime
+Gurax_ImplementOpBinary(Gt, DateTime, DateTime)
+{
+	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
+	return new Value_Bool(dt1 > dt2);
+}
+
+// DateTime >= DateTime
+Gurax_ImplementOpBinary(Ge, DateTime, DateTime)
+{
+	const DateTime& dt1 = Value_DateTime::GetDateTime(valueL);
+	const DateTime& dt2 = Value_DateTime::GetDateTime(valueR);
+	return new Value_Bool(dt1 >= dt2);
+}
+
 //------------------------------------------------------------------------------
 // VType_DateTime
 //------------------------------------------------------------------------------
@@ -409,6 +457,12 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Add, DateTime, TimeDelta);
 	Gurax_AssignOpBinary(Sub, DateTime, TimeDelta);
 	Gurax_AssignOpBinary(Sub, DateTime, DateTime);
+	Gurax_AssignOpBinary(Eq, DateTime, DateTime);
+	Gurax_AssignOpBinary(Ne, DateTime, DateTime);
+	Gurax_AssignOpBinary(Lt, DateTime, DateTime);
+	Gurax_AssignOpBinary(Le, DateTime, DateTime);
+	Gurax_AssignOpBinary(Gt, DateTime, DateTime);
+	Gurax_AssignOpBinary(Ge, DateTime, DateTime);
 }
 
 //------------------------------------------------------------------------------
