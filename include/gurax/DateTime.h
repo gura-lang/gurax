@@ -108,6 +108,7 @@ public:
 public:
 	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
 	DateTime* ToUTC() const;
+	UInt64 ToUnixTime() const;
 	String GetTZOffsetStr(bool colonFlag) const;
 	static UInt32 CalcSecInDay(UInt8 hour, UInt8 min, UInt8 sec) {
 		return static_cast<UInt32>(hour) * 3600 + static_cast<UInt32>(min) * 60 + sec;

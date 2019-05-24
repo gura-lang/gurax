@@ -69,11 +69,20 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 
 DateTime* DateTime::ToUTC() const
 {
-	if (!HasOffset()) return Clone();
+	if (_tz.secsOffset == 0) return Clone();
 	RefPtr<DateTime> pDt(Clone());
 	pDt->AddDelta(0, GetSecsOffset(), 0);
 	pDt->SetSecsOffset(0);
 	return pDt.release();
+}
+
+UInt64 DateTime::ToUnixTime() const
+{
+	RefPtr<DateTime> pDt(new DateTime(1970, 1, 1, 0, 0));
+	RefPtr<TimeDelta> pTd(*this - *pDt);
+	UInt64 rtn = pTd->GetSecsRaw();
+	rtn += pTd->GetDays() * 60 * 60 * 24;
+	return rtn;
 }
 
 UInt8 DateTime::GetDaysOfMonth(UInt16 year, UInt8 month)

@@ -9,10 +9,10 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // DateTime(year?:Number, month?:Number, day?:Number,
-//          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number)
+//          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map
 Gurax_DeclareFunction(DateTime)
 {
-	Declare(VTYPE_DateTime, Flag::None);
+	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("year", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("month", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("day", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
@@ -349,6 +349,21 @@ Gurax_ImplementPropertyGetter(DateTime, utc)
 	return new Value_DateTime(valueThis.GetDateTime().ToUTC());
 }
 
+// DateTime#unixTime
+Gurax_DeclareProperty_R(DateTime, unixTime)
+{
+	Declare(VTYPE_DateTime, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The UNIX time of the date.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, unixTime)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetDateTime().ToUnixTime());
+}
+
 //------------------------------------------------------------------------------
 // Operator
 //------------------------------------------------------------------------------
@@ -453,6 +468,7 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(DateTime, weekShort));
 	Assign(Gurax_CreateProperty(DateTime, yday));
 	Assign(Gurax_CreateProperty(DateTime, utc));
+	Assign(Gurax_CreateProperty(DateTime, unixTime));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, DateTime, TimeDelta);
 	Gurax_AssignOpBinary(Sub, DateTime, TimeDelta);

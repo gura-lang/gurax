@@ -8,10 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, usecs?:Number)
+// TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, usecs?:Number):map
 Gurax_DeclareFunction(TimeDelta)
 {
-	Declare(VTYPE_DateTime, Flag::None);
+	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("days", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("hours", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("mins", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
