@@ -39,39 +39,6 @@ TimeDelta* DateTime::operator-(const DateTime& dt) const
 	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
 }
 
-bool DateTime::operator==(const DateTime& dt) const
-{
-	return GetYear() == dt.GetYear() && GetMonth() == dt.GetMonth() && GetDay() == dt.GetDay() &&
-		GetSecInDay() == dt.GetSecInDay() && GetUSecRaw() == dt.GetUSecRaw();
-}
-
-bool DateTime::operator!=(const DateTime& dt) const
-{
-	return !operator==(dt);
-}
-
-bool DateTime::operator<(const DateTime& dt) const
-{
-	return GetYear() < dt.GetYear() || GetMonth() < dt.GetMonth() || GetDay() < dt.GetDay() ||
-		GetSecInDay() < dt.GetSecInDay() || GetUSecRaw() < dt.GetUSecRaw();
-}
-
-bool DateTime::operator<=(const DateTime& dt) const
-{
-	return !operator>(dt);
-}
-
-bool DateTime::operator>(const DateTime& dt) const
-{
-	return GetYear() > dt.GetYear() || GetMonth() > dt.GetMonth() || GetDay() > dt.GetDay() ||
-		GetSecInDay() > dt.GetSecInDay() || GetUSecRaw() > dt.GetUSecRaw();
-}
-
-bool DateTime::operator>=(const DateTime& dt) const
-{
-	return !operator<(dt);
-}
-
 void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 {
 	Int32 dayOfYear = GetDayOfYear(_year, _month, _day);
@@ -204,6 +171,18 @@ String DateTime::GetTZOffsetStr(bool colonFlag) const
 	}
 	str.Printf(colonFlag? "%02d:%02d" : "%02d%02d", minsOffset / 60, minsOffset % 60);
 	return str;
+}
+
+Int DateTime::Compare(const DateTime& dt1, const DateTime& dt2)
+{
+	Int result;
+	if ((result = static_cast<Int>(dt1._year) - dt2._year) != 0) {
+	} else if ((result = static_cast<Int>(dt1._month) - dt2._month) != 0) {
+	} else if ((result = static_cast<Int>(dt1._day) - dt2._day) != 0) {
+	} else if ((result = static_cast<Int>(dt1._secInDay) - dt2._secInDay) != 0) {
+	} else if ((result = static_cast<Int>(dt1._usecRaw) - dt2._usecRaw) != 0) {
+	}
+	return result;
 }
 
 String DateTime::ToString(const StringStyle& ss) const

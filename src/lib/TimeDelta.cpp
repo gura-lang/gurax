@@ -40,12 +40,12 @@ TimeDelta& TimeDelta::operator-=(const TimeDelta& td)
 TimeDelta& TimeDelta::operator*=(int n)
 {
 	Int64 num = _usecs;
-	num += _secs * 1000000;
-	num += _days * 1000000 * 24 * 60 * 60;
+	num += static_cast<Int64>(_secs) * 1000000;
+	num += static_cast<Int64>(_days) * 1000000 * 24 * 60 * 60;
 	num *= n;
 	_usecs = static_cast<Int32>(num % 1000000);
 	num /= 1000000;
-	_secs = static_cast<Int32>(num % 24 * 60 * 60);
+	_secs = static_cast<Int32>(num % (24 * 60 * 60));
 	num /= 24 * 60 * 60;
 	_days = static_cast<Int32>(num);
 	return *this;
@@ -54,71 +54,37 @@ TimeDelta& TimeDelta::operator*=(int n)
 TimeDelta& TimeDelta::operator/=(int n)
 {
 	Int64 num = _usecs;
-	num += _secs * 1000000;
-	num += _days * 1000000 * 24 * 60 * 60;
+	num += static_cast<Int64>(_secs) * 1000000;
+	num += static_cast<Int64>(_days) * 1000000 * 24 * 60 * 60;
 	num /= n;
 	_usecs = static_cast<Int32>(num % 1000000);
 	num /= 1000000;
-	_secs = static_cast<Int32>(num % 24 * 60 * 60);
+	_secs = static_cast<Int32>(num % (24 * 60 * 60));
 	num /= 24 * 60 * 60;
 	_days = static_cast<Int32>(num);
 	return *this;
 }
 
-bool TimeDelta::operator==(const TimeDelta& td) const
-{
-	return _days == td._days && _secs == td._secs && _usecs == td._usecs;
-}
-
-bool TimeDelta::operator!=(const TimeDelta& td) const
-{
-	return !operator==(td);
-}
-
-bool TimeDelta::operator<(const TimeDelta& td) const
-{
-	return _days < td._days || _secs < td._secs || _usecs < td._usecs;
-}
-
-bool TimeDelta::operator<=(const TimeDelta& td) const
-{
-	return !operator>(td);
-}
-
-bool TimeDelta::operator>(const TimeDelta& td) const
-{
-	return _days > td._days || _secs > td._secs || _usecs > td._usecs;
-}
-
-bool TimeDelta::operator>=(const TimeDelta& td) const
-{
-	return !operator<(td);
-}
-
 void TimeDelta::Regulate()
 {
-	_secs += _usecs / 1000000;
-	_usecs %= 1000000;
-	_days += _secs / (3600 * 24);
-	_secs %= 3600 * 24;
-	if (_usecs < 0) {
-		_usecs += 1000000;
-		_secs--;
-	}
-	if (_secs < 0) {
-		_secs += 3600 * 24;
-		_days--;
-	}
+	Int64 num = _usecs;
+	num += static_cast<Int64>(_secs) * 1000000;
+	num += static_cast<Int64>(_days) * 1000000 * 24 * 60 * 60;
+	_usecs = static_cast<Int32>(num % 1000000);
+	num /= 1000000;
+	_secs = static_cast<Int32>(num % (24 * 60 * 60));
+	num /= 24 * 60 * 60;
+	_days = static_cast<Int32>(num);
 }
 
-int TimeDelta::Compare(const TimeDelta& td1, const TimeDelta& td2)
+Int TimeDelta::Compare(const TimeDelta& td1, const TimeDelta& td2)
 {
-	Int32 result = 0;
+	Int result = 0;
 	if ((result = td1._days - td2._days) != 0) {
 	} else if ((result = td1._secs - td2._secs) != 0) {
 	} else if ((result = td1._usecs - td2._usecs) != 0) {
 	}
-	return (result < 0)? -1 : (result > 0)? +1 : 0;
+	return result;
 }
 
 String TimeDelta::ToString(const StringStyle& ss) const

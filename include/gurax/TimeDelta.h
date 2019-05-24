@@ -60,18 +60,18 @@ public:
 	TimeDelta& operator-=(const TimeDelta& td);
 	TimeDelta& operator*=(int n);
 	TimeDelta& operator/=(int n);
-	bool operator==(const TimeDelta& td) const;
-	bool operator!=(const TimeDelta& td) const;
-	bool operator<(const TimeDelta& td) const;
-	bool operator<=(const TimeDelta& td) const;
-	bool operator>(const TimeDelta& td) const;
-	bool operator>=(const TimeDelta& td) const;
+	bool operator==(const TimeDelta& td) const { return Compare(*this, td) == 0; }
+	bool operator!=(const TimeDelta& td) const { return Compare(*this, td) != 0; }
+	bool operator<(const TimeDelta& td) const  { return Compare(*this, td) < 0;  }
+	bool operator<=(const TimeDelta& td) const { return Compare(*this, td) <= 0; }
+	bool operator>(const TimeDelta& td) const  { return Compare(*this, td) > 0;  }
+	bool operator>=(const TimeDelta& td) const { return Compare(*this, td) >= 0; }
 public:
 	void Regulate();
-	static int Compare(const TimeDelta& td1, const TimeDelta& td2);
 	static Int32 CalcSecsRaw(Int32 hours, Int32 mins, Int32 secs) {
 		return hours * 3600 + mins * 60 + secs;
 	}
+	static Int Compare(const TimeDelta& td1, const TimeDelta& td2);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TimeDelta& timeDelta) const { return this == &timeDelta; }

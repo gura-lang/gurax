@@ -99,12 +99,12 @@ public:
 	DateTime& operator+=(const TimeDelta& td);
 	DateTime& operator-=(const TimeDelta& td);
 	TimeDelta* operator-(const DateTime& dt) const;
-	bool operator==(const DateTime& dt) const;
-	bool operator!=(const DateTime& dt) const;
-	bool operator<(const DateTime& dt) const;
-	bool operator<=(const DateTime& dt) const;
-	bool operator>(const DateTime& dt) const;
-	bool operator>=(const DateTime& dt) const;
+	bool operator==(const DateTime& dt) const { return Compare(*this, dt) == 0; }
+	bool operator!=(const DateTime& dt) const { return Compare(*this, dt) != 0; }
+	bool operator<(const DateTime& dt) const  { return Compare(*this, dt) < 0;  }
+	bool operator<=(const DateTime& dt) const { return Compare(*this, dt) <= 0; }
+	bool operator>(const DateTime& dt) const  { return Compare(*this, dt) > 0;  }
+	bool operator>=(const DateTime& dt) const { return Compare(*this, dt) >= 0; }
 public:
 	void AddDelta(Int32 days, Int32 secs, Int32 usecs);
 	DateTime* ToUTC() const;
@@ -113,6 +113,7 @@ public:
 		return static_cast<UInt32>(hour) * 3600 + static_cast<UInt32>(min) * 60 + sec;
 	}
 	static UInt32 CalcUSecRaw(UInt16 msec, UInt16 usec) { return static_cast<UInt32>(msec) * 1000 + usec; }
+	static Int Compare(const DateTime& dt1, const DateTime& dt2);
 	static bool IsLeapYear(UInt16 year) {
 		return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
 	}
