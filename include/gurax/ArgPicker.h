@@ -71,6 +71,10 @@ public:
 	TimeDelta& PickTimeDelta()		{ return Value_TimeDelta::GetTimeDelta(PickValue()); }
 	Stream& PickStream();
 	Iterator& PickIterator();
+public:
+	template<typename T_Num> T_Num PickRanged(Int numMin, Int numMax) {
+		return Value_Number::GetRanged<T_Num>(PickValue(), numMin, numMax);
+	}
 };
 
 }
