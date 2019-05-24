@@ -37,6 +37,34 @@ TimeDelta& TimeDelta::operator-=(const TimeDelta& td)
 	return *this;
 }
 
+TimeDelta& TimeDelta::operator*=(int n)
+{
+	Int64 num = _usecs;
+	num += _secs * 1000000;
+	num += _days * 1000000 * 24 * 60 * 60;
+	num *= n;
+	_usecs = static_cast<Int32>(num % 1000000);
+	num /= 1000000;
+	_secs = static_cast<Int32>(num % 24 * 60 * 60);
+	num /= 24 * 60 * 60;
+	_days = static_cast<Int32>(num);
+	return *this;
+}
+
+TimeDelta& TimeDelta::operator/=(int n)
+{
+	Int64 num = _usecs;
+	num += _secs * 1000000;
+	num += _days * 1000000 * 24 * 60 * 60;
+	num /= n;
+	_usecs = static_cast<Int32>(num % 1000000);
+	num /= 1000000;
+	_secs = static_cast<Int32>(num % 24 * 60 * 60);
+	num /= 24 * 60 * 60;
+	_days = static_cast<Int32>(num);
+	return *this;
+}
+
 bool TimeDelta::operator==(const TimeDelta& td) const
 {
 	return _days == td._days && _secs == td._secs && _usecs == td._usecs;

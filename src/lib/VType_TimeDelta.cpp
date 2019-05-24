@@ -223,7 +223,7 @@ Gurax_ImplementOpBinary(Mul, TimeDelta, Number)
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
 	int num = Value_Number::GetInt(valueR);
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
-	//*pTd *= num;
+	*pTd *= num;
 	return new Value_TimeDelta(pTd.release());
 }
 
@@ -233,7 +233,7 @@ Gurax_ImplementOpBinary(Mul, Number, TimeDelta)
 	int num = Value_Number::GetInt(valueL);
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
-	//*pTd *= num;
+	*pTd *= num;
 	return new Value_TimeDelta(pTd.release());
 }
 
@@ -247,7 +247,7 @@ Gurax_ImplementOpBinary(Div, TimeDelta, Number)
 		return Value::nil();
 	}
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
-	//*pTd /= num;
+	*pTd /= num;
 	return new Value_TimeDelta(pTd.release());
 }
 

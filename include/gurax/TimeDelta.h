@@ -58,6 +58,8 @@ public:
 	TimeDelta* operator-() const;
 	TimeDelta& operator+=(const TimeDelta& td);
 	TimeDelta& operator-=(const TimeDelta& td);
+	TimeDelta& operator*=(int n);
+	TimeDelta& operator/=(int n);
 	bool operator==(const TimeDelta& td) const;
 	bool operator!=(const TimeDelta& td) const;
 	bool operator<(const TimeDelta& td) const;
