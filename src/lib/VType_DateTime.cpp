@@ -31,14 +31,22 @@ Gurax_ImplementFunction(DateTime)
 {
 	// Arguments
 	ArgPicker args(argument);
-	UInt16 year	= args.IsValid()? args.PickUInt16() : 1970;
-	UInt8 month	= args.IsValid()? args.PickUInt8() : 1;
-	UInt8 day	= args.IsValid()? args.PickUInt8() : 1;
-	UInt8 hour	= args.IsValid()? args.PickUInt8() : 0;
-	UInt8 min	= args.IsValid()? args.PickUInt8() : 0;
-	UInt8 sec	= args.IsValid()? args.PickUInt8() : 0;
-	UInt16 msec	= args.IsValid()? args.PickUInt16() : 0;
-	UInt16 usec	= args.IsValid()? args.PickUInt16() : 0;
+	UInt16 year	= args.IsValid()? args.PickRanged<UInt16>(0, 9999) : 1970;
+	if (Error::IsIssued()) return Value::nil();
+	UInt8 month	= args.IsValid()? args.PickRanged<UInt8>(1, 12) : 1;
+	if (Error::IsIssued()) return Value::nil();
+	UInt8 day	= args.IsValid()? args.PickRanged<UInt8>(1, 31) : 1;
+	if (Error::IsIssued()) return Value::nil();
+	UInt8 hour	= args.IsValid()? args.PickRanged<UInt8>(0, 23) : 0;
+	if (Error::IsIssued()) return Value::nil();
+	UInt8 min	= args.IsValid()? args.PickRanged<UInt8>(0, 59) : 0;
+	if (Error::IsIssued()) return Value::nil();
+	UInt8 sec	= args.IsValid()? args.PickRanged<UInt8>(0, 59) : 0;
+	if (Error::IsIssued()) return Value::nil();
+	UInt16 msec	= args.IsValid()? args.PickRanged<UInt16>(0, 999) : 0;
+	if (Error::IsIssued()) return Value::nil();
+	UInt16 usec	= args.IsValid()? args.PickRanged<UInt16>(0, 999) : 0;
+	if (Error::IsIssued()) return Value::nil();
 	bool validOffsetFlag = args.IsValid();
 	Int32 minsOff = validOffsetFlag? args.PickInt32() : 0;
 	// Function body
