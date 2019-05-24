@@ -187,6 +187,37 @@ Gurax_ImplementPropertySetter(TimeDelta, usecs)
 }
 
 //------------------------------------------------------------------------------
+// Operator
+//------------------------------------------------------------------------------
+// -TimeDelta
+Gurax_ImplementOpUnary(Neg, TimeDelta)
+{
+	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(value);
+	RefPtr<TimeDelta> pTd(-td);
+	return new Value_TimeDelta(pTd.release());
+}
+
+// TimeDelta + TimeDelta
+Gurax_ImplementOpBinary(Add, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	RefPtr<TimeDelta> pTd(new TimeDelta(td1));
+	*pTd += td2;
+	return new Value_TimeDelta(pTd.release());
+}
+
+// TimeDelta - TimeDelta
+Gurax_ImplementOpBinary(Sub, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	RefPtr<TimeDelta> pTd(new TimeDelta(td1));
+	*pTd -= td2;
+	return new Value_TimeDelta(pTd.release());
+}
+
+//------------------------------------------------------------------------------
 // VType_TimeDelta
 //------------------------------------------------------------------------------
 VType_TimeDelta VTYPE_TimeDelta("TimeDelta");
@@ -204,6 +235,10 @@ void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(TimeDelta, secsRaw));
 	Assign(Gurax_CreateProperty(TimeDelta, msecs));
 	Assign(Gurax_CreateProperty(TimeDelta, usecs));
+	// Assignment of operator
+	Gurax_AssignOpUnary(Neg, TimeDelta);
+	Gurax_AssignOpBinary(Add, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Sub, TimeDelta, TimeDelta);
 }
 
 //------------------------------------------------------------------------------

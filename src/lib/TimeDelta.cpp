@@ -14,6 +14,11 @@ TimeDelta::TimeDelta(Int32 days, Int32 secs, Int32 usecs) :
 	Regulate();
 }
 
+TimeDelta* TimeDelta::operator-() const
+{
+	return new TimeDelta(-_days, -_secs, -_usecs);
+}
+
 TimeDelta& TimeDelta::operator+=(const TimeDelta& td)
 {
 	_days += td._days;

@@ -55,6 +55,7 @@ public:
 	void SetMSecs(Int32 msecs)	{ _usecs = msecs * 1000; Regulate(); }
 	void SetUSecs(Int32 usecs)	{ _usecs = usecs; Regulate(); }
 public:
+	TimeDelta* operator-() const;
 	TimeDelta& operator+=(const TimeDelta& td);
 	TimeDelta& operator-=(const TimeDelta& td);
 public:
