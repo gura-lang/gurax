@@ -1,0 +1,11 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Constructor') {
+	Tester(`TimeDelta())
+}
+
+TestCase('TimeDelta * n') {
+	Tester(`(TimeDelta(1, 0, 0) * 5))
+	Tester(`(TimeDelta(1, 2, 3, 4, 5) * 5))
+}

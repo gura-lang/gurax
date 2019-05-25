@@ -49,3 +49,27 @@ TestCase('Constructor Range Check') {
 	Tester(`DateTime(nil, nil, nil, nil, nil, nil, nil, 999))
 	Tester(`DateTime(nil, nil, nil, nil, nil, nil, nil, 1000))
 }
+
+TestCase('DateTime - DateTime') {
+	Tester(`(DateTime(2000, 12, 31) - DateTime(2000, 1, 1)))
+	Tester(`(DateTime(2001, 12, 31) - DateTime(2001, 1, 1)))
+	Tester(`(DateTime(2010, 12, 31) - DateTime(2010, 1, 1)))
+}
+
+TestCase('DateTime + TimeDelta') {
+	Tester(`(DateTime(2000, 1, 1) + TimeDelta(365)))
+	Tester(`(DateTime(2000, 1, 1) + TimeDelta(366)))
+	Tester(`(DateTime(2001, 1, 1) + TimeDelta(364)))
+	Tester(`(DateTime(2001, 1, 1) + TimeDelta(365)))
+	Tester(`(DateTime(2010, 1, 1) + TimeDelta(364)))
+	Tester(`(DateTime(2010, 1, 1) + TimeDelta(365)))
+}
+
+TestCase('DateTime - TimeDelta') {
+	Tester(`(DateTime(2000, 12, 31) - TimeDelta(365)))
+	Tester(`(DateTime(2000, 12, 31) - TimeDelta(366)))
+	Tester(`(DateTime(2001, 12, 31) - TimeDelta(364)))
+	Tester(`(DateTime(2001, 12, 31) - TimeDelta(365)))
+	Tester(`(DateTime(2010, 12, 31) - TimeDelta(364)))
+	Tester(`(DateTime(2010, 12, 31) - TimeDelta(365)))
+}
