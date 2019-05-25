@@ -11,6 +11,7 @@ TestCase('Constructor') {
 	Tester(`DateTime(2019, 5, 21, 8, 23, 42))
 	Tester(`DateTime(2019, 5, 21, 8, 23, 42, 234))
 	Tester(`DateTime(2019, 12, 31, 23, 59, 59, 999))
+	Tester(`DateTime(2019, 12, 31, 23, 59, 59, 999, 765))
 	Tester(`DateTime(2019, 5, nil, 8, nil, 42))
 	Tester(`DateTime(2019, nil, nil, nil, nil, 42))
 	Tester(`DateTime(-1))

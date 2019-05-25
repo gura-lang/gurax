@@ -3,9 +3,40 @@ import(util.tester) {*}
 
 TestCase('Constructor') {
 	Tester(`TimeDelta())
+	Tester(`TimeDelta(123))
+	Tester(`TimeDelta(123, 12))
+	Tester(`TimeDelta(123, 12, 34))
+	Tester(`TimeDelta(123, 12, 34, 56))
+	Tester(`TimeDelta(123, 12, 34, 56, 789))
+	Tester(`TimeDelta(123, 12, 34, 56, 789, 654))
+	Tester(`TimeDelta(nil, 12))
+	Tester(`TimeDelta(nil, nil, 34))
+	Tester(`TimeDelta(nil, nil, nil, 56))
+	Tester(`TimeDelta(nil, nil, nil, nil, 789))
+	Tester(`TimeDelta(nil, nil, nil, nil, nil, 654))
+	Tester(`TimeDelta(days => 123))
+	Tester(`TimeDelta(hours => 12))
+	Tester(`TimeDelta(mins => 34))
+	Tester(`TimeDelta(secs => 56))
+	Tester(`TimeDelta(msecs => 789))
+	Tester(`TimeDelta(usecs => 654))
+	Tester(`TimeDelta(hours => 24 * 6 + 7))
+	Tester(`TimeDelta(mins => 60 * 6 + 7))
+	Tester(`TimeDelta(secs => 60 * 6 + 7))
+	Tester(`TimeDelta(msecs => 1000 * 6 + 7))
+	Tester(`TimeDelta(usecs => 1000 * 6 + 7))
 }
 
 TestCase('TimeDelta * n') {
 	Tester(`(TimeDelta(1, 0, 0) * 5))
 	Tester(`(TimeDelta(1, 2, 3, 4, 5) * 5))
+}
+
+TestCase('TimeDelta / n') {
+	Tester(`(TimeDelta(20) / 5))
+	Tester(`(TimeDelta(hours => 20) / 5))
+	Tester(`(TimeDelta(mins => 20) / 5))
+	Tester(`(TimeDelta(secs => 20) / 5))
+	Tester(`(TimeDelta(msecs => 20) / 5))
+	Tester(`(TimeDelta(1, 0, 0) / 5))
 }

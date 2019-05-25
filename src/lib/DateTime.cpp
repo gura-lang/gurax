@@ -10,13 +10,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 DateTime& DateTime::operator+=(const TimeDelta& td)
 {
-	AddDelta(td.GetDays(), td.GetSecsRaw(), td.GetUSecs());
+	AddDelta(td.GetDays(), td.GetSecsPacked(), td.GetUSecsPacked());
 	return *this;
 }
 
 DateTime& DateTime::operator-=(const TimeDelta& td)
 {
-	AddDelta(-td.GetDays(), -td.GetSecsRaw(), -td.GetUSecs());
+	AddDelta(-td.GetDays(), -td.GetSecsPacked(), -td.GetUSecsPacked());
 	return *this;
 }
 
@@ -34,22 +34,22 @@ TimeDelta* DateTime::operator-(const DateTime& dt) const
 			daysDiff += GetDaysOfYear(year);
 		}
 	}
-	Int32 secsDiff = pDt1->GetSecRaw() - pDt2->GetSecRaw();
-	Int32 usecsDiff = pDt1->GetUSec() - pDt2->GetUSec();
+	Int32 secsDiff = pDt1->GetSecPacked() - pDt2->GetSecPacked();
+	Int32 usecsDiff = pDt1->GetUSecPacked() - pDt2->GetUSecPacked();
 	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
 }
 
 void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 {
 	Int32 dayOfYear = GetDayOfYear(_year, _month, _day);
-	_usecRaw += usecs;
-	if (_usecRaw >= 1000000) {
-		_usecRaw -= 1000000;
-		_secRaw++;
+	_usecPacked += usecs;
+	if (_usecPacked >= 1000000) {
+		_usecPacked -= 1000000;
+		_secPacked++;
 	}
-	_secRaw += secs;
-	if (_secRaw >= 3600 * 24) {
-		_secRaw -= 3600 * 24;
+	_secPacked += secs;
+	if (_secPacked >= 3600 * 24) {
+		_secPacked -= 3600 * 24;
 		dayOfYear++;
 	}
 	dayOfYear += days;
@@ -80,7 +80,7 @@ UInt64 DateTime::ToUnixTime() const
 {
 	RefPtr<DateTime> pDt(new DateTime(1970, 1, 1, 0, 0));
 	RefPtr<TimeDelta> pTd(*this - *pDt);
-	UInt64 rtn = pTd->GetSecsRaw();
+	UInt64 rtn = pTd->GetSecsPacked();
 	rtn += pTd->GetDays() * 60 * 60 * 24;
 	return rtn;
 }
@@ -188,8 +188,8 @@ Int DateTime::Compare(const DateTime& dt1, const DateTime& dt2)
 	if ((result = static_cast<Int>(dt1._year) - dt2._year) != 0) {
 	} else if ((result = static_cast<Int>(dt1._month) - dt2._month) != 0) {
 	} else if ((result = static_cast<Int>(dt1._day) - dt2._day) != 0) {
-	} else if ((result = static_cast<Int>(dt1._secRaw) - dt2._secRaw) != 0) {
-	} else if ((result = static_cast<Int>(dt1._usecRaw) - dt2._usecRaw) != 0) {
+	} else if ((result = static_cast<Int>(dt1._secPacked) - dt2._secPacked) != 0) {
+	} else if ((result = static_cast<Int>(dt1._usecPacked) - dt2._usecPacked) != 0) {
 	}
 	return result;
 }
@@ -199,6 +199,7 @@ String DateTime::ToString(const StringStyle& ss) const
 	String str;
 	str.Printf("%04d-%02d-%02d %02d:%02d:%02d.%03d",
 			   GetYear(), GetMonth(), GetDay(), GetHour(), GetMin(), GetSec(), GetMSec());
+	if (UInt16 usec = GetUSec()) str.Printf("%03d", usec);
 	str += GetTZOffsetStr(true);
 	return str;
 }

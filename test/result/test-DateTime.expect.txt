@@ -8,6 +8,7 @@ DateTime(2019, 5, 21, 8, 23) .. 2019-05-21 08:23:00.000
 DateTime(2019, 5, 21, 8, 23, 42) .. 2019-05-21 08:23:42.000
 DateTime(2019, 5, 21, 8, 23, 42, 234) .. 2019-05-21 08:23:42.234
 DateTime(2019, 12, 31, 23, 59, 59, 999) .. 2019-12-31 23:59:59.999
+DateTime(2019, 12, 31, 23, 59, 59, 999, 765) .. 2019-12-31 23:59:59.999765
 DateTime(2019, 5, nil, 8, nil, 42) .. 2019-05-01 08:00:42.000
 DateTime(2019, nil, nil, nil, nil, 42) .. 2019-01-01 00:00:42.000
 DateTime(-1) .. the number must be between 0 and 9999
@@ -41,5 +42,23 @@ DateTime(nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.999
 DateTime(nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
 DateTime(nil, nil, nil, nil, nil, nil, nil, -1) .. the number must be between 0 and 999
 DateTime(nil, nil, nil, nil, nil, nil, nil, 0) .. 1970-01-01 00:00:00.000
-DateTime(nil, nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.000
+DateTime(nil, nil, nil, nil, nil, nil, nil, 999) .. 1970-01-01 00:00:00.000999
 DateTime(nil, nil, nil, nil, nil, nil, nil, 1000) .. the number must be between 0 and 999
+======== DateTime - DateTime ========
+DateTime(2000, 12, 31) - DateTime(2000, 1, 1) .. 365days,00:00:00.000
+DateTime(2001, 12, 31) - DateTime(2001, 1, 1) .. 364days,00:00:00.000
+DateTime(2010, 12, 31) - DateTime(2010, 1, 1) .. 364days,00:00:00.000
+======== DateTime + TimeDelta ========
+DateTime(2000, 1, 1) + TimeDelta(365) .. 2000-12-31 00:00:00.000
+DateTime(2000, 1, 1) + TimeDelta(366) .. 2001-01-01 00:00:00.000
+DateTime(2001, 1, 1) + TimeDelta(364) .. 2001-12-31 00:00:00.000
+DateTime(2001, 1, 1) + TimeDelta(365) .. 2002-01-01 00:00:00.000
+DateTime(2010, 1, 1) + TimeDelta(364) .. 2010-12-31 00:00:00.000
+DateTime(2010, 1, 1) + TimeDelta(365) .. 2011-01-01 00:00:00.000
+======== DateTime - TimeDelta ========
+DateTime(2000, 12, 31) - TimeDelta(365) .. 2000-01-01 00:00:00.000
+DateTime(2000, 12, 31) - TimeDelta(366) .. 1999-12-31 00:00:00.000
+DateTime(2001, 12, 31) - TimeDelta(364) .. 2001-01-01 00:00:00.000
+DateTime(2001, 12, 31) - TimeDelta(365) .. 2000-12-31 00:00:00.000
+DateTime(2010, 12, 31) - TimeDelta(364) .. 2010-01-01 00:00:00.000
+DateTime(2010, 12, 31) - TimeDelta(365) .. 2009-12-31 00:00:00.000

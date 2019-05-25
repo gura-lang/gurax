@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, usecs?:Number):map
+// TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, msecs?:Number, usecs?:Number):map
 Gurax_DeclareFunction(TimeDelta)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
@@ -16,23 +16,27 @@ Gurax_DeclareFunction(TimeDelta)
 	DeclareArg("hours", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("mins", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("secs", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("msecs", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("usecs", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `TimeDelta` instance.");
+		"Creates a `TimeDelta` instance from specified time durations.\n"
+		"There's no limit on the range of each value.\n");
 }
 
 Gurax_ImplementFunction(TimeDelta)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Int32 days	= args.IsValid()? args.PickInt32() : 0;
-	Int32 hours	= args.IsValid()? args.PickInt32() : 0;
-	Int32 mins	= args.IsValid()? args.PickInt32() : 0;
-	Int32 secs	= args.IsValid()? args.PickInt32() : 0;
-	Int32 usecs	= args.IsValid()? args.PickInt32() : 0;
+	Int32 days	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
+	Int32 hours	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
+	Int32 mins	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
+	Int32 secs	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
+	Int32 msecs	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
+	Int32 usecs	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
 	// Function body
-	RefPtr<TimeDelta> pTimeDelta(new TimeDelta(days, TimeDelta::CalcSecsRaw(hours, mins, secs), usecs));
+	RefPtr<TimeDelta> pTimeDelta(
+		new TimeDelta(days, TimeDelta::CalcSecsPacked(hours, mins, secs), TimeDelta::CalcUSecsPacked(msecs, usecs)));
 	return new Value_TimeDelta(pTimeDelta.release());
 }
 
@@ -123,25 +127,25 @@ Gurax_ImplementPropertySetter(TimeDelta, secs)
 	valueThis.GetTimeDelta().SetSecs(Value_Number::GetInt32(value));
 }
 
-// TimeDelta#secsRaw
-Gurax_DeclareProperty_RW(TimeDelta, secsRaw)
+// TimeDelta#secsPacked
+Gurax_DeclareProperty_RW(TimeDelta, secsPacked)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The raw-seconds value of the time delta.");
+		"The packed seconds value of the time delta.");
 }
 
-Gurax_ImplementPropertyGetter(TimeDelta, secsRaw)
+Gurax_ImplementPropertyGetter(TimeDelta, secsPacked)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetTimeDelta().GetSecsRaw());
+	return new Value_Number(valueThis.GetTimeDelta().GetSecsPacked());
 }
 
-Gurax_ImplementPropertySetter(TimeDelta, secsRaw)
+Gurax_ImplementPropertySetter(TimeDelta, secsPacked)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetSecsRaw(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetSecsPacked(Value_Number::GetInt32(value));
 }
 
 // TimeDelta#msecs
@@ -184,6 +188,27 @@ Gurax_ImplementPropertySetter(TimeDelta, usecs)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	valueThis.GetTimeDelta().SetUSecs(Value_Number::GetInt32(value));
+}
+
+// TimeDelta#usecsPacked
+Gurax_DeclareProperty_RW(TimeDelta, usecsPacked)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The packed micro-seconds value of the time delta.");
+}
+
+Gurax_ImplementPropertyGetter(TimeDelta, usecsPacked)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetTimeDelta().GetSecsPacked());
+}
+
+Gurax_ImplementPropertySetter(TimeDelta, usecsPacked)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetTimeDelta().SetSecsPacked(Value_Number::GetInt32(value));
 }
 
 //------------------------------------------------------------------------------
@@ -314,9 +339,10 @@ void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(TimeDelta, hours));
 	Assign(Gurax_CreateProperty(TimeDelta, mins));
 	Assign(Gurax_CreateProperty(TimeDelta, secs));
-	Assign(Gurax_CreateProperty(TimeDelta, secsRaw));
+	Assign(Gurax_CreateProperty(TimeDelta, secsPacked));
 	Assign(Gurax_CreateProperty(TimeDelta, msecs));
 	Assign(Gurax_CreateProperty(TimeDelta, usecs));
+	Assign(Gurax_CreateProperty(TimeDelta, usecsPacked));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Neg, TimeDelta);
 	Gurax_AssignOpBinary(Add, TimeDelta, TimeDelta);

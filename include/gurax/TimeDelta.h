@@ -17,43 +17,45 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("TimeDelta");
 private:
-	Int32 _days;	// -999999999 <= _days <= 999999999
-	Int32 _secs;	// 0 <= _secs <= 3600 * 24 - 1
-	Int32 _usecs;	// 0 <= _usecs <= 999999
+	Int32 _days;		// -999999999 <= _days <= 999999999
+	Int32 _secsPacked;		// 0 <= _secsPacked <= 3600 * 24 - 1
+	Int32 _usecsPacked;	// 0 <= _usecsPacked <= 999999
 public:
 	// Constructor
 	TimeDelta(Int32 days = 0, Int32 secs = 0, Int32 usecs = 0);
 	// Copy constructor/operator
-	TimeDelta(const TimeDelta& src) : _days(src._days), _secs(src._secs), _usecs(src._usecs) {}
+	TimeDelta(const TimeDelta& src) : _days(src._days), _secsPacked(src._secsPacked), _usecsPacked(src._usecsPacked) {}
 	TimeDelta& operator=(const TimeDelta& src) {
-		_days = src._days, _secs = src._secs, _usecs = src._usecs;
+		_days = src._days, _secsPacked = src._secsPacked, _usecsPacked = src._usecsPacked;
 		return *this;
 	}
 	// Move constructor/operator
-	TimeDelta(TimeDelta&& src) : _days(src._days), _secs(src._secs), _usecs(src._usecs) {}
+	TimeDelta(TimeDelta&& src) : _days(src._days), _secsPacked(src._secsPacked), _usecsPacked(src._usecsPacked) {}
 	TimeDelta& operator=(TimeDelta&& src) noexcept {
-		_days = src._days, _secs = src._secs, _usecs = src._usecs;
+		_days = src._days, _secsPacked = src._secsPacked, _usecsPacked = src._usecsPacked;
 		return *this;
 	}
 protected:
 	// Destructor
 	virtual ~TimeDelta() = default;
 public:
-	Int32 GetDays() const		{ return _days; }
-	Int8 GetHours() const		{ return static_cast<Int8>(_secs / 3600); }			// 0-23
-	Int8 GetMins() const		{ return static_cast<Int8>((_secs / 60) % 60); }	// 0-59
-	Int8 GetSecs() const		{ return static_cast<Int8>(_secs % 60); }			// 0-59
-	Int32 GetSecsRaw() const	{ return _secs; }
-	Int32 GetMSecs() const		{ return _usecs / 1000; }
-	Int32 GetUSecs() const		{ return _usecs; }
+	Int32 GetDays() const			{ return _days; }
+	Int8 GetHours() const			{ return static_cast<Int8>(_secsPacked / 3600); }		// 0-23
+	Int8 GetMins() const			{ return static_cast<Int8>((_secsPacked / 60) % 60); }	// 0-59
+	Int8 GetSecs() const			{ return static_cast<Int8>(_secsPacked % 60); }		// 0-59
+	Int32 GetSecsPacked() const		{ return _secsPacked; }
+	Int32 GetMSecs() const			{ return _usecsPacked / 1000; }
+	Int32 GetUSecs() const			{ return _usecsPacked % 1000; }
+	Int32 GetUSecsPacked() const	{ return _usecsPacked; }
 public:
-	void SetDays(Int32 days)	{ _days = days;	}
-	void SetHours(Int32 hours)	{ _secs = CalcSecsRaw(hours, GetMins(), GetSecs()); Regulate(); }
-	void SetMins(Int32 mins)	{ _secs = CalcSecsRaw(GetHours(), mins, GetSecs()); Regulate(); }
-	void SetSecs(Int32 secs)	{ _secs = CalcSecsRaw(GetHours(), GetMins(), secs); Regulate(); }
-	void SetSecsRaw(Int32 secs)	{ _secs = secs; Regulate(); }
-	void SetMSecs(Int32 msecs)	{ _usecs = msecs * 1000; Regulate(); }
-	void SetUSecs(Int32 usecs)	{ _usecs = usecs; Regulate(); }
+	void SetDays(Int32 days)		{ _days = days;	}
+	void SetHours(Int32 hours)		{ _secsPacked = CalcSecsPacked(hours, GetMins(), GetSecs()); Regulate(); }
+	void SetMins(Int32 mins)		{ _secsPacked = CalcSecsPacked(GetHours(), mins, GetSecs()); Regulate(); }
+	void SetSecs(Int32 secs)		{ _secsPacked = CalcSecsPacked(GetHours(), GetMins(), secs); Regulate(); }
+	void SetSecsPacked(Int32 secsPacked) { _secsPacked = secsPacked; Regulate(); }
+	void SetMSecs(Int32 msecs)		{ _usecsPacked = CalcUSecsPacked(msecs, GetUSecs()); Regulate(); }
+	void SetUSecs(Int32 usecs)		{ _usecsPacked = CalcUSecsPacked(GetMSecs(), usecs); Regulate(); }
+	void SetUSecsPacked(Int32 usecsPacked) { _usecsPacked = usecsPacked; Regulate(); }
 public:
 	TimeDelta* operator-() const;
 	TimeDelta& operator+=(const TimeDelta& td);
@@ -68,9 +70,10 @@ public:
 	bool operator>=(const TimeDelta& td) const { return Compare(*this, td) >= 0; }
 public:
 	void Regulate();
-	static Int32 CalcSecsRaw(Int32 hours, Int32 mins, Int32 secs) {
+	static Int32 CalcSecsPacked(Int32 hours, Int32 mins, Int32 secs) {
 		return hours * 3600 + mins * 60 + secs;
 	}
+	static Int32 CalcUSecsPacked(Int32 msecs, Int32 usecs) { return msecs * 1000 + usecs; }
 	static Int Compare(const TimeDelta& td1, const TimeDelta& td2);
 	static Int64 Pack(Int32 days, Int32 secs, Int32 usecs);
 	static void Unpack(Int64 num, Int32* pDays, Int32* pSecs, Int32* pUsecs);
