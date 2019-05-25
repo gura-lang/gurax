@@ -72,6 +72,8 @@ public:
 		return hours * 3600 + mins * 60 + secs;
 	}
 	static Int Compare(const TimeDelta& td1, const TimeDelta& td2);
+	static Int64 Pack(Int32 days, Int32 secs, Int32 usecs);
+	static void Unpack(Int64 num, Int32* pDays, Int32* pSecs, Int32* pUsecs);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TimeDelta& timeDelta) const { return this == &timeDelta; }

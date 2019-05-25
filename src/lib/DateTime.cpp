@@ -34,7 +34,7 @@ TimeDelta* DateTime::operator-(const DateTime& dt) const
 			daysDiff += GetDaysOfYear(year);
 		}
 	}
-	Int32 secsDiff = pDt1->GetSecInDay() - pDt2->GetSecInDay();
+	Int32 secsDiff = pDt1->GetSecRaw() - pDt2->GetSecRaw();
 	Int32 usecsDiff = pDt1->GetUSec() - pDt2->GetUSec();
 	return new TimeDelta(daysDiff, secsDiff, usecsDiff);
 }
@@ -45,11 +45,11 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 	_usecRaw += usecs;
 	if (_usecRaw >= 1000000) {
 		_usecRaw -= 1000000;
-		_secInDay++;
+		_secRaw++;
 	}
-	_secInDay += secs;
-	if (_secInDay >= 3600 * 24) {
-		_secInDay -= 3600 * 24;
+	_secRaw += secs;
+	if (_secRaw >= 3600 * 24) {
+		_secRaw -= 3600 * 24;
 		dayOfYear++;
 	}
 	dayOfYear += days;
@@ -188,7 +188,7 @@ Int DateTime::Compare(const DateTime& dt1, const DateTime& dt2)
 	if ((result = static_cast<Int>(dt1._year) - dt2._year) != 0) {
 	} else if ((result = static_cast<Int>(dt1._month) - dt2._month) != 0) {
 	} else if ((result = static_cast<Int>(dt1._day) - dt2._day) != 0) {
-	} else if ((result = static_cast<Int>(dt1._secInDay) - dt2._secInDay) != 0) {
+	} else if ((result = static_cast<Int>(dt1._secRaw) - dt2._secRaw) != 0) {
 	} else if ((result = static_cast<Int>(dt1._usecRaw) - dt2._usecRaw) != 0) {
 	}
 	return result;

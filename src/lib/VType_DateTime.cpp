@@ -51,7 +51,7 @@ Gurax_ImplementFunction(DateTime)
 	Int32 minsOff = validOffsetFlag? args.PickInt32() : 0;
 	// Function body
 	RefPtr<DateTime> pDateTime(
-		new DateTime(year, month, day, DateTime::CalcSecInDay(hour, min, sec),
+		new DateTime(year, month, day, DateTime::CalcSecRaw(hour, min, sec),
 					 DateTime::CalcUSecRaw(msec, usec)));
 	if (validOffsetFlag) {
 		pDateTime->SetMinsOffset(minsOff);

@@ -39,42 +39,19 @@ TimeDelta& TimeDelta::operator-=(const TimeDelta& td)
 
 TimeDelta& TimeDelta::operator*=(int n)
 {
-	Int64 num = _usecs;
-	num += static_cast<Int64>(_secs) * 1000000;
-	num += static_cast<Int64>(_days) * 1000000 * 24 * 60 * 60;
-	num *= n;
-	_usecs = static_cast<Int32>(num % 1000000);
-	num /= 1000000;
-	_secs = static_cast<Int32>(num % (24 * 60 * 60));
-	num /= 24 * 60 * 60;
-	_days = static_cast<Int32>(num);
+	Unpack(Pack(_days, _secs, _usecs) * n, &_days, &_secs, &_usecs);
 	return *this;
 }
 
 TimeDelta& TimeDelta::operator/=(int n)
 {
-	Int64 num = _usecs;
-	num += static_cast<Int64>(_secs) * 1000000;
-	num += static_cast<Int64>(_days) * 1000000 * 24 * 60 * 60;
-	num /= n;
-	_usecs = static_cast<Int32>(num % 1000000);
-	num /= 1000000;
-	_secs = static_cast<Int32>(num % (24 * 60 * 60));
-	num /= 24 * 60 * 60;
-	_days = static_cast<Int32>(num);
+	Unpack(Pack(_days, _secs, _usecs) / n, &_days, &_secs, &_usecs);
 	return *this;
 }
 
 void TimeDelta::Regulate()
 {
-	Int64 num = _usecs;
-	num += static_cast<Int64>(_secs) * 1000000;
-	num += static_cast<Int64>(_days) * 1000000 * 24 * 60 * 60;
-	_usecs = static_cast<Int32>(num % 1000000);
-	num /= 1000000;
-	_secs = static_cast<Int32>(num % (24 * 60 * 60));
-	num /= 24 * 60 * 60;
-	_days = static_cast<Int32>(num);
+	Unpack(Pack(_days, _secs, _usecs), &_days, &_secs, &_usecs);
 }
 
 Int TimeDelta::Compare(const TimeDelta& td1, const TimeDelta& td2)
@@ -85,6 +62,23 @@ Int TimeDelta::Compare(const TimeDelta& td1, const TimeDelta& td2)
 	} else if ((result = td1._usecs - td2._usecs) != 0) {
 	}
 	return result;
+}
+
+Int64 TimeDelta::Pack(Int32 days, Int32 secs, Int32 usecs)
+{
+	Int64 num = usecs;
+	num += static_cast<Int64>(secs) * 1000000;
+	num += static_cast<Int64>(days) * 1000000 * 24 * 60 * 60;
+	return num;
+}
+
+void TimeDelta::Unpack(Int64 num, Int32* pDays, Int32* pSecs, Int32* pUsecs)
+{
+	*pUsecs = static_cast<Int32>(num % 1000000);
+	num /= 1000000;
+	*pSecs = static_cast<Int32>(num % (24 * 60 * 60));
+	num /= 24 * 60 * 60;
+	*pDays = static_cast<Int32>(num);
 }
 
 String TimeDelta::ToString(const StringStyle& ss) const

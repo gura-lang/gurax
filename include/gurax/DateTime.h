@@ -22,7 +22,7 @@ private:
 	UInt16 _year;
 	UInt8 _month;
 	UInt8 _day;
-	UInt32 _secInDay;
+	UInt32 _secRaw;
 	UInt32 _usecRaw;
 	struct {
 		bool validFlag;
@@ -30,31 +30,31 @@ private:
 	} _tz;
 public:
 	// Constructor
-	DateTime() : _year(1970), _month(1), _day(1), _secInDay(0), _usecRaw(0) {
+	DateTime() : _year(1970), _month(1), _day(1), _secRaw(0), _usecRaw(0) {
 		_tz.validFlag = false, _tz.secsOffset = 0;
 	}
-	DateTime(UInt16 year, UInt8 month, UInt8 day, UInt32 secInDay, UInt32 usecRaw) :
-		_year(year), _month(month), _day(day), _secInDay(secInDay), _usecRaw(usecRaw) {
+	DateTime(UInt16 year, UInt8 month, UInt8 day, UInt32 secRaw, UInt32 usecRaw) :
+		_year(year), _month(month), _day(day), _secRaw(secRaw), _usecRaw(usecRaw) {
 		_tz.validFlag = false, _tz.secsOffset = 0;
 	}
-	DateTime(UInt16 year, UInt8 month, UInt8 day, UInt32 secInDay, UInt32 usecRaw, Int32 secsOffset) :
-		_year(year), _month(month), _day(day), _secInDay(secInDay), _usecRaw(usecRaw) {
+	DateTime(UInt16 year, UInt8 month, UInt8 day, UInt32 secRaw, UInt32 usecRaw, Int32 secsOffset) :
+		_year(year), _month(month), _day(day), _secRaw(secRaw), _usecRaw(usecRaw) {
 		_tz.validFlag = true, _tz.secsOffset = secsOffset;
 	}
 	// Copy constructor/operator
 	DateTime(const DateTime& dt) :
-		_year(dt._year), _month(dt._month), _day(dt._day), _secInDay(dt._secInDay), _usecRaw(dt._usecRaw), _tz(dt._tz) {
+		_year(dt._year), _month(dt._month), _day(dt._day), _secRaw(dt._secRaw), _usecRaw(dt._usecRaw), _tz(dt._tz) {
 	}
 	DateTime& operator=(const DateTime& dt) {
-		_year = dt._year, _month = dt._month, _day = dt._day, _secInDay = dt._secInDay, _usecRaw = dt._usecRaw, _tz = dt._tz;
+		_year = dt._year, _month = dt._month, _day = dt._day, _secRaw = dt._secRaw, _usecRaw = dt._usecRaw, _tz = dt._tz;
 		return *this;
 	}
 	// Move constructor/operator
 	DateTime(DateTime&& dt) :
-		_year(dt._year), _month(dt._month), _day(dt._day), _secInDay(dt._secInDay), _usecRaw(dt._usecRaw), _tz(dt._tz) {
+		_year(dt._year), _month(dt._month), _day(dt._day), _secRaw(dt._secRaw), _usecRaw(dt._usecRaw), _tz(dt._tz) {
 	}
 	DateTime& operator=(DateTime&& dt) noexcept {
-		_year = dt._year, _month = dt._month, _day = dt._day, _secInDay = dt._secInDay, _usecRaw = dt._usecRaw, _tz = dt._tz;
+		_year = dt._year, _month = dt._month, _day = dt._day, _secRaw = dt._secRaw, _usecRaw = dt._usecRaw, _tz = dt._tz;
 		return *this;
 	}
 protected:
@@ -66,10 +66,10 @@ public:
 	UInt16 GetYear() const { return _year; }
 	UInt8 GetMonth() const { return _month; }
 	UInt8 GetDay() const { return _day; }
-	UInt8 GetHour() const { return GetSecInDay() / 3600; }
-	UInt8 GetMin() const { return (GetSecInDay() / 60) % 60; }
-	UInt8 GetSec() const { return GetSecInDay() % 60; }
-	UInt32 GetSecInDay() const { return _secInDay; }
+	UInt8 GetHour() const { return GetSecRaw() / 3600; }
+	UInt8 GetMin() const { return (GetSecRaw() / 60) % 60; }
+	UInt8 GetSec() const { return GetSecRaw() % 60; }
+	UInt32 GetSecRaw() const { return _secRaw; }
 	UInt16 GetMSec() const { return static_cast<UInt16>(_usecRaw / 1000); }
 	UInt16 GetUSec() const { return static_cast<UInt16>(_usecRaw % 1000); }
 	UInt32 GetUSecRaw() const { return _usecRaw; }
@@ -85,10 +85,10 @@ public:
 	void SetYear(UInt16 year) { _year = year; }
 	void SetMonth(UInt8 month) { _month = month; }
 	void SetDay(UInt8 day) { _day = day; }
-	void SetHour(UInt8 hour) { _secInDay = CalcSecInDay(hour, GetMin(), GetSec()); }
-	void SetMin(UInt8 min) { _secInDay = CalcSecInDay(GetHour(), min, GetSec()); }
-	void SetSec(UInt8 sec) { _secInDay = CalcSecInDay(GetHour(), GetMin(), sec); }
-	void SetSecInDay(UInt32 secInDay) { _secInDay = secInDay; }
+	void SetHour(UInt8 hour) { _secRaw = CalcSecRaw(hour, GetMin(), GetSec()); }
+	void SetMin(UInt8 min) { _secRaw = CalcSecRaw(GetHour(), min, GetSec()); }
+	void SetSec(UInt8 sec) { _secRaw = CalcSecRaw(GetHour(), GetMin(), sec); }
+	void SetSecRaw(UInt32 secRaw) { _secRaw = secRaw; }
 	void SetMSec(UInt16 msec) { _usecRaw = CalcUSecRaw(msec, GetUSec()); }
 	void SetUSec(UInt16 usec) { _usecRaw = CalcUSecRaw(GetMSec(), usec); }
 	void SetUSecRaw(UInt32 usecRaw) { _usecRaw = usecRaw; }
@@ -110,7 +110,7 @@ public:
 	DateTime* ToUTC() const;
 	UInt64 ToUnixTime() const;
 	String GetTZOffsetStr(bool colonFlag) const;
-	static UInt32 CalcSecInDay(UInt8 hour, UInt8 min, UInt8 sec) {
+	static UInt32 CalcSecRaw(UInt8 hour, UInt8 min, UInt8 sec) {
 		return static_cast<UInt32>(hour) * 3600 + static_cast<UInt32>(min) * 60 + sec;
 	}
 	static UInt32 CalcUSecRaw(UInt16 msec, UInt16 usec) { return static_cast<UInt32>(msec) * 1000 + usec; }
