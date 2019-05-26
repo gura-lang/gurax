@@ -27,9 +27,34 @@ TestCase('Constructor') {
 	Tester(`TimeDelta(usecs => 1000 * 6 + 7))
 }
 
+TestCase('-TimeDelta') {
+	Tester(`(-TimeDelta(0, 0, 0, 0, 0)))
+	Tester(`(-TimeDelta(123, 12, 34, 56, 789)))
+}
+
+TestCase('TimeDelta + TimeDelta') {
+	Tester(`(TimeDelta(0, 0, 0, 0, 0) + TimeDelta(123, 12, 34, 56, 789)))
+	Tester(`(TimeDelta(123, 1, 2, 3, 4) + TimeDelta(123, 12, 34, 56, 789)))
+	Tester(`(TimeDelta(123, 13, 32, 10, 300) + TimeDelta(123, 12, 34, 56, 789)))
+}
+
+TestCase('TimeDelta - TimeDelta') {
+	Tester(`(TimeDelta(0, 0, 0, 0, 0) - TimeDelta(123, 12, 34, 56, 789)))
+	Tester(`(TimeDelta(123, 1, 2, 3, 4) - TimeDelta(123, 12, 34, 56, 789)))
+	Tester(`(TimeDelta(123, 13, 32, 10, 300) - TimeDelta(123, 12, 34, 56, 789)))
+	Tester(`(TimeDelta(123, 12, 34, 56, 789) - TimeDelta(0, 0, 0, 0, 0)))
+	Tester(`(TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 1, 2, 3, 4)))
+	Tester(`(TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300)))
+}
+
 TestCase('TimeDelta * n') {
 	Tester(`(TimeDelta(1, 0, 0) * 5))
 	Tester(`(TimeDelta(1, 2, 3, 4, 5) * 5))
+}
+
+TestCase('n * TimeDelta') {
+	Tester(`(5 * TimeDelta(1, 0, 0)))
+	Tester(`(5 * TimeDelta(1, 2, 3, 4, 5)))
 }
 
 TestCase('TimeDelta / n') {

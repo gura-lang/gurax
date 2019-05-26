@@ -22,9 +22,26 @@ TimeDelta(mins => ((60 * 6) + 7)) .. 0days,06:07:00.000
 TimeDelta(secs => ((60 * 6) + 7)) .. 0days,00:06:07.000
 TimeDelta(msecs => ((1000 * 6) + 7)) .. 0days,00:00:06.007
 TimeDelta(usecs => ((1000 * 6) + 7)) .. 0days,00:00:00.006007
+======== -TimeDelta ========
+-TimeDelta(0, 0, 0, 0, 0) .. 0days,00:00:00.000
+-TimeDelta(123, 12, 34, 56, 789) .. -123days,-12:-34:-56.-789
+======== TimeDelta + TimeDelta ========
+TimeDelta(0, 0, 0, 0, 0) + TimeDelta(123, 12, 34, 56, 789) .. 123days,12:34:56.789
+TimeDelta(123, 1, 2, 3, 4) + TimeDelta(123, 12, 34, 56, 789) .. 246days,13:36:59.793
+TimeDelta(123, 13, 32, 10, 300) + TimeDelta(123, 12, 34, 56, 789) .. 247days,02:07:07.089
+======== TimeDelta - TimeDelta ========
+TimeDelta(0, 0, 0, 0, 0) - TimeDelta(123, 12, 34, 56, 789) .. -123days,-12:-34:-56.-789
+TimeDelta(123, 1, 2, 3, 4) - TimeDelta(123, 12, 34, 56, 789) .. 0days,-11:-32:-53.-785
+TimeDelta(123, 13, 32, 10, 300) - TimeDelta(123, 12, 34, 56, 789) .. 0days,00:57:13.511
+TimeDelta(123, 12, 34, 56, 789) - TimeDelta(0, 0, 0, 0, 0) .. 123days,12:34:56.789
+TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 1, 2, 3, 4) .. 0days,11:32:53.785
+TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300) .. 0days,00:-57:-13.-511
 ======== TimeDelta * n ========
 TimeDelta(1, 0, 0) * 5 .. 5days,00:00:00.000
 TimeDelta(1, 2, 3, 4, 5) * 5 .. 5days,10:15:20.025
+======== n * TimeDelta ========
+5 * TimeDelta(1, 0, 0) .. 5days,00:00:00.000
+5 * TimeDelta(1, 2, 3, 4, 5) .. 5days,10:15:20.025
 ======== TimeDelta / n ========
 TimeDelta(20) / 5 .. 4days,00:00:00.000
 TimeDelta(hours => 20) / 5 .. 0days,04:00:00.000

@@ -7,15 +7,22 @@ DateTime(2019, 5, 21, 8) .. 2019-05-21 08:00:00.000
 DateTime(2019, 5, 21, 8, 23) .. 2019-05-21 08:23:00.000
 DateTime(2019, 5, 21, 8, 23, 42) .. 2019-05-21 08:23:42.000
 DateTime(2019, 5, 21, 8, 23, 42, 234) .. 2019-05-21 08:23:42.234
-DateTime(2019, 12, 31, 23, 59, 59, 999) .. 2019-12-31 23:59:59.999
-DateTime(2019, 12, 31, 23, 59, 59, 999, 765) .. 2019-12-31 23:59:59.999765
+DateTime(2019, 5, 21, 8, 23, 42, 234, 765) .. 2019-05-21 08:23:42.234765
 DateTime(2019, 5, nil, 8, nil, 42) .. 2019-05-01 08:00:42.000
 DateTime(2019, nil, nil, nil, nil, 42) .. 2019-01-01 00:00:42.000
+DateTime(year => 2019) .. 2019-01-01 00:00:00.000
+DateTime(month => 5) .. 1970-05-01 00:00:00.000
+DateTime(day => 21) .. 1970-01-21 00:00:00.000
+DateTime(hour => 8) .. 1970-01-01 08:00:00.000
+DateTime(min => 23) .. 1970-01-01 00:23:00.000
+DateTime(sec => 42) .. 1970-01-01 00:00:42.000
+DateTime(msec => 234) .. 1970-01-01 00:00:00.234
+DateTime(usec => 765) .. 1970-01-01 00:00:00.000765
+======== Constructor Range Check ========
 DateTime(-1) .. the number must be between 0 and 9999
 DateTime(0) .. 0000-01-01 00:00:00.000
 DateTime(9999) .. 9999-01-01 00:00:00.000
 DateTime(10000) .. the number must be between 0 and 9999
-======== Constructor Range Check ========
 DateTime(nil, 0) .. the number must be between 1 and 12
 DateTime(nil, 1) .. 1970-01-01 00:00:00.000
 DateTime(nil, 12) .. 1970-12-01 00:00:00.000
@@ -62,3 +69,53 @@ DateTime(2001, 12, 31) - TimeDelta(364) .. 2001-01-01 00:00:00.000
 DateTime(2001, 12, 31) - TimeDelta(365) .. 2000-12-31 00:00:00.000
 DateTime(2010, 12, 31) - TimeDelta(364) .. 2010-01-01 00:00:00.000
 DateTime(2010, 12, 31) - TimeDelta(365) .. 2009-12-31 00:00:00.000
+======== Comparison ========
+----
+DateTime(2010, 6, 20) == DateTime(2010, 6, 20) .. true
+DateTime(2010, 6, 20) != DateTime(2010, 6, 20) .. false
+DateTime(2010, 6, 20) < DateTime(2010, 6, 20) .. false
+DateTime(2010, 6, 20) <= DateTime(2010, 6, 20) .. true
+DateTime(2010, 6, 20) > DateTime(2010, 6, 20) .. false
+DateTime(2010, 6, 20) >= DateTime(2010, 6, 20) .. true
+----
+DateTime(2010, 6, 20) == DateTime(2010, 6, 21) .. false
+DateTime(2010, 6, 20) != DateTime(2010, 6, 21) .. true
+DateTime(2010, 6, 20) < DateTime(2010, 6, 21) .. true
+DateTime(2010, 6, 20) <= DateTime(2010, 6, 21) .. true
+DateTime(2010, 6, 20) > DateTime(2010, 6, 21) .. false
+DateTime(2010, 6, 20) >= DateTime(2010, 6, 21) .. false
+----
+DateTime(2010, 6, 21) == DateTime(2010, 6, 20) .. false
+DateTime(2010, 6, 21) != DateTime(2010, 6, 20) .. true
+DateTime(2010, 6, 21) < DateTime(2010, 6, 20) .. false
+DateTime(2010, 6, 21) <= DateTime(2010, 6, 20) .. false
+DateTime(2010, 6, 21) > DateTime(2010, 6, 20) .. true
+DateTime(2010, 6, 21) >= DateTime(2010, 6, 20) .. true
+----
+DateTime(2010, 6, 20) == DateTime(2010, 7, 20) .. false
+DateTime(2010, 6, 20) != DateTime(2010, 7, 20) .. true
+DateTime(2010, 6, 20) < DateTime(2010, 7, 20) .. true
+DateTime(2010, 6, 20) <= DateTime(2010, 7, 20) .. true
+DateTime(2010, 6, 20) > DateTime(2010, 7, 20) .. false
+DateTime(2010, 6, 20) >= DateTime(2010, 7, 20) .. false
+----
+DateTime(2010, 7, 20) == DateTime(2010, 6, 20) .. false
+DateTime(2010, 7, 20) != DateTime(2010, 6, 20) .. true
+DateTime(2010, 7, 20) < DateTime(2010, 6, 20) .. false
+DateTime(2010, 7, 20) <= DateTime(2010, 6, 20) .. false
+DateTime(2010, 7, 20) > DateTime(2010, 6, 20) .. true
+DateTime(2010, 7, 20) >= DateTime(2010, 6, 20) .. true
+----
+DateTime(2010, 6, 20) == DateTime(2011, 6, 20) .. false
+DateTime(2010, 6, 20) != DateTime(2011, 6, 20) .. true
+DateTime(2010, 6, 20) < DateTime(2011, 6, 20) .. true
+DateTime(2010, 6, 20) <= DateTime(2011, 6, 20) .. true
+DateTime(2010, 6, 20) > DateTime(2011, 6, 20) .. false
+DateTime(2010, 6, 20) >= DateTime(2011, 6, 20) .. false
+----
+DateTime(2011, 6, 20) == DateTime(2010, 6, 20) .. false
+DateTime(2011, 6, 20) != DateTime(2010, 6, 20) .. true
+DateTime(2011, 6, 20) < DateTime(2010, 6, 20) .. false
+DateTime(2011, 6, 20) <= DateTime(2010, 6, 20) .. false
+DateTime(2011, 6, 20) > DateTime(2010, 6, 20) .. true
+DateTime(2011, 6, 20) >= DateTime(2010, 6, 20) .. true
