@@ -43,6 +43,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE StringPicker_ValueList : public StringPicker {
 private:
+	String _str;
 	ValueList::const_iterator _ppValue, _ppValueEnd;
 public:
 	StringPicker_ValueList(const ValueList& valueList) :

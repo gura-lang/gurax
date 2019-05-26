@@ -133,7 +133,8 @@ void Argument::AssignToFrame(Frame& frame) const
 		} else {
 			RefPtr<FunctionCustom>
 				pFunction(new FunctionCustom(
-							  Function::Type::Function, pSymbol, GetExprOfBlock()->GetDeclCallable().Reference(),
+							  Function::Type::Function, pSymbol,
+							  GetExprOfBlock()->GetDeclCallable().Reference(),
 							  GetExprOfBlock()->GetPUnitFirst()));
 			frame.Assign(pFunction.release());
 		}

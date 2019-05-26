@@ -26,9 +26,12 @@ const char* StringPicker_ValueList::Pick()
 {
 	if (_ppValue == _ppValueEnd) return nullptr;
 	const Value* pValue = *(_ppValue++);
-	return pValue->IsInstanceOf(VTYPE_String)?
-		dynamic_cast<const Value_String*>(pValue)->GetString() :
-		pValue->ToString().c_str();
+	if (pValue->IsInstanceOf(VTYPE_String)) {
+		return dynamic_cast<const Value_String*>(pValue)->GetString();
+	} else {
+		_str = pValue->ToString();
+		return _str.c_str();
+	}
 }
 
 }
