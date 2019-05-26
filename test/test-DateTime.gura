@@ -1,13 +1,6 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-/*
-TestCase('') {
-	Tester(`(dt = DateTime(2019, 5, 21, 8, 23, 42, 234, 765)))
-	Tester(`dt.year)
-}
-sys.Exit()
-*/
 TestCase('Constructor') {
 	Tester(`DateTime())
 	Tester(`DateTime(2019))
@@ -139,4 +132,46 @@ TestCase('Comparison') {
 	Tester(`(DateTime(2011, 6, 20) <= DateTime(2010, 6, 20)))
 	Tester(`(DateTime(2011, 6, 20) > DateTime(2010, 6, 20)))
 	Tester(`(DateTime(2011, 6, 20) >= DateTime(2010, 6, 20)))
+}
+
+TestCase('Property') {
+	Println('----')
+	dt = DateTime(2019, 5, 21, 8, 23, 42, 234, 765)
+	Tester(`dt)
+	Tester(`dt.year)
+	Tester(`dt.month)
+	Tester(`dt.day)
+	Tester(`dt.hour)
+	Tester(`dt.min)
+	Tester(`dt.sec)
+	Tester(`dt.msec)
+	Tester(`dt.usec)
+	Tester(`dt.minsOff)
+	Tester(`dt.wday)
+	Tester(`dt.week)
+	Tester(`dt.weekShort)
+	Tester(`dt.yday)
+	Tester(`dt.utc)
+	//Tester(`dt.unixTime)
+	Println('----')
+	dt = DateTime(2019, 5, 21, 8, 23, 42, 234, 765, 60 * 9)
+	Tester(`dt)
+	Tester(`dt.minsOff)
+	Println('----')
+	dt = dt.utc
+	Tester(`dt)
+	Tester(`dt.year)
+	Tester(`dt.month)
+	Tester(`dt.day)
+	Tester(`dt.hour)
+	Tester(`dt.min)
+	Tester(`dt.sec)
+	Tester(`dt.msec)
+	Tester(`dt.usec)
+	Tester(`dt.minsOff)
+	Tester(`dt.wday)
+	Tester(`dt.week)
+	Tester(`dt.weekShort)
+	Tester(`dt.yday)
+	Tester(`dt.utc)
 }

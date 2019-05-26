@@ -227,3 +227,8 @@ g(a, b, c)
   ##9 Lookup(`c)
   ##10 EndArgSlot()
   ##11 Call(cont=##12)
+======== block ========
+f .. f() {block}
+g .. g() {`block}
+f {|v1, v2| func(a, b, c)} .. block(v1, v2)
+g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}

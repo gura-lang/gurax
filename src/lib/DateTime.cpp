@@ -26,11 +26,11 @@ TimeDelta* DateTime::operator-(const DateTime& dt) const
 	RefPtr<DateTime> pDt2(dt.ToUTC());
 	Int32 daysDiff = pDt1->GetDayOfYear() - pDt2->GetDayOfYear();
 	if (pDt1->GetYear() < pDt2->GetYear()) {
-		for (UInt16 year = pDt1->GetYear(); year < pDt2->GetYear(); year++) {
+		for (Int16 year = pDt1->GetYear(); year < pDt2->GetYear(); year++) {
 			daysDiff -= GetDaysOfYear(year);
 		}
 	} else if (pDt1->GetYear() > pDt2->GetYear()) {
-		for (UInt16 year = pDt1->GetYear() - 1; year >= pDt2->GetYear(); year--) {
+		for (Int16 year = pDt1->GetYear() - 1; year >= pDt2->GetYear(); year--) {
 			daysDiff += GetDaysOfYear(year);
 		}
 	}
@@ -46,11 +46,17 @@ void DateTime::AddDelta(Int32 days, Int32 secs, Int32 usecs)
 	if (_usecPacked >= 1000000) {
 		_usecPacked -= 1000000;
 		_secPacked++;
+	} else if (_usecPacked < 0) {
+		_usecPacked += 1000000;
+		_secPacked--;
 	}
 	_secPacked += secs;
 	if (_secPacked >= 3600 * 24) {
 		_secPacked -= 3600 * 24;
 		dayOfYear++;
+	} else if (_secPacked < 0) {
+		_secPacked += 3600 * 24;
+		dayOfYear--;
 	}
 	dayOfYear += days;
 	if (dayOfYear >= 0) {
@@ -71,7 +77,7 @@ DateTime* DateTime::ToUTC() const
 {
 	if (_tz.secsOffset == 0) return Clone();
 	RefPtr<DateTime> pDt(Clone());
-	pDt->AddDelta(0, GetSecsOffset(), 0);
+	pDt->AddDelta(0, -GetSecsOffset(), 0);
 	pDt->SetSecsOffset(0);
 	return pDt.release();
 }
@@ -85,40 +91,40 @@ UInt64 DateTime::ToUnixTime() const
 	return rtn;
 }
 
-UInt8 DateTime::GetDaysOfMonth(UInt16 year, UInt8 month)
+Int8 DateTime::GetDaysOfMonth(Int16 year, Int8 month)
 {
-	static const UInt8 daysTbl_Normal[] = {
+	static const Int8 daysTbl_Normal[] = {
 		0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	};
-	static const UInt8 daysTbl_Leap[] = {
+	static const Int8 daysTbl_Leap[] = {
 		0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	};
 	if (month < 1 || month > 12) return -1;
 	return (IsLeapYear(year)? daysTbl_Leap : daysTbl_Normal)[static_cast<int>(month)];
 }
 
-void DateTime::DayOfYearToMonthDay(UInt16 year, UInt16 dayOfYear, UInt8* pMonth, UInt8* pDay)
+void DateTime::DayOfYearToMonthDay(Int16 year, Int16 dayOfYear, Int8* pMonth, Int8* pDay)
 {
-	static const UInt16 offsetTbl_Normal[] = {
+	static const Int16 offsetTbl_Normal[] = {
 		0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334,
 	};
-	static const UInt16 offsetTbl_Leap[] = {
+	static const Int16 offsetTbl_Leap[] = {
 		0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335,
 	};
-	const UInt16 *offsetTbl = IsLeapYear(year)? offsetTbl_Leap : offsetTbl_Normal;
+	const Int16 *offsetTbl = IsLeapYear(year)? offsetTbl_Leap : offsetTbl_Normal;
 	int i = 0;
 	for ( ; i < 12 && dayOfYear >= offsetTbl[i]; i++) ;
 	i--;
-	*pMonth = static_cast<UInt8>(i + 1);
-	*pDay = static_cast<UInt8>(dayOfYear - offsetTbl[i] + 1);
+	*pMonth = static_cast<Int8>(i + 1);
+	*pDay = static_cast<Int8>(dayOfYear - offsetTbl[i] + 1);
 }
 
-UInt16 DateTime::GetDayOfYear(UInt16 year, UInt8 month, UInt8 day)
+Int16 DateTime::GetDayOfYear(Int16 year, Int8 month, Int8 day)
 {
-	static const UInt16 offsetTbl_Normal[] = {
+	static const Int16 offsetTbl_Normal[] = {
 		0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334,
 	};
-	static const UInt16 offsetTbl_Leap[] = {
+	static const Int16 offsetTbl_Leap[] = {
 		0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335,
 	};
 	if (day < 1 || month < 1 || month > 12) return -1;
@@ -126,13 +132,13 @@ UInt16 DateTime::GetDayOfYear(UInt16 year, UInt8 month, UInt8 day)
 }
 
 // Zeller's congruence. treat 0 as Sunday
-UInt8 DateTime::GetDayOfWeek(UInt16 year, UInt8 month, UInt8 day)
+Int8 DateTime::GetDayOfWeek(Int16 year, Int8 month, Int8 day)
 {
 	if (day < 1 || month < 1 || month > 12) return -1;
 	if (month <= 2) {
 		month += 12, year -= 1;
 	}
-	UInt16 yearH = year / 100, yearL = year % 100;
+	Int16 yearH = year / 100, yearL = year % 100;
 	int rtn = yearL + yearL / 4 + yearH / 4 - 2 * yearH +
 		13 * (static_cast<int>(month) + 1) / 5 + day;
 	rtn %= 7;
@@ -140,9 +146,9 @@ UInt8 DateTime::GetDayOfWeek(UInt16 year, UInt8 month, UInt8 day)
 	return (rtn + 6) % 7;
 }
 
-const Symbol* DateTime::GetSymbolOfWeek(UInt16 year, UInt8 month, UInt8 day)
+const Symbol* DateTime::GetSymbolOfWeek(Int16 year, Int8 month, Int8 day)
 {
-	UInt8 dayOfWeek = GetDayOfWeek(year, month, day);
+	Int8 dayOfWeek = GetDayOfWeek(year, month, day);
 	return
 		(dayOfWeek == 0)? Gurax_Symbol(Sunday) :
 		(dayOfWeek == 1)? Gurax_Symbol(Monday) :
@@ -153,9 +159,9 @@ const Symbol* DateTime::GetSymbolOfWeek(UInt16 year, UInt8 month, UInt8 day)
 		(dayOfWeek == 6)? Gurax_Symbol(Saturday) : Symbol::Empty;
 }
 
-const Symbol* DateTime::GetSymbolShortOfWeek(UInt16 year, UInt8 month, UInt8 day)
+const Symbol* DateTime::GetSymbolShortOfWeek(Int16 year, Int8 month, Int8 day)
 {
-	UInt8 dayOfWeek = GetDayOfWeek(year, month, day);
+	Int8 dayOfWeek = GetDayOfWeek(year, month, day);
 	return
 		(dayOfWeek == 0)? Gurax_Symbol(Sun) :
 		(dayOfWeek == 1)? Gurax_Symbol(Mon) :
@@ -199,7 +205,7 @@ String DateTime::ToString(const StringStyle& ss) const
 	String str;
 	str.Printf("%04d-%02d-%02d %02d:%02d:%02d.%03d",
 			   GetYear(), GetMonth(), GetDay(), GetHour(), GetMin(), GetSec(), GetMSec());
-	if (UInt16 usec = GetUSec()) str.Printf("%03d", usec);
+	if (Int16 usec = GetUSec()) str.Printf("%03d", usec);
 	str += GetTZOffsetStr(true);
 	return str;
 }

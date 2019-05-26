@@ -119,3 +119,39 @@ DateTime(2011, 6, 20) < DateTime(2010, 6, 20) .. false
 DateTime(2011, 6, 20) <= DateTime(2010, 6, 20) .. false
 DateTime(2011, 6, 20) > DateTime(2010, 6, 20) .. true
 DateTime(2011, 6, 20) >= DateTime(2010, 6, 20) .. true
+======== Property ========
+----
+dt .. 2019-05-21 08:23:42.234765
+dt.year .. 2019
+dt.month .. 5
+dt.day .. 21
+dt.hour .. 8
+dt.min .. 23
+dt.sec .. 42
+dt.msec .. 234
+dt.usec .. 765
+dt.minsOff .. <Nil>
+dt.wday .. 2
+dt.week .. `Tuesday
+dt.weekShort .. `Tue
+dt.yday .. 140
+dt.utc .. 2019-05-21 08:23:42.234765
+----
+dt .. 2019-05-21 08:23:42.234765+09:00
+dt.minsOff .. 540
+----
+dt .. 2019-05-20 23:23:42.234765Z
+dt.year .. 2019
+dt.month .. 5
+dt.day .. 20
+dt.hour .. 23
+dt.min .. 23
+dt.sec .. 42
+dt.msec .. 234
+dt.usec .. 765
+dt.minsOff .. 0
+dt.wday .. 1
+dt.week .. `Monday
+dt.weekShort .. `Mon
+dt.yday .. 139
+dt.utc .. 2019-05-20 23:23:42.234765Z
