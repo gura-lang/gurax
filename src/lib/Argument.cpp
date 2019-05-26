@@ -120,11 +120,15 @@ void Argument::AssignToFrame(Frame& frame) const
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfAccessor();
 		if (!pSymbol->IsEmpty()) frame.AssignFromArgument(pSymbol, new Value_Argument(Reference()));
 	} while (0);
-	if (GetExprOfBlock()) {
+	do {
 		// assign to symbol declared as {block}
 		const DeclBlock& declBlock = GetDeclCallable().GetDeclBlock();
 		const Symbol* pSymbol = declBlock.GetSymbol();
-		if (declBlock.IsSet(DeclBlock::Flag::Quote)) {
+		if (pSymbol->IsEmpty()) {
+			// nothing to do
+		} else if (!GetExprOfBlock()) {
+			frame.Assign(pSymbol, Value::nil());
+		} else if (declBlock.IsSet(DeclBlock::Flag::Quote)) {
 			frame.Assign(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
 		} else {
 			RefPtr<FunctionCustom>
@@ -133,7 +137,7 @@ void Argument::AssignToFrame(Frame& frame) const
 							  GetExprOfBlock()->GetPUnitFirst()));
 			frame.Assign(pFunction.release());
 		}
-	}
+	} while (0);
 }
 
 String Argument::ToString(const StringStyle& ss) const

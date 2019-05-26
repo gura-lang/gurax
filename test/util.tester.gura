@@ -14,7 +14,7 @@ Tester(expr:Expr):void:dynamic_scope:map {block?} = {
 		rtn = expr.Eval()
 		rtnStr = rtn.ToString()
 		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):nomap
-		//block && block(rtn)
+		block && block(rtn)
 	} catch {|e|
 		Printf(' %s\n', e.text)
 	}
