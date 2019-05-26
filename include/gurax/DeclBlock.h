@@ -79,6 +79,7 @@ public:
 	bool IsOccurZeroOrOnce() const { return GetOccur().IsIdentical(Occur::ZeroOrOnce); }
 	DeclBlock& SetFlags(Flags flags) { _flags = flags; return *this; }
 	Flags GetFlags() const { return _flags; }
+	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
 	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
 	}

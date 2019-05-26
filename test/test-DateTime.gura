@@ -1,6 +1,13 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+/*
+TestCase('') {
+	Tester(`(dt = DateTime(2019, 5, 21, 8, 23, 42, 234, 765)))
+	Tester(`dt.year)
+}
+sys.Exit()
+*/
 TestCase('Constructor') {
 	Tester(`DateTime())
 	Tester(`DateTime(2019))

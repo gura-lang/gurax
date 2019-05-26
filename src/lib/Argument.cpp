@@ -124,7 +124,7 @@ void Argument::AssignToFrame(Frame& frame) const
 		// assign to symbol declared as {block}
 		const DeclBlock& declBlock = GetDeclCallable().GetDeclBlock();
 		const Symbol* pSymbol = declBlock.GetSymbol();
-		if (declBlock.GetFlags() & DeclBlock::Flag::Quote) {
+		if (declBlock.IsSet(DeclBlock::Flag::Quote)) {
 			frame.Assign(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
 		} else {
 			RefPtr<FunctionCustom>

@@ -1,0 +1,38 @@
+#!/usr/bin/env gurax
+TestCase(title:String):void {`block} = {
+	PrintTitle(title)
+	block.Eval()
+}
+
+PrintTitle(title:String) = {
+	Printf('======== %s ========\n', title)
+}
+
+Tester(expr:Expr):void:dynamic_scope:map {block?} = {
+	Printf('%s ..', expr)
+	try {
+		rtn = expr.Eval()
+		rtnStr = rtn.ToString()
+		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):nomap
+		//block && block(rtn)
+	} catch {|e|
+		Printf(' %s\n', e.text)
+	}
+}
+
+PrintPUnit(expr:Expr):void:map = {
+	seqIdOffset = 0
+	punits = expr.EachPUnit()
+	punit = punits.NextValue()
+	!punit && return
+	seqIdOffset = punit.seqId
+	while (punit) {
+		Printf('  ##%d %s\n', punit.seqId - seqIdOffset, punit.ToString(seqIdOffset))
+		punit = punits.NextValue()
+	}
+}
+
+PrintPUnitWithLabel(expr:Expr):void:map = {
+	Printf('%s\n', expr)
+	PrintPUnit(expr)
+}
