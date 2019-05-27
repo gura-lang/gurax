@@ -27,6 +27,15 @@ TestCase('Constructor') {
 	Tester(`TimeDelta(usecs => 1000 * 6 + 7))
 }
 
+TestCase('Minus Value') {
+	Tester(`TimeDelta(usecs => -1))
+	Tester(`TimeDelta(msecs => -1))
+	Tester(`TimeDelta(secs => -1))
+	Tester(`TimeDelta(mins => -1))
+	Tester(`TimeDelta(hours => -1))
+	Tester(`TimeDelta(days => -1))
+}
+
 TestCase('-TimeDelta') {
 	Tester(`(-TimeDelta(0, 0, 0, 0, 0)))
 	Tester(`(-TimeDelta(123, 12, 34, 56, 789)))
@@ -64,4 +73,15 @@ TestCase('TimeDelta / n') {
 	Tester(`(TimeDelta(secs => 20) / 5))
 	Tester(`(TimeDelta(msecs => 20) / 5))
 	Tester(`(TimeDelta(1, 0, 0) / 5))
+}
+
+TestCase('Property') {
+	td = TimeDelta(123, 12, 34, 56, 789, 654)
+	Tester(`td)
+	Tester(`td.days)
+	Tester(`td.hours)
+	Tester(`td.mins)
+	Tester(`td.secs)
+	Tester(`td.msecs)
+	Tester(`td.usecs)
 }

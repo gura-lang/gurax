@@ -75,8 +75,8 @@ public:
 	}
 	static Int32 CalcUSecsPacked(Int32 msecs, Int32 usecs) { return msecs * 1000 + usecs; }
 	static Int Compare(const TimeDelta& td1, const TimeDelta& td2);
-	static Int64 Pack(Int32 days, Int32 secs, Int32 usecs);
-	static void Unpack(Int64 num, Int32* pDays, Int32* pSecs, Int32* pUsecs);
+	static Int64 Pack(Int32 days, Int32 secsPacked, Int32 usecsPacked);
+	static void Unpack(Int64 num, Int32* pDays, Int32* pSecsPacked, Int32* pUsecsPacked);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const TimeDelta& timeDelta) const { return this == &timeDelta; }

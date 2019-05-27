@@ -22,20 +22,27 @@ TimeDelta(mins => ((60 * 6) + 7)) .. 0days,06:07:00.000
 TimeDelta(secs => ((60 * 6) + 7)) .. 0days,00:06:07.000
 TimeDelta(msecs => ((1000 * 6) + 7)) .. 0days,00:00:06.007
 TimeDelta(usecs => ((1000 * 6) + 7)) .. 0days,00:00:00.006007
+======== Minus Value ========
+TimeDelta(usecs => (-1)) .. -1days,23:59:59.999999
+TimeDelta(msecs => (-1)) .. -1days,23:59:59.999
+TimeDelta(secs => (-1)) .. -1days,23:59:59.000
+TimeDelta(mins => (-1)) .. -1days,23:59:00.000
+TimeDelta(hours => (-1)) .. -1days,23:00:00.000
+TimeDelta(days => (-1)) .. -1days,00:00:00.000
 ======== -TimeDelta ========
 -TimeDelta(0, 0, 0, 0, 0) .. 0days,00:00:00.000
--TimeDelta(123, 12, 34, 56, 789) .. -123days,-12:-34:-56.-789
+-TimeDelta(123, 12, 34, 56, 789) .. -124days,11:25:03.211
 ======== TimeDelta + TimeDelta ========
 TimeDelta(0, 0, 0, 0, 0) + TimeDelta(123, 12, 34, 56, 789) .. 123days,12:34:56.789
 TimeDelta(123, 1, 2, 3, 4) + TimeDelta(123, 12, 34, 56, 789) .. 246days,13:36:59.793
 TimeDelta(123, 13, 32, 10, 300) + TimeDelta(123, 12, 34, 56, 789) .. 247days,02:07:07.089
 ======== TimeDelta - TimeDelta ========
-TimeDelta(0, 0, 0, 0, 0) - TimeDelta(123, 12, 34, 56, 789) .. -123days,-12:-34:-56.-789
-TimeDelta(123, 1, 2, 3, 4) - TimeDelta(123, 12, 34, 56, 789) .. 0days,-11:-32:-53.-785
+TimeDelta(0, 0, 0, 0, 0) - TimeDelta(123, 12, 34, 56, 789) .. -124days,11:25:03.211
+TimeDelta(123, 1, 2, 3, 4) - TimeDelta(123, 12, 34, 56, 789) .. -1days,12:27:06.215
 TimeDelta(123, 13, 32, 10, 300) - TimeDelta(123, 12, 34, 56, 789) .. 0days,00:57:13.511
 TimeDelta(123, 12, 34, 56, 789) - TimeDelta(0, 0, 0, 0, 0) .. 123days,12:34:56.789
 TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 1, 2, 3, 4) .. 0days,11:32:53.785
-TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300) .. 0days,00:-57:-13.-511
+TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300) .. -1days,23:02:46.489
 ======== TimeDelta * n ========
 TimeDelta(1, 0, 0) * 5 .. 5days,00:00:00.000
 TimeDelta(1, 2, 3, 4, 5) * 5 .. 5days,10:15:20.025
@@ -49,3 +56,11 @@ TimeDelta(mins => 20) / 5 .. 0days,00:04:00.000
 TimeDelta(secs => 20) / 5 .. 0days,00:00:04.000
 TimeDelta(msecs => 20) / 5 .. 0days,00:00:00.004
 TimeDelta(1, 0, 0) / 5 .. 0days,04:48:00.000
+======== Property ========
+td .. 123days,12:34:56.789654
+td.days .. 123
+td.hours .. 12
+td.mins .. 34
+td.secs .. 56
+td.msecs .. 789
+td.usecs .. 654

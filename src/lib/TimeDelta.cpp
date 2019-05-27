@@ -64,21 +64,35 @@ Int TimeDelta::Compare(const TimeDelta& td1, const TimeDelta& td2)
 	return result;
 }
 
-Int64 TimeDelta::Pack(Int32 days, Int32 secs, Int32 usecs)
+Int64 TimeDelta::Pack(Int32 days, Int32 secsPacked, Int32 usecsPacked)
 {
-	Int64 num = usecs;
-	num += static_cast<Int64>(secs) * 1000000;
+	Int64 num = usecsPacked;
+	num += static_cast<Int64>(secsPacked) * 1000000;
 	num += static_cast<Int64>(days) * 1000000 * 24 * 60 * 60;
 	return num;
 }
 
-void TimeDelta::Unpack(Int64 num, Int32* pDays, Int32* pSecs, Int32* pUsecs)
+void TimeDelta::Unpack(Int64 num, Int32* pDays, Int32* pSecsPacked, Int32* pUsecsPacked)
 {
-	*pUsecs = static_cast<Int32>(num % 1000000);
-	num /= 1000000;
-	*pSecs = static_cast<Int32>(num % (24 * 60 * 60));
-	num /= 24 * 60 * 60;
-	*pDays = static_cast<Int32>(num);
+	if (num >= 0) {
+		*pUsecsPacked = static_cast<Int32>(num % 1000000);
+		num /= 1000000;
+		*pSecsPacked = static_cast<Int32>(num % (24 * 60 * 60));
+		num /= 24 * 60 * 60;
+		*pDays = static_cast<Int32>(num);
+	} else {
+		Int64 tmp = -num % (24L * 60 * 60 * 1000000);
+		*pDays = num / (24L * 60 * 60 * 1000000);
+		if (tmp == 0) {
+			*pUsecsPacked = 0;
+			*pSecsPacked = 0;
+		} else {
+			tmp = 24L * 60 * 60 * 1000000 - tmp;
+			*pUsecsPacked = static_cast<Int32>(tmp % 1000000);
+			*pSecsPacked = static_cast<Int32>(tmp / 1000000);
+			(*pDays)--;
+		}
+	}
 }
 
 String TimeDelta::ToString(const StringStyle& ss) const
