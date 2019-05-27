@@ -729,6 +729,40 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_CreateVType
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_CreateVType : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+public:
+	// Constructor
+	explicit PUnit_CreateVType(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_CreateVType : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_CreateVType");
+public:
+	PUnitFactory_CreateVType(Expr* pExprSrc, PUnit::SeqId seqId) :
+		PUnitFactory(pExprSrc, seqId) {}
+	virtual size_t GetPUnitSize() const override {
+		return sizeof(PUnit_CreateVType<false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_CreateList
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>

@@ -179,6 +179,12 @@ void PUnit_AssignToSymbol<discardValueFlag>::Exec(Processor& processor) const
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
+	if (pValueAssigned->IsVType()) {
+		VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
+		if (vtype.GetSymbol()->IsEmpty()) {
+			vtype.SetSymbol(GetSymbol());
+		}
+	}
 	frame.Assign(GetSymbol(), pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -605,6 +611,41 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 		_pPUnitCreated = new PUnit_Import<true>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
 	} else {
 		_pPUnitCreated = new PUnit_Import<false>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_CreateVType
+// Stack View: [] -> [VType] (continue)
+//                -> []      (discard)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_CreateVType<discardValueFlag>::Exec(Processor& processor) const
+{
+	// VType settings
+	VType* pVType = new VType(Symbol::Empty);
+	pVType->SetAttrs(VTYPE_Object, VType::Flag::Mutable);
+	pVType->SetConstructor(Function::Empty->Reference());
+	if (!discardValueFlag) processor.PushValue(new Value_VType(*pVType));
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_CreateVType<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "CreateVType()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_CreateVType<true>(_pExprSrc.release(), _seqId);
+	} else {
+		_pPUnitCreated = new PUnit_CreateVType<false>(_pExprSrc.release(), _seqId);
 	}
 	return _pPUnitCreated;
 }

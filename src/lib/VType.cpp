@@ -11,9 +11,9 @@ namespace Gurax {
 VType::UniqId VType::_uniqIdNext = 1;
 VType VType::Empty("");
 
-VType::VType(const char* name) :
+VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
-	_pSymbol(Symbol::Add(name)), _flags(0), _pFrame(new Frame_VType(nullptr)),
+	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
 	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
 {
 }

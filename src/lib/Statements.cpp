@@ -805,7 +805,7 @@ Gurax_DeclareStatementAlias(class_, "class")
 
 Gurax_ImplementStatement(class_)
 {
-	
+	composer.Add_CreateVType(exprCaller);									// [VType]
 }
 
 void Statements::AssignToBasement(Frame& frame)

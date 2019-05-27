@@ -21,18 +21,18 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 String Value_VType::ToStringDigest(const StringStyle& ss) const
 {
+	const Function& constructor = GetVTypeThis().GetConstructor();
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetVTypeThis().MakeFullName();
+	str += constructor.IsEmpty()? GetVTypeThis().MakeFullName() : constructor.ToString();
 	str += ">";
 	return str;
 }
 
 String Value_VType::ToStringDetail(const StringStyle& ss) const
 {
-	const Function& constructor = GetVTypeThis().GetConstructor();
-	return constructor.IsEmpty()? GetVTypeThis().MakeFullName() : constructor.ToString();
+	return ToStringDigest(ss);
 }
 
 bool Value_VType::IsCallable() const

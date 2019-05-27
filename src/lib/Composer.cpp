@@ -128,6 +128,11 @@ void Composer::Add_Import(const Expr& exprSrc, DottedSymbol* pDottedSymbol, Symb
 	SetFactory(new PUnitFactory_Import(exprSrc.Reference(), NextSeqId(), pDottedSymbol, pSymbolList, mixInFlag));
 }
 
+void Composer::Add_CreateVType(const Expr& exprSrc)
+{
+	SetFactory(new PUnitFactory_CreateVType(exprSrc.Reference(), NextSeqId()));
+}
+
 void Composer::Add_CreateList(const Expr& exprSrc, size_t sizeReserve)
 {
 	SetFactory(new PUnitFactory_CreateList(exprSrc.Reference(), NextSeqId(), sizeReserve));

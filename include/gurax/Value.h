@@ -116,6 +116,7 @@ public:
 	virtual bool IsIterable() const { return false; }
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsList() const { return false; }
+	virtual bool IsVType() const { return false; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const { return false; }
 	virtual void UpdateMapMode(Argument& argument) const {}
 	virtual bool ReadyToPickValue() { return true; }

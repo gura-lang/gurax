@@ -47,7 +47,8 @@ public:
 	static VType Empty;
 public:
 	// Constructor
-	explicit VType(const char* name);
+	explicit VType(const Symbol* pSymbol);
+	explicit VType(const char* name) : VType(Symbol::Add(name)) {}
 	// Copy constructor/operator
 	VType(VType& src) = delete;
 	VType& operator=(VType& src) = delete;
@@ -61,6 +62,7 @@ public:
 	void SetAttrs(VType& vtypeInherited, Flags flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	VType* GetVTypeInherited() const { return _pVTypeInherited; }
+	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
