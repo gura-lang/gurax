@@ -42,10 +42,13 @@ public:
 		void Clear();
 		ExceptionInfo* Peek(int offset) { return *(rbegin() + offset); }
 		void Push(ExceptionInfo* pExceptionInfo) { push_back(pExceptionInfo); }
-		ExceptionInfo* Pop() { ExceptionInfo* pExceptionInfo = back(); pop_back(); return pExceptionInfo; }
-		void Discard() { delete back(); pop_back(); }
+		ExceptionInfo* Pop() {
+			if (empty()) return nullptr;
+			ExceptionInfo* pExceptionInfo = back(); pop_back(); return pExceptionInfo;
+		}
 		void Shrink(size_t cnt);
 		void ShrinkUntilNull();
+		void Print() const;
 	};
 protected:
 	PUnitStack _punitStack;

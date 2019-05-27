@@ -127,10 +127,21 @@ void Processor::ExceptionInfoStack::Shrink(size_t cnt)
 
 void Processor::ExceptionInfoStack::ShrinkUntilNull()
 {
-	for (;;) {
+	while (!empty()) {
 		std::unique_ptr<ExceptionInfo> pExceptionInfo(Pop());
 		if (!pExceptionInfo) break;
 	}
+}
+
+void Processor::ExceptionInfoStack::Print() const
+{
+	Stream& stream = *Stream::COut;
+	stream.Printf("[");
+	for (auto ppExceptionInfo = begin(); ppExceptionInfo != end(); ppExceptionInfo++) {
+		if (ppExceptionInfo != begin()) stream.Printf(", ");
+		stream.Printf("%p", *ppExceptionInfo);
+	}
+	stream.Printf("]\n");
 }
 
 //------------------------------------------------------------------------------
