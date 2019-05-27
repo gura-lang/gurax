@@ -17,9 +17,9 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("TimeDelta");
 private:
-	Int32 _days;		// -999999999 <= _days <= 999999999
-	Int32 _secsPacked;		// 0 <= _secsPacked <= 3600 * 24 - 1
-	Int32 _usecsPacked;	// 0 <= _usecsPacked <= 999999
+	Int32 _days;
+	Int32 _secsPacked;	// regulated within [0, 24 * 60 * 60 - 1]
+	Int32 _usecsPacked;	// regulated within [0, 999999]
 public:
 	// Constructor
 	TimeDelta(Int32 days = 0, Int32 secs = 0, Int32 usecs = 0);
@@ -42,7 +42,7 @@ public:
 	Int32 GetDays() const			{ return _days; }
 	Int8 GetHours() const			{ return static_cast<Int8>(_secsPacked / 3600); }		// 0-23
 	Int8 GetMins() const			{ return static_cast<Int8>((_secsPacked / 60) % 60); }	// 0-59
-	Int8 GetSecs() const			{ return static_cast<Int8>(_secsPacked % 60); }		// 0-59
+	Int8 GetSecs() const			{ return static_cast<Int8>(_secsPacked % 60); }			// 0-59
 	Int32 GetSecsPacked() const		{ return _secsPacked; }
 	Int32 GetMSecs() const			{ return _usecsPacked / 1000; }
 	Int32 GetUSecs() const			{ return _usecsPacked % 1000; }
@@ -57,11 +57,15 @@ public:
 	void SetUSecs(Int32 usecs)		{ _usecsPacked = CalcUSecsPacked(GetMSecs(), usecs); Regulate(); }
 	void SetUSecsPacked(Int32 usecsPacked) { _usecsPacked = usecsPacked; Regulate(); }
 public:
+	bool IsZero() const				{ return _days == 0 && _secsPacked == 0 && _usecsPacked == 0; }
+public:
 	TimeDelta* operator-() const;
 	TimeDelta& operator+=(const TimeDelta& td);
 	TimeDelta& operator-=(const TimeDelta& td);
-	TimeDelta& operator*=(int n);
-	TimeDelta& operator/=(int n);
+	TimeDelta& operator*=(Double n);
+	TimeDelta& operator/=(Double n);
+	Double operator/(const TimeDelta& td) const;
+	TimeDelta& operator%=(const TimeDelta& td);
 	bool operator==(const TimeDelta& td) const { return Compare(*this, td) == 0; }
 	bool operator!=(const TimeDelta& td) const { return Compare(*this, td) != 0; }
 	bool operator<(const TimeDelta& td) const  { return Compare(*this, td) < 0;  }

@@ -805,6 +805,7 @@ Gurax_DeclareStatementAlias(class_, "class")
 
 Gurax_ImplementStatement(class_)
 {
+	
 }
 
 void Statements::AssignToBasement(Frame& frame)

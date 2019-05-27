@@ -820,7 +820,6 @@ void Expr_Caller::ComposeForAssignment(
 		pExprDefaultArg->ComposeOrNil(composer);
 		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_EndSequence(*pExprDefaultArg);
-		//composer.Add_Return(*pExprDefaultArg);
 		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());

@@ -43,6 +43,15 @@ TimeDelta(123, 13, 32, 10, 300) - TimeDelta(123, 12, 34, 56, 789) .. 0days,00:57
 TimeDelta(123, 12, 34, 56, 789) - TimeDelta(0, 0, 0, 0, 0) .. 123days,12:34:56.789
 TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 1, 2, 3, 4) .. 0days,11:32:53.785
 TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300) .. -1days,23:02:46.489
+======== TimeDelta / TimeDelta ========
+TimeDelta(8) / TimeDelta(2) .. 4
+TimeDelta(8) / TimeDelta(3) .. 2.66667
+TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6) .. 4.96497
+(TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6)) * TimeDelta(23, 45, 6) .. 123days,12:34:56.000
+======== TimeDelta % TimeDelta ========
+TimeDelta(8) % TimeDelta(2) .. 0days,00:00:00.000
+TimeDelta(8) % TimeDelta(3) .. 2days,00:00:00.000
+TimeDelta(123, 12, 34, 56) % TimeDelta(23, 45, 6) .. 24days,00:10:56.000
 ======== TimeDelta * n ========
 TimeDelta(1, 0, 0) * 5 .. 5days,00:00:00.000
 TimeDelta(1, 2, 3, 4, 5) * 5 .. 5days,10:15:20.025

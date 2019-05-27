@@ -37,15 +37,30 @@ TimeDelta& TimeDelta::operator-=(const TimeDelta& td)
 	return *this;
 }
 
-TimeDelta& TimeDelta::operator*=(int n)
+TimeDelta& TimeDelta::operator*=(Double n)
 {
-	Unpack(Pack(_days, _secsPacked, _usecsPacked) * n, &_days, &_secsPacked, &_usecsPacked);
+	Unpack(static_cast<Int64>(Pack(_days, _secsPacked, _usecsPacked) * n), &_days, &_secsPacked, &_usecsPacked);
 	return *this;
 }
 
-TimeDelta& TimeDelta::operator/=(int n)
+TimeDelta& TimeDelta::operator/=(Double n)
 {
-	Unpack(Pack(_days, _secsPacked, _usecsPacked) / n, &_days, &_secsPacked, &_usecsPacked);
+	Unpack(static_cast<Int64>(Pack(_days, _secsPacked, _usecsPacked) / n), &_days, &_secsPacked, &_usecsPacked);
+	return *this;
+}
+
+Double TimeDelta::operator/(const TimeDelta& td) const
+{
+	Int64 numDiv = Pack(td._days, td._secsPacked, td._usecsPacked);
+	if (numDiv == 0) return 0;
+	return static_cast<Double>(Pack(_days, _secsPacked, _usecsPacked)) / numDiv;
+}
+
+TimeDelta& TimeDelta::operator%=(const TimeDelta& td)
+{
+	Int64 numDiv = Pack(td._days, td._secsPacked, td._usecsPacked);
+	if (numDiv == 0) return *this;
+	Unpack(Pack(_days, _secsPacked, _usecsPacked) % numDiv, &_days, &_secsPacked, &_usecsPacked);
 	return *this;
 }
 

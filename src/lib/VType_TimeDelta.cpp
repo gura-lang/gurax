@@ -246,7 +246,7 @@ Gurax_ImplementOpBinary(Sub, TimeDelta, TimeDelta)
 Gurax_ImplementOpBinary(Mul, TimeDelta, Number)
 {
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
-	int num = Value_Number::GetInt(valueR);
+	Double num = Value_Number::GetDouble(valueR);
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
 	*pTd *= num;
 	return new Value_TimeDelta(pTd.release());
@@ -255,7 +255,7 @@ Gurax_ImplementOpBinary(Mul, TimeDelta, Number)
 // Number * TimeDelta
 Gurax_ImplementOpBinary(Mul, Number, TimeDelta)
 {
-	int num = Value_Number::GetInt(valueL);
+	Double num = Value_Number::GetDouble(valueL);
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
 	*pTd *= num;
@@ -266,13 +266,39 @@ Gurax_ImplementOpBinary(Mul, Number, TimeDelta)
 Gurax_ImplementOpBinary(Div, TimeDelta, Number)
 {
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
-	int num = Value_Number::GetInt(valueR);
+	Double num = Value_Number::GetDouble(valueR);
 	if (num == 0) {
 		Error::Issue(ErrorType::DividedByZero, "divided by zero");
 		return Value::nil();
 	}
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
 	*pTd /= num;
+	return new Value_TimeDelta(pTd.release());
+}
+
+// TimeDelta / TimeDelta
+Gurax_ImplementOpBinary(Div, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	if (td2.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
+	return new Value_Number(td1 / td2);
+}
+
+// TimeDelta % TimeDelta
+Gurax_ImplementOpBinary(Mod, TimeDelta, TimeDelta)
+{
+	const TimeDelta& td1 = Value_TimeDelta::GetTimeDelta(valueL);
+	const TimeDelta& td2 = Value_TimeDelta::GetTimeDelta(valueR);
+	if (td2.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::nil();
+	}
+	RefPtr<TimeDelta> pTd(new TimeDelta(td1));
+	*pTd %= td2;
 	return new Value_TimeDelta(pTd.release());
 }
 
@@ -350,6 +376,8 @@ void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Mul, TimeDelta, Number);
 	Gurax_AssignOpBinary(Mul, Number, TimeDelta);
 	Gurax_AssignOpBinary(Div, TimeDelta, Number);
+	Gurax_AssignOpBinary(Div, TimeDelta, TimeDelta);
+	Gurax_AssignOpBinary(Mod, TimeDelta, TimeDelta);
 	Gurax_AssignOpBinary(Eq, TimeDelta, TimeDelta);
 	Gurax_AssignOpBinary(Ne, TimeDelta, TimeDelta);
 	Gurax_AssignOpBinary(Lt, TimeDelta, TimeDelta);

@@ -56,6 +56,19 @@ TestCase('TimeDelta - TimeDelta') {
 	Tester(`(TimeDelta(123, 12, 34, 56, 789) - TimeDelta(123, 13, 32, 10, 300)))
 }
 
+TestCase('TimeDelta / TimeDelta') {
+	Tester(`(TimeDelta(8) / TimeDelta(2)))
+	Tester(`(TimeDelta(8) / TimeDelta(3)))
+	Tester(`(TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6)))
+	Tester(`(TimeDelta(123, 12, 34, 56) / TimeDelta(23, 45, 6) * TimeDelta(23, 45, 6)))
+}
+
+TestCase('TimeDelta % TimeDelta') {
+	Tester(`(TimeDelta(8) % TimeDelta(2)))
+	Tester(`(TimeDelta(8) % TimeDelta(3)))
+	Tester(`(TimeDelta(123, 12, 34, 56) % TimeDelta(23, 45, 6)))
+}
+
 TestCase('TimeDelta * n') {
 	Tester(`(TimeDelta(1, 0, 0) * 5))
 	Tester(`(TimeDelta(1, 2, 3, 4, 5) * 5))
