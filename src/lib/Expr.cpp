@@ -808,6 +808,7 @@ void Expr_Caller::ComposeForAssignment(
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(*this);
 	pFunction->SetPUnitBody(composer.PeekPUnitCont());
+	pExprAssigned->SetPUnitFirst(composer.PeekPUnitCont());
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
