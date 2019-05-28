@@ -131,13 +131,7 @@ void Argument::AssignToFrame(Frame& frame) const
 		} else if (declBlock.IsSet(DeclBlock::Flag::Quote)) {
 			frame.Assign(pSymbol, new Value_Expr(GetExprOfBlock()->Reference()));
 		} else {
-			RefPtr<FunctionCustom>
-				pFunction(new FunctionCustom(
-							  Function::Type::Function, pSymbol,
-							  GetExprOfBlock()->GetDeclCallable().Reference(),
-							  GetExprOfBlock()->GetPUnitFirst()));
-			pFunction->Declare(VTYPE_Any, DeclCallable::Flag::CutExtraArgs);
-			frame.Assign(pFunction.release());
+			frame.Assign(Function::CreateBlockFunction(pSymbol, *GetExprOfBlock()));
 		}
 	} while (0);
 }

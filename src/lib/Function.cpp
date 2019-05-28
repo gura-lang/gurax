@@ -15,6 +15,16 @@ void Function::Bootup()
 	Empty.reset(new Function_Empty());
 }
 
+Function* Function::CreateBlockFunction(const Symbol* pSymbol, const Expr_Block& exprOfBlock)
+{
+	const PUnit* pPUnit = exprOfBlock.GetPUnitFirst();
+	if (pPUnit->IsBeginSequence()) pPUnit = pPUnit->GetPUnitCont();
+	RefPtr<FunctionCustom> pFunction(
+		new FunctionCustom(Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), pPUnit));
+	pFunction->Declare(VTYPE_Any, Flag::CutExtraArgs);
+	return pFunction.release();
+}
+
 String Function::MakeFullName() const
 {
 	String str;

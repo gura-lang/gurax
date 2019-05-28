@@ -130,6 +130,8 @@ protected:
 	// Destructor
 	virtual ~Function() = default;
 public:
+	static Function* CreateBlockFunction(const Symbol* pSymbol, const Expr_Block& exprOfBlock);
+public:
 	bool IsTypeStatement() const { return _type == Type::Statement; }
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeMethod() const { return _type == Type::Method; }

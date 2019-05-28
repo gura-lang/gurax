@@ -68,7 +68,6 @@ public:
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
-	bool HasBlock() const { return _pExprOfBlock.get() != nullptr; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	Function* CreateFunctionOfBlock(Frame& frameOuter) const;
 	Function* CreateFunctionOfBlock(Processor& processor) const {

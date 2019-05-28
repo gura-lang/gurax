@@ -75,7 +75,7 @@ f(1, 2) {f1(), f2()}
   ##13 Lookup(`f2)
   ##14 Argument()
   ##15 Call(cont=##16)
-  ##16 EndSequence()
+  ##16 Return()
   ##17 Call(cont=##18)
 f(a)
   ##0 Lookup(`f)
