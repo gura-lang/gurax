@@ -8,6 +8,23 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Function#expr
+Gurax_DeclareProperty_R(Function, expr)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `expr` instance that represents the function body.\n"
+		"Set to `nil` if the function has not been declared in a script.");
+}
+
+Gurax_ImplementPropertyGetter(Function, expr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Expr* pExpr = valueThis.GetFunction().GetExprBody();
+	return pExpr? new Value_Expr(pExpr->Reference()) : Value::nil();
+}
+
 // Function#name
 Gurax_DeclareProperty_R(Function, name)
 {
@@ -53,6 +70,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));
 	Assign(Gurax_CreateProperty(Function, type));
 }
