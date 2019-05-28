@@ -136,6 +136,7 @@ void Argument::AssignToFrame(Frame& frame) const
 							  Function::Type::Function, pSymbol,
 							  GetExprOfBlock()->GetDeclCallable().Reference(),
 							  GetExprOfBlock()->GetPUnitFirst()));
+			pFunction->Declare(VTYPE_Any, DeclCallable::Flag::CutExtraArgs);
 			frame.Assign(pFunction.release());
 		}
 	} while (0);

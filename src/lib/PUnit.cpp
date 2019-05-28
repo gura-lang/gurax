@@ -1161,8 +1161,13 @@ void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
-		IssueError(ErrorType::ArgumentError, "too many arguments");
-		processor.ErrorDone();
+		if (argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
+			// just ignore extra arguments
+			processor.SetPUnitNext(_GetPUnitCont());
+		} else {
+			IssueError(ErrorType::ArgumentError, "too many arguments");
+			processor.ErrorDone();
+		}
 	} else if (!pArgSlot->IsVacant()) {
 		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
 		processor.ErrorDone();

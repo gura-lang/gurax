@@ -230,5 +230,5 @@ g(a, b, c)
 ======== block ========
 f .. f() {block}
 g .. g() {`block}
-f {|v1, v2| func(a, b, c)} .. block(v1, v2)
+f {|v1, v2| func(a, b, c)} .. block(v1, v2):cut_extra_args
 g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}
