@@ -45,28 +45,6 @@ void Argument::ResetAllValues()
 	if (_pValueOfDict) _pValueOfDict->GetValueDict().Clear();
 }
 
-#if 0
-Function* Argument::CreateFunctionOfBlock(Frame& frameOuter) const
-{
-	if (!GetExprOfBlock()) return nullptr;
-	RefPtr<FunctionCustom>
-		pFunction(new FunctionCustom(
-					  Function::Type::Function,
-					  GetExprOfBlock()->GetDeclCallable().GetDeclBlock().GetSymbol(),
-					  GetExprOfBlock()->GetDeclCallable().Reference(),
-					  GetExprOfBlock()->GetPUnitFirst()));
-	pFunction->SetFrameOuter(frameOuter);
-	return pFunction.release();
-}
-
-Function* Argument::CreateFunctionOfBlock(Frame& frameOuter, RefPtr<Argument>& pArgument) const
-{
-	Function* pFunction = CreateFunctionOfBlock(frameOuter);
-	if (pFunction) pArgument.reset(new Argument(*pFunction));
-	return pFunction;
-}
-#endif
-
 void Argument::DoCall(Processor& processor)
 {
 	const PUnit* pPUnitNext = processor.GetPUnitNext();

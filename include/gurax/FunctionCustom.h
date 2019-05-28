@@ -17,11 +17,10 @@ protected:
 public:
 	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, Expr* pExprBody);
 public:
-	//void SetPUnitBody(const PUnit* pPUnit) { _pPUnitBody = pPUnit; }
-	const Expr& GetExprBody() const { return *_pExprBody; }
 	const PUnit* GetPUnitBody() const { return _pPUnitBody; }
 public:
 	// Virtual functions of Function
+	virtual const Expr* GetExprBody() const override { return _pExprBody.get(); }
 	virtual void DoExec(Processor& processor, Argument& argument) const override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;

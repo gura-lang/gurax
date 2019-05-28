@@ -69,16 +69,6 @@ public:
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
-#if 0
-	Function* CreateFunctionOfBlock(Frame& frameOuter) const;
-	Function* CreateFunctionOfBlock(Processor& processor) const {
-		return CreateFunctionOfBlock(processor.GetFrameCur());
-	}
-	Function* CreateFunctionOfBlock(Frame& frameOuter, RefPtr<Argument>& pArgument) const;
-	Function* CreateFunctionOfBlock(Processor& processor, RefPtr<Argument>& pArgument) const {
-		return CreateFunctionOfBlock(processor.GetFrameCur(), pArgument);
-	}
-#endif
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }
 	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
