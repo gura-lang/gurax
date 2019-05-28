@@ -127,7 +127,8 @@ void Processor::ExceptionInfoStack::Shrink(size_t cnt)
 
 void Processor::ExceptionInfoStack::ShrinkUntilNull()
 {
-	while (!empty()) {
+	//while (!empty()) {
+	for (;;) {
 		std::unique_ptr<ExceptionInfo> pExceptionInfo(Pop());
 		if (!pExceptionInfo) break;
 	}
