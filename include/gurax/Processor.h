@@ -155,6 +155,11 @@ protected:
 // Processor_Debug
 //------------------------------------------------------------------------------
 class Processor_Debug : public Processor {
+private:
+	int _nestLevel;
+public:
+	// Constructor
+	Processor_Debug() : _nestLevel(-1) {}
 protected:
 	// Virtual function of Processor
 	virtual void RunLoop(const PUnit* pPUnit) override;

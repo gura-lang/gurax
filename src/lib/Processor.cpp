@@ -187,17 +187,18 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 //------------------------------------------------------------------------------
 void Processor_Debug::RunLoop(const PUnit* pPUnit)
 {
-	auto PrintPUnit = [](Stream& stream, const PUnit* pPUnit) {
-		stream.Printf("#%zu %s\n", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+	auto PrintPUnit = [](Stream& stream, int nestLevel, const PUnit* pPUnit) {
+		stream.Printf("%*s#%zu %s\n", nestLevel * 2, "", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
 	};
-	auto PrintStack = [this](Stream& stream) {
-		stream.Printf("%s\n", GetValueStack().ToString(StringStyle().Digest()).c_str());
+	auto PrintStack = [this](Stream& stream, int nestLevel) {
+		stream.Printf("%*s%s\n", nestLevel * 2, "", GetValueStack().ToString(StringStyle().Digest()).c_str());
 	};
 	_pPUnitNext = pPUnit;
 	if (!_pPUnitNext) return;
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
-	stream.Printf("---- Processor Begin ----\n");
+	_nestLevel++;
+	stream.Printf("%*s---- Processor Begin ----\n", _nestLevel * 2, "");
 	PrepareExceptionHandling();
 	if (_pPUnitNext->IsBeginSequence()) {
 		pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
@@ -205,19 +206,20 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		PrintPUnit(stream, _pPUnitNext);
+		PrintPUnit(stream, _nestLevel, _pPUnitNext);
 		_pPUnitNext->Exec(*this);
 	}
 	do {
 		while (_contFlag && _pPUnitNext != pPUnitSentinel) {
-			PrintStack(stream);
-			PrintPUnit(stream, _pPUnitNext);
+			PrintStack(stream, _nestLevel);
+			PrintPUnit(stream, _nestLevel, _pPUnitNext);
 			_pPUnitNext->Exec(*this);
 		}
 		if (!DoExceptionHandling()) break;
 	} while (_contFlag && _pPUnitNext != pPUnitSentinel);
 	_contFlag = _resumeFlag;
-	stream.Printf("---- Processor End ----\n");
+	stream.Printf("%*s---- Processor End ----\n", _nestLevel * 2, "");
+	_nestLevel--;
 }
 
 }
