@@ -803,11 +803,8 @@ void Expr_Caller::ComposeForAssignment(
 		return;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
-	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(), GetDeclCallable().Reference()));
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(*this);
-	pFunction->SetPUnitBody(composer.PeekPUnitCont());
 	pExprAssigned->SetPUnitFirst(composer.PeekPUnitCont());
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(*this);
@@ -825,6 +822,9 @@ void Expr_Caller::ComposeForAssignment(
 		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	RefPtr<FunctionCustom> pFunction(
+		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(),
+						   GetDeclCallable().Reference(), pExprAssigned->Reference()));
 	composer.Add_AssignFunction(*this, pFunction.release());		// [Value]
 }
 

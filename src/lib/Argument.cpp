@@ -45,6 +45,7 @@ void Argument::ResetAllValues()
 	if (_pValueOfDict) _pValueOfDict->GetValueDict().Clear();
 }
 
+#if 0
 Function* Argument::CreateFunctionOfBlock(Frame& frameOuter) const
 {
 	if (!GetExprOfBlock()) return nullptr;
@@ -64,6 +65,7 @@ Function* Argument::CreateFunctionOfBlock(Frame& frameOuter, RefPtr<Argument>& p
 	if (pFunction) pArgument.reset(new Argument(*pFunction));
 	return pFunction;
 }
+#endif
 
 void Argument::DoCall(Processor& processor)
 {

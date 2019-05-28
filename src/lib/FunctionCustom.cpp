@@ -8,6 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // FunctionCustom
 //------------------------------------------------------------------------------
+FunctionCustom::FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, Expr* pExprBody) :
+	Function(type, pSymbol, pDeclCallable), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
+{
+	if (_pPUnitBody && _pPUnitBody->IsBeginSequence()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
+}
+
 void FunctionCustom::DoExec(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);

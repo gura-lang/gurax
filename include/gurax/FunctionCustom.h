@@ -12,13 +12,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class FunctionCustom : public Function {
 protected:
+	RefPtr<Expr> _pExprBody;
 	const PUnit* _pPUnitBody;
 public:
-	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable,
-				   const PUnit* pPUnitBody = nullptr) :
-		Function(type, pSymbol, pDeclCallable), _pPUnitBody(pPUnitBody) {}
+	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, Expr* pExprBody);
 public:
-	void SetPUnitBody(const PUnit* pPUnit) { _pPUnitBody = pPUnit; }
+	//void SetPUnitBody(const PUnit* pPUnit) { _pPUnitBody = pPUnit; }
+	const Expr& GetExprBody() const { return *_pExprBody; }
 	const PUnit* GetPUnitBody() const { return _pPUnitBody; }
 public:
 	// Virtual functions of Function

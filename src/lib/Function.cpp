@@ -17,10 +17,10 @@ void Function::Bootup()
 
 Function* Function::CreateBlockFunction(const Symbol* pSymbol, const Expr_Block& exprOfBlock)
 {
-	const PUnit* pPUnit = exprOfBlock.GetPUnitFirst();
-	if (pPUnit->IsBeginSequence()) pPUnit = pPUnit->GetPUnitCont();
+	//const PUnit* pPUnit = exprOfBlock.GetPUnitFirst();
+	//if (pPUnit->IsBeginSequence()) pPUnit = pPUnit->GetPUnitCont();
 	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), pPUnit));
+		new FunctionCustom(Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), exprOfBlock.Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::CutExtraArgs);
 	return pFunction.release();
 }
