@@ -108,16 +108,15 @@ void RunREPL()
 				pPUnit = pProcessor->GetPUnitNext();
 				if (Error::IsIssued()) break;
 			}
-			if (Error::IsIssued()) {
-				Error::Print(*Stream::CErr);
-				pProcessor->ClearValueStack();
-				pProcessor->ClearError();
-				pPUnit = composer.PeekPUnitCont();
-				break;
-			} else {
-				RefPtr<Value> pValue(pProcessor->PopValue());
-				if (pValue->IsValid()) stream.Printf("%s\n", pValue->ToString().c_str());
-			}
+			if (Error::IsIssued()) break;
+			RefPtr<Value> pValue(pProcessor->PopValue());
+			if (pValue->IsValid()) stream.Printf("%s\n", pValue->ToString().c_str());
+		}
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			pProcessor->ClearValueStack();
+			pProcessor->ClearError();
+			pPUnit = composer.PeekPUnitCont();
 		}
 	}
 }
