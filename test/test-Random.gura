@@ -1,0 +1,30 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Constructor') {
+	Tester(`Random(0))
+	Tester(`Random(0x12345678))
+}
+
+TestCase('Random#Range()') {
+	r = Random(0)
+	Tester(`repeat (20):list {r.Range(10)})
+	Tester(`repeat (20):list {r.Range(100)})
+}
+
+TestCase('Random#Uniform()') {
+	r = Random(0)
+	Tester(`repeat (20):list {r.Uniform()})
+}
+
+TestCase('Random#Normal()') {
+	r = Random(0)
+	Tester(`repeat (20):list {r.Normal()})
+}
+
+TestCase('Random#Reset()') {
+	r = Random(1234)
+	Tester(`repeat (20):list {r.Range(10)})
+	r.Reset()
+	Tester(`repeat (20):list {r.Range(10)})
+}
