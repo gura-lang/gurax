@@ -32,15 +32,22 @@ protected:
 	// Destructor
 	virtual ~Random() = default;
 public:
-	static void Bootup(UInt32 seed) { _pRandomGlobal.reset(new Random(seed)); }
-	static void Bootup() { Bootup(std::random_device()()); }
+	static void Bootup(UInt32 seed);
+	static void Bootup();
 	static Random &Global() { return *_pRandomGlobal; }
 	void Reset() { _engine.seed(_seed); }
-	template<typename T = double> T Uniform() { return std::uniform_real_distribution<T>()(_engine); }
-	template<typename T = double> T Normal(T mean = 0., T stddev = 1.) {
+	UInt32 GetSeed() const { return _seed; }
+	template<typename T = Double> T Uniform() { return std::uniform_real_distribution<T>()(_engine); }
+	template<typename T = Double> T Normal(T mean = 0., T stddev = 1.) {
 		return std::normal_distribution<T>(mean, stddev)(_engine);
 	}
-	template<typename T = int> T Range(T range) { return static_cast<T>(Uniform<Double>() * range); }
+	template<typename T = Int> T Range(T range) { return static_cast<T>(Uniform<Double>() * range); }
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Random& random) const { return this == &random; }
+	bool IsEqualTo(const Random& random) const { return IsIdentical(random); }
+	bool IsLessThan(const Random& random) const { return this < &random; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 }

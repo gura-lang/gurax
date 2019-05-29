@@ -84,6 +84,7 @@
 #include "gurax/VType_Object.h"
 #include "gurax/VType_PUnit.h"
 #include "gurax/VType_Quote.h"
+#include "gurax/VType_Random.h"
 #include "gurax/VType_Stream.h"
 #include "gurax/VType_String.h"
 #include "gurax/VType_StringPtr.h"
