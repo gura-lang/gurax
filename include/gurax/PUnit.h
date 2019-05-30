@@ -59,6 +59,7 @@ public:
 	virtual bool IsBridge() const { return false; }
 	virtual bool IsBeginSequence() const { return false; }
 	virtual bool IsEndSequence() const { return false; }
+	virtual bool IsReturn() const { return false; }
 	virtual bool GetDiscardValueFlag() const = 0;
 	virtual void SetPUnitSentinel(const PUnit* pPUnit) { /* just ignore it */ }
 	virtual void SetPUnitCont(const PUnit* pPUnit) { /* just ignore it */ }
@@ -2252,6 +2253,7 @@ public:
 	PUnit_Return(Expr* pExprSrc, SeqId seqId) : PUnit(pExprSrc, seqId) {}
 public:
 	// Virtual functions of PUnit
+	virtual bool IsReturn() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
 	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
 	virtual const PUnit* GetPUnitNext() const override { return this + 1; }

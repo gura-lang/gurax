@@ -501,7 +501,10 @@ const Expr::TypeInfo Expr_Root::typeInfo;
 void Expr_Root::Compose(Composer& composer)
 {
 	SetPUnitFirst(composer.PeekPUnitCont());
+	//PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
+	//Add_BeginSequence(expr);											// []
 	ComposeSequence(composer, GetExprElemFirst());						// [Any]
+	//pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
 	composer.Add_Return(*this);
 	composer.Add_Terminate(*this);
 }
@@ -817,7 +820,6 @@ void Expr_Caller::ComposeForAssignment(
 		composer.Add_BeginSequence(*pExprDefaultArg);
 		pExprDefaultArg->ComposeOrNil(composer);
 		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
-		//composer.Add_EndSequence(*pExprDefaultArg);
 		composer.Add_Return(*pExprDefaultArg);
 		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
 	}

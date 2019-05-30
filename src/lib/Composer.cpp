@@ -8,8 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Composer
 //------------------------------------------------------------------------------
+PUnit::SeqId Composer::_seqIdCur = 0;
+
 Composer::Composer(bool replFlag) :
-	_replFlag(replFlag), _seqIdCur(0), _pPUnitFirst(nullptr), _pPUnitLast(nullptr)
+	_replFlag(replFlag), _pPUnitFirst(nullptr), _pPUnitLast(nullptr)
 {
 }
 
@@ -54,7 +56,6 @@ void Composer::ComposeAsSequence(Expr& expr)
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
 	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
-	//Add_EndSequence(expr);
 	Add_Return(expr);
 }
 

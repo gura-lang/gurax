@@ -16,7 +16,6 @@ Processor::Processor() :
 	GetValueStack().reserve(1024);
 	GetFrameStack().reserve(1024);
 	PushFrame(Basement::Inst.GetFrame().Reference());
-	//PushPUnit(nullptr);
 }
 
 Processor* Processor::Create(bool debugFlag)
@@ -202,7 +201,8 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	Stream& stream = *Stream::COut;
 	const PUnit* pPUnitSentinel = nullptr;
 	_nestLevel++;
-	stream.Printf("%*s---- Processor Begin ----\n", _nestLevel * 2, "");
+	stream.Printf("%*s---- Processor Begin at %s ----\n",
+				  _nestLevel * 2, "", _pPUnitNext->MakeSeqIdString().c_str());
 	PrepareExceptionHandling();
 	size_t wdSeqId = 0;
 	if (_pPUnitNext->IsBeginSequence()) {

@@ -48,12 +48,13 @@ public:
 	};
 private:
 	bool _replFlag;
-	PUnit::SeqId _seqIdCur;
 	PUnit* _pPUnitFirst;
 	PUnit* _pPUnitLast;
 	PUnitStack _punitStack;
 	RefPtr<PUnitFactory> _pPUnitFactory;
 	RepeaterInfoOwner _repeaterInfoStack;
+private:
+	static PUnit::SeqId _seqIdCur;
 public:
 	// Constructor
 	Composer(bool replFlag = false);
