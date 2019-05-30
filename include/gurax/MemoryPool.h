@@ -103,7 +103,7 @@ public:
 		void Reserve(size_t bytes);
 		void* Allocate(size_t bytes);
 		void* AllocateGhost();
-		Int32 FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint);
+		UInt32 CalcSeqId(const PUnit* pPUnit) const;
 		virtual void Deallocate(void* p) {}
 		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;

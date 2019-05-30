@@ -94,22 +94,31 @@ void* MemoryPool::ChunkPUnit::AllocateGhost()
 	return PeekPointer();
 }
 
-Int32 MemoryPool::ChunkPUnit::FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint)
+//---------
+// Improvement of performance is necessary.
+//---------
+UInt32 MemoryPool::ChunkPUnit::CalcSeqId(const PUnit* pPUnit) const
 {
-	Int32 seqId = 0;
-	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
-		if (pPool->IsWithin(pPUnit, _bytesPoolBuff)) {
-			const PUnit* pPUnitSeek =
-				(pPUnitHint <= pPUnit && pPool->IsWithin(pPUnitHint, _bytesPoolBuff))?
-				pPUnitHint : reinterpret_cast<const PUnit*>(pPool->buff);
-			for ( ; pPUnitSeek <= pPUnit; pPUnit = pPUnit->GetPUnitNext(), seqId++) {
-				if (pPUnitSeek == pPUnit) return seqId;
-			}
-			return -1;
+	static const PUnit* pPUnitHint = nullptr;
+	static UInt32 seqIdHint = 0;
+	UInt32 seqId = 0;
+	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext, seqId += pPool->nPUnits) {
+		if (!pPool->IsWithin(pPUnit, _bytesPoolBuff)) continue;
+		const PUnit* pPUnitSeek = reinterpret_cast<const PUnit*>(pPool->buff);
+		if (pPUnitSeek <= pPUnitHint && pPUnitHint <= pPUnit) {
+			pPUnitSeek = pPUnitHint;
+			seqId = seqIdHint;
 		}
-		seqId += pPool->nPUnits;
+		for ( ; pPUnitSeek <= pPUnit; pPUnitSeek = pPUnitSeek->GetPUnitNext(), seqId++) {
+			if (pPUnitSeek == pPUnit) {
+				pPUnitHint = pPUnitSeek;
+				seqIdHint = seqId;
+				return seqId;
+			}
+		}
+		return 0;
 	}
-	return -1;
+	return 0;
 }
 
 String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const

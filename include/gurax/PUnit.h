@@ -40,7 +40,10 @@ public:
 	String ToString(int seqIdOffset) const { return ToString(StringStyle::Empty, seqIdOffset); }
 	String ToString(const StringStyle& ss) const { return ToString(ss, 0); }
 public:
-	size_t GetSeqId(int seqIdOffset = 0) const { return _seqId - seqIdOffset; }
+	//size_t GetSeqId(int seqIdOffset = 0) const { return _seqId - seqIdOffset; }
+	SeqId GetSeqId(int seqIdOffset = 0) const {
+		return MemoryPool::Global().GetChunkPUnit().CalcSeqId(this) - seqIdOffset;
+	}
 	String MakeSeqIdString(int seqIdOffset = 0) const;
 	static String MakeSeqIdString(const PUnit* pPUnit, int seqIdOffset = 0) {
 		return pPUnit? pPUnit->MakeSeqIdString(seqIdOffset) : "null";
