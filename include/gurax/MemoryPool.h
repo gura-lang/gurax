@@ -48,6 +48,8 @@ static void operator delete(void* p) { \
 
 namespace Gurax {
 
+class PUnit;
+
 //-----------------------------------------------------------------------------
 // MemoryPool
 //-----------------------------------------------------------------------------
@@ -60,11 +62,6 @@ public:
 			Header* pHeaderVacantNext;
 		} u;
 		const char* ownerName;
-	};
-	struct Pool {
-		Pool* pPoolNext;
-		char buff[0];
-		static Pool* Create(size_t bytesPoolBuff);
 	};
 	class Chunk {
 	public:
@@ -82,6 +79,13 @@ public:
 		virtual void Deallocate(void* p) = 0;
 	};
 	class ChunkPUnit : public Chunk {
+	public:
+		struct Pool {
+			Pool* pPoolNext;
+			size_t nPUnits;
+			char buff[0];
+			static Pool* Create(size_t bytesPoolBuff);
+		};
 	protected:
 		size_t _bytesPoolBuff;
 		size_t _bytesMargin;
@@ -95,6 +99,7 @@ public:
 		void Reserve(size_t bytes);
 		void* Allocate(size_t bytes);
 		void* AllocateGhost();
+		int FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint);
 		virtual void Deallocate(void* p) {}
 		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
@@ -102,6 +107,12 @@ public:
 		void* DoAllocate(size_t bytes);
 	};
 	class ChunkFixed : public Chunk {
+	public:
+		struct Pool {
+			Pool* pPoolNext;
+			char buff[0];
+			static Pool* Create(size_t bytesPoolBuff);
+		};
 	private:
 		size_t _bytesBlock;
 		size_t _bytesFrame;

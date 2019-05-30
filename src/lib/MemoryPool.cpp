@@ -39,16 +39,6 @@ void MemoryPool::Deallocate(void* p)
 }
 
 //-----------------------------------------------------------------------------
-// MemoryPool::Pool
-//-----------------------------------------------------------------------------
-MemoryPool::Pool* MemoryPool::Pool::Create(size_t bytesPoolBuff)
-{
-	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
-	pPool->pPoolNext = nullptr;
-	return pPool;
-}
-
-//-----------------------------------------------------------------------------
 // MemoryPool::Chunk
 //-----------------------------------------------------------------------------
 
@@ -85,6 +75,7 @@ void* MemoryPool::ChunkPUnit::Allocate(size_t bytes)
 void* MemoryPool::ChunkPUnit::DoAllocate(size_t bytes)
 {
 	void* pAllocated = PeekPointer();
+	_pPoolCur->nPUnits++;
 	_offsetNext += bytes;
 	if (_offsetNext + _bytesMargin > _bytesPoolBuff) {
 		auto pPUnitBridge = new PUnit_Bridge();
@@ -103,11 +94,27 @@ void* MemoryPool::ChunkPUnit::AllocateGhost()
 	return PeekPointer();
 }
 
+int MemoryPool::ChunkPUnit::FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint)
+{
+	return 0;
+}
+
 String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("[ChunkPUnit:%ldbytes/pool,%zupools]", _bytesPoolBuff, CountPools());
 	return str;
+}
+
+//-----------------------------------------------------------------------------
+// MemoryPool::ChunkPUnit::Pool
+//-----------------------------------------------------------------------------
+MemoryPool::ChunkPUnit::Pool* MemoryPool::ChunkPUnit::Pool::Create(size_t bytesPoolBuff)
+{
+	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
+	pPool->pPoolNext = nullptr;
+	pPool->nPUnits = 0;
+	return pPool;
 }
 
 //-----------------------------------------------------------------------------
@@ -177,6 +184,16 @@ String MemoryPool::ChunkFixed::ToString(const StringStyle& ss) const
 		}
 	}
 	return str;
+}
+
+//-----------------------------------------------------------------------------
+// MemoryPool::ChunkFixed::Pool
+//-----------------------------------------------------------------------------
+MemoryPool::ChunkFixed::Pool* MemoryPool::ChunkFixed::Pool::Create(size_t bytesPoolBuff)
+{
+	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
+	pPool->pPoolNext = nullptr;
+	return pPool;
 }
 
 //-----------------------------------------------------------------------------
