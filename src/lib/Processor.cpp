@@ -189,10 +189,13 @@ void Processor_Normal::RunLoop(const PUnit* pPUnit)
 void Processor_Debug::RunLoop(const PUnit* pPUnit)
 {
 	auto PrintPUnit = [](Stream& stream, int nestLevel, const PUnit* pPUnit) {
-		stream.Printf("%*s#%zu %s\n", nestLevel * 2, "", pPUnit->GetSeqId(), pPUnit->ToString().c_str());
+		String seqIdStr = pPUnit->MakeSeqIdString();
+		stream.Printf("%*s%s %s\n", nestLevel * 2, "", seqIdStr.c_str(), pPUnit->ToString().c_str());
+		return seqIdStr.size();
 	};
-	auto PrintStack = [this](Stream& stream, int nestLevel) {
-		stream.Printf("%*s%s\n", nestLevel * 2, "", GetValueStack().ToString(StringStyle().Digest()).c_str());
+	auto PrintStack = [this](Stream& stream, int nestLevel, size_t wdSeqId) {
+		stream.Printf("%*s%*s %s\n", nestLevel * 2, "", wdSeqId, "",
+					  GetValueStack().ToString(StringStyle().Digest()).c_str());
 	};
 	_pPUnitNext = pPUnit;
 	if (!_pPUnitNext) return;
@@ -201,19 +204,20 @@ void Processor_Debug::RunLoop(const PUnit* pPUnit)
 	_nestLevel++;
 	stream.Printf("%*s---- Processor Begin ----\n", _nestLevel * 2, "");
 	PrepareExceptionHandling();
+	size_t wdSeqId = 0;
 	if (_pPUnitNext->IsBeginSequence()) {
 		pPUnitSentinel = _pPUnitNext->GetPUnitSentinel();
 		_pPUnitNext = _pPUnitNext->GetPUnitCont();	// skip BeginSequence/ArgSlot/ArgSlotNamed
 		if (pPUnitSentinel->IsEndSequence()) pPUnitSentinel = nullptr;
 	} else {
 		PushPUnit(nullptr);	// push a terminator so that Return exits the loop
-		PrintPUnit(stream, _nestLevel, _pPUnitNext);
+		wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitNext);
 		_pPUnitNext->Exec(*this);
 	}
 	do {
 		while (_contFlag && _pPUnitNext != pPUnitSentinel) {
-			PrintStack(stream, _nestLevel);
-			PrintPUnit(stream, _nestLevel, _pPUnitNext);
+			PrintStack(stream, _nestLevel, wdSeqId);
+			wdSeqId = PrintPUnit(stream, _nestLevel, _pPUnitNext);
 			_pPUnitNext->Exec(*this);
 		}
 		if (!DoExceptionHandling()) break;
