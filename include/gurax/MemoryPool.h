@@ -85,6 +85,10 @@ public:
 			size_t nPUnits;
 			char buff[0];
 			static Pool* Create(size_t bytesPoolBuff);
+			bool IsWithin(const PUnit* pPUnit, size_t bytesPoolBuff) const {
+				const char *p = reinterpret_cast<const char *>(pPUnit);
+				return buff <= p && p - buff < bytesPoolBuff;
+			}
 		};
 	protected:
 		size_t _bytesPoolBuff;
@@ -99,7 +103,7 @@ public:
 		void Reserve(size_t bytes);
 		void* Allocate(size_t bytes);
 		void* AllocateGhost();
-		int FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint);
+		Int32 FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint);
 		virtual void Deallocate(void* p) {}
 		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;

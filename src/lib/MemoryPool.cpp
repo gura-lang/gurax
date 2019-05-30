@@ -94,9 +94,22 @@ void* MemoryPool::ChunkPUnit::AllocateGhost()
 	return PeekPointer();
 }
 
-int MemoryPool::ChunkPUnit::FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint)
+Int32 MemoryPool::ChunkPUnit::FindPUnit(const PUnit* pPUnit, const PUnit* pPUnitHint)
 {
-	return 0;
+	Int32 seqId = 0;
+	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext) {
+		if (pPool->IsWithin(pPUnit, _bytesPoolBuff)) {
+			const PUnit* pPUnitSeek =
+				(pPUnitHint <= pPUnit && pPool->IsWithin(pPUnitHint, _bytesPoolBuff))?
+				pPUnitHint : reinterpret_cast<const PUnit*>(pPool->buff);
+			for ( ; pPUnitSeek <= pPUnit; pPUnit = pPUnit->GetPUnitNext(), seqId++) {
+				if (pPUnitSeek == pPUnit) return seqId;
+			}
+			return -1;
+		}
+		seqId += pPool->nPUnits;
+	}
+	return -1;
 }
 
 String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const
