@@ -29,6 +29,17 @@ bool Module::Prepare(const char* name, char separator)
 	return pDottedSymbol && Prepare(pDottedSymbol.release());
 }
 
+Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol)
+{
+	size_t nSymbolsAll = dottedSymbol.GetLength();
+	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
+		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(dottedSymbol, nSymbols));
+		RefPtr<Module> pModule(Import(processor, *pDottedSymbol));
+		if (!pModule) return nullptr;
+	}
+	return Import(processor, dottedSymbol);
+}
+
 Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 {
 	enum class Type { None, Script, Compressed, Binary } type = Type::None;
@@ -132,12 +143,6 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 
 bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag) const
 {
-	size_t nSymbolsAll = GetDottedSymbol().GetLength();
-	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
-		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(GetDottedSymbol(), nSymbols));
-		RefPtr<Module> pModule(Module::Import(processor, *pDottedSymbol));
-		if (!pModule) return false;
-	}
 	Frame& frameCur = processor.GetFrameCur();
 	if (mixInFlag) return GetFrame().ExportTo(frameCur, false);
 	if (pSymbolList && !pSymbolList->empty()) {
@@ -159,10 +164,11 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 		}
 		return true;
 	}
+	size_t nSymbolsAll = GetDottedSymbol().GetLength();
 	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
 		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(GetDottedSymbol(), nSymbols));
 		if (frameCur.Lookup(*pDottedSymbol)) continue;
-		RefPtr<Module> pModule(Module::Import(processor, *pDottedSymbol));
+		RefPtr<Module> pModule(Import(processor, *pDottedSymbol));
 		if (!pModule) return false;
 		if (!frameCur.Assign(pModule.release())) {
 			Error::Issue(ErrorType::ImportError,

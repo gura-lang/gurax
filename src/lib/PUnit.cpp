@@ -586,7 +586,7 @@ PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
-	RefPtr<Module> pModule(Module::Import(processor, GetDottedSymbol()));
+	RefPtr<Module> pModule(Module::ImportHierarchy(processor, GetDottedSymbol()));
 	if (pModule) {
 		pModule->AssignToFrame(processor, GetSymbolList(), GetMixInFlag());
 		if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
