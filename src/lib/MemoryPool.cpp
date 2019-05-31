@@ -46,7 +46,7 @@ void MemoryPool::Deallocate(void* p)
 // MemoryPool::ChunkPUnit
 //-----------------------------------------------------------------------------
 MemoryPool::ChunkPUnit::ChunkPUnit(size_t bytesPoolBuff, size_t bytesMargin) :
-	_bytesPoolBuff(bytesPoolBuff), _bytesMargin(bytesMargin), _offsetNext(0),
+	_bytesPoolBuff(bytesPoolBuff), _bytesMargin(bytesMargin),
 	_pPoolTop(Pool::Create(_bytesPoolBuff)), _pPoolCur(_pPoolTop), _pReserved(nullptr)
 {}
 
@@ -76,12 +76,11 @@ void* MemoryPool::ChunkPUnit::DoAllocate(size_t bytes)
 {
 	void* pAllocated = PeekPointer();
 	_pPoolCur->nPUnits++;
-	_offsetNext += bytes;
-	if (_offsetNext + _bytesMargin > _bytesPoolBuff) {
+	_pPoolCur->offsetNext += bytes;
+	if (_pPoolCur->offsetNext + _bytesMargin > _bytesPoolBuff) {
 		auto pPUnitBridge = new PUnit_Bridge();
 		Pool* pPool = Pool::Create(_bytesPoolBuff);
 		_pPoolCur->pPoolNext = pPool;
-		_offsetNext = 0;
 		_pPoolCur = pPool;
 		pPUnitBridge->SetPUnitCont(reinterpret_cast<const PUnit*>(PeekPointer()));
 	}
@@ -103,7 +102,7 @@ UInt32 MemoryPool::ChunkPUnit::CalcSeqId(const PUnit* pPUnit) const
 	static UInt32 seqIdHint = 0;
 	UInt32 seqId = 0;
 	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext, seqId += pPool->nPUnits) {
-		if (!pPool->IsWithin(pPUnit, _bytesPoolBuff)) continue;
+		if (!pPool->IsWithin(pPUnit)) continue;
 		const PUnit* pPUnitSeek = reinterpret_cast<const PUnit*>(pPool->buff);
 		if (pPUnitSeek <= pPUnitHint && pPUnitHint <= pPUnit) {
 			pPUnitSeek = pPUnitHint;
@@ -134,6 +133,7 @@ String MemoryPool::ChunkPUnit::ToString(const StringStyle& ss) const
 MemoryPool::ChunkPUnit::Pool* MemoryPool::ChunkPUnit::Pool::Create(size_t bytesPoolBuff)
 {
 	Pool* pPool = reinterpret_cast<Pool*>(::malloc(sizeof(Pool) + bytesPoolBuff));
+	pPool->offsetNext = 0;
 	pPool->pPoolNext = nullptr;
 	pPool->nPUnits = 0;
 	return pPool;

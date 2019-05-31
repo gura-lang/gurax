@@ -14,6 +14,7 @@ add_executable(unittest
 	test-OAL.cpp
 	test-Parser.cpp
 	test-PathName.cpp
+	test-PUnit.cpp
 	test-Random.cpp
 	test-Referable.cpp
 	test-SizeOf.cpp

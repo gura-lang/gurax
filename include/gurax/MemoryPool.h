@@ -81,19 +81,19 @@ public:
 	class ChunkPUnit : public Chunk {
 	public:
 		struct Pool {
+			size_t offsetNext;
 			Pool* pPoolNext;
 			size_t nPUnits;
 			char buff[0];
 			static Pool* Create(size_t bytesPoolBuff);
-			bool IsWithin(const PUnit* pPUnit, size_t bytesPoolBuff) const {
+			bool IsWithin(const PUnit* pPUnit) const {
 				const char *p = reinterpret_cast<const char *>(pPUnit);
-				return buff <= p && p - buff < bytesPoolBuff;
+				return buff <= p && p - buff < offsetNext;
 			}
 		};
 	protected:
 		size_t _bytesPoolBuff;
 		size_t _bytesMargin;
-		size_t _offsetNext;
 		Pool* _pPoolTop;
 		Pool* _pPoolCur;
 		void* _pReserved;
@@ -105,7 +105,14 @@ public:
 		void* AllocateGhost();
 		UInt32 CalcSeqId(const PUnit* pPUnit) const;
 		virtual void Deallocate(void* p) {}
-		void* PeekPointer() { return _pPoolCur->buff + _offsetNext; }
+		void* PeekPointer() { return _pPoolCur->buff + _pPoolCur->offsetNext; }
+		const void* PeekPointer() const { return _pPoolCur->buff + _pPoolCur->offsetNext; }
+		const PUnit* PeekPUnitCont() const {
+			return reinterpret_cast<const PUnit*>(PeekPointer());
+		}
+		const PUnit* GetPUnitFirst() const {
+			return reinterpret_cast<const PUnit*>(_pPoolTop->buff);
+		}
 		String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	private:
 		void* DoAllocate(size_t bytes);
@@ -169,6 +176,7 @@ public:
 	void SwitchChunkPUnit(bool replFlag) {
 		_pChunkPUnit = replFlag? &_chunkPUnitREPL : &_chunkPUnitProg;
 	}
+	void SetChunkPUnit(ChunkPUnit* pChunkPUnit) { _pChunkPUnit = pChunkPUnit; }
 	ChunkPUnit& GetChunkPUnit() { return *_pChunkPUnit; }
 	ChunkFixed& GetChunkSmall() { return _chunkSmall; }
 	ChunkFixed& GetChunkMedium() { return _chunkMedium; }
