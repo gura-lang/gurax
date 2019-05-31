@@ -101,7 +101,7 @@ UInt32 MemoryPool::ChunkPUnit::CalcSeqId(const PUnit* pPUnit) const
 	static const PUnit* pPUnitHint = nullptr;
 	static UInt32 seqIdHint = 0;
 	UInt32 seqId = 0;
-	for (Pool* pPool = _pPoolTop; pPool; pPool = pPool->pPoolNext, seqId += pPool->nPUnits) {
+	for (Pool* pPool = _pPoolTop; pPool; seqId += pPool->nPUnits, pPool = pPool->pPoolNext) {
 		if (!pPool->IsWithin(pPUnit)) continue;
 		const PUnit* pPUnitSeek = reinterpret_cast<const PUnit*>(pPool->buff);
 		if (pPUnitSeek <= pPUnitHint && pPUnitHint <= pPUnit) {

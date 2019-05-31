@@ -10,7 +10,7 @@ Gurax_TesterEntry(PUnit)
 	MemoryPool::ChunkPUnit chunkPUnit(32 * 5, 64 * 2);
 	MemoryPool::Global().SetChunkPUnit(&chunkPUnit);
 	RefPtr<Expr> pExpr(new Expr_Empty());
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < 20; i++) {
 		RefPtr<PUnitFactory> pPUnitFactory(new PUnitFactory_NoOperation(pExpr.Reference()));
 		pPUnitFactory->Create(false);
 	}
@@ -18,7 +18,7 @@ Gurax_TesterEntry(PUnit)
 	const PUnit* pPUnit = chunkPUnit.GetPUnitFirst();
 	::printf("%s\n", chunkPUnit.ToString().c_str());
 	for ( ; pPUnit != pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext()) {
-		::printf("%p %s %s\n", pPUnit, pPUnit->MakeSeqIdString().c_str(), pPUnit->ToString().c_str());
+		::printf("%s %s\n", pPUnit->MakeSeqIdString().c_str(), pPUnit->ToString().c_str());
 	}
 	MemoryPool::Global().SwitchChunkPUnit(false);
 }
