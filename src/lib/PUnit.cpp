@@ -107,6 +107,7 @@ String Iterator_PUnit::ToString(const StringStyle& ss) const
 template<bool discardValueFlag>
 void PUnit_Value<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -138,13 +139,14 @@ PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Lookup<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	const Value* pValue = frame.Lookup(GetSymbol());
 	if (pValue) {
 		if (!discardValueFlag) processor.PushValue(pValue->Reference());
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
-		IssueError(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 		processor.ErrorDone();
 	}
 }
@@ -176,6 +178,7 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_AssignToSymbol<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
@@ -216,6 +219,7 @@ PUnit* PUnitFactory_AssignToSymbol::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_AssignToDeclArg<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValueAssigned(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
@@ -250,6 +254,7 @@ PUnit* PUnitFactory_AssignToDeclArg::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_AssignFunction<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
@@ -288,6 +293,7 @@ PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Cast<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetListVarFlag()));
 	if (pValueCasted) {
@@ -325,6 +331,7 @@ PUnit* PUnitFactory_Cast::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_GenIterator<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Iterator> pIterator(pValue->DoGenIterator());
 	if (pIterator) {
@@ -362,6 +369,7 @@ PUnit* PUnitFactory_GenIterator::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_GenRangeIterator<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	int num = Value_Number::GetInt(*pValue);
 	RefPtr<Iterator> pIterator(new Iterator_Range(num));
@@ -396,6 +404,7 @@ PUnit* PUnitFactory_GenRangeIterator::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_GenCounterIterator<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Iterator> pIterator(new Iterator_Counter());
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -428,6 +437,7 @@ PUnit* PUnitFactory_GenCounterIterator::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EvalIterator<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Iterator& iterator = Value_Iterator::GetIterator(processor.PeekValue(GetOffset()));
 	RefPtr<Value> pValueElem(iterator.NextValue());
 	if (pValueElem) {
@@ -465,6 +475,7 @@ PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ForEach<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	size_t offset = GetOffset() + GetDeclArgOwner().size() - 1;
 	for (DeclArg* pDeclArg : GetDeclArgOwner()) {
@@ -511,6 +522,7 @@ PUnit* PUnitFactory_ForEach::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_UnaryOp<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueResult(GetOperator()->EvalUnary(processor, *pValue));
 	if (pValueResult->IsUndefined()) {
@@ -548,6 +560,7 @@ PUnit* PUnitFactory_UnaryOp::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_BinaryOp<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueRight(processor.PopValue());
 	RefPtr<Value> pValueLeft(processor.PopValue());
 	RefPtr<Value> pValueResult(GetOperator()->EvalBinary(processor, *pValueLeft, *pValueRight));
@@ -586,6 +599,7 @@ PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Module> pModule(Module::ImportHierarchy(processor, GetDottedSymbol()));
 	if (pModule) {
 		pModule->AssignToFrame(processor, GetSymbolList(), GetMixInFlag());
@@ -623,6 +637,7 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_CreateVType<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	// VType settings
 	VType* pVType = new VType(Symbol::Empty);
 	pVType->SetAttrs(VTYPE_Object, VType::Flag::Mutable);
@@ -658,6 +673,7 @@ PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_CreateList<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
 	if (GetSizeReserve() > 0) pValueTypedOwner->Reserve(GetSizeReserve());
 	if (!discardValueFlag) processor.PushValue(new Value_List(pValueTypedOwner.release()));
@@ -691,6 +707,7 @@ PUnit* PUnitFactory_CreateList::Create(bool discardValueFlag)
 template<bool discardValueFlag, bool xlistFlag>
 void PUnit_ListElem<discardValueFlag, xlistFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueElem(processor.PopValue());
 	if (pValueElem->IsIterator()) {
 		ValueTypedOwner& valueTypedOwner =
@@ -748,6 +765,7 @@ PUnit* PUnitFactory_ListElem::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_CreateDict<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (!discardValueFlag) processor.PushValue(new Value_Dict());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -779,6 +797,7 @@ PUnit* PUnitFactory_CreateDict::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_DictElem<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueElem(processor.PopValue());
 	RefPtr<Value> pValueKey(processor.PopValue());
 	ValueDict& valueDict = Value_Dict::GetValueDict(processor.PeekValue(GetOffset()));
@@ -814,6 +833,7 @@ PUnit* PUnitFactory_DictElem::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Index<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueCar(processor.PopValue());
 	RefPtr<Index> pIndex(new Index(pValueCar.release(), GetAttr().Reference()));
 	if (GetSizeReserve() > 0) pIndex->Reserve(GetSizeReserve());
@@ -848,11 +868,11 @@ PUnit* PUnitFactory_Index::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_FeedIndex<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	Index& index = Value_Index::GetIndex(processor.PeekValue(0));
 	index.FeedValue(pValue.release());
 	if (Error::IsIssued()) {
-		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();
 	} else {
 		processor.SetPUnitNext(_GetPUnitCont());
@@ -886,11 +906,11 @@ PUnit* PUnitFactory_FeedIndex::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_IndexGet<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
 	Index& index = pValueIndex->GetIndex();
 	RefPtr<Value> pValueElems(index.IndexGet());
 	if (Error::IsIssued()) {
-		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueElems.release());
@@ -925,12 +945,12 @@ PUnit* PUnitFactory_IndexGet::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_IndexSet<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueElems(processor.PopValue());
 	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
 	Index& index = pValueIndex->GetIndex();
 	index.IndexSet(pValueElems->Reference());
 	if (Error::IsIssued()) {
-		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueElems.release());
@@ -965,10 +985,11 @@ PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_PropGet<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Value& valueTarget = processor.PeekValue(0);
 	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		IssueError(ErrorType::PropertyError,
+		Error::Issue(ErrorType::PropertyError,
 				   "value type '%s' doesn't have a property named '%s'",
 				   valueTarget.GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
@@ -1006,10 +1027,11 @@ PUnit* PUnitFactory_PropGet::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_PropSet<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
-		IssueError(ErrorType::PropertyError,
+		Error::Issue(ErrorType::PropertyError,
 				   "failed to set value to symbol '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
@@ -1047,10 +1069,11 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Member<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		IssueError(ErrorType::PropertyError,
+		Error::Issue(ErrorType::PropertyError,
 				   "value type '%s' doesn't have a property named '%s'",
 				   pValueTarget->GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
@@ -1108,6 +1131,7 @@ PUnit_Argument<discardValueFlag>::PUnit_Argument(
 template<bool discardValueFlag>
 void PUnit_Argument<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValueCar(processor.PopValue());
 	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallable();
 	if (!pDeclCallable) {
@@ -1158,6 +1182,7 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
 	if (!pArgSlot) {
@@ -1165,17 +1190,16 @@ void PUnit_BeginArgSlot<discardValueFlag>::Exec(Processor& processor) const
 			// just ignore extra arguments
 			processor.SetPUnitNext(_GetPUnitCont());
 		} else {
-			IssueError(ErrorType::ArgumentError, "too many arguments");
+			Error::Issue(ErrorType::ArgumentError, "too many arguments");
 			processor.ErrorDone();
 		}
 	} else if (!pArgSlot->IsVacant()) {
-		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
 		processor.ErrorDone();
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		Frame& frame = processor.GetFrameCur();
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 		if (Error::IsIssued()) {
-			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			processor.ErrorDone();
 			return;
 		}
@@ -1218,12 +1242,12 @@ PUnit* PUnitFactory_BeginArgSlot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EndArgSlot<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	argument.FeedValue(frame, pValue.release());
 	if (Error::IsIssued()) {
-		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();
 	} else {
 		processor.SetPUnitNext(_GetPUnitCont());
@@ -1258,6 +1282,7 @@ PUnit* PUnitFactory_EndArgSlot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_BeginArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.FindArgSlot(GetSymbol());
 	if (!pArgSlot) {
@@ -1267,18 +1292,17 @@ void PUnit_BeginArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 				new Value_ArgSlot(new ArgSlot_Dict(pValueOfDict->Reference(), GetSymbol())));
 			processor.SetPUnitNext(_GetPUnitCont());
 		} else {
-			IssueError(ErrorType::ArgumentError, "can't find the specified argument: %s", GetSymbol()->GetName());
+			Error::Issue(ErrorType::ArgumentError, "can't find the specified argument: %s", GetSymbol()->GetName());
 			processor.ErrorDone();
 			return;
 		}
 	} else if (!pArgSlot->IsVacant()) {
-		IssueError(ErrorType::ArgumentError, "duplicated assignment of argument");
+		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
 		processor.ErrorDone();
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		Frame& frame = processor.GetFrameCur();
 		pArgSlot->FeedValue(argument, frame, new Value_Expr(GetExprAssigned()->Reference()));
 		if (Error::IsIssued()) {
-			Error::GetErrorOwner().SetExpr(GetExprSrc());
 			processor.ErrorDone();
 			return;
 		}
@@ -1320,6 +1344,7 @@ PUnit* PUnitFactory_BeginArgSlotNamed::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EndArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueArgSlot(processor.PopValue());
@@ -1327,7 +1352,6 @@ void PUnit_EndArgSlotNamed<discardValueFlag>::Exec(Processor& processor) const
 	ArgSlot& argSlot = Value_ArgSlot::GetArgSlot(*pValueArgSlot);
 	argSlot.FeedValue(argument, frame, pValue.release());
 	if (Error::IsIssued()) {
-		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();
 	} else {
 		processor.SetPUnitNext(_GetPUnitCont());
@@ -1361,11 +1385,11 @@ PUnit* PUnitFactory_EndArgSlotNamed::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Call<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value_Argument> pValue(dynamic_cast<Value_Argument*>(processor.PopValue()));
 	Argument& argument = pValue->GetArgument();
 	argument.DoCall(processor);
 	if (Error::IsIssued()) {
-		Error::GetErrorOwner().SetExpr(GetExprSrc());
 		processor.ErrorDone();
 	}
 }
@@ -1397,6 +1421,7 @@ PUnit* PUnitFactory_Call::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Jump<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -1428,6 +1453,7 @@ PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_JumpIf<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		processor.SetPUnitNext(GetPUnitBranchDest());
@@ -1465,6 +1491,7 @@ PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_JumpIfNot<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		if (discardValueFlag) processor.DiscardValue();
@@ -1502,6 +1529,7 @@ PUnit* PUnitFactory_JumpIfNot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NilJumpIf<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		processor.PushValue(Value::nil());
@@ -1540,6 +1568,7 @@ PUnit* PUnitFactory_NilJumpIf::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NilJumpIfNot<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	if (pValue->GetBool()) {
 		if (discardValueFlag) processor.DiscardValue();
@@ -1578,6 +1607,7 @@ PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_KeepJumpIf<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (processor.PeekValue(0).GetBool()) {
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	} else {
@@ -1615,6 +1645,7 @@ PUnit* PUnitFactory_KeepJumpIf::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_KeepJumpIfNot<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (processor.PeekValue(0).GetBool()) {
 		processor.DiscardValue();
 		if (discardValueFlag) processor.DiscardValue();
@@ -1651,6 +1682,7 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_BeginTryBlock<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.BeginTryBlock(GetPUnitBranchDest());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -1683,6 +1715,7 @@ PUnit* PUnitFactory_BeginTryBlock::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EndTryBlock<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.EndTryBlock();
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -1716,6 +1749,7 @@ PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_JumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
 	const Error* pError = Error::GetLastError();
@@ -1756,6 +1790,7 @@ PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_JumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	const Error* pError = Error::GetLastError();
 	if (pError) {
 		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
@@ -1794,6 +1829,7 @@ PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatch<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(*pValue);
 	const Error* pError = Error::GetLastError();
@@ -1835,6 +1871,7 @@ PUnit* PUnitFactory_NilJumpIfNoCatch::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NilJumpIfNoCatchAny<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	const Error* pError = Error::GetLastError();
 	if (pError) {
 		if (!discardValueFlag) processor.PushValue(new Value_Error(pError->Reference()));
@@ -1873,6 +1910,7 @@ PUnit* PUnitFactory_NilJumpIfNoCatchAny::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_BeginSequence<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -1903,6 +1941,7 @@ PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_EndSequence<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.ExitRunLoop();
 }
 
@@ -1933,6 +1972,7 @@ PUnit* PUnitFactory_EndSequence::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_DiscardValue<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.DiscardValue();
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -1965,6 +2005,7 @@ PUnit* PUnitFactory_DiscardValue::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_RemoveValue<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.RemoveValue(GetOffset());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -1997,6 +2038,7 @@ PUnit* PUnitFactory_RemoveValue::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_RemoveValues<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.RemoveValues(GetOffset(), GetCount());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -2029,6 +2071,7 @@ PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 template<bool discardValueFlag, bool branchDestFlag>
 void PUnit_Break<discardValueFlag, branchDestFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (discardValueFlag) processor.DiscardValue();
 	if (GetPUnitMarked()) {
 		if (branchDestFlag) {
@@ -2078,6 +2121,7 @@ PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Continue<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (discardValueFlag) processor.DiscardValue();
 	if (GetPUnitOfLoop()) {
 		processor.SetPUnitNext(GetPUnitOfLoop());
@@ -2114,6 +2158,7 @@ PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Miscatch<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
 	processor.ExitRunLoop(_GetPUnitCont());
 }
@@ -2145,6 +2190,7 @@ PUnit* PUnitFactory_Miscatch::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Return<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	const PUnit* pPUnit = processor.PopPUnit();
 	// Since nullptr means the end of the processor loop, there's no need to
 	// pop frame or value from their stacks.
@@ -2184,6 +2230,7 @@ PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 template<typename T_Frame, bool discardValueFlag>
 void PUnit_PushFrame<T_Frame, discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.PushFrame<T_Frame>();
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -2220,6 +2267,7 @@ template class PUnitFactory_PushFrame<Frame_Scope>;
 template<bool discardValueFlag>
 void PUnit_PushFrameFromStack<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	RefPtr<Value> pValue(processor.PopValue());
 	processor.PushFrame(Value_Frame::GetFrame(*pValue).Reference());
 	if (discardValueFlag) processor.DiscardValue();
@@ -2253,6 +2301,7 @@ PUnit* PUnitFactory_PushFrameFromStack::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_PopFrame<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.PopFrame();
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -2285,6 +2334,7 @@ PUnit* PUnitFactory_PopFrame::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NoOperation<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -2316,6 +2366,7 @@ PUnit* PUnitFactory_NoOperation::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_Terminate<discardValueFlag>::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	if (discardValueFlag) processor.DiscardValue();
 	processor.Terminate();
 }
@@ -2345,6 +2396,7 @@ PUnit* PUnitFactory_Terminate::Create(bool discardValueFlag)
 //------------------------------------------------------------------------------
 void PUnit_REPLEnd::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -2362,6 +2414,7 @@ String PUnit_REPLEnd::ToString(const StringStyle& ss, int seqIdOffset) const
 //------------------------------------------------------------------------------
 void PUnit_Bridge::Exec(Processor& processor) const
 {
+	processor.SetExprCur(_pExprSrc.get());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

@@ -77,6 +77,7 @@ String Error::MakeMessage() const
 
 void Error::SetExpr(const Expr& expr)
 {
+	if (!_pExpr->IsType<Expr_Empty>()) return;
 	_pExpr.reset(expr.Reference());
 	_pFileName.reset(expr.GetPathNameSrcReferable()->Reference());
 	_lineNoTop = expr.GetLineNoTop();

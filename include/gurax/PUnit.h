@@ -30,7 +30,6 @@ public:
 	// Destructor
 	virtual ~PUnit() = default;
 public:
-	const Expr& GetExprSrc() const { return *_pExprSrc; }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PUnit* pPUnit) const { return this == pPUnit; }
 	bool IsEqualTo(const PUnit* pPUnit) const { return IsIdentical(pPUnit); }
@@ -50,11 +49,6 @@ public:
 	void Print(const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0) const;
 	static void Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel,
 					  const StringStyle& ss = StringStyle::Empty, int seqIdOffset = 0);
-public:
-	template<typename... Args>
-	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) const {
-		Error::IssueWith(errorType, GetExprSrc(), format, args...);
-	}
 public:
 	// Virtual functions
 	virtual bool IsBridge() const { return false; }
@@ -1251,6 +1245,8 @@ public:
 		PUnit_Branch(pExprSrc, pPUnitBranchDest? pPUnitBranchDest : this + 1),
 		_pPUnitSentinel(this + 1) {}
 public:
+	const Expr& GetExprSrc() const { return *_pExprSrc; }
+public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1331,6 +1327,7 @@ public:
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
+	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }

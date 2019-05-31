@@ -10,7 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Processor::Processor() :
 	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
-	_pPUnitNext(nullptr), _contFlag(true), _resumeFlag(true), _event(Event::None)
+	_pExprCur(Expr::Empty), _pPUnitNext(nullptr),
+	_contFlag(true), _resumeFlag(true), _event(Event::None)
 {
 	GetPUnitStack().reserve(1024);
 	GetValueStack().reserve(1024);
@@ -56,6 +57,7 @@ void Processor::PrepareExceptionHandling()
 bool Processor::DoExceptionHandling()
 {
 	if (Error::GetLastError()) {
+		if (Error::IsIssued()) Error::GetErrorOwner().SetExpr(GetExprCur());
 		std::unique_ptr<ExceptionInfo> pExceptionInfo(GetExceptionInfoStack().Pop());
 		if (pExceptionInfo) {
 			Error::ClearIssuedFlag();
