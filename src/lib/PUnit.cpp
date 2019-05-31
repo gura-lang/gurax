@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PUnit
 //------------------------------------------------------------------------------
-PUnit::PUnit(Expr* pExprSrc, SeqId seqId) : _pExprSrc(pExprSrc), _seqId(seqId)
+PUnit::PUnit(Expr* pExprSrc) : _pExprSrc(pExprSrc)
 {
 }
 
@@ -123,9 +123,9 @@ String PUnit_Value<discardValueFlag>::ToString(const StringStyle& ss, int seqIdO
 PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Value<true>(_pExprSrc.release(), _seqId, _pValue.release());
+		_pPUnitCreated = new PUnit_Value<true>(_pExprSrc.release(), _pValue.release());
 	} else {
-		_pPUnitCreated = new PUnit_Value<false>(_pExprSrc.release(), _seqId, _pValue.release());
+		_pPUnitCreated = new PUnit_Value<false>(_pExprSrc.release(), _pValue.release());
 	}
 	return _pPUnitCreated;
 }
@@ -161,9 +161,9 @@ String PUnit_Lookup<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Lookup<true>(_pExprSrc.release(), _seqId, _pSymbol);
+		_pPUnitCreated = new PUnit_Lookup<true>(_pExprSrc.release(), _pSymbol);
 	} else {
-		_pPUnitCreated = new PUnit_Lookup<false>(_pExprSrc.release(), _seqId, _pSymbol);
+		_pPUnitCreated = new PUnit_Lookup<false>(_pExprSrc.release(), _pSymbol);
 	}
 	return _pPUnitCreated;
 }
@@ -201,9 +201,9 @@ String PUnit_AssignToSymbol<discardValueFlag>::ToString(const StringStyle& ss, i
 PUnit* PUnitFactory_AssignToSymbol::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_AssignToSymbol<true>(_pExprSrc.release(), _seqId, _pSymbol);
+		_pPUnitCreated = new PUnit_AssignToSymbol<true>(_pExprSrc.release(), _pSymbol);
 	} else {
-		_pPUnitCreated = new PUnit_AssignToSymbol<false>(_pExprSrc.release(), _seqId, _pSymbol);
+		_pPUnitCreated = new PUnit_AssignToSymbol<false>(_pExprSrc.release(), _pSymbol);
 	}
 	return _pPUnitCreated;
 }
@@ -235,9 +235,9 @@ String PUnit_AssignToDeclArg<discardValueFlag>::ToString(const StringStyle& ss, 
 PUnit* PUnitFactory_AssignToDeclArg::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_AssignToDeclArg<true>(_pExprSrc.release(), _seqId, _pDeclArg.release());
+		_pPUnitCreated = new PUnit_AssignToDeclArg<true>(_pExprSrc.release(), _pDeclArg.release());
 	} else {
-		_pPUnitCreated = new PUnit_AssignToDeclArg<false>(_pExprSrc.release(), _seqId, _pDeclArg.release());
+		_pPUnitCreated = new PUnit_AssignToDeclArg<false>(_pExprSrc.release(), _pDeclArg.release());
 	}
 	return _pPUnitCreated;
 }
@@ -273,9 +273,9 @@ String PUnit_AssignFunction<discardValueFlag>::ToString(const StringStyle& ss, i
 PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_AssignFunction<true>(_pExprSrc.release(), _seqId, _pFunction.release());
+		_pPUnitCreated = new PUnit_AssignFunction<true>(_pExprSrc.release(), _pFunction.release());
 	} else {
-		_pPUnitCreated = new PUnit_AssignFunction<false>(_pExprSrc.release(), _seqId, _pFunction.release());
+		_pPUnitCreated = new PUnit_AssignFunction<false>(_pExprSrc.release(), _pFunction.release());
 	}
 	return _pPUnitCreated;
 }
@@ -310,9 +310,9 @@ String PUnit_Cast<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOf
 PUnit* PUnitFactory_Cast::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Cast<true>(_pExprSrc.release(), _seqId, _vtype, _listVarFlag);
+		_pPUnitCreated = new PUnit_Cast<true>(_pExprSrc.release(), _vtype, _listVarFlag);
 	} else {
-		_pPUnitCreated = new PUnit_Cast<false>(_pExprSrc.release(), _seqId, _vtype, _listVarFlag);
+		_pPUnitCreated = new PUnit_Cast<false>(_pExprSrc.release(), _vtype, _listVarFlag);
 	}
 	return _pPUnitCreated;
 }
@@ -347,9 +347,9 @@ String PUnit_GenIterator<discardValueFlag>::ToString(const StringStyle& ss, int 
 PUnit* PUnitFactory_GenIterator::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_GenIterator<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_GenIterator<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_GenIterator<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_GenIterator<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -381,9 +381,9 @@ String PUnit_GenRangeIterator<discardValueFlag>::ToString(const StringStyle& ss,
 PUnit* PUnitFactory_GenRangeIterator::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_GenRangeIterator<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_GenRangeIterator<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_GenRangeIterator<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_GenRangeIterator<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -413,9 +413,9 @@ String PUnit_GenCounterIterator<discardValueFlag>::ToString(const StringStyle& s
 PUnit* PUnitFactory_GenCounterIterator::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_GenCounterIterator<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_GenCounterIterator<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_GenCounterIterator<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_GenCounterIterator<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -451,9 +451,9 @@ String PUnit_EvalIterator<discardValueFlag>::ToString(const StringStyle& ss, int
 PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_EvalIterator<true>(_pExprSrc.release(), _seqId, _offset, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_EvalIterator<true>(_pExprSrc.release(), _offset, _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_EvalIterator<false>(_pExprSrc.release(), _seqId, _offset, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_EvalIterator<false>(_pExprSrc.release(), _offset, _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -495,10 +495,10 @@ PUnit* PUnitFactory_ForEach::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_ForEach<true>(
-			_pExprSrc.release(), _seqId, _offset, _pDeclArgOwner.release(), _pPUnitBranchDest);
+			_pExprSrc.release(), _offset, _pDeclArgOwner.release(), _pPUnitBranchDest);
 	} else {
 		_pPUnitCreated = new PUnit_ForEach<false>(
-			_pExprSrc.release(), _seqId, _offset, _pDeclArgOwner.release(), _pPUnitBranchDest);
+			_pExprSrc.release(), _offset, _pDeclArgOwner.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -533,9 +533,9 @@ String PUnit_UnaryOp<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 PUnit* PUnitFactory_UnaryOp::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_UnaryOp<true>(_pExprSrc.release(), _seqId, _pOperator);
+		_pPUnitCreated = new PUnit_UnaryOp<true>(_pExprSrc.release(), _pOperator);
 	} else {
-		_pPUnitCreated = new PUnit_UnaryOp<false>(_pExprSrc.release(), _seqId, _pOperator);
+		_pPUnitCreated = new PUnit_UnaryOp<false>(_pExprSrc.release(), _pOperator);
 	}
 	return _pPUnitCreated;
 }
@@ -571,9 +571,9 @@ String PUnit_BinaryOp<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_BinaryOp<true>(_pExprSrc.release(), _seqId, _pOperator);
+		_pPUnitCreated = new PUnit_BinaryOp<true>(_pExprSrc.release(), _pOperator);
 	} else {
-		_pPUnitCreated = new PUnit_BinaryOp<false>(_pExprSrc.release(), _seqId, _pOperator);
+		_pPUnitCreated = new PUnit_BinaryOp<false>(_pExprSrc.release(), _pOperator);
 	}
 	return _pPUnitCreated;
 }
@@ -608,9 +608,9 @@ String PUnit_Import<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Import<true>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+		_pPUnitCreated = new PUnit_Import<true>(_pExprSrc.release(), _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
 	} else {
-		_pPUnitCreated = new PUnit_Import<false>(_pExprSrc.release(), _seqId, _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+		_pPUnitCreated = new PUnit_Import<false>(_pExprSrc.release(), _pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
 	}
 	return _pPUnitCreated;
 }
@@ -643,9 +643,9 @@ String PUnit_CreateVType<discardValueFlag>::ToString(const StringStyle& ss, int 
 PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_CreateVType<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_CreateVType<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_CreateVType<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_CreateVType<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -676,9 +676,9 @@ String PUnit_CreateList<discardValueFlag>::ToString(const StringStyle& ss, int s
 PUnit* PUnitFactory_CreateList::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_CreateList<true>(_pExprSrc.release(), _seqId, _sizeReserve);
+		_pPUnitCreated = new PUnit_CreateList<true>(_pExprSrc.release(), _sizeReserve);
 	} else {
-		_pPUnitCreated = new PUnit_CreateList<false>(_pExprSrc.release(), _seqId, _sizeReserve);
+		_pPUnitCreated = new PUnit_CreateList<false>(_pExprSrc.release(), _sizeReserve);
 	}
 	return _pPUnitCreated;
 }
@@ -726,15 +726,15 @@ PUnit* PUnitFactory_ListElem::Create(bool discardValueFlag)
 {
 	if (_xlistFlag) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_ListElem<true, true>(_pExprSrc.release(), _seqId, _offset);
+			_pPUnitCreated = new PUnit_ListElem<true, true>(_pExprSrc.release(), _offset);
 		} else {
-			_pPUnitCreated = new PUnit_ListElem<false, true>(_pExprSrc.release(), _seqId, _offset);
+			_pPUnitCreated = new PUnit_ListElem<false, true>(_pExprSrc.release(), _offset);
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_ListElem<true, false>(_pExprSrc.release(), _seqId, _offset);
+			_pPUnitCreated = new PUnit_ListElem<true, false>(_pExprSrc.release(), _offset);
 		} else {
-			_pPUnitCreated = new PUnit_ListElem<false, false>(_pExprSrc.release(), _seqId, _offset);
+			_pPUnitCreated = new PUnit_ListElem<false, false>(_pExprSrc.release(), _offset);
 		}
 	}
 	return _pPUnitCreated;
@@ -764,9 +764,9 @@ String PUnit_CreateDict<discardValueFlag>::ToString(const StringStyle& ss, int s
 PUnit* PUnitFactory_CreateDict::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_CreateDict<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_CreateDict<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_CreateDict<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_CreateDict<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -799,9 +799,9 @@ String PUnit_DictElem<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_DictElem::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_DictElem<true>(_pExprSrc.release(), _seqId, _offset);
+		_pPUnitCreated = new PUnit_DictElem<true>(_pExprSrc.release(), _offset);
 	} else {
-		_pPUnitCreated = new PUnit_DictElem<false>(_pExprSrc.release(), _seqId, _offset);
+		_pPUnitCreated = new PUnit_DictElem<false>(_pExprSrc.release(), _offset);
 	}
 	return _pPUnitCreated;
 }
@@ -834,9 +834,9 @@ String PUnit_Index<discardValueFlag>::ToString(const StringStyle& ss, int seqIdO
 PUnit* PUnitFactory_Index::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Index<true>(_pExprSrc.release(), _seqId, _pAttr.release(), _sizeReserve);
+		_pPUnitCreated = new PUnit_Index<true>(_pExprSrc.release(), _pAttr.release(), _sizeReserve);
 	} else {
-		_pPUnitCreated = new PUnit_Index<false>(_pExprSrc.release(), _seqId, _pAttr.release(), _sizeReserve);
+		_pPUnitCreated = new PUnit_Index<false>(_pExprSrc.release(), _pAttr.release(), _sizeReserve);
 	}
 	return _pPUnitCreated;
 }
@@ -871,9 +871,9 @@ String PUnit_FeedIndex<discardValueFlag>::ToString(const StringStyle& ss, int se
 PUnit* PUnitFactory_FeedIndex::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_FeedIndex<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_FeedIndex<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_FeedIndex<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_FeedIndex<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -910,9 +910,9 @@ String PUnit_IndexGet<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_IndexGet::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_IndexGet<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_IndexGet<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_IndexGet<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_IndexGet<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -950,9 +950,9 @@ String PUnit_IndexSet<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_IndexSet<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_IndexSet<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_IndexSet<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_IndexSet<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -991,9 +991,9 @@ String PUnit_PropGet<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 PUnit* PUnitFactory_PropGet::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PropGet<true>(_pExprSrc.release(), _seqId, _pSymbol, _pAttr.release());
+		_pPUnitCreated = new PUnit_PropGet<true>(_pExprSrc.release(), _pSymbol, _pAttr.release());
 	} else {
-		_pPUnitCreated = new PUnit_PropGet<false>(_pExprSrc.release(), _seqId, _pSymbol, _pAttr.release());
+		_pPUnitCreated = new PUnit_PropGet<false>(_pExprSrc.release(), _pSymbol, _pAttr.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1031,9 +1031,9 @@ String PUnit_PropSet<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PropSet<true>(_pExprSrc.release(), _seqId, _pSymbol, _pAttr.release());
+		_pPUnitCreated = new PUnit_PropSet<true>(_pExprSrc.release(), _pSymbol, _pAttr.release());
 	} else {
-		_pPUnitCreated = new PUnit_PropSet<false>(_pExprSrc.release(), _seqId, _pSymbol, _pAttr.release());
+		_pPUnitCreated = new PUnit_PropSet<false>(_pExprSrc.release(), _pSymbol, _pAttr.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1079,9 +1079,9 @@ String PUnit_Member<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_Member::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Member<true>(_pExprSrc.release(), _seqId, _pSymbol, _pAttr.release());
+		_pPUnitCreated = new PUnit_Member<true>(_pExprSrc.release(), _pSymbol, _pAttr.release());
 	} else {
-		_pPUnitCreated = new PUnit_Member<false>(_pExprSrc.release(), _seqId, _pSymbol, _pAttr.release());
+		_pPUnitCreated = new PUnit_Member<false>(_pExprSrc.release(), _pSymbol, _pAttr.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1093,8 +1093,8 @@ PUnit* PUnitFactory_Member::Create(bool discardValueFlag)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
 PUnit_Argument<discardValueFlag>::PUnit_Argument(
-	Expr* pExprSrc, SeqId seqId, const Attribute& attr, Expr_Block* pExprOfBlock) :
-	PUnit(pExprSrc, seqId), _pAttr(new Attribute()), _flags(DeclCallable::Flag::None),
+	Expr* pExprSrc, const Attribute& attr, Expr_Block* pExprOfBlock) :
+	PUnit(pExprSrc), _pAttr(new Attribute()), _flags(DeclCallable::Flag::None),
 	_pExprOfBlock(pExprOfBlock)
 {
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
@@ -1142,10 +1142,10 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_Argument<true>(
-			_pExprSrc.release(), _seqId, *_pAttr, _pExprOfBlock.release());
+			_pExprSrc.release(), *_pAttr, _pExprOfBlock.release());
 	} else {
 		_pPUnitCreated = new PUnit_Argument<false>(
-			_pExprSrc.release(), _seqId, *_pAttr, _pExprOfBlock.release());
+			_pExprSrc.release(), *_pAttr, _pExprOfBlock.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1204,9 +1204,9 @@ String PUnit_BeginArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int
 PUnit* PUnitFactory_BeginArgSlot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_BeginArgSlot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginArgSlot<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_BeginArgSlot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginArgSlot<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1242,9 +1242,9 @@ String PUnit_EndArgSlot<discardValueFlag>::ToString(const StringStyle& ss, int s
 PUnit* PUnitFactory_EndArgSlot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_EndArgSlot<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlot<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_EndArgSlot<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlot<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1305,10 +1305,10 @@ PUnit* PUnitFactory_BeginArgSlotNamed::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
 		_pPUnitCreated = new PUnit_BeginArgSlotNamed<true>(
-			_pExprSrc.release(), _seqId, _pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
+			_pExprSrc.release(), _pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
 	} else {
 		_pPUnitCreated = new PUnit_BeginArgSlotNamed<false>(
-			_pExprSrc.release(), _seqId, _pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
+			_pExprSrc.release(), _pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1346,9 +1346,9 @@ String PUnit_EndArgSlotNamed<discardValueFlag>::ToString(const StringStyle& ss, 
 PUnit* PUnitFactory_EndArgSlotNamed::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_EndArgSlotNamed<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlotNamed<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_EndArgSlotNamed<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndArgSlotNamed<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1382,9 +1382,9 @@ String PUnit_Call<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOf
 PUnit* PUnitFactory_Call::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Call<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Call<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_Call<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Call<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1412,9 +1412,9 @@ String PUnit_Jump<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOf
 PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Jump<true>(_pExprSrc.release(), _seqId, _pPUnitCont);
+		_pPUnitCreated = new PUnit_Jump<true>(_pExprSrc.release(), _pPUnitCont);
 	} else {
-		_pPUnitCreated = new PUnit_Jump<false>(_pExprSrc.release(), _seqId, _pPUnitCont);
+		_pPUnitCreated = new PUnit_Jump<false>(_pExprSrc.release(), _pPUnitCont);
 	}
 	return _pPUnitCreated;
 }
@@ -1449,9 +1449,9 @@ String PUnit_JumpIf<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIf<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIf<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_JumpIf<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIf<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1486,9 +1486,9 @@ String PUnit_JumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int se
 PUnit* PUnitFactory_JumpIfNot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIfNot<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIfNot<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1524,9 +1524,9 @@ String PUnit_NilJumpIf<discardValueFlag>::ToString(const StringStyle& ss, int se
 PUnit* PUnitFactory_NilJumpIf::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NilJumpIf<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIf<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_NilJumpIf<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIf<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1562,9 +1562,9 @@ String PUnit_NilJumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, int
 PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NilJumpIfNot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIfNot<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_NilJumpIfNot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIfNot<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1599,9 +1599,9 @@ String PUnit_KeepJumpIf<discardValueFlag>::ToString(const StringStyle& ss, int s
 PUnit* PUnitFactory_KeepJumpIf::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_KeepJumpIf<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_KeepJumpIf<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_KeepJumpIf<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_KeepJumpIf<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1636,9 +1636,9 @@ String PUnit_KeepJumpIfNot<discardValueFlag>::ToString(const StringStyle& ss, in
 PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_KeepJumpIfNot<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_KeepJumpIfNot<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_KeepJumpIfNot<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_KeepJumpIfNot<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1668,9 +1668,9 @@ String PUnit_BeginTryBlock<discardValueFlag>::ToString(const StringStyle& ss, in
 PUnit* PUnitFactory_BeginTryBlock::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_BeginTryBlock<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginTryBlock<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_BeginTryBlock<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_BeginTryBlock<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1700,9 +1700,9 @@ String PUnit_EndTryBlock<discardValueFlag>::ToString(const StringStyle& ss, int 
 PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_EndTryBlock<true>(_pExprSrc.release(), _seqId, _pPUnitCont);
+		_pPUnitCreated = new PUnit_EndTryBlock<true>(_pExprSrc.release(), _pPUnitCont);
 	} else {
-		_pPUnitCreated = new PUnit_EndTryBlock<false>(_pExprSrc.release(), _seqId, _pPUnitCont);
+		_pPUnitCreated = new PUnit_EndTryBlock<false>(_pExprSrc.release(), _pPUnitCont);
 	}
 	return _pPUnitCreated;
 }
@@ -1740,9 +1740,9 @@ String PUnit_JumpIfNoCatch<discardValueFlag>::ToString(const StringStyle& ss, in
 PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNoCatch<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIfNoCatch<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNoCatch<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIfNoCatch<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1778,9 +1778,9 @@ String PUnit_JumpIfNoCatchAny<discardValueFlag>::ToString(const StringStyle& ss,
 PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_JumpIfNoCatchAny<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1819,9 +1819,9 @@ String PUnit_NilJumpIfNoCatch<discardValueFlag>::ToString(const StringStyle& ss,
 PUnit* PUnitFactory_NilJumpIfNoCatch::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NilJumpIfNoCatch<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatch<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_NilJumpIfNoCatch<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatch<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1858,9 +1858,9 @@ String PUnit_NilJumpIfNoCatchAny<discardValueFlag>::ToString(const StringStyle& 
 PUnit* PUnitFactory_NilJumpIfNoCatchAny::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<true>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<true>(_pExprSrc.release(), _pPUnitBranchDest);
 	} else {
-		_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<false>(_pExprSrc.release(), _seqId, _pPUnitBranchDest);
+		_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<false>(_pExprSrc.release(), _pPUnitBranchDest);
 	}
 	return _pPUnitCreated;
 }
@@ -1889,9 +1889,9 @@ String PUnit_BeginSequence<discardValueFlag>::ToString(const StringStyle& ss, in
 PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_BeginSequence<true>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
+		_pPUnitCreated = new PUnit_BeginSequence<true>(_pExprSrc.release(), _pPUnitSentinel);
 	} else {
-		_pPUnitCreated = new PUnit_BeginSequence<false>(_pExprSrc.release(), _seqId, _pPUnitSentinel);
+		_pPUnitCreated = new PUnit_BeginSequence<false>(_pExprSrc.release(), _pPUnitSentinel);
 	}
 	return _pPUnitCreated;
 }
@@ -1918,9 +1918,9 @@ String PUnit_EndSequence<discardValueFlag>::ToString(const StringStyle& ss, int 
 PUnit* PUnitFactory_EndSequence::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_EndSequence<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndSequence<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_EndSequence<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_EndSequence<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1950,9 +1950,9 @@ String PUnit_DiscardValue<discardValueFlag>::ToString(const StringStyle& ss, int
 PUnit* PUnitFactory_DiscardValue::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_DiscardValue<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_DiscardValue<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_DiscardValue<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_DiscardValue<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -1982,9 +1982,9 @@ String PUnit_RemoveValue<discardValueFlag>::ToString(const StringStyle& ss, int 
 PUnit* PUnitFactory_RemoveValue::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_RemoveValue<true>(_pExprSrc.release(), _seqId, _offset);
+		_pPUnitCreated = new PUnit_RemoveValue<true>(_pExprSrc.release(), _offset);
 	} else {
-		_pPUnitCreated = new PUnit_RemoveValue<false>(_pExprSrc.release(), _seqId, _offset);
+		_pPUnitCreated = new PUnit_RemoveValue<false>(_pExprSrc.release(), _offset);
 	}
 	return _pPUnitCreated;
 }
@@ -2014,9 +2014,9 @@ String PUnit_RemoveValues<discardValueFlag>::ToString(const StringStyle& ss, int
 PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_RemoveValues<true>(_pExprSrc.release(), _seqId, _offset, _cnt);
+		_pPUnitCreated = new PUnit_RemoveValues<true>(_pExprSrc.release(), _offset, _cnt);
 	} else {
-		_pPUnitCreated = new PUnit_RemoveValues<false>(_pExprSrc.release(), _seqId, _offset, _cnt);
+		_pPUnitCreated = new PUnit_RemoveValues<false>(_pExprSrc.release(), _offset, _cnt);
 	}
 	return _pPUnitCreated;
 }
@@ -2056,15 +2056,15 @@ PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 {
 	if (_branchDestFlag) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Break<true, true>(_pExprSrc.release(), _seqId, _pPUnitMarked);
+			_pPUnitCreated = new PUnit_Break<true, true>(_pExprSrc.release(), _pPUnitMarked);
 		} else {
-			_pPUnitCreated = new PUnit_Break<false, true>(_pExprSrc.release(), _seqId, _pPUnitMarked);
+			_pPUnitCreated = new PUnit_Break<false, true>(_pExprSrc.release(), _pPUnitMarked);
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Break<true, false>(_pExprSrc.release(), _seqId, _pPUnitMarked);
+			_pPUnitCreated = new PUnit_Break<true, false>(_pExprSrc.release(), _pPUnitMarked);
 		} else {
-			_pPUnitCreated = new PUnit_Break<false, false>(_pExprSrc.release(), _seqId, _pPUnitMarked);
+			_pPUnitCreated = new PUnit_Break<false, false>(_pExprSrc.release(), _pPUnitMarked);
 		}
 	}
 	return _pPUnitCreated;
@@ -2099,9 +2099,9 @@ String PUnit_Continue<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _seqId, _pPUnitOfLoop);
+		_pPUnitCreated = new PUnit_Continue<true>(_pExprSrc.release(), _pPUnitOfLoop);
 	} else {
-		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _seqId, _pPUnitOfLoop);
+		_pPUnitCreated = new PUnit_Continue<false>(_pExprSrc.release(), _pPUnitOfLoop);
 	}
 	return _pPUnitCreated;
 }
@@ -2130,9 +2130,9 @@ String PUnit_Miscatch<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_Miscatch::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Miscatch<true>(_pExprSrc.release(), _seqId, _pValue.release());
+		_pPUnitCreated = new PUnit_Miscatch<true>(_pExprSrc.release(), _pValue.release());
 	} else {
-		_pPUnitCreated = new PUnit_Miscatch<false>(_pExprSrc.release(), _seqId, _pValue.release());
+		_pPUnitCreated = new PUnit_Miscatch<false>(_pExprSrc.release(), _pValue.release());
 	}
 	return _pPUnitCreated;
 }
@@ -2169,9 +2169,9 @@ String PUnit_Return<discardValueFlag>::ToString(const StringStyle& ss, int seqId
 PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Return<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Return<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_Return<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Return<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -2202,9 +2202,9 @@ template<typename T_Frame>
 PUnit* PUnitFactory_PushFrame<T_Frame>::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PushFrame<T_Frame, true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PushFrame<T_Frame, true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_PushFrame<T_Frame, false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PushFrame<T_Frame, false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -2238,9 +2238,9 @@ String PUnit_PushFrameFromStack<discardValueFlag>::ToString(const StringStyle& s
 PUnit* PUnitFactory_PushFrameFromStack::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PushFrameFromStack<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PushFrameFromStack<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_PushFrameFromStack<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PushFrameFromStack<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -2270,9 +2270,9 @@ String PUnit_PopFrame<discardValueFlag>::ToString(const StringStyle& ss, int seq
 PUnit* PUnitFactory_PopFrame::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_PopFrame<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PopFrame<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_PopFrame<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_PopFrame<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -2301,9 +2301,9 @@ String PUnit_NoOperation<discardValueFlag>::ToString(const StringStyle& ss, int 
 PUnit* PUnitFactory_NoOperation::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_NoOperation<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_NoOperation<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_NoOperation<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_NoOperation<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }
@@ -2332,9 +2332,9 @@ String PUnit_Terminate<discardValueFlag>::ToString(const StringStyle& ss, int se
 PUnit* PUnitFactory_Terminate::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_Terminate<true>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Terminate<true>(_pExprSrc.release());
 	} else {
-		_pPUnitCreated = new PUnit_Terminate<false>(_pExprSrc.release(), _seqId);
+		_pPUnitCreated = new PUnit_Terminate<false>(_pExprSrc.release());
 	}
 	return _pPUnitCreated;
 }

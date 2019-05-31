@@ -1,12 +1,12 @@
 [Value]
 foo1:Number = 1
 foo2:Number = 2
-foo3:Nil = nil
+foo3:Nil = <Nil>
 foo4:Bool = true
 foo5:Bool = false
 foo6:String = '6'
 foo7:Number = 7
-foo8:Undefined = undefined
+foo8:Undefined = <Undefined>
 foo9:Number = 0
 fooA:String = ''
 Bool         1 1 0 0

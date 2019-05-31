@@ -53,8 +53,6 @@ private:
 	PUnitStack _punitStack;
 	RefPtr<PUnitFactory> _pPUnitFactory;
 	RepeaterInfoOwner _repeaterInfoStack;
-private:
-	static PUnit::SeqId _seqIdCur;
 public:
 	// Constructor
 	Composer(bool replFlag = false);
@@ -67,7 +65,6 @@ public:
 	// Destructor
 	virtual ~Composer() = default;
 public:
-	PUnit::SeqId NextSeqId() { return _seqIdCur++; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
 	PUnit* PeekPUnitCont() const;
@@ -160,7 +157,7 @@ private:
 template<typename T_Frame>
 void Composer::Add_PushFrame(const Expr& exprSrc)
 {
-	SetFactory(new PUnitFactory_PushFrame<T_Frame>(exprSrc.Reference(), NextSeqId()));
+	SetFactory(new PUnitFactory_PushFrame<T_Frame>(exprSrc.Reference()));
 }
 
 }
