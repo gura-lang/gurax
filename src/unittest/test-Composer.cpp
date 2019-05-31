@@ -46,12 +46,14 @@ Gurax_TesterEntry(Composer)
 		}
 		Composer composer;
 		pExprOfRoot->Compose(composer);
+		composer.Flush();
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			Error::Clear();
 			return;
 		}
-		composer.PrintPUnit();
+		//composer.PrintPUnit();
+		PUnit::Print(pExprOfRoot->GetPUnitFirst(), composer.PeekPUnitCont());
 	};
 	for (size_t i = 0; i < ArraySizeOf(infoTbl); i++) TestFunc(infoTbl[i]);
 }

@@ -1,6 +1,5 @@
 #!/bin/bash
 cases=
-cases="$cases Composer"
 cases="$cases DateTime"
 cases="$cases DeclCallable"
 cases="$cases Formatter"

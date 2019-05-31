@@ -97,6 +97,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	if (Error::IsIssued()) return nullptr;
 	Composer composer;
 	pExprOfRoot->Compose(composer);
+	composer.Flush();
 	if (Error::IsIssued()) return nullptr;
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
 	pModule->SetPathName(pathName);
