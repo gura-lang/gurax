@@ -158,13 +158,14 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Value
 //------------------------------------------------------------------------------
-template<bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_Value : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Value> _pValue;
+	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
 	PUnit_Value(Value* pValue) : _pValue(pValue) {}
@@ -188,7 +189,9 @@ private:
 	RefPtr<Value> _pValue;
 public:
 	PUnitFactory_Value(Expr* pExprSrc, Value* pValue) : PUnitFactory(pExprSrc), _pValue(pValue) {}
-	virtual size_t GetPUnitSize() const override { return sizeof(PUnit_Value<false>); }
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_Value<0, false>) : sizeof(PUnit_Value<0, false>);
+	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
