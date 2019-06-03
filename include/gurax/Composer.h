@@ -93,10 +93,8 @@ public:
 	void Add_GenIterator(const Expr& exprSrc);
 	void Add_GenRangeIterator(const Expr& exprSrc);
 	void Add_GenCounterIterator(const Expr& exprSrc);
-	void Add_EvalIterator(const Expr& exprSrc, size_t offset, const PUnit* pPUnitBranchDest = nullptr);
-
-	void Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner,
-					   const PUnit* pPUnitBranchDest = nullptr);
+	void Add_EvalIterator(const Expr& exprSrc, size_t offset);
+	void Add_ForEach(const Expr& exprSrc, size_t offset, DeclArgOwner* pDeclArgOwner);
 	void Add_UnaryOp(const Expr& exprSrc, const Operator* pOperator);
 	void Add_BinaryOp(const Expr& exprSrc, const Operator* pOperator);
 	void Add_Import(const Expr& exprSrc, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag);
@@ -113,27 +111,26 @@ public:
 	void Add_PropSet(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
 	void Add_Member(const Expr& exprSrc, const Symbol* pSymbol, Attribute* pAttr);
 	void Add_Argument(const Expr& exprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock);
-	void Add_BeginArgSlot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_BeginArgSlot(const Expr& exprSrc);
 	void Add_EndArgSlot(const Expr& exprSrc);
-	void Add_BeginArgSlotNamed(
-		const Expr& exprSrc, const Symbol* pSymbol,
-		Expr* pExprAssigned, const PUnit* pPUnitBranchDest = nullptr);
+	void Add_BeginArgSlotNamed(const Expr& exprSrc, const Symbol* pSymbol, Expr* pExprAssigned);
 	void Add_EndArgSlotNamed(const Expr& exprSrc);
 	void Add_Call(const Expr& exprSrc);
-	void Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
-	void Add_JumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_JumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_NilJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_NilJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_KeepJumpIf(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_KeepJumpIfNot(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_BeginTryBlock(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_EndTryBlock(const Expr& exprSrc, const PUnit* pPUnitCont = nullptr);
-	void Add_JumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_JumpIfNoCatchAny(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_NilJumpIfNoCatch(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_NilJumpIfNoCatchAny(const Expr& exprSrc, const PUnit* pPUnitBranchDest = nullptr);
-	void Add_BeginSequence(const Expr& exprSrc, const PUnit* pPUnitSentinel = nullptr);
+	void Add_Jump(const Expr& exprSrc);
+	void Add_Jump(const Expr& exprSrc, const PUnit* pPUnitCont);
+	void Add_JumpIf(const Expr& exprSrc);
+	void Add_JumpIfNot(const Expr& exprSrc);
+	void Add_NilJumpIf(const Expr& exprSrc);
+	void Add_NilJumpIfNot(const Expr& exprSrc);
+	void Add_KeepJumpIf(const Expr& exprSrc);
+	void Add_KeepJumpIfNot(const Expr& exprSrc);
+	void Add_BeginTryBlock(const Expr& exprSrc);
+	void Add_EndTryBlock(const Expr& exprSrc);
+	void Add_JumpIfNoCatch(const Expr& exprSrc);
+	void Add_JumpIfNoCatchAny(const Expr& exprSrc);
+	void Add_NilJumpIfNoCatch(const Expr& exprSrc);
+	void Add_NilJumpIfNoCatchAny(const Expr& exprSrc);
+	void Add_BeginSequence(const Expr& exprSrc);
 	void Add_EndSequence(const Expr& exprSrc);
 	void Add_DiscardValue(const Expr& exprSrc);
 	void Add_RemoveValue(const Expr& exprSrc, size_t offset);
