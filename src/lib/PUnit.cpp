@@ -125,11 +125,10 @@ PUnit* PUnitFactory_Value::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Value<1, true>(_pValue.release());
+			_pPUnitCreated = new PUnit_Value<1, true>(_pValue.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Value<1, false>(_pValue.release());
+			_pPUnitCreated = new PUnit_Value<1, false>(_pValue.release(), _pExprSrc.Reference());
 		}
-		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_Value<0, true>(_pValue.release());
@@ -173,9 +172,9 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Lookup<1, true>(_pSymbol);
+			_pPUnitCreated = new PUnit_Lookup<1, true>(_pSymbol, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Lookup<1, false>(_pSymbol);
+			_pPUnitCreated = new PUnit_Lookup<1, false>(_pSymbol, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -223,9 +222,9 @@ PUnit* PUnitFactory_AssignToSymbol::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignToSymbol<1, true>(_pSymbol);
+			_pPUnitCreated = new PUnit_AssignToSymbol<1, true>(_pSymbol, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignToSymbol<1, false>(_pSymbol);
+			_pPUnitCreated = new PUnit_AssignToSymbol<1, false>(_pSymbol, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -267,9 +266,9 @@ PUnit* PUnitFactory_AssignToDeclArg::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignToDeclArg<1, true>(_pDeclArg.release());
+			_pPUnitCreated = new PUnit_AssignToDeclArg<1, true>(_pDeclArg.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignToDeclArg<1, false>(_pDeclArg.release());
+			_pPUnitCreated = new PUnit_AssignToDeclArg<1, false>(_pDeclArg.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -315,9 +314,9 @@ PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignFunction<1, true>(_pFunction.release());
+			_pPUnitCreated = new PUnit_AssignFunction<1, true>(_pFunction.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignFunction<1, false>(_pFunction.release());
+			_pPUnitCreated = new PUnit_AssignFunction<1, false>(_pFunction.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -362,9 +361,9 @@ PUnit* PUnitFactory_Cast::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Cast<1, true>(_vtype, _listVarFlag);
+			_pPUnitCreated = new PUnit_Cast<1, true>(_vtype, _listVarFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Cast<1, false>(_vtype, _listVarFlag);
+			_pPUnitCreated = new PUnit_Cast<1, false>(_vtype, _listVarFlag, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -409,9 +408,9 @@ PUnit* PUnitFactory_GenIterator::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenIterator<1, true>();
+			_pPUnitCreated = new PUnit_GenIterator<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_GenIterator<1, false>();
+			_pPUnitCreated = new PUnit_GenIterator<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -453,9 +452,9 @@ PUnit* PUnitFactory_GenRangeIterator::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenRangeIterator<1, true>();
+			_pPUnitCreated = new PUnit_GenRangeIterator<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_GenRangeIterator<1, false>();
+			_pPUnitCreated = new PUnit_GenRangeIterator<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -495,9 +494,9 @@ PUnit* PUnitFactory_GenCounterIterator::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenCounterIterator<1, true>();
+			_pPUnitCreated = new PUnit_GenCounterIterator<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_GenCounterIterator<1, false>();
+			_pPUnitCreated = new PUnit_GenCounterIterator<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -543,9 +542,9 @@ PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EvalIterator<1, true>(_offset, _pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_EvalIterator<1, true>(_offset, _pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_EvalIterator<1, false>(_offset, _pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_EvalIterator<1, false>(_offset, _pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -597,10 +596,10 @@ PUnit* PUnitFactory_ForEach::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_ForEach<1, true>(
-				_offset, _pDeclArgOwner.release(), _pPUnitBranchDest);
+				_offset, _pDeclArgOwner.release(), _pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
 			_pPUnitCreated = new PUnit_ForEach<1, false>(
-				_offset, _pDeclArgOwner.release(), _pPUnitBranchDest);
+				_offset, _pDeclArgOwner.release(), _pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -647,9 +646,9 @@ PUnit* PUnitFactory_UnaryOp::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_UnaryOp<1, true>(_pOperator);
+			_pPUnitCreated = new PUnit_UnaryOp<1, true>(_pOperator, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_UnaryOp<1, false>(_pOperator);
+			_pPUnitCreated = new PUnit_UnaryOp<1, false>(_pOperator, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -695,9 +694,9 @@ PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_BinaryOp<1, true>(_pOperator);
+			_pPUnitCreated = new PUnit_BinaryOp<1, true>(_pOperator, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_BinaryOp<1, false>(_pOperator);
+			_pPUnitCreated = new PUnit_BinaryOp<1, false>(_pOperator, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -742,9 +741,9 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Import<1, true>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+			_pPUnitCreated = new PUnit_Import<1, true>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Import<1, false>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+			_pPUnitCreated = new PUnit_Import<1, false>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -787,9 +786,9 @@ PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_CreateVType<1, true>();
+			_pPUnitCreated = new PUnit_CreateVType<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_CreateVType<1, false>();
+			_pPUnitCreated = new PUnit_CreateVType<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -830,9 +829,9 @@ PUnit* PUnitFactory_CreateList::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_CreateList<1, true>(_sizeReserve);
+			_pPUnitCreated = new PUnit_CreateList<1, true>(_sizeReserve, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_CreateList<1, false>(_sizeReserve);
+			_pPUnitCreated = new PUnit_CreateList<1, false>(_sizeReserve, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -890,15 +889,15 @@ PUnit* PUnitFactory_ListElem::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (_xlistFlag) {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_ListElem<1, true, true>(_offset);
+				_pPUnitCreated = new PUnit_ListElem<1, true, true>(_offset, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_ListElem<1, false, true>(_offset);
+				_pPUnitCreated = new PUnit_ListElem<1, false, true>(_offset, _pExprSrc.Reference());
 			}
 		} else {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_ListElem<1, true, false>(_offset);
+				_pPUnitCreated = new PUnit_ListElem<1, true, false>(_offset, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_ListElem<1, false, false>(_offset);
+				_pPUnitCreated = new PUnit_ListElem<1, false, false>(_offset, _pExprSrc.Reference());
 			}
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
@@ -946,9 +945,9 @@ PUnit* PUnitFactory_CreateDict::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_CreateDict<1, true>();
+			_pPUnitCreated = new PUnit_CreateDict<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_CreateDict<1, false>();
+			_pPUnitCreated = new PUnit_CreateDict<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -991,9 +990,9 @@ PUnit* PUnitFactory_DictElem::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_DictElem<1, true>(_offset);
+			_pPUnitCreated = new PUnit_DictElem<1, true>(_offset, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_DictElem<1, false>(_offset);
+			_pPUnitCreated = new PUnit_DictElem<1, false>(_offset, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1036,9 +1035,9 @@ PUnit* PUnitFactory_Index::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Index<1, true>(_pAttr.release(), _sizeReserve);
+			_pPUnitCreated = new PUnit_Index<1, true>(_pAttr.release(), _sizeReserve, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Index<1, false>(_pAttr.release(), _sizeReserve);
+			_pPUnitCreated = new PUnit_Index<1, false>(_pAttr.release(), _sizeReserve, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1082,9 +1081,9 @@ PUnit* PUnitFactory_FeedIndex::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_FeedIndex<1, true>();
+			_pPUnitCreated = new PUnit_FeedIndex<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_FeedIndex<1, false>();
+			_pPUnitCreated = new PUnit_FeedIndex<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1130,9 +1129,9 @@ PUnit* PUnitFactory_IndexGet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_IndexGet<1, true>();
+			_pPUnitCreated = new PUnit_IndexGet<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_IndexGet<1, false>();
+			_pPUnitCreated = new PUnit_IndexGet<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1179,9 +1178,9 @@ PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_IndexSet<1, true>();
+			_pPUnitCreated = new PUnit_IndexSet<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_IndexSet<1, false>();
+			_pPUnitCreated = new PUnit_IndexSet<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1230,9 +1229,9 @@ PUnit* PUnitFactory_PropGet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropGet<1, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_PropGet<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PropGet<1, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_PropGet<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1280,9 +1279,9 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropSet<1, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_PropSet<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PropSet<1, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_PropSet<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1338,9 +1337,9 @@ PUnit* PUnitFactory_Member::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member<1, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_Member<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Member<1, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_Member<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1408,9 +1407,9 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Argument<1, true>(*_pAttr, _pExprOfBlock.release());
+			_pPUnitCreated = new PUnit_Argument<1, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Argument<1, false>(*_pAttr, _pExprOfBlock.release());
+			_pPUnitCreated = new PUnit_Argument<1, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1478,9 +1477,9 @@ PUnit* PUnitFactory_BeginArgSlot::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_BeginArgSlot<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_BeginArgSlot<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_BeginArgSlot<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_BeginArgSlot<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1525,9 +1524,9 @@ PUnit* PUnitFactory_EndArgSlot::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EndArgSlot<1, true>();
+			_pPUnitCreated = new PUnit_EndArgSlot<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_EndArgSlot<1, false>();
+			_pPUnitCreated = new PUnit_EndArgSlot<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1597,10 +1596,10 @@ PUnit* PUnitFactory_BeginArgSlotNamed::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_BeginArgSlotNamed<1, true>(
-				_pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
+				_pSymbol, _pExprAssigned.release(), _pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
 			_pPUnitCreated = new PUnit_BeginArgSlotNamed<1, false>(
-				_pSymbol, _pExprAssigned.release(), _pPUnitBranchDest);
+				_pSymbol, _pExprAssigned.release(), _pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1649,9 +1648,9 @@ PUnit* PUnitFactory_EndArgSlotNamed::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EndArgSlotNamed<1, true>();
+			_pPUnitCreated = new PUnit_EndArgSlotNamed<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_EndArgSlotNamed<1, false>();
+			_pPUnitCreated = new PUnit_EndArgSlotNamed<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1694,9 +1693,9 @@ PUnit* PUnitFactory_Call::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Call<1, true>();
+			_pPUnitCreated = new PUnit_Call<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Call<1, false>();
+			_pPUnitCreated = new PUnit_Call<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1734,9 +1733,9 @@ PUnit* PUnitFactory_Jump::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Jump<1, true>(_pPUnitCont);
+			_pPUnitCreated = new PUnit_Jump<1, true>(_pPUnitCont, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Jump<1, false>(_pPUnitCont);
+			_pPUnitCreated = new PUnit_Jump<1, false>(_pPUnitCont, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1781,9 +1780,9 @@ PUnit* PUnitFactory_JumpIf::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_JumpIf<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIf<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_JumpIf<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIf<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1828,9 +1827,9 @@ PUnit* PUnitFactory_JumpIfNot::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_JumpIfNot<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIfNot<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_JumpIfNot<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIfNot<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1876,9 +1875,9 @@ PUnit* PUnitFactory_NilJumpIf::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_NilJumpIf<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIf<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_NilJumpIf<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIf<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1924,9 +1923,9 @@ PUnit* PUnitFactory_NilJumpIfNot::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_NilJumpIfNot<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIfNot<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_NilJumpIfNot<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIfNot<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -1971,9 +1970,9 @@ PUnit* PUnitFactory_KeepJumpIf::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_KeepJumpIf<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_KeepJumpIf<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_KeepJumpIf<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_KeepJumpIf<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2018,9 +2017,9 @@ PUnit* PUnitFactory_KeepJumpIfNot::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_KeepJumpIfNot<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_KeepJumpIfNot<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_KeepJumpIfNot<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_KeepJumpIfNot<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2060,9 +2059,9 @@ PUnit* PUnitFactory_BeginTryBlock::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_BeginTryBlock<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_BeginTryBlock<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_BeginTryBlock<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_BeginTryBlock<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2102,9 +2101,9 @@ PUnit* PUnitFactory_EndTryBlock::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EndTryBlock<1, true>(_pPUnitCont);
+			_pPUnitCreated = new PUnit_EndTryBlock<1, true>(_pPUnitCont, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_EndTryBlock<1, false>(_pPUnitCont);
+			_pPUnitCreated = new PUnit_EndTryBlock<1, false>(_pPUnitCont, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2152,9 +2151,9 @@ PUnit* PUnitFactory_JumpIfNoCatch::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_JumpIfNoCatch<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_JumpIfNoCatch<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIfNoCatch<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2200,9 +2199,9 @@ PUnit* PUnitFactory_JumpIfNoCatchAny::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_JumpIfNoCatchAny<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2251,9 +2250,9 @@ PUnit* PUnitFactory_NilJumpIfNoCatch::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_NilJumpIfNoCatch<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIfNoCatch<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_NilJumpIfNoCatch<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIfNoCatch<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2300,9 +2299,9 @@ PUnit* PUnitFactory_NilJumpIfNoCatchAny::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<1, true>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<1, true>(_pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<1, false>(_pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_NilJumpIfNoCatchAny<1, false>(_pPUnitBranchDest, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2341,9 +2340,9 @@ PUnit* PUnitFactory_BeginSequence::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_BeginSequence<1, true>(_pPUnitSentinel);
+			_pPUnitCreated = new PUnit_BeginSequence<1, true>(_pPUnitSentinel, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_BeginSequence<1, false>(_pPUnitSentinel);
+			_pPUnitCreated = new PUnit_BeginSequence<1, false>(_pPUnitSentinel, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2380,9 +2379,9 @@ PUnit* PUnitFactory_EndSequence::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EndSequence<1, true>();
+			_pPUnitCreated = new PUnit_EndSequence<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_EndSequence<1, false>();
+			_pPUnitCreated = new PUnit_EndSequence<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2422,9 +2421,9 @@ PUnit* PUnitFactory_DiscardValue::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_DiscardValue<1, true>();
+			_pPUnitCreated = new PUnit_DiscardValue<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_DiscardValue<1, false>();
+			_pPUnitCreated = new PUnit_DiscardValue<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2464,9 +2463,9 @@ PUnit* PUnitFactory_RemoveValue::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_RemoveValue<1, true>(_offset);
+			_pPUnitCreated = new PUnit_RemoveValue<1, true>(_offset, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_RemoveValue<1, false>(_offset);
+			_pPUnitCreated = new PUnit_RemoveValue<1, false>(_offset, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2506,9 +2505,9 @@ PUnit* PUnitFactory_RemoveValues::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_RemoveValues<1, true>(_offset, _cnt);
+			_pPUnitCreated = new PUnit_RemoveValues<1, true>(_offset, _cnt, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_RemoveValues<1, false>(_offset, _cnt);
+			_pPUnitCreated = new PUnit_RemoveValues<1, false>(_offset, _cnt, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2558,15 +2557,15 @@ PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (_branchDestFlag) {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Break<1, true, true>(_pPUnitMarked);
+				_pPUnitCreated = new PUnit_Break<1, true, true>(_pPUnitMarked, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_Break<1, false, true>(_pPUnitMarked);
+				_pPUnitCreated = new PUnit_Break<1, false, true>(_pPUnitMarked, _pExprSrc.Reference());
 			}
 		} else {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Break<1, true, false>(_pPUnitMarked);
+				_pPUnitCreated = new PUnit_Break<1, true, false>(_pPUnitMarked, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_Break<1, false, false>(_pPUnitMarked);
+				_pPUnitCreated = new PUnit_Break<1, false, false>(_pPUnitMarked, _pExprSrc.Reference());
 			}
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
@@ -2619,9 +2618,9 @@ PUnit* PUnitFactory_Continue::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Continue<1, true>(_pPUnitOfLoop);
+			_pPUnitCreated = new PUnit_Continue<1, true>(_pPUnitOfLoop, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Continue<1, false>(_pPUnitOfLoop);
+			_pPUnitCreated = new PUnit_Continue<1, false>(_pPUnitOfLoop, _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2660,9 +2659,9 @@ PUnit* PUnitFactory_Miscatch::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Miscatch<1, true>(_pValue.release());
+			_pPUnitCreated = new PUnit_Miscatch<1, true>(_pValue.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Miscatch<1, false>(_pValue.release());
+			_pPUnitCreated = new PUnit_Miscatch<1, false>(_pValue.release(), _pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2709,9 +2708,9 @@ PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Return<1, true>();
+			_pPUnitCreated = new PUnit_Return<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Return<1, false>();
+			_pPUnitCreated = new PUnit_Return<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2752,9 +2751,9 @@ PUnit* PUnitFactory_PushFrame<T_Frame>::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PushFrame<1, T_Frame, true>();
+			_pPUnitCreated = new PUnit_PushFrame<1, T_Frame, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PushFrame<1, T_Frame, false>();
+			_pPUnitCreated = new PUnit_PushFrame<1, T_Frame, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2798,9 +2797,9 @@ PUnit* PUnitFactory_PushFrameFromStack::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PushFrameFromStack<1, true>();
+			_pPUnitCreated = new PUnit_PushFrameFromStack<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PushFrameFromStack<1, false>();
+			_pPUnitCreated = new PUnit_PushFrameFromStack<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2840,9 +2839,9 @@ PUnit* PUnitFactory_PopFrame::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PopFrame<1, true>();
+			_pPUnitCreated = new PUnit_PopFrame<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PopFrame<1, false>();
+			_pPUnitCreated = new PUnit_PopFrame<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {
@@ -2881,9 +2880,9 @@ PUnit* PUnitFactory_NoOperation::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_NoOperation<1, true>();
+			_pPUnitCreated = new PUnit_NoOperation<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_NoOperation<1, false>();
+			_pPUnitCreated = new PUnit_NoOperation<1, false>(_pExprSrc.Reference());
 		}
 		_pPUnitCreated->SetExprSrc(_pExprSrc.Reference());
 	} else {

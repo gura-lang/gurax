@@ -169,6 +169,7 @@ private:
 public:
 	// Constructor
 	PUnit_Value(Value* pValue) : _pValue(pValue) {}
+	PUnit_Value(Value* pValue, Expr* pExpr) : _pValue(pValue) { _ppExprSrc[0] = pExpr; }
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
@@ -209,6 +210,7 @@ private:
 public:
 	// Constructor
 	PUnit_Lookup(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PUnit_Lookup(const Symbol* pSymbol, Expr* pExpr) : _pSymbol(pSymbol) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -250,6 +252,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignToSymbol(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	PUnit_AssignToSymbol(const Symbol* pSymbol, Expr* pExpr) : _pSymbol(pSymbol) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -291,6 +294,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignToDeclArg(DeclArg* pDeclArg) : _pDeclArg(pDeclArg) {}
+	PUnit_AssignToDeclArg(DeclArg* pDeclArg, Expr* pExpr) : _pDeclArg(pDeclArg) { _ppExprSrc[0] = pExpr; }
 public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 public:
@@ -332,6 +336,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignFunction(Function* pFunction) : _pFunction(pFunction) {}
+	PUnit_AssignFunction(Function* pFunction, Expr* pExpr) : _pFunction(pFunction) { _ppExprSrc[0] = pExpr; }
 public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
@@ -374,6 +379,7 @@ private:
 public:
 	// Constructor
 	PUnit_Cast(const VType& vtype, bool listVarFlag) : _vtype(vtype), _listVarFlag(listVarFlag) {}
+	PUnit_Cast(const VType& vtype, bool listVarFlag, Expr* pExpr) : _vtype(vtype), _listVarFlag(listVarFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const VType& GetVType() const { return _vtype; }
 	bool GetListVarFlag() const { return _listVarFlag; }
@@ -415,6 +421,7 @@ public:
 public:
 	// Constructor
 	PUnit_GenIterator() {}
+	PUnit_GenIterator(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -449,6 +456,7 @@ public:
 public:
 	// Constructor
 	PUnit_GenRangeIterator() {}
+	PUnit_GenRangeIterator(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -483,6 +491,7 @@ public:
 public:
 	// Constructor
 	PUnit_GenCounterIterator() {}
+	PUnit_GenCounterIterator(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -520,6 +529,8 @@ public:
 	// Constructor
 	PUnit_EvalIterator(size_t offset, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1), _offset(offset) {}
+	PUnit_EvalIterator(size_t offset, const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1), _offset(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -564,6 +575,9 @@ public:
 	PUnit_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1),
 		_offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
+	PUnit_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1),
+		_offset(offset), _pDeclArgOwner(pDeclArgOwner) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
@@ -609,6 +623,7 @@ private:
 public:
 	// Constructor
 	PUnit_UnaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
+	PUnit_UnaryOp(const Operator* pOperator, Expr* pExpr) : _pOperator(pOperator) { _ppExprSrc[0] = pExpr; }
 public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -650,6 +665,7 @@ private:
 public:
 	// Constructor
 	PUnit_BinaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
+	PUnit_BinaryOp(const Operator* pOperator, Expr* pExpr) : _pOperator(pOperator) { _ppExprSrc[0] = pExpr; }
 public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -694,6 +710,8 @@ public:
 	// Constructor
 	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag) :
 		_pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
+	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, Expr* pExpr) :
+		_pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	const SymbolList* GetSymbolList() const { return _pSymbolList.get(); }
@@ -738,6 +756,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_CreateVType() {}
+	explicit PUnit_CreateVType(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -774,6 +793,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_CreateList(size_t sizeReserve) : _sizeReserve(sizeReserve) {}
+	explicit PUnit_CreateList(size_t sizeReserve, Expr* pExpr) : _sizeReserve(sizeReserve) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
@@ -815,6 +835,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_ListElem(size_t offset) : _offset(offset) {}
+	explicit PUnit_ListElem(size_t offset, Expr* pExpr) : _offset(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -856,6 +877,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_CreateDict() {}
+	explicit PUnit_CreateDict(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -892,6 +914,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_DictElem(size_t offset) : _offset(offset) {}
+	explicit PUnit_DictElem(size_t offset, Expr* pExpr) : _offset(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -932,8 +955,8 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Index(Attribute* pAttr, size_t sizeReserve) :
-		_pAttr(pAttr), _sizeReserve(sizeReserve) {}
+	PUnit_Index(Attribute* pAttr, size_t sizeReserve) : _pAttr(pAttr), _sizeReserve(sizeReserve) {}
+	PUnit_Index(Attribute* pAttr, size_t sizeReserve, Expr* pExpr) : _pAttr(pAttr), _sizeReserve(sizeReserve) { _ppExprSrc[0] = pExpr; }
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 	size_t GetSizeReserve() const { return _sizeReserve; }
@@ -976,6 +999,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_FeedIndex() {}
+	explicit PUnit_FeedIndex(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1011,6 +1035,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_IndexGet() {}
+	explicit PUnit_IndexGet(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1046,6 +1071,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_IndexSet() {}
+	explicit PUnit_IndexSet(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1082,8 +1108,8 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr) :
-		_pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) : _pSymbol(pSymbol), _pAttr(pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1127,8 +1153,8 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) :
-		_pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) : _pSymbol(pSymbol), _pAttr(pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1172,8 +1198,8 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr) :
-		_pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) : _pSymbol(pSymbol), _pAttr(pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1219,6 +1245,8 @@ private:
 public:
 	// Constructor
 	PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock);
+	PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock, Expr* pExpr) :
+		PUnit_Argument(attr, pExprOfBlock) { _ppExprSrc[0] = pExpr; }
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 	DeclCallable::Flags GetFlags() const { return _flags; }
@@ -1265,6 +1293,8 @@ public:
 	PUnit_BeginArgSlot(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1),
 		_pPUnitSentinel(this + 1) {}
+	PUnit_BeginArgSlot(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_BeginArgSlot(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	const Expr& GetExprSrc() const { return *_pExprSrc; }
 public:
@@ -1306,6 +1336,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_EndArgSlot() {}
+	explicit PUnit_EndArgSlot(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1344,10 +1375,11 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_BeginArgSlotNamed(const Symbol* pSymbol,
-					   Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
+	PUnit_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1),
 		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned), _pPUnitSentinel(this + 1) {}
+	PUnit_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_BeginArgSlotNamed(pSymbol, pExprAssigned, pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
@@ -1396,6 +1428,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_EndArgSlotNamed() {}
+	explicit PUnit_EndArgSlotNamed(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1432,6 +1465,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_Call() {}
+	explicit PUnit_Call(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1469,6 +1503,9 @@ public:
 	// Constructor
 	PUnit_Jump(const PUnit* pPUnitCont) : _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
 	PUnit_Jump() : PUnit_Jump(this + 1) {}
+	PUnit_Jump(const PUnit* pPUnitCont, Expr* pExpr) : PUnit_Jump(pPUnitCont) { _ppExprSrc[0] = pExpr; }
+	PUnit_Jump(Expr* pExpr) : PUnit_Jump(this + 1) { _ppExprSrc[0] = pExpr; }
+	
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1510,6 +1547,8 @@ public:
 	// Constructor
 	PUnit_JumpIf(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_JumpIf(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_JumpIf(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1548,6 +1587,8 @@ public:
 	// Constructor
 	PUnit_JumpIfNot(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_JumpIfNot(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_JumpIfNot(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1586,6 +1627,8 @@ public:
 	// Constructor
 	PUnit_NilJumpIf(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_NilJumpIf(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_NilJumpIf(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1624,6 +1667,8 @@ public:
 	// Constructor
 	PUnit_NilJumpIfNot(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_NilJumpIfNot(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_NilJumpIfNot(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1662,6 +1707,8 @@ public:
 	// Constructor
 	PUnit_KeepJumpIf(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_KeepJumpIf(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_KeepJumpIf(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1700,6 +1747,8 @@ public:
 	// Constructor
 	PUnit_KeepJumpIfNot(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_KeepJumpIfNot(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_KeepJumpIfNot(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1738,6 +1787,8 @@ public:
 	// Constructor
 	PUnit_BeginTryBlock(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_BeginTryBlock(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_BeginTryBlock(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1776,6 +1827,8 @@ private:
 public:
 	// Constructor
 	PUnit_EndTryBlock(const PUnit* pPUnitCont) : _pPUnitCont(pPUnitCont? pPUnitCont : this + 1) {}
+	PUnit_EndTryBlock(const PUnit* pPUnitCont, Expr* pExpr) :
+		PUnit_EndTryBlock(pPUnitCont) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1817,6 +1870,8 @@ public:
 	// Constructor
 	PUnit_JumpIfNoCatch(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_JumpIfNoCatch(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_JumpIfNoCatch(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1855,6 +1910,8 @@ public:
 	// Constructor
 	PUnit_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_JumpIfNoCatchAny(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1893,6 +1950,8 @@ public:
 	// Constructor
 	PUnit_NilJumpIfNoCatch(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_NilJumpIfNoCatch(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_NilJumpIfNoCatch(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1931,6 +1990,8 @@ public:
 	// Constructor
 	PUnit_NilJumpIfNoCatchAny(const PUnit* pPUnitBranchDest) :
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1) {}
+	PUnit_NilJumpIfNoCatchAny(const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_NilJumpIfNoCatchAny(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1969,6 +2030,7 @@ private:
 public:
 	// Constructor
 	PUnit_BeginSequence(const PUnit* pPUnitSentinel) : _pPUnitSentinel(pPUnitSentinel) {}
+	PUnit_BeginSequence(const PUnit* pPUnitSentinel, Expr* pExpr) : _pPUnitSentinel(pPUnitSentinel) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }
@@ -2010,6 +2072,7 @@ private:
 public:
 	// Constructor
 	PUnit_EndSequence() {}
+	PUnit_EndSequence(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsEndSequence() const override { return true; }
@@ -2046,6 +2109,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_DiscardValue() {}
+	explicit PUnit_DiscardValue(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2082,6 +2146,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_RemoveValue(size_t offset) : _offset(offset) {}
+	explicit PUnit_RemoveValue(size_t offset, Expr* pExpr) : _offset(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -2124,6 +2189,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_RemoveValues(size_t offset, size_t cnt) : _offset(offset), _cnt(cnt) {}
+	explicit PUnit_RemoveValues(size_t offset, size_t cnt, Expr* pExpr) : _offset(offset), _cnt(cnt) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 	size_t GetCount() const { return _cnt; }
@@ -2167,6 +2233,7 @@ private:
 public:
 	// Constructor
 	PUnit_Break(const PUnit* pPUnitMarked) : _pPUnitMarked(pPUnitMarked) {}
+	PUnit_Break(const PUnit* pPUnitMarked, Expr* pExpr) : _pPUnitMarked(pPUnitMarked) { _ppExprSrc[0] = pExpr; }
 public:
 	const PUnit* GetPUnitMarked() const { return _pPUnitMarked; }
 public:
@@ -2211,6 +2278,7 @@ private:
 public:
 	// Constructor
 	PUnit_Continue(const PUnit* pPUnitOfLoop) : _pPUnitOfLoop(pPUnitOfLoop) {}
+	PUnit_Continue(const PUnit* pPUnitOfLoop, Expr* pExpr) : _pPUnitOfLoop(pPUnitOfLoop) { _ppExprSrc[0] = pExpr; }
 public:
 	const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
 public:
@@ -2252,6 +2320,7 @@ private:
 public:
 	// Constructor
 	PUnit_Miscatch(Value* pValue) : _pValue(pValue) {}
+	PUnit_Miscatch(Value* pValue, Expr* pExpr) : _pValue(pValue) { _ppExprSrc[0] = pExpr; }
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
@@ -2292,6 +2361,7 @@ private:
 public:
 	// Constructor
 	PUnit_Return() {}
+	PUnit_Return(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsReturn() const override { return true; }
@@ -2328,6 +2398,7 @@ private:
 public:
 	// Constructor
 	PUnit_PushFrame() {}
+	PUnit_PushFrame(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2364,6 +2435,7 @@ private:
 public:
 	// Constructor
 	PUnit_PushFrameFromStack() {}
+	PUnit_PushFrameFromStack(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2399,6 +2471,7 @@ private:
 public:
 	// Constructor
 	PUnit_PopFrame() {}
+	PUnit_PopFrame(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -2434,6 +2507,7 @@ private:
 public:
 	// Constructor
 	PUnit_NoOperation() {}
+	PUnit_NoOperation(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
