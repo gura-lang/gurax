@@ -16,8 +16,6 @@ class Processor;
 class GURAX_DLLDECLARE PUnit {
 public:
 	using SeqId = UInt32;
-protected:
-	RefPtr<Expr> _pExprSrc;
 public:
 	// Constructor
 	PUnit();
@@ -38,7 +36,6 @@ public:
 	String ToString(int seqIdOffset) const { return ToString(StringStyle::Empty, seqIdOffset); }
 	String ToString(const StringStyle& ss) const { return ToString(ss, 0); }
 public:
-	void SetExprSrc(Expr* pExprSrc) { _pExprSrc.reset(pExprSrc); }
 	SeqId GetSeqId(int seqIdOffset = 0) const {
 		return MemoryPool::Global().GetChunkPUnit().CalcSeqId(this) - seqIdOffset;
 	}
@@ -1294,7 +1291,7 @@ public:
 	PUnit_BeginArgSlot(const PUnit* pPUnitBranchDest, Expr* pExpr) :
 		PUnit_BeginArgSlot(pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
-	const Expr& GetExprSrc() const { return *_pExprSrc; }
+	const Expr& GetExprSrc() const { return *_ppExprSrc[0]; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }
@@ -1381,7 +1378,7 @@ public:
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Expr* GetExprAssigned() const { return _pExprAssigned.get(); }
-	const Expr& GetExprSrc() const { return *_pExprSrc; }
+	const Expr& GetExprSrc() const { return *_ppExprSrc[0]; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }
