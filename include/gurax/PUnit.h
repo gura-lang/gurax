@@ -151,7 +151,7 @@ class PUnitFactory_Branch : public PUnitFactory {
 protected:
 	const PUnit* _pPUnitBranchDest;
 public:
-	PUnitFactory_Branch(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
+	PUnitFactory_Branch(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitBranchDest(pPUnitBranchDest) {}
 };
 
@@ -189,7 +189,7 @@ public:
 private:
 	RefPtr<Value> _pValue;
 public:
-	PUnitFactory_Value(Expr* pExprSrc, Value* pValue) : PUnitFactory(pExprSrc), _pValue(pValue) {}
+	PUnitFactory_Value(Value* pValue, Expr* pExprSrc) : PUnitFactory(pExprSrc), _pValue(pValue) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Value<1, false>) : sizeof(PUnit_Value<0, false>);
 	}
@@ -230,7 +230,7 @@ public:
 private:
 	const Symbol* _pSymbol;
 public:
-	PUnitFactory_Lookup(Expr* pExprSrc, const Symbol* pSymbol) :
+	PUnitFactory_Lookup(const Symbol* pSymbol, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Lookup<1, false>) : sizeof(PUnit_Lookup<0, false>);
@@ -272,7 +272,7 @@ public:
 private:
 	const Symbol* _pSymbol;
 public:
-	PUnitFactory_AssignToSymbol(Expr* pExprSrc, const Symbol* pSymbol) :
+	PUnitFactory_AssignToSymbol(const Symbol* pSymbol, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_AssignToSymbol<1, false>) : sizeof(PUnit_AssignToSymbol<0, false>);
@@ -314,7 +314,7 @@ public:
 private:
 	RefPtr<DeclArg> _pDeclArg;
 public:
-	PUnitFactory_AssignToDeclArg(Expr* pExprSrc, DeclArg* pDeclArg) :
+	PUnitFactory_AssignToDeclArg(DeclArg* pDeclArg, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pDeclArg(pDeclArg) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_AssignToDeclArg<1, false>) : sizeof(PUnit_AssignToDeclArg<0, false>);
@@ -356,7 +356,7 @@ public:
 private:
 	RefPtr<Function> _pFunction;
 public:
-	PUnitFactory_AssignFunction(Expr* pExprSrc, Function* pFunction) :
+	PUnitFactory_AssignFunction(Function* pFunction, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pFunction(pFunction) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_AssignFunction<1, false>) : sizeof(PUnit_AssignFunction<0, false>);
@@ -401,7 +401,7 @@ private:
 	const VType& _vtype;
 	bool _listVarFlag;
 public:
-	PUnitFactory_Cast(Expr* pExprSrc, const VType& vtype, bool listVarFlag) :
+	PUnitFactory_Cast(const VType& vtype, bool listVarFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _vtype(vtype), _listVarFlag(listVarFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Cast<1, false>) : sizeof(PUnit_Cast<0, false>);
@@ -550,8 +550,8 @@ public:
 private:
 	size_t _offset;
 public:
-	PUnitFactory_EvalIterator(Expr* pExprSrc, size_t offset, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest), _offset(offset) {}
+	PUnitFactory_EvalIterator(size_t offset, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_EvalIterator<1, false>) : sizeof(PUnit_EvalIterator<0, false>);
 	}
@@ -599,10 +599,8 @@ private:
 	size_t _offset;
 	std::unique_ptr<DeclArgOwner> _pDeclArgOwner;
 public:
-	PUnitFactory_ForEach(Expr* pExprSrc, size_t offset,
-		DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest), _offset(offset),
-		_pDeclArgOwner(pDeclArgOwner) {}
+	PUnitFactory_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_ForEach<1, false>) : sizeof(PUnit_ForEach<0, false>);
 	}
@@ -643,7 +641,7 @@ public:
 private:
 	const Operator* _pOperator;
 public:
-	PUnitFactory_UnaryOp(Expr* pExprSrc, const Operator* pOperator) :
+	PUnitFactory_UnaryOp(const Operator* pOperator, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pOperator(pOperator) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_UnaryOp<1, false>) : sizeof(PUnit_UnaryOp<0, false>);
@@ -685,7 +683,7 @@ public:
 private:
 	const Operator* _pOperator;
 public:
-	PUnitFactory_BinaryOp(Expr* pExprSrc, const Operator* pOperator) :
+	PUnitFactory_BinaryOp(const Operator* pOperator, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pOperator(pOperator) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_BinaryOp<1, false>) : sizeof(PUnit_BinaryOp<0, false>);
@@ -735,7 +733,7 @@ private:
 	std::unique_ptr<SymbolList> _pSymbolList;
 	bool _mixInFlag;
 public:
-	PUnitFactory_Import(Expr* pExprSrc, DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag) :
+	PUnitFactory_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Import<1, false>) : sizeof(PUnit_Import<0, false>);
@@ -813,7 +811,7 @@ public:
 private:
 	size_t _sizeReserve;
 public:
-	PUnitFactory_CreateList(Expr* pExprSrc, size_t sizeReserve) :
+	PUnitFactory_CreateList(size_t sizeReserve, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _sizeReserve(sizeReserve) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_CreateList<1, false>) : sizeof(PUnit_CreateList<0, false>);
@@ -856,7 +854,7 @@ private:
 	size_t _offset;
 	bool _xlistFlag;
 public:
-	PUnitFactory_ListElem(Expr* pExprSrc, size_t offset, bool xlistFlag) :
+	PUnitFactory_ListElem(size_t offset, bool xlistFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _offset(offset), _xlistFlag(xlistFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_ListElem<1, false, false>) : sizeof(PUnit_ListElem<0, false, false>);
@@ -934,7 +932,7 @@ public:
 private:
 	size_t _offset;
 public:
-	PUnitFactory_DictElem(Expr* pExprSrc, size_t offset) : PUnitFactory(pExprSrc), _offset(offset) {}
+	PUnitFactory_DictElem(size_t offset, Expr* pExprSrc) : PUnitFactory(pExprSrc), _offset(offset) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_DictElem<1, false>) : sizeof(PUnit_DictElem<0, false>);
 	}
@@ -978,7 +976,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 	size_t _sizeReserve;
 public:
-	PUnitFactory_Index(Expr* pExprSrc, Attribute* pAttr, size_t sizeReserve) :
+	PUnitFactory_Index(Attribute* pAttr, size_t sizeReserve, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pAttr(pAttr), _sizeReserve(sizeReserve) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Index<1, false>) : sizeof(PUnit_Index<0, false>);
@@ -1131,7 +1129,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_PropGet(Expr* pExprSrc, const Symbol* pSymbol, Attribute* pAttr) :
+	PUnitFactory_PropGet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_PropGet<1, false>) : sizeof(PUnit_PropGet<0, false>);
@@ -1176,7 +1174,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_PropSet(Expr* pExprSrc, const Symbol* pSymbol, Attribute* pAttr) :
+	PUnitFactory_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_PropSet<1, false>) : sizeof(PUnit_PropSet<0, false>);
@@ -1221,7 +1219,7 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_Member(Expr* pExprSrc, const Symbol* pSymbol, Attribute* pAttr) :
+	PUnitFactory_Member(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Member<1, false>) : sizeof(PUnit_Member<0, false>);
@@ -1269,7 +1267,7 @@ private:
 	RefPtr<Attribute> _pAttr;
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 public:
-	PUnitFactory_Argument(Expr* pExprSrc, Attribute* pAttr, Expr_Block* pExprOfBlock) :
+	PUnitFactory_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pAttr(pAttr), _pExprOfBlock(pExprOfBlock) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Argument<1, false>) : sizeof(PUnit_Argument<0, false>);
@@ -1315,8 +1313,8 @@ class PUnitFactory_BeginArgSlot : public PUnitFactory_Branch {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginArgSlot");
 public:
-	PUnitFactory_BeginArgSlot(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_BeginArgSlot(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_BeginArgSlot<1, false>) : sizeof(PUnit_BeginArgSlot<0, false>);
 	}
@@ -1405,10 +1403,9 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Expr> _pExprAssigned;
 public:
-	PUnitFactory_BeginArgSlotNamed(Expr* pExprSrc, const Symbol* pSymbol,
-							  Expr* pExprAssigned, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest),
-		_pSymbol(pSymbol), _pExprAssigned(pExprAssigned) {}
+	PUnitFactory_BeginArgSlotNamed(const Symbol* pSymbol,
+								   Expr* pExprAssigned, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _pSymbol(pSymbol), _pExprAssigned(pExprAssigned) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_BeginArgSlotNamed<1, false>) : sizeof(PUnit_BeginArgSlotNamed<0, false>);
 	}
@@ -1525,7 +1522,7 @@ public:
 private:
 	const PUnit* _pPUnitCont;
 public:
-	PUnitFactory_Jump(Expr* pExprSrc, const PUnit* pPUnitCont) :
+	PUnitFactory_Jump(const PUnit* pPUnitCont, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitCont(pPUnitCont) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Jump<1, false>) : sizeof(PUnit_Jump<0, false>);
@@ -1565,8 +1562,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIf");
 private:
 public:
-	PUnitFactory_JumpIf(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_JumpIf(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_JumpIf<1, false>) : sizeof(PUnit_JumpIf<0, false>);
 	}
@@ -1605,8 +1602,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNot");
 private:
 public:
-	PUnitFactory_JumpIfNot(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_JumpIfNot(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_JumpIfNot<1, false>) : sizeof(PUnit_JumpIfNot<0, false>);
 	}
@@ -1645,8 +1642,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIf");
 private:
 public:
-	PUnitFactory_NilJumpIf(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_NilJumpIf(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_NilJumpIf<1, false>) : sizeof(PUnit_NilJumpIf<0, false>);
 	}
@@ -1685,8 +1682,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNot");
 private:
 public:
-	PUnitFactory_NilJumpIfNot(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_NilJumpIfNot(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_NilJumpIfNot<1, false>) : sizeof(PUnit_NilJumpIfNot<0, false>);
 	}
@@ -1725,8 +1722,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_KeepJumpIf");
 private:
 public:
-	PUnitFactory_KeepJumpIf(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_KeepJumpIf(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_KeepJumpIf<1, false>) : sizeof(PUnit_KeepJumpIf<0, false>);
 	}
@@ -1765,8 +1762,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_KeepJumpIfNot");
 private:
 public:
-	PUnitFactory_KeepJumpIfNot(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_KeepJumpIfNot(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_KeepJumpIfNot<1, false>) : sizeof(PUnit_KeepJumpIfNot<0, false>);
 	}
@@ -1805,8 +1802,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BeginTryBlock");
 private:
 public:
-	PUnitFactory_BeginTryBlock(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_BeginTryBlock(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_BeginTryBlock<1, false>) : sizeof(PUnit_BeginTryBlock<0, false>);
 	}
@@ -1848,7 +1845,7 @@ public:
 private:
 	const PUnit* _pPUnitCont;
 public:
-	PUnitFactory_EndTryBlock(Expr* pExprSrc, const PUnit* pPUnitCont) :
+	PUnitFactory_EndTryBlock(const PUnit* pPUnitCont, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitCont(pPUnitCont) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_EndTryBlock<1, false>) : sizeof(PUnit_EndTryBlock<0, false>);
@@ -1888,8 +1885,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatch");
 private:
 public:
-	PUnitFactory_JumpIfNoCatch(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_JumpIfNoCatch(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_JumpIfNoCatch<1, false>) : sizeof(PUnit_JumpIfNoCatch<0, false>);
 	}
@@ -1928,8 +1925,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_JumpIfNoCatchAny");
 private:
 public:
-	PUnitFactory_JumpIfNoCatchAny(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_JumpIfNoCatchAny(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_JumpIfNoCatchAny<1, false>) : sizeof(PUnit_JumpIfNoCatchAny<0, false>);
 	}
@@ -1968,8 +1965,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNoCatch");
 private:
 public:
-	PUnitFactory_NilJumpIfNoCatch(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_NilJumpIfNoCatch(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_NilJumpIfNoCatch<1, false>) : sizeof(PUnit_NilJumpIfNoCatch<0, false>);
 	}
@@ -2008,8 +2005,8 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_NilJumpIfNoCatchAny");
 private:
 public:
-	PUnitFactory_NilJumpIfNoCatchAny(Expr* pExprSrc, const PUnit* pPUnitBranchDest) :
-		PUnitFactory_Branch(pExprSrc, pPUnitBranchDest) {}
+	PUnitFactory_NilJumpIfNoCatchAny(const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_NilJumpIfNoCatchAny<1, false>) : sizeof(PUnit_NilJumpIfNoCatchAny<0, false>);
 	}
@@ -2051,7 +2048,7 @@ public:
 private:
 	const PUnit* _pPUnitSentinel;
 public:
-	PUnitFactory_BeginSequence(Expr* pExprSrc, const PUnit* pPUnitSentinel) :
+	PUnitFactory_BeginSequence(const PUnit* pPUnitSentinel, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitSentinel(pPUnitSentinel) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_BeginSequence<1, false>) : sizeof(PUnit_BeginSequence<0, false>);
@@ -2166,7 +2163,7 @@ public:
 private:
 	size_t _offset;
 public:
-	PUnitFactory_RemoveValue(Expr* pExprSrc, size_t offset) :
+	PUnitFactory_RemoveValue(size_t offset, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _offset(offset) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_RemoveValue<1, false>) : sizeof(PUnit_RemoveValue<0, false>);
@@ -2211,7 +2208,7 @@ private:
 	size_t _offset;
 	size_t _cnt;
 public:
-	PUnitFactory_RemoveValues(Expr* pExprSrc, size_t offset, size_t cnt) :
+	PUnitFactory_RemoveValues(size_t offset, size_t cnt, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _offset(offset), _cnt(cnt) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_RemoveValues<1, false>) : sizeof(PUnit_RemoveValues<0, false>);
@@ -2254,8 +2251,7 @@ private:
 	const PUnit* _pPUnitMarked;
 	bool _branchDestFlag;
 public:
-	PUnitFactory_Break(Expr* pExprSrc,
-					   const PUnit* pPUnitMarked, bool branchDestFlag) :
+	PUnitFactory_Break(const PUnit* pPUnitMarked, bool branchDestFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitMarked(pPUnitMarked),
 		_branchDestFlag(branchDestFlag) {}
 	virtual size_t GetPUnitSize() const override {
@@ -2298,7 +2294,7 @@ public:
 private:
 	const PUnit* _pPUnitOfLoop;
 public:
-	PUnitFactory_Continue(Expr* pExprSrc, const PUnit* pPUnitOfLoop) :
+	PUnitFactory_Continue(const PUnit* pPUnitOfLoop, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pPUnitOfLoop(pPUnitOfLoop) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Continue<1, false>) : sizeof(PUnit_Continue<0, false>);
@@ -2340,7 +2336,7 @@ public:
 private:
 	RefPtr<Value> _pValue;
 public:
-	PUnitFactory_Miscatch(Expr* pExprSrc, Value* pValue) :
+	PUnitFactory_Miscatch(Value* pValue, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pValue(pValue) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Miscatch<1, false>) : sizeof(PUnit_Miscatch<0, false>);
