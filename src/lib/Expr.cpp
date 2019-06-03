@@ -506,7 +506,7 @@ void Expr_Root::Compose(Composer& composer)
 	ComposeSequence(composer, GetExprElemFirst());						// [Any]
 	//pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
 	composer.Add_Return(*this);
-	composer.Add_Terminate(*this);
+	composer.Add_Terminate();
 }
 
 String Expr_Root::ToString(const StringStyle& ss) const

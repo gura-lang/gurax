@@ -146,7 +146,7 @@ public:
 	void Add_PushFrameFromStack(const Expr& exprSrc);
 	void Add_PopFrame(const Expr& exprSrc);
 	void Add_NoOperation(const Expr& exprSrc);
-	void Add_Terminate(const Expr& exprSrc);
+	void Add_Terminate();
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;

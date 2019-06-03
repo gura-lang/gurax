@@ -345,9 +345,9 @@ void Composer::Add_NoOperation(const Expr& exprSrc)
 	SetFactory(new PUnitFactory_NoOperation(exprSrc.Reference()));
 }
 
-void Composer::Add_Terminate(const Expr& exprSrc)
+void Composer::Add_Terminate()
 {
-	SetFactory(new PUnitFactory_Terminate(exprSrc.Reference()));
+	SetFactory(new PUnitFactory_Terminate());
 	Flush();
 }
 
