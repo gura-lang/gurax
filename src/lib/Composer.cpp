@@ -57,11 +57,6 @@ void Composer::ComposeAsSequence(Expr& expr)
 	Add_Return(&expr);
 }
 
-void Composer::Add_Value(Value* pValue, const Expr* pExprSrc)
-{
-	SetFactory(new PUnitFactory_Value(pValue, Expr::Reference(pExprSrc)));
-}
-
 void Composer::Add_Lookup(const Symbol* pSymbol, const Expr* pExprSrc)
 {
 	SetFactory(new PUnitFactory_Lookup(pSymbol, Expr::Reference(pExprSrc)));
@@ -80,6 +75,11 @@ void Composer::Add_AssignToDeclArg(DeclArg* pDeclArg, const Expr* pExprSrc)
 void Composer::Add_AssignFunction(Function* pFunction, const Expr* pExprSrc)
 {
 	SetFactory(new PUnitFactory_AssignFunction(pFunction, Expr::Reference(pExprSrc)));
+}
+
+void Composer::Add_AssignMethod(Function* pFunction, const Expr* pExprSrc)
+{
+	SetFactory(new PUnitFactory_AssignMethod(pFunction, Expr::Reference(pExprSrc)));
 }
 
 void Composer::Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc)

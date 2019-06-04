@@ -84,11 +84,14 @@ public:
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void ComposeAsSequence(Expr& expr);
 public:
-	void Add_Value(Value* pValue, const Expr* pExprSrc = nullptr);
+	void Add_Value(Value* pValue, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Value(pValue, Expr::Reference(pExprSrc)));
+	}
 	void Add_Lookup(const Symbol* pSymbol, const Expr* pExprSrc = nullptr);
 	void Add_AssignToSymbol(const Symbol* pSymbol, const Expr* pExprSrc = nullptr);
 	void Add_AssignToDeclArg(DeclArg* pDeclArg, const Expr* pExprSrc = nullptr);
 	void Add_AssignFunction(Function* pFunction, const Expr* pExprSrc = nullptr);
+	void Add_AssignMethod(Function* pFunction, const Expr* pExprSrc = nullptr);
 	void Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc = nullptr);
 	void Add_GenIterator(const Expr* pExprSrc = nullptr);
 	void Add_GenRangeIterator(const Expr* pExprSrc = nullptr);
