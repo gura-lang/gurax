@@ -87,78 +87,212 @@ public:
 	void Add_Value(Value* pValue, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Value(pValue, Expr::Reference(pExprSrc)));
 	}
-	void Add_Lookup(const Symbol* pSymbol, const Expr* pExprSrc = nullptr);
-	void Add_AssignToSymbol(const Symbol* pSymbol, const Expr* pExprSrc = nullptr);
-	void Add_AssignToDeclArg(DeclArg* pDeclArg, const Expr* pExprSrc = nullptr);
-	void Add_AssignFunction(Function* pFunction, const Expr* pExprSrc = nullptr);
-	void Add_AssignMethod(Function* pFunction, const Expr* pExprSrc = nullptr);
-	void Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc = nullptr);
-	void Add_GenIterator(const Expr* pExprSrc = nullptr);
-	void Add_GenRangeIterator(const Expr* pExprSrc = nullptr);
-	void Add_GenCounterIterator(const Expr* pExprSrc = nullptr);
-	void Add_EvalIterator(size_t offset, const Expr* pExprSrc = nullptr);
-	void Add_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const Expr* pExprSrc = nullptr);
-	void Add_UnaryOp(const Operator* pOperator, const Expr* pExprSrc = nullptr);
-	void Add_BinaryOp(const Operator* pOperator, const Expr* pExprSrc = nullptr);
-	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, const Expr* pExprSrc = nullptr);
-	void Add_CreateVType(const Expr* pExprSrc = nullptr);
-	void Add_CreateList(size_t sizeReserve, const Expr* pExprSrc = nullptr);
-	void Add_ListElem(size_t offset, bool xlistFlag, const Expr* pExprSrc = nullptr);
-	void Add_CreateDict(const Expr* pExprSrc = nullptr);
-	void Add_DictElem(size_t offset, const Expr* pExprSrc = nullptr);
-	void Add_Index(Attribute* pAttr, size_t sizeReserve, const Expr* pExprSrc = nullptr);
-	void Add_FeedIndex(const Expr* pExprSrc = nullptr);
-	void Add_IndexGet(const Expr* pExprSrc = nullptr);
-	void Add_IndexSet(const Expr* pExprSrc = nullptr);
-	void Add_PropGet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr);
-	void Add_PropSet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr);
-	void Add_Member(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr);
-	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, const Expr* pExprSrc = nullptr);
-	void Add_BeginArgSlot(const Expr* pExprSrc = nullptr);
-	void Add_EndArgSlot(const Expr* pExprSrc = nullptr);
-	void Add_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const Expr* pExprSrc = nullptr);
-	void Add_EndArgSlotNamed(const Expr* pExprSrc = nullptr);
-	void Add_Call(const Expr* pExprSrc = nullptr);
-	void Add_Jump(const Expr* pExprSrc = nullptr);
-	void Add_Jump(const PUnit* pPUnitCont, const Expr* pExprSrc = nullptr);
-	void Add_JumpIf(const Expr* pExprSrc = nullptr);
-	void Add_JumpIfNot(const Expr* pExprSrc = nullptr);
-	void Add_NilJumpIf(const Expr* pExprSrc = nullptr);
-	void Add_NilJumpIfNot(const Expr* pExprSrc = nullptr);
-	void Add_KeepJumpIf(const Expr* pExprSrc = nullptr);
-	void Add_KeepJumpIfNot(const Expr* pExprSrc = nullptr);
-	void Add_BeginTryBlock(const Expr* pExprSrc = nullptr);
-	void Add_EndTryBlock(const Expr* pExprSrc = nullptr);
-	void Add_JumpIfNoCatch(const Expr* pExprSrc = nullptr);
-	void Add_JumpIfNoCatchAny(const Expr* pExprSrc = nullptr);
-	void Add_NilJumpIfNoCatch(const Expr* pExprSrc = nullptr);
-	void Add_NilJumpIfNoCatchAny(const Expr* pExprSrc = nullptr);
-	void Add_BeginSequence(const Expr* pExprSrc = nullptr);
-	void Add_EndSequence(const Expr* pExprSrc = nullptr);
-	void Add_DiscardValue(const Expr* pExprSrc = nullptr);
-	void Add_RemoveValue(size_t offset, const Expr* pExprSrc = nullptr);
-	void Add_RemoveValues(size_t offset, size_t cnt, const Expr* pExprSrc = nullptr);
-	void Add_Break(const PUnit* pPUnitMarked, bool branchDestFlag, const Expr* pExprSrc = nullptr);
-	void Add_Continue(const PUnit* pPUnitOfLoop, const Expr* pExprSrc = nullptr);
-	void Add_Miscatch(Value* pValue, const Expr* pExprSrc = nullptr);
-	void Add_Return(const Expr* pExprSrc = nullptr);
-	template<typename T_Frame> void Add_PushFrame(const Expr* pExprSrc = nullptr);
-	void Add_PushFrameFromStack(const Expr* pExprSrc = nullptr);
-	void Add_PopFrame(const Expr* pExprSrc = nullptr);
-	void Add_NoOperation(const Expr* pExprSrc = nullptr);
-	void Add_Terminate();
+	void Add_Lookup(const Symbol* pSymbol, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Lookup(pSymbol, Expr::Reference(pExprSrc)));
+	}
+	void Add_AssignToSymbol(const Symbol* pSymbol, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignToSymbol(pSymbol, Expr::Reference(pExprSrc)));
+	}
+	void Add_AssignToDeclArg(DeclArg* pDeclArg, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignToDeclArg(pDeclArg, Expr::Reference(pExprSrc)));
+	}
+	void Add_AssignFunction(Function* pFunction, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignFunction(pFunction, Expr::Reference(pExprSrc)));
+	}
+	void Add_AssignMethod(Function* pFunction, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignMethod(pFunction, Expr::Reference(pExprSrc)));
+	}
+	void Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Cast(vtype, listVarFlag, Expr::Reference(pExprSrc)));
+	}
+	void Add_GenIterator(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenIterator(Expr::Reference(pExprSrc)));
+	}
+	void Add_GenRangeIterator(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenRangeIterator(Expr::Reference(pExprSrc)));
+	}
+	void Add_GenCounterIterator(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenCounterIterator(Expr::Reference(pExprSrc)));
+	}
+	void Add_EvalIterator(size_t offset, const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_EvalIterator(offset, pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_ForEach(offset, pDeclArgOwner, pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_UnaryOp(const Operator* pOperator, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_UnaryOp(pOperator, Expr::Reference(pExprSrc)));
+	}
+	void Add_BinaryOp(const Operator* pOperator, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_BinaryOp(pOperator, Expr::Reference(pExprSrc)));
+	}
+	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Import(pDottedSymbol, pSymbolList, mixInFlag, Expr::Reference(pExprSrc)));
+	}
+	void Add_CreateVType(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_CreateVType(Expr::Reference(pExprSrc)));
+	}
+	void Add_CreateList(size_t sizeReserve, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_CreateList(sizeReserve, Expr::Reference(pExprSrc)));
+	}
+	void Add_ListElem(size_t offset, bool xlistFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_ListElem(offset, xlistFlag, Expr::Reference(pExprSrc)));
+	}
+	void Add_CreateDict(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_CreateDict(Expr::Reference(pExprSrc)));
+	}
+	void Add_DictElem(size_t offset, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_DictElem(offset, Expr::Reference(pExprSrc)));
+	}
+	void Add_Index(Attribute* pAttr, size_t sizeReserve, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Index(pAttr, sizeReserve, Expr::Reference(pExprSrc)));
+	}
+	void Add_FeedIndex(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_FeedIndex(Expr::Reference(pExprSrc)));
+	}
+	void Add_IndexGet(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_IndexGet(Expr::Reference(pExprSrc)));
+	}
+	void Add_IndexSet(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_IndexSet(Expr::Reference(pExprSrc)));
+	}
+	void Add_PropGet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PropGet(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
+	void Add_PropSet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PropSet(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
+	void Add_Member(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Member(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
+	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Argument(pAttr, pExprOfBlock, Expr::Reference(pExprSrc)));
+	}
+	void Add_BeginArgSlot(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_BeginArgSlot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_EndArgSlot(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_EndArgSlot(Expr::Reference(pExprSrc)));
+	}
+	void Add_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_BeginArgSlotNamed(
+					   pSymbol, pExprAssigned, pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_EndArgSlotNamed(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_EndArgSlotNamed(Expr::Reference(pExprSrc)));
+	}
+	void Add_Call(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Call(Expr::Reference(pExprSrc)));
+	}
+	void Add_Jump(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitCont = nullptr;
+		SetFactory(new PUnitFactory_Jump(pPUnitCont, Expr::Reference(pExprSrc)));
+	}
+	void Add_Jump(const PUnit* pPUnitCont, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Jump(pPUnitCont, Expr::Reference(pExprSrc)));
+	}
+	void Add_JumpIf(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_JumpIf(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_JumpIfNot(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_JumpIfNot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_NilJumpIf(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_NilJumpIf(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_NilJumpIfNot(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_NilJumpIfNot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_KeepJumpIf(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_KeepJumpIf(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_KeepJumpIfNot(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_KeepJumpIfNot(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_BeginTryBlock(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_BeginTryBlock(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_EndTryBlock(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitCont = nullptr;
+		SetFactory(new PUnitFactory_EndTryBlock(pPUnitCont, Expr::Reference(pExprSrc)));
+	}
+	void Add_JumpIfNoCatch(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_JumpIfNoCatch(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_JumpIfNoCatchAny(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_JumpIfNoCatchAny(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_NilJumpIfNoCatch(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_NilJumpIfNoCatch(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_NilJumpIfNoCatchAny(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitBranchDest = nullptr;
+		SetFactory(new PUnitFactory_NilJumpIfNoCatchAny(pPUnitBranchDest, Expr::Reference(pExprSrc)));
+	}
+	void Add_BeginSequence(const Expr* pExprSrc = nullptr) {
+		const PUnit* pPUnitSentinel = nullptr;
+		SetFactory(new PUnitFactory_BeginSequence(pPUnitSentinel, Expr::Reference(pExprSrc)));
+	}
+	void Add_EndSequence(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_EndSequence(Expr::Reference(pExprSrc)));
+	}
+	void Add_DiscardValue(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_DiscardValue(Expr::Reference(pExprSrc)));
+	}
+	void Add_RemoveValue(size_t offset, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_RemoveValue(offset, Expr::Reference(pExprSrc)));
+	}
+	void Add_RemoveValues(size_t offset, size_t cnt, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_RemoveValues(offset, cnt, Expr::Reference(pExprSrc)));
+	}
+	void Add_Break(const PUnit* pPUnitMarked, bool branchDestFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Break(pPUnitMarked, branchDestFlag, Expr::Reference(pExprSrc)));
+	}
+	void Add_Continue(const PUnit* pPUnitOfLoop, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Continue(pPUnitOfLoop, Expr::Reference(pExprSrc)));
+	}
+	void Add_Miscatch(Value* pValue, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Miscatch(pValue, Expr::Reference(pExprSrc)));
+	}
+	void Add_Return(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Return(Expr::Reference(pExprSrc)));
+	}
+	template<typename T_Frame> void Add_PushFrame(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PushFrame<T_Frame>(Expr::Reference(pExprSrc)));
+	}
+	void Add_PushFrameFromStack(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PushFrameFromStack(Expr::Reference(pExprSrc)));
+	}
+	void Add_PopFrame(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PopFrame(Expr::Reference(pExprSrc)));
+	}
+	void Add_NoOperation(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_NoOperation(Expr::Reference(pExprSrc)));
+	}
+	void Add_Terminate() {
+		SetFactory(new PUnitFactory_Terminate());
+		Flush();
+	}
 	void Print() const;
 	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
 	Iterator* EachPUnit() const;
 private:
 	void _Flush(bool discardValueFlag);
 };
-
-template<typename T_Frame>
-void Composer::Add_PushFrame(const Expr* pExprSrc)
-{
-	SetFactory(new PUnitFactory_PushFrame<T_Frame>(Expr::Reference(pExprSrc)));
-}
 
 }
 
