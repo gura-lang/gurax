@@ -153,6 +153,8 @@ public:
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator);
+	virtual void ComposeForAssignmentInClass(
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator);
 	virtual void ComposeForArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
@@ -733,6 +735,7 @@ public:
 	Expr_Caller* GetExprTrailerLast();
 	bool IsTrailer() const { return false; }
 	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
+	Function* CreateFunction(Composer& composer, Expr* pExprAssigned, bool withinClassFlag);
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
@@ -743,6 +746,8 @@ public:
 	}
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
+	virtual void ComposeForAssignmentInClass(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;

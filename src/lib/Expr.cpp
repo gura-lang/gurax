@@ -63,10 +63,9 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 		pExpr->Compose(composer);
 		pExpr = pExpr->GetExprNext();
 	}
-	while (pExpr) {
+	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.FlushDiscard();
 		pExpr->Compose(composer);
-		pExpr = pExpr->GetExprNext();
 	}
 	if (pPUnitMarked == composer.PeekPUnitCont()) { // when nothing has been yielded
 		composer.Add_Value(Value::nil(), this);
@@ -94,6 +93,12 @@ void Expr::ComposeForArgSlot(Composer& composer)
 }
 
 void Expr::ComposeForAssignment(
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+{
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
+}
+
+void Expr::ComposeForAssignmentInClass(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
@@ -800,10 +805,29 @@ void Expr_Caller::ComposeForAssignment(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	if (!GetExprCar()->IsType<Expr_Identifier>()) {
+	RefPtr<Function> pFunction(CreateFunction(composer, pExprAssigned, false));
+	if (!pFunction) return;
+	composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
+}
+
+void Expr_Caller::ComposeForAssignmentInClass(
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+{
+	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "identifier is expected");
+						 "operator can not be applied in function assigment");
 		return;
+	}
+	RefPtr<Function> pFunction(CreateFunction(composer, pExprAssigned, true));
+	if (!pFunction) return;
+	composer.Add_AssignMethod(pFunction.release(), this);			// [Value]
+}
+
+Function* Expr_Caller::CreateFunction(Composer& composer, Expr* pExprAssigned, bool withinClassFlag)
+{
+	if (!GetExprCar()->IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
+		return nullptr;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
@@ -824,10 +848,9 @@ void Expr_Caller::ComposeForAssignment(
 		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(Function::Type::Function, pExprCarEx->GetSymbol(),
-						   GetDeclCallable().Reference(), pExprAssigned->Reference()));
-	composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
+	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;
+	return new FunctionCustom(type, pExprCarEx->GetSymbol(),
+							  GetDeclCallable().Reference(), pExprAssigned->Reference());
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
