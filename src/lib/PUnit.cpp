@@ -327,14 +327,15 @@ PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_AssignMethod
-// Stack View: [] -> [Function] (continue)
-//                -> []         (discard)
+// Stack View: [VType] -> [VType Function] (continue)
+//                     -> [VType]         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	Frame& frame = processor.GetFrameCur();
+	VType& vtype = Value_VType::GetVTypeThis(processor.PeekValue(0));
+	Frame& frame = vtype.GetFrame();
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
 	RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
