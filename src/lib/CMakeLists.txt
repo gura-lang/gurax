@@ -11,6 +11,7 @@ add_library(guraxcore SHARED
 	CommandLine.cpp
 	Common.cpp
 	Composer.cpp
+	Constructor.cpp
 	DateTime.cpp
 	DeclArg.cpp
 	DeclBlock.cpp

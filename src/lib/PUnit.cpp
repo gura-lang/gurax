@@ -338,9 +338,18 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 	Frame& frame = vtype.GetFrame();
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
-	RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
-	frame.Assign(GetFunction().GetSymbol(), pValueAssigned->Reference());
-	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	const Symbol* pSymbol = pFunction->GetSymbol();
+	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
+		RefPtr<Constructor> pConstructor(new Constructor(vtype, pFunction.Reference()));
+		vtype.SetConstructor(pConstructor.release());
+		if (!discardValueFlag) {
+			processor.PushValue(new Value_Function(pFunction.release()));
+		}
+	} else {
+		RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
+		frame.Assign(pSymbol, pValueAssigned->Reference());
+		if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

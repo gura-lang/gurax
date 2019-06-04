@@ -15,6 +15,7 @@
 #include "gurax/CommandLine.h"
 #include "gurax/Common.h"
 #include "gurax/Composer.h"
+#include "gurax/Constructor.h"
 #include "gurax/DateTime.h"
 #include "gurax/DeclArg.h"
 #include "gurax/DeclBlock.h"
