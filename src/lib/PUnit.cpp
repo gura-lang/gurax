@@ -390,15 +390,13 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignProperty<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
-#if 0
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	VType& vtype = Value_VType::GetVTypeThis(processor.PeekValue(1));
 	RefPtr<Value> pValueAssigned(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	RefPtr<PropHandler> pPropHandler(new PropHandler(GetSymbol()));
+	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(GetSymbol()));
 	pPropHandler->Declare(VTYPE_Any, PropHandler::Flag::Readable | PropHandler::Flag::Writable);
 	vtype.Assign(pPropHandler.release());
-#endif
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
