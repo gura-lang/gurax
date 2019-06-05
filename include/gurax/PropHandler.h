@@ -155,8 +155,8 @@ private:
 	RefPtr<HelpProvider> _pHelpProvider;
 public:
 	// Constructor
-	PropHandler(const Symbol* pSymbol, Flags flags);
-	PropHandler(const char* name, Flags flags) : PropHandler(Symbol::Add(name), flags) {}
+	PropHandler(const Symbol* pSymbol, Flags flags = Flag::None);
+	PropHandler(const char* name, Flags flags = Flag::None) : PropHandler(Symbol::Add(name), flags) {}
 	// Copy constructor/operator
 	PropHandler(const PropHandler& src) = delete;
 	PropHandler& operator=(const PropHandler& src) = delete;

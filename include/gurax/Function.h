@@ -136,6 +136,7 @@ public:
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
 	bool IsTypeClassMethod() const { return _type == Type::ClassMethod; }
+	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	String MakeFullName() const;

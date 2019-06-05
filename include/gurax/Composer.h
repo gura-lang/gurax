@@ -102,6 +102,9 @@ public:
 	void Add_AssignMethod(Function* pFunction, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_AssignMethod(pFunction, Expr::Reference(pExprSrc)));
 	}
+	void Add_AssignProperty(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignProperty(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
 	void Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Cast(vtype, listVarFlag, Expr::Reference(pExprSrc)));
 	}

@@ -383,6 +383,55 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_AssignProperty
+// Stack View: [VType Value] -> [VType Value] (continue)
+//                           -> [VType]       (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_AssignProperty<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+#if 0
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	VType& vtype = Value_VType::GetVTypeThis(processor.PeekValue(1));
+	RefPtr<Value> pValueAssigned(
+		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
+	RefPtr<PropHandler> pPropHandler(new PropHandler(GetSymbol()));
+	pPropHandler->Declare(VTYPE_Any, PropHandler::Flag::Readable | PropHandler::Flag::Writable);
+	vtype.Assign(pPropHandler.release());
+#endif
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_AssignProperty<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("AssignProperty(%s,cont=%s)",
+			   GetSymbol()->GetName(),
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_AssignProperty::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_AssignProperty<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_AssignProperty<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_AssignProperty<0, true>(_pSymbol, _pAttr.release());
+		} else {
+			_pPUnitCreated = new PUnit_AssignProperty<0, false>(_pSymbol, _pAttr.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Cast
 // Stack View: [Any] -> [Casted] (continue)
 //                   -> []       (discard)
@@ -1241,7 +1290,7 @@ void PUnit_PropGet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
 		Error::Issue(ErrorType::PropertyError,
-				   "value type '%s' doesn't have a property named '%s'",
+				   "value type '%s' doesn't have a property '%s'",
 				   valueTarget.GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
@@ -1291,7 +1340,8 @@ void PUnit_PropSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
 		Error::Issue(ErrorType::PropertyError,
-				   "failed to set value to symbol '%s'", GetSymbol()->GetName());
+				   "value type '%s' doesn't have a writable property '%s'",
+				   pValueTarget->GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp.release());

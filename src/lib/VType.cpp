@@ -32,6 +32,13 @@ void VType::SetAttrs(VType& vtypeInherited, Flags flags)
 	_flags = flags;
 }
 
+void VType::SetSymbol(const Symbol* pSymbol)
+{
+	_pSymbol = pSymbol;
+	Function& constructor = GetConstructor();
+	if (!constructor.IsEmpty() && constructor.GetSymbol()->IsEmpty()) constructor.SetSymbol(pSymbol);
+}
+
 String VType::MakeFullName() const
 {
 	String str;

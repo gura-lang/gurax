@@ -90,6 +90,10 @@ void Argument::AssignToFrame(Frame& frame) const
 	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		pArgSlot->AssignToFrame(frame);
 	}
+	if (GetValueThis().IsValid()) {
+		// assign to symbol "this"
+		frame.AssignFromArgument(Gurax_Symbol(this_), GetValueThis().Reference());
+	} while (0);
 	do {
 		// assign to symbol declared as dict%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();

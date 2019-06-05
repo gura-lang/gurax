@@ -62,7 +62,7 @@ public:
 	void SetAttrs(VType& vtypeInherited, Flags flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	VType* GetVTypeInherited() const { return _pVTypeInherited; }
-	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }
+	void SetSymbol(const Symbol* pSymbol);
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
@@ -88,6 +88,7 @@ public:
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
 	const PropHandler* LookupPropHandlerOfClass(const Symbol* pSymbol) const;
 	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
+	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
 	Value* Cast(const Value& value, bool listVarFlag) const;

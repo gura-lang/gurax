@@ -404,6 +404,52 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_AssignProperty
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_AssignProperty : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_AssignProperty(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_AssignProperty(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_AssignProperty(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_AssignProperty : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_AssignProperty");
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+public:
+	PUnitFactory_AssignProperty(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_AssignProperty<1, false>) : sizeof(PUnit_AssignProperty<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Cast
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>

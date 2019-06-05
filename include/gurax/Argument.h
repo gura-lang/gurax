@@ -68,6 +68,7 @@ public:
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }
 	void SetValueThis(Value* pValueThis) { _pValueThis.reset(pValueThis); }
 	Value& GetValueThis() { return *_pValueThis; }
+	const Value& GetValueThis() const { return *_pValueThis; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }

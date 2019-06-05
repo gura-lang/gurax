@@ -255,6 +255,19 @@ void Expr_Identifier::ComposeForAssignment(
 	composer.Add_AssignToSymbol(GetSymbol(), this);			// [Assigned]
 }
 
+void Expr_Identifier::ComposeForAssignmentInClass(
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+{
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in property assigment");
+		return;
+	}
+	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
+	composer.Add_AssignProperty(GetSymbol(), GetAttr().Reference(), this);
+	composer.FlushDiscard();										// [VType]
+}
+
 String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) const
 {
 	String str;
@@ -820,7 +833,8 @@ void Expr_Caller::ComposeForAssignmentInClass(
 	}
 	RefPtr<Function> pFunction(CreateFunction(composer, pExprAssigned, true));
 	if (!pFunction) return;
-	composer.Add_AssignMethod(pFunction.release(), this);			// [Value]
+	composer.Add_AssignMethod(pFunction.release(), this);
+	composer.FlushDiscard();										// [VType]
 }
 
 Function* Expr_Caller::CreateFunction(Composer& composer, Expr* pExprAssigned, bool withinClassFlag)
