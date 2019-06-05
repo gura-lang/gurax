@@ -39,6 +39,7 @@ add_library(guraxcore SHARED
 	PathName.cpp
 	Processor.cpp
 	PropHandler.cpp
+	PropHandlerCustom.cpp
 	PUnit.cpp
 	Random.cpp
 	Referable.cpp

@@ -42,6 +42,7 @@
 #include "gurax/PathName.h"
 #include "gurax/Processor.h"
 #include "gurax/PropHandler.h"
+#include "gurax/PropHandlerCustom.h"
 #include "gurax/PUnit.h"
 #include "gurax/Random.h"
 #include "gurax/Referable.h"
