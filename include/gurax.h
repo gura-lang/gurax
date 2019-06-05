@@ -61,6 +61,7 @@
 #include "gurax/Value.h"
 #include "gurax/Version.h"
 #include "gurax/VType.h"
+#include "gurax/VTypeCustom.h"
 #include "gurax/VType_Any.h"
 #include "gurax/VType_ArgMapper.h"
 #include "gurax/VType_ArgMapper_Multiple.h"
