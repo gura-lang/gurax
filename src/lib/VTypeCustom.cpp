@@ -8,22 +8,18 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VTypeCustom
 //------------------------------------------------------------------------------
-//VType_Any VTYPE_Any("Any");
+VTypeCustom VTYPECustom("Custom");
 
-#if 0
-void VType_Any::DoPrepare(Frame& frameOuter)
+void VTypeCustom::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
-	SetAttrs(VType::Empty, Flag::Immutable);
-	// Assignment of method
-	Assign(Gurax_CreateMethod(Any, ToString));
+	SetAttrs(VTYPE_Object, Flag::Mutable);
 }
 
-Value* VType_Any::DoCastFrom(const Value& value) const
+Value* VTypeCustom::DoCastFrom(const Value& value) const
 {
 	return value.Reference();
 }
-#endif
 
 //------------------------------------------------------------------------------
 // ValueCustom

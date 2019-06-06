@@ -11,24 +11,35 @@ namespace Gurax {
 // VTypeCustom
 //------------------------------------------------------------------------------
 class VTypeCustom : public VType {
+private:
+	size_t _nProps;
 public:
-	using VType::VType;
-	//virtual void DoPrepare(Frame& frameOuter) override;
-	//virtual Value* DoCastFrom(const Value& value) const override;
+	VTypeCustom(const char* name) : VType(name), _nProps(0) {}
+public:
+	size_t AddProp() { return _nProps++; }
+	size_t CountProps() const { return _nProps; }
+public:
+	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value) const override;
 };
+
+extern VTypeCustom VTYPECustom;
 
 //------------------------------------------------------------------------------
 // ValueCustom
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ValueCustom : public Value {
+class GURAX_DLLDECLARE ValueCustom : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ValueCustom);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueCustom");
+protected:
+	RefPtr<ValueOwner> _pValuesProp;
 public:
 	// Constructor
-	ValueCustom(VType& vtype) : Value(vtype) {}
+	explicit ValueCustom(VType& vtype, size_t nProps) :
+		Value_Object(vtype), _pValuesProp(new ValueOwner(nProps, Value::nil(nProps))) {}
 	// Copy constructor/operator
 	ValueCustom(const ValueCustom& src) = delete;
 	ValueCustom& operator=(const ValueCustom& src) = delete;

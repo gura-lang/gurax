@@ -93,13 +93,20 @@ public:
 public:
 	static void CreateConstant();
 public:
-	static Value* undefined()	{ return _pValue_undefined->Reference(); }
-	static Value* nil()			{ return _pValue_nil->Reference(); }
-	static Value* false_()		{ return _pValue_false_->Reference(); }
-	static Value* true_()		{ return _pValue_true_->Reference(); }
-	static Value* Bool(bool f)	{ return f? true_() : false_(); }
-	static Value* Zero()		{ return _pValue_Zero->Reference(); }
-	static Value* EmptyStr()	{ return _pValue_EmptyStr->Reference(); }
+	static Value* undefined()					{ return _pValue_undefined->Reference(); }
+	static Value* nil()							{ return _pValue_nil->Reference(); }
+	static Value* false_()						{ return _pValue_false_->Reference(); }
+	static Value* true_()						{ return _pValue_true_->Reference(); }
+	static Value* Bool(bool f)					{ return f? true_() : false_(); }
+	static Value* Zero()						{ return _pValue_Zero->Reference(); }
+	static Value* EmptyStr()					{ return _pValue_EmptyStr->Reference(); }
+	static Value* undefined(size_t nRefs)		{ return _pValue_undefined->Reference(nRefs); }
+	static Value* nil(size_t nRefs)				{ return _pValue_nil->Reference(nRefs); }
+	static Value* false_(size_t nRefs)			{ return _pValue_false_->Reference(nRefs); }
+	static Value* true_(size_t nRefs)			{ return _pValue_true_->Reference(nRefs); }
+	static Value* Bool(bool f, size_t nRefs)	{ return f? true_(nRefs) : false_(nRefs); }
+	static Value* Zero(size_t nRefs)			{ return _pValue_Zero->Reference(nRefs); }
+	static Value* EmptyStr(size_t nRefs)		{ return _pValue_EmptyStr->Reference(nRefs); }
 public:
 	// Virtual functions
 	virtual Value* Clone() const = 0;
@@ -152,6 +159,8 @@ protected:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ValueList : public std::vector<Value*> {
 public:
+	using std::vector<Value*>::vector;
+public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	VType* GetVTypeOfElems() const;
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -170,6 +179,8 @@ public:
 	Gurax_DeclareReferable(ValueOwner);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueOwner");
+public:
+	using ValueList::ValueList;
 protected:
 	~ValueOwner() { Clear(); }
 public:

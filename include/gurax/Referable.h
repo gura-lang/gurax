@@ -21,9 +21,19 @@ static T* Reference(const T* p) { \
 	if (pCasted) pCasted->_cntRef++; \
 	return pCasted; \
 } \
+static T* Reference(const T* p, size_t nRefs) {	\
+	T* pCasted = const_cast<T*>(p); \
+	if (pCasted) pCasted->_cntRef += nRefs; \
+	return pCasted; \
+} \
 T* Reference() const { \
 	T* pCasted = const_cast<T*>(this); \
 	pCasted->_cntRef++; \
+	return pCasted; \
+} \
+T* Reference(size_t nRefs) const { \
+	T* pCasted = const_cast<T*>(this); \
+	pCasted->_cntRef += nRefs; \
 	return pCasted; \
 } \
 WeakPtr* GetWeakPtr() const {\
@@ -77,6 +87,7 @@ public:
 	T* get() const { return _p; }
 	T* release() { T* p = _p; _p = nullptr; return p; }
 	T* Reference() const { return _p? _p->Reference() : nullptr; }
+	T* Reference(size_t nRefs) const { return _p? _p->Reference(nRefs) : nullptr; }
 	explicit operator bool() const { return static_cast<bool>(_p); }
 };
 
