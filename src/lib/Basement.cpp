@@ -37,7 +37,6 @@ void Basement::Prepare()
 
 void Basement::PrepareVType(Frame& frame)
 {
-	VTYPECustom.Prepare(frame);
 	VTYPE_Object.Prepare(frame);
 	VTYPE_Any.Prepare(frame);
 	VTYPE_ArgMapper.Prepare(frame);

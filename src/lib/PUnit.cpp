@@ -334,14 +334,14 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	VType& vtype = Value_VType::GetVTypeThis(processor.PeekValue(0));
-	Frame& frame = vtype.GetFrame();
+	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
+	Frame& frame = vtypeCustom.GetFrame();
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
-		RefPtr<Constructor> pConstructor(new Constructor(vtype, pFunction.Reference()));
-		vtype.SetConstructor(pConstructor.release());
+		RefPtr<Constructor> pConstructor(new Constructor(vtypeCustom, pFunction.Reference()));
+		vtypeCustom.SetConstructor(pConstructor.release());
 		if (!discardValueFlag) {
 			processor.PushValue(new Value_Function(pFunction.release()));
 		}
@@ -391,12 +391,13 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignProperty<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	VType& vtype = Value_VType::GetVTypeThis(processor.PeekValue(1));
+	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(1)));
 	RefPtr<Value> pValueAssigned(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(GetSymbol()));
+	size_t iProp = vtypeCustom.AddProp();
+	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(GetSymbol(), iProp));
 	pPropHandler->Declare(VTYPE_Any, PropHandler::Flag::Readable | PropHandler::Flag::Writable);
-	vtype.Assign(pPropHandler.release());
+	vtypeCustom.Assign(pPropHandler.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -857,7 +858,7 @@ void PUnit_CreateVType<nExprSrc, discardValueFlag>::Exec(Processor& processor) c
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	// VType settings
-	VType* pVType = new VType(Symbol::Empty);
+	VType* pVType = new VTypeCustom();
 	pVType->SetAttrs(VTYPE_Object, VType::Flag::Mutable);
 	pVType->SetConstructor(Function::Empty->Reference());
 	if (!discardValueFlag) processor.PushValue(new Value_VType(*pVType));

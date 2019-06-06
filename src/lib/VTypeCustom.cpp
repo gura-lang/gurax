@@ -8,14 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VTypeCustom
 //------------------------------------------------------------------------------
-VTypeCustom VTYPECustom("Custom");
-
-void VTypeCustom::DoPrepare(Frame& frameOuter)
-{
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Mutable);
-}
-
 Value* VTypeCustom::DoCastFrom(const Value& value) const
 {
 	return value.Reference();
@@ -24,5 +16,11 @@ Value* VTypeCustom::DoCastFrom(const Value& value) const
 //------------------------------------------------------------------------------
 // ValueCustom
 //------------------------------------------------------------------------------
+void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
+{
+	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;
+	Value::Delete(*ppValue);
+	*ppValue = pValue;
+}
 
 }

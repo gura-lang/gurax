@@ -7,17 +7,19 @@
 
 namespace Gurax {
 
+class VTypeCustom;
+
 //------------------------------------------------------------------------------
 // Constructor
 //------------------------------------------------------------------------------
 class Constructor : public Function {
 protected:
-	VType& _vtype;
+	VTypeCustom& _vtypeCustom;
 	RefPtr<Function> _pFuncInitializer;
 public:
-	Constructor(VType& vtype, Function* pFuncInitializer);
+	Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer);
 public:
-	VType& GetVType() const { return _vtype; }
+	VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 	const Function& GetFuncInitializer() const { return *_pFuncInitializer; }
 public:
 	// Virtual functions of Function

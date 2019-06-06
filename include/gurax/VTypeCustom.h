@@ -14,16 +14,13 @@ class VTypeCustom : public VType {
 private:
 	size_t _nProps;
 public:
-	VTypeCustom(const char* name) : VType(name), _nProps(0) {}
+	VTypeCustom() : VType(Symbol::Empty), _nProps(0) {}
 public:
 	size_t AddProp() { return _nProps++; }
 	size_t CountProps() const { return _nProps; }
 public:
-	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value) const override;
 };
-
-extern VTypeCustom VTYPECustom;
 
 //------------------------------------------------------------------------------
 // ValueCustom
@@ -38,8 +35,9 @@ protected:
 	RefPtr<ValueOwner> _pValuesProp;
 public:
 	// Constructor
-	explicit ValueCustom(VType& vtype, size_t nProps) :
-		Value_Object(vtype), _pValuesProp(new ValueOwner(nProps, Value::nil(nProps))) {}
+	explicit ValueCustom(VTypeCustom& vtypeCustom) :
+		Value_Object(vtypeCustom),
+		_pValuesProp(new ValueOwner(vtypeCustom.CountProps(), Value::nil(vtypeCustom.CountProps()))) {}
 	// Copy constructor/operator
 	ValueCustom(const ValueCustom& src) = delete;
 	ValueCustom& operator=(const ValueCustom& src) = delete;
@@ -49,6 +47,9 @@ public:
 protected:
 	// Destructor
 	virtual ~ValueCustom() = default;
+public:
+	void SetCustomProp(size_t iProp, Value* pValue);
+	Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

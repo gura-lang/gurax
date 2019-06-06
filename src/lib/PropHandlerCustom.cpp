@@ -10,11 +10,14 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Value* PropHandlerCustom::DoGetValue(Value& valueTarget, const Attribute& attr) const
 {
-	return Value::nil();
+	ValueCustom& valueTargetEx = dynamic_cast<ValueCustom&>(valueTarget);
+	return valueTargetEx.GetCustomProp(_iProp);
 }
 
 void PropHandlerCustom::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
 {
+	ValueCustom& valueTargetEx = dynamic_cast<ValueCustom&>(valueTarget);
+	valueTargetEx.SetCustomProp(_iProp, value.Reference());
 }
 
 }
