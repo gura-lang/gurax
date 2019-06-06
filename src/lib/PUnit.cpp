@@ -337,9 +337,10 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	Frame& frame = vtypeCustom.GetFrame();
 	RefPtr<Function> pFunction(GetFunction().Reference());
-	pFunction->SetFrameOuter(frame);
+	pFunction->SetFrameOuter(processor.GetFrameCur());
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
+		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
 		RefPtr<Constructor> pConstructor(new Constructor(vtypeCustom, pFunction.Reference()));
 		vtypeCustom.SetConstructor(pConstructor.release());
 		if (!discardValueFlag) {
