@@ -38,9 +38,9 @@ public:
 	// Constructor
 	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 			 DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock);
-	Argument(DeclCallable* pDeclCallable) :
+	Argument(DeclCallable* pDeclCallable, DeclCallable::Flags flags = DeclCallable::Flag::None) :
 		Argument(Value::nil(), pDeclCallable, Attribute::Empty->Reference(),
-				 DeclCallable::Flag::None, Value::nil(), nullptr) {}
+				 flags, Value::nil(), nullptr) {}
 	Argument(const Function& function);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;

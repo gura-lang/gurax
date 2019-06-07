@@ -183,6 +183,38 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
+// Test() {block}
+Gurax_DeclareFunction(Test)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Test)
+{
+	// Function body
+	Frame& frame = processor.GetFrameCur();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	RefPtr<Argument> pArgument(
+		new Argument(pExprOfBlock->GetDeclCallable().Reference(), DeclCallable::Flag::CutExtraArgs));
+	ArgFeeder args(*pArgument);
+	if (!args.FeedValue(frame, new Value_Number(1234))) return Value::nil();
+	do {
+		pArgument->AssignToFrame(processor.PushFrame<Frame_Scope>());
+		processor.ProcessExpr(*pExprOfBlock);
+		processor.PopFrame();
+		processor.ClearEvent();
+		if (Error::IsIssued()) return Value::nil();
+	} while (0);	
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
+// Assignment
+//------------------------------------------------------------------------------
 void Functions::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(dir));
@@ -190,6 +222,7 @@ void Functions::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));
 	frame.Assign(Gurax_CreateFunction(Println));
+	frame.Assign(Gurax_CreateFunction(Test));
 }
 
 }
