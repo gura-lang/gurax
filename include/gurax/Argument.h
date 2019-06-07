@@ -51,6 +51,10 @@ public:
 protected:
 	~Argument() = default;
 public:
+	static Argument* CreateForBlockCall(const Expr_Block& exprOfBlock) {
+		return new Argument(exprOfBlock.GetDeclCallable().Reference(), DeclCallable::Flag::CutExtraArgs);
+	}
+public:
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }

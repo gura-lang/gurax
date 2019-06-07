@@ -198,18 +198,12 @@ Gurax_ImplementFunction(Test)
 	// Function body
 	Frame& frame = processor.GetFrameCur();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	RefPtr<Argument> pArgument(
-		new Argument(pExprOfBlock->GetDeclCallable().Reference(), DeclCallable::Flag::CutExtraArgs));
+	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
 	ArgFeeder args(*pArgument);
 	if (!args.FeedValue(frame, new Value_Number(1234))) return Value::nil();
-	do {
-		pArgument->AssignToFrame(processor.PushFrame<Frame_Scope>());
-		processor.ProcessExpr(*pExprOfBlock);
-		processor.PopFrame();
-		processor.ClearEvent();
-		if (Error::IsIssued()) return Value::nil();
-	} while (0);	
-	return Value::nil();
+	if (!args.FeedValue(frame, new Value_Number(5678))) return Value::nil();
+	if (!args.FeedValue(frame, new Value_String("hoge"))) return Value::nil();
+	return pExprOfBlock->DoEval(processor, *pArgument);
 }
 
 //------------------------------------------------------------------------------

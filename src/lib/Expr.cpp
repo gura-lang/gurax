@@ -104,6 +104,17 @@ void Expr::ComposeForAssignmentInClass(
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
+Value* Expr::DoEval(Processor& processor, Argument& argument) const
+{
+	if (!GetPUnitFirst()) return Value::nil();
+	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
+	processor.ProcessPUnit(GetPUnitFirst());
+	processor.PopFrame();
+	processor.ClearEvent();
+	if (Error::IsIssued()) return Value::nil();
+	return processor.PopValue();
+}
+
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
