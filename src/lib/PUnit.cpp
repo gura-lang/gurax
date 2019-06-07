@@ -335,21 +335,11 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
-	Frame& frame = vtypeCustom.GetFrame();
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(processor.GetFrameCur());
-	const Symbol* pSymbol = pFunction->GetSymbol();
-	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
-		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
-		RefPtr<Constructor> pConstructor(new Constructor(vtypeCustom, pFunction.Reference()));
-		vtypeCustom.SetConstructor(pConstructor.release());
-		if (!discardValueFlag) {
-			processor.PushValue(new Value_Function(pFunction.release()));
-		}
-	} else {
-		RefPtr<Value> pValueAssigned(new Value_Function(pFunction.release()));
-		frame.Assign(pSymbol, pValueAssigned->Reference());
-		if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	vtypeCustom.AssignFunction(pFunction.Reference());
+	if (!discardValueFlag) {
+		processor.PushValue(new Value_Function(pFunction.release()));
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }

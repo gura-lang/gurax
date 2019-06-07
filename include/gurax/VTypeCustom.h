@@ -18,6 +18,7 @@ public:
 public:
 	size_t AddProp() { return _nProps++; }
 	size_t CountProps() const { return _nProps; }
+	void AssignFunction(Function* pFunction);
 public:
 	virtual Value* DoCastFrom(const Value& value) const override;
 };
@@ -58,9 +59,8 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)? false : GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return "custom";
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 }

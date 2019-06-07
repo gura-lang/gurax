@@ -30,8 +30,7 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 	processor.ProcessPUnit(GetPUnitBody());
 	processor.PopFrame();
 	processor.ClearEvent();
-	if (Error::IsIssued()) return Value::nil();
-	return processor.PopValue();
+	return Error::IsIssued()? Value::nil() : processor.PopValue();
 }
 
 String FunctionCustom::ToString(const StringStyle& ss) const
