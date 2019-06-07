@@ -1276,9 +1276,6 @@ void PUnit_PropGet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	Value& valueTarget = processor.PeekValue(0);
 	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		Error::Issue(ErrorType::PropertyError,
-				   "value type '%s' doesn't have a property '%s'",
-				   valueTarget.GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp->Reference());
@@ -1326,9 +1323,6 @@ void PUnit_PropSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueProp(processor.PopValue());
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
-		Error::Issue(ErrorType::PropertyError,
-				   "value type '%s' doesn't have a writable property '%s'",
-				   pValueTarget->GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp.release());
@@ -1377,9 +1371,6 @@ void PUnit_Member<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
-		Error::Issue(ErrorType::PropertyError,
-				   "value type '%s' doesn't have a property named '%s'",
-				   pValueTarget->GetVType().MakeFullName().c_str(), GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (discardValueFlag) {

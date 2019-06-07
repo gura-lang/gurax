@@ -76,6 +76,9 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		return pPropHandler->GetValue(*this, attr);
 	} else {
+		Error::Issue(ErrorType::PropertyError,
+					 "value type '%s' doesn't have a property '%s'",
+					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
 		return nullptr;
 	}
 }
@@ -84,10 +87,16 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (!pPropHandler) {
+		Error::Issue(ErrorType::PropertyError,
+					 "value type '%s' doesn't have a property '%s'",
+					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
 		return false;
 	} else if (pPropHandler->IsSet(PropHandler::Flag::Writable)) {
 		return pPropHandler->SetValue(*this, *pValue, attr);
 	} else {
+		Error::Issue(ErrorType::PropertyError,
+					 "value type '%s' doesn't have a writable property '%s'",
+					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
 		return false;
 	}
 }

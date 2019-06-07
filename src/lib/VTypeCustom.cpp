@@ -22,7 +22,13 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 void VTypeCustom::AssignProperty(const Symbol* pSymbol, const Attribute& attr, Value* pValueInit)
 {
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, AddProp()));
-	pPropHandler->Declare(VTYPE_Any, PropHandler::Flag::Readable | PropHandler::Flag::Writable);
+	const VType *pVType = &pValueInit->GetVType();
+	PropHandler::Flags flags = PropHandler::Flag::Readable | PropHandler::Flag::Writable;
+	if (pVType->IsNil()) {
+		pVType = &VTYPE_Any;
+		flags |= PropHandler::Flag::Nil;
+	}
+	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
 }
 
