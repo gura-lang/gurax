@@ -375,20 +375,17 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_AssignProperty
-// Stack View: [VType Value] -> [VType Value] (continue)
-//                           -> [VType]       (discard)
+// Stack View: [VType ValueInit] -> [VType ValueInit] (continue)
+//                               -> [VType]           (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignProperty<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(1)));
-	RefPtr<Value> pValueAssigned(
+	RefPtr<Value> pValueInit(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	size_t iProp = vtypeCustom.AddProp();
-	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(GetSymbol(), iProp));
-	pPropHandler->Declare(VTYPE_Any, PropHandler::Flag::Readable | PropHandler::Flag::Writable);
-	vtypeCustom.Assign(pPropHandler.release());
+	vtypeCustom.AssignProperty(GetSymbol(), GetAttr(), pValueInit.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

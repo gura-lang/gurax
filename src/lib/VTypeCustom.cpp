@@ -19,6 +19,13 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 	}
 }
 
+void VTypeCustom::AssignProperty(const Symbol* pSymbol, const Attribute& attr, Value* pValueInit)
+{
+	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, AddProp()));
+	pPropHandler->Declare(VTYPE_Any, PropHandler::Flag::Readable | PropHandler::Flag::Writable);
+	Assign(pPropHandler.release());
+}
+
 Value* VTypeCustom::DoCastFrom(const Value& value) const
 {
 	return value.Reference();
