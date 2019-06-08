@@ -405,9 +405,11 @@ PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignPropHandler<1, true>(_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignPropHandler<1, true>(
+				_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignPropHandler<1, false>(_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignPropHandler<1, false>(
+				_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
