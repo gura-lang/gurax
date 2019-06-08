@@ -374,45 +374,46 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AssignProperty
+// PUnit_AssignPropHandler
 // Stack View: [VType ValueInit] -> [VType ValueInit] (continue)
 //                               -> [VType]           (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_AssignProperty<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	Frame& frame = processor.GetFrameCur();
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(1)));
 	RefPtr<Value> pValueInit(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	vtypeCustom.AssignProperty(GetSymbol(), GetAttr(), pValueInit.release());
+	vtypeCustom.AssignPropHandler(frame, GetSymbol(), GetAttr(), pValueInit.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_AssignProperty<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("AssignProperty(%s,cont=%s)",
+	str.Printf("AssignPropHandler(%s,cont=%s)",
 			   GetSymbol()->GetName(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_AssignProperty::Create(bool discardValueFlag)
+PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignProperty<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignPropHandler<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignProperty<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignPropHandler<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignProperty<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_AssignPropHandler<0, true>(_pSymbol, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_AssignProperty<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_AssignPropHandler<0, false>(_pSymbol, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;

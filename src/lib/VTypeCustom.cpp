@@ -19,7 +19,7 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 	}
 }
 
-void VTypeCustom::AssignProperty(const Symbol* pSymbol, const Attribute& attr, Value* pValueInit)
+void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const Attribute& attr, Value* pValueInit)
 {
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, AddProp()));
 	const VType *pVType = &pValueInit->GetVType();

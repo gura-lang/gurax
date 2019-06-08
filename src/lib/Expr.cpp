@@ -274,7 +274,7 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 		return;
 	}
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignProperty(GetSymbol(), GetAttr().Reference(), this);
+	composer.Add_AssignPropHandler(GetSymbol(), GetAttr().Reference(), this);
 	composer.FlushDiscard();										// [VType]
 }
 
