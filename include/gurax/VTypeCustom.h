@@ -19,7 +19,8 @@ public:
 	size_t AddProp() { return _nProps++; }
 	size_t CountProps() const { return _nProps; }
 	void AssignFunction(Function* pFunction);
-	void AssignPropHandler(Frame& frame, const Symbol* pSymbol, const Attribute& attr, Value* pValueInit);
+	void AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
+						   const Attribute& attr, Value* pValueInit);
 public:
 	virtual Value* DoCastFrom(const Value& value) const override;
 };

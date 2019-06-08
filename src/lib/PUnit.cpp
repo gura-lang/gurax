@@ -386,7 +386,7 @@ void PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::Exec(Processor& proces
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(1)));
 	RefPtr<Value> pValueInit(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	vtypeCustom.AssignPropHandler(frame, GetSymbol(), GetAttr(), pValueInit.release());
+	vtypeCustom.AssignPropHandler(frame, GetSymbol(), _listVarFlag, GetAttr(), pValueInit.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -405,15 +405,15 @@ PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignPropHandler<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignPropHandler<1, true>(_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignPropHandler<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignPropHandler<1, false>(_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignPropHandler<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_AssignPropHandler<0, true>(_pSymbol, _listVarFlag, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_AssignPropHandler<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_AssignPropHandler<0, false>(_pSymbol, _listVarFlag, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;

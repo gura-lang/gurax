@@ -274,7 +274,7 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 		return;
 	}
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(GetSymbol(), GetAttr().Reference(), this);
+	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -777,11 +777,14 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 						 "operator can not be applied in property assigment");
 		return;
 	}
-	if (!GetExprCar()->IsType<Expr_Identifier>()) {
-		
+	if (!GetExprCar()->IsType<Expr_Identifier>() || HasExprCdr()) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "invalid format of property declaration");
+		return;
 	}
-	//pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	//composer.Add_AssignPropHandler(GetSymbol(), GetAttr().Reference(), this);
+	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
+	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
+	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), true, pExprCar->GetAttr().Reference(), this);
 	composer.FlushDiscard();										// [VType]
 }
 

@@ -19,7 +19,8 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 	}
 }
 
-void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const Attribute& attr, Value* pValueInit)
+void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
+									const Attribute& attr, Value* pValueInit)
 {
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, AddProp()));
 	const VType *pVType = &pValueInit->GetVType();
@@ -28,6 +29,7 @@ void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const A
 		pVType = &VTYPE_Any;
 		flags |= PropHandler::Flag::Nil;
 	}
+	if (listVarFlag) flags |= PropHandler::Flag::ListVar;
 	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
 }

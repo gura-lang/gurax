@@ -413,13 +413,15 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
+	bool _listVarFlag;
 	RefPtr<Attribute> _pAttr;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_AssignPropHandler(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_AssignPropHandler(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_AssignPropHandler(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr) :
+		_pSymbol(pSymbol), _listVarFlag(listVarFlag), _pAttr(pAttr) {}
+	PUnit_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr, Expr* pExpr) :
+		PUnit_AssignPropHandler(pSymbol, listVarFlag, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -439,10 +441,11 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignPropHandler");
 private:
 	const Symbol* _pSymbol;
+	bool _listVarFlag;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _listVarFlag(listVarFlag), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_AssignPropHandler<1, false>) : sizeof(PUnit_AssignPropHandler<0, false>);
 	}
