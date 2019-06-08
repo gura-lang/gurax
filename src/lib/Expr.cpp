@@ -769,6 +769,22 @@ void Expr_Indexer::ComposeForAssignment(
 	composer.Add_IndexSet(this);								// [Elems]
 }
 
+void Expr_Indexer::ComposeForAssignmentInClass(
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+{
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in property assigment");
+		return;
+	}
+	if (!GetExprCar()->IsType<Expr_Identifier>()) {
+		
+	}
+	//pExprAssigned->ComposeOrNil(composer);							// [VType Value]
+	//composer.Add_AssignPropHandler(GetSymbol(), GetAttr().Reference(), this);
+	composer.FlushDiscard();										// [VType]
+}
+
 String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
 {
 	String str;

@@ -698,6 +698,8 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
+	virtual void ComposeForAssignmentInClass(
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
