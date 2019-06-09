@@ -13,14 +13,15 @@ namespace Gurax {
 class VTypeCustom : public VType {
 private:
 	size_t _nProps;
+	RefPtr<ValueOwner> _pValuesPropInit;
 public:
-	VTypeCustom() : VType(Symbol::Empty), _nProps(0) {}
+	VTypeCustom() : VType(Symbol::Empty), _nProps(0), _pValuesPropInit(new ValueOwner()) {}
 public:
 	size_t AddProp() { return _nProps++; }
 	size_t CountProps() const { return _nProps; }
 	void AssignFunction(Function* pFunction);
 	void AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
-						   const Attribute& attr, Value* pValueInit);
+						   const Attribute& attr, RefPtr<Value> pValueInit);
 public:
 	virtual Value* DoCastFrom(const Value& value) const override;
 };

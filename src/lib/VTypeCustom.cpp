@@ -20,16 +20,26 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 }
 
 void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
-									const Attribute& attr, Value* pValueInit)
+									const Attribute& attr, RefPtr<Value> pValueInit)
 {
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, AddProp()));
-	const VType *pVType = &pValueInit->GetVType();
 	PropHandler::Flags flags = PropHandler::Flag::Readable | PropHandler::Flag::Writable;
-	if (pVType->IsNil()) {
-		pVType = &VTYPE_Any;
-		flags |= PropHandler::Flag::Nil;
-	}
 	if (listVarFlag) flags |= PropHandler::Flag::ListVar;
+	if (pValueInit->IsNil() || attr.IsSet(Gurax_Symbol(nil))) flags |= PropHandler::Flag::Nil;
+	const VType *pVType = &VTYPE_Any;
+	Value* pValue = frame.Lookup(attr.GetDottedSymbol());
+	if (pValue && pValue->IsType(VTYPE_VType)) {
+		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
+		if (!pValueInit->IsNil()) {
+			//pVType->Cast(*pValue, listVarFlag);
+		}
+	} else {
+		pVType = &VTYPE_Nil;
+		if (!pValueInit->IsNil()) {
+			pVType = &pValueInit->GetVType();
+		}
+	}
+	_pValuesPropInit->push_back(pValueInit.release());
 	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
 }
