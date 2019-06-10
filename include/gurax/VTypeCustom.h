@@ -11,6 +11,21 @@ namespace Gurax {
 // VTypeCustom
 //------------------------------------------------------------------------------
 class VTypeCustom : public VType {
+public:
+	class Constructor : public Function {
+	protected:
+		VTypeCustom& _vtypeCustom;
+		RefPtr<Function> _pFuncInitializer;
+	public:
+		Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer);
+	public:
+		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
+		const Function& GetFuncInitializer() const { return *_pFuncInitializer; }
+	public:
+		// Virtual functions of Function
+		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
+		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
+	};
 private:
 	size_t _nProps;
 	RefPtr<ValueOwner> _pValuesPropInit;
