@@ -135,8 +135,8 @@ public:
 	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Import(pDottedSymbol, pSymbolList, mixInFlag, Expr::Reference(pExprSrc)));
 	}
-	void Add_CreateVType(const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_CreateVType(Expr::Reference(pExprSrc)));
+	void Add_CreateVType(bool inheritFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_CreateVType(inheritFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_CreateList(size_t sizeReserve, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_CreateList(sizeReserve, Expr::Reference(pExprSrc)));

@@ -832,7 +832,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_CreateVType
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, bool inheritFlag>
 class GURAX_DLLDECLARE PUnit_CreateVType : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -857,10 +857,12 @@ private:
 class PUnitFactory_CreateVType : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_CreateVType");
+private:
+	bool _inheritFlag;
 public:
-	PUnitFactory_CreateVType(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_CreateVType(bool inheritFlag, Expr* pExprSrc) : PUnitFactory(pExprSrc), _inheritFlag(inheritFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_CreateVType<1, false>) : sizeof(PUnit_CreateVType<0, false>);
+		return _pExprSrc? sizeof(PUnit_CreateVType<1, false, false>) : sizeof(PUnit_CreateVType<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

@@ -12,7 +12,7 @@ VType::UniqId VType::_uniqIdNext = 1;
 VType VType::Empty("");
 
 VType::VType(const Symbol* pSymbol) :
-	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInherited(nullptr),
+	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
 	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
 {
@@ -25,10 +25,10 @@ void VType::Prepare(Frame& frameOuter)
 	DoPrepare(frameOuter);
 }
 
-void VType::SetAttrs(VType& vtypeInherited, Flags flags)
+void VType::SetAttrs(VType& vtypeInh, Flags flags)
 {
-	_pVTypeInherited = &vtypeInherited;
-	_pFrame->SetFrameOuter(_pVTypeInherited->GetFrame().Reference());
+	_pVTypeInh = &vtypeInh;
+	_pFrame->SetFrameOuter(_pVTypeInh->GetFrame().Reference());
 	_flags = flags;
 }
 
@@ -63,7 +63,7 @@ DottedSymbol* VType::MakeDottedSymbol() const
 
 const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 {
-	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInherited()) {
+	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInh()) {
 		const PropHandler* pPropHandler = pVType->GetPropHandlerMap().Lookup(pSymbol);
 		if (pPropHandler) return pPropHandler;
 	}
@@ -72,7 +72,7 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 
 const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 {
-	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInherited()) {
+	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInh()) {
 		const PropHandler* pPropHandler = pVType->GetPropHandlerMapOfClass().Lookup(pSymbol);
 		if (pPropHandler) return pPropHandler;
 	}

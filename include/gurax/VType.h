@@ -32,7 +32,7 @@ public:
 protected:
 	UniqId _uniqId;
 	RefPtr<HelpProvider> _pHelpProvider;
-	VType* _pVTypeInherited;
+	VType* _pVTypeInh;
 	const Symbol* _pSymbol;
 	Flags _flags;
 	RefPtr<Frame_VType> _pFrame;
@@ -59,9 +59,9 @@ public:
 	virtual ~VType() = default;
 public:
 	UniqId GetUniqId() const { return _uniqId; }
-	void SetAttrs(VType& vtypeInherited, Flags flags);
+	void SetAttrs(VType& vtypeInh, Flags flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
-	VType* GetVTypeInherited() const { return _pVTypeInherited; }
+	VType* GetVTypeInh() const { return _pVTypeInh; }
 	void SetSymbol(const Symbol* pSymbol);
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }

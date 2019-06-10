@@ -803,7 +803,14 @@ Gurax_DeclareStatementAlias(class_, "class")
 
 Gurax_ImplementStatement(class_)
 {
-	composer.Add_CreateVType(&exprCaller);									// [VType]
+	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	if (pExprCdr) {
+		pExprCdr->ComposeOrNil(composer);									// [Any]
+		composer.Add_Cast(VTYPE_VType, false, &exprCaller);					// [VTypeInh]
+		composer.Add_CreateVType(true, &exprCaller);						// [VType]
+	} else {
+		composer.Add_CreateVType(false, &exprCaller);						// [VType]
+	}
 	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
 		if (!pExpr->IsType<Expr_Assign>()) {
