@@ -12,6 +12,18 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class VTypeCustom : public VType {
 public:
+	class ConstructorDefault : public Function {
+	protected:
+		VTypeCustom& _vtypeCustom;
+	public:
+		ConstructorDefault(VTypeCustom& vtypeCustom);
+	public:
+		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
+	public:
+		// Virtual functions of Function
+		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
+		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
+	};
 	class Constructor : public Function {
 	protected:
 		VTypeCustom& _vtypeCustom;

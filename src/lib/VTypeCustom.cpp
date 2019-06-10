@@ -10,6 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwner())
 {
+	SetConstructor(new VTypeCustom::ConstructorDefault(*this));
 }
 
 void VTypeCustom::AssignFunction(Function* pFunction)
@@ -52,6 +53,29 @@ void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool li
 Value* VTypeCustom::DoCastFrom(const Value& value) const
 {
 	return value.Reference();
+}
+
+//------------------------------------------------------------------------------
+// VTypeCustom::ConstructorDefault
+//------------------------------------------------------------------------------
+VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom) :
+	Function(Type::Function, Symbol::Empty), _vtypeCustom(vtypeCustom)
+{
+}
+
+Value* VTypeCustom::ConstructorDefault::DoEval(Processor& processor, Argument& argument) const
+{
+	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom()));
+	if (!pValueThis->InitCustomProp()) return nullptr;
+	return pValueThis.release();
+}
+
+String VTypeCustom::ConstructorDefault::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += MakeFullName();
+	str += GetDeclCallable().ToString(ss);
+	return str;
 }
 
 //------------------------------------------------------------------------------

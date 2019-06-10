@@ -855,9 +855,8 @@ void PUnit_CreateVType<nExprSrc, discardValueFlag, inheritFlag>::Exec(Processor&
 		RefPtr<Value> pValueVTypeInh(processor.PopValue());
 		pVTypeInh = &Value_VType::GetVTypeThis(*pValueVTypeInh);
 	}
-	VType* pVType = new VTypeCustom();
+	VTypeCustom* pVType = new VTypeCustom();
 	pVType->SetAttrs(*pVTypeInh, VType::Flag::Mutable);
-	pVType->SetConstructor(Function::Empty->Reference());
 	if (!discardValueFlag) processor.PushValue(new Value_VType(*pVType));
 	processor.SetPUnitNext(_GetPUnitCont());
 }
