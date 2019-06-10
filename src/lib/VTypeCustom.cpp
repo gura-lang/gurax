@@ -61,6 +61,8 @@ Value* VTypeCustom::DoCastFrom(const Value& value) const
 VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom) :
 	Function(Type::Function, Symbol::Empty), _vtypeCustom(vtypeCustom)
 {
+	GetDeclCallable().GetDeclBlock().
+		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 }
 
 Value* VTypeCustom::ConstructorDefault::DoEval(Processor& processor, Argument& argument) const
