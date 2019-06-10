@@ -27,13 +27,12 @@ public:
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};
 private:
-	size_t _nProps;
 	RefPtr<ValueOwner> _pValuesPropInit;
 public:
-	VTypeCustom() : VType(Symbol::Empty), _nProps(0), _pValuesPropInit(new ValueOwner()) {}
+	VTypeCustom();
 public:
-	size_t AddProp() { return _nProps++; }
-	size_t CountProps() const { return _nProps; }
+	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
+	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
 	void AssignFunction(Function* pFunction);
 	void AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
 						   const Attribute& attr, RefPtr<Value> pValueInit);
@@ -55,8 +54,7 @@ protected:
 public:
 	// Constructor
 	explicit ValueCustom(VTypeCustom& vtypeCustom) :
-		Value_Object(vtypeCustom),
-		_pValuesProp(new ValueOwner(vtypeCustom.CountProps(), Value::nil(vtypeCustom.CountProps()))) {}
+		Value_Object(vtypeCustom), _pValuesProp(new ValueOwner()) {}
 	// Copy constructor/operator
 	ValueCustom(const ValueCustom& src) = delete;
 	ValueCustom& operator=(const ValueCustom& src) = delete;
@@ -67,6 +65,9 @@ protected:
 	// Destructor
 	virtual ~ValueCustom() = default;
 public:
+	VTypeCustom& GetVType() { return dynamic_cast<VTypeCustom&>(Value_Object::GetVType()); }
+	const VTypeCustom& GetVType() const { return dynamic_cast<const VTypeCustom&>(Value_Object::GetVType()); }
+	bool InitCustomProp();
 	void SetCustomProp(size_t iProp, Value* pValue);
 	Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
 public:

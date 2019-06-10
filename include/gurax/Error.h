@@ -21,6 +21,7 @@ private:
 	String _dispName;
 public:
 	static const ErrorType ArgumentError;
+	static const ErrorType CastError;
 	static const ErrorType CodecError;
 	static const ErrorType ContextError;
 	static const ErrorType DeclarationError;

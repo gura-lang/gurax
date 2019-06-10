@@ -8,6 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VTypeCustom
 //------------------------------------------------------------------------------
+VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwner())
+{
+}
+
 void VTypeCustom::AssignFunction(Function* pFunction)
 {
 	const Symbol* pSymbol = pFunction->GetSymbol();
@@ -22,7 +26,8 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
 									const Attribute& attr, RefPtr<Value> pValueInit)
 {
-	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, AddProp()));
+	size_t iProp = GetValuesPropInit().size();
+	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, iProp));
 	PropHandler::Flags flags = PropHandler::Flag::Readable | PropHandler::Flag::Writable;
 	if (listVarFlag) flags |= PropHandler::Flag::ListVar;
 	if (pValueInit->IsNil() || attr.IsSet(Gurax_Symbol(nil))) flags |= PropHandler::Flag::Nil;
@@ -39,7 +44,7 @@ void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool li
 			pVType = &pValueInit->GetVType();
 		}
 	}
-	_pValuesPropInit->push_back(pValueInit.release());
+	GetValuesPropInit().push_back(pValueInit.release());
 	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
 }
@@ -60,7 +65,8 @@ VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncI
 
 Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<Value> pValueThis(new ValueCustom(GetVTypeCustom()));
+	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom()));
+	if (!pValueThis->InitCustomProp()) return nullptr;
 	argument.SetValueThis(pValueThis.Reference());
 	RefPtr<Value> pValue(GetFuncInitializer().DoEval(processor, argument));
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
@@ -83,6 +89,21 @@ String VTypeCustom::Constructor::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // ValueCustom
 //------------------------------------------------------------------------------
+bool ValueCustom::InitCustomProp()
+{
+	const ValueOwner& valuesPropInit = GetVType().GetValuesPropInit();
+	_pValuesProp->reserve(valuesPropInit.size());
+	for (const Value* pValue : valuesPropInit) {
+		RefPtr<Value> pValueCloned = pValue->Clone();
+		if (!pValueCloned) {
+			Error::Issue(ErrorType::PropertyError, "failed to initialize property");
+			return false;
+		}
+		_pValuesProp->push_back(pValueCloned.release());
+	}
+	return true;
+}
+
 void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
 {
 	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;

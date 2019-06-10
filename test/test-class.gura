@@ -1,2 +1,9 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
+
+TestCase('Empty') {
+	A = class {
+		__init__()={}
+	}
+	Println(A)
+}
