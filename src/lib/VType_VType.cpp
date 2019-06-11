@@ -25,7 +25,8 @@ String Value_VType::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += constructor.IsEmpty()? GetVTypeThis().MakeFullName() : constructor.ToString();
+	str += constructor.IsEmpty()?
+		GetVTypeThis().MakeFullName() : constructor.ToString(StringStyle().Cram());
 	str += ">";
 	return str;
 }
