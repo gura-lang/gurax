@@ -10,7 +10,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwner())
 {
-	SetConstructor(new VTypeCustom::ConstructorDefault(*this));
 }
 
 void VTypeCustom::AssignFunction(Function* pFunction)
@@ -24,7 +23,7 @@ void VTypeCustom::AssignFunction(Function* pFunction)
 	}
 }
 
-void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
+bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
 									const Attribute& attr, RefPtr<Value> pValueInit)
 {
 	size_t iProp = GetValuesPropInit().size();
@@ -37,17 +36,28 @@ void VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool li
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		if (!pValueInit->IsNil()) {
-			//pVType->Cast(*pValue, listVarFlag);
+			pValueInit.reset(pVType->Cast(*pValueInit, listVarFlag));
+			if (!pValueInit) return false;
 		}
-	} else {
-		pVType = &VTYPE_Nil;
-		if (!pValueInit->IsNil()) {
-			pVType = &pValueInit->GetVType();
-		}
+	} else if (!pValueInit->IsNil()) {
+		pVType = &pValueInit->GetVType();
 	}
 	GetValuesPropInit().push_back(pValueInit.release());
 	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
+	return true;
+}
+
+void VTypeCustom::PrepareForAssignment(const Symbol* pSymbol)
+{
+	if (!_pSymbol->IsEmpty()) return;
+	Function& constructor = GetConstructor();
+	_pSymbol = pSymbol;
+	if (constructor.IsEmpty()) {
+		SetConstructor(new ConstructorDefault(*this, pSymbol));
+	} else {
+		constructor.SetSymbol(pSymbol);
+	}
 }
 
 Value* VTypeCustom::DoCastFrom(const Value& value) const
@@ -58,8 +68,8 @@ Value* VTypeCustom::DoCastFrom(const Value& value) const
 //------------------------------------------------------------------------------
 // VTypeCustom::ConstructorDefault
 //------------------------------------------------------------------------------
-VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom) :
-	Function(Type::Function, Symbol::Empty), _vtypeCustom(vtypeCustom)
+VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol) :
+	Function(Type::Function, pSymbol), _vtypeCustom(vtypeCustom)
 {
 	GetDeclCallable().GetDeclBlock().
 		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
@@ -69,7 +79,13 @@ Value* VTypeCustom::ConstructorDefault::DoEval(Processor& processor, Argument& a
 {
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom()));
 	if (!pValueThis->InitCustomProp()) return nullptr;
-	return pValueThis.release();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	if (!pExprOfBlock) return pValueThis.release();
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
+	ArgFeeder args(*pArgumentSub);
+	if (!args.FeedValue(frame, pValueThis.release())) return Value::nil();
+	return pExprOfBlock->DoEval(processor, *pArgumentSub);
 }
 
 String VTypeCustom::ConstructorDefault::ToString(const StringStyle& ss) const

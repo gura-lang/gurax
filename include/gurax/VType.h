@@ -62,7 +62,6 @@ public:
 	void SetAttrs(VType& vtypeInh, Flags flags);
 	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
 	VType* GetVTypeInh() const { return _pVTypeInh; }
-	void SetSymbol(const Symbol* pSymbol);
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
@@ -107,6 +106,7 @@ public:
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 public:
 	// Virtual functions
+	virtual void PrepareForAssignment(const Symbol* pSymbol) {};
 	virtual bool IsNil() const { return false; }
 	virtual bool IsUndefined() const { return false; }
 	virtual bool IsList() const { return false; }

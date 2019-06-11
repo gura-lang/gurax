@@ -16,7 +16,7 @@ public:
 	protected:
 		VTypeCustom& _vtypeCustom;
 	public:
-		ConstructorDefault(VTypeCustom& vtypeCustom);
+		ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 	public:
@@ -46,9 +46,10 @@ public:
 	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
 	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
 	void AssignFunction(Function* pFunction);
-	void AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
+	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
 						   const Attribute& attr, RefPtr<Value> pValueInit);
 public:
+	virtual void PrepareForAssignment(const Symbol* pSymbol) override;
 	virtual Value* DoCastFrom(const Value& value) const override;
 };
 

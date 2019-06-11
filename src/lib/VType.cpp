@@ -14,13 +14,13 @@ VType VType::Empty("");
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
-	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
+	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap()),
+	_pConstructor(Function::Empty.Reference())
 {
 }
 
 void VType::Prepare(Frame& frameOuter)
 {
-	_pConstructor.reset(Function::Empty.Reference());
 	frameOuter.Assign(*this);
 	DoPrepare(frameOuter);
 }
@@ -30,13 +30,6 @@ void VType::SetAttrs(VType& vtypeInh, Flags flags)
 	_pVTypeInh = &vtypeInh;
 	_pFrame->SetFrameOuter(_pVTypeInh->GetFrame().Reference());
 	_flags = flags;
-}
-
-void VType::SetSymbol(const Symbol* pSymbol)
-{
-	_pSymbol = pSymbol;
-	Function& constructor = GetConstructor();
-	if (!constructor.IsEmpty() && constructor.GetSymbol()->IsEmpty()) constructor.SetSymbol(pSymbol);
 }
 
 String VType::MakeFullName() const

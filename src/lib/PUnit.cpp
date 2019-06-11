@@ -200,9 +200,7 @@ void PUnit_AssignToSymbol<nExprSrc, discardValueFlag>::Exec(Processor& processor
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
 	if (pValueAssigned->IsVType()) {
 		VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
-		if (vtype.GetSymbol()->IsEmpty()) {
-			vtype.SetSymbol(GetSymbol());
-		}
+		vtype.PrepareForAssignment(GetSymbol());
 	}
 	frame.Assign(GetSymbol(), pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -386,8 +384,11 @@ void PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::Exec(Processor& proces
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(1)));
 	RefPtr<Value> pValueInit(
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
-	vtypeCustom.AssignPropHandler(frame, GetSymbol(), _listVarFlag, GetAttr(), pValueInit.release());
-	processor.SetPUnitNext(_GetPUnitCont());
+	if (vtypeCustom.AssignPropHandler(frame, GetSymbol(), _listVarFlag, GetAttr(), pValueInit.release())) {
+		processor.SetPUnitNext(_GetPUnitCont());
+	} else {
+		processor.ErrorDone();
+	}
 }
 
 template<int nExprSrc, bool discardValueFlag>
