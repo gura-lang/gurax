@@ -60,6 +60,7 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_Module.Prepare(frame);
 	VTYPE_Nil.Prepare(frame);
 	VTYPE_Number.Prepare(frame);
+	VTYPE_PropHandler.Prepare(frame);
 	VTYPE_PUnit.Prepare(frame);
 	VTYPE_Quote.Prepare(frame);
 	VTYPE_Random.Prepare(frame);

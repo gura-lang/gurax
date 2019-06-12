@@ -186,6 +186,12 @@ protected:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const = 0;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const PropHandler& propHandler) const { return this == &propHandler; }
+	bool IsEqualTo(const PropHandler& propHandler) const { return IsIdentical(propHandler); }
+	bool IsLessThan(const PropHandler& propHandler) const { return this < &propHandler; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------

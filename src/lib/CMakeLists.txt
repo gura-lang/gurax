@@ -82,6 +82,7 @@ add_library(guraxcore SHARED
 	VType_Nil.cpp
 	VType_Number.cpp
 	VType_Object.cpp
+	VType_PropHandler.cpp
 	VType_PUnit.cpp
 	VType_Quote.cpp
 	VType_Random.cpp

@@ -26,6 +26,13 @@ bool PropHandler::SetValue(Value& valueTarget, const Value& value, const Attribu
 	return true;
 }
 
+String PropHandler::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("%s", _pSymbol->GetName());
+	return str;
+}
+
 //------------------------------------------------------------------------------
 // PropHandlerMap
 //------------------------------------------------------------------------------
