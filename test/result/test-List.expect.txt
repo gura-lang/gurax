@@ -72,10 +72,6 @@ tbl[0, 1, 4, 10] .. ['zero', 'one', 'four', 'ten']
 ======== Properties ========
 tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl.len .. 11
-[].vtypeOfElem .. Undefined
-['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. <VType:String>
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <VType:Number>
-['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. Any
 ======== Each ========
 Each { .. }
 ----
