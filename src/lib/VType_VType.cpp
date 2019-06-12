@@ -11,7 +11,7 @@ namespace Gurax {
 // VType#__LookupProp__(symbol:Symbol):map
 Gurax_DeclareMethod(VType, __LookupProp__)
 {
-	Declare(VTYPE_Any, Flag::Map);
+	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -41,7 +41,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __LookupProp__));
+	//Assign(Gurax_CreateMethod(VType, __LookupProp__));
 }
 
 //------------------------------------------------------------------------------
