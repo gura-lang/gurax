@@ -37,11 +37,10 @@ TestCase('Properties') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl)
 	Tester(`tbl.len)
-	//Tester(`[].vtypeOfElem)
-	//Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem)
-	//Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
-	//Tester(`['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
-
+	Tester(`[].vtypeOfElem)
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem)
+	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
+	Tester(`['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
 }
 
 TestCase('Each') {

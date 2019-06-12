@@ -14,13 +14,13 @@ VType VType::Empty("");
 VType::VType(const Symbol* pSymbol) :
 	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
-	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap()),
-	_pConstructor(Function::Empty.Reference())
+	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
 {
 }
 
 void VType::Prepare(Frame& frameOuter)
 {
+	_pConstructor.reset(Function::Empty.Reference()); // _pConstructor must be initialized here
 	frameOuter.Assign(*this);
 	DoPrepare(frameOuter);
 }
