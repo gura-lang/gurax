@@ -431,6 +431,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeInClass(Composer& composer) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(

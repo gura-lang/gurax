@@ -270,6 +270,13 @@ void Expr_Identifier::ComposeForAssignment(
 	composer.Add_AssignToSymbol(GetSymbol(), this);			// [Assigned]
 }
 
+void Expr_Identifier::ComposeInClass(Composer& composer)
+{
+	composer.Add_Value(Value::nil());
+	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), this);
+	composer.FlushDiscard();										// [VType]
+}
+	
 void Expr_Identifier::ComposeForAssignmentInClass(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
