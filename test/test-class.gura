@@ -1,6 +1,36 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	A = class {
+		p1
+		p2 = 3
+		p3:nil = 4
+		p4 = 'hello'
+		p5:nil = 'world'
+	}
+	a = A()
+	Tester(`a.p1)
+	Tester(`a.p2)
+	Tester(`a.p3)
+	Tester(`a.p4)
+	Tester(`a.p5)
+	Tester(`(a.p1 = 3))
+	Tester(`(a.p1 = nil))
+	Tester(`(a.p2 = 5))
+	Tester(`(a.p2 = 'foo'))
+	Tester(`(a.p2 = nil))
+	Tester(`(a.p3 = 5))
+	Tester(`(a.p3 = 'foo'))
+	Tester(`(a.p3 = nil))
+	Tester(`(a.p4 = 5))
+	Tester(`(a.p4 = 'foo'))
+	Tester(`(a.p4 = nil))
+	Tester(`(a.p5 = 5))
+	Tester(`(a.p5 = 'foo'))
+	Tester(`(a.p5 = nil))
+}
+sys.Exit()
 TestCase('Empty') {
 	A = class {}
 	Tester(`A)
