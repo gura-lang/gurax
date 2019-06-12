@@ -10,6 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwner())
 {
+	_pConstructor.reset(Function::Empty.Reference()); // _pConstructor must be initialized here
 }
 
 void VTypeCustom::AssignFunction(Function* pFunction)

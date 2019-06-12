@@ -6,6 +6,32 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// VType#__LookupProp__(symbol:Symbol):map
+Gurax_DeclareMethod(VType, __LookupProp__)
+{
+	Declare(VTYPE_Any, Flag::Map);
+	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(VType, __LookupProp__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	const PropHandler* pPropHandler = valueThis.GetVTypeThis().LookupPropHandler(pSymbol);
+	if (!pPropHandler) return Value::nil();
+	return new Value_PropHandler(pPropHandler->Reference());
+}
+
+//------------------------------------------------------------------------------
 // VType_VType
 //------------------------------------------------------------------------------
 VType_VType VTYPE_VType("VType");
@@ -14,6 +40,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(VType, __LookupProp__));
 }
 
 //------------------------------------------------------------------------------
