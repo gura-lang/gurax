@@ -813,13 +813,7 @@ Gurax_ImplementStatement(class_)
 	}
 	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-		if (!pExpr->IsType<Expr_Assign>()) {
-			Error::Issue(ErrorType::SyntaxError, "invalid class definition");
-			return;
-		}
-		Expr_Assign* pExprEx = dynamic_cast<Expr_Assign*>(pExpr);
-		pExprEx->GetExprLeft()->ComposeForAssignmentInClass(
-			composer, pExprEx->GetExprRight(), pExprEx->GetOperator());		// [VType]
+		pExpr->ComposeInClass(composer);
 		if (Error::IsIssued()) return;
 		composer.FlushDiscard();
 	}

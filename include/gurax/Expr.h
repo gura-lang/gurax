@@ -152,6 +152,7 @@ public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
+	virtual void ComposeInClass(Composer& composer);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator);
 	virtual void ComposeForAssignmentInClass(
@@ -582,6 +583,7 @@ public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeInClass(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

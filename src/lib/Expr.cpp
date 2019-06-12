@@ -73,6 +73,23 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 	// [Value]
 }
 
+void Expr::ComposeInClass(Composer& composer)
+{
+	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
+}
+
+void Expr::ComposeForAssignment(
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+{
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
+}
+
+void Expr::ComposeForAssignmentInClass(
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+{
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
+}
+
 void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
 {
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
@@ -90,18 +107,6 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	composer.Add_EndArgSlot(this);									// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	SetPUnitFirst(pPUnitOfArgSlot);
-}
-
-void Expr::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
-{
-	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
-}
-
-void Expr::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
-{
-	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 Value* Expr::DoEval(Processor& processor, Argument& argument) const
@@ -472,6 +477,11 @@ bool Expr_Assign::DoPrepare()
 void Expr_Assign::Compose(Composer& composer)
 {
 	GetExprLeft()->ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
+}
+
+void Expr_Assign::ComposeInClass(Composer& composer)
+{
+	GetExprLeft()->ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator()); // [Assigned]
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
