@@ -373,17 +373,21 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_AssignPropHandler
-// Stack View: [VType ValueInit] -> [VType ValueInit] (continue)
-//                               -> [VType]           (discard)
+// Stack View: initByNilFlag=false .. [VType ValueInit] -> [VType ValueInit] (continue)
+//                                                      -> [VType]           (discard)
+//             initByNilFlag=true ..  [VType]           -> [VType]           (continue)
+//                                                      -> [VType]           (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, bool initByNilFlag>
+void PUnit_AssignPropHandler<nExprSrc, discardValueFlag, initByNilFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	Frame& frame = processor.GetFrameCur();
-	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(1)));
+	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
+		Value_VType::GetVTypeThis(processor.PeekValue(initByNilFlag? 0 : 1)));
 	RefPtr<Value> pValueInit(
-		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
+		initByNilFlag? Value::nil() :
+		(discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference()));
 	if (vtypeCustom.AssignPropHandler(frame, GetSymbol(), _listVarFlag, GetAttr(), pValueInit.release())) {
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
@@ -391,32 +395,50 @@ void PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::Exec(Processor& proces
 	}
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_AssignPropHandler<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, bool initByNilFlag>
+String PUnit_AssignPropHandler<nExprSrc, discardValueFlag, initByNilFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("AssignPropHandler(%s,cont=%s)",
+	str.Printf("AssignPropHandler(%s,cont=%s,initByNil=%s)",
 			   GetSymbol()->GetName(),
-			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), initByNilFlag? "true" : "false");
 	AppendInfoToString(str, ss);
 	return str;
 }
 
 PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
 {
-	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignPropHandler<1, true>(
-				_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+	if (_initByNilFlag) {
+		if (_pExprSrc) {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, true>(
+					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, true>(
+					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_AssignPropHandler<1, false>(
-				_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, true>(_pSymbol, _listVarFlag, _pAttr.release());
+			} else {
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, true>(_pSymbol, _listVarFlag, _pAttr.release());
+			}
 		}
 	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignPropHandler<0, true>(_pSymbol, _listVarFlag, _pAttr.release());
+		if (_pExprSrc) {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, false>(
+					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, false>(
+					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_AssignPropHandler<0, false>(_pSymbol, _listVarFlag, _pAttr.release());
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, false>(_pSymbol, _listVarFlag, _pAttr.release());
+			} else {
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, false>(_pSymbol, _listVarFlag, _pAttr.release());
+			}
 		}
 	}
 	return _pPUnitCreated;
@@ -842,10 +864,10 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_CreateVType
-// Stack View: inheritFlag = false .. []         -> [VType] (continue)
-//                                               -> []      (discard)
-//             inheritFlag = true ..  [VTypeInh] -> [VType] (continue)
-//                                    [VTypeInh] -> []      (discard)
+// Stack View: inheritFlag=false .. []         -> [VType] (continue)
+//                                             -> []      (discard)
+//             inheritFlag=true ..  [VTypeInh] -> [VType] (continue)
+//                                  [VTypeInh] -> []      (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool inheritFlag>
 void PUnit_CreateVType<nExprSrc, discardValueFlag, inheritFlag>::Exec(Processor& processor) const

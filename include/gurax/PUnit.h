@@ -406,7 +406,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_AssignPropHandler
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, bool initByNilFlag>
 class GURAX_DLLDECLARE PUnit_AssignPropHandler : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -443,11 +443,12 @@ private:
 	const Symbol* _pSymbol;
 	bool _listVarFlag;
 	RefPtr<Attribute> _pAttr;
+	bool _initByNilFlag;
 public:
-	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _listVarFlag(listVarFlag), _pAttr(pAttr) {}
+	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr, bool initByNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _listVarFlag(listVarFlag), _pAttr(pAttr), _initByNilFlag(initByNilFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_AssignPropHandler<1, false>) : sizeof(PUnit_AssignPropHandler<0, false>);
+		return _pExprSrc? sizeof(PUnit_AssignPropHandler<1, false, false>) : sizeof(PUnit_AssignPropHandler<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

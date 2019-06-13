@@ -103,8 +103,8 @@ public:
 		SetFactory(new PUnitFactory_AssignMethod(pFunction, Expr::Reference(pExprSrc)));
 	}
 	void Add_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag,
-							   Attribute* pAttr, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_AssignPropHandler(pSymbol, listVarFlag, pAttr, Expr::Reference(pExprSrc)));
+							   Attribute* pAttr, bool initByNilFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignPropHandler(pSymbol, listVarFlag, pAttr, initByNilFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Cast(vtype, listVarFlag, Expr::Reference(pExprSrc)));

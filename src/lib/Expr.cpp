@@ -281,8 +281,8 @@ void Expr_Identifier::ComposeForAssignment(
 
 void Expr_Identifier::ComposeInClass(Composer& composer)
 {
-	composer.Add_Value(Value::nil());
-	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), this);
+	//composer.Add_Value(Value::nil());
+	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
 	
@@ -295,7 +295,7 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 		return;
 	}
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), this);
+	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -810,7 +810,7 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 	}
 	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), true, pExprCar->GetAttr().Reference(), this);
+	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), true, pExprCar->GetAttr().Reference(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 

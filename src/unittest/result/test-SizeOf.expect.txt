@@ -8,6 +8,8 @@ PUnit_Lookup_                    16
 PUnit_AssignToSymbol_            16
 PUnit_AssignToDeclArg_           16
 PUnit_AssignFunction_            16
+PUnit_AssignMethod_              16
+PUnit_AssignPropHandler_         32
 PUnit_Cast_                      24
 PUnit_GenIterator_               8
 PUnit_GenRangeIterator_          8
@@ -15,6 +17,8 @@ PUnit_EvalIterator_              24
 PUnit_ForEach_                   32
 PUnit_UnaryOp_                   16
 PUnit_BinaryOp_                  16
+PUnit_Import_                    32
+PUnit_CreateVType_               8
 PUnit_CreateList_                16
 PUnit_ListElem_                  16
 PUnit_CreateDict_                8
