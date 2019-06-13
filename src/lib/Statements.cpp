@@ -811,12 +811,7 @@ Gurax_ImplementStatement(class_)
 	} else {
 		composer.Add_CreateVType(false, &exprCaller);						// [VType]
 	}
-	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
-	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeInClass(composer);
-		if (Error::IsIssued()) return;
-		composer.FlushDiscard();
-	}
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer);
 }
 
 void Statements::AssignToBasement(Frame& frame)

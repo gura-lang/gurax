@@ -237,6 +237,7 @@ public:
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
+	void ComposeInClass(Composer& composer);
 };
 
 //------------------------------------------------------------------------------
@@ -325,6 +326,7 @@ public:
 		Expr(typeInfo), _pExprLinkElem(pExprLinkElem) {
 		_pExprLinkElem->SetExprParent(this);
 	}
+	ExprLink& GetExprLinkElem() { return *_pExprLinkElem; }
 	const ExprLink& GetExprLinkElem() const { return *_pExprLinkElem; }
 	size_t CountExprElem() const { return _pExprLinkElem->CountSequence(); }
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
@@ -753,6 +755,7 @@ public:
 		return true;
 	}
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeInClass(Composer& composer) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(

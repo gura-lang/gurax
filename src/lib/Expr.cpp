@@ -181,6 +181,15 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	return true;
 }
 
+void ExprLink::ComposeInClass(Composer& composer)
+{
+	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeInClass(composer);
+		if (Error::IsIssued()) return;
+		composer.FlushDiscard();
+	}
+}
+
 //------------------------------------------------------------------------------
 // Expr_Empty
 //------------------------------------------------------------------------------
@@ -854,6 +863,21 @@ void Expr_Caller::Compose(Composer& composer)
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
 	composer.Add_Call(this);										// [Result]
+}
+
+void Expr_Caller::ComposeInClass(Composer& composer)
+{
+	const char* errMsg = "invalid class definition";
+	if (!GetExprCar()->IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
+		return;
+	}
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprCar())->GetSymbol();
+	if (!pSymbol->IsIdentical(Gurax_Symbol(public_)) || HasExprCdr()) {
+		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
+		return;
+	}
+	GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer);
 }
 
 void Expr_Caller::ComposeForAssignment(
