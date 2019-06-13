@@ -181,7 +181,7 @@ g() .. 3
 ======== nil attribute ========
 f .. f(a:Number)
 g .. g(a:Number:nil)
-f(nil) .. failed to cast from Nil to Number
+f(nil) .. can't accept nil value
 g(nil) .. <Nil>
 ======== dynamic_scope ========
 [static]  a = external

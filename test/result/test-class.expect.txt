@@ -8,3 +8,23 @@ A1 .. <VType:A1(v){block?}>
 A1(3) .. <A1>
 A2 .. <VType:A2(v1,v2){block?}>
 A2(3, 4) .. <A2>
+======== Property ========
+a.p1 .. <Nil>
+a.p2 .. 3
+a.p3 .. 4
+a.p4 .. hello
+a.p5 .. world
+a.p1 = 3 .. 3
+a.p1 = nil .. <Nil>
+a.p2 = 5 .. 5
+a.p2 = 'foo' .. failed to cast from String to Number
+a.p2 = nil .. can't accept nil value
+a.p3 = 5 .. 5
+a.p3 = 'foo' .. failed to cast from String to Number
+a.p3 = nil .. <Nil>
+a.p4 = 5 .. 5
+a.p4 = 'foo' .. foo
+a.p4 = nil .. <Nil>
+a.p5 = 5 .. 5
+a.p5 = 'foo' .. foo
+a.p5 = nil .. <Nil>

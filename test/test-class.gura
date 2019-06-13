@@ -1,6 +1,33 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Empty') {
+	A = class {}
+	Tester(`A)
+	a = A()
+	Tester(`a)
+	A {|a|
+		Tester(`a)
+	}
+}
+
+TestCase('Constructor') {
+	A0 = class {
+		__init__() = {}
+	}
+	Tester(`A0)
+	A1 = class {
+		__init__(v) = {}
+	}
+	Tester(`A1)
+	Tester(`A1(3))
+	A2 = class {
+		__init__(v1, v2) = {}
+	}
+	Tester(`A2)
+	Tester(`A2(3, 4))
+}
+
 TestCase('Property') {
 	A = class {
 		p1
@@ -29,31 +56,4 @@ TestCase('Property') {
 	Tester(`(a.p5 = 5))
 	Tester(`(a.p5 = 'foo'))
 	Tester(`(a.p5 = nil))
-}
-sys.Exit()
-TestCase('Empty') {
-	A = class {}
-	Tester(`A)
-	a = A()
-	Tester(`a)
-	A {|a|
-		Tester(`a)
-	}
-}
-
-TestCase('Constructor') {
-	A0 = class {
-		__init__() = {}
-	}
-	Tester(`A0)
-	A1 = class {
-		__init__(v) = {}
-	}
-	Tester(`A1)
-	Tester(`A1(3))
-	A2 = class {
-		__init__(v1, v2) = {}
-	}
-	Tester(`A2)
-	Tester(`A2(3, 4))
 }

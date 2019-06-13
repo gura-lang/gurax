@@ -75,8 +75,12 @@ const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 Value* VType::Cast(const Value& value, bool listVarFlag) const
 {
 	auto IssueError = [](const VType& vtype, const Value& value) {
-		Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",
-					 value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+		if (value.IsNil()) {
+			Error::Issue(ErrorType::ValueError, "can't accept nil value");
+		} else {
+			Error::Issue(ErrorType::ValueError, "failed to cast from %s to %s",
+						 value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+		}
 	};
 	if (listVarFlag) {
 		if (!value.IsType(VTYPE_List)) {
