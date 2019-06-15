@@ -8,8 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__LookupProp__(symbol:Symbol):map
-Gurax_DeclareMethod(VType, __LookupProp__)
+// VType#__lookup__(symbol:Symbol):map
+Gurax_DeclareMethod(VType, __lookup__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -18,7 +18,7 @@ Gurax_DeclareMethod(VType, __LookupProp__)
 		"");
 }
 
-Gurax_ImplementMethod(VType, __LookupProp__)
+Gurax_ImplementMethod(VType, __lookup__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -41,7 +41,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __LookupProp__));
+	Assign(Gurax_CreateMethod(VType, __lookup__));
 }
 
 //------------------------------------------------------------------------------
@@ -96,10 +96,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		return pPropHandler->GetValue(*this, attr);
 	}
-	Error::Issue(ErrorType::PropertyError,
-				 "value type '%s' doesn't have a property '%s'",
-				 GetVType().MakeFullName().c_str(), pSymbol->GetName());
-	return nullptr;
+	return Value::DoPropGet(pSymbol, attr);
 }
 
 bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
