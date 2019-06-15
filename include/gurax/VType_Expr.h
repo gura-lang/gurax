@@ -15,6 +15,7 @@ class VType_Expr : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value) const override;
 };
 
 extern VType_Expr VTYPE_Expr;

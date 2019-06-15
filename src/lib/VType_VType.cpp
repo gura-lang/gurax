@@ -8,8 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__lookup__(symbol:Symbol):map
-Gurax_DeclareMethod(VType, __lookup__)
+// VType#__PropHandler__(symbol:Symbol):map
+Gurax_DeclareMethod(VType, __PropHandler__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -18,7 +18,7 @@ Gurax_DeclareMethod(VType, __lookup__)
 		"");
 }
 
-Gurax_ImplementMethod(VType, __lookup__)
+Gurax_ImplementMethod(VType, __PropHandler__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -41,7 +41,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __lookup__));
+	Assign(Gurax_CreateMethod(VType, __PropHandler__));
 }
 
 //------------------------------------------------------------------------------
