@@ -72,15 +72,15 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (!pPropHandler) {
-		return GetVType().GetFrame().Lookup(pSymbol);
+		Value* pValue = GetVType().GetFrame().Lookup(pSymbol);
+		if (pValue) return pValue;
 	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		return pPropHandler->GetValue(*this, attr);
-	} else {
-		Error::Issue(ErrorType::PropertyError,
-					 "value type '%s' doesn't have a property '%s'",
-					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
-		return nullptr;
 	}
+	Error::Issue(ErrorType::PropertyError,
+				 "value type '%s' doesn't have a property '%s'",
+				 GetVType().MakeFullName().c_str(), pSymbol->GetName());
+	return nullptr;
 }
 
 bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
