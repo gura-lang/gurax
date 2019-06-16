@@ -82,15 +82,6 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, Eval));
 }
 
-Value* VType_Expr::DoCastFrom(const Value& value) const
-{
-	if (value.IsType(VTYPE_Symbol)) {
-		RefPtr<Expr> pExpr(new Expr_Identifier(dynamic_cast<const Value_Symbol&>(value).GetSymbol()));
-		return new Value_Expr(pExpr.release());
-	}
-	return nullptr;
-}
-
 //------------------------------------------------------------------------------
 // Value_Expr
 //------------------------------------------------------------------------------

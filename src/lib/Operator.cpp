@@ -210,20 +210,11 @@ String Operator::ToString(const VType& vtypeL, const VType& vtypeR) const
 //------------------------------------------------------------------------------
 void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 {
+	Expr* pExprChild = expr.GetExprChild();
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(&expr);
-	composer.ComposeAsSequence(*expr.GetExprChild());
+	composer.ComposeAsSequence(*pExprChild);
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	const Expr* pExprChild = expr.GetExprChild();
-#if 0
-	if (pExprChild->IsType<Expr_Identifier>()) {
-		const Expr_Identifier* pExprChildEx = dynamic_cast<const Expr_Identifier*>(pExprChild);
-		if (pExprChildEx->IsPureSymbol()) {
-			composer.Add_Value(new Value_Symbol(pExprChildEx->GetSymbol()), &expr);	// [Result]
-			return;
-		}
-	}
-#endif
 	composer.Add_Value(new Value_Expr(pExprChild->Reference()), &expr);				// [Result]
 }
 
