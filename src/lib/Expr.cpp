@@ -281,7 +281,6 @@ void Expr_Identifier::ComposeForAssignment(
 
 void Expr_Identifier::ComposeInClass(Composer& composer)
 {
-	//composer.Add_Value(Value::nil());
 	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr().Reference(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
