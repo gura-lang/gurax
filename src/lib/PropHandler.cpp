@@ -30,6 +30,7 @@ String PropHandler::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("%s", _pSymbol->GetName());
+	str.Printf(":%s", GetVType().MakeFullName().c_str());
 	return str;
 }
 

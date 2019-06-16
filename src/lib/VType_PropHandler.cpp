@@ -19,5 +19,19 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_PropHandler
 //------------------------------------------------------------------------------
+String Value_PropHandler::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	_ToStringDigest(str, ss);
+	str += ":";
+	str += GetPropHandler().ToString(ss);
+	str += ">";
+	return str;
+}
+
+String Value_PropHandler::ToStringDetail(const StringStyle& ss) const
+{
+	return ToStringDigest(ss);
+}
 
 }

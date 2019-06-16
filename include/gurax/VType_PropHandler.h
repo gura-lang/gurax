@@ -70,9 +70,8 @@ public:
 			GetPropHandler().IsLessThan(Value_PropHandler::GetPropHandler(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetPropHandler().ToString(ss);
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 }
