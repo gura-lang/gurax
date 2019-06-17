@@ -30,7 +30,11 @@ String PropHandler::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("%s", _pSymbol->GetName());
+	if (IsSet(Flag::ListVar)) str += "[]";
 	str.Printf(":%s", GetVType().MakeFullName().c_str());
+	if (IsSet(Flag::OfClass)) str += ":static";
+	if (IsSet(Flag::Nil)) str += ":nil";
+	if (IsSet(Flag::Public)) str += ":public";
 	return str;
 }
 

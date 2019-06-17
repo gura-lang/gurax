@@ -147,6 +147,7 @@ public:
 		static const Flags ListVar			= (1 << 2);
 		static const Flags OfClass			= (1 << 3);
 		static const Flags Nil				= (1 << 4);
+		static const Flags Public			= (1 << 5);
 	};
 private:
 	const Symbol* _pSymbol;
