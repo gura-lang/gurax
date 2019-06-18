@@ -46,8 +46,8 @@ public:
 	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
 	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
 	void AssignFunction(Function* pFunction);
-	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, bool listVarFlag,
-						   const Attribute& attr, RefPtr<Value> pValueInit);
+	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
+						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
 public:
 	virtual void PrepareForAssignment(const Symbol* pSymbol) override;
 	virtual Value* DoCastFrom(const Value& value) const override;

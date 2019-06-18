@@ -413,18 +413,19 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const Symbol* _pSymbol;
-	bool _listVarFlag;
-	RefPtr<Attribute> _pAttr;
+	RefPtr<DottedSymbol> _pDottedSymbol;
+	PropHandler::Flags _flags;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr) :
-		_pSymbol(pSymbol), _listVarFlag(listVarFlag), _pAttr(pAttr) {}
-	PUnit_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr, Expr* pExpr) :
-		PUnit_AssignPropHandler(pSymbol, listVarFlag, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignPropHandler(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropHandler::Flags flags) :
+		_pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags) {}
+	PUnit_AssignPropHandler(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropHandler::Flags flags, Expr* pExpr) :
+		PUnit_AssignPropHandler(pSymbol, pDottedSymbol, flags) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	const Attribute& GetAttr() const { return *_pAttr; }
+	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	const PropHandler::Flags GetFlags() const { return _flags; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -441,12 +442,12 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignPropHandler");
 private:
 	const Symbol* _pSymbol;
-	bool _listVarFlag;
-	RefPtr<Attribute> _pAttr;
+	RefPtr<DottedSymbol> _pDottedSymbol;
+	PropHandler::Flags _flags;
 	bool _initByNilFlag;
 public:
-	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, bool listVarFlag, Attribute* pAttr, bool initByNilFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _listVarFlag(listVarFlag), _pAttr(pAttr), _initByNilFlag(initByNilFlag) {}
+	PUnitFactory_AssignPropHandler(const Symbol* pSymbol, DottedSymbol* pDottedSymbol, PropHandler::Flags flags, bool initByNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pDottedSymbol(pDottedSymbol), _flags(flags), _initByNilFlag(initByNilFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_AssignPropHandler<1, false, false>) : sizeof(PUnit_AssignPropHandler<0, false, false>);
 	}

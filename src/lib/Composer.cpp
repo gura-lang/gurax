@@ -73,6 +73,29 @@ Iterator* Composer::EachPUnit() const
 	return new Iterator_PUnit(GetPUnitFirst(), nullptr);
 }
 
+void Composer::Add_AssignPropHandler(const Symbol* pSymbol, const Attribute& attr,
+									 bool initByNilFlag, const Expr* pExprSrc)
+{
+	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
+	PropHandler::Flags flags = 0;
+	if (pDottedSymbol->IsEqualTo(Gurax_Symbol(nil)) || pDottedSymbol->IsEqualTo(Gurax_Symbol(public_))) {
+		pDottedSymbol = &DottedSymbol::Empty;
+	}
+	const SymbolList& symbols = attr.GetSymbols();
+	for (auto ppSymbol = symbols.begin(); ppSymbol != symbols.end(); ppSymbol++) {
+		const Symbol* pSymbol = *ppSymbol;
+		if (pSymbol->IsIdentical(Gurax_Symbol(nil))) {
+			flags |= PropHandler::Flag::Nil;
+		} else if (pSymbol->IsIdentical(Gurax_Symbol(public_))) {
+			flags |= PropHandler::Flag::Public;
+		} else if (ppSymbol != symbols.begin()) {
+			Error::IssueWith(ErrorType::SyntaxError, *pExprSrc, "unknown attribute: %s", pSymbol->GetName());
+		}
+	}
+	SetFactory(new PUnitFactory_AssignPropHandler(
+				   pSymbol, pDottedSymbol->Reference(), flags, initByNilFlag, Expr::Reference(pExprSrc)));
+}
+
 //------------------------------------------------------------------------------
 // Composer::RepeaterInfoOwner
 //------------------------------------------------------------------------------

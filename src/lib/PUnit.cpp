@@ -388,7 +388,7 @@ void PUnit_AssignPropHandler<nExprSrc, discardValueFlag, initByNilFlag>::Exec(Pr
 	RefPtr<Value> pValueInit(
 		initByNilFlag? Value::nil() :
 		(discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference()));
-	if (vtypeCustom.AssignPropHandler(frame, GetSymbol(), _listVarFlag, GetAttr(), pValueInit.release())) {
+	if (vtypeCustom.AssignPropHandler(frame, GetSymbol(), GetDottedSymbol(), GetFlags(), pValueInit.release())) {
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else {
 		processor.ErrorDone();
@@ -412,32 +412,32 @@ PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
 		if (_pExprSrc) {
 			if (discardValueFlag) {
 				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, true>(
-					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			} else {
 				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, true>(
-					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			}
 		} else {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, true>(_pSymbol, _listVarFlag, _pAttr.release());
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, true>(_pSymbol, _pDottedSymbol.release(), _flags);
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, true>(_pSymbol, _listVarFlag, _pAttr.release());
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, true>(_pSymbol, _pDottedSymbol.release(), _flags);
 			}
 		}
 	} else {
 		if (_pExprSrc) {
 			if (discardValueFlag) {
 				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, false>(
-					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			} else {
 				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, false>(
-					_pSymbol, _listVarFlag, _pAttr.release(), _pExprSrc.Reference());
+					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			}
 		} else {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, false>(_pSymbol, _listVarFlag, _pAttr.release());
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, false>(_pSymbol, _pDottedSymbol.release(), _flags);
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, false>(_pSymbol, _listVarFlag, _pAttr.release());
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, false>(_pSymbol, _pDottedSymbol.release(), _flags);
 			}
 		}
 	}
