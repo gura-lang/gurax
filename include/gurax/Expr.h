@@ -152,11 +152,11 @@ public:
 	// Virtual functions
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
-	virtual void ComposeInClass(Composer& composer);
+	virtual void ComposeInClass(Composer& composer, bool publicFlag);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator);
 	virtual void ComposeForAssignmentInClass(
-		Composer& composer, Expr* pExprAssigned, const Operator* pOperator);
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag);
 	virtual void ComposeForArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
@@ -237,7 +237,7 @@ public:
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
-	void ComposeInClass(Composer& composer);
+	void ComposeInClass(Composer& composer, bool publicFlag);
 };
 
 //------------------------------------------------------------------------------
@@ -433,11 +433,11 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInClass(Composer& composer) override;
+	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(
-		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
@@ -586,7 +586,7 @@ public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInClass(Composer& composer) override;
+	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
@@ -704,7 +704,7 @@ public:
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(
-		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
@@ -755,11 +755,11 @@ public:
 		return true;
 	}
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInClass(Composer& composer) override;
+	virtual void ComposeInClass(Composer& composer, bool publiclFlag) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(
-		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
+		Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };

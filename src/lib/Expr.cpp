@@ -73,7 +73,7 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 	// [Value]
 }
 
-void Expr::ComposeInClass(Composer& composer)
+void Expr::ComposeInClass(Composer& composer, bool publicFlag)
 {
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
@@ -85,7 +85,7 @@ void Expr::ComposeForAssignment(
 }
 
 void Expr::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
@@ -181,10 +181,10 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	return true;
 }
 
-void ExprLink::ComposeInClass(Composer& composer)
+void ExprLink::ComposeInClass(Composer& composer, bool publicFlag)
 {
 	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeInClass(composer);
+		pExpr->ComposeInClass(composer, publicFlag);
 		if (Error::IsIssued()) return;
 		composer.FlushDiscard();
 	}
@@ -279,17 +279,15 @@ void Expr_Identifier::ComposeForAssignment(
 	composer.Add_AssignToSymbol(GetSymbol(), this);			// [Assigned]
 }
 
-void Expr_Identifier::ComposeInClass(Composer& composer)
+void Expr_Identifier::ComposeInClass(Composer& composer, bool publicFlag)
 {
-	bool publicFlag = true;
 	composer.Add_AssignPropHandler(GetSymbol(), GetAttr(), publicFlag, true, this);
 	composer.FlushDiscard();										// [VType]
 }
 	
 void Expr_Identifier::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
 {
-	bool publicFlag = true;
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in property assigment");
@@ -496,9 +494,9 @@ void Expr_Assign::Compose(Composer& composer)
 	GetExprLeft()->ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
 }
 
-void Expr_Assign::ComposeInClass(Composer& composer)
+void Expr_Assign::ComposeInClass(Composer& composer, bool publicFlag)
 {
-	GetExprLeft()->ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator()); // [Assigned]
+	GetExprLeft()->ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
@@ -797,9 +795,8 @@ void Expr_Indexer::ComposeForAssignment(
 }
 
 void Expr_Indexer::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
 {
-	bool publicFlag = true;
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in property assigment");
@@ -867,7 +864,7 @@ void Expr_Caller::Compose(Composer& composer)
 	composer.Add_Call(this);										// [Result]
 }
 
-void Expr_Caller::ComposeInClass(Composer& composer)
+void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)
 {
 	const char* errMsg = "invalid class definition";
 	if (!GetExprCar()->IsType<Expr_Identifier>()) {
@@ -879,7 +876,7 @@ void Expr_Caller::ComposeInClass(Composer& composer)
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
-	GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer);
+	GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, publicFlag);
 }
 
 void Expr_Caller::ComposeForAssignment(
@@ -896,7 +893,7 @@ void Expr_Caller::ComposeForAssignment(
 }
 
 void Expr_Caller::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
 {
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
