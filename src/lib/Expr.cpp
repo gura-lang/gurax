@@ -281,20 +281,22 @@ void Expr_Identifier::ComposeForAssignment(
 
 void Expr_Identifier::ComposeInClass(Composer& composer)
 {
-	composer.Add_AssignPropHandler(GetSymbol(), GetAttr(), true, this);
+	bool publicFlag = true;
+	composer.Add_AssignPropHandler(GetSymbol(), GetAttr(), publicFlag, true, this);
 	composer.FlushDiscard();										// [VType]
 }
 	
 void Expr_Identifier::ComposeForAssignmentInClass(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
+	bool publicFlag = true;
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in property assigment");
 		return;
 	}
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(GetSymbol(), GetAttr(), false, this);
+	composer.Add_AssignPropHandler(GetSymbol(), GetAttr(), publicFlag, false, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -797,6 +799,7 @@ void Expr_Indexer::ComposeForAssignment(
 void Expr_Indexer::ComposeForAssignmentInClass(
 	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
 {
+	bool publicFlag = true;
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in property assigment");
@@ -809,7 +812,7 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 	}
 	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), GetAttr(), false, this);
+	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), GetAttr(), publicFlag, false, this);
 	composer.FlushDiscard();										// [VType]
 }
 

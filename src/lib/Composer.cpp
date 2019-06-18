@@ -74,10 +74,10 @@ Iterator* Composer::EachPUnit() const
 }
 
 void Composer::Add_AssignPropHandler(const Symbol* pSymbol, const Attribute& attr,
-									 bool initByNilFlag, const Expr* pExprSrc)
+									 bool publicFlag, bool initByNilFlag, const Expr* pExprSrc)
 {
 	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
-	PropHandler::Flags flags = 0;
+	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
 	if (pDottedSymbol->IsEqualTo(Gurax_Symbol(nil)) || pDottedSymbol->IsEqualTo(Gurax_Symbol(public_))) {
 		pDottedSymbol = &DottedSymbol::Empty;
 	}
