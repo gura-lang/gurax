@@ -876,7 +876,7 @@ void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
-	GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, publicFlag);
+	GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, true);
 }
 
 void Expr_Caller::ComposeForAssignment(
