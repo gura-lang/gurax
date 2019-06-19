@@ -703,6 +703,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator) override;
+	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForAssignmentInClass(
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
