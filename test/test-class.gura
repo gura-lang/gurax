@@ -57,3 +57,135 @@ TestCase('Property') {
 	Tester(`(a.p5 = 'foo'))
 	Tester(`(a.p5 = nil))
 }
+
+TestCase('Property') {
+	A = class {
+		//--------
+		a1
+		a2:Number
+		a3:String
+		a4 = 3
+		a5 = 'hello'
+		a6:Number = 3
+		a7:String = 'hello'
+		a8:Number:nil = 3
+		a9:String:nil = 'hello'
+		//--------
+		b1[]
+		b2[]:Number
+		b3[]:String
+		b4[] = [3, 1, 4, 1, 5, 9]
+		b5[] = ['apple', 'orange', 'grape']
+		b6[] = [3, 1, 4, 'apple', 1, 6, 9]
+		b7[]:Any = [3, 1, 4, 1, 6, 9]
+		b8[]:Number = [3, 1, 4, 1, 5, 9]
+		b9[]:String = ['apple', 'orange', 'grape']
+		b10[]:Number:nil = [3, 1, 4, 1, 5, 9]
+		b11[]:String:nil = ['apple', 'orange', 'grape']
+		//--------
+		c1:public
+		c2:Number:public
+		c3:String:public
+		c4:Number:public = 3
+		c5:String:public = 'hello'
+		c6:Number:nil:public = 3
+		c7:String:nil:public = 'hello'
+		//--------
+		d1[]:public
+		d2[]:Number:public
+		d3[]:String:public
+		d4[]:public = [3, 1, 4, 1, 5, 9]
+		d5[]:public = ['apple', 'orange', 'grape']
+		d6[]:public = [3, 1, 4, 'apple', 1, 6, 9]
+		d7[]:Any = [3, 1, 4, 1, 6, 9]
+		d8[]:Number:public = [3, 1, 4, 1, 5, 9]
+		d9[]:String:public = ['apple', 'orange', 'grape']
+		d10[]:Number:nil:public = [3, 1, 4, 1, 5, 9]
+		d11[]:String:nil:public = ['apple', 'orange', 'grape']
+		//--------
+		public {
+			e1
+			e2:Number
+			e3:String
+			e4:Number = 3
+			e5:String = 'hello'
+			e6:Number:nil = 3
+			e7:String:nil = 'hello'
+		}
+		//--------
+		public {
+			f1[]
+			f2[]:Number
+			f3[]:String
+			f4[] = [3, 1, 4, 1, 5, 9]
+			f5[] = ['apple', 'orange', 'grape']
+			f6[] = [3, 1, 4, 'apple', 1, 6, 9]
+			f7[]:Any = [3, 1, 4, 1, 6, 9]
+			f8[]:Number = [3, 1, 4, 1, 5, 9]
+			f9[]:String = ['apple', 'orange', 'grape']
+			f10[]:Number:nil = [3, 1, 4, 1, 5, 9]
+			f11[]:String:nil = ['apple', 'orange', 'grape']
+		}
+	}
+	Println('--------')
+	Tester(`A.__PropHandler__(`a1))
+	Tester(`A.__PropHandler__(`a2))
+	Tester(`A.__PropHandler__(`a3))
+	Tester(`A.__PropHandler__(`a4))
+	Tester(`A.__PropHandler__(`a5))
+	Tester(`A.__PropHandler__(`a6))
+	Tester(`A.__PropHandler__(`a7))
+	Tester(`A.__PropHandler__(`a8))
+	Tester(`A.__PropHandler__(`a9))
+	Println('--------')
+	Tester(`A.__PropHandler__(`b1))
+	Tester(`A.__PropHandler__(`b2))
+	Tester(`A.__PropHandler__(`b3))
+	Tester(`A.__PropHandler__(`b4))
+	Tester(`A.__PropHandler__(`b5))
+	Tester(`A.__PropHandler__(`b6))
+	Tester(`A.__PropHandler__(`b7))
+	Tester(`A.__PropHandler__(`b8))
+	Tester(`A.__PropHandler__(`b9))
+	Tester(`A.__PropHandler__(`b10))
+	Println('--------')
+	Tester(`A.__PropHandler__(`c1))
+	Tester(`A.__PropHandler__(`c2))
+	Tester(`A.__PropHandler__(`c3))
+	Tester(`A.__PropHandler__(`c4))
+	Tester(`A.__PropHandler__(`c5))
+	Tester(`A.__PropHandler__(`c6))
+	Tester(`A.__PropHandler__(`c7))
+	Println('--------')
+	Tester(`A.__PropHandler__(`d1))
+	Tester(`A.__PropHandler__(`d2))
+	Tester(`A.__PropHandler__(`d3))
+	Tester(`A.__PropHandler__(`d4))
+	Tester(`A.__PropHandler__(`d5))
+	Tester(`A.__PropHandler__(`d6))
+	Tester(`A.__PropHandler__(`d7))
+	Tester(`A.__PropHandler__(`d8))
+	Tester(`A.__PropHandler__(`d9))
+	Tester(`A.__PropHandler__(`d10))
+	Tester(`A.__PropHandler__(`d11))
+	Println('--------')
+	Tester(`A.__PropHandler__(`e1))
+	Tester(`A.__PropHandler__(`e2))
+	Tester(`A.__PropHandler__(`e3))
+	Tester(`A.__PropHandler__(`e4))
+	Tester(`A.__PropHandler__(`e5))
+	Tester(`A.__PropHandler__(`e6))
+	Tester(`A.__PropHandler__(`e7))
+	Println('--------')
+	Tester(`A.__PropHandler__(`f1))
+	Tester(`A.__PropHandler__(`f2))
+	Tester(`A.__PropHandler__(`f3))
+	Tester(`A.__PropHandler__(`f4))
+	Tester(`A.__PropHandler__(`f5))
+	Tester(`A.__PropHandler__(`f6))
+	Tester(`A.__PropHandler__(`f7))
+	Tester(`A.__PropHandler__(`f8))
+	Tester(`A.__PropHandler__(`f9))
+	Tester(`A.__PropHandler__(`f10))
+	Tester(`A.__PropHandler__(`f11))
+}

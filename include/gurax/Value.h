@@ -256,6 +256,7 @@ public:
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	VType* GetVTypeOfElems() const { return _pVTypeOfElems; }
+	bool HasDeterminedVTypeOfElems() const;
 };
 
 //------------------------------------------------------------------------------

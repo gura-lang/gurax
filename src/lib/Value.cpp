@@ -331,6 +331,11 @@ void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 	}
 }
 
+bool ValueTypedOwner::HasDeterminedVTypeOfElems() const
+{
+	return !_pVTypeOfElems->IsIdentical(VTYPE_Undefined) && !_pVTypeOfElems->IsIdentical(VTYPE_Any);
+}
+
 //------------------------------------------------------------------------------
 // ValueStack
 //------------------------------------------------------------------------------

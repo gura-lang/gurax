@@ -33,13 +33,22 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	flags |= PropHandler::Flag::Readable | PropHandler::Flag::Writable;
 	const VType *pVType = &VTYPE_Any;
 	Value* pValue = frame.Lookup(dottedSymbol);
+	if (pValueInit->IsNil()) flags |= PropHandler::Flag::Nil;
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		if (!pValueInit->IsNil()) {
 			pValueInit.reset(pVType->Cast(*pValueInit, listVarFlag));
 			if (!pValueInit) return false;
 		}
-	} else if (!pValueInit->IsNil() && !listVarFlag) {
+	} else if (listVarFlag) {
+		if (pValueInit->IsType(VTYPE_List)) {
+			const Value_List& valueEx = dynamic_cast<const Value_List&>(*pValueInit);
+			const ValueTypedOwner& valueTypedOwner = valueEx.GetValueTypedOwner();
+			if (valueTypedOwner.HasDeterminedVTypeOfElems()) {
+				pVType = valueTypedOwner.GetVTypeOfElems();
+			}
+		}
+	} else if (!pValueInit->IsNil()) {
 		pVType = &pValueInit->GetVType();
 	}
 	GetValuesPropInit().push_back(pValueInit.release());
