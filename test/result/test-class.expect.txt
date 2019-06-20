@@ -8,27 +8,7 @@ A1 .. <VType:A1(v){block?}>
 A1(3) .. <A1>
 A2 .. <VType:A2(v1,v2){block?}>
 A2(3, 4) .. <A2>
-======== Property ========
-a.p1 .. <Nil>
-a.p2 .. 3
-a.p3 .. 4
-a.p4 .. hello
-a.p5 .. world
-a.p1 = 3 .. 3
-a.p1 = nil .. <Nil>
-a.p2 = 5 .. 5
-a.p2 = 'foo' .. failed to cast from String to Number
-a.p2 = nil .. can't accept nil value
-a.p3 = 5 .. 5
-a.p3 = 'foo' .. failed to cast from String to Number
-a.p3 = nil .. <Nil>
-a.p4 = 5 .. 5
-a.p4 = 'foo' .. foo
-a.p4 = nil .. <Nil>
-a.p5 = 5 .. 5
-a.p5 = 'foo' .. foo
-a.p5 = nil .. <Nil>
-======== Property ========
+======== Property Declaration ========
 --------
 A.__PropHandler__(`a1) .. <PropHandler:a1:Any:nil>
 A.__PropHandler__(`a2) .. <PropHandler:a2:Number:nil>
@@ -90,3 +70,40 @@ A.__PropHandler__(`f8) .. <PropHandler:f8[]:Number:public>
 A.__PropHandler__(`f9) .. <PropHandler:f9[]:String:public>
 A.__PropHandler__(`f10) .. <PropHandler:f10[]:Number:nil:public>
 A.__PropHandler__(`f11) .. <PropHandler:f11[]:String:nil:public>
+======== Property Access ========
+a.a1 .. <Nil>
+a.n1 .. 3
+a.n2 .. 3
+a.n3 .. <Nil>
+a.n4 .. 3
+a.s1 .. hello
+a.s2 .. hello
+a.s3 .. <Nil>
+a.s4 .. hello
+a.a1 = 3 .. 3
+a.a1 = 'world' .. world
+a.a1 = nil .. <Nil>
+a.n1 = 3 .. 3
+a.n1 = 'world' .. failed to cast from String to Number
+a.n1 = nil .. can't accept nil value
+a.n2 = 3 .. 3
+a.n2 = 'world' .. failed to cast from String to Number
+a.n2 = nil .. <Nil>
+a.n3 = 3 .. 3
+a.n3 = 'world' .. failed to cast from String to Number
+a.n3 = nil .. <Nil>
+a.n4 = 3 .. 3
+a.n4 = 'world' .. failed to cast from String to Number
+a.n4 = nil .. can't accept nil value
+a.s1 = 3 .. 3
+a.s1 = 'world' .. world
+a.s1 = nil .. <Nil>
+a.s2 = 3 .. 3
+a.s2 = 'world' .. world
+a.s2 = nil .. <Nil>
+a.s3 = 3 .. 3
+a.s3 = 'world' .. world
+a.s3 = nil .. <Nil>
+a.s4 = 3 .. 3
+a.s4 = 'world' .. world
+a.s4 = nil .. <Nil>

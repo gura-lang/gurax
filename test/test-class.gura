@@ -28,37 +28,7 @@ TestCase('Constructor') {
 	Tester(`A2(3, 4))
 }
 
-TestCase('Property') {
-	A = class {
-		p1
-		p2 = 3
-		p3:nil = 4
-		p4 = 'hello'
-		p5:nil = 'world'
-	}
-	a = A()
-	Tester(`a.p1)
-	Tester(`a.p2)
-	Tester(`a.p3)
-	Tester(`a.p4)
-	Tester(`a.p5)
-	Tester(`(a.p1 = 3))
-	Tester(`(a.p1 = nil))
-	Tester(`(a.p2 = 5))
-	Tester(`(a.p2 = 'foo'))
-	Tester(`(a.p2 = nil))
-	Tester(`(a.p3 = 5))
-	Tester(`(a.p3 = 'foo'))
-	Tester(`(a.p3 = nil))
-	Tester(`(a.p4 = 5))
-	Tester(`(a.p4 = 'foo'))
-	Tester(`(a.p4 = nil))
-	Tester(`(a.p5 = 5))
-	Tester(`(a.p5 = 'foo'))
-	Tester(`(a.p5 = nil))
-}
-
-TestCase('Property') {
+TestCase('Property Declaration') {
 	A = class {
 		//--------
 		a1
@@ -188,4 +158,57 @@ TestCase('Property') {
 	Tester(`A.__PropHandler__(`f9))
 	Tester(`A.__PropHandler__(`f10))
 	Tester(`A.__PropHandler__(`f11))
+}
+
+TestCase('Property Access') {
+	A = class {
+		public {
+			a1
+			n1 = 3
+			n2:nil = 3
+			n3:Number
+			n4:Number = 3
+			s1 = 'hello'
+			s2:nil = 'hello'
+			s3:String
+			s4:String = 'hello'
+		}
+	}
+	a = A()
+	Tester(`a.a1)
+	Tester(`a.n1)
+	Tester(`a.n2)
+	Tester(`a.n3)
+	Tester(`a.n4)
+	Tester(`a.s1)
+	Tester(`a.s2)
+	Tester(`a.s3)
+	Tester(`a.s4)
+	Tester(`(a.a1 = 3))
+	Tester(`(a.a1 = 'world'))
+	Tester(`(a.a1 = nil))
+	Tester(`(a.n1 = 3))
+	Tester(`(a.n1 = 'world'))
+	Tester(`(a.n1 = nil))
+	Tester(`(a.n2 = 3))
+	Tester(`(a.n2 = 'world'))
+	Tester(`(a.n2 = nil))
+	Tester(`(a.n3 = 3))
+	Tester(`(a.n3 = 'world'))
+	Tester(`(a.n3 = nil))
+	Tester(`(a.n4 = 3))
+	Tester(`(a.n4 = 'world'))
+	Tester(`(a.n4 = nil))
+	Tester(`(a.s1 = 3))
+	Tester(`(a.s1 = 'world'))
+	Tester(`(a.s1 = nil))
+	Tester(`(a.s2 = 3))
+	Tester(`(a.s2 = 'world'))
+	Tester(`(a.s2 = nil))
+	Tester(`(a.s3 = 3))
+	Tester(`(a.s3 = 'world'))
+	Tester(`(a.s3 = nil))
+	Tester(`(a.s4 = 3))
+	Tester(`(a.s4 = 'world'))
+	Tester(`(a.s4 = nil))
 }
