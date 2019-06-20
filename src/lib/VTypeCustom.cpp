@@ -10,18 +10,23 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwner())
 {
-	_pConstructor.reset(Function::Empty.Reference()); // _pConstructor must be initialized here
+	// _pConstructor and _pDestructor must be initialized here
+	_pConstructor.reset(Function::Empty.Reference());
+	_pDestructor.reset(Function::Empty.Reference());
 }
 
-void VTypeCustom::AssignFunction(Function* pFunction)
+bool VTypeCustom::AssignFunction(Function* pFunction)
 {
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
 		SetConstructor(new Constructor(*this, pFunction));
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
+		SetDestructor(pFunction);
 	} else {
 		GetFrame().Assign(pSymbol, new Value_Function(pFunction));
 	}
+	return true;
 }
 
 bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
@@ -140,6 +145,12 @@ String VTypeCustom::Constructor::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // ValueCustom
 //------------------------------------------------------------------------------
+ValueCustom::~ValueCustom()
+{
+	//VTypeCustom& vtype = GetVType();
+	//vtype.GetDestructor();
+}
+
 bool ValueCustom::InitCustomProp()
 {
 	const ValueOwner& valuesPropInit = GetVType().GetValuesPropInit();

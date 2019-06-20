@@ -40,12 +40,15 @@ public:
 	};
 private:
 	RefPtr<ValueOwner> _pValuesPropInit;
+	RefPtr<Function> _pDestructor;
 public:
 	VTypeCustom();
 public:
+	void SetDestructor(Function* pDestructor) { _pDestructor.reset(pDestructor); }
+	const Function& GetDestructor() const { return *_pDestructor; }
 	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
 	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
-	void AssignFunction(Function* pFunction);
+	bool AssignFunction(Function* pFunction);
 	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
 public:
@@ -76,7 +79,7 @@ public:
 	ValueCustom& operator=(ValueCustom&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~ValueCustom() = default;
+	virtual ~ValueCustom();
 public:
 	VTypeCustom& GetVType() { return dynamic_cast<VTypeCustom&>(Value_Object::GetVType()); }
 	const VTypeCustom& GetVType() const { return dynamic_cast<const VTypeCustom&>(Value_Object::GetVType()); }
