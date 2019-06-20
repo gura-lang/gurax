@@ -1323,6 +1323,7 @@ void PUnit_PropGet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	Value& valueTarget = processor.PeekValue(0);
 	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
+		Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp->Reference());
@@ -1418,6 +1419,7 @@ void PUnit_Member<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
 	if (!pValueProp) {
+		Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (discardValueFlag) {
