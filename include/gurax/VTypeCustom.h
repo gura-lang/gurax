@@ -66,11 +66,12 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueCustom");
 protected:
+	RefPtr<Processor> _pProcessor;
 	RefPtr<ValueOwner> _pValuesProp;
 public:
 	// Constructor
-	explicit ValueCustom(VTypeCustom& vtypeCustom) :
-		Value_Object(vtypeCustom), _pValuesProp(new ValueOwner()) {}
+	ValueCustom(VTypeCustom& vtypeCustom, Processor* pProcessor) :
+		Value_Object(vtypeCustom), _pProcessor(pProcessor), _pValuesProp(new ValueOwner()) {}
 	// Copy constructor/operator
 	ValueCustom(const ValueCustom& src) = delete;
 	ValueCustom& operator=(const ValueCustom& src) = delete;
@@ -81,6 +82,7 @@ protected:
 	// Destructor
 	virtual ~ValueCustom();
 public:
+	Processor& GetProcessor() { return *_pProcessor; }
 	VTypeCustom& GetVType() { return dynamic_cast<VTypeCustom&>(Value_Object::GetVType()); }
 	const VTypeCustom& GetVType() const { return dynamic_cast<const VTypeCustom&>(Value_Object::GetVType()); }
 	bool InitCustomProp();

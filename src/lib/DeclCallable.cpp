@@ -21,6 +21,11 @@ DeclCallable::DeclCallable() :
 {
 }
 
+bool DeclCallable::IsNaked() const
+{
+	return GetDeclArgOwner().empty();
+}
+
 bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
 	_declArgOwner.reserve(exprLinkCdr.CountSequence());

@@ -28,6 +28,14 @@ TestCase('Constructor') {
 	Tester(`A2(3, 4))
 }
 
+TestCase('Destructor') {
+	A = class {
+		__del__() = Println('destructor')
+	}
+	a = A()
+	a = nil
+}
+
 TestCase('Property Declaration') {
 	A = class {
 		//--------

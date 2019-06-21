@@ -22,6 +22,10 @@ bool VTypeCustom::AssignFunction(Function* pFunction)
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
 		SetConstructor(new Constructor(*this, pFunction));
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
+		if (!pFunction->GetDeclCallable().IsNaked()) {
+			Error::Issue(ErrorType::SyntaxError, "destructors can't have any arguments");
+			return false;
+		}
 		SetDestructor(pFunction);
 	} else {
 		GetFrame().Assign(pSymbol, new Value_Function(pFunction));
@@ -91,7 +95,7 @@ VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom, co
 
 Value* VTypeCustom::ConstructorDefault::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom()));
+	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return nullptr;
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return pValueThis.release();
@@ -121,7 +125,7 @@ VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncI
 
 Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom()));
+	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return nullptr;
 	argument.SetValueThis(pValueThis.Reference());
 	RefPtr<Value> pValue(GetFuncInitializer().DoEval(processor, argument));
@@ -147,8 +151,11 @@ String VTypeCustom::Constructor::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 ValueCustom::~ValueCustom()
 {
-	//VTypeCustom& vtype = GetVType();
-	//vtype.GetDestructor();
+	const Function& funcDestructor = GetVType().GetDestructor();
+	if (!funcDestructor.IsEmpty()) {
+		RefPtr<Argument> pArgument(new Argument(funcDestructor));
+		funcDestructor.DoEval(GetProcessor(), *pArgument);
+	}
 }
 
 bool ValueCustom::InitCustomProp()

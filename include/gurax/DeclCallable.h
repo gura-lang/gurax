@@ -103,6 +103,7 @@ protected:
 	// Destructor
 	~DeclCallable() = default;
 public:
+	bool IsNaked() const;
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock);
 	void Clear();
 	DeclArgOwner& GetDeclArgOwner() { return _declArgOwner; }
