@@ -38,6 +38,7 @@ public:
 	~ArgPicker() = default;
 public:
 	bool IsDefined() const { return _pArgSlot && _pArgSlot->IsDefined(); }
+	bool IsUndefined() const { return !IsDefined(); }
 	bool IsValid();
 public:
 	Value& PeekValue();

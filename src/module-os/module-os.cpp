@@ -46,7 +46,10 @@ Gurax_DeclareFunction(Redirect)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cin", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::Read, nullptr);
+	DeclareArg("cout", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::Write, nullptr);
+	DeclareArg("cerr", VTYPE_Stream, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::Write, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(fork));
+	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -56,11 +59,20 @@ Gurax_ImplementFunction(Redirect)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream* pStreamCIn = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : nullptr;
+	Stream* pStreamCIn = g_pStreamCIn;
+	Stream* pStreamCOut = g_pStreamCOut;
+	Stream* pStreamCErr = g_pStreamCErr;
+	g_pStreamCIn = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
+	g_pStreamCOut = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
+	g_pStreamCErr = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
 	// Function body
-	//bool forkFlag = argument.IsSet(Gurax_Symbol(fork));
-	//OAL::ExecProgram(pathName, valList, g_pStreamCIn, g_pStreamCOut, g_pStreamCErr, forkFlag);
-	return Value::nil();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
+	RefPtr<Value> pValueRtn(pExprOfBlock->DoEval(processor, *pArgument));
+	g_pStreamCIn = pStreamCIn;
+	g_pStreamCOut = pStreamCOut;
+	g_pStreamCErr = pStreamCErr;
+	return pValueRtn.release();
 }
 
 //------------------------------------------------------------------------------
@@ -136,6 +148,7 @@ Gurax_ModulePrepare()
 	g_pStreamCErr = Basement::Inst.GetStreamCErr().Reference();
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exec));
+	Assign(Gurax_CreateFunction(Redirect));
 	// Assignment of property
 	Assign(Gurax_CreateModuleProperty(cin));
 	Assign(Gurax_CreateModuleProperty(cout));

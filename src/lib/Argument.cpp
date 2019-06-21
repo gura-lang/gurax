@@ -65,7 +65,7 @@ void Argument::DoCall(Processor& processor)
 	const DeclBlock& declBlock = _pDeclCallable->GetDeclBlock();
 	if (_pExprOfBlock) {
 		if (declBlock.IsOccurZero()) {
-			Error::Issue(ErrorType::ArgumentError, "block is unnecessary");
+			Error::Issue(ErrorType::ArgumentError, "block can not be specified");
 			return;
 		}
 	} else {

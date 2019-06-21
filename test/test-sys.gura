@@ -3,8 +3,8 @@ import(util.tester) {*}
 
 TestCase('Streams') {
 	Tester(`sys.cin)
-	Tester(`sys.cerr)
 	Tester(`sys.cout)
+	Tester(`sys.cerr)
 	sys.cout.Println('print message on sys.cout')
 }
 

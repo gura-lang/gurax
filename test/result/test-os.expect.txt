@@ -1,0 +1,9 @@
+======== Streams ========
+os.cin .. <Stream:CIn>
+os.cout .. <Stream:COut>
+os.cerr .. <Stream:CErr>
+print message on os.cout
+======== os.Redirect() ========
+os.cin .. <Nil>
+os.cout .. <Nil>
+os.cerr .. <Nil>

@@ -196,8 +196,8 @@ Gurax_DeclareFunction(Test)
 Gurax_ImplementFunction(Test)
 {
 	// Function body
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	Frame& frame = processor.GetFrameCur();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
 	ArgFeeder args(*pArgument);
 	if (!args.FeedValue(frame, new Value_Number(1234)) ||
