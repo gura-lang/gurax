@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 // Macro
 //------------------------------------------------------------------------------
-#define Gurax_DeclareReferable(T) \
+#define Gurax_DeclareReferable_WithoutDelete(T) \
 class WeakPtr : public WeakPtrBase { \
 public: \
 	WeakPtr(T* p) : WeakPtrBase(p) {} \
@@ -16,6 +16,7 @@ public: \
 	WeakPtr* Reference() const { return static_cast<WeakPtr*>(WeakPtrBase::Reference()); } \
 	T* Lock() { return T::Reference(static_cast<T*>(_p)); } \
 }; \
+int GetCntRef() const { return _cntRef; } \
 static T* Reference(const T* p) { \
 	T* pCasted = const_cast<T*>(p); \
 	if (pCasted) pCasted->_cntRef++; \
@@ -43,15 +44,17 @@ WeakPtr* GetWeakPtr() const {\
 	} \
 	pCasted->_pwBase = new WeakPtr(pCasted); \
 	return static_cast<WeakPtr*>(pCasted->_pwBase); \
-} \
+}
+
+#define Gurax_DeclareReferable(T) \
+Gurax_DeclareReferable_WithoutDelete(T) \
 static void Delete(T* p) { \
 	if (!p) return; \
 	p->_cntRef--; \
 	if (p->_cntRef > 0) return; \
 	WeakPtr::DeleteReferable(p->_pwBase); \
 	delete p; \
-} \
-int GetCntRef() const { return _cntRef; }
+}
 
 namespace Gurax {
 
