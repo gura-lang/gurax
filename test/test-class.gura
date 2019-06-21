@@ -220,3 +220,18 @@ TestCase('Property Access') {
 	Tester(`(a.s4 = 'world'))
 	Tester(`(a.s4 = nil))
 }
+
+TestCase('Example') {
+	Person = class {
+		name = ''
+		age = 0
+		__init__(name:String, age:Number) = {
+			this.name = name
+			this.age = age
+		}
+		Print() = Printf('%s is %d years old.\n', this.name, this.age)
+	}
+	Println(Person)
+	Person('Taro', 10) {|p| p.Print()}
+	Person('Hanako', 12) {|p| p.Print()}
+}

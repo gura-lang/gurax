@@ -109,3 +109,7 @@ a.s3 = nil .. <Nil>
 a.s4 = 3 .. 3
 a.s4 = 'world' .. world
 a.s4 = nil .. <Nil>
+======== Example ========
+<VType:Person(name:String,age:Number){block?}>
+Taro is 10 years old.
+Hanako is 12 years old.
