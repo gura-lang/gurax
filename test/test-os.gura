@@ -1,0 +1,17 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Streams') {
+	Tester(`os.cin)
+	Tester(`os.cout)
+	Tester(`os.cerr)
+	os.cout.Println('print message on os.cout')
+}
+
+TestCase('os.Redirect()') {
+	os.Redirect(nil, nil) {
+		Tester(`os.cin)
+		Tester(`os.cout)
+		Tester(`os.cerr)
+	}
+}
