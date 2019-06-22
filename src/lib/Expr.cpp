@@ -281,7 +281,8 @@ void Expr_Identifier::ComposeForAssignment(
 
 void Expr_Identifier::ComposeInClass(Composer& composer, bool publicFlag)
 {
-	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr(), publicFlag, true, this);
+	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
+	composer.Add_AssignPropHandler(GetSymbol(), flags, GetAttr(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
 	
@@ -293,8 +294,9 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 						 "operator can not be applied in property assigment");
 		return;
 	}
+	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(GetSymbol(), false, GetAttr(), publicFlag, false, this);
+	composer.Add_AssignPropHandler(GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -801,8 +803,9 @@ void Expr_Indexer::ComposeInClass(Composer& composer, bool publicFlag)
 						 "invalid format of property declaration");
 		return;
 	}
+	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
 	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
-	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), true, GetAttr(), publicFlag, true, this);
+	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), flags, GetAttr(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -819,9 +822,10 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 						 "invalid format of property declaration");
 		return;
 	}
+	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
 	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
 	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), true, GetAttr(), publicFlag, false, this);
+	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 

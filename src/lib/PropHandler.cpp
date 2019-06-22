@@ -35,6 +35,8 @@ String PropHandler::ToString(const StringStyle& ss) const
 	if (IsSet(Flag::OfClass)) str += ":static";
 	if (IsSet(Flag::Nil)) str += ":nil";
 	if (IsSet(Flag::Public)) str += ":public";
+	if (IsSet(Flag::ReadStream)) str += ":r";
+	if (IsSet(Flag::WriteStream)) str += ":w";
 	return str;
 }
 

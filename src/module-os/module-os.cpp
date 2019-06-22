@@ -45,9 +45,9 @@ Gurax_ImplementFunction(Exec)
 Gurax_DeclareFunction(Redirect)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cin", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::Read, nullptr);
-	DeclareArg("cout", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::Write, nullptr);
-	DeclareArg("cerr", VTYPE_Stream, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::Write, nullptr);
+	DeclareArg("cin", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::ReadStream, nullptr);
+	DeclareArg("cout", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::WriteStream, nullptr);
+	DeclareArg("cerr", VTYPE_Stream, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::WriteStream, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(fork));
 	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(

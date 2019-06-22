@@ -141,13 +141,15 @@ public:
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None				= 0;
-		static const Flags Readable			= (1 << 0);
-		static const Flags Writable			= (1 << 1);
-		static const Flags ListVar			= (1 << 2);
-		static const Flags OfClass			= (1 << 3);
-		static const Flags Nil				= (1 << 4);
-		static const Flags Public			= (1 << 5);
+		static const Flags None			= 0;
+		static const Flags Readable		= 1 << 0;
+		static const Flags Writable		= 1 << 1;
+		static const Flags ListVar		= 1 << 2;
+		static const Flags OfClass		= 1 << 3;
+		static const Flags Nil			= 1 << 4;
+		static const Flags Public		= 1 << 5;
+		static const Flags ReadStream	= 1 << 6;	// :r
+		static const Flags WriteStream	= 1 << 7;	// :w
 	};
 private:
 	const Symbol* _pSymbol;

@@ -21,14 +21,14 @@ public:
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None		= 0;
-		static const Flags Map		= 1 << 0;	// :map .. must be here
-		static const Flags NoMap	= 1 << 1;	// :nomap .. must be here
-		static const Flags ListVar	= 1 << 2;	// :listvar
-		static const Flags NoCast	= 1 << 3;	// :nocast
-		static const Flags Nil		= 1 << 4;	// :nil
-		static const Flags Read		= 1 << 5;	// :r
-		static const Flags Write	= 1 << 6;	// :w
+		static const Flags None			= 0;
+		static const Flags Map			= 1 << 0;	// :map .. must be here
+		static const Flags NoMap		= 1 << 1;	// :nomap .. must be here
+		static const Flags ListVar		= 1 << 2;	// :listvar
+		static const Flags NoCast		= 1 << 3;	// :nocast
+		static const Flags Nil			= 1 << 4;	// :nil
+		static const Flags ReadStream	= 1 << 5;	// :r
+		static const Flags WriteStream	= 1 << 6;	// :w
 	};
 	class Occur {
 	private:
@@ -70,8 +70,8 @@ public:
 			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
 			Assoc(Gurax_Symbol(nocast),			Flag::NoCast);
 			Assoc(Gurax_Symbol(nil),			Flag::Nil);
-			Assoc(Gurax_Symbol(r),				Flag::Read);
-			Assoc(Gurax_Symbol(w),				Flag::Write);
+			Assoc(Gurax_Symbol(r),				Flag::ReadStream);
+			Assoc(Gurax_Symbol(w),				Flag::WriteStream);
 		}
 		static SymbolAssoc* GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
