@@ -4,7 +4,7 @@
 #ifndef GURAX_PROPHANDLER_H
 #define GURAX_PROPHANDLER_H
 #include "Attribute.h"
-#include "Symbol.h"
+#include "Symbols.h"
 
 //------------------------------------------------------------------------------
 // Macros to declare PropHandler for instance
@@ -150,6 +150,21 @@ public:
 		static const Flags Public		= 1 << 5;
 		static const Flags ReadStream	= 1 << 6;	// :r
 		static const Flags WriteStream	= 1 << 7;	// :w
+	};
+	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
+	public:
+		SymbolAssoc_Flag() {
+			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
+			Assoc(Gurax_Symbol(nil),		Flag::Nil);
+			Assoc(Gurax_Symbol(public_),	Flag::Public);
+			Assoc(Gurax_Symbol(r),			Flag::ReadStream);
+			Assoc(Gurax_Symbol(w),			Flag::WriteStream);
+
+		}
+		static SymbolAssoc* GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_Flag());
+		}
 	};
 private:
 	const Symbol* _pSymbol;

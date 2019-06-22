@@ -84,17 +84,12 @@ void Composer::Add_AssignPropHandler(const Symbol* pSymbol, PropHandler::Flags f
 	const SymbolList& symbols = attr.GetSymbols();
 	for (auto ppSymbol = symbols.begin(); ppSymbol != symbols.end(); ppSymbol++) {
 		const Symbol* pSymbol = *ppSymbol;
-		if (pSymbol->IsIdentical(Gurax_Symbol(r))) {
-			flags |= PropHandler::Flag::Readable;
-		} else if (pSymbol->IsIdentical(Gurax_Symbol(w))) {
-			flags |= PropHandler::Flag::Writable;
-		} else if (pSymbol->IsIdentical(Gurax_Symbol(nil))) {
-			flags |= PropHandler::Flag::Nil;
-		} else if (pSymbol->IsIdentical(Gurax_Symbol(public_))) {
-			flags |= PropHandler::Flag::Public;
-		} else if (ppSymbol != symbols.begin()) {
+		PropHandler::Flags flagsUpdate = PropHandler::SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
+		if (flagsUpdate == PropHandler::Flag::None && ppSymbol != symbols.begin()) {
 			Error::IssueWith(ErrorType::SyntaxError, *pExprSrc, "unknown attribute: %s", pSymbol->GetName());
+			return;
 		}
+		flags |= flagsUpdate;
 	}
 	SetFactory(new PUnitFactory_AssignPropHandler(
 				   pSymbol, pDottedSymbol->Reference(), flags, initByNilFlag, Expr::Reference(pExprSrc)));
