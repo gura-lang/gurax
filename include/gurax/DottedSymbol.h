@@ -108,6 +108,7 @@ public:
 	bool AppendFromExpr(const Expr& expr);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 	size_t GetLength() const { return _symbolList.size(); }
+	bool IsSingleSymbol() const { return _symbolList.size() == 1; }
 	bool IsDotted() const { return _symbolList.size() > 1; }
 	bool IsEmpty() const { return _symbolList.empty(); }
 	bool IsEqualTo(const Symbol* pSymbol) const {

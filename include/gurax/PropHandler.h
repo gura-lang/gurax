@@ -159,11 +159,10 @@ public:
 			Assoc(Gurax_Symbol(public_),	Flag::Public);
 			Assoc(Gurax_Symbol(r),			Flag::ReadStream);
 			Assoc(Gurax_Symbol(w),			Flag::WriteStream);
-
 		}
-		static SymbolAssoc* GetInstance() {
+		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_Flag());
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Flag());
 		}
 	};
 private:

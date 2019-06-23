@@ -76,15 +76,15 @@ Iterator* Composer::EachPUnit() const
 void Composer::Add_AssignPropHandler(const Symbol* pSymbol, PropHandler::Flags flags,
 									 const Attribute& attr, bool initByNilFlag, const Expr* pExprSrc)
 {
+	auto& symbolAssoc = PropHandler::SymbolAssoc_Flag::GetInstance();
 	const DottedSymbol* pDottedSymbol = &attr.GetDottedSymbol();
-	if (pDottedSymbol->IsEqualTo(Gurax_Symbol(r)) || pDottedSymbol->IsEqualTo(Gurax_Symbol(w)) ||
-		pDottedSymbol->IsEqualTo(Gurax_Symbol(nil)) || pDottedSymbol->IsEqualTo(Gurax_Symbol(public_))) {
+	if (pDottedSymbol->IsSingleSymbol() && symbolAssoc.DoesExist(pDottedSymbol->GetSymbolFirst())) {
 		pDottedSymbol = &DottedSymbol::Empty;
 	}
 	const SymbolList& symbols = attr.GetSymbols();
 	for (auto ppSymbol = symbols.begin(); ppSymbol != symbols.end(); ppSymbol++) {
 		const Symbol* pSymbol = *ppSymbol;
-		PropHandler::Flags flagsUpdate = PropHandler::SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
+		PropHandler::Flags flagsUpdate = symbolAssoc.ToAssociated(pSymbol);
 		if (flagsUpdate == PropHandler::Flag::None && ppSymbol != symbols.begin()) {
 			Error::IssueWith(ErrorType::SyntaxError, *pExprSrc, "unknown attribute: %s", pSymbol->GetName());
 			return;

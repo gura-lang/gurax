@@ -223,6 +223,9 @@ public:
 		auto pPair = _mapToSymbol.find(associated);
 		return (pPair == _mapToSymbol.end())? Symbol::Empty : pPair->second;
 	}
+	bool DoesExist(const Symbol* pSymbol) const {
+		return _mapToAssociated.find(pSymbol) != _mapToAssociated.end();
+	}
 };
 
 }
