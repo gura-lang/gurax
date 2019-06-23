@@ -1,3 +1,6 @@
+======== Property ========
+Number.__PropHandler__(`re) .. <PropHandler:re:Number:R>
+Number.__PropHandler__(`im) .. <PropHandler:im:Number:R>
 ======== Number#re and Number#im ========
 a .. 3
 a.re .. 3

@@ -1,6 +1,11 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	Tester(`Number.__PropHandler__(`re))
+	Tester(`Number.__PropHandler__(`im))
+}
+
 TestCase('Number#re and Number#im') {
 	a = 3
 	Tester(`a)
