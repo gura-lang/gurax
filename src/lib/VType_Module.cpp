@@ -37,26 +37,29 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
-		return GetModule().GetFrame().Lookup(pSymbol);
-	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+	if (pPropHandler) {
+		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
+			return nullptr;
+		}
 		return pPropHandler->GetValue(*this, attr);
-	} else {
-		return nullptr;
 	}
+	Value* pValue = GetModule().GetFrame().Lookup(pSymbol);
+	return pValue;
 }
 
 bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
-		GetModule().GetFrame().Assign(pSymbol, pValue.release());
-		return true;
-	} else if (pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+	if (pPropHandler) {
+		if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+			Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
+			return false;
+		}
 		return pPropHandler->SetValue(*this, *pValue, attr);
-	} else {
-		return false;
 	}
+	GetModule().GetFrame().Assign(pSymbol, pValue.release());
+	return true;
 }
 
 }
