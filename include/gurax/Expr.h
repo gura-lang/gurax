@@ -35,20 +35,20 @@ public:
 		Assoc(Gurax_SymbolMark(ColonAsterisk),	MemberMode::MapToIter);
 		Assoc(Gurax_SymbolMark(ColonColon),		MemberMode::MapToList);
 	}
-	static SymbolAssoc* GetInstance() {
+	static const SymbolAssoc& GetInstance() {
 		static SymbolAssoc* pSymbolAssoc = nullptr;
-		return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_MemberMode());
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_MemberMode());
 	}
 };
 
 inline MemberMode SymbolToMemberMode(const Symbol* pSymbol)
 {
-	return SymbolAssoc_MemberMode::GetInstance()->ToAssociated(pSymbol);
+	return SymbolAssoc_MemberMode::GetInstance().ToAssociated(pSymbol);
 }
 
 inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
 {
-	return SymbolAssoc_MemberMode::GetInstance()->ToSymbol(memberMode);
+	return SymbolAssoc_MemberMode::GetInstance().ToSymbol(memberMode);
 }
 
 //------------------------------------------------------------------------------

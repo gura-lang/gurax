@@ -199,6 +199,12 @@ public:
 		return DoGetValue(valueTarget, attr);
 	}
 	bool SetValue(Value& valueTarget, const Value& value, const Attribute& attr) const;
+	static Flags SymbolToFlag(const Symbol* pSymbol) {
+		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);
+	}
+	static const Symbol* FlagToSymbol(Flags flag) {
+		return SymbolAssoc_Flag::GetInstance().ToSymbol(flag);
+	}
 protected:
 	// Virtual functions
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const = 0;

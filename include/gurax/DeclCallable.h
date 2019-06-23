@@ -72,9 +72,9 @@ public:
 			Assoc(Gurax_Symbol(iter),			Flag::Iter);
 			Assoc(Gurax_Symbol(xiter),			Flag::XIter);
 		}
-		static SymbolAssoc* GetInstance() {
+		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_Flag());
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Flag());
 		}
 	};
 private:
@@ -137,10 +137,10 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	static Flags SymbolToFlag(const Symbol* pSymbol) {
-		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
+		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);
 	}
 	static const Symbol* FlagToSymbol(Flags flag) {
-		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
+		return SymbolAssoc_Flag::GetInstance().ToSymbol(flag);
 	}
 	static Flags SymbolsToFlags(const SymbolList& symbols);
 	static String FlagsToString(Flags flags);

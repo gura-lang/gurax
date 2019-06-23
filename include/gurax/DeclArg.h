@@ -73,9 +73,9 @@ public:
 			Assoc(Gurax_Symbol(r),				Flag::ReadStream);
 			Assoc(Gurax_Symbol(w),				Flag::WriteStream);
 		}
-		static SymbolAssoc* GetInstance() {
+		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? pSymbolAssoc : (pSymbolAssoc = new SymbolAssoc_Flag());
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Flag());
 		}
 	};
 private:
@@ -123,10 +123,10 @@ public:
 	bool FixVType(Frame& frame);
 	Value* Cast(Frame& frame, const Value& value);
 	static Flags SymbolToFlag(const Symbol* pSymbol) {
-		return SymbolAssoc_Flag::GetInstance()->ToAssociated(pSymbol);
+		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);
 	}
 	static const Symbol* FlagToSymbol(Flags flag) {
-		return SymbolAssoc_Flag::GetInstance()->ToSymbol(flag);
+		return SymbolAssoc_Flag::GetInstance().ToSymbol(flag);
 	}
 	static String FlagsToString(Flags flags);
 public:
