@@ -27,7 +27,10 @@ Gurax_ImplementMethod(VType, __PropHandler__)
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
 	const PropHandler* pPropHandler = valueThis.GetVTypeThis().LookupPropHandler(pSymbol);
-	if (!pPropHandler) return Value::nil();
+	if (!pPropHandler) {
+		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
+		return Value::nil();
+	}
 	return new Value_PropHandler(pPropHandler->Reference());
 }
 

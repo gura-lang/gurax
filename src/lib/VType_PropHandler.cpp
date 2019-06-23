@@ -6,6 +6,24 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// PropHandler#symbol
+Gurax_DeclareProperty_R(PropHandler, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The property's symbol.");
+}
+
+Gurax_ImplementPropertyGetter(PropHandler, symbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetPropHandler().GetSymbol());
+}
+
+//------------------------------------------------------------------------------
 // VType_PropHandler
 //------------------------------------------------------------------------------
 VType_PropHandler VTYPE_PropHandler("PropHandler");
@@ -14,6 +32,8 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of property
+	Assign(Gurax_CreateProperty(PropHandler, symbol));
 }
 
 //------------------------------------------------------------------------------

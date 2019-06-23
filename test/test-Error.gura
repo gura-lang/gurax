@@ -1,0 +1,6 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Tester(`Error.__PropHandler__(`year))
+}

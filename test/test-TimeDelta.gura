@@ -1,6 +1,17 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	Tester(`TimeDelta.__PropHandler__(`days))
+	Tester(`TimeDelta.__PropHandler__(`hours))
+	Tester(`TimeDelta.__PropHandler__(`mins))
+	Tester(`TimeDelta.__PropHandler__(`secs))
+	Tester(`TimeDelta.__PropHandler__(`secsPacked))
+	Tester(`TimeDelta.__PropHandler__(`msecs))
+	Tester(`TimeDelta.__PropHandler__(`usecs))
+	Tester(`TimeDelta.__PropHandler__(`usecsPacked))
+}
+
 TestCase('Constructor') {
 	Tester(`TimeDelta())
 	Tester(`TimeDelta(123))
