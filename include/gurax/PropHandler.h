@@ -141,24 +141,27 @@ public:
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None			= 0;
-		static const Flags Readable		= 1 << 0;
-		static const Flags Writable		= 1 << 1;
-		static const Flags ListVar		= 1 << 2;
-		static const Flags OfClass		= 1 << 3;
-		static const Flags Nil			= 1 << 4;
-		static const Flags Public		= 1 << 5;
-		static const Flags ReadStream	= 1 << 6;	// :r
-		static const Flags WriteStream	= 1 << 7;	// :w
+		static const Flags None		= 0;
+		static const Flags ListVar	= 1 << 0;	// :listvar
+		static const Flags Nil		= 1 << 1;	// :nil
+		static const Flags StreamR	= 1 << 2;	// :r
+		static const Flags StreamW	= 1 << 3;	// :w
+		static const Flags OfClass	= 1 << 4;	// :static
+		static const Flags Public	= 1 << 5;	// :public
+		static const Flags Readable	= 1 << 6;	// :readable
+		static const Flags Writable	= 1 << 7;	// :writable
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
-			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
+			Assoc(Gurax_Symbol(listvar),	Flag::ListVar);
 			Assoc(Gurax_Symbol(nil),		Flag::Nil);
+			Assoc(Gurax_Symbol(r),			Flag::StreamR);
+			Assoc(Gurax_Symbol(w),			Flag::StreamW);
+			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
 			Assoc(Gurax_Symbol(public_),	Flag::Public);
-			Assoc(Gurax_Symbol(r),			Flag::ReadStream);
-			Assoc(Gurax_Symbol(w),			Flag::WriteStream);
+			Assoc(Gurax_Symbol(R),			Flag::Readable);
+			Assoc(Gurax_Symbol(W),			Flag::Writable);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;

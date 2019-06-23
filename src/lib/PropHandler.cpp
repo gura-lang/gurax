@@ -32,11 +32,13 @@ String PropHandler::ToString(const StringStyle& ss) const
 	str.Printf("%s", _pSymbol->GetName());
 	if (IsSet(Flag::ListVar)) str += "[]";
 	str.Printf(":%s", GetVType().MakeFullName().c_str());
-	if (IsSet(Flag::OfClass)) str += ":static";
 	if (IsSet(Flag::Nil)) str += ":nil";
+	if (IsSet(Flag::StreamR)) str += ":r";
+	if (IsSet(Flag::StreamW)) str += ":w";
+	if (IsSet(Flag::OfClass)) str += ":static";
 	if (IsSet(Flag::Public)) str += ":public";
-	if (IsSet(Flag::ReadStream)) str += ":r";
-	if (IsSet(Flag::WriteStream)) str += ":w";
+	if (IsSet(Flag::Readable)) str += ":R";
+	if (IsSet(Flag::Writable)) str += ":W";
 	return str;
 }
 

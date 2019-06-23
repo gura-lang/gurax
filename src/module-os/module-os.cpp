@@ -45,9 +45,9 @@ Gurax_ImplementFunction(Exec)
 Gurax_DeclareFunction(Redirect)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cin", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::ReadStream, nullptr);
-	DeclareArg("cout", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::WriteStream, nullptr);
-	DeclareArg("cerr", VTYPE_Stream, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::WriteStream, nullptr);
+	DeclareArg("cin", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::StreamR, nullptr);
+	DeclareArg("cout", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::Nil | DeclArg::Flag::StreamW, nullptr);
+	DeclareArg("cerr", VTYPE_Stream, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::StreamW, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(fork));
 	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(
@@ -81,7 +81,7 @@ Gurax_ImplementFunction(Redirect)
 // os.cin
 Gurax_DeclareModuleProperty_RW(cin)
 {
-	Declare(VTYPE_Stream, Flag::Nil);
+	Declare(VTYPE_Stream, Flag::Nil | Flag::StreamR | Flag::Writable);
 }
 
 Gurax_ImplementModulePropertyGetter(cin)
@@ -99,7 +99,7 @@ Gurax_ImplementModulePropertySetter(cin)
 // os.cout
 Gurax_DeclareModuleProperty_RW(cout)
 {
-	Declare(VTYPE_Stream, Flag::Nil);
+	Declare(VTYPE_Stream, Flag::Nil | Flag::StreamW | Flag::Writable);
 }
 
 Gurax_ImplementModulePropertyGetter(cout)
@@ -117,7 +117,7 @@ Gurax_ImplementModulePropertySetter(cout)
 // os.cerr
 Gurax_DeclareModuleProperty_RW(cerr)
 {
-	Declare(VTYPE_Stream, Flag::Nil);
+	Declare(VTYPE_Stream, Flag::Nil | Flag::StreamW | Flag::Writable);
 }
 
 Gurax_ImplementModulePropertyGetter(cerr)
