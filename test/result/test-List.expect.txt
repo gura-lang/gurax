@@ -58,6 +58,9 @@ foo[0, 2, 6]
   ##6 Value(<Number:6>)
   ##7 FeedIndex()
   ##8 IndexGet()
+======== Property ========
+List.__PropHandler__(`len) .. <PropHandler:len:Number:R>
+List.__PropHandler__(`vtypeOfElem) .. <PropHandler:vtypeOfElem:VType:R>
 ======== Initializer ========
 [3, 1, 4, 1, 5, 9, 2, 6] .. [3, 1, 4, 1, 5, 9, 2, 6]
 ======== Get ========
@@ -69,9 +72,10 @@ tbl[10] .. ten
 tbl[11] .. index 11 is out of range of the list size 11
 tbl[0, 1] .. ['zero', 'one']
 tbl[0, 1, 4, 10] .. ['zero', 'one', 'four', 'ten']
-======== Properties ========
+======== List#len ========
 tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl.len .. 11
+======== List#vtypeOfELem ========
 [].vtypeOfElem .. Undefined
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. <VType:String>
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <VType:Number>

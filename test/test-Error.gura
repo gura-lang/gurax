@@ -2,5 +2,10 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Error.__PropHandler__(`year))
+	Tester(`Error.__PropHandler__(`errorType))
+	Tester(`Error.__PropHandler__(`expr))
+	Tester(`Error.__PropHandler__(`fileName))
+	Tester(`Error.__PropHandler__(`lineNo))
+	Tester(`Error.__PropHandler__(`lineNoBtm))
+	Tester(`Error.__PropHandler__(`text))
 }

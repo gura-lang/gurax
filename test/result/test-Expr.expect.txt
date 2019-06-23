@@ -1,3 +1,4 @@
+======== PUnit ========
 --------
 f(`(a))
   ##0 Lookup(`a)
@@ -32,3 +33,5 @@ f(`(a + b))
   ##0 Lookup(`foo)
   ##1 Value(<Number:3>)
   ##2 PropSet(`bar)
+======== Property ========
+Expr.__PropHandler__(`children) .. <PropHandler:children:Iterator:R>

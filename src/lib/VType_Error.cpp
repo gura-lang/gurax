@@ -59,7 +59,7 @@ Gurax_ImplementPropertyGetter(Error, errorType)
 // Error#expr
 Gurax_DeclareProperty_R(Error, expr)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Expr, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `Expr` instance that caused the error.\n");

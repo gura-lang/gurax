@@ -1,6 +1,11 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Property') {
+	Tester(`String.__PropHandler__(`len))
+	Tester(`String.__PropHandler__(`width))
+}
+
 TestCase('String#StartsWith(), String#EndsWith()') {
 	str = 'abcdefghijklmn'
 	exprs = [
@@ -28,6 +33,7 @@ TestCase('String#StartsWith(), String#EndsWith()') {
 	]
 	Tester(exprs)
 }
+
 TestCase('String#len, String#width') {
 	exprs = [
 		`str
@@ -39,6 +45,7 @@ TestCase('String#len, String#width') {
 	str = 'あいうえおかきくけこ'
 	Tester(exprs)
 }
+
 TestCase('String#Find()') {
 	str = 'abcdefghijklmn'
 	exprs = [

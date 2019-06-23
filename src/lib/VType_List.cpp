@@ -53,7 +53,7 @@ Gurax_ImplementPropertyGetter(List, len)
 // List#vtypeOfElem
 Gurax_DeclareProperty_R(List, vtypeOfElem)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_VType, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The value type of elements in the list.");

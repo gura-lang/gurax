@@ -149,6 +149,10 @@ f(a => 1, b => 2, c => 3, d => 4, e => 5)
   ##15 Value(<Number:5>)
   ##16 EndArgSlotNamed()
   ##17 Call(cont=##18)
+======== Property ========
+Function.__PropHandler__(`expr) .. <PropHandler:expr:Expr:R>
+Function.__PropHandler__(`name) .. <PropHandler:name:String:R>
+Function.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
 ======== Default Value ========
 f .. f(a => 'def-A', b => 'def-B', c => 'def-C')
 f() .. a=def-A, b=def-B, c=def-C

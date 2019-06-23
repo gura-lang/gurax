@@ -1,35 +1,42 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
-f(`expr) = {
-	Println('--------')
-	Printf('f(`(%s))\n', expr)
-	PrintPUnit(expr)
+
+TestCase('PUnit') {
+	f(`expr) = {
+		Println('--------')
+		Printf('f(`(%s))\n', expr)
+		PrintPUnit(expr)
+	}
+	f(a)
+	f(a = 3)
+	f(a + b)
+	exprs = []
+	exprs = [
+		`{
+			foo
+		}
+		`{
+			foo
+			bar
+		}
+		`{
+			foo = 2
+			bar = 'hello'
+		}
+		`{
+			foo.bar
+		}
+		`{
+			foo.bar = 3
+		}
+	]
+	exprs.Each {|expr|
+		Println('--------')
+		Printf('`%s\n', expr)
+		PrintPUnit(expr)
+	}
 }
-f(a)
-f(a = 3)
-f(a + b)
-exprs = []
-exprs = [
-	`{
-		foo
-	}
-	`{
-		foo
-		bar
-	}
-	`{
-		foo = 2
-		bar = 'hello'
-	}
-	`{
-		foo.bar
-	}
-	`{
-		foo.bar = 3
-	}
-]
-exprs.Each {|expr|
-	Println('--------')
-	Printf('`%s\n', expr)
-	PrintPUnit(expr)
+
+TestCase('Property') {
+	Tester(`Expr.__PropHandler__(`children))
 }

@@ -19,6 +19,12 @@ TestCase('PUnit') {
 	PrintPUnitWithLabel(exprs)
 }
 
+TestCase('Property') {
+	Tester(`Function.__PropHandler__(`expr))
+	Tester(`Function.__PropHandler__(`name))
+	Tester(`Function.__PropHandler__(`type))
+}
+
 TestCase('Default Value') {
 	f(a => 'def-A', b => 'def-B', c => 'def-C') = Format('a=%s, b=%s, c=%s', a, b, c)
 	Tester(`f)

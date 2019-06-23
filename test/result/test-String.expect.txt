@@ -1,3 +1,6 @@
+======== Property ========
+String.__PropHandler__(`len) .. <PropHandler:len:Number:R>
+String.__PropHandler__(`width) .. <PropHandler:width:Number:R>
 ======== String#StartsWith(), String#EndsWith() ========
 str .. abcdefghijklmn
 str.StartsWith('abcd') .. true

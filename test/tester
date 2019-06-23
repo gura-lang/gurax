@@ -2,6 +2,7 @@
 cases=
 cases="$cases DateTime"
 cases="$cases Dict"
+cases="$cases Error"
 cases="$cases Expr"
 cases="$cases Function"
 cases="$cases ImplicitMapping"
