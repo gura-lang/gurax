@@ -45,6 +45,7 @@ Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 		return pPropHandler->GetValue(*this, attr);
 	}
 	Value* pValue = GetModule().GetFrame().Lookup(pSymbol);
+	//return pValue? pValue : Value::DoPropGet(pSymbol, attr);
 	return pValue;
 }
 
