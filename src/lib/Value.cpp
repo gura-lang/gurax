@@ -71,12 +71,15 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
-		Value* pValue = GetVType().GetFrame().Lookup(pSymbol);
-		if (pValue) return pValue;
-	} else if (pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+	if (pPropHandler) {
+		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
+			return nullptr;
+		}
 		return pPropHandler->GetValue(*this, attr);
 	}
+	Value* pValue = GetVType().GetFrame().Lookup(pSymbol);
+	if (pValue) return pValue;
 	Error::Issue(ErrorType::PropertyError,
 				 "value type '%s' doesn't have a property '%s'",
 				 GetVType().MakeFullName().c_str(), pSymbol->GetName());
@@ -86,19 +89,17 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
-		Error::Issue(ErrorType::PropertyError,
-					 "value type '%s' doesn't have a property '%s'",
-					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
-		return false;
-	} else if (pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+	if (pPropHandler) {
+		if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+			Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
+			return false;
+		}
 		return pPropHandler->SetValue(*this, *pValue, attr);
-	} else {
-		Error::Issue(ErrorType::PropertyError,
-					 "value type '%s' doesn't have a writable property '%s'",
-					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
-		return false;
 	}
+	Error::Issue(ErrorType::PropertyError,
+				 "value type '%s' doesn't have a property '%s'",
+				 GetVType().MakeFullName().c_str(), pSymbol->GetName());
+	return false;
 }
 
 Iterator* Value::DoGenIterator() const
