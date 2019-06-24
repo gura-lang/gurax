@@ -109,6 +109,17 @@ void Function::DoExec(Processor& processor, Argument& argument) const
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
+Value* Function::ReturnValue(Processor& processor, Argument& argument, RefPtr<Value> pValueRtn) const
+{
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	if (!pExprOfBlock) return pValueRtn.release();
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
+	ArgFeeder args(*pArgumentSub);
+	if (!args.FeedValue(frame, pValueRtn.release())) return Value::nil();
+	return pExprOfBlock->DoEval(processor, *pArgumentSub);
+}
+
 String Function::ToString(const StringStyle& ss) const
 {
 	String str;

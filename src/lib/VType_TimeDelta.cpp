@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, msecs?:Number, usecs?:Number):map
+// TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, msecs?:Number, usecs?:Number):map {block?}
 Gurax_DeclareFunction(TimeDelta)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
@@ -18,6 +18,7 @@ Gurax_DeclareFunction(TimeDelta)
 	DeclareArg("secs", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("msecs", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("usecs", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `TimeDelta` instance from specified time durations.\n"
@@ -37,7 +38,7 @@ Gurax_ImplementFunction(TimeDelta)
 	// Function body
 	RefPtr<TimeDelta> pTimeDelta(
 		new TimeDelta(days, TimeDelta::CalcSecsPacked(hours, mins, secs), TimeDelta::CalcUSecsPacked(msecs, usecs)));
-	return new Value_TimeDelta(pTimeDelta.release());
+	return ReturnValue(processor, argument, new Value_TimeDelta(pTimeDelta.release()));
 }
 
 //------------------------------------------------------------------------------

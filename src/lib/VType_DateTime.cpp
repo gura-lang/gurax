@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // DateTime(year?:Number, month?:Number, day?:Number,
-//          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map
+//          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map {block?}
 Gurax_DeclareFunction(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
@@ -22,6 +22,7 @@ Gurax_DeclareFunction(DateTime)
 	DeclareArg("msec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("usec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
 	DeclareArg("minsOff", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `DateTime` instance.");
@@ -56,7 +57,7 @@ Gurax_ImplementFunction(DateTime)
 	if (validOffsetFlag) {
 		pDateTime->SetMinsOffset(minsOff);
 	}
-	return new Value_DateTime(pDateTime.release());
+	return ReturnValue(processor, argument, new Value_DateTime(pDateTime.release()));
 }
 
 //------------------------------------------------------------------------------

@@ -8,11 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Random(seed?:Number):map
+// Random(seed?:Number):map {block?}
 Gurax_DeclareFunction(Random)
 {
 	Declare(VTYPE_Random, Flag::Map);
 	DeclareArg("seed", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Random` instance that has been initialized with the specified seed.\n"
@@ -28,7 +29,7 @@ Gurax_ImplementFunction(Random)
 	Int32 seed = (seedFlag = args.IsValid())? args.PickInt32() : 0;
 	// Function body
 	RefPtr<Random> pRandom(seedFlag? new Random(seed) : Random::Global().Reference());
-	return new Value_Random(pRandom.release());
+	return ReturnValue(processor, argument, new Value_Random(pRandom.release()));
 }
 
 //------------------------------------------------------------------------------

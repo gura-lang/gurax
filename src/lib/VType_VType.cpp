@@ -8,11 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__PropHandler__(symbol:Symbol):map
+// VType#__PropHandler__(symbol:Symbol):map {block?}
 Gurax_DeclareMethod(VType, __PropHandler__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -31,7 +32,7 @@ Gurax_ImplementMethod(VType, __PropHandler__)
 		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
 		return Value::nil();
 	}
-	return new Value_PropHandler(pPropHandler->Reference());
+	return ReturnValue(processor, argument, new Value_PropHandler(pPropHandler->Reference()));
 }
 
 //------------------------------------------------------------------------------
