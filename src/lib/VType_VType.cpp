@@ -94,29 +94,29 @@ void Value_VType::DoCall(Processor& processor, Argument& argument)
 Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandlerOfClass(pSymbol);
-	if (pPropHandler) {
-		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
-			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
-			return nullptr;
-		}
-		return pPropHandler->GetValue(*this, attr);
+	if (!pPropHandler) {
+		Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
+		return pValue? pValue : Value::DoPropGet(pSymbol, attr);
 	}
-	Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
-	return pValue? pValue : Value::DoPropGet(pSymbol, attr);
+	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
+		return nullptr;
+	}
+	return pPropHandler->GetValue(*this, attr);
 }
 
 bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
 	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandler(pSymbol);
-	if (pPropHandler) {
-		if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
-			Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
-			return false;
-		}
-		return pPropHandler->SetValue(*this, *pValue, attr);
+	if (!pPropHandler) {
+		GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
+		return true;
 	}
-	GetVTypeThis().GetFrame().Assign(pSymbol, pValue.release());
-	return true;
+	if (!pPropHandler->IsSet(PropHandler::Flag::Writable)) {
+		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
+		return false;
+	}
+	return pPropHandler->SetValue(*this, *pValue, attr);
 }
 
 }
