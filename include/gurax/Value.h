@@ -135,7 +135,7 @@ public:
 	virtual void DoCall(Processor& processor, Argument& argument) {}
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, Value* pValue);
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr);
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFounderrorFlag);
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
 	virtual Iterator* DoGenIterator() const;
 public:

@@ -66,8 +66,8 @@ public:
 	virtual void DoIndexSet(const Index& index, Value* pValue) override {
 		GetValueProp().DoIndexSet(index, pValue);
 	}		
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override {
-		return GetValueProp().DoPropGet(pSymbol, attr);
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override {
+		return GetValueProp().DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override {
 		return GetValueProp().DoPropSet(pSymbol, pValue.release(), attr);

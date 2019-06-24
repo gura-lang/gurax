@@ -1321,9 +1321,9 @@ void PUnit_PropGet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	Value& valueTarget = processor.PeekValue(0);
-	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr());
+	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
-		Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
+		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (!discardValueFlag) processor.PushValue(pValueProp->Reference());
@@ -1417,9 +1417,9 @@ void PUnit_Member<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr());
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
-		Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
+		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 	} else {
 		if (discardValueFlag) {

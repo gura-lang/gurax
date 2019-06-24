@@ -75,7 +75,7 @@ public:
 	virtual bool IsCallable() const override;
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr) override;
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 

@@ -91,12 +91,12 @@ void Value_VType::DoCall(Processor& processor, Argument& argument)
 	constructor.DoCall(processor, argument);
 }
 
-Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
+Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandlerOfClass(pSymbol);
 	if (!pPropHandler) {
 		Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
-		return pValue? pValue : Value::DoPropGet(pSymbol, attr);
+		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
 	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());

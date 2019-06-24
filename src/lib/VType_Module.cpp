@@ -66,13 +66,12 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
-Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
+Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
 	if (!pPropHandler) {
 		Value* pValue = GetModule().GetFrame().Lookup(pSymbol);
-		return pValue? pValue : Value::DoPropGet(pSymbol, attr);
-		//return pValue;
+		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
 	}
 	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());

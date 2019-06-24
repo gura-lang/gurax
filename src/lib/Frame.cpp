@@ -17,7 +17,7 @@ Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail) const
 	Value* pValue = Lookup(pSymbol);
 	while (pValue && ppSymbol + nTail != symbolList.end()) {
 		const Symbol* pSymbol = *ppSymbol++;
-		pValue = pValue->DoPropGet(pSymbol, *Attribute::Empty);
+		pValue = pValue->DoPropGet(pSymbol, *Attribute::Empty, false);
 	}
 	return pValue;
 }

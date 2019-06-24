@@ -68,7 +68,7 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
-Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
+Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
 	if (pPropHandler) {
@@ -80,9 +80,11 @@ Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr)
 	}
 	Value* pValue = GetVType().GetFrame().Lookup(pSymbol);
 	if (pValue) return pValue;
-	Error::Issue(ErrorType::PropertyError,
-				 "value type '%s' doesn't have a property '%s'",
-				 GetVType().MakeFullName().c_str(), pSymbol->GetName());
+	if (notFoundErrorFlag) {
+		Error::Issue(ErrorType::PropertyError,
+					 "value type '%s' doesn't have a property '%s'",
+					 GetVType().MakeFullName().c_str(), pSymbol->GetName());
+	}
 	return nullptr;
 }
 
