@@ -6,6 +6,36 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// Module#__PropHandler__(symbol:Symbol):map {block?}
+Gurax_DeclareMethod(Module, __PropHandler__)
+{
+	Declare(VTYPE_PropHandler, Flag::Map);
+	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Module, __PropHandler__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	const PropHandler* pPropHandler = valueThis.GetModule().LookupPropHandler(pSymbol);
+	if (!pPropHandler) {
+		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
+		return Value::nil();
+	}
+	return ReturnValue(processor, argument, new Value_PropHandler(pPropHandler->Reference()));
+}
+
+//------------------------------------------------------------------------------
 // VType_Module
 //------------------------------------------------------------------------------
 VType_Module VTYPE_Module("Module");
@@ -14,6 +44,8 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Module, __PropHandler__));
 }
 
 //------------------------------------------------------------------------------

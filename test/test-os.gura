@@ -1,6 +1,12 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+/*
+TestCase('Property') {
+	Tester(`os.__PropHandler__(`len))
+}
+*/
+
 TestCase('Streams') {
 	Tester(`os.cin)
 	Tester(`os.cout)
