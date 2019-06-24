@@ -71,6 +71,9 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+public:
+	virtual Value* DoIndexGet(const Index& index) const override;
+	virtual void DoIndexSet(const Index& index, Value* pValue) override;
 };
 
 }

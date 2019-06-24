@@ -121,4 +121,41 @@ String Value_Dict::ToStringDetail(const StringStyle& ss) const
 	return GetValueDict().ToString(ss);
 }
 
+Value* Value_Dict::DoIndexGet(const Index& index) const
+{
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.size() == 1) {
+		const Value* pValueIndex = valuesIndex.front();
+		Value* pValue = GetValueDict().Lookup(pValueIndex);
+		if (!pValue) {
+			Error::Issue(ErrorType::IndexError, "invalid key value");
+			return Value::nil();
+		}
+		return pValue->Reference();
+	} else {
+		RefPtr<ValueTypedOwner> pValuesRtn(new ValueTypedOwner());
+		pValuesRtn->Reserve(valuesIndex.size());
+		for (const Value* pValueIndex : valuesIndex) {
+			Value* pValue = GetValueDict().Lookup(pValueIndex);
+			if (!pValue) {
+				Error::Issue(ErrorType::IndexError, "invalid key value");
+				return Value::nil();
+			}
+			pValuesRtn->Add(pValue->Reference());
+		}
+		return new Value_List(pValuesRtn.release());
+	}
+}
+
+void Value_Dict::DoIndexSet(const Index& index, Value* pValue)
+{
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.size() == 1) {
+		const Value* pValueIndex = valuesIndex.front();
+		GetValueDict().Assign(pValueIndex->Reference(), pValue->Reference());
+	} else {
+		
+	}
+}
+
 }
