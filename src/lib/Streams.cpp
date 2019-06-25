@@ -37,11 +37,12 @@ bool Stream_Binary::PutChar(char ch)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset < buffTgt.size()) {
-		buffTgt[_offset] = ch;
+		buffTgt[_offset++] = ch;
 	} else {
 		size_t bytesGap = buffTgt.size() - _offset;
 		if (bytesGap > 0) buffTgt.assign(bytesGap, '\0');
 		buffTgt += ch;
+		_offset = buffTgt.size();
 	}
 	return true;
 }
