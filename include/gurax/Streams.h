@@ -63,7 +63,7 @@ private:
 	RefPtr<BinaryReferable> _pBuff;
 	size_t _offset;
 public:
-	Stream_Binary(BinaryReferable* pBuff);
+	Stream_Binary(BinaryReferable* pBuff, size_t offset);
 	Stream_Binary();
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const { return "binary"; };

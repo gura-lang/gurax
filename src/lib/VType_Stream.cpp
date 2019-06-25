@@ -100,8 +100,9 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 Value* VType_Stream::DoCastFrom(const Value& value) const
 {
 	if (value.IsType(VTYPE_Binary)) {
-		return new Value_Stream(
-			new Stream_Binary(Value_Binary::GetBinaryReferable(value).Reference()));
+		const BinaryReferable& binary = Value_Binary::GetBinaryReferable(value);
+		size_t offset = 0;
+		return new Value_Stream(new Stream_Binary(binary.Reference(), offset));
 	}
 	return nullptr;
 }

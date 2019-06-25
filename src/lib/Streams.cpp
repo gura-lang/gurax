@@ -17,7 +17,7 @@ Stream* Stream_File::Open(const char* fileName, const char* mode)
 //------------------------------------------------------------------------------
 // Stream_Binary
 //------------------------------------------------------------------------------
-Stream_Binary::Stream_Binary(BinaryReferable* pBuff) : _pBuff(pBuff), _offset(0)
+Stream_Binary::Stream_Binary(BinaryReferable* pBuff, size_t offset) : _pBuff(pBuff), _offset(offset)
 {
 }
 
