@@ -164,9 +164,6 @@ public:
 	void DeclareAttrOpt(const char* name) {
 		GetDeclCallable().GetAttr().AddSymbolOpt(Symbol::Add(name));
 	}
-	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
-		GetDeclCallable().GetDeclBlock().SetOccur(occur).SetFlags(flags);
-	}
 	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur,
 					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		GetDeclCallable().GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
@@ -174,6 +171,9 @@ public:
 	void DeclareBlock(const char* name, const DeclBlock::Occur& occur,
 					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Symbol::Add(name), occur, flags);
+	}
+	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
+		DeclareBlock(Gurax_Symbol(block), occur, flags);
 	}
 	void AddHelp(const Symbol* pLangCode, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(doc));

@@ -55,6 +55,26 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
+// Stream_Binary
+//------------------------------------------------------------------------------
+class Stream_Binary : public Stream {
+private:
+	RefPtr<BinaryReferable> _pBuff;
+	size_t _offset;
+public:
+	Stream_Binary(BinaryReferable* pBuff);
+	Stream_Binary();
+	virtual bool IsDumb() const { return false; }
+	virtual const char* GetName() const { return "binary"; };
+	virtual const char* GetIdentifier() const { return "binary"; }
+	virtual void Close() {}
+	virtual int GetChar();
+	virtual bool PutChar(char ch);
+	virtual size_t Read(void* buff, size_t len);
+	virtual size_t Write(const void* buff, size_t len);
+};
+
 }
 
 #endif

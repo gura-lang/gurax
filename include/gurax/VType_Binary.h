@@ -49,12 +49,20 @@ protected:
 public:
 	Binary& GetBinary() { return _pBinary->GetBinary(); }
 	const Binary& GetBinary() const { return _pBinary->GetBinary(); }
+	BinaryReferable& GetBinaryReferable() { return *_pBinary; }
+	const BinaryReferable& GetBinaryReferable() const { return *_pBinary; }
 public:
 	static Binary& GetBinary(Value& value) {
 		return dynamic_cast<Value_Binary&>(value).GetBinary();
 	}
 	static const Binary& GetBinary(const Value& value) {
 		return dynamic_cast<const Value_Binary&>(value).GetBinary();
+	}
+	static BinaryReferable& GetBinaryReferable(Value& value) {
+		return dynamic_cast<Value_Binary&>(value).GetBinaryReferable();
+	}
+	static const BinaryReferable& GetBinaryReferable(const Value& value) {
+		return dynamic_cast<const Value_Binary&>(value).GetBinaryReferable();
 	}
 public:
 	// Virtual functions of Value
