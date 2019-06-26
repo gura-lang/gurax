@@ -63,7 +63,8 @@ size_t Stream_Binary::Write(const void* buff, size_t len)
 	} else {
 		size_t bytesGap = buffTgt.size() - _offset;
 		if (bytesGap > 0) buffTgt.assign(bytesGap, '\0');
-		buffTgt.insert(Binary::npos, reinterpret_cast<const UInt8*>(buff), len);
+		buffTgt.append(reinterpret_cast<const UInt8*>(buff), len);
+		//buffTgt.insert(Binary::npos, reinterpret_cast<const UInt8*>(buff), len);
 		_offset = buffTgt.size();
 	}
 	return len;

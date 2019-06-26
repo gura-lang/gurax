@@ -69,6 +69,7 @@ public:
 		static constexpr CTypes Lower			= 1 << 12;
 		static constexpr CTypes Upper			= 1 << 13;
 		static constexpr CTypes URIC			= 1 << 14;
+		static constexpr CTypes Print			= 1 << 15;
 		static constexpr CTypes SymbolFirst		= Alpha | SymbolExtra | UTF8First;
 		static constexpr CTypes SymbolFollower	= SymbolFirst | Digit | UTF8Follower;
 	};
@@ -107,6 +108,7 @@ public:
 	static bool IsLower(char ch)			{ return (GetCTypes(ch) & CType::Lower) != 0;		}
 	static bool IsUpper(char ch)			{ return (GetCTypes(ch) & CType::Upper) != 0;		}
 	static bool IsURIC(char ch)				{ return (GetCTypes(ch) & CType::URIC) != 0;		}
+	static bool IsPrint(char ch)			{ return (GetCTypes(ch) & CType::Print) != 0;		}
 	static bool IsSymbolFirst(char ch)		{ return (GetCTypes(ch) & CType::SymbolFirst) != 0;	}
 	static bool IsSymbolFollower(char ch)	{ return (GetCTypes(ch) & CType::SymbolFollower) != 0; }
 	static int ConvBinDigit(char ch)		{ return _convBinDigitTbl[static_cast<UChar>(ch)];	}

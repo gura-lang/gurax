@@ -101,7 +101,7 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Binary)) {
 		const BinaryReferable& binary = Value_Binary::GetBinaryReferable(value);
-		size_t offset = 0;
+		size_t offset = (flags & DeclArg::Flag::StreamW)? binary.GetBinary().size() : 0;
 		return new Value_Stream(new Stream_Binary(binary.Reference(), offset));
 	}
 	return nullptr;

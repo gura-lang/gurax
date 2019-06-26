@@ -27,9 +27,13 @@ String Binary::MakeQuoted(bool surroundFlag) const
 	char chQuote = '\'';
 	if (surroundFlag) strRtn += chQuote;
 	for (char ch : *this) {
-		char tmp[16];
-		::sprintf(tmp, "\\x%02x", ch);
-		strRtn += tmp;
+		if (String::IsPrint(ch)) {
+			strRtn += ch;
+		} else {
+			char tmp[16];
+			::sprintf(tmp, "\\x%02x", ch);
+			strRtn += tmp;
+		}
 	}
 	if (surroundFlag) strRtn += chQuote;
 	return strRtn;

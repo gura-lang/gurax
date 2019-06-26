@@ -88,6 +88,9 @@ void String::Bootup()
 			ch == '*' || ch == '\'' || ch == '(' || ch == ')') {
 			ctypes |= CType::URIC;
 		}
+		if (0x20 <= ch && ch < 0x7f) {
+			ctypes |= CType::Print;
+		}
 		_ctypesTbl[ch] = ctypes;
 		_convBinDigitTbl[ch] = ('0' <= ch && ch <= '1')? ch - '0' : 0;
 		_convOctDigitTbl[ch] = ('0' <= ch && ch <= '7')? ch - '0' : 0;
