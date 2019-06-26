@@ -72,7 +72,7 @@ const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 	return nullptr;
 }
 
-Value* VType::Cast(const Value& value, DeclArg::Flags flags, int a) const
+Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 {
 	auto IssueError = [](const VType& vtype, const Value& value) {
 		if (value.IsNil()) {

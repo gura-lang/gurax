@@ -454,7 +454,7 @@ void PUnit_Cast<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetFlags(), 0));
+	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetFlags()));
 	if (pValueCasted) {
 		if (!discardValueFlag) processor.PushValue(pValueCasted.release());
 		processor.SetPUnitNext(_GetPUnitCont());

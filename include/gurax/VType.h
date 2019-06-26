@@ -91,7 +91,7 @@ public:
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }
-	Value* Cast(const Value& value, DeclArg::Flags flags, int a) const;
+	Value* Cast(const Value& value, DeclArg::Flags flags) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }

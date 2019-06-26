@@ -45,7 +45,7 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		if (!pValueInit->IsNil()) {
-			pValueInit.reset(pVType->Cast(*pValueInit, flags, 0));
+			pValueInit.reset(pVType->Cast(*pValueInit, flags));
 			if (!pValueInit) return false;
 		}
 	} else if (flags & PropHandler::Flag::ListVar) {
