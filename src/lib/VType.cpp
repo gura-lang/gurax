@@ -74,6 +74,7 @@ const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 
 Value* VType::Cast(const Value& value, bool listVarFlag) const
 {
+	DeclArg::Flags flags = 0;
 	auto IssueError = [](const VType& vtype, const Value& value) {
 		if (value.IsNil()) {
 			Error::Issue(ErrorType::ValueError, "can't accept nil value");
@@ -97,7 +98,7 @@ Value* VType::Cast(const Value& value, bool listVarFlag) const
 			if (pValueElem->IsInstanceOf(*this)) {
 				pValuesCasted->Add(pValueElem->Reference());
 			} else {
-				RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem));
+				RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
 				if (!pValueElemCasted) {
 					IssueError(*this, *pValueElem);
 					return nullptr;
@@ -109,7 +110,7 @@ Value* VType::Cast(const Value& value, bool listVarFlag) const
 	} else if (value.IsInstanceOf(*this)) {
 		return value.Reference();
 	} else {
-		RefPtr<Value> pValueCasted(DoCastFrom(value));
+		RefPtr<Value> pValueCasted(DoCastFrom(value, flags));
 		if (!pValueCasted) {
 			IssueError(*this, value);
 			return nullptr;
@@ -118,7 +119,7 @@ Value* VType::Cast(const Value& value, bool listVarFlag) const
 	}
 }
 
-Value* VType::DoCastFrom(const Value& value) const
+Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return nullptr;
 }

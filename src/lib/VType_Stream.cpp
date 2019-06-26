@@ -97,7 +97,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Println));
 }
 
-Value* VType_Stream::DoCastFrom(const Value& value) const
+Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Binary)) {
 		const BinaryReferable& binary = Value_Binary::GetBinaryReferable(value);

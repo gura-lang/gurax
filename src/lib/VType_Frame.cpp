@@ -20,7 +20,7 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 }
 
-Value* VType_Frame::DoCastFrom(const Value& value) const
+Value* VType_Frame::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	RefPtr<Frame> pFrame;
 	if (value.IsType(VTYPE_Module)) {

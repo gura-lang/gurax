@@ -16,7 +16,7 @@ void VType_Quote::DoPrepare(Frame& frameOuter)
 	SetAttrs(VType::Empty, Flag::Immutable);
 }
 
-Value* VType_Quote::DoCastFrom(const Value& value) const
+Value* VType_Quote::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return value.IsInstanceOf(VTYPE_Expr)? value.Reference() : nullptr;
 }

@@ -16,7 +16,7 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 }
 
-Value* VType_Symbol::DoCastFrom(const Value& value) const
+Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Expr)) {
 		const Expr& expr = dynamic_cast<const Value_Expr&>(value).GetExpr();

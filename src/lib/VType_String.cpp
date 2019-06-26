@@ -176,7 +176,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(String, width));
 }
 
-Value* VType_String::DoCastFrom(const Value& value) const
+Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return new Value_String(value.ToString());
 }

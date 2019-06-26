@@ -36,7 +36,7 @@ void VType_Any::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Any, ToString));
 }
 
-Value* VType_Any::DoCastFrom(const Value& value) const
+Value* VType_Any::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return value.Reference();
 }

@@ -53,7 +53,7 @@ public:
 						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
 public:
 	virtual void PrepareForAssignment(const Symbol* pSymbol) override;
-	virtual Value* DoCastFrom(const Value& value) const override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 //------------------------------------------------------------------------------

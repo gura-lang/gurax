@@ -9,6 +9,7 @@
 #include "DottedSymbol.h"
 #include "Frame.h"
 #include "PropHandler.h"
+#include "DeclArg.h"
 
 namespace Gurax {
 
@@ -113,7 +114,7 @@ public:
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
-	virtual Value* DoCastFrom(const Value& value) const;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const;
 };
 
 //------------------------------------------------------------------------------

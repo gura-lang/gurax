@@ -107,7 +107,7 @@ public:
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
-	bool IsVType(const VType& vtype) const { return _pVType->IsIdentical(vtype); }
+	//bool IsVType(const VType& vtype) const { return _pVType->IsIdentical(vtype); }
 	const VType& GetVType() const { return *_pVType; }
 	void SetVType(const VType* pVType) { _pVType = pVType; }
 	const Occur& GetOccur() const { return _occur; }

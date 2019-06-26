@@ -78,7 +78,7 @@ void VTypeCustom::PrepareForAssignment(const Symbol* pSymbol)
 	}
 }
 
-Value* VTypeCustom::DoCastFrom(const Value& value) const
+Value* VTypeCustom::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return value.Reference();
 }

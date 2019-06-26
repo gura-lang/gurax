@@ -14,7 +14,7 @@ class VType_String : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
-	virtual Value* DoCastFrom(const Value& value) const override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern VType_String VTYPE_String;
