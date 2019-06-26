@@ -5,6 +5,7 @@
 #define GURAX_PROPHANDLER_H
 #include "Attribute.h"
 #include "Symbols.h"
+#include "DeclArg.h"
 
 //------------------------------------------------------------------------------
 // Macros to declare PropHandler for instance
@@ -139,35 +140,9 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(PropHandler);
 public:
-	using Flags = UInt32;
-	struct Flag {
-		static const Flags None		= 0;
-		static const Flags ListVar	= 1 << 0;	// :listvar
-		static const Flags Nil		= 1 << 1;	// :nil
-		static const Flags StreamR	= 1 << 2;	// :r
-		static const Flags StreamW	= 1 << 3;	// :w
-		static const Flags OfClass	= 1 << 4;	// :static
-		static const Flags Public	= 1 << 5;	// :public
-		static const Flags Readable	= 1 << 6;	// :readable
-		static const Flags Writable	= 1 << 7;	// :writable
-	};
-	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
-	public:
-		SymbolAssoc_Flag() {
-			Assoc(Gurax_Symbol(listvar),	Flag::ListVar);
-			Assoc(Gurax_Symbol(nil),		Flag::Nil);
-			Assoc(Gurax_Symbol(r),			Flag::StreamR);
-			Assoc(Gurax_Symbol(w),			Flag::StreamW);
-			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
-			Assoc(Gurax_Symbol(public_),	Flag::Public);
-			Assoc(Gurax_Symbol(R),			Flag::Readable);
-			Assoc(Gurax_Symbol(W),			Flag::Writable);
-		}
-		static const SymbolAssoc& GetInstance() {
-			static SymbolAssoc* pSymbolAssoc = nullptr;
-			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Flag());
-		}
-	};
+	using Flags = DeclArg::Flags;
+	using Flag = DeclArg::Flag;
+	using SymbolAssoc_Flag = DeclArg::SymbolAssoc_Flag;
 private:
 	const Symbol* _pSymbol;
 	const VType* _pVType;

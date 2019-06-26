@@ -234,7 +234,7 @@ Gurax_ImplementStatement(catch_)
 	const DeclArg* pDeclArg = declArgsOfBlock.empty()? nullptr : declArgsOfBlock.front();
 	if (exprCaller.GetExprCdrFirst()) {
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);				// [Any]
-		composer.Add_Cast(VTYPE_ErrorType, false, &exprCaller);				// [ErrorType]
+		composer.Add_Cast(VTYPE_ErrorType, 0, &exprCaller);					// [ErrorType]
 		PUnit* pPUnitOfBranch1 = composer.PeekPUnitCont();
 		composer.Add_JumpIfNoCatch(&exprCaller);							// [Error] or []
 		if (pDeclArg) {
@@ -544,7 +544,7 @@ Gurax_ImplementStatement(repeat)
 	if (declArgsOfBlock.empty()) {
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);								// [Any]
-			composer.Add_Cast(VTYPE_Number, false, &exprCaller);				// [Number]
+			composer.Add_Cast(VTYPE_Number, 0, &exprCaller);				// [Number]
 			composer.Add_GenRangeIterator(&exprCaller);						// [Iterator]
 		} else {
 			composer.Add_GenCounterIterator(&exprCaller);					// [Iterator]
@@ -589,7 +589,7 @@ Gurax_ImplementStatement(repeat)
 		composer.Add_PushFrame<Frame_Block>(&exprCaller);
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);								// [Any]
-			composer.Add_Cast(VTYPE_Number, false, &exprCaller);				// [Number]
+			composer.Add_Cast(VTYPE_Number, 0, &exprCaller);				// [Number]
 			composer.Add_GenRangeIterator(&exprCaller);						// [Iterator]
 		} else {
 			composer.Add_GenCounterIterator(&exprCaller);					// [Iterator]
@@ -782,7 +782,7 @@ Gurax_ImplementStatement(scope)
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
 		pExprCdr->ComposeOrNil(composer);									// [Any]
-		composer.Add_Cast(VTYPE_Frame, false, &exprCaller);					// [Frame]
+		composer.Add_Cast(VTYPE_Frame, 0, &exprCaller);						// [Frame]
 		composer.Add_PushFrameFromStack(&exprCaller);
 		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 		composer.Add_PopFrame(&exprCaller);
@@ -806,7 +806,7 @@ Gurax_ImplementStatement(class_)
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	if (pExprCdr) {
 		pExprCdr->ComposeOrNil(composer);									// [Any]
-		composer.Add_Cast(VTYPE_VType, false, &exprCaller);					// [VTypeInh]
+		composer.Add_Cast(VTYPE_VType, 0, &exprCaller);						// [VTypeInh]
 		composer.Add_CreateVType(true, &exprCaller);						// [VType]
 	} else {
 		composer.Add_CreateVType(false, &exprCaller);						// [VType]

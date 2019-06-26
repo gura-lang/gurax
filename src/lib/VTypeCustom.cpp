@@ -36,7 +36,6 @@ bool VTypeCustom::AssignFunction(Function* pFunction)
 bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropHandler::Flags flags, RefPtr<Value> pValueInit)
 {
-	bool listVarFlag = (flags & PropHandler::Flag::ListVar)? true : false;
 	size_t iProp = GetValuesPropInit().size();
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, iProp));
 	flags |= PropHandler::Flag::Readable | PropHandler::Flag::Writable;
@@ -46,10 +45,10 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	if (pValue && pValue->IsType(VTYPE_VType)) {
 		pVType = &dynamic_cast<Value_VType*>(pValue)->GetVTypeThis();
 		if (!pValueInit->IsNil()) {
-			pValueInit.reset(pVType->Cast(*pValueInit, listVarFlag));
+			pValueInit.reset(pVType->Cast(*pValueInit, flags, 0));
 			if (!pValueInit) return false;
 		}
-	} else if (listVarFlag) {
+	} else if (flags & PropHandler::Flag::ListVar) {
 		if (pValueInit->IsType(VTYPE_List)) {
 			const Value_List& valueEx = dynamic_cast<const Value_List&>(*pValueInit);
 			const ValueTypedOwner& valueTypedOwner = valueEx.GetValueTypedOwner();

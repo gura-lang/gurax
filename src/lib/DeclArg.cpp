@@ -142,7 +142,7 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 		return nullptr;
 	}
 	if (value.IsNil() && (IsSet(Flag::Nil) || IsOccurZeroOrOnce())) return value.Reference();
-	return GetVType().Cast(value, IsSet(Flag::ListVar));
+	return GetVType().Cast(value, GetFlags(), 0);
 }
 
 String DeclArg::FlagsToString(Flags flags)

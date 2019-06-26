@@ -20,7 +20,7 @@ bool PropHandler::SetValue(Value& valueTarget, const Value& value, const Attribu
 		DoSetValue(valueTarget, value, attr);
 		return true;
 	}
-	RefPtr<Value> pValueCasted(GetVType().Cast(value, IsSet(Flag::ListVar)));
+	RefPtr<Value> pValueCasted(GetVType().Cast(value, GetFlags(), 0));
 	if (!pValueCasted) return false;
 	DoSetValue(valueTarget, *pValueCasted, attr);
 	return true;

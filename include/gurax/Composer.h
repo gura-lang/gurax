@@ -104,8 +104,8 @@ public:
 	}
 	void Add_AssignPropHandler(const Symbol* pSymbol, PropHandler::Flags flags,
 							   const Attribute& attr, bool initByNilFlag, const Expr* pExprSrc);
-	void Add_Cast(const VType& vtype, bool listVarFlag, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_Cast(vtype, listVarFlag, Expr::Reference(pExprSrc)));
+	void Add_Cast(const VType& vtype, DeclArg::Flags flags, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Cast(vtype, flags, Expr::Reference(pExprSrc)));
 	}
 	void Add_GenIterator(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_GenIterator(Expr::Reference(pExprSrc)));

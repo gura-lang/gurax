@@ -72,9 +72,8 @@ const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 	return nullptr;
 }
 
-Value* VType::Cast(const Value& value, bool listVarFlag) const
+Value* VType::Cast(const Value& value, DeclArg::Flags flags, int a) const
 {
-	DeclArg::Flags flags = 0;
 	auto IssueError = [](const VType& vtype, const Value& value) {
 		if (value.IsNil()) {
 			Error::Issue(ErrorType::ValueError, "can't accept nil value");
@@ -83,7 +82,7 @@ Value* VType::Cast(const Value& value, bool listVarFlag) const
 						 value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
 		}
 	};
-	if (listVarFlag) {
+	if (flags & DeclArg::Flag::ListVar) {
 		if (!value.IsType(VTYPE_List)) {
 			Error::Issue(ErrorType::ValueError, "must be a list value");
 			return nullptr;

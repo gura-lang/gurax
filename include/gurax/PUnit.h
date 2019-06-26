@@ -464,15 +464,15 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	const VType& _vtype;
-	bool _listVarFlag;
+	DeclArg::Flags _flags;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Cast(const VType& vtype, bool listVarFlag) : _vtype(vtype), _listVarFlag(listVarFlag) {}
-	PUnit_Cast(const VType& vtype, bool listVarFlag, Expr* pExpr) : _vtype(vtype), _listVarFlag(listVarFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_Cast(const VType& vtype, DeclArg::Flags flags) : _vtype(vtype), _flags(flags) {}
+	PUnit_Cast(const VType& vtype, DeclArg::Flags flags, Expr* pExpr) : _vtype(vtype), _flags(flags) { _ppExprSrc[0] = pExpr; }
 public:
 	const VType& GetVType() const { return _vtype; }
-	bool GetListVarFlag() const { return _listVarFlag; }
+	DeclArg::Flags GetFlags() const { return _flags; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -489,10 +489,10 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Cast");
 private:
 	const VType& _vtype;
-	bool _listVarFlag;
+	DeclArg::Flags _flags;
 public:
-	PUnitFactory_Cast(const VType& vtype, bool listVarFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _vtype(vtype), _listVarFlag(listVarFlag) {}
+	PUnitFactory_Cast(const VType& vtype, DeclArg::Flags flags, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _vtype(vtype), _flags(flags) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Cast<1, false>) : sizeof(PUnit_Cast<0, false>);
 	}

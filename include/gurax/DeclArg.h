@@ -29,6 +29,10 @@ public:
 		static const Flags Map		= 1 << 4;	// :map .. must be here
 		static const Flags NoMap	= 1 << 5;	// :nomap .. must be here
 		static const Flags NoCast	= 1 << 6;	// :nocast
+		static const Flags OfClass	= 1 << 7;	// :static
+		static const Flags Public	= 1 << 8;	// :public
+		static const Flags Readable	= 1 << 9;	// :readable
+		static const Flags Writable	= 1 << 10;	// :writable
 	};
 	class Occur {
 	private:
@@ -72,6 +76,10 @@ public:
 			Assoc(Gurax_Symbol(map),			Flag::Map);
 			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
 			Assoc(Gurax_Symbol(nocast),			Flag::NoCast);
+			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
+			Assoc(Gurax_Symbol(public_),	Flag::Public);
+			Assoc(Gurax_Symbol(R),			Flag::Readable);
+			Assoc(Gurax_Symbol(W),			Flag::Writable);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;

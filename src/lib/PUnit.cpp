@@ -454,7 +454,7 @@ void PUnit_Cast<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetListVarFlag()));
+	RefPtr<Value> pValueCasted(GetVType().Cast(*pValue, GetFlags(), 0));
 	if (pValueCasted) {
 		if (!discardValueFlag) processor.PushValue(pValueCasted.release());
 		processor.SetPUnitNext(_GetPUnitCont());
@@ -476,15 +476,15 @@ PUnit* PUnitFactory_Cast::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Cast<1, true>(_vtype, _listVarFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Cast<1, true>(_vtype, _flags, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Cast<1, false>(_vtype, _listVarFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Cast<1, false>(_vtype, _flags, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Cast<0, true>(_vtype, _listVarFlag);
+			_pPUnitCreated = new PUnit_Cast<0, true>(_vtype, _flags);
 		} else {
-			_pPUnitCreated = new PUnit_Cast<0, false>(_vtype, _listVarFlag);
+			_pPUnitCreated = new PUnit_Cast<0, false>(_vtype, _flags);
 		}
 	}
 	return _pPUnitCreated;
