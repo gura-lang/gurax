@@ -235,3 +235,37 @@ TestCase('Example') {
 	Person('Taro', 10) {|p| p.Print()}
 	Person('Hanako', 12) {|p| p.Print()}
 }
+
+TestCase('Inheritance') {
+	A = class {
+		p1 = 'A#p1'
+		p2 = 'A#p2'
+		p3 = 'A#p3'
+		f1() = 'A#f1'
+		f2() = 'A#f2'
+		f3() = 'A#f3'
+	}
+	B = class(A) {
+		p3 = 'B#p3'
+		f3() = 'B#f3'
+	}
+	a = A(), b = B()
+	Tester(`A.__PropHandler__(`p1))
+	Tester(`A.__PropHandler__(`p2))
+	Tester(`A.__PropHandler__(`p3))
+	Tester(`B.__PropHandler__(`p1))
+	Tester(`B.__PropHandler__(`p2))
+	Tester(`B.__PropHandler__(`p3))
+	Tester(`a.p1)
+	Tester(`a.p2)
+	Tester(`a.p3)
+	Tester(`b.p1)
+	Tester(`b.p2)
+	Tester(`b.p3)
+	Tester(`a.f1())
+	Tester(`a.f2())
+	Tester(`a.f3())
+	Tester(`b.f1())
+	Tester(`b.f2())
+	Tester(`b.f3())
+}

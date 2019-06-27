@@ -15,6 +15,16 @@ VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwn
 	_pDestructor.reset(Function::Empty.Reference());
 }
 
+void VTypeCustom::Inherit()
+{
+	if (GetVTypeInh()->IsCustom()) {
+		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
+		for (Value* pValue : pVTypeInh->GetValuesPropInit()) {
+			GetValuesPropInit().push_back(pValue->Reference());
+		}
+	}
+}
+
 bool VTypeCustom::AssignFunction(Function* pFunction)
 {
 	const Symbol* pSymbol = pFunction->GetSymbol();

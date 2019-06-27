@@ -44,6 +44,7 @@ private:
 public:
 	VTypeCustom();
 public:
+	void Inherit();
 	void SetDestructor(Function* pDestructor) { _pDestructor.reset(pDestructor); }
 	const Function& GetDestructor() const { return *_pDestructor; }
 	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
@@ -52,6 +53,7 @@ public:
 	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
 public:
+	virtual bool IsCustom() const override { return true; }
 	virtual void PrepareForAssignment(const Symbol* pSymbol) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };

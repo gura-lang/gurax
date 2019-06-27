@@ -108,6 +108,7 @@ public:
 public:
 	// Virtual functions
 	virtual void PrepareForAssignment(const Symbol* pSymbol) {};
+	virtual bool IsCustom() const { return false; }
 	virtual bool IsNil() const { return false; }
 	virtual bool IsUndefined() const { return false; }
 	virtual bool IsList() const { return false; }
