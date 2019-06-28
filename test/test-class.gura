@@ -266,6 +266,26 @@ TestCase('Constant Property') {
 	Tester(`(a.s4 = 'xxxx'))
 }
 
+TestCase('Class Property') {
+	A = class {
+		p:static = 'hello'
+	}
+	Tester(`A.__PropHandler__(`p))
+	a1 = A()
+	a2 = A()
+	Tester(`A.p)
+	Tester(`a1.p)
+	Tester(`a1.p)
+	A.p = 'gura'
+	Tester(`A.p)
+	Tester(`a1.p)
+	Tester(`a2.p)
+	a1.p = 'world'
+	Tester(`A.p)
+	Tester(`a1.p)
+	Tester(`a2.p)
+}
+
 TestCase('Error in Property Declaration') {
 	Tester(`(A = class { a:Number = 'hello' }))
 	Tester(`(A = class { a:Number = nil }))
