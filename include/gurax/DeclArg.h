@@ -69,17 +69,18 @@ public:
 	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
 		SymbolAssoc_Flag() {
-			Assoc(Gurax_Symbol(listvar),		Flag::ListVar);
-			Assoc(Gurax_Symbol(nil),			Flag::Nil);
-			Assoc(Gurax_Symbol(r),				Flag::StreamR);
-			Assoc(Gurax_Symbol(w),				Flag::StreamW);
-			Assoc(Gurax_Symbol(map),			Flag::Map);
-			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
-			Assoc(Gurax_Symbol(nocast),			Flag::NoCast);
+			Assoc(Gurax_Symbol(listvar),	Flag::ListVar);
+			Assoc(Gurax_Symbol(nil),		Flag::Nil);
+			Assoc(Gurax_Symbol(r),			Flag::StreamR);
+			Assoc(Gurax_Symbol(w),			Flag::StreamW);
+			Assoc(Gurax_Symbol(map),		Flag::Map);
+			Assoc(Gurax_Symbol(nomap),		Flag::NoMap);
+			Assoc(Gurax_Symbol(nocast),		Flag::NoCast);
 			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
 			Assoc(Gurax_Symbol(public_),	Flag::Public);
 			Assoc(Gurax_Symbol(R),			Flag::Readable);
 			Assoc(Gurax_Symbol(W),			Flag::Writable);
+			Assoc(Gurax_Symbol(const_),		Flag::None);		// only for DoesExit()
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;

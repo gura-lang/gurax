@@ -82,6 +82,7 @@ a.s1 .. hello
 a.s2 .. hello
 a.s3 .. <Nil>
 a.s4 .. hello
+a.xxx .. value type 'A' doesn't have a property 'xxx'
 a.a1 = 3 .. 3
 a.a1 = 'world' .. world
 a.a1 = nil .. <Nil>
@@ -113,3 +114,27 @@ a.s4 = nil .. <Nil>
 <VType:Person(name:String,age:Number){block?}>
 Taro is 10 years old.
 Hanako is 12 years old.
+======== Inheritance ========
+A.__PropHandler__(`p1) .. <PropHandler:p1:String:R:W>
+A.__PropHandler__(`p2) .. <PropHandler:p2:String:R:W>
+A.__PropHandler__(`p3) .. <PropHandler:p3:String:R:W>
+B.__PropHandler__(`p1) .. <PropHandler:p1:String:R:W>
+B.__PropHandler__(`p2) .. <PropHandler:p2:String:R:W>
+B.__PropHandler__(`p3) .. <PropHandler:p3:String:R:W>
+a.p1 .. A#p1
+a.p2 .. A#p2
+a.p3 .. A#p3
+b.p1 .. A#p1
+b.p2 .. A#p2
+b.p3 .. B#p3
+a.FormatProp() .. A#p1 A#p2 A#p3
+b.FormatProp() .. A#p1 A#p2 B#p3
+a.f1() .. A#f1
+a.f2() .. A#f2
+a.f3() .. A#f3
+b.f1() .. A#f1
+b.f2() .. A#f2
+b.f3() .. B#f3
+a.p1 .. A#p1-mod
+b.p1 .. B#p1-mod
+b.p3 .. B#p3-mod

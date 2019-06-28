@@ -192,6 +192,7 @@ TestCase('Property Access') {
 	Tester(`a.s2)
 	Tester(`a.s3)
 	Tester(`a.s4)
+	Tester(`a.xxx)
 	Tester(`(a.a1 = 3))
 	Tester(`(a.a1 = 'world'))
 	Tester(`(a.a1 = nil))
@@ -244,6 +245,7 @@ TestCase('Inheritance') {
 		f1() = 'A#f1'
 		f2() = 'A#f2'
 		f3() = 'A#f3'
+		FormatProp() = Format('%s %s %s', this.p1, this.p2, this.p3)
 	}
 	B = class(A) {
 		p3 = 'B#p3'
@@ -262,10 +264,18 @@ TestCase('Inheritance') {
 	Tester(`b.p1)
 	Tester(`b.p2)
 	Tester(`b.p3)
+	Tester(`a.FormatProp())
+	Tester(`b.FormatProp())
 	Tester(`a.f1())
 	Tester(`a.f2())
 	Tester(`a.f3())
 	Tester(`b.f1())
 	Tester(`b.f2())
 	Tester(`b.f3())
+	a.p1 = 'A#p1-mod'
+	Tester(`a.p1)
+	b.p1 = 'B#p1-mod'
+	Tester(`b.p1)
+	b.p3 = 'B#p3-mod'
+	Tester(`b.p3)
 }
