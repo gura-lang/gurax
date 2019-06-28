@@ -110,6 +110,34 @@ a.s3 = nil .. <Nil>
 a.s4 = 3 .. 3
 a.s4 = 'world' .. world
 a.s4 = nil .. <Nil>
+======== Constant Property ========
+A.__PropHandler__(`a1) .. <PropHandler:a1:Any:nil:public:R>
+A.__PropHandler__(`n1) .. <PropHandler:n1:Number:public:R>
+A.__PropHandler__(`n2) .. <PropHandler:n2:Number:nil:public:R>
+A.__PropHandler__(`n3) .. <PropHandler:n3:Number:nil:public:R>
+A.__PropHandler__(`n4) .. <PropHandler:n4:Number:public:R>
+A.__PropHandler__(`s1) .. <PropHandler:s1:String:public:R>
+A.__PropHandler__(`s2) .. <PropHandler:s2:String:nil:public:R>
+A.__PropHandler__(`s3) .. <PropHandler:s3:String:nil:public:R>
+A.__PropHandler__(`s4) .. <PropHandler:s4:String:public:R>
+a.a1 .. <Nil>
+a.n1 .. 3
+a.n2 .. 3
+a.n3 .. <Nil>
+a.n4 .. 3
+a.s1 .. hello
+a.s2 .. hello
+a.s3 .. <Nil>
+a.s4 .. hello
+a.a1 = 3 .. property 'a1' is not writable
+a.n1 = 3 .. property 'n1' is not writable
+a.n2 = 3 .. property 'n2' is not writable
+a.n3 = 3 .. property 'n3' is not writable
+a.n4 = 3 .. property 'n4' is not writable
+a.s1 = 'xxxx' .. property 's1' is not writable
+a.s2 = 'xxxx' .. property 's2' is not writable
+a.s3 = 'xxxx' .. property 's3' is not writable
+a.s4 = 'xxxx' .. property 's4' is not writable
 ======== Example ========
 <VType:Person(name:String,age:Number){block?}>
 Taro is 10 years old.

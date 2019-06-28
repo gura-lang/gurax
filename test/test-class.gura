@@ -222,6 +222,50 @@ TestCase('Property Access') {
 	Tester(`(a.s4 = nil))
 }
 
+TestCase('Constant Property') {
+	A = class {
+		public {
+			a1:const
+			n1:const = 3
+			n2:nil:const = 3
+			n3:Number:const
+			n4:Number:const = 3
+			s1:const = 'hello'
+			s2:nil:const = 'hello'
+			s3:String:const
+			s4:String:const = 'hello'
+		}
+	}
+	Tester(`A.__PropHandler__(`a1))
+	Tester(`A.__PropHandler__(`n1))
+	Tester(`A.__PropHandler__(`n2))
+	Tester(`A.__PropHandler__(`n3))
+	Tester(`A.__PropHandler__(`n4))
+	Tester(`A.__PropHandler__(`s1))
+	Tester(`A.__PropHandler__(`s2))
+	Tester(`A.__PropHandler__(`s3))
+	Tester(`A.__PropHandler__(`s4))
+	a = A()
+	Tester(`a.a1)
+	Tester(`a.n1)
+	Tester(`a.n2)
+	Tester(`a.n3)
+	Tester(`a.n4)
+	Tester(`a.s1)
+	Tester(`a.s2)
+	Tester(`a.s3)
+	Tester(`a.s4)
+	Tester(`(a.a1 = 3))
+	Tester(`(a.n1 = 3))
+	Tester(`(a.n2 = 3))
+	Tester(`(a.n3 = 3))
+	Tester(`(a.n4 = 3))
+	Tester(`(a.s1 = 'xxxx'))
+	Tester(`(a.s2 = 'xxxx'))
+	Tester(`(a.s3 = 'xxxx'))
+	Tester(`(a.s4 = 'xxxx'))
+}
+
 TestCase('Example') {
 	Person = class {
 		name = ''

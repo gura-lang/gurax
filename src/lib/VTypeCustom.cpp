@@ -48,7 +48,6 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 {
 	size_t iProp = GetValuesPropInit().size();
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, iProp));
-	flags |= PropHandler::Flag::Readable | PropHandler::Flag::Writable;
 	const VType *pVType = &VTYPE_Any;
 	Value* pValue = frame.Lookup(dottedSymbol);
 	if (pValueInit->IsNil()) flags |= PropHandler::Flag::Nil;
