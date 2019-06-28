@@ -59,10 +59,13 @@ const PropHandler* VType::LookupPropHandler(const Symbol* pSymbol) const
 	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInh()) {
 		const PropHandler* pPropHandler = pVType->GetPropHandlerMap().Lookup(pSymbol);
 		if (pPropHandler) return pPropHandler;
+		pPropHandler = pVType->GetPropHandlerMapOfClass().Lookup(pSymbol);
+		if (pPropHandler) return pPropHandler;
 	}
 	return nullptr;
 }
 
+#if 0
 const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 {
 	for (const VType* pVType = this; pVType; pVType = pVType->GetVTypeInh()) {
@@ -71,6 +74,7 @@ const PropHandler* VType::LookupPropHandlerOfClass(const Symbol* pSymbol) const
 	}
 	return nullptr;
 }
+#endif
 
 Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 {

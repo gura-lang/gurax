@@ -93,7 +93,8 @@ void Value_VType::DoCall(Processor& processor, Argument& argument)
 
 Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandlerOfClass(pSymbol);
+	const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandler(pSymbol);
+	//const PropHandler* pPropHandler = GetVTypeThis().LookupPropHandlerOfClass(pSymbol);
 	if (!pPropHandler) {
 		Value* pValue = GetVTypeThis().GetFrame().Lookup(pSymbol);
 		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
