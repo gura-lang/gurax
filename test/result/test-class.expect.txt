@@ -142,13 +142,16 @@ a.s4 = 'xxxx' .. property 's4' is not writable
 A.__PropHandler__(`p) .. <PropHandler:p:String:static:R:W>
 A.p .. hello
 a1.p .. hello
-a1.p .. hello
+a2.p .. hello
 A.p .. gura
 a1.p .. gura
 a2.p .. gura
 A.p .. world
 a1.p .. world
 a2.p .. world
+A.p .. !!!!
+a1.p .. !!!!
+a2.p .. !!!!
 ======== Error in Property Declaration ========
 A = class {a:Number = 'hello'} .. failed to cast from String to Number
 A = class {a:Number = nil} .. <VType:A(){block?}>

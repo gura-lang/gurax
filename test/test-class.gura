@@ -275,12 +275,16 @@ TestCase('Class Property') {
 	a2 = A()
 	Tester(`A.p)
 	Tester(`a1.p)
-	Tester(`a1.p)
+	Tester(`a2.p)
 	A.p = 'gura'
 	Tester(`A.p)
 	Tester(`a1.p)
 	Tester(`a2.p)
 	a1.p = 'world'
+	Tester(`A.p)
+	Tester(`a1.p)
+	Tester(`a2.p)
+	a1.p = '!!!!'
 	Tester(`A.p)
 	Tester(`a1.p)
 	Tester(`a2.p)
