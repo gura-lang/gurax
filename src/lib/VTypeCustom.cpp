@@ -107,6 +107,13 @@ Value* VTypeCustom::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	return value.Reference();
 }
 
+void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
+{
+	ValueOwner::iterator ppValue = GetValuesPropOfClass().begin() + iProp;
+	Value::Delete(*ppValue);
+	*ppValue = pValue;
+}
+
 //------------------------------------------------------------------------------
 // VTypeCustom::ConstructorDefault
 //------------------------------------------------------------------------------
@@ -200,13 +207,6 @@ bool ValueCustom::InitCustomProp()
 void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
 {
 	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;
-	Value::Delete(*ppValue);
-	*ppValue = pValue;
-}
-
-void ValueCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
-{
-	ValueOwner::iterator ppValue = GetVType().GetValuesPropOfClass().begin() + iProp;
 	Value::Delete(*ppValue);
 	*ppValue = pValue;
 }

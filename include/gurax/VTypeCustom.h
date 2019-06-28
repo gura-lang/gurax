@@ -55,6 +55,8 @@ public:
 	bool AssignFunction(Function* pFunction);
 	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
+	void SetCustomPropOfClass(size_t iProp, Value* pValue);
+	Value* GetCustomPropOfClass(size_t iProp) { return GetValuesPropOfClass()[iProp]->Reference(); }
 public:
 	virtual bool IsCustom() const override { return true; }
 	virtual void PrepareForAssignment(const Symbol* pSymbol) override;
@@ -92,9 +94,7 @@ public:
 	const VTypeCustom& GetVType() const { return dynamic_cast<const VTypeCustom&>(Value_Object::GetVType()); }
 	bool InitCustomProp();
 	void SetCustomProp(size_t iProp, Value* pValue);
-	void SetCustomPropOfClass(size_t iProp, Value* pValue);
 	Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
-	Value* GetCustomPropOfClass(size_t iProp) { return GetVType().GetValuesPropOfClass()[iProp]->Reference(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
