@@ -8,13 +8,26 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// PropHandlerCustom
+// PropHandlerCustom_Instance
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE PropHandlerCustom : public PropHandler {
+class GURAX_DLLDECLARE PropHandlerCustom_Instance : public PropHandler {
 private:
 	size_t _iProp;
 public:
-	PropHandlerCustom(const Symbol* pSymbol, size_t iProp) : PropHandler(pSymbol), _iProp(iProp) {}
+	PropHandlerCustom_Instance(const Symbol* pSymbol, size_t iProp) : PropHandler(pSymbol), _iProp(iProp) {}
+protected:
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override;
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override;
+};
+
+//------------------------------------------------------------------------------
+// PropHandlerCustom_Class
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PropHandlerCustom_Class : public PropHandler {
+private:
+	size_t _iProp;
+public:
+	PropHandlerCustom_Class(const Symbol* pSymbol, size_t iProp) : PropHandler(pSymbol), _iProp(iProp) {}
 protected:
 	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override;
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override;

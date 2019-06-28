@@ -55,7 +55,6 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	bool ofClassFlag = (flags & PropHandler::Flag::OfClass);
 	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
 	size_t iProp = valuesProp.size();
-	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, iProp));
 	const VType *pVType = &VTYPE_Any;
 	Value* pValue = frame.Lookup(dottedSymbol);
 	if (pValueInit->IsNil()) flags |= PropHandler::Flag::Nil;
@@ -80,6 +79,12 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 		pVType = &pValueInit->GetVType();
 	}
 	valuesProp.push_back(pValueInit.release());
+	RefPtr<PropHandler> pPropHandler;
+	if (ofClassFlag) {
+		pPropHandler.reset(new PropHandlerCustom_Class(pSymbol, iProp));
+	} else {
+		pPropHandler.reset(new PropHandlerCustom_Instance(pSymbol, iProp));
+	}
 	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
 	return true;
