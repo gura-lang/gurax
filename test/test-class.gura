@@ -266,6 +266,16 @@ TestCase('Constant Property') {
 	Tester(`(a.s4 = 'xxxx'))
 }
 
+TestCase('Error in Property Declaration') {
+	Tester(`(A = class { a:Number = 'hello' }))
+	Tester(`(A = class { a:Number = nil }))
+	Tester(`(A = class { a[] = nil }))
+	Tester(`(A = class { a[] = 3 }))
+	Tester(`(A = class { a[] = [] }))
+	Tester(`(A = class { a[]:Number = [] }))
+	Tester(`(A = class { a[]:Number = ['h'] }))
+}
+
 TestCase('Example') {
 	Person = class {
 		name = ''

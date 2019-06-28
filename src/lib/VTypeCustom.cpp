@@ -8,7 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VTypeCustom
 //------------------------------------------------------------------------------
-VTypeCustom::VTypeCustom() : VType(Symbol::Empty), _pValuesPropInit(new ValueOwner())
+VTypeCustom::VTypeCustom() :
+	VType(Symbol::Empty), _pValuesPropInit(new ValueOwner()), _pValuesPropOfClass(new ValueOwner())
 {
 	// _pConstructor and _pDestructor must be initialized here
 	_pConstructor.reset(Function::Empty.Reference());
@@ -19,8 +20,13 @@ void VTypeCustom::Inherit()
 {
 	if (GetVTypeInh()->IsCustom()) {
 		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
+		GetValuesPropInit().reserve(pVTypeInh->GetValuesPropInit().size());
 		for (Value* pValue : pVTypeInh->GetValuesPropInit()) {
 			GetValuesPropInit().push_back(pValue->Reference());
+		}
+		GetValuesPropOfClass().reserve(pVTypeInh->GetValuesPropOfClass().size());
+		for (Value* pValue : pVTypeInh->GetValuesPropOfClass()) {
+			GetValuesPropOfClass().push_back(pValue->Reference());
 		}
 	}
 }
@@ -46,7 +52,8 @@ bool VTypeCustom::AssignFunction(Function* pFunction)
 bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropHandler::Flags flags, RefPtr<Value> pValueInit)
 {
-	size_t iProp = GetValuesPropInit().size();
+	ValueOwner& valuesProp = (flags & PropHandler::Flag::OfClass)? GetValuesPropOfClass() : GetValuesPropInit();
+	size_t iProp = valuesProp.size();
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, iProp));
 	const VType *pVType = &VTYPE_Any;
 	Value* pValue = frame.Lookup(dottedSymbol);
@@ -64,11 +71,14 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 			if (valueTypedOwner.HasDeterminedVTypeOfElems()) {
 				pVType = valueTypedOwner.GetVTypeOfElems();
 			}
+		} else if (!pValueInit->IsNil()) {
+			Error::Issue(ErrorType::PropertyError, "must be initialized by a list");
+			return false;
 		}
 	} else if (!pValueInit->IsNil()) {
 		pVType = &pValueInit->GetVType();
 	}
-	GetValuesPropInit().push_back(pValueInit.release());
+	valuesProp.push_back(pValueInit.release());
 	pPropHandler->Declare(*pVType, flags);
 	Assign(pPropHandler.release());
 	return true;

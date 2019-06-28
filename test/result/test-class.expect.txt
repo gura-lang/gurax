@@ -138,6 +138,14 @@ a.s1 = 'xxxx' .. property 's1' is not writable
 a.s2 = 'xxxx' .. property 's2' is not writable
 a.s3 = 'xxxx' .. property 's3' is not writable
 a.s4 = 'xxxx' .. property 's4' is not writable
+======== Error in Property Declaration ========
+A = class {a:Number = 'hello'} .. failed to cast from String to Number
+A = class {a:Number = nil} .. <VType:A(){block?}>
+A = class {a[] = nil} .. <VType:A(){block?}>
+A = class {a[] = 3} .. must be initialized by a list
+A = class {a[] = []} .. <VType:A(){block?}>
+A = class {a[]:Number = []} .. <VType:A(){block?}>
+A = class {a[]:Number = ['h']} .. failed to cast from String to Number
 ======== Example ========
 <VType:Person(name:String,age:Number){block?}>
 Taro is 10 years old.

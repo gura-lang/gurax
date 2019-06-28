@@ -40,6 +40,7 @@ public:
 	};
 private:
 	RefPtr<ValueOwner> _pValuesPropInit;
+	RefPtr<ValueOwner> _pValuesPropOfClass;
 	RefPtr<Function> _pDestructor;
 public:
 	VTypeCustom();
@@ -49,6 +50,8 @@ public:
 	const Function& GetDestructor() const { return *_pDestructor; }
 	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
 	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
+	ValueOwner& GetValuesPropOfClass() { return *_pValuesPropOfClass; }
+	const ValueOwner& GetValuesPropOfClass() const { return *_pValuesPropOfClass; }
 	bool AssignFunction(Function* pFunction);
 	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
