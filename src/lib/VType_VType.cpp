@@ -103,6 +103,10 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
 		return nullptr;
 	}
+	if (!pPropHandler->IsSet(PropHandler::Flag::OfClass)) {
+		Error::Issue(ErrorType::PropertyError, "property '%s' is not a static one", pSymbol->GetName());
+		return nullptr;
+	}
 	return pPropHandler->GetValue(*this, attr);
 }
 

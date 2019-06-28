@@ -52,7 +52,8 @@ bool VTypeCustom::AssignFunction(Function* pFunction)
 bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropHandler::Flags flags, RefPtr<Value> pValueInit)
 {
-	ValueOwner& valuesProp = (flags & PropHandler::Flag::OfClass)? GetValuesPropOfClass() : GetValuesPropInit();
+	bool ofClassFlag = (flags & PropHandler::Flag::OfClass);
+	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
 	size_t iProp = valuesProp.size();
 	RefPtr<PropHandler> pPropHandler(new PropHandlerCustom(pSymbol, iProp));
 	const VType *pVType = &VTYPE_Any;
@@ -194,6 +195,13 @@ bool ValueCustom::InitCustomProp()
 void ValueCustom::SetCustomProp(size_t iProp, Value* pValue)
 {
 	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;
+	Value::Delete(*ppValue);
+	*ppValue = pValue;
+}
+
+void ValueCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
+{
+	ValueOwner::iterator ppValue = GetVType().GetValuesPropOfClass().begin() + iProp;
 	Value::Delete(*ppValue);
 	*ppValue = pValue;
 }

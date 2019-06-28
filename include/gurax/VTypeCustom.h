@@ -92,7 +92,9 @@ public:
 	const VTypeCustom& GetVType() const { return dynamic_cast<const VTypeCustom&>(Value_Object::GetVType()); }
 	bool InitCustomProp();
 	void SetCustomProp(size_t iProp, Value* pValue);
+	void SetCustomPropOfClass(size_t iProp, Value* pValue);
 	Value* GetCustomProp(size_t iProp) { return (*_pValuesProp)[iProp]->Reference(); }
+	Value* GetCustomPropOfClass(size_t iProp) { return GetVType().GetValuesPropOfClass()[iProp]->Reference(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
