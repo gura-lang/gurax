@@ -270,24 +270,37 @@ TestCase('Class Property') {
 	A = class {
 		p:static = 'hello'
 	}
+	B = class(A) {
+	}
 	Tester(`A.__PropHandler__(`p))
+	Tester(`B.__PropHandler__(`p))
 	a1 = A()
 	a2 = A()
+	b1 = B()
+	b2 = B()
 	Tester(`A.p)
 	Tester(`a1.p)
 	Tester(`a2.p)
+	Tester(`b1.p)
+	Tester(`b1.p)
 	A.p = 'gura'
 	Tester(`A.p)
 	Tester(`a1.p)
 	Tester(`a2.p)
+	Tester(`b1.p)
+	Tester(`b2.p)
 	a1.p = 'world'
 	Tester(`A.p)
 	Tester(`a1.p)
 	Tester(`a2.p)
-	a1.p = '!!!!'
+	Tester(`b1.p)
+	Tester(`b2.p)
+	b1.p = '!!!!'
 	Tester(`A.p)
 	Tester(`a1.p)
 	Tester(`a2.p)
+	Tester(`b1.p)
+	Tester(`b2.p)
 }
 
 TestCase('Error in Property Declaration') {

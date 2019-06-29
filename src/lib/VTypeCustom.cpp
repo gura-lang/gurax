@@ -20,14 +20,8 @@ void VTypeCustom::Inherit()
 {
 	if (GetVTypeInh()->IsCustom()) {
 		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-		GetValuesPropInit().reserve(pVTypeInh->GetValuesPropInit().size());
-		for (Value* pValue : pVTypeInh->GetValuesPropInit()) {
-			GetValuesPropInit().push_back(pValue->Reference());
-		}
-		GetValuesPropOfClass().reserve(pVTypeInh->GetValuesPropOfClass().size());
-		for (Value* pValue : pVTypeInh->GetValuesPropOfClass()) {
-			GetValuesPropOfClass().push_back(pValue->Reference());
-		}
+		_pValuesPropInit.reset(pVTypeInh->GetValuesPropInit().Reference());
+		_pValuesPropOfClass.reset(pVTypeInh->GetValuesPropOfClass().Reference());
 	}
 }
 
