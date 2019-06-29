@@ -104,7 +104,7 @@ Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool
 		return nullptr;
 	}
 	if (!pPropHandler->IsSet(PropHandler::Flag::OfClass)) {
-		Error::Issue(ErrorType::PropertyError, "property '%s' is not a static one", pSymbol->GetName());
+		Error::Issue(ErrorType::PropertyError, "property '%s' belongs to an instance", pSymbol->GetName());
 		return nullptr;
 	}
 	return pPropHandler->GetValue(*this, attr);

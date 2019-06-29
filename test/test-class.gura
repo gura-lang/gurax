@@ -303,6 +303,30 @@ TestCase('Class Property') {
 	Tester(`b2.p)
 }
 
+TestCase('Dict as Property') {
+	A = class {
+		d = %{}
+		ds:static = %{}
+	}
+	Println(A.__PropHandler__(`d))
+	a = A()
+	Tester(`a.d)
+	Tester(`A.ds)
+	Tester(`a.ds)
+	a.d['apple'] = 100
+	a.d['grape'] = 200
+	a.d['orange'] = 80
+	Tester(`a.d)
+	A.ds['apple'] = 100
+	A.ds['grape'] = 200
+	A.ds['orange'] = 80
+	Tester(`A.ds)
+	Tester(`a.ds)
+	a.ds['grape'] = 230
+	Tester(`A.ds)
+	Tester(`a.ds)
+}
+
 TestCase('Error in Property Declaration') {
 	Tester(`(A = class { a:Number = 'hello' }))
 	Tester(`(A = class { a:Number = nil }))
