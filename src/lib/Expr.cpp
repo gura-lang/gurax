@@ -113,10 +113,11 @@ Value* Expr::DoEval(Processor& processor, Argument& argument) const
 {
 	if (!GetPUnitFirst()) return Value::nil();
 	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
-	processor.ProcessPUnit(GetPUnitFirst());
+	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	processor.PopFrame();
 	processor.ClearEvent();
-	return Error::IsIssued()? Value::nil() : processor.PopValue();
+	//return Error::IsIssued()? Value::nil() : processor.PopValue();
+	return pValue.release();
 }
 
 //------------------------------------------------------------------------------

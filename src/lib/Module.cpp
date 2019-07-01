@@ -102,11 +102,11 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
 	pModule->SetPathName(pathName);
 	processor.PushFrame(pModule->GetFrame().Reference());
-	processor.ProcessPUnit(composer.GetPUnitFirst());
+	Value::Delete(processor.ProcessPUnit(composer.GetPUnitFirst()));
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return nullptr;
-	processor.DiscardValue();	// discard the last value
+	//processor.DiscardValue();	// discard the last value
 	return pModule.release();
 }
 

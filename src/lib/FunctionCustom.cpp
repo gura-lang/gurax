@@ -27,10 +27,11 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 {
 	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
-	processor.ProcessPUnit(GetPUnitBody());
+	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitBody()));
 	processor.PopFrame();
 	processor.ClearEvent();
-	return Error::IsIssued()? Value::nil() : processor.PopValue();
+	//return Error::IsIssued()? Value::nil() : processor.PopValue();
+	return pValue.release();
 }
 
 String FunctionCustom::ToString(const StringStyle& ss) const

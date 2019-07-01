@@ -129,8 +129,8 @@ public:
 	bool IsEventBreak() const { return _event == Event::Break; }
 	bool IsEventContinue() const { return _event == Event::Continue; }
 public:
-	void ProcessPUnit(const PUnit* pPUnit) { RunLoop(pPUnit); }
-	Value* ProcessExpr(const Expr& expr);
+	Value* ProcessPUnit(const PUnit* pPUnit);
+	Value* ProcessExpr(const Expr& expr) { return ProcessPUnit(expr.GetPUnitFirst()); }
 public:
 	void Print() const;
 protected:

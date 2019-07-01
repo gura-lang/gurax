@@ -34,10 +34,10 @@ Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicSco
 	return *pFrame;
 }
 
-Value* Processor::ProcessExpr(const Expr& expr)
+Value* Processor::ProcessPUnit(const PUnit* pPUnit)
 {
-	if (!expr.GetPUnitFirst()) return Value::nil();
-	ProcessPUnit(expr.GetPUnitFirst());
+	if (!pPUnit) return Value::nil();
+	RunLoop(pPUnit);
 	return Error::IsIssued()? Value::nil() : PopValue();
 }
 

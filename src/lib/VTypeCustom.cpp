@@ -155,7 +155,16 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return nullptr;
 	argument.SetValueThis(pValueThis.Reference());
-	RefPtr<Value> pValue(GetFuncInitializer().DoEval(processor, argument));
+	do {
+		bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
+		argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
+		Value::Delete(processor.ProcessPUnit(GetFuncInitializer().GetPUnitBody()));
+		processor.PopFrame();
+		processor.ClearEvent();
+		if (Error::IsIssued()) return Value::nil();
+		//processor.PopValue();
+	} while (0);
+	//RefPtr<Value> pValue(GetFuncInitializer().DoEval(processor, argument));
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return pValueThis.release();
 	Frame& frame = processor.GetFrameCur();
