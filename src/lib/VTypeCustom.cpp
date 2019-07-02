@@ -95,7 +95,13 @@ void VTypeCustom::PrepareForAssignment(const Symbol* pSymbol)
 	Function& constructor = GetConstructor();
 	_pSymbol = pSymbol;
 	if (constructor.IsEmpty()) {
-		SetConstructor(new ConstructorDefault(*this, pSymbol));
+		//SetConstructor(new ConstructorDefault(*this, pSymbol));
+		if (GetVTypeInh()->IsCustom()) {
+			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
+			SetConstructor(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
+		} else {
+			SetConstructor(new ConstructorDefault(*this, pSymbol, nullptr));
+		}
 	} else {
 		constructor.SetSymbol(pSymbol);
 	}
@@ -116,8 +122,8 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 //------------------------------------------------------------------------------
 // VTypeCustom::ConstructorDefault
 //------------------------------------------------------------------------------
-VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol) :
-	Function(Type::Function, pSymbol), _vtypeCustom(vtypeCustom)
+VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol, Function* pConstructorInh) :
+	Function(Type::Function, pSymbol), _vtypeCustom(vtypeCustom), _pConstructorInh(pConstructorInh)
 {
 	GetDeclCallable().GetDeclBlock().
 		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
@@ -155,6 +161,7 @@ VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncI
 
 Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
 {
+	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	RefPtr<Value> pValueThis;
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());
@@ -164,24 +171,22 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 		pValueThis.reset(pValueThisWk.release());
 		argument.SetValueThis(pValueThis.Reference());
 	}
-#if 0
-	const Expr* pExprBody = GetFuncInitializer().GetExprBody();
-	if (pExprBody && pExprBody->IsType<Expr_Block>()) {
-		const Expr_Block* pExprBodyEx = dynamic_cast<const Expr_Block*>(pExprBody);
-		pExprBodyEx->GetDeclCallable().GetDeclArgOwner();
-		//RefPtr<Argument> pArgument(new Argument(pExprBodyEx->GetDeclCallable().Reference()));
+	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
+	if (_pConstructorInh) {
+		const Expr* pExprBody = GetFuncInitializer().GetExprBody();
+		RefPtr<Argument> pArgument(new Argument(_pConstructorInh->GetDeclCallable().Reference()));
+		if (pExprBody && pExprBody->IsType<Expr_Block>()) {
+			//const Expr_Block* pExprBodyEx = dynamic_cast<const Expr_Block*>(pExprBody);
+			//for (const DeclArg* pDeclArg : pExprBodyEx->GetDeclCallable().GetDeclArgOwner()) {
+			//	pDeclArg->GetExpr();
+			//}
+		}
+		_pConstructorInh->DoEvalVoid(processor, *pArgument);
 	}
-#endif
-	if (!GetFuncInitializer().IsEmpty()) {
-		bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
-		Frame& frame = processor.PushFrameForFunction(*this, dynamicScopeFlag);
-		argument.AssignToFrame(frame);
-		
-		Value::Delete(processor.ProcessPUnit(GetFuncInitializer().GetPUnitBody()));
-		processor.PopFrame();
-		processor.ClearEvent();
-		if (Error::IsIssued()) return Value::nil();
-	} while (0);
+	Value::Delete(processor.ProcessPUnit(GetFuncInitializer().GetPUnitBody()));
+	processor.PopFrame();
+	processor.ClearEvent();
+	if (Error::IsIssued()) return Value::nil();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return pValueThis.release();
 	Frame& frame = processor.GetFrameCur();

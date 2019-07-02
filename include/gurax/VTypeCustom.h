@@ -15,8 +15,9 @@ public:
 	class ConstructorDefault : public Function {
 	protected:
 		VTypeCustom& _vtypeCustom;
+		RefPtr<Function> _pConstructorInh;	// this may be nullptr
 	public:
-		ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol);
+		ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol, Function* pConstructorInh);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 	public:
