@@ -116,7 +116,6 @@ Value* Expr::DoEval(Processor& processor, Argument& argument) const
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	processor.PopFrame();
 	processor.ClearEvent();
-	//return Error::IsIssued()? Value::nil() : processor.PopValue();
 	return pValue.release();
 }
 

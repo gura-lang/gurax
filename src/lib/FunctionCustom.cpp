@@ -30,7 +30,6 @@ Value* FunctionCustom::DoEval(Processor& processor, Argument& argument) const
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitBody()));
 	processor.PopFrame();
 	processor.ClearEvent();
-	//return Error::IsIssued()? Value::nil() : processor.PopValue();
 	return pValue.release();
 }
 

@@ -20,8 +20,6 @@ void VTypeCustom::Inherit()
 {
 	if (GetVTypeInh()->IsCustom()) {
 		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-		//_pConstructor.reset(pVTypeInh->GetConstructor().Reference());
-		//_pDestructor.reset(pVTypeInh->GetDestructor().Reference());
 		_pValuesPropInit.reset(pVTypeInh->GetValuesPropInit().Reference());
 		_pValuesPropOfClass.reset(pVTypeInh->GetValuesPropOfClass().Reference());
 	}
@@ -170,9 +168,7 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 		processor.PopFrame();
 		processor.ClearEvent();
 		if (Error::IsIssued()) return Value::nil();
-		//processor.PopValue();
 	} while (0);
-	//RefPtr<Value> pValue(GetFuncInitializer().DoEval(processor, argument));
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return pValueThis.release();
 	Frame& frame = processor.GetFrameCur();

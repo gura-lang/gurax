@@ -106,7 +106,6 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return nullptr;
-	//processor.DiscardValue();	// discard the last value
 	return pModule.release();
 }
 
