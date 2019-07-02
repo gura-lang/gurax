@@ -28,8 +28,9 @@ public:
 	protected:
 		VTypeCustom& _vtypeCustom;
 		RefPtr<Function> _pFuncInitializer;
+		RefPtr<Function> _pConstructorInh;	// this may be nullptr
 	public:
-		Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer);
+		Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer, Function* pConstructorInh);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 		const Function& GetFuncInitializer() const { return *_pFuncInitializer; }

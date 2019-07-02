@@ -92,7 +92,8 @@ void Argument::AssignToFrame(Frame& frame) const
 	}
 	if (GetValueThis().IsValid()) {
 		// assign to symbol "this"
-		frame.AssignFromArgument(Gurax_Symbol(this_), GetValueThis().Reference());
+		//frame.AssignFromArgument(Gurax_Symbol(this_), GetValueThis().Reference());
+		AssignThisToFrame(frame, GetValueThis().Reference());
 	} while (0);
 	do {
 		// assign to symbol declared as dict%

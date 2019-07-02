@@ -95,6 +95,9 @@ public:
 	bool ReadyToPickValue();
 	void AssignToFrame(Frame& frame) const;
 	void DoCall(Processor& processor);
+	static void AssignThisToFrame(Frame& frame, Value* pValueThis) {
+		frame.AssignFromArgument(Gurax_Symbol(this_), pValueThis);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Argument& argument) const { return this == &argument; }

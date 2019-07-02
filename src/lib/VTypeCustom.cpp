@@ -30,7 +30,12 @@ bool VTypeCustom::AssignFunction(Function* pFunction)
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
-		SetConstructor(new Constructor(*this, pFunction));
+		if (GetVTypeInh()->IsCustom()) {
+			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
+			SetConstructor(new Constructor(*this, pFunction, pVTypeInh->GetConstructor().Reference()));
+		} else {
+			SetConstructor(new Constructor(*this, pFunction, nullptr));
+		}
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
 		if (!pFunction->GetDeclCallable().IsNaked()) {
 			Error::Issue(ErrorType::SyntaxError, "destructors can't have any arguments");
@@ -142,17 +147,23 @@ String VTypeCustom::ConstructorDefault::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // VTypeCustom::Constructor
 //------------------------------------------------------------------------------
-VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer) :
+VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer, Function* pConstructorInh) :
 	Function(Type::Function, Symbol::Empty, pFuncInitializer->GetDeclCallable().Reference()),
-	_vtypeCustom(vtypeCustom), _pFuncInitializer(pFuncInitializer)
+	_vtypeCustom(vtypeCustom), _pFuncInitializer(pFuncInitializer), _pConstructorInh(pConstructorInh)
 {
 }
 
 Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
-	if (!pValueThis->InitCustomProp()) return nullptr;
-	argument.SetValueThis(pValueThis.Reference());
+	RefPtr<Value> pValueThis;
+	if (argument.GetValueThis().IsValid()) {
+		pValueThis.reset(argument.GetValueThis().Reference());
+	} else {
+		RefPtr<ValueCustom> pValueThisWk(new ValueCustom(GetVTypeCustom(), processor.Reference()));
+		if (!pValueThisWk->InitCustomProp()) return nullptr;
+		pValueThis.reset(pValueThisWk.release());
+		argument.SetValueThis(pValueThis.Reference());
+	}
 #if 0
 	const Expr* pExprBody = GetFuncInitializer().GetExprBody();
 	if (pExprBody && pExprBody->IsType<Expr_Block>()) {
@@ -161,9 +172,11 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 		//RefPtr<Argument> pArgument(new Argument(pExprBodyEx->GetDeclCallable().Reference()));
 	}
 #endif
-	do {
+	if (!GetFuncInitializer().IsEmpty()) {
 		bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
-		argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
+		Frame& frame = processor.PushFrameForFunction(*this, dynamicScopeFlag);
+		argument.AssignToFrame(frame);
+		
 		Value::Delete(processor.ProcessPUnit(GetFuncInitializer().GetPUnitBody()));
 		processor.PopFrame();
 		processor.ClearEvent();
