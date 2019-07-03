@@ -599,6 +599,19 @@ bool Expr_Block::DoPrepare()
 
 void Expr_Block::Compose(Composer& composer)
 {
+	RefPtr<Expr> pExprParent(LockExprParent());
+	if (pExprParent && !pExprParent->IsType<Expr_Caller>() && HasExprParam()) {
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+		composer.Add_Jump(this);
+		SetPUnitSubFirst(composer.PeekPUnitCont());
+		PUnit* pPUnitSequence = composer.PeekPUnitCont();
+		composer.Add_BeginSequence(this);
+		composer.Add_Argument(Attribute::Empty->Reference(), nullptr);
+		Expr::ComposeForArgSlot(composer, GetExprParamFirst());
+		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
+		composer.Add_Return(this);
+		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	}
 	ComposeSequence(composer, GetExprElemFirst());					// [Any]
 }
 
