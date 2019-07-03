@@ -93,7 +93,7 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 	return true;
 }
 
-void VTypeCustom::PrepareForAssignment(const Symbol* pSymbol)
+void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymbol)
 {
 	if (!_pSymbol->IsEmpty()) return;
 	Function& constructor = GetConstructor();
@@ -106,6 +106,7 @@ void VTypeCustom::PrepareForAssignment(const Symbol* pSymbol)
 		} else {
 			pConstructor.reset(new ConstructorDefault(*this, pSymbol, nullptr));
 		}
+		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
 	} else {
 		constructor.SetSymbol(pSymbol);

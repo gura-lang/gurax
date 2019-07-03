@@ -107,7 +107,7 @@ public:
 	bool IsImmutable() const { return (_flags & Flag::Mutable) == 0; }
 public:
 	// Virtual functions
-	virtual void PrepareForAssignment(const Symbol* pSymbol) {};
+	virtual void PrepareForAssignment(Processor& processor, const Symbol* pSymbol) {};
 	virtual bool IsCustom() const { return false; }
 	virtual bool IsNil() const { return false; }
 	virtual bool IsUndefined() const { return false; }

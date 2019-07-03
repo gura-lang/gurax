@@ -61,7 +61,7 @@ public:
 	Value* GetCustomPropOfClass(size_t iProp) { return GetValuesPropOfClass()[iProp]->Reference(); }
 public:
 	virtual bool IsCustom() const override { return true; }
-	virtual void PrepareForAssignment(const Symbol* pSymbol) override;
+	virtual void PrepareForAssignment(Processor& processor, const Symbol* pSymbol) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 

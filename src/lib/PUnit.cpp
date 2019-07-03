@@ -200,7 +200,7 @@ void PUnit_AssignToSymbol<nExprSrc, discardValueFlag>::Exec(Processor& processor
 		discardValueFlag? processor.PopValue() : processor.PeekValue(0).Reference());
 	if (pValueAssigned->IsVType()) {
 		VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
-		vtype.PrepareForAssignment(GetSymbol());
+		vtype.PrepareForAssignment(processor, GetSymbol());
 	}
 	frame.Assign(GetSymbol(), pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());
