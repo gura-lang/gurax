@@ -99,13 +99,14 @@ void VTypeCustom::PrepareForAssignment(const Symbol* pSymbol)
 	Function& constructor = GetConstructor();
 	_pSymbol = pSymbol;
 	if (constructor.IsEmpty()) {
-		//SetConstructor(new ConstructorDefault(*this, pSymbol));
+		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			SetConstructor(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
+			pConstructor.reset(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
 		} else {
-			SetConstructor(new ConstructorDefault(*this, pSymbol, nullptr));
+			pConstructor.reset(new ConstructorDefault(*this, pSymbol, nullptr));
 		}
+		SetConstructor(pConstructor.release());
 	} else {
 		constructor.SetSymbol(pSymbol);
 	}
