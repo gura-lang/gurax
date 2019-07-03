@@ -335,7 +335,7 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(processor.GetFrameCur());
-	if (!vtypeCustom.AssignFunction(pFunction.Reference())) return;
+	if (!vtypeCustom.AssignMethod(pFunction.Reference())) return;
 	if (!discardValueFlag) {
 		processor.PushValue(new Value_Function(pFunction.release()));
 	}

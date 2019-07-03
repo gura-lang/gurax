@@ -25,7 +25,7 @@ void VTypeCustom::Inherit()
 	}
 }
 
-bool VTypeCustom::AssignFunction(Function* pFunction)
+bool VTypeCustom::AssignMethod(Function* pFunction)
 {
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
@@ -161,7 +161,6 @@ VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncI
 
 Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
 {
-	bool dynamicScopeFlag = argument.IsSet(DeclCallable::Flag::DynamicScope);
 	RefPtr<Value> pValueThis;
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());
@@ -171,6 +170,7 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 		pValueThis.reset(pValueThisWk.release());
 		argument.SetValueThis(pValueThis.Reference());
 	}
+	bool dynamicScopeFlag = false;
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
 	if (_pConstructorInh) {
 		const Expr* pExprBody = GetFuncInitializer().GetExprBody();

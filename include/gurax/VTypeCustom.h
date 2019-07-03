@@ -54,7 +54,7 @@ public:
 	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
 	ValueOwner& GetValuesPropOfClass() { return *_pValuesPropOfClass; }
 	const ValueOwner& GetValuesPropOfClass() const { return *_pValuesPropOfClass; }
-	bool AssignFunction(Function* pFunction);
+	bool AssignMethod(Function* pFunction);
 	bool AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 						   PropHandler::Flags flags, RefPtr<Value> pValueInit);
 	void SetCustomPropOfClass(size_t iProp, Value* pValue);
