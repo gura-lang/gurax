@@ -594,25 +594,29 @@ const Expr::TypeInfo Expr_Block::typeInfo;
 
 bool Expr_Block::DoPrepare()
 {
-	return PrepareDeclCallable();
+	return HasCallerAsParent()? PrepareDeclCallable() : true;
 }
 
 void Expr_Block::Compose(Composer& composer)
 {
-	RefPtr<Expr> pExprParent(LockExprParent());
-	if (pExprParent && !pExprParent->IsType<Expr_Caller>() && HasExprParam()) {
+	if (!HasCallerAsParent() && HasExprParam()) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(this);
 		SetPUnitSubFirst(composer.PeekPUnitCont());
 		PUnit* pPUnitSequence = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(this);
-		composer.Add_Argument(Attribute::Empty->Reference(), nullptr);
 		Expr::ComposeForArgSlot(composer, GetExprParamFirst());
 		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
 	ComposeSequence(composer, GetExprElemFirst());					// [Any]
+}
+
+bool Expr_Block::HasCallerAsParent() const
+{
+	RefPtr<Expr> pExprParent(LockExprParent());
+	return pExprParent && pExprParent->IsType<Expr_Caller>();
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const

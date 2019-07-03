@@ -642,6 +642,7 @@ public:
 		if (!_pExprLinkParam) return true;
 		return _pDeclCallable->Prepare(GetExprLinkParam(), *Attribute::Empty, nullptr);
 	}
+	bool HasCallerAsParent() const;
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {

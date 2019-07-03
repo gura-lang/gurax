@@ -175,11 +175,11 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 	if (_pConstructorInh) {
 		const Expr* pExprBody = GetFuncInitializer().GetExprBody();
 		RefPtr<Argument> pArgument(new Argument(_pConstructorInh->GetDeclCallable().Reference()));
+		pArgument->SetValueThis(pValueThis.Reference());
 		if (pExprBody && pExprBody->IsType<Expr_Block>()) {
-			//const Expr_Block* pExprBodyEx = dynamic_cast<const Expr_Block*>(pExprBody);
-			//for (const DeclArg* pDeclArg : pExprBodyEx->GetDeclCallable().GetDeclArgOwner()) {
-			//	pDeclArg->GetExpr();
-			//}
+			const Expr_Block* pExprBodyEx = dynamic_cast<const Expr_Block*>(pExprBody);
+			processor.PushValue(new Value_Argument(pArgument.Reference()));
+			Value::Delete(processor.ProcessPUnit(pExprBodyEx->GetPUnitSubFirst()));
 		}
 		_pConstructorInh->DoEvalVoid(processor, *pArgument);
 	}
