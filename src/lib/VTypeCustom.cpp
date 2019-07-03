@@ -30,12 +30,16 @@ bool VTypeCustom::AssignMethod(Function* pFunction)
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
+		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			SetConstructor(new Constructor(*this, pFunction, pVTypeInh->GetConstructor().Reference()));
+			pConstructor.reset(new Constructor(*this, pFunction, pVTypeInh->GetConstructor().Reference()));
 		} else {
-			SetConstructor(new Constructor(*this, pFunction, nullptr));
+			pConstructor.reset(new Constructor(*this, pFunction, nullptr));
 		}
+		RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
+		pConstructor->SetFrameOuter(*pFrameOuter);
+		SetConstructor(pConstructor.release());
 	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
 		if (!pFunction->GetDeclCallable().IsNaked()) {
 			Error::Issue(ErrorType::SyntaxError, "destructors can't have any arguments");
