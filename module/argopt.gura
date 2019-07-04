@@ -1,0 +1,35 @@
+#!/usr/bin/env gurax
+Entry = class {
+	public {
+		type:Symbol = `none
+		longName:String = ''
+		shortName:String:nil
+		help:String:nil
+		helpValue:String:nil
+		defValue
+	}
+	__init__(type:Symbol, longName:String, shortName:String:nil,
+			 help:String:nil, helpValue:String:nil, defValue) = {
+		this.type = type
+		this.longName = longName
+		this.shortName = shortName
+		this.help = help
+		this.helpValue = helpValue
+		this.defValue = defValue
+	}
+}
+
+Parser = class {
+	entries[]:Entry = []
+	Parse(argv[]:String) = {
+		Println(argv)
+	}
+	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, defValue?:String) = {
+		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, defValue))
+	}
+}
+
+Parser {|p|
+	p.AddParam('value')
+	p.Parse(sys.argv)
+}
