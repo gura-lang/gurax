@@ -88,7 +88,7 @@ class GURAX_DLLDECLARE FrameStack : public FrameOwner {
 public:
 	Frame* GetCur() { return back(); }
 	void Push(Frame* pFrame) { push_back(pFrame); }
-	void Pop() { pop_back(); }
+	void Pop() { Frame::Delete(back()); pop_back(); }
 	void Shrink(size_t cnt);
 };
 

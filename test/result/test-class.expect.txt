@@ -9,6 +9,7 @@ A1(3) .. <A1>
 A2 .. <VType:A2(v1,v2){block?}>
 A2(3, 4) .. <A2>
 ======== Destructor ========
+destructor
 ======== Property Declaration ========
 --------
 A.__PropHandler__(`a1) .. <PropHandler:a1:Any:nil:R:W>
