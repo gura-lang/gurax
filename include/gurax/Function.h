@@ -102,8 +102,6 @@ protected:
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;
 public:
 	static RefPtr<Function> Empty;
-	static RefPtr<Function> EmptyWithBlock;
-	static RefPtr<Function> EmptyWithOptionalBlock;
 public:
 	static void Bootup();
 public:

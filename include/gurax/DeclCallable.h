@@ -87,7 +87,9 @@ private:
 	const Symbol* _pSymbolOfDict;
 	const Symbol* _pSymbolOfAccessor;
 public:
-	static const DeclCallable* Empty;
+	static RefPtr<DeclCallable> Empty;
+	static RefPtr<DeclCallable> EmptyWithBlock;
+	static RefPtr<DeclCallable> EmptyWithOptionalBlock;
 public:
 	static void Bootup();
 public:

@@ -9,18 +9,10 @@ namespace Gurax {
 // Function
 //------------------------------------------------------------------------------
 RefPtr<Function> Function::Empty;
-RefPtr<Function> Function::EmptyWithBlock;
-RefPtr<Function> Function::EmptyWithOptionalBlock;
 
 void Function::Bootup()
 {
 	Empty.reset(new Function_Empty());
-	EmptyWithBlock.reset(new Function_Empty());
-	EmptyWithBlock->GetDeclCallable().GetDeclBlock().
-		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
-	EmptyWithOptionalBlock.reset(new Function_Empty());
-	EmptyWithOptionalBlock->GetDeclCallable().GetDeclBlock().
-		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 }
 
 Function* Function::CreateBlockFunction(const Symbol* pSymbol, const Expr_Block& exprOfBlock)

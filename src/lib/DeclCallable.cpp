@@ -8,11 +8,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DeclCallable
 //------------------------------------------------------------------------------
-const DeclCallable* DeclCallable::Empty = nullptr;
+RefPtr<DeclCallable> DeclCallable::Empty;
+RefPtr<DeclCallable> DeclCallable::EmptyWithBlock;
+RefPtr<DeclCallable> DeclCallable::EmptyWithOptionalBlock;
 
 void DeclCallable::Bootup()
 {
-	Empty = new DeclCallable();
+	Empty.reset(new DeclCallable());
+	EmptyWithBlock.reset(new DeclCallable());
+	EmptyWithBlock->GetDeclBlock().
+		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
+	EmptyWithOptionalBlock.reset(new DeclCallable());
+	EmptyWithOptionalBlock->GetDeclBlock().
+		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 }
 
 DeclCallable::DeclCallable() :
