@@ -8,6 +8,56 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// List#Add(value):reduce
+Gurax_DeclareMethod(List, Add)
+{
+	Declare(VTYPE_List, Flag::Reduce);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(List, Add)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& value = args.PickValue();
+	// Function body
+	valueThis.GetValueTypedOwner().Add(value.Reference());
+	return argument.GetValueThis().Reference();
+}
+
+// List#Append(value):reduce
+Gurax_DeclareMethod(List, Append)
+{
+	Declare(VTYPE_List, Flag::Reduce);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(List, Append)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Value& value = args.PickValue();
+	// Function body
+	if (value.IsType(VTYPE_List)) {
+		valueThis.GetValueTypedOwner().Append(Value_List::GetValueTypedOwner(value));
+	} else if (value.IsType(VTYPE_Iterator)) {
+		valueThis.GetValueTypedOwner().Append(Value_Iterator::GetIterator(value));
+	} else {
+		valueThis.GetValueTypedOwner().Add(value.Reference());
+	}
+	return argument.GetValueThis().Reference();
+}
+
 // List#Each() {`block}
 Gurax_DeclareMethod(List, Each)
 {
@@ -75,6 +125,8 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(List, Add));
+	Assign(Gurax_CreateMethod(List, Append));
 	Assign(Gurax_CreateMethod(List, Each));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(List, len));

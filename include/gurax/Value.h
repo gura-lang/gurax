@@ -253,6 +253,8 @@ public:
 		UpdateVTypeOfElems(pValue->GetVType());
 		_pValueOwner->push_back(pValue);
 	}
+	void Append(const ValueTypedOwner& values);
+	void Append(Iterator& iterator);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	VType* GetVTypeOfElems() const { return _pVTypeOfElems; }

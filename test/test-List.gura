@@ -153,3 +153,19 @@ TestCase('Each with :list') {
 		Format('%d-%s', i, x)
 	})
 }
+
+TestCase('List#Add()') {
+	tbl = []
+	Tester(`tbl.Add(3))
+	Tester(`tbl.Add('hello'))
+	Tester(`tbl.Add([1, 2, 3]))
+	Tester(`tbl.Add(4..9))
+}
+
+TestCase('List#Append()') {
+	tbl = []
+	Tester(`tbl.Append(3))
+	Tester(`tbl.Append('hello'))
+	Tester(`tbl.Append([1, 2, 3]))
+	Tester(`tbl.Append(4..9))
+}

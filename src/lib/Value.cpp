@@ -325,6 +325,22 @@ void ValueTypedOwner::Clear()
 	_pValueOwner->Clear();
 }
 
+void ValueTypedOwner::Append(const ValueTypedOwner& values)
+{
+	for (const Value* pValue : values.GetValueOwner()) {
+		Add(pValue->Reference());
+	}
+}
+
+void ValueTypedOwner::Append(Iterator& iterator)
+{
+	for (;;) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		Add(pValue->Reference());
+	}
+}
+
 void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 {
 	if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
