@@ -394,3 +394,44 @@ TestCase('Inheritance') {
 	b.p3 = 'B#p3-mod'
 	Tester(`b.p3)
 }
+
+TestCase('Constructor Inheritance (1)') {
+	Base = class {
+		a
+		__init__() = { this.a = 'A' }
+	}
+	Derive1 = class(Base) {
+		b
+		__init__() = { this.b = 'B' }
+	}
+	Derive2 = class(Derive1) {
+		c
+		__init__() = { this.c = 'C' }
+		Format() = Format('%s, %s, %s', this.a, this.b, this.c)
+	}
+	Tester(`Derive2().Format())
+}
+
+TestCase('Constructor Inheritance (2)') {
+	ext = 'EXT'
+	Base = class {
+		a, b, c, ext
+		__init__(a, b, c) = {
+			this.a = a, this.b = b, this.c = c, this.ext = ext
+		}
+		Format() = Format('%s, %s, %s, %s', this.a, this.b, this.c, this.ext)
+	}
+	Derive1 = class(Base) {
+		__init__(a, b, c) = {|a, b, c|}
+	}
+	Derive2 = class(Base) {
+		__init__(b, c) = {|11, b, c|}
+	}
+	Derive3 = class(Base) {
+		__init__(a) = {|a * 1, a * 2, a * 3|}
+	}
+	Tester(`Base(1, 2, 3).Format())
+	Tester(`Derive1(11, 22, 33).Format())
+	Tester(`Derive2(22, 33).Format())
+	Tester(`Derive3(111).Format())
+}

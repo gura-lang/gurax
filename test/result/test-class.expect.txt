@@ -9,7 +9,6 @@ A1(3) .. <A1>
 A2 .. <VType:A2(v1,v2){block?}>
 A2(3, 4) .. <A2>
 ======== Destructor ========
-destructor
 ======== Property Declaration ========
 --------
 A.__PropHandler__(`a1) .. <PropHandler:a1:Any:nil:R:W>
@@ -207,3 +206,10 @@ b.f3() .. B#f3
 a.p1 .. A#p1-mod
 b.p1 .. B#p1-mod
 b.p3 .. B#p3-mod
+======== Constructor Inheritance (1) ========
+Derive2().Format() .. A, B, C
+======== Constructor Inheritance (2) ========
+Base(1, 2, 3).Format() .. 1, 2, 3, EXT
+Derive1(11, 22, 33).Format() .. 11, 22, 33, EXT
+Derive2(22, 33).Format() .. 11, 22, 33, EXT
+Derive3(111).Format() .. 111, 222, 333, EXT
