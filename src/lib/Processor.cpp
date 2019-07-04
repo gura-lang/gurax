@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Processor::Processor() :
 	_pValueStack(new ValueStack()), _pFrameStack(new FrameStack()),
-	_pExprCur(Expr::Empty), _pPUnitNext(nullptr),
+	_pExprCur(Expr::Empty.get()), _pPUnitNext(nullptr),
 	_contFlag(true), _resumeFlag(true), _event(Event::None)
 {
 	GetPUnitStack().reserve(1024);

@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Expr
 //------------------------------------------------------------------------------
-const Expr* Expr::Empty = nullptr;
+RefPtr<Expr> Expr::Empty;
 
 void Expr::Bootup()
 {
-	Empty = new Expr_Empty();
+	Empty.reset(new Expr_Empty());
 }
 
 void Expr::ComposeOrNil(Composer& composer)

@@ -33,13 +33,13 @@ bool Error::_errorIssuedFlag = false;
 ErrorOwner* Error::_pErrorOwnerGlobal = nullptr;
 
 Error::Error(const ErrorType& errorType, String text) :
-	_errorType(errorType), _pExpr(Expr::Empty->Reference()),
+	_errorType(errorType), _pExpr(Expr::Empty.Reference()),
 	_lineNoTop(0), _lineNoBtm(0), _text(std::move(text))
 {
 }
 
 Error::Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoTop, int lineNoBtm, String text) :
-	_errorType(errorType), _pExpr(Expr::Empty->Reference()),
+	_errorType(errorType), _pExpr(Expr::Empty.Reference()),
 	_pFileName(pFileName), _lineNoTop(lineNoTop), _lineNoBtm(lineNoBtm), _text(std::move(text))
 {
 }

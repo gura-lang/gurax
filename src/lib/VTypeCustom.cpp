@@ -107,8 +107,15 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
+			//pConstructor.reset(new Constructor(
+			//					   *this, DeclCallable::EmptyWithOptionalBlock.Reference(),
+			//					   Expr::Empty.Reference(),
+			//					   pVTypeInh->GetConstructor().Reference()));
 			pConstructor.reset(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
 		} else {
+			//pConstructor.reset(new Constructor(
+			//					   *this, DeclCallable::EmptyWithOptionalBlock.Reference(),
+			//					   Expr::Empty.Reference(), nullptr));
 			pConstructor.reset(new ConstructorDefault(*this, pSymbol, nullptr));
 		}
 		pConstructor->SetFrameOuter(processor.GetFrameCur());

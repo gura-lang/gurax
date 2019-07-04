@@ -98,7 +98,7 @@ protected:
 	const PUnit* _pPUnitFirst;
 	const PUnit* _pPUnitSubFirst;
 public:
-	static const Expr* Empty;
+	static RefPtr<Expr> Empty;
 public:
 	// Constructor
 	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo), _pPUnitFirst(nullptr), _pPUnitSubFirst(nullptr) {}
