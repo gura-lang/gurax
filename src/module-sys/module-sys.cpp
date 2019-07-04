@@ -5,6 +5,8 @@
 
 Gurax_BeginModule(sys)
 
+RefPtr<Value> g_pValue_argv;
+
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
@@ -31,10 +33,27 @@ Gurax_ImplementFunction(Exit)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// sys.argv
+Gurax_DeclareModuleProperty_R(argv)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A list of `string` that represents arguments in the command line.");
+}
+
+Gurax_ImplementModulePropertyGetter(argv)
+{
+	return g_pValue_argv->Reference();
+}
+
 // sys.cin
 Gurax_DeclareModuleProperty_RW(cin)
 {
 	Declare(VTYPE_Stream, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A `stream` instance used for standard input on a console.");
 }
 
 Gurax_ImplementModulePropertyGetter(cin)
@@ -53,6 +72,9 @@ Gurax_ImplementModulePropertySetter(cin)
 Gurax_DeclareModuleProperty_RW(cout)
 {
 	Declare(VTYPE_Stream, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A `stream` instance used for standard output on a console.");
 }
 
 Gurax_ImplementModulePropertyGetter(cout)
@@ -71,6 +93,9 @@ Gurax_ImplementModulePropertySetter(cout)
 Gurax_DeclareModuleProperty_RW(cerr)
 {
 	Declare(VTYPE_Stream, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A `stream` instance used for standard error output on a console.");
 }
 
 Gurax_ImplementModulePropertyGetter(cerr)
@@ -89,6 +114,9 @@ Gurax_ImplementModulePropertySetter(cerr)
 Gurax_DeclareModuleProperty_RW(path)
 {
 	Declare(VTYPE_String, Flag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A list of path names in which imported Gura modules are searched.");
 }
 
 Gurax_ImplementModulePropertyGetter(path)
@@ -117,6 +145,9 @@ Gurax_ImplementModulePropertySetter(path)
 Gurax_DeclareModuleProperty_RW(ps1)
 {
 	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The first-level prompt in REPL.");
 }
 
 Gurax_ImplementModulePropertyGetter(ps1)
@@ -133,6 +164,9 @@ Gurax_ImplementModulePropertySetter(ps1)
 Gurax_DeclareModuleProperty_RW(ps2)
 {
 	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The second-level prompt in REPL.");
 }
 
 Gurax_ImplementModulePropertyGetter(ps2)
@@ -155,6 +189,12 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialization of global variable
+	do {
+		RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+		pValues->Add(new Value_String(""));
+		g_pValue_argv.reset(new Value_List(pValues.release()));
+	} while (0);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
 	// Assignment of property

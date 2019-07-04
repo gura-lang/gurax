@@ -13,6 +13,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Basement {
 private:
+	int _argc;
+	char** _argv;
 	RefPtr<Frame> _pFrame;
 	RefPtr<Stream> _pStreamCIn;
 	RefPtr<Stream> _pStreamCOut;
@@ -34,7 +36,9 @@ public:
 	// Destructor
 	~Basement() = default;
 public:
-	void Prepare();
+	void Initialize(int argc, char** argv);
+	int GetArgc() const { return _argc; }
+	char** GetArgv() const { return _argv; }
 	void PrepareVType(Frame& frame);
 	void PrepareValue(Frame& frame);
 	Frame& GetFrame() { return *_pFrame; }

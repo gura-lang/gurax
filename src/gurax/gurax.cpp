@@ -21,9 +21,10 @@ int Main(int argc, char* argv[])
 		.OptBool("debug",	'g')
 		.OptBool("list",	'L')
 		.Parse(argc, argv)) {
-		Stream::CErr->Printf("%s\n", cmdLine.GetError());
+		::fprintf(stderr, "%s\n", cmdLine.GetError());
 		return 1;
 	}
+	Gurax::Initialize(argc, argv);
 	if (argc < 2) {
 		RunREPL();
 		return 1;
@@ -152,6 +153,5 @@ bool ReadLine(const char* prompt, String& strLine)
 
 int main(int argc, char* argv[])
 {
-	Gurax::Initialize();
 	return Gurax::Main(argc, argv);
 }

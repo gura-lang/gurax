@@ -106,7 +106,7 @@
 
 namespace Gurax {
 
-void Initialize();
+void Initialize(int argc, char* argv[]);
 
 }
 

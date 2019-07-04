@@ -5,7 +5,7 @@
 
 namespace Gurax {
 
-void Initialize()
+void Initialize(int argc, char** argv)
 {
 	Attribute::Bootup();
 	Binary::Bootup();
@@ -22,7 +22,7 @@ void Initialize()
 	Symbol::Bootup();
 	Template::Bootup();
 	Token::Bootup();
-	Basement::Inst.Prepare();
+	Basement::Inst.Initialize(argc, argv);
 }
 
 }

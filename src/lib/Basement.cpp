@@ -10,14 +10,15 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Basement Basement::Inst;
 
-
 Basement::Basement() : _pFrame(new Frame_Basement()), _ps1(">>> "), _ps2("... ")
 {
 	_pathList.push_back(".");
 }
 
-void Basement::Prepare()
+void Basement::Initialize(int argc, char** argv)
 {
+	_argc = argc;
+	_argv = argv;
 	Frame& frame = GetFrame();
 	PrepareVType(frame);
 	PrepareValue(frame);

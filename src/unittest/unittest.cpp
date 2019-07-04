@@ -40,6 +40,6 @@ void PrintTitle(const char* title)
 
 int main(int argc, char* argv[])
 {
-	Gurax::Initialize();
+	Gurax::Initialize(argc, argv);
 	return Gurax::Main(argc, argv);
 }
