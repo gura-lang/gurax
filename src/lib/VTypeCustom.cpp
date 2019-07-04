@@ -101,28 +101,27 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymbol)
 {
 	if (!_pSymbol->IsEmpty()) return;
-	Function& constructor = GetConstructor();
 	_pSymbol = pSymbol;
-	if (constructor.IsEmpty()) {
+	if (GetConstructor().IsEmpty()) {
+		RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
+		pDeclCallable->GetDeclBlock().
+			SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			//pConstructor.reset(new Constructor(
-			//					   *this, DeclCallable::EmptyWithOptionalBlock.Reference(),
-			//					   Expr::Empty.Reference(),
-			//					   pVTypeInh->GetConstructor().Reference()));
-			pConstructor.reset(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
+			pConstructor.reset(new Constructor(
+								   *this, pDeclCallable.release(), Expr::Empty.Reference(),
+								   pVTypeInh->GetConstructor().Reference()));
+			//pConstructor.reset(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
 		} else {
-			//pConstructor.reset(new Constructor(
-			//					   *this, DeclCallable::EmptyWithOptionalBlock.Reference(),
-			//					   Expr::Empty.Reference(), nullptr));
-			pConstructor.reset(new ConstructorDefault(*this, pSymbol, nullptr));
+			pConstructor.reset(new Constructor(
+								   *this, pDeclCallable.release(), Expr::Empty.Reference(), nullptr));
+			//pConstructor.reset(new ConstructorDefault(*this, pSymbol, nullptr));
 		}
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
-	} else {
-		constructor.SetSymbol(pSymbol);
 	}
+	GetConstructor().SetSymbol(pSymbol);
 }
 
 Value* VTypeCustom::DoCastFrom(const Value& value, DeclArg::Flags flags) const
