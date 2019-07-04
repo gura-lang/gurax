@@ -192,12 +192,17 @@ Gurax_ModulePrepare()
 	// Initialization of global variable
 	do {
 		RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
-		pValues->Add(new Value_String(""));
+		int argc = Basement::Inst.GetArgc();
+		char** argv = Basement::Inst.GetArgv();
+		for (int iArg = 1; iArg < argc; iArg++) {
+			pValues->Add(new Value_String(argv[iArg]));
+		}
 		g_pValue_argv.reset(new Value_List(pValues.release()));
 	} while (0);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
 	// Assignment of property
+	Assign(Gurax_CreateModuleProperty(argv));
 	Assign(Gurax_CreateModuleProperty(cin));
 	Assign(Gurax_CreateModuleProperty(cout));
 	Assign(Gurax_CreateModuleProperty(cerr));
