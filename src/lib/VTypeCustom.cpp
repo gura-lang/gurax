@@ -112,11 +112,9 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 			pConstructor.reset(new Constructor(
 								   *this, pDeclCallable.release(), Expr::Empty.Reference(),
 								   pVTypeInh->GetConstructor().Reference()));
-			//pConstructor.reset(new ConstructorDefault(*this, pSymbol, pVTypeInh->GetConstructor().Reference()));
 		} else {
 			pConstructor.reset(new Constructor(
 								   *this, pDeclCallable.release(), Expr::Empty.Reference(), nullptr));
-			//pConstructor.reset(new ConstructorDefault(*this, pSymbol, nullptr));
 		}
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
@@ -134,37 +132,6 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 	ValueOwner::iterator ppValue = GetValuesPropOfClass().begin() + iProp;
 	Value::Delete(*ppValue);
 	*ppValue = pValue;
-}
-
-//------------------------------------------------------------------------------
-// VTypeCustom::ConstructorDefault
-//------------------------------------------------------------------------------
-VTypeCustom::ConstructorDefault::ConstructorDefault(VTypeCustom& vtypeCustom, const Symbol* pSymbol, Function* pConstructorInh) :
-	Function(Type::Function, pSymbol), _vtypeCustom(vtypeCustom), _pConstructorInh(pConstructorInh)
-{
-	GetDeclCallable().GetDeclBlock().
-		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
-}
-
-Value* VTypeCustom::ConstructorDefault::DoEval(Processor& processor, Argument& argument) const
-{
-	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
-	if (!pValueThis->InitCustomProp()) return nullptr;
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	if (!pExprOfBlock) return pValueThis.release();
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder args(*pArgumentSub);
-	if (!args.FeedValue(frame, pValueThis.release())) return Value::nil();
-	return pExprOfBlock->DoEval(processor, *pArgumentSub);
-}
-
-String VTypeCustom::ConstructorDefault::ToString(const StringStyle& ss) const
-{
-	String str;
-	str += MakeFullName();
-	str += GetDeclCallable().ToString(ss);
-	return str;
 }
 
 //------------------------------------------------------------------------------
