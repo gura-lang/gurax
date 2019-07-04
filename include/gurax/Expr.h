@@ -153,6 +153,7 @@ public:
 	Value* DoEval(Processor& processor, Argument& argument) const;
 public:
 	// Virtual functions
+	virtual bool IsEmpty() const { return false; }
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
@@ -253,6 +254,7 @@ public:
 	Expr_Empty() : Expr(typeInfo) {}
 public:
 	// Virtual functions of Expr
+	virtual bool IsEmpty() const override { return true; }
 	virtual bool Traverse(Visitor& visitor) override { return false; }
 	virtual void Compose(Composer& composer) override {}
 	virtual String ToString(const StringStyle& ss) const override { return String::Empty; }

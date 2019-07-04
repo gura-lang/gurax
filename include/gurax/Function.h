@@ -197,7 +197,7 @@ public:
 public:
 	// Virtual functions
 	virtual bool IsEmpty() const { return false; }
-	virtual const Expr* GetExprBody() const { return nullptr; }
+	virtual const Expr& GetExprBody() const { return *Expr::Empty; }
 	virtual const PUnit* GetPUnitBody() const { return nullptr; }
 	virtual void DoExec(Processor& processor, Argument& argument) const;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); };

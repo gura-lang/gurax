@@ -18,7 +18,7 @@ public:
 	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, Expr* pExprBody);
 public:
 	// Virtual functions of Function
-	virtual const Expr* GetExprBody() const override { return _pExprBody.get(); }
+	virtual const Expr& GetExprBody() const override { return *_pExprBody; }
 	virtual const PUnit* GetPUnitBody() const override { return _pPUnitBody; }
 	virtual void DoExec(Processor& processor, Argument& argument) const override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;

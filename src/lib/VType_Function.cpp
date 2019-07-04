@@ -21,8 +21,8 @@ Gurax_DeclareProperty_R(Function, expr)
 Gurax_ImplementPropertyGetter(Function, expr)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const Expr* pExpr = valueThis.GetFunction().GetExprBody();
-	return pExpr? new Value_Expr(pExpr->Reference()) : Value::nil();
+	const Expr& expr = valueThis.GetFunction().GetExprBody();
+	return expr.IsEmpty()? Value::nil() : new Value_Expr(expr.Reference());
 }
 
 // Function#name

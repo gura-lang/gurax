@@ -33,9 +33,14 @@ bool VTypeCustom::AssignMethod(Function* pFunction)
 		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			pConstructor.reset(new Constructor(*this, pFunction, pVTypeInh->GetConstructor().Reference()));
+			pConstructor.reset(new Constructor(
+								   *this, pFunction->GetDeclCallable().Reference(),
+								   pFunction->GetExprBody().Reference(),
+								   pVTypeInh->GetConstructor().Reference()));
 		} else {
-			pConstructor.reset(new Constructor(*this, pFunction, nullptr));
+			pConstructor.reset(new Constructor(
+								   *this, pFunction->GetDeclCallable().Reference(),
+								   pFunction->GetExprBody().Reference(), nullptr));
 		}
 		RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
 		pConstructor->SetFrameOuter(*pFrameOuter);
@@ -159,10 +164,13 @@ String VTypeCustom::ConstructorDefault::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // VTypeCustom::Constructor
 //------------------------------------------------------------------------------
-VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer, Function* pConstructorInh) :
-	Function(Type::Function, Symbol::Empty, pFuncInitializer->GetDeclCallable().Reference()),
-	_vtypeCustom(vtypeCustom), _pFuncInitializer(pFuncInitializer), _pConstructorInh(pConstructorInh)
+VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
+									  Expr* pExprBody, Function* pConstructorInh) :
+	Function(Type::Function, Symbol::Empty, pDeclCallable),
+	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst()),
+	_pConstructorInh(pConstructorInh)
 {
+	if (_pPUnitBody && _pPUnitBody->IsBeginSequence()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
 Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
@@ -179,17 +187,17 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 	bool dynamicScopeFlag = false;
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
 	if (_pConstructorInh) {
-		const Expr* pExprBody = GetFuncInitializer().GetExprBody();
+		const Expr& exprBody = GetExprBody();
 		RefPtr<Argument> pArgument(new Argument(_pConstructorInh->GetDeclCallable().Reference()));
 		pArgument->SetValueThis(pValueThis.Reference());
-		if (pExprBody && pExprBody->IsType<Expr_Block>()) {
-			const Expr_Block* pExprBodyEx = dynamic_cast<const Expr_Block*>(pExprBody);
+		if (exprBody.IsType<Expr_Block>()) {
+			const Expr_Block& exprBodyEx = dynamic_cast<const Expr_Block&>(exprBody);
 			processor.PushValue(new Value_Argument(pArgument.Reference()));
-			Value::Delete(processor.ProcessPUnit(pExprBodyEx->GetPUnitSubFirst()));
+			Value::Delete(processor.ProcessPUnit(exprBodyEx.GetPUnitSubFirst()));
 		}
 		_pConstructorInh->DoEvalVoid(processor, *pArgument);
 	}
-	Value::Delete(processor.ProcessPUnit(GetFuncInitializer().GetPUnitBody()));
+	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();

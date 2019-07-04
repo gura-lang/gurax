@@ -28,15 +28,17 @@ public:
 	class Constructor : public Function {
 	protected:
 		VTypeCustom& _vtypeCustom;
-		RefPtr<Function> _pFuncInitializer;
+		RefPtr<Expr> _pExprBody;
+		const PUnit* _pPUnitBody;
 		RefPtr<Function> _pConstructorInh;	// this may be nullptr
 	public:
-		Constructor(VTypeCustom& vtypeCustom, Function* pFuncInitializer, Function* pConstructorInh);
+		Constructor(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr* pExprBody, Function* pConstructorInh);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
-		const Function& GetFuncInitializer() const { return *_pFuncInitializer; }
 	public:
 		// Virtual functions of Function
+		virtual const Expr& GetExprBody() const override { return *_pExprBody; }
+		virtual const PUnit* GetPUnitBody() const override { return _pPUnitBody; }
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};
