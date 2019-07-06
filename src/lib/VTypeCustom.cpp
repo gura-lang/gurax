@@ -87,14 +87,15 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 		pVType = &pValueInit->GetVType();
 	}
 	valuesProp.push_back(pValueInit.release());
-	RefPtr<PropHandler> pPropHandler;
 	if (ofClassFlag) {
-		pPropHandler.reset(new PropHandlerCustom_Class(pSymbol, iProp));
+		RefPtr<PropHandler> pPropHandler(new PropHandlerCustom_Class(pSymbol, iProp));
+		pPropHandler->Declare(*pVType, flags);
+		GetPropHandlerMapOfClass().Assign(pPropHandler.release());
 	} else {
-		pPropHandler.reset(new PropHandlerCustom_Instance(pSymbol, iProp));
+		RefPtr<PropHandler> pPropHandler(new PropHandlerCustom_Instance(pSymbol, iProp));
+		pPropHandler->Declare(*pVType, flags);
+		GetPropHandlerMap().Assign(pPropHandler.release());
 	}
-	pPropHandler->Declare(*pVType, flags);
-	Assign(pPropHandler.release());
 	return true;
 }
 
@@ -132,6 +133,22 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 	ValueOwner::iterator ppValue = GetValuesPropOfClass().begin() + iProp;
 	Value::Delete(*ppValue);
 	*ppValue = pValue;
+}
+
+PropHandlerOwner* VTypeCustom::CreatePropHandlerOwner()
+{
+	RefPtr<PropHandlerOwner> pPropHandlerOwner(new PropHandlerOwner());
+	// PropHandler instances stored in PropHandlerMap must be those of PropHandlerCustom_Instance.
+	for (auto iter : GetPropHandlerMap()) {
+		pPropHandlerOwner->push_back(iter.second->Reference());
+	}
+	std::sort(pPropHandlerOwner->begin(), pPropHandlerOwner->end(),
+			  [](PropHandler* pPropHandler1, PropHandler* pPropHandler2) {
+		size_t iProp1 = dynamic_cast<PropHandlerCustom_Instance*>(pPropHandler1)->GetIndex();
+		size_t iProp2 = dynamic_cast<PropHandlerCustom_Instance*>(pPropHandler2)->GetIndex();
+		return iProp1 < iProp2;
+	});
+	return pPropHandlerOwner.release();
 }
 
 //------------------------------------------------------------------------------
