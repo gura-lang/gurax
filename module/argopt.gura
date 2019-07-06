@@ -9,7 +9,7 @@ Entry = class {
 		defValue
 	}
 	__init__(type:Symbol, longName:String, shortName:String:nil,
-			 help:String:nil, helpValue:String:nil, defValue) = {
+			 help:String:nil, helpValue:String:nil, defValue:nil) = {
 		this.type = type
 		this.longName = longName
 		this.shortName = shortName

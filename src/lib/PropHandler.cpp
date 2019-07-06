@@ -43,6 +43,29 @@ String PropHandler::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// PropHandlerList
+//------------------------------------------------------------------------------
+PropHandlerList& PropHandlerList::Sort(SortOrder sortOrder)
+{
+	SortListByOrder<PropHandlerList, PropHandler::LessThan_SymbolName, PropHandler::GreaterThan_SymbolName>(*this, sortOrder);
+	return *this;
+}
+
+String PropHandlerList::ToString(const StringStyle& ss) const
+{
+	return "PropHandlerList";
+}
+
+//------------------------------------------------------------------------------
+// PropHandlerOwner
+//------------------------------------------------------------------------------
+void PropHandlerOwner::Clear()
+{
+	for (PropHandler* pPropHandler : *this) PropHandler::Delete(pPropHandler);
+	clear();
+}
+
+//------------------------------------------------------------------------------
 // PropHandlerMap
 //------------------------------------------------------------------------------
 void PropHandlerMap::Clear()

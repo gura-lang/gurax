@@ -814,6 +814,19 @@ Gurax_ImplementStatement(class_)
 	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, false);
 }
 
+// struct {`block}
+Gurax_DeclareStatementAlias(struct_, "struct")
+{
+	Declare(VTYPE_VType, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+}
+
+Gurax_ImplementStatement(struct_)
+{
+	composer.Add_CreateVType(false, &exprCaller);							// [VType]
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, false);
+}
+
 void Statements::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateStatement(cond));
@@ -832,6 +845,7 @@ void Statements::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(import));
 	frame.Assign(Gurax_CreateStatement(scope));
 	frame.Assign(Gurax_CreateStatement(class_));
+	frame.Assign(Gurax_CreateStatement(struct_));
 }
 
 }

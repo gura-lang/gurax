@@ -369,6 +369,7 @@ public:
 		_pExprLinkCdr.reset(pExprLinkCdr);
 		_pExprLinkCdr->SetExprParent(this);
 	}
+	ExprLink& GetExprLinkCdr() { return *_pExprLinkCdr; }
 	const ExprLink& GetExprLinkCdr() const { return *_pExprLinkCdr; }
 	bool HasExprCdr() const { return !_pExprLinkCdr->IsEmpty(); }
 	Expr* GetExprCdrFirst() { return _pExprLinkCdr->GetExprFirst(); }

@@ -2,7 +2,7 @@
 ======== ReduceOneToken ========
 123456
 'foo'
-b'\x12\x34\x56'
+b'\x124V'
 e'<html></html>'
 foo
 +

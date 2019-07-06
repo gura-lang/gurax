@@ -140,6 +140,23 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(PropHandler);
 public:
+	// Algorithm operators
+	struct EqualTo_SymbolName {
+		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
+			return Symbol::EqualTo_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
+		}
+	};
+	struct LessThan_SymbolName {
+		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
+			return Symbol::LessThan_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
+		}
+	};
+	struct GreaterThan_SymbolName {
+		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
+			return Symbol::GreaterThan_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
+		}
+	};
+public:
 	using Flags = DeclArg::Flags;
 	using Flag = DeclArg::Flag;
 	using SymbolAssoc_Flag = DeclArg::SymbolAssoc_Flag;
@@ -193,6 +210,34 @@ public:
 	bool IsEqualTo(const PropHandler& propHandler) const { return IsIdentical(propHandler); }
 	bool IsLessThan(const PropHandler& propHandler) const { return this < &propHandler; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// PropHandlerList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PropHandlerList : public std::vector<PropHandler*> {
+public:
+	using std::vector<PropHandler*>::vector;
+public:
+	PropHandlerList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const PropHandlerList& propHandlerList) const { return this == &propHandlerList; }
+	bool IsEqualTo(const PropHandlerList& propHandlerList) const { return IsIdentical(propHandlerList); }
+	bool IsLessThan(const PropHandlerList& propHandlerList) const { return this < &propHandlerList; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// PropHandlerOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE PropHandlerOwner : public PropHandlerList, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(PropHandlerOwner);
+protected:
+	~PropHandlerOwner() { Clear(); }
+public:
+	void Clear();
 };
 
 //------------------------------------------------------------------------------
