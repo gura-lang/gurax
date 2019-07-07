@@ -825,6 +825,7 @@ Gurax_ImplementStatement(struct_)
 {
 	composer.Add_CreateVType(false, &exprCaller);							// [VType]
 	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, true);
+	composer.Add_CompleteStruct(&exprCaller);								// [VType]
 }
 
 void Statements::AssignToBasement(Frame& frame)

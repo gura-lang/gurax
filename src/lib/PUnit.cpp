@@ -929,6 +929,49 @@ PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_CompleteStruct
+// Stack View: [VType] -> [VType] (continue)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_CompleteStruct<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+
+	if (Error::IsIssued()) {
+		processor.ErrorDone();
+	} else {
+		processor.SetPUnitNext(_GetPUnitCont());
+	}
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_CompleteStruct<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "CompleteStruct()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_CompleteStruct::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_CompleteStruct<1, true>(_pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_CompleteStruct<1, false>(_pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_CompleteStruct<0, true>();
+		} else {
+			_pPUnitCreated = new PUnit_CompleteStruct<0, false>();
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_CreateList
 // Stack View: [] -> [List] (continue)
 //                -> []     (discard)

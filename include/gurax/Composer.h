@@ -139,6 +139,9 @@ public:
 	void Add_CreateVType(bool inheritFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_CreateVType(inheritFlag, Expr::Reference(pExprSrc)));
 	}
+	void Add_CompleteStruct(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_CompleteStruct(Expr::Reference(pExprSrc)));
+	}
 	void Add_CreateList(size_t sizeReserve, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_CreateList(sizeReserve, Expr::Reference(pExprSrc)));
 	}
