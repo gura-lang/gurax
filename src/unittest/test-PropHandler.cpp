@@ -27,10 +27,10 @@ Gurax_TesterEntry(PropHandler)
 	pPropHandlerOwner->push_back(new PropHandlerTmp(Symbol::Add("banana")));
 	pPropHandlerOwner->push_back(new PropHandlerTmp(Symbol::Add("pineapple")));
 	PrintList(*pPropHandlerOwner);
-	pPropHandlerOwner->Sort();
+	pPropHandlerOwner->SortBySymbolName();
 	::printf("----\n");
 	PrintList(*pPropHandlerOwner);
-	pPropHandlerOwner->Sort(SortOrder::Descend);
+	pPropHandlerOwner->SortBySymbolName(SortOrder::Descend);
 	::printf("----\n");
 	PrintList(*pPropHandlerOwner);
 }

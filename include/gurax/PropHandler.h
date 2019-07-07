@@ -141,6 +141,21 @@ public:
 	Gurax_DeclareReferable(PropHandler);
 public:
 	// Algorithm operators
+	struct EqualTo_SeqId {
+		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
+			return pPropHandler1->GetSeqId() == pPropHandler2->GetSeqId();
+		}
+	};
+	struct LessThan_SeqId {
+		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
+			return pPropHandler1->GetSeqId() < pPropHandler2->GetSeqId();
+		}
+	};
+	struct GreaterThan_SeqId {
+		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
+			return pPropHandler1->GetSeqId() > pPropHandler2->GetSeqId();
+		}
+	};
 	struct EqualTo_SymbolName {
 		size_t operator()(const PropHandler* pPropHandler1, const PropHandler* pPropHandler2) const {
 			return Symbol::EqualTo_Name()(pPropHandler1->GetSymbol(), pPropHandler2->GetSymbol());
@@ -157,10 +172,12 @@ public:
 		}
 	};
 public:
+	using SeqId = UInt32;
 	using Flags = DeclArg::Flags;
 	using Flag = DeclArg::Flag;
 	using SymbolAssoc_Flag = DeclArg::SymbolAssoc_Flag;
 private:
+	SeqId _seqId;
 	const Symbol* _pSymbol;
 	const VType* _pVType;
 	Flags _flags;
@@ -179,6 +196,8 @@ protected:
 	// Destructor
 	virtual ~PropHandler() = default;
 public:
+	void SetSeqId(SeqId seqId) { _seqId = seqId; }
+	SeqId GetSeqId() const { return _seqId; }
 	void Declare(const VType& vtype, UInt32 flags) { _pVType = &vtype, _flags |= flags; }
 	void AddHelp(const Symbol* pLangCode, String doc) {
 		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
@@ -219,7 +238,8 @@ class GURAX_DLLDECLARE PropHandlerList : public std::vector<PropHandler*> {
 public:
 	using std::vector<PropHandler*>::vector;
 public:
-	PropHandlerList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	PropHandlerList& SortBySeqId(SortOrder sortOrder = SortOrder::Ascend);
+	PropHandlerList& SortBySymbolName(SortOrder sortOrder = SortOrder::Ascend);
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PropHandlerList& propHandlerList) const { return this == &propHandlerList; }
 	bool IsEqualTo(const PropHandlerList& propHandlerList) const { return IsIdentical(propHandlerList); }
@@ -260,6 +280,7 @@ public:
 	}
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
+	PropHandlerOwner* CreatePropHandlerOwner() const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

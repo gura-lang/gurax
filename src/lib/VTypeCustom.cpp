@@ -135,22 +135,6 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 	*ppValue = pValue;
 }
 
-PropHandlerOwner* VTypeCustom::CreatePropHandlerOwner()
-{
-	RefPtr<PropHandlerOwner> pPropHandlerOwner(new PropHandlerOwner());
-	// PropHandler instances stored in PropHandlerMap must be those of PropHandlerCustom_Instance.
-	for (auto iter : GetPropHandlerMap()) {
-		pPropHandlerOwner->push_back(iter.second->Reference());
-	}
-	std::sort(pPropHandlerOwner->begin(), pPropHandlerOwner->end(),
-			  [](PropHandler* pPropHandler1, PropHandler* pPropHandler2) {
-		size_t iProp1 = dynamic_cast<PropHandlerCustom_Instance*>(pPropHandler1)->GetIndex();
-		size_t iProp2 = dynamic_cast<PropHandlerCustom_Instance*>(pPropHandler2)->GetIndex();
-		return iProp1 < iProp2;
-	});
-	return pPropHandlerOwner.release();
-}
-
 //------------------------------------------------------------------------------
 // VTypeCustom::Constructor
 //------------------------------------------------------------------------------

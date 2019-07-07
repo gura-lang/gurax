@@ -9,7 +9,7 @@ namespace Gurax {
 // PropHandler
 //------------------------------------------------------------------------------
 PropHandler::PropHandler(const Symbol* pSymbol, Flags flags) :
-	_pSymbol(pSymbol), _pVType(&VTYPE_Any), _flags(flags),
+	_seqId(0), _pSymbol(pSymbol), _pVType(&VTYPE_Any), _flags(flags),
 	_pHelpProvider(new HelpProvider())
 {
 }
@@ -45,9 +45,17 @@ String PropHandler::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // PropHandlerList
 //------------------------------------------------------------------------------
-PropHandlerList& PropHandlerList::Sort(SortOrder sortOrder)
+PropHandlerList& PropHandlerList::SortBySeqId(SortOrder sortOrder)
 {
-	SortListByOrder<PropHandlerList, PropHandler::LessThan_SymbolName, PropHandler::GreaterThan_SymbolName>(*this, sortOrder);
+	SortListByOrder<PropHandlerList, PropHandler::LessThan_SeqId, PropHandler::GreaterThan_SeqId>
+		(*this, sortOrder);
+	return *this;
+}
+
+PropHandlerList& PropHandlerList::SortBySymbolName(SortOrder sortOrder)
+{
+	SortListByOrder<PropHandlerList, PropHandler::LessThan_SymbolName, PropHandler::GreaterThan_SymbolName>
+		(*this, sortOrder);
 	return *this;
 }
 
@@ -78,11 +86,20 @@ void PropHandlerMap::Assign(PropHandler* pPropHandler)
 {
 	iterator pPair = find(pPropHandler->GetSymbol());
 	if (pPair == end()) {
+		pPropHandler->SetSeqId(size());
 		emplace(pPropHandler->GetSymbol(), pPropHandler);
 	} else {
+		pPropHandler->SetSeqId(pPair->second->GetSeqId());
 		PropHandler::Delete(pPair->second);
 		pPair->second = pPropHandler;
 	}
+}
+
+PropHandlerOwner* PropHandlerMap::CreatePropHandlerOwner() const
+{
+	RefPtr<PropHandlerOwner> pPropHandlerOwner(new PropHandlerOwner());
+	for (auto iter : *this) pPropHandlerOwner->push_back(iter.second->Reference());
+	return pPropHandlerOwner.release();
 }
 
 String PropHandlerMap::ToString(const StringStyle& ss) const
