@@ -35,27 +35,26 @@ Gurax_ImplementMethod(VType, __PropHandler__)
 	return ReturnValue(processor, argument, new Value_PropHandler(pPropHandler->Reference()));
 }
 
-// VType#__PropHandlers__() {block?}
-Gurax_DeclareMethod(VType, __PropHandlers__)
+//------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// VType#__props__
+Gurax_DeclareProperty_R(VType, __props__)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethod(VType, __PropHandlers__)
+Gurax_ImplementPropertyGetter(VType, __props__)
 {
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
+	auto& valueThis = GetValueThis(valueTarget);
 	// Function body
 	RefPtr<PropHandlerOwner> pPropHandlerOwner(valueThis.GetVTypeThis().GetPropHandlerMap().CreatePropHandlerOwner());
 	pPropHandlerOwner->SortBySymbolName();
 	RefPtr<Iterator> pIterator(new Iterator_PropHandler(pPropHandlerOwner.release()));
-	return ReturnValue(processor, argument, new Value_Iterator(pIterator.release()));
+	return new Value_Iterator(pIterator.release());
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +68,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(VType, __PropHandler__));
-	Assign(Gurax_CreateMethod(VType, __PropHandlers__));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(VType, __props__));
 }
 
 //------------------------------------------------------------------------------
