@@ -62,4 +62,38 @@ void VType_PUnit::DoPrepare(Frame& frameOuter)
 // Value_PUnit
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+// Iterator_PUnit
+//------------------------------------------------------------------------------
+Iterator_PUnit::Iterator_PUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel) :
+	_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel)
+{}
+
+Value* Iterator_PUnit::NextValue()
+{
+	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
+	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
+	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
+	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
+	_pPUnit = _pPUnit->GetPUnitNext();
+	return pValue.release();
+}
+
+size_t Iterator_PUnit::GetLength() const
+{
+	const PUnit* pPUnit = _pPUnit;
+	if (!pPUnit || _pPUnit == _pPUnitSentinel) return 0;
+	for ( ; pPUnit && pPUnit->IsBridge(); pPUnit = _pPUnit->GetPUnitNext()) ;
+	size_t cnt = 0;
+	for ( ; pPUnit && pPUnit != _pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext(), ++cnt) ;
+	return cnt;
+}
+
+String Iterator_PUnit::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "PUnit";
+	return str;
+}
+
 }

@@ -74,6 +74,25 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_PropHandler
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_PropHandler : public Iterator {
+private:
+	RefPtr<PropHandlerOwner> _pPropHandlerOwner;
+	size_t _idx;
+public:
+	Iterator_PropHandler(PropHandlerOwner* pPropHandlerOwner);
+public:
+	const PropHandlerOwner& GetPropHandlerOwner() const { return *_pPropHandlerOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual Value* NextValue() override;
+	virtual size_t GetLength() const override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

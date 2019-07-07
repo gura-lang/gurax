@@ -35,6 +35,29 @@ Gurax_ImplementMethod(VType, __PropHandler__)
 	return ReturnValue(processor, argument, new Value_PropHandler(pPropHandler->Reference()));
 }
 
+// VType#__PropHandlers__() {block?}
+Gurax_DeclareMethod(VType, __PropHandlers__)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(VType, __PropHandlers__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	// Function body
+	RefPtr<PropHandlerOwner> pPropHandlerOwner(valueThis.GetVTypeThis().GetPropHandlerMap().CreatePropHandlerOwner());
+	pPropHandlerOwner->SortBySymbolName();
+	RefPtr<Iterator> pIterator(new Iterator_PropHandler(pPropHandlerOwner.release()));
+	return ReturnValue(processor, argument, new Value_Iterator(pIterator.release()));
+}
+
 //------------------------------------------------------------------------------
 // VType_VType
 //------------------------------------------------------------------------------
@@ -46,6 +69,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(VType, __PropHandler__));
+	Assign(Gurax_CreateMethod(VType, __PropHandlers__));
 }
 
 //------------------------------------------------------------------------------

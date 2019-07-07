@@ -54,4 +54,30 @@ String Value_PropHandler::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
+//------------------------------------------------------------------------------
+// Iterator_PropHandler
+//------------------------------------------------------------------------------
+Iterator_PropHandler::Iterator_PropHandler(PropHandlerOwner* pPropHandlerOwner) :
+	_pPropHandlerOwner(pPropHandlerOwner), _idx(0)
+{}
+
+Value* Iterator_PropHandler::NextValue()
+{
+	if (_idx >= GetPropHandlerOwner().size()) return nullptr;
+	const PropHandler* pPropHandler = GetPropHandlerOwner()[_idx++];
+	return new Value_PropHandler(pPropHandler->Reference());
+}
+
+size_t Iterator_PropHandler::GetLength() const
+{
+	return GetPropHandlerOwner().size();
+}
+
+String Iterator_PropHandler::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "PropHandler";
+	return str;
+}
+
 }

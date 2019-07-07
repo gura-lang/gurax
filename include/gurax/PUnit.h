@@ -113,24 +113,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_PUnit
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_PUnit : public Iterator {
-private:
-	const PUnit* _pPUnit;
-	const PUnit* _pPUnitSentinel;
-public:
-	Iterator_PUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel) :
-		_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel) {}
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-	virtual Value* NextValue() override;
-	virtual size_t GetLength() const override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_Branch
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE PUnit_Branch : public PUnit {
