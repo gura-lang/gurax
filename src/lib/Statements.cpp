@@ -824,7 +824,7 @@ Gurax_DeclareStatementAlias(struct_, "struct")
 Gurax_ImplementStatement(struct_)
 {
 	composer.Add_CreateVType(false, &exprCaller);							// [VType]
-	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, false);
+	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, true);
 }
 
 void Statements::AssignToBasement(Frame& frame)
