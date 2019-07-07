@@ -33,12 +33,12 @@ bool VTypeCustom::AssignMethod(Function* pFunction)
 		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			pConstructor.reset(new Constructor(
+			pConstructor.reset(new ConstructorClass(
 								   *this, pFunction->GetDeclCallable().Reference(),
 								   pFunction->GetExprBody().Reference(),
 								   pVTypeInh->GetConstructor().Reference()));
 		} else {
-			pConstructor.reset(new Constructor(
+			pConstructor.reset(new ConstructorClass(
 								   *this, pFunction->GetDeclCallable().Reference(),
 								   pFunction->GetExprBody().Reference(), nullptr));
 		}
@@ -105,16 +105,15 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	_pSymbol = pSymbol;
 	if (GetConstructor().IsEmpty()) {
 		RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
-		pDeclCallable->GetDeclBlock().
-			SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
+		pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			pConstructor.reset(new Constructor(
+			pConstructor.reset(new ConstructorClass(
 								   *this, pDeclCallable.release(), Expr::Empty.Reference(),
 								   pVTypeInh->GetConstructor().Reference()));
 		} else {
-			pConstructor.reset(new Constructor(
+			pConstructor.reset(new ConstructorClass(
 								   *this, pDeclCallable.release(), Expr::Empty.Reference(), nullptr));
 		}
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
@@ -136,10 +135,10 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 }
 
 //------------------------------------------------------------------------------
-// VTypeCustom::Constructor
+// VTypeCustom::ConstructorClass
 //------------------------------------------------------------------------------
-VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
-									  Expr* pExprBody, Function* pConstructorInh) :
+VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
+												Expr* pExprBody, Function* pConstructorInh) :
 	Function(Type::Function, Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst()),
 	_pConstructorInh(pConstructorInh)
@@ -147,14 +146,14 @@ VTypeCustom::Constructor::Constructor(VTypeCustom& vtypeCustom, DeclCallable* pD
 	if (_pPUnitBody && _pPUnitBody->IsBeginSequence()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
-Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument) const
+Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
 {
 	RefPtr<Value> pValueThis;
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());
 	} else {
 		RefPtr<ValueCustom> pValueThisWk(new ValueCustom(GetVTypeCustom(), processor.Reference()));
-		if (!pValueThisWk->InitCustomProp()) return nullptr;
+		if (!pValueThisWk->InitCustomProp()) return Value::nil();
 		pValueThis.reset(pValueThisWk.release());
 		argument.SetValueThis(pValueThis.Reference());
 	}
@@ -184,7 +183,41 @@ Value* VTypeCustom::Constructor::DoEval(Processor& processor, Argument& argument
 	return pExprOfBlock->DoEval(processor, *pArgumentSub);
 }
 
-String VTypeCustom::Constructor::ToString(const StringStyle& ss) const
+String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += MakeFullName();
+	str += GetDeclCallable().ToString(ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// VTypeCustom::ConstructorStruct
+//------------------------------------------------------------------------------
+VTypeCustom::ConstructorStruct::ConstructorStruct(
+	VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropHandlerOwner* pPropHandlerOwner) :
+	Function(Type::Function, Symbol::Empty, pDeclCallable),
+	_vtypeCustom(vtypeCustom), _pPropHandlerOwner(pPropHandlerOwner)
+{
+}
+
+Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& argument) const
+{
+	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
+	if (!pValueThis->InitCustomProp()) return Value::nil();
+	ArgPicker args(argument);
+	PropHandlerOwner::iterator ppPropHandler = _pPropHandlerOwner->begin();
+	for ( ; ppPropHandler != _pPropHandlerOwner->end() && args.IsDefined(); ppPropHandler++) {
+		PropHandler* pPropHandler = *ppPropHandler;
+		if (!pPropHandler->SetValue(*pValueThis, args.PickValue(), *Attribute::Empty)) return Value::nil();
+	}
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	if (!pExprOfBlock) return pValueThis.release();
+	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
+	return pExprOfBlock->DoEval(processor, *pArgumentSub);
+}
+
+String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += MakeFullName();

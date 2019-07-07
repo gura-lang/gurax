@@ -12,20 +12,33 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class VTypeCustom : public VType {
 public:
-	class Constructor : public Function {
+	class ConstructorClass : public Function {
 	protected:
 		VTypeCustom& _vtypeCustom;
 		RefPtr<Expr> _pExprBody;
 		const PUnit* _pPUnitBody;
 		RefPtr<Function> _pConstructorInh;	// this may be nullptr
 	public:
-		Constructor(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr* pExprBody, Function* pConstructorInh);
+		ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr* pExprBody, Function* pConstructorInh);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 	public:
 		// Virtual functions of Function
 		virtual const Expr& GetExprBody() const override { return *_pExprBody; }
 		virtual const PUnit* GetPUnitBody() const override { return _pPUnitBody; }
+		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
+		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
+	};
+	class ConstructorStruct : public Function {
+	protected:
+		VTypeCustom& _vtypeCustom;
+		RefPtr<PropHandlerOwner> _pPropHandlerOwner;
+	public:
+		ConstructorStruct(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropHandlerOwner* pPropHandlerOwner);
+	public:
+		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
+	public:
+		// Virtual functions of Function
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};

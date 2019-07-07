@@ -16,11 +16,9 @@ void DeclCallable::Bootup()
 {
 	Empty.reset(new DeclCallable());
 	EmptyWithBlock.reset(new DeclCallable());
-	EmptyWithBlock->GetDeclBlock().
-		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
+	EmptyWithBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
 	EmptyWithOptionalBlock.reset(new DeclCallable());
-	EmptyWithOptionalBlock->GetDeclBlock().
-		SetSymbol(Gurax_Symbol(block)).SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
+	EmptyWithOptionalBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 }
 
 DeclCallable::DeclCallable() :

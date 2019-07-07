@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DeclBlock
 //------------------------------------------------------------------------------
-DeclBlock::DeclBlock() : _pSymbol(Symbol::Empty), _pOccur(&Occur::Zero), _flags(Flag::None)
+DeclBlock::DeclBlock() : _pSymbol(Gurax_Symbol(block)), _pOccur(&Occur::Zero), _flags(Flag::None)
 {
 }
 

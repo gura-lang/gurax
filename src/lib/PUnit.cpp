@@ -940,13 +940,14 @@ void PUnit_CompleteStruct<nExprSrc, discardValueFlag>::Exec(Processor& processor
 	RefPtr<PropHandlerOwner> pPropHandlerOwner(vtypeCustom.GetPropHandlerMap().CreatePropHandlerOwner());
 	pPropHandlerOwner->SortBySeqId();
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
-	//pDeclCallable->GetDeclBlock().
+	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
 	for (PropHandler* pPropHandler : *pPropHandlerOwner) {
 		pDeclCallable->GetDeclArgOwner().push_back(
 			new DeclArg(pPropHandler->GetSymbol(), pPropHandler->GetVType(),
 						DeclArg::Occur::Once, pPropHandler->GetFlags(), nullptr));
 	}
-	vtypeCustom.SetConstructor(new Function(Function::Type::Function, "__init__", pDeclCallable.release()));
+	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(
+								   vtypeCustom, pDeclCallable.release(), pPropHandlerOwner.release()));
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 	} else {
