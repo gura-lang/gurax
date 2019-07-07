@@ -936,7 +936,17 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_CompleteStruct<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-
+	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
+	RefPtr<PropHandlerOwner> pPropHandlerOwner(vtypeCustom.GetPropHandlerMap().CreatePropHandlerOwner());
+	pPropHandlerOwner->SortBySeqId();
+	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
+	//pDeclCallable->GetDeclBlock().
+	for (PropHandler* pPropHandler : *pPropHandlerOwner) {
+		pDeclCallable->GetDeclArgOwner().push_back(
+			new DeclArg(pPropHandler->GetSymbol(), pPropHandler->GetVType(),
+						DeclArg::Occur::Once, pPropHandler->GetFlags(), nullptr));
+	}
+	vtypeCustom.SetConstructor(new Function(Function::Type::Function, "__init__", pDeclCallable.release()));
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 	} else {
