@@ -154,6 +154,7 @@ public:
 public:
 	// Virtual functions
 	virtual bool IsEmpty() const { return false; }
+	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
@@ -568,6 +569,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
+	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const override;
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -591,6 +593,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual bool DoPrepare() override;
+	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const override;
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override;

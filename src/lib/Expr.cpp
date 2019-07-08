@@ -404,6 +404,13 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 
+bool Expr_BinaryOp::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
+{
+	if (!GetOperator()->IsType(OpType::Pair)) return false;
+	*ppExpr = const_cast<Expr_BinaryOp*>(this);
+	return true;
+}
+
 void Expr_BinaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
@@ -488,6 +495,13 @@ bool Expr_Assign::DoPrepare()
 		Expr_Caller* pExprEx = dynamic_cast<Expr_Caller*>(GetExprLeft());
 		return pExprEx->PrepareDeclCallable();
 	}
+	return true;
+}
+
+bool Expr_Assign::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
+{
+	if (GetOperator()) return false;
+	*ppExpr = const_cast<Expr_Assign*>(this);
 	return true;
 }
 
@@ -952,9 +966,8 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr* pExprAssigned, b
 	pExprAssigned->ComposeOrNil(composer);
 	composer.Add_Return(this);
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		if (!pExpr->IsType<Expr_BinaryOp>()) continue;
-		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-		if (!pExprEx->GetOperator()->IsType(OpType::Pair)) continue;
+		Expr_Binary* pExprEx = nullptr;
+		if (!pExpr->IsDeclArgWithDefault(&pExprEx)) continue;
 		Expr* pExprDefaultArg = pExprEx->GetExprRight();
 		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(pExprDefaultArg);

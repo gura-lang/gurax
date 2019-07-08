@@ -40,13 +40,9 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	RefPtr<Expr> pExprDefault;
 	const Attribute* pAttrSrc = nullptr;
 	const Expr* pExpr = &expr;
-	if (pExpr->IsType<Expr_BinaryOp>()) {
-		const Expr_BinaryOp* pExprEx = dynamic_cast<const Expr_BinaryOp*>(pExpr);
-		if (!pExprEx->GetOperator()->IsType(OpType::Pair)) {
-			Error::Issue(ErrorType::SyntaxError, "invalid format of declaration");
-			return nullptr;
-		}
-		// x => value
+	Expr_Binary* pExprEx = nullptr;
+	if (pExpr->IsDeclArgWithDefault(&pExprEx)) {
+		// x => value or x = value
 		pExpr = pExprEx->GetExprLeft();
 		pExprDefault.reset(pExprEx->GetExprRight()->Reference());
 	}
@@ -87,7 +83,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 		flags |= Flag::ListVar;
 	}
 	if (!pExpr->IsType<Expr_Identifier>()) {
-		Error::Issue(ErrorType::SyntaxError, "declaration must be an indentifier");
+		Error::Issue(ErrorType::SyntaxError, "invalid declaration of argument");
 		return nullptr;
 	}
 	const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExpr);
