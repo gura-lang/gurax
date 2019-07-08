@@ -31,14 +31,14 @@ TestCase('Constructor') {
 	Tester(`DateTime(2019, 5, 21, 8, 23, 42, 234, 765))
 	Tester(`DateTime(2019, 5, nil, 8, nil, 42))
 	Tester(`DateTime(2019, nil, nil, nil, nil, 42))
-	Tester(`DateTime(year => 2019))
-	Tester(`DateTime(month => 5))
-	Tester(`DateTime(day => 21))
-	Tester(`DateTime(hour => 8))
-	Tester(`DateTime(min => 23))
-	Tester(`DateTime(sec => 42))
-	Tester(`DateTime(msec => 234))
-	Tester(`DateTime(usec => 765))
+	Tester(`DateTime(year = 2019))
+	Tester(`DateTime(month = 5))
+	Tester(`DateTime(day = 21))
+	Tester(`DateTime(hour = 8))
+	Tester(`DateTime(min = 23))
+	Tester(`DateTime(sec = 42))
+	Tester(`DateTime(msec = 234))
+	Tester(`DateTime(usec = 765))
 }
 
 TestCase('Constructor Range Check') {

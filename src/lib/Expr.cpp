@@ -404,12 +404,14 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_BinaryOp::typeInfo;
 
+#if 0
 bool Expr_BinaryOp::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
 {
 	if (!GetOperator()->IsType(OpType::Pair)) return false;
 	*ppExpr = const_cast<Expr_BinaryOp*>(this);
 	return true;
 }
+#endif
 
 void Expr_BinaryOp::Compose(Composer& composer)
 {
@@ -420,28 +422,6 @@ void Expr_BinaryOp::Compose(Composer& composer)
 		GetExprRight()->ComposeOrNil(composer);							// [Left Right]
 		composer.Add_BinaryOp(GetOperator(), this);						// [Result]
 	}
-}
-
-void Expr_BinaryOp::ComposeForArgSlot(Composer& composer)
-{
-	if (!GetOperator()->IsType(OpType::Pair)) {
-		Expr::ComposeForArgSlot(composer);
-		return;
-	}
-	if (!GetExprLeft()->IsType<Expr_Identifier>()) {
-		Error::IssueWith(ErrorType::ArgumentError, *this,
-						 "named argument must be specified by a symbol");
-		return;
-	}
-	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
-	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
-	composer.Add_BeginArgSlotNamed(
-		pSymbol, GetExprRight()->Reference(), this);					// [Argument ArgSlot]
-	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
-	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlotNamed(this);									// [Argument]
-	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	GetExprRight()->SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -513,6 +493,24 @@ void Expr_Assign::Compose(Composer& composer)
 void Expr_Assign::ComposeInClass(Composer& composer, bool publicFlag)
 {
 	GetExprLeft()->ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
+}
+
+void Expr_Assign::ComposeForArgSlot(Composer& composer)
+{
+	if (GetOperator() || !GetExprLeft()->IsType<Expr_Identifier>()) {
+		Error::IssueWith(ErrorType::ArgumentError, *this,
+						 "invalid declaration of named argument");
+		return;
+	}
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	composer.Add_BeginArgSlotNamed(
+		pSymbol, GetExprRight()->Reference(), this);					// [Argument ArgSlot]
+	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
+	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
+	composer.Add_EndArgSlotNamed(this);									// [Argument]
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	GetExprRight()->SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const

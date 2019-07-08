@@ -914,7 +914,7 @@ void PUnit_CompleteStruct<nExprSrc, discardValueFlag>::Exec(Processor& processor
 	for (PropHandler* pPropHandler : *pPropHandlerOwner) {
 		pDeclCallable->GetDeclArgOwner().push_back(
 			new DeclArg(pPropHandler->GetSymbol(), pPropHandler->GetVType(),
-						DeclArg::Occur::Once, pPropHandler->GetFlags(), nullptr));
+						DeclArg::Occur::ZeroOrOnce, pPropHandler->GetFlags(), nullptr));
 	}
 	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(
 								   vtypeCustom, pDeclCallable.release(), pPropHandlerOwner.release()));

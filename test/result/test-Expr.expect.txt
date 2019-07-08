@@ -3,7 +3,7 @@
 f(`(a))
   ##0 Lookup(`a)
 --------
-f(`(a = 3))
+f(`({a = 3}))
   ##0 Value(<Number:3>)
   ##1 AssignToSymbol(`a)
 --------

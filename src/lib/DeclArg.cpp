@@ -42,7 +42,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	const Expr* pExpr = &expr;
 	Expr_Binary* pExprEx = nullptr;
 	if (pExpr->IsDeclArgWithDefault(&pExprEx)) {
-		// x => value or x = value
+		// x = value
 		pExpr = pExprEx->GetExprLeft();
 		pExprDefault.reset(pExprEx->GetExprRight()->Reference());
 	}
@@ -172,7 +172,7 @@ String DeclArg::ToString(const StringStyle& ss) const
 	}
 	str += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (GetExprDefault()) {
-		str += ss.IsCram()? "=>" : " => ";
+		str += ss.IsCram()? "=" : " = ";
 		str += GetExprDefault()->ToString(ss);
 	}
 	return str;

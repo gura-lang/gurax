@@ -12,9 +12,9 @@ TestCase('PUnit') {
 		`f(a)
 		`f(a, b)
 		`f(a, b, c, d, e)
-		`f(a => 1)
-		`f(a => 1, b => 2)
-		`f(a => 1, b => 2, c => 3, d => 4, e => 5)
+		`f(a = 1)
+		`f(a = 1, b = 2)
+		`f(a = 1, b = 2, c = 3, d = 4, e = 5)
 	]
 	PrintPUnitWithLabel(exprs)
 }
@@ -26,27 +26,27 @@ TestCase('Property') {
 }
 
 TestCase('Default Value (1)') {
-	f(a => 'def-A', b => 'def-B', c => 'def-C') = Format('a=%s, b=%s, c=%s', a, b, c)
+	f(a = 'def-A', b = 'def-B', c = 'def-C') = Format('a=%s, b=%s, c=%s', a, b, c)
 	Tester(`f)
 	Tester(`f())
 	Tester(`f(1))
 	Tester(`f(1, 2))
 	Tester(`f(1, 2, 3))
-	Tester(`f(a => 1))
-	Tester(`f(b => 2))
-	Tester(`f(c => 3))
-	Tester(`f(a => 1, c => 3))
+	Tester(`f(a = 1))
+	Tester(`f(b = 2))
+	Tester(`f(c = 3))
+	Tester(`f(a = 1, c = 3))
 }
 
 TestCase('Default Value (2)') {
-	f(a => 'A', b => 'B', c, d => 'D', e => 'E') = {
+	f(a = 'A', b = 'B', c, d = 'D', e = 'E') = {
 		Format('a=%s, b=%s, c=%s, d=%s, e=%s', a, b, c, d, e)
 	}
 	Tester(`f)
 	Tester(`f())
-	Tester(`f(c => 'CC'))
+	Tester(`f(c = 'CC'))
 	Tester(`f('AA', 'BB', 'CC'))
-	Tester(`f(e => 'EE', d => 'DD', c => 'CC', b => 'BB', a => 'AA'))
+	Tester(`f(e = 'EE', d = 'DD', c = 'CC', b = 'BB', a = 'AA'))
 }
 
 TestCase('Optional Argument') {
@@ -56,10 +56,10 @@ TestCase('Optional Argument') {
 	Tester(`f(1))
 	Tester(`f(1, 2))
 	Tester(`f(1, 2, 3))
-	Tester(`f(a => 1))
-	Tester(`f(b => 2))
-	Tester(`f(c => 3))
-	Tester(`f(a => 1, c => 3))
+	Tester(`f(a = 1))
+	Tester(`f(b = 2))
+	Tester(`f(c = 3))
+	Tester(`f(a = 1, c = 3))
 }
 
 TestCase('Property') {
@@ -119,10 +119,10 @@ TestCase('Named argument') {
 		Println(dict)
 		Println(arg)
 	}
-	f1(d1 => 1, d2 => 2, d3 => 3)
-	f2(10, 20, 30, d1 => 1, d2 => 2, d3 => 3)
-	f2(a => 10, b => 20, c => 30, d1 => 1, d2 => 2, d3 => 3)
-	f2(b => 10, c => 20, a => 30, d1 => 1, d2 => 2, d3 => 3)
+	f1(d1 = 1, d2 = 2, d3 = 3)
+	f2(10, 20, 30, d1 = 1, d2 = 2, d3 = 3)
+	f2(a = 10, b = 20, c = 30, d1 = 1, d2 = 2, d3 = 3)
+	f2(b = 10, c = 20, a = 30, d1 = 1, d2 = 2, d3 = 3)
 }
 
 TestCase('Cast of List Value') {
@@ -140,7 +140,7 @@ TestCase('Quoted Value') {
 	f(3)
 	f('str')
 	f(v)
-	f(v = 2)
+	f({v = 2})
 	f(g(a, b, c))
 }
 

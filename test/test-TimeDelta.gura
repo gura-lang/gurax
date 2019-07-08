@@ -25,26 +25,26 @@ TestCase('Constructor') {
 	Tester(`TimeDelta(nil, nil, nil, 56))
 	Tester(`TimeDelta(nil, nil, nil, nil, 789))
 	Tester(`TimeDelta(nil, nil, nil, nil, nil, 654))
-	Tester(`TimeDelta(days => 123))
-	Tester(`TimeDelta(hours => 12))
-	Tester(`TimeDelta(mins => 34))
-	Tester(`TimeDelta(secs => 56))
-	Tester(`TimeDelta(msecs => 789))
-	Tester(`TimeDelta(usecs => 654))
-	Tester(`TimeDelta(hours => 24 * 6 + 7))
-	Tester(`TimeDelta(mins => 60 * 6 + 7))
-	Tester(`TimeDelta(secs => 60 * 6 + 7))
-	Tester(`TimeDelta(msecs => 1000 * 6 + 7))
-	Tester(`TimeDelta(usecs => 1000 * 6 + 7))
+	Tester(`TimeDelta(days = 123))
+	Tester(`TimeDelta(hours = 12))
+	Tester(`TimeDelta(mins = 34))
+	Tester(`TimeDelta(secs = 56))
+	Tester(`TimeDelta(msecs = 789))
+	Tester(`TimeDelta(usecs = 654))
+	Tester(`TimeDelta(hours = 24 * 6 + 7))
+	Tester(`TimeDelta(mins = 60 * 6 + 7))
+	Tester(`TimeDelta(secs = 60 * 6 + 7))
+	Tester(`TimeDelta(msecs = 1000 * 6 + 7))
+	Tester(`TimeDelta(usecs = 1000 * 6 + 7))
 }
 
 TestCase('Minus Value') {
-	Tester(`TimeDelta(usecs => -1))
-	Tester(`TimeDelta(msecs => -1))
-	Tester(`TimeDelta(secs => -1))
-	Tester(`TimeDelta(mins => -1))
-	Tester(`TimeDelta(hours => -1))
-	Tester(`TimeDelta(days => -1))
+	Tester(`TimeDelta(usecs = -1))
+	Tester(`TimeDelta(msecs = -1))
+	Tester(`TimeDelta(secs = -1))
+	Tester(`TimeDelta(mins = -1))
+	Tester(`TimeDelta(hours = -1))
+	Tester(`TimeDelta(days = -1))
 }
 
 TestCase('-TimeDelta') {
@@ -92,10 +92,10 @@ TestCase('n * TimeDelta') {
 
 TestCase('TimeDelta / n') {
 	Tester(`(TimeDelta(20) / 5))
-	Tester(`(TimeDelta(hours => 20) / 5))
-	Tester(`(TimeDelta(mins => 20) / 5))
-	Tester(`(TimeDelta(secs => 20) / 5))
-	Tester(`(TimeDelta(msecs => 20) / 5))
+	Tester(`(TimeDelta(hours = 20) / 5))
+	Tester(`(TimeDelta(mins = 20) / 5))
+	Tester(`(TimeDelta(secs = 20) / 5))
+	Tester(`(TimeDelta(msecs = 20) / 5))
 	Tester(`(TimeDelta(1, 0, 0) / 5))
 }
 

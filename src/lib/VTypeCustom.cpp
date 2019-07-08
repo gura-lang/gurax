@@ -203,17 +203,25 @@ VTypeCustom::ConstructorStruct::ConstructorStruct(
 
 Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& argument) const
 {
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return Value::nil();
 	ArgPicker args(argument);
 	PropHandlerOwner::iterator ppPropHandler = _pPropHandlerOwner->begin();
 	for ( ; ppPropHandler != _pPropHandlerOwner->end() && args.IsDefined(); ppPropHandler++) {
 		PropHandler* pPropHandler = *ppPropHandler;
-		if (!pPropHandler->SetValue(*pValueThis, args.PickValue(), *Attribute::Empty)) return Value::nil();
+		const Value& value = args.PickValue();
+		if (!value.IsUndefined() && !pPropHandler->SetValue(*pValueThis, value, *Attribute::Empty)) {
+			return Value::nil();
+		}
 	}
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return pValueThis.release();
 	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
+	do {
+		ArgFeeder args(*pArgumentSub);
+		if (!args.FeedValue(frame, pValueThis->Reference())) return Value::nil();
+	} while (0);
 	return pExprOfBlock->DoEval(processor, *pArgumentSub);
 }
 

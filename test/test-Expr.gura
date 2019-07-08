@@ -8,7 +8,7 @@ TestCase('PUnit') {
 		PrintPUnit(expr)
 	}
 	f(a)
-	f(a = 3)
+	f({a = 3})
 	f(a + b)
 	exprs = []
 	exprs = [

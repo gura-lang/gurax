@@ -20,24 +20,24 @@ TimeDelta(nil, nil, 34) .. 0days,00:34:00.000
 TimeDelta(nil, nil, nil, 56) .. 0days,00:00:56.000
 TimeDelta(nil, nil, nil, nil, 789) .. 0days,00:00:00.789
 TimeDelta(nil, nil, nil, nil, nil, 654) .. 0days,00:00:00.000654
-TimeDelta(days => 123) .. 123days,00:00:00.000
-TimeDelta(hours => 12) .. 0days,12:00:00.000
-TimeDelta(mins => 34) .. 0days,00:34:00.000
-TimeDelta(secs => 56) .. 0days,00:00:56.000
-TimeDelta(msecs => 789) .. 0days,00:00:00.789
-TimeDelta(usecs => 654) .. 0days,00:00:00.000654
-TimeDelta(hours => ((24 * 6) + 7)) .. 6days,07:00:00.000
-TimeDelta(mins => ((60 * 6) + 7)) .. 0days,06:07:00.000
-TimeDelta(secs => ((60 * 6) + 7)) .. 0days,00:06:07.000
-TimeDelta(msecs => ((1000 * 6) + 7)) .. 0days,00:00:06.007
-TimeDelta(usecs => ((1000 * 6) + 7)) .. 0days,00:00:00.006007
+TimeDelta(days = 123) .. 123days,00:00:00.000
+TimeDelta(hours = 12) .. 0days,12:00:00.000
+TimeDelta(mins = 34) .. 0days,00:34:00.000
+TimeDelta(secs = 56) .. 0days,00:00:56.000
+TimeDelta(msecs = 789) .. 0days,00:00:00.789
+TimeDelta(usecs = 654) .. 0days,00:00:00.000654
+TimeDelta(hours = (24 * 6) + 7) .. 6days,07:00:00.000
+TimeDelta(mins = (60 * 6) + 7) .. 0days,06:07:00.000
+TimeDelta(secs = (60 * 6) + 7) .. 0days,00:06:07.000
+TimeDelta(msecs = (1000 * 6) + 7) .. 0days,00:00:06.007
+TimeDelta(usecs = (1000 * 6) + 7) .. 0days,00:00:00.006007
 ======== Minus Value ========
-TimeDelta(usecs => (-1)) .. -1days,23:59:59.999999
-TimeDelta(msecs => (-1)) .. -1days,23:59:59.999
-TimeDelta(secs => (-1)) .. -1days,23:59:59.000
-TimeDelta(mins => (-1)) .. -1days,23:59:00.000
-TimeDelta(hours => (-1)) .. -1days,23:00:00.000
-TimeDelta(days => (-1)) .. -1days,00:00:00.000
+TimeDelta(usecs = -1) .. -1days,23:59:59.999999
+TimeDelta(msecs = -1) .. -1days,23:59:59.999
+TimeDelta(secs = -1) .. -1days,23:59:59.000
+TimeDelta(mins = -1) .. -1days,23:59:00.000
+TimeDelta(hours = -1) .. -1days,23:00:00.000
+TimeDelta(days = -1) .. -1days,00:00:00.000
 ======== -TimeDelta ========
 -TimeDelta(0, 0, 0, 0, 0) .. 0days,00:00:00.000
 -TimeDelta(123, 12, 34, 56, 789) .. -124days,11:25:03.211
@@ -69,10 +69,10 @@ TimeDelta(1, 2, 3, 4, 5) * 5 .. 5days,10:15:20.025
 5 * TimeDelta(1, 2, 3, 4, 5) .. 5days,10:15:20.025
 ======== TimeDelta / n ========
 TimeDelta(20) / 5 .. 4days,00:00:00.000
-TimeDelta(hours => 20) / 5 .. 0days,04:00:00.000
-TimeDelta(mins => 20) / 5 .. 0days,00:04:00.000
-TimeDelta(secs => 20) / 5 .. 0days,00:00:04.000
-TimeDelta(msecs => 20) / 5 .. 0days,00:00:00.004
+TimeDelta(hours = 20) / 5 .. 0days,04:00:00.000
+TimeDelta(mins = 20) / 5 .. 0days,00:04:00.000
+TimeDelta(secs = 20) / 5 .. 0days,00:00:04.000
+TimeDelta(msecs = 20) / 5 .. 0days,00:00:00.004
 TimeDelta(1, 0, 0) / 5 .. 0days,04:48:00.000
 ======== Property ========
 td .. 123days,12:34:56.789654

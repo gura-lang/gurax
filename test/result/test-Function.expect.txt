@@ -113,39 +113,39 @@ f(a, b, c, d, e)
   ##15 Lookup(`e)
   ##16 EndArgSlot()
   ##17 Call(cont=##18)
-f(a => 1)
+f(a = 1)
   ##0 Lookup(`f)
   ##1 Argument()
-  ##2 BeginArgSlotNamed(`a=>1,symbol=a,sentinel=##4,branchdest=##5)
+  ##2 BeginArgSlotNamed(`a=1,symbol=a,sentinel=##4,branchdest=##5)
   ##3 Value(<Number:1>)
   ##4 EndArgSlotNamed()
   ##5 Call(cont=##6)
-f(a => 1, b => 2)
+f(a = 1, b = 2)
   ##0 Lookup(`f)
   ##1 Argument()
-  ##2 BeginArgSlotNamed(`a=>1,symbol=a,sentinel=##4,branchdest=##5)
+  ##2 BeginArgSlotNamed(`a=1,symbol=a,sentinel=##4,branchdest=##5)
   ##3 Value(<Number:1>)
   ##4 EndArgSlotNamed()
-  ##5 BeginArgSlotNamed(`b=>2,symbol=b,sentinel=##7,branchdest=##8)
+  ##5 BeginArgSlotNamed(`b=2,symbol=b,sentinel=##7,branchdest=##8)
   ##6 Value(<Number:2>)
   ##7 EndArgSlotNamed()
   ##8 Call(cont=##9)
-f(a => 1, b => 2, c => 3, d => 4, e => 5)
+f(a = 1, b = 2, c = 3, d = 4, e = 5)
   ##0 Lookup(`f)
   ##1 Argument()
-  ##2 BeginArgSlotNamed(`a=>1,symbol=a,sentinel=##4,branchdest=##5)
+  ##2 BeginArgSlotNamed(`a=1,symbol=a,sentinel=##4,branchdest=##5)
   ##3 Value(<Number:1>)
   ##4 EndArgSlotNamed()
-  ##5 BeginArgSlotNamed(`b=>2,symbol=b,sentinel=##7,branchdest=##8)
+  ##5 BeginArgSlotNamed(`b=2,symbol=b,sentinel=##7,branchdest=##8)
   ##6 Value(<Number:2>)
   ##7 EndArgSlotNamed()
-  ##8 BeginArgSlotNamed(`c=>3,symbol=c,sentinel=##10,branchdest=##11)
+  ##8 BeginArgSlotNamed(`c=3,symbol=c,sentinel=##10,branchdest=##11)
   ##9 Value(<Number:3>)
   ##10 EndArgSlotNamed()
-  ##11 BeginArgSlotNamed(`d=>4,symbol=d,sentinel=##13,branchdest=##14)
+  ##11 BeginArgSlotNamed(`d=4,symbol=d,sentinel=##13,branchdest=##14)
   ##12 Value(<Number:4>)
   ##13 EndArgSlotNamed()
-  ##14 BeginArgSlotNamed(`e=>5,symbol=e,sentinel=##16,branchdest=##17)
+  ##14 BeginArgSlotNamed(`e=5,symbol=e,sentinel=##16,branchdest=##17)
   ##15 Value(<Number:5>)
   ##16 EndArgSlotNamed()
   ##17 Call(cont=##18)
@@ -154,31 +154,31 @@ Function.__PropHandler__(`expr) .. <PropHandler:expr:Expr:R>
 Function.__PropHandler__(`name) .. <PropHandler:name:String:R>
 Function.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
 ======== Default Value (1) ========
-f .. f(a => 'def-A', b => 'def-B', c => 'def-C')
+f .. f(a = 'def-A', b = 'def-B', c = 'def-C')
 f() .. a=def-A, b=def-B, c=def-C
 f(1) .. a=1, b=def-B, c=def-C
 f(1, 2) .. a=1, b=2, c=def-C
 f(1, 2, 3) .. a=1, b=2, c=3
-f(a => 1) .. a=1, b=def-B, c=def-C
-f(b => 2) .. a=def-A, b=2, c=def-C
-f(c => 3) .. a=def-A, b=def-B, c=3
-f(a => 1, c => 3) .. a=1, b=def-B, c=3
+f(a = 1) .. a=1, b=def-B, c=def-C
+f(b = 2) .. a=def-A, b=2, c=def-C
+f(c = 3) .. a=def-A, b=def-B, c=3
+f(a = 1, c = 3) .. a=1, b=def-B, c=3
 ======== Default Value (2) ========
-f .. f(a => 'A', b => 'B', c, d => 'D', e => 'E')
+f .. f(a = 'A', b = 'B', c, d = 'D', e = 'E')
 f() .. lacking value for argument 'c'
-f(c => 'CC') .. a=A, b=B, c=CC, d=D, e=E
+f(c = 'CC') .. a=A, b=B, c=CC, d=D, e=E
 f('AA', 'BB', 'CC') .. a=AA, b=BB, c=CC, d=D, e=E
-f(e => 'EE', d => 'DD', c => 'CC', b => 'BB', a => 'AA') .. a=AA, b=BB, c=CC, d=DD, e=EE
+f(e = 'EE', d = 'DD', c = 'CC', b = 'BB', a = 'AA') .. a=AA, b=BB, c=CC, d=DD, e=EE
 ======== Optional Argument ========
 f .. f(a?, b?, c?)
 f() .. a=<Undefined>, b=<Undefined>, c=<Undefined>
 f(1) .. a=1, b=<Undefined>, c=<Undefined>
 f(1, 2) .. a=1, b=2, c=<Undefined>
 f(1, 2, 3) .. a=1, b=2, c=3
-f(a => 1) .. a=1, b=<Undefined>, c=<Undefined>
-f(b => 2) .. a=<Undefined>, b=2, c=<Undefined>
-f(c => 3) .. a=<Undefined>, b=<Undefined>, c=3
-f(a => 1, c => 3) .. a=1, b=<Undefined>, c=3
+f(a = 1) .. a=1, b=<Undefined>, c=<Undefined>
+f(b = 2) .. a=<Undefined>, b=2, c=<Undefined>
+f(c = 3) .. a=<Undefined>, b=<Undefined>, c=3
+f(a = 1, c = 3) .. a=1, b=<Undefined>, c=3
 ======== Property ========
 func.name .. func
 func.type .. `function
@@ -221,7 +221,7 @@ g(nil) .. <Nil>
   ##0 Value(<String:'str'>)
 v
   ##0 Lookup(`v)
-v = 2
+{v = 2}
   ##0 Value(<Number:2>)
   ##1 AssignToSymbol(`v)
 g(a, b, c)

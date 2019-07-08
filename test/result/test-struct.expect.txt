@@ -1,4 +1,4 @@
 ======== Empty ========
 A .. <VType:A(){block?}>
 a .. <A>
-a .. Undefined
+a .. <A>
