@@ -1,0 +1,13 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Empty') {
+	A = struct {}
+	Tester(`A)
+	a = A()
+	Tester(`a)
+	A {|a|
+		Tester(`a)
+	}
+}
+

@@ -153,7 +153,7 @@ f(a => 1, b => 2, c => 3, d => 4, e => 5)
 Function.__PropHandler__(`expr) .. <PropHandler:expr:Expr:R>
 Function.__PropHandler__(`name) .. <PropHandler:name:String:R>
 Function.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
-======== Default Value ========
+======== Default Value (1) ========
 f .. f(a => 'def-A', b => 'def-B', c => 'def-C')
 f() .. a=def-A, b=def-B, c=def-C
 f(1) .. a=1, b=def-B, c=def-C
@@ -163,6 +163,12 @@ f(a => 1) .. a=1, b=def-B, c=def-C
 f(b => 2) .. a=def-A, b=2, c=def-C
 f(c => 3) .. a=def-A, b=def-B, c=3
 f(a => 1, c => 3) .. a=1, b=def-B, c=3
+======== Default Value (2) ========
+f .. f(a => 'A', b => 'B', c, d => 'D', e => 'E')
+f() .. lacking value for argument 'c'
+f(c => 'CC') .. a=A, b=B, c=CC, d=D, e=E
+f('AA', 'BB', 'CC') .. a=AA, b=BB, c=CC, d=D, e=E
+f(e => 'EE', d => 'DD', c => 'CC', b => 'BB', a => 'AA') .. a=AA, b=BB, c=CC, d=DD, e=EE
 ======== Optional Argument ========
 f .. f(a?, b?, c?)
 f() .. a=<Undefined>, b=<Undefined>, c=<Undefined>

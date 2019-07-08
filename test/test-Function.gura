@@ -25,7 +25,7 @@ TestCase('Property') {
 	Tester(`Function.__PropHandler__(`type))
 }
 
-TestCase('Default Value') {
+TestCase('Default Value (1)') {
 	f(a => 'def-A', b => 'def-B', c => 'def-C') = Format('a=%s, b=%s, c=%s', a, b, c)
 	Tester(`f)
 	Tester(`f())
@@ -36,6 +36,17 @@ TestCase('Default Value') {
 	Tester(`f(b => 2))
 	Tester(`f(c => 3))
 	Tester(`f(a => 1, c => 3))
+}
+
+TestCase('Default Value (2)') {
+	f(a => 'A', b => 'B', c, d => 'D', e => 'E') = {
+		Format('a=%s, b=%s, c=%s, d=%s, e=%s', a, b, c, d, e)
+	}
+	Tester(`f)
+	Tester(`f())
+	Tester(`f(c => 'CC'))
+	Tester(`f('AA', 'BB', 'CC'))
+	Tester(`f(e => 'EE', d => 'DD', c => 'CC', b => 'BB', a => 'AA'))
 }
 
 TestCase('Optional Argument') {
