@@ -1,22 +1,11 @@
 #!/usr/bin/env gurax
-Entry = class {
-	public {
-		type:Symbol = `none
-		longName:String = ''
-		shortName:String:nil
-		help:String:nil
-		helpValue:String:nil
-		defValue
-	}
-	__init__(type:Symbol, longName:String, shortName:String:nil,
-			 help:String:nil, helpValue:String:nil, defValue:nil) = {
-		this.type = type
-		this.longName = longName
-		this.shortName = shortName
-		this.help = help
-		this.helpValue = helpValue
-		this.defValue = defValue
-	}
+Entry = struct {
+	type:Symbol = `none
+	longName:String = ''
+	shortName:String:nil
+	help:String:nil
+	helpValue:String:nil
+	defValue
 }
 
 Parser = class {
