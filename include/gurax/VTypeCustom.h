@@ -37,6 +37,7 @@ public:
 		ConstructorStruct(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropHandlerOwner* pPropHandlerOwner);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
+		const PropHandlerOwner& GetPropHandlerOwner() const { return *_pPropHandlerOwner; }
 	public:
 		// Virtual functions of Function
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;

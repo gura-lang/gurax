@@ -40,6 +40,7 @@ public:
 	bool IsDefined() const { return _pArgSlot && _pArgSlot->IsDefined(); }
 	bool IsUndefined() const { return !IsDefined(); }
 	bool IsValid();
+	void Next() { if (_pArgSlot) _pArgSlot = _pArgSlot->GetNext(); }
 public:
 	Value& PeekValue();
 	Value& PickValue();

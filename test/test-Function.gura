@@ -26,16 +26,18 @@ TestCase('Property') {
 }
 
 TestCase('Default Value (1)') {
-	f(a = 'def-A', b = 'def-B', c = 'def-C') = Format('a=%s, b=%s, c=%s', a, b, c)
+	f(a = 'A', b = 'B', c = 'C', d = 'D', e = 'E') = {
+		Format('a=%s, b=%s, c=%s, d=%s, e=%s', a, b, c, d, e)
+	}
 	Tester(`f)
 	Tester(`f())
-	Tester(`f(1))
-	Tester(`f(1, 2))
-	Tester(`f(1, 2, 3))
-	Tester(`f(a = 1))
-	Tester(`f(b = 2))
-	Tester(`f(c = 3))
-	Tester(`f(a = 1, c = 3))
+	Tester(`f(a = 'A-mod'))
+	Tester(`f(b = 'B-mod'))
+	Tester(`f(c = 'C-mod'))
+	Tester(`f(d = 'D-mod'))
+	Tester(`f(e = 'E-mod'))
+	Tester(`f('A-mod', 'B-mod', 'C-mod'))
+	Tester(`f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod'))
 }
 
 TestCase('Default Value (2)') {
@@ -44,9 +46,13 @@ TestCase('Default Value (2)') {
 	}
 	Tester(`f)
 	Tester(`f())
-	Tester(`f(c = 'CC'))
-	Tester(`f('AA', 'BB', 'CC'))
-	Tester(`f(e = 'EE', d = 'DD', c = 'CC', b = 'BB', a = 'AA'))
+	Tester(`f(a = 'A-mod', c = 'C'))
+	Tester(`f(b = 'B-mod', c = 'C'))
+	Tester(`f(c = 'C'))
+	Tester(`f(d = 'D-mod', c = 'C'))
+	Tester(`f(e = 'E-mod', c = 'C'))
+	Tester(`f('A-mod', 'B-mod', 'C-mod'))
+	Tester(`f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod'))
 }
 
 TestCase('Optional Argument') {

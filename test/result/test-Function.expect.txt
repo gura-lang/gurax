@@ -154,21 +154,25 @@ Function.__PropHandler__(`expr) .. <PropHandler:expr:Expr:R>
 Function.__PropHandler__(`name) .. <PropHandler:name:String:R>
 Function.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
 ======== Default Value (1) ========
-f .. f(a = 'def-A', b = 'def-B', c = 'def-C')
-f() .. a=def-A, b=def-B, c=def-C
-f(1) .. a=1, b=def-B, c=def-C
-f(1, 2) .. a=1, b=2, c=def-C
-f(1, 2, 3) .. a=1, b=2, c=3
-f(a = 1) .. a=1, b=def-B, c=def-C
-f(b = 2) .. a=def-A, b=2, c=def-C
-f(c = 3) .. a=def-A, b=def-B, c=3
-f(a = 1, c = 3) .. a=1, b=def-B, c=3
+f .. f(a = 'A', b = 'B', c = 'C', d = 'D', e = 'E')
+f() .. a=A, b=B, c=C, d=D, e=E
+f(a = 'A-mod') .. a=A-mod, b=B, c=C, d=D, e=E
+f(b = 'B-mod') .. a=A, b=B-mod, c=C, d=D, e=E
+f(c = 'C-mod') .. a=A, b=B, c=C-mod, d=D, e=E
+f(d = 'D-mod') .. a=A, b=B, c=C, d=D-mod, e=E
+f(e = 'E-mod') .. a=A, b=B, c=C, d=D, e=E-mod
+f('A-mod', 'B-mod', 'C-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D, e=E
+f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D-mod, e=E-mod
 ======== Default Value (2) ========
 f .. f(a = 'A', b = 'B', c, d = 'D', e = 'E')
 f() .. lacking value for argument 'c'
-f(c = 'CC') .. a=A, b=B, c=CC, d=D, e=E
-f('AA', 'BB', 'CC') .. a=AA, b=BB, c=CC, d=D, e=E
-f(e = 'EE', d = 'DD', c = 'CC', b = 'BB', a = 'AA') .. a=AA, b=BB, c=CC, d=DD, e=EE
+f(a = 'A-mod', c = 'C') .. a=A-mod, b=B, c=C, d=D, e=E
+f(b = 'B-mod', c = 'C') .. a=A, b=B-mod, c=C, d=D, e=E
+f(c = 'C') .. a=A, b=B, c=C, d=D, e=E
+f(d = 'D-mod', c = 'C') .. a=A, b=B, c=C, d=D-mod, e=E
+f(e = 'E-mod', c = 'C') .. a=A, b=B, c=C, d=D, e=E-mod
+f('A-mod', 'B-mod', 'C-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D, e=E
+f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D-mod, e=E-mod
 ======== Optional Argument ========
 f .. f(a?, b?, c?)
 f() .. a=<Undefined>, b=<Undefined>, c=<Undefined>

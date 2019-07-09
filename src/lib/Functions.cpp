@@ -22,7 +22,7 @@ Gurax_ImplementFunction(dir)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const Frame& frame = args.IsDefined()? Value_Frame::GetFrame(args.PickValue()) : Basement::Inst.GetFrame();
+	const Frame& frame = args.IsValid()? Value_Frame::GetFrame(args.PickValue()) : Basement::Inst.GetFrame();
 	// Function body
 	SymbolList symbolList;
 	frame.GatherSymbol(symbolList);

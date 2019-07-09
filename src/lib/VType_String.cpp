@@ -35,7 +35,7 @@ Gurax_ImplementMethod(String, EndsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int endpos = args.IsDefined()? args.PickInt() : -1;
+	int endpos = args.IsValid()? args.PickInt() : -1;
 	// Function body
 	const char* str = valueThis.GetString();
 	const char* rtn = nullptr;
@@ -79,7 +79,7 @@ Gurax_ImplementMethod(String, Find)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int pos = args.IsDefined()? args.PickInt() : 0;
+	int pos = args.IsValid()? args.PickInt() : 0;
 	// Function body
 	const String& str = valueThis.GetStringSTL();
 	String::const_iterator pStr = str.Forward(pos);
@@ -114,7 +114,7 @@ Gurax_ImplementMethod(String, StartsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int pos = args.IsDefined()? args.PickInt() : 0;
+	int pos = args.IsValid()? args.PickInt() : 0;
 	// Function body
 	const char* str = valueThis.GetString();
 	if (pos > 0) str = String::Forward(str, pos);

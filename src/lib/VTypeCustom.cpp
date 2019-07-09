@@ -207,11 +207,10 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return Value::nil();
 	ArgPicker args(argument);
-	PropHandlerOwner::iterator ppPropHandler = _pPropHandlerOwner->begin();
-	for ( ; ppPropHandler != _pPropHandlerOwner->end() && args.IsDefined(); ppPropHandler++) {
-		PropHandler* pPropHandler = *ppPropHandler;
-		const Value& value = args.PickValue();
-		if (!value.IsUndefined() && !pPropHandler->SetValue(*pValueThis, value, *Attribute::Empty)) {
+	for (PropHandler* pPropHandler : GetPropHandlerOwner()) {
+		if (args.IsUndefined()) {
+			args.Next();
+		} else if (!pPropHandler->SetValue(*pValueThis, args.PickValue(), *Attribute::Empty)) {
 			return Value::nil();
 		}
 	}
