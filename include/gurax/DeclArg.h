@@ -26,8 +26,8 @@ public:
 		static const Flags Nil		= 1 << 1;	// :nil
 		static const Flags StreamR	= 1 << 2;	// :r
 		static const Flags StreamW	= 1 << 3;	// :w
-		static const Flags Map		= 1 << 4;	// :map .. must be here
-		static const Flags NoMap	= 1 << 5;	// :nomap .. must be here
+		static const Flags Map		= 1 << 4;	// :map
+		static const Flags NoMap	= 1 << 5;	// :nomap
 		static const Flags NoCast	= 1 << 6;	// :nocast
 		static const Flags OfClass	= 1 << 7;	// :static
 		static const Flags Public	= 1 << 8;	// :public

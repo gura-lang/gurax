@@ -11,3 +11,43 @@ TestCase('Empty') {
 	}
 }
 
+TestCase('Constructor') {
+	A = struct {
+		p1
+		p2:Number
+		p3:String
+		p4:DateTime
+		p5 = nil
+		p6 = 3
+		p7 = 'P7'
+		p8 = DateTime()
+		Format() = {
+			Format('%s, %s, %s, %s, %s, %s, %s, %s',
+				   this.p1, this.p2, this.p3, this.p4, this.p5, this.p6, this.p7, this.p8):nomap
+		}
+	}
+	Println(A)
+	Tester(`A().Format())
+}
+
+TestCase('Default Value for Property') {
+	A = struct {
+		p1 = 'P1'
+		p2:String
+		p3 = 'P3'
+		p4:String
+		Format() = Format('%s, %s, %s, %s', this.p1, this.p2, this.p3, this.p4):nomap
+	}
+	Println(A)
+	Println(A.__props__)
+	Tester(`A().Format())
+	Tester(`A('P1-mod').Format())
+	Tester(`A('P1-mod', 'P2-mod').Format())
+	Tester(`A('P1-mod', 'P2-mod', 'P3-mod').Format())
+	Tester(`A('P1-mod', 'P2-mod', 'P3-mod', 'p4-mod').Format())
+	Tester(`A(p1 = 'P1-mod').Format())
+	Tester(`A(p2 = 'P2-mod').Format())
+	Tester(`A(p3 = 'P3-mod').Format())
+	Tester(`A(p4 = 'P4-mod').Format())
+	Tester(`A(nil, nil, nil, nil).Format())
+}

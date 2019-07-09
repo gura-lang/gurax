@@ -912,9 +912,12 @@ void PUnit_CompleteStruct<nExprSrc, discardValueFlag>::Exec(Processor& processor
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
 	for (PropHandler* pPropHandler : *pPropHandlerOwner) {
+		PropHandler::Flags flags = pPropHandler->GetFlags();
+		flags &= ~(PropHandler::Flag::Nil | PropHandler::Flag::OfClass | PropHandler::Flag::Public |
+				   PropHandler::Flag::Readable | PropHandler::Flag::Writable);
 		pDeclCallable->GetDeclArgOwner().push_back(
 			new DeclArg(pPropHandler->GetSymbol(), pPropHandler->GetVType(),
-						DeclArg::Occur::ZeroOrOnce, pPropHandler->GetFlags(), nullptr));
+						DeclArg::Occur::ZeroOrOnce, flags, nullptr));
 	}
 	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(
 								   vtypeCustom, pDeclCallable.release(), pPropHandlerOwner.release()));

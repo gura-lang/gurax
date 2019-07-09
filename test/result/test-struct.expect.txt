@@ -2,3 +2,22 @@
 A .. <VType:A(){block?}>
 a .. <A>
 a .. <A>
+======== Constructor ========
+<VType:A(p1?:Any,p2?:Number,p3?:String,p4?:DateTime,p5?:Any,p6?:Number,p7?:String,p8?:DateTime){block?}>
+A().Format() .. <Nil>, <Nil>, <Nil>, <Nil>, <Nil>, 3, P7, 1970-01-01 00:00:00.000
+======== Default Value for Property ========
+<VType:A(p1?:String,p2?:String,p3?:String,p4?:String){block?}>
+<PropHandler:p1:String:public:R:W>
+<PropHandler:p2:String:nil:public:R:W>
+<PropHandler:p3:String:public:R:W>
+<PropHandler:p4:String:nil:public:R:W>
+A().Format() .. P1, <Nil>, P3, <Nil>
+A('P1-mod').Format() .. P1-mod, <Nil>, P3, <Nil>
+A('P1-mod', 'P2-mod').Format() .. P1-mod, P2-mod, P3, <Nil>
+A('P1-mod', 'P2-mod', 'P3-mod').Format() .. P1-mod, P2-mod, P3-mod, <Nil>
+A('P1-mod', 'P2-mod', 'P3-mod', 'p4-mod').Format() .. P1-mod, P2-mod, P3-mod, p4-mod
+A(p1 = 'P1-mod').Format() .. P1-mod, <Nil>, P3, <Nil>
+A(p2 = 'P2-mod').Format() .. P1, P2-mod, P3, <Nil>
+A(p3 = 'P3-mod').Format() .. P1, <Nil>, P3-mod, <Nil>
+A(p4 = 'P4-mod').Format() .. P1, <Nil>, P3, P4-mod
+A(nil, nil, nil, nil).Format() .. P1, <Nil>, P3, <Nil>

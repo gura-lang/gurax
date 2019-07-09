@@ -210,7 +210,11 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 	for (PropHandler* pPropHandler : GetPropHandlerOwner()) {
 		if (args.IsUndefined()) {
 			args.Next();
-		} else if (!pPropHandler->SetValue(*pValueThis, args.PickValue(), *Attribute::Empty)) {
+			continue;
+		}
+		const Value& value = args.PickValue();
+		if (!pPropHandler->IsSet(PropHandler::Flag::Nil) && value.IsNil()) continue;
+		if (!pPropHandler->SetValue(*pValueThis, value, *Attribute::Empty)) {
 			return Value::nil();
 		}
 	}
