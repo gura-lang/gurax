@@ -38,3 +38,13 @@ TestCase('Indexer') {
 	}
 }
 
+TestCase('Dict#Put()') {
+	d = %{'a' => 3, 'b' => 2, 'c' => 1}
+	Tester(`d)
+	Tester(`d.Put('a', 99):timid)
+	Tester(`d.Put('e', 99):timid)
+	Tester(`d.Put('f', 100).Put('g', 200).Put('h', 300))
+	Tester(`d.Put('a', 999):overwrite)
+	Tester(`d.Put('a', 888):strict)
+	Tester(`d.Put([1, 2, 3], [4, 5, 6]))
+}
