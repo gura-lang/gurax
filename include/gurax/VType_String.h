@@ -77,6 +77,7 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual bool IsAsDictKey() const override { return true; }
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };
 

@@ -125,6 +125,7 @@ public:
 	virtual bool IsList() const { return false; }
 	virtual bool IsVType() const { return false; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const { return false; }
+	virtual bool IsAsDictKey() const { return false; }
 	virtual void UpdateMapMode(Argument& argument) const {}
 	virtual bool ReadyToPickValue() { return true; }
 	virtual Value* PickValue() { return Reference(); }
@@ -305,6 +306,8 @@ class GURAX_DLLDECLARE ValueDict :
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ValueDict);
+public:
+	enum StoreMode { None, Strict, Overwrite, Timid, };
 protected:
 	~ValueDict() { Clear(); }
 public:
@@ -312,6 +315,8 @@ public:
 	ValueDict* Clone() const;
 	ValueDict* CloneDeep() const;
 	void Assign(Value* pValueKey, Value* pValue);
+	bool Store(const ValueDict& valDict, StoreMode storeMode);
+	bool Store(const Value& valueKey, const Value& value, StoreMode storeMode);
 	Value* Lookup(const Value* pValueKey) const {
 		auto pPair = find(const_cast<Value*>(pValueKey));
 		return (pPair == end())? nullptr : pPair->second;

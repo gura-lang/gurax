@@ -54,6 +54,40 @@ Gurax_ImplementStatement(_dict_)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// String#Put(key, value):map:reduce:[overwrite,strict,timid]
+Gurax_DeclareMethod(Dict, Put)
+{
+	Declare(VTYPE_Any, Flag::Map);
+	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareAttrOpt(Gurax_Symbol(overwrite));
+	DeclareAttrOpt(Gurax_Symbol(strict));
+	DeclareAttrOpt(Gurax_Symbol(timid));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, Put)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& key = args.PickValue();
+	const Value& value = args.PickValue();
+	// Function body
+	ValueDict::StoreMode storeMode =
+		argument.IsSet(Gurax_Symbol(strict))? ValueDict::StoreMode::Strict :
+		argument.IsSet(Gurax_Symbol(timid))? ValueDict::StoreMode::Timid :
+		ValueDict::StoreMode::Overwrite;
+	if (!valueThis.GetValueDict().Store(key, value, storeMode)) return Value::nil();
+	return argument.GetValueThis().Reference();
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Dict#keys
@@ -100,6 +134,8 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Mutable);
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_dict_));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Dict, Put));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Dict, len));
 	Assign(Gurax_CreateProperty(Dict, keys));

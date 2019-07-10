@@ -67,6 +67,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return String("`").append(_pSymbol->GetName());
 	}
+	virtual bool IsAsDictKey() const override { return true; }
 };
 
 }

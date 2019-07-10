@@ -469,6 +469,47 @@ void ValueDict::Assign(Value* pValueKey, Value* pValue)
 	}
 }
 
+bool ValueDict::Store(const ValueDict& valDict, StoreMode storeMode)
+{
+	for (auto iterSrc : valDict) {
+		const Value *pValueKey = iterSrc.first;
+		ValueDict::iterator iterDst = find(const_cast<Value*>(pValueKey));
+		if (iterDst == end()) {
+			insert(ValueDict::value_type(iterSrc.first->Reference(), iterSrc.second->Reference()));
+		} else if (storeMode == StoreMode::Overwrite) {
+			Value::Delete(iterDst->second);
+			iterDst->second = iterSrc.second->Reference();
+		} else if (storeMode == StoreMode::Timid) {
+			// nothing to do
+		} else {
+			Error::Issue(ErrorType::ValueError, "duplicated key '%s'", pValueKey->ToString().c_str());
+			return false;
+		}
+	}
+	return true;
+}
+
+bool ValueDict::Store(const Value& valueKey, const Value& value, StoreMode storeMode)
+{
+	if (!valueKey.IsAsDictKey()) {
+		Error::Issue(ErrorType::TypeError, "invalid value type for key");
+		return false;
+	}
+	ValueDict::iterator iterDst = find(const_cast<Value*>(&valueKey));
+	if (iterDst == end()) {
+		insert(ValueDict::value_type(valueKey.Reference(), value.Reference()));
+	} else if (storeMode == StoreMode::Overwrite) {
+		Value::Delete(iterDst->second);
+		iterDst->second = value.Reference();
+	} else if (storeMode == StoreMode::Timid) {
+		// nothing to do
+	} else {
+		Error::Issue(ErrorType::ValueError, "duplicated key '%s'", valueKey.ToString().c_str());
+		return false;
+	}
+	return true;
+}
+
 String ValueDict::ToString(const StringStyle& ss) const
 {
 	const char* strPair = ss.IsCram()? "=>" : " => ";

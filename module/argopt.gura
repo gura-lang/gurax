@@ -16,9 +16,13 @@ Parser = class {
 	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, defValue?:String) = {
 		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, defValue))
 	}
+	AddFlag(longName:String, shortName?:String, help?:String) = {
+		this.entries.Add(Entry(`flag, longName, shortName, help, nil, false))
+	}
 }
 
 Parser {|p|
 	p.AddParam('value')
+	p.AddFlag('flag')
 	p.Parse(sys.argv)
 }
