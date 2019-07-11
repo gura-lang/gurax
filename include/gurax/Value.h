@@ -220,6 +220,8 @@ public:
 	ValueTypedOwner();
 	ValueTypedOwner(VType* pVTypeOfElems, ValueOwner* pValueOwner) :
 		_pVTypeOfElems(pVTypeOfElems), _pValueOwner(pValueOwner) {}
+	ValueTypedOwner(ValueOwner* pValueOwner) :
+		ValueTypedOwner(pValueOwner->GetVTypeOfElems(), pValueOwner) {}
 	// Copy constructor/operator
 	ValueTypedOwner(const ValueTypedOwner& src) = delete;
 	ValueTypedOwner& operator=(const ValueTypedOwner& src) = delete;
