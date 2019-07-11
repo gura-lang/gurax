@@ -14,18 +14,11 @@ TestCase('Initializer') {
 }
 
 TestCase('Property') {
+	Tester(`Dict.__PropHandler__(`isEmpty))
+	Tester(`Dict.__PropHandler__(`items))
 	Tester(`Dict.__PropHandler__(`len))
 	Tester(`Dict.__PropHandler__(`keys))
-}
-
-TestCase('Dict#len and Dict#keys') {
-	d = %{
-		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
-		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
-	}
-	Tester(`d)
-	Tester(`d.len)
-	Tester(`d.keys)
+	Tester(`Dict.__PropHandler__(`values))
 }
 
 TestCase('Indexer') {
@@ -33,9 +26,67 @@ TestCase('Indexer') {
 		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
 		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
 	}
-	d.keys.Each {|key|
-		Println(d[key])
+	Tester(`d['key0'])
+	Tester(`d['key4'])
+	Tester(`d['key9'])
+	Tester(`d['key10'])
+}
+
+TestCase('Dict#Append()') {
+	d1 = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
 	}
+	d2 = %{
+		'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE',
+		'key0' => 'value0-mod', 'key5' => 'value5-mod'
+	}
+	d = d1.Clone()
+	Tester(`d.Append(d2))
+	d = d1.Clone()
+	Tester(`d.Append(d2):timid)
+	d = d1.Clone()
+	Tester(`d.Append(d2):strict)
+}
+
+TestCase('Dict#Clear()') {
+	d = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+	}
+	Tester(`d)
+	Tester(`d.Clear())
+}
+
+TestCase('Dict#Erase()') {
+	d = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+	}
+	Tester(`d.Erase('key0'))
+	Tester(`d.Erase('key3'))
+	Tester(`d.Erase('key9'))
+}
+
+TestCase('Dict#Get()') {
+	d = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+	}
+	Tester(`d.Get('key0'))
+	Tester(`d.Get('key4'))
+	Tester(`d.Get('key10'))
+	Tester(`d.Get('key10'):raise)
+}
+
+TestCase('Dict#HasKey()') {
+	d = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+	}
+	Tester(`d.HasKey('key0'))
+	Tester(`d.HasKey('key4'))
+	Tester(`d.HasKey('key10'))
 }
 
 TestCase('Dict#Put()') {
@@ -47,4 +98,19 @@ TestCase('Dict#Put()') {
 	Tester(`d.Put('a', 999):overwrite)
 	Tester(`d.Put('a', 888):strict)
 	Tester(`d.Put([1, 2, 3], [4, 5, 6]))
+}
+
+TestCase('Dict#isEmpty') {
+	Tester(`%{'a' => 'b'}.isEmpty)
+	Tester(`%{}.isEmpty)
+}
+
+TestCase('Dict#len and Dict#keys') {
+	d = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
+		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
+	}
+	Tester(`d)
+	Tester(`d.len)
+	Tester(`d.keys)
 }

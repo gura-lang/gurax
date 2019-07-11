@@ -13,6 +13,23 @@ Gurax_DeclareStatementAlias(_dict_, "%")
 {
 	Declare(VTYPE_Dict, Flag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Dict` instance.\n"
+		"\n"
+		"The `block` contains a sequence of key-value pairs in the format below:\n"
+		"\n"
+		"- `{key1 => value1, key2 => value2, key3 => value3}`\n"
+		"- `{{key1, value1}, {key2, value2}, {key3, value3}}``\n"
+		"- `{key1, value1, key2, value2, key3, value3}`\n"
+		"\n"
+		"You can use `Number`, `String` or `Symbol` value for the dictionary keys.\n"
+		"\n"
+		"Below is an example using a block:"
+		"\n"
+		"    d = %{\n"
+		"        'apple' => 100, 'grape' => 200, 'banana' => 80\n"
+		"    }\n");
 }
 
 Gurax_ImplementStatement(_dict_)
@@ -66,7 +83,14 @@ Gurax_DeclareMethod(Dict, Append)
 	DeclareAttrOpt(Gurax_Symbol(timid));
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Appends items stored in another `Dict` instance to the target.\n"
+		"\n"
+		"If a key of the added item already exists in the target dictionary, it would be overwritten.\n"
+		"This behavior can be altered with the following attributes:\n"
+		"\n"
+		"- `:overwrite` .. overwrite the existing one (default)\n"
+		"- `:strict` .. raises an error\n"
+		"- `:timid` .. keeps the existing one\n");
 }
 
 Gurax_ImplementMethod(Dict, Append)
@@ -91,7 +115,7 @@ Gurax_DeclareMethod(Dict, Clear)
 	Declare(VTYPE_Dict, Flag::Reduce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Clears all the items in the target dictionary.");
 }
 
 Gurax_ImplementMethod(Dict, Clear)
@@ -110,7 +134,7 @@ Gurax_DeclareMethod(Dict, Erase)
 	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Erases an item that has a key that matches with the specified one");
 }
 
 Gurax_ImplementMethod(Dict, Erase)
@@ -134,7 +158,20 @@ Gurax_DeclareMethod(Dict, Get)
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Seeks a value that is associated with the specified `key`.\n"
+		"\n"
+		"The method would return the value `default`\n"
+		"when the specified key doesn't exist in the dictionary.\n"
+		"If the argument is omitted, the default value is `nil`.\n"
+		"\n"
+		"When the attribute `:raise` is specified,\n"
+		"an error occurs when the specified key doesn't exist.\n"
+		"\n"
+		"Calling this method with `:raise` attribute behaves the same as index operator.\n"
+		"The following two codes have the same effect:\n"
+		"\n"
+		"- `v = d['foo']`\n"
+		"- `v = d.Get('foo'):raise`\n");
 }
 
 Gurax_ImplementMethod(Dict, Get)
@@ -144,7 +181,7 @@ Gurax_ImplementMethod(Dict, Get)
 	// Arguments
 	ArgPicker args(argument);
 	const Value& key = args.PickValue();
-	const Value& valueDefault = args.PickValue();
+	const Value& valueDefault = args.IsValid()? args.PickValue() : Value::C_nil();
 	// Function body
 	const Value* pValue = valueThis.GetValueDict().Lookup(key);
 	if (pValue) {
@@ -164,7 +201,7 @@ Gurax_DeclareMethod(Dict, HasKey)
 	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns `true` if the specified `key` exists in the target dictionary.");
 }
 
 Gurax_ImplementMethod(Dict, HasKey)
@@ -190,7 +227,14 @@ Gurax_DeclareMethod(Dict, Put)
 	DeclareAttrOpt(Gurax_Symbol(timid));
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Appends items stored in another `Dict` instance to the target.\n"
+		"\n"
+		"If a key of the added item already exists in the target dictionary, it would be overwritten.\n"
+		"This behavior can be altered with the following attributes:\n"
+		"\n"
+		"- `:overwrite` .. overwrite the existing one (default)\n"
+		"- `:strict` .. raises an error\n"
+		"- `:timid` .. keeps the existing one\n");
 }
 
 Gurax_ImplementMethod(Dict, Put)
@@ -219,7 +263,7 @@ Gurax_DeclareProperty_R(Dict, isEmpty)
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"A flag indicating whether the dictionary is empty or not.");
+		"A `Bool` value indicating whether the dictionary is empty or not.");
 }
 
 Gurax_ImplementPropertyGetter(Dict, isEmpty)
@@ -344,7 +388,7 @@ Value* Value_Dict::DoIndexGet(const Index& index) const
 		const Value* pValueIndex = valuesIndex.front();
 		const Value* pValue = GetValueDict().Lookup(*pValueIndex);
 		if (!pValue) {
-			Error::Issue(ErrorType::IndexError, "invalid key value");
+			ValueDict::IssueError_KeyNotFound(*pValueIndex);
 			return Value::nil();
 		}
 		return pValue->Reference();
@@ -354,7 +398,7 @@ Value* Value_Dict::DoIndexGet(const Index& index) const
 		for (const Value* pValueIndex : valuesIndex) {
 			const Value* pValue = GetValueDict().Lookup(*pValueIndex);
 			if (!pValue) {
-				Error::Issue(ErrorType::IndexError, "invalid key value");
+				ValueDict::IssueError_KeyNotFound(*pValueIndex);
 				return Value::nil();
 			}
 			pValuesRtn->Add(pValue->Reference());

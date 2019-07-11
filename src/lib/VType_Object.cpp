@@ -8,6 +8,26 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Object#Clone()
+Gurax_DeclareMethod(Object, Clone)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates a cloned object.\n");
+}
+
+Gurax_ImplementMethod(Object, Clone)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	RefPtr<Value> pValue(valueThis.Clone());
+	if (pValue) return pValue.release();
+	Error::Issue(ErrorType::ValueError, "failed to create a cloned object");
+	return Value::nil();
+}
+
 // Object#IsInstanceOf(vtype:VType)
 Gurax_DeclareMethod(Object, IsInstanceOf)
 {
@@ -57,6 +77,7 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VType::Empty, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Object, Clone));
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
 	Assign(Gurax_CreateMethod(Object, ToString));
 }

@@ -3,23 +3,36 @@
 % {{'key0', 'value0'}, {'key1', 'value1'}, {'key2', 'value2'}, {'key3', 'value3'}, {'key4', 'value4'}, {'key5', 'value5'}, {'key6', 'value6'}, {'key7', 'value7'}, {'key8', 'value8'}, {'key9', 'value9'}} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
 % {'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
 ======== Property ========
+Dict.__PropHandler__(`isEmpty) .. <PropHandler:isEmpty:Bool:R>
+Dict.__PropHandler__(`items) .. <PropHandler:items:List:R>
 Dict.__PropHandler__(`len) .. <PropHandler:len:Number:R>
 Dict.__PropHandler__(`keys) .. <PropHandler:keys:List:R>
-======== Dict#len and Dict#keys ========
-d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
-d.len .. 10
-d.keys .. ['key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6', 'key7', 'key8', 'key9']
+Dict.__PropHandler__(`values) .. <PropHandler:values:List:R>
 ======== Indexer ========
-value0
-value1
-value2
-value3
-value4
-value5
-value6
-value7
-value8
-value9
+d['key0'] .. value0
+d['key4'] .. value4
+d['key9'] .. value9
+d['key10'] .. the dictionary doesn't have a key ''key10''
+======== Dict#Append() ========
+d.Append(d2) .. %{'key0' => 'value0-mod', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5-mod', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9', 'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE'}
+d.Append(d2):timid .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9', 'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE'}
+d.Append(d2):strict .. duplicated key ''key5''
+======== Dict#Clear() ========
+d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+d.Clear() .. %{}
+======== Dict#Erase() ========
+d.Erase('key0') .. %{'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+d.Erase('key3') .. %{'key1' => 'value1', 'key2' => 'value2', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+d.Erase('key9') .. %{'key1' => 'value1', 'key2' => 'value2', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8'}
+======== Dict#Get() ========
+d.Get('key0') .. value0
+d.Get('key4') .. value4
+d.Get('key10') .. <Nil>
+d.Get('key10'):raise .. the dictionary doesn't have a key ''key10''
+======== Dict#HasKey() ========
+d.HasKey('key0') .. true
+d.HasKey('key4') .. true
+d.HasKey('key10') .. false
 ======== Dict#Put() ========
 d .. %{'a' => 3, 'b' => 2, 'c' => 1}
 d.Put('a', 99):timid .. %{'a' => 3, 'b' => 2, 'c' => 1}
@@ -28,3 +41,10 @@ d.Put('f', 100).Put('g', 200).Put('h', 300) .. %{'a' => 3, 'b' => 2, 'c' => 1, '
 d.Put('a', 999):overwrite .. %{'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}
 d.Put('a', 888):strict .. duplicated key ''a''
 d.Put([1, 2, 3], [4, 5, 6]) .. [%{1 => 4, 2 => 5, 3 => 6, 'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}, %{1 => 4, 2 => 5, 3 => 6, 'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}, %{1 => 4, 2 => 5, 3 => 6, 'a' => 999, 'b' => 2, 'c' => 1, 'e' => 99, 'f' => 100, 'g' => 200, 'h' => 300}]
+======== Dict#isEmpty ========
+% {'a' => 'b'}.isEmpty .. false
+% {}.isEmpty .. true
+======== Dict#len and Dict#keys ========
+d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
+d.len .. 10
+d.keys .. ['key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6', 'key7', 'key8', 'key9']

@@ -93,6 +93,10 @@ public:
 public:
 	static void CreateConstant();
 public:
+	static const Value& C_undefined()			{ return *_pValue_undefined; }
+	static const Value& C_nil()					{ return *_pValue_nil; }
+	static const Value& C_false()				{ return *_pValue_false_; }
+	static const Value& C_true()				{ return *_pValue_true_; }
 	static Value* undefined()					{ return _pValue_undefined->Reference(); }
 	static Value* nil()							{ return _pValue_nil->Reference(); }
 	static Value* false_()						{ return _pValue_false_->Reference(); }
