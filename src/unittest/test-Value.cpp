@@ -61,7 +61,7 @@ void Test_Dict()
 	for (const SampleRecord* pSampleRecord = SampleRecord::tbl;
 								 pSampleRecord->name; ++pSampleRecord) {
 		RefPtr<Value> pValueKey(new Value_String(pSampleRecord->name));
-		Value* pValue = pValueDict->Lookup(pValueKey.get());
+		const Value* pValue = pValueDict->Lookup(*pValueKey);
 		::printf("%s: %s\n", pValueKey->ToString().c_str(), pValue->ToString().c_str());
 	}
 }

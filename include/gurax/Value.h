@@ -317,17 +317,20 @@ public:
 	void Assign(Value* pValueKey, Value* pValue);
 	bool Store(const ValueDict& valDict, StoreMode storeMode);
 	bool Store(const Value& valueKey, const Value& value, StoreMode storeMode);
-	Value* Lookup(const Value* pValueKey) const {
-		auto pPair = find(const_cast<Value*>(pValueKey));
+	const Value* Lookup(const Value& valueKey) const {
+		auto pPair = find(const_cast<Value*>(&valueKey));
 		return (pPair == end())? nullptr : pPair->second;
 	}
-	bool DoesExist(const Value* pValueKey) const { return find(const_cast<Value*>(pValueKey)) != end(); }
+	void Erase(const Value& valueKey);
+	bool DoesExist(const Value& valueKey) const { return find(const_cast<Value*>(&valueKey)) != end(); }
 	ValueOwner* GetKeys() const { return ValueOwner::CollectKeys(*this); }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueDict& valueDict) const { return this == &valueDict; }
 	bool IsEqualTo(const ValueDict& valueDict) const { return IsIdentical(valueDict); }
 	bool IsLessThan(const ValueDict& valueDict) const { return this < &valueDict; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+public:
+	static void IssueError_KeyNotFound(const Value& valueKey);
 };
 
 }

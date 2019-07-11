@@ -56,7 +56,130 @@ Gurax_ImplementStatement(_dict_)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#Put(key, value):map:reduce:[overwrite,strict,timid]
+// Dict#Append(dict:Dict):Dict:reduce:[overwrite,strict,timid]
+Gurax_DeclareMethod(Dict, Append)
+{
+	Declare(VTYPE_Dict, Flag::Reduce);
+	DeclareArg("dict", VTYPE_Dict, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareAttrOpt(Gurax_Symbol(overwrite));
+	DeclareAttrOpt(Gurax_Symbol(strict));
+	DeclareAttrOpt(Gurax_Symbol(timid));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, Append)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const ValueDict& valDict = Value_Dict::GetValueDict(args.PickValue());
+	// Function body
+	ValueDict::StoreMode storeMode =
+		argument.IsSet(Gurax_Symbol(strict))? ValueDict::StoreMode::Strict :
+		argument.IsSet(Gurax_Symbol(timid))? ValueDict::StoreMode::Timid :
+		ValueDict::StoreMode::Overwrite;
+	if (!valueThis.GetValueDict().Store(valDict, storeMode)) return Value::nil();
+	return argument.GetValueThis().Reference();
+}
+
+// Dict#Clear()
+Gurax_DeclareMethod(Dict, Clear)
+{
+	Declare(VTYPE_Dict, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, Clear)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	valueThis.GetValueDict().Clear();
+	return argument.GetValueThis().Reference();
+}
+
+// Dict#Erase(key):map
+Gurax_DeclareMethod(Dict, Erase)
+{
+	Declare(VTYPE_Dict, Flag::Reduce);
+	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, Erase)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& key = args.PickValue();
+	// Function body
+	valueThis.GetValueDict().Erase(key);
+	return argument.GetValueThis().Reference();
+}
+
+// Dict#Get(key, default?):map:[raise]
+Gurax_DeclareMethod(Dict, Get)
+{
+	Declare(VTYPE_Any, Flag::Map);
+	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("default", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareAttrOpt(Gurax_Symbol(raise));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, Get)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& key = args.PickValue();
+	const Value& valueDefault = args.PickValue();
+	// Function body
+	const Value* pValue = valueThis.GetValueDict().Lookup(key);
+	if (pValue) {
+		return pValue->Reference();
+	} else if (argument.IsSet(Gurax_Symbol(raise))) {
+		ValueDict::IssueError_KeyNotFound(key);
+		return Value::nil();
+	} else {
+		return valueDefault.Reference();
+	}
+}
+
+// Dict#HasKey(key):map
+Gurax_DeclareMethod(Dict, HasKey)
+{
+	Declare(VTYPE_Bool, Flag::Map);
+	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Dict, HasKey)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& key = args.PickValue();
+	// Function body
+	const Value* pValue = valueThis.GetValueDict().Lookup(key);
+	return new Value_Bool(pValue);
+}
+
+// Dict#Put(key, value):map:reduce:[overwrite,strict,timid]
 Gurax_DeclareMethod(Dict, Put)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -90,13 +213,42 @@ Gurax_ImplementMethod(Dict, Put)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Dict#isEmpty
+Gurax_DeclareProperty_R(Dict, isEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A flag indicating whether the dictionary is empty or not.");
+}
+
+Gurax_ImplementPropertyGetter(Dict, isEmpty)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetValueDict().empty());
+}
+
+// Dict#items
+Gurax_DeclareProperty_R(Dict, items)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A list of key-value pairs.");
+}
+
+Gurax_ImplementPropertyGetter(Dict, items)
+{
+	return Value::nil();
+}
+
 // Dict#keys
 Gurax_DeclareProperty_R(Dict, keys)
 {
 	Declare(VTYPE_List, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns a list of keys.");
+		"A list of keys.");
 }
 
 Gurax_ImplementPropertyGetter(Dict, keys)
@@ -114,13 +266,34 @@ Gurax_DeclareProperty_R(Dict, len)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns the number of elements in the list.");
+		"The number of items in the dictionary.");
 }
 
 Gurax_ImplementPropertyGetter(Dict, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetValueDict().size());
+}
+
+// Dict#values
+Gurax_DeclareProperty_R(Dict, values)
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A list of values.");
+}
+
+Gurax_ImplementPropertyGetter(Dict, values)
+{
+	//auto& valueThis = GetValueThis(valueTarget);
+#if 0
+	RefPtr<ValueOwner> pValueOwner(valueThis.GetValueDict().GetKeys());
+	pValueOwner->Sort();
+	VType* pVType = pValueOwner->GetVTypeOfElems();
+	return new Value_List(new ValueTypedOwner(pVType, pValueOwner.release()));
+#endif
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -135,10 +308,18 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_dict_));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Dict, Append));
+	Assign(Gurax_CreateMethod(Dict, Clear));
+	Assign(Gurax_CreateMethod(Dict, Erase));
+	Assign(Gurax_CreateMethod(Dict, Get));
+	Assign(Gurax_CreateMethod(Dict, HasKey));
 	Assign(Gurax_CreateMethod(Dict, Put));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Dict, len));
+	Assign(Gurax_CreateProperty(Dict, isEmpty));
+	Assign(Gurax_CreateProperty(Dict, items));
 	Assign(Gurax_CreateProperty(Dict, keys));
+	Assign(Gurax_CreateProperty(Dict, len));
+	Assign(Gurax_CreateProperty(Dict, values));
 }
 
 //------------------------------------------------------------------------------
@@ -162,7 +343,7 @@ Value* Value_Dict::DoIndexGet(const Index& index) const
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
 		const Value* pValueIndex = valuesIndex.front();
-		Value* pValue = GetValueDict().Lookup(pValueIndex);
+		const Value* pValue = GetValueDict().Lookup(*pValueIndex);
 		if (!pValue) {
 			Error::Issue(ErrorType::IndexError, "invalid key value");
 			return Value::nil();
@@ -172,7 +353,7 @@ Value* Value_Dict::DoIndexGet(const Index& index) const
 		RefPtr<ValueTypedOwner> pValuesRtn(new ValueTypedOwner());
 		pValuesRtn->Reserve(valuesIndex.size());
 		for (const Value* pValueIndex : valuesIndex) {
-			Value* pValue = GetValueDict().Lookup(pValueIndex);
+			const Value* pValue = GetValueDict().Lookup(*pValueIndex);
 			if (!pValue) {
 				Error::Issue(ErrorType::IndexError, "invalid key value");
 				return Value::nil();

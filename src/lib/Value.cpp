@@ -471,14 +471,14 @@ void ValueDict::Assign(Value* pValueKey, Value* pValue)
 
 bool ValueDict::Store(const ValueDict& valDict, StoreMode storeMode)
 {
-	for (auto iterSrc : valDict) {
-		const Value *pValueKey = iterSrc.first;
-		ValueDict::iterator iterDst = find(const_cast<Value*>(pValueKey));
-		if (iterDst == end()) {
-			insert(ValueDict::value_type(iterSrc.first->Reference(), iterSrc.second->Reference()));
+	for (auto pairSrc : valDict) {
+		const Value *pValueKey = pairSrc.first;
+		ValueDict::iterator pPairDst = find(const_cast<Value*>(pValueKey));
+		if (pPairDst == end()) {
+			insert(ValueDict::value_type(pairSrc.first->Reference(), pairSrc.second->Reference()));
 		} else if (storeMode == StoreMode::Overwrite) {
-			Value::Delete(iterDst->second);
-			iterDst->second = iterSrc.second->Reference();
+			Value::Delete(pPairDst->second);
+			pPairDst->second = pairSrc.second->Reference();
 		} else if (storeMode == StoreMode::Timid) {
 			// nothing to do
 		} else {
@@ -495,12 +495,12 @@ bool ValueDict::Store(const Value& valueKey, const Value& value, StoreMode store
 		Error::Issue(ErrorType::TypeError, "invalid value type for key");
 		return false;
 	}
-	ValueDict::iterator iterDst = find(const_cast<Value*>(&valueKey));
-	if (iterDst == end()) {
+	ValueDict::iterator pPairDst = find(const_cast<Value*>(&valueKey));
+	if (pPairDst == end()) {
 		insert(ValueDict::value_type(valueKey.Reference(), value.Reference()));
 	} else if (storeMode == StoreMode::Overwrite) {
-		Value::Delete(iterDst->second);
-		iterDst->second = value.Reference();
+		Value::Delete(pPairDst->second);
+		pPairDst->second = value.Reference();
 	} else if (storeMode == StoreMode::Timid) {
 		// nothing to do
 	} else {
@@ -508,6 +508,15 @@ bool ValueDict::Store(const Value& valueKey, const Value& value, StoreMode store
 		return false;
 	}
 	return true;
+}
+
+void ValueDict::Erase(const Value& valueKey)
+{
+	auto pPair = find(const_cast<Value*>(&valueKey));
+	if (pPair == end()) return;
+	Value::Delete(pPair->first);
+	Value::Delete(pPair->second);
+	erase(pPair);
 }
 
 String ValueDict::ToString(const StringStyle& ss) const
@@ -519,7 +528,7 @@ String ValueDict::ToString(const StringStyle& ss) const
 	str += "%{";
 	for (auto ppValueKey = pKeys->begin(); ppValueKey != pKeys->end(); ppValueKey++) {
 		const Value* pValueKey = *ppValueKey;
-		Value* pValue = Lookup(pValueKey);
+		const Value* pValue = Lookup(*pValueKey);
 		if (ppValueKey != pKeys->begin()) str += ss.GetComma();
 		str += pValueKey->ToString(ss);
 		str += strPair;
@@ -527,6 +536,11 @@ String ValueDict::ToString(const StringStyle& ss) const
 	}
 	str += "}";
 	return str;
+}
+
+void ValueDict::IssueError_KeyNotFound(const Value& valueKey)
+{
+	Error::Issue(ErrorType::KeyError, "the dictionary doesn't have a key '%s'", valueKey.ToString().c_str());
 }
 
 }
