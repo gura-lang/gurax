@@ -18,6 +18,9 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
+	Tester(`List.__PropHandler__(`first))
+	Tester(`List.__PropHandler__(`isEmpty))
+	Tester(`List.__PropHandler__(`last))
 	Tester(`List.__PropHandler__(`len))
 	Tester(`List.__PropHandler__(`vtypeOfElem))
 }
@@ -38,10 +41,12 @@ TestCase('Get') {
 	Tester(`tbl[0, 1, 4, 10]);
 }
 
-TestCase('List#len') {
+TestCase('List#len, List#first and List#last') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl)
 	Tester(`tbl.len)
+	Tester(`tbl.first)
+	Tester(`tbl.last)
 }
 
 TestCase('List#vtypeOfELem') {
@@ -51,7 +56,12 @@ TestCase('List#vtypeOfELem') {
 	Tester(`['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
 }
 
-TestCase('Each') {
+TestCase('List#isEmpty') {
+	Tester(`[].isEmpty)
+	Tester(`[1, 2, 3].isEmpty)
+}
+
+TestCase('List#Each()') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Println('Each { .. }')
 	tbl.Each {
@@ -111,7 +121,7 @@ TestCase('Each') {
 		Printf('%d %s\n', i, x)
 	}
 }
-TestCase('Each with :list') {
+TestCase('List#Each() with :list') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl.Each():list {|x| x})
 	Tester(`tbl.Each():xlist {|x|
@@ -160,6 +170,8 @@ TestCase('List#Add()') {
 	Tester(`tbl.Add('hello'))
 	Tester(`tbl.Add([1, 2, 3]))
 	Tester(`tbl.Add(4..9))
+	Tester(`tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9))
+	Tester(`tbl.Add('a', 'b', 'c', 'd', 'e', 'f'))
 }
 
 TestCase('List#Append()') {
@@ -168,4 +180,8 @@ TestCase('List#Append()') {
 	Tester(`tbl.Append('hello'))
 	Tester(`tbl.Append([1, 2, 3]))
 	Tester(`tbl.Append(4..9))
+	Tester(`tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9))
+	Tester(`tbl.Append('a', 'b', 'c', 'd', 'e', 'f'))
+	Tester(`tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]))
+	Tester(`tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']))
 }

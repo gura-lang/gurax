@@ -72,15 +72,17 @@ tbl[10] .. ten
 tbl[11] .. index 11 is out of range of the list size 11
 tbl[0, 1] .. ['zero', 'one']
 tbl[0, 1, 4, 10] .. ['zero', 'one', 'four', 'ten']
-======== List#len ========
+======== List#len, List#first and List#last ========
 tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl.len .. 11
+tbl.first .. zero
+tbl.last .. ten
 ======== List#vtypeOfELem ========
 [].vtypeOfElem .. Undefined
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. <VType:String>
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <VType:Number>
 ['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. Any
-======== Each ========
+======== List#Each() ========
 Each { .. }
 ----
 ----
@@ -180,7 +182,7 @@ Each {|x, i| .. }, skip "t"
 7 seven
 8 eight
 9 nine
-======== Each with :list ========
+======== List#Each() with :list ========
 tbl.Each():list {|x| x} .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl.Each():xlist {|x| if (x.StartsWith('t')) {x}} .. ['two', 'three', 'ten']
 tbl.Each():list {|x| if (x.StartsWith('t')) {break}, x} .. ['zero', 'one']
@@ -197,8 +199,14 @@ tbl.Add(3) .. [3]
 tbl.Add('hello') .. [3, 'hello']
 tbl.Add([1, 2, 3]) .. [3, 'hello', [1, 2, 3]]
 tbl.Add(4 .. 9) .. [3, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>]
+tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9) .. [3, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Add('a', 'b', 'c', 'd', 'e', 'f') .. [3, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
 ======== List#Append() ========
 tbl.Append(3) .. [3]
 tbl.Append('hello') .. [3, 'hello']
 tbl.Append([1, 2, 3]) .. [3, 'hello', 1, 2, 3]
 tbl.Append(4 .. 9) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Append('a', 'b', 'c', 'd', 'e', 'f') .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']

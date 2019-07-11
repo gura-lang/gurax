@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// List#Add(value):reduce
+// List#Add(value+):reduce
 Gurax_DeclareMethod(List, Add)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -24,17 +24,20 @@ Gurax_ImplementMethod(List, Add)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const Value& value = args.PickValue();
+	const ValueList& values = args.PickList();
 	// Function body
-	valueThis.GetValueTypedOwner().Add(value.Reference());
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	for (Value* pValue : values) {
+		valueTypedOwner.Add(pValue->Reference());
+	}
 	return argument.GetValueThis().Reference();
 }
 
-// List#Append(value):reduce
+// List#Append(value+):reduce
 Gurax_DeclareMethod(List, Append)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -46,15 +49,36 @@ Gurax_ImplementMethod(List, Append)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Value& value = args.PickValue();
+	const ValueList& values = args.PickList();
 	// Function body
-	if (value.IsType(VTYPE_List)) {
-		valueThis.GetValueTypedOwner().Append(Value_List::GetValueTypedOwner(value));
-	} else if (value.IsType(VTYPE_Iterator)) {
-		valueThis.GetValueTypedOwner().Append(Value_Iterator::GetIterator(value));
-	} else {
-		valueThis.GetValueTypedOwner().Add(value.Reference());
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	for (Value* pValue : values) {
+		if (pValue->IsType(VTYPE_List)) {
+			valueTypedOwner.Append(Value_List::GetValueTypedOwner(*pValue));
+		} else if (pValue->IsType(VTYPE_Iterator)) {
+			valueTypedOwner.Append(Value_Iterator::GetIterator(*pValue));
+		} else {
+			valueTypedOwner.Add(pValue->Reference());
+		}
 	}
+	return argument.GetValueThis().Reference();
+}
+
+// List#Clear():reduce
+Gurax_DeclareMethod(List, Clear)
+{
+	Declare(VTYPE_List, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(List, Clear)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	valueThis.GetValueTypedOwner().Clear();
 	return argument.GetValueThis().Reference();
 }
 
@@ -85,6 +109,55 @@ Gurax_ImplementMethod(List, Each)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// List#first
+Gurax_DeclareProperty_R(List, first)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The first element in the list, or `nil` if the list is empty.");
+}
+
+Gurax_ImplementPropertyGetter(List, first)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const ValueOwner& valueOwner = valueThis.GetValueOwner();
+	if (valueOwner.empty()) return Value::nil();
+	return valueOwner.front()->Reference();
+}
+
+// List#isEmpty
+Gurax_DeclareProperty_R(List, isEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A boolean value indicating whether the list is empty or not.");
+}
+
+Gurax_ImplementPropertyGetter(List, isEmpty)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Bool(valueThis.GetValueOwner().empty());
+}
+
+// List#last
+Gurax_DeclareProperty_R(List, last)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The last element in the list, or `nil` if the list is empty.");
+}
+
+Gurax_ImplementPropertyGetter(List, last)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const ValueOwner& valueOwner = valueThis.GetValueOwner();
+	if (valueOwner.empty()) return Value::nil();
+	return valueOwner.back()->Reference();
+}
+
 // List#len
 Gurax_DeclareProperty_R(List, len)
 {
@@ -127,8 +200,12 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(List, Add));
 	Assign(Gurax_CreateMethod(List, Append));
+	Assign(Gurax_CreateMethod(List, Clear));
 	Assign(Gurax_CreateMethod(List, Each));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(List, first));
+	Assign(Gurax_CreateProperty(List, isEmpty));
+	Assign(Gurax_CreateProperty(List, last));
 	Assign(Gurax_CreateProperty(List, len));
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 }

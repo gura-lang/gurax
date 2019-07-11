@@ -263,7 +263,7 @@ Gurax_DeclareProperty_R(Dict, isEmpty)
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"A `Bool` value indicating whether the dictionary is empty or not.");
+		"A boolean value indicating whether the dictionary is empty or not.");
 }
 
 Gurax_ImplementPropertyGetter(Dict, isEmpty)
