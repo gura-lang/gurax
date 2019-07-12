@@ -67,31 +67,6 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
-#if 0
-//------------------------------------------------------------------------------
-// Iterator_ListElem
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_ListElem : public Iterator {
-private:
-	RefPtr<ValueTypedOwner> _pValueTypedOwner;
-	size_t _idx;
-public:
-	Iterator_ListElem(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner), _idx(0) {}
-public:
-	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
-	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
-	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
-	}
-	virtual Value* NextValue() override;
-	virtual size_t GetLength() const override { return GetValueOwner().size(); }
-	virtual String ToString(const StringStyle& ss) const override;
-};
-#endif
-
 //------------------------------------------------------------------------------
 // Iterator_UnaryOpImpMap
 //------------------------------------------------------------------------------

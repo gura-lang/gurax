@@ -52,25 +52,6 @@ String Iterator_Counter::ToString(const StringStyle& ss) const
 	return str;
 }
 
-#if 0
-//------------------------------------------------------------------------------
-// Iterator_ListElem
-//------------------------------------------------------------------------------
-Value* Iterator_ListElem::NextValue()
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
-}
-
-String Iterator_ListElem::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("ListElem:n=%zu", GetValueOwner().size());
-	return str;
-}
-#endif
-
 //------------------------------------------------------------------------------
 // Iterator_UnaryOpImpMap
 //------------------------------------------------------------------------------

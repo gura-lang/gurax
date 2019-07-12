@@ -43,6 +43,96 @@ public:
 		virtual size_t GetLength() const override { return GetValueOwner().size(); }
 		virtual String ToString(const StringStyle& ss) const override;
 	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Reverse
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Reverse : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Reverse(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Cycle
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Cycle : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Cycle(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Pingpong
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Pingpong : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Pingpong(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Fold
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Fold : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Fold(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Permutation
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Permutation : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Permutation(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Combination
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Combination : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Combination(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 private:
 	VType* _pVTypeOfElems;	// set to "undefined", "any" or the other specific class
 	RefPtr<ValueOwner> _pValueOwner;
