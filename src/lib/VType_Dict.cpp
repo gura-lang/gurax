@@ -149,12 +149,12 @@ Gurax_ImplementMethod(Dict, Erase)
 	return argument.GetValueThis().Reference();
 }
 
-// Dict#Get(key, default?):map:[raise]
+// Dict#Get(key, default?:nomap):map:[raise]
 Gurax_DeclareMethod(Dict, Get)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("key", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("default", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("default", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::NoMap, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en),

@@ -75,8 +75,14 @@ TestCase('Dict#Get()') {
 	}
 	Tester(`d.Get('key0'))
 	Tester(`d.Get('key4'))
-	Tester(`d.Get('key10'))
-	Tester(`d.Get('key10'):raise)
+	Tester(`d.Get(['key0', 'key1', 'key2', 'key3']))
+	Tester(`d.Get('keyA'))
+	Tester(`d.Get('keyA'):raise)
+	Tester(`d.Get('keyA', 'hoge'))
+	Tester(`d.Get('keyA', [1, 2, 3]))
+	Tester(`d.Get('keyA', [1, 2, 3]))
+	Tester(`d.Get(['key0', 'key1', 'keyA'], 'hoge'))
+	Tester(`d.Get(['key0', 'key1', 'keyA'], [1, 2, 3]))
 }
 
 TestCase('Dict#HasKey()') {
@@ -86,7 +92,7 @@ TestCase('Dict#HasKey()') {
 	}
 	Tester(`d.HasKey('key0'))
 	Tester(`d.HasKey('key4'))
-	Tester(`d.HasKey('key10'))
+	Tester(`d.HasKey('keyA'))
 }
 
 TestCase('Dict#Put()') {

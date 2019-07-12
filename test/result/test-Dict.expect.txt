@@ -27,12 +27,18 @@ d.Erase('key9') .. %{'key1' => 'value1', 'key2' => 'value2', 'key4' => 'value4',
 ======== Dict#Get() ========
 d.Get('key0') .. value0
 d.Get('key4') .. value4
-d.Get('key10') .. <Nil>
-d.Get('key10'):raise .. the dictionary doesn't have a key ''key10''
+d.Get(['key0', 'key1', 'key2', 'key3']) .. ['value0', 'value1', 'value2', 'value3']
+d.Get('keyA') .. <Nil>
+d.Get('keyA'):raise .. the dictionary doesn't have a key ''keyA''
+d.Get('keyA', 'hoge') .. hoge
+d.Get('keyA', [1, 2, 3]) .. [1, 2, 3]
+d.Get('keyA', [1, 2, 3]) .. [1, 2, 3]
+d.Get(['key0', 'key1', 'keyA'], 'hoge') .. ['value0', 'value1', 'hoge']
+d.Get(['key0', 'key1', 'keyA'], [1, 2, 3]) .. ['value0', 'value1', [1, 2, 3]]
 ======== Dict#HasKey() ========
 d.HasKey('key0') .. true
 d.HasKey('key4') .. true
-d.HasKey('key10') .. false
+d.HasKey('keyA') .. false
 ======== Dict#Put() ========
 d .. %{'a' => 3, 'b' => 2, 'c' => 1}
 d.Put('a', 99):timid .. %{'a' => 3, 'b' => 2, 'c' => 1}
