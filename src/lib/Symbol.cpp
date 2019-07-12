@@ -17,6 +17,13 @@ void Symbol::Bootup()
 	Empty = Add("");
 }
 
+bool Symbol::IsIdentical(const Expr& expr) const
+{
+	if (!expr.IsType<Expr_Identifier>()) return false;
+	const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
+	return IsIdentical(exprEx.GetSymbol());
+}
+
 String Symbol::ToString(const StringStyle& ss) const
 {
 	String str;

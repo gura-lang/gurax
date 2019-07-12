@@ -6,12 +6,41 @@ Entry = struct {
 	help:String:nil
 	helpValue:String:nil
 	defValue
+	MakeHelpIndex(longNameFlag:Bool, shortNameFlag:Bool) = {
+		str = ''
+		if (!shortNameFlag) {
+			strSep = ''
+		} elsif (this.shortName) {
+			str += '-' + this.shortName
+			strSep = ', '
+		} else {
+			str += '  '
+			strSep = '  '
+		}
+		if (longNameFlag && this.longName) {
+			str += strSep
+			str += '--'
+			str += this.longName
+		}
+		if (this.type == `flag) {
+			// nothing to do
+		} else {
+			if (longNameFlag && this.longName) {
+				str += '='
+			} elsif (shortNameFlag && this.shortName) {
+				str += ' '
+			}
+			str += this.helpValue || 'X'
+		}
+		str
+	}
 }
 
 Parser = class {
 	entries[]:Entry = []
 	Parse(argv[]:String) = {
 		Println(argv)
+		Println(this.entries[0].MakeHelpIndex(true, true))
 	}
 	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, defValue?:String) = {
 		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, defValue))

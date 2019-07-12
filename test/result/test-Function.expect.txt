@@ -175,14 +175,14 @@ f('A-mod', 'B-mod', 'C-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D, e=E
 f(e = 'E-mod', d = 'D-mod', c = 'C-mod', b = 'B-mod', a = 'A-mod') .. a=A-mod, b=B-mod, c=C-mod, d=D-mod, e=E-mod
 ======== Optional Argument ========
 f .. f(a?, b?, c?)
-f() .. a=<Undefined>, b=<Undefined>, c=<Undefined>
-f(1) .. a=1, b=<Undefined>, c=<Undefined>
-f(1, 2) .. a=1, b=2, c=<Undefined>
+f() .. a=<Nil>, b=<Nil>, c=<Nil>
+f(1) .. a=1, b=<Nil>, c=<Nil>
+f(1, 2) .. a=1, b=2, c=<Nil>
 f(1, 2, 3) .. a=1, b=2, c=3
-f(a = 1) .. a=1, b=<Undefined>, c=<Undefined>
-f(b = 2) .. a=<Undefined>, b=2, c=<Undefined>
-f(c = 3) .. a=<Undefined>, b=<Undefined>, c=3
-f(a = 1, c = 3) .. a=1, b=<Undefined>, c=3
+f(a = 1) .. a=1, b=<Nil>, c=<Nil>
+f(b = 2) .. a=<Nil>, b=2, c=<Nil>
+f(c = 3) .. a=<Nil>, b=<Nil>, c=3
+f(a = 1, c = 3) .. a=1, b=<Nil>, c=3
 ======== Property ========
 func.name .. func
 func.type .. `function

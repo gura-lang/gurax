@@ -52,6 +52,7 @@ public:
 	// Virtual functions for runtime process
 	virtual bool IsValid() const override { return false; }
 	virtual bool IsUndefined() const override { return true; }
+	virtual Value* PickValue() override { return Value::nil(); }
 	virtual bool GetBool() const override { return false; }
 };
 

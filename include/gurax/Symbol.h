@@ -158,6 +158,7 @@ public:
 public:
 	size_t CalcHash() const { return static_cast<size_t>(GetUniqId()); }
 	bool IsIdentical(const Symbol* pSymbol) const { return GetUniqId() == pSymbol->GetUniqId(); }
+	bool IsIdentical(const Expr& expr) const;
 	static bool IsIdentical(const Symbol* pSymbol1, const Symbol* pSymbol2) {
 		return pSymbol1 && pSymbol2 && pSymbol1->IsIdentical(pSymbol2);
 	}

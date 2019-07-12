@@ -68,6 +68,24 @@ Gurax_ImplementMethod(Object, ToString)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Object#vtype
+Gurax_DeclareProperty_R(Object, vtype)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The number of characters in the string.");
+}
+
+Gurax_ImplementPropertyGetter(Object, vtype)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_VType(valueThis.GetVType());
+}
+
+//------------------------------------------------------------------------------
 // VType_Object
 //------------------------------------------------------------------------------
 VType_Object VTYPE_Object("Object");
@@ -80,6 +98,8 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Object, Clone));
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
 	Assign(Gurax_CreateMethod(Object, ToString));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Object, vtype));
 }
 
 //------------------------------------------------------------------------------

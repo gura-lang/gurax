@@ -46,6 +46,15 @@ Gurax_ImplementOpBinary(Add, Number, Number)
 	return new Value_Number(numL + numR);
 }
 
+// String + String
+Gurax_ImplementOpBinary(Add, String, String)
+{
+	String strL = Value_String::GetStringSTL(valueL);
+	const char* strR = Value_String::GetString(valueR);
+	strL += strR;
+	return new Value_String(strL);
+}
+
 // Number & Number
 Gurax_ImplementOpBinary(And, Number, Number)
 {
@@ -121,6 +130,30 @@ Gurax_ImplementOpBinary(Eq, Number, Number)
 	Double numL = Value_Number::GetDouble(valueL);
 	Double numR = Value_Number::GetDouble(valueR);
 	return new Value_Bool(numL == numR);
+}
+
+// Symbol == Symbol
+Gurax_ImplementOpBinary(Eq, Symbol, Symbol)
+{
+	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
+	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
+	return new Value_Bool(pSymbolL->IsIdentical(pSymbolR));
+}
+
+// Symbol == Expr
+Gurax_ImplementOpBinary(Eq, Symbol, Expr)
+{
+	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(pSymbolL->IsIdentical(exprR));
+}
+
+// Expr == Symbol
+Gurax_ImplementOpBinary(Eq, Expr, Symbol)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
+	return new Value_Bool(pSymbolR->IsIdentical(exprL));
 }
 
 // Number <*> Number
@@ -293,6 +326,7 @@ void Operators::Bootup()
 	Gurax_AssignOpUnary(Pos,			Number);
 	Gurax_AssignOpUnary(PostSeq,		Number);
 	Gurax_AssignOpBinary(Add,			Number, Number);
+	Gurax_AssignOpBinary(Add,			String, String);
 	Gurax_AssignOpBinary(And,			Number, Number);
 	Gurax_AssignOpBinary(Cmp,			Number, Number);
 	Gurax_AssignOpBinary(Concat,		Number, Number);
@@ -302,6 +336,9 @@ void Operators::Bootup()
 	Gurax_AssignOpBinary(Div,			Number, Number);
 	Gurax_AssignOpBinary(Dot,			Number, Number);
 	Gurax_AssignOpBinary(Eq,			Number, Number);
+	Gurax_AssignOpBinary(Eq,			Symbol, Symbol);
+	Gurax_AssignOpBinary(Eq,			Symbol, Expr);
+	Gurax_AssignOpBinary(Eq,			Expr, Symbol);
 	Gurax_AssignOpBinary(Gear,			Number, Number);
 	Gurax_AssignOpBinary(Ge,			Number, Number);
 	Gurax_AssignOpBinary(Gt,			Number, Number);

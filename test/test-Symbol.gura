@@ -1,0 +1,8 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('') {
+	x = `a
+	Println(x.vtype)
+	x == `a
+}
