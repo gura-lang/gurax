@@ -131,6 +131,7 @@ public:
 	static DeclArg* CreateFromExpr(const Expr& expr);
 	bool FixVType(Frame& frame);
 	Value* Cast(Frame& frame, const Value& value);
+	static bool CheckFlagConfliction(Flags flags);
 	static Flags SymbolToFlag(const Symbol* pSymbol) {
 		return SymbolAssoc_Flag::GetInstance().ToAssociated(pSymbol);
 	}

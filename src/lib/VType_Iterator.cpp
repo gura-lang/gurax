@@ -78,13 +78,6 @@ String Value_Iterator::ToStringDetail(const StringStyle& ss) const
 bool Value_Iterator::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const
 {
 	return DeclCallable::IsMappable(declArg, flags);
-#if 0
-	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map)) != DeclCallable::Flag::Map) {
-		return false;
-	}
-	if (declArg.GetVType().IsListOrIterator()) return false;
-	return true;
-#endif
 }
 
 void Value_Iterator::UpdateMapMode(Argument& argument) const

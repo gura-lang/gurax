@@ -141,6 +141,16 @@ Value* DeclArg::Cast(Frame& frame, const Value& value)
 	return GetVType().Cast(value, GetFlags());
 }
 
+bool DeclArg::CheckFlagConfliction(Flags flags)
+{
+	if ((flags & Flag::Map) != 0 && (flags & Flag::NoMap) != 0) {
+		Error::Issue(ErrorType::ArgumentError,
+					 "attribute :map and :nomap can not be specified together");
+		return false;
+	}
+	return true;
+}
+
 String DeclArg::FlagsToString(Flags flags)
 {
 	String str;

@@ -179,28 +179,18 @@ bool DeclCallable::CheckAttribute(const Attribute& attr) const
 
 bool DeclCallable::CheckFlagConfliction(Flags flags)
 {
-	int cnt = 0;
-	if (flags & Flag::Map) cnt++;
-	if (flags & Flag::NoMap) cnt++;
-	if (cnt > 1) {
+	if ((flags & Flag::Map) != 0 && (flags & Flag::NoMap) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
 					 "attribute :map and :nomap can not be specified together");
 		return false;
 	}
-	cnt = 0;
-	if (flags & Flag::Public) cnt++;
-	if (flags & Flag::Private) cnt++;
-	if (cnt > 1) {
+	if ((flags & Flag::Public) != 0 && (flags & Flag::Private) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
 					 "attribute :public and :private can not be specified together");
 		return false;
 	}
-	cnt = 0;
-	if (flags & Flag::List) cnt++;
-	if (flags & Flag::XList) cnt++;
-	if (flags & Flag::Iter) cnt++;
-	if (flags & Flag::XIter) cnt++;
-	if (cnt > 1) {
+	if ((flags & Flag::List) != 0 && (flags & Flag::XList) != 0 &&
+		(flags & Flag::Iter) != 0 && (flags & Flag::XIter) != 0) {
 		Error::Issue(ErrorType::ArgumentError,
 					 "attribute :list, :xlist, :iter and :xiter can not be specified together");
 		return false;
@@ -210,6 +200,8 @@ bool DeclCallable::CheckFlagConfliction(Flags flags)
 
 bool DeclCallable::IsMappable(const DeclArg& declArg, Flags flags)
 {
+	if (declArg.IsSet(DeclArg::Flag::NoMap)) return false;
+	if (declArg.IsSet(DeclArg::Flag::Map)) return true;
 	if ((flags & (Flag::NoMap | Flag::Map)) != Flag::Map) return false;
 	if (declArg.GetVType().IsListOrIterator()) return false;
 	return true;
