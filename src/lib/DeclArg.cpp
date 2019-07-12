@@ -148,6 +148,11 @@ bool DeclArg::CheckFlagConfliction(Flags flags)
 					 "attribute :map and :nomap can not be specified together");
 		return false;
 	}
+	if ((flags & Flag::Public) != 0 && (flags & Flag::Private) != 0) {
+		Error::Issue(ErrorType::ArgumentError,
+					 "attribute :public and :private can not be specified together");
+		return false;
+	}
 	return true;
 }
 

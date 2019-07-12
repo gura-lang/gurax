@@ -31,8 +31,9 @@ public:
 		static const Flags NoCast	= 1 << 6;	// :nocast
 		static const Flags OfClass	= 1 << 7;	// :static
 		static const Flags Public	= 1 << 8;	// :public
-		static const Flags Readable	= 1 << 9;	// :readable
-		static const Flags Writable	= 1 << 10;	// :writable
+		static const Flags Private	= 1 << 9;	// :private
+		static const Flags Readable	= 1 << 10;	// :readable
+		static const Flags Writable	= 1 << 11;	// :writable
 	};
 	class Occur {
 	private:
@@ -78,6 +79,7 @@ public:
 			Assoc(Gurax_Symbol(nocast),		Flag::NoCast);
 			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
 			Assoc(Gurax_Symbol(public_),	Flag::Public);
+			Assoc(Gurax_Symbol(private_),	Flag::Private);
 			Assoc(Gurax_Symbol(R),			Flag::Readable);
 			Assoc(Gurax_Symbol(W),			Flag::Writable);
 			Assoc(Gurax_Symbol(const_),		Flag::None);		// only for DoesExit()
