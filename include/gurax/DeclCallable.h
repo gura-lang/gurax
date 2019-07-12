@@ -131,6 +131,7 @@ public:
 	}
 	bool IsResultVoid() const { return GetVTypeResult().IsNil(); }
 	bool IsResultReduce() const { return IsSet(Flag::Reduce); }
+	static bool IsMappable(const DeclArg& declArg, Flags flags);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclCallable& declCaller) const { return this == &declCaller; }

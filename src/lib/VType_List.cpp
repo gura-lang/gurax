@@ -228,11 +228,14 @@ String Value_List::ToStringDetail(const StringStyle& ss) const
 
 bool Value_List::IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const
 {
+	return DeclCallable::IsMappable(declArg, flags);
+#if 0
 	if ((flags & (DeclCallable::Flag::NoMap | DeclCallable::Flag::Map)) != DeclCallable::Flag::Map) {
 		return false;
 	}
 	if (declArg.GetVType().IsListOrIterator()) return false;
 	return true;
+#endif
 }
 
 void Value_List::UpdateMapMode(Argument& argument) const

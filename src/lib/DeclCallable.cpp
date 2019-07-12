@@ -208,6 +208,13 @@ bool DeclCallable::CheckFlagConfliction(Flags flags)
 	return true;
 }
 
+bool DeclCallable::IsMappable(const DeclArg& declArg, Flags flags)
+{
+	if ((flags & (Flag::NoMap | Flag::Map)) != Flag::Map) return false;
+	if (declArg.GetVType().IsListOrIterator()) return false;
+	return true;
+}
+
 String DeclCallable::ToString(const StringStyle& ss) const
 {
 	String str;
