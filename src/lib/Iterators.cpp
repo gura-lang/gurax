@@ -52,6 +52,7 @@ String Iterator_Counter::ToString(const StringStyle& ss) const
 	return str;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // Iterator_ListElem
 //------------------------------------------------------------------------------
@@ -68,6 +69,7 @@ String Iterator_ListElem::ToString(const StringStyle& ss) const
 	str.Printf("ListElem:n=%zu", GetValueOwner().size());
 	return str;
 }
+#endif
 
 //------------------------------------------------------------------------------
 // Iterator_UnaryOpImpMap

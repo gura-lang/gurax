@@ -1,5 +1,5 @@
 ======== Create Iterator ========
 3 .. 3
-() .. <Iterator:ListElem:n=0>
-(3,) .. <Iterator:ListElem:n=1>
-(3, 1, 4, 1, 5, 9, 2, 6, 5, 3) .. <Iterator:ListElem:n=10>
+() .. <Iterator:List#Each:n=0>
+(3,) .. <Iterator:List#Each:n=1>
+(3, 1, 4, 1, 5, 9, 2, 6, 5, 3) .. <Iterator:List#Each:n=10>

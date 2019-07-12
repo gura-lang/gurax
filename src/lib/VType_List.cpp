@@ -273,7 +273,7 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 
 Iterator* Value_List::DoGenIterator() const
 {
-	return new Iterator_ListElem(GetValueTypedOwner().Reference());
+	return new ValueTypedOwner::Iterator_Each(GetValueTypedOwner().Reference());
 }
 
 }

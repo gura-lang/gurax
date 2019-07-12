@@ -14,6 +14,35 @@ class GURAX_DLLDECLARE ValueTypedOwner : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ValueTypedOwner);
+public:
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::IteratorBase
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE IteratorBase : public Iterator {
+	private:
+		RefPtr<ValueTypedOwner> _pValueTypedOwner;
+	public:
+		IteratorBase(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner) {}
+	public:
+		const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
+		const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
+		
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_Each
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Each : public IteratorBase {
+	private:
+		size_t _idx;
+	public:
+		Iterator_Each(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual Value* NextValue() override;
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 private:
 	VType* _pVTypeOfElems;	// set to "undefined", "any" or the other specific class
 	RefPtr<ValueOwner> _pValueOwner;

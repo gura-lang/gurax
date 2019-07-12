@@ -67,6 +67,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // Iterator_ListElem
 //------------------------------------------------------------------------------
@@ -89,6 +90,7 @@ public:
 	virtual size_t GetLength() const override { return GetValueOwner().size(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
+#endif
 
 //------------------------------------------------------------------------------
 // Iterator_UnaryOpImpMap
