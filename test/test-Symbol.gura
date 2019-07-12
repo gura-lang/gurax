@@ -1,8 +1,9 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('') {
+TestCase('Operator ==') {
 	x = `a
 	Println(x.vtype)
-	x == `a
+	Tester(`(`a == `a))
+	Tester(`(x == `a))
 }

@@ -140,6 +140,14 @@ Gurax_ImplementOpBinary(Eq, Symbol, Symbol)
 	return new Value_Bool(pSymbolL->IsIdentical(pSymbolR));
 }
 
+// Expr == Expr
+Gurax_ImplementOpBinary(Eq, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(exprL.IsEqualTo(exprR));
+}
+
 // Symbol == Expr
 Gurax_ImplementOpBinary(Eq, Symbol, Expr)
 {
@@ -337,6 +345,7 @@ void Operators::Bootup()
 	Gurax_AssignOpBinary(Dot,			Number, Number);
 	Gurax_AssignOpBinary(Eq,			Number, Number);
 	Gurax_AssignOpBinary(Eq,			Symbol, Symbol);
+	Gurax_AssignOpBinary(Eq,			Expr, Expr);
 	Gurax_AssignOpBinary(Eq,			Symbol, Expr);
 	Gurax_AssignOpBinary(Eq,			Expr, Symbol);
 	Gurax_AssignOpBinary(Gear,			Number, Number);

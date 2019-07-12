@@ -169,7 +169,7 @@ public:
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
-	bool IsEqualTo(const Expr& expr) const { return IsIdentical(expr); }
+	virtual bool IsEqualTo(const Expr& expr) const { return IsIdentical(expr); }
 	bool IsLessThan(const Expr& expr) const { return this < &expr; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 	virtual String ToString(const StringStyle& ss) const = 0;
@@ -447,6 +447,7 @@ public:
 		Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
+	virtual bool IsEqualTo(const Expr& expr) const override;
 };
 
 //------------------------------------------------------------------------------

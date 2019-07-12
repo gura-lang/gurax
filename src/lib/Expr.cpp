@@ -309,6 +309,13 @@ String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) c
 	return str;
 }
 
+bool Expr_Identifier::IsEqualTo(const Expr& expr) const
+{
+	if (!expr.IsType<Expr_Identifier>()) return false;
+	const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
+	return GetSymbol()->IsIdentical(exprEx.GetSymbol());
+}
+
 //------------------------------------------------------------------------------
 // Expr_Suffixed : Expr_Node
 //------------------------------------------------------------------------------
