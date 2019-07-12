@@ -94,10 +94,10 @@ void RunREPL()
 		}
 		Expr* pExpr = pExprLast? pExprLast->GetExprNext() : exprRoot.GetExprElemFirst();
 		for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+			pExprLast = pExpr;
 			if (!pExpr->Prepare()) break;
 			if (Error::IsIssued()) break;
 			pExpr->Compose(composer);
-			pExprLast = pExpr;
 			composer.Flush();
 			if (Error::IsIssued()) break;
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
