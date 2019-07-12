@@ -99,6 +99,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 							 "duplicated symbol declaration: %s", pDeclArg->GetSymbol()->GetName());
 			return false;
 		}
+		if (!DeclArg::CheckFlagConfliction(pDeclArg->GetFlags())) return false;
 		_declArgOwner.push_back(pDeclArg.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
@@ -106,7 +107,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		_flags |= flag;
 		if (!flag) _pAttr->AddSymbol(pSymbol);
 	}
-	//if (!CheckFlagConfliction(_flags)) return false;
+	if (!CheckFlagConfliction(GetFlags())) return false;
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 	if (pExprOfBlock) {
 		const char* strError = "invalid format of block declaration";
