@@ -4,6 +4,7 @@
 #ifndef GURAX_VTYPE_LIST_H
 #define GURAX_VTYPE_LIST_H
 #include "VType_Object.h"
+#include "ValueTypedOwner.h"
 
 namespace Gurax {
 

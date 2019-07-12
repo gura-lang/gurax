@@ -4,6 +4,7 @@
 #ifndef GURAX_VTYPE_DICT_H
 #define GURAX_VTYPE_DICT_H
 #include "VType_Object.h"
+#include "ValueDict.h"
 
 namespace Gurax {
 
