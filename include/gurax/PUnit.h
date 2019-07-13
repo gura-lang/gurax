@@ -149,7 +149,7 @@ private:
 public:
 	// Constructor
 	PUnit_Value(Value* pValue) : _pValue(pValue) {}
-	PUnit_Value(Value* pValue, Expr* pExpr) : _pValue(pValue) { _ppExprSrc[0] = pExpr; }
+	PUnit_Value(Value* pValue, Expr* pExpr) : PUnit_Value(pValue) { _ppExprSrc[0] = pExpr; }
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
@@ -191,7 +191,7 @@ private:
 public:
 	// Constructor
 	PUnit_Lookup(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
-	PUnit_Lookup(const Symbol* pSymbol, Expr* pExpr) : _pSymbol(pSymbol) { _ppExprSrc[0] = pExpr; }
+	PUnit_Lookup(const Symbol* pSymbol, Expr* pExpr) : PUnit_Lookup(pSymbol) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -234,7 +234,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignToSymbol(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
-	PUnit_AssignToSymbol(const Symbol* pSymbol, Expr* pExpr) : _pSymbol(pSymbol) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignToSymbol(const Symbol* pSymbol, Expr* pExpr) : PUnit_AssignToSymbol(pSymbol) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 public:
@@ -277,7 +277,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignToDeclArg(DeclArg* pDeclArg) : _pDeclArg(pDeclArg) {}
-	PUnit_AssignToDeclArg(DeclArg* pDeclArg, Expr* pExpr) : _pDeclArg(pDeclArg) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignToDeclArg(DeclArg* pDeclArg, Expr* pExpr) : PUnit_AssignToDeclArg(pDeclArg) { _ppExprSrc[0] = pExpr; }
 public:
 	const DeclArg& GetDeclArg() const { return *_pDeclArg; }
 public:
@@ -320,7 +320,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignFunction(Function* pFunction) : _pFunction(pFunction) {}
-	PUnit_AssignFunction(Function* pFunction, Expr* pExpr) : _pFunction(pFunction) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignFunction(Function* pFunction, Expr* pExpr) : PUnit_AssignFunction(pFunction) { _ppExprSrc[0] = pExpr; }
 public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
@@ -363,7 +363,7 @@ private:
 public:
 	// Constructor
 	PUnit_AssignMethod(Function* pFunction) : _pFunction(pFunction) {}
-	PUnit_AssignMethod(Function* pFunction, Expr* pExpr) : _pFunction(pFunction) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignMethod(Function* pFunction, Expr* pExpr) : PUnit_AssignMethod(pFunction) { _ppExprSrc[0] = pExpr; }
 public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
@@ -459,7 +459,7 @@ private:
 public:
 	// Constructor
 	PUnit_Cast(const VType& vtype, DeclArg::Flags flags) : _vtype(vtype), _flags(flags) {}
-	PUnit_Cast(const VType& vtype, DeclArg::Flags flags, Expr* pExpr) : _vtype(vtype), _flags(flags) { _ppExprSrc[0] = pExpr; }
+	PUnit_Cast(const VType& vtype, DeclArg::Flags flags, Expr* pExpr) : PUnit_Cast(vtype, flags) { _ppExprSrc[0] = pExpr; }
 public:
 	const VType& GetVType() const { return _vtype; }
 	DeclArg::Flags GetFlags() const { return _flags; }
@@ -661,8 +661,7 @@ public:
 		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1),
 		_offset(offset), _pDeclArgOwner(pDeclArgOwner) {}
 	PUnit_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExpr) :
-		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1),
-		_offset(offset), _pDeclArgOwner(pDeclArgOwner) { _ppExprSrc[0] = pExpr; }
+		PUnit_ForEach(offset, pDeclArgOwner, pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
@@ -707,7 +706,7 @@ private:
 public:
 	// Constructor
 	PUnit_UnaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
-	PUnit_UnaryOp(const Operator* pOperator, Expr* pExpr) : _pOperator(pOperator) { _ppExprSrc[0] = pExpr; }
+	PUnit_UnaryOp(const Operator* pOperator, Expr* pExpr) : PUnit_UnaryOp(pOperator) { _ppExprSrc[0] = pExpr; }
 public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -750,7 +749,7 @@ private:
 public:
 	// Constructor
 	PUnit_BinaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
-	PUnit_BinaryOp(const Operator* pOperator, Expr* pExpr) : _pOperator(pOperator) { _ppExprSrc[0] = pExpr; }
+	PUnit_BinaryOp(const Operator* pOperator, Expr* pExpr) : PUnit_BinaryOp(pOperator) { _ppExprSrc[0] = pExpr; }
 public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
@@ -797,7 +796,7 @@ public:
 	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag) :
 		_pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
 	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, Expr* pExpr) :
-		_pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) { _ppExprSrc[0] = pExpr; }
+		PUnit_Import(pDottedSymbol, pSymbolList, mixInFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	const SymbolList* GetSymbolList() const { return _pSymbolList.get(); }
@@ -921,7 +920,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_CreateList(size_t sizeReserve) : _sizeReserve(sizeReserve) {}
-	explicit PUnit_CreateList(size_t sizeReserve, Expr* pExpr) : _sizeReserve(sizeReserve) { _ppExprSrc[0] = pExpr; }
+	explicit PUnit_CreateList(size_t sizeReserve, Expr* pExpr) : PUnit_CreateList(sizeReserve) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetSizeReserve() const { return _sizeReserve; }
 public:
@@ -964,7 +963,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_ListElem(size_t offset) : _offset(offset) {}
-	explicit PUnit_ListElem(size_t offset, Expr* pExpr) : _offset(offset) { _ppExprSrc[0] = pExpr; }
+	explicit PUnit_ListElem(size_t offset, Expr* pExpr) : PUnit_ListElem(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -1045,7 +1044,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_DictElem(size_t offset) : _offset(offset) {}
-	explicit PUnit_DictElem(size_t offset, Expr* pExpr) : _offset(offset) { _ppExprSrc[0] = pExpr; }
+	explicit PUnit_DictElem(size_t offset, Expr* pExpr) : PUnit_DictElem(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -1088,7 +1087,8 @@ private:
 public:
 	// Constructor
 	PUnit_Index(Attribute* pAttr, size_t sizeReserve) : _pAttr(pAttr), _sizeReserve(sizeReserve) {}
-	PUnit_Index(Attribute* pAttr, size_t sizeReserve, Expr* pExpr) : _pAttr(pAttr), _sizeReserve(sizeReserve) { _ppExprSrc[0] = pExpr; }
+	PUnit_Index(Attribute* pAttr, size_t sizeReserve, Expr* pExpr) :
+		PUnit_Index(pAttr, sizeReserve) { _ppExprSrc[0] = pExpr; }
 public:
 	const Attribute& GetAttr() const { return *_pAttr; }
 	size_t GetSizeReserve() const { return _sizeReserve; }
@@ -1245,7 +1245,8 @@ private:
 public:
 	// Constructor
 	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) : _pSymbol(pSymbol), _pAttr(pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_PropGet(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1291,7 +1292,8 @@ private:
 public:
 	// Constructor
 	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) : _pSymbol(pSymbol), _pAttr(pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_PropSet(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -2192,7 +2194,8 @@ private:
 public:
 	// Constructor
 	PUnit_BeginSequence(const PUnit* pPUnitSentinel) : _pPUnitSentinel(pPUnitSentinel) {}
-	PUnit_BeginSequence(const PUnit* pPUnitSentinel, Expr* pExpr) : _pPUnitSentinel(pPUnitSentinel) { _ppExprSrc[0] = pExpr; }
+	PUnit_BeginSequence(const PUnit* pPUnitSentinel, Expr* pExpr) :
+		PUnit_BeginSequence(pPUnitSentinel) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool IsBeginSequence() const override { return true; }
@@ -2311,7 +2314,7 @@ private:
 public:
 	// Constructor
 	explicit PUnit_RemoveValue(size_t offset) : _offset(offset) {}
-	explicit PUnit_RemoveValue(size_t offset, Expr* pExpr) : _offset(offset) { _ppExprSrc[0] = pExpr; }
+	explicit PUnit_RemoveValue(size_t offset, Expr* pExpr) : PUnit_RemoveValue(offset) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -2355,7 +2358,8 @@ private:
 public:
 	// Constructor
 	explicit PUnit_RemoveValues(size_t offset, size_t cnt) : _offset(offset), _cnt(cnt) {}
-	explicit PUnit_RemoveValues(size_t offset, size_t cnt, Expr* pExpr) : _offset(offset), _cnt(cnt) { _ppExprSrc[0] = pExpr; }
+	explicit PUnit_RemoveValues(size_t offset, size_t cnt, Expr* pExpr) :
+		PUnit_RemoveValues(offset, cnt) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 	size_t GetCount() const { return _cnt; }
@@ -2400,7 +2404,7 @@ private:
 public:
 	// Constructor
 	PUnit_Break(const PUnit* pPUnitMarked) : _pPUnitMarked(pPUnitMarked) {}
-	PUnit_Break(const PUnit* pPUnitMarked, Expr* pExpr) : _pPUnitMarked(pPUnitMarked) { _ppExprSrc[0] = pExpr; }
+	PUnit_Break(const PUnit* pPUnitMarked, Expr* pExpr) : PUnit_Break(pPUnitMarked) { _ppExprSrc[0] = pExpr; }
 public:
 	const PUnit* GetPUnitMarked() const { return _pPUnitMarked; }
 public:
@@ -2445,7 +2449,7 @@ private:
 public:
 	// Constructor
 	PUnit_Continue(const PUnit* pPUnitOfLoop) : _pPUnitOfLoop(pPUnitOfLoop) {}
-	PUnit_Continue(const PUnit* pPUnitOfLoop, Expr* pExpr) : _pPUnitOfLoop(pPUnitOfLoop) { _ppExprSrc[0] = pExpr; }
+	PUnit_Continue(const PUnit* pPUnitOfLoop, Expr* pExpr) : PUnit_Continue(pPUnitOfLoop) { _ppExprSrc[0] = pExpr; }
 public:
 	const PUnit* GetPUnitOfLoop() const { return _pPUnitOfLoop; }
 public:
@@ -2488,7 +2492,7 @@ private:
 public:
 	// Constructor
 	PUnit_Miscatch(Value* pValue) : _pValue(pValue) {}
-	PUnit_Miscatch(Value* pValue, Expr* pExpr) : _pValue(pValue) { _ppExprSrc[0] = pExpr; }
+	PUnit_Miscatch(Value* pValue, Expr* pExpr) : PUnit_Miscatch(pValue) { _ppExprSrc[0] = pExpr; }
 public:
 	const Value* GetValue() const { return _pValue.get(); }
 public:
