@@ -1333,14 +1333,18 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	MemberMode _memberMode;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) : _pSymbol(pSymbol), _pAttr(pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _memberMode(memberMode) {}
+	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode, Expr* pExpr) :
+		PUnit_Member(pSymbol, pAttr, memberMode) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	MemberMode GetMemberMode() const { return _memberMode; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1359,9 +1363,10 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	MemberMode _memberMode;
 public:
-	PUnitFactory_Member(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnitFactory_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _memberMode(memberMode) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Member<1, false>) : sizeof(PUnit_Member<0, false>);
 	}

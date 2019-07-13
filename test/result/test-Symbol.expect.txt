@@ -1,0 +1,4 @@
+======== Operator == ========
+<VType:Expr>
+(`a) == (`a) .. true
+x == (`a) .. true

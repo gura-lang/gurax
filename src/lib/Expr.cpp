@@ -540,7 +540,8 @@ const Expr::TypeInfo Expr_Member::typeInfo;
 void Expr_Member::Compose(Composer& composer)
 {
 	GetExprTarget()->ComposeOrNil(composer);								// [Target]
-	composer.Add_Member(GetSymbol(), GetAttr().Reference(), this);			// [Member] or [Prop]
+	composer.Add_Member(GetSymbol(), GetAttr().Reference(),
+						GetMemberMode(), this);								// [Member] or [Prop]
 }
 
 void Expr_Member::ComposeForAssignment(

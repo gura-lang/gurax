@@ -35,7 +35,7 @@ try {f()} catch(Error.SyntaxError) {|e| g()}
   ##3 Call(cont=##4)
   ##4 EndTryBlock(cont=##17)
   ##5 Lookup(`Error)
-  ##6 Member(`SyntaxError)
+  ##6 Member(`T.SyntaxError)
   ##7 Cast(ErrorType)
   ##8 JumpIfNoCatch(branchdest=##16)
   ##9 PushFrame<Block>()

@@ -27,7 +27,7 @@ f(`(a + b))
 --------
 `{foo.bar}
   ##0 Lookup(`foo)
-  ##1 Member(`bar)
+  ##1 Member(`T.bar)
 --------
 `{foo.bar = 3}
   ##0 Lookup(`foo)
