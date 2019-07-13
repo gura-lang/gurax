@@ -55,23 +55,12 @@ public:
 	virtual bool IsEqualTo(const Value* pValue) const override { return this == pValue; }
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
-	virtual const DeclCallable* GetDeclCallable() const override { return GetValueProp().GetDeclCallable(); }
-	virtual void DoCall(Processor& processor, Argument& argument) override {
-		argument.SetValueThis(GetValueThis().Reference());
-		GetValueProp().DoCall(processor, argument);
-	}
-	virtual Value* DoIndexGet(const Index& index) const override {
-		return GetValueProp().DoIndexGet(index);
-	}
-	virtual void DoIndexSet(const Index& index, Value* pValue) override {
-		GetValueProp().DoIndexSet(index, pValue);
-	}		
-	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override {
-		return GetValueProp().DoPropGet(pSymbol, attr, notFoundErrorFlag);
-	}
-	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override {
-		return GetValueProp().DoPropSet(pSymbol, pValue.release(), attr);
-	}
+	virtual const DeclCallable* GetDeclCallable() const override;
+	virtual void DoCall(Processor& processor, Argument& argument) override;
+	virtual Value* DoIndexGet(const Index& index) const override;
+	virtual void DoIndexSet(const Index& index, Value* pValue) override;
+	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
+	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
 };
 
 }

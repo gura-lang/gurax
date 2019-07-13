@@ -28,4 +28,35 @@ String Value_Member_MapToList::ToStringDetail(const StringStyle& ss) const
 	return str;
 }
 
+const DeclCallable* Value_Member_MapToList::GetDeclCallable() const
+{
+	return GetValueProp().GetDeclCallable();
+}
+
+void Value_Member_MapToList::DoCall(Processor& processor, Argument& argument)
+{
+	argument.SetValueThis(GetValueThis().Reference());
+	GetValueProp().DoCall(processor, argument);
+}
+
+Value* Value_Member_MapToList::DoIndexGet(const Index& index) const
+{
+	return GetValueProp().DoIndexGet(index);
+}
+
+void Value_Member_MapToList::DoIndexSet(const Index& index, Value* pValue)
+{
+	GetValueProp().DoIndexSet(index, pValue);
+}		
+
+Value* Value_Member_MapToList::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	return GetValueProp().DoPropGet(pSymbol, attr, notFoundErrorFlag);
+}
+
+bool Value_Member_MapToList::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	return GetValueProp().DoPropSet(pSymbol, pValue.release(), attr);
+}
+
 }
