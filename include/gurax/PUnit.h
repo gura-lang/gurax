@@ -1325,28 +1325,26 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Member
+// PUnit_Member_Normal
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Member : public PUnit {
+class GURAX_DLLDECLARE PUnit_Member_Normal : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
-private:
+protected:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	MemberMode _memberMode;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode) :
-		_pSymbol(pSymbol), _pAttr(pAttr), _memberMode(memberMode) {}
-	PUnit_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode, Expr* pExpr) :
-		PUnit_Member(pSymbol, pAttr, memberMode) { _ppExprSrc[0] = pExpr; }
+	PUnit_Member_Normal(const Symbol* pSymbol, Attribute* pAttr) :
+		_pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_Member_Normal(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
-	MemberMode GetMemberMode() const { return _memberMode; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1359,18 +1357,17 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Member : public PUnitFactory {
+class PUnitFactory_Member_Normal : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Member");
+	Gurax_MemoryPoolAllocator("PUnitFactory_Member_Normal");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	MemberMode _memberMode;
 public:
-	PUnitFactory_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _memberMode(memberMode) {}
+	PUnitFactory_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_Member<1, false>) : sizeof(PUnit_Member<0, false>);
+		return _pExprSrc? sizeof(PUnit_Member_Normal<1, false>) : sizeof(PUnit_Member_Normal<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

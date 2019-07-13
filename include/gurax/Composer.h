@@ -172,8 +172,8 @@ public:
 	void Add_PropSet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_PropSet(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
-	void Add_Member(const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_Member(pSymbol, pAttr, memberMode, Expr::Reference(pExprSrc)));
+	void Add_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Member_Normal(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
 	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Argument(pAttr, pExprOfBlock, Expr::Reference(pExprSrc)));

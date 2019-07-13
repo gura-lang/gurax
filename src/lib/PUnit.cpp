@@ -1435,13 +1435,13 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Member
+// PUnit_Member_Normal
 // Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
 //                      -> [Prop]                (continue, not callable)
 //                      -> []                    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_Member<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
@@ -1462,28 +1462,28 @@ void PUnit_Member<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_Member<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_Member_Normal<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Member(`T%s%s)", MemberModeToSymbol(GetMemberMode())->GetName(), GetSymbol()->GetName());
+	str.Printf("Member_Normal(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Member::Create(bool discardValueFlag)
+PUnit* PUnitFactory_Member_Normal::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member<1, true>(_pSymbol, _pAttr.release(), _memberMode, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Member_Normal<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Member<1, false>(_pSymbol, _pAttr.release(), _memberMode, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Member_Normal<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member<0, true>(_pSymbol, _pAttr.release(), _memberMode);
+			_pPUnitCreated = new PUnit_Member_Normal<0, true>(_pSymbol, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_Member<0, false>(_pSymbol, _pAttr.release(), _memberMode);
+			_pPUnitCreated = new PUnit_Member_Normal<0, false>(_pSymbol, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;
