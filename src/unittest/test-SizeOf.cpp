@@ -153,6 +153,9 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Value_Index);
 	PrintSizeOf(Value_Iterator);
 	PrintSizeOf(Value_List);
+	PrintSizeOf(Value_Member_MapAlong);
+	PrintSizeOf(Value_Member_MapToIter);
+	PrintSizeOf(Value_Member_MapToList);
 	PrintSizeOf(Value_Member_Normal);
 	PrintSizeOf(Value_Module);
 	PrintSizeOf(Value_Nil);

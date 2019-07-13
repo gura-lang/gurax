@@ -84,7 +84,10 @@ Value_Function                   40
 Value_Index                      40
 Value_Iterator                   40
 Value_List                       40
-Value_Member                     48
+Value_Member_MapAlong            48
+Value_Member_MapToIter           48
+Value_Member_MapToList           48
+Value_Member_Normal              48
 Value_Module                     40
 Value_Nil                        32
 Value_Number                     40
