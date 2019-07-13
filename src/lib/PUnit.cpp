@@ -1508,7 +1508,7 @@ void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processo
 		if (discardValueFlag) {
 			// nothing to do
 		} else if (pValueProp->IsCallable()) {
-			processor.PushValue(new Value_Member_Normal(pValueTarget.release(), pValueProp->Reference()));
+			processor.PushValue(new Value_Member_MapAlong(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
 		}
@@ -1563,7 +1563,7 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 		if (discardValueFlag) {
 			// nothing to do
 		} else if (pValueProp->IsCallable()) {
-			processor.PushValue(new Value_Member_Normal(pValueTarget.release(), pValueProp->Reference()));
+			processor.PushValue(new Value_Member_MapToList(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
 		}
@@ -1618,7 +1618,7 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 		if (discardValueFlag) {
 			// nothing to do
 		} else if (pValueProp->IsCallable()) {
-			processor.PushValue(new Value_Member_Normal(pValueTarget.release(), pValueProp->Reference()));
+			processor.PushValue(new Value_Member_MapToIter(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
 		}
