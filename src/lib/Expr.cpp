@@ -539,8 +539,29 @@ const Expr::TypeInfo Expr_Member::typeInfo;
 
 void Expr_Member::Compose(Composer& composer)
 {
-	GetExprTarget()->ComposeOrNil(composer);								// [Target]
-	composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+	GetExprTarget()->ComposeOrNil(composer);									// [Target]
+	switch (GetMemberMode()) {
+	case MemberMode::Normal: {
+		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		break;
+	}
+	case MemberMode::MapAlong: {
+		composer.Add_Member_MapAlong(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		break;
+	}
+	case MemberMode::MapToList: {
+		composer.Add_Member_MapToList(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
+		break;
+	}
+	case MemberMode::MapToIter: {
+		composer.Add_Member_MapToIter(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
+		break;
+	}
+	default: {
+		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		break;
+	}
+	}
 }
 
 void Expr_Member::ComposeForAssignment(
