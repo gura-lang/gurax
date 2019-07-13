@@ -1,25 +1,25 @@
 //==============================================================================
-// VType_Member.cpp
+// VType_Member_Normal.cpp
 //==============================================================================
 #include "stdafx.h"
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// VType_Member
+// VType_Member_Normal
 //------------------------------------------------------------------------------
-VType_Member VTYPE_Member("Member");
+VType_Member_Normal VTYPE_Member_Normal("Member_Normal");
 
-void VType_Member::DoPrepare(Frame& frameOuter)
+void VType_Member_Normal::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------
-// Value_Member
+// Value_Member_Normal
 //------------------------------------------------------------------------------
-String Value_Member::ToStringDetail(const StringStyle& ss) const
+String Value_Member_Normal::ToStringDetail(const StringStyle& ss) const
 {
 	String str;
 	//str += GetValueThis<Value>().ToStringDetail(ss);

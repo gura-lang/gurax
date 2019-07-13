@@ -84,7 +84,7 @@
 #include "gurax/VType_Index.h"
 #include "gurax/VType_Iterator.h"
 #include "gurax/VType_List.h"
-#include "gurax/VType_Member.h"
+#include "gurax/VType_Member_Normal.h"
 #include "gurax/VType_Module.h"
 #include "gurax/VType_Nil.h"
 #include "gurax/VType_Number.h"

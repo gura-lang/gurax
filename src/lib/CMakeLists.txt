@@ -82,7 +82,7 @@ add_library(guraxcore SHARED
 	VType_Index.cpp
 	VType_Iterator.cpp
 	VType_List.cpp
-	VType_Member.cpp
+	VType_Member_Normal.cpp
 	VType_Module.cpp
 	VType_Nil.cpp
 	VType_Number.cpp
