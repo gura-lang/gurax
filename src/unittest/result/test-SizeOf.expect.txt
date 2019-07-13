@@ -29,7 +29,10 @@ PUnit_IndexGet_                  8
 PUnit_IndexSet_                  8
 PUnit_PropGet_                   24
 PUnit_PropSet_                   24
-PUnit_Member_                    24
+PUnit_Member_Normal_             24
+PUnit_Member_MapAlong_           24
+PUnit_Member_MapToList_          24
+PUnit_Member_MapToIter_          24
 PUnit_Argument_                  32
 PUnit_BeginArgSlot_              24
 PUnit_EndArgSlot_                8
