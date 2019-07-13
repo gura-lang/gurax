@@ -1490,6 +1490,171 @@ PUnit* PUnitFactory_Member_Normal::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Member_MapAlong
+// Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
+//                      -> [Prop]                (continue, not callable)
+//                      -> []                    (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueTarget(processor.PopValue());
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	if (!pValueProp) {
+		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
+		processor.ErrorDone();
+	} else {
+		if (discardValueFlag) {
+			// nothing to do
+		} else if (pValueProp->IsCallable()) {
+			processor.PushValue(new Value_Member(pValueTarget.release(), pValueProp->Reference()));
+		} else {
+			processor.PushValue(pValueProp->Reference());
+		}
+		processor.SetPUnitNext(_GetPUnitCont());
+	}
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("Member_MapAlong(`%s)", GetSymbol()->GetName());
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Member_MapAlong::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Member_MapAlong<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_Member_MapAlong<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Member_MapAlong<0, true>(_pSymbol, _pAttr.release());
+		} else {
+			_pPUnitCreated = new PUnit_Member_MapAlong<0, false>(_pSymbol, _pAttr.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Member_MapToList
+// Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
+//                      -> [Prop]                (continue, not callable)
+//                      -> []                    (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueTarget(processor.PopValue());
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	if (!pValueProp) {
+		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
+		processor.ErrorDone();
+	} else {
+		if (discardValueFlag) {
+			// nothing to do
+		} else if (pValueProp->IsCallable()) {
+			processor.PushValue(new Value_Member(pValueTarget.release(), pValueProp->Reference()));
+		} else {
+			processor.PushValue(pValueProp->Reference());
+		}
+		processor.SetPUnitNext(_GetPUnitCont());
+	}
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_Member_MapToList<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("Member_MapToList(`%s)", GetSymbol()->GetName());
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Member_MapToList::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Member_MapToList<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_Member_MapToList<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Member_MapToList<0, true>(_pSymbol, _pAttr.release());
+		} else {
+			_pPUnitCreated = new PUnit_Member_MapToList<0, false>(_pSymbol, _pAttr.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_Member_MapToIter
+// Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
+//                      -> [Prop]                (continue, not callable)
+//                      -> []                    (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueTarget(processor.PopValue());
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	if (!pValueProp) {
+		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
+		processor.ErrorDone();
+	} else {
+		if (discardValueFlag) {
+			// nothing to do
+		} else if (pValueProp->IsCallable()) {
+			processor.PushValue(new Value_Member(pValueTarget.release(), pValueProp->Reference()));
+		} else {
+			processor.PushValue(pValueProp->Reference());
+		}
+		processor.SetPUnitNext(_GetPUnitCont());
+	}
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("Member_MapToIter(`%s)", GetSymbol()->GetName());
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Member_MapToIter::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Member_MapToIter<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_Member_MapToIter<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Member_MapToIter<0, true>(_pSymbol, _pAttr.release());
+		} else {
+			_pPUnitCreated = new PUnit_Member_MapToIter<0, false>(_pSymbol, _pAttr.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_Argument
 // Stack View: [Car] -> [Argument(Car)] (continue)
 //                   -> []              (discard)

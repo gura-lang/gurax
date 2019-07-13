@@ -175,6 +175,15 @@ public:
 	void Add_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Member_Normal(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
+	void Add_Member_MapAlong(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Member_MapAlong(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
+	void Add_Member_MapToList(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Member_MapToList(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
+	void Add_Member_MapToIter(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Member_MapToIter(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	}
 	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Argument(pAttr, pExprOfBlock, Expr::Reference(pExprSrc)));
 	}

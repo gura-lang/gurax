@@ -67,6 +67,12 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_PropSet_);
 	using PUnit_Member_Normal_ = PUnit_Member_Normal<0, false>;
 	PrintSizeOf(PUnit_Member_Normal_);
+	using PUnit_Member_MapAlong_ = PUnit_Member_MapAlong<0, false>;
+	PrintSizeOf(PUnit_Member_MapAlong_);
+	using PUnit_Member_MapToList_ = PUnit_Member_MapToList<0, false>;
+	PrintSizeOf(PUnit_Member_MapToList_);
+	using PUnit_Member_MapToIter_ = PUnit_Member_MapToIter<0, false>;
+	PrintSizeOf(PUnit_Member_MapToIter_);
 	using PUnit_Argument_ = PUnit_Argument<0, false>;
 	PrintSizeOf(PUnit_Argument_);
 	using PUnit_BeginArgSlot_ = PUnit_BeginArgSlot<0, false>;
