@@ -28,16 +28,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Member_MapToList");
 protected:
-	RefPtr<Value> _pValueThis;
-	RefPtr<Value> _pValueProp;
+	RefPtr<Iterator> _pIteratorTarget;
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
 public:
 	// Constructor
-	Value_Member_MapToList(Value* pValueThis, Value* pValueProp, VType& vtype = VTYPE_Member_MapToList) :
-		Value_Object(vtype), _pValueThis(pValueThis), _pValueProp(pValueProp) {}
+	Value_Member_MapToList(Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr, VType& vtype = VTYPE_Member_MapToList) :
+		Value_Object(vtype), _pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	// Copy constructor/operator
-	Value_Member_MapToList(const Value_Member_MapToList& src) :
-		Value_Object(src), _pValueThis(src._pValueThis->Reference()),
-		_pValueProp(src._pValueProp->Reference()) {}
+	Value_Member_MapToList(const Value_Member_MapToList& src) = delete;
 	Value_Member_MapToList& operator=(const Value_Member_MapToList& src) = delete;
 	// Move constructor/operator
 	Value_Member_MapToList(Value_Member_MapToList&& src) = delete;
@@ -46,8 +45,9 @@ protected:
 	// Destructor
 	~Value_Member_MapToList() = default;
 public:
-	Value& GetValueThis() const { return *_pValueThis; }
-	Value& GetValueProp() const { return *_pValueProp; }
+	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
