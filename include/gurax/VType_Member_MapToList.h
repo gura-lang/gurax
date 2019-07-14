@@ -45,6 +45,7 @@ protected:
 	// Destructor
 	~Value_Member_MapToList() = default;
 public:
+	bool Prepare();
 	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }

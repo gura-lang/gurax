@@ -19,6 +19,11 @@ void VType_Member_MapToList::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Member_MapToList
 //------------------------------------------------------------------------------
+bool Value_Member_MapToList::Prepare()
+{
+	return true;
+}
+
 String Value_Member_MapToList::ToStringDetail(const StringStyle& ss) const
 {
 	String str;

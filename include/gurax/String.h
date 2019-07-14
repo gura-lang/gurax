@@ -228,6 +228,12 @@ public:
 	String Replace(const char* sub, const char* replace, int nMaxReplace) {
 		return Replace<T_CharCmp>(c_str(), sub, replace, nMaxReplace);
 	}
+public:
+	// Modification
+	String Upper() const { return Upper(c_str()); }
+	static String Upper(const char* str);
+	String Lower() const { return Lower(c_str()); }
+	static String Lower(const char* str);
 };
 
 struct CharCase {

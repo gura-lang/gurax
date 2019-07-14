@@ -82,3 +82,9 @@ TestCase('String#Find()') {
 	]
 	Tester(exprs)
 }
+
+TestCase('String#Uppper(), String#Lower()') {
+	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Upper())
+	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Lower())
+}
+

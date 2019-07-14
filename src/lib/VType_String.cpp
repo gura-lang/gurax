@@ -88,6 +88,23 @@ Gurax_ImplementMethod(String, Find)
 	return (pFound == str.end())? Value::nil() : new Value_Number(str.CalcPos(pFound));
 }
 
+// String#Lower()
+Gurax_DeclareMethod(String, Lower)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts each alphabetical character to lower case.\n");
+}
+
+Gurax_ImplementMethod(String, Lower)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_String(String::Lower(valueThis.GetString()));
+}
+
 // String#StartsWith(sub:String, pos?:Number):map:[rest,icase]
 Gurax_DeclareMethod(String, StartsWith)
 {
@@ -123,6 +140,23 @@ Gurax_ImplementMethod(String, StartsWith)
 		String::StartsWith<CharCase>(str, sub);
 	return !argument.IsSet(Gurax_Symbol(rest))? Value::Bool(rtn) :
 		rtn? new Value_String(rtn) : Value::nil();
+}
+
+// String#Upper()
+Gurax_DeclareMethod(String, Upper)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts each alphabetical character to upper case.\n");
+}
+
+Gurax_ImplementMethod(String, Upper)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_String(String::Upper(valueThis.GetString()));
 }
 
 //------------------------------------------------------------------------------
@@ -170,7 +204,9 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(String, EndsWith));
 	Assign(Gurax_CreateMethod(String, Find));
+	Assign(Gurax_CreateMethod(String, Lower));
 	Assign(Gurax_CreateMethod(String, StartsWith));
+	Assign(Gurax_CreateMethod(String, Upper));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(String, len));
 	Assign(Gurax_CreateProperty(String, width));

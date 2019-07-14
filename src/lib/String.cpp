@@ -473,42 +473,42 @@ String String::Center(const char* str, size_t width, const char* padding)
 {
 	size_t widthBody = Width(str);
 	if (width <= widthBody) return String(str);
-	String rtn;
+	String strRtn;
 	size_t widthRight = (width - widthBody) / 2;
 	size_t widthLeft = width - widthBody - widthRight;
-	while (widthLeft-- > 0) rtn += padding;
-	rtn += str;
-	while (widthRight-- > 0) rtn += padding;
-	return rtn;
+	while (widthLeft-- > 0) strRtn += padding;
+	strRtn += str;
+	while (widthRight-- > 0) strRtn += padding;
+	return strRtn;
 }
 
 String String::LJust(const char* str, size_t width, const char* padding)
 {
 	size_t widthBody = Width(str);
 	if (width <= widthBody) return String(str);
-	String rtn;
+	String strRtn;
 	size_t widthRight = width - widthBody;
-	rtn += str;
-	while (widthRight-- > 0) rtn += padding;
-	return rtn;
+	strRtn += str;
+	while (widthRight-- > 0) strRtn += padding;
+	return strRtn;
 }
 
 String String::RJust(const char* str, size_t width, const char* padding)
 {
 	size_t widthBody = Width(str);
 	if (width <= widthBody) return String(str);
-	String rtn;
+	String strRtn;
 	size_t widthLeft = width - widthBody;
-	while (widthLeft-- > 0) rtn += padding;
-	rtn += str;
-	return rtn;
+	while (widthLeft-- > 0) strRtn += padding;
+	strRtn += str;
+	return strRtn;
 }
 
 String String::Left(const char* str, size_t len)
 {
-	String rtn;
-	rtn.AppendNChars(str, len);
-	return rtn;
+	String strRtn;
+	strRtn.AppendNChars(str, len);
+	return strRtn;
 }
 
 String String::Right(const char* str, size_t len)
@@ -531,13 +531,27 @@ String String::Middle(const char* str, int start, size_t len)
 		return String("");
 	} else if (len > 0 && start + len < lenSrc) {
 		str = Forward(str, start);
-		String rtn;
-		rtn.AppendNChars(str, len);
-		return rtn;
+		String strRtn;
+		strRtn.AppendNChars(str, len);
+		return strRtn;
 	} else {
 		str = Forward(str, start);
 		return String(str);
 	}
+}
+
+String String::Upper(const char* str)
+{
+	String strRtn;
+	for (const char* p = str; *p != '\0';  p++) strRtn += ToUpper(*p);
+	return strRtn;
+}
+
+String String::Lower(const char* str)
+{
+	String strRtn;
+	for (const char* p = str; *p != '\0';  p++) strRtn += ToLower(*p);
+	return strRtn;
 }
 
 //------------------------------------------------------------------------------

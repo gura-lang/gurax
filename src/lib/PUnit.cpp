@@ -1556,8 +1556,10 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
-		processor.PushValue(new Value_Member_MapToList(
-								pValueTarget->DoGenIterator(), GetSymbol(), GetAttr().Reference()));
+		RefPtr<Value_Member_MapToList> pValue(
+			new Value_Member_MapToList(pValueTarget->DoGenIterator(), GetSymbol(), GetAttr().Reference()));
+		if (!pValue->Prepare()) return;
+		processor.PushValue(pValue.release());
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
