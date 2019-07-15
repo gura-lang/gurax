@@ -21,6 +21,7 @@ void VType_Member_MapToList::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 bool Value_Member_MapToList::Prepare()
 {
+	
 	return true;
 }
 

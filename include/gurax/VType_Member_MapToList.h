@@ -31,6 +31,8 @@ protected:
 	RefPtr<Iterator> _pIteratorTarget;
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	RefPtr<Value> _pValueThis;
+	RefPtr<Value> _pValueProp;
 public:
 	// Constructor
 	Value_Member_MapToList(Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr, VType& vtype = VTYPE_Member_MapToList) :

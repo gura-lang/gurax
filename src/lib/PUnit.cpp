@@ -1556,18 +1556,28 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
-		RefPtr<Value_Member_MapToList> pValue(
-			new Value_Member_MapToList(pValueTarget->DoGenIterator(), GetSymbol(), GetAttr().Reference()));
-		if (!pValue->Prepare()) return;
-		processor.PushValue(pValue.release());
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		RefPtr<Iterator> pIterator(pValueTarget->DoGenIterator());
+		for (;;) {
+			RefPtr<Value> pValueTargetElem(pIterator->NextValue());
+			if (!pValueTargetElem) break;
+			Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
+			if (!pValueProp) {
+				processor.ErrorDone();
+				return;
+			} else if (pValueProp->IsCallable()) {
+				pValueOwner->push_back(new Value_Member_Normal(pValueTargetElem.release(), pValueProp->Reference()));
+			} else {
+				pValueOwner->push_back(pValueProp->Reference());
+			}
+		}
+		processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
-			//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 			processor.ErrorDone();
 			return;
-		}
-		if (discardValueFlag) {
+		} else if (discardValueFlag) {
 			// nothing to do
 		} else if (pValueProp->IsCallable()) {
 			processor.PushValue(new Value_Member_Normal(pValueTarget.release(), pValueProp->Reference()));
