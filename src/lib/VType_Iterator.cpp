@@ -85,6 +85,15 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 	argument.SetMapMode(Argument::MapMode::ToIter);
 }
 
+const DeclCallable* Value_Iterator::GetDeclCallable() const
+{
+	return nullptr;
+}
+
+void Value_Iterator::DoCall(Processor& processor, Argument& argument)
+{
+}
+
 Iterator* Value_Iterator::DoGenIterator() const
 {
 	return GetIterator().Clone();
