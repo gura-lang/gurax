@@ -144,6 +144,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Value_Attribute);
 	PrintSizeOf(Value_Binary);
 	PrintSizeOf(Value_Bool);
+	PrintSizeOf(Value_CallableMember);
 	PrintSizeOf(Value_DateTime);
 	PrintSizeOf(Value_Dict);
 	PrintSizeOf(Value_Error);
@@ -153,10 +154,6 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Value_Index);
 	PrintSizeOf(Value_Iterator);
 	PrintSizeOf(Value_List);
-	PrintSizeOf(Value_Member_MapAlong);
-	PrintSizeOf(Value_Member_MapToIter);
-	PrintSizeOf(Value_Member_MapToList);
-	PrintSizeOf(Value_Member_Normal);
 	PrintSizeOf(Value_Module);
 	PrintSizeOf(Value_Nil);
 	PrintSizeOf(Value_Number);

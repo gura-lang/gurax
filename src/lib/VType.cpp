@@ -18,6 +18,12 @@ VType::VType(const Symbol* pSymbol) :
 {
 }
 
+void VType::Assign(Function* pFunction)
+{
+	pFunction->SetVTypeOfOwner(*this);
+	GetFrame().Assign(pFunction);
+}
+
 void VType::Prepare(Frame& frameOuter)
 {
 	_pConstructor.reset(Function::Empty.Reference()); // _pConstructor must be initialized here

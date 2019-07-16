@@ -95,7 +95,7 @@ public:
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
-	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
+	void Assign(Function* pFunction);
 	void Assign(PropHandler* pPropHandler) {
 		(pPropHandler->IsSet(PropHandler::Flag::OfClass)?
 		 GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);

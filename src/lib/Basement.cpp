@@ -47,6 +47,7 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_Attribute.Prepare(frame);
 	VTYPE_Binary.Prepare(frame);
 	VTYPE_Bool.Prepare(frame);
+	VTYPE_CallableMember.Prepare(frame);
 	VTYPE_DateTime.Prepare(frame);
 	VTYPE_Dict.Prepare(frame);
 	VTYPE_Error.Prepare(frame);
@@ -57,10 +58,6 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_Iterator.Prepare(frame);
 	VTYPE_VType.Prepare(frame);
 	VTYPE_List.Prepare(frame);
-	VTYPE_Member_MapAlong.Prepare(frame);
-	VTYPE_Member_MapToIter.Prepare(frame);
-	VTYPE_Member_MapToList.Prepare(frame);
-	VTYPE_Member_Normal.Prepare(frame);
 	VTYPE_Module.Prepare(frame);
 	VTYPE_Nil.Prepare(frame);
 	VTYPE_Number.Prepare(frame);

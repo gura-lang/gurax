@@ -236,6 +236,15 @@ void Value_List::UpdateMapMode(Argument& argument) const
 	if (argument.IsMapNone()) argument.SetMapMode(Argument::MapMode::ToList);
 }
 
+const DeclCallable* Value_List::GetDeclCallable() const
+{
+	return nullptr;
+}
+
+void Value_List::DoCall(Processor& processor, Argument& argument)
+{
+}
+
 Value* Value_List::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();

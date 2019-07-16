@@ -100,20 +100,22 @@ protected:
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<HelpProvider> _pHelpProvider;
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;
+	VType* _pVTypeOfOwner;					// this may be nullptr
 public:
 	static RefPtr<Function> Empty;
 public:
 	static void Bootup();
 public:
 	// Constructor
+	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, HelpProvider* pHelpProvider) :
+		_type(type), _pSymbol(pSymbol), _pDeclCallable(pDeclCallable), _pHelpProvider(pHelpProvider),
+		_pVTypeOfOwner(nullptr) {}
 	Function(Type type) :
 		Function(type, Symbol::Empty, new DeclCallable(), new HelpProvider()) {}
 	Function(Type type, const Symbol* pSymbol) :
 		Function(type, pSymbol, new DeclCallable(), new HelpProvider()) {}
 	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable) :
 		Function(type, pSymbol, pDeclCallable, new HelpProvider()) {}
-	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, HelpProvider* pHelpProvider) :
-		_type(type), _pSymbol(pSymbol), _pDeclCallable(pDeclCallable), _pHelpProvider(pHelpProvider) {}
 	Function(Type type, const char* name) :
 		Function(type, Symbol::Add(name)) {}		
 	Function(Type type, const char* name, DeclCallable* pDeclCallable) :
@@ -144,6 +146,8 @@ public:
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
 	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
+	void SetVTypeOfOwner(VType& vtypeOfOwner) { _pVTypeOfOwner = &vtypeOfOwner; }
+	const VType* GetVTypeOfOwner() const { return _pVTypeOfOwner; }
 	void Declare(const VType& vtypeResult, Flags flags) {
 		GetDeclCallable().SetVTypeResult(vtypeResult);
 		GetDeclCallable().SetFlags(flags);

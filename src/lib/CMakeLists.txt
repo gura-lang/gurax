@@ -72,6 +72,7 @@ add_library(guraxcore SHARED
 	VType_Attribute.cpp
 	VType_Binary.cpp
 	VType_Bool.cpp
+	VType_CallableMember.cpp
 	VType_DateTime.cpp
 	VType_Dict.cpp
 	VType_Error.cpp
@@ -82,10 +83,6 @@ add_library(guraxcore SHARED
 	VType_Index.cpp
 	VType_Iterator.cpp
 	VType_List.cpp
-	VType_Member_MapAlong.cpp
-	VType_Member_MapToIter.cpp
-	VType_Member_MapToList.cpp
-	VType_Member_Normal.cpp
 	VType_Module.cpp
 	VType_Nil.cpp
 	VType_Number.cpp
