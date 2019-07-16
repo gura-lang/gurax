@@ -236,13 +236,35 @@ void Value_List::UpdateMapMode(Argument& argument) const
 	if (argument.IsMapNone()) argument.SetMapMode(Argument::MapMode::ToList);
 }
 
+bool Value_List::IsCallable() const
+{
+	return true;
+}
+
 const DeclCallable* Value_List::GetDeclCallable() const
 {
+	
 	return nullptr;
 }
 
 void Value_List::DoCall(Processor& processor, Argument& argument)
 {
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+#if 0
+	RefPtr<Iterator> pIterator(DoGenIterator());
+	for (;;) {
+		RefPtr<Value> pValueElem(pIterator->NextValue());
+		if (!pValueElem) {
+			if (Error::IsIssued()) return;
+			break;
+		}
+		argument.SetValueThis(pValueElem.Reference());
+		pValueElem->DoCall(processor, argument);
+		if (Error::IsIssued()) return;
+		//pValueOwner->push_back(pValueRtn.release());
+	}
+#endif
+	processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
 }
 
 Value* Value_List::DoIndexGet(const Index& index) const

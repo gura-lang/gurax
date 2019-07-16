@@ -84,7 +84,7 @@ public:
 	virtual bool IsList() const override { return true; }
 	virtual bool IsMappable(const DeclArg& declArg, DeclCallable::Flags flags) const override;
 	virtual void UpdateMapMode(Argument& argument) const override;
-	virtual bool IsCallable() const override { return true; }
+	virtual bool IsCallable() const override;
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoIndexGet(const Index& index) const override;

@@ -85,6 +85,11 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 	argument.SetMapMode(Argument::MapMode::ToIter);
 }
 
+bool Value_Iterator::IsCallable() const
+{
+	return true;
+}
+
 const DeclCallable* Value_Iterator::GetDeclCallable() const
 {
 	return nullptr;
