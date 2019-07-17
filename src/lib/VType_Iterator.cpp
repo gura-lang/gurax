@@ -87,7 +87,7 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 
 bool Value_Iterator::IsCallable() const
 {
-	return true;
+	return false;
 }
 
 const DeclCallable* Value_Iterator::GetDeclCallable() const
