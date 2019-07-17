@@ -243,8 +243,10 @@ bool Value_List::IsCallable() const
 
 const DeclCallable* Value_List::GetDeclCallable() const
 {
-	
-	return nullptr;
+	const ValueOwner& valueOwner = GetValueOwner();
+	if (valueOwner.empty()) return nullptr;
+	const Value* pValueElem = valueOwner.front();
+	return pValueElem->GetDeclCallable();
 }
 
 void Value_List::DoCall(Processor& processor, Argument& argument)
@@ -257,14 +259,7 @@ void Value_List::DoCall(Processor& processor, Argument& argument)
 Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	RefPtr<Iterator> pIterator(DoGenIterator());
-	for (;;) {
-		RefPtr<Value> pValueElem(pIterator->NextValue());
-		if (!pValueElem) {
-			if (Error::IsIssued()) return Value::nil();
-			break;
-		}
-		argument.SetValueThis(pValueElem.Reference());
+	for (Value* pValueElem : GetValueOwner()) {
 		RefPtr<Value> pValueRtn(pValueElem->DoEval(processor, argument));
 		if (Error::IsIssued()) return Value::nil();
 		pValueOwner->push_back(pValueRtn.release());
