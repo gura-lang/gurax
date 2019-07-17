@@ -99,6 +99,11 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 {
 }
 
+Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
+{
+	return Value::nil();
+}
+
 Iterator* Value_Iterator::DoGenIterator() const
 {
 	return GetIterator().Clone();

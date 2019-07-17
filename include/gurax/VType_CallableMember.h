@@ -57,6 +57,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, Value* pValue) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;

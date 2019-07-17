@@ -39,6 +39,12 @@ void Value_CallableMember::DoCall(Processor& processor, Argument& argument)
 	GetValueProp().DoCall(processor, argument);
 }
 
+Value* Value_CallableMember::DoEval(Processor& processor, Argument& argument) const
+{
+	argument.SetValueThis(GetValueThis().Reference());
+	return GetValueProp().DoEval(processor, argument);
+}
+
 Value* Value_CallableMember::DoIndexGet(const Index& index) const
 {
 	return GetValueProp().DoIndexGet(index);

@@ -76,6 +76,7 @@ public:
 	virtual bool IsCallable() const override { return true; }
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 };
 
 }

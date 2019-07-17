@@ -249,22 +249,27 @@ const DeclCallable* Value_List::GetDeclCallable() const
 
 void Value_List::DoCall(Processor& processor, Argument& argument)
 {
+	RefPtr<Value> pValueRtn(DoEval(processor, argument));
+	if (Error::IsIssued()) return;
+	processor.PushValue(pValueRtn.release());
+}
+
+Value* Value_List::DoEval(Processor& processor, Argument& argument) const
+{
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-#if 0
 	RefPtr<Iterator> pIterator(DoGenIterator());
 	for (;;) {
 		RefPtr<Value> pValueElem(pIterator->NextValue());
 		if (!pValueElem) {
-			if (Error::IsIssued()) return;
+			if (Error::IsIssued()) return Value::nil();
 			break;
 		}
 		argument.SetValueThis(pValueElem.Reference());
-		pValueElem->DoCall(processor, argument);
-		if (Error::IsIssued()) return;
-		//pValueOwner->push_back(pValueRtn.release());
+		RefPtr<Value> pValueRtn(pValueElem->DoEval(processor, argument));
+		if (Error::IsIssued()) return Value::nil();
+		pValueOwner->push_back(pValueRtn.release());
 	}
-#endif
-	processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
+	return new Value_List(new ValueTypedOwner(pValueOwner.release()));
 }
 
 Value* Value_List::DoIndexGet(const Index& index) const
