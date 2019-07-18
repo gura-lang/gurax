@@ -19,8 +19,8 @@ Stream* g_pStreamCErr = nullptr;
 Gurax_DeclareFunction(Exec)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("args", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(fork));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -45,9 +45,9 @@ Gurax_ImplementFunction(Exec)
 Gurax_DeclareFunction(Redirect)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cin", VTYPE_Stream, ArgOccur::Once, ArgFlag::Nil | ArgFlag::StreamR, nullptr);
-	DeclareArg("cout", VTYPE_Stream, ArgOccur::Once, ArgFlag::Nil | ArgFlag::StreamW, nullptr);
-	DeclareArg("cerr", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW, nullptr);
+	DeclareArg("cin", VTYPE_Stream, ArgOccur::Once, ArgFlag::Nil | ArgFlag::StreamR);
+	DeclareArg("cout", VTYPE_Stream, ArgOccur::Once, ArgFlag::Nil | ArgFlag::StreamW);
+	DeclareArg("cerr", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	DeclareAttrOpt(Gurax_Symbol(fork));
 	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(

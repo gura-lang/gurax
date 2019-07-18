@@ -14,7 +14,7 @@ RefPtr<Value> g_pValue_argv;
 Gurax_DeclareFunction(Exit)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("exitCode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("exitCode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

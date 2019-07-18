@@ -20,7 +20,7 @@ Function_Unary::Function_Unary(const Operator* pOperator) :
 	Function(Function::Type::Statement, pOperator->GetSymbol()), _pOperator(pOperator)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
 }
 
 void Function_Unary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
@@ -50,8 +50,8 @@ Function_Binary::Function_Binary(const Operator* pOperator) :
 	Function(Function::Type::Statement, pOperator->GetSymbol()), _pOperator(pOperator)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("valueL", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("valueR", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("valueL", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("valueR", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 }
 
 void Function_Binary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
