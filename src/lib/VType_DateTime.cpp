@@ -13,16 +13,16 @@ namespace Gurax {
 Gurax_DeclareFunction(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
-	DeclareArg("year", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("month", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("day", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("hour", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("min", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("sec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("msec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("usec", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("minsOff", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	DeclareArg("year", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("month", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("day", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("hour", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("min", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("sec", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("msec", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("usec", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("minsOff", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `DateTime` instance.");

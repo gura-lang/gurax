@@ -23,8 +23,8 @@ namespace Gurax {
 Gurax_DeclareClassMethod(Error, Raise)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("msg", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("errorType", VTYPE_ErrorType, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("msg", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
 }
 
 Gurax_ImplementClassMethod(Error, Raise)

@@ -32,7 +32,7 @@ Gurax_ImplementMethod(Object, Clone)
 Gurax_DeclareMethod(Object, IsInstanceOf)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("vtype", VTYPE_VType, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("vtype", VTYPE_VType, ArgOccur::Once, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns `true` if the object is an instance of the specified `vtype`.\n");

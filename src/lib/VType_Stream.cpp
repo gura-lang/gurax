@@ -12,7 +12,7 @@ namespace Gurax {
 Gurax_DeclareMethod(Stream, Print)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out `values` to the specified stream.");
@@ -35,8 +35,8 @@ Gurax_ImplementMethod(Stream, Print)
 Gurax_DeclareMethod(Stream, Printf)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out `values` to the specified stream according to formatter specifiers specified in `format`.\n"
@@ -63,7 +63,7 @@ Gurax_ImplementMethod(Stream, Printf)
 Gurax_DeclareMethod(Stream, Println)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out `values` and an end-of-line character to the specified stream.\n");
@@ -86,7 +86,7 @@ Gurax_ImplementMethod(Stream, Println)
 Gurax_DeclareMethod(Stream, Read)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("bytes", VTYPE_Number, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from the `Stream` and returns it as a `Binary` instance.");
@@ -116,7 +116,7 @@ Gurax_ImplementMethod(Stream, ReadLine)
 Gurax_DeclareMethod(Stream, ReadLines)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("nLines", VTYPE_Number, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -132,7 +132,7 @@ Gurax_ImplementMethod(Stream, ReadLines)
 Gurax_DeclareMethod(Stream, Write)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("bytes", VTYPE_Number, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Writes data pointed by the specified `Pointer` instance to the `Stream`.");

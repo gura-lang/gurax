@@ -12,7 +12,7 @@ namespace Gurax {
 Gurax_DeclareFunction(Random)
 {
 	Declare(VTYPE_Random, Flag::Map);
-	DeclareArg("seed", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("seed", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -39,8 +39,8 @@ Gurax_ImplementFunction(Random)
 Gurax_DeclareMethod(Random, Normal)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("mean", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareArg("stddev", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("stddev", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Randomly generates a real number based on uniform distribution with specified mean and standard deviation values.\n"
@@ -63,7 +63,7 @@ Gurax_ImplementMethod(Random, Normal)
 Gurax_DeclareMethod(Random, Range)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("range", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
+	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Randomly generates an integer number in the range of `[0, range)`");

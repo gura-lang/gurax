@@ -12,7 +12,7 @@ namespace Gurax {
 Gurax_DeclareMethod(PUnit, ToString)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("seqIdOffset", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("seqIdOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 }
 
 Gurax_ImplementMethod(PUnit, ToString)

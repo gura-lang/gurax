@@ -12,7 +12,7 @@ namespace Gurax {
 Gurax_DeclareMethod(List, Add)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -37,7 +37,7 @@ Gurax_ImplementMethod(List, Add)
 Gurax_DeclareMethod(List, Append)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
