@@ -519,10 +519,7 @@ Gurax_ImplementMethod(String, Replaces)
 Gurax_DeclareMethod(String, Right)
 {
 	Declare(VTYPE_String, Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("len", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -540,12 +537,9 @@ Gurax_ImplementMethod(String, Right)
 Gurax_DeclareMethod(String, Split)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "sep", VTYPE_String, OCCUR_ZeroOrOnce);
-	DeclareArg(env, "count", VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -600,12 +594,9 @@ Gurax_ImplementMethod(String, StartsWith)
 Gurax_DeclareMethod(String, Strip)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareAttrOpt(Gurax_Symbol(both));
 	DeclareAttrOpt(Gurax_Symbol(left));
 	DeclareAttrOpt(Gurax_Symbol(right));
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -628,9 +619,6 @@ Gurax_ImplementMethod(String, Strip)
 Gurax_DeclareMethod(String, ToBinary)
 {
 	Declare(VTYPE_Binary, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -646,9 +634,6 @@ Gurax_ImplementMethod(String, ToBinary)
 Gurax_DeclareMethod(String, ToReader)
 {
 	Declare(VTYPE_Stream, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -679,11 +664,8 @@ Gurax_ImplementMethod(String, ToSymbol)
 Gurax_DeclareMethod(String, ToTemplate)
 {
 	Declare(VTYPE_Template, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareAttrOpt(Gurax_Symbol(noindent));
 	DeclareAttrOpt(Gurax_Symbol(lasteol));
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -700,9 +682,6 @@ Gurax_ImplementMethod(String, ToTemplate)
 Gurax_DeclareClassMethod(String, Translator)
 {
 	Declare(VTYPE_Nil, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-#endif
 	DeclareBlock(BlkOccur::Once);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -724,9 +703,6 @@ Gurax_ImplementClassMethod(String, Translator)
 Gurax_DeclareMethod(String, UnescapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -759,9 +735,6 @@ Gurax_ImplementMethod(String, Upper)
 Gurax_DeclareMethod(String, ZenToHan)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -779,9 +752,7 @@ Gurax_ImplementMethod(String, ZenToHan)
 // String#isAlnum
 Gurax_DeclareProperty_R(String, isAlnum)
 {
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if all the characters in the string are alphabet and digit.");
@@ -795,9 +766,7 @@ Gurax_ImplementPropertyGetter(String, isAlnum)
 // String#isAlpha
 Gurax_DeclareProperty_R(String, isAlpha)
 {
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if all the characters in the string are alphabet.");
@@ -811,9 +780,7 @@ Gurax_ImplementPropertyGetter(String, isAlpha)
 // String#isDigit()
 Gurax_DeclareProperty_R(String, isDigit)
 {
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if all the characters in the string are digit.");
@@ -827,9 +794,7 @@ Gurax_ImplementPropertyGetter(String, isDigit)
 // String#isEmpty()
 Gurax_DeclareProperty_R(String, isEmpty)
 {
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the string is empty.");
@@ -843,9 +808,7 @@ Gurax_ImplementPropertyGetter(String, isEmpty)
 // String#isSpace()
 Gurax_DeclareProperty_R(String, isSpace)
 {
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-#endif
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if all the characters in the string are space.");
