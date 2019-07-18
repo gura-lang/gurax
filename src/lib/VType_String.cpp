@@ -12,8 +12,8 @@ namespace Gurax {
 Gurax_DeclareMethod(String, Align)
 {
 	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 #if 0
 	DeclareAttr(Gurax_Symbol(center));
 	DeclareAttr(Gurax_Symbol(left));
@@ -217,8 +217,8 @@ Gurax_ImplementMethod(String, EncodeURI)
 Gurax_DeclareMethod(String, EndsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
@@ -303,8 +303,8 @@ Gurax_ImplementMethod(String, EscapeHTML)
 Gurax_DeclareMethod(String, Find)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rev));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
@@ -622,8 +622,8 @@ Gurax_ImplementMethod(String, Split)
 Gurax_DeclareMethod(String, StartsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(

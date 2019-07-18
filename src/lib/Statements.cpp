@@ -12,9 +12,9 @@ namespace Gurax {
 Gurax_DeclareStatement(cond)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("exprTrue", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("exprFalse", VTYPE_Quote, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("exprTrue", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("exprFalse", VTYPE_Quote, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Evaluates `exprTrue` and returns its result if `cond` is determined as `true`, and does `exprFalse` otherwise.\n"
@@ -53,8 +53,8 @@ Gurax_ImplementStatement(cond)
 Gurax_DeclareStatementAlias(if_, "if")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Specifies an \"if\" block within a sequence of `if-elsif-else`.\n"
@@ -114,8 +114,8 @@ Gurax_ImplementStatement(if_)
 Gurax_DeclareStatementAlias(elsif, "elsif")
 {
 	Declare(VTYPE_Any, Flag::Trailer);
-	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Specifies an \"elsif\" block within a sequence of `if-elsif-else`.\n"
@@ -151,7 +151,7 @@ Gurax_ImplementStatement(elsif)
 Gurax_DeclareStatementAlias(else_, "else")
 {
 	Declare(VTYPE_Any, Flag::Trailer);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Specifies an \"else\" block within a sequence of `if-elsif-else` or `try-catch-else-finally`.\n");
@@ -171,7 +171,7 @@ Gurax_ImplementStatement(else_)
 Gurax_DeclareStatementAlias(try_, "try")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(try_)
@@ -219,8 +219,8 @@ Gurax_ImplementStatement(try_)
 Gurax_DeclareStatementAlias(catch_, "catch")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("errorType", VTYPE_ErrorType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("errorType", VTYPE_ErrorType, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(catch_)
@@ -295,7 +295,7 @@ Gurax_ImplementStatement(catch_)
 Gurax_DeclareStatement(finally)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(finally)
@@ -306,8 +306,8 @@ Gurax_ImplementStatement(finally)
 Gurax_DeclareStatementAlias(for_, "for")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::OnceOrMore, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(for_)
@@ -427,8 +427,8 @@ Gurax_ImplementStatement(for_)
 Gurax_DeclareStatementAlias(while_, "while")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cond", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("cond", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(while_)
@@ -530,8 +530,8 @@ Gurax_ImplementStatement(while_)
 Gurax_DeclareStatement(repeat)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("cnt", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::None);
 }
 
 Gurax_ImplementStatement(repeat)
@@ -683,7 +683,7 @@ Gurax_ImplementStatement(break_)
 Gurax_DeclareStatementAlias(continue_, "continue")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 }
 
 Gurax_ImplementStatement(continue_)
@@ -716,7 +716,7 @@ Gurax_ImplementStatement(continue_)
 Gurax_DeclareStatementAlias(return_, "return")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("value", VTYPE_Any, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 }
 
 Gurax_ImplementStatement(return_)
@@ -734,8 +734,8 @@ Gurax_ImplementStatement(return_)
 Gurax_DeclareStatement(import)
 {
 	Declare(VTYPE_Module, Flag::None);
-	DeclareArg("name", VTYPE_Quote, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
+	DeclareArg("name", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(import)
@@ -773,8 +773,8 @@ Gurax_ImplementStatement(import)
 Gurax_DeclareStatement(scope)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("frame", VTYPE_Frame, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("frame", VTYPE_Frame, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(scope)
@@ -797,8 +797,8 @@ Gurax_ImplementStatement(scope)
 Gurax_DeclareStatementAlias(class_, "class")
 {
 	Declare(VTYPE_VType, Flag::None);
-	DeclareArg("parent", VTYPE_VType, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareArg("parent", VTYPE_VType, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(class_)
@@ -818,7 +818,7 @@ Gurax_ImplementStatement(class_)
 Gurax_DeclareStatementAlias(struct_, "struct")
 {
 	Declare(VTYPE_VType, Flag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareBlock(BlkOccur::Once, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(struct_)

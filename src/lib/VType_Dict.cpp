@@ -77,7 +77,7 @@ Gurax_ImplementStatement(_dict_)
 Gurax_DeclareMethod(Dict, Append)
 {
 	Declare(VTYPE_Dict, Flag::Reduce);
-	DeclareArg("dict", VTYPE_Dict, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("dict", VTYPE_Dict, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareAttrOpt(Gurax_Symbol(strict));
 	DeclareAttrOpt(Gurax_Symbol(timid));
@@ -131,7 +131,7 @@ Gurax_ImplementMethod(Dict, Clear)
 Gurax_DeclareMethod(Dict, Erase)
 {
 	Declare(VTYPE_Dict, Flag::Reduce);
-	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Erases an item that has a key that matches with the specified one");
@@ -153,8 +153,8 @@ Gurax_ImplementMethod(Dict, Erase)
 Gurax_DeclareMethod(Dict, Get)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("default", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::NoMap, nullptr);
+	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("default", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::NoMap);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -198,7 +198,7 @@ Gurax_ImplementMethod(Dict, Get)
 Gurax_DeclareMethod(Dict, HasKey)
 {
 	Declare(VTYPE_Bool, Flag::Map);
-	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `true` if the specified `key` exists in the target dictionary.");
@@ -220,8 +220,8 @@ Gurax_ImplementMethod(Dict, HasKey)
 Gurax_DeclareMethod(Dict, Put)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
-	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("key", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareAttrOpt(Gurax_Symbol(strict));
 	DeclareAttrOpt(Gurax_Symbol(timid));

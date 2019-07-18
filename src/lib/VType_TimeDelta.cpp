@@ -12,12 +12,12 @@ namespace Gurax {
 Gurax_DeclareFunction(TimeDelta)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
-	DeclareArg("days", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
-	DeclareArg("hours", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
-	DeclareArg("mins", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
-	DeclareArg("secs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
-	DeclareArg("msecs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
-	DeclareArg("usecs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
+	DeclareArg("days", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("hours", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("mins", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("secs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("msecs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("usecs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),

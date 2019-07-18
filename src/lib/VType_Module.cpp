@@ -12,7 +12,7 @@ namespace Gurax {
 Gurax_DeclareMethod(Module, __PropHandler__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
-	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
