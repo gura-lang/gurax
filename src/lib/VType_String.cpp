@@ -217,8 +217,8 @@ Gurax_ImplementMethod(String, EncodeURI)
 Gurax_DeclareMethod(String, EndsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("posEnd", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
@@ -303,8 +303,8 @@ Gurax_ImplementMethod(String, EscapeHTML)
 Gurax_DeclareMethod(String, Find)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("pos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rev));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
@@ -622,8 +622,8 @@ Gurax_ImplementMethod(String, Split)
 Gurax_DeclareMethod(String, StartsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("sub", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("pos", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(

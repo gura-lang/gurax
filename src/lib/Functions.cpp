@@ -12,7 +12,7 @@ namespace Gurax {
 Gurax_DeclareFunction(dir)
 {
 	Declare(VTYPE_List, Flag::None);
-	DeclareArg("frame", VTYPE_Frame, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("frame", VTYPE_Frame, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -37,8 +37,8 @@ Gurax_ImplementFunction(dir)
 Gurax_DeclareFunction(Format)
 {
 	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Converts `values` into string depending on formatter specifications\n"
@@ -119,7 +119,7 @@ Gurax_ImplementFunction(Format)
 Gurax_DeclareFunction(Print)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out `values` to standard output.");
@@ -140,8 +140,8 @@ Gurax_ImplementFunction(Print)
 Gurax_DeclareFunction(Printf)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("format", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out `values` to standard output according to formatter specifiers specified in `format`.\n"
@@ -166,7 +166,7 @@ Gurax_ImplementFunction(Printf)
 Gurax_DeclareFunction(Println)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("values", VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None, nullptr);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out `values` and an end-of-line character to the standard output.\n");
@@ -187,7 +187,7 @@ Gurax_ImplementFunction(Println)
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	DeclareBlock(BlkOccur::Once, BlkFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
