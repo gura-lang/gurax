@@ -14,7 +14,7 @@ Gurax_DeclareMethod(String, Align)
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
 	DeclareArg(env, "width", VTYPE_number);
-	DeclareArg(env, "padding", VTYPE_string, OCCUR_Once, FLAG_None, 0, new Expr_Value(Value(" ")));
+	DeclareArg(env, "padding", VTYPE_String, OCCUR_Once, FLAG_None, 0, new Expr_Value(Value(" ")));
 	DeclareAttr(Gurax_Symbol(center));
 	DeclareAttr(Gurax_Symbol(left));
 	DeclareAttr(Gurax_Symbol(right));
@@ -67,7 +67,7 @@ Gurax_DeclareMethod(String, Chop)
 {
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "suffix", VTYPE_string, OCCUR_ZeroOrMore);
+	DeclareArg(env, "suffix", VTYPE_String, OCCUR_ZeroOrMore);
 	DeclareAttr(Gurax_Symbol(eol));
 	DeclareAttr(Gurax_Symbol(icase));
 	DeclareBlock(OCCUR_ZeroOrOnce);
@@ -249,6 +249,46 @@ Gurax_ImplementMethod(String, EndsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
+// String#Escape():[surround] {block?}
+Gurax_DeclareMethod(String, Escape)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareAttr(Gurax_Symbol(surround));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Applies backslash escaping on characters in the string.\n"
+		"If attribute `:surround` is specified, the result contains a pair of single- or double-\n"
+		"quotation characters surrounding the string.\n");
+}
+
+Gurax_ImplementMethod(String, Escape)
+{
+	return Value::nil();
+}
+
+// String#EscapeHTML():[quote] {block?}
+Gurax_DeclareMethod(String, EscapeHTML)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareAttr(Gurax_Symbol(quote));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Converts some characters into HTML entity symbols.\n"
+		"If attribute `:quote` is specified, a double-quotation character would be converted to\n"
+		"an entity symbol \"&quot;\".");
+}
+
+Gurax_ImplementMethod(String, EscapeHTML)
+{
+	return Value::nil();
+}
+
 // String#Find(sub:String, pos?:Number):map:[icase,rev]
 Gurax_DeclareMethod(String, Find)
 {
@@ -285,6 +325,88 @@ Gurax_ImplementMethod(String, Find)
 	return (pFound == str.end())? Value::nil() : new Value_Number(str.CalcPos(pFound));
 }
 
+// String#Fold(len:number, step?:number):[neat] {block?}
+Gurax_DeclareMethod(String, Fold)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareArg(env, "len", VTYPE_number);
+	DeclareArg(env, "step", VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareAttr(Gurax_Symbol(neat));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator that folds the source string by the specified length.\n"
+		"\n"
+		"The argument `step` specifies the length of advancement for the next folding point.\n"
+		"If omitted, it would be the same amount as `len`.\n");
+}
+
+Gurax_ImplementMethod(String, Fold)
+{
+	return Value::nil();
+}
+
+// String#Foldw(width:Number):[padding] {block?}
+Gurax_DeclareMethod(String, Foldw)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareArg(env, "width", VTYPE_number);
+	DeclareAttr(Gurax_Symbol(padding));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator that folds the source string by the specified width.\n"
+		"\n"
+		"This method takes into account the character width based on the specification\n"
+		"of East Asian Width.\n");
+}
+
+Gurax_ImplementMethod(String, Foldw)
+{
+	return Value::nil();
+}
+
+// String#Format(values*):map
+Gurax_DeclareMethod(String, Format)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "values", VTYPE_any, OCCUR_ZeroOrMore);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Taking the string instance as a printf-styled formatter string,\n"
+		"it converts `values` into a string depending on formatter specifiers in it.\n");
+}
+
+Gurax_ImplementMethod(String, Format)
+{
+	return Value::nil();
+}
+
+// String#Left(len?:Number):map
+Gurax_DeclareMethod(String, Left)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Extracts the specified length of string from left of the source string.\n"
+		"\n"
+		"If the argument is omitted, it would return whole the source string.\n");
+}
+
+Gurax_ImplementMethod(String, Left)
+{
+	return Value::nil();
+}
+
 // String#Lower()
 Gurax_DeclareMethod(String, Lower)
 {
@@ -300,6 +422,179 @@ Gurax_ImplementMethod(String, Lower)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	return new Value_String(String::Lower(valueThis.GetString()));
+}
+
+// String#Mid(pos:Number, len?:Number):map {block?}
+Gurax_DeclareMethod(String, Mid)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "pos", VTYPE_number, OCCUR_Once);
+	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Extracts the specified length of string from the position `pos` and returns the result.\n"
+		"\n"
+		"If the argument `len` is omitted, it returns a string from `pos` to the end.\n"
+		"The number of an argument `pos` starts from zero.\n"
+		"\n"
+		"Below are examples:\n"
+		"\n"
+		"    'Hello world'.mid(3, 2) // 'lo'\n"
+		"    'Hello world'.mid(5)    // 'world'\n");
+}
+
+Gurax_ImplementMethod(String, Mid)
+{
+	return Value::nil();
+}
+
+// String#Print(stream?:Stream:w):void
+Gurax_DeclareMethod(String, Print)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
+	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Prints out the string to the specified `stream`.\n"
+		"\n"
+		"If the argument is omitted, it would print to the standard output.\n");
+}
+
+Gurax_ImplementMethod(String, Print)
+{
+	return Value::nil();
+}
+
+// String#Println(stream?:Stream:w):void
+Gurax_DeclareMethod(String, Println)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
+	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Prints out the string and a line-break to the specified `stream`.\n"
+		"\n"
+		"If the argument is omitted, it would print to the standard output.\n");
+}
+
+Gurax_ImplementMethod(String, Println)
+{
+	return Value::nil();
+}
+
+// String#Replace(match:String, sub:String, count?:number):map:[icase] {block?}
+Gurax_DeclareMethod(String, Replace)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "match",	VTYPE_string);
+	DeclareArg(env, "sub",		VTYPE_string);
+	DeclareArg(env, "count",	VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareAttr(Gurax_Symbol(icase));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Replaces sub strings that matches the string `match` with a string specified by `sub`\n"
+		"and returns the result.\n"
+		"\n"
+		"The argument `count` limits the maximum number of substitution.\n"
+		"If omitted, there's no limit of the work.\n"
+		"\n"
+		"With an attribute `:icase`, character cases are ignored while matching strings.\n"
+		"\n"
+		"If `block` is specified, it would be evaluated with a block parameter `|result:String, replaced:boolean|`,\n"
+		"where `result` is the result string and `replaced` indicates if there is any change\n"
+		"between the result and its original string.\n"
+		"In this case, the block's result would become the function's returned value.\n");
+}
+
+Gurax_ImplementMethod(String, Replace)
+{
+	return Value::nil();
+}
+
+// String#Replaces(map[]:String, count?:number):map:[icase] {block?}
+Gurax_DeclareMethod(String, Replaces)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "map",		VTYPE_String, OCCUR_Once, FLAG_ListVar);
+	DeclareArg(env, "count",	VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareAttr(Gurax_Symbol(icase));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Replaces string parts according to a list of pairs of a matching and a substituting string\n"
+		"and returns the result.\n"
+		"\n"
+		"The argument `map` is a `list` of match-substitution paris like `[match1, sub1, match2, sub2, ..]`\n"
+		"with which a sub string that matches `match`*n* would be replaced with `sub`*n*.\n"
+		"\n"
+		"The argument `count` limits the maximum number of substitution.\n"
+		"If omitted, there's no limit of the work.\n"
+		"\n"
+		"With an attribute `:icase`, character cases are ignored while matching strings.\n"
+		"\n"
+		"If `block` is specified, it would be evaluated with a block parameter `|result:String, replaced:boolean|`,\n"
+		"where `result` is the result string and `replaced` indicates if there is any change\n"
+		"between the result and its original string.\n"
+		"In this case, the block's result would become the function's returned value.\n");
+}
+
+Gurax_ImplementMethod(String, Replaces)
+{
+	return Value::nil();
+}
+
+// String#Right(len?:Number):map {block?}
+Gurax_DeclareMethod(String, Right)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Extracts the specified length of string from right of the source string.\n"
+		"\n"
+		"If the argument is omitted, it would return whole the source string.\n");
+}
+
+Gurax_ImplementMethod(String, Right)
+{
+	return Value::nil();
+}
+
+// String#Split(sep?:String, count?:number):[icase] {block?}
+Gurax_DeclareMethod(String, Split)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareArg(env, "sep", VTYPE_String, OCCUR_ZeroOrOnce);
+	DeclareArg(env, "count", VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareAttr(Gurax_Symbol(icase));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator generating sub strings extracted from the original one\n"
+		"separated by a specified string `sep`.\n"
+		"With an attribute `:icase`, character cases are ignored while finding the separator.\n");
+}
+
+Gurax_ImplementMethod(String, Split)
+{
+	return Value::nil();
 }
 
 // String#StartsWith(sub:String, pos?:Number):map:[rest,icase]
@@ -339,6 +634,33 @@ Gurax_ImplementMethod(String, StartsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
+// String#Strip():[both,left,right] {block?}
+Gurax_DeclareMethod(String, Strip)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareAttr(Gurax_Symbol(both));
+	DeclareAttr(Gurax_Symbol(left));
+	DeclareAttr(Gurax_Symbol(right));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns a string that removes space characters on the left, the right or the both sides\n"
+		"of the original string.\n"
+		"\n"
+		"The following attributes would specify which side of spaces should be removed:\n"
+		"\n"
+		"- `:both` .. Removes spaces on both sides. This is the default.\n"
+		"- `:left` .. Removes spaces on the left side.\n"
+		"- `:right` .. Removes spaces on the right side.\n");
+}
+
+Gurax_ImplementMethod(String, Strip)
+{
+	return Value::nil();
+}
+
 // String#ToBinary() {block?}
 Gurax_DeclareMethod(String, ToBinary)
 {
@@ -352,6 +674,100 @@ Gurax_DeclareMethod(String, ToBinary)
 }
 
 Gurax_ImplementMethod(String, ToBinary)
+{
+	return Value::nil();
+}
+
+// String#ToReader() {block?}
+Gurax_DeclareMethod(String, ToReader)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a `stream` instance that reads the string content as a binary sequence.\n");
+}
+
+Gurax_ImplementMethod(String, ToReader)
+{
+	return Value::nil();
+}
+
+// String#ToSymbol() {block?}
+Gurax_DeclareMethod(String, ToSymbol)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Convers the string into a symbol.\n");
+}
+
+Gurax_ImplementMethod(String, ToSymbol)
+{
+	return Value::nil();
+}
+
+// String#ToTemplate():[noindent,lasteol] {block?}
+Gurax_DeclareMethod(String, ToTemplate)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareAttr(Gurax_Symbol(noindent));
+	DeclareAttr(Gurax_Symbol(lasteol));
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Parses the content of the string as a text containing embedded scripts\n"
+		"and returns a `template` instance.\n");
+}
+
+Gurax_ImplementMethod(String, ToTemplate)
+{
+	return Value::nil();
+}
+
+// String.Translator():void {block}
+Gurax_DeclareClassMethod(String, Translator)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
+	DeclareBlock(OCCUR_Once);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Register a procedure evaluated when a string literal\n"
+		"appears with a suffix symbol \"`$`\",\n"
+		"which is meant to translate the string into another language.\n"
+		"\n"
+		"The procedure is described in `block` takes a block parameter `|str:string|`\n"
+		"where `str` is the original String, and is expected to return a string\n"
+		"translated from the original.\n");
+}
+
+Gurax_ImplementClassMethod(String, Translator)
+{
+	return Value::nil();
+}
+
+// String#UnescapeHTML() {block?}
+Gurax_DeclareMethod(String, UnescapeHTML)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Converts escape sequences into readable characters.");
+}
+
+Gurax_ImplementMethod(String, UnescapeHTML)
 {
 	return Value::nil();
 }
@@ -373,9 +789,106 @@ Gurax_ImplementMethod(String, Upper)
 	return new Value_String(String::Upper(valueThis.GetString()));
 }
 
+// String#ZenToHan() {block?}
+Gurax_DeclareMethod(String, ZenToHan)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareBlock(OCCUR_ZeroOrOnce);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts zenkaku to hankaku characters.");
+}
+
+Gurax_ImplementMethod(String, ZenToHan)
+{
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// String#isAlnum
+Gurax_DeclareProperty_R(String, isAlnum)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are alphabet and digit.");
+}
+
+Gurax_ImplementPropertyGetter(String, isAlnum)
+{
+	return Value::nil();
+}
+
+// String#isAlpha
+Gurax_DeclareProperty_R(String, isAlpha)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are alphabet.");
+}
+
+Gurax_ImplementPropertyGetter(String, isAlpha)
+{
+	return Value::nil();
+}
+
+// String#isDigit()
+Gurax_DeclareProperty_R(String, isDigit)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are digit.");
+}
+
+Gurax_ImplementPropertyGetter(String, isDigit)
+{
+	return Value::nil();
+}
+
+// String#isEmpty()
+Gurax_DeclareProperty_R(String, isEmpty)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the string is empty.");
+}
+
+Gurax_ImplementPropertyGetter(String, isEmpty)
+{
+	return Value::nil();
+}
+
+// String#isSpace()
+Gurax_DeclareProperty_R(String, isSpace)
+{
+#if 0
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+#endif
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are space.");
+}
+
+Gurax_ImplementPropertyGetter(String, isSpace)
+{
+	return Value::nil();
+}
+
 // String#len
 Gurax_DeclareProperty_R(String, len)
 {
@@ -416,12 +929,47 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(String, Align));
+	Assign(Gurax_CreateMethod(String, Capitalize));
+	Assign(Gurax_CreateMethod(String, Chop));
+	Assign(Gurax_CreateMethod(String, DecodeURI));
+	Assign(Gurax_CreateMethod(String, Each));
+	Assign(Gurax_CreateMethod(String, EachLine));
+	Assign(Gurax_CreateMethod(String, Embed));
+	Assign(Gurax_CreateMethod(String, Encode));
+	Assign(Gurax_CreateMethod(String, EncodeURI));
 	Assign(Gurax_CreateMethod(String, EndsWith));
+	Assign(Gurax_CreateMethod(String, Escape));
+	Assign(Gurax_CreateMethod(String, EscapeHTML));
 	Assign(Gurax_CreateMethod(String, Find));
+	Assign(Gurax_CreateMethod(String, Fold));
+	Assign(Gurax_CreateMethod(String, Foldw));
+	Assign(Gurax_CreateMethod(String, Format));
+	Assign(Gurax_CreateMethod(String, Left));
 	Assign(Gurax_CreateMethod(String, Lower));
+	Assign(Gurax_CreateMethod(String, Mid));
+	Assign(Gurax_CreateMethod(String, Print));
+	Assign(Gurax_CreateMethod(String, Println));
+	Assign(Gurax_CreateMethod(String, Replace));
+	Assign(Gurax_CreateMethod(String, Replaces));
+	Assign(Gurax_CreateMethod(String, Right));
+	Assign(Gurax_CreateMethod(String, Split));
 	Assign(Gurax_CreateMethod(String, StartsWith));
+	Assign(Gurax_CreateMethod(String, Strip));
+	Assign(Gurax_CreateMethod(String, ToBinary));
+	Assign(Gurax_CreateMethod(String, ToReader));
+	Assign(Gurax_CreateMethod(String, ToSymbol));
+	Assign(Gurax_CreateMethod(String, ToTemplate));
+	Assign(Gurax_CreateMethod(String, Translator));
+	Assign(Gurax_CreateMethod(String, UnescapeHTML));
 	Assign(Gurax_CreateMethod(String, Upper));
+	Assign(Gurax_CreateMethod(String, ZenToHan));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(String, isAlnum));
+	Assign(Gurax_CreateProperty(String, isAlpha));
+	Assign(Gurax_CreateProperty(String, isDigit));
+	Assign(Gurax_CreateProperty(String, isEmpty));
+	Assign(Gurax_CreateProperty(String, isSpace));
 	Assign(Gurax_CreateProperty(String, len));
 	Assign(Gurax_CreateProperty(String, width));
 }
