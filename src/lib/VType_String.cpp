@@ -12,10 +12,9 @@ namespace Gurax {
 Gurax_DeclareMethod(String, Align)
 {
 	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("width", VTYPE_number);
+	DeclareArg("padding", VTYPE_String, OCCUR_Once, FLAG_None, 0, new Expr_Value(Value(" ")));
 #if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "width", VTYPE_number);
-	DeclareArg(env, "padding", VTYPE_String, OCCUR_Once, FLAG_None, 0, new Expr_Value(Value(" ")));
 	DeclareAttr(Gurax_Symbol(center));
 	DeclareAttr(Gurax_Symbol(left));
 	DeclareAttr(Gurax_Symbol(right));
