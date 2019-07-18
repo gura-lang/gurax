@@ -1,6 +1,15 @@
 ======== Property ========
 String.__PropHandler__(`len) .. <PropHandler:len:Number:R>
 String.__PropHandler__(`width) .. <PropHandler:width:Number:R>
+======== String#Align() ========
+======== String#Capitalize() ========
+======== String#Chop() ========
+======== String#DecodeURI() ========
+======== String#Each() ========
+======== String#EachLine() ========
+======== String#Embed() ========
+======== String#Encode() ========
+======== String#EncodeURI() ========
 ======== String#StartsWith(), String#EndsWith() ========
 str .. abcdefghijklmn
 str.StartsWith('abcd') .. true
@@ -23,13 +32,8 @@ str.EndsWith('KLMN'):rest .. <Nil>
 str.EndsWith('KLMN'):rest:icase .. klmn
 str.StartsWith('defg', 3):rest .. hijklmn
 str.EndsWith('ghij', 10):rest .. ghijklmn
-======== String#len, String#width ========
-str .. abcdefghijklmn
-str.len .. 14
-str.width .. 14
-str .. あいうえおかきくけこ
-str.len .. 10
-str.width .. 20
+======== String#Escape() ========
+======== String#EscapeHTML() ========
 ======== String#Find() ========
 str .. abcdefghijklmn
 str.Find('a') .. 0
@@ -57,6 +61,32 @@ str.Find('ん') .. <Nil>
 str.Find('あいうえ') .. 0
 str.Find('おかきく') .. 4
 str.Find('おかきき') .. <Nil>
+======== String#Fold() ========
+======== String#Foldw() ========
+======== String#Format() ========
+======== String#Left() ========
 ======== String#Uppper(), String#Lower() ========
 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Upper() .. ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ
 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Lower() .. abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+======== String#Mid() ========
+======== String#Print() ========
+======== String#Println() ========
+======== String#Replace() ========
+======== String#Replaces() ========
+======== String#Right() ========
+======== String#Split() ========
+======== String#Strip() ========
+======== String#ToBinary() ========
+======== String#ToReader() ========
+======== String#ToSymbol() ========
+======== String#ToTemplate() ========
+======== String#Translator() ========
+======== String#UnescapeHTML() ========
+======== String#ZenToHan() ========
+======== String#len, String#width ========
+str .. abcdefghijklmn
+str.len .. 14
+str.width .. 14
+str .. あいうえおかきくけこ
+str.len .. 10
+str.width .. 20

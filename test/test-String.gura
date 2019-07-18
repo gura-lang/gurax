@@ -6,6 +6,33 @@ TestCase('Property') {
 	Tester(`String.__PropHandler__(`width))
 }
 
+TestCase('String#Align()') {
+}
+
+TestCase('String#Capitalize()') {
+}
+
+TestCase('String#Chop()') {
+}
+
+TestCase('String#DecodeURI()') {
+}
+
+TestCase('String#Each()') {
+}
+
+TestCase('String#EachLine()') {
+}
+
+TestCase('String#Embed()') {
+}
+
+TestCase('String#Encode()') {
+}
+
+TestCase('String#EncodeURI()') {
+}
+
 TestCase('String#StartsWith(), String#EndsWith()') {
 	str = 'abcdefghijklmn'
 	exprs = [
@@ -34,16 +61,10 @@ TestCase('String#StartsWith(), String#EndsWith()') {
 	Tester(exprs)
 }
 
-TestCase('String#len, String#width') {
-	exprs = [
-		`str
-		`str.len
-		`str.width
-	]
-	str = 'abcdefghijklmn'
-	Tester(exprs)
-	str = 'あいうえおかきくけこ'
-	Tester(exprs)
+TestCase('String#Escape()') {
+}
+
+TestCase('String#EscapeHTML()') {
 }
 
 TestCase('String#Find()') {
@@ -83,8 +104,76 @@ TestCase('String#Find()') {
 	Tester(exprs)
 }
 
+TestCase('String#Fold()') {
+}
+
+TestCase('String#Foldw()') {
+}
+
+TestCase('String#Format()') {
+}
+
+TestCase('String#Left()') {
+}
+
 TestCase('String#Uppper(), String#Lower()') {
 	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Upper())
 	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Lower())
 }
 
+TestCase('String#Mid()') {
+}
+
+TestCase('String#Print()') {
+}
+
+TestCase('String#Println()') {
+}
+
+TestCase('String#Replace()') {
+}
+
+TestCase('String#Replaces()') {
+}
+
+TestCase('String#Right()') {
+}
+
+TestCase('String#Split()') {
+}
+
+TestCase('String#Strip()') {
+}
+
+TestCase('String#ToBinary()') {
+}
+
+TestCase('String#ToReader()') {
+}
+
+TestCase('String#ToSymbol()') {
+}
+
+TestCase('String#ToTemplate()') {
+}
+
+TestCase('String#Translator()') {
+}
+
+TestCase('String#UnescapeHTML()') {
+}
+
+TestCase('String#ZenToHan()') {
+}
+
+TestCase('String#len, String#width') {
+	exprs = [
+		`str
+		`str.len
+		`str.width
+	]
+	str = 'abcdefghijklmn'
+	Tester(exprs)
+	str = 'あいうえおかきくけこ'
+	Tester(exprs)
+}
