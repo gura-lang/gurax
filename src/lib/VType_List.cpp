@@ -251,9 +251,11 @@ const DeclCallable* Value_List::GetDeclCallable() const
 
 void Value_List::DoCall(Processor& processor, Argument& argument)
 {
+	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	RefPtr<Value> pValueRtn(DoEval(processor, argument));
 	if (Error::IsIssued()) return;
 	processor.PushValue(pValueRtn.release());
+	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
 Value* Value_List::DoEval(Processor& processor, Argument& argument) const
