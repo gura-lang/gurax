@@ -14,12 +14,10 @@ Gurax_DeclareMethod(String, Align)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-#if 0
-	DeclareAttr(Gurax_Symbol(center));
-	DeclareAttr(Gurax_Symbol(left));
-	DeclareAttr(Gurax_Symbol(right));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareAttrOpt(Gurax_Symbol(center));
+	DeclareAttrOpt(Gurax_Symbol(left));
+	DeclareAttrOpt(Gurax_Symbol(right));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Align the string to the left, right or center within the specified `width`\n"
@@ -49,10 +47,7 @@ Gurax_ImplementMethod(String, Align)
 Gurax_DeclareMethod(String, Capitalize)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string that capitalizes the first character.\n");
@@ -67,13 +62,10 @@ Gurax_ImplementMethod(String, Capitalize)
 Gurax_DeclareMethod(String, Chop)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "suffix", VTYPE_String, OCCUR_ZeroOrMore);
-	DeclareAttr(Gurax_Symbol(eol));
-	DeclareAttr(Gurax_Symbol(icase));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("suffix", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(eol));
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string that removes a last character.\n"
@@ -92,10 +84,7 @@ Gurax_ImplementMethod(String, Chop)
 Gurax_DeclareMethod(String, DecodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string in which percent-encoded characters are decoded.");
@@ -110,12 +99,9 @@ Gurax_ImplementMethod(String, DecodeURI)
 Gurax_DeclareMethod(String, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareAttr(Gurax_Symbol(utf8));
-	DeclareAttr(Gurax_Symbol(utf32));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareAttrOpt(Gurax_Symbol(utf8));
+	DeclareAttrOpt(Gurax_Symbol(utf32));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator generating strings of each character in the original one.\n");
@@ -131,12 +117,9 @@ Gurax_ImplementMethod(String, Each)
 Gurax_DeclareMethod(String, EachLine)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "nLines", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(chop));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(chop));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator generating strings of each line in the original one.\n"
@@ -154,12 +137,9 @@ Gurax_ImplementMethod(String, EachLine)
 Gurax_DeclareMethod(String, Embed)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "dst", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
-	DeclareAttr(Gurax_Symbol(noindent));
-	DeclareAttr(Gurax_Symbol(lasteol));
-#endif
+	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(noindent));
+	DeclareAttrOpt(Gurax_Symbol(lasteol));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Evaluates a string that contains embedded scripts\n"
@@ -180,11 +160,8 @@ Gurax_ImplementMethod(String, Embed)
 Gurax_DeclareMethod(String, Encode)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "codec", VTYPE_codec);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	//DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Encodes the string with the given `codec` and return the result as a `binary`.\n");
@@ -199,10 +176,7 @@ Gurax_ImplementMethod(String, Encode)
 Gurax_DeclareMethod(String, EncodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string in which non-URIC characters are percent-encoded.\n");
@@ -261,11 +235,8 @@ Gurax_ImplementMethod(String, EndsWith)
 Gurax_DeclareMethod(String, Escape)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gurax_Symbol(surround));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareAttrOpt(Gurax_Symbol(surround));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Applies backslash escaping on characters in the string.\n"
@@ -282,11 +253,8 @@ Gurax_ImplementMethod(String, Escape)
 Gurax_DeclareMethod(String, EscapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gurax_Symbol(quote));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareAttrOpt(Gurax_Symbol(quote));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Converts some characters into HTML entity symbols.\n"
@@ -339,13 +307,10 @@ Gurax_ImplementMethod(String, Find)
 Gurax_DeclareMethod(String, Fold)
 {
 	Declare(VTYPE_String, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "len", VTYPE_number);
-	DeclareArg(env, "step", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(neat));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(neat));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator that folds the source string by the specified length.\n"
@@ -363,12 +328,9 @@ Gurax_ImplementMethod(String, Fold)
 Gurax_DeclareMethod(String, Foldw)
 {
 	Declare(VTYPE_String, Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "width", VTYPE_number);
-	DeclareAttr(Gurax_Symbol(padding));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(padding));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator that folds the source string by the specified width.\n"
@@ -386,10 +348,7 @@ Gurax_ImplementMethod(String, Foldw)
 Gurax_DeclareMethod(String, Format)
 {
 	Declare(VTYPE_String, Flag::Reduce | Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "values", VTYPE_any, OCCUR_ZeroOrMore);
-#endif
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Taking the string instance as a printf-styled formatter string,\n"
@@ -405,10 +364,7 @@ Gurax_ImplementMethod(String, Format)
 Gurax_DeclareMethod(String, Left)
 {
 	Declare(VTYPE_String, Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("len", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Extracts the specified length of string from left of the source string.\n"
@@ -442,12 +398,9 @@ Gurax_ImplementMethod(String, Lower)
 Gurax_DeclareMethod(String, Mid)
 {
 	Declare(VTYPE_String, Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "pos", VTYPE_number, OCCUR_Once);
-	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Extracts the specified length of string from the position `pos` and returns the result.\n"
@@ -470,10 +423,7 @@ Gurax_ImplementMethod(String, Mid)
 Gurax_DeclareMethod(String, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
-#endif
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out the string to the specified `stream`.\n"
@@ -490,10 +440,7 @@ Gurax_ImplementMethod(String, Print)
 Gurax_DeclareMethod(String, Println)
 {
 	Declare(VTYPE_Nil, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
-#endif
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints out the string and a line-break to the specified `stream`.\n"
@@ -510,14 +457,11 @@ Gurax_ImplementMethod(String, Println)
 Gurax_DeclareMethod(String, Replace)
 {
 	Declare(VTYPE_String, Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "match",	VTYPE_string);
-	DeclareArg(env, "sub",		VTYPE_string);
-	DeclareArg(env, "count",	VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(icase));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("match", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Replaces sub strings that matches the string `match` with a string specified by `sub`\n"
@@ -543,13 +487,10 @@ Gurax_ImplementMethod(String, Replace)
 Gurax_DeclareMethod(String, Replaces)
 {
 	Declare(VTYPE_String, Flag::Map);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "map",		VTYPE_String, OCCUR_Once, FLAG_ListVar);
-	DeclareArg(env, "count",	VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(icase));
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("map", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Replaces string parts according to a list of pairs of a matching and a substituting string\n"
@@ -581,8 +522,8 @@ Gurax_DeclareMethod(String, Right)
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
 	DeclareArg(env, "len", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Extracts the specified length of string from right of the source string.\n"
@@ -603,9 +544,9 @@ Gurax_DeclareMethod(String, Split)
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareArg(env, "sep", VTYPE_String, OCCUR_ZeroOrOnce);
 	DeclareArg(env, "count", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(icase));
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(icase));
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator generating sub strings extracted from the original one\n"
@@ -661,11 +602,11 @@ Gurax_DeclareMethod(String, Strip)
 	Declare(VTYPE_String, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gurax_Symbol(both));
-	DeclareAttr(Gurax_Symbol(left));
-	DeclareAttr(Gurax_Symbol(right));
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(both));
+	DeclareAttrOpt(Gurax_Symbol(left));
+	DeclareAttrOpt(Gurax_Symbol(right));
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string that removes space characters on the left, the right or the both sides\n"
@@ -689,8 +630,8 @@ Gurax_DeclareMethod(String, ToBinary)
 	Declare(VTYPE_Binary, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Converts the string into `binary` instance.");
@@ -707,8 +648,8 @@ Gurax_DeclareMethod(String, ToReader)
 	Declare(VTYPE_Stream, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns a `stream` instance that reads the string content as a binary sequence.\n");
@@ -723,10 +664,7 @@ Gurax_ImplementMethod(String, ToReader)
 Gurax_DeclareMethod(String, ToSymbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Convers the string into a symbol.\n");
@@ -743,10 +681,10 @@ Gurax_DeclareMethod(String, ToTemplate)
 	Declare(VTYPE_Template, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gurax_Symbol(noindent));
-	DeclareAttr(Gurax_Symbol(lasteol));
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(noindent));
+	DeclareAttrOpt(Gurax_Symbol(lasteol));
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Parses the content of the string as a text containing embedded scripts\n"
@@ -764,8 +702,8 @@ Gurax_DeclareClassMethod(String, Translator)
 	Declare(VTYPE_Nil, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareBlock(OCCUR_Once);
 #endif
+	DeclareBlock(BlkOccur::Once);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Register a procedure evaluated when a string literal\n"
@@ -788,8 +726,8 @@ Gurax_DeclareMethod(String, UnescapeHTML)
 	Declare(VTYPE_String, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Converts escape sequences into readable characters.");
@@ -823,8 +761,8 @@ Gurax_DeclareMethod(String, ZenToHan)
 	Declare(VTYPE_String, Flag::None);
 #if 0
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareBlock(OCCUR_ZeroOrOnce);
 #endif
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Converts zenkaku to hankaku characters.");
