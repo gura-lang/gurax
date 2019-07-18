@@ -374,7 +374,14 @@ Gurax_DeclareMethod(String, Left)
 
 Gurax_ImplementMethod(String, Left)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	int len = args.PickInt();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Left(len));
 }
 
 // String#Lower()

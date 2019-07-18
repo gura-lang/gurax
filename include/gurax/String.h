@@ -205,27 +205,27 @@ public:
 public:
 	// Alignment/Extraction/Replacement
 	static String Center(const char* str, size_t width, const char* padding);
-	String Center(size_t width, const char* padding) { return Center(c_str(), width, padding); }
+	String Center(size_t width, const char* padding) const { return Center(c_str(), width, padding); }
 	static String LJust(const char* str, size_t width, const char* padding);
-	String LJust(size_t width, const char* padding) { return LJust(c_str(), width, padding); }
+	String LJust(size_t width, const char* padding) const { return LJust(c_str(), width, padding); }
 	static String RJust(const char* str, size_t width, const char* padding);
-	String RJust(size_t width, const char* padding) { return RJust(c_str(), width, padding); }
+	String RJust(size_t width, const char* padding) const { return RJust(c_str(), width, padding); }
 	static String Left(const char* str, size_t len);
-	String Left(size_t len) { return Left(c_str(), len); }
+	String Left(size_t len) const { return Left(c_str(), len); }
 	static String Right(const char* str, size_t len);
-	String Right(size_t len) { return Right(c_str(), len); }
+	String Right(size_t len) const { return Right(c_str(), len); }
 	static String Middle(const char* str, int start, size_t len);
-	String Middle(int start, size_t len) { return Middle(c_str(), start, len); }
+	String Middle(int start, size_t len) const { return Middle(c_str(), start, len); }
 	template<typename T_CharCmp>
 	static String Replace(const char* str, const char* sub, const char* replace);
 	template<typename T_CharCmp>
 	static String Replace(const char* str, const char* sub, const char* replace, int nMaxReplace);
 	template<typename T_CharCmp>
-	String Replace(const char* sub, const char* replace) {
+	String Replace(const char* sub, const char* replace) const {
 		return Replace<T_CharCmp>(c_str(), sub, replace);
 	}
 	template<typename T_CharCmp>
-	String Replace(const char* sub, const char* replace, int nMaxReplace) {
+	String Replace(const char* sub, const char* replace, int nMaxReplace) const {
 		return Replace<T_CharCmp>(c_str(), sub, replace, nMaxReplace);
 	}
 public:
