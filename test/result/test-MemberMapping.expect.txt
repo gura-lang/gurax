@@ -1,0 +1,9 @@
+======== Simple ========
+a .. ['abcd', 'efg', 'hijklm']
+a::len .. [4, 3, 6]
+a::Upper() .. ['ABCD', 'EFG', 'HIJKLM']
+a::Left(2) .. ['ab', 'ef', 'hi']
+a .. []
+a::len .. []
+a::Upper() .. []
+a::Left(2) .. []

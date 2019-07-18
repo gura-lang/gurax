@@ -1,0 +1,15 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Simple') {
+	a = ['abcd', 'efg', 'hijklm']
+	Tester(`a)
+	Tester(`a::len)
+	Tester(`a::Upper())
+	Tester(`a::Left(2))
+	a = []
+	Tester(`a)
+	Tester(`a::len)
+	Tester(`a::Upper())
+	Tester(`a::Left(2))
+}
