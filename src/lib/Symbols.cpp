@@ -43,6 +43,7 @@ Gurax_RealizeSymbol(abs);
 Gurax_RealizeSymbol(align);
 Gurax_RealizeSymbol(alpha);
 Gurax_RealizeSymbol(and);
+Gurax_RealizeSymbol(any_attr);
 Gurax_RealizeSymbol(aqua);
 Gurax_RealizeSymbol(ar);
 Gurax_RealizeSymbol(arg);

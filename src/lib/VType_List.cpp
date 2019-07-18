@@ -244,7 +244,7 @@ bool Value_List::IsCallable() const
 const DeclCallable* Value_List::GetDeclCallable() const
 {
 	const ValueOwner& valueOwner = GetValueOwner();
-	if (valueOwner.empty()) return nullptr;
+	if (valueOwner.empty()) return DeclCallable::Wildcard.get();
 	const Value* pValueElem = valueOwner.front();
 	return pValueElem->GetDeclCallable();
 }

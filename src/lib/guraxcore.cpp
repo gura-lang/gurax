@@ -7,11 +7,12 @@ namespace Gurax {
 
 void Initialize(int argc, char** argv)
 {
+	Symbol::Bootup();	// must be at first
 	Attribute::Bootup();
 	Binary::Bootup();
 	Codec::Bootup();
-	DeclArg::Bootup();
 	DeclCallable::Bootup();
+	DeclArg::Bootup();
 	Error::Bootup();
 	Expr::Bootup();
 	Function::Bootup();
@@ -19,7 +20,6 @@ void Initialize(int argc, char** argv)
 	Random::Bootup();
 	String::Bootup();
 	Stream::Bootup();
-	Symbol::Bootup();
 	Template::Bootup();
 	Token::Bootup();
 	Basement::Inst.Initialize(argc, argv);

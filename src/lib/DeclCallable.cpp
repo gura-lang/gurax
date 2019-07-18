@@ -11,14 +11,20 @@ namespace Gurax {
 RefPtr<DeclCallable> DeclCallable::Empty;
 RefPtr<DeclCallable> DeclCallable::EmptyWithBlock;
 RefPtr<DeclCallable> DeclCallable::EmptyWithOptionalBlock;
+RefPtr<DeclCallable> DeclCallable::Wildcard;
 
 void DeclCallable::Bootup()
 {
 	Empty.reset(new DeclCallable());
 	EmptyWithBlock.reset(new DeclCallable());
-	EmptyWithBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
 	EmptyWithOptionalBlock.reset(new DeclCallable());
+	Wildcard.reset(new DeclCallable());
+	EmptyWithBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::Once).SetFlags(Flag::None);
 	EmptyWithOptionalBlock->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
+	Wildcard->GetDeclArgOwner().push_back(
+		new DeclArg(Gurax_Symbol(x), VTYPE_Any, DeclArg::Occur::ZeroOrMore, DeclArg::Flag::None, nullptr));
+	Wildcard->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
+	Wildcard->SetFlags(Flag::AnyAttr);
 }
 
 DeclCallable::DeclCallable() :
@@ -169,6 +175,7 @@ void DeclCallable::Clear()
 
 bool DeclCallable::CheckAttribute(const Attribute& attr) const
 {
+	if (IsSet(Flag::AnyAttr)) return true;
 	for (const Symbol* pSymbol: attr.GetSymbols()) {
 		if (!GetAttr().GetSymbolSetOpt().IsSet(pSymbol)) {
 			Error::Issue(ErrorType::ArgumentError, "unacceptable attribute symbol: %s", pSymbol->GetName());

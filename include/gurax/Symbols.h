@@ -45,6 +45,7 @@ Gurax_DeclareSymbol(abs);
 Gurax_DeclareSymbol(align);
 Gurax_DeclareSymbol(alpha);
 Gurax_DeclareSymbol(and);
+Gurax_DeclareSymbol(any_attr);
 Gurax_DeclareSymbol(aqua);
 Gurax_DeclareSymbol(ar);
 Gurax_DeclareSymbol(arg);

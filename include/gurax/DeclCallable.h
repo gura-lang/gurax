@@ -45,7 +45,7 @@ public:
 		static const Flags XList			= 1 << 18;	// :xlist
 		static const Flags Iter				= 1 << 19;	// :iter
 		static const Flags XIter			= 1 << 20;	// :xiter
-		
+		static const Flags AnyAttr			= 1 << 21;	// :any_attr
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
@@ -71,6 +71,7 @@ public:
 			Assoc(Gurax_Symbol(xlist),			Flag::XList);
 			Assoc(Gurax_Symbol(iter),			Flag::Iter);
 			Assoc(Gurax_Symbol(xiter),			Flag::XIter);
+			Assoc(Gurax_Symbol(any_attr),		Flag::AnyAttr);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
@@ -90,6 +91,7 @@ public:
 	static RefPtr<DeclCallable> Empty;
 	static RefPtr<DeclCallable> EmptyWithBlock;
 	static RefPtr<DeclCallable> EmptyWithOptionalBlock;
+	static RefPtr<DeclCallable> Wildcard;
 public:
 	static void Bootup();
 public:
