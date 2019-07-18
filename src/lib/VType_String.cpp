@@ -12,8 +12,8 @@ namespace Gurax {
 Gurax_DeclareMethod(String, Align)
 {
 	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("width", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
-	DeclareArg("padding", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None, nullptr);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None, nullptr);
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None, nullptr);
 #if 0
 	DeclareAttr(Gurax_Symbol(center));
 	DeclareAttr(Gurax_Symbol(left));

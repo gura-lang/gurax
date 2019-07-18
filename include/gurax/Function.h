@@ -94,6 +94,10 @@ public:
 	enum class Type { Statement, Function, Method, ClassMethod };
 	using Flags = DeclCallable::Flags;
 	using Flag = DeclCallable::Flag;
+	using ArgOccur = DeclArg::Occur;
+	using ArgFlag = DeclArg::Flag;
+	using BlkOccur = DeclBlock::Occur;
+	using BlkFlag = DeclBlock::Flag;
 protected:
 	Type _type;
 	const Symbol* _pSymbol;
