@@ -55,6 +55,7 @@ public:
 	virtual bool IsEqualTo(const Value* pValue) const override { return this == pValue; }
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+	virtual bool IsCallable() const override { return true; }
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;

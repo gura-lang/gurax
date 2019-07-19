@@ -236,11 +236,6 @@ void Value_List::UpdateMapMode(Argument& argument) const
 	if (argument.IsMapNone()) argument.SetMapMode(Argument::MapMode::ToList);
 }
 
-bool Value_List::IsCallable() const
-{
-	return true;
-}
-
 const DeclCallable* Value_List::GetDeclCallable() const
 {
 	const ValueOwner& valueOwner = GetValueOwner();
