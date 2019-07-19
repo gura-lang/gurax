@@ -29,10 +29,10 @@ public:
 		static const Flags LenDetermined	= (1 << 1);
 	};
 protected:
-	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<Value> _pValuePeeked;
 public:
 	// Constructor
-	Iterator() : _pHelpProvider(new HelpProvider()) {}
+	Iterator() {}
 	// Copy constructor/operator
 	Iterator(const Iterator& src) = delete;
 	Iterator& operator=(const Iterator& src) = delete;
@@ -48,12 +48,6 @@ public:
 	bool MustBeFinite() const;
 	bool IsLenUndetermined() const { return (GetFlags() & Flag::LenDetermined) == 0; }
 	bool IsLenDetermined() const { return (GetFlags() & Flag::LenDetermined) != 0; }
-	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
-	}
-	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
-	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Iterator& iterator) const { return this == &iterator; }
 	bool IsEqualTo(const Iterator& iterator) const { return IsIdentical(iterator); }
@@ -61,7 +55,13 @@ public:
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
-	Value* NextValue() { return DoNextValue(); }
+	Value* NextValue() {
+		return _pValuePeeked? _pValuePeeked.release() : DoNextValue();
+	}
+	Value* PeekValue() {
+		if (!_pValuePeeked) _pValuePeeked.reset(DoNextValue());
+		return _pValuePeeked.Reference();
+	}
 public:
 	// Virtual functions
 	virtual Iterator* Clone() const;
