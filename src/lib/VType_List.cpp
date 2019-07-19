@@ -278,12 +278,12 @@ Value* Value_List::DoIndexGet(const Index& index) const
 		if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return Value::nil();
 		return pValue;
 	} else {
-		RefPtr<ValueTypedOwner> pValuesRtn(new ValueTypedOwner());
-		pValuesRtn->Reserve(valuesIndex.size());
+		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
+		pValuesRtn->reserve(valuesIndex.size());
 		for (const Value* pValueIndex : valuesIndex) {
 			Value* pValue = nullptr;
 			if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return Value::nil();
-			pValuesRtn->Add(pValue);
+			pValuesRtn->push_back(pValue);
 		}
 		return new Value_List(pValuesRtn.release());
 	}

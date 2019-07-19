@@ -138,11 +138,10 @@ private:
 	RefPtr<ValueOwner> _pValueOwner;
 public:
 	// Constructor
-	ValueTypedOwner();
-	ValueTypedOwner(VType* pVTypeOfElems, ValueOwner* pValueOwner) :
-		_pVTypeOfElems(pVTypeOfElems), _pValueOwner(pValueOwner) {}
+	ValueTypedOwner() = delete;
+	ValueTypedOwner(VType& vtypeOfElems, ValueOwner* pValueOwner);
 	ValueTypedOwner(ValueOwner* pValueOwner) :
-		ValueTypedOwner(pValueOwner->GetVTypeOfElems(), pValueOwner) {}
+		_pVTypeOfElems(&pValueOwner->GetVTypeOfElems()), _pValueOwner(pValueOwner) {}
 	// Copy constructor/operator
 	ValueTypedOwner(const ValueTypedOwner& src) = delete;
 	ValueTypedOwner& operator=(const ValueTypedOwner& src) = delete;
@@ -156,7 +155,7 @@ public:
 	void Clear();
 	ValueTypedOwner* Clone() const;
 	ValueTypedOwner* CloneDeep() const {
-		return new ValueTypedOwner(_pVTypeOfElems, _pValueOwner->CloneDeep());
+		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}
 	bool IsEmpty() const { return _pValueOwner->empty(); }
 	size_t GetSize() const { return _pValueOwner->size(); }

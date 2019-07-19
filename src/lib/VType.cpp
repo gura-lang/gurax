@@ -101,18 +101,18 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 
 		// type check
 
-		RefPtr<ValueTypedOwner> pValuesCasted(new ValueTypedOwner());
-		pValuesCasted->Reserve(values.GetSize());
+		RefPtr<ValueOwner> pValuesCasted(new ValueOwner());
+		pValuesCasted->reserve(values.GetSize());
 		for (const Value* pValueElem : values.GetValueOwner()) {
 			if (pValueElem->IsInstanceOf(*this)) {
-				pValuesCasted->Add(pValueElem->Reference());
+				pValuesCasted->push_back(pValueElem->Reference());
 			} else {
 				RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
 				if (!pValueElemCasted) {
 					IssueError(*this, *pValueElem);
 					return nullptr;
 				}
-				pValuesCasted->Add(pValueElemCasted.release());
+				pValuesCasted->push_back(pValueElemCasted.release());
 			}
 		}
 		return new Value_List(pValuesCasted.release());

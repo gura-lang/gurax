@@ -8,9 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ValueTypedOwner
 //------------------------------------------------------------------------------
-ValueTypedOwner::ValueTypedOwner() :
-	_pVTypeOfElems(&VTYPE_Undefined), _pValueOwner(new ValueOwner())
-{}
+ValueTypedOwner::ValueTypedOwner(VType& vtypeOfElems, ValueOwner* pValueOwner) :
+	_pVTypeOfElems(pValueOwner->empty()? &VTYPE_Undefined : &vtypeOfElems), _pValueOwner(pValueOwner)
+{
+}
 
 void ValueTypedOwner::Clear()
 {

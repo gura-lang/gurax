@@ -14,16 +14,16 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 	return *this;
 }
 
-VType* ValueList::GetVTypeOfElems() const
+VType& ValueList::GetVTypeOfElems() const
 {
-	if (empty()) return &VTYPE_Undefined;
+	if (empty()) return VTYPE_Undefined;
 	auto ppValue = begin();
 	VType* pVTypeOfElems = &(*ppValue)->GetVType();
 	ppValue++;
 	for ( ; ppValue != end(); ppValue++) {
-		if (!pVTypeOfElems->IsIdentical((*ppValue)->GetVType())) return &VTYPE_Any;
+		if (!pVTypeOfElems->IsIdentical((*ppValue)->GetVType())) return VTYPE_Any;
 	}
-	return pVTypeOfElems;
+	return *pVTypeOfElems;
 }
 
 String ValueList::ToString(const StringStyle& ss) const

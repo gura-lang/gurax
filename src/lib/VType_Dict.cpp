@@ -393,15 +393,15 @@ Value* Value_Dict::DoIndexGet(const Index& index) const
 		}
 		return pValue->Reference();
 	} else {
-		RefPtr<ValueTypedOwner> pValuesRtn(new ValueTypedOwner());
-		pValuesRtn->Reserve(valuesIndex.size());
+		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
+		pValuesRtn->reserve(valuesIndex.size());
 		for (const Value* pValueIndex : valuesIndex) {
 			const Value* pValue = GetValueDict().Lookup(*pValueIndex);
 			if (!pValue) {
 				ValueDict::IssueError_KeyNotFound(*pValueIndex);
 				return Value::nil();
 			}
-			pValuesRtn->Add(pValue->Reference());
+			pValuesRtn->push_back(pValue->Reference());
 		}
 		return new Value_List(pValuesRtn.release());
 	}

@@ -964,9 +964,9 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_CreateList<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
-	if (GetSizeReserve() > 0) pValueTypedOwner->Reserve(GetSizeReserve());
-	if (!discardValueFlag) processor.PushValue(new Value_List(pValueTypedOwner.release()));
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (GetSizeReserve() > 0) pValueOwner->reserve(GetSizeReserve());
+	if (!discardValueFlag) processor.PushValue(new Value_List(pValueOwner.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

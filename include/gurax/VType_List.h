@@ -4,6 +4,7 @@
 #ifndef GURAX_VTYPE_LIST_H
 #define GURAX_VTYPE_LIST_H
 #include "VType_Object.h"
+#include "VType_Undefined.h"
 #include "ValueTypedOwner.h"
 
 namespace Gurax {
@@ -34,10 +35,14 @@ protected:
 	RefPtr<ValueTypedOwner> _pValueTypedOwner;
 public:
 	// Constructor
-	Value_List(VType& vtype = VTYPE_List) :
-		Value_List(new ValueTypedOwner(), vtype) {}
 	explicit Value_List(ValueTypedOwner* pValueTypedOwner, VType& vtype = VTYPE_List) :
 		Value_Object(vtype), _pValueTypedOwner(pValueTypedOwner) {}
+	Value_List(VType& vtype = VTYPE_List) :
+		Value_List(new ValueTypedOwner(VTYPE_Undefined, new ValueOwner()), vtype) {}
+	Value_List(VType& vtypeOfElems, ValueOwner* pValueOwner, VType& vtype = VTYPE_List) :
+		Value_List(new ValueTypedOwner(vtypeOfElems, pValueOwner), vtype) {}
+	explicit Value_List(ValueOwner* pValueOwner, VType& vtype = VTYPE_List) :
+		Value_List(new ValueTypedOwner(pValueOwner), vtype) {}
 	// Copy constructor/operator
 	Value_List(const Value_List& src) :
 		Value_Object(src), _pValueTypedOwner(src._pValueTypedOwner->Reference()) {}

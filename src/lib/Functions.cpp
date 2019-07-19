@@ -27,10 +27,10 @@ Gurax_ImplementFunction(dir)
 	SymbolList symbolList;
 	frame.GatherSymbol(symbolList);
 	symbolList.Sort();
-	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
-	pValues->Reserve(symbolList.size());
-	for (const Symbol* pSymbol : symbolList) pValues->Add(new Value_Symbol(pSymbol));
-	return new Value_List(pValues.release());
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	pValues->reserve(symbolList.size());
+	for (const Symbol* pSymbol : symbolList) pValues->push_back(new Value_Symbol(pSymbol));
+	return new Value_List(VTYPE_Symbol, pValues.release());
 }
 
 // Format(format:String, values*):String:map

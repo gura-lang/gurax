@@ -19,7 +19,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	if (declArgOwner.size() == 0) {
 		// iterable#Each { .. }
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
-			RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
+			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
@@ -27,12 +27,12 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.
 				if (!pValue->IsUndefined() && (listFlag || pValue->IsValid())) {
-					pValueTypedOwner->Add(pValue.release());
+					pValueOwner->push_back(pValue.release());
 				}
 				contFlag = !processor.IsEventBreak();
 				processor.ClearEvent();
 			} while (contFlag);
-			pValueRtn.reset(new Value_List(pValueTypedOwner.release()));
+			pValueRtn.reset(new Value_List(pValueOwner.release()));
 		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
 
 		} else {
@@ -48,7 +48,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	} else if (declArgOwner.size() == 1) {
 		// iterable#Each {|elem| .. }
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
-			RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
+			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
@@ -58,12 +58,12 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.
 				if (!pValue->IsUndefined() && (listFlag || pValue->IsValid())) {
-					pValueTypedOwner->Add(pValue.release());
+					pValueOwner->push_back(pValue.release());
 				}
 				contFlag = !processor.IsEventBreak();
 				processor.ClearEvent();
 			} while (contFlag);
-			pValueRtn.reset(new Value_List(pValueTypedOwner.release()));
+			pValueRtn.reset(new Value_List(pValueOwner.release()));
 		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
 
 		} else {
@@ -82,7 +82,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 		// iterable#Each {|elem, idx| .. }
 		size_t idx = 0;
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
-			RefPtr<ValueTypedOwner> pValueTypedOwner(new ValueTypedOwner());
+			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
@@ -96,12 +96,12 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.
 				if (!pValue->IsUndefined() && (listFlag || pValue->IsValid())) {
-					pValueTypedOwner->Add(pValue.release());
+					pValueOwner->push_back(pValue.release());
 				}
 				contFlag = !processor.IsEventBreak();
 				processor.ClearEvent();
 			} while (contFlag);
-			pValueRtn.reset(new Value_List(pValueTypedOwner.release()));
+			pValueRtn.reset(new Value_List(pValueOwner.release()));
 		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
 
 		} else {

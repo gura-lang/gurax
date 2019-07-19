@@ -121,13 +121,13 @@ Gurax_DeclareModuleProperty_RW(path)
 
 Gurax_ImplementModulePropertyGetter(path)
 {
-	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+	RefPtr<ValueOwner> pValues(new ValueOwner());
 	const StringList& pathList = Basement::Inst.GetPathList();
-	pValues->Reserve(pathList.size());
+	pValues->reserve(pathList.size());
 	for (const String& dirName : pathList) {
-		pValues->Add(new Value_String(dirName));
+		pValues->push_back(new Value_String(dirName));
 	}
-	return new Value_List(pValues.release());
+	return new Value_List(VTYPE_String, pValues.release());
 }
 
 Gurax_ImplementModulePropertySetter(path)
@@ -191,13 +191,16 @@ Gurax_ModulePrepare()
 {
 	// Initialization of global variable
 	do {
-		RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+		RefPtr<ValueOwner> pValues(new ValueOwner());
 		int argc = Basement::Inst.GetArgc();
 		char** argv = Basement::Inst.GetArgv();
-		for (int iArg = 1; iArg < argc; iArg++) {
-			pValues->Add(new Value_String(argv[iArg]));
+		if (argc > 1) {
+			pValues->reserve(argc - 1);
+			for (int iArg = 1; iArg < argc; iArg++) {
+				pValues->push_back(new Value_String(argv[iArg]));
+			}
 		}
-		g_pValue_argv.reset(new Value_List(pValues.release()));
+		g_pValue_argv.reset(new Value_List(VTYPE_String, pValues.release()));
 	} while (0);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
