@@ -175,7 +175,7 @@ Value* Iterator_MemberMapToIter::DoNextValue()
 	if (!pValueTargetElem) return nullptr;
 	Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) return nullptr;
-	if (pValueProp->IsCallable()) {
+	if (pValueProp->IsCallable() && !pValueProp->IsIterable()) {
 		return new Value_CallableMember(pValueTargetElem.release(), pValueProp->Reference());
 	} else {
 		return pValueProp->Reference();

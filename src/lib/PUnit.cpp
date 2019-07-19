@@ -1453,7 +1453,7 @@ void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor)
 	}
 	if (discardValueFlag) {
 		// nothing to do
-	} else if (pValueProp->IsCallable()) {
+	} else if (pValueProp->IsCallable() && !pValueProp->IsIterable()) {
 		processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
 	} else {
 		processor.PushValue(pValueProp->Reference());
@@ -1508,7 +1508,7 @@ void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processo
 	}
 	if (discardValueFlag) {
 		// nothing to do
-	} else if (pValueProp->IsCallable()) {
+	} else if (pValueProp->IsCallable() && !pValueProp->IsIterable()) {
 		processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
 	} else {
 		processor.PushValue(pValueProp->Reference());
@@ -1565,7 +1565,7 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 			if (!pValueProp) {
 				processor.ErrorDone();
 				return;
-			} else if (pValueProp->IsCallable()) {
+			} else if (pValueProp->IsCallable() && !pValueProp->IsIterable()) {
 				pValueOwner->push_back(new Value_CallableMember(pValueTargetElem.release(), pValueProp->Reference()));
 			} else {
 				pValueOwner->push_back(pValueProp->Reference());
@@ -1579,7 +1579,7 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 			return;
 		} else if (discardValueFlag) {
 			// nothing to do
-		} else if (pValueProp->IsCallable()) {
+		} else if (pValueProp->IsCallable() && !pValueProp->IsIterable()) {
 			processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
@@ -1639,7 +1639,7 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 			return;
 		} else if (discardValueFlag) {
 			// nothing to do
-		} else if (pValueProp->IsCallable()) {
+		} else if (pValueProp->IsCallable() && !pValueProp->IsIterable()) {
 			processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
