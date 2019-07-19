@@ -166,4 +166,27 @@ String Iterator_Range::ToString(const StringStyle& ss) const
 	return str;
 }
 
+//------------------------------------------------------------------------------
+// Iterator_MemberMapToIter
+//------------------------------------------------------------------------------
+Value* Iterator_MemberMapToIter::DoNextValue()
+{
+	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
+	if (!pValueTargetElem) return nullptr;
+	Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
+	if (!pValueProp) return nullptr;
+	if (pValueProp->IsCallable()) {
+		return new Value_CallableMember(pValueTargetElem.release(), pValueProp->Reference());
+	} else {
+		return pValueProp->Reference();
+	}
+}
+
+String Iterator_MemberMapToIter::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("MemberMapToIter");
+	return str;
+}
+
 }

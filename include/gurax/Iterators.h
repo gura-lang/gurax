@@ -166,6 +166,30 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_MemberMapToIter
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_MemberMapToIter : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorTarget;
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+public:
+	Iterator_MemberMapToIter(Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr) :
+		_pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
+public:
+	const Iterator& GetIteratorTarget() const { return *_pIteratorTarget; }
+	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIteratorTarget().GetFlags(); }
+	virtual Value* DoNextValue() override;
+	virtual size_t GetLength() const override { return GetIteratorTarget().GetLength(); }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

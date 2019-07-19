@@ -1,4 +1,4 @@
-======== Simple ========
+======== Map to List ========
 a .. ['abcd', 'efg', 'hijklm']
 a::len .. [4, 3, 6]
 a::Upper() .. ['ABCD', 'EFG', 'HIJKLM']
@@ -7,3 +7,10 @@ a .. []
 a::len .. []
 a::Upper() .. []
 a::Left(2) .. []
+======== Map to Iterator ========
+a .. ['abcd', 'efg', 'hijklm']
+a:*len .. <Iterator:MemberMapToIter>
+[a:*len] .. [4, 3, 6]
+a .. []
+a:*len .. <Iterator:MemberMapToIter>
+[a:*len] .. []

@@ -1556,10 +1556,10 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
+		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-		RefPtr<Iterator> pIterator(pValueTarget->DoGenIterator());
 		for (;;) {
-			RefPtr<Value> pValueTargetElem(pIterator->NextValue());
+			RefPtr<Value> pValueTargetElem(pIteratorTarget->NextValue());
 			if (!pValueTargetElem) break;
 			Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
 			if (!pValueProp) {
@@ -1627,18 +1627,23 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
-	if (!pValueProp) {
-		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
-		processor.ErrorDone();
-		return;
-	}
-	if (discardValueFlag) {
-		// nothing to do
-	} else if (pValueProp->IsCallable()) {
-		processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
+	if (pValueTarget->IsIterable()) {
+		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+		RefPtr<Iterator> pIterator(new Iterator_MemberMapToIter(
+									   pIteratorTarget.release(), GetSymbol(), GetAttr().Reference()));
+		processor.PushValue(new Value_Iterator(pIterator.release()));
 	} else {
-		processor.PushValue(pValueProp->Reference());
+		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+		if (!pValueProp) {
+			processor.ErrorDone();
+			return;
+		} else if (discardValueFlag) {
+			// nothing to do
+		} else if (pValueProp->IsCallable()) {
+			processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
+		} else {
+			processor.PushValue(pValueProp->Reference());
+		}
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }

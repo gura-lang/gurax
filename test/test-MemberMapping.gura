@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('Simple') {
+TestCase('Map to List') {
 	a = ['abcd', 'efg', 'hijklm']
 	Tester(`a)
 	Tester(`a::len)
@@ -12,4 +12,19 @@ TestCase('Simple') {
 	Tester(`a::len)
 	Tester(`a::Upper())
 	Tester(`a::Left(2))
+}
+
+TestCase('Map to Iterator') {
+	a = ['abcd', 'efg', 'hijklm']
+	Tester(`a)
+	Tester(`a:*len)
+	Tester(`[a:*len])
+	//Tester(`a::Upper())
+	//Tester(`a::Left(2))
+	a = []
+	Tester(`a)
+	Tester(`a:*len)
+	Tester(`[a:*len])
+	//Tester(`a::Upper())
+	//Tester(`a::Left(2))
 }
