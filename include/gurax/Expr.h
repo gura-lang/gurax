@@ -789,7 +789,7 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-	virtual Value* NextValue() override;
+	virtual Value* DoNextValue() override;
 	virtual size_t GetLength() const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

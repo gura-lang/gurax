@@ -1087,7 +1087,7 @@ const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
 //------------------------------------------------------------------------------
 // Iterator_Expr
 //------------------------------------------------------------------------------
-Value* Iterator_Expr::NextValue()
+Value* Iterator_Expr::DoNextValue()
 {
 	if (!_pExprCur) return nullptr;
 	RefPtr<Value> pValue(new Value_Expr(_pExprCur->Reference()));

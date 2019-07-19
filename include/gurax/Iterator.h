@@ -61,11 +61,12 @@ public:
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
 	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
+	Value* NextValue() { return DoNextValue(); }
 public:
 	// Virtual functions
 	virtual Iterator* Clone() const;
 	virtual Flags GetFlags() const = 0;
-	virtual Value* NextValue() = 0;
+	virtual Value* DoNextValue() = 0;
 	virtual size_t GetLength() const = 0;
 	virtual String ToString(const StringStyle& ss) const;
 };

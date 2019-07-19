@@ -69,7 +69,7 @@ Iterator_PUnit::Iterator_PUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 	_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel)
 {}
 
-Value* Iterator_PUnit::NextValue()
+Value* Iterator_PUnit::DoNextValue()
 {
 	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
 	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;

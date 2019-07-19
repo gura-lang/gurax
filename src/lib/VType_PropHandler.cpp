@@ -61,7 +61,7 @@ Iterator_PropHandler::Iterator_PropHandler(PropHandlerOwner* pPropHandlerOwner) 
 	_pPropHandlerOwner(pPropHandlerOwner), _idx(0)
 {}
 
-Value* Iterator_PropHandler::NextValue()
+Value* Iterator_PropHandler::DoNextValue()
 {
 	if (_idx >= GetPropHandlerOwner().size()) return nullptr;
 	const PropHandler* pPropHandler = GetPropHandlerOwner()[_idx++];

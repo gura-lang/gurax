@@ -19,7 +19,7 @@ String Iterator_Const::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_ConstN
 //------------------------------------------------------------------------------
-Value* Iterator_ConstN::NextValue()
+Value* Iterator_ConstN::DoNextValue()
 {
 	if (_idx >= _num) return nullptr;
 	_idx++;
@@ -38,7 +38,7 @@ String Iterator_ConstN::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_Counter
 //------------------------------------------------------------------------------
-Value* Iterator_Counter::NextValue()
+Value* Iterator_Counter::DoNextValue()
 {
 	Value* pValue = new Value_Number(_idx);
 	_idx += _idxStep;
@@ -65,7 +65,7 @@ Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, const Oper
 	if (!(_flags & Flag::LenDetermined)) _len = 0;
 }
 
-Value* Iterator_UnaryOpImpMap::NextValue()
+Value* Iterator_UnaryOpImpMap::DoNextValue()
 {
 	if (!GetValue().ReadyToPickValue()) return nullptr;
 	RefPtr<Value> pValueEach(GetValue().PickValue());
@@ -99,7 +99,7 @@ Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, const Op
 	if (!(_flags & Flag::LenDetermined)) _len = 0;
 }
 
-Value* Iterator_BinaryOpImpMap::NextValue()
+Value* Iterator_BinaryOpImpMap::DoNextValue()
 {
 	if (!GetValueL().ReadyToPickValue() || !GetValueR().ReadyToPickValue()) return nullptr;
 	RefPtr<Value> pValueEachL(GetValueL().PickValue());
@@ -135,7 +135,7 @@ Iterator_FunctionImpMap::Iterator_FunctionImpMap(Processor* pProcessor, Function
 	if (!(_flags & Flag::LenDetermined)) _len = 0;
 }
 
-Value* Iterator_FunctionImpMap::NextValue()
+Value* Iterator_FunctionImpMap::DoNextValue()
 {
 	if (!GetArgument().ReadyToPickValue()) return nullptr;
 	return GetFunction().DoEval(GetProcessor(), GetArgument());
@@ -151,7 +151,7 @@ String Iterator_FunctionImpMap::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_Range
 //------------------------------------------------------------------------------
-Value* Iterator_Range::NextValue()
+Value* Iterator_Range::DoNextValue()
 {
 	if (_idx == _idxEnd) return nullptr;
 	Value* pValue = new Value_Number(_idx);
