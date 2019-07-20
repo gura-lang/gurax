@@ -82,6 +82,7 @@ public:
 	bool IsType(const VType& vtype) const { return GetVType().IsIdentical(vtype); }
 	static bool IsType(const Value* pValue, const VType& vtype) { return pValue && pValue->IsType(vtype); }
 	bool IsInstanceOf(const VType& vtype) const;
+	Value* AsMember(const Value& valueTarget) const;
 	static bool IsInstanceOf(const Value* pValue, const VType& vtype) { return pValue && pValue->IsInstanceOf(vtype); }
 	String ToString() const { return ToString(StringStyle::Empty); }
 	String ToString(const StringStyle& ss) const {

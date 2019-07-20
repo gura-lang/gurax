@@ -1451,6 +1451,8 @@ void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor)
 		processor.ErrorDone();
 		return;
 	}
+	if (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
+#if 0
 	if (discardValueFlag) {
 		// nothing to do
 	} else if (pValueProp->CanBeCallableMember()) {
@@ -1458,6 +1460,7 @@ void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor)
 	} else {
 		processor.PushValue(pValueProp->Reference());
 	}
+#endif
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -1506,6 +1509,8 @@ void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processo
 		processor.ErrorDone();
 		return;
 	}
+	if (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
+#if 0
 	if (discardValueFlag) {
 		// nothing to do
 	} else if (pValueProp->CanBeCallableMember()) {
@@ -1513,6 +1518,7 @@ void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processo
 	} else {
 		processor.PushValue(pValueProp->Reference());
 	}
+#endif
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -1565,11 +1571,16 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 			if (!pValueProp) {
 				processor.ErrorDone();
 				return;
+			} else {
+				pValueOwner->push_back(pValueProp->AsMember(*pValueTargetElem));
+			}
+#if 0
 			} else if (pValueProp->CanBeCallableMember()) {
 				pValueOwner->push_back(new Value_CallableMember(pValueTargetElem.release(), pValueProp->Reference()));
 			} else {
 				pValueOwner->push_back(pValueProp->Reference());
 			}
+#endif
 		}
 		processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
 	} else {
@@ -1577,13 +1588,16 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
-		} else if (discardValueFlag) {
-			// nothing to do
+		} else if (!discardValueFlag) {
+			processor.PushValue(pValueProp->AsMember(*pValueTarget));
+		}
+#if 0
 		} else if (pValueProp->CanBeCallableMember()) {
 			processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
 		}
+#endif
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -1637,13 +1651,16 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
-		} else if (discardValueFlag) {
-			// nothing to do
+		} else if (!discardValueFlag) {
+			processor.PushValue(pValueProp->AsMember(*pValueTarget));
+		}
+#if 0
 		} else if (pValueProp->CanBeCallableMember()) {
 			processor.PushValue(new Value_CallableMember(pValueTarget.release(), pValueProp->Reference()));
 		} else {
 			processor.PushValue(pValueProp->Reference());
 		}
+#endif
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }

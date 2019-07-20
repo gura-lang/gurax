@@ -174,12 +174,7 @@ Value* Iterator_MemberMapToIter::DoNextValue()
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
 	Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
-	if (!pValueProp) return nullptr;
-	if (pValueProp->CanBeCallableMember()) {
-		return new Value_CallableMember(pValueTargetElem.release(), pValueProp->Reference());
-	} else {
-		return pValueProp->Reference();
-	}
+	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
 String Iterator_MemberMapToIter::ToString(const StringStyle& ss) const

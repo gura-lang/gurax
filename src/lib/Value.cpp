@@ -33,6 +33,15 @@ bool Value::IsInstanceOf(const VType& vtype) const
 	return false;
 }
 
+Value* Value::AsMember(const Value& valueTarget) const
+{
+	if (CanBeCallableMember()) {
+		return new Value_CallableMember(valueTarget.Reference(), Reference());
+	} else {
+		return Reference();
+	}
+}
+
 String Value::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
