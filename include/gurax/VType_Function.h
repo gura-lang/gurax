@@ -74,7 +74,7 @@ public:
 public:
 	// Virtual functions for runtime process
 	virtual bool CanBeCallableMember() const override { return true; }
-	virtual const DeclCallable* GetDeclCallable() const override;
+	virtual const DeclCallable* GetDeclCallable() override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 };

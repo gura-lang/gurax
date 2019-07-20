@@ -91,7 +91,7 @@ String Value_Function::ToStringDetail(const StringStyle& ss) const
 	return GetFunction().ToString(ss);
 }
 
-const DeclCallable* Value_Function::GetDeclCallable() const
+const DeclCallable* Value_Function::GetDeclCallable()
 {
 	return &GetFunction().GetDeclCallable();
 }

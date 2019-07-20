@@ -184,4 +184,23 @@ String Iterator_MemberMapToIter::ToString(const StringStyle& ss) const
 	return str;
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Evaluator
+//------------------------------------------------------------------------------
+Value* Iterator_Evaluator::DoNextValue()
+{
+	RefPtr<Value> pValueElem(GetIterator().NextValue());
+	if (!pValueElem) return nullptr;
+	RefPtr<Value> pValueRtn(pValueElem->DoEval(GetProcessor(), GetArgument()));
+	if (Error::IsIssued()) return Value::nil();
+	return pValueRtn.release();
+}
+
+String Iterator_Evaluator::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("Evaluator");
+	return str;
+}
+
 }

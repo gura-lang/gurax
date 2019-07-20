@@ -190,6 +190,30 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Evaluator
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Evaluator : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Iterator> _pIterator;
+	RefPtr<Argument> _pArgument;
+public:
+	Iterator_Evaluator(Processor* pProcessor, Iterator* pIterator, Argument* pArgument) :
+		_pProcessor(pProcessor), _pIterator(pIterator), _pArgument(pArgument) {}
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Iterator& GetIterator() { return *_pIterator; }
+	const Iterator& GetIterator() const { return *_pIterator; }
+	Argument& GetArgument() { return *_pArgument; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIterator().GetFlags(); }
+	virtual Value* DoNextValue() override;
+	virtual size_t GetLength() const override { return GetIterator().GetLength(); }
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

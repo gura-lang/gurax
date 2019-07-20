@@ -92,7 +92,7 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
-const DeclCallable* Value_VType::GetDeclCallable() const
+const DeclCallable* Value_VType::GetDeclCallable()
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();
 	if (constructor.IsEmpty()) {

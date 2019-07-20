@@ -137,7 +137,7 @@ public:
 	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {}
 	virtual bool GetBool() const { return true; }
 	virtual bool CanBeCallableMember() const { return false; }
-	virtual const DeclCallable* GetDeclCallable() const;
+	virtual const DeclCallable* GetDeclCallable();
 	virtual void DoCall(Processor& processor, Argument& argument) {}
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
 	virtual Value* DoIndexGet(const Index& index) const;

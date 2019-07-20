@@ -85,18 +85,26 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 	argument.SetMapMode(Argument::MapMode::ToIter);
 }
 
-const DeclCallable* Value_Iterator::GetDeclCallable() const
+const DeclCallable* Value_Iterator::GetDeclCallable()
 {
-	return nullptr;
+	RefPtr<Value> pValueElem(GetIterator().PeekValue());
+	return pValueElem? pValueElem->GetDeclCallable() : nullptr;
 }
 
 void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 {
+	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+	RefPtr<Value> pValueRtn(DoEval(processor, argument));
+	if (Error::IsIssued()) return;
+	processor.PushValue(pValueRtn.release());
+	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
 Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
 {
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_Evaluator(
+								   processor.Reference(), GetIterator().Reference(), argument.Reference()));
+	return new Value_Iterator(pIterator.release());
 }
 
 Iterator* Value_Iterator::DoGenIterator() const

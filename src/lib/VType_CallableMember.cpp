@@ -28,7 +28,7 @@ String Value_CallableMember::ToStringDetail(const StringStyle& ss) const
 	return str;
 }
 
-const DeclCallable* Value_CallableMember::GetDeclCallable() const
+const DeclCallable* Value_CallableMember::GetDeclCallable()
 {
 	return GetValueProp().GetDeclCallable();
 }

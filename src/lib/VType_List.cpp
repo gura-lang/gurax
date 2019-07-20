@@ -236,11 +236,11 @@ void Value_List::UpdateMapMode(Argument& argument) const
 	if (argument.IsMapNone()) argument.SetMapMode(Argument::MapMode::ToList);
 }
 
-const DeclCallable* Value_List::GetDeclCallable() const
+const DeclCallable* Value_List::GetDeclCallable()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	if (valueOwner.empty()) return DeclCallable::Wildcard.get();
-	const Value* pValueElem = valueOwner.front();
+	Value* pValueElem = valueOwner.front();
 	return pValueElem->GetDeclCallable();
 }
 
