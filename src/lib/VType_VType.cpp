@@ -92,12 +92,6 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
-bool Value_VType::IsCallable() const
-{
-	const Function& constructor = GetVTypeThis().GetConstructor();
-	return !constructor.IsEmpty();
-}
-
 const DeclCallable* Value_VType::GetDeclCallable() const
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();

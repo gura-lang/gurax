@@ -72,7 +72,7 @@ public:
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual bool IsVType() const override { return true; }
-	virtual bool IsCallable() const override;
+	virtual bool CanBeCallableMember() const override { return !GetVTypeThis().GetConstructor().IsEmpty(); }
 	virtual const DeclCallable* GetDeclCallable() const override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
