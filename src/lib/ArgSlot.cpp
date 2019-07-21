@@ -41,7 +41,7 @@ String ArgSlot_Single::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += GetDeclArg().GetSymbol()->GetName();
-	str += ss.IsCram()? "=>" : " => ";
+	str += ss.IsCram()? "=" : " = ";
 	str += _pValue->ToString(ss);
 	return str;
 }
@@ -74,7 +74,7 @@ String ArgSlot_Multiple::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += GetDeclArg().GetSymbol()->GetName();
-	str += ss.IsCram()? "=>" : " => ";
+	str += ss.IsCram()? "=" : " = ";
 	str += GetValue().GetValueOwner().ToString(ss);
 	return str;
 }

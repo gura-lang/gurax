@@ -199,7 +199,7 @@ Value* Iterator_Evaluator::DoNextValue()
 String Iterator_Evaluator::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Evaluator");
+	str.Printf("Evaluator:%s", GetArgument().ToString(StringStyle().Cram()).c_str());
 	return str;
 }
 

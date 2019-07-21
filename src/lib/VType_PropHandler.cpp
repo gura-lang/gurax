@@ -61,16 +61,16 @@ Iterator_PropHandler::Iterator_PropHandler(PropHandlerOwner* pPropHandlerOwner) 
 	_pPropHandlerOwner(pPropHandlerOwner), _idx(0)
 {}
 
+size_t Iterator_PropHandler::GetLength() const
+{
+	return GetPropHandlerOwner().size();
+}
+
 Value* Iterator_PropHandler::DoNextValue()
 {
 	if (_idx >= GetPropHandlerOwner().size()) return nullptr;
 	const PropHandler* pPropHandler = GetPropHandlerOwner()[_idx++];
 	return new Value_PropHandler(pPropHandler->Reference());
-}
-
-size_t Iterator_PropHandler::GetLength() const
-{
-	return GetPropHandlerOwner().size();
 }
 
 String Iterator_PropHandler::ToString(const StringStyle& ss) const

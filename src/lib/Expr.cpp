@@ -1087,17 +1087,17 @@ const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
 //------------------------------------------------------------------------------
 // Iterator_Expr
 //------------------------------------------------------------------------------
+size_t Iterator_Expr::GetLength() const
+{
+	return _pExprLinkElem->CountSequence();
+}
+
 Value* Iterator_Expr::DoNextValue()
 {
 	if (!_pExprCur) return nullptr;
 	RefPtr<Value> pValue(new Value_Expr(_pExprCur->Reference()));
 	_pExprCur = _pExprCur->GetExprNext();
 	return pValue.release();
-}
-
-size_t Iterator_Expr::GetLength() const
-{
-	return _pExprLinkElem->CountSequence();
 }
 
 String Iterator_Expr::ToString(const StringStyle& ss) const

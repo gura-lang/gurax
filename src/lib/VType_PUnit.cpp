@@ -69,16 +69,6 @@ Iterator_PUnit::Iterator_PUnit(const PUnit* pPUnit, const PUnit* pPUnitSentinel)
 	_pPUnit(pPUnit), _pPUnitSentinel(pPUnitSentinel)
 {}
 
-Value* Iterator_PUnit::DoNextValue()
-{
-	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
-	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
-	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
-	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
-	_pPUnit = _pPUnit->GetPUnitNext();
-	return pValue.release();
-}
-
 size_t Iterator_PUnit::GetLength() const
 {
 	const PUnit* pPUnit = _pPUnit;
@@ -87,6 +77,16 @@ size_t Iterator_PUnit::GetLength() const
 	size_t cnt = 0;
 	for ( ; pPUnit && pPUnit != _pPUnitSentinel; pPUnit = pPUnit->GetPUnitNext(), ++cnt) ;
 	return cnt;
+}
+
+Value* Iterator_PUnit::DoNextValue()
+{
+	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
+	for ( ; _pPUnit->IsBridge(); _pPUnit = _pPUnit->GetPUnitNext()) ;
+	if (!_pPUnit || _pPUnit == _pPUnitSentinel) return nullptr;
+	RefPtr<Value> pValue(new Value_PUnit(_pPUnit));
+	_pPUnit = _pPUnit->GetPUnitNext();
+	return pValue.release();
 }
 
 String Iterator_PUnit::ToString(const StringStyle& ss) const
