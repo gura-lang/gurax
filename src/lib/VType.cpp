@@ -126,7 +126,7 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 				}
 			}
 		} else {
-			Error::Issue(ErrorType::ValueError, "a list or an iterator are acceptable");
+			Error::Issue(ErrorType::ValueError, "a list or an iterator is acceptable");
 			return nullptr;
 		}
 		return new Value_List(pValuesCasted.release());
