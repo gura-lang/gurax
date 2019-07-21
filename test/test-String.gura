@@ -1,6 +1,24 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+words10 = [
+	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'horn'
+]
+words100 = [
+	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen',
+	'demonic', 'horn', 'motion' 'whip', 'rampant', 'bruise', 'religion', 'ignore',
+	'roll', 'foregoing', 'equable', 'hydrant', 'inexpensive', 'boy', 'flowery', 'exotic'
+	'bushes', 'toy', 'soap', 'iron', 'force', 'beautiful', 'loutish', 'childlike', 'bore'
+	'country', 'property', 'blow', 'oceanic', 'agreeable', 'impartial', 'sigh', 'smile'
+	'dry', 'prevent', 'thaw', 'preach', 'mate', 'gaping', 'sulky', 'poor', 'greasy'
+	'rob', 'rat', 'merciful', 'burst', 'try', 'digestion', 'rural', 'dapper', 'unaccountable'
+	'flame', 'natural', 'unusual', 'volatile', 'jump', 'cheat', 'null', 'mix', 'deeply'
+	'cover', 'encourage', 'experience', 'disgusting', 'entertaining', 'purring', 'tired'
+	'clap', 'cause', 'complain', 'flat', 'curve', 'change', 'boil', 'part', 'living', 'steam'
+	'detect', 'milk', 'pine', 'ray', 'sudden', 'person', 'roasted', 'cannon', 'hate', 'heal'
+	'move', 'miniature', 'reading', 'possess', 'nebulous'
+]
+
 TestCase('Property') {
 	Tester(`String.__PropHandler__(`len))
 	Tester(`String.__PropHandler__(`width))
