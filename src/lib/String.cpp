@@ -520,7 +520,7 @@ String String::Right(const char* str, size_t len)
 	return String(str);
 }
 
-String String::Middle(const char* str, int start, size_t len)
+String String::Mid(const char* str, int start, size_t len)
 {
 	int lenSrc = static_cast<int>(Length(str));
 	if (start < 0) {

@@ -74,8 +74,14 @@ public:
 	Stream& PickStream();
 	Iterator& PickIterator();
 public:
+	template<typename T_Num> T_Num PickNumber() {
+		return Value_Number::GetNumber<T_Num>(PickValue());
+	}
 	template<typename T_Num> T_Num PickRanged(Int numMin, Int numMax) {
 		return Value_Number::GetRanged<T_Num>(PickValue(), numMin, numMax);
+	}
+	template<typename T_Num> T_Num PickNonNeg() {
+		return Value_Number::GetNonNeg<T_Num>(PickValue());
 	}
 };
 

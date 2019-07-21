@@ -269,7 +269,7 @@ Gurax_ImplementPropertySetter(DateTime, minsOff)
 	auto& valueThis = GetValueThis(valueTarget);
 	DateTime& dateTime = valueThis.GetDateTime();
 	if (value.IsValid()) {
-		dateTime.SetMinsOffset(Value_Number::Get<Int32>(value));
+		dateTime.SetMinsOffset(Value_Number::GetNumber<Int32>(value));
 	} else {
 		dateTime.InvalidateOffset();
 	}

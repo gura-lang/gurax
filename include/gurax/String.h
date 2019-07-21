@@ -214,8 +214,8 @@ public:
 	String Left(size_t len) const { return Left(c_str(), len); }
 	static String Right(const char* str, size_t len);
 	String Right(size_t len) const { return Right(c_str(), len); }
-	static String Middle(const char* str, int start, size_t len);
-	String Middle(int start, size_t len) const { return Middle(c_str(), start, len); }
+	static String Mid(const char* str, int start, size_t len);
+	String Mid(int start, size_t len) const { return Mid(c_str(), start, len); }
 	template<typename T_CharCmp>
 	static String Replace(const char* str, const char* sub, const char* replace);
 	template<typename T_CharCmp>

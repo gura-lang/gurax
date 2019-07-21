@@ -214,7 +214,8 @@ Gurax_ImplementMethod(String, EndsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int endpos = args.IsValid()? args.PickInt() : -1;
+	Int endpos = args.IsValid()? args.PickNonNeg<Int>() : -1;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const char* str = valueThis.GetString();
 	const char* rtn = nullptr;
@@ -294,7 +295,8 @@ Gurax_ImplementMethod(String, Find)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int pos = args.IsValid()? args.PickInt() : 0;
+	Int pos = args.IsValid()? args.PickNonNeg<Int>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
 	String::const_iterator pStr = str.Forward(pos);
@@ -378,7 +380,8 @@ Gurax_ImplementMethod(String, Left)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	int len = args.PickInt();
+	Int len = args.PickNonNeg<Int>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
 	return new Value_String(str.Left(len));
@@ -423,7 +426,16 @@ Gurax_DeclareMethod(String, Mid)
 
 Gurax_ImplementMethod(String, Mid)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int pos = args.PickNonNeg<Int>();
+	Int len = args.PickNonNeg<Int>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Mid(pos, len));
 }
 
 // String#Print(stream?:Stream:w):void
@@ -537,7 +549,15 @@ Gurax_DeclareMethod(String, Right)
 
 Gurax_ImplementMethod(String, Right)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int len = args.PickNonNeg<Int>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Right(len));
 }
 
 // String#Split(sep?:String, count?:number):String:[icase] {block?}
@@ -586,7 +606,8 @@ Gurax_ImplementMethod(String, StartsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	int pos = args.IsValid()? args.PickInt() : 0;
+	Int pos = args.IsValid()? args.PickNonNeg<Int>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const char* str = valueThis.GetString();
 	if (pos > 0) str = String::Forward(str, pos);

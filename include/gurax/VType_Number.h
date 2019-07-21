@@ -66,8 +66,9 @@ public:
 	Float GetFloat() const		{ return static_cast<Float>(_num); }
 	Double GetDouble() const	{ return _num; }
 public:
-	template<typename T_Num> T_Num Get() const { return static_cast<T_Num>(_num); }
-	template<typename T_Num> T_Num GetRanged(Int numMin, Int numMax) const;
+	template<typename T_Num> T_Num GetNumber() const { return static_cast<T_Num>(_num); }
+	template<typename T_Num> T_Num GetRanged(T_Num numMin, T_Num numMax) const;
+	template<typename T_Num> T_Num GetNonNeg() const;
 public:
 	static size_t GetSizeT(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetSizeT(); }
 	static Char GetChar(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetChar(); }
@@ -89,11 +90,14 @@ public:
 	static Float GetFloat(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetFloat(); }
 	static Double GetDouble(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetDouble(); }
 public:
-	template<typename T_Num> static T_Num Get(const Value& value) {
-		return dynamic_cast<const Value_Number&>(value).Get<T_Num>();
+	template<typename T_Num> static T_Num GetNumber(const Value& value) {
+		return dynamic_cast<const Value_Number&>(value).GetNumber<T_Num>();
 	}
-	template<typename T_Num> static Int GetRanged(const Value& value, Int numMin, Int numMax) {
+	template<typename T_Num> static T_Num GetRanged(const Value& value, T_Num numMin, T_Num numMax) {
 		return dynamic_cast<const Value_Number&>(value).GetRanged<T_Num>(numMin, numMax);
+	}
+	template<typename T_Num> static T_Num GetNonNeg(const Value& value) {
+		return dynamic_cast<const Value_Number&>(value).GetNonNeg<T_Num>();
 	}
 public:
 	// Virtual functions of Value
@@ -121,13 +125,21 @@ public:
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& flags) const override;
 };
 
-template<typename T_Num> T_Num Value_Number::GetRanged(Int numMin, Int numMax) const
+template<typename T_Num> T_Num Value_Number::GetRanged(T_Num numMin, T_Num numMax) const
 {
-	Int num = Get<Int>();
-	if (num < numMin || numMax < num) {
-		Error::Issue(ErrorType::RangeError, "the number must be between %d and %d", numMin, numMax);
+	if ((_num < static_cast<Double>(numMin) || static_cast<Double>(numMax) < _num) && !Error::IsIssued()) {
+		Error::Issue(ErrorType::RangeError, "the number must be between %g and %g",
+					 static_cast<Double>(numMin), static_cast<Double>(numMax));
 	}
-	return num;
+	return static_cast<T_Num>(_num);
+}
+
+template<typename T_Num> T_Num Value_Number::GetNonNeg() const
+{
+	if (_num < 0 && !Error::IsIssued()) {
+		Error::Issue(ErrorType::RangeError, "negative value is not acceptable");
+	}
+	return static_cast<T_Num>(_num);
 }
 
 }
