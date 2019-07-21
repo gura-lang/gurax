@@ -24,10 +24,11 @@ TestCase('Property') {
 	Tester(`String.__PropHandler__(`width))
 }
 
-TestCase('String#Align()') {
+TestCase('String#Capitalize()') {
 }
 
-TestCase('String#Capitalize()') {
+TestCase('String#Center()') {
+	Tester(`words100::Center(10))
 }
 
 TestCase('String#Chop()') {

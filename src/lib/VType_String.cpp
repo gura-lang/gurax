@@ -50,7 +50,7 @@ Gurax_ImplementMethod(String, Center)
 	// Arguments
 	ArgPicker args(argument);
 	Int width = args.PickNonNeg<Int>();
-	const char* padding = args.PickString();
+	const char* padding = args.IsValid()? args.PickString() : " ";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
@@ -413,7 +413,7 @@ Gurax_ImplementMethod(String, LJust)
 	// Arguments
 	ArgPicker args(argument);
 	Int width = args.PickNonNeg<Int>();
-	const char* padding = args.PickString();
+	const char* padding = args.IsValid()? args.PickString() : " ";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
@@ -620,7 +620,7 @@ Gurax_ImplementMethod(String, RJust)
 	// Arguments
 	ArgPicker args(argument);
 	Int width = args.PickNonNeg<Int>();
-	const char* padding = args.PickString();
+	const char* padding = args.IsValid()? args.PickString() : " ";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
