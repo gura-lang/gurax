@@ -45,54 +45,10 @@ public:
 protected:
 	// Destructor
 	~Value_Number() = default;
-#if 0
-public:
-	size_t GetSizeT() const		{ return static_cast<size_t>(_num); }
-	Char GetChar() const		{ return static_cast<Char>(_num); }
-	UChar GetUChar() const		{ return static_cast<UChar>(_num); }
-	Short GetShort() const		{ return static_cast<Short>(_num); }
-	UShort GetUShort() const	{ return static_cast<UShort>(_num); }
-	Int GetInt() const			{ return static_cast<Int>(_num); }
-	UInt GetUInt() const		{ return static_cast<UInt>(_num); }
-	Long GetLong() const		{ return static_cast<Long>(_num); }
-	ULong GetULong() const		{ return static_cast<ULong>(_num); }
-	Int8 GetInt8() const		{ return static_cast<Int8>(_num); }
-	UInt8 GetUInt8() const		{ return static_cast<UInt8>(_num); }
-	Int16 GetInt16() const		{ return static_cast<Int16>(_num); }
-	UInt16 GetUInt16() const	{ return static_cast<UInt16>(_num); }
-	Int32 GetInt32() const		{ return static_cast<Int32>(_num); }
-	UInt32 GetUInt32() const	{ return static_cast<UInt32>(_num); }
-	Int64 GetInt64() const		{ return static_cast<Int64>(_num); }
-	UInt64 GetUInt64() const	{ return static_cast<UInt64>(_num); }
-	Float GetFloat() const		{ return static_cast<Float>(_num); }
-	Double GetDouble() const	{ return _num; }
-#endif
 public:
 	template<typename T_Num> T_Num GetNumber() const { return static_cast<T_Num>(_num); }
 	template<typename T_Num> T_Num GetRanged(T_Num numMin, T_Num numMax) const;
 	template<typename T_Num> T_Num GetNonNeg() const;
-#if 0
-public:
-	static size_t GetSizeT(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetSizeT(); }
-	static Char GetChar(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetChar(); }
-	static UChar GetUChar(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUChar(); }
-	static Short GetShort(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetShort(); }
-	static UShort GetUShort(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUShort(); }
-	static Int GetInt(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetInt(); }
-	static UInt GetUInt(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetUInt(); }
-	static Long GetLong(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetLong(); }
-	static ULong GetULong(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetULong(); }
-	static Int8 GetInt8(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetInt8(); }
-	static UInt8 GetUInt8(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt8(); }
-	static Int16 GetInt16(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetInt16(); }
-	static UInt16 GetUInt16(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt16(); }
-	static Int32 GetInt32(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetInt32(); }
-	static UInt32 GetUInt32(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt32(); }
-	static Int64 GetInt64(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetInt64(); }
-	static UInt64 GetUInt64(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt64(); }
-	static Float GetFloat(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetFloat(); }
-	static Double GetDouble(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetDouble(); }
-#endif
 public:
 	template<typename T_Num> static T_Num GetNumber(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumber<T_Num>();
