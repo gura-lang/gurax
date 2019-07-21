@@ -69,7 +69,7 @@ bool Formatter::Format(const char* format, Source&& source)
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
-				formatterFlags.fieldMinWidth = Value_Number::GetInt(*pValue);
+				formatterFlags.fieldMinWidth = Value_Number::GetNumber<Int>(*pValue);
 				if (formatterFlags.fieldMinWidth < 0) {
 					formatterFlags.leftAlignFlag = true;
 					formatterFlags.fieldMinWidth = -formatterFlags.fieldMinWidth;
@@ -195,7 +195,7 @@ bool Formatter::Format(const char* format, Source&& source)
 					IssueError_NumberIsExpectedForAsterisk();
 					return false;
 				}
-				formatterFlags.precision = Value_Number::GetInt(*pValue);
+				formatterFlags.precision = Value_Number::GetNumber<Int>(*pValue);
 				if (formatterFlags.precision < 0) formatterFlags.precision = FormatterFlags::Prec::Default;
 				if (source.IsEnd()) {
 					IssueError_NotEnoughArguments();

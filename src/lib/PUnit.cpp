@@ -516,7 +516,7 @@ void PUnit_GenRangeIterator<nExprSrc, discardValueFlag>::Exec(Processor& process
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValue(processor.PopValue());
-	int num = Value_Number::GetInt(*pValue);
+	int num = Value_Number::GetNumber<Int>(*pValue);
 	RefPtr<Iterator> pIterator(new Iterator_Range(num));
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitNext(_GetPUnitCont());

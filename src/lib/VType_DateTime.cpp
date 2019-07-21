@@ -49,7 +49,7 @@ Gurax_ImplementFunction(DateTime)
 	Int16 usec	= args.IsValid()? args.PickRanged<Int16>(0, 999) : 0;
 	if (Error::IsIssued()) return Value::nil();
 	bool validOffsetFlag = args.IsValid();
-	Int32 minsOff = validOffsetFlag? args.PickInt32() : 0;
+	Int32 minsOff = validOffsetFlag? args.PickNumber<Int32>() : 0;
 	// Function body
 	RefPtr<DateTime> pDateTime(
 		new DateTime(year, month, day, DateTime::CalcSecPacked(hour, min, sec),

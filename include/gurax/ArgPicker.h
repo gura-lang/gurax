@@ -45,6 +45,7 @@ public:
 	Value& PeekValue();
 	Value& PickValue();
 	Bool PickBool()					{ return PickValue().GetBool(); }
+#if 0
 	size_t PickSizeT()				{ return Value_Number::GetSizeT(PickValue()); }
 	Char PickChar()					{ return Value_Number::GetChar(PickValue()); }
 	UChar PickUChar()				{ return Value_Number::GetUChar(PickValue()); }
@@ -64,6 +65,7 @@ public:
 	UInt64 PickUInt64()				{ return Value_Number::GetUInt64(PickValue()); }
 	Float PickFloat()				{ return Value_Number::GetFloat(PickValue()); }
 	Double PickDouble()				{ return Value_Number::GetDouble(PickValue()); }
+#endif
 	const Symbol* PickSymbol()		{ return Value_Symbol::GetSymbol(PickValue()); }
 	const char* PickString()		{ return Value_String::GetString(PickValue()); }
 	const String& PickStringSTL()	{ return Value_String::GetStringSTL(PickValue()); }

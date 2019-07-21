@@ -26,7 +26,7 @@ Gurax_ImplementFunction(Random)
 	// Arguments
 	ArgPicker args(argument);
 	bool seedFlag = false;
-	Int32 seed = (seedFlag = args.IsValid())? args.PickInt32() : 0;
+	Int32 seed = (seedFlag = args.IsValid())? args.PickNumber<Int32>() : 0;
 	// Function body
 	RefPtr<Random> pRandom(seedFlag? new Random(seed) : Random::Global().Reference());
 	return ReturnValue(processor, argument, new Value_Random(pRandom.release()));
@@ -53,8 +53,8 @@ Gurax_ImplementMethod(Random, Normal)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double mean = args.IsValid()? args.PickDouble() : 0.;
-	Double stddev = args.IsValid()? args.PickDouble() : 1.;
+	Double mean = args.IsValid()? args.PickNumber<Double>() : 0.;
+	Double stddev = args.IsValid()? args.PickNumber<Double>() : 1.;
 	// Function body
 	return new Value_Number(valueThis.GetRandom().Normal<Double>(mean, stddev));
 }
@@ -75,7 +75,8 @@ Gurax_ImplementMethod(Random, Range)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int range = args.PickInt();
+	Int range = args.PickNonNeg<Int>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	return new Value_Number(valueThis.GetRandom().Range<Int>(range));
 }

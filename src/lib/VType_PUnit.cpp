@@ -22,7 +22,7 @@ Gurax_ImplementMethod(PUnit, ToString)
 	const PUnit* pPUnit = valueThis.GetPUnit();
 	// Arguments
 	ArgPicker args(argument);
-	int seqIdOffset = args.IsValid()? args.PickInt() : 0;
+	int seqIdOffset = args.IsValid()? args.PickNumber<Int>() : 0;
 	// Function body
 	RefPtr<Value> pValue(new Value_String(pPUnit->ToString(seqIdOffset)));
 	return pValue.release();

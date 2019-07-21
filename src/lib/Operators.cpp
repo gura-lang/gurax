@@ -8,14 +8,14 @@ namespace Gurax {
 // ~Number
 Gurax_ImplementOpUnary(Inv, Number)
 {
-	Int num = Value_Number::GetInt(value);
+	Int num = Value_Number::GetNumber<Int>(value);
 	return new Value_Number(~num);
 }
 
 // -Number
 Gurax_ImplementOpUnary(Neg, Number)
 {
-	Double num = Value_Number::GetDouble(value);
+	Double num = Value_Number::GetNumber<Double>(value);
 	return new Value_Number(-num);
 }
 
@@ -34,15 +34,15 @@ Gurax_ImplementOpUnary(Pos, Number)
 // Number ..
 Gurax_ImplementOpUnary(PostSeq, Number)
 {
-	int num = Value_Number::GetInt(value);
+	int num = Value_Number::GetNumber<Int>(value);
 	return new Value_Iterator(new Iterator_Counter(num, 1));
 }
 
 // Number + Number
 Gurax_ImplementOpBinary(Add, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL + numR);
 }
 
@@ -58,16 +58,16 @@ Gurax_ImplementOpBinary(Add, String, String)
 // Number & Number
 Gurax_ImplementOpBinary(And, Number, Number)
 {
-	Int numL = Value_Number::GetInt(valueL);
-	Int numR = Value_Number::GetInt(valueR);
+	Int numL = Value_Number::GetNumber<Int>(valueL);
+	Int numR = Value_Number::GetNumber<Int>(valueR);
 	return new Value_Number(numL & numR);
 }
 
 // Number <=> Number
 Gurax_ImplementOpBinary(Cmp, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	int rslt = (numL < numR)? -1 : (numL > numR)? +1 : 0;
 	return new Value_Number(rslt);
 }
@@ -75,40 +75,40 @@ Gurax_ImplementOpBinary(Cmp, Number, Number)
 // Number <+> Number
 Gurax_ImplementOpBinary(Concat, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL + numR);
 }
 
 // Number in Number
 Gurax_ImplementOpBinary(Contains, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL == numR);
 }
 
 // Number <^> Number
 Gurax_ImplementOpBinary(Cross, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL * numR);
 }
 
 // Number <-> Number
 Gurax_ImplementOpBinary(Difference, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL - numR);
 }
 
 // Number / Number
 Gurax_ImplementOpBinary(Div, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	if (numR == 0.) {
 		Error::Issue(ErrorType::DividedByZero, "divided by zero");
 		return Value::undefined();
@@ -119,16 +119,16 @@ Gurax_ImplementOpBinary(Div, Number, Number)
 // Number <.> Number
 Gurax_ImplementOpBinary(Dot, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL * numR);
 }
 
 // Number == Number
 Gurax_ImplementOpBinary(Eq, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Bool(numL == numR);
 }
 
@@ -167,56 +167,56 @@ Gurax_ImplementOpBinary(Eq, Expr, Symbol)
 // Number <*> Number
 Gurax_ImplementOpBinary(Gear, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL * numR);
 }
 
 // Number >= Number
 Gurax_ImplementOpBinary(Ge, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Bool(numL >= numR);
 }
 
 // Number > Number
 Gurax_ImplementOpBinary(Gt, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Bool(numL > numR);
 }
 
 // Number <&> Number
 Gurax_ImplementOpBinary(Intersection, Number, Number)
 {
-	Int numL = Value_Number::GetInt(valueL);
-	Int numR = Value_Number::GetInt(valueR);
+	Int numL = Value_Number::GetNumber<Int>(valueL);
+	Int numR = Value_Number::GetNumber<Int>(valueR);
 	return new Value_Number(numL & numR);
 }
 
 // Number <= Number
 Gurax_ImplementOpBinary(Le, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Bool(numL <= numR);
 }
 
 // Number < Number
 Gurax_ImplementOpBinary(Lt, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Bool(numL < numR);
 }
 
 // Number % Number
 Gurax_ImplementOpBinary(Mod, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	if (numR == 0.) {
 		Error::Issue(ErrorType::DividedByZero, "divided by zero");
 		return Value::undefined();
@@ -227,56 +227,56 @@ Gurax_ImplementOpBinary(Mod, Number, Number)
 // Number %% Number
 Gurax_ImplementOpBinary(ModMod, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(std::fmod(numL, numR));
 }
 
 // Number * Number
 Gurax_ImplementOpBinary(Mul, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL * numR);
 }
 
 // Number != Number
 Gurax_ImplementOpBinary(Ne, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Bool(numL != numR);
 }
 
 // Number | Number
 Gurax_ImplementOpBinary(Or, Number, Number)
 {
-	Int numL = Value_Number::GetInt(valueL);
-	Int numR = Value_Number::GetInt(valueR);
+	Int numL = Value_Number::GetNumber<Int>(valueL);
+	Int numR = Value_Number::GetNumber<Int>(valueR);
 	return new Value_Number(numL | numR);
 }
 
 // Number => Number
 Gurax_ImplementOpBinary(Pair, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL + numR);
 }
 
 // Number ** Number
 Gurax_ImplementOpBinary(Pow, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(std::pow(numL, numR));
 }
 
 // Number .. Number
 Gurax_ImplementOpBinary(Seq, Number, Number)
 {
-	int numL = Value_Number::GetInt(valueL);
-	int numR = Value_Number::GetInt(valueR);
+	int numL = Value_Number::GetNumber<Int>(valueL);
+	int numR = Value_Number::GetNumber<Int>(valueR);
 	int idxBegin = 0, idxEnd = 0, idxStep = 0;
 	if (numL <= numR) {
 		idxBegin = numL, idxEnd = numR + 1, idxStep = 1;
@@ -289,40 +289,40 @@ Gurax_ImplementOpBinary(Seq, Number, Number)
 // Number << Number
 Gurax_ImplementOpBinary(Shl, Number, Number)
 {
-	Int numL = Value_Number::GetInt(valueL);
-	Int numR = Value_Number::GetInt(valueR);
+	Int numL = Value_Number::GetNumber<Int>(valueL);
+	Int numR = Value_Number::GetNumber<Int>(valueR);
 	return new Value_Number(numL << numR);
 }
 
 // Number >> Number
 Gurax_ImplementOpBinary(Shr, Number, Number)
 {
-	Int numL = Value_Number::GetInt(valueL);
-	Int numR = Value_Number::GetInt(valueR);
+	Int numL = Value_Number::GetNumber<Int>(valueL);
+	Int numR = Value_Number::GetNumber<Int>(valueR);
 	return new Value_Number(numL >> numR);
 }
 
 // Number - Number
 Gurax_ImplementOpBinary(Sub, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL - numR);
 }
 
 // Number ||| Number
 Gurax_ImplementOpBinary(Union, Number, Number)
 {
-	Double numL = Value_Number::GetDouble(valueL);
-	Double numR = Value_Number::GetDouble(valueR);
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
 	return new Value_Number(numL + numR);
 }
 
 // Number ^ Number
 Gurax_ImplementOpBinary(Xor, Number, Number)
 {
-	Int numL = Value_Number::GetInt(valueL);
-	Int numR = Value_Number::GetInt(valueR);
+	Int numL = Value_Number::GetNumber<Int>(valueL);
+	Int numR = Value_Number::GetNumber<Int>(valueR);
 	return new Value_Number(numL ^ numR);
 }
 

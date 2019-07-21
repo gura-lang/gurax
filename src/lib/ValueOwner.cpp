@@ -45,7 +45,7 @@ bool ValueOwner::IndexGet(const Value* pValueIndex, Value** ppValue) const
 {
 	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
 		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
-		int idxOrg = pValueIndexEx->GetInt();
+		int idxOrg = pValueIndexEx->GetNumber<Int>();
 		int idx = (idxOrg >= 0)? idxOrg : idxOrg + size();
 		if (0 <= idx && static_cast<size_t>(idx) < size()) {
 			*ppValue = Get(idx)->Reference();
@@ -72,7 +72,7 @@ bool ValueOwner::IndexSet(const Value* pValueIndex, Value* pValue)
 {
 	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
 		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
-		int idxOrg = pValueIndexEx->GetInt();
+		int idxOrg = pValueIndexEx->GetNumber<Int>();
 		int idx = (idxOrg >= 0)? idxOrg : idxOrg + size();
 		if (0 <= idx && static_cast<size_t>(idx) < size()) {
 			Set(idx, pValue);

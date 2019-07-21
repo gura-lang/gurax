@@ -29,12 +29,12 @@ Gurax_ImplementFunction(TimeDelta)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Int32 days	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
-	Int32 hours	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
-	Int32 mins	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
-	Int32 secs	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
-	Int32 msecs	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
-	Int32 usecs	= args.IsValid()? args.PickInt32() : 0;	// no range limit applied
+	Int32 days	= args.IsValid()? args.PickNumber<Int32>() : 0;	// no range limit applied
+	Int32 hours	= args.IsValid()? args.PickNumber<Int32>() : 0;	// no range limit applied
+	Int32 mins	= args.IsValid()? args.PickNumber<Int32>() : 0;	// no range limit applied
+	Int32 secs	= args.IsValid()? args.PickNumber<Int32>() : 0;	// no range limit applied
+	Int32 msecs	= args.IsValid()? args.PickNumber<Int32>() : 0;	// no range limit applied
+	Int32 usecs	= args.IsValid()? args.PickNumber<Int32>() : 0;	// no range limit applied
 	// Function body
 	RefPtr<TimeDelta> pTimeDelta(
 		new TimeDelta(days, TimeDelta::CalcSecsPacked(hours, mins, secs), TimeDelta::CalcUSecsPacked(msecs, usecs)));
@@ -62,7 +62,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, days)
 Gurax_ImplementPropertySetter(TimeDelta, days)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetDays(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetDays(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#hours
@@ -83,7 +83,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, hours)
 Gurax_ImplementPropertySetter(TimeDelta, hours)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetHours(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetHours(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#mins
@@ -104,7 +104,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, mins)
 Gurax_ImplementPropertySetter(TimeDelta, mins)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetMins(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetMins(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#secs
@@ -125,7 +125,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, secs)
 Gurax_ImplementPropertySetter(TimeDelta, secs)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetSecs(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetSecs(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#secsPacked
@@ -146,7 +146,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, secsPacked)
 Gurax_ImplementPropertySetter(TimeDelta, secsPacked)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetSecsPacked(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetSecsPacked(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#msecs
@@ -167,7 +167,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, msecs)
 Gurax_ImplementPropertySetter(TimeDelta, msecs)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetMSecs(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetMSecs(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#usecs
@@ -188,7 +188,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, usecs)
 Gurax_ImplementPropertySetter(TimeDelta, usecs)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetUSecs(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetUSecs(Value_Number::GetNumber<Int32>(value));
 }
 
 // TimeDelta#usecsPacked
@@ -209,7 +209,7 @@ Gurax_ImplementPropertyGetter(TimeDelta, usecsPacked)
 Gurax_ImplementPropertySetter(TimeDelta, usecsPacked)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	valueThis.GetTimeDelta().SetSecsPacked(Value_Number::GetInt32(value));
+	valueThis.GetTimeDelta().SetSecsPacked(Value_Number::GetNumber<Int32>(value));
 }
 
 //------------------------------------------------------------------------------
@@ -247,7 +247,7 @@ Gurax_ImplementOpBinary(Sub, TimeDelta, TimeDelta)
 Gurax_ImplementOpBinary(Mul, TimeDelta, Number)
 {
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
-	Double num = Value_Number::GetDouble(valueR);
+	Double num = Value_Number::GetNumber<Double>(valueR);
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
 	*pTd *= num;
 	return new Value_TimeDelta(pTd.release());
@@ -256,7 +256,7 @@ Gurax_ImplementOpBinary(Mul, TimeDelta, Number)
 // Number * TimeDelta
 Gurax_ImplementOpBinary(Mul, Number, TimeDelta)
 {
-	Double num = Value_Number::GetDouble(valueL);
+	Double num = Value_Number::GetNumber<Double>(valueL);
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueR);
 	RefPtr<TimeDelta> pTd(new TimeDelta(td));
 	*pTd *= num;
@@ -267,7 +267,7 @@ Gurax_ImplementOpBinary(Mul, Number, TimeDelta)
 Gurax_ImplementOpBinary(Div, TimeDelta, Number)
 {
 	const TimeDelta& td = Value_TimeDelta::GetTimeDelta(valueL);
-	Double num = Value_Number::GetDouble(valueR);
+	Double num = Value_Number::GetNumber<Double>(valueR);
 	if (num == 0) {
 		Error::Issue(ErrorType::DividedByZero, "divided by zero");
 		return Value::nil();

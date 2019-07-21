@@ -45,6 +45,7 @@ public:
 protected:
 	// Destructor
 	~Value_Number() = default;
+#if 0
 public:
 	size_t GetSizeT() const		{ return static_cast<size_t>(_num); }
 	Char GetChar() const		{ return static_cast<Char>(_num); }
@@ -65,10 +66,12 @@ public:
 	UInt64 GetUInt64() const	{ return static_cast<UInt64>(_num); }
 	Float GetFloat() const		{ return static_cast<Float>(_num); }
 	Double GetDouble() const	{ return _num; }
+#endif
 public:
 	template<typename T_Num> T_Num GetNumber() const { return static_cast<T_Num>(_num); }
 	template<typename T_Num> T_Num GetRanged(T_Num numMin, T_Num numMax) const;
 	template<typename T_Num> T_Num GetNonNeg() const;
+#if 0
 public:
 	static size_t GetSizeT(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetSizeT(); }
 	static Char GetChar(const Value& value)		{ return dynamic_cast<const Value_Number&>(value).GetChar(); }
@@ -89,6 +92,7 @@ public:
 	static UInt64 GetUInt64(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetUInt64(); }
 	static Float GetFloat(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetFloat(); }
 	static Double GetDouble(const Value& value)	{ return dynamic_cast<const Value_Number&>(value).GetDouble(); }
+#endif
 public:
 	template<typename T_Num> static T_Num GetNumber(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumber<T_Num>();
@@ -102,13 +106,13 @@ public:
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return GetSizeT(); }
+	virtual size_t DoCalcHash() const override { return GetNumber<size_t>(); }
 	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) && GetDouble() == Value_Number::GetDouble(*pValue);
+		return IsSameType(pValue) && GetNumber<Double>() == Value_Number::GetNumber<Double>(*pValue);
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetDouble() < Value_Number::GetDouble(*pValue) :
+			GetNumber<Double>() < Value_Number::GetNumber<Double>(*pValue) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
