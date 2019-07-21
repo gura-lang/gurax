@@ -8,41 +8,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#Align(width:Number, padding?:String):String:map:[center,left,right] {block?}
-Gurax_DeclareMethod(String, Align)
-{
-	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(center));
-	DeclareAttrOpt(Gurax_Symbol(left));
-	DeclareAttrOpt(Gurax_Symbol(right));
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Align the string to the left, right or center within the specified `width`\n"
-		"and returns the result.\n"
-		"\n"
-		"The following attributes specify the alignment position:\n"
-		"\n"
-		"- `:center` .. Aligns to the center. This is the default.\n"
-		"- `:left` .. Aligns to the left\n"
-		"- `:right` .. Aligns to the right\n"
-		"\n"
-		"If the string width is narrower than the specified `width`, nothing would be done.\n"
-		"\n"
-		"It uses a string specified by the argument `padding` to fill lacking spaces.\n"
-		"If omitted, a white space is used for padding.\n"
-		"\n"
-		"This method takes into account the character width based on the specification\n"
-		"of East Asian Width. A kanji-character occupies two characters in width.\n");
-}
-
-Gurax_ImplementMethod(String, Align)
-{
-	return Value::nil();
-}
-
 // String#Capitalize():String {block?}
 Gurax_DeclareMethod(String, Capitalize)
 {
@@ -56,6 +21,40 @@ Gurax_DeclareMethod(String, Capitalize)
 Gurax_ImplementMethod(String, Capitalize)
 {
 	return Value::nil();
+}
+
+// String#Center(width:Number, padding?:String):String:map
+Gurax_DeclareMethod(String, Center)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Align the string to the center within the specified `width`\n"
+		"and returns the result.\n"
+		"\n"
+		"If the string width is narrower than the specified `width`, nothing would be done.\n"
+		"\n"
+		"It uses a string specified by the argument `padding` to fill lacking spaces.\n"
+		"If omitted, a white space is used for padding.\n"
+		"\n"
+		"This method takes into account the character width based on the specification\n"
+		"of East Asian Width. A kanji-character occupies two characters in width.\n");
+}
+
+Gurax_ImplementMethod(String, Center)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int width = args.PickNonNeg<Int>();
+	const char* padding = args.PickString();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Center(width, padding));
 }
 
 // String#Chop(suffix*:String):String:[eol,icase] {block?}
@@ -214,19 +213,19 @@ Gurax_ImplementMethod(String, EndsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	Int endpos = args.IsValid()? args.PickNonNeg<Int>() : -1;
+	Int endPos = args.IsValid()? args.PickNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const char* str = valueThis.GetString();
 	const char* rtn = nullptr;
-	if (endpos < 0) {
+	if (endPos < 0) {
 		rtn = argument.IsSet(Gurax_Symbol(icase))?
 			String::EndsWith<CharICase>(str, sub) :
 			String::EndsWith<CharCase>(str, sub);
 	} else {
 		rtn = argument.IsSet(Gurax_Symbol(icase))?
-			String::EndsWith<CharICase>(str, endpos, sub) :
-			String::EndsWith<CharCase>(str, endpos, sub);
+			String::EndsWith<CharICase>(str, endPos, sub) :
+			String::EndsWith<CharCase>(str, endPos, sub);
 	}
 	return !argument.IsSet(Gurax_Symbol(rest))? Value::Bool(rtn) :
 		rtn? new Value_String(rtn) : Value::nil();
@@ -385,6 +384,40 @@ Gurax_ImplementMethod(String, Left)
 	// Function body
 	const String& str = valueThis.GetStringSTL();
 	return new Value_String(str.Left(len));
+}
+
+// String#LJust(width:Number, padding?:String):String:map
+Gurax_DeclareMethod(String, LJust)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Align the string to the left within the specified `width`\n"
+		"and returns the result.\n"
+		"\n"
+		"If the string width is narrower than the specified `width`, nothing would be done.\n"
+		"\n"
+		"It uses a string specified by the argument `padding` to fill lacking spaces.\n"
+		"If omitted, a white space is used for padding.\n"
+		"\n"
+		"This method takes into account the character width based on the specification\n"
+		"of East Asian Width. A kanji-character occupies two characters in width.\n");
+}
+
+Gurax_ImplementMethod(String, LJust)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int width = args.PickNonNeg<Int>();
+	const char* padding = args.PickString();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.LJust(width, padding));
 }
 
 // String#Lower()
@@ -558,6 +591,40 @@ Gurax_ImplementMethod(String, Right)
 	// Function body
 	const String& str = valueThis.GetStringSTL();
 	return new Value_String(str.Right(len));
+}
+
+// String#RJust(width:Number, padding?:String):String:map
+Gurax_DeclareMethod(String, RJust)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Align the string to the right within the specified `width`\n"
+		"and returns the result.\n"
+		"\n"
+		"If the string width is narrower than the specified `width`, nothing would be done.\n"
+		"\n"
+		"It uses a string specified by the argument `padding` to fill lacking spaces.\n"
+		"If omitted, a white space is used for padding.\n"
+		"\n"
+		"This method takes into account the character width based on the specification\n"
+		"of East Asian Width. A kanji-character occupies two characters in width.\n");
+}
+
+Gurax_ImplementMethod(String, RJust)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int width = args.PickNonNeg<Int>();
+	const char* padding = args.PickString();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.RJust(width, padding));
 }
 
 // String#Split(sep?:String, count?:number):String:[icase] {block?}
@@ -887,8 +954,8 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(String, Align));
 	Assign(Gurax_CreateMethod(String, Capitalize));
+	Assign(Gurax_CreateMethod(String, Center));
 	Assign(Gurax_CreateMethod(String, Chop));
 	Assign(Gurax_CreateMethod(String, DecodeURI));
 	Assign(Gurax_CreateMethod(String, Each));
@@ -904,6 +971,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Foldw));
 	Assign(Gurax_CreateMethod(String, Format));
 	Assign(Gurax_CreateMethod(String, Left));
+	Assign(Gurax_CreateMethod(String, LJust));
 	Assign(Gurax_CreateMethod(String, Lower));
 	Assign(Gurax_CreateMethod(String, Mid));
 	Assign(Gurax_CreateMethod(String, Print));
@@ -911,6 +979,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Replace));
 	Assign(Gurax_CreateMethod(String, Replaces));
 	Assign(Gurax_CreateMethod(String, Right));
+	Assign(Gurax_CreateMethod(String, RJust));
 	Assign(Gurax_CreateMethod(String, Split));
 	Assign(Gurax_CreateMethod(String, StartsWith));
 	Assign(Gurax_CreateMethod(String, Strip));
