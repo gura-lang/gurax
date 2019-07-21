@@ -2,7 +2,7 @@
 import(util.tester) {*}
 
 words10 = [
-	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'horn'
+	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining'
 ]
 words100 = [
 	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen',
@@ -28,7 +28,8 @@ TestCase('String#Capitalize()') {
 }
 
 TestCase('String#Center()') {
-	Tester(`words100::Center(10))
+	Printf('%s\n', words10::Center(10))
+	Printf('%s\n', words10::Center(10, '.'))
 }
 
 TestCase('String#Chop()') {
@@ -133,6 +134,13 @@ TestCase('String#Format()') {
 }
 
 TestCase('String#Left()') {
+	Printf('%-13s .. "%s"\n', words10, words10::Left(0))
+	Printf('%-13s .. "%s"\n', words10, words10::Left(6))
+}
+
+TestCase('String#LJust()') {
+	Printf('%s\n', words10::LJust(10))
+	Printf('%s\n', words10::LJust(10, '.'))
 }
 
 TestCase('String#Uppper(), String#Lower()') {
@@ -141,6 +149,9 @@ TestCase('String#Uppper(), String#Lower()') {
 }
 
 TestCase('String#Mid()') {
+	Printf('%-13s .. "%s"\n', words10, words10::Mid(0, 0))
+	Printf('%-13s .. "%s"\n', words10, words10::Mid(1, 4))
+	Printf('%-13s .. "%s"\n', words10, words10::Mid(6, 4))
 }
 
 TestCase('String#Print()') {
@@ -156,6 +167,13 @@ TestCase('String#Replaces()') {
 }
 
 TestCase('String#Right()') {
+	Printf('%-13s .. "%s"\n', words10, words10::Right(0))
+	Printf('%-13s .. "%s"\n', words10, words10::Right(6))
+}
+
+TestCase('String#RJust()') {
+	Printf('%s\n', words10::RJust(10))
+	Printf('%s\n', words10::RJust(10, '.'))
 }
 
 TestCase('String#Split()') {

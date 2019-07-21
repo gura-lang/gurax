@@ -1,8 +1,28 @@
 ======== Property ========
 String.__PropHandler__(`len) .. <PropHandler:len:Number:R>
 String.__PropHandler__(`width) .. <PropHandler:width:Number:R>
-======== String#Align() ========
 ======== String#Capitalize() ========
+======== String#Center() ========
+  bubble  
+ tasteful 
+   yell   
+  unarmed 
+   vest   
+  private 
+ cowardly 
+  happen  
+  demonic 
+entertaining
+..bubble..
+.tasteful.
+...yell...
+..unarmed.
+...vest...
+..private.
+.cowardly.
+..happen..
+..demonic.
+entertaining
 ======== String#Chop() ========
 ======== String#DecodeURI() ========
 ======== String#Each() ========
@@ -65,15 +85,127 @@ str.Find('おかきき') .. <Nil>
 ======== String#Foldw() ========
 ======== String#Format() ========
 ======== String#Left() ========
+bubble        .. ""
+tasteful      .. ""
+yell          .. ""
+unarmed       .. ""
+vest          .. ""
+private       .. ""
+cowardly      .. ""
+happen        .. ""
+demonic       .. ""
+entertaining  .. ""
+bubble        .. "bubble"
+tasteful      .. "tastef"
+yell          .. "yell"
+unarmed       .. "unarme"
+vest          .. "vest"
+private       .. "privat"
+cowardly      .. "coward"
+happen        .. "happen"
+demonic       .. "demoni"
+entertaining  .. "entert"
+======== String#LJust() ========
+bubble    
+tasteful  
+yell      
+unarmed   
+vest      
+private   
+cowardly  
+happen    
+demonic   
+entertaining
+bubble....
+tasteful..
+yell......
+unarmed...
+vest......
+private...
+cowardly..
+happen....
+demonic...
+entertaining
 ======== String#Uppper(), String#Lower() ========
 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Upper() .. ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ
 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Lower() .. abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
 ======== String#Mid() ========
+bubble        .. ""
+tasteful      .. ""
+yell          .. ""
+unarmed       .. ""
+vest          .. ""
+private       .. ""
+cowardly      .. ""
+happen        .. ""
+demonic       .. ""
+entertaining  .. ""
+bubble        .. "ubbl"
+tasteful      .. "aste"
+yell          .. "ell"
+unarmed       .. "narm"
+vest          .. "est"
+private       .. "riva"
+cowardly      .. "owar"
+happen        .. "appe"
+demonic       .. "emon"
+entertaining  .. "nter"
+bubble        .. ""
+tasteful      .. "ul"
+yell          .. ""
+unarmed       .. "d"
+vest          .. ""
+private       .. "e"
+cowardly      .. "ly"
+happen        .. ""
+demonic       .. "c"
+entertaining  .. "aini"
 ======== String#Print() ========
 ======== String#Println() ========
 ======== String#Replace() ========
 ======== String#Replaces() ========
 ======== String#Right() ========
+bubble        .. ""
+tasteful      .. ""
+yell          .. ""
+unarmed       .. ""
+vest          .. ""
+private       .. ""
+cowardly      .. ""
+happen        .. ""
+demonic       .. ""
+entertaining  .. ""
+bubble        .. "bubble"
+tasteful      .. "steful"
+yell          .. "yell"
+unarmed       .. "narmed"
+vest          .. "vest"
+private       .. "rivate"
+cowardly      .. "wardly"
+happen        .. "happen"
+demonic       .. "emonic"
+entertaining  .. "aining"
+======== String#RJust() ========
+    bubble
+  tasteful
+      yell
+   unarmed
+      vest
+   private
+  cowardly
+    happen
+   demonic
+entertaining
+....bubble
+..tasteful
+......yell
+...unarmed
+......vest
+...private
+..cowardly
+....happen
+...demonic
+entertaining
 ======== String#Split() ========
 ======== String#Strip() ========
 ======== String#ToBinary() ========
