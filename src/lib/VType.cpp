@@ -93,27 +93,41 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 		}
 	};
 	if (flags & DeclArg::Flag::ListVar) {
-		if (!value.IsType(VTYPE_List)) {
-			Error::Issue(ErrorType::ValueError, "must be a list value");
-			return nullptr;
-		}
-		const ValueTypedOwner& values = dynamic_cast<const Value_List&>(value).GetValueTypedOwner();
-
-		// type check
-
 		RefPtr<ValueOwner> pValuesCasted(new ValueOwner());
-		pValuesCasted->reserve(values.GetSize());
-		for (const Value* pValueElem : values.GetValueOwner()) {
-			if (pValueElem->IsInstanceOf(*this)) {
-				pValuesCasted->push_back(pValueElem->Reference());
-			} else {
-				RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
-				if (!pValueElemCasted) {
-					IssueError(*this, *pValueElem);
-					return nullptr;
+		if (value.IsType(VTYPE_List)) {
+			const ValueTypedOwner& values = dynamic_cast<const Value_List&>(value).GetValueTypedOwner();
+			pValuesCasted->reserve(values.GetSize());
+			for (const Value* pValueElem : values.GetValueOwner()) {
+				if (pValueElem->IsInstanceOf(*this)) {
+					pValuesCasted->push_back(pValueElem->Reference());
+				} else {
+					RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
+					if (!pValueElemCasted) {
+						IssueError(*this, *pValueElem);
+						return nullptr;
+					}
+					pValuesCasted->push_back(pValueElemCasted.release());
 				}
-				pValuesCasted->push_back(pValueElemCasted.release());
 			}
+		} else if (value.IsType(VTYPE_Iterator)) {
+			RefPtr<Iterator> pIterator(Value_Iterator::GetIterator(value).Clone());
+			for (;;) {
+				RefPtr<Value> pValueElem(pIterator->NextValue());
+				if (!pValueElem) break;
+				if (pValueElem->IsInstanceOf(*this)) {
+					pValuesCasted->push_back(pValueElem->Reference());
+				} else {
+					RefPtr<Value> pValueElemCasted(DoCastFrom(*pValueElem, flags));
+					if (!pValueElemCasted) {
+						IssueError(*this, *pValueElem);
+						return nullptr;
+					}
+					pValuesCasted->push_back(pValueElemCasted.release());
+				}
+			}
+		} else {
+			Error::Issue(ErrorType::ValueError, "a list or an iterator are acceptable");
+			return nullptr;
 		}
 		return new Value_List(pValuesCasted.release());
 	} else if (value.IsInstanceOf(*this)) {

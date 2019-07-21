@@ -16,6 +16,7 @@ public:
 	virtual bool IsIterator() const override { return true; }
 	virtual bool IsListOrIterator() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern VType_Iterator VTYPE_Iterator;

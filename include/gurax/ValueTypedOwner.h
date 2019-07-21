@@ -157,6 +157,7 @@ public:
 	ValueTypedOwner* CloneDeep() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}
+	static ValueTypedOwner* CreateFromIterator(Iterator& iterator);
 	bool IsEmpty() const { return _pValueOwner->empty(); }
 	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
@@ -182,6 +183,7 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	VType* GetVTypeOfElems() const { return _pVTypeOfElems; }
 	bool HasDeterminedVTypeOfElems() const;
+	Iterator* GenerateIterator() const { return new Iterator_Each(Reference()); }
 };
 
 }

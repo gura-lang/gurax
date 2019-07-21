@@ -19,6 +19,17 @@ void ValueTypedOwner::Clear()
 	_pValueOwner->Clear();
 }
 
+ValueTypedOwner* ValueTypedOwner::CreateFromIterator(Iterator& iterator)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	for (;;) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		pValueOwner->push_back(pValue.release());
+	}	
+	return new ValueTypedOwner(pValueOwner.release());
+}
+
 void ValueTypedOwner::Append(const ValueTypedOwner& values)
 {
 	for (const Value* pValue : values.GetValueOwner()) {

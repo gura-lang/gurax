@@ -57,6 +57,14 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
 }
 
+Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_List)) {
+		return new Value_Iterator(Value_List::GetValueTypedOwner(value).GenerateIterator());
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_Iterator
 //------------------------------------------------------------------------------

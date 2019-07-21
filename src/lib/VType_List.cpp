@@ -210,6 +210,15 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 }
 
+Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Iterator)) {
+		RefPtr<Iterator> pIterator(Value_Iterator::GetIterator(value).Clone());
+		return new Value_List(ValueTypedOwner::CreateFromIterator(*pIterator));
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_List
 //------------------------------------------------------------------------------
@@ -297,7 +306,7 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 
 Iterator* Value_List::DoGenIterator() const
 {
-	return new ValueTypedOwner::Iterator_Each(GetValueTypedOwner().Reference());
+	return GetValueTypedOwner().GenerateIterator();
 }
 
 }
