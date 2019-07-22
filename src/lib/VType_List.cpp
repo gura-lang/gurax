@@ -266,6 +266,11 @@ Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	for (Value* pValueElem : GetValueOwner()) {
+		if (!argument.GetDeclCallable().IsIdentical(pValueElem->GetDeclCallable())) {
+			Error::Issue(ErrorType::ValueError,
+						 "member mapping cannot be applied to a list that contains different type of values");
+			return Value::nil();
+		}
 		RefPtr<Value> pValueRtn(pValueElem->DoEval(processor, argument));
 		if (Error::IsIssued()) return Value::nil();
 		pValueOwner->push_back(pValueRtn.release());

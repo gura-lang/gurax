@@ -191,8 +191,13 @@ Value* Iterator_Evaluator::DoNextValue()
 {
 	RefPtr<Value> pValueElem(GetIterator().NextValue());
 	if (!pValueElem) return nullptr;
+	if (!GetArgument().GetDeclCallable().IsIdentical(pValueElem->GetDeclCallable())) {
+		Error::Issue(ErrorType::ValueError,
+					 "member mapping cannot be applied to an iterator that returns different type of values");
+		return nullptr;
+	}
 	RefPtr<Value> pValueRtn(pValueElem->DoEval(GetProcessor(), GetArgument()));
-	if (Error::IsIssued()) return Value::nil();
+	if (Error::IsIssued()) return nullptr;
 	return pValueRtn.release();
 }
 

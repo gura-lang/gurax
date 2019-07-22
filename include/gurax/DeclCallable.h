@@ -137,6 +137,7 @@ public:
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const DeclCallable& declCaller) const { return this == &declCaller; }
+	bool IsIdentical(const DeclCallable* pDeclCaller) const { return this == pDeclCaller; }
 	bool IsEqualTo(const DeclCallable& declCaller) const { return IsIdentical(declCaller); }
 	bool IsLessThan(const DeclCallable& declCaller) const { return this < &declCaller; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
