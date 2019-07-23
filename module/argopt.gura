@@ -39,8 +39,15 @@ Entry = struct {
 Parser = class {
 	entries[]:Entry = []
 	Parse(argv[]:String) = {
-		Println(argv)
-		Println(this.entries[0].MakeHelpIndex(true, true))
+		cfg = %{}
+		cfg.Put(this.entries:*longName, this.entries:*defValue)
+		argvRest = []
+		i = argv.Offset(1)
+		while (arg = i.next()) {
+			Println(arg)
+		}
+		//Println(argv)
+		//Println(this.entries[0].MakeHelpIndex(true, true))
 	}
 	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, defValue?:String) = {
 		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, defValue))
