@@ -6,7 +6,7 @@
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
-// Implementation of method specific to list
+// Implementation of method specific to List
 //-----------------------------------------------------------------------------
 // List#Add(value+):reduce
 Gurax_DeclareMethod(List, Add)
@@ -293,7 +293,7 @@ Gurax_ImplementMethod(List, Shift)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of method that is common to both iterator and list
+// Implementation of method common to both Iterator and List
 //-----------------------------------------------------------------------------
 // List#After(criteria) {block?}
 Gurax_DeclareMethod(List, After)
@@ -1507,11 +1507,66 @@ void VType_List::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Mutable);
-	// Assignment of method
+	// Assignment of method specific to List
 	Assign(Gurax_CreateMethod(List, Add));
 	Assign(Gurax_CreateMethod(List, Append));
 	Assign(Gurax_CreateMethod(List, Clear));
+	Assign(Gurax_CreateMethod(List, Combination));
+	Assign(Gurax_CreateMethod(List, Erase));
+	Assign(Gurax_CreateMethod(List, Get));
+	Assign(Gurax_CreateMethod(List, Insert));
+	Assign(Gurax_CreateMethod(List, Permutation));
+	Assign(Gurax_CreateMethod(List, Put));
+	Assign(Gurax_CreateMethod(List, Shift));
+	Assign(Gurax_CreateMethod(List, Shuffle));
+	// Assignment of method common to both Iterator and List
+	Assign(Gurax_CreateMethod(List, After));
+	Assign(Gurax_CreateMethod(List, Align));
+	Assign(Gurax_CreateMethod(List, And));
+	Assign(Gurax_CreateMethod(List, ArgMax));
+	Assign(Gurax_CreateMethod(List, ArgMin));
+	Assign(Gurax_CreateMethod(List, Before));
+	Assign(Gurax_CreateMethod(List, Contains));
+	Assign(Gurax_CreateMethod(List, Count));
+	Assign(Gurax_CreateMethod(List, Cycle));
 	Assign(Gurax_CreateMethod(List, Each));
+	Assign(Gurax_CreateMethod(List, Filter));
+	Assign(Gurax_CreateMethod(List, Find));
+	Assign(Gurax_CreateMethod(List, Flatten));
+	Assign(Gurax_CreateMethod(List, Fold));
+	Assign(Gurax_CreateMethod(List, Format));
+	Assign(Gurax_CreateMethod(List, Head));
+	Assign(Gurax_CreateMethod(List, Join));
+	Assign(Gurax_CreateMethod(List, Joinb));
+	Assign(Gurax_CreateMethod(List, Map));
+	Assign(Gurax_CreateMethod(List, Max));
+	Assign(Gurax_CreateMethod(List, Mean));
+	Assign(Gurax_CreateMethod(List, Min));
+	Assign(Gurax_CreateMethod(List, NilTo));
+	Assign(Gurax_CreateMethod(List, Offset));
+	Assign(Gurax_CreateMethod(List, Or));
+	Assign(Gurax_CreateMethod(List, Pack));
+	Assign(Gurax_CreateMethod(List, PingPong));
+	Assign(Gurax_CreateMethod(List, Print));
+	Assign(Gurax_CreateMethod(List, Printf));
+	Assign(Gurax_CreateMethod(List, Println));
+	Assign(Gurax_CreateMethod(List, Prod));
+	Assign(Gurax_CreateMethod(List, Rank));
+	Assign(Gurax_CreateMethod(List, Reduce));
+	Assign(Gurax_CreateMethod(List, Replace));
+	Assign(Gurax_CreateMethod(List, Reverse));
+	Assign(Gurax_CreateMethod(List, RoundOff));
+	Assign(Gurax_CreateMethod(List, RunLength));
+	Assign(Gurax_CreateMethod(List, Since));
+	Assign(Gurax_CreateMethod(List, Skip));
+	Assign(Gurax_CreateMethod(List, SkipNil));
+	Assign(Gurax_CreateMethod(List, Sort));
+	Assign(Gurax_CreateMethod(List, Std));
+	Assign(Gurax_CreateMethod(List, Sum));
+	Assign(Gurax_CreateMethod(List, Tail));
+	Assign(Gurax_CreateMethod(List, Until));
+	Assign(Gurax_CreateMethod(List, Var));
+	Assign(Gurax_CreateMethod(List, While));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(List, first));
 	Assign(Gurax_CreateProperty(List, isEmpty));
