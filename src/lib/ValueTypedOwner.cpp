@@ -52,6 +52,19 @@ bool ValueTypedOwner::Add(Iterator& iterator)
 	return !Error::IsIssued();
 }
 
+void ValueTypedOwner::Append(const ValueList& values)
+{
+	for (Value* pValue : values) {
+		if (pValue->IsType(VTYPE_List)) {
+			Add(Value_List::GetValueTypedOwner(*pValue));
+		} else if (pValue->IsType(VTYPE_Iterator)) {
+			Add(Value_Iterator::GetIterator(*pValue));
+		} else {
+			Add(pValue->Reference());
+		}
+	}
+}
+
 void ValueTypedOwner::UpdateVTypeOfElems(const Value& value)
 {
 	// Assumes that value is not of Undefined or Any.

@@ -185,3 +185,171 @@ TestCase('List#Append()') {
 	Tester(`tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]))
 	Tester(`tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']))
 }
+
+TestCase('List#Clear()') {
+}
+
+TestCase('List#Combination()') {
+}
+
+TestCase('List#Erase()') {
+}
+
+TestCase('List#Get()') {
+}
+
+TestCase('List#Insert()') {
+}
+
+TestCase('List#Permutation()') {
+}
+
+TestCase('List#Put()') {
+}
+
+TestCase('List#Shift()') {
+}
+
+TestCase('List#Shuffle()') {
+}
+
+TestCase('List#After()') {
+}
+
+TestCase('List#Align()') {
+}
+
+TestCase('List#And()') {
+}
+
+TestCase('List#ArgMax()') {
+}
+
+TestCase('List#ArgMin()') {
+}
+
+TestCase('List#Before()') {
+}
+
+TestCase('List#Contains()') {
+}
+
+TestCase('List#Count()') {
+}
+
+TestCase('List#Cycle()') {
+}
+
+TestCase('List#Each()') {
+}
+
+TestCase('List#Filter()') {
+}
+
+TestCase('List#Find()') {
+}
+
+TestCase('List#Flatten()') {
+}
+
+TestCase('List#Fold()') {
+}
+
+TestCase('List#Format()') {
+}
+
+TestCase('List#Head()') {
+}
+
+TestCase('List#Join()') {
+}
+
+TestCase('List#Joinb()') {
+}
+
+TestCase('List#Map()') {
+}
+
+TestCase('List#Max()') {
+}
+
+TestCase('List#Mean()') {
+}
+
+TestCase('List#Min()') {
+}
+
+TestCase('List#NilTo()') {
+}
+
+TestCase('List#Offset()') {
+}
+
+TestCase('List#Or()') {
+}
+
+TestCase('List#Pack()') {
+}
+
+TestCase('List#PingPong()') {
+}
+
+TestCase('List#Print()') {
+}
+
+TestCase('List#Printf()') {
+}
+
+TestCase('List#Println()') {
+}
+
+TestCase('List#Prod()') {
+}
+
+TestCase('List#Rank()') {
+}
+
+TestCase('List#Reduce()') {
+}
+
+TestCase('List#Replace()') {
+}
+
+TestCase('List#Reverse()') {
+}
+
+TestCase('List#RoundOff()') {
+}
+
+TestCase('List#RunLength()') {
+}
+
+TestCase('List#Since()') {
+}
+
+TestCase('List#Skip()') {
+}
+
+TestCase('List#SkipNil()') {
+}
+
+TestCase('List#Sort()') {
+}
+
+TestCase('List#Std()') {
+}
+
+TestCase('List#Sum()') {
+}
+
+TestCase('List#Tail()') {
+}
+
+TestCase('List#Until()') {
+}
+
+TestCase('List#Var()') {
+}
+
+TestCase('List#While()') {
+}

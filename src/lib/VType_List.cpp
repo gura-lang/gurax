@@ -26,10 +26,11 @@ Gurax_ImplementMethod(List, Add)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	for (Value* pValue : values) {
-		valueTypedOwner.Add(pValue->Reference());
-	}
+	//ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	//for (Value* pValue : values) {
+	//	valueTypedOwner.Add(pValue->Reference());
+	//}
+	valueThis.GetValueTypedOwner().Add(values);
 	return argument.GetValueThis().Reference();
 }
 
@@ -51,16 +52,17 @@ Gurax_ImplementMethod(List, Append)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	for (Value* pValue : values) {
-		if (pValue->IsType(VTYPE_List)) {
-			valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValue));
-		} else if (pValue->IsType(VTYPE_Iterator)) {
-			valueTypedOwner.Add(Value_Iterator::GetIterator(*pValue));
-		} else {
-			valueTypedOwner.Add(pValue->Reference());
-		}
-	}
+	//ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	//for (Value* pValue : values) {
+	//	if (pValue->IsType(VTYPE_List)) {
+	//		valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValue));
+	//	} else if (pValue->IsType(VTYPE_Iterator)) {
+	//		valueTypedOwner.Add(Value_Iterator::GetIterator(*pValue));
+	//	} else {
+	//		valueTypedOwner.Add(pValue->Reference());
+	//	}
+	//}
+	valueThis.GetValueTypedOwner().Append(values);
 	return argument.GetValueThis().Reference();
 }
 
@@ -205,11 +207,11 @@ Gurax_ImplementMethod(List, Permutation)
 	return Value::nil();
 }
 
-// List#Put(index:Number, value:nomap):reduce:map
+// List#Put(pos:Number, value:nomap):reduce:map
 Gurax_DeclareMethod(List, Put)
 {
 	Declare(VTYPE_List, Flag::Reduce | Flag::Map);
-	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -219,14 +221,20 @@ Gurax_DeclareMethod(List, Put)
 
 Gurax_ImplementMethod(List, Put)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	size_t pos = args.PickNonNeg<size_t>();
+	const Value& value = args.PickValue();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-#endif
+	if (pos >= valueTypedOwner.GetSize()) {
+		Error::Issue(ErrorType::RangeError, "specified position is out of rante");
+		return Value::nil();
+	}
+	valueTypedOwner.Set(pos, value.Reference());
 	return Value::nil();
 }
 
@@ -259,8 +267,8 @@ Gurax_DeclareMethod(List, Shift)
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Shifts the elements of the list. If the content of the list is [1, 2, 3, 4],\n"
-		"it becomes [2, 3, 4] after calling this method. In default, no error occurs\n"
+		"Shifts the elements of the list. If the content of the list is `[1, 2, 3, 4]`,\n"
+		"it becomes `[2, 3, 4]` after calling this method. In default, no error occurs\n"
 		"even when the list is empty. To raise an error for executing this method on\n"
 		"an empty list, specify :raise attribute.");
 }

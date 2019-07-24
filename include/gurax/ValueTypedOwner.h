@@ -180,6 +180,8 @@ public:
 	void Add(const ValueList& values);
 	void Add(const ValueTypedOwner& values);
 	bool Add(Iterator& iterator);
+	void Append(const ValueList& values);
+	void Erase(size_t pos);
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
