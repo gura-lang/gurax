@@ -166,8 +166,13 @@ TestCase('List#Each() with :list') {
 
 TestCase('List#Add()') {
 	tbl = []
+	Tester(`tbl.vtypeOfElem)
 	Tester(`tbl.Add(3))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Add(6, 7, 8))
+	Tester(`tbl.vtypeOfElem)
 	Tester(`tbl.Add('hello'))
+	Tester(`tbl.vtypeOfElem)
 	Tester(`tbl.Add([1, 2, 3]))
 	Tester(`tbl.Add(4..9))
 	Tester(`tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9))
@@ -176,8 +181,13 @@ TestCase('List#Add()') {
 
 TestCase('List#Append()') {
 	tbl = []
+	Tester(`tbl.vtypeOfElem)
 	Tester(`tbl.Append(3))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Append(6, 7, 8))
+	Tester(`tbl.vtypeOfElem)
 	Tester(`tbl.Append('hello'))
+	Tester(`tbl.vtypeOfElem)
 	Tester(`tbl.Append([1, 2, 3]))
 	Tester(`tbl.Append(4..9))
 	Tester(`tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9))
@@ -187,6 +197,9 @@ TestCase('List#Append()') {
 }
 
 TestCase('List#Clear()') {
+	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+	Tester(`tbl)
+	Tester(`tbl.Clear())
 }
 
 TestCase('List#Combination()') {

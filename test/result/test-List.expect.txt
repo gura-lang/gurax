@@ -201,22 +201,34 @@ tbl.Each():list {|x, i| if (x.StartsWith('t')) {break('end')}, Format('%d-%s', i
 tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue}, Format('%d-%s', i, x)} .. ['0-zero', '1-one', '4-four', '5-five', '6-six', '7-seven', '8-eight', '9-nine']
 tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue('x')}, Format('%d-%s', i, x)} .. ['0-zero', '1-one', 'x', 'x', '4-four', '5-five', '6-six', '7-seven', '8-eight', '9-nine', 'x']
 ======== List#Add() ========
+tbl.vtypeOfElem .. Undefined
 tbl.Add(3) .. [3]
-tbl.Add('hello') .. [3, 'hello']
-tbl.Add([1, 2, 3]) .. [3, 'hello', [1, 2, 3]]
-tbl.Add(4 .. 9) .. [3, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>]
-tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9) .. [3, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-tbl.Add('a', 'b', 'c', 'd', 'e', 'f') .. [3, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+tbl.vtypeOfElem .. <VType:Number>
+tbl.Add(6, 7, 8) .. [3, 6, 7, 8]
+tbl.vtypeOfElem .. <VType:Number>
+tbl.Add('hello') .. [3, 6, 7, 8, 'hello']
+tbl.vtypeOfElem .. Any
+tbl.Add([1, 2, 3]) .. [3, 6, 7, 8, 'hello', [1, 2, 3]]
+tbl.Add(4 .. 9) .. [3, 6, 7, 8, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>]
+tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9) .. [3, 6, 7, 8, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Add('a', 'b', 'c', 'd', 'e', 'f') .. [3, 6, 7, 8, 'hello', [1, 2, 3], <Iterator:Range:begin=4:end=10:step=1>, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
 ======== List#Append() ========
+tbl.vtypeOfElem .. Undefined
 tbl.Append(3) .. [3]
-tbl.Append('hello') .. [3, 'hello']
-tbl.Append([1, 2, 3]) .. [3, 'hello', 1, 2, 3]
-tbl.Append(4 .. 9) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9]
-tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-tbl.Append('a', 'b', 'c', 'd', 'e', 'f') .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
-tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9]
-tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']) .. [3, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+tbl.vtypeOfElem .. <VType:Number>
+tbl.Append(6, 7, 8) .. [3, 6, 7, 8]
+tbl.vtypeOfElem .. <VType:Number>
+tbl.Append('hello') .. [3, 6, 7, 8, 'hello']
+tbl.vtypeOfElem .. Any
+tbl.Append([1, 2, 3]) .. [3, 6, 7, 8, 'hello', 1, 2, 3]
+tbl.Append(4 .. 9) .. [3, 6, 7, 8, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9) .. [3, 6, 7, 8, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Append('a', 'b', 'c', 'd', 'e', 'f') .. [3, 6, 7, 8, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]) .. [3, 6, 7, 8, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']) .. [3, 6, 7, 8, 'hello', 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
 ======== List#Clear() ========
+tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+tbl.Clear() .. []
 ======== List#Combination() ========
 ======== List#Erase() ========
 ======== List#Get() ========
