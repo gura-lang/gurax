@@ -23,14 +23,14 @@ void HelpOwner::Clear()
 }
 
 //------------------------------------------------------------------------------
-// HelpProvider
+// HelpHolder
 //------------------------------------------------------------------------------
-void HelpProvider::AddHelp(const Symbol* pLangCode, String doc)
+void HelpHolder::AddHelp(const Symbol* pLangCode, String doc)
 {
 	_helpOwner.push_back(new Help(GetWeakPtr(), pLangCode, std::move(doc)));
 }
 
-void HelpProvider::AddHelp(const Symbol* pLangCode, String formatName, String doc)
+void HelpHolder::AddHelp(const Symbol* pLangCode, String formatName, String doc)
 {
 	_helpOwner.push_back(new Help(GetWeakPtr(), pLangCode, std::move(formatName), std::move(doc)));
 }

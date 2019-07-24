@@ -102,7 +102,7 @@ protected:
 	Type _type;
 	const Symbol* _pSymbol;
 	RefPtr<DeclCallable> _pDeclCallable;
-	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<HelpHolder> _pHelpHolder;
 	RefPtr<Frame::WeakPtr> _pwFrameOuter;
 	VType* _pVTypeOfOwner;					// this may be nullptr
 public:
@@ -111,21 +111,21 @@ public:
 	static void Bootup();
 public:
 	// Constructor
-	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, HelpProvider* pHelpProvider) :
-		_type(type), _pSymbol(pSymbol), _pDeclCallable(pDeclCallable), _pHelpProvider(pHelpProvider),
+	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, HelpHolder* pHelpHolder) :
+		_type(type), _pSymbol(pSymbol), _pDeclCallable(pDeclCallable), _pHelpHolder(pHelpHolder),
 		_pVTypeOfOwner(nullptr) {}
 	Function(Type type) :
-		Function(type, Symbol::Empty, new DeclCallable(), new HelpProvider()) {}
+		Function(type, Symbol::Empty, new DeclCallable(), new HelpHolder()) {}
 	Function(Type type, const Symbol* pSymbol) :
-		Function(type, pSymbol, new DeclCallable(), new HelpProvider()) {}
+		Function(type, pSymbol, new DeclCallable(), new HelpHolder()) {}
 	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable) :
-		Function(type, pSymbol, pDeclCallable, new HelpProvider()) {}
+		Function(type, pSymbol, pDeclCallable, new HelpHolder()) {}
 	Function(Type type, const char* name) :
 		Function(type, Symbol::Add(name)) {}		
 	Function(Type type, const char* name, DeclCallable* pDeclCallable) :
 		Function(type, Symbol::Add(name), pDeclCallable) {}
-	Function(Type type, const char* name, DeclCallable* pDeclCallable, HelpProvider* pHelpProvider) :
-		Function(type, Symbol::Add(name), pDeclCallable, pHelpProvider) {}
+	Function(Type type, const char* name, DeclCallable* pDeclCallable, HelpHolder* pHelpHolder) :
+		Function(type, Symbol::Add(name), pDeclCallable, pHelpHolder) {}
 	// Copy constructor/operator
 	Function(const Function& src) = delete;
 	Function& operator=(const Function& src) = delete;
@@ -183,12 +183,14 @@ public:
 	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Gurax_Symbol(block), occur, flags);
 	}
+	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
 	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
+	void LinkHelp(VType& vtype, const Symbol* pSymbol);
 	void DoEvalVoid(Processor& processor, Argument& argument) const {
 		Value::Delete(DoEval(processor, argument));
 	}

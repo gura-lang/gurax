@@ -42,6 +42,10 @@ String Function::MakeFullName() const
 	return str;
 }
 
+void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
+{
+}
+
 void Function::DoCall(Processor& processor, Argument& argument) const
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();

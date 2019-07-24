@@ -97,7 +97,7 @@ public:
 protected:
 	RefPtr<Frame> _pFrame;
 	RefPtr<DottedSymbol> _pDottedSymbol;
-	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<HelpHolder> _pHelpHolder;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 	String _pathName;
 private:
@@ -122,10 +122,10 @@ public:
 	void SetPathName(const char* pathName) { _pathName = pathName; }
 	const char* GetPathName() const { return _pathName.c_str(); }
 	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
 	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	Frame& GetFrame() { return *_pFrame; }
 	const Frame& GetFrame() const { return *_pFrame; }

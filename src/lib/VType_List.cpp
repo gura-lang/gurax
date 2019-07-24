@@ -86,10 +86,8 @@ Gurax_ImplementMethod(List, Clear)
 Gurax_DeclareMethod(List, Combination)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator that generates lists that contain elements picked up\n"
@@ -113,9 +111,7 @@ Gurax_ImplementMethod(List, Combination)
 Gurax_DeclareMethod(List, Erase)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-#if 0
-	DeclareArg(env, "idx", VTYPE_number, OCCUR_ZeroOrMore);
-#endif
+	DeclareArg("idx", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Erases elements at the specified indices.");
@@ -139,7 +135,7 @@ Gurax_DeclareMethod(List, Get)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
 #if 0
-	DeclareArg(env, "index", VTYPE_number);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 #endif
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -164,10 +160,8 @@ Gurax_ImplementMethod(List, Get)
 Gurax_DeclareMethod(List, Insert)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-#if 0
-	DeclareArg(env, "idx", VTYPE_number);
-	DeclareArg(env, "elem", VTYPE_any, OCCUR_OnceOrMore);
-#endif
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("elem", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Insert specified items to the list from the selected index.");
@@ -190,10 +184,8 @@ Gurax_ImplementMethod(List, Insert)
 Gurax_DeclareMethod(List, Permutation)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
-	DeclareArg(env, "n", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-#endif
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator that generates lists that contain elements picked up\n"
@@ -217,10 +209,8 @@ Gurax_ImplementMethod(List, Permutation)
 Gurax_DeclareMethod(List, Put)
 {
 	Declare(VTYPE_List, Flag::Reduce | Flag::Map);
-#if 0
-	DeclareArg(env, "index", VTYPE_number);
-	DeclareArg(env, "value", VTYPE_any, OCCUR_Once, FLAG_NoMap);
-#endif
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Stores a value at the specified index in the list.\n"
@@ -266,9 +256,7 @@ Gurax_ImplementMethod(List, Shuffle)
 Gurax_DeclareMethod(List, Shift)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
-	DeclareAttr(Gurax_Symbol(raise));
-#endif
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Shifts the elements of the list. If the content of the list is [1, 2, 3, 4],\n"
@@ -297,11 +285,9 @@ Gurax_ImplementMethod(List, Shift)
 Gurax_DeclareMethod(List, After)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
-	DeclareArg(env, "criteria", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
-#endif
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
 Gurax_ImplementMethod(List, After)
@@ -322,9 +308,9 @@ Gurax_DeclareMethod(List, Align)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 #if 0
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareArg(env, "value", VTYPE_any, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -369,8 +355,8 @@ Gurax_DeclareMethod(List, ArgMax)
 {
 	Declare(VTYPE_Number, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(last_index));
-	DeclareAttr(Gurax_Symbol(indices));
+	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -393,8 +379,8 @@ Gurax_DeclareMethod(List, ArgMin)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(last_index));
-	DeclareAttr(Gurax_Symbol(indices));
+	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -417,8 +403,8 @@ Gurax_DeclareMethod(List, Before)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "criteria", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -441,7 +427,7 @@ Gurax_DeclareMethod(List, Contains)
 {
 	Declare(VTYPE_Bool, Flag::None);
 #if 0
-	DeclareArg(env, "value", VTYPE_any);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -464,7 +450,7 @@ Gurax_DeclareMethod(List, Count)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareArg(env, "criteria", VTYPE_any, OCCUR_ZeroOrOnce);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -487,8 +473,8 @@ Gurax_DeclareMethod(List, Cycle)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "n", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -535,8 +521,8 @@ Gurax_DeclareMethod(List, Filter)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "criteria", VTYPE_any, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -559,8 +545,8 @@ Gurax_DeclareMethod(List, Find)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(index));
-	DeclareArg(env, "criteria", VTYPE_any, OCCUR_ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(index));
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -583,9 +569,9 @@ Gurax_DeclareMethod(List, Flatten)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(dfs));
-	DeclareAttr(Gurax_Symbol(bfs));
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(dfs));
+	DeclareAttrOpt(Gurax_Symbol(bfs));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -608,11 +594,11 @@ Gurax_DeclareMethod(List, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 #if 0
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareArg(env, "nstep", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(iteritem));
-	DeclareAttr(Gurax_Symbol(neat));
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nstep", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(iteritem));
+	DeclareAttrOpt(Gurax_Symbol(neat));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -635,8 +621,8 @@ Gurax_DeclareMethod(List, Format)
 {
 	Declare(VTYPE_String, Flag::Map);
 #if 0
-	DeclareArg(env, "format", VTYPE_string);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -659,9 +645,9 @@ Gurax_DeclareMethod(List, Head)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 #if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	SetFuncAttr(VTYPE_Any, RSLTMODE_Normal, ArgFlag::Map);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -684,7 +670,7 @@ Gurax_DeclareMethod(List, Join)
 {
 	Declare(VTYPE_String, Flag::Map);
 #if 0
-	DeclareArg(env, "sep", VTYPE_string, OCCUR_ZeroOrOnce);
+	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -729,8 +715,8 @@ Gurax_DeclareMethod(List, Map)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "func", VTYPE_function);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("func", VTYPE_function, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -753,9 +739,9 @@ Gurax_DeclareMethod(List, Max)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(index));
-	DeclareAttr(Gurax_Symbol(last_index));
-	DeclareAttr(Gurax_Symbol(indices));
+	DeclareAttrOpt(Gurax_Symbol(index));
+	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -800,9 +786,9 @@ Gurax_DeclareMethod(List, Min)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(index));
-	DeclareAttr(Gurax_Symbol(last_index));
-	DeclareAttr(Gurax_Symbol(indices));
+	DeclareAttrOpt(Gurax_Symbol(index));
+	DeclareAttrOpt(Gurax_Symbol(last_index));
+	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -825,8 +811,8 @@ Gurax_DeclareMethod(List, NilTo)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "replace", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -849,9 +835,9 @@ Gurax_DeclareMethod(List, Offset)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 #if 0
-	DeclareBlock(OCCUR_Once);
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareBlock(BlkOccur::Once);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -896,7 +882,7 @@ Gurax_DeclareMethod(List, Pack)
 {
 	Declare(VTYPE_Binary, Flag::None);
 #if 0
-	DeclareArg(env, "format", VTYPE_string);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -919,11 +905,11 @@ Gurax_DeclareMethod(List, PingPong)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "n", VTYPE_number, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(sticky));
-	DeclareAttr(Gurax_Symbol(sticky_at_top));
-	DeclareAttr(Gurax_Symbol(sticky_at_btm));
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(sticky));
+	DeclareAttrOpt(Gurax_Symbol(sticky_at_top));
+	DeclareAttrOpt(Gurax_Symbol(sticky_at_btm));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -946,7 +932,7 @@ Gurax_DeclareMethod(List, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
 #if 0
-	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
+	DeclareArg("stream", VTYPE_stream, ArgOccur::ZeroOrOnce, ArgFlag::Write);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -969,8 +955,8 @@ Gurax_DeclareMethod(List, Printf)
 {
 	Declare(VTYPE_Nil, Flag::None);
 #if 0
-	DeclareArg(env, "format", VTYPE_string);
-	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_stream, ArgOccur::ZeroOrOnce, ArgFlag::Write);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -993,7 +979,7 @@ Gurax_DeclareMethod(List, Println)
 {
 	Declare(VTYPE_Nil, Flag::None);
 #if 0
-	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Write);
+	DeclareArg("stream", VTYPE_stream, ArgOccur::ZeroOrOnce, ArgFlag::Write);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1038,9 +1024,9 @@ Gurax_DeclareMethod(List, Rank)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareArg(env, "directive", VTYPE_any, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
-	DeclareAttr(Gurax_Symbol(stable));
+	DeclareArg("directive", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(stable));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1063,8 +1049,8 @@ Gurax_DeclareMethod(List, Reduce)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareArg(env, "accum", VTYPE_any);
-	DeclareBlock(OCCUR_Once);
+	DeclareArg("accum", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::Once);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1087,9 +1073,9 @@ Gurax_DeclareMethod(List, Replace)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareArg(env, "value", VTYPE_any);
-	DeclareArg(env, "replace", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1112,7 +1098,7 @@ Gurax_DeclareMethod(List, Reverse)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1135,9 +1121,9 @@ Gurax_DeclareMethod(List, RoundOff)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "threshold", VTYPE_number, OCCUR_Once, FLAG_None, 0,
-											new Expr_Value(RoundOffThreshold));
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("threshold", VTYPE_Number, ArgOccur::Once, ArgFlag::None,
+			   new Expr_Value(RoundOffThreshold));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1160,7 +1146,7 @@ Gurax_DeclareMethod(List, RunLength)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1183,8 +1169,8 @@ Gurax_DeclareMethod(List, Since)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "criteria", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1207,8 +1193,8 @@ Gurax_DeclareMethod(List, Skip)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1231,7 +1217,7 @@ Gurax_DeclareMethod(List, SkipNil)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1254,10 +1240,10 @@ Gurax_DeclareMethod(List, Sort)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "directive", VTYPE_any, OCCUR_ZeroOrOnce);
-	DeclareArg(env, "keys", VTYPE_any, OCCUR_ZeroOrOnce, FLAG_ListVar);
-	DeclareAttr(Gurax_Symbol(stable));
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("directive", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("keys", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
+	DeclareAttrOpt(Gurax_Symbol(stable));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1280,8 +1266,8 @@ Gurax_DeclareMethod(List, Std)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gurax_Symbol(p));
+	SetFuncAttr(VTYPE_Any, RSLTMODE_Normal, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(p));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1326,8 +1312,8 @@ Gurax_DeclareMethod(List, Tail)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "n", VTYPE_number);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1350,8 +1336,8 @@ Gurax_DeclareMethod(List, Until)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 #if 0
-	DeclareArg(env, "criteria", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1374,7 +1360,7 @@ Gurax_DeclareMethod(List, Var)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareAttr(Gurax_Symbol(p));
+	DeclareAttrOpt(Gurax_Symbol(p));
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }
@@ -1397,8 +1383,8 @@ Gurax_DeclareMethod(List, While)
 {
 	Declare(VTYPE_Any, Flag::None);
 #if 0
-	DeclareArg(env, "criteria", VTYPE_any);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(env.LookupClass(VTYPE_iterator), GetSymbol());
 #endif
 }

@@ -26,25 +26,25 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// HelpProvider
+// HelpHolder
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE HelpProvider : public Referable {
+class GURAX_DLLDECLARE HelpHolder : public Referable {
 public:
-	Gurax_DeclareReferable(HelpProvider);
+	Gurax_DeclareReferable(HelpHolder);
 protected:
 	HelpOwner _helpOwner;
 public:
 	// Constructor
-	HelpProvider() {}
+	HelpHolder() {}
 	// Copy constructor/operator
-	HelpProvider(const HelpProvider& src) = delete;
-	HelpProvider& operator=(const HelpProvider& src) = delete;
+	HelpHolder(const HelpHolder& src) = delete;
+	HelpHolder& operator=(const HelpHolder& src) = delete;
 	// Move constructor/operator
-	HelpProvider(HelpProvider&& src) = delete;
-	HelpProvider& operator=(HelpProvider&& src) noexcept = delete;
+	HelpHolder(HelpHolder&& src) = delete;
+	HelpHolder& operator=(HelpHolder&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~HelpProvider() = default;
+	virtual ~HelpHolder() = default;
 public:
 	void AddHelp(const Symbol* pLangCode, String doc);
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc);
@@ -59,16 +59,16 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Help);
 private:
-	RefPtr<HelpProvider::WeakPtr> _pwHelpProvider;
+	RefPtr<HelpHolder::WeakPtr> _pwHelpHolder;
 	const Symbol* _pLangCode;
 	String _formatName;
 	String _doc;
 public:
 	// Constructor
-	Help(HelpProvider::WeakPtr *pwHelpProvider, const Symbol* pLangCode, String doc) :
-		_pwHelpProvider(pwHelpProvider), _pLangCode(pLangCode), _doc(std::move(doc)) {}
-	Help(HelpProvider::WeakPtr *pwHelpProvider, const Symbol* pLangCode, String formatName, String doc) :
-		_pwHelpProvider(pwHelpProvider), _pLangCode(pLangCode),
+	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, String doc) :
+		_pwHelpHolder(pwHelpHolder), _pLangCode(pLangCode), _doc(std::move(doc)) {}
+	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, String formatName, String doc) :
+		_pwHelpHolder(pwHelpHolder), _pLangCode(pLangCode),
 		_formatName(std::move(formatName)), _doc(std::move(doc)) {}
 	// Copy constructor/operator
 	Help(const Help& src) = delete;

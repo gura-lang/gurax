@@ -12,7 +12,7 @@ VType::UniqId VType::_uniqIdNext = 1;
 VType VType::Empty("");
 
 VType::VType(const Symbol* pSymbol) :
-	_uniqId(_uniqIdNext++), _pHelpProvider(new HelpProvider()), _pVTypeInh(nullptr),
+	_uniqId(_uniqIdNext++), _pHelpHolder(new HelpHolder()), _pVTypeInh(nullptr),
 	_pSymbol(pSymbol), _flags(0), _pFrame(new Frame_VType(nullptr)),
 	_pPropHandlerMap(new PropHandlerMap()), _pPropHandlerMapOfClass(new PropHandlerMap())
 {

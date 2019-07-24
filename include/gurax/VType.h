@@ -32,7 +32,7 @@ public:
 	};
 protected:
 	UniqId _uniqId;
-	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<HelpHolder> _pHelpHolder;
 	VType* _pVTypeInh;
 	const Symbol* _pSymbol;
 	Flags _flags;
@@ -61,7 +61,7 @@ public:
 public:
 	UniqId GetUniqId() const { return _uniqId; }
 	void SetAttrs(VType& vtypeInh, Flags flags);
-	const HelpProvider& GetHelpProvider() const { return *_pHelpProvider; }
+	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	VType* GetVTypeInh() const { return _pVTypeInh; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
@@ -70,10 +70,10 @@ public:
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
 	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }

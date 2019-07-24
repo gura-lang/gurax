@@ -181,7 +181,7 @@ private:
 	const Symbol* _pSymbol;
 	const VType* _pVType;
 	Flags _flags;
-	RefPtr<HelpProvider> _pHelpProvider;
+	RefPtr<HelpHolder> _pHelpHolder;
 public:
 	// Constructor
 	PropHandler(const Symbol* pSymbol, Flags flags = Flag::None);
@@ -200,10 +200,10 @@ public:
 	SeqId GetSeqId() const { return _seqId; }
 	void Declare(const VType& vtype, UInt32 flags) { _pVType = &vtype, _flags |= flags; }
 	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
 	}
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpProvider->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVType() const { return *_pVType; }
