@@ -1050,12 +1050,11 @@ Gurax_ImplementMethod(List, Reverse)
 	return Value::nil();
 }
 
-// List#RoundOff(threshold:number => 1e-10) {block?}
+// List#RoundOff(threshold?:number) {block?}
 Gurax_DeclareMethod(List, RoundOff)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	//DeclareArg("threshold", VTYPE_Number, ArgOccur::Once, ArgFlag::None,
-	//		   new Expr_Value(new Value_Number(RoundOffThreshold)));
+	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
