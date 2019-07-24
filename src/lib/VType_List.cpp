@@ -988,11 +988,9 @@ Gurax_ImplementMethod(List, Rank)
 Gurax_DeclareMethod(List, Reduce)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
 	DeclareArg("accum", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Reduce)
@@ -1012,12 +1010,10 @@ Gurax_ImplementMethod(List, Reduce)
 Gurax_DeclareMethod(List, Replace)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Replace)
@@ -1037,10 +1033,8 @@ Gurax_ImplementMethod(List, Replace)
 Gurax_DeclareMethod(List, Reverse)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Reverse)
@@ -1060,12 +1054,10 @@ Gurax_ImplementMethod(List, Reverse)
 Gurax_DeclareMethod(List, RoundOff)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
-	DeclareArg("threshold", VTYPE_Number, ArgOccur::Once, ArgFlag::None,
-			   new Expr_Value(RoundOffThreshold));
+	//DeclareArg("threshold", VTYPE_Number, ArgOccur::Once, ArgFlag::None,
+	//		   new Expr_Value(new Value_Number(RoundOffThreshold)));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, RoundOff)
@@ -1085,10 +1077,8 @@ Gurax_ImplementMethod(List, RoundOff)
 Gurax_DeclareMethod(List, RunLength)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, RunLength)
@@ -1108,11 +1098,9 @@ Gurax_ImplementMethod(List, RunLength)
 Gurax_DeclareMethod(List, Since)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Since)
@@ -1132,11 +1120,9 @@ Gurax_ImplementMethod(List, Since)
 Gurax_DeclareMethod(List, Skip)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Skip)
