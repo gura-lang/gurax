@@ -1142,10 +1142,8 @@ Gurax_ImplementMethod(List, Skip)
 Gurax_DeclareMethod(List, SkipNil)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, SkipNil)
@@ -1165,13 +1163,11 @@ Gurax_ImplementMethod(List, SkipNil)
 Gurax_DeclareMethod(List, Sort)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareArg("directive", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("keys", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
 	DeclareAttrOpt(Gurax_Symbol(stable));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Sort)
@@ -1191,11 +1187,8 @@ Gurax_ImplementMethod(List, Sort)
 Gurax_DeclareMethod(List, Std)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
-	SetFuncAttr(VTYPE_Any, RSLTMODE_Normal, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(p));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Std)
@@ -1215,9 +1208,7 @@ Gurax_ImplementMethod(List, Std)
 Gurax_DeclareMethod(List, Sum)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Sum)
@@ -1237,11 +1228,9 @@ Gurax_ImplementMethod(List, Sum)
 Gurax_DeclareMethod(List, Tail)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Tail)
@@ -1261,11 +1250,9 @@ Gurax_ImplementMethod(List, Tail)
 Gurax_DeclareMethod(List, Until)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-#if 0
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Until)
@@ -1285,10 +1272,8 @@ Gurax_ImplementMethod(List, Until)
 Gurax_DeclareMethod(List, Var)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
 	DeclareAttrOpt(Gurax_Symbol(p));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, Var)
@@ -1308,11 +1293,9 @@ Gurax_ImplementMethod(List, Var)
 Gurax_DeclareMethod(List, While)
 {
 	Declare(VTYPE_Any, Flag::None);
-#if 0
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
-#endif
 }
 
 Gurax_ImplementMethod(List, While)
