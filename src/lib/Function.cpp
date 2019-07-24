@@ -44,6 +44,10 @@ String Function::MakeFullName() const
 
 void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
 {
+	Value* pValue = vtype.GetFrame().Lookup(pSymbol);
+	if (pValue && pValue->IsType(VTYPE_Function)) {
+		_pHelpHolder.reset(Value_Function::GetFunction(*pValue).GetHelpHolder().Reference());
+	}
 }
 
 void Function::DoCall(Processor& processor, Argument& argument) const

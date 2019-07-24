@@ -86,7 +86,6 @@ public:
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMapOfClass() const { return *_pPropHandlerMapOfClass; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
-	//const PropHandler* LookupPropHandlerOfClass(const Symbol* pSymbol) const;
 	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
