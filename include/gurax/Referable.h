@@ -16,6 +16,7 @@ public: \
 	WeakPtr* Reference() const { return static_cast<WeakPtr*>(WeakPtrBase::Reference()); } \
 	T* Lock() { return T::Reference(static_cast<T*>(_p)); } \
 }; \
+void IncCntRef() { _cntRef++; } \
 int GetCntRef() const { return _cntRef; } \
 static T* Reference(const T* p) { \
 	T* pCasted = const_cast<T*>(p); \

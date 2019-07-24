@@ -41,6 +41,22 @@ void ValueOwner::Set(size_t pos, Value* pValue)
 	*ppValue = pValue;
 }
 
+void ValueOwner::Add(const ValueList& values)
+{
+	values.IncCntRefOfEach();
+	insert(end(), values.begin(), values.end());
+}
+
+bool ValueOwner::Add(Iterator& iterator)
+{
+	for (;;) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		push_back(pValue->Reference());
+	}
+	return !Error::IsIssued();
+}
+
 bool ValueOwner::IndexGet(const Value* pValueIndex, Value** ppValue) const
 {
 	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {

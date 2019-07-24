@@ -162,28 +162,32 @@ public:
 	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
 	void Set(size_t pos, Value* pValue) {
-		UpdateVTypeOfElems(pValue->GetVType());
+		UpdateVTypeOfElems(*pValue);
 		_pValueOwner->Set(pos, pValue);
 	}
 	Value* Get(size_t pos) const { return _pValueOwner->Get(pos); }
 	bool IndexSet(const Value* pValueIndex, Value* pValue) {
-		UpdateVTypeOfElems(pValue->GetVType());
+		UpdateVTypeOfElems(*pValue);
 		return _pValueOwner->IndexSet(pValueIndex, pValue);
 	}
 	bool IndexGet(const Value* pValueIndex, Value** ppValue) const {
 		return _pValueOwner->IndexGet(pValueIndex, ppValue);
 	}
 	void Add(Value* pValue) {
-		UpdateVTypeOfElems(pValue->GetVType());
+		UpdateVTypeOfElems(*pValue);
 		_pValueOwner->push_back(pValue);
 	}
-	void Append(const ValueTypedOwner& values);
-	void Append(Iterator& iterator);
+	void Add(const ValueList& values);
+	void Add(const ValueTypedOwner& values);
+	bool Add(Iterator& iterator);
+	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
-	VType* GetVTypeOfElems() const { return _pVTypeOfElems; }
+	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const { return new Iterator_Each(Reference()); }
+private:
+	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 };
 
 }

@@ -54,9 +54,9 @@ Gurax_ImplementMethod(List, Append)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	for (Value* pValue : values) {
 		if (pValue->IsType(VTYPE_List)) {
-			valueTypedOwner.Append(Value_List::GetValueTypedOwner(*pValue));
+			valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValue));
 		} else if (pValue->IsType(VTYPE_Iterator)) {
-			valueTypedOwner.Append(Value_Iterator::GetIterator(*pValue));
+			valueTypedOwner.Add(Value_Iterator::GetIterator(*pValue));
 		} else {
 			valueTypedOwner.Add(pValue->Reference());
 		}
@@ -1389,7 +1389,7 @@ Gurax_DeclareProperty_R(List, vtypeOfElem)
 Gurax_ImplementPropertyGetter(List, vtypeOfElem)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_VType(*valueThis.GetValueTypedOwner().GetVTypeOfElems());
+	return new Value_VType(valueThis.GetValueTypedOwner().GetVTypeOfElems());
 }
 
 //------------------------------------------------------------------------------

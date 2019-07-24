@@ -14,6 +14,11 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 	return *this;
 }
 
+void ValueList::IncCntRefOfEach() const
+{
+	for (Value* pValue : *this) pValue->IncCntRef();
+}
+
 VType& ValueList::GetVTypeOfElems() const
 {
 	if (empty()) return VTYPE_Undefined;

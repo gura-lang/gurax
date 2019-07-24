@@ -77,7 +77,7 @@ bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const D
 			const Value_List& valueEx = dynamic_cast<const Value_List&>(*pValueInit);
 			const ValueTypedOwner& valueTypedOwner = valueEx.GetValueTypedOwner();
 			if (valueTypedOwner.HasDeterminedVTypeOfElems()) {
-				pVType = valueTypedOwner.GetVTypeOfElems();
+				pVType = &valueTypedOwner.GetVTypeOfElems();
 			}
 		} else if (!pValueInit->IsNil()) {
 			Error::Issue(ErrorType::PropertyError, "must be initialized by a list");

@@ -16,7 +16,7 @@ ValueTypedOwner::ValueTypedOwner(VType& vtypeOfElems, ValueOwner* pValueOwner) :
 void ValueTypedOwner::Clear()
 {
 	_pVTypeOfElems = &VTYPE_Undefined;
-	_pValueOwner->Clear();
+	GetValueOwner().Clear();
 }
 
 ValueTypedOwner* ValueTypedOwner::CreateFromIterator(Iterator& iterator)
@@ -30,25 +30,46 @@ ValueTypedOwner* ValueTypedOwner::CreateFromIterator(Iterator& iterator)
 	return new ValueTypedOwner(pValueOwner.release());
 }
 
-void ValueTypedOwner::Append(const ValueTypedOwner& values)
+void ValueTypedOwner::Add(const ValueList& values)
 {
-	for (const Value* pValue : values.GetValueOwner()) {
-		Add(pValue->Reference());
-	}
+	UpdateVTypeOfElems(values.GetVTypeOfElems());
+	GetValueOwner().Add(values);
+}
+	
+void ValueTypedOwner::Add(const ValueTypedOwner& values)
+{
+	UpdateVTypeOfElems(values.GetVTypeOfElems());
+	GetValueOwner().Add(values.GetValueOwner());
 }
 
-void ValueTypedOwner::Append(Iterator& iterator)
+bool ValueTypedOwner::Add(Iterator& iterator)
 {
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
 		Add(pValue->Reference());
 	}
+	return !Error::IsIssued();
+}
+
+void ValueTypedOwner::UpdateVTypeOfElems(const Value& value)
+{
+	// Assumes that value is not of Undefined or Any.
+	VType& vtypeAdded = value.GetVType();
+	if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
+		_pVTypeOfElems = &vtypeAdded;
+	} else if (!_pVTypeOfElems->IsIdentical(vtypeAdded)) {
+		_pVTypeOfElems = &VTYPE_Any;
+	}
 }
 
 void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 {
-	if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
+	if (vtypeAdded.IsIdentical(VTYPE_Undefined)) {
+		// nothing to do
+	} else if (vtypeAdded.IsIdentical(VTYPE_Any)) {
+		_pVTypeOfElems = &VTYPE_Any;
+	} else if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
 		_pVTypeOfElems = &vtypeAdded;
 	} else if (!_pVTypeOfElems->IsIdentical(vtypeAdded)) {
 		_pVTypeOfElems = &VTYPE_Any;

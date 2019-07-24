@@ -69,7 +69,7 @@ protected:
 	virtual ~Value() = default;
 public:
 	VType& GetVType() { return *_pVType; }
-	const VType& GetVType() const { return *_pVType; }
+	VType& GetVType() const { return *_pVType; }
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Value* pValue) const { return this == pValue; }
 	static bool IsIdentical(const Value* pValue1, const Value* pValue2) {
