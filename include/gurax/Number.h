@@ -19,6 +19,9 @@ public:
 	struct GreaterThan {
 		bool operator()(T_Num num1, T_Num num2) const { return num1 > num2; }
 	};
+public:
+	static const T_Num Max;
+	static const T_Num Min;
 };
 
 //------------------------------------------------------------------------------
