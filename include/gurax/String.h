@@ -382,7 +382,9 @@ class StringList : public std::vector<String> {
 public:
 	static const StringList Empty;
 public:
-	StringList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	StringList& Sort() { std::sort(begin(), end()); return *this; }
+	StringList& Sort(SortOrder sortOrder);
+	StringList& Unique() { erase(std::unique(begin(), end()), end()); return *this; }
 };
 
 //------------------------------------------------------------------------------

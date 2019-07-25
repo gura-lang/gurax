@@ -11,6 +11,7 @@ add_executable(unittest
 	test-Help.cpp
 	test-Iterator.cpp
 	test-MemoryPool.cpp
+	test-Number.cpp
 	test-OAL.cpp
 	test-Parser.cpp
 	test-PathName.cpp

@@ -33,9 +33,13 @@ class NumList : public std::vector<T_Num, Allocator<T_Num> >
 public:
 	using std::vector<T_Num, Allocator<T_Num> >::vector;
 public:
-	NumList& Sort(SortOrder sortOrder = SortOrder::Ascend) {
-		SortListByOrder<NumList, Number<T_Num>::LessThan, Number<T_Num>::GreaterThan>(*this, sortOrder);
+	NumList& Sort() { std::sort(this->begin(), this->end()); return *this; }
+	NumList& Sort(SortOrder sortOrder) {
+		SortListByOrder<NumList, typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(
+			*this, sortOrder);
+		return *this;
 	}
+	NumList& Unique() { this->erase(std::unique(this->begin(), this->end()), this->end()); return *this; }
 };
 
 //------------------------------------------------------------------------------
