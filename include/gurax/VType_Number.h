@@ -46,10 +46,14 @@ protected:
 	// Destructor
 	~Value_Number() = default;
 public:
+	Double GetNumberRaw() const { return _num; }
 	template<typename T_Num> T_Num GetNumber() const { return static_cast<T_Num>(_num); }
 	template<typename T_Num> T_Num GetNumberRanged(T_Num numMin, T_Num numMax) const;
 	template<typename T_Num> T_Num GetNumberNonNeg() const;
 public:
+	static Double GetNumberRaw(const Value& value) {
+		return dynamic_cast<const Value_Number&>(value).GetNumberRaw();
+	}
 	template<typename T_Num> static T_Num GetNumber(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumber<T_Num>();
 	}
@@ -59,6 +63,13 @@ public:
 	template<typename T_Num> static T_Num GetNumberNonNeg(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumberNonNeg<T_Num>();
 	}
+public:
+	template<typename T_Num>
+	static NumList<T_Num> GetNumList(const ValueList& values);
+	template<typename T_Num>
+	static NumList<T_Num> GetNumListRanged(const ValueList& values, T_Num numMin, T_Num numMax);
+	template<typename T_Num>
+	static NumList<T_Num> GetNumListNonNeg(const ValueList& values);
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -85,7 +96,8 @@ public:
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& flags) const override;
 };
 
-template<typename T_Num> T_Num Value_Number::GetNumberRanged(T_Num numMin, T_Num numMax) const
+template<typename T_Num>
+T_Num Value_Number::GetNumberRanged(T_Num numMin, T_Num numMax) const
 {
 	if ((_num < static_cast<Double>(numMin) || static_cast<Double>(numMax) < _num) && !Error::IsIssued()) {
 		Error::Issue(ErrorType::RangeError, "the number must be between %g and %g",
@@ -94,12 +106,61 @@ template<typename T_Num> T_Num Value_Number::GetNumberRanged(T_Num numMin, T_Num
 	return static_cast<T_Num>(_num);
 }
 
-template<typename T_Num> T_Num Value_Number::GetNumberNonNeg() const
+template<typename T_Num>
+T_Num Value_Number::GetNumberNonNeg() const
 {
 	if (_num < 0 && !Error::IsIssued()) {
 		Error::Issue(ErrorType::RangeError, "negative value is not acceptable");
 	}
 	return static_cast<T_Num>(_num);
+}
+
+template<typename T_Num>
+NumList<T_Num> Value_Number::GetNumList(const ValueList& values)
+{
+	NumList<T_Num> nums;
+	nums.reserve(values.size());
+	for (Value* pValue : values) {
+		Double numRaw = Value_Number::GetNumberRaw(*pValue);
+		nums.push_back(static_cast<T_Num>(numRaw));
+	}
+	return nums;
+}
+
+template<typename T_Num>
+NumList<T_Num> Value_Number::GetNumListRanged(const ValueList& values, T_Num numMin, T_Num numMax)
+{
+	NumList<T_Num> nums;
+	if (Error::IsIssued()) return nums;
+	Double numMinDbl = static_cast<Double>(numMin);
+	Double numMaxDbl = static_cast<Double>(numMax);
+	nums.reserve(values.size());
+	for (Value* pValue : values) {
+		Double numRaw = Value_Number::GetNumberRaw(*pValue);
+		if ((numRaw < numMinDbl || numMaxDbl < numRaw)) {
+			Error::Issue(ErrorType::RangeError, "the number must be between %g and %g", numMinDbl, numMaxDbl);
+			break;
+		}
+		nums.push_back(static_cast<T_Num>(numRaw));
+	}
+	return nums;
+}
+
+template<typename T_Num>
+NumList<T_Num> Value_Number::GetNumListNonNeg(const ValueList& values)
+{
+	NumList<T_Num> nums;
+	if (Error::IsIssued()) return nums;
+	nums.reserve(values.size());
+	for (Value* pValue : values) {
+		Double numRaw = Value_Number::GetNumberRaw(*pValue);
+		if (numRaw < 0) {
+			Error::Issue(ErrorType::RangeError, "negative value is not acceptable");
+			break;
+		}
+		nums.push_back(static_cast<T_Num>(numRaw));
+	}
+	return nums;
 }
 
 }
