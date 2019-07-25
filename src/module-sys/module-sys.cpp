@@ -24,7 +24,7 @@ Gurax_ImplementFunction(Exit)
 {
 	// Arguments
 	ArgPicker args(argument);
-	int exitCode = args.IsDefined()? args.PickNonNeg<Int>() : 0;
+	int exitCode = args.IsDefined()? args.PickNumberNonNeg<Int>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	std::exit(exitCode);

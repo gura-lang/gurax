@@ -32,21 +32,21 @@ Gurax_ImplementFunction(DateTime)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Int16 year	= args.IsValid()? args.PickRanged<Int16>(0, 9999) : 1970;
+	Int16 year	= args.IsValid()? args.PickNumberRanged<Int16>(0, 9999) : 1970;
 	if (Error::IsIssued()) return Value::nil();
-	Int8 month	= args.IsValid()? args.PickRanged<Int8>(1, 12) : 1;
+	Int8 month	= args.IsValid()? args.PickNumberRanged<Int8>(1, 12) : 1;
 	if (Error::IsIssued()) return Value::nil();
-	Int8 day	= args.IsValid()? args.PickRanged<Int8>(1, 31) : 1;
+	Int8 day	= args.IsValid()? args.PickNumberRanged<Int8>(1, 31) : 1;
 	if (Error::IsIssued()) return Value::nil();
-	Int8 hour	= args.IsValid()? args.PickRanged<Int8>(0, 23) : 0;
+	Int8 hour	= args.IsValid()? args.PickNumberRanged<Int8>(0, 23) : 0;
 	if (Error::IsIssued()) return Value::nil();
-	Int8 min	= args.IsValid()? args.PickRanged<Int8>(0, 59) : 0;
+	Int8 min	= args.IsValid()? args.PickNumberRanged<Int8>(0, 59) : 0;
 	if (Error::IsIssued()) return Value::nil();
-	Int8 sec	= args.IsValid()? args.PickRanged<Int8>(0, 59) : 0;
+	Int8 sec	= args.IsValid()? args.PickNumberRanged<Int8>(0, 59) : 0;
 	if (Error::IsIssued()) return Value::nil();
-	Int16 msec	= args.IsValid()? args.PickRanged<Int16>(0, 999) : 0;
+	Int16 msec	= args.IsValid()? args.PickNumberRanged<Int16>(0, 999) : 0;
 	if (Error::IsIssued()) return Value::nil();
-	Int16 usec	= args.IsValid()? args.PickRanged<Int16>(0, 999) : 0;
+	Int16 usec	= args.IsValid()? args.PickNumberRanged<Int16>(0, 999) : 0;
 	if (Error::IsIssued()) return Value::nil();
 	bool validOffsetFlag = args.IsValid();
 	Int32 minsOff = validOffsetFlag? args.PickNumber<Int32>() : 0;
@@ -81,7 +81,7 @@ Gurax_ImplementPropertyGetter(DateTime, year)
 Gurax_ImplementPropertySetter(DateTime, year)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int16 num = Value_Number::GetRanged<Int16>(value, 0, 9999);
+	Int16 num = Value_Number::GetNumberRanged<Int16>(value, 0, 9999);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetYear(num);
 }
@@ -104,7 +104,7 @@ Gurax_ImplementPropertyGetter(DateTime, month)
 Gurax_ImplementPropertySetter(DateTime, month)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int8 num = Value_Number::GetRanged<Int8>(value, 1, 12);
+	Int8 num = Value_Number::GetNumberRanged<Int8>(value, 1, 12);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetMonth(num);
 }
@@ -127,7 +127,7 @@ Gurax_ImplementPropertyGetter(DateTime, day)
 Gurax_ImplementPropertySetter(DateTime, day)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int8 num = Value_Number::GetRanged<Int8>(value, 1, 31);
+	Int8 num = Value_Number::GetNumberRanged<Int8>(value, 1, 31);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetDay(num);
 }
@@ -150,7 +150,7 @@ Gurax_ImplementPropertyGetter(DateTime, hour)
 Gurax_ImplementPropertySetter(DateTime, hour)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int8 num = Value_Number::GetRanged<Int8>(value, 0, 23);
+	Int8 num = Value_Number::GetNumberRanged<Int8>(value, 0, 23);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetHour(num);
 }
@@ -173,7 +173,7 @@ Gurax_ImplementPropertyGetter(DateTime, min)
 Gurax_ImplementPropertySetter(DateTime, min)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int8 num = Value_Number::GetRanged<Int8>(value, 0, 59);
+	Int8 num = Value_Number::GetNumberRanged<Int8>(value, 0, 59);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetMin(num);
 }
@@ -196,7 +196,7 @@ Gurax_ImplementPropertyGetter(DateTime, sec)
 Gurax_ImplementPropertySetter(DateTime, sec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int8 num = Value_Number::GetRanged<Int8>(value, 0, 59);
+	Int8 num = Value_Number::GetNumberRanged<Int8>(value, 0, 59);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetSec(num);
 }
@@ -219,7 +219,7 @@ Gurax_ImplementPropertyGetter(DateTime, msec)
 Gurax_ImplementPropertySetter(DateTime, msec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int16 num = Value_Number::GetRanged<Int16>(value, 0, 999);
+	Int16 num = Value_Number::GetNumberRanged<Int16>(value, 0, 999);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetMSec(num);
 }
@@ -242,7 +242,7 @@ Gurax_ImplementPropertyGetter(DateTime, usec)
 Gurax_ImplementPropertySetter(DateTime, usec)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	Int16 num = Value_Number::GetRanged<Int16>(value, 0, 999);
+	Int16 num = Value_Number::GetNumberRanged<Int16>(value, 0, 999);
 	if (Error::IsIssued()) return;
 	valueThis.GetDateTime().SetUSec(num);
 }

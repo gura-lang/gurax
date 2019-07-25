@@ -49,7 +49,7 @@ Gurax_ImplementMethod(String, Center)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int width = args.PickNonNeg<Int>();
+	Int width = args.PickNumberNonNeg<Int>();
 	const char* padding = args.IsValid()? args.PickString() : " ";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
@@ -213,7 +213,7 @@ Gurax_ImplementMethod(String, EndsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	Int endPos = args.IsValid()? args.PickNonNeg<Int>() : -1;
+	Int endPos = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const char* str = valueThis.GetString();
@@ -294,7 +294,7 @@ Gurax_ImplementMethod(String, Find)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	Int pos = args.IsValid()? args.PickNonNeg<Int>() : 0;
+	Int pos = args.IsValid()? args.PickNumberNonNeg<Int>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
@@ -379,7 +379,7 @@ Gurax_ImplementMethod(String, Left)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int len = args.PickNonNeg<Int>();
+	Int len = args.PickNumberNonNeg<Int>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
@@ -412,7 +412,7 @@ Gurax_ImplementMethod(String, LJust)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int width = args.PickNonNeg<Int>();
+	Int width = args.PickNumberNonNeg<Int>();
 	const char* padding = args.IsValid()? args.PickString() : " ";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
@@ -463,8 +463,8 @@ Gurax_ImplementMethod(String, Mid)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int pos = args.PickNonNeg<Int>();
-	Int len = args.PickNonNeg<Int>();
+	Int pos = args.PickNumberNonNeg<Int>();
+	Int len = args.PickNumberNonNeg<Int>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
@@ -586,7 +586,7 @@ Gurax_ImplementMethod(String, Right)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int len = args.PickNonNeg<Int>();
+	Int len = args.PickNumberNonNeg<Int>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
@@ -619,7 +619,7 @@ Gurax_ImplementMethod(String, RJust)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int width = args.PickNonNeg<Int>();
+	Int width = args.PickNumberNonNeg<Int>();
 	const char* padding = args.IsValid()? args.PickString() : " ";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
@@ -673,7 +673,7 @@ Gurax_ImplementMethod(String, StartsWith)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sub = args.PickString();
-	Int pos = args.IsValid()? args.PickNonNeg<Int>() : 0;
+	Int pos = args.IsValid()? args.PickNumberNonNeg<Int>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const char* str = valueThis.GetString();

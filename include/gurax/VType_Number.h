@@ -47,17 +47,17 @@ protected:
 	~Value_Number() = default;
 public:
 	template<typename T_Num> T_Num GetNumber() const { return static_cast<T_Num>(_num); }
-	template<typename T_Num> T_Num GetRanged(T_Num numMin, T_Num numMax) const;
-	template<typename T_Num> T_Num GetNonNeg() const;
+	template<typename T_Num> T_Num GetNumberRanged(T_Num numMin, T_Num numMax) const;
+	template<typename T_Num> T_Num GetNumberNonNeg() const;
 public:
 	template<typename T_Num> static T_Num GetNumber(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumber<T_Num>();
 	}
-	template<typename T_Num> static T_Num GetRanged(const Value& value, T_Num numMin, T_Num numMax) {
-		return dynamic_cast<const Value_Number&>(value).GetRanged<T_Num>(numMin, numMax);
+	template<typename T_Num> static T_Num GetNumberRanged(const Value& value, T_Num numMin, T_Num numMax) {
+		return dynamic_cast<const Value_Number&>(value).GetNumberRanged<T_Num>(numMin, numMax);
 	}
-	template<typename T_Num> static T_Num GetNonNeg(const Value& value) {
-		return dynamic_cast<const Value_Number&>(value).GetNonNeg<T_Num>();
+	template<typename T_Num> static T_Num GetNumberNonNeg(const Value& value) {
+		return dynamic_cast<const Value_Number&>(value).GetNumberNonNeg<T_Num>();
 	}
 public:
 	// Virtual functions of Value
@@ -85,7 +85,7 @@ public:
 	virtual bool Format_c(Formatter& formatter, FormatterFlags& flags) const override;
 };
 
-template<typename T_Num> T_Num Value_Number::GetRanged(T_Num numMin, T_Num numMax) const
+template<typename T_Num> T_Num Value_Number::GetNumberRanged(T_Num numMin, T_Num numMax) const
 {
 	if ((_num < static_cast<Double>(numMin) || static_cast<Double>(numMax) < _num) && !Error::IsIssued()) {
 		Error::Issue(ErrorType::RangeError, "the number must be between %g and %g",
@@ -94,7 +94,7 @@ template<typename T_Num> T_Num Value_Number::GetRanged(T_Num numMin, T_Num numMa
 	return static_cast<T_Num>(_num);
 }
 
-template<typename T_Num> T_Num Value_Number::GetNonNeg() const
+template<typename T_Num> T_Num Value_Number::GetNumberNonNeg() const
 {
 	if (_num < 0 && !Error::IsIssued()) {
 		Error::Issue(ErrorType::RangeError, "negative value is not acceptable");

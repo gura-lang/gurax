@@ -48,11 +48,11 @@ public:
 	template<typename T_Num> T_Num PickNumber() {
 		return Value_Number::GetNumber<T_Num>(PickValue());
 	}
-	template<typename T_Num> T_Num PickRanged(T_Num numMin, T_Num numMax) {
-		return Value_Number::GetRanged<T_Num>(PickValue(), numMin, numMax);
+	template<typename T_Num> T_Num PickNumberRanged(T_Num numMin, T_Num numMax) {
+		return Value_Number::GetNumberRanged<T_Num>(PickValue(), numMin, numMax);
 	}
-	template<typename T_Num> T_Num PickNonNeg() {
-		return Value_Number::GetNonNeg<T_Num>(PickValue());
+	template<typename T_Num> T_Num PickNumberNonNeg() {
+		return Value_Number::GetNumberNonNeg<T_Num>(PickValue());
 	}
 	const Symbol* PickSymbol()		{ return Value_Symbol::GetSymbol(PickValue()); }
 	const char* PickString()		{ return Value_String::GetString(PickValue()); }

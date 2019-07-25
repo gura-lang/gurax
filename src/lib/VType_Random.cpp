@@ -75,7 +75,7 @@ Gurax_ImplementMethod(Random, Range)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int range = args.PickNonNeg<Int>();
+	Int range = args.PickNumberNonNeg<Int>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	return new Value_Number(valueThis.GetRandom().Range<Int>(range));

@@ -234,7 +234,7 @@ Gurax_ImplementMethod(List, Put)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	size_t pos = args.PickNonNeg<size_t>();
+	size_t pos = args.PickNumberNonNeg<size_t>();
 	const Value& value = args.PickValue();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
