@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_VALUE_H
 #define GURAX_VALUE_H
+#include "Number.h"
 #include "VType.h"
 #include "Iterator.h"
 #include "DeclCallable.h"

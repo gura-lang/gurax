@@ -11,7 +11,6 @@ add_library(guraxcore SHARED
 	CommandLine.cpp
 	Common.cpp
 	Composer.cpp
-	Container.cpp
 	DateTime.cpp
 	DeclArg.cpp
 	DeclBlock.cpp
@@ -32,6 +31,7 @@ add_library(guraxcore SHARED
 	Memory.cpp
 	MemoryPool.cpp
 	Module.cpp
+	Number.cpp
 	OAL.cpp
 	Operator.cpp
 	Operators.cpp
