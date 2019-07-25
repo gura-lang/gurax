@@ -1009,6 +1009,17 @@ Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_String
 //------------------------------------------------------------------------------
+StringList Value_String::GetStringList(const ValueList& values)
+{
+	StringList strs;
+	strs.reserve(values.size());
+	for (Value* pValue : values) {
+		const String& str = GetStringSTL(*pValue);
+		strs.push_back(str);
+	}
+	return strs;
+}
+
 String Value_String::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

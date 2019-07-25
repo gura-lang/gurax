@@ -28,10 +28,10 @@ public:
 // NumList
 //------------------------------------------------------------------------------
 template<typename T_Num>
-class NumList : public std::vector<T_Num, Allocator<T_Num> >
+class NumList : public std::vector<T_Num>
 {
 public:
-	using std::vector<T_Num, Allocator<T_Num> >::vector;
+	using std::vector<T_Num>::vector;
 public:
 	NumList& Sort() { std::sort(this->begin(), this->end()); return *this; }
 	NumList& Sort(SortOrder sortOrder) {
@@ -46,10 +46,10 @@ public:
 // NumDeque
 //------------------------------------------------------------------------------
 template<typename T_Num>
-class NumDeque : public std::deque<T_Num, Allocator<T_Num> >
+class NumDeque : public std::deque<T_Num>
 {
 public:
-	using std::deque<T_Num, Allocator<T_Num> >::vector;
+	using std::deque<T_Num>::vector;
 };
 
 }

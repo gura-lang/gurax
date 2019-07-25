@@ -182,6 +182,7 @@ public:
 	bool Add(Iterator& iterator);
 	void Append(const ValueList& values);
 	void Erase(size_t pos);
+	void Erase(const NumList<Int>& posList);
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }

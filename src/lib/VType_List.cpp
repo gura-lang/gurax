@@ -130,15 +130,19 @@ Gurax_DeclareMethod(List, Erase)
 
 Gurax_ImplementMethod(List, Erase)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	NumList<Int> posList = Value_Number::GetNumList<Int>(args.PickList());
 	// Function body
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-#endif
-	return Value::nil();
+	for (auto pPos = posList.begin(); pPos != posList.end(); pPos++) {
+		if (*pPos < 0) *pPos += valueTypedOwner.GetSize();
+	}
+	posList.Sort(SortOrder::Descend).Unique();
+	valueTypedOwner.Erase(posList);
+	return argument.GetValueThis().Reference();
 }
 
 // List#Get(index:Number):map:flat

@@ -65,6 +65,16 @@ void ValueTypedOwner::Append(const ValueList& values)
 	}
 }
 
+void ValueTypedOwner::Erase(size_t pos)
+{
+	
+}
+
+void ValueTypedOwner::Erase(const NumList<Int>& posList)
+{
+	
+}
+
 void ValueTypedOwner::UpdateVTypeOfElems(const Value& value)
 {
 	// Assumes that value is not of Undefined or Any.

@@ -121,7 +121,7 @@ NumList<T_Num> Value_Number::GetNumList(const ValueList& values)
 	NumList<T_Num> nums;
 	nums.reserve(values.size());
 	for (Value* pValue : values) {
-		Double numRaw = Value_Number::GetNumberRaw(*pValue);
+		Double numRaw = GetNumberRaw(*pValue);
 		nums.push_back(static_cast<T_Num>(numRaw));
 	}
 	return nums;

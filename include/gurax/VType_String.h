@@ -60,6 +60,7 @@ public:
 	static const String& GetStringSTL(const Value& value) {
 		return dynamic_cast<const Value_String&>(value).GetStringSTL();
 	}
+	static StringList GetStringList(const ValueList& values);
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
