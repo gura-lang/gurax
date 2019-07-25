@@ -6,6 +6,28 @@
 namespace Gurax {
 
 //-----------------------------------------------------------------------------
+// Implementation of class method
+//-----------------------------------------------------------------------------
+#if 0
+// List.Zip(values+) {block?}
+Gurax_DeclareClassMethod(List, Zip)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("values", VTYPE_any, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gura_Symbol(en), 
+		"Creates an iterator generating lists that bind given argument values.\n"
+		"When the value is a list or an iterator, each item in it would be zipped.\n");
+}
+
+Gurax_ImplementClassMethod(List, Zip)
+{
+	return Value::nil();
+}
+#endif
+
+//-----------------------------------------------------------------------------
 // Implementation of method specific to List
 //-----------------------------------------------------------------------------
 // List#Add(value+):reduce
@@ -15,7 +37,7 @@ Gurax_DeclareMethod(List, Add)
 	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Adds values to the list.");
 }
 
 Gurax_ImplementMethod(List, Add)
@@ -26,10 +48,6 @@ Gurax_ImplementMethod(List, Add)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	//ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	//for (Value* pValue : values) {
-	//	valueTypedOwner.Add(pValue->Reference());
-	//}
 	valueThis.GetValueTypedOwner().Add(values);
 	return argument.GetValueThis().Reference();
 }
@@ -41,7 +59,8 @@ Gurax_DeclareMethod(List, Append)
 	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Adds values to the list.\n"
+		"If the value is a list of an iterator, elements they contain are added to the list.\n");
 }
 
 Gurax_ImplementMethod(List, Append)
@@ -52,16 +71,6 @@ Gurax_ImplementMethod(List, Append)
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	//ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	//for (Value* pValue : values) {
-	//	if (pValue->IsType(VTYPE_List)) {
-	//		valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValue));
-	//	} else if (pValue->IsType(VTYPE_Iterator)) {
-	//		valueTypedOwner.Add(Value_Iterator::GetIterator(*pValue));
-	//	} else {
-	//		valueTypedOwner.Add(pValue->Reference());
-	//	}
-	//}
 	valueThis.GetValueTypedOwner().Append(values);
 	return argument.GetValueThis().Reference();
 }
@@ -72,7 +81,7 @@ Gurax_DeclareMethod(List, Clear)
 	Declare(VTYPE_List, Flag::Reduce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Clears the content of the list.");
 }
 
 Gurax_ImplementMethod(List, Clear)
