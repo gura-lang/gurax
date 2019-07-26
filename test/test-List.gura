@@ -61,6 +61,117 @@ TestCase('List#isEmpty') {
 	Tester(`[1, 2, 3].isEmpty)
 }
 
+TestCase('List#Add()') {
+	tbl = []
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Add(3))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Add(6, 7, 8))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Add('hello'))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Add([1, 2, 3]))
+	Tester(`tbl.Add(4..9))
+	Tester(`tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9))
+	Tester(`tbl.Add('a', 'b', 'c', 'd', 'e', 'f'))
+}
+
+TestCase('List#Append()') {
+	tbl = []
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Append(3))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Append(6, 7, 8))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Append('hello'))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Append([1, 2, 3]))
+	Tester(`tbl.Append(4..9))
+	Tester(`tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9))
+	Tester(`tbl.Append('a', 'b', 'c', 'd', 'e', 'f'))
+	Tester(`tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]))
+	Tester(`tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']))
+}
+
+TestCase('List#Clear()') {
+	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+	Tester(`tbl)
+	Tester(`tbl.Clear())
+}
+
+TestCase('List#Combination()') {
+}
+
+TestCase('List#Erase()') {
+	tbl = [0..20]
+	Tester(`tbl)
+	Tester(`tbl.Erase(0))
+	Tester(`tbl.Erase(0, 1, 2, 3))
+	Tester(`tbl.Erase(-1, -2, -3))
+	Tester(`tbl.Erase(0, 2, 4, 6, 8))
+}
+
+TestCase('List#Get()') {
+}
+
+TestCase('List#Insert()') {
+	tbl = [99, 99, 99, 99, 99]
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Insert(3, 3))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Insert(3, 6, 7, 8))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Insert(3, 'hello'))
+	Tester(`tbl.vtypeOfElem)
+	Tester(`tbl.Insert(3, [1, 2, 3]))
+	Tester(`tbl.Insert(3, 4..9))
+	Tester(`tbl.Insert(3, 1, 2, 3, 4, 5, 6, 7, 8, 9))
+	Tester(`tbl.Insert(3, 'a', 'b', 'c', 'd', 'e', 'f'))
+	tbl = [99, 99, 99, 99, 99]
+	Tester(`tbl.Insert(-1, 3))
+	Tester(`tbl.Insert(20, 3))
+	Tester(`tbl.Insert(-20, 3))
+}
+
+TestCase('List#Permutation()') {
+}
+
+TestCase('List#Put()') {
+}
+
+TestCase('List#Shift()') {
+}
+
+TestCase('List#Shuffle()') {
+}
+
+TestCase('List#After()') {
+}
+
+TestCase('List#Align()') {
+}
+
+TestCase('List#And()') {
+}
+
+TestCase('List#ArgMax()') {
+}
+
+TestCase('List#ArgMin()') {
+}
+
+TestCase('List#Before()') {
+}
+
+TestCase('List#Contains()') {
+}
+
+TestCase('List#Count()') {
+}
+
+TestCase('List#Cycle()') {
+}
+
 TestCase('List#Each()') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Println('Each { .. }')
@@ -121,6 +232,7 @@ TestCase('List#Each()') {
 		Printf('%d %s\n', i, x)
 	}
 }
+
 TestCase('List#Each() with :list') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl.Each():list {|x| x})
@@ -162,98 +274,6 @@ TestCase('List#Each() with :list') {
 		if (x.StartsWith('t')) { continue('x') }
 		Format('%d-%s', i, x)
 	})
-}
-
-TestCase('List#Add()') {
-	tbl = []
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Add(3))
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Add(6, 7, 8))
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Add('hello'))
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Add([1, 2, 3]))
-	Tester(`tbl.Add(4..9))
-	Tester(`tbl.Add(1, 2, 3, 4, 5, 6, 7, 8, 9))
-	Tester(`tbl.Add('a', 'b', 'c', 'd', 'e', 'f'))
-}
-
-TestCase('List#Append()') {
-	tbl = []
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Append(3))
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Append(6, 7, 8))
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Append('hello'))
-	Tester(`tbl.vtypeOfElem)
-	Tester(`tbl.Append([1, 2, 3]))
-	Tester(`tbl.Append(4..9))
-	Tester(`tbl.Append(1, 2, 3, 4, 5, 6, 7, 8, 9))
-	Tester(`tbl.Append('a', 'b', 'c', 'd', 'e', 'f'))
-	Tester(`tbl.Append([1, 2, 3], [4, 5, 6], [7, 8, 9]))
-	Tester(`tbl.Append(['a', 'b'], ['c', 'd'], ['e', 'f']))
-}
-
-TestCase('List#Clear()') {
-	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-	Tester(`tbl)
-	Tester(`tbl.Clear())
-}
-
-TestCase('List#Combination()') {
-}
-
-TestCase('List#Erase()') {
-}
-
-TestCase('List#Get()') {
-}
-
-TestCase('List#Insert()') {
-}
-
-TestCase('List#Permutation()') {
-}
-
-TestCase('List#Put()') {
-}
-
-TestCase('List#Shift()') {
-}
-
-TestCase('List#Shuffle()') {
-}
-
-TestCase('List#After()') {
-}
-
-TestCase('List#Align()') {
-}
-
-TestCase('List#And()') {
-}
-
-TestCase('List#ArgMax()') {
-}
-
-TestCase('List#ArgMin()') {
-}
-
-TestCase('List#Before()') {
-}
-
-TestCase('List#Contains()') {
-}
-
-TestCase('List#Count()') {
-}
-
-TestCase('List#Cycle()') {
-}
-
-TestCase('List#Each()') {
 }
 
 TestCase('List#Filter()') {
