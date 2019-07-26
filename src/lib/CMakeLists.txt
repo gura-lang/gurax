@@ -36,6 +36,7 @@ add_library(guraxcore SHARED
 	Operator.cpp
 	Operators.cpp
 	Parser.cpp
+	PathMgr.cpp
 	PathName.cpp
 	Processor.cpp
 	PropHandler.cpp

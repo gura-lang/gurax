@@ -39,6 +39,7 @@
 #include "gurax/Operator.h"
 #include "gurax/Operators.h"
 #include "gurax/Parser.h"
+#include "gurax/PathMgr.h"
 #include "gurax/PathName.h"
 #include "gurax/Processor.h"
 #include "gurax/PropHandler.h"
