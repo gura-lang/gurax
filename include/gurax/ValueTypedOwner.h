@@ -161,21 +161,18 @@ public:
 	bool IsEmpty() const { return _pValueOwner->empty(); }
 	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
-	void Set(Int pos, Value* pValue) {
-		UpdateVTypeOfElems(*pValue);
-		_pValueOwner->Set(pos, pValue);
-	}
-	Value* Get(size_t pos) const { return _pValueOwner->Get(pos); }
+	bool Set(Int pos, Value* pValue);
+	Value* Get(Int pos) const;
 	bool IndexSet(const Value* pValueIndex, Value* pValue);
 	bool IndexGet(const Value* pValueIndex, Value** ppValue) const;
-	void Add(Value* pValue) {
-		UpdateVTypeOfElems(*pValue);
-		_pValueOwner->push_back(pValue);
-	}
+	void Add(Value* pValue);
 	void Add(const ValueList& values);
 	void Add(const ValueTypedOwner& values);
 	bool Add(Iterator& iterator);
-	void Append(const ValueList& values);
+	bool Append(const ValueList& values);
+	bool Insert(Int pos, const ValueList& values);
+	bool Insert(Int pos, const ValueTypedOwner& values);
+	bool Insert(Int pos, Iterator& iterator);
 	bool Erase(Int pos);
 	bool Erase(const NumList<Int>& posList);
 	void UpdateVTypeOfElems(const Value& value);

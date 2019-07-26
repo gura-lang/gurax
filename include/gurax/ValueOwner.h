@@ -26,8 +26,10 @@ public:
 	ValueOwner* CloneDeep() const;
 	void Set(Int pos, Value* pValue);
 	Value* Get(Int pos) const { return at(pos); }
+	void Add(Value* pValue) { push_back(pValue); }
 	void Add(const ValueList& values);
-	bool Add(Iterator& iterator);
+	void Insert(Int pos, Value* pValue) { insert(begin() + pos, pValue); }
+	void Insert(Int pos, const ValueList& values);
 public:
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };

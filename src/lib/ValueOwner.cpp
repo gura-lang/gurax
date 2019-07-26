@@ -47,14 +47,10 @@ void ValueOwner::Add(const ValueList& values)
 	insert(end(), values.begin(), values.end());
 }
 
-bool ValueOwner::Add(Iterator& iterator)
+void ValueOwner::Insert(Int pos, const ValueList& values)
 {
-	for (;;) {
-		RefPtr<Value> pValue(iterator.NextValue());
-		if (!pValue) break;
-		push_back(pValue->Reference());
-	}
-	return !Error::IsIssued();
+	values.IncCntRefOfEach();
+	insert(begin() + pos, values.begin(), values.end());
 }
 
 //------------------------------------------------------------------------------

@@ -31,10 +31,8 @@ void ValueList::IncCntRefOfEach() const
 	for (Value* pValue : *this) pValue->IncCntRef();
 }
 
-bool ValueList::FixPosition(Int* pPos) const
+bool ValueList::CheckPosition(Int pos) const
 {
-	Int& pos = *pPos;
-	if (pos < 0) pos += size();
 	if (0 <= pos && static_cast<size_t>(pos) < size()) return true;
 	IssueError_IndexOutOfRange(pos);
 	return false;

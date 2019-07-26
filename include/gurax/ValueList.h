@@ -17,7 +17,11 @@ public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	VType& GetVTypeOfElems() const;
 	void IncCntRefOfEach() const;
-	bool FixPosition(Int* pPos) const;
+	bool CheckPosition(Int pos) const;
+	bool FixPosition(Int* pPos) const {
+		if (*pPos < 0) *pPos += size();
+		return CheckPosition(*pPos);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }

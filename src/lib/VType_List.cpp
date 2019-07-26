@@ -44,11 +44,12 @@ Gurax_ImplementMethod(List, Add)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	valueThis.GetValueTypedOwner().Add(values);
+	valueTypedOwner.Add(values);
 	return argument.GetValueThis().Reference();
 }
 
@@ -67,11 +68,12 @@ Gurax_ImplementMethod(List, Append)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	const ValueList& values = args.PickList();
 	// Function body
-	valueThis.GetValueTypedOwner().Append(values);
+	if (!valueTypedOwner.Append(values)) return Value::nil();
 	return argument.GetValueThis().Reference();
 }
 
@@ -88,8 +90,9 @@ Gurax_ImplementMethod(List, Clear)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	valueThis.GetValueTypedOwner().Clear();
+	valueTypedOwner.Clear();
 	return argument.GetValueThis().Reference();
 }
 
@@ -110,19 +113,19 @@ Gurax_ImplementMethod(List, Combination)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
 
-// List#Erase(idx*:Number):reduce
+// List#Erase(pos*:Number):reduce
 Gurax_DeclareMethod(List, Erase)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("idx", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Erases elements at the specified indices.");
@@ -132,26 +135,24 @@ Gurax_ImplementMethod(List, Erase)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	NumList<Int> posList = Value_Number::GetNumList<Int>(args.PickList());
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	for (auto pPos = posList.begin(); pPos != posList.end(); pPos++) {
 		if (*pPos < 0) *pPos += valueTypedOwner.GetSize();
 	}
 	posList.Sort(SortOrder::Descend).Unique();
-	valueTypedOwner.Erase(posList);
+	if (!valueTypedOwner.Erase(posList)) return Value::nil();
 	return argument.GetValueThis().Reference();
 }
 
-// List#Get(index:Number):map:flat
+// List#Get(pos:Number):map:flat
 Gurax_DeclareMethod(List, Get)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
-#if 0
-	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-#endif
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a value stored at the specified index in the list.\n"
@@ -160,39 +161,42 @@ Gurax_DeclareMethod(List, Get)
 
 Gurax_ImplementMethod(List, Get)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	Int pos = args.PickNumber<Int>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-#endif
-	return Value::nil();
+	Value* pValue = valueTypedOwner.Get(pos);
+	if (!pValue) return Value::nil();
+	return pValue->Reference();
 }
 
-// List#Insert(idx:Number, elem+):reduce
+// List#Insert(pos:Number, values+):reduce
 Gurax_DeclareMethod(List, Insert)
 {
 	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elem", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Insert specified items to the list from the selected index.");
+		"Inserts items at the specified position in the list.");
 }
 
 Gurax_ImplementMethod(List, Insert)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	Int pos = args.PickNumber<Int>();
+	const ValueList& values = args.PickList();
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-#endif
-	return Value::nil();
+	valueTypedOwner.Insert(pos, values);
+	return argument.GetValueThis().Reference();
 }
 
 // List#Permutation(n?:Number) {block?}
@@ -212,10 +216,10 @@ Gurax_ImplementMethod(List, Permutation)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -236,17 +240,13 @@ Gurax_ImplementMethod(List, Put)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
-	size_t pos = args.PickNumberNonNeg<size_t>();
+	Int pos = args.PickNumber<Int>();
 	const Value& value = args.PickValue();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	if (pos >= valueTypedOwner.GetSize()) {
-		Error::Issue(ErrorType::RangeError, "specified position is out of rante");
-		return Value::nil();
-	}
 	valueTypedOwner.Set(pos, value.Reference());
 	return Value::nil();
 }
@@ -265,10 +265,10 @@ Gurax_ImplementMethod(List, Shuffle)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -291,10 +291,10 @@ Gurax_ImplementMethod(List, Shift)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -316,10 +316,10 @@ Gurax_ImplementMethod(List, After)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -339,10 +339,10 @@ Gurax_ImplementMethod(List, Align)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -359,10 +359,10 @@ Gurax_ImplementMethod(List, And)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -381,10 +381,10 @@ Gurax_ImplementMethod(List, ArgMax)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -403,10 +403,10 @@ Gurax_ImplementMethod(List, ArgMin)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -425,10 +425,10 @@ Gurax_ImplementMethod(List, Before)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -446,10 +446,10 @@ Gurax_ImplementMethod(List, Contains)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -467,10 +467,10 @@ Gurax_ImplementMethod(List, Count)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -489,10 +489,10 @@ Gurax_ImplementMethod(List, Cycle)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -509,7 +509,7 @@ Gurax_DeclareMethod(List, Each)
 		"\n"
 		"- `iterable#Each { .. }` .. no parameter\n"
 		"- `iterable#Each {|elem| .. }` .. Element instance\n"
-		"- `iterable#Each {|elem, idx| .. }` .. Element instance and index counter\n");
+		"- `iterable#Each {|elem, pos| .. }` .. Element instance and index counter\n");
 }
 
 Gurax_ImplementMethod(List, Each)
@@ -535,10 +535,10 @@ Gurax_ImplementMethod(List, Filter)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -557,10 +557,10 @@ Gurax_ImplementMethod(List, Find)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -580,10 +580,10 @@ Gurax_ImplementMethod(List, Flatten)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -606,10 +606,10 @@ Gurax_ImplementMethod(List, Fold)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -628,10 +628,10 @@ Gurax_ImplementMethod(List, Format)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -650,10 +650,10 @@ Gurax_ImplementMethod(List, Head)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -671,10 +671,10 @@ Gurax_ImplementMethod(List, Join)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -691,10 +691,10 @@ Gurax_ImplementMethod(List, Joinb)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -713,10 +713,10 @@ Gurax_ImplementMethod(List, Map)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -736,10 +736,10 @@ Gurax_ImplementMethod(List, Max)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -756,10 +756,10 @@ Gurax_ImplementMethod(List, Mean)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -779,10 +779,10 @@ Gurax_ImplementMethod(List, Min)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -801,10 +801,10 @@ Gurax_ImplementMethod(List, NilTo)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -824,10 +824,10 @@ Gurax_ImplementMethod(List, Offset)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -844,10 +844,10 @@ Gurax_ImplementMethod(List, Or)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -865,10 +865,10 @@ Gurax_ImplementMethod(List, Pack)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -890,10 +890,10 @@ Gurax_ImplementMethod(List, PingPong)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -911,10 +911,10 @@ Gurax_ImplementMethod(List, Print)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -933,10 +933,10 @@ Gurax_ImplementMethod(List, Printf)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -954,10 +954,10 @@ Gurax_ImplementMethod(List, Println)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -974,10 +974,10 @@ Gurax_ImplementMethod(List, Prod)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -997,10 +997,10 @@ Gurax_ImplementMethod(List, Rank)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1019,10 +1019,10 @@ Gurax_ImplementMethod(List, Reduce)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1042,10 +1042,10 @@ Gurax_ImplementMethod(List, Replace)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1063,10 +1063,10 @@ Gurax_ImplementMethod(List, Reverse)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1085,10 +1085,10 @@ Gurax_ImplementMethod(List, RoundOff)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1106,10 +1106,10 @@ Gurax_ImplementMethod(List, RunLength)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1128,10 +1128,10 @@ Gurax_ImplementMethod(List, Since)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1150,10 +1150,10 @@ Gurax_ImplementMethod(List, Skip)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1171,10 +1171,10 @@ Gurax_ImplementMethod(List, SkipNil)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1195,10 +1195,10 @@ Gurax_ImplementMethod(List, Sort)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1216,10 +1216,10 @@ Gurax_ImplementMethod(List, Std)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1236,10 +1236,10 @@ Gurax_ImplementMethod(List, Sum)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1258,10 +1258,10 @@ Gurax_ImplementMethod(List, Tail)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1280,10 +1280,10 @@ Gurax_ImplementMethod(List, Until)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1301,10 +1301,10 @@ Gurax_ImplementMethod(List, Var)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
@@ -1323,10 +1323,10 @@ Gurax_ImplementMethod(List, While)
 #if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 #endif
 	return Value::nil();
 }
