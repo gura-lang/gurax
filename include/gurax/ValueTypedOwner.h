@@ -161,18 +161,13 @@ public:
 	bool IsEmpty() const { return _pValueOwner->empty(); }
 	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }
-	void Set(size_t pos, Value* pValue) {
+	void Set(Int pos, Value* pValue) {
 		UpdateVTypeOfElems(*pValue);
 		_pValueOwner->Set(pos, pValue);
 	}
 	Value* Get(size_t pos) const { return _pValueOwner->Get(pos); }
-	bool IndexSet(const Value* pValueIndex, Value* pValue) {
-		UpdateVTypeOfElems(*pValue);
-		return _pValueOwner->IndexSet(pValueIndex, pValue);
-	}
-	bool IndexGet(const Value* pValueIndex, Value** ppValue) const {
-		return _pValueOwner->IndexGet(pValueIndex, ppValue);
-	}
+	bool IndexSet(const Value* pValueIndex, Value* pValue);
+	bool IndexGet(const Value* pValueIndex, Value** ppValue) const;
 	void Add(Value* pValue) {
 		UpdateVTypeOfElems(*pValue);
 		_pValueOwner->push_back(pValue);
@@ -181,8 +176,8 @@ public:
 	void Add(const ValueTypedOwner& values);
 	bool Add(Iterator& iterator);
 	void Append(const ValueList& values);
-	void Erase(size_t pos);
-	void Erase(const NumList<Int>& posList);
+	bool Erase(Int pos);
+	bool Erase(const NumList<Int>& posList);
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }

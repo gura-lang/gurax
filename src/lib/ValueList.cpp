@@ -14,11 +14,6 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 	return *this;
 }
 
-void ValueList::IncCntRefOfEach() const
-{
-	for (Value* pValue : *this) pValue->IncCntRef();
-}
-
 VType& ValueList::GetVTypeOfElems() const
 {
 	if (empty()) return VTYPE_Undefined;
@@ -29,6 +24,20 @@ VType& ValueList::GetVTypeOfElems() const
 		if (!pVTypeOfElems->IsIdentical((*ppValue)->GetVType())) return VTYPE_Any;
 	}
 	return *pVTypeOfElems;
+}
+
+void ValueList::IncCntRefOfEach() const
+{
+	for (Value* pValue : *this) pValue->IncCntRef();
+}
+
+bool ValueList::FixPosition(Int* pPos) const
+{
+	Int& pos = *pPos;
+	if (pos < 0) pos += size();
+	if (0 <= pos && static_cast<size_t>(pos) < size()) return true;
+	IssueError_IndexOutOfRange(pos);
+	return false;
 }
 
 String ValueList::ToString(const StringStyle& ss) const

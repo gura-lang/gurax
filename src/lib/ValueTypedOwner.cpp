@@ -30,6 +30,55 @@ ValueTypedOwner* ValueTypedOwner::CreateFromIterator(Iterator& iterator)
 	return new ValueTypedOwner(pValueOwner.release());
 }
 
+bool ValueTypedOwner::IndexSet(const Value* pValueIndex, Value* pValue)
+{
+	ValueOwner& valueOwner = GetValueOwner();
+	UpdateVTypeOfElems(*pValue);
+	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
+		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
+		Int pos = pValueIndexEx->GetNumber<Int>();
+		if (pos < 0) pos += valueOwner.size();
+		if (0 <= pos && static_cast<size_t>(pos) < valueOwner.size()) {
+			valueOwner.Set(pos, pValue);
+			return true;
+		}
+		valueOwner.IssueError_IndexOutOfRange(pos);
+	} else if (pValueIndex->IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool* pValueIndexEx = dynamic_cast<const Value_Bool*>(pValueIndex);
+		int pos = static_cast<int>(pValueIndexEx->GetBool());
+		if (static_cast<size_t>(pos) < valueOwner.size()) {
+			valueOwner.Set(pos, pValue);
+			return true;
+		}
+		valueOwner.IssueError_IndexOutOfRange(pValueIndexEx->ToString().c_str());
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	Value::Delete(pValue);
+	return false;
+}
+
+bool ValueTypedOwner::IndexGet(const Value* pValueIndex, Value** ppValue) const
+{
+	const ValueOwner& valueOwner = GetValueOwner();
+	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
+		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
+		Int pos = pValueIndexEx->GetNumber<Int>();
+		if (!valueOwner.FixPosition(&pos)) return false;
+		*ppValue = valueOwner.Get(pos)->Reference();
+		return true;
+	} else if (pValueIndex->IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool* pValueIndexEx = dynamic_cast<const Value_Bool*>(pValueIndex);
+		int pos = static_cast<int>(pValueIndexEx->GetBool());
+		if (!valueOwner.FixPosition(&pos)) return false;
+		*ppValue = valueOwner.Get(pos)->Reference();
+		return true;
+	} else {
+		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
+	}
+	return false;
+}
+
 void ValueTypedOwner::Add(const ValueList& values)
 {
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
@@ -65,14 +114,21 @@ void ValueTypedOwner::Append(const ValueList& values)
 	}
 }
 
-void ValueTypedOwner::Erase(size_t pos)
+bool ValueTypedOwner::Erase(Int pos)
 {
-	
+	ValueOwner& valueOwner = GetValueOwner();
+	if (!valueOwner.FixPosition(&pos)) return false;
+	ValueOwner::iterator ppValue = valueOwner.begin() + pos;
+	Value::Delete(*ppValue);
+	valueOwner.erase(ppValue);
+	return true;
 }
 
-void ValueTypedOwner::Erase(const NumList<Int>& posList)
+bool ValueTypedOwner::Erase(const NumList<Int>& posList)
 {
-	
+	//ValueOwner& valueOwner = GetValueOwner();
+	//for (Int pos
+	return true;
 }
 
 void ValueTypedOwner::UpdateVTypeOfElems(const Value& value)

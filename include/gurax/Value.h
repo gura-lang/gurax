@@ -7,6 +7,7 @@
 #include "VType.h"
 #include "Iterator.h"
 #include "DeclCallable.h"
+#include "Error.h"
 
 namespace Gurax {
 

@@ -24,12 +24,10 @@ public:
 	void Clear();
 	ValueOwner* Clone() const;
 	ValueOwner* CloneDeep() const;
-	void Set(size_t pos, Value* pValue);
-	Value* Get(size_t pos) const { return at(pos); }
+	void Set(Int pos, Value* pValue);
+	Value* Get(Int pos) const { return at(pos); }
 	void Add(const ValueList& values);
 	bool Add(Iterator& iterator);
-	bool IndexSet(const Value* pValueIndex, Value* pValue);
-	bool IndexGet(const Value* pValueIndex, Value** ppValue) const;
 public:
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };

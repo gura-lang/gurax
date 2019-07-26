@@ -8,7 +8,6 @@
 
 namespace Gurax {
 
-class Expr;
 class Error;
 class Stream;
 
