@@ -1,2 +1,19 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
+
+TestCase('PUnit') {
+	exprs = [
+		`()
+		`(1,)
+		`(1, 2, 3)
+	]
+	PrintPUnitWithLabel(exprs)
+}
+
+TestCase('Iterator#isFinite and isInfinite') {
+	x = ()
+	Tester(`x.isFinite)
+	x = (1..)
+	Tester(`x.isFinite)
+}
+

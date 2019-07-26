@@ -44,6 +44,41 @@ Gurax_ImplementMethod(Iterator, NextValue)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Iterator#isFinite
+Gurax_DeclareProperty_R(Iterator, isFinite)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the iterator is a finite one.");
+}
+
+Gurax_ImplementPropertyGetter(Iterator, isFinite)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Iterator& iterator = valueThis.GetIterator();
+	return new Value_Bool(!iterator.IsInfinite());
+}
+
+// Iterator#isInfinite
+Gurax_DeclareProperty_R(Iterator, isInfinite)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the iterator is a infinite one.");
+}
+
+Gurax_ImplementPropertyGetter(Iterator, isInfinite)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Iterator& iterator = valueThis.GetIterator();
+	return new Value_Bool(iterator.IsInfinite());
+}
+
+//------------------------------------------------------------------------------
 // VType_Iterator
 //------------------------------------------------------------------------------
 VType_Iterator VTYPE_Iterator("Iterator");
@@ -55,6 +90,8 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Iterator, Each));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Iterator, isFinite));
 }
 
 Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) const
