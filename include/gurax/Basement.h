@@ -5,6 +5,7 @@
 #define GURAX_BASEMENT_H
 #include "Frame.h"
 #include "Value.h"
+#include "SuffixMgr.h"
 
 namespace Gurax {
 
@@ -19,6 +20,7 @@ private:
 	RefPtr<Stream> _pStreamCIn;
 	RefPtr<Stream> _pStreamCOut;
 	RefPtr<Stream> _pStreamCErr;
+	RefPtr<SuffixMgrMap> _pSuffixMgrMap;
 	String _ps1;
 	String _ps2;
 	StringList _pathList;
@@ -48,6 +50,7 @@ public:
 	void SetStreamCIn(Stream* pStreamCIn) { _pStreamCIn.reset(pStreamCIn); }
 	void SetStreamCOut(Stream* pStreamCOut) { _pStreamCOut.reset(pStreamCOut); }
 	void SetStreamCErr(Stream* pStreamCErr) { _pStreamCErr.reset(pStreamCErr); }
+	SuffixMgrMap& GetSuffixMgrMap() { return *_pSuffixMgrMap; }
 	const char* GetPS1() const { return _ps1.c_str(); }
 	const char* GetPS2() const { return _ps2.c_str(); }
 	void SetPS1(const char* ps1) { _ps1 = ps1; }
