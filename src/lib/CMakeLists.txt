@@ -38,6 +38,7 @@ add_library(guraxcore SHARED
 	OAL.cpp
 	Operator.cpp
 	Operators.cpp
+	Palette.cpp
 	Parser.cpp
 	PathMgr.cpp
 	PathName.cpp
@@ -80,6 +81,9 @@ add_library(guraxcore SHARED
 	VType_CallableMember.cpp
 	VType_DateTime.cpp
 	VType_Dict.cpp
+	VType_Directory.cpp
+	VType_DirRecord.cpp
+	VType_DirStructure.cpp
 	VType_Error.cpp
 	VType_ErrorType.cpp
 	VType_Expr.cpp
@@ -92,6 +96,8 @@ add_library(guraxcore SHARED
 	VType_Nil.cpp
 	VType_Number.cpp
 	VType_Object.cpp
+	VType_Palette.cpp
+	VType_PathMgr.cpp
 	VType_PropHandler.cpp
 	VType_PUnit.cpp
 	VType_Quote.cpp

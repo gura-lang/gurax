@@ -50,6 +50,9 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_CallableMember.Prepare(frame);
 	VTYPE_DateTime.Prepare(frame);
 	VTYPE_Dict.Prepare(frame);
+	VTYPE_Directory.Prepare(frame);
+	VTYPE_DirRecord.Prepare(frame);
+	VTYPE_DirStructure.Prepare(frame);
 	VTYPE_Error.Prepare(frame);
 	VTYPE_ErrorType.Prepare(frame);
 	VTYPE_Expr.Prepare(frame);
@@ -61,6 +64,8 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_Module.Prepare(frame);
 	VTYPE_Nil.Prepare(frame);
 	VTYPE_Number.Prepare(frame);
+	VTYPE_PathMgr.Prepare(frame);
+	VTYPE_Palette.Prepare(frame);
 	VTYPE_PropHandler.Prepare(frame);
 	VTYPE_PUnit.Prepare(frame);
 	VTYPE_Quote.Prepare(frame);
