@@ -33,23 +33,16 @@ Gurax_ImplementFunction(DateTime)
 	// Arguments
 	ArgPicker args(argument);
 	Int16 year	= args.IsValid()? args.PickNumberRanged<Int16>(0, 9999) : 1970;
-	if (Error::IsIssued()) return Value::nil();
 	Int8 month	= args.IsValid()? args.PickNumberRanged<Int8>(1, 12) : 1;
-	if (Error::IsIssued()) return Value::nil();
 	Int8 day	= args.IsValid()? args.PickNumberRanged<Int8>(1, 31) : 1;
-	if (Error::IsIssued()) return Value::nil();
 	Int8 hour	= args.IsValid()? args.PickNumberRanged<Int8>(0, 23) : 0;
-	if (Error::IsIssued()) return Value::nil();
 	Int8 min	= args.IsValid()? args.PickNumberRanged<Int8>(0, 59) : 0;
-	if (Error::IsIssued()) return Value::nil();
 	Int8 sec	= args.IsValid()? args.PickNumberRanged<Int8>(0, 59) : 0;
-	if (Error::IsIssued()) return Value::nil();
 	Int16 msec	= args.IsValid()? args.PickNumberRanged<Int16>(0, 999) : 0;
-	if (Error::IsIssued()) return Value::nil();
 	Int16 usec	= args.IsValid()? args.PickNumberRanged<Int16>(0, 999) : 0;
-	if (Error::IsIssued()) return Value::nil();
 	bool validOffsetFlag = args.IsValid();
 	Int32 minsOff = validOffsetFlag? args.PickNumber<Int32>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<DateTime> pDateTime(
 		new DateTime(year, month, day, DateTime::CalcSecPacked(hour, min, sec),
