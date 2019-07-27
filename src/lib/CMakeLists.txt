@@ -15,6 +15,9 @@ add_library(guraxcore SHARED
 	DeclArg.cpp
 	DeclBlock.cpp
 	DeclCallable.cpp
+	Directory.cpp
+	DirRecord.cpp
+	DirStructure.cpp
 	DottedSymbol.cpp
 	Error.cpp
 	Expr.cpp
