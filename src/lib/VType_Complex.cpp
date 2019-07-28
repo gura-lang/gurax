@@ -13,12 +13,13 @@ Gurax_DeclareProperty_R(Complex, im)
 	Declare(VTYPE_Complex, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The imaginary part of the number. Always returns zero.");
+		"The imaginary part of the Complex value.");
 }
 
 Gurax_ImplementPropertyGetter(Complex, im)
 {
-	return Value::Zero();
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetComplex().im);
 }
 
 Gurax_DeclareProperty_R(Complex, re)
@@ -26,13 +27,13 @@ Gurax_DeclareProperty_R(Complex, re)
 	Declare(VTYPE_Complex, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The real part of the number. Always returns the number itself.");
+		"The real part of the Complex Value.");
 }
 
 Gurax_ImplementPropertyGetter(Complex, re)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Complex(valueThis.GetComplex<Double>());
+	return new Value_Number(valueThis.GetComplex().re);
 }
 
 //------------------------------------------------------------------------------
@@ -56,85 +57,64 @@ String Value_Complex::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%g>", GetComplex<Double>());
+	//str.Printf(":%g>", GetComplex<Double>());
 	return str;
 }
 
 String Value_Complex::ToStringDetail(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%g", GetComplex<Double>());
+	//str.Printf("%g", GetComplex<Double>());
 	return str;
-}
-
-bool Value_Complex::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
-{
-	char buff[128];
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_d(GetComplex<Int64>(), buff, sizeof(buff)));
-}
-
-bool Value_Complex::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const
-{
-	char buff[128];
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_u(GetComplex<UInt64>(), buff, sizeof(buff)));
-}
-
-bool Value_Complex::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
-{
-	char buff[128];
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_b(GetComplex<UInt64>(), buff, sizeof(buff)));
-}
-
-bool Value_Complex::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
-{
-	char buff[128];
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_o(GetComplex<UInt64>(), buff, sizeof(buff)));
-}
-
-bool Value_Complex::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
-{
-	char buff[128];
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_x(GetComplex<UInt64>(), buff, sizeof(buff)));
 }
 
 bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
+#if 0
 	char buff[128];
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
 	return formatter.PutAlignedString(
 		formatterFlags, formatterFlags.FormatComplex_e(GetComplex<Double>(), buff, sizeof(buff)));
+#endif
+	return false;
 }
 
 bool Value_Complex::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
+#if 0
 	char buff[128];
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
 	return formatter.PutAlignedString(
 		formatterFlags, formatterFlags.FormatComplex_f(GetComplex<Double>(), buff, sizeof(buff)));
+#endif
+	return false;
 }
 
 bool Value_Complex::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
+#if 0
 	char buff[128];
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
 	return formatter.PutAlignedString(
 		formatterFlags, formatterFlags.FormatComplex_g(GetComplex<Double>(), buff, sizeof(buff)));
+#endif
+	return false;
 }
 
-bool Value_Complex::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
+ComplexList Value_Complex::GetComplexList(const ValueList& values)
 {
-	return formatter.PutChar(GetComplex<Char>());
+	ComplexList nums;
+	nums.reserve(values.size());
+	for (Value* pValue : values) {
+		nums.push_back(GetComplex(*pValue));
+	}
+	return nums;
 }
 
 }

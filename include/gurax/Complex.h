@@ -15,6 +15,15 @@ public:
 	using std::complex<Double>::complex;
 };
 
+//------------------------------------------------------------------------------
+// ComplexList
+//------------------------------------------------------------------------------
+class ComplexList : public std::vector<Complex>
+{
+public:
+	using std::vector<Complex>::vector;
+};
+
 }
 
 #endif
