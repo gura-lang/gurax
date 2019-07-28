@@ -19,7 +19,7 @@ Gurax_DeclareProperty_R(Complex, im)
 Gurax_ImplementPropertyGetter(Complex, im)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetComplex().im);
+	return new Value_Number(valueThis.GetComplex().imag());
 }
 
 Gurax_DeclareProperty_R(Complex, re)
@@ -33,7 +33,7 @@ Gurax_DeclareProperty_R(Complex, re)
 Gurax_ImplementPropertyGetter(Complex, re)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetComplex().re);
+	return new Value_Number(valueThis.GetComplex().real());
 }
 
 //------------------------------------------------------------------------------
