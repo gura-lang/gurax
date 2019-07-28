@@ -6,6 +6,31 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Complex(re?:Number, im?:Number):map {block?}
+Gurax_DeclareFunction(Complex)
+{
+	Declare(VTYPE_Complex, Flag::Map);
+	DeclareArg("re", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("im", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Complex` instance.");
+}
+
+Gurax_ImplementFunction(Complex)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Double re = args.PickNumber<Double>();
+	Double im = args.IsValid()? args.PickNumber<Double>() : 0;
+	// Function body
+	return ReturnValue(processor, argument, new Value_Complex(Complex(re, im)));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 Gurax_DeclareProperty_R(Complex, im)
@@ -45,6 +70,7 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	SetConstructor(Gurax_CreateFunction(Complex));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Complex, im));
 	Assign(Gurax_CreateProperty(Complex, re));
