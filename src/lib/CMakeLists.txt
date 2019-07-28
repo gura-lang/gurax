@@ -10,6 +10,7 @@ add_library(guraxcore SHARED
 	Codec.cpp
 	CommandLine.cpp
 	Common.cpp
+	Complex.cpp
 	Composer.cpp
 	DateTime.cpp
 	DeclArg.cpp

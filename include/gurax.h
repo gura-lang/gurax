@@ -14,6 +14,7 @@
 #include "gurax/Codec.h"
 #include "gurax/CommandLine.h"
 #include "gurax/Common.h"
+#include "gurax/Complex.h"
 #include "gurax/Composer.h"
 #include "gurax/DateTime.h"
 #include "gurax/DeclArg.h"
