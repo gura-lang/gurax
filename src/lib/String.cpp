@@ -554,6 +554,11 @@ String String::Lower(const char* str)
 	return strRtn;
 }
 
+void String::IssueError_InvalidFormatOfNumber()
+{
+	Error::Issue(ErrorType::FormatError, "invalid format of number");
+}
+
 //------------------------------------------------------------------------------
 // StringList
 //------------------------------------------------------------------------------

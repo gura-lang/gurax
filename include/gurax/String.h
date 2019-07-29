@@ -234,6 +234,8 @@ public:
 	static String Upper(const char* str);
 	String Lower() const { return Lower(c_str()); }
 	static String Lower(const char* str);
+public:
+	static void IssueError_InvalidFormatOfNumber();
 };
 
 struct CharCase {

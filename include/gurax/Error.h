@@ -25,6 +25,7 @@ public:
 	static const ErrorType ContextError;
 	static const ErrorType DeclarationError;
 	static const ErrorType DividedByZero;
+	static const ErrorType FormatError;
 	static const ErrorType ImportError;
 	static const ErrorType IndexError;
 	static const ErrorType InvalidOperation;

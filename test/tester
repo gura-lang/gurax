@@ -1,5 +1,6 @@
 #!/bin/bash
 cases=
+cases="$cases Complex"
 cases="$cases DateTime"
 cases="$cases Dict"
 cases="$cases Error"

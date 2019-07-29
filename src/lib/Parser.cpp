@@ -134,9 +134,14 @@ bool Parser::ReduceOneToken()
 	RefPtr<Expr> pExprGen;
 	if (pToken->IsType(TokenType::Number)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> Number\n"));
+		bool successFlag = false;
+		Double num = String::ToNumber(pToken->GetSegment(), &successFlag);
+		if (!successFlag) {
+			String::IssueError_InvalidFormatOfNumber();
+			return false;
+		}
 		pExprGen.reset(
-			new Expr_Value(new Value_Number(
-								String::ToNumber(pToken->GetSegment())), pToken->GetSegmentReferable()->Reference()));
+			new Expr_Value(new Value_Number(num), pToken->GetSegmentReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::String)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> String\n"));
 		pExprGen.reset(new Expr_Value(new Value_String(pToken->GetSegmentReferable()->Reference())));
@@ -171,7 +176,7 @@ bool Parser::ReduceOneToken()
 		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable()->Reference(),
 									  Symbol::Add(pToken->GetSuffix()), true));
 	} else if (pToken->IsType(TokenType::StringSuffixed)) {
-		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> SuffixedSuffixed\n"));
+		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> StringSuffixed\n"));
 		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable()->Reference(),
 									  Symbol::Add(pToken->GetSuffix()), false));
 	} else {
