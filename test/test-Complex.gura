@@ -1,0 +1,14 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Tester(`Complex.__PropHandler__(`re))
+	Tester(`Complex.__PropHandler__(`im))
+}
+
+TestCase('Complex#re and Complex#im') {
+	a = 3j
+	Tester(`a)
+	Tester(`a.re)
+	Tester(`a.im)
+}
