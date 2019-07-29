@@ -152,7 +152,7 @@ public:
 	// Destructor
 	virtual ~OpEntry() = default;
 public:
-	virtual Value* EvalUnary(Processor& processor, const Value& value) const ;
+	virtual Value* EvalUnary(Processor& processor, const Value& value) const;
 	virtual Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
 };
 

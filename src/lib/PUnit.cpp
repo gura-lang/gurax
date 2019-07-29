@@ -158,8 +158,8 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_Suffixed
-// Stack View: [] -> [Any] (continue)
-//                -> []    (discard)
+// Stack View: [Any] -> [Result] (continue)
+//                   -> []       (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
@@ -171,14 +171,10 @@ void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) cons
 		processor.ErrorDone();
 		return;
 	}
-#if 0
-	Frame& frame = processor.GetFrameCur();
-	const Value* pValue = frame.Suffixed(GetSymbol());
-	if (!pValue) {
-	}
-	if (!discardValueFlag) processor.PushValue(pValue->Reference());
+	RefPtr<Value> pValue(processor.PopValue());
+	RefPtr<Value> pValueResult(pSuffixMgr->Eval(processor, *pValue));
+	if (!discardValueFlag) processor.PushValue(pValueResult.release());
 	processor.SetPUnitNext(_GetPUnitCont());
-#endif
 }
 
 template<int nExprSrc, bool discardValueFlag>

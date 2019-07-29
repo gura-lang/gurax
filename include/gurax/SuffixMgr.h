@@ -26,9 +26,10 @@ public:
 	SuffixMgr(SuffixMgr&& src) = delete;
 	SuffixMgr& operator=(SuffixMgr&& src) noexcept = delete;
 protected:
-	~SuffixMgr() = default;
+	virtual ~SuffixMgr() = default;
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	virtual Value* Eval(Processor& processor, const Value& value) const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const SuffixMgr& suffixMgr) const { return this == &suffixMgr; }
