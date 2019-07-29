@@ -48,7 +48,7 @@ Error::Error(const ErrorType& errorType, StringReferable* pFileName, int lineNoT
 
 Error::Error(const ErrorType& errorType, Expr* pExpr, String text) :
 	_errorType(errorType), _pExpr(pExpr),
-	_pFileName(StringReferable::Reference(pExpr->GetPathNameSrcReferable())),
+	_pFileName(pExpr->GetPathNameSrcReferable().Reference()),
 	_lineNoTop(pExpr->GetLineNoTop()), _lineNoBtm(pExpr->GetLineNoBtm()), _text(std::move(text))
 {
 }
@@ -82,7 +82,7 @@ void Error::SetExpr(const Expr& expr)
 {
 	if (!_pExpr->IsType<Expr_Empty>()) return;
 	_pExpr.reset(expr.Reference());
-	_pFileName.reset(expr.GetPathNameSrcReferable()->Reference());
+	_pFileName.reset(expr.GetPathNameSrcReferable().Reference());
 	_lineNoTop = expr.GetLineNoTop();
 	_lineNoBtm = expr.GetLineNoBtm();
 }

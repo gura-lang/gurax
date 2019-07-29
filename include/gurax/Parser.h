@@ -48,20 +48,20 @@ private:
 	Expr_Block* CreateExprOfBlock(RefPtr<Token>& pToken);
 	template<typename T_TokenP, typename... Args>
 	void IssueError(const ErrorType& errorType, T_TokenP& pToken, const char* format, const Args&... args) {
-		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable().Reference(),
 					   pToken->GetLineNoTop(), pToken->GetLineNoBtm(), format, args...);
 	}
 	template<typename T_TokenP, typename... Args>
 	void IssueError(const ErrorType& errorType, T_TokenP& pTokenTop, T_TokenP& pTokenBtm,
 					const char* format, const Args&... args) {
-		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+		Error::IssueAt(errorType, _pTokenizer->GetPathNameSrcReferable().Reference(),
 					   pTokenTop->GetLineNoTop(), pTokenBtm->GetLineNoBtm(), format, args...);
 	}
 public:
 	virtual void FeedToken(RefPtr<Token> pToken) override;
 private:
 	void SetSourceInfo(Expr* pExpr, int lineNoTop, int lineNoBtm) const {
-		pExpr->SetSourceInfo(_pTokenizer->GetPathNameSrcReferable()->Reference(), lineNoTop, lineNoBtm);
+		pExpr->SetSourceInfo(_pTokenizer->GetPathNameSrcReferable().Reference(), lineNoTop, lineNoBtm);
 	}
 	void SetSourceInfo(RefPtr<Expr>& pExpr, int lineNoTop, int lineNoBtm) const {
 		SetSourceInfo(pExpr.get(), lineNoTop, lineNoBtm);

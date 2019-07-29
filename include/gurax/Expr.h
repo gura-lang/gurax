@@ -120,7 +120,7 @@ public:
 		_lineNoTop = lineNoTop, _lineNoBtm = lineNoBtm;
 	}
 	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
-	const StringReferable* GetPathNameSrcReferable() const { return _pPathNameSrc.get(); }
+	const StringReferable& GetPathNameSrcReferable() const { return *_pPathNameSrc; }
 	int GetLineNoTop() const { return _lineNoTop; }
 	int GetLineNoBtm() const { return _lineNoBtm; }
 	void SetSilentFlag(bool silentFlag) { _silentFlag = silentFlag; }
@@ -468,7 +468,7 @@ protected:
 public:
 	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag) :
 		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
-	const StringReferable* GetSegmentReferable() const { return _pStrSegment.get(); }
+	const StringReferable& GetSegmentReferable() const { return *_pStrSegment; }
 	const char* GetSegment() const { return _pStrSegment->GetString(); }
 	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
 	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
@@ -495,7 +495,7 @@ protected:
 public:
 	Expr_Embedded(Template* pTempl, StringReferable* pStr) : Expr_Node(typeInfo), _pTempl(pTempl), _pStr(pStr) {}
 	const Template& GetTemplate() const { return *_pTempl; }
-	const StringReferable* GetStringReferable() const { return _pStr.get(); }
+	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:

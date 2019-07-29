@@ -951,7 +951,7 @@ bool Parser::EmitExpr(ExprLink& exprLink, Expr* pExpr)
 			return true;
 		} else {
 			Expr::Delete(pExpr);
-			Error::IssueAt(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable()->Reference(),
+			Error::IssueAt(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable().Reference(),
 						   pExpr->GetLineNoTop(), pExpr->GetLineNoBtm(),
 						   "trailer must be placed after a caller expression");
 			return false;

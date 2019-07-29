@@ -115,7 +115,7 @@ public:
 	int GetLineNo() const { return _cntLine + 1; }
 	const char* GetPathNameSrc() const { return _pPathNameSrc->GetString(); }
 	const String& GetPathNameSrcSTL() const { return _pPathNameSrc->GetStringSTL(); }
-	const StringReferable* GetPathNameSrcReferable() const { return _pPathNameSrc.get(); }
+	const StringReferable& GetPathNameSrcReferable() const { return *_pPathNameSrc; }
 	template<typename... Args>
 	void IssueError(const ErrorType& errorType, const char* format, const Args&... args) {
 		Error::Issue(errorType, format, args...);
