@@ -399,6 +399,8 @@ public:
 private:
 	String _str;
 public:
+	static RefPtr<StringReferable> Empty;
+public:
 	// Constructor
 	StringReferable() {}
 	explicit StringReferable(String str) : _str(std::move(str)) {}

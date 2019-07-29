@@ -221,6 +221,59 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_Suffixed
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_Suffixed : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	RefPtr<StringReferable> _pStrSegment;
+	const Symbol* _pSymbolSuffix;
+	bool _numberFlag;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag) :
+		_pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	PUnit_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag, Expr* pExpr) :
+		PUnit_Suffixed(pStrSegment, pSymbolSuffix, numberFlag) { _ppExprSrc[0] = pExpr; }
+public:
+	const char* GetSegment() const { return _pStrSegment->GetString(); }
+	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
+	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
+	bool IsNumber() const { return _numberFlag; }
+	bool IsString() const { return !_numberFlag; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_Suffixed : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_Suffixed");
+private:
+	RefPtr<StringReferable> _pStrSegment;
+	const Symbol* _pSymbolSuffix;
+	bool _numberFlag;
+public:
+	PUnitFactory_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_Suffixed<1, false>) : sizeof(PUnit_Suffixed<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_AssignToSymbol
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>

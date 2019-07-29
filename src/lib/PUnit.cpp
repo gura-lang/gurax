@@ -157,6 +157,55 @@ PUnit* PUnitFactory_Lookup::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_Suffixed
+// Stack View: [] -> [Any] (continue)
+//                -> []    (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+#if 0
+	Frame& frame = processor.GetFrameCur();
+	const Value* pValue = frame.Suffixed(GetSymbol());
+	if (!pValue) {
+		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(pValue->Reference());
+	processor.SetPUnitNext(_GetPUnitCont());
+#endif
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_Suffixed<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("Suffixed(`%s)", GetSymbolSuffix()->GetName());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag);
+		} else {
+			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag);
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_AssignToSymbol
 // Stack View: [Assigned] -> [Assigned] (continue)
 //                        -> []         (discard)

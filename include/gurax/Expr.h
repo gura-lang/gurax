@@ -101,7 +101,9 @@ public:
 	static RefPtr<Expr> Empty;
 public:
 	// Constructor
-	Expr(const TypeInfo& typeInfo) : _typeInfo(typeInfo), _pPUnitFirst(nullptr), _pPUnitSubFirst(nullptr) {}
+	Expr(const TypeInfo& typeInfo) :
+		_typeInfo(typeInfo), _pPathNameSrc(StringReferable::Empty->Reference()),
+		_pPUnitFirst(nullptr), _pPUnitSubFirst(nullptr) {}
 	// Copy constructor/operator
 	Expr(const Expr& src) = delete;
 	Expr& operator=(const Expr& src) = delete;
@@ -466,9 +468,10 @@ protected:
 public:
 	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag) :
 		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	const StringReferable* GetSegmentReferable() const { return _pStrSegment.get(); }
 	const char* GetSegment() const { return _pStrSegment->GetString(); }
 	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
-	const Symbol* GetSuffix() const { return _pSymbolSuffix; }
+	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
 	bool IsNumber() const { return _numberFlag; }
 	bool IsString() const { return !_numberFlag; }
 public:
@@ -492,6 +495,7 @@ protected:
 public:
 	Expr_Embedded(Template* pTempl, StringReferable* pStr) : Expr_Node(typeInfo), _pTempl(pTempl), _pStr(pStr) {}
 	const Template& GetTemplate() const { return *_pTempl; }
+	const StringReferable* GetStringReferable() const { return _pStr.get(); }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:

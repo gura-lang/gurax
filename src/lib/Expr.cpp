@@ -323,7 +323,7 @@ const Expr::TypeInfo Expr_Suffixed::typeInfo;
 
 void Expr_Suffixed::Compose(Composer& composer)
 {
-	if (IsNumber() && GetSuffix()->IsIdentical(Gurax_Symbol(j))) {
+	if (IsNumber() && GetSymbolSuffix()->IsIdentical(Gurax_Symbol(j))) {
 		bool successFlag = false;
 		Double num = GetSegmentSTL().ToNumber(&successFlag);
 		if (!successFlag) {
@@ -332,6 +332,7 @@ void Expr_Suffixed::Compose(Composer& composer)
 		}
 		composer.Add_Value(new Value_Complex(Complex(0, num)), this);	// [Value]
 	} else {
+		//composer.Add_Suffixed(GetSegmentReferable()->Reference(), );
 	}
 }
 
@@ -339,7 +340,7 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += IsNumber()? GetSegmentSTL() : GetSegmentSTL().MakeQuoted(true);
-	str += GetSuffix()->GetName();
+	str += GetSymbolSuffix()->GetName();
 	return str;
 }
 

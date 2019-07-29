@@ -37,6 +37,7 @@ char String::_toEscapedTbl[256];
 
 void String::Bootup()
 {
+	StringReferable::Empty.reset(new StringReferable());
 	for (int ch = 0; ch < 256; ++ch) {
 		CTypes ctypes = 0;
 		if (('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z')) {
@@ -573,6 +574,7 @@ StringList& StringList::Sort(SortOrder sortOrder)
 //------------------------------------------------------------------------------
 // StringReferable
 //------------------------------------------------------------------------------
+RefPtr<StringReferable> StringReferable::Empty;
 
 //------------------------------------------------------------------------------
 // StringStyle
