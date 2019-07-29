@@ -67,6 +67,33 @@ Gurax_ImplementMethod(Expr, Eval)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Expr == Expr
+Gurax_ImplementOpBinary(Eq, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(exprL.IsEqualTo(exprR));
+}
+
+// Symbol == Expr
+Gurax_ImplementOpBinary(Eq, Symbol, Expr)
+{
+	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(pSymbolL->IsIdentical(exprR));
+}
+
+// Expr == Symbol
+Gurax_ImplementOpBinary(Eq, Expr, Symbol)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
+	return new Value_Bool(pSymbolR->IsIdentical(exprL));
+}
+
+//------------------------------------------------------------------------------
 // VType_Expr
 //------------------------------------------------------------------------------
 VType_Expr VTYPE_Expr("Expr");
@@ -80,6 +107,10 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Eq,			Expr, Expr);
+	Gurax_AssignOpBinary(Eq,			Symbol, Expr);
+	Gurax_AssignOpBinary(Eq,			Expr, Symbol);
 }
 
 //------------------------------------------------------------------------------

@@ -945,6 +945,18 @@ Gurax_ImplementPropertyGetter(String, width)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// String + String
+Gurax_ImplementOpBinary(Add, String, String)
+{
+	String strL = Value_String::GetStringSTL(valueL);
+	const char* strR = Value_String::GetString(valueR);
+	strL += strR;
+	return new Value_String(strL);
+}
+
+//------------------------------------------------------------------------------
 // VType_String
 //------------------------------------------------------------------------------
 VType_String VTYPE_String("String");
@@ -999,6 +1011,8 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(String, isSpace));
 	Assign(Gurax_CreateProperty(String, len));
 	Assign(Gurax_CreateProperty(String, width));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Add, String, String);
 }
 
 Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const

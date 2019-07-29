@@ -33,6 +33,37 @@ Gurax_ImplementFunction(Complex)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Complex#abs
+Gurax_DeclareProperty_R(Complex, abs)
+{
+	Declare(VTYPE_Complex, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The absolute value of the number.");
+}
+
+Gurax_ImplementPropertyGetter(Complex, abs)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(std::abs(valueThis.GetComplex()));
+}
+
+// Complex#arg
+Gurax_DeclareProperty_R(Complex, arg)
+{
+	Declare(VTYPE_Complex, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The argument value of the number. Always returns zero.");
+}
+
+Gurax_ImplementPropertyGetter(Complex, arg)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(std::arg(valueThis.GetComplex()));
+}
+
+// Complex#imag
 Gurax_DeclareProperty_R(Complex, imag)
 {
 	Declare(VTYPE_Complex, Flag::None);
@@ -47,6 +78,22 @@ Gurax_ImplementPropertyGetter(Complex, imag)
 	return new Value_Number(valueThis.GetComplex().imag());
 }
 
+// Complex#norm
+Gurax_DeclareProperty_R(Complex, norm)
+{
+	Declare(VTYPE_Complex, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The norm value of the number.");
+}
+
+Gurax_ImplementPropertyGetter(Complex, norm)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(std::norm(valueThis.GetComplex()));
+}
+
+// Complex#real
 Gurax_DeclareProperty_R(Complex, real)
 {
 	Declare(VTYPE_Complex, Flag::None);
@@ -72,7 +119,10 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Complex));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Complex, abs));
+	Assign(Gurax_CreateProperty(Complex, arg));
 	Assign(Gurax_CreateProperty(Complex, imag));
+	Assign(Gurax_CreateProperty(Complex, norm));
 	Assign(Gurax_CreateProperty(Complex, real));
 }
 

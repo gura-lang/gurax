@@ -359,7 +359,7 @@ Gurax_ImplementPropertyGetter(DateTime, unixTime)
 }
 
 //------------------------------------------------------------------------------
-// Operator
+// Implementation of operator
 //------------------------------------------------------------------------------
 // DateTime + TimeDelta
 Gurax_ImplementOpBinary(Add, DateTime, TimeDelta)
