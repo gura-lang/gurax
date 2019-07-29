@@ -20,7 +20,8 @@ private:
 	RefPtr<Stream> _pStreamCIn;
 	RefPtr<Stream> _pStreamCOut;
 	RefPtr<Stream> _pStreamCErr;
-	RefPtr<SuffixMgrMap> _pSuffixMgrMap;
+	RefPtr<SuffixMgrMap> _pSuffixMgrMap_Number;
+	RefPtr<SuffixMgrMap> _pSuffixMgrMap_String;
 	String _ps1;
 	String _ps2;
 	StringList _pathList;
@@ -50,7 +51,12 @@ public:
 	void SetStreamCIn(Stream* pStreamCIn) { _pStreamCIn.reset(pStreamCIn); }
 	void SetStreamCOut(Stream* pStreamCOut) { _pStreamCOut.reset(pStreamCOut); }
 	void SetStreamCErr(Stream* pStreamCErr) { _pStreamCErr.reset(pStreamCErr); }
-	SuffixMgrMap& GetSuffixMgrMap() { return *_pSuffixMgrMap; }
+	SuffixMgrMap& GetSuffixMgrMap_Number() { return *_pSuffixMgrMap_Number; }
+	SuffixMgrMap& GetSuffixMgrMap_String() { return *_pSuffixMgrMap_String; }
+	const SuffixMgrMap& GetSuffixMgrMap_Number() const { return *_pSuffixMgrMap_Number; }
+	const SuffixMgrMap& GetSuffixMgrMap_String() const { return *_pSuffixMgrMap_String; }
+	void AssignSuffixMgr(SuffixMgr* pSuffixMgr, bool numberFlag);
+	const SuffixMgr* LookupSuffixMgr(const Symbol* pSymbolSuffix, bool numberFlag) const;
 	const char* GetPS1() const { return _ps1.c_str(); }
 	const char* GetPS2() const { return _ps2.c_str(); }
 	void SetPS1(const char* ps1) { _ps1 = ps1; }

@@ -35,6 +35,7 @@ public:
 	static const ErrorType PropertyError;
 	static const ErrorType RangeError;
 	static const ErrorType StreamError;
+	static const ErrorType SuffixError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
 	static const ErrorType ValueError;

@@ -10,7 +10,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Basement Basement::Inst;
 
-Basement::Basement() : _pFrame(new Frame_Basement()), _ps1(">>> "), _ps2("... ")
+Basement::Basement() :
+	_pFrame(new Frame_Basement()),
+	_pSuffixMgrMap_Number(new SuffixMgrMap()), _pSuffixMgrMap_String(new SuffixMgrMap()),
+	_ps1(">>> "), _ps2("... ")
 {
 	_pathList.push_back(".");
 }
@@ -86,6 +89,22 @@ void Basement::PrepareValue(Frame& frame)
 	frame.Assign("nil",		Value::nil());
 	frame.Assign("false",	Value::false_());
 	frame.Assign("true",	Value::true_());
+}
+
+void Basement::AssignSuffixMgr(SuffixMgr* pSuffixMgr, bool numberFlag)
+{
+	if (numberFlag) {
+		GetSuffixMgrMap_Number().Assign(pSuffixMgr);
+	} else {
+		GetSuffixMgrMap_String().Assign(pSuffixMgr);
+	}
+}
+
+const SuffixMgr* Basement::LookupSuffixMgr(const Symbol* pSymbolSuffix, bool numberFlag) const
+{
+	return numberFlag?
+		GetSuffixMgrMap_Number().Lookup(pSymbolSuffix) :
+		GetSuffixMgrMap_String().Lookup(pSymbolSuffix);
 }
 
 }

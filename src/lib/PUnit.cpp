@@ -165,13 +165,16 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetSymbolSuffix(), IsNumber());
+	if (!pSuffixMgr) {
+		Error::Issue(ErrorType::SuffixError, "suffix '%s' can not be handled", GetSymbolSuffix()->GetName());
+		processor.ErrorDone();
+		return;
+	}
 #if 0
 	Frame& frame = processor.GetFrameCur();
 	const Value* pValue = frame.Suffixed(GetSymbol());
 	if (!pValue) {
-		Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
-		processor.ErrorDone();
-		return;
 	}
 	if (!discardValueFlag) processor.PushValue(pValue->Reference());
 	processor.SetPUnitNext(_GetPUnitCont());
