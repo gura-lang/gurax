@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Complex(re?:Number, im?:Number):map {block?}
+// Complex(re:Number, im?:Number):map {block?}
 Gurax_DeclareFunction(Complex)
 {
 	Declare(VTYPE_Complex, Flag::Map);
@@ -83,54 +83,62 @@ String Value_Complex::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	//str.Printf(":%g>", GetComplex<Double>());
+	const Complex& num = GetComplex();
+	if (num.imag() > 0) {
+		str.Printf(":%g+%gj>", num.real(), num.imag());
+	} else if (num.imag() < 0) {
+		str.Printf(":%g%gj>", num.real(), num.imag());
+	} else {
+		str.Printf(":%g>", num.real());
+	}
 	return str;
 }
 
 String Value_Complex::ToStringDetail(const StringStyle& ss) const
 {
-	String str;
-	//str.Printf("%g", GetComplex<Double>());
-	return str;
+	return ToStringDigest(ss);
 }
 
 bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
-#if 0
 	char buff[128];
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_e(GetComplex<Double>(), buff, sizeof(buff)));
-#endif
-	return false;
+	formatterFlags.FormatNumber_e(GetComplex().real(), buff, sizeof(buff));
+	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	formatterFlags.FormatNumber_e(GetComplex().imag(), buff, sizeof(buff));
+	::strcat(buff, "j");
+	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	return true;
 }
 
 bool Value_Complex::Format_f(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
-#if 0
 	char buff[128];
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_f(GetComplex<Double>(), buff, sizeof(buff)));
-#endif
-	return false;
+	formatterFlags.FormatNumber_f(GetComplex().real(), buff, sizeof(buff));
+	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	formatterFlags.FormatNumber_f(GetComplex().imag(), buff, sizeof(buff));
+	::strcat(buff, "j");
+	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	return true;
 }
 
 bool Value_Complex::Format_g(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
-#if 0
 	char buff[128];
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
-	return formatter.PutAlignedString(
-		formatterFlags, formatterFlags.FormatComplex_g(GetComplex<Double>(), buff, sizeof(buff)));
-#endif
-	return false;
+	formatterFlags.FormatNumber_g(GetComplex().real(), buff, sizeof(buff));
+	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	formatterFlags.FormatNumber_g(GetComplex().imag(), buff, sizeof(buff));
+	::strcat(buff, "j");
+	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	return true;
 }
 
 ComplexList Value_Complex::GetComplexList(const ValueList& values)
