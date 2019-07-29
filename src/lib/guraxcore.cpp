@@ -16,7 +16,6 @@ void Initialize(int argc, char** argv)
 	Error::Bootup();
 	Expr::Bootup();
 	Function::Bootup();
-	Operators::Bootup();
 	Random::Bootup();
 	Stream::Bootup();
 	Template::Bootup();

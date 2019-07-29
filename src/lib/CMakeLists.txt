@@ -38,7 +38,6 @@ add_library(guraxcore SHARED
 	Number.cpp
 	OAL.cpp
 	Operator.cpp
-	Operators.cpp
 	Palette.cpp
 	Parser.cpp
 	PathMgr.cpp
