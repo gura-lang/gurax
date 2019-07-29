@@ -8,12 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Complex(re:Number, im?:Number):map {block?}
+// Complex(real:Number, imag?:Number):map {block?}
 Gurax_DeclareFunction(Complex)
 {
 	Declare(VTYPE_Complex, Flag::Map);
-	DeclareArg("re", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("im", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("real", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("imag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -24,16 +24,16 @@ Gurax_ImplementFunction(Complex)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Double re = args.PickNumber<Double>();
-	Double im = args.IsValid()? args.PickNumber<Double>() : 0;
+	Double real = args.PickNumber<Double>();
+	Double imag = args.IsValid()? args.PickNumber<Double>() : 0;
 	// Function body
-	return ReturnValue(processor, argument, new Value_Complex(Complex(re, im)));
+	return ReturnValue(processor, argument, new Value_Complex(Complex(real, imag)));
 }
 
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-Gurax_DeclareProperty_R(Complex, im)
+Gurax_DeclareProperty_R(Complex, imag)
 {
 	Declare(VTYPE_Complex, Flag::None);
 	AddHelp(
@@ -41,13 +41,13 @@ Gurax_DeclareProperty_R(Complex, im)
 		"The imaginary part of the Complex value.");
 }
 
-Gurax_ImplementPropertyGetter(Complex, im)
+Gurax_ImplementPropertyGetter(Complex, imag)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetComplex().imag());
 }
 
-Gurax_DeclareProperty_R(Complex, re)
+Gurax_DeclareProperty_R(Complex, real)
 {
 	Declare(VTYPE_Complex, Flag::None);
 	AddHelp(
@@ -55,7 +55,7 @@ Gurax_DeclareProperty_R(Complex, re)
 		"The real part of the Complex Value.");
 }
 
-Gurax_ImplementPropertyGetter(Complex, re)
+Gurax_ImplementPropertyGetter(Complex, real)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetComplex().real());
@@ -72,8 +72,8 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Complex));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Complex, im));
-	Assign(Gurax_CreateProperty(Complex, re));
+	Assign(Gurax_CreateProperty(Complex, imag));
+	Assign(Gurax_CreateProperty(Complex, real));
 }
 
 //------------------------------------------------------------------------------

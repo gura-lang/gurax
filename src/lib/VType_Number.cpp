@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-Gurax_DeclareProperty_R(Number, im)
+Gurax_DeclareProperty_R(Number, imag)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -16,12 +16,12 @@ Gurax_DeclareProperty_R(Number, im)
 		"The imaginary part of the number. Always returns zero.");
 }
 
-Gurax_ImplementPropertyGetter(Number, im)
+Gurax_ImplementPropertyGetter(Number, imag)
 {
 	return Value::Zero();
 }
 
-Gurax_DeclareProperty_R(Number, re)
+Gurax_DeclareProperty_R(Number, real)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -29,7 +29,7 @@ Gurax_DeclareProperty_R(Number, re)
 		"The real part of the number. Always returns the number itself.");
 }
 
-Gurax_ImplementPropertyGetter(Number, re)
+Gurax_ImplementPropertyGetter(Number, real)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetNumber<Double>());
@@ -45,8 +45,8 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Number, im));
-	Assign(Gurax_CreateProperty(Number, re));
+	Assign(Gurax_CreateProperty(Number, imag));
+	Assign(Gurax_CreateProperty(Number, real));
 }
 
 //------------------------------------------------------------------------------

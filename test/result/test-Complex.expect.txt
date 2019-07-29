@@ -1,7 +1,7 @@
 ======== Property ========
-Complex.__PropHandler__(`re) .. <PropHandler:re:Complex:R>
-Complex.__PropHandler__(`im) .. <PropHandler:im:Complex:R>
+Complex.__PropHandler__(`real) .. <PropHandler:real:Complex:R>
+Complex.__PropHandler__(`imag) .. <PropHandler:imag:Complex:R>
 ======== Complex#re and Complex#im ========
 a .. <Complex:0+3j>
-a.re .. 0
-a.im .. 3
+a.real .. 0
+a.imag .. 3

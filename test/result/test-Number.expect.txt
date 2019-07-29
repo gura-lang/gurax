@@ -1,7 +1,7 @@
 ======== Property ========
-Number.__PropHandler__(`re) .. <PropHandler:re:Number:R>
-Number.__PropHandler__(`im) .. <PropHandler:im:Number:R>
+Number.__PropHandler__(`real) .. <PropHandler:real:Number:R>
+Number.__PropHandler__(`imag) .. <PropHandler:imag:Number:R>
 ======== Number#re and Number#im ========
 a .. 3
-a.re .. 3
-a.im .. 0
+a.real .. 3
+a.imag .. 0

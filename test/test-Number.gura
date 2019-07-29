@@ -2,13 +2,13 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Number.__PropHandler__(`re))
-	Tester(`Number.__PropHandler__(`im))
+	Tester(`Number.__PropHandler__(`real))
+	Tester(`Number.__PropHandler__(`imag))
 }
 
 TestCase('Number#re and Number#im') {
 	a = 3
 	Tester(`a)
-	Tester(`a.re)
-	Tester(`a.im)
+	Tester(`a.real)
+	Tester(`a.imag)
 }
