@@ -332,7 +332,7 @@ void Expr_Suffixed::Compose(Composer& composer)
 		}
 		composer.Add_Value(new Value_Complex(Complex(0, num)), this);	// [Value]
 	} else {
-		//composer.Add_Suffixed(GetSegmentReferable()->Reference(), );
+		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetSymbolSuffix(), IsNumber());
 	}
 }
 
