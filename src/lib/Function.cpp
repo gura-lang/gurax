@@ -31,18 +31,6 @@ String Function::MakeFullName() const
 {
 	RefPtr<Frame> pFrame(LockFrameOuter());
 	return Frame::MakeFullName(pFrame.get(), GetName());
-#if 0
-	String str;
-	if (pFrame) {
-		const DottedSymbol& dottedSymbol = pFrame->GetDottedSymbol();
-		if (!dottedSymbol.IsEmpty()) {
-			str += dottedSymbol.ToString();
-			str += ".";
-		}
-	}
-	str += GetName();
-	return str;
-#endif
 }
 
 void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)

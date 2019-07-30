@@ -25,11 +25,6 @@ Function_Unary::Function_Unary(const Operator* pOperator) :
 
 void Function_Unary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 {
-	if (exprCaller.CountExprCdr() != 1) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "function %s takes one argument", MakeFullName().c_str());
-		return;
-	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	pExprCdr->ComposeOrNil(composer);							// [Any]
 	composer.Add_UnaryOp(_pOperator, &exprCaller);
@@ -56,11 +51,6 @@ Function_Binary::Function_Binary(const Operator* pOperator) :
 
 void Function_Binary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
 {
-	if (exprCaller.CountExprCdr() != 2) {
-		Error::IssueWith(ErrorType::ArgumentError, exprCaller,
-						 "function %s takes two arguments", MakeFullName().c_str());
-		return;
-	}
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
 	pExprCdr->ComposeOrNil(composer);							// [Any]
 	pExprCdr = pExprCdr->GetExprNext();

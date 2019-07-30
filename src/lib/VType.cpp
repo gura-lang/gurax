@@ -42,18 +42,6 @@ String VType::MakeFullName() const
 {
 	RefPtr<Frame> pFrame(LockFrameOuter());
 	return Frame::MakeFullName(pFrame.get(), GetName());
-#if 0
-	String str;
-	if (pFrame) {
-		const DottedSymbol& dottedSymbol = pFrame->GetDottedSymbol();
-		if (!dottedSymbol.IsEmpty()) {
-			str += dottedSymbol.ToString();
-			str += ".";
-		}
-	}
-	str += GetName();
-	return str;
-#endif
 }
 
 DottedSymbol* VType::MakeDottedSymbol() const
