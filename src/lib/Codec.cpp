@@ -11,7 +11,7 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 CodecFactory::List* CodecFactory::_pList = nullptr;
 
-CodecFactory::CodecFactory(const char* encoding) : _encoding(encoding)
+CodecFactory::CodecFactory(String encoding) : _encoding(std::move(encoding))
 {
 }
 
@@ -227,7 +227,6 @@ Codec::Result Codec_None::Encoder::FeedChar(char ch, char& chConv)
 
 //-----------------------------------------------------------------------------
 // Codec_UTF
-// Base class for handling characters in UTF code.
 //-----------------------------------------------------------------------------
 Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 {
@@ -301,7 +300,6 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 
 //-----------------------------------------------------------------------------
 // Codec_SBCS
-// Base class for handling characters in SBCS, Single Byte Character Set.
 //-----------------------------------------------------------------------------
 Codec::Result Codec_SBCS::Decoder::FeedChar(char ch, char& chConv)
 {
@@ -311,24 +309,33 @@ Codec::Result Codec_SBCS::Decoder::FeedChar(char ch, char& chConv)
 
 Codec::Result Codec_SBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 {
-	if (_pMap == nullptr) {
-		_pMap = new Map();
+	if (_pMapShared == nullptr) {
+		_pMapShared = new Map();
 		for (int codeSBCS = 0; codeSBCS < 256; codeSBCS++) {
 			UShort codeUTF16 = _codeTbl[codeSBCS];
-			if (_pMap->find(codeUTF16) == _pMap->end()) {
-				(*_pMap)[codeUTF16] = codeSBCS;
+			if (_pMapShared->find(codeUTF16) == _pMapShared->end()) {
+				(*_pMapShared)[codeUTF16] = codeSBCS;
 			}
 		}
 	}
-	Map::iterator iter = _pMap->find(static_cast<UShort>(codeUTF32));
-	if (iter == _pMap->end()) return Result::Error;
+	Map::iterator iter = _pMapShared->find(static_cast<UShort>(codeUTF32));
+	if (iter == _pMapShared->end()) return Result::Error;
 	chConv = static_cast<UChar>(iter->second);
 	return Result::Complete;
 }
 
 //-----------------------------------------------------------------------------
+// CodecFactory_SBCS
+//-----------------------------------------------------------------------------
+Codec* CodecFactory_SBCS::CreateCodec(bool delcrFlag, bool addcrFlag)
+{
+	return new Codec_SBCS(
+		this, new typename Codec_SBCS::Decoder(delcrFlag, _codeTbl),
+		new typename Codec_SBCS::Encoder(addcrFlag, _codeTbl, _pMapShared));
+}
+
+//-----------------------------------------------------------------------------
 // Codec_DBCS
-// Base class for handling characters in DBCS, Double Byte Character Set.
 //-----------------------------------------------------------------------------
 bool Codec_DBCS::Decoder::IsLeadByte(UChar ch)
 {

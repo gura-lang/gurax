@@ -15,12 +15,12 @@ class Codec;
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE CodecFactory {
 public:
-	typedef std::vector<CodecFactory*> List;
+	using List = std::vector<CodecFactory*>;
 private:
 	String _encoding;
 	static List* _pList;
 public:
-	CodecFactory(const char* encoding);
+	CodecFactory(String encoding);
 	const char* GetEncoding() const { return _encoding.c_str(); }
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) = 0;
 	static void Register(CodecFactory* pFactory);
@@ -46,10 +46,10 @@ public:
 		static const char* const UTF32BE;
 		static const char* const UTF32LE;
 	};
-	typedef std::map<UShort, UShort> Map;
+	using Map = std::map<UInt16, UInt16>;
 	struct CodeRow {
 		int nCols;
-		const UShort* row;
+		const UInt16* row;
 	};
 	struct WidthInfo {
 		UInt32 codeUTF32Ceil;
@@ -116,8 +116,8 @@ public:
 	static Codec* CreateCodecNone(bool delcrFlag, bool addcrFlag);
 	static Codec* CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag);
 	static void Bootup();
-	static UShort DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UShort codeDBCS);
-	static UShort UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UShort codeUTF16, Map** ppMap);
+	static UInt16 DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS);
+	static UInt16 UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UInt16 codeUTF16, Map** ppMap);
 	static WidthProp GetWidthProp(UInt32 codeUTF32);
 public:
 	static const char* EncodingFromLANG();
@@ -147,6 +147,8 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Codec_None : public Codec {
 public:
+	using Codec::Codec;
+public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
 		explicit Decoder(bool delcrFlag) : Codec::Decoder(delcrFlag) {}
@@ -161,9 +163,10 @@ public:
 
 //-----------------------------------------------------------------------------
 // Codec_UTF
-// Base class for handling characters in UTF code.
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Codec_UTF : public Codec {
+public:
+	using Codec::Codec;
 public:
 	class GURAX_DLLDECLARE Decoder : public Codec::Decoder {
 	public:
@@ -185,49 +188,64 @@ public:
 
 //-----------------------------------------------------------------------------
 // Codec_SBCS
-// Base class for handling characters in SBCS, Single Byte Character Set.
 //-----------------------------------------------------------------------------
 class Codec_SBCS : public Codec_UTF {
 public:
+	using Codec_UTF::Codec_UTF;
+public:
 	class Decoder : public Codec_UTF::Decoder {
 	private:
-		const UShort* _codeTbl;
+		const UInt16* _codeTbl;
 	public:
-		Decoder(bool delcrFlag, const UShort* codeTbl) :
+		Decoder(bool delcrFlag, const UInt16* codeTbl) :
 			Codec_UTF::Decoder(delcrFlag), _codeTbl(codeTbl) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
-		const UShort* _codeTbl;
-		Map*& _pMap;
+		const UInt16* _codeTbl;
+		Map*& _pMapShared;
 	public:
-		Encoder(bool addcrFlag, const UShort* codeTbl, Map*& pMap) :
-			Codec_UTF::Encoder(addcrFlag), _codeTbl(codeTbl), _pMap(pMap) {}
+		Encoder(bool addcrFlag, const UInt16* codeTbl, Map*& pMapShared) :
+			Codec_UTF::Encoder(addcrFlag), _codeTbl(codeTbl), _pMapShared(pMapShared) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 	};
 };
 
 //-----------------------------------------------------------------------------
+// CodecFactory_SBCS
+//-----------------------------------------------------------------------------
+class CodecFactory_SBCS : public CodecFactory {
+public:
+	const UInt16* _codeTbl;
+	Codec::Map* _pMapShared;
+public:
+	explicit CodecFactory_SBCS(String encoding, const UInt16* codeTbl) :
+		CodecFactory(std::move(encoding)), _codeTbl(codeTbl), _pMapShared(nullptr) {}
+	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override;
+};
+
+//-----------------------------------------------------------------------------
 // Codec_DBCS
-// Base class for handling characters in DBCS, Double Byte Character Set.
 //-----------------------------------------------------------------------------
 class Codec_DBCS : public Codec_UTF {
 public:
+	using Codec_UTF::Codec_UTF;
+public:
 	class Decoder : public Codec_UTF::Decoder {
 	private:
-		UShort _codeDBCS;
+		UInt16 _codeDBCS;
 	public:
 		explicit Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 		virtual bool IsLeadByte(UChar ch);
-		virtual UShort DBCSToUTF16(UShort codeDBCS) = 0;
+		virtual UInt16 DBCSToUTF16(UInt16 codeDBCS) = 0;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	public:
 		explicit Encoder(bool addcrFlag) : Codec_UTF::Encoder(addcrFlag) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
-		virtual UShort UTF16ToDBCS(UShort codeUTF16) = 0;
+		virtual UInt16 UTF16ToDBCS(UInt16 codeUTF16) = 0;
 	};
 };
 
