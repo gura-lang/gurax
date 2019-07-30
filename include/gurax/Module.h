@@ -95,8 +95,8 @@ public:
 	using ModuleCreateT		= Module* (*)(Frame* pFrameOuter);
 	using ModuleTerminateT	= void (*)(Module& module);
 protected:
-	RefPtr<Frame> _pFrame;
-	RefPtr<DottedSymbol> _pDottedSymbol;
+	RefPtr<Frame_Module> _pFrame;
+	//RefPtr<DottedSymbol> _pDottedSymbol;
 	RefPtr<HelpHolder> _pHelpHolder;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 	String _pathName;
@@ -117,8 +117,10 @@ protected:
 	// Destructor
 	virtual ~Module() = default;
 public:
-	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
-	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	//void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
+	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pFrame->SetDottedSymbol(pDottedSymbol); }
+	//const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
+	const DottedSymbol& GetDottedSymbol() const { return _pFrame->GetDottedSymbol(); }
 	void SetPathName(const char* pathName) { _pathName = pathName; }
 	const char* GetPathName() const { return _pathName.c_str(); }
 	void AddHelp(const Symbol* pLangCode, String doc) {

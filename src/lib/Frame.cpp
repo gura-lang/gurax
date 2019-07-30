@@ -60,6 +60,20 @@ void Frame::Assign(Function* pFunction)
 	Assign(pFunction->GetSymbol(), new Value_Function(pFunction));
 }
 
+String Frame::MakeFullName(const Frame* pFrame, const char* name)
+{
+	String str;
+	if (pFrame) {
+		const DottedSymbol& dottedSymbol = pFrame->GetDottedSymbol();
+		if (!dottedSymbol.IsEmpty()) {
+			str += dottedSymbol.ToString();
+			str += ".";
+		}
+	}
+	str += name;
+	return str;
+}
+
 //------------------------------------------------------------------------------
 // FrameList
 //------------------------------------------------------------------------------

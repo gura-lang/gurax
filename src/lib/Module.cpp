@@ -12,7 +12,6 @@ ModuleMap Module::_moduleMap;
 
 Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 	_pFrame(new Frame_Module(pFrameOuter, pDottedSymbol->Reference())),
-	_pDottedSymbol(pDottedSymbol),
 	_pHelpHolder(new HelpHolder()), _pPropHandlerMap(new PropHandlerMap())
 {
 }

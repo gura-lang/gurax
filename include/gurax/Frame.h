@@ -46,13 +46,14 @@ public:
 	void Assign(VType& vtype);
 	void Assign(Function* pFunction);
 	Value* Lookup(const char* name) { return Lookup(Symbol::Add(name)); }
+	static String MakeFullName(const Frame* pFrame, const char* name);
 public:
 	// Virtual functions
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* Lookup(const Symbol* pSymbol) const = 0;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
-	virtual const DottedSymbol* GetDottedSymbol() const { return nullptr; }
+	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -201,11 +202,13 @@ public:
 	// Constructor
 	Frame_Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol);
 public:
+	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
+public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* Lookup(const Symbol* pSymbol) const override;
-	virtual const DottedSymbol* GetDottedSymbol() const override { return _pDottedSymbol.get(); }
+	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
