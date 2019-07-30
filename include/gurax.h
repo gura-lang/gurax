@@ -81,6 +81,7 @@
 #include "gurax/VType_Binary.h"
 #include "gurax/VType_Bool.h"
 #include "gurax/VType_CallableMember.h"
+#include "gurax/VType_Codec.h"
 #include "gurax/VType_Complex.h"
 #include "gurax/VType_DateTime.h"
 #include "gurax/VType_Dict.h"

@@ -128,6 +128,11 @@ Codec::WidthProp Codec::GetWidthProp(UInt32 codeUTF32)
 	return WidthProp::N;
 }
 
+String Codec::ToString(const StringStyle& ss) const
+{
+	return "";
+}
+
 //-----------------------------------------------------------------------------
 // Codec::BOM
 //-----------------------------------------------------------------------------

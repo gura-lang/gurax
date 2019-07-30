@@ -121,6 +121,12 @@ public:
 	static WidthProp GetWidthProp(UInt32 codeUTF32);
 public:
 	static const char* EncodingFromLANG();
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Codec& codec) const { return this == &codec; }
+	bool IsEqualTo(const Codec& codec) const { return IsIdentical(codec); }
+	bool IsLessThan(const Codec& codec) const { return this < &codec; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //-----------------------------------------------------------------------------

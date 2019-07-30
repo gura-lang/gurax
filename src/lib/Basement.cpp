@@ -51,6 +51,7 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_Binary.Prepare(frame);
 	VTYPE_Bool.Prepare(frame);
 	VTYPE_CallableMember.Prepare(frame);
+	VTYPE_Codec.Prepare(frame);
 	VTYPE_Complex.Prepare(frame);
 	VTYPE_DateTime.Prepare(frame);
 	VTYPE_Dict.Prepare(frame);

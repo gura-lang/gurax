@@ -79,6 +79,7 @@ add_library(guraxcore SHARED
 	VType_Binary.cpp
 	VType_Bool.cpp
 	VType_CallableMember.cpp
+	VType_Codec.cpp
 	VType_Complex.cpp
 	VType_DateTime.cpp
 	VType_Dict.cpp
