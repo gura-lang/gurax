@@ -113,6 +113,10 @@ add_library(guraxcore SHARED
 	VType_Undefined.cpp
 	VType_VType.cpp
 	../module-codecs/module-codecs.cpp
+	../module-codecs_basic/module-codecs_basic.cpp
+	../module-codecs_chinese/module-codecs_chinese.cpp
+	../module-codecs_iso8859/module-codecs_iso8859.cpp
+	../module-codecs_japanese/module-codecs_japanese.cpp
 	../module-fs/module-fs.cpp
 	../module-math/module-math.cpp
 	../module-os/module-os.cpp

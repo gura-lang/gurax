@@ -31,6 +31,10 @@ void Basement::Initialize(int argc, char** argv)
 	SetStreamCOut(Stream::COut->Reference());
 	SetStreamCErr(Stream::CErr->Reference());
 	frame.Assign(Module_codecs::Create(frame.Reference()));
+	frame.Assign(Module_codecs_basic::Create(frame.Reference()));
+	frame.Assign(Module_codecs_chinese::Create(frame.Reference()));
+	frame.Assign(Module_codecs_iso8859::Create(frame.Reference()));
+	frame.Assign(Module_codecs_japanese::Create(frame.Reference()));
 	frame.Assign(Module_fs::Create(frame.Reference()));
 	frame.Assign(Module_math::Create(frame.Reference()));
 	frame.Assign(Module_os::Create(frame.Reference()));
