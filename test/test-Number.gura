@@ -2,13 +2,51 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Number.__PropHandler__(`real))
+	Tester(`Number.__PropHandler__(`abs))
+	Tester(`Number.__PropHandler__(`arg))
 	Tester(`Number.__PropHandler__(`imag))
+	Tester(`Number.__PropHandler__(`norm))
+	Tester(`Number.__PropHandler__(`real))
 }
 
-TestCase('Number#re and Number#im') {
-	a = 3
-	Tester(`a)
-	Tester(`a.real)
-	Tester(`a.imag)
+TestCase('Property Access') {
+	test(a:Number) = {
+		Tester(`a)
+		Tester(`a.abs)
+		Tester(`a.arg)
+		Tester(`a.imag)
+		Tester(`a.norm)
+		Tester(`a.real)
+	}
+	test(3)
+}
+
+TestCase('Operator') {
+	Tester(`(~3))
+	Tester(`(-3))
+	Tester(`(+3))
+	Tester(`(3 + 5))
+	Tester(`(3 & 5))
+	Tester(`(3 <=> 5))
+	Tester(`(3 <=> 3))
+	Tester(`(5 <=> 3))
+	Tester(`(3 / 5))
+	Tester(`(3 / 0))
+	Tester(`(3 == 5))
+	Tester(`(3 == 3))
+	Tester(`(5 == 3))
+	Tester(`(3 >= 5))
+	Tester(`(3 >= 3))
+	Tester(`(5 >= 3))
+	Tester(`(3 > 5))
+	Tester(`(3 > 3))
+	Tester(`(5 > 3))
+	Tester(`(3 <= 5))
+	Tester(`(3 <= 3))
+	Tester(`(5 <= 3))
+	Tester(`(3 < 5))
+	Tester(`(3 < 3))
+	Tester(`(5 < 3))
+	Tester(`(3 * 5))
+	Tester(`(3 - 5))
 }

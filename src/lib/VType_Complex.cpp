@@ -109,6 +109,178 @@ Gurax_ImplementPropertyGetter(Complex, real)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// -Complex
+Gurax_ImplementOpUnary(Neg, Complex)
+{
+	const Complex& num = Value_Complex::GetComplex(value);
+	return new Value_Complex(-num);
+}
+
+// +Complex
+Gurax_ImplementOpUnary(Pos, Complex)
+{
+	return value.Clone();
+}
+
+// Complex + Complex
+Gurax_ImplementOpBinary(Add, Complex, Complex)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Complex(numL + numR);
+}
+
+// Complex + Number
+Gurax_ImplementOpBinary(Add, Complex, Number)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Complex(numL + numR);
+}
+
+// Number + Complex
+Gurax_ImplementOpBinary(Add, Number, Complex)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Complex(numL + numR);
+}
+
+// Complex == Complex
+Gurax_ImplementOpBinary(Eq, Complex, Complex)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Bool(numL == numR);
+}
+
+// Complex == Number
+Gurax_ImplementOpBinary(Eq, Complex, Number)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(numL == numR);
+}
+
+// Number == Complex
+Gurax_ImplementOpBinary(Eq, Number, Complex)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Bool(numL == numR);
+}
+
+// Complex / Complex
+Gurax_ImplementOpBinary(Div, Complex, Complex)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	if (numR.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::undefined();
+	}
+	return new Value_Complex(numL / numR);
+}
+
+// Complex / Number
+Gurax_ImplementOpBinary(Div, Complex, Number)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	if (numR == 0.) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::undefined();
+	}
+	return new Value_Complex(numL / numR);
+}
+
+// Number / Complex
+Gurax_ImplementOpBinary(Div, Number, Complex)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	if (numR.IsZero()) {
+		Error::Issue(ErrorType::DividedByZero, "divided by zero");
+		return Value::undefined();
+	}
+	return new Value_Complex(numL / numR);
+}
+
+// Complex * Complex
+Gurax_ImplementOpBinary(Mul, Complex, Complex)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Complex(numL * numR);
+}
+
+// Complex * Number
+Gurax_ImplementOpBinary(Mul, Complex, Number)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Complex(numL * numR);
+}
+
+// Number * Complex
+Gurax_ImplementOpBinary(Mul, Number, Complex)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Complex(numL * numR);
+}
+
+// Complex != Complex
+Gurax_ImplementOpBinary(Ne, Complex, Complex)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Bool(numL != numR);
+}
+
+// Complex != Number
+Gurax_ImplementOpBinary(Ne, Complex, Number)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Bool(numL != numR);
+}
+
+// Number != Complex
+Gurax_ImplementOpBinary(Ne, Number, Complex)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Bool(numL != numR);
+}
+
+// Complex - Complex
+Gurax_ImplementOpBinary(Sub, Complex, Complex)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Complex(numL - numR);
+}
+
+// Complex - Number
+Gurax_ImplementOpBinary(Sub, Complex, Number)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Complex(numL - numR);
+}
+
+// Number - Complex
+Gurax_ImplementOpBinary(Sub, Number, Complex)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	return new Value_Complex(numL - numR);
+}
+
+//------------------------------------------------------------------------------
 // VType_Complex
 //------------------------------------------------------------------------------
 VType_Complex VTYPE_Complex("Complex");
@@ -124,6 +296,35 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Complex, imag));
 	Assign(Gurax_CreateProperty(Complex, norm));
 	Assign(Gurax_CreateProperty(Complex, real));
+	// Assignment of operator
+	Gurax_AssignOpUnary(Neg,	Complex);
+	Gurax_AssignOpUnary(Pos,	Complex);
+	Gurax_AssignOpBinary(Add,	Complex, Complex);
+	Gurax_AssignOpBinary(Add,	Complex, Number);
+	Gurax_AssignOpBinary(Add,	Number, Complex);
+	Gurax_AssignOpBinary(Div,	Complex, Complex);
+	Gurax_AssignOpBinary(Div,	Complex, Number);
+	Gurax_AssignOpBinary(Div,	Number, Complex);
+	Gurax_AssignOpBinary(Eq,	Complex, Complex);
+	Gurax_AssignOpBinary(Eq,	Complex, Number);
+	Gurax_AssignOpBinary(Eq,	Number, Complex);
+	Gurax_AssignOpBinary(Mul,	Complex, Complex);
+	Gurax_AssignOpBinary(Mul,	Complex, Number);
+	Gurax_AssignOpBinary(Mul,	Number, Complex);
+	Gurax_AssignOpBinary(Ne,	Complex, Complex);
+	Gurax_AssignOpBinary(Ne,	Complex, Number);
+	Gurax_AssignOpBinary(Ne,	Number, Complex);
+	Gurax_AssignOpBinary(Sub,	Complex, Complex);
+	Gurax_AssignOpBinary(Sub,	Complex, Number);
+	Gurax_AssignOpBinary(Sub,	Number, Complex);
+}
+
+Value* VType_Complex::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Number)) {
+		return new Value_Complex(Complex(Value_Number::GetNumber<Double>(value)));
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------

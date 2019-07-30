@@ -2,13 +2,46 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Complex.__PropHandler__(`real))
+	Tester(`Complex.__PropHandler__(`abs))
+	Tester(`Complex.__PropHandler__(`arg))
 	Tester(`Complex.__PropHandler__(`imag))
+	Tester(`Complex.__PropHandler__(`norm))
+	Tester(`Complex.__PropHandler__(`real))
 }
 
-TestCase('Complex#re and Complex#im') {
-	a = 3j
-	Tester(`a)
-	Tester(`a.real)
-	Tester(`a.imag)
+TestCase('Property Access') {
+	test(a:Complex) = {
+		Tester(`a)
+		Tester(`a.abs)
+		Tester(`a.arg)
+		Tester(`a.imag)
+		Tester(`a.norm)
+		Tester(`a.real)
+	}
+	test(3)
+	test(3j)
+	test(1+1j)
+	test(-1+1j)
+	test(-1-1j)
+	test(1-1j)
+}
+
+TestCase('Operator') {
+	Tester(`(-(3 + 2j)))
+	Tester(`(+(3 + 2j)))
+	Tester(`((3 + 2j) + (5 + 4j)))
+	Tester(`((3 + 2j) + 5))
+	Tester(`(3 + (5 + 4j)))
+	Tester(`((3 + 2j) / (5 + 4j)))
+	Tester(`((3 + 2j) / 0))
+	Tester(`((3 + 2j) == (5 + 4j)))
+	Tester(`((3 + 2j) == (3 + 2j)))
+	Tester(`((3 + 2j) * (5 + 4j)))
+	Tester(`((3 + 2j) * 5))
+	Tester(`(3 * (5 + 4j)))
+	Tester(`((3 + 2j) != (5 + 4j)))
+	Tester(`((3 + 2j) != (3 + 2j)))
+	Tester(`((3 + 2j) - (5 + 4j)))
+	Tester(`((3 + 2j) - 5))
+	Tester(`(3 - (5 + 4j)))
 }

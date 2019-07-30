@@ -1,7 +1,61 @@
 ======== Property ========
-Complex.__PropHandler__(`real) .. <PropHandler:real:Complex:R>
+Complex.__PropHandler__(`abs) .. <PropHandler:abs:Complex:R>
+Complex.__PropHandler__(`arg) .. <PropHandler:arg:Complex:R>
 Complex.__PropHandler__(`imag) .. <PropHandler:imag:Complex:R>
-======== Complex#re and Complex#im ========
+Complex.__PropHandler__(`norm) .. <PropHandler:norm:Complex:R>
+Complex.__PropHandler__(`real) .. <PropHandler:real:Complex:R>
+======== Property Access ========
+a .. <Complex:3>
+a.abs .. 3
+a.arg .. 0
+a.imag .. 0
+a.norm .. 9
+a.real .. 3
 a .. <Complex:0+3j>
-a.real .. 0
+a.abs .. 3
+a.arg .. 1.5708
 a.imag .. 3
+a.norm .. 9
+a.real .. 0
+a .. <Complex:1+1j>
+a.abs .. 1.41421
+a.arg .. 0.785398
+a.imag .. 1
+a.norm .. 2
+a.real .. 1
+a .. <Complex:-1+1j>
+a.abs .. 1.41421
+a.arg .. 2.35619
+a.imag .. 1
+a.norm .. 2
+a.real .. -1
+a .. <Complex:-1-1j>
+a.abs .. 1.41421
+a.arg .. -2.35619
+a.imag .. -1
+a.norm .. 2
+a.real .. -1
+a .. <Complex:1-1j>
+a.abs .. 1.41421
+a.arg .. -0.785398
+a.imag .. -1
+a.norm .. 2
+a.real .. 1
+======== Operator ========
+-(3 + 2j) .. <Complex:-3-2j>
++(3 + 2j) .. <Complex:3+2j>
+(3 + 2j) + (5 + 4j) .. <Complex:8+6j>
+(3 + 2j) + 5 .. <Complex:8+2j>
+3 + (5 + 4j) .. <Complex:8+4j>
+(3 + 2j) / (5 + 4j) .. <Complex:0.560976-0.0487805j>
+(3 + 2j) / 0 .. divided by zero
+(3 + 2j) == (5 + 4j) .. false
+(3 + 2j) == (3 + 2j) .. true
+(3 + 2j) * (5 + 4j) .. <Complex:7+22j>
+(3 + 2j) * 5 .. <Complex:15+10j>
+3 * (5 + 4j) .. <Complex:15+12j>
+(3 + 2j) != (5 + 4j) .. true
+(3 + 2j) != (3 + 2j) .. false
+(3 + 2j) - (5 + 4j) .. <Complex:-2-2j>
+(3 + 2j) - 5 .. <Complex:-2+2j>
+3 - (5 + 4j) .. <Complex:-2-4j>

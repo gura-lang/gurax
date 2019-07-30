@@ -15,6 +15,7 @@ class VType_Complex : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern VType_Complex VTYPE_Complex;
@@ -33,8 +34,10 @@ protected:
 public:
 	// Constructor
 	explicit Value_Complex(VType& vtype = VTYPE_Complex) :
-		Value_Complex(0., vtype) {}
+		Value_Object(vtype), _num(0.) {}
 	explicit Value_Complex(const Complex& num, VType& vtype = VTYPE_Complex) :
+		Value_Object(vtype), _num(num) {}
+	explicit Value_Complex(const std::complex<Double>& num, VType& vtype = VTYPE_Complex) :
 		Value_Object(vtype), _num(num) {}
 	// Copy constructor/operator
 	Value_Complex(const Value_Complex& src) :
