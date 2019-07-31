@@ -530,7 +530,7 @@ String String::Mid(const char* str, int start, size_t len)
 	}
 	if (start >= lenSrc || len == 0) {
 		return String("");
-	} else if (len > 0 && start + len < lenSrc) {
+	} else if (len < lenSrc - start) {
 		str = Forward(str, start);
 		String strRtn;
 		strRtn.AppendNChars(str, len);

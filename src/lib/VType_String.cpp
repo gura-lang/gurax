@@ -464,7 +464,7 @@ Gurax_ImplementMethod(String, Mid)
 	// Arguments
 	ArgPicker args(argument);
 	Int pos = args.PickNumberNonNeg<Int>();
-	Int len = args.PickNumberNonNeg<Int>();
+	size_t len = args.IsValid()? args.PickNumberNonNeg<size_t>() : static_cast<size_t>(-1);
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();

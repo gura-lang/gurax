@@ -149,9 +149,13 @@ TestCase('String#Uppper(), String#Lower()') {
 }
 
 TestCase('String#Mid()') {
-	Printf('%-13s .. "%s"\n', words10, words10::Mid(0, 0))
-	Printf('%-13s .. "%s"\n', words10, words10::Mid(1, 4))
-	Printf('%-13s .. "%s"\n', words10, words10::Mid(6, 4))
+	Tester(`words10)
+	Tester(`words10::Mid(0))
+	Tester(`words10::Mid(1))
+	Tester(`words10::Mid(6))
+	Tester(`words10::Mid(0, 0))
+	Tester(`words10::Mid(1, 4))
+	Tester(`words10::Mid(6, 4))
 }
 
 TestCase('String#Print()') {

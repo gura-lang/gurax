@@ -5,7 +5,8 @@ Entry = struct {
 	shortName:String:nil
 	help:String:nil
 	helpValue:String:nil
-	defValue
+	valueDefault
+	value
 	MakeHelpIndex(longNameFlag:Bool, shortNameFlag:Bool) = {
 		str = ''
 		if (!shortNameFlag) {
@@ -39,18 +40,25 @@ Entry = struct {
 Parser = class {
 	entries[]:Entry = []
 	Parse(argv[]:String) = {
-		cfg = %{}
-		cfg.Put(this.entries:*longName, this.entries:*defValue)
+		dictByLongName = %{}
+		dictByShortName = %{}
+		dictByLongName.Put(this.entries:*longName, this.entries)
+		this.entries.Each {|entry|
+			if (entry.shortName) {
+				dictByShortName.Put(entry.shrotName, entry)
+			}
+		}
 		argvRest = []
 		iter = argv.Offset(1)
-		while (arg = iter.Next()) {
-			Println(arg)
+		while (arg = iter.NextValue()) {
+			value = dictByLongName.Get(arg)
+			Println(value)
 		}
 		//Println(argv)
 		//Println(this.entries[0].MakeHelpIndex(true, true))
 	}
-	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, defValue?:String) = {
-		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, defValue))
+	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, valueDefault?:String) = {
+		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, valueDefault))
 	}
 	AddFlag(longName:String, shortName?:String, help?:String) = {
 		this.entries.Add(Entry(`flag, longName, shortName, help, nil, false))
@@ -58,7 +66,7 @@ Parser = class {
 }
 
 Parser {|p|
-	p.AddParam('value')
+	p.AddParam('value', valueDefault = 'xx')
 	p.AddFlag('flag')
 	p.Parse(sys.argv)
 }
