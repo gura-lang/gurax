@@ -809,12 +809,13 @@ Gurax_ImplementMethod(List, NilTo)
 	return Value::nil();
 }
 
-// List#Offset(offset:Number):map {block?}
+// List#Offset(offset:Number):map:[raise] {block?}
 Gurax_DeclareMethod(List, Offset)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareBlock(BlkOccur::Once);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
@@ -829,7 +830,7 @@ Gurax_ImplementMethod(List, Offset)
 	Int offset = args.PickNumberNonNeg<Int>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	if (!valueTypedOwner.CheckPosition(offset)) return Value::nil();
+	if (argument.IsSet(Gurax_Symbol(raise)) && !valueTypedOwner.CheckPosition(offset)) return Value::nil();
 	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Each(valueTypedOwner.Reference(), offset));
 	return new Value_Iterator(pIterator.release());
 }

@@ -17,3 +17,9 @@ TestCase('Iterator#isFinite and isInfinite') {
 	Tester(`x.isFinite)
 }
 
+TestCase('Iterator#NextValue()') {
+	x = 1..10
+	while (a = x.NextValue()) {
+		Println(a)
+	}
+}

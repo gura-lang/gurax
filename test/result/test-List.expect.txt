@@ -284,7 +284,8 @@ tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue('x')}, Format('%d-%s', 
 [tbl.Offset(2)] .. ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 [tbl.Offset(3)] .. ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 [tbl.Offset(10)] .. ['ten']
-[tbl.Offset(11)] .. position 11 exceeds the list's size of 11
+[tbl.Offset(11)] .. []
+[tbl.Offset(11):raise] .. position 11 exceeds the list's size of 11
 [tbl.Offset(-1)] .. negative value is not acceptable
 ======== List#Or() ========
 ======== List#Pack() ========

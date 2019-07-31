@@ -323,6 +323,7 @@ TestCase('List#Offset()') {
 	Tester(`[tbl.Offset(3)])
 	Tester(`[tbl.Offset(10)])
 	Tester(`[tbl.Offset(11)])
+	Tester(`[tbl.Offset(11):raise])
 	Tester(`[tbl.Offset(-1)])
 }
 
