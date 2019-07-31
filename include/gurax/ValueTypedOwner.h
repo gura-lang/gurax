@@ -34,8 +34,10 @@ public:
 	class GURAX_DLLDECLARE Iterator_Each : public IteratorBase {
 	private:
 		size_t _idx;
+		size_t _idxBegin;
 	public:
-		Iterator_Each(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+		Iterator_Each(ValueTypedOwner* pValueTypedOwner, size_t idxBegin = 0) :
+			IteratorBase(pValueTypedOwner), _idx(idxBegin), _idxBegin(idxBegin) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -179,6 +181,8 @@ public:
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
+	bool CheckPosition(Int pos) const { return GetValueOwner().CheckPosition(pos); }
+	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const { return new Iterator_Each(Reference()); }
 private:

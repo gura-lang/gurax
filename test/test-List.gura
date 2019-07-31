@@ -316,6 +316,14 @@ TestCase('List#NilTo()') {
 }
 
 TestCase('List#Offset()') {
+	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+	Tester(`[tbl.Offset(0)])
+	Tester(`[tbl.Offset(1)])
+	Tester(`[tbl.Offset(2)])
+	Tester(`[tbl.Offset(3)])
+	Tester(`[tbl.Offset(10)])
+	Tester(`[tbl.Offset(11)])
+	Tester(`[tbl.Offset(-1)])
 }
 
 TestCase('List#Or()') {

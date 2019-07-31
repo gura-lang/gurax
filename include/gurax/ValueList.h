@@ -30,7 +30,7 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	void IssueError_IndexOutOfRange(Int pos) const {
-		Error::Issue(ErrorType::IndexError, "position %d is out of range of the list size %zu",
+		Error::Issue(ErrorType::IndexError, "position %d exceeds the list's size of %zu",
 					 pos, size());
 	}
 	void IssueError_IndexOutOfRange(const char* pos) const {

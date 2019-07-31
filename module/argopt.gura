@@ -42,8 +42,8 @@ Parser = class {
 		cfg = %{}
 		cfg.Put(this.entries:*longName, this.entries:*defValue)
 		argvRest = []
-		i = argv.Offset(1)
-		while (arg = i.next()) {
+		iter = argv.Offset(1)
+		while (arg = iter.next()) {
 			Println(arg)
 		}
 		//Println(argv)

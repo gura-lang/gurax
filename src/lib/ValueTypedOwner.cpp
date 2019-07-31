@@ -240,7 +240,7 @@ Value* ValueTypedOwner::Iterator_Each::DoNextValue()
 String ValueTypedOwner::Iterator_Each::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Each:n=%zu", GetValueOwner().size());
+	str.Printf("List#Each:begin=%zu:n=%zu", _idxBegin, GetValueOwner().size());
 	return str;
 }
 

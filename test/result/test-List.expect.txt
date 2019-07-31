@@ -72,7 +72,7 @@ tbl[0] .. zero
 tbl[1] .. one
 tbl[2] .. two
 tbl[10] .. ten
-tbl[11] .. position 11 is out of range of the list size 11
+tbl[11] .. position 11 exceeds the list's size of 11
 tbl[0, 1] .. ['zero', 'one']
 tbl[0, 1, 4, 10] .. ['zero', 'one', 'four', 'ten']
 ======== List#len, List#first and List#last ========
@@ -138,8 +138,8 @@ tbl.Insert(3, 4 .. 9) .. [99, 99, 99, <Iterator:Range:begin=4:end=10:step=1>, [1
 tbl.Insert(3, 1, 2, 3, 4, 5, 6, 7, 8, 9) .. [99, 99, 99, 1, 2, 3, 4, 5, 6, 7, 8, 9, <Iterator:Range:begin=4:end=10:step=1>, [1, 2, 3], 'hello', 6, 7, 8, 3, 99, 99]
 tbl.Insert(3, 'a', 'b', 'c', 'd', 'e', 'f') .. [99, 99, 99, 'a', 'b', 'c', 'd', 'e', 'f', 1, 2, 3, 4, 5, 6, 7, 8, 9, <Iterator:Range:begin=4:end=10:step=1>, [1, 2, 3], 'hello', 6, 7, 8, 3, 99, 99]
 tbl.Insert(-1, 3) .. [99, 99, 99, 99, 3, 99]
-tbl.Insert(20, 3) .. position 20 is out of range of the list size 6
-tbl.Insert(-20, 3) .. position -14 is out of range of the list size 6
+tbl.Insert(20, 3) .. position 20 exceeds the list's size of 6
+tbl.Insert(-20, 3) .. position -14 exceeds the list's size of 6
 ======== List#Permutation() ========
 ======== List#Put() ========
 ======== List#Shift() ========
@@ -279,6 +279,13 @@ tbl.Each():list {|x, i| if (x.StartsWith('t')) {continue('x')}, Format('%d-%s', 
 ======== List#Min() ========
 ======== List#NilTo() ========
 ======== List#Offset() ========
+[tbl.Offset(0)] .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+[tbl.Offset(1)] .. ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+[tbl.Offset(2)] .. ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+[tbl.Offset(3)] .. ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+[tbl.Offset(10)] .. ['ten']
+[tbl.Offset(11)] .. position 11 exceeds the list's size of 11
+[tbl.Offset(-1)] .. negative value is not acceptable
 ======== List#Or() ========
 ======== List#Pack() ========
 ======== List#PingPong() ========
