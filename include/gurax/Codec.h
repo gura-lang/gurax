@@ -9,23 +9,28 @@ namespace Gurax {
 
 class Binary;
 class Codec;
+class CodecFactory;
+
+//-----------------------------------------------------------------------------
+// CodecFactoryList
+//-----------------------------------------------------------------------------
+using CodecFactoryList = std::vector<CodecFactory*>;
 
 //-----------------------------------------------------------------------------
 // CodecFactory
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE CodecFactory {
-public:
-	using List = std::vector<CodecFactory*>;
 private:
 	String _encoding;
-	static List* _pList;
+	static CodecFactoryList _codecFactoryList;
 public:
 	CodecFactory(String encoding);
 	const char* GetEncoding() const { return _encoding.c_str(); }
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) = 0;
+public:
+	static CodecFactoryList& GetList() { return _codecFactoryList; }
 	static void Register(CodecFactory* pFactory);
 	static CodecFactory* Lookup(const char* name);
-	static const List* GetList() { return _pList; }
 };
 
 //-----------------------------------------------------------------------------
@@ -195,19 +200,18 @@ public:
 public:
 	class Decoder : public Codec_UTF::Decoder {
 	private:
-		const UInt16* _codeTbl;
+		const UInt16* _tblToUTF16;
 	public:
-		Decoder(bool delcrFlag, const UInt16* codeTbl) :
-			Codec_UTF::Decoder(delcrFlag), _codeTbl(codeTbl) {}
+		Decoder(bool delcrFlag, const UInt16* tblToUTF16) :
+			Codec_UTF::Decoder(delcrFlag), _tblToUTF16(tblToUTF16) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
 	class Encoder : public Codec_UTF::Encoder {
 	private:
-		const UInt16* _codeTbl;
-		Map*& _pMapShared;
+		const Map& _mapToSBCS;
 	public:
-		Encoder(bool addcrFlag, const UInt16* codeTbl, Map*& pMapShared) :
-			Codec_UTF::Encoder(addcrFlag), _codeTbl(codeTbl), _pMapShared(pMapShared) {}
+		Encoder(bool addcrFlag, const Map& mapToSBCS) :
+			Codec_UTF::Encoder(addcrFlag), _mapToSBCS(mapToSBCS) {}
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 	};
 };
@@ -217,11 +221,10 @@ public:
 //-----------------------------------------------------------------------------
 class CodecFactory_SBCS : public CodecFactory {
 public:
-	const UInt16* _codeTbl;
-	Codec::Map* _pMapShared;
+	const UInt16* _tblToUTF16;
+	Codec::Map _mapToSBCS;
 public:
-	explicit CodecFactory_SBCS(String encoding, const UInt16* codeTbl) :
-		CodecFactory(std::move(encoding)), _codeTbl(codeTbl), _pMapShared(nullptr) {}
+	explicit CodecFactory_SBCS(String encoding, const UInt16* tblToUTF16);
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override;
 };
 
@@ -238,7 +241,7 @@ public:
 	public:
 		explicit Decoder(bool delcrFlag) : Codec_UTF::Decoder(delcrFlag), _codeDBCS(0x0000) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
-		virtual bool IsLeadByte(UChar ch);
+		virtual bool IsLeadByte(UChar ch) { return ch >= 0x80; }
 		virtual UInt16 DBCSToUTF16(UInt16 codeDBCS) = 0;
 	};
 	class Encoder : public Codec_UTF::Encoder {

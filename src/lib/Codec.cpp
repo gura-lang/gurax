@@ -9,7 +9,7 @@ namespace Gurax {
 //-----------------------------------------------------------------------------
 // CodecFactory
 //-----------------------------------------------------------------------------
-CodecFactory::List* CodecFactory::_pList = nullptr;
+CodecFactoryList CodecFactory::_codecFactoryList;
 
 CodecFactory::CodecFactory(String encoding) : _encoding(std::move(encoding))
 {
@@ -17,16 +17,13 @@ CodecFactory::CodecFactory(String encoding) : _encoding(std::move(encoding))
 
 void CodecFactory::Register(CodecFactory* pFactory)
 {
-	if (_pList == nullptr) {
-		_pList = new List();
-	}
-	_pList->push_back(pFactory);
+	GetList().push_back(pFactory);
 }
 
 CodecFactory* CodecFactory::Lookup(const char* encoding)
 {
-	if (encoding == nullptr || _pList == nullptr) return nullptr;
-	for (CodecFactory* pFactory : *_pList) {
+	if (encoding == nullptr) return nullptr;
+	for (CodecFactory* pFactory : GetList()) {
 		if (::strcasecmp(pFactory->GetEncoding(), encoding) == 0) {
 			return pFactory;
 		}
@@ -262,15 +259,24 @@ Codec::Result Codec_UTF::Decoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 
 Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 {
-	Codec::Result rslt = Codec::Result::None;
+	if (ch == '\n') {
+		if (GetAddcrFlag()) {
+			StoreChar('\n');
+			chConv = '\r';
+		} else {
+			chConv = ch;
+		}
+		return Codec::Result::Complete;
+	}
+	Codec::Result rtn = Codec::Result::None;
 	UChar _ch = static_cast<UChar>(ch);
 	if ((_ch & 0x80) == 0x00) {
-		rslt = FeedUTF32(_ch, chConv);
+		rtn = FeedUTF32(_ch, chConv);
 		_cntChars = 0;
 	} else if ((_ch & 0xc0) == 0x80) {
 		if (_cntChars == 1) {
 			_codeUTF32 = (_codeUTF32 << 6) | (_ch & 0x3f);
-			rslt = FeedUTF32(_codeUTF32, chConv);
+			rtn = FeedUTF32(_codeUTF32, chConv);
 			_codeUTF32 = 0x00000000;
 			_cntChars = 0;
 		} else if (_cntChars > 0) {
@@ -295,7 +301,7 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 		_codeUTF32 = _ch & 0x01;
 		_cntChars = 5;
 	}
-	return rslt;
+	return rtn;
 }
 
 //-----------------------------------------------------------------------------
@@ -303,47 +309,44 @@ Codec::Result Codec_UTF::Encoder::FeedChar(char ch, char& chConv)
 //-----------------------------------------------------------------------------
 Codec::Result Codec_SBCS::Decoder::FeedChar(char ch, char& chConv)
 {
-	chConv = static_cast<UChar>(_codeTbl[static_cast<UChar>(ch)]);
+	if (GetDelcrFlag() && ch == '\r') return Codec::Result::None;
+	chConv = static_cast<UChar>(_tblToUTF16[static_cast<UChar>(ch)]);
 	return (chConv == '\0')? Result::Error : Result::Complete;
 }
 
 Codec::Result Codec_SBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 {
-	if (_pMapShared == nullptr) {
-		_pMapShared = new Map();
-		for (int codeSBCS = 0; codeSBCS < 256; codeSBCS++) {
-			UShort codeUTF16 = _codeTbl[codeSBCS];
-			if (_pMapShared->find(codeUTF16) == _pMapShared->end()) {
-				(*_pMapShared)[codeUTF16] = codeSBCS;
-			}
-		}
-	}
-	Map::iterator iter = _pMapShared->find(static_cast<UShort>(codeUTF32));
-	if (iter == _pMapShared->end()) return Result::Error;
-	chConv = static_cast<UChar>(iter->second);
+	auto pPair = _mapToSBCS.find(static_cast<UShort>(codeUTF32));
+	if (pPair == _mapToSBCS.end()) return Result::Error;
+	chConv = static_cast<UChar>(pPair->second);
 	return Result::Complete;
 }
 
 //-----------------------------------------------------------------------------
 // CodecFactory_SBCS
 //-----------------------------------------------------------------------------
+CodecFactory_SBCS::CodecFactory_SBCS(String encoding, const UInt16* tblToUTF16) :
+	CodecFactory(std::move(encoding)), _tblToUTF16(tblToUTF16)
+{
+	for (int codeSBCS = 0; codeSBCS < 256; codeSBCS++) {
+		UInt16 codeUTF16 = _tblToUTF16[codeSBCS];
+		_mapToSBCS[codeUTF16] = codeSBCS;
+	}
+}
+
 Codec* CodecFactory_SBCS::CreateCodec(bool delcrFlag, bool addcrFlag)
 {
 	return new Codec_SBCS(
-		this, new typename Codec_SBCS::Decoder(delcrFlag, _codeTbl),
-		new typename Codec_SBCS::Encoder(addcrFlag, _codeTbl, _pMapShared));
+		this, new typename Codec_SBCS::Decoder(delcrFlag, _tblToUTF16),
+		new typename Codec_SBCS::Encoder(addcrFlag, _mapToSBCS));
 }
 
 //-----------------------------------------------------------------------------
 // Codec_DBCS
 //-----------------------------------------------------------------------------
-bool Codec_DBCS::Decoder::IsLeadByte(UChar ch)
-{
-	return ch >= 0x80;
-}
-
 Codec::Result Codec_DBCS::Decoder::FeedChar(char ch, char& chConv)
 {
+	if (GetDelcrFlag() && ch == '\r') return Codec::Result::None;
 	UChar _ch = static_cast<UChar>(ch);
 	UInt32 codeUTF32 = 0x00000000;
 	if (_codeDBCS == 0x0000) {
