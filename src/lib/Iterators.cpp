@@ -122,7 +122,9 @@ String Iterator_BinaryOpImpMap::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_FunctionImpMap
 //------------------------------------------------------------------------------
-Iterator_FunctionImpMap::Iterator_FunctionImpMap(Processor* pProcessor, Function* pFunction, Argument* pArgument) :
+template<bool skipNilFlag>
+Iterator_FunctionImpMap<skipNilFlag>::Iterator_FunctionImpMap(
+	Processor* pProcessor, Function* pFunction, Argument* pArgument) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pArgument(pArgument),
 	_flags(Flag::None), _len(0)
 {
@@ -135,18 +137,34 @@ Iterator_FunctionImpMap::Iterator_FunctionImpMap(Processor* pProcessor, Function
 	if (!(_flags & Flag::LenDetermined)) _len = 0;
 }
 
-Value* Iterator_FunctionImpMap::DoNextValue()
+template<bool skipNilFlag>
+Value* Iterator_FunctionImpMap<skipNilFlag>::DoNextValue()
 {
-	if (!GetArgument().ReadyToPickValue()) return nullptr;
-	return GetFunction().DoEval(GetProcessor(), GetArgument());
+	if (skipNilFlag) {
+		for (;;) {
+			if (!GetArgument().ReadyToPickValue()) break;
+			RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+			if (pValueRtn->IsValid()) return pValueRtn.release();
+		}
+		return nullptr;
+	} else {
+		if (!GetArgument().ReadyToPickValue()) return nullptr;
+		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+		if (Error::IsIssued()) return nullptr;
+		return pValueRtn.release();
+	}
 }
 
-String Iterator_FunctionImpMap::ToString(const StringStyle& ss) const
+template<bool skipNilFlag>
+String Iterator_FunctionImpMap<skipNilFlag>::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("FunctionImpMap");
 	return str;
 }
+
+template class Iterator_FunctionImpMap<true>;
+template class Iterator_FunctionImpMap<false>;
 
 //------------------------------------------------------------------------------
 // Iterator_Range

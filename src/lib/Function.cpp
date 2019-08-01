@@ -48,7 +48,12 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		while (argument.ReadyToPickValue()) {
-			valueTypedOwner.Add(DoEval(processor, argument));
+			RefPtr<Value> pValueRtn(DoEval(processor, argument));
+			if (Error::IsIssued()) {
+				processor.ErrorDone();
+				return;
+			}
+			valueTypedOwner.Add(pValueRtn.release());
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
@@ -58,7 +63,12 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		while (argument.ReadyToPickValue()) {
-			valueTypedOwner.Add(DoEval(processor, argument));
+			RefPtr<Value> pValueRtn(DoEval(processor, argument));
+			if (Error::IsIssued()) {
+				processor.ErrorDone();
+				return;
+			}
+			if (pValueRtn->IsValid()) valueTypedOwner.Add(pValueRtn.release());
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
@@ -66,14 +76,14 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 	auto MapToIter = [this](Processor& processor, Argument& argument) {
 		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 		RefPtr<Iterator> pIterator(
-			new Iterator_FunctionImpMap(processor.Reference(), Reference(), argument.Reference()));
+			new Iterator_FunctionImpMap<false>(processor.Reference(), Reference(), argument.Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	};
 	auto MapToXIter = [this](Processor& processor, Argument& argument) {
 		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 		RefPtr<Iterator> pIterator(
-			new Iterator_FunctionImpMap(processor.Reference(), Reference(), argument.Reference()));
+			new Iterator_FunctionImpMap<true>(processor.Reference(), Reference(), argument.Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	};

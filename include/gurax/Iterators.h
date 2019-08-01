@@ -123,6 +123,7 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_FunctionImpMap
 //------------------------------------------------------------------------------
+template<bool skipNilFlag>
 class GURAX_DLLDECLARE Iterator_FunctionImpMap : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
@@ -143,6 +144,9 @@ public:
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
+
+extern template class Iterator_FunctionImpMap<true>;
+extern template class Iterator_FunctionImpMap<false>;
 
 //------------------------------------------------------------------------------
 // Iterator_Range
