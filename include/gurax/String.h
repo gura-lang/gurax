@@ -91,6 +91,14 @@ public:
 public:
 	static void Bootup();
 public:
+	static bool CheckPosition(size_t len, Int pos, Int posRaw);
+	static bool CheckPosition(size_t len, Int pos) { return CheckPosition(len, pos, pos); }
+	static bool CheckPosition(const char* str, Int pos) { return CheckPosition(::strlen(str), pos); }
+	bool CheckPosition(Int pos) const { return CheckPosition(size(), pos); }
+	static bool FixPosition(size_t len, Int* pPos);
+	static bool FixPosition(const char* str, Int* pPos) { return FixPosition(::strlen(str), pPos); }
+	bool FixPosition(Int* pPos) const { return FixPosition(size(), pPos); }
+public:
 	// Character operation
 	static CTypes GetCTypes(char ch)		{ return _ctypesTbl[static_cast<UChar>(ch)];		}
 	static bool IsAlpha(char ch)			{ return (GetCTypes(ch) & CType::Alpha) != 0;		}
@@ -236,6 +244,13 @@ public:
 	static String Lower(const char* str);
 public:
 	static void IssueError_InvalidFormatOfNumber();
+	static void IssueError_IndexOutOfRange(size_t len, Int pos);
+	static void IssueError_IndexOutOfRange(const char* str, Int pos) {
+		return IssueError_IndexOutOfRange(::strlen(str), pos);
+	}
+	void IssueError_IndexOutOfRange(Int pos) const {
+		return IssueError_IndexOutOfRange(size(), pos);
+	}
 };
 
 struct CharCase {

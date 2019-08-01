@@ -107,6 +107,20 @@ void String::Bootup()
 	}
 }
 
+bool String::CheckPosition(size_t len, Int pos, Int posRaw)
+{
+	if (0 <= pos && static_cast<size_t>(pos) < len) return true;
+	IssueError_IndexOutOfRange(len, posRaw);
+	return false;
+}
+
+bool String::FixPosition(size_t len, Int* pPos)
+{
+	Int posRaw = *pPos;
+	if (*pPos < 0) *pPos += len;
+	return CheckPosition(len, *pPos, posRaw);
+}
+
 String String::PickChar(size_t idx) const
 {
 	const_iterator p = begin();
@@ -558,6 +572,12 @@ String String::Lower(const char* str)
 void String::IssueError_InvalidFormatOfNumber()
 {
 	Error::Issue(ErrorType::FormatError, "invalid format of number");
+}
+
+void String::IssueError_IndexOutOfRange(size_t len, Int pos)
+{
+	Error::Issue(ErrorType::IndexError,
+				 "specified position %d exceeds the string's size of %zu", pos, len);
 }
 
 //------------------------------------------------------------------------------

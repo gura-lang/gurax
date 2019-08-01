@@ -17,11 +17,9 @@ public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	VType& GetVTypeOfElems() const;
 	void IncCntRefOfEach() const;
-	bool CheckPosition(Int pos) const;
-	bool FixPosition(Int* pPos) const {
-		if (*pPos < 0) *pPos += size();
-		return CheckPosition(*pPos);
-	}
+	bool CheckPosition(Int pos, Int posRaw) const;
+	bool CheckPosition(Int pos) const { return CheckPosition(pos, pos); }
+	bool FixPosition(Int* pPos) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }
@@ -29,14 +27,8 @@ public:
 	bool IsLessThan(const ValueList& valueList) const { return this < &valueList; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
-	void IssueError_IndexOutOfRange(Int pos) const {
-		Error::Issue(ErrorType::IndexError, "position %d exceeds the list's size of %zu",
-					 pos, size());
-	}
-	void IssueError_IndexOutOfRange(const char* pos) const {
-		Error::Issue(ErrorType::IndexError, "position %s is out of range of the list size %zu",
-					 pos, size());
-	}
+	void IssueError_IndexOutOfRange(Int pos) const;
+	void IssueError_IndexOutOfRange(const char* pos) const;
 };
 
 }

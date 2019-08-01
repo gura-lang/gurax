@@ -149,6 +149,16 @@ TestCase('String#Uppper(), String#Lower()') {
 }
 
 TestCase('String#Mid()') {
+	Tester(`'Hello World'.Mid(0))
+	Tester(`'Hello World'.Mid(6))
+	Tester(`'Hello World'.Mid(9))
+	Tester(`'Hello World'.Mid(10))
+	Tester(`'Hello World'.Mid(-1))
+	Tester(`'Hello World'.Mid(-2))
+	Tester(`'Hello World'.Mid(11))
+	Tester(`'Hello World'.Mid(12))
+	Tester(`'Hello World'.Mid(-11))
+	Tester(`'Hello World'.Mid(-12))
 	Tester(`words10)
 	Tester(`words10::Mid(0))
 	Tester(`words10::Mid(1))

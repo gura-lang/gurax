@@ -130,36 +130,23 @@ entertaining
 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Upper() .. ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ
 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.Lower() .. abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
 ======== String#Mid() ========
-bubble        .. ""
-tasteful      .. ""
-yell          .. ""
-unarmed       .. ""
-vest          .. ""
-private       .. ""
-cowardly      .. ""
-happen        .. ""
-demonic       .. ""
-entertaining  .. ""
-bubble        .. "ubbl"
-tasteful      .. "aste"
-yell          .. "ell"
-unarmed       .. "narm"
-vest          .. "est"
-private       .. "riva"
-cowardly      .. "owar"
-happen        .. "appe"
-demonic       .. "emon"
-entertaining  .. "nter"
-bubble        .. ""
-tasteful      .. "ul"
-yell          .. ""
-unarmed       .. "d"
-vest          .. ""
-private       .. "e"
-cowardly      .. "ly"
-happen        .. ""
-demonic       .. "c"
-entertaining  .. "aini"
+'Hello World'.Mid(0) .. Hello World
+'Hello World'.Mid(6) .. World
+'Hello World'.Mid(9) .. ld
+'Hello World'.Mid(10) .. d
+'Hello World'.Mid(-1) .. d
+'Hello World'.Mid(-2) .. ld
+'Hello World'.Mid(11) .. specified position 11 exceeds the string's size of 11
+'Hello World'.Mid(12) .. specified position 12 exceeds the string's size of 11
+'Hello World'.Mid(-11) .. Hello World
+'Hello World'.Mid(-12) .. specified position -12 exceeds the string's size of 11
+words10 .. ['bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining']
+words10::Mid(0) .. ['bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining']
+words10::Mid(1) .. ['ubble', 'asteful', 'ell', 'narmed', 'est', 'rivate', 'owardly', 'appen', 'emonic', 'ntertaining']
+words10::Mid(6) .. specified position 6 exceeds the string's size of 6
+words10::Mid(0, 0) .. ['', '', '', '', '', '', '', '', '', '']
+words10::Mid(1, 4) .. ['ubbl', 'aste', 'ell', 'narm', 'est', 'riva', 'owar', 'appe', 'emon', 'nter']
+words10::Mid(6, 4) .. specified position 6 exceeds the string's size of 6
 ======== String#Print() ========
 ======== String#Println() ========
 ======== String#Replace() ========

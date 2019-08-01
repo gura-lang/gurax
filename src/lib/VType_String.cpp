@@ -463,11 +463,12 @@ Gurax_ImplementMethod(String, Mid)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Int pos = args.PickNumberNonNeg<Int>();
+	Int pos = args.PickNumber<Int>();
 	size_t len = args.IsValid()? args.PickNumberNonNeg<size_t>() : static_cast<size_t>(-1);
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
+	if (!str.FixPosition(&pos)) return Value::nil();
 	return new Value_String(str.Mid(pos, len));
 }
 

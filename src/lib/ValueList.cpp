@@ -31,11 +31,18 @@ void ValueList::IncCntRefOfEach() const
 	for (Value* pValue : *this) pValue->IncCntRef();
 }
 
-bool ValueList::CheckPosition(Int pos) const
+bool ValueList::CheckPosition(Int pos, Int posRaw) const
 {
 	if (0 <= pos && static_cast<size_t>(pos) < size()) return true;
-	IssueError_IndexOutOfRange(pos);
+	IssueError_IndexOutOfRange(posRaw);
 	return false;
+}
+
+bool ValueList::FixPosition(Int* pPos) const
+{
+	Int posRaw = *pPos;
+	if (*pPos < 0) *pPos += size();
+	return CheckPosition(*pPos, posRaw);
 }
 
 String ValueList::ToString(const StringStyle& ss) const
@@ -48,6 +55,18 @@ String ValueList::ToString(const StringStyle& ss) const
 	}
 	str += "]";
 	return str;
+}
+
+void ValueList::IssueError_IndexOutOfRange(Int pos) const
+{
+	Error::Issue(ErrorType::IndexError, "specified position %d exceeds the list's size of %zu",
+				 pos, size());
+}
+
+void ValueList::IssueError_IndexOutOfRange(const char* pos) const
+{
+	Error::Issue(ErrorType::IndexError, "specified position %s is out of range of the list size %zu",
+				 pos, size());
 }
 
 }
