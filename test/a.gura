@@ -1,8 +1,15 @@
 #!/usr/bin/env gurax
-Printf('%.3f\n', os.Clock())
+//Printf('%.3f\n', os.Clock())
+f(x):map = { x * x }
+//f(x) = {}
 t = os.Clock {
-	repeat (1000000) {
-		if (true) {}
+	repeat (100000):list {|i|
+		f(i)
 	}
+}
+Println(t)
+x = [0..(100000 - 1)]
+t = os.Clock {
+	f(x)
 }
 Println(t)

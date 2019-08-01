@@ -43,6 +43,40 @@ void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
 
 void Function::DoCall(Processor& processor, Argument& argument) const
 {
+	auto MapToList = [this](Processor& processor, Argument& argument) {
+		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		RefPtr<Value_List> pValueRtn(new Value_List());
+		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+		while (argument.ReadyToPickValue()) {
+			valueTypedOwner.Add(DoEval(processor, argument));
+		}
+		processor.PushValue(pValueRtn.release());
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	};
+	auto MapToXList = [this](Processor& processor, Argument& argument) {
+		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		RefPtr<Value_List> pValueRtn(new Value_List());
+		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+		while (argument.ReadyToPickValue()) {
+			valueTypedOwner.Add(DoEval(processor, argument));
+		}
+		processor.PushValue(pValueRtn.release());
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	};
+	auto MapToIter = [this](Processor& processor, Argument& argument) {
+		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		RefPtr<Iterator> pIterator(
+			new Iterator_FunctionImpMap(processor.Reference(), Reference(), argument.Reference()));
+		processor.PushValue(new Value_Iterator(pIterator.release()));
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	};
+	auto MapToXIter = [this](Processor& processor, Argument& argument) {
+		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
+		RefPtr<Iterator> pIterator(
+			new Iterator_FunctionImpMap(processor.Reference(), Reference(), argument.Reference()));
+		processor.PushValue(new Value_Iterator(pIterator.release()));
+		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	};
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	if (argument.IsMapNone()) {
 		DoExec(processor, argument);
@@ -64,19 +98,18 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+	} else if (argument.IsSet(DeclCallable::Flag::List)) {
+		MapToList(processor, argument);
+	} else if (argument.IsSet(DeclCallable::Flag::XList)) {
+		MapToXList(processor, argument);
+	} else if (argument.IsSet(DeclCallable::Flag::Iter)) {
+		MapToIter(processor, argument);
+	} else if (argument.IsSet(DeclCallable::Flag::XIter)) {
+		MapToXIter(processor, argument);
 	} else if (argument.IsMapToList()) {
-		RefPtr<Value_List> pValueRtn(new Value_List());
-		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
-		while (argument.ReadyToPickValue()) {
-			valueTypedOwner.Add(DoEval(processor, argument));
-		}
-		processor.PushValue(pValueRtn.release());
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		MapToList(processor, argument);
 	} else { // argument.IsMapToIter()
-		RefPtr<Iterator> pIterator(
-			new Iterator_FunctionImpMap(processor.Reference(), Reference(), argument.Reference()));
-		processor.PushValue(new Value_Iterator(pIterator.release()));
-		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
+		MapToIter(processor, argument);
 	}
 }
 
