@@ -20,6 +20,15 @@ Gurax_DeclareMethod(String, Capitalize)
 
 Gurax_ImplementMethod(String, Capitalize)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -76,6 +85,15 @@ Gurax_DeclareMethod(String, Chop)
 
 Gurax_ImplementMethod(String, Chop)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -91,6 +109,15 @@ Gurax_DeclareMethod(String, DecodeURI)
 
 Gurax_ImplementMethod(String, DecodeURI)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -108,6 +135,15 @@ Gurax_DeclareMethod(String, Each)
 
 Gurax_ImplementMethod(String, Each)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -129,6 +165,15 @@ Gurax_DeclareMethod(String, EachLine)
 
 Gurax_ImplementMethod(String, EachLine)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -152,6 +197,15 @@ Gurax_DeclareMethod(String, Embed)
 
 Gurax_ImplementMethod(String, Embed)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -168,6 +222,15 @@ Gurax_DeclareMethod(String, Encode)
 
 Gurax_ImplementMethod(String, Encode)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -183,6 +246,15 @@ Gurax_DeclareMethod(String, EncodeURI)
 
 Gurax_ImplementMethod(String, EncodeURI)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -246,6 +318,15 @@ Gurax_DeclareMethod(String, Escape)
 
 Gurax_ImplementMethod(String, Escape)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -322,6 +403,15 @@ Gurax_DeclareMethod(String, Fold)
 
 Gurax_ImplementMethod(String, Fold)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -342,6 +432,15 @@ Gurax_DeclareMethod(String, Foldw)
 
 Gurax_ImplementMethod(String, Foldw)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -358,6 +457,15 @@ Gurax_DeclareMethod(String, Format)
 
 Gurax_ImplementMethod(String, Format)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -434,7 +542,8 @@ Gurax_ImplementMethod(String, Lower)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_String(String::Lower(valueThis.GetString()));
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Lower());
 }
 
 // String#Mid(pos:Number, len?:Number):String:map {block?}
@@ -486,6 +595,15 @@ Gurax_DeclareMethod(String, Print)
 
 Gurax_ImplementMethod(String, Print)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -503,6 +621,15 @@ Gurax_DeclareMethod(String, Println)
 
 Gurax_ImplementMethod(String, Println)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -533,6 +660,15 @@ Gurax_DeclareMethod(String, Replace)
 
 Gurax_ImplementMethod(String, Replace)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -565,6 +701,15 @@ Gurax_DeclareMethod(String, Replaces)
 
 Gurax_ImplementMethod(String, Replaces)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -645,6 +790,15 @@ Gurax_DeclareMethod(String, Split)
 
 Gurax_ImplementMethod(String, Split)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -708,6 +862,15 @@ Gurax_DeclareMethod(String, Strip)
 
 Gurax_ImplementMethod(String, Strip)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -723,6 +886,15 @@ Gurax_DeclareMethod(String, ToBinary)
 
 Gurax_ImplementMethod(String, ToBinary)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -738,6 +910,15 @@ Gurax_DeclareMethod(String, ToReader)
 
 Gurax_ImplementMethod(String, ToReader)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -753,6 +934,15 @@ Gurax_DeclareMethod(String, ToSymbol)
 
 Gurax_ImplementMethod(String, ToSymbol)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -771,6 +961,15 @@ Gurax_DeclareMethod(String, ToTemplate)
 
 Gurax_ImplementMethod(String, ToTemplate)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -792,6 +991,15 @@ Gurax_DeclareClassMethod(String, Translator)
 
 Gurax_ImplementClassMethod(String, Translator)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -807,6 +1015,15 @@ Gurax_DeclareMethod(String, UnescapeHTML)
 
 Gurax_ImplementMethod(String, UnescapeHTML)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -824,7 +1041,8 @@ Gurax_ImplementMethod(String, Upper)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_String(String::Upper(valueThis.GetString()));
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Upper());
 }
 
 // String#ZenToHan():String {block?}
@@ -839,6 +1057,15 @@ Gurax_DeclareMethod(String, ZenToHan)
 
 Gurax_ImplementMethod(String, ZenToHan)
 {
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -856,6 +1083,10 @@ Gurax_DeclareProperty_R(String, isAlnum)
 
 Gurax_ImplementPropertyGetter(String, isAlnum)
 {
+#if 0
+	auto& valueThis = GetValueThis(valueTarget);
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -870,6 +1101,10 @@ Gurax_DeclareProperty_R(String, isAlpha)
 
 Gurax_ImplementPropertyGetter(String, isAlpha)
 {
+#if 0
+	auto& valueThis = GetValueThis(valueTarget);
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -884,6 +1119,10 @@ Gurax_DeclareProperty_R(String, isDigit)
 
 Gurax_ImplementPropertyGetter(String, isDigit)
 {
+#if 0
+	auto& valueThis = GetValueThis(valueTarget);
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -898,6 +1137,10 @@ Gurax_DeclareProperty_R(String, isEmpty)
 
 Gurax_ImplementPropertyGetter(String, isEmpty)
 {
+#if 0
+	auto& valueThis = GetValueThis(valueTarget);
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -912,6 +1155,10 @@ Gurax_DeclareProperty_R(String, isSpace)
 
 Gurax_ImplementPropertyGetter(String, isSpace)
 {
+#if 0
+	auto& valueThis = GetValueThis(valueTarget);
+	const String& str = valueThis.GetStringSTL();
+#endif
 	return Value::nil();
 }
 
@@ -927,7 +1174,8 @@ Gurax_DeclareProperty_R(String, len)
 Gurax_ImplementPropertyGetter(String, len)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetStringSTL().Length());
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Number(str.Length());
 }
 
 // String#width
@@ -942,7 +1190,8 @@ Gurax_DeclareProperty_R(String, width)
 Gurax_ImplementPropertyGetter(String, width)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetStringSTL().Width());
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Number(str.Width());
 }
 
 //------------------------------------------------------------------------------
