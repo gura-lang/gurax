@@ -6,6 +6,7 @@ TestCase('Unary Operator') {
 	Tester(`(-[1, 2, 3, 4, 5]))
 	Tester(`[-(1, 2, 3, 4, 5)])
 }
+
 TestCase('Binary Operator') {
 	Tester(`([] + []))
 	Tester(`([1, 2, 3, 4, 5] + 3))
@@ -18,4 +19,15 @@ TestCase('Binary Operator') {
 	Tester(`[[1, 2, 3, 4, 5] + (3, 4, 5, 6, 7)])
 	Tester(`[(1, 2, 3, 4, 5) + [3, 4, 5, 6, 7]])
 	Tester(`[(1, 2, 3, 4, 5) + (3, 4, 5, 6, 7)])
+}
+
+TestCase('Function') {
+	f(x):map = x
+	x = [1, 2, 3, nil, 5, 6, nil, 8, 9]
+	Tester(`x)
+	Tester(`f(x))
+	Tester(`f(x):list)
+	Tester(`f(x):xlist)
+	Tester(`[f(x):iter])
+	Tester(`[f(x):xiter])
 }
