@@ -94,14 +94,14 @@ public:
 		bool Encode(Binary& dst, const String& src) { return Encode(dst, src.c_str()); }
 	};
 private:
-	CodecFactory* _pFactory;
+	CodecFactory* _pCodecFactory;
 	std::unique_ptr<Decoder> _pDecoder;
 	std::unique_ptr<Encoder> _pEncoder;
-	static CodecFactory* _pFactory_None;
+	static CodecFactory* _pCodecFactory_Dumb;
 	static const WidthInfo _widthInfoTbl[];
 public:
 	// Constructor
-	Codec(CodecFactory* pFactory, Decoder* pDecoder, Encoder* pEncoder);
+	Codec(CodecFactory* pCodecFactory, Decoder* pDecoder, Encoder* pEncoder);
 	// Copy constructor/operator
 	Codec(const Codec& src) = delete;
 	Codec& operator=(const Codec& src) = delete;
@@ -112,13 +112,12 @@ protected:
 	// Destructor
 	virtual ~Codec() = default;
 public:
-	const char* GetEncoding() const { return _pFactory->GetEncoding(); }
-	CodecFactory* GetFactory() { return _pFactory; }
-	const CodecFactory* GetFactory() const { return _pFactory; }
+	CodecFactory& GetCodecFactory() { return *_pCodecFactory; }
+	const CodecFactory& GetCodecFactory() const { return *_pCodecFactory; }
+	const char* GetEncoding() const { return GetCodecFactory().GetEncoding(); }
 	Decoder* GetDecoder() { return _pDecoder.get(); }
 	Encoder* GetEncoder() { return _pEncoder.get(); }
 	Codec* Duplicate() const;
-	static Codec* CreateCodecNone(bool delcrFlag, bool addcrFlag);
 	static Codec* CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag);
 	static void Bootup();
 	static UInt16 DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS);
@@ -148,9 +147,9 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Codec_None
+// Codec_Dumb
 //-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Codec_None : public Codec {
+class GURAX_DLLDECLARE Codec_Dumb : public Codec {
 public:
 	using Codec::Codec;
 public:

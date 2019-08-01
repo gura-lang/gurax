@@ -15,17 +15,17 @@ CodecFactory::CodecFactory(String encoding) : _encoding(std::move(encoding))
 {
 }
 
-void CodecFactory::Register(CodecFactory* pFactory)
+void CodecFactory::Register(CodecFactory* pCodecFactory)
 {
-	GetList().push_back(pFactory);
+	GetList().push_back(pCodecFactory);
 }
 
 CodecFactory* CodecFactory::Lookup(const char* encoding)
 {
 	if (encoding == nullptr) return nullptr;
-	for (CodecFactory* pFactory : GetList()) {
-		if (::strcasecmp(pFactory->GetEncoding(), encoding) == 0) {
-			return pFactory;
+	for (CodecFactory* pCodecFactory : GetList()) {
+		if (::strcasecmp(pCodecFactory->GetEncoding(), encoding) == 0) {
+			return pCodecFactory;
 		}
 	}
 	return nullptr;
@@ -34,38 +34,35 @@ CodecFactory* CodecFactory::Lookup(const char* encoding)
 //-----------------------------------------------------------------------------
 // Codec
 //-----------------------------------------------------------------------------
-CodecFactory* Codec::_pFactory_None = nullptr;
+CodecFactory* Codec::_pCodecFactory_Dumb = nullptr;
 
-Codec::Codec(CodecFactory* pFactory, Decoder* pDecoder, Encoder* pEncoder) :
-	_pFactory(pFactory), _pDecoder(pDecoder), _pEncoder(pEncoder)
+Codec::Codec(CodecFactory* pCodecFactory, Decoder* pDecoder, Encoder* pEncoder) :
+	_pCodecFactory(pCodecFactory), _pDecoder(pDecoder), _pEncoder(pEncoder)
 {
 }
 
 Codec* Codec::Duplicate() const
 {
-	return _pFactory->CreateCodec(_pDecoder->GetDelcrFlag(), _pEncoder->GetAddcrFlag());
-}
-
-Codec* Codec::CreateCodecNone(bool delcrFlag, bool addcrFlag)
-{
-	return _pFactory_None->CreateCodec(delcrFlag, addcrFlag);
+	return _pCodecFactory->CreateCodec(_pDecoder->GetDelcrFlag(), _pEncoder->GetAddcrFlag());
 }
 
 Codec* Codec::CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag)
 {
-	if (encoding == nullptr) encoding = "none";
-	CodecFactory* pFactory = CodecFactory::Lookup(encoding);
-	if (pFactory == nullptr) {
+	if (encoding == nullptr) {
+		return _pCodecFactory_Dumb->CreateCodec(delcrFlag, addcrFlag);
+	}
+	CodecFactory* pCodecFactory = CodecFactory::Lookup(encoding);
+	if (pCodecFactory == nullptr) {
 		Error::Issue(ErrorType::CodecError, "unsupported encoding %s", encoding);
 		return nullptr;
 	}
-	return pFactory->CreateCodec(delcrFlag, addcrFlag);
+	return pCodecFactory->CreateCodec(delcrFlag, addcrFlag);
 }
 
 void Codec::Bootup()
 {
-	_pFactory_None = new CodecFactoryTmpl<Codec_None>("none");
-	CodecFactory::Register(_pFactory_None);
+	_pCodecFactory_Dumb = new CodecFactoryTmpl<Codec_Dumb>("dumb");
+	CodecFactory::Register(_pCodecFactory_Dumb);
 }
 
 UShort Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UShort codeDBCS)
@@ -202,16 +199,16 @@ bool Codec::Encoder::Encode(Binary& dst, const char* src)
 }
 
 //-----------------------------------------------------------------------------
-// Codec_None
+// Codec_Dumb
 //-----------------------------------------------------------------------------
-Codec::Result Codec_None::Decoder::FeedChar(char ch, char& chConv)
+Codec::Result Codec_Dumb::Decoder::FeedChar(char ch, char& chConv)
 {
 	if (GetDelcrFlag() && ch == '\r') return Codec::Result::None;
 	chConv = ch;
 	return Codec::Result::Complete;
 }
 
-Codec::Result Codec_None::Encoder::FeedChar(char ch, char& chConv)
+Codec::Result Codec_Dumb::Encoder::FeedChar(char ch, char& chConv)
 {
 	if (GetAddcrFlag() && ch == '\n') {
 		StoreChar('\n');
