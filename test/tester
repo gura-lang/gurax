@@ -1,5 +1,8 @@
 #!/bin/bash
 cases=
+cases="$cases Binary"
+cases="$cases Bool"
+cases="$cases Codec"
 cases="$cases Complex"
 cases="$cases DateTime"
 cases="$cases Dict"
