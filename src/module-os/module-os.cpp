@@ -15,6 +15,30 @@ Stream* g_pStreamCErr = nullptr;
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+// os.Clock() {block?}
+Gurax_DeclareFunction(Clock)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the time duration in second since the system has started.\n"
+		"\n"
+		"If `block` is specified, it would calculate how much time has been spent\n"
+		"during evaluating the block.\n ");
+}
+
+Gurax_ImplementFunction(Clock)
+{
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	if (!pExprOfBlock) return new Value_Number(OAL::GetTickTime());
+	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
+	Double timeBegin = OAL::GetTickTime();
+	RefPtr<Value> pValueRtn(pExprOfBlock->DoEval(processor, *pArgument));
+	Double timeEnd = OAL::GetTickTime();
+	return new Value_Number(timeEnd - timeBegin);
+}
+
 // os.Exec(pathName:string, args*:String):map:[fork]
 Gurax_DeclareFunction(Exec)
 {
@@ -147,6 +171,7 @@ Gurax_ModulePrepare()
 	g_pStreamCOut = Basement::Inst.GetStreamCOut().Reference();
 	g_pStreamCErr = Basement::Inst.GetStreamCErr().Reference();
 	// Assignment of function
+	Assign(Gurax_CreateFunction(Clock));
 	Assign(Gurax_CreateFunction(Exec));
 	Assign(Gurax_CreateFunction(Redirect));
 	// Assignment of property

@@ -54,6 +54,7 @@ public:
 		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag) {
 		return ExecProgram(pathName, StringPicker_StringList(args), pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
 	}
+	static Double GetTickTime();
 };
 
 }

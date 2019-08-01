@@ -1,2 +1,8 @@
 #!/usr/bin/env gurax
-2+3j
+Printf('%.3f\n', os.Clock())
+t = os.Clock {
+	repeat (1000000) {
+		if (true) {}
+	}
+}
+Println(t)

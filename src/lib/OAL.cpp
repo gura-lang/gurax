@@ -107,6 +107,16 @@ bool OAL::DoesExistFile(const char* pathName)
 	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) == 0;
 }
 
+Double OAL::GetTickTime()
+{
+	LARGE_INTEGER freq, counter;
+	if (::QueryPerformanceFrequency(&freq) && ::QueryPerformanceCounter(&counter)) {
+		return static_cast<Double>(counter.QuadPart) / freq.QuadPart;
+	} else {
+		return static_cast<Double>(::GetTickCount()) / 1000;
+	}
+}
+
 //-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (MSWIN)
 //-----------------------------------------------------------------------------
@@ -283,6 +293,16 @@ int OAL::ExecProgram(
 done:
 	for (char* arg : argv) ::free(arg);
 	return exitCode;
+}
+
+Double OAL::GetTickTime()
+{
+	timeval tv;
+	struct timezone tz;
+	::gettimeofday(&tv, &tz);
+	Double num = tv.tv_sec;
+	num += static_cast<Double>(tv.tv_usec) / 1000000;
+	return num;
 }
 
 //-----------------------------------------------------------------------------
