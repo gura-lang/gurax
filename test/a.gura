@@ -3,11 +3,16 @@
 f(x):map = { x * x }
 //f(x) = {}
 t = os.Clock {
-	repeat (100000):list {|i|
-		f(i)
-	}
+	u = repeat (100000):iter {|i| f(i)}
+	[u]
 }
 Println(t)
+
+t = os.Clock {
+	repeat (100000):list {|i| f(i)}
+}
+Println(t)
+
 x = [0..(100000 - 1)]
 t = os.Clock {
 	f(x)
