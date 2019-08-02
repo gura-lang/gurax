@@ -371,7 +371,7 @@ void Expr_UnaryOp::Compose(Composer& composer)
 	if (GetOperator()->GetRawFlag()) {
 		GetOperator()->ComposeUnary(composer, *this);				// [Result]
 	} else {
-		GetExprChild()->ComposeOrNil(composer);						// [Any]
+		GetExprChild().ComposeOrNil(composer);						// [Any]
 		composer.Add_UnaryOp(GetOperator(), this);					// [Result]
 	}
 }
@@ -381,24 +381,24 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	String str;
 	switch (GetOperator()->GetStyle()) {
 	case OpStyle::OpPreUnary: {
-		bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
+		bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
 		str += GetOperator()->GetSymbol();
 		if (requireParFlag) str += '(';
-		str += GetExprChild()->ToString(ss);
+		str += GetExprChild().ToString(ss);
 		if (requireParFlag) str += ')';
 		break;
 	}
 	case OpStyle::OpPostUnary: {
-		if (GetExprChild()->IsType<Expr_Identifier>()) {
-			const Expr_Identifier* pExprEx = dynamic_cast<const Expr_Identifier*>(GetExprChild());
-			str += pExprEx->ToString(ss, GetOperator()->GetSymbol());
-		} else if (GetExprChild()->IsType<Expr_Indexer>()) {
-			const Expr_Indexer* pExprEx = dynamic_cast<const Expr_Indexer*>(GetExprChild());
-			str += pExprEx->ToString(ss, GetOperator()->GetSymbol());
+		if (GetExprChild().IsType<Expr_Identifier>()) {
+			const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(GetExprChild());
+			str += exprEx.ToString(ss, GetOperator()->GetSymbol());
+		} else if (GetExprChild().IsType<Expr_Indexer>()) {
+			const Expr_Indexer& exprEx = dynamic_cast<const Expr_Indexer&>(GetExprChild());
+			str += exprEx.ToString(ss, GetOperator()->GetSymbol());
 		} else {
-			bool requireParFlag = GetExprChild()->IsType<Expr_UnaryOp>() || GetExprChild()->IsType<Expr_BinaryOp>();
+			bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
 			if (requireParFlag) str += '(';
-			str += GetExprChild()->ToString(ss);
+			str += GetExprChild().ToString(ss);
 			if (requireParFlag) str += ')';
 			str += GetOperator()->GetSymbol();
 		}
@@ -407,7 +407,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::MathUnary: {
 		str += GetOperator()->GetSymbol();
 		str += '(';
-		str += GetExprChild()->ToString(ss);
+		str += GetExprChild().ToString(ss);
 		str += ')';
 		break;
 	}

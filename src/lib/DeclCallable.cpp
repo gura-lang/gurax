@@ -50,19 +50,19 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 									 "duplicated declaration of dictionary argument");
 					return false;
 				}
-				if (!pExprEx->GetExprChild()->IsType<Expr_Identifier>()) {
+				if (!pExprEx->GetExprChild().IsType<Expr_Identifier>()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "invalid format of dictionary argument");
 					return false;
 				}
-				const Expr_Identifier* pExprIdentifier =
-					dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild());
-				if (!pExprIdentifier->IsPureSymbol()) {
+				const Expr_Identifier& exprIdentifier =
+					dynamic_cast<const Expr_Identifier&>(pExprEx->GetExprChild());
+				if (!exprIdentifier.IsPureSymbol()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "dictionary argument cannot have attributes");
 					return false;
 				}
-				const Symbol* pSymbol = pExprIdentifier->GetSymbol();
+				const Symbol* pSymbol = exprIdentifier.GetSymbol();
 				if (IsDeclaredSymbol(pSymbol)) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "duplicated symbol declaration: %s", pSymbol->GetName());
@@ -76,19 +76,19 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 									 "duplicated declaration of argument accessor");
 					return false;
 				}
-				if (!pExprEx->GetExprChild()->IsType<Expr_Identifier>()) {
+				if (!pExprEx->GetExprChild().IsType<Expr_Identifier>()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "invalid format of argument accessor");
 					return false;
 				}
-				const Expr_Identifier* pExprIdentifier =
-					dynamic_cast<const Expr_Identifier*>(pExprEx->GetExprChild());
-				if (!pExprIdentifier->IsPureSymbol()) {
+				const Expr_Identifier& exprIdentifier =
+					dynamic_cast<const Expr_Identifier&>(pExprEx->GetExprChild());
+				if (!exprIdentifier.IsPureSymbol()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "argument accessor cannot have attributes");
 					return false;
 				}
-				const Symbol* pSymbol = pExprIdentifier->GetSymbol();
+				const Symbol* pSymbol = exprIdentifier.GetSymbol();
 				if (IsDeclaredSymbol(pSymbol)) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "duplicated symbol declaration: %s", pSymbol->GetName());
@@ -146,7 +146,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				Error::IssueWith(ErrorType::DeclarationError, *pExprOfBlock, strError);
 				return false;
 			}
-			pExpr = pExprEx->GetExprChild();
+			pExpr = &pExprEx->GetExprChild();
 		}
 		GetDeclBlock().SetFlags(flags).SetOccur(pOccur? *pOccur : DeclBlock::Occur::Once);
 		if (pExpr->IsType<Expr_Identifier>()) {

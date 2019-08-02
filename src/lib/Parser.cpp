@@ -514,7 +514,7 @@ bool Parser::ReduceThreeTokens()
 			if (pExprDst->IsType<Expr_UnaryOp>()) {
 				// In thc case that an identifier has an operator applied like "x+:attr",
 				// the attribute should be appended to the identifier.
-				pExprDst = dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetExprChild();
+				pExprDst = &dynamic_cast<Expr_UnaryOp*>(pExprDst)->GetExprChild();
 			}
 			if (pExprRight->IsType<Expr_Identifier>()) {
 				DBGPARSER(::printf("Reduce: Expr -> Expr : Expr(Identifier)\n"));

@@ -49,7 +49,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	if (pExpr->IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
 		const Operator* pOperator = pExprEx->GetOperator();
-		pExpr = pExprEx->GetExprChild();
+		pExpr = &pExprEx->GetExprChild();
 		if (pOperator->IsType(OpType::Quote)) {
 			// `x
 			pVType = &VTYPE_Quote;

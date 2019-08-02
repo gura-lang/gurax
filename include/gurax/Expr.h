@@ -286,8 +286,8 @@ public:
 	Expr_Unary(const TypeInfo& typeInfo, Expr* pExprChild) : Expr(typeInfo), _pExprChild(pExprChild) {
 		_pExprChild->SetExprParent(this);
 	}
-	Expr* GetExprChild() { return _pExprChild.get(); }
-	const Expr* GetExprChild() const { return _pExprChild.get(); }
+	Expr& GetExprChild() { return *_pExprChild; }
+	const Expr& GetExprChild() const { return *_pExprChild; }
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {

@@ -210,12 +210,12 @@ String Operator::ToString(const VType& vtypeL, const VType& vtypeR) const
 //------------------------------------------------------------------------------
 void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 {
-	Expr* pExprChild = expr.GetExprChild();
+	Expr& exprChild = expr.GetExprChild();
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(&expr);
-	composer.ComposeAsSequence(*pExprChild);
+	composer.ComposeAsSequence(exprChild);
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	composer.Add_Value(new Value_Expr(pExprChild->Reference()), &expr);				// [Result]
+	composer.Add_Value(new Value_Expr(exprChild.Reference()), &expr);				// [Result]
 }
 
 //------------------------------------------------------------------------------
