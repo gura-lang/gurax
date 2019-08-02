@@ -233,6 +233,7 @@ template<bool finiteFlag>
 Value* Iterator_Repeat<finiteFlag>::DoNextValue()
 {
 	if (finiteFlag && _idx >= _cnt) return nullptr;
+	::printf("check\n");
 	if (GetArgument().HasArgSlot()) {
 		ArgFeeder args(GetArgument());
 		if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
@@ -245,7 +246,7 @@ Value* Iterator_Repeat<finiteFlag>::DoNextValue()
 template<bool finiteFlag>
 String Iterator_Repeat<finiteFlag>::ToString(const StringStyle& ss) const
 {
-	return "";
+	return "Repeat";
 }
 
 template class Iterator_Repeat<true>;

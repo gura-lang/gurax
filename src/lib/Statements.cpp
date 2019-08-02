@@ -540,6 +540,8 @@ Gurax_ImplementStatement(repeat)
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));
 	if (iterFlag || xiterFlag) {
+		//*********************
+		//exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Value]
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 			composer.Add_Cast(VTYPE_Number, &exprCaller);						// [Number]
