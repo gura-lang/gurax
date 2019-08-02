@@ -79,13 +79,13 @@ void Expr::ComposeInClass(Composer& composer, bool publicFlag)
 }
 
 void Expr::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 void Expr::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
@@ -267,14 +267,14 @@ void Expr_Identifier::Compose(Composer& composer)
 }
 
 void Expr_Identifier::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	if (pOperator) {
 		composer.Add_Lookup(GetSymbol(), this);				// [Any]
-		pExprAssigned->ComposeOrNil(composer);				// [Any Right]
+		exprAssigned.ComposeOrNil(composer);				// [Any Right]
 		composer.Add_BinaryOp(pOperator, this);				// [Assigned]
 	} else {
-		pExprAssigned->ComposeOrNil(composer);				// [Assigned]
+		exprAssigned.ComposeOrNil(composer);				// [Assigned]
 	}
 	composer.Add_AssignToSymbol(GetSymbol(), this);			// [Assigned]
 }
@@ -287,7 +287,7 @@ void Expr_Identifier::ComposeInClass(Composer& composer, bool publicFlag)
 }
 	
 void Expr_Identifier::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
 {
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -295,7 +295,7 @@ void Expr_Identifier::ComposeForAssignmentInClass(
 		return;
 	}
 	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
-	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
+	exprAssigned.ComposeOrNil(composer);							// [VType Value]
 	composer.Add_AssignPropHandler(GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
@@ -505,12 +505,12 @@ bool Expr_Assign::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
 
 void Expr_Assign::Compose(Composer& composer)
 {
-	GetExprLeft()->ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
+	GetExprLeft()->ComposeForAssignment(composer, *GetExprRight(), GetOperator()); // [Assigned]
 }
 
 void Expr_Assign::ComposeInClass(Composer& composer, bool publicFlag)
 {
-	GetExprLeft()->ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
+	GetExprLeft()->ComposeForAssignmentInClass(composer, *GetExprRight(), GetOperator(), publicFlag); // [Assigned]
 }
 
 void Expr_Assign::ComposeForArgSlot(Composer& composer)
@@ -576,15 +576,15 @@ void Expr_Member::Compose(Composer& composer)
 }
 
 void Expr_Member::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	GetExprTarget()->ComposeOrNil(composer);								// [Target]
 	if (pOperator) {
 		composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
-		pExprAssigned->ComposeOrNil(composer);								// [Target Prop Right]
+		exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
 		composer.Add_BinaryOp(pOperator, this);								// [Target Assigned]
 	} else {
-		pExprAssigned->ComposeOrNil(composer);								// [Target Assigned]
+		exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
 	}
 	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), this);			// [Assigned]
 }
@@ -794,7 +794,7 @@ void Expr_Lister::Compose(Composer& composer)
 }
 
 void Expr_Lister::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 }
 
@@ -847,7 +847,7 @@ void Expr_Indexer::Compose(Composer& composer)
 }
 
 void Expr_Indexer::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	GetExprCar()->ComposeOrNil(composer);						// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
@@ -859,7 +859,7 @@ void Expr_Indexer::ComposeForAssignment(
 	if (pOperator) {
 		
 	} else {
-		pExprAssigned->ComposeOrNil(composer);					// [Index(Car) Elems]
+		exprAssigned.ComposeOrNil(composer);					// [Index(Car) Elems]
 	}
 	composer.Add_IndexSet(this);								// [Elems]
 }
@@ -878,7 +878,7 @@ void Expr_Indexer::ComposeInClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Indexer::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
 {
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -892,7 +892,7 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 	}
 	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
 	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
-	pExprAssigned->ComposeOrNil(composer);							// [VType Value]
+	exprAssigned.ComposeOrNil(composer);							// [VType Value]
 	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
@@ -964,43 +964,45 @@ void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Caller::ComposeForAssignment(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	RefPtr<Function> pFunction(CreateFunction(composer, pExprAssigned, false));
+	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, false));
 	if (!pFunction) return;
 	composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
 }
 
 void Expr_Caller::ComposeForAssignmentInClass(
-	Composer& composer, Expr* pExprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
 {
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	RefPtr<Function> pFunction(CreateFunction(composer, pExprAssigned, true));
+	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, true));
 	if (!pFunction) return;
 	composer.Add_AssignMethod(pFunction.release(), this);
 	composer.FlushDiscard();										// [VType]
 }
 
-Function* Expr_Caller::CreateFunction(Composer& composer, Expr* pExprAssigned, bool withinClassFlag)
+Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag)
 {
 	if (!GetExprCar()->IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
 	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
+	const Symbol* pSymbol = pExprCarEx->GetSymbol();
+
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
-	pExprAssigned->SetPUnitFirst(composer.PeekPUnitCont());
-	pExprAssigned->ComposeOrNil(composer);
+	exprAssigned.SetPUnitFirst(composer.PeekPUnitCont());
+	exprAssigned.ComposeOrNil(composer);
 	composer.Add_Return(this);
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		Expr_Binary* pExprEx = nullptr;
@@ -1015,8 +1017,8 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr* pExprAssigned, b
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;
-	return new FunctionCustom(type, pExprCarEx->GetSymbol(),
-							  GetDeclCallable().Reference(), pExprAssigned->Reference());
+	return new FunctionCustom(type, pSymbol,
+							  GetDeclCallable().Reference(), exprAssigned.Reference());
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const
