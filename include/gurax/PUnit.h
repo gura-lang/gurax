@@ -652,6 +652,52 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_GenIterator_Repeat
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool finiteFlag>
+class GURAX_DLLDECLARE PUnit_GenIterator_Repeat : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+	RefPtr<Expr_Block> _pExprOfBlock;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock) : _pExprOfBlock(pExprOfBlock) {}
+	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, Expr* pExpr) :
+		PUnit_GenIterator_Repeat(pExprOfBlock) { _ppExprSrc[0] = pExpr; }
+public:
+	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_GenIterator_Repeat : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_Repeat");
+private:
+	RefPtr<Expr_Block> _pExprOfBlock;
+	bool _finiteFlag;
+public:
+	PUnitFactory_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc?
+			sizeof(PUnit_GenIterator_Repeat<1, false, false>) :
+			sizeof(PUnit_GenIterator_Repeat<0, false, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_EvalIterator
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>

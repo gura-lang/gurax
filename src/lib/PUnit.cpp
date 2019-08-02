@@ -639,6 +639,78 @@ PUnit* PUnitFactory_GenIterator_Counter::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_GenIterator_Repeat
+// Stack View: [] -> [Iterator] (continue)
+//                -> []         (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool finiteFlag>
+void PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag, finiteFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Iterator> pIterator;
+	if (finiteFlag) {
+		RefPtr<Value> pValue(processor.PopValue());
+		size_t cnt = Value_Number::GetNumber<size_t>(*pValue);
+		pIterator.reset(new Iterator_Repeat<true>(processor.Reference(), GetExprOfBlock().Reference(), cnt));
+	} else {
+		pIterator.reset(new Iterator_Repeat<false>(processor.Reference(), GetExprOfBlock().Reference()));
+	}
+	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag, bool finiteFlag>
+String PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag, finiteFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "GenIterator_Repeat()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_GenIterator_Repeat::Create(bool discardValueFlag)
+{
+	if (_finiteFlag) {
+		if (_pExprSrc) {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<1, true, true>(
+					_pExprOfBlock.Reference(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<1, false, true>(
+					_pExprOfBlock.Reference(), _pExprSrc.Reference());
+			}
+		} else {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<0, true, true>(
+					_pExprOfBlock.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<0, false, true>(
+					_pExprOfBlock.Reference());
+			}
+		}
+	} else {
+		if (_pExprSrc) {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<1, true, false>(
+					_pExprOfBlock.Reference(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<1, false, false>(
+					_pExprOfBlock.Reference(), _pExprSrc.Reference());
+			}
+		} else {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<0, true, false>(
+					_pExprOfBlock.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_GenIterator_Repeat<0, false, false>(
+					_pExprOfBlock.Reference());
+			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_EvalIterator
 // Stack View: [Iterator] -> [Iterator Elem] (continue)
 //                        -> [Iterator]      (discard)

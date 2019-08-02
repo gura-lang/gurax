@@ -541,12 +541,14 @@ Gurax_ImplementStatement(repeat)
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));
 	if (iterFlag || xiterFlag) {
 		if (pExprCdr) {
-			pExprCdr->ComposeOrNil(composer);								// [Any]
-			composer.Add_Cast(VTYPE_Number, &exprCaller);					// [Number]
+			pExprCdr->ComposeOrNil(composer);									// [Any]
+			composer.Add_Cast(VTYPE_Number, &exprCaller);						// [Number]
+			composer.Add_GenIterator_Repeat(
+				exprCaller.GetExprOfBlock()->Reference(), true, &exprCaller);	// [Iterator]
 		} else {
-			composer.Add_Value(Value::nil());								// [Nil]
+			composer.Add_GenIterator_Repeat(
+				exprCaller.GetExprOfBlock()->Reference(), false, &exprCaller);	// [Iterator]
 		}
-		
 	} else {
 		const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));
