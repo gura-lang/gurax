@@ -325,10 +325,10 @@ Gurax_ImplementStatement(for_)
 							 "invalid argument for for-statement");
 			return;
 		}
-		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(*pExprEx->GetExprLeft()));
+		RefPtr<DeclArg> pDeclArg(DeclArg::CreateFromExpr(pExprEx->GetExprLeft()));
 		if (!pDeclArg) return;
 		pDeclArgs->push_back(pDeclArg.release());
-		pExprEx->GetExprRight()->ComposeOrNil(composer);					// [Any]
+		pExprEx->GetExprRight().ComposeOrNil(composer);						// [Any]
 		composer.Add_GenIterator(&exprCaller);								// [Iterator]
 	}
 	size_t nIterators = pDeclArgs->size();

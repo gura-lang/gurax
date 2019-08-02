@@ -129,10 +129,10 @@ Gurax_TesterEntry(DeclCallable)
 		const Expr* pExpr = pExprRoot->GetExprElemFirst();
 		if (pExpr->IsType<Expr_Assign>()) {
 			const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);
-			const Expr* pExpr = pExprEx->GetExprLeft();
-			if (pExpr->IsType<Expr_Caller>()) {
-				const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
-				::printf("%s\n", pExprEx->GetDeclCallable().ToString(StringStyle().Verbose()).c_str());
+			const Expr& expr = pExprEx->GetExprLeft();
+			if (expr.IsType<Expr_Caller>()) {
+				const Expr_Caller& exprEx = dynamic_cast<const Expr_Caller&>(expr);
+				::printf("%s\n", exprEx.GetDeclCallable().ToString(StringStyle().Verbose()).c_str());
 			}
 		}
 	}

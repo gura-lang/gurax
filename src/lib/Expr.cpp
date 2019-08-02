@@ -436,8 +436,8 @@ void Expr_BinaryOp::Compose(Composer& composer)
 	if (GetOperator()->GetRawFlag()) {
 		GetOperator()->ComposeBinary(composer, *this);
 	} else {
-		GetExprLeft()->ComposeOrNil(composer);							// [Left]
-		GetExprRight()->ComposeOrNil(composer);							// [Left Right]
+		GetExprLeft().ComposeOrNil(composer);							// [Left]
+		GetExprRight().ComposeOrNil(composer);							// [Left Right]
 		composer.Add_BinaryOp(GetOperator(), this);						// [Result]
 	}
 }
@@ -449,9 +449,9 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::OpBinary: {
 		do {
 			bool needParenFlag =
-				GetExprLeft()->IsType<Expr_BinaryOp>() || GetExprLeft()->IsType<Expr_UnaryOp>();
+				GetExprLeft().IsType<Expr_BinaryOp>() || GetExprLeft().IsType<Expr_UnaryOp>();
 			if (needParenFlag) str += '(';
-			str += GetExprLeft()->ToString(ss);
+			str += GetExprLeft().ToString(ss);
 			if (needParenFlag) str += ')';
 		} while (0);
 		if (!ss.IsCram()) str += ' ';
@@ -459,9 +459,9 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 		if (!ss.IsCram()) str += ' ';
 		do {
 			bool needParenFlag =
-				GetExprRight()->IsType<Expr_BinaryOp>() || GetExprRight()->IsType<Expr_UnaryOp>();
+				GetExprRight().IsType<Expr_BinaryOp>() || GetExprRight().IsType<Expr_UnaryOp>();
 			if (needParenFlag) str += '(';
-			str += GetExprRight()->ToString(ss);
+			str += GetExprRight().ToString(ss);
 			if (needParenFlag) str += ')';
 		} while (0);
 		break;
@@ -469,10 +469,10 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::MathBinary: {
 		str += GetOperator()->GetSymbol();
 		str += '(';
-		str += GetExprLeft()->ToString(ss);
+		str += GetExprLeft().ToString(ss);
 		str += ss.GetComma();
 		if (!ss.IsCram()) str += ' ';
-		str += GetExprRight()->ToString(ss);
+		str += GetExprRight().ToString(ss);
 		str += ')';
 		break;
 	}
@@ -489,9 +489,9 @@ const Expr::TypeInfo Expr_Assign::typeInfo;
 
 bool Expr_Assign::DoPrepare()
 {
-	if (GetExprLeft()->IsType<Expr_Caller>()) {
-		Expr_Caller* pExprEx = dynamic_cast<Expr_Caller*>(GetExprLeft());
-		return pExprEx->PrepareDeclCallable();
+	if (GetExprLeft().IsType<Expr_Caller>()) {
+		Expr_Caller& exprEx = dynamic_cast<Expr_Caller&>(GetExprLeft());
+		return exprEx.PrepareDeclCallable();
 	}
 	return true;
 }
@@ -505,41 +505,41 @@ bool Expr_Assign::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
 
 void Expr_Assign::Compose(Composer& composer)
 {
-	GetExprLeft()->ComposeForAssignment(composer, *GetExprRight(), GetOperator()); // [Assigned]
+	GetExprLeft().ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
 }
 
 void Expr_Assign::ComposeInClass(Composer& composer, bool publicFlag)
 {
-	GetExprLeft()->ComposeForAssignmentInClass(composer, *GetExprRight(), GetOperator(), publicFlag); // [Assigned]
+	GetExprLeft().ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
 }
 
 void Expr_Assign::ComposeForArgSlot(Composer& composer)
 {
-	if (GetOperator() || !GetExprLeft()->IsType<Expr_Identifier>()) {
+	if (GetOperator() || !GetExprLeft().IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::ArgumentError, *this,
 						 "invalid declaration of named argument");
 		return;
 	}
-	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprLeft())->GetSymbol();
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprLeft()).GetSymbol();
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	composer.Add_BeginArgSlotNamed(
-		pSymbol, GetExprRight()->Reference(), this);					// [Argument ArgSlot]
-	GetExprRight()->ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
+		pSymbol, GetExprRight().Reference(), this);					// [Argument ArgSlot]
+	GetExprRight().ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
 	composer.Add_EndArgSlotNamed(this);									// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	GetExprRight()->SetPUnitFirst(pPUnitOfArgSlot);
+	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 String Expr_Assign::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += GetExprLeft()->ToString(ss);
+	str += GetExprLeft().ToString(ss);
 	if (!ss.IsCram()) str += ' ';
 	if (GetOperator()) str += GetOperator()->GetSymbol();
 	str += '=';
 	if (!ss.IsCram()) str += ' ';
-	str += GetExprRight()->ToString(ss);
+	str += GetExprRight().ToString(ss);
 	return str;
 }
 
@@ -1007,13 +1007,13 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		Expr_Binary* pExprEx = nullptr;
 		if (!pExpr->IsDeclArgWithDefault(&pExprEx)) continue;
-		Expr* pExprDefaultArg = pExprEx->GetExprRight();
+		Expr& exprDefaultArg = pExprEx->GetExprRight();
 		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
-		composer.Add_BeginSequence(pExprDefaultArg);
-		pExprDefaultArg->ComposeOrNil(composer);
+		composer.Add_BeginSequence(&exprDefaultArg);
+		exprDefaultArg.ComposeOrNil(composer);
 		pPUnitDefaultArg->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_Return(pExprDefaultArg);
-		pExprDefaultArg->SetPUnitFirst(pPUnitDefaultArg);
+		composer.Add_Return(&exprDefaultArg);
+		exprDefaultArg.SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;

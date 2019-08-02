@@ -41,8 +41,8 @@ Gurax_ImplementStatement(_dict_)
 			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
 			// %{ .. key => value .. }
 			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-			pExprEx->GetExprLeft()->ComposeOrNil(composer);		// [Dict Key]
-			pExprEx->GetExprRight()->ComposeOrNil(composer);	// [Dict Key Elem]
+			pExprEx->GetExprLeft().ComposeOrNil(composer);		// [Dict Key]
+			pExprEx->GetExprRight().ComposeOrNil(composer);		// [Dict Key Elem]
 		} else if (pExpr->IsType<Expr_Block>()) {
 			// %{ .. {key, value} .. }
 			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);

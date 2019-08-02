@@ -43,8 +43,8 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	Expr_Binary* pExprEx = nullptr;
 	if (pExpr->IsDeclArgWithDefault(&pExprEx)) {
 		// x = value
-		pExpr = pExprEx->GetExprLeft();
-		pExprDefault.reset(pExprEx->GetExprRight()->Reference());
+		pExpr = &pExprEx->GetExprLeft();
+		pExprDefault.reset(pExprEx->GetExprRight().Reference());
 	}
 	if (pExpr->IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);

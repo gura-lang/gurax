@@ -12,7 +12,7 @@ static DeclCallable* ComposeDeclCallable(const char* src)
 	const Expr* pExpr = pExprRoot->GetExprElemFirst();
 	if (pExpr->IsType<Expr_Assign>()) {
 		const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);
-		const Expr* pExpr = pExprEx->GetExprLeft();
+		const Expr* pExpr = &pExprEx->GetExprLeft();
 		if (pExpr->IsType<Expr_Caller>()) {
 			const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
 			return pExprEx->GetDeclCallable().Reference();

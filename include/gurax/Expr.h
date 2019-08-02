@@ -309,10 +309,10 @@ public:
 			Expr(typeInfo), _pExprLeft(pExprLeft), _pExprRight(pExprRight) {
 		_pExprLeft->SetExprParent(this), _pExprRight->SetExprParent(this);
 	}
-	Expr* GetExprLeft() { return _pExprLeft.get(); }
-	Expr* GetExprRight() { return _pExprRight.get(); }
-	const Expr* GetExprLeft() const { return _pExprLeft.get(); }
-	const Expr* GetExprRight() const { return _pExprRight.get(); }
+	Expr& GetExprLeft() { return *_pExprLeft; }
+	Expr& GetExprRight() { return *_pExprRight; }
+	const Expr& GetExprLeft() const { return *_pExprLeft; }
+	const Expr& GetExprRight() const { return *_pExprRight; }
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {
