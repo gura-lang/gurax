@@ -67,6 +67,7 @@ public:
 	bool IsSetOpt(const Symbol* pSymbol) {
 		return GetDeclCallable().IsSetOpt(pSymbol) || GetAttr().IsSetOpt(pSymbol);
 	}
+	bool HasArgSlot() const { return _pArgSlotFirst? true : false; }
 	ArgSlot* GetArgSlotFirst() { return _pArgSlotFirst.get(); }
 	const ArgSlot* GetArgSlotFirst() const { return _pArgSlotFirst.get(); }
 	ArgSlot* GetArgSlotToFeed() { return _pArgSlotToFeed; }

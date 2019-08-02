@@ -226,4 +226,29 @@ String Iterator_Evaluator::ToString(const StringStyle& ss) const
 	return str;
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Repeat
+//------------------------------------------------------------------------------
+template<bool finiteFlag>
+Value* Iterator_Repeat<finiteFlag>::DoNextValue()
+{
+	if (finiteFlag && _idx >= _cnt) return nullptr;
+	if (GetArgument().HasArgSlot()) {
+		ArgFeeder args(GetArgument());
+		if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+	}
+	RefPtr<Value> pValueRtn(GetExprOfBlock().DoEval(GetProcessor(), GetArgument()));
+	_idx++;
+	return pValueRtn.release();
+}
+
+template<bool finiteFlag>
+String Iterator_Repeat<finiteFlag>::ToString(const StringStyle& ss) const
+{
+	return "";
+}
+
+template class Iterator_Repeat<true>;
+template class Iterator_Repeat<false>;
+
 }
