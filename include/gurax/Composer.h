@@ -116,11 +116,11 @@ public:
 	void Add_GenIterator(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_GenIterator(Expr::Reference(pExprSrc)));
 	}
-	void Add_GenRangeIterator(const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_GenRangeIterator(Expr::Reference(pExprSrc)));
+	void Add_GenIterator_Range(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenIterator_Range(Expr::Reference(pExprSrc)));
 	}
-	void Add_GenCounterIterator(const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_GenCounterIterator(Expr::Reference(pExprSrc)));
+	void Add_GenIterator_Counter(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenIterator_Counter(Expr::Reference(pExprSrc)));
 	}
 	void Add_EvalIterator(size_t offset, const Expr* pExprSrc = nullptr) {
 		const PUnit* pPUnitBranchDest = nullptr;

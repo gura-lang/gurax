@@ -555,12 +555,12 @@ PUnit* PUnitFactory_GenIterator::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_GenRangeIterator
+// PUnit_GenIterator_Range
 // Stack View: [Number] -> [Iterator] (continue)
 //                      -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_GenRangeIterator<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_GenIterator_Range<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValue(processor.PopValue());
@@ -571,39 +571,39 @@ void PUnit_GenRangeIterator<nExprSrc, discardValueFlag>::Exec(Processor& process
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_GenRangeIterator<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_GenIterator_Range<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "GenRangeIterator()";
+	str += "GenIterator_Range()";
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_GenRangeIterator::Create(bool discardValueFlag)
+PUnit* PUnitFactory_GenIterator_Range::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenRangeIterator<1, true>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_GenIterator_Range<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_GenRangeIterator<1, false>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_GenIterator_Range<1, false>(_pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenRangeIterator<0, true>();
+			_pPUnitCreated = new PUnit_GenIterator_Range<0, true>();
 		} else {
-			_pPUnitCreated = new PUnit_GenRangeIterator<0, false>();
+			_pPUnitCreated = new PUnit_GenIterator_Range<0, false>();
 		}
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_GenCounterIterator
+// PUnit_GenIterator_Counter
 // Stack View: [] -> [Iterator] (continue)
 //                -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_GenCounterIterator<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_GenIterator_Counter<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Iterator> pIterator(new Iterator_Counter());
@@ -612,27 +612,27 @@ void PUnit_GenCounterIterator<nExprSrc, discardValueFlag>::Exec(Processor& proce
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_GenCounterIterator<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_GenIterator_Counter<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "GenCounterIterator()";
+	str += "GenIterator_Counter()";
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_GenCounterIterator::Create(bool discardValueFlag)
+PUnit* PUnitFactory_GenIterator_Counter::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenCounterIterator<1, true>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_GenIterator_Counter<1, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_GenCounterIterator<1, false>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_GenIterator_Counter<1, false>(_pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenCounterIterator<0, true>();
+			_pPUnitCreated = new PUnit_GenIterator_Counter<0, true>();
 		} else {
-			_pPUnitCreated = new PUnit_GenCounterIterator<0, false>();
+			_pPUnitCreated = new PUnit_GenIterator_Counter<0, false>();
 		}
 	}
 	return _pPUnitCreated;

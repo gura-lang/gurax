@@ -580,18 +580,18 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_GenRangeIterator
+// PUnit_GenIterator_Range
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_GenRangeIterator : public PUnit {
+class GURAX_DLLDECLARE PUnit_GenIterator_Range : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_GenRangeIterator() {}
-	PUnit_GenRangeIterator(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
+	PUnit_GenIterator_Range() {}
+	PUnit_GenIterator_Range(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -604,30 +604,30 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenRangeIterator : public PUnitFactory {
+class PUnitFactory_GenIterator_Range : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_GenRangeIterator");
+	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_Range");
 public:
-	PUnitFactory_GenRangeIterator(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_GenIterator_Range(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_GenRangeIterator<1, false>) : sizeof(PUnit_GenRangeIterator<0, false>);
+		return _pExprSrc? sizeof(PUnit_GenIterator_Range<1, false>) : sizeof(PUnit_GenIterator_Range<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_GenCounterIterator
+// PUnit_GenIterator_Counter
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_GenCounterIterator : public PUnit {
+class GURAX_DLLDECLARE PUnit_GenIterator_Counter : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_GenCounterIterator() {}
-	PUnit_GenCounterIterator(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
+	PUnit_GenIterator_Counter() {}
+	PUnit_GenIterator_Counter(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -640,13 +640,13 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_GenCounterIterator : public PUnitFactory {
+class PUnitFactory_GenIterator_Counter : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_GenCounterIterator");
+	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_Counter");
 public:
-	PUnitFactory_GenCounterIterator(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_GenIterator_Counter(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_GenCounterIterator<1, false>) : sizeof(PUnit_GenCounterIterator<0, false>);
+		return _pExprSrc? sizeof(PUnit_GenIterator_Counter<1, false>) : sizeof(PUnit_GenIterator_Counter<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

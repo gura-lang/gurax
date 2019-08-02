@@ -31,7 +31,7 @@ while (true):xlist {}
   ##9 NoOperation()
 while (true) {|n| nil}
   ##0 PushFrame<Block>()
-  ##1 GenCounterIterator()
+  ##1 GenIterator_Counter()
   ##2 Value(<Nil>)
   ##3 Lookup(`true)
   ##4 JumpIfNot(branchdest=##10)
@@ -44,7 +44,7 @@ while (true) {|n| nil}
   ##11 PopFrame()
 while (true):list {|n| nil}
   ##0 PushFrame<Block>()
-  ##1 GenCounterIterator()
+  ##1 GenIterator_Counter()
   ##2 CreateList()
   ##3 Jump(cont=##7)
   ##4 ListElem(offsetToList=0)
@@ -60,7 +60,7 @@ while (true):list {|n| nil}
   ##14 PopFrame()
 while (true):xlist {|n| nil}
   ##0 PushFrame<Block>()
-  ##1 GenCounterIterator()
+  ##1 GenIterator_Counter()
   ##2 CreateList()
   ##3 Jump(cont=##7)
   ##4 ListElem(offsetToList=0):xlist
@@ -86,7 +86,7 @@ while (a < 3) {}
   ##8 NoOperation()
 while (a < 3) {|i| f(i)}
   ##0 PushFrame<Block>()
-  ##1 GenCounterIterator()
+  ##1 GenIterator_Counter()
   ##2 Value(<Nil>)
   ##3 Lookup(`a)
   ##4 Value(<Number:3>)

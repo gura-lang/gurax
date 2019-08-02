@@ -31,8 +31,10 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_Cast_);
 	using PUnit_GenIterator_ = PUnit_GenIterator<0, false>;
 	PrintSizeOf(PUnit_GenIterator_);
-	using PUnit_GenRangeIterator_ = PUnit_GenRangeIterator<0, false>;
-	PrintSizeOf(PUnit_GenRangeIterator_);
+	using PUnit_GenIterator_Range_ = PUnit_GenIterator_Range<0, false>;
+	PrintSizeOf(PUnit_GenIterator_Range_);
+	using PUnit_GenIterator_Counter_ = PUnit_GenIterator_Counter<0, false>;
+	PrintSizeOf(PUnit_GenIterator_Counter_);
 	using PUnit_EvalIterator_ = PUnit_EvalIterator<0, false>;
 	PrintSizeOf(PUnit_EvalIterator_);
 	using PUnit_ForEach_ = PUnit_ForEach<0, false>;
