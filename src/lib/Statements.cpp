@@ -540,8 +540,15 @@ Gurax_ImplementStatement(repeat)
 	bool iterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(iter));
 	bool xiterFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(xiter));
 	if (iterFlag || xiterFlag) {
-		//*********************
-		//exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Value]
+		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+		composer.Add_Jump(&exprCaller);
+		PUnit* pPUnitOfBlock = composer.PeekPUnitCont();
+		composer.Add_BeginSequence(&exprCaller);
+		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Value]
+		pPUnitOfBlock->SetPUnitSentinel(composer.PeekPUnitCont());
+		composer.Add_EndSequence(&exprCaller);									// [Value]
+		exprCaller.GetExprOfBlock()->SetPUnitFirst(pPUnitOfBlock);
+		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 			composer.Add_Cast(VTYPE_Number, &exprCaller);						// [Number]
