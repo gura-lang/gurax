@@ -997,16 +997,15 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 		return nullptr;
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol();
-
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
 	exprAssigned.SetPUnitFirst(composer.PeekPUnitCont());
 	exprAssigned.ComposeOrNil(composer);
 	composer.Add_Return(this);
-	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		Expr_Binary* pExprEx = nullptr;
-		if (!pExpr->IsDeclArgWithDefault(&pExprEx)) continue;
-		Expr& exprDefaultArg = pExprEx->GetExprRight();
+	for (Expr* pExprParam = GetExprCdrFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
+		Expr_Binary* pExprParamEx = nullptr;
+		if (!pExprParam->IsDeclArgWithDefault(&pExprParamEx)) continue;
+		Expr& exprDefaultArg = pExprParamEx->GetExprRight();
 		PUnit* pPUnitDefaultArg = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(&exprDefaultArg);
 		exprDefaultArg.ComposeOrNil(composer);
