@@ -229,11 +229,10 @@ String Iterator_Evaluator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_Repeat
 //------------------------------------------------------------------------------
-template<bool finiteFlag>
-Value* Iterator_Repeat<finiteFlag>::DoNextValue()
+Value* Iterator_Repeat::DoNextValue()
 {
 	for (;;) {
-		if (finiteFlag && _idx >= _cnt) break;
+		if (GetFiniteFlag() && _idx >= _cnt) break;
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
 			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
@@ -250,13 +249,9 @@ Value* Iterator_Repeat<finiteFlag>::DoNextValue()
 	return nullptr;
 }
 
-template<bool finiteFlag>
-String Iterator_Repeat<finiteFlag>::ToString(const StringStyle& ss) const
+String Iterator_Repeat::ToString(const StringStyle& ss) const
 {
 	return "Repeat";
 }
-
-template class Iterator_Repeat<true>;
-template class Iterator_Repeat<false>;
 
 }

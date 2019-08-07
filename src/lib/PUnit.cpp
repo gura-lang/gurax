@@ -651,9 +651,9 @@ void PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag>::Exec(Processor& proce
 	if (GetFiniteFlag()) {
 		RefPtr<Value> pValue(processor.PopValue());
 		size_t cnt = Value_Number::GetNumber<size_t>(*pValue);
-		pIterator.reset(new Iterator_Repeat<true>(processor.Reference(), GetExprOfBlock().Reference(), cnt));
+		pIterator.reset(new Iterator_Repeat(processor.Reference(), GetExprOfBlock().Reference(), true, cnt));
 	} else {
-		pIterator.reset(new Iterator_Repeat<false>(processor.Reference(), GetExprOfBlock().Reference()));
+		pIterator.reset(new Iterator_Repeat(processor.Reference(), GetExprOfBlock().Reference(), false));
 	}
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitNext(_GetPUnitCont());

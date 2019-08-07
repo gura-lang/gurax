@@ -223,29 +223,30 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_Repeat
 //------------------------------------------------------------------------------
-template<bool finiteFlag>
 class GURAX_DLLDECLARE Iterator_Repeat : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Frame> _pFrame;
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<Argument> _pArgument;
+	bool _finiteFlag;
 	size_t _cnt;
 	size_t _idx;
 public:
-	Iterator_Repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, size_t cnt = -1) :
+	Iterator_Repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, size_t cnt = -1) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_cnt(cnt), _idx(0) {}
+		_finiteFlag(finiteFlag), _cnt(cnt), _idx(0) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
 	Argument& GetArgument() { return *_pArgument; }
+	bool GetFiniteFlag() const { return _finiteFlag; }
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return finiteFlag?
+		return GetFiniteFlag()?
 			(Flag::Finite | Flag::LenDetermined) :
 			(Flag::Infinite | Flag::LenUndetermined);
 	}
@@ -253,9 +254,6 @@ public:
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
-
-extern template class Iterator_Repeat<true>;
-extern template class Iterator_Repeat<false>;
 
 }
 
