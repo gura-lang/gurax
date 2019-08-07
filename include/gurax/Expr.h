@@ -366,8 +366,8 @@ public:
 		_pExprCar.reset(pExprCar);
 		_pExprCar->SetExprParent(this);
 	}
-	Expr* GetExprCar() { return _pExprCar.get(); }
-	const Expr* GetExprCar() const { return _pExprCar.get(); }
+	Expr& GetExprCar() { return *_pExprCar; }
+	const Expr& GetExprCar() const { return *_pExprCar; }
 	void SetExprLinkCdr(ExprLink* pExprLinkCdr) {
 		_pExprLinkCdr.reset(pExprLinkCdr);
 		_pExprLinkCdr->SetExprParent(this);
@@ -523,8 +523,8 @@ public:
 		Expr_Node(typeInfo), _pExprTarget(pExprTarget), _pSymbol(pSymbol), _pAttr(pAttr),
 		_memberMode(memberMode) {}
 public:
-	Expr* GetExprTarget() { return _pExprTarget.get(); }	
-	const Expr* GetExprTarget() const { return _pExprTarget.get(); }	
+	Expr& GetExprTarget() { return *_pExprTarget; }
+	const Expr& GetExprTarget() const { return *_pExprTarget; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	MemberMode GetMemberMode() const { return _memberMode; }

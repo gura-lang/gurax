@@ -78,7 +78,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 			return nullptr;
 		}
 		// x[]
-		pExpr = pExprEx->GetExprCar();
+		pExpr = &pExprEx->GetExprCar();
 		pAttrSrc = &pExprEx->GetAttr();
 		flags |= Flag::ListVar;
 	}

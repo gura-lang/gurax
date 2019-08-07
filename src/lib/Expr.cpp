@@ -550,7 +550,7 @@ const Expr::TypeInfo Expr_Member::typeInfo;
 
 void Expr_Member::Compose(Composer& composer)
 {
-	GetExprTarget()->ComposeOrNil(composer);									// [Target]
+	GetExprTarget().ComposeOrNil(composer);									// [Target]
 	switch (GetMemberMode()) {
 	case MemberMode::Normal: {
 		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
@@ -578,7 +578,7 @@ void Expr_Member::Compose(Composer& composer)
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
-	GetExprTarget()->ComposeOrNil(composer);								// [Target]
+	GetExprTarget().ComposeOrNil(composer);								// [Target]
 	if (pOperator) {
 		composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
 		exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
@@ -592,7 +592,7 @@ void Expr_Member::ComposeForAssignment(
 String Expr_Member::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += GetExprTarget()->ToString(ss);
+	str += GetExprTarget().ToString(ss);
 	str += MemberModeToSymbol(GetMemberMode())->GetName();
 	str += GetSymbol()->ToString();
 	str += GetAttr().ToString(ss);
@@ -836,7 +836,7 @@ const Expr::TypeInfo Expr_Indexer::typeInfo;
 
 void Expr_Indexer::Compose(Composer& composer)
 {
-	GetExprCar()->ComposeOrNil(composer);						// [Car]
+	GetExprCar().ComposeOrNil(composer);						// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, this);	// [Index(Car)]
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -849,7 +849,7 @@ void Expr_Indexer::Compose(Composer& composer)
 void Expr_Indexer::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
-	GetExprCar()->ComposeOrNil(composer);						// [Car]
+	GetExprCar().ComposeOrNil(composer);						// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, this);	// [Index(Car)]
 	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
@@ -866,14 +866,14 @@ void Expr_Indexer::ComposeForAssignment(
 
 void Expr_Indexer::ComposeInClass(Composer& composer, bool publicFlag)
 {
-	if (!GetExprCar()->IsType<Expr_Identifier>() || HasExprCdr()) {
+	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprCdr()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "invalid format of property declaration");
 		return;
 	}
 	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
-	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
-	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), flags, GetAttr(), true, this);
+	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
+	composer.Add_AssignPropHandler(exprCar.GetSymbol(), flags, GetAttr(), true, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -885,15 +885,15 @@ void Expr_Indexer::ComposeForAssignmentInClass(
 						 "operator can not be applied in property assigment");
 		return;
 	}
-	if (!GetExprCar()->IsType<Expr_Identifier>() || HasExprCdr()) {
+	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprCdr()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "invalid format of property declaration");
 		return;
 	}
 	PropHandler::Flags flags = PropHandler::Flag::ListVar | (publicFlag? PropHandler::Flag::Public : 0);
-	const Expr_Identifier* pExprCar = dynamic_cast<Expr_Identifier*>(GetExprCar());
+	const Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(GetExprCar());
 	exprAssigned.ComposeOrNil(composer);							// [VType Value]
-	composer.Add_AssignPropHandler(pExprCar->GetSymbol(), flags, GetAttr(), false, this);
+	composer.Add_AssignPropHandler(exprCar.GetSymbol(), flags, GetAttr(), false, this);
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -923,7 +923,7 @@ const Expr::TypeInfo Expr_Caller::typeInfo;
 
 void Expr_Caller::Compose(Composer& composer)
 {
-	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*GetExprCar()));
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(GetExprCar()));
 	if (pDottedSymbol) {
 		Value* pValue = Basement::Inst.GetFrame().Lookup(*pDottedSymbol);
 		if (pValue && pValue->IsType(VTYPE_Function)) {
@@ -934,7 +934,7 @@ void Expr_Caller::Compose(Composer& composer)
 			}
 		}
 	}
-	GetExprCar()->ComposeOrNil(composer);							// [Car]
+	GetExprCar().ComposeOrNil(composer);							// [Car]
 	composer.Add_Argument(GetAttr().Reference(),
 						  Expr_Block::Reference(GetExprOfBlock()), this); // [Argument]
 	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());			// [Argument]
@@ -951,11 +951,11 @@ void Expr_Caller::Compose(Composer& composer)
 void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)
 {
 	const char* errMsg = "invalid class definition";
-	if (!GetExprCar()->IsType<Expr_Identifier>()) {
+	if (!GetExprCar().IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
-	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(GetExprCar())->GetSymbol();
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol();
 	if (!pSymbol->IsIdentical(Gurax_Symbol(public_)) || HasExprCdr()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
@@ -992,12 +992,11 @@ void Expr_Caller::ComposeForAssignmentInClass(
 
 Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag)
 {
-	if (!GetExprCar()->IsType<Expr_Identifier>()) {
+	if (!GetExprCar().IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
-	const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(GetExprCar());
-	const Symbol* pSymbol = pExprCarEx->GetSymbol();
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol();
 
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
@@ -1088,10 +1087,10 @@ const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
 	for (const Expr* pExpr = GetExprTrailer(); pExpr; ) {
 		if (!pExpr->IsType<Expr_Caller>()) return pExpr;
 		const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
-		const Expr* pExprCar = pExprEx->GetExprCar();
-		if (!pExprCar->IsType<Expr_Identifier>()) return pExprCar;
-		const Expr_Identifier* pExprCarEx = dynamic_cast<const Expr_Identifier*>(pExprCar);
-		symbols.push_back(pExprCarEx->GetSymbol());
+		const Expr& exprCar = pExprEx->GetExprCar();
+		if (!exprCar.IsType<Expr_Identifier>()) return &exprCar;
+		const Expr_Identifier& exprCarEx = dynamic_cast<const Expr_Identifier&>(exprCar);
+		symbols.push_back(exprCarEx.GetSymbol());
 		pExpr = pExprEx->GetExprTrailer();
 	}
 	return nullptr;
