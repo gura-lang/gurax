@@ -129,8 +129,12 @@ public:
 	void ClearEvent() { _event = Event::None; }
 	void SetEventBreak() { _event = Event::Break; }
 	void SetEventContinue() { _event = Event::Continue; }
+	bool IsEventNone() const { return _event == Event::None; }
 	bool IsEventBreak() const { return _event == Event::Break; }
 	bool IsEventContinue() const { return _event == Event::Continue; }
+	static bool IsEventNone(Event event) { return event == Event::None; }
+	static bool IsEventBreak(Event event) { return event == Event::Break; }
+	static bool IsEventContinue(Event event) { return event == Event::Continue; }
 public:
 	Value* ProcessPUnit(const PUnit* pPUnit);
 	Value* ProcessExpr(const Expr& expr) { return ProcessPUnit(expr.GetPUnitFirst()); }

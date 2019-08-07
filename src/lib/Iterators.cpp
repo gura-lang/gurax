@@ -241,12 +241,10 @@ Value* Iterator_Repeat<finiteFlag>::DoNextValue()
 		Processor::Event event;
 		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
 		_idx++;
-		if (event == Processor::Event::None) {
-			return pValueRtn.release();
-		} else if (event == Processor::Event::Break) {
+		if (Processor::IsEventBreak(event)) {
 			break;
-		} else { // Processor::Event::Continue;
-			// nothing to do
+		} else {
+			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
 		}
 	}
 	return nullptr;
