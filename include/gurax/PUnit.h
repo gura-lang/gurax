@@ -654,20 +654,23 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_GenIterator_Repeat
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag, bool finiteFlag>
+template<int nExprSrc, bool discardValueFlag>
 class GURAX_DLLDECLARE PUnit_GenIterator_Repeat : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 	RefPtr<Expr_Block> _pExprOfBlock;
+	bool _finiteFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock) : _pExprOfBlock(pExprOfBlock) {}
-	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, Expr* pExpr) :
-		PUnit_GenIterator_Repeat(pExprOfBlock) { _ppExprSrc[0] = pExpr; }
+	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag) :
+		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag) {}
+	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, Expr* pExpr) :
+		PUnit_GenIterator_Repeat(pExprOfBlock, finiteFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
+	bool GetFiniteFlag() const { return _finiteFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -691,8 +694,8 @@ public:
 		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc?
-			sizeof(PUnit_GenIterator_Repeat<1, false, false>) :
-			sizeof(PUnit_GenIterator_Repeat<0, false, false>);
+			sizeof(PUnit_GenIterator_Repeat<1, false>) :
+			sizeof(PUnit_GenIterator_Repeat<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
