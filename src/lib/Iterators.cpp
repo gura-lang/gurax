@@ -242,6 +242,8 @@ Value* Iterator_Repeat::DoNextValue()
 		_idx++;
 		if (Processor::IsEventBreak(event)) {
 			break;
+		} else if (GetSkipNilFlag()) {
+			if (pValueRtn->IsValid()) return pValueRtn.release();
 		} else {
 			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
 		}

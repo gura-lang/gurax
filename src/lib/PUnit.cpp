@@ -651,9 +651,11 @@ void PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag>::Exec(Processor& proce
 	if (GetFiniteFlag()) {
 		RefPtr<Value> pValue(processor.PopValue());
 		size_t cnt = Value_Number::GetNumber<size_t>(*pValue);
-		pIterator.reset(new Iterator_Repeat(processor.Reference(), GetExprOfBlock().Reference(), true, cnt));
+		pIterator.reset(new Iterator_Repeat(
+							processor.Reference(), GetExprOfBlock().Reference(), true, GetSkipNilFlag(), cnt));
 	} else {
-		pIterator.reset(new Iterator_Repeat(processor.Reference(), GetExprOfBlock().Reference(), false));
+		pIterator.reset(new Iterator_Repeat(
+							processor.Reference(), GetExprOfBlock().Reference(), false, GetSkipNilFlag()));
 	}
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -673,18 +675,18 @@ PUnit* PUnitFactory_GenIterator_Repeat::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_GenIterator_Repeat<1, true>(
-				_pExprOfBlock.Reference(), _finiteFlag, _pExprSrc.Reference());
+				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
 		} else {
 			_pPUnitCreated = new PUnit_GenIterator_Repeat<1, false>(
-				_pExprOfBlock.Reference(), _finiteFlag, _pExprSrc.Reference());
+				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_GenIterator_Repeat<0, true>(
-				_pExprOfBlock.Reference(), _finiteFlag);
+				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
 		} else {
 			_pPUnitCreated = new PUnit_GenIterator_Repeat<0, false>(
-				_pExprOfBlock.Reference(), _finiteFlag);
+				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
 		}
 	}
 	return _pPUnitCreated;

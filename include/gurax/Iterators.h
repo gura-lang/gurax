@@ -230,19 +230,21 @@ private:
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<Argument> _pArgument;
 	bool _finiteFlag;
+	bool _skipNilFlag;
 	size_t _cnt;
 	size_t _idx;
 public:
-	Iterator_Repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, size_t cnt = -1) :
+	Iterator_Repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, size_t cnt = -1) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_finiteFlag(finiteFlag), _cnt(cnt), _idx(0) {}
+		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _cnt(cnt), _idx(0) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
 	Argument& GetArgument() { return *_pArgument; }
 	bool GetFiniteFlag() const { return _finiteFlag; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {

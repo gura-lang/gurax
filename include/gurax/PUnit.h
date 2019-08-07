@@ -661,16 +661,18 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 	RefPtr<Expr_Block> _pExprOfBlock;
 	bool _finiteFlag;
+	bool _skipNilFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag) :
-		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag) {}
-	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, Expr* pExpr) :
-		PUnit_GenIterator_Repeat(pExprOfBlock, finiteFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
+		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	PUnit_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExpr) :
+		PUnit_GenIterator_Repeat(pExprOfBlock, finiteFlag, skipNilFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
 	bool GetFiniteFlag() const { return _finiteFlag; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -689,9 +691,10 @@ public:
 private:
 	RefPtr<Expr_Block> _pExprOfBlock;
 	bool _finiteFlag;
+	bool _skipNilFlag;
 public:
-	PUnitFactory_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag) {}
+	PUnitFactory_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc?
 			sizeof(PUnit_GenIterator_Repeat<1, false>) :

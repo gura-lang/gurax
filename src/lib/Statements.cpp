@@ -548,10 +548,10 @@ Gurax_ImplementStatement(repeat)
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 			composer.Add_Cast(VTYPE_Number, &exprCaller);						// [Number]
 			composer.Add_GenIterator_Repeat(
-				exprCaller.GetExprOfBlock()->Reference(), true, &exprCaller);	// [Iterator]
+				exprCaller.GetExprOfBlock()->Reference(), true, xiterFlag, &exprCaller);	// [Iterator]
 		} else {
 			composer.Add_GenIterator_Repeat(
-				exprCaller.GetExprOfBlock()->Reference(), false, &exprCaller);	// [Iterator]
+				exprCaller.GetExprOfBlock()->Reference(), false, xiterFlag, &exprCaller);	// [Iterator]
 		}
 	} else {
 		const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
