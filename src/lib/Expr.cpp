@@ -109,15 +109,18 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	SetPUnitFirst(pPUnitOfArgSlot);
 }
 
-Value* Expr::DoEval(Processor& processor, Argument& argument) const
+#if 0
+Value* Expr::DoEval(Processor& processor, Argument& argument, Processor::Event* pEvent) const
 {
 	if (!GetPUnitFirst()) return Value::nil();
 	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
+	if (pEvent) *pEvent = processor.GetEvent();
 	processor.PopFrame();
 	processor.ClearEvent();
 	return pValue.release();
 }
+#endif
 
 //------------------------------------------------------------------------------
 // ExprList

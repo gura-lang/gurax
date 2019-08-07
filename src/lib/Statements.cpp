@@ -542,12 +542,7 @@ Gurax_ImplementStatement(repeat)
 	if (iterFlag || xiterFlag) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(&exprCaller);
-		PUnit* pPUnitOfBlock = composer.PeekPUnitCont();
-		composer.Add_BeginSequence(&exprCaller);
-		exprCaller.GetExprOfBlock()->ComposeOrNil(composer);					// [Value]
-		pPUnitOfBlock->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_EndSequence(&exprCaller);									// [Value]
-		exprCaller.GetExprOfBlock()->SetPUnitFirst(pPUnitOfBlock);
+		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
@@ -673,7 +668,7 @@ Gurax_ImplementStatement(break_)
 {
 	if (!composer.HasValidRepeaterInfo()) {
 		Error::IssueWith(ErrorType::ContextError, exprCaller,
-						 "break-statement can be used in a loop");
+						 "break-statement can only be used in a loop");
 		return;
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();
@@ -713,7 +708,7 @@ Gurax_ImplementStatement(continue_)
 {
 	if (!composer.HasValidRepeaterInfo()) {
 		Error::IssueWith(ErrorType::ContextError, exprCaller,
-						 "continue-statement can be used in a loop");
+						 "continue-statement can only be used in a loop");
 		return;
 	}
 	const Composer::RepeaterInfo& repeaterInfo = composer.GetRepeaterInfoCur();

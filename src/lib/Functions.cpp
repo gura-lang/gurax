@@ -203,7 +203,7 @@ Gurax_ImplementFunction(Test)
 	if (!args.FeedValue(frame, new Value_Number(1234)) ||
 		!args.FeedValue(frame, new Value_Number(5678)) ||
 		!args.FeedValue(frame, new Value_String("hoge"))) return Value::nil();
-	return pExprOfBlock->DoEval(processor, *pArgument);
+	return processor.EvalExpr(*pExprOfBlock, *pArgument);
 }
 
 //------------------------------------------------------------------------------

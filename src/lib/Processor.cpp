@@ -34,6 +34,17 @@ Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicSco
 	return *pFrame;
 }
 
+Value* Processor::EvalExpr(const Expr& expr, Argument& argument, Event* pEvent)
+{
+	if (!expr.GetPUnitFirst()) return Value::nil();
+	argument.AssignToFrame(PushFrame<Frame_Block>());
+	RefPtr<Value> pValue(ProcessPUnit(expr.GetPUnitFirst()));
+	if (pEvent) *pEvent = GetEvent();
+	PopFrame();
+	ClearEvent();
+	return pValue.release();
+}
+
 Value* Processor::ProcessPUnit(const PUnit* pPUnit)
 {
 	if (!pPUnit) return Value::nil();

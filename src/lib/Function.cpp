@@ -159,7 +159,7 @@ Value* Function::ReturnValue(Processor& processor, Argument& argument, RefPtr<Va
 	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
 	ArgFeeder args(*pArgumentSub);
 	if (!args.FeedValue(frame, pValueRtn.release())) return Value::nil();
-	return pExprOfBlock->DoEval(processor, *pArgumentSub);
+	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
 }
 
 String Function::ToString(const StringStyle& ss) const

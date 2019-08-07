@@ -108,6 +108,8 @@ public:
 	}
 	ExceptionInfo* EndTryBlock() { return GetExceptionInfoStack().Pop(); }
 public:
+	Value* EvalExpr(const Expr& expr, Argument& argument, Event* pEvent = nullptr);
+public:
 	void SetExprCur(const Expr* pExpr) { _pExprCur = pExpr; }
 	const Expr& GetExprCur() const { return *_pExprCur; }
 	void SetPUnitNext(const PUnit* pPUnitNext) { _pPUnitNext = pPUnitNext; }
@@ -123,6 +125,7 @@ public:
 	bool GetContFlag() const { return _contFlag; }
 	bool GetResumeFlag() const { return _resumeFlag; }
 public:
+	Event GetEvent() const { return _event; }
 	void ClearEvent() { _event = Event::None; }
 	void SetEventBreak() { _event = Event::Break; }
 	void SetEventContinue() { _event = Event::Continue; }

@@ -232,14 +232,24 @@ String Iterator_Evaluator::ToString(const StringStyle& ss) const
 template<bool finiteFlag>
 Value* Iterator_Repeat<finiteFlag>::DoNextValue()
 {
-	if (finiteFlag && _idx >= _cnt) return nullptr;
-	if (GetArgument().HasArgSlot()) {
-		ArgFeeder args(GetArgument());
-		if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+	for (;;) {
+		if (finiteFlag && _idx >= _cnt) break;
+		if (GetArgument().HasArgSlot()) {
+			ArgFeeder args(GetArgument());
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+		}
+		Processor::Event event;
+		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		_idx++;
+		if (event == Processor::Event::None) {
+			return pValueRtn.release();
+		} else if (event == Processor::Event::Break) {
+			break;
+		} else { // Processor::Event::Continue;
+			// nothing to do
+		}
 	}
-	RefPtr<Value> pValueRtn(GetExprOfBlock().DoEval(GetProcessor(), GetArgument()));
-	_idx++;
-	return pValueRtn.release();
+	return nullptr;
 }
 
 template<bool finiteFlag>

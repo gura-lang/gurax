@@ -180,7 +180,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
 	ArgFeeder args(*pArgumentSub);
 	if (!args.FeedValue(frame, pValueThis.release())) return Value::nil();
-	return pExprOfBlock->DoEval(processor, *pArgumentSub);
+	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
 }
 
 String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
@@ -225,7 +225,7 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 		ArgFeeder args(*pArgumentSub);
 		if (!args.FeedValue(frame, pValueThis->Reference())) return Value::nil();
 	} while (0);
-	return pExprOfBlock->DoEval(processor, *pArgumentSub);
+	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
 }
 
 String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
