@@ -639,22 +639,22 @@ PUnit* PUnitFactory_GenIterator_Counter::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_GenIterator_Repeat
+// PUnit_GenIterator_repeat
 // Stack View: [] -> [Iterator] (continue)
 //                -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_GenIterator_repeat<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Iterator> pIterator;
 	if (GetFiniteFlag()) {
 		RefPtr<Value> pValue(processor.PopValue());
 		size_t cnt = Value_Number::GetNumber<size_t>(*pValue);
-		pIterator.reset(new Iterator_Repeat(
+		pIterator.reset(new Iterator_repeat(
 							processor.Reference(), GetExprOfBlock().Reference(), true, GetSkipNilFlag(), cnt));
 	} else {
-		pIterator.reset(new Iterator_Repeat(
+		pIterator.reset(new Iterator_repeat(
 							processor.Reference(), GetExprOfBlock().Reference(), false, GetSkipNilFlag()));
 	}
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
@@ -662,30 +662,30 @@ void PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag>::Exec(Processor& proce
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_GenIterator_Repeat<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_GenIterator_repeat<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "GenIterator_Repeat()";
+	str += "GenIterator_repeat()";
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_GenIterator_Repeat::Create(bool discardValueFlag)
+PUnit* PUnitFactory_GenIterator_repeat::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenIterator_Repeat<1, true>(
+			_pPUnitCreated = new PUnit_GenIterator_repeat<1, true>(
 				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_GenIterator_Repeat<1, false>(
+			_pPUnitCreated = new PUnit_GenIterator_repeat<1, false>(
 				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_GenIterator_Repeat<0, true>(
+			_pPUnitCreated = new PUnit_GenIterator_repeat<0, true>(
 				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
 		} else {
-			_pPUnitCreated = new PUnit_GenIterator_Repeat<0, false>(
+			_pPUnitCreated = new PUnit_GenIterator_repeat<0, false>(
 				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
 		}
 	}

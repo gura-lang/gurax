@@ -1497,7 +1497,7 @@ Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Iterator)) {
 		RefPtr<Iterator> pIterator(Value_Iterator::GetIterator(value).Clone());
-		return new Value_List(ValueTypedOwner::CreateFromIterator(*pIterator));
+		return new Value_List(ValueTypedOwner::CreateFromIterator(*pIterator, false));
 	}
 	return nullptr;
 }

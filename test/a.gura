@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 //Printf('%.3f\n', os.Clock())
-f(x):map = { x * x }
-//f(x) = {}
+//f(x):map = { x * x }
+f(x) = {}
 t = os.Clock {
 	u = repeat (100000):iter {|i| f(i)}
 	[u]

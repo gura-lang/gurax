@@ -221,9 +221,9 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Repeat
+// Iterator_repeat
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Repeat : public Iterator {
+class GURAX_DLLDECLARE Iterator_repeat : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Frame> _pFrame;
@@ -235,7 +235,7 @@ private:
 	size_t _idx;
 	bool _contFlag;
 public:
-	Iterator_Repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, size_t cnt = -1) :
+	Iterator_repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, size_t cnt = -1) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
 		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _cnt(cnt), _idx(0), _contFlag(true) {}

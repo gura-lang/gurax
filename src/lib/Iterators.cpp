@@ -227,9 +227,9 @@ String Iterator_Evaluator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Repeat
+// Iterator_repeat
 //------------------------------------------------------------------------------
-Value* Iterator_Repeat::DoNextValue()
+Value* Iterator_repeat::DoNextValue()
 {
 	while (_contFlag) {
 		if (GetFiniteFlag() && _idx >= _cnt) break;
@@ -254,9 +254,9 @@ Value* Iterator_Repeat::DoNextValue()
 	return nullptr;
 }
 
-String Iterator_Repeat::ToString(const StringStyle& ss) const
+String Iterator_repeat::ToString(const StringStyle& ss) const
 {
-	return "Repeat";
+	return "repeat";
 }
 
 }

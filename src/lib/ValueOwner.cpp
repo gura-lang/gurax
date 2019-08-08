@@ -34,6 +34,25 @@ ValueOwner* ValueOwner::CloneDeep() const
 	return pValueOwner.release();
 }
 
+ValueOwner* ValueOwner::CreateFromIterator(Iterator& iterator, bool skipNilFlag)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (skipNilFlag) {
+		for (;;) {
+			RefPtr<Value> pValue(iterator.NextValue());
+			if (!pValue) break;
+			if (pValue->IsValid()) pValueOwner->push_back(pValue.release());
+		}
+	} else {
+		for (;;) {
+			RefPtr<Value> pValue(iterator.NextValue());
+			if (!pValue) break;
+			pValueOwner->push_back(pValue.release());
+		}
+	}
+	return pValueOwner.release();
+}
+
 void ValueOwner::Set(Int pos, Value* pValue)
 {
 	auto ppValue = begin() + pos;

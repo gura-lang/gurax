@@ -24,6 +24,7 @@ public:
 	void Clear();
 	ValueOwner* Clone() const;
 	ValueOwner* CloneDeep() const;
+	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);
 	void Set(Int pos, Value* pValue);
 	Value* Get(Int pos) const { return at(pos); }
 	void Add(Value* pValue) { push_back(pValue); }

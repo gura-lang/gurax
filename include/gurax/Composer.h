@@ -122,8 +122,8 @@ public:
 	void Add_GenIterator_Counter(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_GenIterator_Counter(Expr::Reference(pExprSrc)));
 	}
-	void Add_GenIterator_Repeat(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_GenIterator_Repeat(pExprOfBlock, finiteFlag, skipNilFlag, Expr::Reference(pExprSrc)));
+	void Add_GenIterator_repeat(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenIterator_repeat(pExprOfBlock, finiteFlag, skipNilFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_EvalIterator(size_t offset, const Expr* pExprSrc = nullptr) {
 		const PUnit* pPUnitBranchDest = nullptr;

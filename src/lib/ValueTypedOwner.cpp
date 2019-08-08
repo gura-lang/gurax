@@ -20,17 +20,6 @@ void ValueTypedOwner::Clear()
 	valueOwner.Clear();
 }
 
-ValueTypedOwner* ValueTypedOwner::CreateFromIterator(Iterator& iterator)
-{
-	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	for (;;) {
-		RefPtr<Value> pValue(iterator.NextValue());
-		if (!pValue) break;
-		pValueOwner->push_back(pValue.release());
-	}	
-	return new ValueTypedOwner(pValueOwner.release());
-}
-
 bool ValueTypedOwner::Set(Int pos, Value* pValue)
 {
 	ValueOwner& valueOwner = GetValueOwner();

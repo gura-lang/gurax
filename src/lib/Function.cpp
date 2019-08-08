@@ -162,6 +162,21 @@ Value* Function::ReturnValue(Processor& processor, Argument& argument, RefPtr<Va
 	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
 }
 
+Value* Function::ReturnIterator(Processor& processor, Argument& argument, RefPtr<Iterator> pIterator) const
+{
+	if (argument.IsSet(DeclCallable::Flag::List)) {
+		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, false));
+		if (Error::IsIssued()) return Value::nil();
+		return new Value_List(pValueOwner.release());
+	} else if (argument.IsSet(DeclCallable::Flag::XList)) {
+		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, true));
+		if (Error::IsIssued()) return Value::nil();
+		return new Value_List(pValueOwner.release());
+	} else {
+		return new Value_Iterator(pIterator.release());
+	}
+}
+
 String Function::ToString(const StringStyle& ss) const
 {
 	String str;

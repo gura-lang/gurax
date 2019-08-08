@@ -183,6 +183,66 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
+// Range(num:Number, numEnd?:Number, step?:Number):Iterator:map
+Gurax_DeclareFunction(Range)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("numEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that generates a sequence of number that increases or decreases by a specified step.\n"
+		"\n"
+		"- `Range(num:Number)` .. `(0, 1, 2, ..., num)` or `(0, -1, -2, ..., num)\n"
+		"- `Range(num:Number, numEnd:Number)` .. `(num, num+1, num2, ..., numEnd)` or `(num, num-1, num-2, ..., numEnd)`\n"
+		"- `Range(num:Number, numEnd:Number, step:Number)` .. `(num, num+step, num+step*2, ..., numEnd)`\n");
+}
+
+Gurax_ImplementFunction(Range)
+{
+	// Arguments
+	bool validFlag_numEnd = false, validFlag_step = false;
+	ArgPicker args(argument);
+	Int num = args.PickNumber<Int>();
+	Int numEnd = (validFlag_numEnd = args.IsValid())? args.PickNumber<Int>() : 0;
+	Int step = (validFlag_step = args.IsValid())? args.PickNumber<Int>() : 1;
+	// Function body
+	RefPtr<Iterator> pIterator;
+	if (!validFlag_numEnd && !validFlag_step) {
+		if (num >= 0) {
+			pIterator.reset(new Iterator_Range(0, num, 1));
+		} else if (num < 0) {
+			pIterator.reset(new Iterator_Range(0, num, -1));
+		}
+	} else if (validFlag_numEnd && !validFlag_step) {
+		if (numEnd >= num) {
+			pIterator.reset(new Iterator_Range(num, numEnd + 1, 1));
+		} else {
+			pIterator.reset(new Iterator_Range(num, numEnd - 1, -1));
+		}
+	} else if (!validFlag_numEnd && validFlag_step) {
+		if (step == 0) {
+			Error::Issue(ErrorType::RangeError, "step must not be zero");
+			return Value::nil();
+		} else if ((num < 0 && step > 0) || (num > 0 && step < 0)) {
+			Error::Issue(ErrorType::RangeError, "range value error");
+			return Value::nil();
+		}
+		pIterator.reset(new Iterator_Range(0, num / step * step, step));
+	} else { // validFlag_numEnd && validFlag_step
+		if (step == 0) {
+			Error::Issue(ErrorType::RangeError, "step must not be zero");
+			return Value::nil();
+		} else if ((num > numEnd && step < 0) || (num < numEnd && step > 0)) {
+			Error::Issue(ErrorType::RangeError, "range value error");
+			return Value::nil();
+		}
+		pIterator.reset(new Iterator_Range(num, num + (numEnd - num) / step * step, step));
+	}
+	return ReturnIterator(processor, argument, pIterator.release());
+}
+
 // Test() {block}
 Gurax_DeclareFunction(Test)
 {
@@ -216,6 +276,7 @@ void Functions::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));
 	frame.Assign(Gurax_CreateFunction(Println));
+	frame.Assign(Gurax_CreateFunction(Range));
 	frame.Assign(Gurax_CreateFunction(Test));
 }
 

@@ -548,10 +548,10 @@ Gurax_ImplementStatement(repeat)
 		if (pExprCdr) {
 			pExprCdr->ComposeOrNil(composer);									// [Any]
 			composer.Add_Cast(VTYPE_Number, &exprCaller);						// [Number]
-			composer.Add_GenIterator_Repeat(
+			composer.Add_GenIterator_repeat(
 				exprCaller.GetExprOfBlock()->Reference(), true, xiterFlag, &exprCaller);	// [Iterator]
 		} else {
-			composer.Add_GenIterator_Repeat(
+			composer.Add_GenIterator_repeat(
 				exprCaller.GetExprOfBlock()->Reference(), false, xiterFlag, &exprCaller);	// [Iterator]
 		}
 	} else {
