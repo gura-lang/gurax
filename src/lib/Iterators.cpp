@@ -231,18 +231,21 @@ String Iterator_Evaluator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_Repeat::DoNextValue()
 {
-	for (;;) {
+	while (_contFlag) {
 		if (GetFiniteFlag() && _idx >= _cnt) break;
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
 			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
 		}
+		_idx++;
 		Processor::Event event;
 		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
-		_idx++;
+		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
-			break;
-		} else if (GetSkipNilFlag()) {
+			_contFlag = false;
+			if (pValueRtn->IsUndefined()) break;
+		}
+		if (GetSkipNilFlag()) {
 			if (pValueRtn->IsValid()) return pValueRtn.release();
 		} else {
 			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();

@@ -15,12 +15,53 @@ TestCase('PUnit') {
 		`repeat ():xlist {|n| nil}
 		`repeat (3):xlist {}
 		`repeat (3):xlist {|n| nil}
+		`repeat ():iter {}
+		`repeat ():iter {|n| nil}
+		`repeat (3):iter {}
+		`repeat (3):iter {|n| nil}
+		`repeat ():xiter {}
+		`repeat ():xiter {|n| nil}
+		`repeat (3):xiter {}
+		`repeat (3):xiter {|n| nil}
 		`repeat (3) {|i| f(i)}
 	]
 	PrintPUnitWithLabel(exprs)
 }
 
-TestCase('Create list') {
-	Tester(`repeat (10):list {'x'})
-	Tester(`repeat (10):xlist {|i| if (i % 2 == 0) { continue }; i})
+TestCase('Simple') {
+	Tester(`repeat(10) {7})
+	Tester(`repeat(10) {break})
+	Tester(`repeat(10) {break(7)})
+	Tester(`repeat(10) {continue})
+	Tester(`repeat(10) {continue(7)})
+}
+
+TestCase('repeat():list, repeat():xlist') {
+	Tester(`repeat (10):list {|i| i})
+	Tester(`repeat (10):xlist {|i| i})
+	Tester(`repeat (10):list {|i| (i % 2 == 0) && continue, i})
+	Tester(`repeat (10):xlist {|i| (i % 2 == 0) && continue, i})
+	Tester(`repeat (10):list {|i| (i % 2 == 0) && continue(99), i})
+	Tester(`repeat (10):xlist {|i| (i % 2 == 0) && continue(99), i})
+	Tester(`repeat (10):list {|i| (i == 5) && break, i})
+	Tester(`repeat (10):xlist {|i| (i == 5) && break, i})
+	Tester(`repeat (10):list {|i| (i == 5) && break(99), i})
+	Tester(`repeat (10):xlist {|i| (i == 5) && break(99), i})
+	Tester(`repeat (10):list {|i| (i == 5) && break(nil), i})
+	Tester(`repeat (10):xlist {|i| (i == 5) && break(nil), i})
+}
+
+TestCase('repeat():iter, repeat():xiter') {
+	Tester(`[repeat (10):iter {|i| i}])
+	Tester(`[repeat (10):xiter {|i| i}])
+	Tester(`[repeat (10):iter {|i| (i % 2 == 0) && continue, i}])
+	Tester(`[repeat (10):xiter {|i| (i % 2 == 0) && continue, i}])
+	Tester(`[repeat (10):iter {|i| (i % 2 == 0) && continue(99), i}])
+	Tester(`[repeat (10):xiter {|i| (i % 2 == 0) && continue(99), i}])
+	Tester(`[repeat (10):iter {|i| (i == 5) && break, i}])
+	Tester(`[repeat (10):xiter {|i| (i == 5) && break, i}])
+	Tester(`[repeat (10):iter {|i| (i == 5) && break(99), i}])
+	Tester(`[repeat (10):xiter {|i| (i == 5) && break(99), i}])
+	Tester(`[repeat (10):iter {|i| (i == 5) && break(nil), i}])
+	Tester(`[repeat (10):xiter {|i| (i == 5) && break(nil), i}])
 }

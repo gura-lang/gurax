@@ -45,7 +45,7 @@ void Composer::_Flush(bool discardValueFlag)
 	}
 }
 
-void Composer::ComposeAsSequence(Expr& expr)
+void Composer::ComposeAsSequence2(Expr& expr)
 {
 	expr.SetPUnitFirst(PeekPUnitCont());
 	PUnit* pPUnitOfBeginSequence = PeekPUnitCont();
@@ -54,7 +54,7 @@ void Composer::ComposeAsSequence(Expr& expr)
 	expr.ComposeOrNil(*this);								// [Any]
 	EndRepeaterBlock();
 	pPUnitOfBeginSequence->SetPUnitSentinel(PeekPUnitCont());
-	Add_Return(&expr);
+	//Add_Return(&expr);
 }
 
 void Composer::Print() const

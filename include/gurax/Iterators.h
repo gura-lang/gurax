@@ -233,11 +233,12 @@ private:
 	bool _skipNilFlag;
 	size_t _cnt;
 	size_t _idx;
+	bool _contFlag;
 public:
 	Iterator_Repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, size_t cnt = -1) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _cnt(cnt), _idx(0) {}
+		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _cnt(cnt), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }

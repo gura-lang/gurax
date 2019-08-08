@@ -109,19 +109,6 @@ void Expr::ComposeForArgSlot(Composer& composer)
 	SetPUnitFirst(pPUnitOfArgSlot);
 }
 
-#if 0
-Value* Expr::DoEval(Processor& processor, Argument& argument, Processor::Event* pEvent) const
-{
-	if (!GetPUnitFirst()) return Value::nil();
-	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
-	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
-	if (pEvent) *pEvent = processor.GetEvent();
-	processor.PopFrame();
-	processor.ClearEvent();
-	return pValue.release();
-}
-#endif
-
 //------------------------------------------------------------------------------
 // ExprList
 //------------------------------------------------------------------------------
@@ -937,18 +924,19 @@ void Expr_Caller::Compose(Composer& composer)
 			}
 		}
 	}
-	GetExprCar().ComposeOrNil(composer);							// [Car]
+	GetExprCar().ComposeOrNil(composer);									// [Car]
 	composer.Add_Argument(GetAttr().Reference(),
-						  Expr_Block::Reference(GetExprOfBlock()), this); // [Argument]
-	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());			// [Argument]
+						  Expr_Block::Reference(GetExprOfBlock()), this);	// [Argument]
+	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
 	if (Error::IsIssued()) return;
 	if (GetExprOfBlock()) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(this);
-		composer.ComposeAsSequence(*GetExprOfBlock());
+		composer.ComposeAsSequence2(*GetExprOfBlock());
+		composer.Add_Return(GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}
-	composer.Add_Call(this);										// [Result]
+	composer.Add_Call(this);												// [Result]
 }
 
 void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)

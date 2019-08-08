@@ -82,7 +82,7 @@ public:
 		_repeaterInfoStack.pop_back();
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
-	void ComposeAsSequence(Expr& expr);
+	void ComposeAsSequence2(Expr& expr);
 public:
 	void Add_Value(Value* pValue, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Value(pValue, Expr::Reference(pExprSrc)));
