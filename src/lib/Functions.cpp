@@ -183,10 +183,10 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
-// Range(num:Number, numEnd?:Number, step?:Number):Iterator:map
+// Range(num:Number, numEnd?:Number, step?:Number):map
 Gurax_DeclareFunction(Range)
 {
-	Declare(VTYPE_Iterator, Flag::Map);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -229,16 +229,16 @@ Gurax_ImplementFunction(Range)
 			Error::Issue(ErrorType::RangeError, "range value error");
 			return Value::nil();
 		}
-		pIterator.reset(new Iterator_Range(0, num / step * step, step));
+		pIterator.reset(new Iterator_Range(0, num / step * step + step, step));
 	} else { // validFlag_numEnd && validFlag_step
 		if (step == 0) {
 			Error::Issue(ErrorType::RangeError, "step must not be zero");
 			return Value::nil();
-		} else if ((num > numEnd && step < 0) || (num < numEnd && step > 0)) {
+		} else if ((numEnd > num && step < 0) || (numEnd < num && step > 0)) {
 			Error::Issue(ErrorType::RangeError, "range value error");
 			return Value::nil();
 		}
-		pIterator.reset(new Iterator_Range(num, num + (numEnd - num) / step * step, step));
+		pIterator.reset(new Iterator_Range(num, num + (numEnd - num) / step * step + step, step));
 	}
 	return ReturnIterator(processor, argument, pIterator.release());
 }

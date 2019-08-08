@@ -20,8 +20,8 @@ Gurax_ImplementPropertyGetter(Expr, children)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	RefPtr<Iterator> pIterator(valueThis.GetExpr().EachChild());
-	if (pIterator) return new Value_Iterator(pIterator.release());
-	return Value::nil();
+	if (!pIterator) return Value::nil();
+	return new Value_Iterator(pIterator.release());
 }
 
 //------------------------------------------------------------------------------

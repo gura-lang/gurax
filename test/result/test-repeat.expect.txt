@@ -154,13 +154,13 @@ repeat ():iter {}
   ##1 BeginSequence(sentinel=##3)
   ##2 Value(<Nil>)
   ##3 EndSequence()
-  ##4 GenIterator_Repeat()
+  ##4 GenIterator_repeat()
 repeat ():iter {|n| nil}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`nil)
   ##3 EndSequence()
-  ##4 GenIterator_Repeat()
+  ##4 GenIterator_repeat()
 repeat (3):iter {}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
@@ -168,7 +168,7 @@ repeat (3):iter {}
   ##3 EndSequence()
   ##4 Value(<Number:3>)
   ##5 Cast(Number)
-  ##6 GenIterator_Repeat()
+  ##6 GenIterator_repeat()
 repeat (3):iter {|n| nil}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
@@ -176,19 +176,19 @@ repeat (3):iter {|n| nil}
   ##3 EndSequence()
   ##4 Value(<Number:3>)
   ##5 Cast(Number)
-  ##6 GenIterator_Repeat()
+  ##6 GenIterator_repeat()
 repeat ():xiter {}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Value(<Nil>)
   ##3 EndSequence()
-  ##4 GenIterator_Repeat()
+  ##4 GenIterator_repeat()
 repeat ():xiter {|n| nil}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
   ##2 Lookup(`nil)
   ##3 EndSequence()
-  ##4 GenIterator_Repeat()
+  ##4 GenIterator_repeat()
 repeat (3):xiter {}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
@@ -196,7 +196,7 @@ repeat (3):xiter {}
   ##3 EndSequence()
   ##4 Value(<Number:3>)
   ##5 Cast(Number)
-  ##6 GenIterator_Repeat()
+  ##6 GenIterator_repeat()
 repeat (3):xiter {|n| nil}
   ##0 Jump(cont=##4)
   ##1 BeginSequence(sentinel=##3)
@@ -204,7 +204,7 @@ repeat (3):xiter {|n| nil}
   ##3 EndSequence()
   ##4 Value(<Number:3>)
   ##5 Cast(Number)
-  ##6 GenIterator_Repeat()
+  ##6 GenIterator_repeat()
 repeat (3) {|i| f(i)}
   ##0 PushFrame<Block>()
   ##1 Value(<Number:3>)
