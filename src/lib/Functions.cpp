@@ -183,20 +183,21 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
-// Range(num:Number, numEnd?:Number, step?:Number):map
+// Range(num:Number, numEnd?:Number, step?:Number):map {block?}
 Gurax_DeclareFunction(Range)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that generates a sequence of number that increases or decreases by a specified step.\n"
 		"\n"
-		"- `Range(num:Number)` .. `(0, 1, 2, ..., num)` or `(0, -1, -2, ..., num)\n"
-		"- `Range(num:Number, numEnd:Number)` .. `(num, num+1, num2, ..., numEnd)` or `(num, num-1, num-2, ..., numEnd)`\n"
-		"- `Range(num:Number, numEnd:Number, step:Number)` .. `(num, num+step, num+step*2, ..., numEnd)`\n");
+		"- `Range(num:Number)`\n"
+		"- `Range(num:Number, numEnd:Number)`\n"
+		"- `Range(num:Number, numEnd:Number, step:Number)`\n");
 }
 
 Gurax_ImplementFunction(Range)
@@ -210,35 +211,25 @@ Gurax_ImplementFunction(Range)
 	// Function body
 	RefPtr<Iterator> pIterator;
 	if (!validFlag_numEnd && !validFlag_step) {
-		if (num >= 0) {
-			pIterator.reset(new Iterator_Range(0, num, 1));
-		} else if (num < 0) {
-			pIterator.reset(new Iterator_Range(0, num, -1));
-		}
+		pIterator.reset(new Iterator_Range(0, num, (num >= 0)? 1 : -1));
 	} else if (validFlag_numEnd && !validFlag_step) {
-		if (numEnd >= num) {
-			pIterator.reset(new Iterator_Range(num, numEnd + 1, 1));
-		} else {
-			pIterator.reset(new Iterator_Range(num, numEnd - 1, -1));
-		}
+		pIterator.reset(new Iterator_Range(num, numEnd, (numEnd >= num)? 1 : -1));
 	} else if (!validFlag_numEnd && validFlag_step) {
 		if (step == 0) {
 			Error::Issue(ErrorType::RangeError, "step must not be zero");
 			return Value::nil();
-		} else if ((num < 0 && step > 0) || (num > 0 && step < 0)) {
-			Error::Issue(ErrorType::RangeError, "range value error");
-			return Value::nil();
 		}
-		pIterator.reset(new Iterator_Range(0, num / step * step + step, step));
+		numEnd = num / step * step;
+		if (numEnd * step < 0) numEnd = 0;
+		pIterator.reset(new Iterator_Range(0, numEnd, step));
 	} else { // validFlag_numEnd && validFlag_step
 		if (step == 0) {
 			Error::Issue(ErrorType::RangeError, "step must not be zero");
 			return Value::nil();
-		} else if ((numEnd > num && step < 0) || (numEnd < num && step > 0)) {
-			Error::Issue(ErrorType::RangeError, "range value error");
-			return Value::nil();
 		}
-		pIterator.reset(new Iterator_Range(num, num + (numEnd - num) / step * step + step, step));
+		numEnd = num + (numEnd - num) / step * step;
+		if ((numEnd - num) * step < 0) numEnd = num;
+		pIterator.reset(new Iterator_Range(num, numEnd, step));
 	}
 	return ReturnIterator(processor, argument, pIterator.release());
 }

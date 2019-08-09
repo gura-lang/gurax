@@ -164,7 +164,10 @@ Value* Function::ReturnValue(Processor& processor, Argument& argument, RefPtr<Va
 
 Value* Function::ReturnIterator(Processor& processor, Argument& argument, RefPtr<Iterator> pIterator) const
 {
-	if (argument.IsSet(DeclCallable::Flag::List)) {
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	if (pExprOfBlock) {
+		return pIterator->Each(processor, *pExprOfBlock, argument.GetFlags());
+	} else if (argument.IsSet(DeclCallable::Flag::List)) {
 		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, false));
 		if (Error::IsIssued()) return Value::nil();
 		return new Value_List(pValueOwner.release());

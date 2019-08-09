@@ -1,0 +1,47 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Basic') {
+	Tester(`Range(10))
+}
+
+TestCase('Range(num)') {
+	Tester(`Range(0):list)
+	Tester(`Range(1):list)
+	Tester(`Range(10):list)
+	Tester(`Range(-1):list)
+	Tester(`Range(-10):list)
+}
+
+TestCase('Range(num, numEnd)') {
+	Tester(`Range(0, 0):list)
+	Tester(`Range(0, 1):list)
+	Tester(`Range(0, 10):list)
+	Tester(`Range(3, 5):list)
+	Tester(`Range(3, 10):list)
+	Tester(`Range(10, 0):list)
+	Tester(`Range(5, 3):list)
+	Tester(`Range(10, 3):list)
+	Tester(`Range(0, -10):list)
+}
+
+TestCase('Range(num, numEnd, step)') {
+	Tester(`Range(0, 0, 2):list)
+	Tester(`Range(0, 1, 2):list)
+	Tester(`Range(0, 10, 2):list)
+	Tester(`Range(3, 5, 2):list)
+	Tester(`Range(3, 10, 2):list)
+	Tester(`Range(10, 0, 2):list)
+	Tester(`Range(5, 3, 2):list)
+	Tester(`Range(10, 3, 2):list)
+	Tester(`Range(0, -10, 2):list)
+	Tester(`Range(10, 0, -2):list)
+	Tester(`Range(5, 3, -2):list)
+	Tester(`Range(10, 3, -2):list)
+	Tester(`Range(0, -10, -2):list)
+}
+
+TestCase('Block') {
+	Tester(`Range(10):list {|n| n * n})
+	Tester(`{accum = 0, Range(11) {|n| accum += n}})
+}
