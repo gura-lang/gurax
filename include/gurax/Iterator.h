@@ -71,6 +71,25 @@ public:
 	virtual String ToString(const StringStyle& ss) const;
 };
 
+//------------------------------------------------------------------------------
+// IteratorList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE IteratorList : public std::vector<Iterator*> {
+};
+
+//------------------------------------------------------------------------------
+// IteratorOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE IteratorOwner : public IteratorList, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(IteratorOwner);
+protected:
+	~IteratorOwner() { Clear(); }
+public:
+	void Clear();
+};
+
 }
 
 #endif

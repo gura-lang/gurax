@@ -227,6 +227,78 @@ String Iterator_Evaluator::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_for
+//------------------------------------------------------------------------------
+Value* Iterator_for::DoNextValue()
+{
+#if 0
+	while (_contFlag) {
+		
+
+		if (GetFiniteFlag() && _idx >= _cnt) break;
+		if (GetArgument().HasArgSlot()) {
+			ArgFeeder args(GetArgument());
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+		}
+		_idx++;
+		Processor::Event event;
+		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		if (Error::IsIssued()) break;
+		if (Processor::IsEventBreak(event)) {
+			_contFlag = false;
+			if (pValueRtn->IsUndefined()) break;
+		}
+		if (GetSkipNilFlag()) {
+			if (pValueRtn->IsValid()) return pValueRtn.release();
+		} else {
+			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
+		}
+	}
+#endif
+	return nullptr;
+}
+
+String Iterator_for::ToString(const StringStyle& ss) const
+{
+	return "for";
+}
+
+//------------------------------------------------------------------------------
+// Iterator_while
+//------------------------------------------------------------------------------
+Value* Iterator_while::DoNextValue()
+{
+#if 0
+	while (_contFlag) {
+		if (GetFiniteFlag() && _idx >= _cnt) break;
+		if (GetArgument().HasArgSlot()) {
+			ArgFeeder args(GetArgument());
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+		}
+		_idx++;
+		Processor::Event event;
+		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		if (Error::IsIssued()) break;
+		if (Processor::IsEventBreak(event)) {
+			_contFlag = false;
+			if (pValueRtn->IsUndefined()) break;
+		}
+		if (GetSkipNilFlag()) {
+			if (pValueRtn->IsValid()) return pValueRtn.release();
+		} else {
+			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
+		}
+	}
+#endif
+	return nullptr;
+}
+
+String Iterator_while::ToString(const StringStyle& ss) const
+{
+	return "while";
+}
+
+//------------------------------------------------------------------------------
 // Iterator_repeat
 //------------------------------------------------------------------------------
 Value* Iterator_repeat::DoNextValue()

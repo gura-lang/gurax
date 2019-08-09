@@ -83,7 +83,7 @@ private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	Flags _flags;
 	RefPtr<Attribute> _pAttr;
-	DeclArgOwner _declArgOwner;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	DeclBlock _declBlock;
 	const Symbol* _pSymbolOfDict;
 	const Symbol* _pSymbolOfAccessor;
@@ -110,8 +110,8 @@ public:
 	bool IsNaked() const;
 	bool Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock);
 	void Clear();
-	DeclArgOwner& GetDeclArgOwner() { return _declArgOwner; }
-	const DeclArgOwner& GetDeclArgOwner() const { return _declArgOwner; }
+	DeclArgOwner& GetDeclArgOwner() { return *_pDeclArgOwner; }
+	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
 	DeclBlock& GetDeclBlock() { return _declBlock; }
 	const DeclBlock& GetDeclBlock() const { return _declBlock; }
 	void SetVTypeResult(const VType& vtype) { _pVTypeResult = &vtype; }

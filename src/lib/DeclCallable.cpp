@@ -28,7 +28,7 @@ void DeclCallable::Bootup()
 }
 
 DeclCallable::DeclCallable() :
-	_pVTypeResult(&VTYPE_Any), _flags(0), _pAttr(new Attribute()),
+	_pVTypeResult(&VTYPE_Any), _flags(0), _pAttr(new Attribute()), _pDeclArgOwner(new DeclArgOwner()),
 	_pSymbolOfDict(Symbol::Empty), _pSymbolOfAccessor(Symbol::Empty)
 {
 }
@@ -40,7 +40,7 @@ bool DeclCallable::IsNaked() const
 
 bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, const Expr_Block* pExprOfBlock)
 {
-	_declArgOwner.reserve(exprLinkCdr.CountSequence());
+	GetDeclArgOwner().reserve(exprLinkCdr.CountSequence());
 	for (const Expr* pExpr = exprLinkCdr.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		if (pExpr->IsType<Expr_UnaryOp>()) {
 			const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
@@ -106,7 +106,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 			return false;
 		}
 		if (!DeclArg::CheckFlagConfliction(pDeclArg->GetFlags())) return false;
-		_declArgOwner.push_back(pDeclArg.release());
+		GetDeclArgOwner().push_back(pDeclArg.release());
 	}
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		Flags flag = SymbolToFlag(pSymbol);
@@ -168,7 +168,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 
 void DeclCallable::Clear()
 {
-	_declArgOwner.Clear();
+	GetDeclArgOwner().Clear();
 	_flags = 0;
 	_pAttr.reset(new Attribute());
 }

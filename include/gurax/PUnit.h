@@ -758,7 +758,7 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
-	std::unique_ptr<DeclArgOwner> _pDeclArgOwner;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
@@ -787,7 +787,7 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_ForEach");
 private:
 	size_t _offset;
-	std::unique_ptr<DeclArgOwner> _pDeclArgOwner;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
 public:
 	PUnitFactory_ForEach(size_t offset, DeclArgOwner* pDeclArgOwner, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
 		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset), _pDeclArgOwner(pDeclArgOwner) {}

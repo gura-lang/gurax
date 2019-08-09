@@ -162,9 +162,13 @@ public:
 //------------------------------------------------------------------------------
 // DeclArgOwner
 //------------------------------------------------------------------------------
-class DeclArgOwner: public DeclArgList {
+class DeclArgOwner: public DeclArgList, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(DeclArgOwner);
+protected:
 	~DeclArgOwner() { Clear(); }
+public:
 	void Clear() {
 		for (DeclArg* pDeclArg : *this) DeclArg::Delete(pDeclArg);
 		clear();
