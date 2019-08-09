@@ -230,21 +230,21 @@ private:
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<Argument> _pArgument;
 	RefPtr<DeclArgOwner> _pDeclArgOwner;
-	RefPtr<IteratorOwner> _pIterators;
+	RefPtr<IteratorOwner> _pIteratorOwner;
 	size_t _idx;
 	bool _contFlag;
 public:
-	Iterator_for(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, IteratorOwner* pIterators) :
+	Iterator_for(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, IteratorOwner* pIteratorOwner) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_pDeclArgOwner(pDeclArgOwner), _pIterators(pIterators), _idx(0), _contFlag(true) {}
+		_pDeclArgOwner(pDeclArgOwner), _pIteratorOwner(pIteratorOwner), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
 	Argument& GetArgument() { return *_pArgument; }
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
-	IteratorOwner& GetIterators() { return *_pIterators; }
+	IteratorOwner& GetIteratorOwner() { return *_pIteratorOwner; }
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
