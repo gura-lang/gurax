@@ -12,12 +12,21 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 {
 	RefPtr<Value> pValueRtn(Value::nil());
 	const DeclArgOwner& declArgOwner = exprOfBlock.GetDeclCallable().GetDeclArgOwner();
-	Frame& frame = processor.PushFrame<Frame_Scope>();
-	bool listFlag = false;
-	bool iterFlag = false;
-	bool contFlag = true;
-	if (declArgOwner.size() == 0) {
+	if (declArgOwner.size() > 2) {
+		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
+		return Value::nil();
+	}
+	bool skipNilFlag = false;
+	if ((flags & DeclCallable::Flag::Iter) || (skipNilFlag = flags & DeclCallable::Flag::XIter)) {
+		RefPtr<Iterator> pIterator(new Iterator_DoEach(
+									   processor.Reference(), processor.CreateFrame<Frame_Scope>(),
+									   exprOfBlock.Reference(), Reference(), skipNilFlag));
+		pValueRtn.reset(new Value_Iterator(pIterator.release()));
+	} else if (declArgOwner.size() == 0) {
 		// iterable#Each { .. }
+		bool listFlag = false;
+		bool contFlag = true;
+		processor.PushFrame<Frame_Scope>();
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
@@ -33,8 +42,6 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				processor.ClearEvent();
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueOwner.release()));
-		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
-
 		} else {
 			do {
 				RefPtr<Value> pValueElem(NextValue());
@@ -45,8 +52,12 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				processor.ClearEvent();
 			} while (contFlag);
 		}
+		processor.PopFrame();
 	} else if (declArgOwner.size() == 1) {
 		// iterable#Each {|elem| .. }
+		bool listFlag = false;
+		bool contFlag = true;
+		Frame& frame = processor.PushFrame<Frame_Scope>();
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
@@ -64,8 +75,6 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				processor.ClearEvent();
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueOwner.release()));
-		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
-
 		} else {
 			do {
 				RefPtr<Value> pValueElem(NextValue());
@@ -78,9 +87,13 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				processor.ClearEvent();
 			} while (contFlag);
 		}
-	} else if (declArgOwner.size() == 2) {
+		processor.PopFrame();
+	} else { // declArgOwner.size() == 2
 		// iterable#Each {|elem, idx| .. }
+		bool listFlag = false;
+		bool contFlag = true;
 		size_t idx = 0;
+		Frame& frame = processor.PushFrame<Frame_Scope>();
 		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
@@ -102,8 +115,6 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				processor.ClearEvent();
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueOwner.release()));
-		} else if ((iterFlag = flags & DeclCallable::Flag::Iter) || (flags & DeclCallable::Flag::XIter)) {
-
 		} else {
 			do {
 				RefPtr<Value> pValueElem(NextValue());
@@ -120,10 +131,8 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				processor.ClearEvent();
 			} while (contFlag);
 		}
-	} else {
-		Error::Issue(ErrorType::ArgumentError, "invalid number of block parameters");
+		processor.PopFrame();
 	}
-	processor.PopFrame();
 	if (Error::IsIssued()) return Value::nil();
 	return pValueRtn.release();
 }

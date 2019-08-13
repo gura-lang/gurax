@@ -334,48 +334,21 @@ String Iterator_repeat::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_DoEach
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_DoEach : public Iterator {
-private:
-	RefPtr<Processor> _pProcessor;
-	RefPtr<Frame> _pFrame;
-	RefPtr<Expr_Block> _pExprOfBlock;
-	RefPtr<Argument> _pArgument;
-	RefPtr<Iterator> _pIteratorSrc;
-	bool _skipNilFlag;
-	size_t _idx;
-public:
-	Iterator_DoEach(Processor* pProcessor, Expr_Block* pExprOfBlock, Iterator* pIteratorSrc, bool skipNilFlag) :
-		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
-		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_pIteratorSrc(pIteratorSrc), _skipNilFlag(skipNilFlag), _idx(0) {}
-public:
-	Processor& GetProcessor() { return *_pProcessor; }
-	Frame& GetFrame() { return *_pFrame; }
-	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
-	Argument& GetArgument() { return *_pArgument; }
-	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
-	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
-	bool GetSkipNilFlag() const { return _skipNilFlag; }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags(); }
-	virtual size_t GetLength() const override { return GetIteratorSrc().GetLength(); }
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
 Value* Iterator_DoEach::DoNextValue()
 {
-#if 0
 	while (_contFlag) {
-		if (GetFiniteFlag() && _idx >= _cnt) break;
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) return nullptr;
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetFrame(), pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		Processor::Event event;
+		GetProcessor().PushFrame(GetFrame().Reference());
 		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		GetProcessor().PopFrame();
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
 			_contFlag = false;
@@ -387,13 +360,12 @@ Value* Iterator_DoEach::DoNextValue()
 			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
 		}
 	}
-#endif
 	return nullptr;
 }
 
 String Iterator_DoEach::ToString(const StringStyle& ss) const
 {
-	return "repeat";
+	return "DoEach";
 }
 
 }

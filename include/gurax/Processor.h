@@ -95,8 +95,9 @@ public:
 	FrameStack& GetFrameStack() { return *_pFrameStack; }
 	const FrameStack& GetFrameStack() const { return *_pFrameStack; }
 	void ClearFrameStack() { GetFrameStack().Clear(); }
-	void PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); }
-	template<typename T_Frame> Frame& PushFrame();
+	Frame& PushFrame(Frame* pFrame) { GetFrameStack().Push(pFrame); return *pFrame; }
+	template<typename T_Frame> Frame* CreateFrame() { return new T_Frame(GetFrameCur().Reference()); }
+	template<typename T_Frame> Frame& PushFrame() { return PushFrame(CreateFrame<T_Frame>()); }
 	Frame& PushFrameForFunction(const Function& function, bool dynamicScopeFlag);
 	void PopFrame() { GetFrameStack().Pop(); }
 	Frame& GetFrameCur() { return *GetFrameStack().GetCur(); }
@@ -143,14 +144,6 @@ public:
 protected:
 	virtual void RunLoop(const PUnit* pPUnit) = 0;
 };
-
-template<typename T_Frame>
-Frame& Processor::PushFrame()
-{
-	Frame* pFrame = new T_Frame(GetFrameCur().Reference());
-	PushFrame(pFrame);
-	return *pFrame;
-}
 
 //------------------------------------------------------------------------------
 // Processor_Normal

@@ -331,6 +331,40 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_DoEach
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_DoEach : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Frame> _pFrame;
+	RefPtr<Expr_Block> _pExprOfBlock;
+	RefPtr<Argument> _pArgument;
+	RefPtr<Iterator> _pIteratorSrc;
+	bool _skipNilFlag;
+	size_t _idx;
+	bool _contFlag;
+public:
+	Iterator_DoEach(Processor* pProcessor, Frame* pFrame, Expr_Block* pExprOfBlock, Iterator* pIteratorSrc, bool skipNilFlag) :
+		_pProcessor(pProcessor), _pFrame(pFrame),
+		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
+		_pIteratorSrc(pIteratorSrc), _skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Frame& GetFrame() { return *_pFrame; }
+	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
+	Argument& GetArgument() { return *_pArgument; }
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags(); }
+	virtual size_t GetLength() const override { return GetIteratorSrc().GetLength(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif
