@@ -22,114 +22,62 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 									   processor.Reference(), processor.CreateFrame<Frame_Scope>(),
 									   exprOfBlock.Reference(), Reference(), skipNilFlag));
 		pValueRtn.reset(new Value_Iterator(pIterator.release()));
-	} else if (declArgOwner.size() == 0) {
-		// iterable#Each { .. }
-		bool listFlag = false;
-		bool contFlag = true;
-		processor.PushFrame<Frame_Scope>();
-		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
-			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-			do {
-				RefPtr<Value> pValueElem(NextValue());
-				if (!pValueElem) break;
-				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
-				if (Error::IsIssued()) break;
-				// Statements of return and break possibly return undefined value.
-				if (!pValue->IsUndefined() && (listFlag || pValue->IsValid())) {
-					pValueOwner->push_back(pValue.release());
-				}
-				contFlag = !processor.IsEventBreak();
-				processor.ClearEvent();
-			} while (contFlag);
-			pValueRtn.reset(new Value_List(pValueOwner.release()));
-		} else {
-			do {
-				RefPtr<Value> pValueElem(NextValue());
-				if (!pValueElem) break;
-				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
-				if (Error::IsIssued()) break;
-				contFlag = !processor.IsEventBreak();
-				processor.ClearEvent();
-			} while (contFlag);
-		}
-		processor.PopFrame();
-	} else if (declArgOwner.size() == 1) {
-		// iterable#Each {|elem| .. }
-		bool listFlag = false;
-		bool contFlag = true;
-		Frame& frame = processor.PushFrame<Frame_Scope>();
-		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
-			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-			do {
-				RefPtr<Value> pValueElem(NextValue());
-				if (!pValueElem) break;
-				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
-				if (Error::IsIssued()) break;
-				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
-				if (Error::IsIssued()) break;
-				// Statements of return and break possibly return undefined value.
-				if (!pValue->IsUndefined() && (listFlag || pValue->IsValid())) {
-					pValueOwner->push_back(pValue.release());
-				}
-				contFlag = !processor.IsEventBreak();
-				processor.ClearEvent();
-			} while (contFlag);
-			pValueRtn.reset(new Value_List(pValueOwner.release()));
-		} else {
-			do {
-				RefPtr<Value> pValueElem(NextValue());
-				if (!pValueElem) break;
-				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
-				if (Error::IsIssued()) break;
-				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
-				if (Error::IsIssued()) break;
-				contFlag = !processor.IsEventBreak();
-				processor.ClearEvent();
-			} while (contFlag);
-		}
-		processor.PopFrame();
-	} else { // declArgOwner.size() == 2
-		// iterable#Each {|elem, idx| .. }
-		bool listFlag = false;
+	} else {
+		size_t nArgs = declArgOwner.size();
 		bool contFlag = true;
 		size_t idx = 0;
 		Frame& frame = processor.PushFrame<Frame_Scope>();
-		if ((listFlag = flags & DeclCallable::Flag::List) || (flags & DeclCallable::Flag::XList)) {
+		if ((flags & DeclCallable::Flag::List) || (skipNilFlag = flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
-				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
-				if (Error::IsIssued()) break;
-				RefPtr<Value> pValueIdx(new Value_Number(idx));
+				if (nArgs > 0) {
+					frame.AssignWithCast(*declArgOwner[0], *pValueElem);
+					if (Error::IsIssued()) break;
+					if (nArgs > 1) {
+						RefPtr<Value> pValueIdx(new Value_Number(idx));
+						frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
+						if (Error::IsIssued()) break;
+					}
+				}
 				idx++;
-				frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
-				if (Error::IsIssued()) break;
 				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
+				Processor::Event event = processor.GetEvent();
+				processor.ClearEvent();
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.
-				if (!pValue->IsUndefined() && (listFlag || pValue->IsValid())) {
-					pValueOwner->push_back(pValue.release());
+				if (Processor::IsEventBreak(event)) {
+					contFlag = false;
+					if (pValue->IsUndefined()) break;
 				}
-				contFlag = !processor.IsEventBreak();
-				processor.ClearEvent();
+				if (skipNilFlag) {
+					if (pValue->IsValid()) pValueOwner->push_back(pValue.release());
+				} else {
+					pValueOwner->push_back(pValue->IsValid()? pValue.release() : Value::nil());
+				}
 			} while (contFlag);
 			pValueRtn.reset(new Value_List(pValueOwner.release()));
 		} else {
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
-				frame.AssignWithCast(*declArgOwner[0], *pValueElem);
-				if (Error::IsIssued()) break;
-				RefPtr<Value> pValueIdx(new Value_Number(idx));
+				if (nArgs > 0) {
+					frame.AssignWithCast(*declArgOwner[0], *pValueElem);
+					if (Error::IsIssued()) break;
+					if (nArgs > 1) {
+						RefPtr<Value> pValueIdx(new Value_Number(idx));
+						frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
+						if (Error::IsIssued()) break;
+					}
+				}
 				idx++;
-				frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
-				if (Error::IsIssued()) break;
 				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
 				if (Error::IsIssued()) break;
 				contFlag = !processor.IsEventBreak();
 				processor.ClearEvent();
 			} while (contFlag);
+			if (pValueRtn->IsUndefined()) pValueRtn.reset(Value::nil());
 		}
 		processor.PopFrame();
 	}
