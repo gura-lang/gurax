@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
-class VType_List : public VType {
+class GURAX_DLLDECLARE VType_List : public VType {
 public:
 	using VType::VType;
 	virtual bool IsList() const override { return true; }

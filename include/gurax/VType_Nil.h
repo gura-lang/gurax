@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Nil
 //------------------------------------------------------------------------------
-class VType_Nil : public VType {
+class GURAX_DLLDECLARE VType_Nil : public VType {
 public:
 	using VType::VType;
 	virtual bool IsNil() const override { return true; }

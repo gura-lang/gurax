@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_ArgMapper_Multiple
 //------------------------------------------------------------------------------
-class VType_ArgMapper_Multiple : public VType {
+class GURAX_DLLDECLARE VType_ArgMapper_Multiple : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

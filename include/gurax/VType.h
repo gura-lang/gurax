@@ -20,7 +20,7 @@ class Processor;
 //------------------------------------------------------------------------------
 // VType
 //------------------------------------------------------------------------------
-class VType {
+class GURAX_DLLDECLARE VType {
 public:
 	using UniqId = UInt32;
 	using Flags = UInt32;

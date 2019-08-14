@@ -10,7 +10,48 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_String
 //------------------------------------------------------------------------------
-class VType_String : public VType {
+class GURAX_DLLDECLARE VType_String : public VType {
+public:
+	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+	public:
+		enum class Type { String, UTF8, UTF32 };
+	private:
+		RefPtr<StringReferable> _pStr;
+		Type _type;
+		const char* _pCurrent;
+	public:
+		Iterator_Each(StringReferable* pStr, Type type) :
+			_pStr(pStr), _type(type), _pCurrent(GetString()) {}
+	public:
+		const char* GetString() const { return _pStr->GetString(); }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenUndetermined;
+		}
+		virtual size_t GetLength() const override { return -1; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	class GURAX_DLLDECLARE Iterator_EachLine : public Iterator {
+	private:
+		RefPtr<StringReferable> _pStr;
+		bool _chopFlag;
+		const char* _pCurrent;
+	public:
+		Iterator_EachLine(StringReferable* pStr, bool chopFlag) :
+			_pStr(pStr), _chopFlag(chopFlag), _pCurrent(GetString()) {}
+	public:
+		const char* GetString() const { return _pStr->GetString(); }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenUndetermined;
+		}
+		virtual size_t GetLength() const override { return -1; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
@@ -28,8 +69,6 @@ public:
 	Gurax_DeclareReferable(Value_String);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_String");
-public:
-	
 protected:
 	RefPtr<StringReferable> _pStr;
 public:
@@ -51,9 +90,13 @@ protected:
 	// Destructor
 	~Value_String() = default;
 public:
+	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 public:
+	static const StringReferable& GetStringReferable(const Value& value) {
+		return dynamic_cast<const Value_String&>(value).GetStringReferable();
+	}
 	static const char* GetString(const Value& value) {
 		return dynamic_cast<const Value_String&>(value).GetString();
 	}

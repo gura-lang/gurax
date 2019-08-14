@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Codec
 //------------------------------------------------------------------------------
-class VType_Codec : public VType {
+class GURAX_DLLDECLARE VType_Codec : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

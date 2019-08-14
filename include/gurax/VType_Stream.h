@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Stream
 //------------------------------------------------------------------------------
-class VType_Stream : public VType {
+class GURAX_DLLDECLARE VType_Stream : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

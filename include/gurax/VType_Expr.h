@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Expr
 //------------------------------------------------------------------------------
-class VType_Expr : public VType {
+class GURAX_DLLDECLARE VType_Expr : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

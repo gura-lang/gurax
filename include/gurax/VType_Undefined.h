@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Undefined
 //------------------------------------------------------------------------------
-class VType_Undefined : public VType {
+class GURAX_DLLDECLARE VType_Undefined : public VType {
 public:
 	using VType::VType;
 	virtual bool IsUndefined() const override { return true; }

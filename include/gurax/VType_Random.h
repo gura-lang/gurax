@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Random
 //------------------------------------------------------------------------------
-class VType_Random : public VType {
+class GURAX_DLLDECLARE VType_Random : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

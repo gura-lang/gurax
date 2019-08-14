@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Iterator
 //------------------------------------------------------------------------------
-class VType_Iterator : public VType {
+class GURAX_DLLDECLARE VType_Iterator : public VType {
 public:
 	using VType::VType;
 	virtual bool IsIterator() const override { return true; }

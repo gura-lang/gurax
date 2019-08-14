@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
-class VType_Binary : public VType {
+class GURAX_DLLDECLARE VType_Binary : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

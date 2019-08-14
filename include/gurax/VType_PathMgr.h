@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_PathMgr
 //------------------------------------------------------------------------------
-class VType_PathMgr : public VType {
+class GURAX_DLLDECLARE VType_PathMgr : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

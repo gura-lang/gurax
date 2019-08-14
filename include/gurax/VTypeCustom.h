@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VTypeCustom
 //------------------------------------------------------------------------------
-class VTypeCustom : public VType {
+class GURAX_DLLDECLARE VTypeCustom : public VType {
 public:
 	class ConstructorClass : public Function {
 	protected:

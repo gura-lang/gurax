@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_Quote
 //------------------------------------------------------------------------------
-class VType_Quote : public VType {
+class GURAX_DLLDECLARE VType_Quote : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_StringPtr
 //------------------------------------------------------------------------------
-class VType_StringPtr : public VType {
+class GURAX_DLLDECLARE VType_StringPtr : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;

@@ -130,51 +130,48 @@ Gurax_DeclareMethod(String, Each)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Creates an iterator generating strings of each character in the original one.\n");
+		"Creates an iterator that returns each character in the string.\n");
 }
 
 Gurax_ImplementMethod(String, Each)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	VType_String::Iterator_Each::Type type =
+		argument.IsSet(Gurax_Symbol(utf8))? VType_String::Iterator_Each::Type::UTF8 :
+		argument.IsSet(Gurax_Symbol(utf32))? VType_String::Iterator_Each::Type::UTF32 :
+		VType_String::Iterator_Each::Type::String;
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const StringReferable& str = valueThis.GetStringReferable();
+	return ReturnIterator(processor, argument, new VType_String::Iterator_Each(str.Reference(), type));
 }
 
-// String#EachLine(nLines?:Number):Iterator:[chop] {block?}
-// conrresponding to file#readlines()
+
+// String#EachLine():Iterator:[chop] {block?}
+// conrresponding to stream#ReadLines()
 Gurax_DeclareMethod(String, EachLine)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Creates an iterator generating strings of each line in the original one.\n"
+		"Creates an iterator that returns each line of the string.\n"
 		"\n"
-		"In default, end-of-line characters are involved in the result.\n"
+		"In default, end-of-line characters are included in the result.\n"
 		"You can eliminates them by specifying `:chop` attribute.\n");
 }
 
 Gurax_ImplementMethod(String, EachLine)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	bool chopFlag = argument.IsSet(Gurax_Symbol(chop));
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const StringReferable& str = valueThis.GetStringReferable();
+	return ReturnIterator(processor, argument, new VType_String::Iterator_EachLine(str.Reference(), chopFlag));
 }
 
 // String#Embed(dst?:Stream:w):String:[noindent,lasteol]
@@ -1268,6 +1265,64 @@ void VType_String::DoPrepare(Frame& frameOuter)
 Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return new Value_String(value.ToString());
+}
+
+//------------------------------------------------------------------------------
+// VType_String::Iterator_Each
+//------------------------------------------------------------------------------
+Value* VType_String::Iterator_Each::DoNextValue()
+{
+	if (!*_pCurrent) return nullptr;
+	RefPtr<Value> pValue;
+	switch (_type) {
+	case Type::UTF8: {
+		pValue.reset(new Value_Number(String::NextUTF8(&_pCurrent)));
+		break;
+	}
+	case Type::UTF32: {
+		pValue.reset(new Value_Number(String::NextUTF32(&_pCurrent)));
+		break;
+	}
+	default: { // Type::String
+		const char* pEnd = String::Forward(_pCurrent);
+		pValue.reset(new Value_String(String(_pCurrent, pEnd)));
+		_pCurrent = pEnd;
+		break;
+	}
+	}
+	return pValue.release();
+}
+
+String VType_String::Iterator_Each::ToString(const StringStyle& ss) const
+{
+	return "String#Each";
+}
+
+//------------------------------------------------------------------------------
+// VType_String::Iterator_EachLine
+//------------------------------------------------------------------------------
+Value* VType_String::Iterator_EachLine::DoNextValue()
+{
+	const char* pBegin = _pCurrent;
+	if (!*pBegin) return nullptr;
+	const char* pEnd = pBegin;
+	for ( ; ; _pCurrent++) {
+		char ch = *_pCurrent;
+		if (ch == '\0') {
+			pEnd = _pCurrent;
+			break;
+		} else if (ch == '\n') {
+			pEnd = _chopFlag? _pCurrent : _pCurrent + 1;
+			_pCurrent++;
+			break;
+		}
+	}
+	return new Value_String(String(pBegin, pEnd));
+}
+
+String VType_String::Iterator_EachLine::ToString(const StringStyle& ss) const
+{
+	return "String#EachLine";
 }
 
 //------------------------------------------------------------------------------

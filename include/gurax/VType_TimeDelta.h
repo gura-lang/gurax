@@ -11,7 +11,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // VType_TimeDelta
 //------------------------------------------------------------------------------
-class VType_TimeDelta : public VType {
+class GURAX_DLLDECLARE VType_TimeDelta : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
