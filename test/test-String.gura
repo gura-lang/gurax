@@ -25,6 +25,9 @@ TestCase('Property') {
 }
 
 TestCase('String#Capitalize()') {
+	Printf('%s -> %s\n', words10, words10::Capitalize())
+	words = ['aaaaaa', 'zzzzzz', 'AAAAAA', 'ZZZZZZ']
+	Printf('%s -> %s\n', words, words::Capitalize())
 }
 
 TestCase('String#Center()') {

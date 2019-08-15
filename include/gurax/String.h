@@ -242,6 +242,8 @@ public:
 	static String Upper(const char* str);
 	String Lower() const { return Lower(c_str()); }
 	static String Lower(const char* str);
+	String Capitalize() const { return Capitalize(c_str()); }
+	static String Capitalize(const char* str);
 public:
 	static void IssueError_InvalidFormatOfNumber();
 	static void IssueError_IndexOutOfRange(size_t len, Int pos);

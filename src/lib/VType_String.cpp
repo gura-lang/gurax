@@ -20,7 +20,6 @@ Gurax_DeclareMethod(String, Capitalize)
 
 Gurax_ImplementMethod(String, Capitalize)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
@@ -28,8 +27,7 @@ Gurax_ImplementMethod(String, Capitalize)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.Capitalize());
 }
 
 // String#Center(width:Number, padding?:String):String:map

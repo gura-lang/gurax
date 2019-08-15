@@ -569,6 +569,17 @@ String String::Lower(const char* str)
 	return strRtn;
 }
 
+String String::Capitalize(const char* str)
+{
+	String strRtn;
+	const char* p = str;
+	if (*p != '\0') {
+		strRtn += ToUpper(*p);
+		strRtn += p + 1;
+	}
+	return strRtn;
+}
+
 void String::IssueError_InvalidFormatOfNumber()
 {
 	Error::Issue(ErrorType::FormatError, "invalid format of number");
