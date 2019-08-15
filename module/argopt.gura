@@ -51,8 +51,13 @@ Parser = class {
 		argvRest = []
 		iter = argv.Offset(1)
 		while (arg = iter.NextValue()) {
-			value = dictByLongName.Get(arg)
-			Println(value)
+			if (longName = arg.StartsWith('--'):rest) {
+				value = dictByLongName.Get(longName)
+			} elsif (shortName = arg.StartsWith('-'):rest) {
+				value = dictByShortName.Get(shortName)
+			} else {
+				
+			}
 		}
 		//Println(argv)
 		//Println(this.entries[0].MakeHelpIndex(true, true))

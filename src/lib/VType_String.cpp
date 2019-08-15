@@ -652,16 +652,21 @@ Gurax_DeclareMethod(String, Replace)
 
 Gurax_ImplementMethod(String, Replace)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	const char* match = args.PickString();
+	const char* sub = args.PickString();
+	bool validFlag_count = false;
+	Int count = (validFlag_count = args.IsValid())? args.PickNumberNonNeg<Int>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	String strRtn = argument.IsSet(Gurax_Symbol(icase))?
+		(validFlag_count? str.Replace<CharICase>(match, sub, count) : str.Replace<CharICase>(match, sub)) :
+		(validFlag_count? str.Replace<CharCase>(match, sub, count) : str.Replace<CharCase>(match, sub));
+	return new Value_String(strRtn);
 }
 
 // String#Replaces(map[]:String, count?:number):String:map:[icase] {block?}
@@ -1285,6 +1290,44 @@ void VType_String::DoPrepare(Frame& frameOuter)
 Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return new Value_String(value.ToString());
+}
+
+//------------------------------------------------------------------------------
+// VType_String::Iterator_Split
+//------------------------------------------------------------------------------
+template<typename T_CharCmp>
+class GURAX_DLLDECLARE Iterator_Split : public Iterator {
+private:
+	RefPtr<StringReferable> _pStr;
+	String _sep;
+	const char* _pCurrent;
+public:
+	Iterator_Split(StringReferable* pStr, String sep) :
+		_pStr(pStr), _sep(sep), _pCurrent(GetString()) {}
+public:
+	const char* GetString() const { return _pStr->GetString(); }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+template<typename T_CharCmp>
+Value* Iterator_Split<T_CharCmp>::DoNextValue()
+{
+	if (!*_pCurrent) return nullptr;
+	//const char* pEnd = String::Find<T_CharCmp>(_pCurrent, _sep.c_str());
+	return nullptr;
+}
+
+template<typename T_CharCmp>
+String Iterator_Split<T_CharCmp>::ToString(const StringStyle& ss) const
+{
+	return "String#Split";
 }
 
 //------------------------------------------------------------------------------

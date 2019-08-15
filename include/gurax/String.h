@@ -173,7 +173,7 @@ public:
 	bool IsLessThanICase(const String& str) const					{ return IsLessThanICase(c_str(), str.c_str()); }
 public:
 	template<typename T_CharCmp>
-	static const char* Find(const char* str, const char* sub);
+	static const char* Find(const char* str, const char* sub, const char** pStrNext);
 	template<typename T_CharCmp>
 	static const_iterator Find(const_iterator pStr, const_iterator pStrEnd, const char* sub);
 	template<typename T_CharCmp>
@@ -278,15 +278,19 @@ inline String operator+(const String& v1, const String& v2) {
 }
 
 template<typename T_CharCmp>
-const char* String::Find(const char* str, const char* sub)
+const char* String::Find(const char* str, const char* sub, const char** pStrNext)
 {
 	for ( ; *str != '\0'; str++) {
 		const char* p1 = str;
 		const char* p2 = sub;
 		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
-		if (*p2 == '\0') return str;
+		if (*p2 == '\0') {
+			*pStrNext = p1;
+			return str;
+		}
 	}
-	return nullptr;
+	*pStrNext = str;
+	return str;
 }
 
 template<typename T_CharCmp>
@@ -349,22 +353,22 @@ template<typename T_CharCmp>
 String String::Replace(const char* str, const char* sub, const char* replace)
 {
 	String result;
-	int lenSub = static_cast<int>(::strlen(sub));
-	if (lenSub == 0) {
+	if (*sub == '\0') {
 		result += replace;
 		const char* p = str;
-		for ( ; *p != '\0'; p++) {
+		for ( ; *p != '\0'; p = Forward(p)) {
 			result += *p;
 			result += replace;
 		}
-		result += p;
+		//result += p;
 	} else {
 		const char* pLeft = str;
-		const char* pRight = Find<T_CharCmp>(pLeft, sub);
-		for ( ; pRight != nullptr; pRight = Find<T_CharCmp>(pLeft, sub)) {
+		const char* pLeftNext = str;
+		const char* pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext);
+		for ( ; *pRight; pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext)) {
 			result.append(pLeft, pRight - pLeft);
 			result += replace;
-			pLeft = pRight + lenSub;
+			pLeft = pLeftNext;
 		}
 		result += pLeft;
 	}
@@ -375,25 +379,25 @@ template<typename T_CharCmp>
 String String::Replace(const char* str, const char* sub, const char* replace, int nMaxReplace)
 {
 	String result;
-	int lenSub = static_cast<int>(::strlen(sub));
-	if (lenSub == 0) {
+	if (*sub == '\0') {
 		if (nMaxReplace != 0) {
 			result += replace;
 			nMaxReplace--;
 		}
 		const char* p = str;
-		for ( ; *p != '\0' && nMaxReplace != 0; p++, nMaxReplace--) {
+		for ( ; *p != '\0' && nMaxReplace != 0; p = Forward(p), nMaxReplace--) {
 			result += *p;
 			result += replace;
 		}
 		result += p;
 	} else {
 		const char* pLeft = str;
-		const char* pRight = Find<T_CharCmp>(pLeft, sub);
-		for ( ; pRight != nullptr && nMaxReplace != 0; pRight = Find<T_CharCmp>(pLeft, sub), nMaxReplace--) {
+		const char* pLeftNext = str;
+		const char* pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext);
+		for ( ; *pRight && nMaxReplace != 0; pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext), nMaxReplace--) {
 			result.append(pLeft, pRight - pLeft);
 			result += replace;
-			pLeft = pRight + lenSub;
+			pLeft = pLeftNext;
 		}
 		result += pLeft;
 	}
