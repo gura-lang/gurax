@@ -12,6 +12,26 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_String : public VType {
 public:
+	template<typename T_CharCmp>
+	class Iterator_Split : public Iterator {
+	private:
+		RefPtr<StringReferable> _pStr;
+		String _sep;
+		const char* _pCurrent;
+	public:
+		Iterator_Split(StringReferable* pStr, String sep) :
+			_pStr(pStr), _sep(sep), _pCurrent(GetString()) {}
+	public:
+		const char* GetString() const { return _pStr->GetString(); }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenUndetermined;
+		}
+		virtual size_t GetLength() const override { return -1; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 	class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 	public:
 		enum class Type { String, UTF8, UTF32 };
@@ -124,6 +144,26 @@ public:
 	virtual bool IsAsDictKey() const override { return true; }
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 };
+
+//------------------------------------------------------------------------------
+// VType_String::Iterator_Split
+//------------------------------------------------------------------------------
+template<typename T_CharCmp>
+Value* VType_String::Iterator_Split<T_CharCmp>::DoNextValue()
+{
+	if (!*_pCurrent) return nullptr;
+	const char* pCurrentNext = _pCurrent;
+	const char* pEnd = String::Find<T_CharCmp>(_pCurrent, _sep.c_str(), &pCurrentNext);
+	String strRtn(_pCurrent, pEnd);
+	_pCurrent = pCurrentNext;
+	return new Value_String(strRtn);
+}
+
+template<typename T_CharCmp>
+String VType_String::Iterator_Split<T_CharCmp>::ToString(const StringStyle& ss) const
+{
+	return "String#Split";
+}
 
 }
 

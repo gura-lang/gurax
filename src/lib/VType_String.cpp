@@ -770,12 +770,11 @@ Gurax_ImplementMethod(String, RJust)
 	return new Value_String(str.RJust(width, padding));
 }
 
-// String#Split(sep?:String, count?:number):String:[icase] {block?}
+// String#Split(sep?:String):String:[icase] {block?}
 Gurax_DeclareMethod(String, Split)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -787,16 +786,23 @@ Gurax_DeclareMethod(String, Split)
 
 Gurax_ImplementMethod(String, Split)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	const char* sep = args.IsValid()? args.PickString() : "";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const StringReferable& str = valueThis.GetStringReferable();
+	RefPtr<Iterator> pIterator;
+	if (*sep == '\0') {
+		pIterator.reset(new VType_String::Iterator_Each(str.Reference(), VType_String::Iterator_Each::Type::String));
+	} else if (argument.IsSet(Gurax_Symbol(icase))) {
+		pIterator.reset(new VType_String::Iterator_Split<CharICase>(str.Reference(), sep));
+	} else {
+		pIterator.reset(new VType_String::Iterator_Split<CharCase>(str.Reference(), sep));
+	}
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // String#StartsWith(sub:String, pos?:Number):map:[rest,icase]
@@ -1290,44 +1296,6 @@ void VType_String::DoPrepare(Frame& frameOuter)
 Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return new Value_String(value.ToString());
-}
-
-//------------------------------------------------------------------------------
-// VType_String::Iterator_Split
-//------------------------------------------------------------------------------
-template<typename T_CharCmp>
-class GURAX_DLLDECLARE Iterator_Split : public Iterator {
-private:
-	RefPtr<StringReferable> _pStr;
-	String _sep;
-	const char* _pCurrent;
-public:
-	Iterator_Split(StringReferable* pStr, String sep) :
-		_pStr(pStr), _sep(sep), _pCurrent(GetString()) {}
-public:
-	const char* GetString() const { return _pStr->GetString(); }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenUndetermined;
-	}
-	virtual size_t GetLength() const override { return -1; }
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-template<typename T_CharCmp>
-Value* Iterator_Split<T_CharCmp>::DoNextValue()
-{
-	if (!*_pCurrent) return nullptr;
-	//const char* pEnd = String::Find<T_CharCmp>(_pCurrent, _sep.c_str());
-	return nullptr;
-}
-
-template<typename T_CharCmp>
-String Iterator_Split<T_CharCmp>::ToString(const StringStyle& ss) const
-{
-	return "String#Split";
 }
 
 //------------------------------------------------------------------------------
