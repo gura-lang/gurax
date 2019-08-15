@@ -313,16 +313,13 @@ Gurax_DeclareMethod(String, Escape)
 
 Gurax_ImplementMethod(String, Escape)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	bool surroundFlag = argument.IsSet(Gurax_Symbol(surround));
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.MakeQuoted(surroundFlag));
 }
 
 // String#EscapeHTML():String:[quote] {block?}
@@ -835,38 +832,61 @@ Gurax_ImplementMethod(String, StartsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
-// String#Strip():String:[both,left,right] {block?}
+// String#Strip():String {block?}
 Gurax_DeclareMethod(String, Strip)
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(both));
-	DeclareAttrOpt(Gurax_Symbol(left));
-	DeclareAttrOpt(Gurax_Symbol(right));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Returns a string that removes space characters on the left, the right or the both sides\n"
-		"of the original string.\n"
-		"\n"
-		"The following attributes would specify which side of spaces should be removed:\n"
-		"\n"
-		"- `:both` .. Removes spaces on both sides. This is the default.\n"
-		"- `:left` .. Removes spaces on the left side.\n"
-		"- `:right` .. Removes spaces on the right side.\n");
+		"Returns a string that removes space characters on the both side.\n");
 }
 
 Gurax_ImplementMethod(String, Strip)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.Strip(true, true));
+}
+
+// String#StripLeft():String {block?}
+Gurax_DeclareMethod(String, StripLeft)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns a string that removes space characters on the left side.\n");
+}
+
+Gurax_ImplementMethod(String, StripLeft)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Strip(true, false));
+}
+
+// String#StripRight():String {block?}
+Gurax_DeclareMethod(String, StripRight)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns a string that removes space characters on the right side.\n");
+}
+
+Gurax_ImplementMethod(String, StripRight)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.Strip(false, true));
 }
 
 // String#ToBinary():Binary {block?}
@@ -1240,6 +1260,8 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Split));
 	Assign(Gurax_CreateMethod(String, StartsWith));
 	Assign(Gurax_CreateMethod(String, Strip));
+	Assign(Gurax_CreateMethod(String, StripLeft));
+	Assign(Gurax_CreateMethod(String, StripRight));
 	Assign(Gurax_CreateMethod(String, ToBinary));
 	Assign(Gurax_CreateMethod(String, ToReader));
 	Assign(Gurax_CreateMethod(String, ToSymbol));

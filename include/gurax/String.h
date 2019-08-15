@@ -244,6 +244,12 @@ public:
 	static String Lower(const char* str);
 	String Capitalize() const { return Capitalize(c_str()); }
 	static String Capitalize(const char* str);
+	String Strip(bool stripLeftFlag, bool stripRightFlag) const {
+		return Strip(c_str(), stripLeftFlag, stripRightFlag);
+	}
+	static String Strip(const char* str, bool stripLeftFlag, bool stripRightFlag);
+	String Chop(bool eolOnlyFlag) const { return Chop(c_str(), eolOnlyFlag); }
+	static String Chop(const char* str, bool eolOnlyFlag);
 public:
 	static void IssueError_InvalidFormatOfNumber();
 	static void IssueError_IndexOutOfRange(size_t len, Int pos);

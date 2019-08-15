@@ -580,6 +580,42 @@ String String::Capitalize(const char* str)
 	return strRtn;
 }
 
+String String::Strip(const char* str, bool stripLeftFlag, bool stripRightFlag)
+{
+	size_t len = ::strlen(str);
+	if (len == 0) return String::Empty;
+	const char* p1 = str;
+	const char* p2 = str + len - 1;
+	if (stripLeftFlag) {
+		for ( ; IsSpace(*p1); p1++) ;
+	}
+	if (stripRightFlag) {
+		for ( ; p2 > p1 && IsSpace(*p2); p2--) ;
+		if (IsSpace(*p2)) return String("");
+	}
+	return String(p1, p2 - p1 + 1);
+}
+
+String String::Chop(const char* str, bool eolOnlyFlag)
+{
+	size_t len = ::strlen(str);
+	if (len == 0) return String::Empty;
+	const char* p = str + len;
+	if (*(p - 1) == '\n') {
+		p--;
+		if (p > str && *(p - 1) == '\r') p--;
+	} else if (eolOnlyFlag) {
+		// nothing to do
+	} else if (IsUTF8Follower(*(p - 1))) {
+		p--;
+		if (p > str) p--;
+		while (p > str && !IsUTF8First(*p)) p--;
+	} else {
+		p--;
+	}
+	return String(str, p);
+}
+
 void String::IssueError_InvalidFormatOfNumber()
 {
 	Error::Issue(ErrorType::FormatError, "invalid format of number");

@@ -2,6 +2,20 @@
 String.__PropHandler__(`len) .. <PropHandler:len:Number:R>
 String.__PropHandler__(`width) .. <PropHandler:width:Number:R>
 ======== String#Capitalize() ========
+bubble -> Bubble
+tasteful -> Tasteful
+yell -> Yell
+unarmed -> Unarmed
+vest -> Vest
+private -> Private
+cowardly -> Cowardly
+happen -> Happen
+demonic -> Demonic
+entertaining -> Entertaining
+aaaaaa -> Aaaaaa
+zzzzzz -> Zzzzzz
+AAAAAA -> AAAAAA
+ZZZZZZ -> ZZZZZZ
 ======== String#Center() ========
   bubble  
  tasteful 
@@ -222,6 +236,41 @@ entertaining
 entertaining
 ======== String#Split() ========
 ======== String#Strip() ========
+''.Strip() .. ''
+'abcdefg'.Strip() .. 'abcdefg'
+' abcdefg'.Strip() .. 'abcdefg'
+'abcdefg '.Strip() .. 'abcdefg'
+' abcdefg '.Strip() .. 'abcdefg'
+'   abcdefg'.Strip() .. 'abcdefg'
+'abcdefg   '.Strip() .. 'abcdefg'
+'   abcdefg   '.Strip() .. 'abcdefg'
+'\nabcdefg\n'.Strip() .. 'abcdefg'
+'\tabcdefg\t'.Strip() .. 'abcdefg'
+'\n \t\n \tabcdefg\n \t\n \t'.Strip() .. 'abcdefg'
+======== String#StripLeft() ========
+''.StripLeft() .. ''
+'abcdefg'.StripLeft() .. 'abcdefg'
+' abcdefg'.StripLeft() .. 'abcdefg'
+'abcdefg '.StripLeft() .. 'abcdefg '
+' abcdefg '.StripLeft() .. 'abcdefg '
+'   abcdefg'.StripLeft() .. 'abcdefg'
+'abcdefg   '.StripLeft() .. 'abcdefg   '
+'   abcdefg   '.StripLeft() .. 'abcdefg   '
+'\nabcdefg\n'.StripLeft() .. 'abcdefg\n'
+'\tabcdefg\t'.StripLeft() .. 'abcdefg\t'
+'\n \t\n \tabcdefg\n \t\n \t'.StripLeft() .. 'abcdefg\n \t\n \t'
+======== String#StripRight() ========
+''.StripRight() .. ''
+'abcdefg'.StripRight() .. 'abcdefg'
+' abcdefg'.StripRight() .. ' abcdefg'
+'abcdefg '.StripRight() .. 'abcdefg'
+' abcdefg '.StripRight() .. ' abcdefg'
+'   abcdefg'.StripRight() .. '   abcdefg'
+'abcdefg   '.StripRight() .. 'abcdefg'
+'   abcdefg   '.StripRight() .. '   abcdefg'
+'\nabcdefg\n'.StripRight() .. '\nabcdefg'
+'\tabcdefg\t'.StripRight() .. '\tabcdefg'
+'\n \t\n \tabcdefg\n \t\n \t'.StripRight() .. '\n \t\n \tabcdefg'
 ======== String#ToBinary() ========
 ======== String#ToReader() ========
 ======== String#ToSymbol() ========

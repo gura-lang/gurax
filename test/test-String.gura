@@ -225,6 +225,45 @@ TestCase('String#Split()') {
 }
 
 TestCase('String#Strip()') {
+	Tester(`''.Strip(), true)
+	Tester(`'abcdefg'.Strip(), true)
+	Tester(`' abcdefg'.Strip(), true)
+	Tester(`'abcdefg '.Strip(), true)
+	Tester(`' abcdefg '.Strip(), true)
+	Tester(`'   abcdefg'.Strip(), true)
+	Tester(`'abcdefg   '.Strip(), true)
+	Tester(`'   abcdefg   '.Strip(), true)
+	Tester(`'\nabcdefg\n'.Strip(), true)
+	Tester(`'\tabcdefg\t'.Strip(), true)
+	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.Strip(), true)
+}
+
+TestCase('String#StripLeft()') {
+	Tester(`''.StripLeft(), true)
+	Tester(`'abcdefg'.StripLeft(), true)
+	Tester(`' abcdefg'.StripLeft(), true)
+	Tester(`'abcdefg '.StripLeft(), true)
+	Tester(`' abcdefg '.StripLeft(), true)
+	Tester(`'   abcdefg'.StripLeft(), true)
+	Tester(`'abcdefg   '.StripLeft(), true)
+	Tester(`'   abcdefg   '.StripLeft(), true)
+	Tester(`'\nabcdefg\n'.StripLeft(), true)
+	Tester(`'\tabcdefg\t'.StripLeft(), true)
+	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.StripLeft(), true)
+}
+
+TestCase('String#StripRight()') {
+	Tester(`''.StripRight(), true)
+	Tester(`'abcdefg'.StripRight(), true)
+	Tester(`' abcdefg'.StripRight(), true)
+	Tester(`'abcdefg '.StripRight(), true)
+	Tester(`' abcdefg '.StripRight(), true)
+	Tester(`'   abcdefg'.StripRight(), true)
+	Tester(`'abcdefg   '.StripRight(), true)
+	Tester(`'   abcdefg   '.StripRight(), true)
+	Tester(`'\nabcdefg\n'.StripRight(), true)
+	Tester(`'\tabcdefg\t'.StripRight(), true)
+	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.StripRight(), true)
 }
 
 TestCase('String#ToBinary()') {
