@@ -191,6 +191,24 @@ words10::Mid(6, 4) .. specified position 6 exceeds the string's size of 6
 ======== String#Print() ========
 ======== String#Println() ========
 ======== String#Replace() ========
+str .. A brown fox jumps over the lazy dog.
+str.Replace('', '#') .. #A# #b#r#o#w#n# #f#o#x# #j#u#m#p#s# #o#v#e#r# #t#h#e# #l#a#z#y# #d#o#g#.#
+str.Replace('brown', 'red') .. A red fox jumps over the lazy dog.
+str.Replace('.', '!!!') .. A brown fox jumps over the lazy dog!!!
+str.Replace('fox', 'FOX') .. A brown FOX jumps over the lazy dog.
+str.Replace('fox', 'dog') .. A brown dog jumps over the lazy dog.
+str.Replace('fox', 'f-o-x') .. A brown f-o-x jumps over the lazy dog.
+str.Replace('FOX', 'f-o-x') .. A brown fox jumps over the lazy dog.
+str.Replace('FOX', 'f-o-x'):icase .. A brown f-o-x jumps over the lazy dog.
+str.Replace('fox', 'FOX') .. A brown FOX jumps over the lazy dog.
+str.Replace('fox', 'FOX') .. A brown FOX jumps over the lazy dog.
+str.Replace('fox', 'FOX') .. A brown FOX jumps over the lazy dog.
+str .. abcdef abcdef abcdef abcdef abcdef
+str.Replace('abcdef', 'ABCDEF') .. ABCDEF ABCDEF ABCDEF ABCDEF ABCDEF
+str.Replace('abcdef', 'ABCDEF', 0) .. abcdef abcdef abcdef abcdef abcdef
+str.Replace('abcdef', 'ABCDEF', 1) .. ABCDEF abcdef abcdef abcdef abcdef
+str.Replace('abcdef', 'ABCDEF', 3) .. ABCDEF ABCDEF ABCDEF abcdef abcdef
+str.Replace('abcdef', 'ABCDEF', 10) .. ABCDEF ABCDEF ABCDEF ABCDEF ABCDEF
 ======== String#Replaces() ========
 ======== String#Right() ========
 bubble        .. ""

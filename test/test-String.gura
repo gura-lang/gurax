@@ -206,6 +206,26 @@ TestCase('String#Println()') {
 }
 
 TestCase('String#Replace()') {
+	str = 'A brown fox jumps over the lazy dog.'
+	Tester(`str)
+	Tester(`str.Replace('', '#'))
+	Tester(`str.Replace('brown', 'red'))
+	Tester(`str.Replace('.', '!!!'))
+	Tester(`str.Replace('fox', 'FOX'))
+	Tester(`str.Replace('fox', 'dog'))
+	Tester(`str.Replace('fox', 'f-o-x'))
+	Tester(`str.Replace('FOX', 'f-o-x'))
+	Tester(`str.Replace('FOX', 'f-o-x'):icase)
+	Tester(`str.Replace('fox', 'FOX'))
+	Tester(`str.Replace('fox', 'FOX'))
+	Tester(`str.Replace('fox', 'FOX'))
+	str = 'abcdef abcdef abcdef abcdef abcdef'
+	Tester(`str)
+	Tester(`str.Replace('abcdef', 'ABCDEF'))
+	Tester(`str.Replace('abcdef', 'ABCDEF', 0))
+	Tester(`str.Replace('abcdef', 'ABCDEF', 1))
+	Tester(`str.Replace('abcdef', 'ABCDEF', 3))
+	Tester(`str.Replace('abcdef', 'ABCDEF', 10))
 }
 
 TestCase('String#Replaces()') {
