@@ -568,7 +568,7 @@ void Expr_Member::Compose(Composer& composer)
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
-	GetExprTarget().ComposeOrNil(composer);								// [Target]
+	GetExprTarget().ComposeOrNil(composer);									// [Target]
 	if (pOperator) {
 		composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
 		exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
@@ -786,6 +786,12 @@ void Expr_Lister::Compose(Composer& composer)
 void Expr_Lister::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
+	exprAssigned.ComposeOrNil(composer);						// [Assigned]
+	// create iterator											// [Iterator]
+	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		composer.Add_EvalIterator(0, true);						// [Iterator Value]
+		
+	}
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const

@@ -706,6 +706,8 @@ void PUnit_EvalIterator<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 	if (pValueElem) {
 		if (!discardValueFlag) processor.PushValue(pValueElem.release());
 		processor.SetPUnitNext(_GetPUnitCont());
+	} else if (_raiseFlag) {
+		Error::Issue(ErrorType::IteratorError, "there's no enough value");
 	} else {
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}
@@ -725,15 +727,15 @@ PUnit* PUnitFactory_EvalIterator::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EvalIterator<1, true>(_offset, _pPUnitBranchDest, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_EvalIterator<1, true>(_offset, _raiseFlag, _pPUnitBranchDest, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_EvalIterator<1, false>(_offset, _pPUnitBranchDest, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_EvalIterator<1, false>(_offset, _raiseFlag, _pPUnitBranchDest, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_EvalIterator<0, true>(_offset, _pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_EvalIterator<0, true>(_offset, _raiseFlag, _pPUnitBranchDest);
 		} else {
-			_pPUnitCreated = new PUnit_EvalIterator<0, false>(_offset, _pPUnitBranchDest);
+			_pPUnitCreated = new PUnit_EvalIterator<0, false>(_offset, _raiseFlag, _pPUnitBranchDest);
 		}
 	}
 	return _pPUnitCreated;

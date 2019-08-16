@@ -713,13 +713,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	size_t _offset;
+	bool _raiseFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_EvalIterator(size_t offset, const PUnit* pPUnitBranchDest) :
-		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1), _offset(offset) {}
-	PUnit_EvalIterator(size_t offset, const PUnit* pPUnitBranchDest, Expr* pExpr) :
-		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1), _offset(offset) { _ppExprSrc[0] = pExpr; }
+	PUnit_EvalIterator(size_t offset, bool raiseFlag, const PUnit* pPUnitBranchDest) :
+		PUnit_Branch(pPUnitBranchDest? pPUnitBranchDest : this + 1), _offset(offset), _raiseFlag(raiseFlag) {}
+	PUnit_EvalIterator(size_t offset, bool raiseFlag, const PUnit* pPUnitBranchDest, Expr* pExpr) :
+		PUnit_EvalIterator(offset, raiseFlag, pPUnitBranchDest) { _ppExprSrc[0] = pExpr; }
 public:
 	size_t GetOffset() const { return _offset; }
 public:
@@ -739,9 +740,10 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_EvalIterator");
 private:
 	size_t _offset;
+	bool _raiseFlag;
 public:
-	PUnitFactory_EvalIterator(size_t offset, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
-		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset) {}
+	PUnitFactory_EvalIterator(size_t offset, bool raiseFlag, const PUnit* pPUnitBranchDest, Expr* pExprSrc) :
+		PUnitFactory_Branch(pPUnitBranchDest, pExprSrc), _offset(offset), _raiseFlag(raiseFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_EvalIterator<1, false>) : sizeof(PUnit_EvalIterator<0, false>);
 	}
