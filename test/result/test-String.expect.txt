@@ -263,6 +263,13 @@ entertaining
 ...demonic
 entertaining
 ======== String#Split() ========
+str .. abc:def:ghi:jkl:mno
+str.Split(':'):list .. ['abc', 'def', 'ghi', 'jkl', 'mno']
+str.Split(':', 0):list .. ['abc:def:ghi:jkl:mno']
+str.Split(':', 1):list .. ['abc', 'def:ghi:jkl:mno']
+str.Split(':', 2):list .. ['abc', 'def', 'ghi:jkl:mno']
+str.Split(':', 3):list .. ['abc', 'def', 'ghi', 'jkl:mno']
+str.Split(':', 10):list .. ['abc', 'def', 'ghi', 'jkl', 'mno']
 ======== String#Strip() ========
 ''.Strip() .. ''
 'abcdefg'.Strip() .. 'abcdefg'

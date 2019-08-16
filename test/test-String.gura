@@ -254,6 +254,14 @@ TestCase('String#RJust()') {
 }
 
 TestCase('String#Split()') {
+	str = 'abc:def:ghi:jkl:mno'
+	Tester(`str)
+	Tester(`str.Split(':'):list)
+	Tester(`str.Split(':', 0):list)
+	Tester(`str.Split(':', 1):list)
+	Tester(`str.Split(':', 2):list)
+	Tester(`str.Split(':', 3):list)
+	Tester(`str.Split(':', 10):list)
 }
 
 TestCase('String#Strip()') {

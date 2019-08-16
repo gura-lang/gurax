@@ -17,10 +17,12 @@ public:
 	private:
 		RefPtr<StringReferable> _pStr;
 		String _sep;
+		Int _cntMax;
+		Int _cnt;
 		const char* _pCurrent;
 	public:
-		Iterator_Split(StringReferable* pStr, String sep) :
-			_pStr(pStr), _sep(sep), _pCurrent(GetString()) {}
+		Iterator_Split(StringReferable* pStr, String sep, Int cntMax) :
+			_pStr(pStr), _sep(sep), _cntMax(cntMax), _cnt(0), _pCurrent(GetString()) {}
 	public:
 		const char* GetString() const { return _pStr->GetString(); }
 	public:
@@ -152,9 +154,15 @@ template<typename T_CharCmp>
 Value* VType_String::Iterator_Split<T_CharCmp>::DoNextValue()
 {
 	if (!*_pCurrent) return nullptr;
+	if (_cnt == _cntMax) {
+		RefPtr<Value> pValue(new Value_String(_pCurrent));
+		_pCurrent += ::strlen(_pCurrent);
+		return pValue.release();
+	}
 	const char* pCurrentNext = _pCurrent;
 	const char* pEnd = String::Find<T_CharCmp>(_pCurrent, _sep.c_str(), &pCurrentNext);
 	String strRtn(_pCurrent, pEnd);
+	_cnt++;
 	_pCurrent = pCurrentNext;
 	return new Value_String(strRtn);
 }

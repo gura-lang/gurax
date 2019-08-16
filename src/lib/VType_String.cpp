@@ -774,11 +774,12 @@ Gurax_ImplementMethod(String, RJust)
 	return new Value_String(str.RJust(width, padding));
 }
 
-// String#Split(sep?:String):String:[icase] {block?}
+// String#Split(sep?:String, count?:Number):String:[icase] {block?}
 Gurax_DeclareMethod(String, Split)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -795,6 +796,7 @@ Gurax_ImplementMethod(String, Split)
 	// Arguments
 	ArgPicker args(argument);
 	const char* sep = args.IsValid()? args.PickString() : "";
+	Int cntMax = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const StringReferable& str = valueThis.GetStringReferable();
@@ -802,9 +804,9 @@ Gurax_ImplementMethod(String, Split)
 	if (*sep == '\0') {
 		pIterator.reset(new VType_String::Iterator_Each(str.Reference(), VType_String::Iterator_Each::Type::String));
 	} else if (argument.IsSet(Gurax_Symbol(icase))) {
-		pIterator.reset(new VType_String::Iterator_Split<CharICase>(str.Reference(), sep));
+		pIterator.reset(new VType_String::Iterator_Split<CharICase>(str.Reference(), sep, cntMax));
 	} else {
-		pIterator.reset(new VType_String::Iterator_Split<CharCase>(str.Reference(), sep));
+		pIterator.reset(new VType_String::Iterator_Split<CharCase>(str.Reference(), sep, cntMax));
 	}
 	return ReturnIterator(processor, argument, pIterator.release());
 }
