@@ -669,8 +669,8 @@ Gurax_ImplementMethod(String, Replace)
 	return new Value_String(strRtn);
 }
 
-// String#Replaces(map[]:String, count?:number):String:map:[icase] {block?}
-Gurax_DeclareMethod(String, Replaces)
+// String#ReplaceM(map[]:String, count?:number):String:map:[icase] {block?}
+Gurax_DeclareMethod(String, ReplaceM)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("map", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
@@ -696,18 +696,22 @@ Gurax_DeclareMethod(String, Replaces)
 		"In this case, the block's result would become the function's returned value.\n");
 }
 
-Gurax_ImplementMethod(String, Replaces)
+Gurax_ImplementMethod(String, ReplaceM)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	StringList map = Value_String::GetStringList(args.PickList());
+	bool validFlag_count = false;
+	Int count = (validFlag_count = args.IsValid())? args.PickNumberNonNeg<Int>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	String strRtn = argument.IsSet(Gurax_Symbol(icase))?
+		(validFlag_count? str.ReplaceM<CharICase>(map, count) : str.ReplaceM<CharICase>(map)) :
+		(validFlag_count? str.ReplaceM<CharCase>(map, count) : str.ReplaceM<CharCase>(map));
+	return new Value_String(strRtn);
 }
 
 // String#Right(len?:Number):String:map {block?}
@@ -1265,7 +1269,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Print));
 	Assign(Gurax_CreateMethod(String, Println));
 	Assign(Gurax_CreateMethod(String, Replace));
-	Assign(Gurax_CreateMethod(String, Replaces));
+	Assign(Gurax_CreateMethod(String, ReplaceM));
 	Assign(Gurax_CreateMethod(String, Right));
 	Assign(Gurax_CreateMethod(String, RJust));
 	Assign(Gurax_CreateMethod(String, Split));

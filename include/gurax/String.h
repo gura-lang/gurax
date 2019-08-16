@@ -211,7 +211,7 @@ public:
 	static size_t Width(const char* str);
 	size_t Width() const { return Width(c_str()); }
 public:
-	// Alignment/Extraction/Replacement
+	// Alignment/Extraction
 	static String Center(const char* str, size_t width, const char* padding);
 	String Center(size_t width, const char* padding) const { return Center(c_str(), width, padding); }
 	static String LJust(const char* str, size_t width, const char* padding);
@@ -224,6 +224,7 @@ public:
 	String Right(size_t len) const { return Right(c_str(), len); }
 	static String Mid(const char* str, int start, size_t len);
 	String Mid(int start, size_t len) const { return Mid(c_str(), start, len); }
+	// Replacement
 	template<typename T_CharCmp>
 	static String Replace(const char* str, const char* sub, const char* replace);
 	template<typename T_CharCmp>
@@ -235,6 +236,19 @@ public:
 	template<typename T_CharCmp>
 	String Replace(const char* sub, const char* replace, int nMaxReplace) const {
 		return Replace<T_CharCmp>(c_str(), sub, replace, nMaxReplace);
+	}
+	// Multiple Replacement
+	template<typename T_CharCmp>
+	static String ReplaceM(const char* str, const StringList& map);
+	template<typename T_CharCmp>
+	static String ReplaceM(const char* str, const StringList& map, int nMaxReplace);
+	template<typename T_CharCmp>
+	String ReplaceM(const StringList& map) const {
+		return ReplaceM<T_CharCmp>(c_str(), map);
+	}
+	template<typename T_CharCmp>
+	String ReplaceM(const StringList& map, int nMaxReplace) const {
+		return ReplaceM<T_CharCmp>(c_str(), map, nMaxReplace);
 	}
 public:
 	// Modification
@@ -275,133 +289,6 @@ struct CharICase {
 
 inline String operator+(const String& v1, const String& v2) {
 	return String(static_cast<std::string>(v1) + static_cast<std::string>(v2));
-}
-
-template<typename T_CharCmp>
-const char* String::Find(const char* str, const char* sub, const char** pStrNext)
-{
-	for ( ; *str != '\0'; str++) {
-		const char* p1 = str;
-		const char* p2 = sub;
-		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
-		if (*p2 == '\0') {
-			*pStrNext = p1;
-			return str;
-		}
-	}
-	*pStrNext = str;
-	return str;
-}
-
-template<typename T_CharCmp>
-String::const_iterator String::Find(const_iterator pStr, const_iterator pStrEnd, const char* sub)
-{
-	for ( ; pStr != pStrEnd; pStr++) {
-		String::const_iterator p1 = pStr;
-		const char* p2 = sub;
-		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
-		if (*p2 == '\0') return pStr;
-	}
-	return pStrEnd;
-}
-
-template<typename T_CharCmp>
-const char* String::StartsWith(const char* str, const char* sub)
-{
-	const char* p1 = str;
-	const char* p2 = sub;
-	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
-	return p1;
-}
-
-template<typename T_CharCmp>
-String::const_iterator String::StartsWith(const_iterator pStr, const_iterator pStrEnd, const char* sub)
-{
-	const_iterator p1 = pStr;
-	const char* p2 = sub;
-	for ( ; p1 != pStrEnd && *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return pStrEnd;
-	return p1;
-}
-
-template<typename T_CharCmp>
-const char* String::EndsWith(const char* str, const char* sub)
-{
-	size_t len = ::strlen(sub);
-	const char* p = str + ::strlen(str);
-	if (str + len > p) return nullptr;
-	p -= len;
-	const char* p1 = p;
-	const char* p2 = sub;
-	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
-	return p;
-}
-
-template<typename T_CharCmp>
-const char* String::EndsWith(const char* str, size_t posEnd, const char* sub)
-{
-	size_t len = ::strlen(sub);
-	const char* p = String::Forward(str, posEnd);
-	if (str + len > p) return nullptr;
-	p -= len;
-	const char* p1 = p;
-	const char* p2 = sub;
-	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
-	return p;
-}
-
-template<typename T_CharCmp>
-String String::Replace(const char* str, const char* sub, const char* replace)
-{
-	String result;
-	if (*sub == '\0') {
-		result += replace;
-		const char* p = str;
-		for ( ; *p != '\0'; p = Forward(p)) {
-			result += *p;
-			result += replace;
-		}
-		//result += p;
-	} else {
-		const char* pLeft = str;
-		const char* pLeftNext = str;
-		const char* pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext);
-		for ( ; *pRight; pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext)) {
-			result.append(pLeft, pRight - pLeft);
-			result += replace;
-			pLeft = pLeftNext;
-		}
-		result += pLeft;
-	}
-	return result;
-}
-
-template<typename T_CharCmp>
-String String::Replace(const char* str, const char* sub, const char* replace, int nMaxReplace)
-{
-	String result;
-	if (*sub == '\0') {
-		if (nMaxReplace != 0) {
-			result += replace;
-			nMaxReplace--;
-		}
-		const char* p = str;
-		for ( ; *p != '\0' && nMaxReplace != 0; p = Forward(p), nMaxReplace--) {
-			result += *p;
-			result += replace;
-		}
-		result += p;
-	} else {
-		const char* pLeft = str;
-		const char* pLeftNext = str;
-		const char* pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext);
-		for ( ; *pRight && nMaxReplace != 0; pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext), nMaxReplace--) {
-			result.append(pLeft, pRight - pLeft);
-			result += replace;
-			pLeft = pLeftNext;
-		}
-		result += pLeft;
-	}
-	return result;
 }
 
 //------------------------------------------------------------------------------
@@ -514,6 +401,171 @@ public:
 	const char* GetColon() const		{ return _strsColon[static_cast<int>(IsCram())]; }
 	const char* GetSemicolon() const	{ return _strsSemicolon[static_cast<int>(IsCram())]; }
 };
+
+//------------------------------------------------------------------------------
+// Templates of String
+//------------------------------------------------------------------------------
+template<typename T_CharCmp>
+const char* String::Find(const char* str, const char* sub, const char** pStrNext)
+{
+	for ( ; *str != '\0'; str++) {
+		const char* p1 = str;
+		const char* p2 = sub;
+		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
+		if (*p2 == '\0') {
+			*pStrNext = p1;
+			return str;
+		}
+	}
+	*pStrNext = str;
+	return str;
+}
+
+template<typename T_CharCmp>
+String::const_iterator String::Find(const_iterator pStr, const_iterator pStrEnd, const char* sub)
+{
+	for ( ; pStr != pStrEnd; pStr++) {
+		String::const_iterator p1 = pStr;
+		const char* p2 = sub;
+		for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) break;
+		if (*p2 == '\0') return pStr;
+	}
+	return pStrEnd;
+}
+
+template<typename T_CharCmp>
+const char* String::StartsWith(const char* str, const char* sub)
+{
+	const char* p1 = str;
+	const char* p2 = sub;
+	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
+	return p1;
+}
+
+template<typename T_CharCmp>
+String::const_iterator String::StartsWith(const_iterator pStr, const_iterator pStrEnd, const char* sub)
+{
+	const_iterator p1 = pStr;
+	const char* p2 = sub;
+	for ( ; p1 != pStrEnd && *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return pStrEnd;
+	return p1;
+}
+
+template<typename T_CharCmp>
+const char* String::EndsWith(const char* str, const char* sub)
+{
+	size_t len = ::strlen(sub);
+	const char* p = str + ::strlen(str);
+	if (str + len > p) return nullptr;
+	p -= len;
+	const char* p1 = p;
+	const char* p2 = sub;
+	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
+	return p;
+}
+
+template<typename T_CharCmp>
+const char* String::EndsWith(const char* str, size_t posEnd, const char* sub)
+{
+	size_t len = ::strlen(sub);
+	const char* p = String::Forward(str, posEnd);
+	if (str + len > p) return nullptr;
+	p -= len;
+	const char* p1 = p;
+	const char* p2 = sub;
+	for ( ; *p2 != '\0'; p1++, p2++) if (T_CharCmp()(*p1, *p2) != 0) return nullptr;
+	return p;
+}
+
+template<typename T_CharCmp>
+String String::Replace(const char* str, const char* sub, const char* replace)
+{
+	String strRtn;
+	if (*sub == '\0') {
+		strRtn += replace;
+		const char* p = str;
+		for ( ; *p != '\0'; p = Forward(p)) {
+			strRtn += *p;
+			strRtn += replace;
+		}
+		//strRtn += p;
+	} else {
+		const char* pLeft = str;
+		for (;;) {
+			const char* pLeftNext;
+			const char* pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext);
+			if (!*pRight) break;
+			strRtn.append(pLeft, pRight - pLeft);
+			strRtn += replace;
+			pLeft = pLeftNext;
+		}
+		strRtn += pLeft;
+	}
+	return strRtn;
+}
+
+template<typename T_CharCmp>
+String String::Replace(const char* str, const char* sub, const char* replace, int nMaxReplace)
+{
+	String strRtn;
+	if (*sub == '\0') {
+		if (nMaxReplace != 0) {
+			strRtn += replace;
+			nMaxReplace--;
+		}
+		const char* p = str;
+		for ( ; *p != '\0' && nMaxReplace != 0; p = Forward(p), nMaxReplace--) {
+			strRtn += *p;
+			strRtn += replace;
+		}
+		strRtn += p;
+	} else {
+		const char* pLeft = str;
+		for ( ; nMaxReplace != 0; nMaxReplace--) {
+			const char* pLeftNext;
+			const char* pRight = Find<T_CharCmp>(pLeft, sub, &pLeftNext);
+			if (!*pRight) break;
+			strRtn.append(pLeft, pRight - pLeft);
+			strRtn += replace;
+			pLeft = pLeftNext;
+		}
+		strRtn += pLeft;
+	}
+	return strRtn;
+}
+
+template<typename T_CharCmp>
+String String::ReplaceM(const char* str, const StringList& map)
+{
+	String strRtn;
+	for (const char *p = str; *p; ) {
+		const char* pNext = nullptr;
+		for (auto pItem = map.begin(); pItem != map.end(); ) {
+			const String& sub = *pItem++;
+			if (pItem == map.end()) break;
+			const String& replace = *pItem++;
+			const char* pNext = StartsWith<T_CharCmp>(p, sub.c_str());
+			if (pNext) {
+				strRtn += replace;
+				break;
+			}
+		}
+		if (pNext) {
+			p = pNext;
+		} else {
+			strRtn += *p;
+			p++;
+		}
+	}
+	return strRtn;
+}
+
+template<typename T_CharCmp>
+String String::ReplaceM(const char* str, const StringList& map, int nMaxReplace)
+{
+	String strRtn;
+	return strRtn;
+}
 
 }
 

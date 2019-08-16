@@ -228,7 +228,10 @@ TestCase('String#Replace()') {
 	Tester(`str.Replace('abcdef', 'ABCDEF', 10))
 }
 
-TestCase('String#Replaces()') {
+TestCase('String#ReplaceM()') {
+	str = 'A brown fox jumps over the lazy dog.'
+	Tester(`str)
+	Tester(`str.ReplaceM(['fox', 'dog', 'dog', 'fox'))
 }
 
 TestCase('String#Right()') {
