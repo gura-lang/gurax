@@ -210,6 +210,7 @@ bool DeclCallable::IsMappable(const DeclArg& declArg, Flags flags)
 {
 	if (declArg.IsSet(DeclArg::Flag::NoMap)) return false;
 	if (declArg.IsSet(DeclArg::Flag::Map)) return true;
+	if (declArg.IsSet(DeclArg::Flag::ListVar)) return false;
 	if ((flags & (Flag::NoMap | Flag::Map)) != Flag::Map) return false;
 	if (declArg.GetVType().IsListOrIterator()) return false;
 	return true;
