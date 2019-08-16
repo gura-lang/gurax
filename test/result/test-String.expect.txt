@@ -209,7 +209,17 @@ str.Replace('abcdef', 'ABCDEF', 0) .. abcdef abcdef abcdef abcdef abcdef
 str.Replace('abcdef', 'ABCDEF', 1) .. ABCDEF abcdef abcdef abcdef abcdef
 str.Replace('abcdef', 'ABCDEF', 3) .. ABCDEF ABCDEF ABCDEF abcdef abcdef
 str.Replace('abcdef', 'ABCDEF', 10) .. ABCDEF ABCDEF ABCDEF ABCDEF ABCDEF
-======== String#Replaces() ========
+======== String#ReplaceM() ========
+str .. A brown fox jumps over the lazy dog.
+str.ReplaceM(['fox', 'dog', 'dog', 'fox']) .. A brown dog jumps over the lazy fox.
+str.ReplaceM(['FOX', 'dog', 'DOG', 'fox']) .. A brown fox jumps over the lazy dog.
+str.ReplaceM(['FOX', 'dog', 'DOG', 'fox']):icase .. A brown dog jumps over the lazy fox.
+str .. abcdef abcdef abcdef abcdef abcdef
+str.ReplaceM(['abc', 'ABC', 'def', 'DEF']) .. ABCDEF ABCDEF ABCDEF ABCDEF ABCDEF
+str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 0) .. abcdef abcdef abcdef abcdef abcdef
+str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 1) .. ABCdef abcdef abcdef abcdef abcdef
+str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 3) .. ABCDEF ABCdef abcdef abcdef abcdef
+str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 10) .. ABCDEF ABCDEF ABCDEF ABCDEF ABCDEF
 ======== String#Right() ========
 bubble        .. ""
 tasteful      .. ""

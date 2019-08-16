@@ -544,7 +544,7 @@ String String::ReplaceM(const char* str, const StringList& map)
 			const String& sub = *pItem++;
 			if (pItem == map.end()) break;
 			const String& replace = *pItem++;
-			const char* pNext = StartsWith<T_CharCmp>(p, sub.c_str());
+			pNext = StartsWith<T_CharCmp>(p, sub.c_str());
 			if (pNext) {
 				strRtn += replace;
 				break;
@@ -563,7 +563,32 @@ String String::ReplaceM(const char* str, const StringList& map)
 template<typename T_CharCmp>
 String String::ReplaceM(const char* str, const StringList& map, int nMaxReplace)
 {
+	if (nMaxReplace == 0) return str;
 	String strRtn;
+	for (const char *p = str; *p; ) {
+		const char* pNext = nullptr;
+		for (auto pItem = map.begin(); pItem != map.end(); ) {
+			const String& sub = *pItem++;
+			if (pItem == map.end()) break;
+			const String& replace = *pItem++;
+			pNext = StartsWith<T_CharCmp>(p, sub.c_str());
+			if (pNext) {
+				strRtn += replace;
+				break;
+			}
+		}
+		if (pNext) {
+			p = pNext;
+			nMaxReplace--;
+			if (nMaxReplace == 0) {
+				strRtn += p;
+				break;
+			}
+		} else {
+			strRtn += *p;
+			p++;
+		}
+	}
 	return strRtn;
 }
 

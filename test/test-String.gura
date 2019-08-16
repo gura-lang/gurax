@@ -231,7 +231,16 @@ TestCase('String#Replace()') {
 TestCase('String#ReplaceM()') {
 	str = 'A brown fox jumps over the lazy dog.'
 	Tester(`str)
-	Tester(`str.ReplaceM(['fox', 'dog', 'dog', 'fox'))
+	Tester(`str.ReplaceM(['fox', 'dog', 'dog', 'fox']))
+	Tester(`str.ReplaceM(['FOX', 'dog', 'DOG', 'fox']))
+	Tester(`str.ReplaceM(['FOX', 'dog', 'DOG', 'fox']):icase)
+	str = 'abcdef abcdef abcdef abcdef abcdef'
+	Tester(`str)
+	Tester(`str.ReplaceM(['abc', 'ABC', 'def', 'DEF']))
+	Tester(`str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 0))
+	Tester(`str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 1))
+	Tester(`str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 3))
+	Tester(`str.ReplaceM(['abc', 'ABC', 'def', 'DEF'], 10))
 }
 
 TestCase('String#Right()') {
