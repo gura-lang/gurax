@@ -754,7 +754,8 @@ void PUnit_EvalIterator<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 		if (!discardValueFlag) processor.PushValue(pValueElem.release());
 		processor.SetPUnitNext(_GetPUnitCont());
 	} else if (_raiseFlag) {
-		Error::Issue(ErrorType::IteratorError, "there's no enough value");
+		Error::Issue(ErrorType::IteratorError, "insufficient number of values");
+		processor.ErrorDone();
 	} else {
 		processor.SetPUnitNext(GetPUnitBranchDest());
 	}

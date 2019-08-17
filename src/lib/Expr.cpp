@@ -263,6 +263,13 @@ void Expr_Identifier::Compose(Composer& composer)
 
 void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
 {
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in lister assigment");
+		return;
+	}
+	composer.Add_AssignToSymbol(GetSymbol(), this);			// [Assigned]
+	composer.FlushDiscard();
 }
 
 void Expr_Identifier::ComposeForAssignment(
@@ -576,6 +583,16 @@ void Expr_Member::Compose(Composer& composer)
 
 void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
 {
+#if 0
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in lister assigment");
+		return;
+	}
+	GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
+	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), this);			// [Assigned]
+	composer.FlushDiscard();
+#endif
 }
 
 void Expr_Member::ComposeForAssignment(
