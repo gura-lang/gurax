@@ -647,8 +647,14 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_ForLister<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	//RefPtr<Iterator> pIterator(new Iterator_ForLister());
-	//if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
+	RefPtr<Value> pValue(processor.PopValue());
+	RefPtr<Iterator> pIterator;
+	if (pValue->IsIterable()) {
+		pIterator.reset(pValue->DoGenIterator());
+	} else {
+		pIterator.reset(new Iterator_Const(pValue.Reference()));
+	}
+	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
