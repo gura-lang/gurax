@@ -159,6 +159,7 @@ public:
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
+	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator);
 	virtual void ComposeForAssignmentInClass(
@@ -442,6 +443,7 @@ public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(
@@ -530,6 +532,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -715,6 +718,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;

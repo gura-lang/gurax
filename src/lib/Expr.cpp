@@ -78,6 +78,11 @@ void Expr::ComposeInClass(Composer& composer, bool publicFlag)
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
 
+void Expr::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+{
+	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
+}
+
 void Expr::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
@@ -254,6 +259,10 @@ void Expr_Identifier::Compose(Composer& composer)
 		}
 	}
 	composer.Add_Lookup(pSymbol, this);					// [Value]
+}
+
+void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+{
 }
 
 void Expr_Identifier::ComposeForAssignment(
@@ -565,6 +574,10 @@ void Expr_Member::Compose(Composer& composer)
 	}
 }
 
+void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+{
+}
+
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
@@ -840,6 +853,10 @@ void Expr_Indexer::Compose(Composer& composer)
 		composer.Add_FeedIndex(pExpr);							// [Index(Car)]
 	}
 	composer.Add_IndexGet(this);								// [Elems]
+}
+
+void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+{
 }
 
 void Expr_Indexer::ComposeForAssignment(
