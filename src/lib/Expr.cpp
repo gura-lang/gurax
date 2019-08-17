@@ -803,7 +803,7 @@ void Expr_Lister::ComposeForAssignment(
 	composer.Add_GenIterator_ForLister(this);					// [Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.Add_EvalIterator(0, true);						// [Iterator Value]
-		
+		pExpr->ComposeForValueAssignment(composer, pOperator);	// [Iterator]
 	}
 }
 
