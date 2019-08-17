@@ -787,7 +787,7 @@ void Expr_Lister::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	exprAssigned.ComposeOrNil(composer);						// [Assigned]
-	// create iterator											// [Iterator]
+	composer.Add_GenIterator_ForLister(this);					// [Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.Add_EvalIterator(0, true);						// [Iterator Value]
 		

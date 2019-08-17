@@ -639,6 +639,47 @@ PUnit* PUnitFactory_GenIterator_Counter::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_GenIterator_ForLister
+// Stack View: [Value] -> [Iterator] (continue)
+//                     -> []         (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_GenIterator_ForLister<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	//RefPtr<Iterator> pIterator(new Iterator_ForLister());
+	//if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_GenIterator_ForLister<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "GenIterator_ForLister()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_GenIterator_ForLister::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_GenIterator_ForLister<1, true>(_pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_GenIterator_ForLister<1, false>(_pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_GenIterator_ForLister<0, true>();
+		} else {
+			_pPUnitCreated = new PUnit_GenIterator_ForLister<0, false>();
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_GenIterator_repeat
 // Stack View: [] -> [Iterator] (continue)
 //                -> []         (discard)
