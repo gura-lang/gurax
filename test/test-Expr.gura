@@ -42,9 +42,24 @@ TestCase('Property') {
 }
 
 TestCase('Assignment') {
-	test(expr:Expr) = {
-		Println(expr.children)
-	}
-	test(`[a, b, c])
-	//Tester(`([x] = []))
+	Tester(`{[x] = [], [x]})
+	Tester(`{[x] = [1], [x]})
+	Tester(`{[a, b, c] = 1, [a, b, c]})
+	Tester(`{[a, b, c] = [1], [a, b, c]})
+	Tester(`{[a, b, c] = [1, 2], [a, b, c]})
+	Tester(`{[a, b, c] = [1, 2, 3], [a, b, c]})
+	Tester(`{[a, b, c] = [1, 2, 3, 4], [a, b, c]})
+	X = struct {p1, p2, p3}
+	x = X()
+	Tester(`{[x.p1, x.p2, x.p3] = 1, [x.p1, x.p2, x.p3]})
+	Tester(`{[x.p1, x.p2, x.p3] = [1], [x.p1, x.p2, x.p3]})
+	Tester(`{[x.p1, x.p2, x.p3] = [1, 2], [x.p1, x.p2, x.p3]})
+	Tester(`{[x.p1, x.p2, x.p3] = [1, 2, 3], [x.p1, x.p2, x.p3]})
+	Tester(`{[x.p1, x.p2, x.p3] = [1, 2, 3, 4], [x.p1, x.p2, x.p3]})
+	x = [nil, nil, nil]
+	Tester(`{[x[0], x[1], x[2]] = 1, x})
+	Tester(`{[x[0], x[1], x[2]] = [1], x})
+	Tester(`{[x[0], x[1], x[2]] = [1, 2], x})
+	Tester(`{[x[0], x[1], x[2]] = [1, 2, 3], x})
+	Tester(`{[x[0], x[1], x[2]] = [1, 2, 3, 4], x})
 }

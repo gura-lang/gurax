@@ -815,11 +815,12 @@ void Expr_Lister::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	exprAssigned.ComposeOrNil(composer);						// [Assigned]
-	composer.Add_GenIterator_ForLister(this);					// [Iterator]
+	composer.Add_GenIterator_ForLister(this);					// [Assigned Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		composer.Add_EvalIterator(0, true);						// [Iterator Value]
-		pExpr->ComposeForValueAssignment(composer, pOperator);	// [Iterator]
+		composer.Add_EvalIterator(0, true);						// [Assigned Iterator Value]
+		pExpr->ComposeForValueAssignment(composer, pOperator);	// [Assigned Iterator]
 	}
+	composer.Add_DiscardValue(this);							// [Assigned]
 }
 
 String Expr_Lister::ToString(const StringStyle& ss) const
@@ -885,6 +886,7 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 		composer.Add_FeedIndex(pExpr);							// [Elems Index(Car)]
 	}
 	composer.Add_IndexSet(true, this);							// [Elems]
+	composer.FlushDiscard();
 }
 
 void Expr_Indexer::ComposeForAssignment(

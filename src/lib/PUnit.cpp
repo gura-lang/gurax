@@ -640,19 +640,19 @@ PUnit* PUnitFactory_GenIterator_Counter::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_GenIterator_ForLister
-// Stack View: [Value] -> [Iterator] (continue)
-//                     -> []         (discard)
+// Stack View: [Value] -> [Value Iterator] (continue)
+//                     -> [Value]          (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_ForLister<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Value> pValue(processor.PopValue());
+	Value& value(processor.PeekValue(0));
 	RefPtr<Iterator> pIterator;
-	if (pValue->IsIterable()) {
-		pIterator.reset(pValue->DoGenIterator());
+	if (value.IsIterable()) {
+		pIterator.reset(value.DoGenIterator());
 	} else {
-		pIterator.reset(new Iterator_Const(pValue.Reference()));
+		pIterator.reset(new Iterator_Const(value.Reference()));
 	}
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
