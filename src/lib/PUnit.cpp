@@ -1445,15 +1445,25 @@ PUnit* PUnitFactory_IndexGet::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_IndexSet
-// Stack View: [Index(Car) Elems] -> [Elems] (continue)
-//                                -> []      (discard)
+// Stack View: valueFirst=false: [Index(Car) Elems] -> [Elems] (continue)
+//                                                  -> []      (discard)
+//             valueFirst=true:  [Elems Index(Car)] -> [Elems] (continue)
+//                                                  -> []      (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_IndexSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Value> pValueElems(processor.PopValue());
-	RefPtr<Value_Index> pValueIndex(dynamic_cast<Value_Index*>(processor.PopValue()));
+	RefPtr<Value> pValueElems;
+	RefPtr<Value_Index> pValueIndex;
+	if (_valueFirstFlag) {
+		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
+		pValueElems.reset(processor.PopValue());
+	} else {
+		pValueElems.reset(processor.PopValue());
+		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
+	}
+
 	Index& index = pValueIndex->GetIndex();
 	index.IndexSet(pValueElems->Reference());
 	if (Error::IsIssued()) {
@@ -1541,15 +1551,24 @@ PUnit* PUnitFactory_PropGet::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_PropSet
-// Stack View: [Target Assigned] -> [Assigned] (continue)
-//                               -> []         (discard)
+// Stack View: valueFirst=false: [Target Assigned] -> [Assigned] (continue)
+//                                                 -> []         (discard)
+//             valueFirst=true:  [Assigned Target] -> [Assigned] (continue)
+//                                                 -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_PropSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Value> pValueProp(processor.PopValue());
-	RefPtr<Value> pValueTarget(processor.PopValue());
+	RefPtr<Value> pValueProp;
+	RefPtr<Value> pValueTarget;
+	if (_valueFirstFlag) {
+		pValueTarget.reset(processor.PopValue());
+		pValueProp.reset(processor.PopValue());
+	} else {
+		pValueProp.reset(processor.PopValue());
+		pValueTarget.reset(processor.PopValue());
+	}
 	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
