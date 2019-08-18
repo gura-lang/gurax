@@ -51,10 +51,19 @@ Parser = class {
 		argvRest = []
 		iter = argv.Offset(1)
 		while (arg = iter.NextValue()) {
-			if (longName = arg.StartsWith('--'):rest) {
-				value = dictByLongName.Get(longName)
+			if (argBody = arg.StartsWith('--'):rest) {
+				fields = argBody.Split('=', 1):list
+				if (fields.len == 0) {
+					[longName, value] = ['', nil]
+				} elsif (fields.len == 1) {
+					[longName, value] = [fields[0], nil]
+				} else {
+					[longName, value] = fields
+				}
+				entry = dictByLongName.Get(longName)
+				
 			} elsif (shortName = arg.StartsWith('-'):rest) {
-				value = dictByShortName.Get(shortName)
+				entry = dictByShortName.Get(shortName)
 			} else {
 				
 			}
