@@ -35,3 +35,21 @@ f(`(a + b))
   ##2 PropSet(`bar)
 ======== Property ========
 Expr.__PropHandler__(`children) .. <PropHandler:children:Iterator:R>
+======== Assignment ========
+{[x] = [], [x]} .. insufficient number of values
+{[x] = [1], [x]} .. [1]
+{[a, b, c] = 1, [a, b, c]} .. [1, 1, 1]
+{[a, b, c] = [1], [a, b, c]} .. insufficient number of values
+{[a, b, c] = [1, 2], [a, b, c]} .. insufficient number of values
+{[a, b, c] = [1, 2, 3], [a, b, c]} .. [1, 2, 3]
+{[a, b, c] = [1, 2, 3, 4], [a, b, c]} .. [1, 2, 3]
+{[x.p1, x.p2, x.p3] = 1, [x.p1, x.p2, x.p3]} .. [1, 1, 1]
+{[x.p1, x.p2, x.p3] = [1], [x.p1, x.p2, x.p3]} .. insufficient number of values
+{[x.p1, x.p2, x.p3] = [1, 2], [x.p1, x.p2, x.p3]} .. insufficient number of values
+{[x.p1, x.p2, x.p3] = [1, 2, 3], [x.p1, x.p2, x.p3]} .. [1, 2, 3]
+{[x.p1, x.p2, x.p3] = [1, 2, 3, 4], [x.p1, x.p2, x.p3]} .. [1, 2, 3]
+{[x[0], x[1], x[2]] = 1, x} .. [1, 1, 1]
+{[x[0], x[1], x[2]] = [1], x} .. insufficient number of values
+{[x[0], x[1], x[2]] = [1, 2], x} .. insufficient number of values
+{[x[0], x[1], x[2]] = [1, 2, 3], x} .. [1, 2, 3]
+{[x[0], x[1], x[2]] = [1, 2, 3, 4], x} .. [1, 2, 3]

@@ -819,6 +819,7 @@ void Expr_Lister::ComposeForAssignment(
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.Add_EvalIterator(0, true);						// [Assigned Iterator Value]
 		pExpr->ComposeForValueAssignment(composer, pOperator);	// [Assigned Iterator]
+		if (Error::IsIssued()) return;
 	}
 	composer.Add_DiscardValue(this);							// [Assigned]
 }
@@ -876,6 +877,7 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in lister assigment");
+		
 		return;
 	}
 	GetExprCar().ComposeOrNil(composer);						// [Elems Car]
