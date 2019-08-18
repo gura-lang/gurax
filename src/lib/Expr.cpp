@@ -583,16 +583,14 @@ void Expr_Member::Compose(Composer& composer)
 
 void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
 {
-#if 0
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in lister assigment");
 		return;
 	}
 	GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
-	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), this);			// [Assigned]
+	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), true, this);	// [Assigned]
 	composer.FlushDiscard();
-#endif
 }
 
 void Expr_Member::ComposeForAssignment(
@@ -606,7 +604,7 @@ void Expr_Member::ComposeForAssignment(
 	} else {
 		exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
 	}
-	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), this);			// [Assigned]
+	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), false, this);	// [Assigned]
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
@@ -874,6 +872,19 @@ void Expr_Indexer::Compose(Composer& composer)
 
 void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
 {
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in lister assigment");
+		return;
+	}
+	GetExprCar().ComposeOrNil(composer);						// [Elems Car]
+	size_t nExprs = GetExprLinkCdr().CountSequence();
+	composer.Add_Index(GetAttr().Reference(), nExprs, this);	// [Elems Index(Car)]
+	for (Expr* pExpr = GetExprCdrFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeOrNil(composer);							// [Elems Index(Car) Cdr]
+		composer.Add_FeedIndex(pExpr);							// [Elems Index(Car)]
+	}
+	composer.Add_IndexSet(true, this);							// [Elems]
 }
 
 void Expr_Indexer::ComposeForAssignment(
@@ -891,7 +902,7 @@ void Expr_Indexer::ComposeForAssignment(
 	} else {
 		exprAssigned.ComposeOrNil(composer);					// [Index(Car) Elems]
 	}
-	composer.Add_IndexSet(this);								// [Elems]
+	composer.Add_IndexSet(false, this);							// [Elems]
 }
 
 void Expr_Indexer::ComposeInClass(Composer& composer, bool publicFlag)

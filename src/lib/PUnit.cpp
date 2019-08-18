@@ -1477,15 +1477,15 @@ PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_IndexSet<1, true>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_IndexSet<1, true>(_valueFirstFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_IndexSet<1, false>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_IndexSet<1, false>(_valueFirstFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_IndexSet<0, true>();
+			_pPUnitCreated = new PUnit_IndexSet<0, true>(_valueFirstFlag);
 		} else {
-			_pPUnitCreated = new PUnit_IndexSet<0, false>();
+			_pPUnitCreated = new PUnit_IndexSet<0, false>(_valueFirstFlag);
 		}
 	}
 	return _pPUnitCreated;
@@ -1572,15 +1572,15 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropSet<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_PropSet<1, true>(_pSymbol, _pAttr.release(), _valueFirstFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PropSet<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_PropSet<1, false>(_pSymbol, _pAttr.release(), _valueFirstFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropSet<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_PropSet<0, true>(_pSymbol, _pAttr.release(), _valueFirstFlag);
 		} else {
-			_pPUnitCreated = new PUnit_PropSet<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_PropSet<0, false>(_pSymbol, _pAttr.release(), _valueFirstFlag);
 		}
 	}
 	return _pPUnitCreated;

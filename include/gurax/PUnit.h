@@ -1345,11 +1345,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
+	bool _valueFirstFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	explicit PUnit_IndexSet() {}
-	explicit PUnit_IndexSet(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
+	explicit PUnit_IndexSet(bool valueFirstFlag) : _valueFirstFlag(valueFirstFlag) {}
+	explicit PUnit_IndexSet(bool valueFirstFlag, Expr* pExpr) :
+		PUnit_IndexSet(valueFirstFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1365,8 +1367,11 @@ private:
 class PUnitFactory_IndexSet : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_IndexSet");
+private:
+	bool _valueFirstFlag;
 public:
-	PUnitFactory_IndexSet(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	PUnitFactory_IndexSet(bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_IndexSet<1, false>) : sizeof(PUnit_IndexSet<0, false>);
 	}
@@ -1431,12 +1436,14 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	bool _valueFirstFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_PropSet(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExpr) :
+		PUnit_PropSet(pSymbol, pAttr, valueFirstFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1458,9 +1465,10 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	bool _valueFirstFlag;
 public:
-	PUnitFactory_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnitFactory_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_PropSet<1, false>) : sizeof(PUnit_PropSet<0, false>);
 	}

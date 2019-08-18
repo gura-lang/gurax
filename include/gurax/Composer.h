@@ -172,14 +172,14 @@ public:
 	void Add_IndexGet(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_IndexGet(Expr::Reference(pExprSrc)));
 	}
-	void Add_IndexSet(const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_IndexSet(Expr::Reference(pExprSrc)));
+	void Add_IndexSet(bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_IndexSet(valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_PropGet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_PropGet(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
-	void Add_PropSet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_PropSet(pSymbol, pAttr, Expr::Reference(pExprSrc)));
+	void Add_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PropSet(pSymbol, pAttr, valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Member_Normal(pSymbol, pAttr, Expr::Reference(pExprSrc)));
