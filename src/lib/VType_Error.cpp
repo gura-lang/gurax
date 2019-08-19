@@ -19,12 +19,16 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Error.Raise(errorType:ErrorType):void
+// Error.Raise(errorType:ErrorType, format:String, values*:Any):void
 Gurax_DeclareClassMethod(Error, Raise)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("errorType", VTYPE_ErrorType, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("msg", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementClassMethod(Error, Raise)
@@ -32,9 +36,13 @@ Gurax_ImplementClassMethod(Error, Raise)
 	// Arguments
 	ArgPicker args(argument);
 	const ErrorType& errorType = Value_ErrorType::GetErrorType(args.PickValue());
-	const char* msg = args.PickString();
+	const char* format = args.PickString();
+	const ValueList& values = args.PickList();
 	// Function body
-	Error::Issue(errorType, "%s", msg);
+	String str;
+	str.PrintFmt(format, values);
+	if (Error::IsIssued()) return Value::nil();
+	Error::Issue(errorType, "%s", str.c_str());
 	return Value::nil();
 }
 
@@ -137,6 +145,7 @@ Gurax_ImplementPropertyGetter(Error, text)
 ImplementErrorTypeProperty(ArgumentError)
 ImplementErrorTypeProperty(CastError)
 ImplementErrorTypeProperty(CodecError)
+ImplementErrorTypeProperty(CommandError)
 ImplementErrorTypeProperty(ContextError)
 ImplementErrorTypeProperty(DeclarationError)
 ImplementErrorTypeProperty(DividedByZero)
@@ -177,6 +186,7 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassProperty(Error, ArgumentError));
 	Assign(Gurax_CreateClassProperty(Error, CastError));
 	Assign(Gurax_CreateClassProperty(Error, CodecError));
+	Assign(Gurax_CreateClassProperty(Error, CommandError));
 	Assign(Gurax_CreateClassProperty(Error, ContextError));
 	Assign(Gurax_CreateClassProperty(Error, DeclarationError));
 	Assign(Gurax_CreateClassProperty(Error, DividedByZero));

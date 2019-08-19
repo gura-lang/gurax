@@ -53,15 +53,16 @@ Parser = class {
 		while (arg = iter.NextValue()) {
 			if ((argBody = arg.StartsWith('--'):rest) && !argBody.IsEmpty()) {
 				fields = argBody.Split('=', 1):list
-				if (fields.len == 1) {
-					[longName, value] = [fields[0], nil]
-				} else {
-					[longName, value] = fields
-				}
+				[longName, value] = cond(fields.len == 1, [fields[0], nil], fields)
 				entry = dictByLongName.Get(longName)
-				
+				!entry && Error.Raise(Error.KeyError, "unknown option --%s", longName)
+				if (entry.type == `param) {
+					//!value && Error.Raise()
+				} else { // entry.type == `flag
+				}
 			} elsif (shortName = arg.StartsWith('-'):rest) {
 				entry = dictByShortName.Get(shortName)
+				!entry && Error.Raise(Error.KeyError, "unknown option -%s", shortName)
 			} else {
 				
 			}
@@ -70,15 +71,19 @@ Parser = class {
 		//Println(this.entries[0].MakeHelpIndex(true, true))
 	}
 	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, valueDefault?:String) = {
-		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, valueDefault))
+		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, valueDefault, valueDefault))
 	}
 	AddFlag(longName:String, shortName?:String, help?:String) = {
-		this.entries.Add(Entry(`flag, longName, shortName, help, nil, false))
+		this.entries.Add(Entry(`flag, longName, shortName, help, nil, false, false))
 	}
 }
 
 Parser {|p|
-	p.AddParam('value', valueDefault = 'xx')
-	p.AddFlag('flag')
+	p.AddParam('p1', valueDefault = 'default1')
+	p.AddParam('p2', valueDefault = 'default2')
+	p.AddParam('p3', valueDefault = 'default3')
+	p.AddParam('p4', valueDefault = 'default4')
+	p.AddParam('p5', valueDefault = 'default5')
+	p.AddFlag('f1')
 	p.Parse(sys.argv)
 }

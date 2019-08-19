@@ -22,6 +22,7 @@ public:
 	static const ErrorType ArgumentError;
 	static const ErrorType CastError;
 	static const ErrorType CodecError;
+	static const ErrorType CommandError;
 	static const ErrorType ContextError;
 	static const ErrorType DeclarationError;
 	static const ErrorType DividedByZero;
