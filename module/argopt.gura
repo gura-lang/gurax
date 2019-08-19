@@ -43,7 +43,7 @@ Parser = class {
 		dictByLongName.Put(this.entries:*longName, this.entries)
 		this.entries.Each {|entry|
 			if (entry.shortName) {
-				dictByShortName.Put(entry.shrotName, entry)
+				dictByShortName.Put(entry.shortName, entry)
 			}
 		}
 		argvRest = []
@@ -76,7 +76,6 @@ Parser = class {
 				argvRest.Add(arg)
 			}
 		}
-
 		//Println(this.entries[0].MakeHelpIndex(true, true))
 		[argvRest, opt]
 	}
@@ -86,19 +85,4 @@ Parser = class {
 	AddFlag(longName:String, shortName?:String, help?:String) = {
 		this.entries.Add(Entry(`flag, longName, shortName, help, nil))
 	}
-}
-
-Parser {|p|
-	p.AddParam('p1')
-	p.AddParam('p2')
-	p.AddParam('p3')
-	p.AddParam('p4')
-	p.AddParam('p5')
-	p.AddFlag('f1')
-	p.AddFlag('f2')
-	p.AddFlag('f3')
-	p.AddFlag('f4')
-	p.AddFlag('f5')
-	[argv, opt] = p.Parse(sys.argv)
-	Println(opt)
 }

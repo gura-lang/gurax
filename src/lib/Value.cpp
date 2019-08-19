@@ -35,7 +35,9 @@ bool Value::IsInstanceOf(const VType& vtype) const
 
 Value* Value::AsMember(const Value& valueTarget) const
 {
-	if (CanBeCallableMember()) {
+	if (valueTarget.IsType(VTYPE_Module)) {
+		return Reference();
+	} else if (CanBeCallableMember()) {
 		return new Value_CallableMember(valueTarget.Reference(), Reference());
 	} else {
 		return Reference();
