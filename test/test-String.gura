@@ -164,6 +164,67 @@ TestCase('String#Foldw()') {
 TestCase('String#Format()') {
 }
 
+TestCase('String#IsAlnum()') {
+	Tester(`''.IsAlnum())
+	Tester(`'a'.IsAlnum())
+	Tester(`'0'.IsAlnum())
+	Tester(`' '.IsAlnum())
+	Tester(`'*'.IsAlnum())
+	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsAlnum())
+	Tester(`'0123456789'.IsAlnum())
+	Tester(`' \t\n'.IsAlnum())
+	Tester(`'a*'.IsAlnum())
+	Tester(`'0*'.IsAlnum())
+	Tester(`' *'.IsAlnum())
+}
+
+TestCase('String#IsAlpha()') {
+	Tester(`''.IsAlpha())
+	Tester(`'a'.IsAlpha())
+	Tester(`'0'.IsAlpha())
+	Tester(`' '.IsAlpha())
+	Tester(`'*'.IsAlpha())
+	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsAlpha())
+	Tester(`'0123456789'.IsAlpha())
+	Tester(`' \t\n'.IsAlpha())
+	Tester(`'a*'.IsAlpha())
+	Tester(`'0*'.IsAlpha())
+	Tester(`' *'.IsAlpha())
+}
+
+TestCase('String#IsDigit()') {
+	Tester(`''.IsDigit())
+	Tester(`'a'.IsDigit())
+	Tester(`'0'.IsDigit())
+	Tester(`' '.IsDigit())
+	Tester(`'*'.IsDigit())
+	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsDigit())
+	Tester(`'0123456789'.IsDigit())
+	Tester(`' \t\n'.IsDigit())
+	Tester(`'a*'.IsDigit())
+	Tester(`'0*'.IsDigit())
+	Tester(`' *'.IsDigit())
+}
+
+TestCase('String#IsEmpty()') {
+	Tester(`''.IsEmpty())
+	Tester(`'0'.IsEmpty())
+}
+
+TestCase('String#IsSpace()') {
+	Tester(`''.IsSpace())
+	Tester(`'a'.IsSpace())
+	Tester(`'0'.IsSpace())
+	Tester(`' '.IsSpace())
+	Tester(`'*'.IsSpace())
+	Tester(`'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsSpace())
+	Tester(`'0123456789'.IsSpace())
+	Tester(`' \t\n'.IsSpace())
+	Tester(`'a*'.IsSpace())
+	Tester(`'0*'.IsSpace())
+	Tester(`' *'.IsSpace())
+}
+
 TestCase('String#Left()') {
 	Printf('%-13s .. "%s"\n', words10, words10::Left(0))
 	Printf('%-13s .. "%s"\n', words10, words10::Left(6))

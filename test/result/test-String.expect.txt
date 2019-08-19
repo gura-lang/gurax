@@ -125,6 +125,57 @@ str.Find('おかきき') .. <Nil>
 ======== String#Fold() ========
 ======== String#Foldw() ========
 ======== String#Format() ========
+======== String#IsAlnum() ========
+''.IsAlnum() .. false
+'a'.IsAlnum() .. true
+'0'.IsAlnum() .. true
+' '.IsAlnum() .. false
+'*'.IsAlnum() .. false
+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsAlnum() .. true
+'0123456789'.IsAlnum() .. true
+' \t\n'.IsAlnum() .. false
+'a*'.IsAlnum() .. false
+'0*'.IsAlnum() .. false
+' *'.IsAlnum() .. false
+======== String#IsAlpha() ========
+''.IsAlpha() .. false
+'a'.IsAlpha() .. true
+'0'.IsAlpha() .. false
+' '.IsAlpha() .. false
+'*'.IsAlpha() .. false
+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsAlpha() .. true
+'0123456789'.IsAlpha() .. false
+' \t\n'.IsAlpha() .. false
+'a*'.IsAlpha() .. false
+'0*'.IsAlpha() .. false
+' *'.IsAlpha() .. false
+======== String#IsDigit() ========
+''.IsDigit() .. false
+'a'.IsDigit() .. false
+'0'.IsDigit() .. true
+' '.IsDigit() .. false
+'*'.IsDigit() .. false
+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsDigit() .. false
+'0123456789'.IsDigit() .. true
+' \t\n'.IsDigit() .. false
+'a*'.IsDigit() .. false
+'0*'.IsDigit() .. false
+' *'.IsDigit() .. false
+======== String#IsEmpty() ========
+''.IsEmpty() .. true
+'0'.IsEmpty() .. false
+======== String#IsSpace() ========
+''.IsSpace() .. false
+'a'.IsSpace() .. false
+'0'.IsSpace() .. false
+' '.IsSpace() .. true
+'*'.IsSpace() .. false
+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.IsSpace() .. false
+'0123456789'.IsSpace() .. false
+' \t\n'.IsSpace() .. true
+'a*'.IsSpace() .. false
+'0*'.IsSpace() .. false
+' *'.IsSpace() .. false
 ======== String#Left() ========
 bubble        .. ""
 tasteful      .. ""

@@ -616,6 +616,15 @@ String String::Chop(const char* str, bool eolOnlyFlag)
 	return String(str, p);
 }
 
+bool String::IsCTypes(const char* str, CTypes ctypes)
+{
+	if (!*str) return false;
+	for (const char* p = str; *p; p++) {
+		if ((GetCTypes(*p) & ctypes) == 0) return false;
+	}
+	return true;
+}
+
 void String::IssueError_InvalidFormatOfNumber()
 {
 	Error::Issue(ErrorType::FormatError, "invalid format of number");

@@ -224,6 +224,7 @@ public:
 	String Right(size_t len) const { return Right(c_str(), len); }
 	static String Mid(const char* str, int start, size_t len);
 	String Mid(int start, size_t len) const { return Mid(c_str(), start, len); }
+public:
 	// Replacement
 	template<typename T_CharCmp>
 	static String Replace(const char* str, const char* sub, const char* replace);
@@ -237,6 +238,7 @@ public:
 	String Replace(const char* sub, const char* replace, int nMaxReplace) const {
 		return Replace<T_CharCmp>(c_str(), sub, replace, nMaxReplace);
 	}
+public:
 	// Multiple Replacement
 	template<typename T_CharCmp>
 	static String ReplaceM(const char* str, const StringList& map);
@@ -264,6 +266,18 @@ public:
 	static String Strip(const char* str, bool stripLeftFlag, bool stripRightFlag);
 	String Chop(bool eolOnlyFlag) const { return Chop(c_str(), eolOnlyFlag); }
 	static String Chop(const char* str, bool eolOnlyFlag);
+public:
+	static bool IsCTypes(const char* str, CTypes ctypes);
+	static bool IsAlnum(const char* str) { return IsCTypes(str, CType::Alpha | CType::Digit); }
+	bool IsAlnum() const { return IsAlnum(c_str()); }
+	static bool IsAlpha(const char* str) { return IsCTypes(str, CType::Alpha); }
+	bool IsAlpha() const { return IsAlpha(c_str()); }
+	static bool IsDigit(const char* str) { return IsCTypes(str, CType::Digit); }
+	bool IsDigit() const { return IsDigit(c_str()); }
+	static bool IsEmpty(const char* str) { return *str == '\0'; }
+	bool IsEmpty() const { return IsEmpty(c_str()); }
+	static bool IsSpace(const char* str) { return IsCTypes(str, CType::Space); }
+	bool IsSpace() const { return IsSpace(c_str()); }
 public:
 	static void IssueError_InvalidFormatOfNumber();
 	static void IssueError_IndexOutOfRange(size_t len, Int pos);

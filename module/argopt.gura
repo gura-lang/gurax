@@ -51,11 +51,9 @@ Parser = class {
 		argvRest = []
 		iter = argv.Offset(1)
 		while (arg = iter.NextValue()) {
-			if (argBody = arg.StartsWith('--'):rest) {
+			if ((argBody = arg.StartsWith('--'):rest) && !argBody.IsEmpty()) {
 				fields = argBody.Split('=', 1):list
-				if (fields.len == 0) {
-					[longName, value] = ['', nil]
-				} elsif (fields.len == 1) {
+				if (fields.len == 1) {
 					[longName, value] = [fields[0], nil]
 				} else {
 					[longName, value] = fields

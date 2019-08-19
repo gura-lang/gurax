@@ -461,6 +461,86 @@ Gurax_ImplementMethod(String, Format)
 	return Value::nil();
 }
 
+// String#IsAlnum()
+Gurax_DeclareMethod(String, IsAlnum)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are alphabet and digit.");
+}
+
+Gurax_ImplementMethod(String, IsAlnum)
+{
+	auto& valueThis = GetValueThis(argument);
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Bool(str.IsAlnum());
+}
+
+// String#IsAlpha()
+Gurax_DeclareMethod(String, IsAlpha)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are alphabet.");
+}
+
+Gurax_ImplementMethod(String, IsAlpha)
+{
+	auto& valueThis = GetValueThis(argument);
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Bool(str.IsAlpha());
+}
+
+// String#IsDigit()
+Gurax_DeclareMethod(String, IsDigit)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are digit.");
+}
+
+Gurax_ImplementMethod(String, IsDigit)
+{
+	auto& valueThis = GetValueThis(argument);
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Bool(str.IsDigit());
+}
+
+// String#IsEmpty()
+Gurax_DeclareMethod(String, IsEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the string is empty.");
+}
+
+Gurax_ImplementMethod(String, IsEmpty)
+{
+	auto& valueThis = GetValueThis(argument);
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Bool(str.IsEmpty());
+}
+
+// String#IsSpace()
+Gurax_DeclareMethod(String, IsSpace)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if all the characters in the string are space.");
+}
+
+Gurax_ImplementMethod(String, IsSpace)
+{
+	auto& valueThis = GetValueThis(argument);
+	const String& str = valueThis.GetStringSTL();
+	return new Value_Bool(str.IsSpace());
+}
+
 // String#Left(len?:Number):String:map
 Gurax_DeclareMethod(String, Left)
 {
@@ -1104,96 +1184,6 @@ Gurax_ImplementMethod(String, ZenToHan)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// String#isAlnum
-Gurax_DeclareProperty_R(String, isAlnum)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if all the characters in the string are alphabet and digit.");
-}
-
-Gurax_ImplementPropertyGetter(String, isAlnum)
-{
-#if 0
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
-}
-
-// String#isAlpha
-Gurax_DeclareProperty_R(String, isAlpha)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if all the characters in the string are alphabet.");
-}
-
-Gurax_ImplementPropertyGetter(String, isAlpha)
-{
-#if 0
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
-}
-
-// String#isDigit()
-Gurax_DeclareProperty_R(String, isDigit)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if all the characters in the string are digit.");
-}
-
-Gurax_ImplementPropertyGetter(String, isDigit)
-{
-#if 0
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
-}
-
-// String#isEmpty()
-Gurax_DeclareProperty_R(String, isEmpty)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the string is empty.");
-}
-
-Gurax_ImplementPropertyGetter(String, isEmpty)
-{
-#if 0
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
-}
-
-// String#isSpace()
-Gurax_DeclareProperty_R(String, isSpace)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if all the characters in the string are space.");
-}
-
-Gurax_ImplementPropertyGetter(String, isSpace)
-{
-#if 0
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
-}
-
 // String#len
 Gurax_DeclareProperty_R(String, len)
 {
@@ -1264,6 +1254,11 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Fold));
 	Assign(Gurax_CreateMethod(String, Foldw));
 	Assign(Gurax_CreateMethod(String, Format));
+	Assign(Gurax_CreateMethod(String, IsAlnum));
+	Assign(Gurax_CreateMethod(String, IsAlpha));
+	Assign(Gurax_CreateMethod(String, IsDigit));
+	Assign(Gurax_CreateMethod(String, IsEmpty));
+	Assign(Gurax_CreateMethod(String, IsSpace));
 	Assign(Gurax_CreateMethod(String, Left));
 	Assign(Gurax_CreateMethod(String, LJust));
 	Assign(Gurax_CreateMethod(String, Lower));
@@ -1288,11 +1283,6 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Upper));
 	Assign(Gurax_CreateMethod(String, ZenToHan));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(String, isAlnum));
-	Assign(Gurax_CreateProperty(String, isAlpha));
-	Assign(Gurax_CreateProperty(String, isDigit));
-	Assign(Gurax_CreateProperty(String, isEmpty));
-	Assign(Gurax_CreateProperty(String, isSpace));
 	Assign(Gurax_CreateProperty(String, len));
 	Assign(Gurax_CreateProperty(String, width));
 	// Assignment of operator
