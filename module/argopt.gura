@@ -5,8 +5,6 @@ Entry = struct {
 	shortName:String:nil
 	help:String:nil
 	helpValue:String:nil
-	valueDefault
-	value
 	MakeHelpIndex(longNameFlag:Bool, shortNameFlag:Bool) = {
 		str = ''
 		if (!shortNameFlag) {
@@ -49,41 +47,58 @@ Parser = class {
 			}
 		}
 		argvRest = []
+		opt = %{}
 		iter = argv.Offset(1)
 		while (arg = iter.NextValue()) {
 			if ((argBody = arg.StartsWith('--'):rest) && !argBody.IsEmpty()) {
 				fields = argBody.Split('=', 1):list
 				[longName, value] = cond(fields.len == 1, [fields[0], nil], fields)
 				entry = dictByLongName.Get(longName)
-				!entry && Error.Raise(Error.KeyError, "unknown option --%s", longName)
+				!entry && Error.Raise(Error.CommandError, 'unknown option --%s', longName)
 				if (entry.type == `param) {
-					//!value && Error.Raise()
+					!value && Error.Raise(Error.CommandError, 'value must be specified')
+					opt[entry.longName] = value
 				} else { // entry.type == `flag
+					value && Error.Raise(Error.CommandError, 'value is unnecessary')
+					opt[entry.longName] = true
 				}
 			} elsif (shortName = arg.StartsWith('-'):rest) {
 				entry = dictByShortName.Get(shortName)
-				!entry && Error.Raise(Error.KeyError, "unknown option -%s", shortName)
+				!entry && Error.Raise(Error.CommandError, 'unknown option -%s', shortName)
+				if (entry.type == `param) {
+					value = iter.NextValue()
+					!value && Error.Raise(Error.CommandError, 'value must be specified')
+					opt[entry.longName] = value
+				} else { // entry.type == `flag
+					opt[entry.longName] = true
+				}
 			} else {
-				
+				argvRest.Add(arg)
 			}
 		}
-		//Println(argv)
+
 		//Println(this.entries[0].MakeHelpIndex(true, true))
+		[argvRest, opt]
 	}
-	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String, valueDefault?:String) = {
-		this.entries.Add(Entry(`param, longName, shortName, help, helpValue, valueDefault, valueDefault))
+	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String) = {
+		this.entries.Add(Entry(`param, longName, shortName, help, helpValue))
 	}
 	AddFlag(longName:String, shortName?:String, help?:String) = {
-		this.entries.Add(Entry(`flag, longName, shortName, help, nil, false, false))
+		this.entries.Add(Entry(`flag, longName, shortName, help, nil))
 	}
 }
 
 Parser {|p|
-	p.AddParam('p1', valueDefault = 'default1')
-	p.AddParam('p2', valueDefault = 'default2')
-	p.AddParam('p3', valueDefault = 'default3')
-	p.AddParam('p4', valueDefault = 'default4')
-	p.AddParam('p5', valueDefault = 'default5')
+	p.AddParam('p1')
+	p.AddParam('p2')
+	p.AddParam('p3')
+	p.AddParam('p4')
+	p.AddParam('p5')
 	p.AddFlag('f1')
-	p.Parse(sys.argv)
+	p.AddFlag('f2')
+	p.AddFlag('f3')
+	p.AddFlag('f4')
+	p.AddFlag('f5')
+	[argv, opt] = p.Parse(sys.argv)
+	Println(opt)
 }
