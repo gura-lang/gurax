@@ -2,20 +2,44 @@
 import(argopt)
 
 p = argopt.Parser()
-p.AddParam('p1', 'a')
-p.AddParam('p2', 'b')
-p.AddParam('p3', 'c')
-p.AddParam('p4', 'd')
-p.AddParam('p5', 'e')
-p.AddFlag('f1', 'f')
-p.AddFlag('f2', 'g')
-p.AddFlag('f3', 'h')
-p.AddFlag('f4', 'i')
-p.AddFlag('f5', 'j')
+p.AddFlag('flag-a', 'a')
+p.AddFlag('flag-b', 'b')
+p.AddFlag('flag-c', 'c')
+p.AddFlag('flag-d', 'd')
+p.AddFlag('flag-e', 'e')
+p.AddParam('param-A', 'A')
+p.AddParam('param-B', 'B')
+p.AddParam('param-C', 'C')
+p.AddParam('param-D', 'D')
+p.AddParam('param-E', 'E')
 
 Tester(argv[]:String) = {
-	[argvRest, opt] = p.Parse(argv)
+	try {
+		[argvRest, opt] = p.Parse([''] |+| argv)
+	} catch {|e|
+		Printf('%s -> ** %s **\n', argv, e.text):nomap
+		return
+	}
 	Printf('%s -> %s, %s\n', argv, argvRest, opt):nomap
 }
 
 Tester([''])
+Tester(['file1'])
+Tester(['file1', 'file2', 'file3'])
+Tester(['--flag-a'])
+Tester(['-a'])
+Tester(['--flag-a', '--flag-b'])
+Tester(['-a', '-b'])
+Tester(['--flag-a', '--flag-b', '--flag-c', '--flag-d', '--flag-e'])
+Tester(['-a', '-b', '-c', '-d', '-e'])
+Tester(['--flag-a', '--flag-a'])
+Tester(['-a', '-a'])
+Tester(['file1', '--flag-a', 'file2', '--flag-b', '--flag-c', 'file3', '--flag-d', '--flag-e', 'file4'])
+Tester(['--param-A=value-A'])
+Tester(['-A', 'value-A'])
+Tester(['--param-A=value-A', '--param-B=vaue-B'])
+Tester(['-A', 'value-A', '-B', 'value-B'])
+Tester(['--param-A=value-A', '--param-B=value-B', '--param-C=value-C', '--param-D=value-D', '--param-E=value-E'])
+Tester(['-A', 'value-A', '-B', 'value-B', '-C', 'value-C', '-D', 'value-D', '-E', 'value-E'])
+Tester(['--param-A'])
+Tester(['--flag-a=value'])
