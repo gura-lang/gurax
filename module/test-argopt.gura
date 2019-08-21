@@ -1,18 +1,21 @@
 #!/usr/bin/env gurax
 import(argopt)
 
-argopt.Parser {|p|
-	p.AddParam('p1', 'a')
-	p.AddParam('p2', 'b')
-	p.AddParam('p3', 'c')
-	p.AddParam('p4', 'd')
-	p.AddParam('p5', 'e')
-	p.AddFlag('f1', 'f')
-	p.AddFlag('f2', 'g')
-	p.AddFlag('f3', 'h')
-	p.AddFlag('f4', 'i')
-	p.AddFlag('f5', 'j')
-	[argv, opt] = p.Parse(sys.argv)
-	Println(argv):nomap
-	Println(opt)
+p = argopt.Parser()
+p.AddParam('p1', 'a')
+p.AddParam('p2', 'b')
+p.AddParam('p3', 'c')
+p.AddParam('p4', 'd')
+p.AddParam('p5', 'e')
+p.AddFlag('f1', 'f')
+p.AddFlag('f2', 'g')
+p.AddFlag('f3', 'h')
+p.AddFlag('f4', 'i')
+p.AddFlag('f5', 'j')
+
+Tester(argv[]:String) = {
+	[argvRest, opt] = p.Parse(argv)
+	Printf('%s -> %s, %s\n', argv, argvRest, opt):nomap
 }
+
+Tester([''])

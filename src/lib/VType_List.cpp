@@ -1417,6 +1417,18 @@ Gurax_ImplementPropertyGetter(List, vtypeOfElem)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// List |+| List
+Gurax_ImplementOpBinary(Concat, List, List)
+{
+	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
+	const ValueTypedOwner& valuesR = Value_List::GetValueTypedOwner(valueR);
+	pValues->Add(valuesR);
+	return new Value_List(pValues.release());
+}
+
+//------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
 VType_List VTYPE_List("List");
@@ -1491,6 +1503,8 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(List, last));
 	Assign(Gurax_CreateProperty(List, len));
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Concat, List, List);
 }
 
 Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
