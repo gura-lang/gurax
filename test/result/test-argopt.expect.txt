@@ -1,0 +1,20 @@
+[''] -> [''], %{}
+['file1'] -> ['file1'], %{}
+['file1', 'file2', 'file3'] -> ['file1', 'file2', 'file3'], %{}
+['--flag-a'] -> [], %{'flag-a' => true}
+['-a'] -> [], %{'flag-a' => true}
+['--flag-a', '--flag-b'] -> [], %{'flag-a' => true, 'flag-b' => true}
+['-a', '-b'] -> [], %{'flag-a' => true, 'flag-b' => true}
+['--flag-a', '--flag-b', '--flag-c', '--flag-d', '--flag-e'] -> [], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => true, 'flag-d' => true, 'flag-e' => true}
+['-a', '-b', '-c', '-d', '-e'] -> [], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => true, 'flag-d' => true, 'flag-e' => true}
+['--flag-a', '--flag-a'] -> [], %{'flag-a' => true}
+['-a', '-a'] -> [], %{'flag-a' => true}
+['file1', '--flag-a', 'file2', '--flag-b', '--flag-c', 'file3', '--flag-d', '--flag-e', 'file4'] -> ['file1', 'file2', 'file3', 'file4'], %{'flag-a' => true, 'flag-b' => true, 'flag-c' => true, 'flag-d' => true, 'flag-e' => true}
+['--param-A=value-A'] -> [], %{'param-A' => 'value-A'}
+['-A', 'value-A'] -> [], %{'param-A' => 'value-A'}
+['--param-A=value-A', '--param-B=vaue-B'] -> [], %{'param-A' => 'value-A', 'param-B' => 'vaue-B'}
+['-A', 'value-A', '-B', 'value-B'] -> [], %{'param-A' => 'value-A', 'param-B' => 'value-B'}
+['--param-A=value-A', '--param-B=value-B', '--param-C=value-C', '--param-D=value-D', '--param-E=value-E'] -> [], %{'param-A' => 'value-A', 'param-B' => 'value-B', 'param-C' => 'value-C', 'param-D' => 'value-D', 'param-E' => 'value-E'}
+['-A', 'value-A', '-B', 'value-B', '-C', 'value-C', '-D', 'value-D', '-E', 'value-E'] -> [], %{'param-A' => 'value-A', 'param-B' => 'value-B', 'param-C' => 'value-C', 'param-D' => 'value-D', 'param-E' => 'value-E'}
+['--param-A'] -> ** value must be specified **
+['--flag-a=value'] -> ** value is unnecessary **

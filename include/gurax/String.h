@@ -266,6 +266,8 @@ public:
 	static String Strip(const char* str, bool stripLeftFlag, bool stripRightFlag);
 	String Chop(bool eolOnlyFlag) const { return Chop(c_str(), eolOnlyFlag); }
 	static String Chop(const char* str, bool eolOnlyFlag);
+	void Split(StringList& strs, char sep) const { return Split(strs, c_str(), sep); }
+	static void Split(StringList& strs, const char* str, char sep);
 public:
 	static bool IsCTypes(const char* str, CTypes ctypes);
 	static bool IsAlnum(const char* str) { return IsCTypes(str, CType::Alpha | CType::Digit); }

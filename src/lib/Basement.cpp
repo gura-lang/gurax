@@ -112,7 +112,9 @@ void Basement::PrepareValue(Frame& frame)
 
 void Basement::AppendPathList(const String& str)
 {
-	_pathList.push_back(str);
+	StringList dirNames;
+	str.Split(dirNames, ':');
+	for (const String& dirName : dirNames) _pathList.push_back(dirName);
 }
 
 void Basement::AppendPathList(const StringList& strs)

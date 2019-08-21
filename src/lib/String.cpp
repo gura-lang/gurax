@@ -616,6 +616,21 @@ String String::Chop(const char* str, bool eolOnlyFlag)
 	return String(str, p);
 }
 
+void String::Split(StringList& strs, const char* str, char sep)
+{
+	const char* p = str;
+	while (*p) {
+		const char* pFind = ::strchr(p, sep);
+		if (pFind) {
+			strs.push_back(String(p, pFind));
+			p = pFind + 1;
+		} else {
+			strs.push_back(p);
+			break;
+		}
+	}
+}
+
 bool String::IsCTypes(const char* str, CTypes ctypes)
 {
 	if (!*str) return false;
