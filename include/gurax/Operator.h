@@ -193,11 +193,19 @@ public:
 // Operator
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator {
+public:
+	using Flags = UInt32;
+	struct Flag {
+		static const Flags None		= 0;
+		static const Flags Raw		= 1 << 0;
+		static const Flags Map		= 1 << 1;
+		static const Flags NoMap	= 0 << 1;
+	};
 private:
 	OpStyle _opStyle;
 	const char* _symbol;
 	OpType _opType;
-	bool _rawFlag;
+	Flags _flags;
 	bool _binaryFlag;
 	OpEntryMap _opEntryMap;
 private:
@@ -281,7 +289,7 @@ public:
 	static Operator* math_Unitstep;
 public:
 	// Constructor
-	Operator(OpStyle opStyle, const char* symbol, OpType opType, bool rawFlag = false);
+	Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags flags = Flag::Map);
 	// Copy constructor/operator
 	Operator(const Operator& src) = delete;
 	Operator& operator=(const Operator& src) = delete;
@@ -294,7 +302,8 @@ public:
 	OpStyle GetStyle() const			{ return _opStyle; }
 	const char* GetSymbol() const		{ return _symbol; }
 	OpType GetType() const				{ return _opType; }
-	bool GetRawFlag() const				{ return _rawFlag; }
+	bool GetRawFlag() const				{ return (_flags & Flag::Raw) != 0; }
+	bool GetMapFlag() const				{ return (_flags & Flag::Map) != 0; }
 	bool IsType(OpType opType) const	{ return _opType == opType; }
 	bool IsUnary() const				{ return !_binaryFlag; }
 	bool IsBinary() const				{ return _binaryFlag; }
@@ -335,7 +344,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_Quote : public Operator {
 public:
-	Operator_Quote() : Operator(OpStyle::OpPreUnary, "`", OpType::Quote, true) {}
+	Operator_Quote() : Operator(OpStyle::OpPreUnary, "`", OpType::Quote, Flag::Raw) {}
 public:
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const override;
 };
@@ -345,7 +354,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_AndAnd : public Operator {
 public:
-	Operator_AndAnd() : Operator(OpStyle::OpBinary, "&&", OpType::AndAnd, true) {}
+	Operator_AndAnd() : Operator(OpStyle::OpBinary, "&&", OpType::AndAnd, Flag::Raw) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };
@@ -355,7 +364,7 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Operator_OrOr : public Operator {
 public:
-	Operator_OrOr() : Operator(OpStyle::OpBinary, "||", OpType::OrOr, true) {}
+	Operator_OrOr() : Operator(OpStyle::OpBinary, "||", OpType::OrOr, Flag::Raw) {}
 public:
 	virtual void ComposeBinary(Composer& composer, Expr_Binary& expr) const override;
 };

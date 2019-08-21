@@ -28,17 +28,17 @@ Operator* Operator::Add				= new Operator(OpStyle::OpBinary,		"+",			OpType::Add
 Operator* Operator::And				= new Operator(OpStyle::OpBinary,		"&",			OpType::And);
 Operator* Operator::AndAnd			= new Operator_AndAnd();
 Operator* Operator::Cmp				= new Operator(OpStyle::OpBinary,		"<=>",			OpType::Cmp);
-Operator* Operator::Concat			= new Operator(OpStyle::OpBinary,		"|+|",			OpType::Concat);
-Operator* Operator::Contains		= new Operator(OpStyle::OpBinary,		"in",			OpType::Contains);
-Operator* Operator::Cross			= new Operator(OpStyle::OpBinary,		"|^|",			OpType::Cross);
-Operator* Operator::Difference		= new Operator(OpStyle::OpBinary,		"|-|",			OpType::Difference);
+Operator* Operator::Concat			= new Operator(OpStyle::OpBinary,		"|+|",			OpType::Concat, Operator::Flag::NoMap);
+Operator* Operator::Contains		= new Operator(OpStyle::OpBinary,		"in",			OpType::Contains, Operator::Flag::NoMap);
+Operator* Operator::Cross			= new Operator(OpStyle::OpBinary,		"|^|",			OpType::Cross, Operator::Flag::NoMap);
+Operator* Operator::Difference		= new Operator(OpStyle::OpBinary,		"|-|",			OpType::Difference, Operator::Flag::NoMap);
 Operator* Operator::Div				= new Operator(OpStyle::OpBinary,		"/",			OpType::Div);
-Operator* Operator::Dot				= new Operator(OpStyle::OpBinary,		"|.|",			OpType::Dot);
+Operator* Operator::Dot				= new Operator(OpStyle::OpBinary,		"|.|",			OpType::Dot, Operator::Flag::NoMap);
 Operator* Operator::Eq				= new Operator(OpStyle::OpBinary,		"==",			OpType::Eq);
-Operator* Operator::Gear			= new Operator(OpStyle::OpBinary,		"|*|",			OpType::Gear);
+Operator* Operator::Gear			= new Operator(OpStyle::OpBinary,		"|*|",			OpType::Gear, Operator::Flag::NoMap);
 Operator* Operator::Ge				= new Operator(OpStyle::OpBinary,		">=",			OpType::Ge);
 Operator* Operator::Gt				= new Operator(OpStyle::OpBinary,		">",			OpType::Gt);
-Operator* Operator::Intersection	= new Operator(OpStyle::OpBinary,		"|&|",			OpType::Intersection);
+Operator* Operator::Intersection	= new Operator(OpStyle::OpBinary,		"|&|",			OpType::Intersection, Operator::Flag::NoMap);
 Operator* Operator::Le				= new Operator(OpStyle::OpBinary,		"<=",			OpType::Le);
 Operator* Operator::Lt				= new Operator(OpStyle::OpBinary,		"<",			OpType::Lt);
 Operator* Operator::Mod				= new Operator(OpStyle::OpBinary,		"%",			OpType::Mod);
@@ -53,7 +53,7 @@ Operator* Operator::Seq				= new Operator(OpStyle::OpBinary,		"..",			OpType::Se
 Operator* Operator::Shl				= new Operator(OpStyle::OpBinary,		"<<",			OpType::Shl);
 Operator* Operator::Shr				= new Operator(OpStyle::OpBinary,		">>",			OpType::Shr);
 Operator* Operator::Sub				= new Operator(OpStyle::OpBinary,		"-",			OpType::Sub);
-Operator* Operator::Union			= new Operator(OpStyle::OpBinary,		"|||",			OpType::Union);
+Operator* Operator::Union			= new Operator(OpStyle::OpBinary,		"|||",			OpType::Union, Operator::Flag::NoMap);
 Operator* Operator::Xor				= new Operator(OpStyle::OpBinary,		"^",			OpType::Xor);
 // Mathematical functions
 Operator* Operator::math_Abs		= new Operator(OpStyle::MathUnary,		"Abs",			OpType::math_Abs);
@@ -87,8 +87,8 @@ Operator* Operator::math_Tan		= new Operator(OpStyle::MathUnary,		"Tan",			OpTyp
 Operator* Operator::math_Tanh		= new Operator(OpStyle::MathUnary,		"Tanh",			OpType::math_Tanh);
 Operator* Operator::math_Unitstep	= new Operator(OpStyle::MathUnary,		"Unitstep",		OpType::math_Unitstep);
 
-Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType, bool rawFlag) :
-	_opStyle(opStyle), _symbol(symbol), _opType(opType), _rawFlag(rawFlag),
+Operator::Operator(OpStyle opStyle, const char* symbol, OpType opType, Flags flags) :
+	_opStyle(opStyle), _symbol(symbol), _opType(opType), _flags(flags),
 	_binaryFlag(opStyle == OpStyle::OpBinary || opStyle == OpStyle::MathBinary)
 {
 	_operatorTbl[static_cast<size_t>(opType)] = this;
@@ -125,60 +125,62 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 
 Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 {
-	if (value.IsList()) {
-		RefPtr<Iterator> pIterator(
-			new Iterator_UnaryOpImpMap(
-				processor.Reference(), this,
-				new Value_ArgMapper(value.DoGenIterator())));
-		RefPtr<Value_List> pValueRtn(new Value_List());
-		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
-		for (;;) {
-			RefPtr<Value> pValue(pIterator->NextValue());
-			if (!pValue) break;
-			valueTypedOwner.Add(pValue.release());
+	if (GetMapFlag()) {
+		if (value.IsList()) {
+			RefPtr<Iterator> pIterator(
+				new Iterator_UnaryOpImpMap(
+					processor.Reference(), this,
+					new Value_ArgMapper(value.DoGenIterator())));
+			RefPtr<Value_List> pValueRtn(new Value_List());
+			ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+			for (;;) {
+				RefPtr<Value> pValue(pIterator->NextValue());
+				if (!pValue) break;
+				valueTypedOwner.Add(pValue.release());
+			}
+			if (Error::IsIssued()) return Value::nil();
+			return pValueRtn.release();
+		} else if (value.IsIterator()) {
+			RefPtr<Iterator> pIterator(
+				new Iterator_UnaryOpImpMap(
+					processor.Reference(), this,
+					new Value_ArgMapper(value.DoGenIterator())));
+			return new Value_Iterator(pIterator.release());
 		}
-		if (Error::IsIssued()) return Value::nil();
-		return pValueRtn.release();
-	} else if (value.IsIterator()) {
-		RefPtr<Iterator> pIterator(
-			new Iterator_UnaryOpImpMap(
-				processor.Reference(), this,
-				new Value_ArgMapper(value.DoGenIterator())));
-		return new Value_Iterator(pIterator.release());
-	} else {
-		const OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
-		return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 	}
+	const OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
+	return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 }
 
 Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
 {
-	if (valueL.IsIterator() || valueR.IsIterator()) {
-		RefPtr<Iterator> pIterator(
-			new Iterator_BinaryOpImpMap(
-				processor.Reference(), this,
-				valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
-				valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
-		return new Value_Iterator(pIterator.release());
-	} else if (valueL.IsList() || valueR.IsList()) {
-		RefPtr<Iterator> pIterator(
-			new Iterator_BinaryOpImpMap(
-				processor.Reference(), this,
-				valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
-				valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
-		RefPtr<Value_List> pValueRtn(new Value_List());
-		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
-		for (;;) {
-			RefPtr<Value> pValue(pIterator->NextValue());
-			if (!pValue) break;
-			valueTypedOwner.Add(pValue.release());
+	if (GetMapFlag()) {
+		if (valueL.IsIterator() || valueR.IsIterator()) {
+			RefPtr<Iterator> pIterator(
+				new Iterator_BinaryOpImpMap(
+					processor.Reference(), this,
+					valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
+					valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
+			return new Value_Iterator(pIterator.release());
+		} else if (valueL.IsList() || valueR.IsList()) {
+			RefPtr<Iterator> pIterator(
+				new Iterator_BinaryOpImpMap(
+					processor.Reference(), this,
+					valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
+					valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
+			RefPtr<Value_List> pValueRtn(new Value_List());
+			ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+			for (;;) {
+				RefPtr<Value> pValue(pIterator->NextValue());
+				if (!pValue) break;
+				valueTypedOwner.Add(pValue.release());
+			}
+			if (Error::IsIssued()) return Value::nil();
+			return pValueRtn.release();
 		}
-		if (Error::IsIssued()) return Value::nil();
-		return pValueRtn.release();
-	} else {
-		const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
-		return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 	}
+	const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
+	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 
 String Operator::ToString(const VType& vtype) const
