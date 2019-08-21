@@ -48,6 +48,8 @@ public:
 	bool GetListingFlag() const { return _listingFlag; }
 	void PrepareVType(Frame& frame);
 	void PrepareValue(Frame& frame);
+	void AppendPathList(const String& str);
+	void AppendPathList(const StringList& strs);
 	Frame& GetFrame() { return *_pFrame; }
 	Stream& GetStreamCIn() { return *_pStreamCIn; }
 	Stream& GetStreamCOut() { return *_pStreamCOut; }

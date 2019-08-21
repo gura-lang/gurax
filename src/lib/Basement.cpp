@@ -16,16 +16,15 @@ Basement::Basement() :
 	_pSuffixMgrMap_Number(new SuffixMgrMap()), _pSuffixMgrMap_String(new SuffixMgrMap()),
 	_ps1(">>> "), _ps2("... ")
 {
-	_pathList.push_back(".");
 }
 
 bool Basement::Initialize(int& argc, char** argv)
 {
 	CommandLine cmdLine;
 	if (!cmdLine
-		.OptString	("module-path",	'I')
-		.OptBool	("debug",		'g')
-		.OptBool	("list",		'L')
+		.OptMultiString	("module-path",	'I')
+		.OptBool		("debug",		'g')
+		.OptBool		("list",		'L')
 		.Parse(argc, argv)) {
 		Error::Issue(ErrorType::CommandError, "%s", cmdLine.GetError());
 		return false;
@@ -37,6 +36,8 @@ bool Basement::Initialize(int& argc, char** argv)
 	Frame& frame = GetFrame();
 	PrepareVType(frame);
 	PrepareValue(frame);
+	AppendPathList(".");
+	AppendPathList(cmdLine.GetStringList("module-path"));
 	Statements::AssignToBasement(frame);
 	Functions::AssignToBasement(frame);
 	SetStreamCIn(Stream::CIn->Reference());
@@ -107,6 +108,16 @@ void Basement::PrepareValue(Frame& frame)
 	frame.Assign("nil",		Value::nil());
 	frame.Assign("false",	Value::false_());
 	frame.Assign("true",	Value::true_());
+}
+
+void Basement::AppendPathList(const String& str)
+{
+	_pathList.push_back(str);
+}
+
+void Basement::AppendPathList(const StringList& strs)
+{
+	for (const String& str : strs) AppendPathList(str);
 }
 
 void Basement::AssignSuffixMgr(SuffixMgr* pSuffixMgr, bool numberFlag)
