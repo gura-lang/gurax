@@ -11,6 +11,7 @@ namespace Gurax {
 Basement Basement::Inst;
 
 Basement::Basement() :
+	_argc(0), _argv(nullptr), _debugFlag(false), _listingFlag(false),
 	_pFrame(new Frame_Basement()),
 	_pSuffixMgrMap_Number(new SuffixMgrMap()), _pSuffixMgrMap_String(new SuffixMgrMap()),
 	_ps1(">>> "), _ps2("... ")
@@ -18,10 +19,21 @@ Basement::Basement() :
 	_pathList.push_back(".");
 }
 
-void Basement::Initialize(int argc, char** argv)
+bool Basement::Initialize(int& argc, char** argv)
 {
+	CommandLine cmdLine;
+	if (!cmdLine
+		.OptString	("module-path",	'I')
+		.OptBool	("debug",		'g')
+		.OptBool	("list",		'L')
+		.Parse(argc, argv)) {
+		Error::Issue(ErrorType::CommandError, "%s", cmdLine.GetError());
+		return false;
+	}
 	_argc = argc;
 	_argv = argv;
+	_debugFlag = cmdLine.GetBool("debug");
+	_listingFlag = cmdLine.GetBool("list");
 	Frame& frame = GetFrame();
 	PrepareVType(frame);
 	PrepareValue(frame);
@@ -41,6 +53,7 @@ void Basement::Initialize(int argc, char** argv)
 	frame.Assign(Module_path::Create(frame.Reference()));
 	frame.Assign(Module_re::Create(frame.Reference()));
 	frame.Assign(Module_sys::Create(frame.Reference()));
+	return true;
 }
 
 void Basement::PrepareVType(Frame& frame)

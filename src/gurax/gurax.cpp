@@ -16,15 +16,10 @@ void RunREPL();
 
 int Main(int argc, char* argv[])
 {
-	CommandLine cmdLine;
-	if (!cmdLine
-		.OptBool("debug",	'g')
-		.OptBool("list",	'L')
-		.Parse(argc, argv)) {
-		::fprintf(stderr, "%s\n", cmdLine.GetError());
+	if (!Gurax::Initialize(argc, argv)) {
+		Error::Print(*Stream::CErr);
 		return 1;
 	}
-	Gurax::Initialize(argc, argv);
 	if (argc < 2) {
 		RunREPL();
 		return 1;
@@ -46,10 +41,10 @@ int Main(int argc, char* argv[])
 		Error::Print(*Stream::CErr);
 		return 1;
 	}
-	if (cmdLine.GetBool("list")) {
+	if (Basement::Inst.GetListingFlag()) {
 		composer.PrintPUnit();
 	} else {
-		RefPtr<Processor> pProcessor(Processor::Create(cmdLine.GetBool("debug")));
+		RefPtr<Processor> pProcessor(Processor::Create(Basement::Inst.GetDebugFlag()));
 		RefPtr<Value> pValue(pProcessor->ProcessExpr(*pExprOfRoot));
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
