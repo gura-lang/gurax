@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+#if 0
+// ********************
 // Module#__PropHandler__(symbol:Symbol):map {block?}
 Gurax_DeclareMethod(Module, __PropHandler__)
 {
@@ -34,6 +36,7 @@ Gurax_ImplementMethod(Module, __PropHandler__)
 	}
 	return ReturnValue(processor, argument, new Value_PropHandler(pPropHandler->Reference()));
 }
+#endif
 
 //------------------------------------------------------------------------------
 // VType_Module
@@ -45,7 +48,7 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Module, __PropHandler__));
+	//Assign(Gurax_CreateMethod(Module, __PropHandler__));
 }
 
 //------------------------------------------------------------------------------

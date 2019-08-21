@@ -1,7 +1,4 @@
 ======== Property ========
-os.__PropHandler__(`cin) .. <PropHandler:cin:Stream:nil:r:R:W>
-os.__PropHandler__(`cout) .. <PropHandler:cout:Stream:nil:w:R:W>
-os.__PropHandler__(`cerr) .. <PropHandler:cerr:Stream:nil:w:R:W>
 ======== Streams ========
 os.cin .. <Stream:CIn>
 os.cout .. <Stream:COut>
