@@ -38,6 +38,7 @@ bool Basement::Initialize(int& argc, char** argv)
 	PrepareValue(frame);
 	AppendPathList(".");
 	AppendPathList(cmdLine.GetStringList("module-path"));
+	AppendPathList(OAL::GetEnv("GURAXPATH"));
 	Statements::AssignToBasement(frame);
 	Functions::AssignToBasement(frame);
 	SetStreamCIn(Stream::CIn->Reference());
@@ -114,7 +115,10 @@ void Basement::AppendPathList(const String& str)
 {
 	StringList dirNames;
 	str.Split(dirNames, ':');
-	for (const String& dirName : dirNames) _pathList.push_back(dirName);
+	for (const String& dirName : dirNames) {
+		String dirNameStripped = dirName.Strip(true, true);
+		if (!dirNameStripped.empty()) _pathList.push_back(dirNameStripped);
+	}
 }
 
 void Basement::AppendPathList(const StringList& strs)

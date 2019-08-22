@@ -70,6 +70,27 @@ String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
 	return rtn;
 }
 
+void OAL::PutEnv(const char* name, const char* value)
+{
+	::SetEnvironmentVariable(ToNativeString(name).c_str(), ToNativeString(value).c_str());
+}
+
+String OAL::GetEnv(const char* name, bool* pFoundFlag)
+{
+	String nameEnc = ToNativeString(name);
+	DWORD len = ::GetEnvironmentVariable(nameEnc.c_str(), nullptr, 0);
+	if (len == 0) {
+		if (pFoundFlag != nullptr) *pFoundFlag = false;
+		return String("");
+	}
+	char* buff = new char [len];
+	::GetEnvironmentVariable(nameEnc.c_str(), buff, len);
+	String rtn(FromNativeString(buff));
+	delete[] buff;
+	if (pFoundFlag != nullptr) *pFoundFlag = true;
+	return rtn;
+}
+
 String OAL::ToNativeString(const char* str)
 {
 	return ConvCodePage(str, CP_UTF8, CP_THREAD_ACP);
@@ -158,6 +179,23 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 //------------------------------------------------------------------------------
 // OAL (POSIX)
 //------------------------------------------------------------------------------
+String OAL::GetEnv(const char* name, bool* pFoundFlag)
+{
+	const char* str = ::getenv(ToNativeString(name).c_str());
+	if (str == nullptr) {
+		if (pFoundFlag != nullptr) *pFoundFlag = false;
+		return String("");
+	}
+	if (pFoundFlag != nullptr) *pFoundFlag = true;
+	return FromNativeString(str);
+}
+
+void OAL::PutEnv(const char* name, const char* value)
+{
+	int overwrite = 1;
+	::setenv(ToNativeString(name).c_str(), ToNativeString(value).c_str(), overwrite);
+}
+
 String OAL::ToNativeString(const char* str)
 {
 	return String(str);

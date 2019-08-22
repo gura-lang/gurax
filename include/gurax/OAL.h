@@ -36,6 +36,8 @@ public:
 		void* GetEntry(const char* funcName);
 	};
 public:
+	static void PutEnv(const char* name, const char* value);
+	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
 	static String GetCurDir();
