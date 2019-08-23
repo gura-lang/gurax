@@ -409,15 +409,24 @@ Gurax_DeclareMethod(List, ArgMin)
 
 Gurax_ImplementMethod(List, ArgMin)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	if (argument.IsSet(Gurax_Symbol(last_index))) {
+		Int idxFound = 0;
+		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThanOrEqualTo>(&idxFound));
+		return pValue? new Value_Number(idxFound) : Value::nil();
+	} else if (argument.IsSet(Gurax_Symbol(indices))) {
+		NumList<Int> idxFoundList;
+		idxFoundList.reserve(16);
+		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>(idxFoundList));
+		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
+	} else {
+		Int idxFound = 0;
+		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>(&idxFound));
+		return pValue? new Value_Number(idxFound) : Value::nil();
+	}
 }
 
 // List#Before(criteria) {block?}

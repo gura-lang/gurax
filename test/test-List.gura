@@ -155,9 +155,15 @@ TestCase('List#And()') {
 }
 
 TestCase('List#ArgMax()') {
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMax())
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMax():last_index)
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMax():indices)
 }
 
 TestCase('List#ArgMin()') {
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin())
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin():last_index)
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin():indices)
 }
 
 TestCase('List#Before()') {
@@ -365,7 +371,7 @@ TestCase('List#Map()') {
 }
 
 TestCase('List#Max()') {
-	Tester(`[3, 1, 4, 1, 5, 9, 2, 6].Max())
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Max())
 	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Max())
 }
 
@@ -373,7 +379,7 @@ TestCase('List#Mean()') {
 }
 
 TestCase('List#Min()') {
-	Tester(`[3, 1, 4, 1, 5, 9, 2, 6].Min())
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Min())
 	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Min())
 }
 
