@@ -365,6 +365,24 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Expr
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Expr : public Iterator {
+private:
+	RefPtr<ExprLink> _pExprLinkElem;
+	const Expr* _pExprCur;
+public:
+	Iterator_Expr(ExprLink* pExprLinkElem) :
+		_pExprLinkElem(pExprLinkElem), _pExprCur(_pExprLinkElem->GetExprFirst()) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override;
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

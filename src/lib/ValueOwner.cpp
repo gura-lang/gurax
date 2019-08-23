@@ -53,6 +53,14 @@ ValueOwner* ValueOwner::CreateFromIterator(Iterator& iterator, bool skipNilFlag)
 	return pValueOwner.release();
 }
 
+ValueOwner* ValueOwner::CreateFromStringList(const StringList& strs)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(strs.size());
+	for (const String& str : strs) pValueOwner->push_back(new Value_String(str));
+	return pValueOwner.release();
+}
+
 void ValueOwner::Set(Int pos, Value* pValue)
 {
 	auto ppValue = begin() + pos;

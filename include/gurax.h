@@ -126,6 +126,8 @@
 #include "../src/module-re/module-re.h"
 #include "../src/module-sys/module-sys.h"
 
+#include "gurax/Imp_Iterator.h"
+
 namespace Gurax {
 
 bool Initialize(int& argc, char* argv[]);

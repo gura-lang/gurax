@@ -5,9 +5,9 @@
 #define GURAX_VALUE_H
 #include "Number.h"
 #include "VType.h"
-#include "Iterator.h"
 #include "DeclCallable.h"
 #include "Error.h"
+#include "Iterator.h"
 
 namespace Gurax {
 

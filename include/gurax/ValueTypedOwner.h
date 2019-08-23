@@ -4,6 +4,8 @@
 #ifndef GURAX_VALUETYPEDOWNER_H
 #define GURAX_VALUETYPEDOWNER_H
 #include "ValueOwner.h"
+#include "VType_Number.h"
+#include "VType_String.h"
 
 namespace Gurax {
 
@@ -179,9 +181,18 @@ public:
 	ValueTypedOwner* CloneDeep() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}
+public:
 	static ValueTypedOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag) {
 		return new ValueTypedOwner(ValueOwner::CreateFromIterator(iterator, skipNilFlag));
 	}
+	template<typename T_Num>
+	static ValueTypedOwner* CreateFromNumList(const NumList<T_Num>& nums) {
+		return new ValueTypedOwner(VTYPE_Number, ValueOwner::CreateFromNumList<T_Num>(nums));
+	}
+	static ValueTypedOwner* CreateFromStringList(const StringList& strs) {
+		return new ValueTypedOwner(VTYPE_String, ValueOwner::CreateFromStringList(strs));
+	}
+public:
 	bool IsEmpty() const { return _pValueOwner->empty(); }
 	size_t GetSize() const { return _pValueOwner->size(); }
 	void Reserve(size_t size) { _pValueOwner->reserve(size); }

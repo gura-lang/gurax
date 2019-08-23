@@ -5,7 +5,6 @@
 #define GURAX_EXPR_H
 #include "Attribute.h"
 #include "DeclCallable.h"
-#include "Iterator.h"
 #include "Operator.h"
 #include "Template.h"
 #include "Value.h"
@@ -13,6 +12,7 @@
 namespace Gurax {
 
 class Composer;
+class Iterator;
 class Processor;
 class PUnit;
 
@@ -780,24 +780,6 @@ public:
 	virtual void ComposeForAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_Expr
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Expr : public Iterator {
-private:
-	RefPtr<ExprLink> _pExprLinkElem;
-	const Expr* _pExprCur;
-public:
-	Iterator_Expr(ExprLink* pExprLinkElem) :
-		_pExprLinkElem(pExprLinkElem), _pExprCur(_pExprLinkElem->GetExprFirst()) {}
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-	virtual size_t GetLength() const override;
-	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

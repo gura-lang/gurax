@@ -378,15 +378,24 @@ Gurax_DeclareMethod(List, ArgMax)
 
 Gurax_ImplementMethod(List, ArgMax)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	if (argument.IsSet(Gurax_Symbol(last_index))) {
+		Int idxFound = 0;
+		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThanOrEqualTo>(&idxFound));
+		return pValue? new Value_Number(idxFound) : Value::nil();
+	} else if (argument.IsSet(Gurax_Symbol(indices))) {
+		NumList<Int> idxFoundList;
+		idxFoundList.reserve(16);
+		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>(idxFoundList));
+		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
+	} else {
+		Int idxFound = 0;
+		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>(&idxFound));
+		return pValue? new Value_Number(idxFound) : Value::nil();
+	}
 }
 
 // List#ArgMin():[last_index,indices]
@@ -733,8 +742,6 @@ Gurax_ImplementMethod(List, Max)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
 	RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>());
 	return pValue? pValue.release() : Value::nil();
@@ -772,8 +779,6 @@ Gurax_ImplementMethod(List, Min)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
 	RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>());
 	return pValue? pValue.release() : Value::nil();

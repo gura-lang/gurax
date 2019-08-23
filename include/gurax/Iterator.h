@@ -3,13 +3,12 @@
 //==============================================================================
 #ifndef GURAX_ITERATOR_H
 #define GURAX_ITERATOR_H
-#include "Referable.h"
 #include "Help.h"
 #include "DeclCallable.h"
+#include "Value.h"
 
 namespace Gurax {
 
-class Value;
 class Processor;
 
 //------------------------------------------------------------------------------
@@ -44,6 +43,8 @@ protected:
 	virtual ~Iterator() = default;
 public:
 	template<typename T_Compare> Value* FindMinMax();
+	template<typename T_Compare> Value* FindMinMax(Int* pIdxFound);
+	template<typename T_Compare> Value* FindMinMax(NumList<Int>& idxFoundList);
 public:
 	bool IsInfinite() const { return (GetFlags() & Flag::Finite) == 0; }
 	bool IsFinite() const { return (GetFlags() & Flag::Finite) != 0; }
@@ -72,18 +73,6 @@ public:
 	virtual size_t GetLength() const = 0;
 	virtual String ToString(const StringStyle& ss) const;
 };
-
-template<typename T_Compare> Value* Iterator::FindMinMax()
-{
-	RefPtr<Value> pValueFound(NextValue());
-	if (!pValueFound) return nullptr;
-	for (;;) {
-		RefPtr<Value> pValue(NextValue());
-		if (!pValue) break;
-		if (T_Compare()(pValueFound.get(), pValue.get())) pValueFound.reset(pValue.release());
-	}
-	return pValueFound.release();
-}
 
 //------------------------------------------------------------------------------
 // IteratorList

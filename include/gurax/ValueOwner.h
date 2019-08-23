@@ -4,6 +4,7 @@
 #ifndef GURAX_VALUEOWNER_H
 #define GURAX_VALUEOWNER_H
 #include "ValueList.h"
+#include "VType_Number.h"
 
 namespace Gurax {
 
@@ -24,7 +25,12 @@ public:
 	void Clear();
 	ValueOwner* Clone() const;
 	ValueOwner* CloneDeep() const;
+public:
 	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);
+	template<typename T_Num>
+	static ValueOwner* CreateFromNumList(const NumList<T_Num>& nums);
+	static ValueOwner* CreateFromStringList(const StringList& strs);
+public:
 	void Set(Int pos, Value* pValue);
 	Value* Get(Int pos) const { return at(pos); }
 	void Add(Value* pValue) { push_back(pValue); }
@@ -34,6 +40,15 @@ public:
 public:
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };
+
+template<typename T_Num>
+ValueOwner* ValueOwner::CreateFromNumList(const NumList<T_Num>& nums)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(nums.size());
+	for (T_Num num : nums) pValueOwner->push_back(new Value_Number(num));
+	return pValueOwner.release();
+}
 
 template<typename T_Map>
 ValueOwner* ValueOwner::CollectKeys(const T_Map& map)
