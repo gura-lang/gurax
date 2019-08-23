@@ -365,12 +365,16 @@ TestCase('List#Map()') {
 }
 
 TestCase('List#Max()') {
+	Tester(`[3, 1, 4, 1, 5, 9, 2, 6].Max())
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Max())
 }
 
 TestCase('List#Mean()') {
 }
 
 TestCase('List#Min()') {
+	Tester(`[3, 1, 4, 1, 5, 9, 2, 6].Min())
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Min())
 }
 
 TestCase('List#NilTo()') {

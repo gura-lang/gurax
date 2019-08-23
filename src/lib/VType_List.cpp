@@ -721,27 +721,23 @@ Gurax_ImplementMethod(List, Map)
 	return Value::nil();
 }
 
-// List#Max():[index,last_index,indices]
+// List#Max()
 Gurax_DeclareMethod(List, Max)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(index));
-	DeclareAttrOpt(Gurax_Symbol(last_index));
-	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
 Gurax_ImplementMethod(List, Max)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>());
+	return pValue? pValue.release() : Value::nil();
 }
 
 // List#Mean()
@@ -764,27 +760,23 @@ Gurax_ImplementMethod(List, Mean)
 	return Value::nil();
 }
 
-// List#Min():[index,last_index,indices]
+// List#Min()
 Gurax_DeclareMethod(List, Min)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(index));
-	DeclareAttrOpt(Gurax_Symbol(last_index));
-	DeclareAttrOpt(Gurax_Symbol(indices));
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
 Gurax_ImplementMethod(List, Min)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>());
+	return pValue? pValue.release() : Value::nil();
 }
 
 // List#NilTo(replace) {block?}

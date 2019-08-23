@@ -178,7 +178,7 @@ bool DeclCallable::CheckAttribute(const Attribute& attr) const
 	if (IsSet(Flag::AnyAttr)) return true;
 	for (const Symbol* pSymbol: attr.GetSymbols()) {
 		if (!GetAttr().GetSymbolSetOpt().IsSet(pSymbol)) {
-			Error::Issue(ErrorType::ArgumentError, "unacceptable attribute symbol: %s", pSymbol->GetName());
+			Error::Issue(ErrorType::ArgumentError, "invalid attribute symbol: %s", pSymbol->GetName());
 			return false;
 		}
 	}

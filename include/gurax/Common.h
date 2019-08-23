@@ -120,13 +120,13 @@ enum class SortOrder {
 	Descend,
 };
 
-template<typename T_List, typename LessThan, typename GreaterThan>
+template<typename T_List, typename T_LessThan, typename T_GreaterThan>
 void SortListByOrder(T_List& list, SortOrder sortOrder)
 {
 	if (sortOrder == SortOrder::Ascend) {
-		std::sort(list.begin(), list.end(), LessThan());
+		std::sort(list.begin(), list.end(), T_LessThan());
 	} else if (sortOrder == SortOrder::Descend) {
-		std::sort(list.begin(), list.end(), GreaterThan());
+		std::sort(list.begin(), list.end(), T_GreaterThan());
 	}
 }
 

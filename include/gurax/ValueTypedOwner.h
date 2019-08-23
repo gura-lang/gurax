@@ -26,12 +26,14 @@ public:
 	public:
 		const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
 		const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
-		
 	};
 	//--------------------------------------------------------------------------
 	// ValueTypedOwner::Iterator_Each
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Each : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Each");
 	private:
 		size_t _idx;
 		size_t _idxBegin;
@@ -49,6 +51,9 @@ public:
 	// ValueTypedOwner::Iterator_Reverse
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Reverse : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Reverse");
 	private:
 		size_t _idx;
 	public:
@@ -64,6 +69,9 @@ public:
 	// ValueTypedOwner::Iterator_Cycle
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Cycle : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Cycle");
 	private:
 		size_t _idx;
 	public:
@@ -79,6 +87,9 @@ public:
 	// ValueTypedOwner::Iterator_Pingpong
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Pingpong : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Pingpong");
 	private:
 		size_t _idx;
 	public:
@@ -94,6 +105,9 @@ public:
 	// ValueTypedOwner::Iterator_Fold
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Fold : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Fold");
 	private:
 		size_t _idx;
 	public:
@@ -109,6 +123,9 @@ public:
 	// ValueTypedOwner::Iterator_Permutation
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Permutation : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Permutation");
 	private:
 		size_t _idx;
 	public:
@@ -124,6 +141,9 @@ public:
 	// ValueTypedOwner::Iterator_Combination
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Combination : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Combination");
 	private:
 		size_t _idx;
 	public:

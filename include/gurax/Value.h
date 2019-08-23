@@ -36,9 +36,19 @@ public:
 			return pValue1->IsLessThan(pValue2);
 		}
 	};
+	struct LessThanOrEqualTo {
+		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+			return !pValue2->IsLessThan(pValue1);
+		}
+	};
 	struct GreaterThan {
 		size_t operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue2->IsLessThan(pValue1);
+		}
+	};
+	struct GreaterThanOrEqualTo {
+		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+			return !pValue1->IsLessThan(pValue2);
 		}
 	};
 	struct Hash {

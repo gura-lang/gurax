@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
-sys.path = sys.path |+| ['test-import']
 import(util.tester) {*}
+sys.path = sys.path |+| ['test-import']
 
 TestCase('PUnit') {
 	exprs = [

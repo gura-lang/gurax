@@ -1,4 +1,4 @@
-#!/usr/bin/env gurax
+#!/usr/bin/env gurax -I../module
 import(argopt)
 
 p = argopt.Parser()
