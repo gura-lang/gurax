@@ -1,5 +1,4 @@
 #!/usr/bin/env gurax
-sys.path = sys.path |+| ['../module']
 import(argopt)
 
 p = argopt.Parser()
