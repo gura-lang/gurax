@@ -1783,7 +1783,8 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 	if (pValueTarget->IsIterable()) {
 		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
 		RefPtr<Iterator> pIterator(new Iterator_MemberMapToIter(
-									   pIteratorTarget.release(), GetSymbol(), GetAttr().Reference()));
+									   processor.Reference(), pIteratorTarget.release(),
+									   GetSymbol(), GetAttr().Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);

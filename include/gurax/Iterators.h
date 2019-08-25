@@ -184,16 +184,19 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_MemberMapToIter : public Iterator {
 private:
+	RefPtr<Processor> _pProcessor;
 	RefPtr<Iterator> _pIteratorTarget;
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	Iterator_MemberMapToIter(Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr) :
-		_pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
+	Iterator_MemberMapToIter(Processor* pProcessor, Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr) :
+		_pProcessor(pProcessor), _pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
 protected:
 	// Destructor
 	virtual ~Iterator_MemberMapToIter() { DiscardUnevaluated(); }
 public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	const Processor& GetProcessor() const { return *_pProcessor; }
 	const Iterator& GetIteratorTarget() const { return *_pIteratorTarget; }
 	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
 	const Symbol* GetSymbol() const { return _pSymbol; }

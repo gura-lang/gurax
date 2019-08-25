@@ -91,6 +91,7 @@ void Iterator::DiscardUnevaluated()
 	for (;;) {
 		RefPtr<Value> pValue(NextValue());
 		if (!pValue) break;
+		
 	}
 }
 
