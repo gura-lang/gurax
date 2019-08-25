@@ -141,7 +141,9 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	RefPtr<Value> pValueRtn(DoEval(processor, argument));
 	if (Error::IsIssued()) return;
-	processor.PushValue(pValueRtn.release());
+	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
+		processor.PushValue(pValueRtn.release());
+	}
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
