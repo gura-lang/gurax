@@ -1561,13 +1561,18 @@ void Value_List::DoCall(Processor& processor, Argument& argument)
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	RefPtr<Value> pValueRtn(DoEval(processor, argument));
 	if (Error::IsIssued()) return;
+	//if (!pPUnitOfCaller->GetDiscardValueFlag()) {
+	//	processor.PushValue(pValueRtn.release());
+	//}
 	processor.PushValue(pValueRtn.release());
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
+// **** must handle attributes: :list, :xlist ****
 Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (GetValueOwner().empty()) return new Value_List(new ValueTypedOwner(new ValueOwner()));
+	RefPtr<ValueOwner> pValueOwner;
 	for (Value* pValueElem : GetValueOwner()) {
 		if (!argument.GetDeclCallable().IsIdentical(pValueElem->GetDeclCallable())) {
 			Error::Issue(ErrorType::ValueError,
@@ -1576,9 +1581,10 @@ Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 		}
 		RefPtr<Value> pValueRtn(pValueElem->DoEval(processor, argument));
 		if (Error::IsIssued()) return Value::nil();
+		if (!pValueOwner) pValueOwner.reset(new ValueOwner());
 		pValueOwner->push_back(pValueRtn.release());
 	}
-	return new Value_List(new ValueTypedOwner(pValueOwner.release()));
+	return pValueOwner? new Value_List(new ValueTypedOwner(pValueOwner.release())) : Value::nil();
 }
 
 Value* Value_List::DoIndexGet(const Index& index) const

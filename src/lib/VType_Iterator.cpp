@@ -138,12 +138,19 @@ const DeclCallable* Value_Iterator::GetDeclCallable()
 
 void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 {
+#if 1
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	RefPtr<Value> pValueRtn(DoEval(processor, argument));
 	if (Error::IsIssued()) return;
+	processor.PushValue(pValueRtn.release());
+#else
+	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
+		RefPtr<Value> pValueRtn(DoEval(processor, argument));
+		if (Error::IsIssued()) return;
 		processor.PushValue(pValueRtn.release());
 	}
+#endif
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
