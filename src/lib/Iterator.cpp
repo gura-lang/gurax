@@ -85,13 +85,14 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	return pValueRtn.release();
 }
 
-void Iterator::DiscardUnevaluated()
+void Iterator::DiscardUnevaluated(Processor& processor, Argument& argument)
 {
 	if (!IsVirgin() || !MustBeFinite()) return;
+	::printf("check\n");
 	for (;;) {
 		RefPtr<Value> pValue(NextValue());
 		if (!pValue) break;
-		
+		pValue->DoEval(processor, argument);
 	}
 }
 
