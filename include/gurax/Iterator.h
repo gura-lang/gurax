@@ -71,7 +71,7 @@ public:
 		if (!_pValuePeeked) _pValuePeeked.reset(DoNextValue());
 		return _pValuePeeked.Reference();
 	}
-	void DiscardMappedResult();
+	void DiscardUnevaluated();
 public:
 	// Virtual functions
 	virtual Iterator* Clone() const;

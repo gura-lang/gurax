@@ -147,7 +147,7 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 
 Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
 {
-	RefPtr<Iterator> pIterator(new Iterator_Evaluator(
+	RefPtr<Iterator> pIterator(new Iterator_IteratorEvaluator(
 								   processor.Reference(), GetIterator().Reference(), argument.Reference()));
 	return new Value_Iterator(pIterator.release());
 }

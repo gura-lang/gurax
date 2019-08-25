@@ -83,7 +83,7 @@ public:
 	Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValue);
 protected:
 	// Destructor
-	virtual ~Iterator_UnaryOpImpMap() { DiscardMappedResult(); }
+	virtual ~Iterator_UnaryOpImpMap() { DiscardUnevaluated(); }
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Value& GetValue() { return *_pValue; }
@@ -113,7 +113,7 @@ public:
 	Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValueL, Value* pValueR);
 protected:
 	// Destructor
-	virtual ~Iterator_BinaryOpImpMap() { DiscardMappedResult(); }
+	virtual ~Iterator_BinaryOpImpMap() { DiscardUnevaluated(); }
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Value& GetValueL() { return *_pValueL; }
@@ -141,7 +141,7 @@ public:
 	Iterator_FunctionImpMap(Processor* pProcessor, Function* pFunction, Argument* pArgument);
 protected:
 	// Destructor
-	virtual ~Iterator_FunctionImpMap() { DiscardMappedResult(); }
+	virtual ~Iterator_FunctionImpMap() { DiscardUnevaluated(); }
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Function& GetFunction() { return *_pFunction; }
@@ -192,7 +192,7 @@ public:
 		_pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
 protected:
 	// Destructor
-	virtual ~Iterator_MemberMapToIter() { DiscardMappedResult(); }
+	virtual ~Iterator_MemberMapToIter() { DiscardUnevaluated(); }
 public:
 	const Iterator& GetIteratorTarget() const { return *_pIteratorTarget; }
 	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
@@ -207,15 +207,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Evaluator
+// Iterator_IteratorEvaluator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Evaluator : public Iterator {
+class GURAX_DLLDECLARE Iterator_IteratorEvaluator : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Iterator> _pIterator;
 	RefPtr<Argument> _pArgument;
 public:
-	Iterator_Evaluator(Processor* pProcessor, Iterator* pIterator, Argument* pArgument) :
+	Iterator_IteratorEvaluator(Processor* pProcessor, Iterator* pIterator, Argument* pArgument) :
 		_pProcessor(pProcessor), _pIterator(pIterator), _pArgument(pArgument) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }

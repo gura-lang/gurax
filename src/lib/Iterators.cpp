@@ -203,9 +203,9 @@ String Iterator_MemberMapToIter::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Evaluator
+// Iterator_IteratorEvaluator
 //------------------------------------------------------------------------------
-Value* Iterator_Evaluator::DoNextValue()
+Value* Iterator_IteratorEvaluator::DoNextValue()
 {
 	RefPtr<Value> pValueElem(GetIterator().NextValue());
 	if (!pValueElem) return nullptr;
@@ -219,10 +219,10 @@ Value* Iterator_Evaluator::DoNextValue()
 	return pValueRtn.release();
 }
 
-String Iterator_Evaluator::ToString(const StringStyle& ss) const
+String Iterator_IteratorEvaluator::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Evaluator:%s", GetArgument().ToString(StringStyle().Cram()).c_str());
+	str.Printf("IteratorEvaluator:%s", GetArgument().ToString(StringStyle().Cram()).c_str());
 	return str;
 }
 
