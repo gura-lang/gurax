@@ -85,6 +85,15 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	return pValueRtn.release();
 }
 
+void Iterator::DiscardMappedResult()
+{
+	if (!IsVirgin() || !MustBeFinite()) return;
+	for (;;) {
+		RefPtr<Value> pValue(NextValue());
+		if (!pValue) break;
+	}
+}
+
 bool Iterator::MustBeFinite() const
 {
 	if (IsFinite()) return true;

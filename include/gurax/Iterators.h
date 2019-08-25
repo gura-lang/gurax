@@ -81,6 +81,9 @@ private:
 	size_t _len;
 public:
 	Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValue);
+protected:
+	// Destructor
+	virtual ~Iterator_UnaryOpImpMap() { DiscardMappedResult(); }
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Value& GetValue() { return *_pValue; }
@@ -108,6 +111,9 @@ private:
 	size_t _len;
 public:
 	Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValueL, Value* pValueR);
+protected:
+	// Destructor
+	virtual ~Iterator_BinaryOpImpMap() { DiscardMappedResult(); }
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Value& GetValueL() { return *_pValueL; }
@@ -133,6 +139,9 @@ private:
 	size_t _len;
 public:
 	Iterator_FunctionImpMap(Processor* pProcessor, Function* pFunction, Argument* pArgument);
+protected:
+	// Destructor
+	virtual ~Iterator_FunctionImpMap() { DiscardMappedResult(); }
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Function& GetFunction() { return *_pFunction; }
@@ -181,6 +190,9 @@ private:
 public:
 	Iterator_MemberMapToIter(Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr) :
 		_pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
+protected:
+	// Destructor
+	virtual ~Iterator_MemberMapToIter() { DiscardMappedResult(); }
 public:
 	const Iterator& GetIteratorTarget() const { return *_pIteratorTarget; }
 	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
