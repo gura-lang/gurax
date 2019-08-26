@@ -19,7 +19,6 @@ TestCase('PUnit') {
 
 TestCase('Property') {
 	Tester(`List.__PropHandler__(`first))
-	Tester(`List.__PropHandler__(`isEmpty))
 	Tester(`List.__PropHandler__(`last))
 	Tester(`List.__PropHandler__(`len))
 	Tester(`List.__PropHandler__(`vtypeOfElem))
@@ -54,11 +53,6 @@ TestCase('List#vtypeOfELem') {
 	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem)
 	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
 	Tester(`['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem)
-}
-
-TestCase('List#isEmpty') {
-	Tester(`[].isEmpty)
-	Tester(`[1, 2, 3].isEmpty)
 }
 
 TestCase('List#Add()') {
@@ -359,6 +353,11 @@ TestCase('List#Format()') {
 }
 
 TestCase('List#Head()') {
+}
+
+TestCase('List#IsEmpty()') {
+	Tester(`[].IsEmpty())
+	Tester(`[1, 2, 3].IsEmpty())
 }
 
 TestCase('List#Join()') {

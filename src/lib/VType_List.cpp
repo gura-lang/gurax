@@ -676,6 +676,23 @@ Gurax_ImplementMethod(List, Head)
 	return Value::nil();
 }
 
+// List#IsEmpty()
+Gurax_DeclareMethod(List, IsEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A boolean value indicating whether the list is empty or not.");
+}
+
+Gurax_ImplementMethod(List, IsEmpty)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetValueOwner().empty());
+}
+
 // List#Join(sep?:String):map
 Gurax_DeclareMethod(List, Join)
 {
@@ -1360,21 +1377,6 @@ Gurax_ImplementPropertyGetter(List, first)
 	return valueOwner.front()->Reference();
 }
 
-// List#isEmpty
-Gurax_DeclareProperty_R(List, isEmpty)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A boolean value indicating whether the list is empty or not.");
-}
-
-Gurax_ImplementPropertyGetter(List, isEmpty)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Bool(valueThis.GetValueOwner().empty());
-}
-
 // List#last
 Gurax_DeclareProperty_R(List, last)
 {
@@ -1472,6 +1474,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Fold));
 	Assign(Gurax_CreateMethod(List, Format));
 	Assign(Gurax_CreateMethod(List, Head));
+	Assign(Gurax_CreateMethod(List, IsEmpty));
 	Assign(Gurax_CreateMethod(List, Join));
 	Assign(Gurax_CreateMethod(List, Joinb));
 	Assign(Gurax_CreateMethod(List, Map));
@@ -1505,7 +1508,6 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, While));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(List, first));
-	Assign(Gurax_CreateProperty(List, isEmpty));
 	Assign(Gurax_CreateProperty(List, last));
 	Assign(Gurax_CreateProperty(List, len));
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));

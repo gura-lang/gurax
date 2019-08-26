@@ -16,9 +16,13 @@
   ##5 Value(<Number:3>)
   ##6 ListElem(offsetToList=0)
   ##7 GenIterator()
-======== Iterator#isFinite and isInfinite ========
-x.isFinite .. true
-x.isFinite .. false
+======== Iterator#isFinite() and Iterator#IsInfinite() ========
+x .. <Iterator:Range:begin=1:end=11:step=1>
+x.IsFinite() .. true
+x.IsInfinite() .. false
+x .. <Iterator:Counter:begin=1:step=1>
+x.IsFinite() .. false
+x.IsInfinite() .. true
 ======== Iterator#NextValue() ========
 1
 2

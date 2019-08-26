@@ -216,6 +216,23 @@ Gurax_ImplementMethod(Dict, HasKey)
 	return new Value_Bool(pValue);
 }
 
+// Dict#IsEmpty()
+Gurax_DeclareMethod(Dict, IsEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the dictionary has no entries.");
+}
+
+Gurax_ImplementMethod(Dict, IsEmpty)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetValueDict().empty());
+}
+
 // Dict#Put(key, value):map:reduce:[overwrite,strict,timid]
 Gurax_DeclareMethod(Dict, Put)
 {
@@ -257,21 +274,6 @@ Gurax_ImplementMethod(Dict, Put)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Dict#isEmpty
-Gurax_DeclareProperty_R(Dict, isEmpty)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A boolean value indicating whether the dictionary is empty or not.");
-}
-
-Gurax_ImplementPropertyGetter(Dict, isEmpty)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Bool(valueThis.GetValueDict().empty());
-}
-
 // Dict#items
 Gurax_DeclareProperty_R(Dict, items)
 {
@@ -356,9 +358,9 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Dict, Erase));
 	Assign(Gurax_CreateMethod(Dict, Get));
 	Assign(Gurax_CreateMethod(Dict, HasKey));
+	Assign(Gurax_CreateMethod(Dict, IsEmpty));
 	Assign(Gurax_CreateMethod(Dict, Put));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Dict, isEmpty));
 	Assign(Gurax_CreateProperty(Dict, items));
 	Assign(Gurax_CreateProperty(Dict, keys));
 	Assign(Gurax_CreateProperty(Dict, len));

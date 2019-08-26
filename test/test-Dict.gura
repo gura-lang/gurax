@@ -14,7 +14,6 @@ TestCase('Initializer') {
 }
 
 TestCase('Property') {
-	Tester(`Dict.__PropHandler__(`isEmpty))
 	Tester(`Dict.__PropHandler__(`items))
 	Tester(`Dict.__PropHandler__(`len))
 	Tester(`Dict.__PropHandler__(`keys))
@@ -95,6 +94,11 @@ TestCase('Dict#HasKey()') {
 	Tester(`d.HasKey('keyA'))
 }
 
+TestCase('Dict#IsEmpty()') {
+	Tester(`%{'a' => 'b'}.IsEmpty())
+	Tester(`%{}.IsEmpty())
+}
+
 TestCase('Dict#Put()') {
 	d = %{'a' => 3, 'b' => 2, 'c' => 1}
 	Tester(`d)
@@ -104,11 +108,6 @@ TestCase('Dict#Put()') {
 	Tester(`d.Put('a', 999):overwrite)
 	Tester(`d.Put('a', 888):strict)
 	Tester(`d.Put([1, 2, 3], [4, 5, 6]))
-}
-
-TestCase('Dict#isEmpty') {
-	Tester(`%{'a' => 'b'}.isEmpty)
-	Tester(`%{}.isEmpty)
 }
 
 TestCase('Dict#len and Dict#keys') {

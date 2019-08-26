@@ -60,7 +60,6 @@ foo[0, 2, 6]
   ##8 IndexGet()
 ======== Property ========
 List.__PropHandler__(`first) .. <PropHandler:first:Any:R>
-List.__PropHandler__(`isEmpty) .. <PropHandler:isEmpty:Bool:R>
 List.__PropHandler__(`last) .. <PropHandler:last:Any:R>
 List.__PropHandler__(`len) .. <PropHandler:len:Number:R>
 List.__PropHandler__(`vtypeOfElem) .. <PropHandler:vtypeOfElem:VType:R>
@@ -85,9 +84,6 @@ tbl.last .. ten
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].vtypeOfElem .. <VType:String>
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. <VType:Number>
 ['a', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].vtypeOfElem .. Any
-======== List#isEmpty ========
-[].isEmpty .. true
-[1, 2, 3].isEmpty .. false
 ======== List#Add() ========
 tbl.vtypeOfElem .. Undefined
 tbl.Add(3) .. [3]
@@ -307,6 +303,9 @@ tbl.Each():xlist {continue(nil)} .. []
 ======== List#Fold() ========
 ======== List#Format() ========
 ======== List#Head() ========
+======== List#IsEmpty() ========
+[].IsEmpty() .. true
+[1, 2, 3].IsEmpty() .. false
 ======== List#Join() ========
 ======== List#Joinb() ========
 ======== List#Map() ========

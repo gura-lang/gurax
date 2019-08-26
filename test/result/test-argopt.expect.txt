@@ -1,3 +1,13 @@
+-a, --flag-a     help-a
+-b, --flag-b     help-b
+-c, --flag-c     help-c
+-d, --flag-d     help-d
+-e, --flag-e     help-e
+-A, --param-A=X  help-A
+-B, --param-B=X  help-B
+-C, --param-C=X  help-C
+-D, --param-D=X  help-D
+-E, --param-E=X  help-E
 [''] -> [''], %{}
 ['file1'] -> ['file1'], %{}
 ['file1', 'file2', 'file3'] -> ['file1', 'file2', 'file3'], %{}

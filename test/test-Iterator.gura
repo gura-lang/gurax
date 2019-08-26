@@ -10,11 +10,15 @@ TestCase('PUnit') {
 	PrintPUnitWithLabel(exprs)
 }
 
-TestCase('Iterator#isFinite and isInfinite') {
-	x = ()
-	Tester(`x.isFinite)
-	x = (1..)
-	Tester(`x.isFinite)
+TestCase('Iterator#isFinite() and Iterator#IsInfinite()') {
+	x = 1..10
+	Tester(`x)
+	Tester(`x.IsFinite())
+	Tester(`x.IsInfinite())
+	x = 1..
+	Tester(`x)
+	Tester(`x.IsFinite())
+	Tester(`x.IsInfinite())
 }
 
 TestCase('Iterator#NextValue()') {

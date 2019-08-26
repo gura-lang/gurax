@@ -27,6 +27,42 @@ Gurax_ImplementMethod(Iterator, Each)
 	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
 
+// Iterator#IsFinite()
+Gurax_DeclareMethod(Iterator, IsFinite)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the iterator is a finite one.");
+}
+
+Gurax_ImplementMethod(Iterator, IsFinite)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	const Iterator& iterator = valueThis.GetIterator();
+	return new Value_Bool(!iterator.IsInfinite());
+}
+
+// Iterator#IsInfinite()
+Gurax_DeclareMethod(Iterator, IsInfinite)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the iterator is a infinite one.");
+}
+
+Gurax_ImplementMethod(Iterator, IsInfinite)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	const Iterator& iterator = valueThis.GetIterator();
+	return new Value_Bool(iterator.IsInfinite());
+}
+
 // Iterator#NextValue()
 Gurax_DeclareMethod(Iterator, NextValue)
 {
@@ -46,37 +82,6 @@ Gurax_ImplementMethod(Iterator, NextValue)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Iterator#isFinite
-Gurax_DeclareProperty_R(Iterator, isFinite)
-{
-	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the iterator is a finite one.");
-}
-
-Gurax_ImplementPropertyGetter(Iterator, isFinite)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Iterator& iterator = valueThis.GetIterator();
-	return new Value_Bool(!iterator.IsInfinite());
-}
-
-// Iterator#isInfinite
-Gurax_DeclareProperty_R(Iterator, isInfinite)
-{
-	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the iterator is a infinite one.");
-}
-
-Gurax_ImplementPropertyGetter(Iterator, isInfinite)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const Iterator& iterator = valueThis.GetIterator();
-	return new Value_Bool(iterator.IsInfinite());
-}
 
 //------------------------------------------------------------------------------
 // VType_Iterator
@@ -89,9 +94,10 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Iterator, Each));
+	Assign(Gurax_CreateMethod(Iterator, IsFinite));
+	Assign(Gurax_CreateMethod(Iterator, IsInfinite));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Iterator, isFinite));
 }
 
 Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) const
@@ -138,12 +144,6 @@ const DeclCallable* Value_Iterator::GetDeclCallable()
 
 void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 {
-#if 0
-	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
-	RefPtr<Value> pValueRtn(DoEval(processor, argument));
-	if (Error::IsIssued()) return;
-	processor.PushValue(pValueRtn.release());
-#else
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	if (pPUnitOfCaller->GetDiscardValueFlag()) {
 		if (GetIterator().MustBeFinite()) {
@@ -158,7 +158,6 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 		if (Error::IsIssued()) return;
 		processor.PushValue(pValueRtn.release());
 	}
-#endif
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
