@@ -1782,7 +1782,7 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
 		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
-		RefPtr<Iterator> pIterator(new Iterator_MemberMapToIter(
+		RefPtr<Iterator> pIterator(new Iterator_Member_MapToIter(
 									   processor.Reference(), pIteratorTarget.release(),
 									   GetSymbol(), GetAttr().Reference()));
 		processor.PushValue(new Value_Iterator(pIterator.release()));

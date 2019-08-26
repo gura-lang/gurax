@@ -185,9 +185,9 @@ String Iterator_Range::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_MemberMapToIter
+// Iterator_Member_MapToIter
 //------------------------------------------------------------------------------
-Value* Iterator_MemberMapToIter::DoNextValue()
+Value* Iterator_Member_MapToIter::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
@@ -195,10 +195,10 @@ Value* Iterator_MemberMapToIter::DoNextValue()
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
-String Iterator_MemberMapToIter::ToString(const StringStyle& ss) const
+String Iterator_Member_MapToIter::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("MemberMapToIter");
+	str.Printf("Member_MapToIter");
 	return str;
 }
 
