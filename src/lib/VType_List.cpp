@@ -199,6 +199,23 @@ Gurax_ImplementMethod(List, Insert)
 	return argument.GetValueThis().Reference();
 }
 
+// List#IsEmpty()
+Gurax_DeclareMethod(List, IsEmpty)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"A boolean value indicating whether the list is empty or not.");
+}
+
+Gurax_ImplementMethod(List, IsEmpty)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetValueOwner().empty());
+}
+
 // List#Permutation(n?:Number) {block?}
 Gurax_DeclareMethod(List, Permutation)
 {
@@ -674,23 +691,6 @@ Gurax_ImplementMethod(List, Head)
 	// Function body
 #endif
 	return Value::nil();
-}
-
-// List#IsEmpty()
-Gurax_DeclareMethod(List, IsEmpty)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A boolean value indicating whether the list is empty or not.");
-}
-
-Gurax_ImplementMethod(List, IsEmpty)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_Bool(valueThis.GetValueOwner().empty());
 }
 
 // List#Join(sep?:String):map
@@ -1453,6 +1453,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Erase));
 	Assign(Gurax_CreateMethod(List, Get));
 	Assign(Gurax_CreateMethod(List, Insert));
+	Assign(Gurax_CreateMethod(List, IsEmpty));
 	Assign(Gurax_CreateMethod(List, Permutation));
 	Assign(Gurax_CreateMethod(List, Put));
 	Assign(Gurax_CreateMethod(List, Shift));
@@ -1474,7 +1475,6 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Fold));
 	Assign(Gurax_CreateMethod(List, Format));
 	Assign(Gurax_CreateMethod(List, Head));
-	Assign(Gurax_CreateMethod(List, IsEmpty));
 	Assign(Gurax_CreateMethod(List, Join));
 	Assign(Gurax_CreateMethod(List, Joinb));
 	Assign(Gurax_CreateMethod(List, Map));

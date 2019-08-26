@@ -127,6 +127,11 @@ TestCase('List#Insert()') {
 	Tester(`tbl.Insert(-20, 3))
 }
 
+TestCase('List#IsEmpty()') {
+	Tester(`[].IsEmpty())
+	Tester(`[1, 2, 3].IsEmpty())
+}
+
 TestCase('List#Permutation()') {
 }
 
@@ -353,11 +358,6 @@ TestCase('List#Format()') {
 }
 
 TestCase('List#Head()') {
-}
-
-TestCase('List#IsEmpty()') {
-	Tester(`[].IsEmpty())
-	Tester(`[1, 2, 3].IsEmpty())
 }
 
 TestCase('List#Join()') {
