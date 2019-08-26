@@ -136,6 +136,9 @@ tbl.Insert(3, 'a', 'b', 'c', 'd', 'e', 'f') .. [99, 99, 99, 'a', 'b', 'c', 'd', 
 tbl.Insert(-1, 3) .. [99, 99, 99, 99, 3, 99]
 tbl.Insert(20, 3) .. specified position 20 exceeds the list's size of 6
 tbl.Insert(-20, 3) .. specified position -20 exceeds the list's size of 6
+======== List#IsEmpty() ========
+[].IsEmpty() .. true
+[1, 2, 3].IsEmpty() .. false
 ======== List#Permutation() ========
 ======== List#Put() ========
 ======== List#Shift() ========
@@ -303,9 +306,6 @@ tbl.Each():xlist {continue(nil)} .. []
 ======== List#Fold() ========
 ======== List#Format() ========
 ======== List#Head() ========
-======== List#IsEmpty() ========
-[].IsEmpty() .. true
-[1, 2, 3].IsEmpty() .. false
 ======== List#Join() ========
 ======== List#Joinb() ========
 ======== List#Map() ========

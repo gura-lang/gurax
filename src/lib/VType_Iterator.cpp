@@ -276,11 +276,11 @@ Gurax_ImplementMethod(Iterator, Cycle)
 	return Value::nil();
 }
 
-// Iterator#Each() {`block}
+// Iterator#Each() {`block?}
 Gurax_DeclareMethod(Iterator, Each)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Repeats the process in `block` for each element in the target iterable instance.\n"
@@ -288,7 +288,10 @@ Gurax_DeclareMethod(Iterator, Each)
 		"\n"
 		"- `iterable#Each { .. }` .. no parameter\n"
 		"- `iterable#Each {|elem| .. }` .. Element instance\n"
-		"- `iterable#Each {|elem, pos| .. }` .. Element instance and index counter\n");
+		"- `iterable#Each {|elem, pos| .. }` .. Element instance and index counter\n"
+		"\n"
+		"If `block` is not specified, it creates an iterator that iterates each item in the iterable.\n"
+		"When the iterable is an iterator, its cloned value will be created.\n");
 }
 
 Gurax_ImplementMethod(Iterator, Each)
@@ -296,6 +299,7 @@ Gurax_ImplementMethod(Iterator, Each)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
+	if (!argument.HasExprOfBlock()) return valueThis.Reference();
 	RefPtr<Iterator> pIterator(valueThis.GetIterator().Clone());
 	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }

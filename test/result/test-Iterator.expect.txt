@@ -16,13 +16,11 @@
   ##5 Value(<Number:3>)
   ##6 ListElem(offsetToList=0)
   ##7 GenIterator()
-======== Iterator#isFinite() and Iterator#IsInfinite() ========
-x .. <Iterator:Range:begin=1:end=11:step=1>
-x.IsFinite() .. true
-x.IsInfinite() .. false
-x .. <Iterator:Counter:begin=1:step=1>
-x.IsFinite() .. false
-x.IsInfinite() .. true
+======== Iterator#IsFinite() and Iterator#IsInfinite() ========
+1 .. 10.IsFinite() .. true
+1 .. 10.IsInfinite() .. false
+1...IsFinite() .. false
+1...IsInfinite() .. true
 ======== Iterator#NextValue() ========
 1
 2
@@ -34,3 +32,120 @@ x.IsInfinite() .. true
 8
 9
 10
+======== Iterator#After() ========
+======== Iterator#Align() ========
+======== Iterator#And() ========
+======== Iterator#ArgMax() ========
+(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMax() .. 6
+(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMax():last_index .. 26
+(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMax():indices .. [6, 13, 14, 26]
+======== Iterator#ArgMin() ========
+(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMin() .. 7
+(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMin():last_index .. 28
+(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMin():indices .. [7, 10, 28]
+======== Iterator#Before() ========
+======== Iterator#Contains() ========
+======== Iterator#Count() ========
+======== Iterator#Cycle() ========
+======== Iterator#Each() ========
+Each { .. }
+----
+----
+----
+----
+----
+----
+----
+----
+----
+----
+----
+Each {|x| .. }
+zero
+one
+two
+three
+four
+five
+six
+seven
+eight
+nine
+ten
+Each {|x, i| .. }
+0 zero
+1 one
+2 two
+3 three
+4 four
+5 five
+6 six
+7 seven
+8 eight
+9 nine
+10 ten
+Each {|x| .. }, break at "t"
+zero
+one
+two
+Each {|x| .. }, break at "s"
+zero
+one
+two
+three
+four
+five
+six
+Each {|x| .. }, skip "t"
+zero
+one
+four
+five
+six
+seven
+eight
+nine
+Each {|x, i| .. }, break at "t"
+0 zero
+1 one
+2 two
+Each {|x, i| .. }, break at "s"
+0 zero
+1 one
+2 two
+3 three
+4 four
+5 five
+6 six
+Each {|x, i| .. }, skip "t"
+0 zero
+1 one
+4 four
+5 five
+6 six
+7 seven
+8 eight
+9 nine
+Each {|x, i| .. }, break at "t"
+0 zero
+1 one
+2 two
+Each {|x, i| .. }, break at "s"
+0 zero
+1 one
+2 two
+3 three
+4 four
+5 five
+6 six
+Each {|x, i| .. }, skip "t"
+0 zero
+1 one
+4 four
+5 five
+6 six
+7 seven
+8 eight
+9 nine
+tbl.Each().Each {break} .. <Nil>
+tbl.Each().Each {continue} .. <Nil>

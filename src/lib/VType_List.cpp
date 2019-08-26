@@ -532,19 +532,12 @@ Gurax_ImplementMethod(List, Cycle)
 	return Value::nil();
 }
 
-// List#Each() {`block}
+// List#Each() {`block?}
 Gurax_DeclareMethod(List, Each)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Repeats the process in `block` for each element in the target iterable instance.\n"
-		"The `block` takes block parameters in one of the following forms:\n"
-		"\n"
-		"- `iterable#Each { .. }` .. no parameter\n"
-		"- `iterable#Each {|elem| .. }` .. Element instance\n"
-		"- `iterable#Each {|elem, pos| .. }` .. Element instance and index counter\n");
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce, DeclBlock::Flag::Quote);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
 Gurax_ImplementMethod(List, Each)
@@ -553,6 +546,7 @@ Gurax_ImplementMethod(List, Each)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	RefPtr<Iterator> pIterator(valueThis.DoGenIterator());
+	if (!argument.HasExprOfBlock()) return new Value_Iterator(pIterator.release());
 	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
 

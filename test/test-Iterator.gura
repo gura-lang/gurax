@@ -45,7 +45,6 @@ TestCase('Iterator#ArgMin()') {
 	Tester(`(1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMin():indices)
 }
 
-sys.Exit()
 TestCase('Iterator#Before()') {
 }
 
@@ -61,65 +60,66 @@ TestCase('Iterator#Cycle()') {
 TestCase('Iterator#Each()') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Println('Each { .. }')
-	tbl.Each {
+	tbl.Each().Each {
 		Println('----')
 	}
 	Println('Each {|x| .. }')
-	tbl.Each {|x|
+	tbl.Each().Each {|x|
 		Printf('%s\n', x)
 	}
 	Println('Each {|x, i| .. }')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		Printf('%d %s\n', i, x)
 	}
 	Println('Each {|x| .. }, break at "t"')
-	tbl.Each {|x|
+	tbl.Each().Each {|x|
 		Printf('%s\n', x)
 		if (x.StartsWith('t')) { break }
 	}
 	Println('Each {|x| .. }, break at "s"')
-	tbl.Each {|x|
+	tbl.Each().Each {|x|
 		Printf('%s\n', x)
 		if (x.StartsWith('s')) { break }
 	}
 	Println('Each {|x| .. }, skip "t"')
-	tbl.Each {|x|
+	tbl.Each().Each {|x|
 		if (x.StartsWith('t')) { continue }
 		Printf('%s\n', x)
 	}
 	Println('Each {|x, i| .. }, break at "t"')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		Printf('%d %s\n', i, x)
 		if (x.StartsWith('t')) { break }
 	}
 	Println('Each {|x, i| .. }, break at "s"')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		Printf('%d %s\n', i, x)
 		if (x.StartsWith('s')) { break }
 	}
 	Println('Each {|x, i| .. }, skip "t"')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		if (x.StartsWith('t')) { continue }
 		Printf('%d %s\n', i, x)
 	}
 	Println('Each {|x, i| .. }, break at "t"')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		Printf('%d %s\n', i, x)
 		x.StartsWith('t') && break
 	}
 	Println('Each {|x, i| .. }, break at "s"')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		Printf('%d %s\n', i, x)
 		x.StartsWith('s') && break
 	}
 	Println('Each {|x, i| .. }, skip "t"')
-	tbl.Each {|x, i|
+	tbl.Each().Each {|x, i|
 		x.StartsWith('t') && continue
 		Printf('%d %s\n', i, x)
 	}
-	Tester(`tbl.Each { break })
-	Tester(`tbl.Each { continue })
+	Tester(`tbl.Each().Each { break })
+	Tester(`tbl.Each().Each { continue })
 }
+sys.Exit()
 
 TestCase('Iterator#Each():list') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
