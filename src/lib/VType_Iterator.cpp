@@ -145,7 +145,15 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 	processor.PushValue(pValueRtn.release());
 #else
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
-	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
+	if (pPUnitOfCaller->GetDiscardValueFlag()) {
+		if (GetIterator().MustBeFinite()) {
+			for (;;) {
+				RefPtr<Value> pValue(GetIterator().NextValue());
+				if (!pValue) break;
+				pValue->DoEval(processor, argument);
+			}
+		}
+	} else {
 		RefPtr<Value> pValueRtn(DoEval(processor, argument));
 		if (Error::IsIssued()) return;
 		processor.PushValue(pValueRtn.release());

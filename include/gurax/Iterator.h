@@ -71,7 +71,7 @@ public:
 		if (!_pValuePeeked) _pValuePeeked.reset(DoNextValue());
 		return _pValuePeeked.Reference();
 	}
-	void DiscardUnevaluated(Processor& processor, Argument& argument);
+	//void DiscardUnevaluated(Processor& processor, Argument& argument);
 public:
 	// Virtual functions
 	virtual Iterator* Clone() const;
