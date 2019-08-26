@@ -92,7 +92,7 @@ bool Iterator::MustBeFinite() const
 	return false;
 }
 
-Iterator* Iterator::Clone() const
+Iterator* Iterator::Clone2() const
 {
 	//*********************
 	return Reference();

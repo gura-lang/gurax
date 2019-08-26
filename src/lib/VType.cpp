@@ -90,9 +90,9 @@ Value* VType::Cast(const Value& value, DeclArg::Flags flags) const
 				}
 			}
 		} else if (value.IsType(VTYPE_Iterator)) {
-			RefPtr<Iterator> pIterator(Value_Iterator::GetIterator(value).Clone());
+			Iterator& iterator = Value_Iterator::GetIterator(value);
 			for (;;) {
-				RefPtr<Value> pValueElem(pIterator->NextValue());
+				RefPtr<Value> pValueElem(iterator.NextValue());
 				if (!pValueElem) break;
 				if (pValueElem->IsInstanceOf(*this)) {
 					pValuesCasted->push_back(pValueElem->Reference());

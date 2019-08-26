@@ -73,7 +73,7 @@ public:
 	}
 public:
 	// Virtual functions
-	virtual Iterator* Clone() const;
+	virtual Iterator* Clone2() const;
 	virtual Flags GetFlags() const = 0;
 	virtual Value* DoNextValue() = 0;
 	virtual size_t GetLength() const = 0;

@@ -49,12 +49,12 @@ protected:
 	~Value_Iterator() = default;
 public:
 	Iterator& GetIterator() { return *_pIterator; }
-	const Iterator& GetIterator() const { return *_pIterator; }
+	Iterator& GetIterator() const { return *_pIterator; }
 public:
 	static Iterator& GetIterator(Value& value) {
 		return dynamic_cast<Value_Iterator&>(value).GetIterator();
 	}
-	static const Iterator& GetIterator(const Value& value) {
+	static Iterator& GetIterator(const Value& value) {
 		return dynamic_cast<const Value_Iterator&>(value).GetIterator();
 	}
 public:

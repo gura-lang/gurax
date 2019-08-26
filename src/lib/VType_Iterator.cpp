@@ -141,20 +141,20 @@ Gurax_ImplementMethod(Iterator, ArgMax)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<Iterator> pIteratorThis(valueThis.GetIterator().Clone());
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
 	if (argument.IsSet(Gurax_Symbol(last_index))) {
 		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThanOrEqualTo>(&idxFound));
+		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::LessThanOrEqualTo>(&idxFound));
 		return pValue? new Value_Number(idxFound) : Value::nil();
 	} else if (argument.IsSet(Gurax_Symbol(indices))) {
 		NumList<Int> idxFoundList;
 		idxFoundList.reserve(16);
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>(idxFoundList));
+		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::LessThan>(idxFoundList));
 		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
 	} else {
 		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>(&idxFound));
+		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::LessThan>(&idxFound));
 		return pValue? new Value_Number(idxFound) : Value::nil();
 	}
 }
@@ -172,20 +172,20 @@ Gurax_ImplementMethod(Iterator, ArgMin)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<Iterator> pIteratorThis(valueThis.GetIterator().Clone());
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
 	if (argument.IsSet(Gurax_Symbol(last_index))) {
 		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThanOrEqualTo>(&idxFound));
+		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::GreaterThanOrEqualTo>(&idxFound));
 		return pValue? new Value_Number(idxFound) : Value::nil();
 	} else if (argument.IsSet(Gurax_Symbol(indices))) {
 		NumList<Int> idxFoundList;
 		idxFoundList.reserve(16);
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>(idxFoundList));
+		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::GreaterThan>(idxFoundList));
 		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
 	} else {
 		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>(&idxFound));
+		RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::GreaterThan>(&idxFound));
 		return pValue? new Value_Number(idxFound) : Value::nil();
 	}
 }
@@ -298,10 +298,10 @@ Gurax_ImplementMethod(Iterator, Each)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
 	if (!argument.HasExprOfBlock()) return valueThis.Reference();
-	RefPtr<Iterator> pIterator(valueThis.GetIterator().Clone());
-	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
+	return iteratorThis.Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
 
 // Iterator#Filter(criteria?) {block?}
@@ -515,9 +515,9 @@ Gurax_ImplementMethod(Iterator, Max)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<Iterator> pIteratorThis(valueThis.GetIterator().Clone());
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>());
+	RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::LessThan>());
 	return pValue? pValue.release() : Value::nil();
 }
 
@@ -552,9 +552,9 @@ Gurax_ImplementMethod(Iterator, Min)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<Iterator> pIteratorThis(valueThis.GetIterator().Clone());
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>());
+	RefPtr<Value> pValue(iteratorThis.FindMinMax<Value::GreaterThan>());
 	return pValue? pValue.release() : Value::nil();
 }
 
@@ -1254,7 +1254,7 @@ Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
 
 Iterator* Value_Iterator::DoGenIterator() const
 {
-	return GetIterator().Clone();
+	return GetIterator().Reference();
 }
 
 }
