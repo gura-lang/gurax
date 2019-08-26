@@ -2,16 +2,19 @@
 import(argopt)
 
 p = argopt.Parser()
-p.AddFlag('flag-a', 'a')
-p.AddFlag('flag-b', 'b')
-p.AddFlag('flag-c', 'c')
-p.AddFlag('flag-d', 'd')
-p.AddFlag('flag-e', 'e')
-p.AddParam('param-A', 'A')
-p.AddParam('param-B', 'B')
-p.AddParam('param-C', 'C')
-p.AddParam('param-D', 'D')
-p.AddParam('param-E', 'E')
+p.AddFlag('flag-a', 'a', 'help-a')
+p.AddFlag('flag-b', 'b', 'help-b')
+p.AddFlag('flag-c', 'c', 'help-c')
+p.AddFlag('flag-d', 'd', 'help-d')
+p.AddFlag('flag-e', 'e', 'help-e')
+p.AddParam('param-A', 'A', 'help-A')
+p.AddParam('param-B', 'B', 'help-B')
+p.AddParam('param-C', 'C', 'help-C')
+p.AddParam('param-D', 'D', 'help-D')
+p.AddParam('param-E', 'E', 'help-E')
+
+p.PrintHelp()
+
 
 Tester(argv[]:String) = {
 	try {
