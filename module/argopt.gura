@@ -86,7 +86,6 @@ Parser = class {
 				argvRest.Add(arg)
 			}
 		}
-		//Println(this.entries[0].MakeHelpIndex(true, true))
 		[argvRest, opt]
 	}
 	AddParam(longName:String, shortName?:String, help?:String, helpValue?:String) = {
