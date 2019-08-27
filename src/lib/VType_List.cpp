@@ -110,15 +110,16 @@ Gurax_DeclareMethod(List, Combination)
 
 Gurax_ImplementMethod(List, Combination)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(valueTypedOwner, n));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // List#Erase(pos*:Number):reduce
@@ -230,15 +231,22 @@ Gurax_DeclareMethod(List, Permutation)
 
 Gurax_ImplementMethod(List, Permutation)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	bool validFlag_n = false;
+	size_t n = (validFlag_n = args.IsValid())? args.PickNumberPos<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator;
+	if (validFlag_n) {
+		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(valueTypedOwner, n));
+	} else {
+		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(valueTypedOwner));
+	}
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // List#Put(pos:Number, value:nomap):reduce:map

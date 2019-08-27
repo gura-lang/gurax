@@ -133,8 +133,8 @@ public:
 	private:
 		bool _doneFlag;
 	public:
-		Iterator_Permutation(ValueTypedOwner* pValueTypedOwner) :
-			IteratorBase(pValueTypedOwner->Clone()), _doneFlag(false) {}
+		Iterator_Permutation(const ValueTypedOwner& valueTypedOwner) :
+			IteratorBase(valueTypedOwner.Clone()), _doneFlag(false) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -153,8 +153,8 @@ public:
 		size_t _nExtract;
 		bool _doneFlag;
 	public:
-		Iterator_PartialPermutation(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
-			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract), _doneFlag(false) {}
+		Iterator_PartialPermutation(const ValueTypedOwner& valueTypedOwner, size_t nExtract) :
+			IteratorBase(valueTypedOwner.Clone()), _nExtract(nExtract), _doneFlag(false) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -173,8 +173,8 @@ public:
 		size_t _nExtract;
 		bool _doneFlag;
 	public:
-		Iterator_Combination(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
-			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract), _doneFlag(false) {}
+		Iterator_Combination(ValueTypedOwner& valueTypedOwner, size_t nExtract) :
+			IteratorBase(valueTypedOwner.Clone()), _nExtract(nExtract), _doneFlag(false) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

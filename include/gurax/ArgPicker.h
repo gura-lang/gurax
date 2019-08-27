@@ -54,6 +54,9 @@ public:
 	template<typename T_Num> T_Num PickNumberNonNeg() {
 		return Value_Number::GetNumberNonNeg<T_Num>(PickValue());
 	}
+	template<typename T_Num> T_Num PickNumberPos() {
+		return Value_Number::GetNumberPos<T_Num>(PickValue());
+	}
 	const Symbol* PickSymbol()		{ return Value_Symbol::GetSymbol(PickValue()); }
 	const char* PickString()		{ return Value_String::GetString(PickValue()); }
 	const String& PickStringSTL()	{ return Value_String::GetStringSTL(PickValue()); }

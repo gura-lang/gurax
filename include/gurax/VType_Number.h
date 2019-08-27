@@ -50,6 +50,7 @@ public:
 	template<typename T_Num> T_Num GetNumber() const { return static_cast<T_Num>(_num); }
 	template<typename T_Num> T_Num GetNumberRanged(T_Num numMin, T_Num numMax) const;
 	template<typename T_Num> T_Num GetNumberNonNeg() const;
+	template<typename T_Num> T_Num GetNumberPos() const;
 public:
 	static Double GetNumberRaw(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumberRaw();
@@ -63,6 +64,9 @@ public:
 	template<typename T_Num> static T_Num GetNumberNonNeg(const Value& value) {
 		return dynamic_cast<const Value_Number&>(value).GetNumberNonNeg<T_Num>();
 	}
+	template<typename T_Num> static T_Num GetNumberPos(const Value& value) {
+		return dynamic_cast<const Value_Number&>(value).GetNumberPos<T_Num>();
+	}
 public:
 	template<typename T_Num>
 	static NumList<T_Num> GetNumList(const ValueList& values);
@@ -70,6 +74,8 @@ public:
 	static NumList<T_Num> GetNumListRanged(const ValueList& values, T_Num numMin, T_Num numMax);
 	template<typename T_Num>
 	static NumList<T_Num> GetNumListNonNeg(const ValueList& values);
+	template<typename T_Num>
+	static NumList<T_Num> GetNumListPos(const ValueList& values);
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -116,6 +122,15 @@ T_Num Value_Number::GetNumberNonNeg() const
 }
 
 template<typename T_Num>
+T_Num Value_Number::GetNumberPos() const
+{
+	if ((_num < 0 || static_cast<T_Num>(_num) == 0) && !Error::IsIssued()) {
+		Error::Issue(ErrorType::RangeError, "must be positive value");
+	}
+	return static_cast<T_Num>(_num);
+}
+
+template<typename T_Num>
 NumList<T_Num> Value_Number::GetNumList(const ValueList& values)
 {
 	NumList<T_Num> nums;
@@ -156,6 +171,23 @@ NumList<T_Num> Value_Number::GetNumListNonNeg(const ValueList& values)
 		Double numRaw = Value_Number::GetNumberRaw(*pValue);
 		if (numRaw < 0) {
 			Error::Issue(ErrorType::RangeError, "negative value is not acceptable");
+			break;
+		}
+		nums.push_back(static_cast<T_Num>(numRaw));
+	}
+	return nums;
+}
+
+template<typename T_Num>
+NumList<T_Num> Value_Number::GetNumListPos(const ValueList& values)
+{
+	NumList<T_Num> nums;
+	if (Error::IsIssued()) return nums;
+	nums.reserve(values.size());
+	for (Value* pValue : values) {
+		Double numRaw = Value_Number::GetNumberRaw(*pValue);
+		if (numRaw < 0 || static_cast<T_Num>(numRaw) == 0) {
+			Error::Issue(ErrorType::RangeError, "must be positive value");
 			break;
 		}
 		nums.push_back(static_cast<T_Num>(numRaw));
