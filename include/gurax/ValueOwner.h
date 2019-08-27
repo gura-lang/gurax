@@ -27,6 +27,7 @@ protected:
 public:
 	void Clear();
 	ValueOwner* Clone() const;
+	ValueOwner* Extract(size_t n) const;
 	ValueOwner* CloneDeep() const;
 public:
 	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);

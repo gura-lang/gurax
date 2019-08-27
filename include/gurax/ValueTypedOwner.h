@@ -199,6 +199,9 @@ public:
 	ValueTypedOwner* Clone() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->Clone());
 	}
+	ValueTypedOwner* Extract(size_t n) const {
+		return new ValueTypedOwner(_pValueOwner->Extract(n));
+	}
 	ValueTypedOwner* CloneDeep() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}
