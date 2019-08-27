@@ -308,9 +308,8 @@ String ValueTypedOwner::Iterator_Fold::ToString(const StringStyle& ss) const
 Value* ValueTypedOwner::Iterator_Permutation::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
-	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Clone()));
-	ValueOwner& valueOwner = GetValueOwner();
-	_doneFlag = !std::next_permutation(valueOwner.begin(), valueOwner.end());
+	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract<size_t>(_indices)));
+	_doneFlag = !std::next_permutation(_indices.begin(), _indices.end());
 	return pValue.release();
 }
 
@@ -327,9 +326,8 @@ String ValueTypedOwner::Iterator_Permutation::ToString(const StringStyle& ss) co
 Value* ValueTypedOwner::Iterator_PartialPermutation::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
-	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_nExtract)));
-	ValueOwner& valueOwner = GetValueOwner();
-	_doneFlag = !boost::next_partial_permutation(valueOwner.begin(), valueOwner.begin() + _nExtract, valueOwner.end());
+	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_indices, _nExtract)));
+	_doneFlag = !boost::next_partial_permutation(_indices.begin(), _indices.begin() + _nExtract, _indices.end());
 	return pValue.release();
 }
 
@@ -346,9 +344,8 @@ String ValueTypedOwner::Iterator_PartialPermutation::ToString(const StringStyle&
 Value* ValueTypedOwner::Iterator_Combination::DoNextValue()
 {
 	if (_doneFlag) return nullptr;
-	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_nExtract)));
-	ValueOwner& valueOwner = GetValueOwner();
-	_doneFlag = !boost::next_combination(valueOwner.begin(), valueOwner.begin() + _nExtract, valueOwner.end());
+	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_indices, _nExtract)));
+	_doneFlag = !boost::next_combination(_indices.begin(), _indices.begin() + _nExtract, _indices.end());
 	return pValue.release();
 }
 

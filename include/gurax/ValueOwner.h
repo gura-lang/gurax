@@ -30,6 +30,8 @@ public:
 	ValueOwner* Extract(size_t n) const;
 	template<typename T_Num>
 	ValueOwner* Extract(NumList<T_Num>& indices) const;
+	template<typename T_Num>
+	ValueOwner* Extract(NumList<T_Num>& indices, size_t n) const;
 	ValueOwner* CloneDeep() const;
 public:
 	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);
@@ -53,7 +55,17 @@ ValueOwner* ValueOwner::Extract(NumList<T_Num>& indices) const
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	pValueOwner->reserve(indices.size());
 	for (T_Num idx : indices) pValueOwner->push_back((*this)[idx]->Reference());
-	pValueOwner->IncCntRefOfEach();
+	return pValueOwner.release();
+}
+
+template<typename T_Num>
+ValueOwner* ValueOwner::Extract(NumList<T_Num>& indices, size_t n) const
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(indices.size());
+	for (auto pIdx = indices.begin(); pIdx != indices.begin() + n; pIdx++) {
+		pValueOwner->push_back((*this)[*pIdx]->Reference());
+	}
 	return pValueOwner.release();
 }
 

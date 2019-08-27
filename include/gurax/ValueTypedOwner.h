@@ -217,6 +217,14 @@ public:
 	ValueTypedOwner* Extract(size_t n) const {
 		return new ValueTypedOwner(_pValueOwner->Extract(n));
 	}
+	template<typename T_Num>
+	ValueTypedOwner* Extract(NumList<T_Num>& indices) const {
+		return new ValueTypedOwner(_pValueOwner->Extract<T_Num>(indices));
+	}
+	template<typename T_Num>
+		ValueTypedOwner* Extract(NumList<T_Num>& indices, size_t n) const {
+		return new ValueTypedOwner(_pValueOwner->Extract<T_Num>(indices, n));
+	}
 	ValueTypedOwner* CloneDeep() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}

@@ -51,7 +51,7 @@ template<typename T_Num>
 NumList<T_Num>& NumList<T_Num>::FillSeq(size_t n)
 {
 	this->reserve(n);
-	for (size_t i = 0; i < n ; i++) this->push_back(static_cast<T_Num>(n));
+	for (size_t i = 0; i < n ; i++) this->push_back(static_cast<T_Num>(i));
 	return *this;
 }
 
