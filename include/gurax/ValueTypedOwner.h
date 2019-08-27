@@ -26,7 +26,9 @@ public:
 	public:
 		IteratorBase(ValueTypedOwner* pValueTypedOwner) : _pValueTypedOwner(pValueTypedOwner) {}
 	public:
+		ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 		const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
+		ValueOwner& GetValueOwner() { return GetValueTypedOwner().GetValueOwner(); }
 		const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
 	};
 	//--------------------------------------------------------------------------
@@ -128,9 +130,11 @@ public:
 	public:
 		// Uses MemoryPool allocator
 		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Permutation");
+	private:
+		bool _doneFlag;
 	public:
 		Iterator_Permutation(ValueTypedOwner* pValueTypedOwner) :
-			IteratorBase(pValueTypedOwner->Clone()) {}
+			IteratorBase(pValueTypedOwner->Clone()), _doneFlag(false) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -147,9 +151,10 @@ public:
 		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_PartialPermutation");
 	private:
 		size_t _nExtract;
+		bool _doneFlag;
 	public:
 		Iterator_PartialPermutation(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
-			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract) {}
+			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract), _doneFlag(false) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -166,9 +171,10 @@ public:
 		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Combination");
 	private:
 		size_t _nExtract;
+		bool _doneFlag;
 	public:
 		Iterator_Combination(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
-			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract) {}
+			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract), _doneFlag(false) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

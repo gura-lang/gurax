@@ -307,7 +307,11 @@ String ValueTypedOwner::Iterator_Fold::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* ValueTypedOwner::Iterator_Permutation::DoNextValue()
 {
-	return Value::nil();
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Clone()));
+	ValueOwner& valueOwner = GetValueOwner();
+	_doneFlag = !std::next_permutation(valueOwner.begin(), valueOwner.end());
+	return pValue.release();
 }
 
 String ValueTypedOwner::Iterator_Permutation::ToString(const StringStyle& ss) const
@@ -322,7 +326,11 @@ String ValueTypedOwner::Iterator_Permutation::ToString(const StringStyle& ss) co
 //------------------------------------------------------------------------------
 Value* ValueTypedOwner::Iterator_PartialPermutation::DoNextValue()
 {
-	return Value::nil();
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_nExtract)));
+	ValueOwner& valueOwner = GetValueOwner();
+	_doneFlag = !boost::next_partial_permutation(valueOwner.begin(), valueOwner.begin() + _nExtract, valueOwner.end());
+	return pValue.release();
 }
 
 String ValueTypedOwner::Iterator_PartialPermutation::ToString(const StringStyle& ss) const
@@ -337,7 +345,11 @@ String ValueTypedOwner::Iterator_PartialPermutation::ToString(const StringStyle&
 //------------------------------------------------------------------------------
 Value* ValueTypedOwner::Iterator_Combination::DoNextValue()
 {
-	return Value::nil();
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_nExtract)));
+	ValueOwner& valueOwner = GetValueOwner();
+	_doneFlag = !boost::next_combination(valueOwner.begin(), valueOwner.begin() + _nExtract, valueOwner.end());
+	return pValue.release();
 }
 
 String ValueTypedOwner::Iterator_Combination::ToString(const StringStyle& ss) const
