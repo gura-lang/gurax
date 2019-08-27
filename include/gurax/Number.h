@@ -34,13 +34,26 @@ public:
 	using std::vector<T_Num>::vector;
 public:
 	NumList& Sort() { std::sort(this->begin(), this->end()); return *this; }
-	NumList& Sort(SortOrder sortOrder) {
-		SortListByOrder<NumList, typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(
-			*this, sortOrder);
-		return *this;
-	}
+	NumList& Sort(SortOrder sortOrder);
 	NumList& Unique() { this->erase(std::unique(this->begin(), this->end()), this->end()); return *this; }
+	NumList& FillSeq(size_t n);
 };
+
+template<typename T_Num>
+NumList<T_Num>& NumList<T_Num>::Sort(SortOrder sortOrder)
+{
+	SortListByOrder<NumList, typename Number<T_Num>::LessThan, typename Number<T_Num>::GreaterThan>(
+		*this, sortOrder);
+	return *this;
+}
+
+template<typename T_Num>
+NumList<T_Num>& NumList<T_Num>::FillSeq(size_t n)
+{
+	this->reserve(n);
+	for (size_t i = 0; i < n ; i++) this->push_back(static_cast<T_Num>(n));
+	return *this;
+}
 
 //------------------------------------------------------------------------------
 // NumDeque

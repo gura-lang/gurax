@@ -28,6 +28,8 @@ public:
 	void Clear();
 	ValueOwner* Clone() const;
 	ValueOwner* Extract(size_t n) const;
+	template<typename T_Num>
+	ValueOwner* Extract(NumList<T_Num>& indices) const;
 	ValueOwner* CloneDeep() const;
 public:
 	static ValueOwner* CreateFromIterator(Iterator& iterator, bool skipNilFlag);
@@ -44,6 +46,16 @@ public:
 public:
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };
+
+template<typename T_Num>
+ValueOwner* ValueOwner::Extract(NumList<T_Num>& indices) const
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(indices.size());
+	for (T_Num idx : indices) pValueOwner->push_back((*this)[idx]->Reference());
+	pValueOwner->IncCntRefOfEach();
+	return pValueOwner.release();
+}
 
 template<typename T_Num>
 ValueOwner* ValueOwner::CreateFromNumList(const NumList<T_Num>& nums)

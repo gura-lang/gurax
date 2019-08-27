@@ -118,7 +118,7 @@ Gurax_ImplementMethod(List, Combination)
 	size_t n = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(valueTypedOwner, n));
+	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(valueTypedOwner.Reference(), n));
 	return ReturnIterator(processor, argument, pIterator.release());
 }
 
@@ -242,9 +242,9 @@ Gurax_ImplementMethod(List, Permutation)
 	// Function body
 	RefPtr<Iterator> pIterator;
 	if (validFlag_n) {
-		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(valueTypedOwner, n));
+		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(valueTypedOwner.Reference(), n));
 	} else {
-		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(valueTypedOwner));
+		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(valueTypedOwner.Reference()));
 	}
 	return ReturnIterator(processor, argument, pIterator.release());
 }

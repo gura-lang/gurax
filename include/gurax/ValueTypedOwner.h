@@ -131,10 +131,13 @@ public:
 		// Uses MemoryPool allocator
 		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Permutation");
 	private:
+		NumList<size_t> _indices;
 		bool _doneFlag;
 	public:
-		Iterator_Permutation(const ValueTypedOwner& valueTypedOwner) :
-			IteratorBase(valueTypedOwner.Clone()), _doneFlag(false) {}
+		Iterator_Permutation(ValueTypedOwner* pValueTypedOwner) :
+			IteratorBase(pValueTypedOwner), _doneFlag(false) {
+			_indices.FillSeq(GetValueOwner().size());
+		}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -152,9 +155,12 @@ public:
 	private:
 		size_t _nExtract;
 		bool _doneFlag;
+		NumList<size_t> _indices;
 	public:
-		Iterator_PartialPermutation(const ValueTypedOwner& valueTypedOwner, size_t nExtract) :
-			IteratorBase(valueTypedOwner.Clone()), _nExtract(nExtract), _doneFlag(false) {}
+		Iterator_PartialPermutation(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
+			IteratorBase(pValueTypedOwner), _nExtract(nExtract), _doneFlag(false) {
+			_indices.FillSeq(GetValueOwner().size());
+		}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -172,9 +178,12 @@ public:
 	private:
 		size_t _nExtract;
 		bool _doneFlag;
+		NumList<size_t> _indices;
 	public:
-		Iterator_Combination(ValueTypedOwner& valueTypedOwner, size_t nExtract) :
-			IteratorBase(valueTypedOwner.Clone()), _nExtract(nExtract), _doneFlag(false) {}
+		Iterator_Combination(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
+			IteratorBase(pValueTypedOwner), _nExtract(nExtract), _doneFlag(false) {
+			_indices.FillSeq(GetValueOwner().size());
+		}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
