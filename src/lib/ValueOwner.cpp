@@ -16,10 +16,16 @@ void ValueOwner::Clear()
 
 ValueOwner* ValueOwner::Clone() const
 {
+#if 0
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner(*this));
+	pValueOwner->IncCntRefOfEach();
+	return pValueOwner.release();
+#else
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	pValueOwner->reserve(size());
 	for (Value* pValue : *this) pValueOwner->push_back(pValue->Reference());
 	return pValueOwner.release();
+#endif
 }
 
 ValueOwner* ValueOwner::CloneDeep() const

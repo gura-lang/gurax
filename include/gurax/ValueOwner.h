@@ -18,8 +18,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueOwner");
 public:
-	using ValueList::ValueList;
+	//using ValueList::ValueList;
+	ValueOwner() {}
 protected:
+	ValueOwner(const ValueOwner& valueOwner) : ValueList(valueOwner) {}
+	ValueOwner(const_iterator pBegin, const_iterator pEnd) : ValueList(pBegin, pEnd) {}
 	~ValueOwner() { Clear(); }
 public:
 	void Clear();

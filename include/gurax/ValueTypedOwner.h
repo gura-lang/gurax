@@ -128,10 +128,28 @@ public:
 	public:
 		// Uses MemoryPool allocator
 		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Permutation");
-	private:
-		size_t _idx;
 	public:
-		Iterator_Permutation(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+		Iterator_Permutation(ValueTypedOwner* pValueTypedOwner) :
+			IteratorBase(pValueTypedOwner->Clone()) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::Iterator_PartialPermutation
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_PartialPermutation : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_PartialPermutation");
+	private:
+		size_t _nExtract;
+	public:
+		Iterator_PartialPermutation(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
+			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -147,9 +165,10 @@ public:
 		// Uses MemoryPool allocator
 		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Combination");
 	private:
-		size_t _idx;
+		size_t _nExtract;
 	public:
-		Iterator_Combination(ValueTypedOwner* pValueTypedOwner) : IteratorBase(pValueTypedOwner), _idx(0) {}
+		Iterator_Combination(ValueTypedOwner* pValueTypedOwner, size_t nExtract) :
+			IteratorBase(pValueTypedOwner->Clone()), _nExtract(nExtract) {}
 	public:
 		// Virtual functions of Iterator
 		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
@@ -177,7 +196,9 @@ protected:
 	virtual ~ValueTypedOwner() = default;
 public:
 	void Clear();
-	ValueTypedOwner* Clone() const;
+	ValueTypedOwner* Clone() const {
+		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->Clone());
+	}
 	ValueTypedOwner* CloneDeep() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->CloneDeep());
 	}

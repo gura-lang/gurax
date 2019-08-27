@@ -2,6 +2,7 @@
 // ValueTypedOwner.cpp
 //==============================================================================
 #include "stdafx.h"
+#include "../boost/combination.hpp"
 
 namespace Gurax {
 
@@ -306,9 +307,7 @@ String ValueTypedOwner::Iterator_Fold::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* ValueTypedOwner::Iterator_Permutation::DoNextValue()
 {
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
+	return Value::nil();
 }
 
 String ValueTypedOwner::Iterator_Permutation::ToString(const StringStyle& ss) const
@@ -319,19 +318,32 @@ String ValueTypedOwner::Iterator_Permutation::ToString(const StringStyle& ss) co
 }
 
 //------------------------------------------------------------------------------
+// ValueTypedOwner::Iterator_PartialPermutation
+//------------------------------------------------------------------------------
+Value* ValueTypedOwner::Iterator_PartialPermutation::DoNextValue()
+{
+	return Value::nil();
+}
+
+String ValueTypedOwner::Iterator_PartialPermutation::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("List#PartialPermutation:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // ValueTypedOwner::Iterator_Combination
 //------------------------------------------------------------------------------
 Value* ValueTypedOwner::Iterator_Combination::DoNextValue()
 {
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
+	return Value::nil();
 }
 
 String ValueTypedOwner::Iterator_Combination::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Combination:n=%zu", GetValueOwner().size());
+	str.Printf("List#Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
 	return str;
 }
 
