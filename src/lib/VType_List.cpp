@@ -112,13 +112,17 @@ Gurax_ImplementMethod(List, Combination)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
 	// Arguments
 	ArgPicker args(argument);
 	size_t n = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(valueTypedOwner.Reference(), n));
+	if (n > pValueTypedOwner->GetSize()) {
+		Error::Issue(ErrorType::RangeError, "range over");
+		return Value::nil();
+	}
+	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(pValueTypedOwner.release(), n));
 	return ReturnIterator(processor, argument, pIterator.release());
 }
 
@@ -233,18 +237,22 @@ Gurax_ImplementMethod(List, Permutation)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
 	// Arguments
 	ArgPicker args(argument);
 	bool validFlag_n = false;
 	size_t n = (validFlag_n = args.IsValid())? args.PickNumberPos<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
+	if (n > pValueTypedOwner->GetSize()) {
+		Error::Issue(ErrorType::RangeError, "range over");
+		return Value::nil();
+	}
 	RefPtr<Iterator> pIterator;
-	if (validFlag_n) {
-		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(valueTypedOwner.Reference(), n));
+	if (validFlag_n && n < pValueTypedOwner->GetSize()) {
+		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(pValueTypedOwner.release(), n));
 	} else {
-		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(valueTypedOwner.Reference()));
+		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(pValueTypedOwner.release()));
 	}
 	return ReturnIterator(processor, argument, pIterator.release());
 }

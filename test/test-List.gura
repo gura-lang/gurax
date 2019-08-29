@@ -1,6 +1,16 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TesterPerm(expr:Expr) = {
+	try {
+		tbl = expr.Eval()
+		Println('----')
+		Printf('%s .. %d : %s\n', expr, tbl.len, tbl):nomap
+	} catch {|e|
+		Printf('%s .. %s\n', expr, e.text)
+	}
+}
+
 TestCase('PUnit') {
 	exprs = [
 		`[]
@@ -94,6 +104,10 @@ TestCase('List#Clear()') {
 }
 
 TestCase('List#Combination()') {
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(3):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(4):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(5):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(6):list)
 }
 
 TestCase('List#Erase()') {
@@ -133,6 +147,10 @@ TestCase('List#IsEmpty()') {
 }
 
 TestCase('List#Permutation()') {
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation():list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(5):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(3):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(6):list)
 }
 
 TestCase('List#Put()') {
