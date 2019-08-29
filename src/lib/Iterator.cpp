@@ -23,6 +23,11 @@ Value* Iterator::And()
 
 bool Iterator::Contains(const Value& value)
 {
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		if (pValueElem->IsEqualTo(&value)) return true;
+	}
 	return false;
 }
 
@@ -105,7 +110,17 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 
 String Iterator::Join(const char* sep)
 {
-	return "";
+	String str;
+	RefPtr<Value> pValueElem(NextValue());
+	if (!pValueElem) return str;
+	str += pValueElem->ToString();
+	for (;;) {
+		RefPtr<Value> pValueNext(NextValue());
+		if (!pValueNext) break;
+		str += sep;
+		str += pValueElem->ToString();
+	}
+	return str;
 }
 
 Value* Iterator::Mean()
