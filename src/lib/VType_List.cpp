@@ -714,7 +714,7 @@ Gurax_ImplementMethod(List, Mean)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return pIteratorThis->Mean();
+	return pIteratorThis->Mean(processor);
 }
 
 // List#Min()
@@ -939,7 +939,7 @@ Gurax_ImplementMethod(List, Prod)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return pIteratorThis->Sum();
+	return pIteratorThis->Prod(processor);
 }
 
 // List#Rank(directive?):[stable] {block?}
@@ -1174,7 +1174,7 @@ Gurax_ImplementMethod(List, Std)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return pIteratorThis->Std();
+	return pIteratorThis->Std(processor);
 }
 
 // List#Sum()
@@ -1190,7 +1190,7 @@ Gurax_ImplementMethod(List, Sum)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return pIteratorThis->Sum();
+	return pIteratorThis->Sum(processor);
 }
 
 // List#Tail(n:number):map {block?}
@@ -1251,7 +1251,7 @@ Gurax_ImplementMethod(List, Var)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return pIteratorThis->Var();
+	return pIteratorThis->Var(processor);
 }
 
 // List#While(criteria) {block?}

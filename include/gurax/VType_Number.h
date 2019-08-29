@@ -78,6 +78,7 @@ public:
 	static NumList<T_Num> GetNumListPos(const ValueList& values);
 public:
 	// Virtual functions of Value
+	virtual bool IsZero() const override { return _num == 0.; }
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override { return GetNumber<size_t>(); }
 	virtual bool IsEqualTo(const Value* pValue) const override {

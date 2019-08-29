@@ -576,7 +576,7 @@ Gurax_ImplementMethod(Iterator, Mean)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	return iteratorThis.Mean();
+	return iteratorThis.Mean(processor);
 }
 
 // Iterator#Min()
@@ -838,7 +838,7 @@ Gurax_ImplementMethod(Iterator, Prod)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	return iteratorThis.Prod();
+	return iteratorThis.Prod(processor);
 }
 
 // Iterator#Rank(directive?):[stable] {block?}
@@ -1076,7 +1076,7 @@ Gurax_ImplementMethod(Iterator, Std)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	return iteratorThis.Std();
+	return iteratorThis.Std(processor);
 }
 
 // Iterator#Sum()
@@ -1092,7 +1092,7 @@ Gurax_ImplementMethod(Iterator, Sum)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	return iteratorThis.Sum();
+	return iteratorThis.Sum(processor);
 }
 
 // Iterator#Tail(n:number):map {block?}
@@ -1153,7 +1153,7 @@ Gurax_ImplementMethod(Iterator, Var)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	return iteratorThis.Var();
+	return iteratorThis.Var(processor);
 }
 
 // Iterator#While(criteria) {block?}

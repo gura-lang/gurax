@@ -66,12 +66,12 @@ public:
 	bool Contains(const Value& value);
 	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
 	String Join(const char* sep);
-	Value* Mean();
+	Value* Mean(Processor& processor);
 	Value* Or();
-	Value* Prod();
-	Value* Std();
-	Value* Sum();
-	Value* Var();
+	Value* Prod(Processor& processor);
+	Value* Std(Processor& processor);
+	Value* Sum(Processor& processor);
+	Value* Var(Processor& processor);
 public:
 	Value* NextValue() {
 		_idxCur = _idxNext++;

@@ -137,6 +137,7 @@ public:
 	virtual bool IsValid() const { return true; }
 	virtual bool IsUndefined() const { return false; }
 	virtual bool IsNil() const { return false; }
+	virtual bool IsZero() const { return false; }
 	virtual bool IsIterable() const { return false; }
 	virtual bool IsIterator() const { return false; }
 	virtual bool IsList() const { return false; }

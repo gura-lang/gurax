@@ -123,8 +123,11 @@ String Iterator::Join(const char* sep)
 	return str;
 }
 
-Value* Iterator::Mean()
+Value* Iterator::Mean(Processor& processor)
 {
+	//RefPtr<Value> pValueSum(Sum(processor));
+	//if (pValueSum->IsInvalid()) return Value::nil();
+	//return pValueSum.release();
 	return Value::nil();
 }
 
@@ -141,29 +144,38 @@ Value* Iterator::Or()
 	return pValueElem.release();
 }
 
-Value* Iterator::Prod()
+Value* Iterator::Prod(Processor& processor)
+{
+	RefPtr<Value> pValueAccum(NextValue());
+	if (!pValueAccum) return Value::nil();
+	while (!pValueAccum->IsZero()) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		pValueAccum.reset(Operator::Mul->EvalBinary(processor, *pValueAccum, *pValueElem));
+		if (Error::IsIssued()) return Value::nil();
+	}
+	return pValueAccum.release();
+}
+
+Value* Iterator::Std(Processor& processor)
 {
 	return Value::nil();
 }
 
-Value* Iterator::Std()
+Value* Iterator::Sum(Processor& processor)
 {
-	return Value::nil();
-}
-
-Value* Iterator::Sum()
-{
-	RefPtr<Value> pValueSum(NextValue());
-	if (!pValueSum) return Value::nil();
+	RefPtr<Value> pValueAccum(NextValue());
+	if (!pValueAccum) return Value::nil();
 	for (;;) {
 		RefPtr<Value> pValueElem(NextValue());
 		if (!pValueElem) break;
-		//pValueSum.reset(Operator::Add.EvalBinary(processor, *pValueSum, *pValueElem));
+		pValueAccum.reset(Operator::Add->EvalBinary(processor, *pValueAccum, *pValueElem));
+		if (Error::IsIssued()) return Value::nil();
 	}
-	return pValueSum.release();
+	return pValueAccum.release();
 }
 
-Value* Iterator::Var()
+Value* Iterator::Var(Processor& processor)
 {
 	return Value::nil();
 }
