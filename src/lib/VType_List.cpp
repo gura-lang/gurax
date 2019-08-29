@@ -96,36 +96,6 @@ Gurax_ImplementMethod(List, Clear)
 	return argument.GetValueThis().Reference();
 }
 
-// List#Combination(n:Number) {block?}
-Gurax_DeclareMethod(List, Combination)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates an iterator that generates lists that contain elements picked up\n"
-		"from the original list in a combination manner.\n");
-}
-
-Gurax_ImplementMethod(List, Combination)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
-	// Arguments
-	ArgPicker args(argument);
-	size_t n = args.PickNumberPos<size_t>();
-	if (Error::IsIssued()) return Value::nil();
-	// Function body
-	if (n > pValueTypedOwner->GetSize()) {
-		Error::Issue(ErrorType::RangeError, "range over");
-		return Value::nil();
-	}
-	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(pValueTypedOwner.release(), n));
-	return ReturnIterator(processor, argument, pIterator.release());
-}
-
 // List#Erase(pos*:Number):reduce
 Gurax_DeclareMethod(List, Erase)
 {
@@ -219,42 +189,6 @@ Gurax_ImplementMethod(List, IsEmpty)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	return new Value_Bool(valueThis.GetValueOwner().empty());
-}
-
-// List#Permutation(n?:Number) {block?}
-Gurax_DeclareMethod(List, Permutation)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates an iterator that generates lists that contain elements picked up\n"
-		"from the original list in a permutation manner.\n");
-}
-
-Gurax_ImplementMethod(List, Permutation)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
-	// Arguments
-	ArgPicker args(argument);
-	bool validFlag_n = false;
-	size_t n = (validFlag_n = args.IsValid())? args.PickNumberPos<size_t>() : 0;
-	if (Error::IsIssued()) return Value::nil();
-	// Function body
-	if (n > pValueTypedOwner->GetSize()) {
-		Error::Issue(ErrorType::RangeError, "range over");
-		return Value::nil();
-	}
-	RefPtr<Iterator> pIterator;
-	if (validFlag_n && n < pValueTypedOwner->GetSize()) {
-		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(pValueTypedOwner.release(), n));
-	} else {
-		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(pValueTypedOwner.release()));
-	}
-	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // List#Put(pos:Number, value:nomap):reduce:map
@@ -482,6 +416,33 @@ Gurax_ImplementMethod(List, Before)
 	// Function body
 #endif
 	return Value::nil();
+}
+
+// List#Combination(n:Number) {block?}
+Gurax_DeclareMethod(List, Combination)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
+}
+
+Gurax_ImplementMethod(List, Combination)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
+	// Arguments
+	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	if (n > pValueTypedOwner->GetSize()) {
+		Error::Issue(ErrorType::RangeError, "range over");
+		return Value::nil();
+	}
+	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(pValueTypedOwner.release(), n));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // List#Contains(value)
@@ -907,6 +868,39 @@ Gurax_ImplementMethod(List, Pack)
 	// Function body
 #endif
 	return Value::nil();
+}
+
+// List#Permutation(n?:Number) {block?}
+Gurax_DeclareMethod(List, Permutation)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
+}
+
+Gurax_ImplementMethod(List, Permutation)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
+	// Arguments
+	ArgPicker args(argument);
+	bool validFlag_n = false;
+	size_t n = (validFlag_n = args.IsValid())? args.PickNumberPos<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	if (n > pValueTypedOwner->GetSize()) {
+		Error::Issue(ErrorType::RangeError, "range over");
+		return Value::nil();
+	}
+	RefPtr<Iterator> pIterator;
+	if (validFlag_n && n < pValueTypedOwner->GetSize()) {
+		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(pValueTypedOwner.release(), n));
+	} else {
+		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(pValueTypedOwner.release()));
+	}
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // List#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}
@@ -1459,12 +1453,10 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Add));
 	Assign(Gurax_CreateMethod(List, Append));
 	Assign(Gurax_CreateMethod(List, Clear));
-	Assign(Gurax_CreateMethod(List, Combination));
 	Assign(Gurax_CreateMethod(List, Erase));
 	Assign(Gurax_CreateMethod(List, Get));
 	Assign(Gurax_CreateMethod(List, Insert));
 	Assign(Gurax_CreateMethod(List, IsEmpty));
-	Assign(Gurax_CreateMethod(List, Permutation));
 	Assign(Gurax_CreateMethod(List, Put));
 	Assign(Gurax_CreateMethod(List, Shift));
 	Assign(Gurax_CreateMethod(List, Shuffle));
@@ -1475,6 +1467,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, ArgMax));
 	Assign(Gurax_CreateMethod(List, ArgMin));
 	Assign(Gurax_CreateMethod(List, Before));
+	Assign(Gurax_CreateMethod(List, Combination));
 	Assign(Gurax_CreateMethod(List, Contains));
 	Assign(Gurax_CreateMethod(List, Count));
 	Assign(Gurax_CreateMethod(List, Cycle));
@@ -1495,6 +1488,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Offset));
 	Assign(Gurax_CreateMethod(List, Or));
 	Assign(Gurax_CreateMethod(List, Pack));
+	Assign(Gurax_CreateMethod(List, Permutation));
 	Assign(Gurax_CreateMethod(List, PingPong));
 	Assign(Gurax_CreateMethod(List, Print));
 	Assign(Gurax_CreateMethod(List, Printf));

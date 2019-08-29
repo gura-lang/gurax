@@ -212,6 +212,37 @@ Gurax_ImplementMethod(Iterator, Before)
 	return Value::nil();
 }
 
+// Iterator#Combination(n:Number) {block?}
+Gurax_DeclareMethod(Iterator, Combination)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator that generates lists that contain elements picked up\n"
+		"from the original iterable in a combination rule.\n");
+}
+
+Gurax_ImplementMethod(Iterator, Combination)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	if (n > pValueTypedOwner->GetSize()) {
+		Error::Issue(ErrorType::RangeError, "range over");
+		return Value::nil();
+	}
+	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(pValueTypedOwner.release(), n));
+	return ReturnIterator(processor, argument, pIterator.release());
+}
+
 // Iterator#Contains(value)
 Gurax_DeclareMethod(Iterator, Contains)
 {
@@ -656,6 +687,43 @@ Gurax_ImplementMethod(Iterator, Pack)
 	// Function body
 #endif
 	return Value::nil();
+}
+
+// Iterator#Permutation(n?:Number) {block?}
+Gurax_DeclareMethod(Iterator, Permutation)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator that generates lists that contain elements picked up\n"
+		"from the original iterable in a permutation rule.\n");
+}
+
+Gurax_ImplementMethod(Iterator, Permutation)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	bool validFlag_n = false;
+	size_t n = (validFlag_n = args.IsValid())? args.PickNumberPos<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	if (n > pValueTypedOwner->GetSize()) {
+		Error::Issue(ErrorType::RangeError, "range over");
+		return Value::nil();
+	}
+	RefPtr<Iterator> pIterator;
+	if (validFlag_n && n < pValueTypedOwner->GetSize()) {
+		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(pValueTypedOwner.release(), n));
+	} else {
+		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(pValueTypedOwner.release()));
+	}
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // Iterator#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}
@@ -1140,6 +1208,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, ArgMax));
 	Assign(Gurax_CreateMethod(Iterator, ArgMin));
 	Assign(Gurax_CreateMethod(Iterator, Before));
+	Assign(Gurax_CreateMethod(Iterator, Combination));
 	Assign(Gurax_CreateMethod(Iterator, Contains));
 	Assign(Gurax_CreateMethod(Iterator, Count));
 	Assign(Gurax_CreateMethod(Iterator, Cycle));
@@ -1160,6 +1229,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Offset));
 	Assign(Gurax_CreateMethod(Iterator, Or));
 	Assign(Gurax_CreateMethod(Iterator, Pack));
+	Assign(Gurax_CreateMethod(Iterator, Permutation));
 	Assign(Gurax_CreateMethod(Iterator, PingPong));
 	Assign(Gurax_CreateMethod(Iterator, Print));
 	Assign(Gurax_CreateMethod(Iterator, Printf));
