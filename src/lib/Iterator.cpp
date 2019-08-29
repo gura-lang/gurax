@@ -153,7 +153,14 @@ Value* Iterator::Std()
 
 Value* Iterator::Sum()
 {
-	return Value::nil();
+	RefPtr<Value> pValueSum(NextValue());
+	if (!pValueSum) return Value::nil();
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		//pValueSum.reset(Operator::Add.EvalBinary(processor, *pValueSum, *pValueElem));
+	}
+	return pValueSum.release();
 }
 
 Value* Iterator::Var()
