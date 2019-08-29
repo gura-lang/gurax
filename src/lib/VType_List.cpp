@@ -349,20 +349,7 @@ Gurax_ImplementMethod(List, ArgMax)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	if (argument.IsSet(Gurax_Symbol(last_index))) {
-		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThanOrEqualTo>(&idxFound));
-		return pValue? new Value_Number(idxFound) : Value::nil();
-	} else if (argument.IsSet(Gurax_Symbol(indices))) {
-		NumList<Int> idxFoundList;
-		idxFoundList.reserve(16);
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>(idxFoundList));
-		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
-	} else {
-		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::LessThan>(&idxFound));
-		return pValue? new Value_Number(idxFound) : Value::nil();
-	}
+	return VType_Iterator::Method_ArgMax(argument, *pIteratorThis);
 }
 
 // List#ArgMin():[last_index,indices]
@@ -380,20 +367,7 @@ Gurax_ImplementMethod(List, ArgMin)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	if (argument.IsSet(Gurax_Symbol(last_index))) {
-		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThanOrEqualTo>(&idxFound));
-		return pValue? new Value_Number(idxFound) : Value::nil();
-	} else if (argument.IsSet(Gurax_Symbol(indices))) {
-		NumList<Int> idxFoundList;
-		idxFoundList.reserve(16);
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>(idxFoundList));
-		return pValue? new Value_List(ValueTypedOwner::CreateFromNumList<Int>(idxFoundList)) : Value::nil();
-	} else {
-		Int idxFound = 0;
-		RefPtr<Value> pValue(pIteratorThis->FindMinMax<Value::GreaterThan>(&idxFound));
-		return pValue? new Value_Number(idxFound) : Value::nil();
-	}
+	return VType_Iterator::Method_ArgMin(argument, *pIteratorThis);
 }
 
 // List#Before(criteria) {block?}
@@ -431,18 +405,9 @@ Gurax_ImplementMethod(List, Combination)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
-	// Arguments
-	ArgPicker args(argument);
-	size_t n = args.PickNumberPos<size_t>();
-	if (Error::IsIssued()) return Value::nil();
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	if (n > pValueTypedOwner->GetSize()) {
-		Error::Issue(ErrorType::RangeError, "range over");
-		return Value::nil();
-	}
-	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(pValueTypedOwner.release(), n));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return VType_Iterator::Method_Combination(*this, processor, argument, valueTypedOwner);
 }
 
 // List#Contains(value)
@@ -883,24 +848,9 @@ Gurax_ImplementMethod(List, Permutation)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<ValueTypedOwner> pValueTypedOwner(valueThis.GetValueTypedOwner().Reference());
-	// Arguments
-	ArgPicker args(argument);
-	bool validFlag_n = false;
-	size_t n = (validFlag_n = args.IsValid())? args.PickNumberPos<size_t>() : 0;
-	if (Error::IsIssued()) return Value::nil();
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	if (n > pValueTypedOwner->GetSize()) {
-		Error::Issue(ErrorType::RangeError, "range over");
-		return Value::nil();
-	}
-	RefPtr<Iterator> pIterator;
-	if (validFlag_n && n < pValueTypedOwner->GetSize()) {
-		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(pValueTypedOwner.release(), n));
-	} else {
-		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(pValueTypedOwner.release()));
-	}
-	return ReturnIterator(processor, argument, pIterator.release());
+	return VType_Iterator::Method_Permutation(*this, processor, argument, valueTypedOwner);
 }
 
 // List#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}

@@ -17,6 +17,13 @@ public:
 	virtual bool IsListOrIterator() const override { return true; }
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+public:
+	static Value* Method_ArgMax(Argument& argument, Iterator& iteratorThis);
+	static Value* Method_ArgMin(Argument& argument, Iterator& iteratorThis);
+	static Value* Method_Combination(const Function& function, Processor& processor,
+									 Argument& argument, const ValueTypedOwner& valueTypedOwner);
+	static Value* Method_Permutation(const Function& function, Processor& processor,
+									 Argument& argument, const ValueTypedOwner& valueTypedOwner);
 };
 
 extern VType_Iterator VTYPE_Iterator;
