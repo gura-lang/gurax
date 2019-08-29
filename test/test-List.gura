@@ -103,13 +103,6 @@ TestCase('List#Clear()') {
 	Tester(`tbl.Clear())
 }
 
-TestCase('List#Combination()') {
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(3):list)
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(4):list)
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(5):list)
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(6):list)
-}
-
 TestCase('List#Erase()') {
 	tbl = [0..20]
 	Tester(`tbl)
@@ -146,13 +139,6 @@ TestCase('List#IsEmpty()') {
 	Tester(`[1, 2, 3].IsEmpty())
 }
 
-TestCase('List#Permutation()') {
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation():list)
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(5):list)
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(3):list)
-	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(6):list)
-}
-
 TestCase('List#Put()') {
 }
 
@@ -184,6 +170,13 @@ TestCase('List#ArgMin()') {
 }
 
 TestCase('List#Before()') {
+}
+
+TestCase('List#Combination()') {
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(3):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(4):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(5):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Combination(6):list)
 }
 
 TestCase('List#Contains()') {
@@ -419,6 +412,13 @@ TestCase('List#Or()') {
 }
 
 TestCase('List#Pack()') {
+}
+
+TestCase('List#Permutation()') {
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation():list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(5):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(3):list)
+	TesterPerm(`['A', 'B', 'C', 'D', 'E'].Permutation(6):list)
 }
 
 TestCase('List#PingPong()') {
