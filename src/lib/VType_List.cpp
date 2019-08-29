@@ -323,15 +323,11 @@ Gurax_DeclareMethod(List, And)
 
 Gurax_ImplementMethod(List, And)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->And();
 }
 
 // List#ArgMax():[last_index,indices]
@@ -803,15 +799,11 @@ Gurax_DeclareMethod(List, Or)
 
 Gurax_ImplementMethod(List, Or)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->Or();
 }
 
 // List#Pack(format:String)

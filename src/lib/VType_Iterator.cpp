@@ -21,9 +21,9 @@ Gurax_ImplementMethod(Iterator, IsFinite)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	const Iterator& iterator = valueThis.GetIterator();
-	return new Value_Bool(!iterator.IsInfinite());
+	return new Value_Bool(!iteratorThis.IsInfinite());
 }
 
 // Iterator#IsInfinite()
@@ -39,9 +39,9 @@ Gurax_ImplementMethod(Iterator, IsInfinite)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	const Iterator& iterator = valueThis.GetIterator();
-	return new Value_Bool(iterator.IsInfinite());
+	return new Value_Bool(iteratorThis.IsInfinite());
 }
 
 // Iterator#NextValue()
@@ -54,9 +54,9 @@ Gurax_ImplementMethod(Iterator, NextValue)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	Iterator& iterator = valueThis.GetIterator();
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-	RefPtr<Value> pValue(iterator.NextValue());
+	RefPtr<Value> pValue(iteratorThis.NextValue());
 	return pValue? pValue.release() : Value::nil();
 }
 
@@ -117,15 +117,11 @@ Gurax_DeclareMethod(Iterator, And)
 
 Gurax_ImplementMethod(Iterator, And)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.And();
 }
 
 // Iterator#ArgMax():[last_index,indices]
@@ -674,15 +670,11 @@ Gurax_DeclareMethod(Iterator, Or)
 
 Gurax_ImplementMethod(Iterator, Or)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.Or();
 }
 
 // Iterator#Pack(format:String)

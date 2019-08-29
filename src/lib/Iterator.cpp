@@ -8,6 +8,24 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Iterator
 //------------------------------------------------------------------------------
+Value* Iterator::And()
+{
+	RefPtr<Value> pValueElem(NextValue());
+	if (!pValueElem) return Value::nil();
+	for (;;) {
+		if (!pValueElem->GetBool()) return pValueElem.release();
+		RefPtr<Value> pValueNext(NextValue());
+		if (!pValueNext) break;
+		pValueElem.reset(pValueNext.release());
+	}
+	return pValueElem.release();
+}
+
+bool Iterator::Contains(const Value& value)
+{
+	return false;
+}
+
 Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags)
 {
 	RefPtr<Value> pValueRtn(Value::nil());
@@ -83,6 +101,49 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	}
 	if (Error::IsIssued()) return Value::nil();
 	return pValueRtn.release();
+}
+
+String Iterator::Join(const char* sep)
+{
+	return "";
+}
+
+Value* Iterator::Mean()
+{
+	return Value::nil();
+}
+
+Value* Iterator::Or()
+{
+	RefPtr<Value> pValueElem(NextValue());
+	if (!pValueElem) return Value::nil();
+	for (;;) {
+		if (pValueElem->GetBool()) return pValueElem.release();
+		RefPtr<Value> pValueNext(NextValue());
+		if (!pValueNext) break;
+		pValueElem.reset(pValueNext.release());
+	}
+	return pValueElem.release();
+}
+
+Value* Iterator::Prod()
+{
+	return Value::nil();
+}
+
+Value* Iterator::Std()
+{
+	return Value::nil();
+}
+
+Value* Iterator::Sum()
+{
+	return Value::nil();
+}
+
+Value* Iterator::Var()
+{
+	return Value::nil();
 }
 
 bool Iterator::MustBeFinite() const

@@ -62,7 +62,17 @@ public:
 	bool IsLessThan(const Iterator& iterator) const { return this < &iterator; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 public:
+	Value* And();
+	bool Contains(const Value& value);
 	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);
+	String Join(const char* sep);
+	Value* Mean();
+	Value* Or();
+	Value* Prod();
+	Value* Std();
+	Value* Sum();
+	Value* Var();
+public:
 	Value* NextValue() {
 		_idxCur = _idxNext++;
 		return _pValuePeeked? _pValuePeeked.release() : DoNextValue();

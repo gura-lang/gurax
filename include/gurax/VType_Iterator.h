@@ -20,10 +20,12 @@ public:
 public:
 	static Value* Method_ArgMax(Argument& argument, Iterator& iteratorThis);
 	static Value* Method_ArgMin(Argument& argument, Iterator& iteratorThis);
-	static Value* Method_Combination(const Function& function, Processor& processor,
-									 Argument& argument, const ValueTypedOwner& valueTypedOwner);
-	static Value* Method_Permutation(const Function& function, Processor& processor,
-									 Argument& argument, const ValueTypedOwner& valueTypedOwner);
+	static Value* Method_Combination(
+		const Function& function, Processor& processor,
+		Argument& argument, const ValueTypedOwner& valueTypedOwner);
+	static Value* Method_Permutation(
+		const Function& function, Processor& processor,
+		Argument& argument, const ValueTypedOwner& valueTypedOwner);
 };
 
 extern VType_Iterator VTYPE_Iterator;
