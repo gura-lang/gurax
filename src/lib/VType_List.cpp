@@ -416,15 +416,14 @@ Gurax_DeclareMethod(List, Contains)
 
 Gurax_ImplementMethod(List, Contains)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Arguments
 	ArgPicker args(argument);
+	const Value& value = args.PickValue();
 	// Function body
-#endif
-	return Value::nil();
+	return new Value_Bool(pIteratorThis->Contains(value));
 }
 
 // List#Count(criteria?)
@@ -635,15 +634,15 @@ Gurax_DeclareMethod(List, Join)
 
 Gurax_ImplementMethod(List, Join)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
+	// Function body
 	// Arguments
 	ArgPicker args(argument);
+	const char* sep = args.IsValid()? args.PickString() : "";
 	// Function body
-#endif
-	return Value::nil();
+	return new Value_String(pIteratorThis->Join(sep));
 }
 
 // List#Joinb()
@@ -655,14 +654,11 @@ Gurax_DeclareMethod(List, Joinb)
 
 Gurax_ImplementMethod(List, Joinb)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
+
 	return Value::nil();
 }
 
@@ -714,15 +710,11 @@ Gurax_DeclareMethod(List, Mean)
 
 Gurax_ImplementMethod(List, Mean)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->Mean();
 }
 
 // List#Min()
@@ -943,15 +935,11 @@ Gurax_DeclareMethod(List, Prod)
 
 Gurax_ImplementMethod(List, Prod)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->Sum();
 }
 
 // List#Rank(directive?):[stable] {block?}
@@ -1054,14 +1042,11 @@ Gurax_DeclareMethod(List, RoundOff)
 
 Gurax_ImplementMethod(List, RoundOff)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
+
 	return Value::nil();
 }
 
@@ -1185,15 +1170,11 @@ Gurax_DeclareMethod(List, Std)
 
 Gurax_ImplementMethod(List, Std)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->Std();
 }
 
 // List#Sum()
@@ -1205,15 +1186,11 @@ Gurax_DeclareMethod(List, Sum)
 
 Gurax_ImplementMethod(List, Sum)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->Sum();
 }
 
 // List#Tail(n:number):map {block?}
@@ -1270,15 +1247,11 @@ Gurax_DeclareMethod(List, Var)
 
 Gurax_ImplementMethod(List, Var)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return pIteratorThis->Var();
 }
 
 // List#While(criteria) {block?}

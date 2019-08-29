@@ -266,15 +266,14 @@ Gurax_DeclareMethod(Iterator, Contains)
 
 Gurax_ImplementMethod(Iterator, Contains)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
+	const Value& value = args.PickValue();
 	// Function body
-#endif
-	return Value::nil();
+	return new Value_Bool(iteratorThis.Contains(value));
 }
 
 // Iterator#Count(criteria?)
@@ -495,15 +494,14 @@ Gurax_DeclareMethod(Iterator, Join)
 
 Gurax_ImplementMethod(Iterator, Join)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
+	const char* sep = args.IsValid()? args.PickString() : "";
 	// Function body
-#endif
-	return Value::nil();
+	return new Value_String(iteratorThis.Join(sep));
 }
 
 // Iterator#Joinb()
@@ -574,15 +572,11 @@ Gurax_DeclareMethod(Iterator, Mean)
 
 Gurax_ImplementMethod(Iterator, Mean)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.Mean();
 }
 
 // Iterator#Min()
@@ -840,15 +834,11 @@ Gurax_DeclareMethod(Iterator, Prod)
 
 Gurax_ImplementMethod(Iterator, Prod)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.Prod();
 }
 
 // Iterator#Rank(directive?):[stable] {block?}
@@ -1082,15 +1072,11 @@ Gurax_DeclareMethod(Iterator, Std)
 
 Gurax_ImplementMethod(Iterator, Std)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.Std();
 }
 
 // Iterator#Sum()
@@ -1102,15 +1088,11 @@ Gurax_DeclareMethod(Iterator, Sum)
 
 Gurax_ImplementMethod(Iterator, Sum)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.Sum();
 }
 
 // Iterator#Tail(n:number):map {block?}
@@ -1167,15 +1149,11 @@ Gurax_DeclareMethod(Iterator, Var)
 
 Gurax_ImplementMethod(Iterator, Var)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return iteratorThis.Var();
 }
 
 // Iterator#While(criteria) {block?}
