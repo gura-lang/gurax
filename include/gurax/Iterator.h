@@ -71,6 +71,7 @@ public:
 	Value* Prod(Processor& processor);
 	Value* Std(Processor& processor);
 	Value* Sum(Processor& processor);
+	Value* Sum(Processor& processor, size_t* pCnt);
 	Value* Var(Processor& processor);
 public:
 	Value* NextValue() {

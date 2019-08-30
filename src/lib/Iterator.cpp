@@ -125,10 +125,11 @@ String Iterator::Join(const char* sep)
 
 Value* Iterator::Mean(Processor& processor)
 {
-	//RefPtr<Value> pValueSum(Sum(processor));
-	//if (pValueSum->IsInvalid()) return Value::nil();
-	//return pValueSum.release();
-	return Value::nil();
+	size_t cnt = 0;
+	RefPtr<Value> pValueSum(Sum(processor, &cnt));
+	if (!pValueSum->IsValid()) return Value::nil();
+	RefPtr<Value> pValueNum(new Value_Number(cnt));
+	return Operator::Div->EvalBinary(processor, *pValueSum, *pValueNum);
 }
 
 Value* Iterator::Or()
@@ -172,6 +173,24 @@ Value* Iterator::Sum(Processor& processor)
 		pValueAccum.reset(Operator::Add->EvalBinary(processor, *pValueAccum, *pValueElem));
 		if (Error::IsIssued()) return Value::nil();
 	}
+	return pValueAccum.release();
+}
+
+Value* Iterator::Sum(Processor& processor, size_t* pCnt)
+{
+	size_t cnt = 0;
+	*pCnt = 0;
+	RefPtr<Value> pValueAccum(NextValue());
+	if (!pValueAccum) return Value::nil();
+	cnt++;
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		cnt++;
+		pValueAccum.reset(Operator::Add->EvalBinary(processor, *pValueAccum, *pValueElem));
+		if (Error::IsIssued()) return Value::nil();
+	}
+	*pCnt = cnt;
 	return pValueAccum.release();
 }
 
