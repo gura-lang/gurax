@@ -69,7 +69,9 @@ Gurax_DeclareMethod(Iterator, After)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, After)
@@ -92,7 +94,9 @@ Gurax_DeclareMethod(Iterator, Align)
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Align)
@@ -112,7 +116,9 @@ Gurax_ImplementMethod(Iterator, Align)
 Gurax_DeclareMethod(Iterator, And)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, And)
@@ -130,7 +136,9 @@ Gurax_DeclareMethod(Iterator, ArgMax)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(last_index));
 	DeclareAttrOpt(Gurax_Symbol(indices));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, ArgMax)
@@ -166,7 +174,9 @@ Gurax_DeclareMethod(Iterator, ArgMin)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(last_index));
 	DeclareAttrOpt(Gurax_Symbol(indices));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, ArgMin)
@@ -202,7 +212,9 @@ Gurax_DeclareMethod(Iterator, Before)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Before)
@@ -261,7 +273,9 @@ Gurax_DeclareMethod(Iterator, Contains)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Contains)
@@ -281,7 +295,9 @@ Gurax_DeclareMethod(Iterator, Count)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Count)
@@ -303,7 +319,9 @@ Gurax_DeclareMethod(Iterator, Cycle)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Cycle)
@@ -353,7 +371,9 @@ Gurax_DeclareMethod(Iterator, Filter)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Filter)
@@ -375,7 +395,9 @@ Gurax_DeclareMethod(Iterator, Find)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Find)
@@ -398,7 +420,9 @@ Gurax_DeclareMethod(Iterator, Flatten)
 	DeclareAttrOpt(Gurax_Symbol(dfs));
 	DeclareAttrOpt(Gurax_Symbol(bfs));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Flatten)
@@ -423,7 +447,9 @@ Gurax_DeclareMethod(Iterator, Fold)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(iteritem));
 	DeclareAttrOpt(Gurax_Symbol(neat));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 
 }
 
@@ -446,7 +472,9 @@ Gurax_DeclareMethod(Iterator, Format)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Format)
@@ -468,7 +496,9 @@ Gurax_DeclareMethod(Iterator, Head)
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Head)
@@ -489,7 +519,9 @@ Gurax_DeclareMethod(Iterator, Join)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Join)
@@ -508,7 +540,9 @@ Gurax_ImplementMethod(Iterator, Join)
 Gurax_DeclareMethod(Iterator, Joinb)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Joinb)
@@ -530,7 +564,9 @@ Gurax_DeclareMethod(Iterator, Map)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Map)
@@ -550,7 +586,9 @@ Gurax_ImplementMethod(Iterator, Map)
 Gurax_DeclareMethod(Iterator, Max)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Max)
@@ -567,7 +605,9 @@ Gurax_ImplementMethod(Iterator, Max)
 Gurax_DeclareMethod(Iterator, Mean)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Mean)
@@ -583,7 +623,9 @@ Gurax_ImplementMethod(Iterator, Mean)
 Gurax_DeclareMethod(Iterator, Min)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Min)
@@ -602,7 +644,9 @@ Gurax_DeclareMethod(Iterator, NilTo)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, NilTo)
@@ -626,7 +670,9 @@ Gurax_DeclareMethod(Iterator, Offset)
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Offset)
@@ -659,7 +705,9 @@ Gurax_ImplementMethod(Iterator, Offset)
 Gurax_DeclareMethod(Iterator, Or)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Or)
@@ -676,7 +724,9 @@ Gurax_DeclareMethod(Iterator, Pack)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Pack)
@@ -745,7 +795,9 @@ Gurax_DeclareMethod(Iterator, PingPong)
 	DeclareAttrOpt(Gurax_Symbol(sticky));
 	DeclareAttrOpt(Gurax_Symbol(sticky_at_top));
 	DeclareAttrOpt(Gurax_Symbol(sticky_at_btm));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, PingPong)
@@ -766,7 +818,9 @@ Gurax_DeclareMethod(Iterator, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Print)
@@ -788,7 +842,9 @@ Gurax_DeclareMethod(Iterator, Printf)
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Printf)
@@ -809,7 +865,9 @@ Gurax_DeclareMethod(Iterator, Println)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Println)
@@ -829,7 +887,9 @@ Gurax_ImplementMethod(Iterator, Println)
 Gurax_DeclareMethod(Iterator, Prod)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Prod)
@@ -848,7 +908,9 @@ Gurax_DeclareMethod(Iterator, Rank)
 	DeclareArg("directive", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(stable));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Rank)
@@ -870,7 +932,9 @@ Gurax_DeclareMethod(Iterator, Reduce)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("accum", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::Once);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Reduce)
@@ -893,7 +957,9 @@ Gurax_DeclareMethod(Iterator, Replace)
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Replace)
@@ -914,7 +980,9 @@ Gurax_DeclareMethod(Iterator, Reverse)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Reverse)
@@ -936,7 +1004,9 @@ Gurax_DeclareMethod(Iterator, RoundOff)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, RoundOff)
@@ -957,7 +1027,9 @@ Gurax_DeclareMethod(Iterator, RunLength)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, RunLength)
@@ -979,7 +1051,9 @@ Gurax_DeclareMethod(Iterator, Since)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Since)
@@ -1001,7 +1075,9 @@ Gurax_DeclareMethod(Iterator, Skip)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Skip)
@@ -1022,7 +1098,9 @@ Gurax_DeclareMethod(Iterator, SkipNil)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, SkipNil)
@@ -1046,7 +1124,9 @@ Gurax_DeclareMethod(Iterator, Sort)
 	DeclareArg("keys", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
 	DeclareAttrOpt(Gurax_Symbol(stable));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Sort)
@@ -1067,7 +1147,9 @@ Gurax_DeclareMethod(Iterator, Std)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(p));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Std)
@@ -1083,7 +1165,9 @@ Gurax_ImplementMethod(Iterator, Std)
 Gurax_DeclareMethod(Iterator, Sum)
 {
 	Declare(VTYPE_Any, Flag::None);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Sum)
@@ -1101,7 +1185,9 @@ Gurax_DeclareMethod(Iterator, Tail)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Tail)
@@ -1123,7 +1209,9 @@ Gurax_DeclareMethod(Iterator, Until)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Until)
@@ -1144,7 +1232,9 @@ Gurax_DeclareMethod(Iterator, Var)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(p));
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, Var)
@@ -1162,7 +1252,9 @@ Gurax_DeclareMethod(Iterator, While)
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementMethod(Iterator, While)
