@@ -155,6 +155,23 @@ TestCase('List#Align()') {
 }
 
 TestCase('List#And()') {
+	Tester(`[].And())
+	Tester(`[false].And())
+	Tester(`[nil].And())
+	Tester(`[true].And())
+	Tester(`[false, false].And())
+	Tester(`[false, true].And())
+	Tester(`[true, false].And())
+	Tester(`[true, true].And())
+	Tester(`[true, true, true, true, true, true, true, true].And())
+	Tester(`[true, true, true, true, true, true, false, true].And())
+	Tester(`[0].And())
+	Tester(`[0, 1, 2, 3].And())
+	Tester(`[5].And())
+	Tester(`[5, true].And())
+	Tester(`[true, 5].And())
+	Tester(`[true, true, true, 5].And())
+	Tester(`[true, true, true, 5, false].And())
 }
 
 TestCase('List#ArgMax()') {
@@ -372,6 +389,14 @@ TestCase('List#Head()') {
 }
 
 TestCase('List#Join()') {
+	Tester(`[].Join(), true)
+	Tester(`[].Join(','), true)
+	Tester(`['abc'].Join(), true)
+	Tester(`['abc'].Join(','), true)
+	Tester(`['abc', 'def'].Join(), true)
+	Tester(`['abc', 'def'].Join(','), true)
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join(), true)
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join(','), true)
 }
 
 TestCase('List#Joinb()') {
@@ -409,6 +434,23 @@ TestCase('List#Offset()') {
 }
 
 TestCase('List#Or()') {
+	Tester(`[].Or())
+	Tester(`[false].Or())
+	Tester(`[nil].Or())
+	Tester(`[true].Or())
+	Tester(`[false, false].Or())
+	Tester(`[false, true].Or())
+	Tester(`[true, false].Or())
+	Tester(`[true, true].Or())
+	Tester(`[true, true, true, true, true, true, true, true].Or())
+	Tester(`[true, true, true, true, true, true, false, true].Or())
+	Tester(`[0].Or())
+	Tester(`[0, 1, 2, 3].Or())
+	Tester(`[5].Or())
+	Tester(`[5, true].Or())
+	Tester(`[true, 5].Or())
+	Tester(`[true, true, true, 5].Or())
+	Tester(`[true, true, true, 5, false].Or())
 }
 
 TestCase('List#Pack()') {

@@ -144,6 +144,23 @@ tbl.Insert(-20, 3) .. specified position -20 exceeds the list's size of 6
 ======== List#After() ========
 ======== List#Align() ========
 ======== List#And() ========
+[].And() .. <Nil>
+[false].And() .. false
+[nil].And() .. <Nil>
+[true].And() .. true
+[false, false].And() .. false
+[false, true].And() .. false
+[true, false].And() .. false
+[true, true].And() .. true
+[true, true, true, true, true, true, true, true].And() .. true
+[true, true, true, true, true, true, false, true].And() .. false
+[0].And() .. 0
+[0, 1, 2, 3].And() .. 3
+[5].And() .. 5
+[5, true].And() .. true
+[true, 5].And() .. 5
+[true, true, true, 5].And() .. 5
+[true, true, true, 5, false].And() .. false
 ======== List#ArgMax() ========
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMax() .. 6
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMax():last_index .. 26
@@ -313,6 +330,14 @@ tbl.Each():xlist {continue(nil)} .. []
 ======== List#Format() ========
 ======== List#Head() ========
 ======== List#Join() ========
+[].Join() .. ''
+[].Join(',') .. ''
+['abc'].Join() .. 'abc'
+['abc'].Join(',') .. 'abc'
+['abc', 'def'].Join() .. 'abcdef'
+['abc', 'def'].Join(',') .. 'abc,def'
+['abc', 'def', 'ghi', 'jkl', 'mno'].Join() .. 'abcdefghijklmno'
+['abc', 'def', 'ghi', 'jkl', 'mno'].Join(',') .. 'abc,def,ghi,jkl,mno'
 ======== List#Joinb() ========
 ======== List#Map() ========
 ======== List#Max() ========
@@ -333,6 +358,23 @@ tbl.Each():xlist {continue(nil)} .. []
 [tbl.Offset(11):raise] .. specified position 11 exceeds the list's size of 11
 [tbl.Offset(-1)] .. negative value is not acceptable
 ======== List#Or() ========
+[].Or() .. <Nil>
+[false].Or() .. false
+[nil].Or() .. <Nil>
+[true].Or() .. true
+[false, false].Or() .. false
+[false, true].Or() .. true
+[true, false].Or() .. true
+[true, true].Or() .. true
+[true, true, true, true, true, true, true, true].Or() .. true
+[true, true, true, true, true, true, false, true].Or() .. true
+[0].Or() .. 0
+[0, 1, 2, 3].Or() .. 0
+[5].Or() .. 5
+[5, true].Or() .. 5
+[true, 5].Or() .. true
+[true, true, true, 5].Or() .. true
+[true, true, true, 5, false].Or() .. true
 ======== List#Pack() ========
 ======== List#Permutation() ========
 ----

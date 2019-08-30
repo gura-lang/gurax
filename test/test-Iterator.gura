@@ -41,6 +41,23 @@ TestCase('Iterator#Align()') {
 }
 
 TestCase('Iterator#And()') {
+	Tester(`[].Each().And())
+	Tester(`[false].Each().And())
+	Tester(`[nil].Each().And())
+	Tester(`[true].Each().And())
+	Tester(`[false, false].Each().And())
+	Tester(`[false, true].Each().And())
+	Tester(`[true, false].Each().And())
+	Tester(`[true, true].Each().And())
+	Tester(`[true, true, true, true, true, true, true, true].Each().And())
+	Tester(`[true, true, true, true, true, true, false, true].Each().And())
+	Tester(`[0].Each().And())
+	Tester(`[0, 1, 2, 3].Each().And())
+	Tester(`[5].Each().And())
+	Tester(`[5, true].Each().And())
+	Tester(`[true, 5].Each().And())
+	Tester(`[true, true, true, 5].Each().And())
+	Tester(`[true, true, true, 5, false].Each().And())
 }
 
 TestCase('Iterator#ArgMax()') {
@@ -258,6 +275,14 @@ TestCase('Iterator#Head()') {
 }
 
 TestCase('Iterator#Join()') {
+	Tester(`[].Each().Join(), true)
+	Tester(`[].Each().Join(','), true)
+	Tester(`['abc'].Each().Join(), true)
+	Tester(`['abc'].Each().Join(','), true)
+	Tester(`['abc', 'def'].Each().Join(), true)
+	Tester(`['abc', 'def'].Each().Join(','), true)
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(), true)
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(','), true)
 }
 
 TestCase('Iterator#Joinb()') {
@@ -267,16 +292,16 @@ TestCase('Iterator#Map()') {
 }
 
 TestCase('Iterator#Max()') {
-	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Max())
-	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Max())
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Each().Max())
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Max())
 }
 
 TestCase('Iterator#Mean()') {
 }
 
 TestCase('Iterator#Min()') {
-	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Min())
-	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Min())
+	Tester(`[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Each().Min())
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Min())
 }
 
 TestCase('Iterator#NilTo()') {
@@ -297,6 +322,23 @@ TestCase('Iterator#Offset()') {
 }
 
 TestCase('Iterator#Or()') {
+	Tester(`[].Each().Or())
+	Tester(`[false].Each().Or())
+	Tester(`[nil].Each().Or())
+	Tester(`[true].Each().Or())
+	Tester(`[false, false].Each().Or())
+	Tester(`[false, true].Each().Or())
+	Tester(`[true, false].Each().Or())
+	Tester(`[true, true].Each().Or())
+	Tester(`[true, true, true, true, true, true, true, true].Each().Or())
+	Tester(`[true, true, true, true, true, true, false, true].Each().Or())
+	Tester(`[0].Each().Or())
+	Tester(`[0, 1, 2, 3].Each().Or())
+	Tester(`[5].Each().Or())
+	Tester(`[5, true].Each().Or())
+	Tester(`[true, 5].Each().Or())
+	Tester(`[true, true, true, 5].Each().Or())
+	Tester(`[true, true, true, 5, false].Each().Or())
 }
 
 TestCase('Iterator#Pack()') {

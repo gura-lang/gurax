@@ -35,6 +35,23 @@
 ======== Iterator#After() ========
 ======== Iterator#Align() ========
 ======== Iterator#And() ========
+[].Each().And() .. <Nil>
+[false].Each().And() .. false
+[nil].Each().And() .. <Nil>
+[true].Each().And() .. true
+[false, false].Each().And() .. false
+[false, true].Each().And() .. false
+[true, false].Each().And() .. false
+[true, true].Each().And() .. true
+[true, true, true, true, true, true, true, true].Each().And() .. true
+[true, true, true, true, true, true, false, true].Each().And() .. false
+[0].Each().And() .. 0
+[0, 1, 2, 3].Each().And() .. 3
+[5].Each().And() .. 5
+[5, true].Each().And() .. true
+[true, 5].Each().And() .. 5
+[true, true, true, 5].Each().And() .. 5
+[true, true, true, 5, false].Each().And() .. false
 ======== Iterator#ArgMax() ========
 (1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMax() .. 6
 (1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMax():last_index .. 26
@@ -204,18 +221,43 @@ tbl.Each().Each():xlist {continue(nil)} .. []
 ======== Iterator#Format() ========
 ======== Iterator#Head() ========
 ======== Iterator#Join() ========
+[].Each().Join() .. ''
+[].Each().Join(',') .. ''
+['abc'].Each().Join() .. 'abc'
+['abc'].Each().Join(',') .. 'abc'
+['abc', 'def'].Each().Join() .. 'abcdef'
+['abc', 'def'].Each().Join(',') .. 'abc,def'
+['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join() .. 'abcdefghijklmno'
+['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(',') .. 'abc,def,ghi,jkl,mno'
 ======== Iterator#Joinb() ========
 ======== Iterator#Map() ========
 ======== Iterator#Max() ========
-[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Max() .. 9
-['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Max() .. zero
+[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Each().Max() .. 9
+['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Max() .. zero
 ======== Iterator#Mean() ========
 ======== Iterator#Min() ========
-[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Min() .. 0
-['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Min() .. eight
+[1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Each().Min() .. 0
+['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Min() .. eight
 ======== Iterator#NilTo() ========
 ======== Iterator#Offset() ========
 ======== Iterator#Or() ========
+[].Each().Or() .. <Nil>
+[false].Each().Or() .. false
+[nil].Each().Or() .. <Nil>
+[true].Each().Or() .. true
+[false, false].Each().Or() .. false
+[false, true].Each().Or() .. true
+[true, false].Each().Or() .. true
+[true, true].Each().Or() .. true
+[true, true, true, true, true, true, true, true].Each().Or() .. true
+[true, true, true, true, true, true, false, true].Each().Or() .. true
+[0].Each().Or() .. 0
+[0, 1, 2, 3].Each().Or() .. 0
+[5].Each().Or() .. 5
+[5, true].Each().Or() .. 5
+[true, 5].Each().Or() .. true
+[true, true, true, 5].Each().Or() .. true
+[true, true, true, 5, false].Each().Or() .. true
 ======== Iterator#Pack() ========
 ======== Iterator#Permutation() ========
 ----

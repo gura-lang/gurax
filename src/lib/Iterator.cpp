@@ -116,8 +116,8 @@ String Iterator::Join(const char* sep)
 	if (!pValueElem) return str;
 	str += pValueElem->ToString(ss);
 	for (;;) {
-		RefPtr<Value> pValueNext(NextValue());
-		if (!pValueNext) break;
+		pValueElem.reset(NextValue());
+		if (!pValueElem) break;
 		str += sep;
 		str += pValueElem->ToString(ss);
 	}
