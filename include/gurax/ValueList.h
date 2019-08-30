@@ -14,6 +14,8 @@ class GURAX_DLLDECLARE ValueList : public std::vector<Value*> {
 public:
 	using std::vector<Value*>::vector;
 public:
+	static const ValueList Empty;
+public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
 	VType& GetVTypeOfElems() const;
 	void IncCntRefOfEach() const;

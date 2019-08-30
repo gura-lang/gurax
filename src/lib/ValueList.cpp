@@ -8,6 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ValueList
 //------------------------------------------------------------------------------
+const ValueList ValueList::Empty;
+
 ValueList& ValueList::Sort(SortOrder sortOrder)
 {
 	SortListByOrder<ValueList, Value::LessThan, Value::GreaterThan>(*this, sortOrder);

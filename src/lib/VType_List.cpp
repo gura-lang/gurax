@@ -1149,15 +1149,11 @@ Gurax_DeclareMethod(List, Sort)
 
 Gurax_ImplementMethod(List, Sort)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Sort(*this, processor, argument, valueTypedOwner);
 }
 
 // List#Std():[p]

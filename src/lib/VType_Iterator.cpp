@@ -1131,14 +1131,29 @@ Gurax_DeclareMethod(Iterator, Sort)
 
 Gurax_ImplementMethod(Iterator, Sort)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	return VType_Iterator::Method_Sort(*this, processor, argument, *pValueTypedOwner);
+}
+
+Value* VType_Iterator::Method_Sort(
+	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+{
 	// Arguments
 	ArgPicker args(argument);
+	bool validFlag_directive = false;
+	bool validFlag_keys = false;
+	const Value& directive = (validFlag_directive = args.IsValid())? args.PickValue() : Value::C_nil();
+	const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
 	// Function body
-#endif
+	if (validFlag_directive) {
+
+	} else {
+		
+	}
 	return Value::nil();
 }
 
