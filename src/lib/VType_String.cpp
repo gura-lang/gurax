@@ -1378,7 +1378,9 @@ String Value_String::ToStringDigest(const StringStyle& ss) const
 
 String Value_String::ToStringDetail(const StringStyle& ss) const
 {
-	return GetStringSTL().MakeQuoted(true);
+	String str = GetStringSTL();
+	if (!ss.IsAsValue()) str = str.MakeQuoted(true);
+	return str;
 }
 
 bool Value_String::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const

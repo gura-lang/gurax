@@ -358,12 +358,13 @@ public:
 	struct Flag {
 		static const Flags None			= 0;
 		static const Flags AsSource		= (1 << 0);
-		static const Flags Cram			= (1 << 1);
-		static const Flags MultiLine	= (1 << 2);
-		static const Flags UpperCase	= (1 << 3);
-		static const Flags Verbose		= (1 << 4);
-		static const Flags Digest		= (1 << 5);
-		static const Flags AddressInfo	= (1 << 6);
+		static const Flags AsValue		= (1 << 1);
+		static const Flags Cram			= (1 << 2);
+		static const Flags MultiLine	= (1 << 3);
+		static const Flags UpperCase	= (1 << 4);
+		static const Flags Verbose		= (1 << 5);
+		static const Flags Digest		= (1 << 6);
+		static const Flags AddressInfo	= (1 << 7);
 	};
 private:
 	Flags _flags;
@@ -392,6 +393,8 @@ public:
 	StringStyle& SetIndentUnit(const char* indentUnit) { _indentUnit = indentUnit; return *this; }
 	StringStyle& AsSource()				{ _flags |= Flag::AsSource; return *this; }
 	StringStyle& NoAsSource()			{ _flags &= ~Flag::AsSource; return *this; }
+	StringStyle& AsValue()				{ _flags |= Flag::AsValue; return *this; }
+	StringStyle& NoAsValue()			{ _flags &= ~Flag::AsValue; return *this; }
 	StringStyle& Cram()					{ _flags |= Flag::Cram; return *this; }
 	StringStyle& NoCram()				{ _flags &= ~Flag::Cram; return *this; }
 	StringStyle& MultiLine()			{ _flags |= Flag::MultiLine; return *this; }
@@ -405,6 +408,7 @@ public:
 	StringStyle& AddressInfo()			{ _flags |= Flag::AddressInfo; return *this; }
 	StringStyle& NoAddressInfo()		{ _flags &= ~Flag::AddressInfo; return *this; }
 	bool IsAsSource() const				{ return (_flags & Flag::AsSource) != 0; }
+	bool IsAsValue() const				{ return (_flags & Flag::AsValue) != 0; }
 	bool IsCram() const					{ return (_flags & Flag::Cram) != 0; }
 	bool IsMultiLine() const			{ return (_flags & Flag::MultiLine) != 0; }
 	bool IsUpperCase() const			{ return (_flags & Flag::UpperCase) != 0; }

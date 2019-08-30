@@ -110,15 +110,16 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 
 String Iterator::Join(const char* sep)
 {
+	StringStyle ss = StringStyle().AsValue();
 	String str;
 	RefPtr<Value> pValueElem(NextValue());
 	if (!pValueElem) return str;
-	str += pValueElem->ToString();
+	str += pValueElem->ToString(ss);
 	for (;;) {
 		RefPtr<Value> pValueNext(NextValue());
 		if (!pValueNext) break;
 		str += sep;
-		str += pValueElem->ToString();
+		str += pValueElem->ToString(ss);
 	}
 	return str;
 }
