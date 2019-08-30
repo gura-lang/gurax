@@ -411,6 +411,11 @@ TestCase('List#Max()') {
 }
 
 TestCase('List#Mean()') {
+	Tester(`[].Mean())
+	Tester(`[0].Mean())
+	Tester(`[0, 1].Mean())
+	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Mean())
+	Tester(`[0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Mean())
 }
 
 TestCase('List#Min()') {
@@ -512,6 +517,11 @@ TestCase('List#Std()') {
 }
 
 TestCase('List#Sum()') {
+	Tester(`[].Sum())
+	Tester(`[0].Sum())
+	Tester(`[0, 1].Sum())
+	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Sum())
+	Tester(`[0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Sum())
 }
 
 TestCase('List#Tail()') {

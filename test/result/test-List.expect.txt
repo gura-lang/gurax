@@ -344,6 +344,11 @@ tbl.Each():xlist {continue(nil)} .. []
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Max() .. 9
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Max() .. zero
 ======== List#Mean() ========
+[].Mean() .. <Nil>
+[0].Mean() .. 0
+[0, 1].Mean() .. 0.5
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Mean() .. 5
+[0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Mean() .. unsuppported binary operation: Number + Expr
 ======== List#Min() ========
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Min() .. 0
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Min() .. eight
@@ -401,6 +406,11 @@ tbl.Each():xlist {continue(nil)} .. []
 ======== List#Sort() ========
 ======== List#Std() ========
 ======== List#Sum() ========
+[].Sum() .. <Nil>
+[0].Sum() .. 0
+[0, 1].Sum() .. 1
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Sum() .. 55
+[0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Sum() .. unsuppported binary operation: Number + Expr
 ======== List#Tail() ========
 ======== List#Until() ========
 ======== List#Var() ========

@@ -297,6 +297,11 @@ TestCase('Iterator#Max()') {
 }
 
 TestCase('Iterator#Mean()') {
+	Tester(`[].Each().Mean())
+	Tester(`[0].Each().Mean())
+	Tester(`[0, 1].Each().Mean())
+	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each().Mean())
+	Tester(`[0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Each().Mean())
 }
 
 TestCase('Iterator#Min()') {
@@ -400,6 +405,11 @@ TestCase('Iterator#Std()') {
 }
 
 TestCase('Iterator#Sum()') {
+	Tester(`[].Each().Sum())
+	Tester(`[0].Each().Sum())
+	Tester(`[0, 1].Each().Sum())
+	Tester(`[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each().Sum())
+	Tester(`[0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Each().Sum())
 }
 
 TestCase('Iterator#Tail()') {
