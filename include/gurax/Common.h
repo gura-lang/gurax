@@ -130,6 +130,16 @@ void SortListByOrder(T_List& list, SortOrder sortOrder)
 	}
 }
 
+template<typename T_List, typename T_LessThan, typename T_GreaterThan>
+void StableSortListByOrder(T_List& list, SortOrder sortOrder)
+{
+	if (sortOrder == SortOrder::Ascend) {
+		std::stable_sort(list.begin(), list.end(), T_LessThan());
+	} else if (sortOrder == SortOrder::Descend) {
+		std::stable_sort(list.begin(), list.end(), T_GreaterThan());
+	}
+}
+
 //------------------------------------------------------------------------------
 // Number types
 //------------------------------------------------------------------------------

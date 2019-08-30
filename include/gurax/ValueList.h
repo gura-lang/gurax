@@ -17,6 +17,9 @@ public:
 	static const ValueList Empty;
 public:
 	ValueList& Sort(SortOrder sortOrder = SortOrder::Ascend);
+	ValueList& Sort(Processor& processor, const Function& function);
+	ValueList& StableSort(SortOrder sortOrder = SortOrder::Ascend);
+	ValueList& StableSort(Processor& processor, const Function& function);
 	VType& GetVTypeOfElems() const;
 	void IncCntRefOfEach() const;
 	bool CheckPosition(Int pos, Int posRaw) const;

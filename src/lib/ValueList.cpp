@@ -16,6 +16,24 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 	return *this;
 }
 
+ValueList& ValueList::Sort(Processor& processor, const Function& function)
+{
+	//std::sort(begin(), end(), Value::CustomCompare(processor, function));
+	return *this;
+}
+
+ValueList& ValueList::StableSort(SortOrder sortOrder)
+{
+	StableSortListByOrder<ValueList, Value::LessThan, Value::GreaterThan>(*this, sortOrder);
+	return *this;
+}
+
+ValueList& ValueList::StableSort(Processor& processor, const Function& function)
+{
+	//std::stable_sort(begin(), end(), Value::CustomCompare(processor, function));
+	return *this;
+}
+
 VType& ValueList::GetVTypeOfElems() const
 {
 	if (empty()) return VTYPE_Undefined;

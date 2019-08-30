@@ -1149,6 +1149,7 @@ Value* VType_Iterator::Method_Sort(
 	const Value& directive = (validFlag_directive = args.IsValid())? args.PickValue() : Value::C_nil();
 	const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
 	// Function body
+	RefPtr<ValueTypedOwner> pValueTypedOwner(valueTypedOwner.Clone());
 	if (validFlag_directive) {
 
 	} else {

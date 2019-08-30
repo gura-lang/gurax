@@ -27,29 +27,38 @@ public:
 public:
 	// Algorithm operators
 	struct EqualTo {
-		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue1->IsEqualTo(pValue2);
 		}
 	};
 	struct LessThan {
-		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue1->IsLessThan(pValue2);
 		}
 	};
 	struct LessThanOrEqualTo {
-		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return !pValue2->IsLessThan(pValue1);
 		}
 	};
 	struct GreaterThan {
-		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return pValue2->IsLessThan(pValue1);
 		}
 	};
 	struct GreaterThanOrEqualTo {
-		size_t operator()(const Value* pValue1, const Value* pValue2) const {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
 			return !pValue1->IsLessThan(pValue2);
 		}
+	};
+	struct CustomCompare {
+	private:
+		Processor& _processor;
+		const Function& _function;
+		RefPtr<Argument> _pArgument;
+	public:
+		CustomCompare(Processor& processor, const Function& function);
+		bool operator()(const Value* pValue1, const Value* pValue2) const;
 	};
 	struct Hash {
 		size_t operator()(const Value* pValue) const {
