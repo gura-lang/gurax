@@ -265,6 +265,18 @@ public:
 	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const { return new Iterator_Each(Reference()); }
+	void Sort(SortOrder sortOrder = SortOrder::Ascend) {
+		GetValueOwner().Sort(sortOrder);
+	}
+	void Sort(Processor& processor, const Function& function) {
+		GetValueOwner().Sort(processor, function);
+	}
+	void StableSort(SortOrder sortOrder = SortOrder::Ascend)  {
+		GetValueOwner().StableSort(sortOrder);
+	}
+	void StableSort(Processor& processor, const Function& function) {
+		GetValueOwner().StableSort(processor, function);
+	}
 private:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 };

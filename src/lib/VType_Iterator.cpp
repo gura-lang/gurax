@@ -1148,14 +1148,40 @@ Value* VType_Iterator::Method_Sort(
 	bool validFlag_keys = false;
 	const Value& directive = (validFlag_directive = args.IsValid())? args.PickValue() : Value::C_nil();
 	const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
+	bool stableFlag = argument.IsSet(Gurax_Symbol(stable));
 	// Function body
 	RefPtr<ValueTypedOwner> pValueTypedOwner(valueTypedOwner.Clone());
-	if (validFlag_directive) {
-
-	} else {
-		
+	if (!validFlag_directive) {
+		if (stableFlag) {
+			pValueTypedOwner->StableSort(SortOrder::Ascend);
+		} else {
+			pValueTypedOwner->Sort(SortOrder::Ascend);
+		}
+	} else if (directive.IsType(VTYPE_Symbol)) {
+		const Symbol* pSymbol = dynamic_cast<const Value_Symbol&>(directive).GetSymbol();
+		SortOrder sortOrder =
+			pSymbol->IsIdentical(Gurax_Symbol(ascend))? SortOrder::Ascend :
+			pSymbol->IsIdentical(Gurax_Symbol(ascend))? SortOrder::Descend :
+			SortOrder::None;
+		if (sortOrder == SortOrder::None) {
+			Error::Issue(ErrorType::ValueError, "acceptable symbol is `ascend or `descend");
+			return Value::nil();
+		}
+		if (stableFlag) {
+			pValueTypedOwner->StableSort(sortOrder);
+		} else {
+			pValueTypedOwner->Sort(sortOrder);
+		}
+	} else if (directive.IsType(VTYPE_Function)) {
+		const Function& function = dynamic_cast<const Value_Function&>(directive).GetFunction();
+		if (stableFlag) {
+			pValueTypedOwner->StableSort(processor, function);
+		} else {
+			pValueTypedOwner->Sort(processor, function);
+		}
 	}
-	return Value::nil();
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_List(pValueTypedOwner.release());
 }
 
 // Iterator#Std():[p]
