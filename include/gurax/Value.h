@@ -90,8 +90,9 @@ protected:
 	// Destructor
 	virtual ~Value() = default;
 public:
-	Value* Cast(const VType& vtype, DeclArg::Flags flags = DeclArg::Flag::None) const {
-		return vtype.Cast(*this, flags);
+	template<typename T_Value>
+	T_Value* Cast(DeclArg::Flags flags = DeclArg::Flag::None) const {
+		return dynamic_cast<T_Value*>(T_Value::vtype.Cast(*this, flags));
 	}
 	VType& GetVType() { return *_pVType; }
 	VType& GetVType() const { return *_pVType; }

@@ -1159,13 +1159,12 @@ Value* VType_Iterator::Method_Sort(
 			valueOwner.Sort(SortOrder::Ascend);
 		}
 	} else if (directive.IsType(VTYPE_Expr)) {
-#if 0
-		RefPtr<Value_Symbol>* pValueCasted(directive.Cast<Value_Symbol>());
+		RefPtr<Value_Symbol> pValueCasted(directive.Cast<Value_Symbol>());
 		if (!pValueCasted) return Value::nil();
 		const Symbol* pSymbol = dynamic_cast<const Value_Symbol&>(*pValueCasted).GetSymbol();
 		SortOrder sortOrder =
 			pSymbol->IsIdentical(Gurax_Symbol(ascend))? SortOrder::Ascend :
-			pSymbol->IsIdentical(Gurax_Symbol(ascend))? SortOrder::Descend :
+			pSymbol->IsIdentical(Gurax_Symbol(descend))? SortOrder::Descend :
 			SortOrder::None;
 		if (sortOrder == SortOrder::None) {
 			Error::Issue(ErrorType::ValueError, "acceptable symbol is `ascend or `descend");
@@ -1176,7 +1175,6 @@ Value* VType_Iterator::Method_Sort(
 		} else {
 			valueOwner.Sort(sortOrder);
 		}
-#endif
 	} else if (directive.IsType(VTYPE_Function)) {
 		const Function& function = dynamic_cast<const Value_Function&>(directive).GetFunction();
 		if (stableFlag) {
