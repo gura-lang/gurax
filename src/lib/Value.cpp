@@ -202,20 +202,15 @@ bool Value::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 //------------------------------------------------------------------------------
 // Value::CustomCompare
 //------------------------------------------------------------------------------
-Value::CustomCompare::CustomCompare(Processor& processor, const Function& function) :
-	_processor(processor), _function(function),
-	_pArgument(new Argument(_function.GetDeclCallable().Reference()))
-{
-}
-
 bool Value::CustomCompare::operator()(const Value* pValue1, const Value* pValue2) const
 {
 	if (Error::IsIssued()) return false;
-	ArgFeeder args(*_pArgument);
+	ArgFeeder args(_argument);
 	RefPtr<Frame> pFrame(_function.LockFrameOuter());
 	args.FeedValue(*pFrame, pValue1->Reference());
 	args.FeedValue(*pFrame, pValue2->Reference());
-	RefPtr<Value> pValueRtn(_function.DoEval(_processor, *_pArgument));
+	if (Error::IsIssued()) return false;
+	RefPtr<Value> pValueRtn(_function.DoEval(_processor, _argument));
 	return pValueRtn->GetBool();
 }
 

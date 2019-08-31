@@ -30,7 +30,8 @@ ValueList& ValueList::StableSort(SortOrder sortOrder)
 
 ValueList& ValueList::StableSort(Processor& processor, const Function& function)
 {
-	//std::stable_sort(begin(), end(), Value::CustomCompare(processor, function));
+	RefPtr<Argument> pArgument(new Argument(function.GetDeclCallable().Reference()));
+	std::stable_sort(begin(), end(), Value::CustomCompare(processor, function, *pArgument));
 	return *this;
 }
 

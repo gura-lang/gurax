@@ -55,9 +55,10 @@ public:
 	private:
 		Processor& _processor;
 		const Function& _function;
-		RefPtr<Argument> _pArgument;
+		Argument& _argument;
 	public:
-		CustomCompare(Processor& processor, const Function& function);
+		CustomCompare(Processor& processor, const Function& function, Argument& argument) :
+			_processor(processor), _function(function), _argument(argument) {}
 		bool operator()(const Value* pValue1, const Value* pValue2) const;
 	};
 	struct Hash {
