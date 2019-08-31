@@ -18,7 +18,8 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 
 ValueList& ValueList::Sort(Processor& processor, const Function& function)
 {
-	//std::sort(begin(), end(), Value::CustomCompare(processor, function));
+	RefPtr<Argument> pArgument(new Argument(function.GetDeclCallable().Reference()));
+	std::sort(begin(), end(), Value::CustomCompare(processor, function, *pArgument));
 	return *this;
 }
 
