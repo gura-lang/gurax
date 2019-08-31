@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Directory> _pDirectory;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Directory() = delete;
 	Value_Directory(Directory* pDirectory, VType& vtype = VTYPE_Directory) :

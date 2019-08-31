@@ -65,5 +65,6 @@ void VType_Palette::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Palette
 //------------------------------------------------------------------------------
+VType& Value_Palette::vtype = VTYPE_Palette;
 
 }

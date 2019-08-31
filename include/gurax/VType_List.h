@@ -35,6 +35,8 @@ public:
 protected:
 	RefPtr<ValueTypedOwner> _pValueTypedOwner;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_List(ValueTypedOwner* pValueTypedOwner, VType& vtype = VTYPE_List) :
 		Value_Object(vtype), _pValueTypedOwner(pValueTypedOwner) {}

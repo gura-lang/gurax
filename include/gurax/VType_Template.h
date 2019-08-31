@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Template> _pTempl;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Template(VType& vtype = VTYPE_Template) = delete;
 	explicit Value_Template(Template* pTempl, VType& vtype = VTYPE_Template) :

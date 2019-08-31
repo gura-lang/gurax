@@ -32,6 +32,8 @@ public:
 protected:
 	RefPtr<Expr> _pExpr;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Quote() = delete;
 	explicit Value_Quote(Expr* pExpr) : Value(VTYPE_Quote), _pExpr(pExpr) {}

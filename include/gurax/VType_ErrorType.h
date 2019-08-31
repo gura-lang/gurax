@@ -31,6 +31,8 @@ public:
 protected:
 	const ErrorType& _errorType;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_ErrorType() = delete;
 	explicit Value_ErrorType(const ErrorType& errorType, VType& vtype = VTYPE_ErrorType) :

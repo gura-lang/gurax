@@ -39,5 +39,6 @@ void VType_Undefined::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Undefined
 //------------------------------------------------------------------------------
+VType& Value_Undefined::vtype = VTYPE_Undefined;
 
 }

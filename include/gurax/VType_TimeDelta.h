@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<TimeDelta> _pTimeDelta;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_TimeDelta(VType& vtype = VTYPE_TimeDelta) :
 		Value_TimeDelta(new TimeDelta(), vtype) {}

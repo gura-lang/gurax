@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<ValueDict> _pValueDict;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Dict(VType& vtype = VTYPE_Dict) :
 		Value_Dict(new ValueDict(), vtype) {}

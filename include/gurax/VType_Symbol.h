@@ -31,6 +31,8 @@ public:
 protected:
 	const Symbol* _pSymbol;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Symbol(VType& vtype = VTYPE_Symbol) = delete;
 	explicit Value_Symbol(const Symbol* pSymbol, VType& vtype = VTYPE_Symbol) :

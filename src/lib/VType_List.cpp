@@ -1442,6 +1442,8 @@ Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_List
 //------------------------------------------------------------------------------
+VType& Value_List::vtype = VTYPE_List;
+
 String Value_List::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

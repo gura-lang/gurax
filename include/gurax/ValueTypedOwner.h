@@ -260,23 +260,12 @@ public:
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
+	ValueOwner& GetValueOwnerToSort() { return *_pValueOwner; }
 	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
 	bool CheckPosition(Int pos) const { return GetValueOwner().CheckPosition(pos); }
 	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const { return new Iterator_Each(Reference()); }
-	void Sort(SortOrder sortOrder = SortOrder::Ascend) {
-		GetValueOwner().Sort(sortOrder);
-	}
-	void Sort(Processor& processor, const Function& function) {
-		GetValueOwner().Sort(processor, function);
-	}
-	void StableSort(SortOrder sortOrder = SortOrder::Ascend)  {
-		GetValueOwner().StableSort(sortOrder);
-	}
-	void StableSort(Processor& processor, const Function& function) {
-		GetValueOwner().StableSort(processor, function);
-	}
 private:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 };

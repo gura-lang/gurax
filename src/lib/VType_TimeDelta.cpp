@@ -390,5 +390,6 @@ void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_TimeDelta
 //------------------------------------------------------------------------------
+VType& Value_TimeDelta::vtype = VTYPE_TimeDelta;
 
 }

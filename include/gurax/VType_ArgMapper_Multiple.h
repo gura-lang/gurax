@@ -30,6 +30,8 @@ public:
 protected:
 	RefPtr<Value_List> _pValuePicked;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_ArgMapper_Multiple() = delete;
 	explicit Value_ArgMapper_Multiple(ValueTypedOwner* pValueTypedOwner, VType& vtype = VTYPE_ArgMapper_Multiple) :

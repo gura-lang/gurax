@@ -1355,6 +1355,8 @@ String VType_String::Iterator_EachLine::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_String
 //------------------------------------------------------------------------------
+VType& Value_String::vtype = VTYPE_String;
+
 StringList Value_String::GetStringList(const ValueList& values)
 {
 	StringList strs;

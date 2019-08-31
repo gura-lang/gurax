@@ -31,6 +31,8 @@ public:
 protected:
 	const PUnit* _pPUnit;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_PUnit() = delete;
 	Value_PUnit(const PUnit* pPUnit, VType& vtype = VTYPE_PUnit) :

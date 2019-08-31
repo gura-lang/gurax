@@ -31,6 +31,8 @@ public:
 protected:
 	const char* _str;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_StringPtr(VType& vtype = VTYPE_StringPtr) :
 		Value_StringPtr("", vtype) {}

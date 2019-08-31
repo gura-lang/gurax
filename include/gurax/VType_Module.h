@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Module> _pModule;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Module() = delete;
 	explicit Value_Module(Module* pModule, VType& vtype = VTYPE_Module) :

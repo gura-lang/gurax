@@ -19,5 +19,6 @@ void VType_PathMgr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_PathMgr
 //------------------------------------------------------------------------------
+VType& Value_PathMgr::vtype = VTYPE_PathMgr;
 
 }

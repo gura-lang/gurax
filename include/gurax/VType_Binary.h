@@ -30,6 +30,8 @@ public:
 protected:
 	RefPtr<BinaryReferable> _pBinary;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Binary(VType& vtype = VTYPE_Binary) :
 		Value_Binary(new BinaryReferable(), vtype) {}

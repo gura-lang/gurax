@@ -32,6 +32,8 @@ public:
 protected:
 	RefPtr<Stream> _pStream;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Stream() = delete;
 	explicit Value_Stream(Stream *pStream, VType& vtype = VTYPE_Stream) :

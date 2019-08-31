@@ -45,6 +45,8 @@ public:
 protected:
 	RefPtr<Iterator> _pIterator;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Iterator() = delete;
 	explicit Value_Iterator(Iterator *pIterator, VType& vtype = VTYPE_Iterator) :

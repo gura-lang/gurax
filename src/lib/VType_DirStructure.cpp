@@ -19,5 +19,6 @@ void VType_DirStructure::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_DirStructure
 //------------------------------------------------------------------------------
+VType& Value_DirStructure::vtype = VTYPE_DirStructure;
 
 }

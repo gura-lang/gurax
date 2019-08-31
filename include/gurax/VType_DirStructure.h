@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<DirStructure> _pDirStructure;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_DirStructure() = delete;
 	Value_DirStructure(DirStructure* pDirStructure, VType& vtype = VTYPE_DirStructure) :

@@ -19,5 +19,6 @@ void VType_ArgSlot::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_ArgSlot
 //------------------------------------------------------------------------------
+VType& Value_ArgSlot::vtype = VTYPE_ArgSlot;
 
 }

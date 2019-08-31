@@ -19,6 +19,8 @@ void VType_Bool::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Bool
 //------------------------------------------------------------------------------
+VType& Value_Bool::vtype = VTYPE_Bool;
+
 String Value_Bool::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

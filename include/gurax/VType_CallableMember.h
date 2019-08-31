@@ -31,6 +31,8 @@ protected:
 	RefPtr<Value> _pValueThis;
 	RefPtr<Value> _pValueProp;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_CallableMember(Value* pValueThis, Value* pValueProp, VType& vtype = VTYPE_CallableMember) :
 		Value_Object(vtype), _pValueThis(pValueThis), _pValueProp(pValueProp) {}

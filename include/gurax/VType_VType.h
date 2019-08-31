@@ -30,6 +30,8 @@ public:
 protected:
 	VType* _pVTypeThis;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_VType() = delete;
 	explicit Value_VType(VType& vtypeThis, VType& vtype = VTYPE_VType) :

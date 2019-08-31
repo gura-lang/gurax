@@ -32,6 +32,8 @@ public:
 protected:
 	RefPtr<Frame> _pFrame;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Frame() = delete;
 	explicit Value_Frame(Frame* pFrame, VType& vtype = VTYPE_Frame) :

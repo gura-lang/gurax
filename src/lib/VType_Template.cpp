@@ -19,5 +19,6 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Template
 //------------------------------------------------------------------------------
+VType& Value_Template::vtype = VTYPE_Template;
 
 }

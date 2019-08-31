@@ -28,6 +28,8 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Object");
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Object() : Value_Object(VTYPE_Object) {}
 	explicit Value_Object(VType& vtype) : Value(vtype) {}

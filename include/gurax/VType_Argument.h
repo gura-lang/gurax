@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Argument> _pArgument;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Argument() = delete;
 	Value_Argument(Argument* pArgument, VType& vtype = VTYPE_Argument) :

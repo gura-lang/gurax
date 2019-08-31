@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<DirRecord> _pDirRecord;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_DirRecord() = delete;
 	Value_DirRecord(DirRecord* pDirRecord, VType& vtype = VTYPE_DirRecord) :

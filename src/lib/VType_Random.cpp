@@ -136,6 +136,8 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Random
 //------------------------------------------------------------------------------
+VType& Value_Random::vtype = VTYPE_Random;
+
 String Value_Random::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

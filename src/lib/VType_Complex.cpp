@@ -330,6 +330,8 @@ Value* VType_Complex::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_Complex
 //------------------------------------------------------------------------------
+VType& Value_Complex::vtype = VTYPE_Complex;
+
 String Value_Complex::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

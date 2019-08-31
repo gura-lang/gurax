@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Error> _pError;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Error() = delete;
 	explicit Value_Error(Error* pError, VType& vtype = VTYPE_Error) :

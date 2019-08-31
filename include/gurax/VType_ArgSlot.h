@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<ArgSlot> _pArgSlot;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_ArgSlot() = delete;
 	Value_ArgSlot(ArgSlot* pArgSlot, VType& vtype = VTYPE_ArgSlot) :

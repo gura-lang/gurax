@@ -175,6 +175,8 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_Stream
 //------------------------------------------------------------------------------
+VType& Value_Stream::vtype = VTYPE_Stream;
+
 String Value_Stream::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

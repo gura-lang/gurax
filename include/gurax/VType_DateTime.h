@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<DateTime> _pDateTime;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_DateTime(VType& vtype = VTYPE_DateTime) :
 		Value_DateTime(new DateTime(), vtype) {}

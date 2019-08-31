@@ -479,6 +479,8 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_DateTime
 //------------------------------------------------------------------------------
+VType& Value_DateTime::vtype = VTYPE_DateTime;
+
 String Value_DateTime::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

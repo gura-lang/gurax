@@ -54,6 +54,8 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Module
 //------------------------------------------------------------------------------
+VType& Value_Module::vtype = VTYPE_Module;
+
 String Value_Module::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

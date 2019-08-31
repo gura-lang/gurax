@@ -55,5 +55,6 @@ Value* VType_Any::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_Any
 //------------------------------------------------------------------------------
+VType& Value_Any::vtype = VTYPE_Any;
 
 }

@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Index> _pIndex;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Index() = delete;
 	Value_Index(Index* pIndex, VType& vtype = VTYPE_Index) :

@@ -29,6 +29,8 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Nil");
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Nil(VType& vtype = VTYPE_Nil) : Value_Object(vtype) {}
 	// Copy constructor/operator

@@ -46,5 +46,6 @@ Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_Symbol
 //------------------------------------------------------------------------------
+VType& Value_Symbol::vtype = VTYPE_Symbol;
 
 }

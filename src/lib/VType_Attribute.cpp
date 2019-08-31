@@ -19,5 +19,6 @@ void VType_Attribute::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Attribute
 //------------------------------------------------------------------------------
+VType& Value_Attribute::vtype = VTYPE_Attribute;
 
 }

@@ -370,6 +370,8 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Dict
 //------------------------------------------------------------------------------
+VType& Value_Dict::vtype = VTYPE_Dict;
+
 String Value_Dict::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

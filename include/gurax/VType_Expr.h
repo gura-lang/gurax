@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Expr> _pExpr;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Expr() = delete;
 	explicit Value_Expr(Expr* pExpr, VType& vtype = VTYPE_Expr) :

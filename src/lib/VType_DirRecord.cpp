@@ -19,5 +19,6 @@ void VType_DirRecord::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_DirRecord
 //------------------------------------------------------------------------------
+VType& Value_DirRecord::vtype = VTYPE_DirRecord;
 
 }

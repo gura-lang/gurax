@@ -39,6 +39,8 @@ void VType_PropHandler::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_PropHandler
 //------------------------------------------------------------------------------
+VType& Value_PropHandler::vtype = VTYPE_PropHandler;
+
 String Value_PropHandler::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

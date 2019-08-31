@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Codec> _pCodec;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Codec() = delete;
 	Value_Codec(Codec* pCodec, VType& vtype = VTYPE_Codec) :

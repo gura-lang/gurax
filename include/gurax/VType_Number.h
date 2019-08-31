@@ -30,6 +30,8 @@ public:
 protected:
 	Double _num;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Number(VType& vtype = VTYPE_Number) :
 		Value_Number(0., vtype) {}

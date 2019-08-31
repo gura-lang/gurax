@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Random> _pRandom;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Random() = delete;
 	explicit Value_Random(Random* pRandom, VType& vtype = VTYPE_Random) :

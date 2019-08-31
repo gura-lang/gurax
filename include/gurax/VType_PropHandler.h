@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<PropHandler> _pPropHandler;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_PropHandler() = delete;
 	Value_PropHandler(PropHandler* pPropHandler, VType& vtype = VTYPE_PropHandler) :

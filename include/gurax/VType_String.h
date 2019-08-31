@@ -94,6 +94,8 @@ public:
 protected:
 	RefPtr<StringReferable> _pStr;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_String(VType& vtype = VTYPE_String) :
 		Value_String(new StringReferable(), vtype) {}

@@ -36,5 +36,6 @@ Value* VType_Frame::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_Frame
 //------------------------------------------------------------------------------
+VType& Value_Frame::vtype = VTYPE_Frame;
 
 }

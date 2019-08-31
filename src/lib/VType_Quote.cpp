@@ -24,5 +24,6 @@ Value* VType_Quote::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 // Value_Quote
 //------------------------------------------------------------------------------
+VType& Value_Quote::vtype = VTYPE_Quote;
 
 }

@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Attribute> _pAttr;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Attribute() = delete;
 	explicit Value_Attribute(Attribute* pAttr, VType& vtype = VTYPE_Attribute) :

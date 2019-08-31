@@ -412,6 +412,8 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Number
 //------------------------------------------------------------------------------
+VType& Value_Number::vtype = VTYPE_Number;
+
 String Value_Number::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

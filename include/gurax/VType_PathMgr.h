@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<PathMgr> _pPathMgr;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_PathMgr() = delete;
 	Value_PathMgr(PathMgr* pPathMgr, VType& vtype = VTYPE_PathMgr) :

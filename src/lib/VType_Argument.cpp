@@ -19,5 +19,6 @@ void VType_Argument::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Argument
 //------------------------------------------------------------------------------
+VType& Value_Argument::vtype = VTYPE_Argument;
 
 }

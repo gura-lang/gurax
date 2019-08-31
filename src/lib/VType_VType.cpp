@@ -75,6 +75,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_VType
 //------------------------------------------------------------------------------
+VType& Value_VType::vtype = VTYPE_VType;
+
 String Value_VType::ToStringDigest(const StringStyle& ss) const
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();

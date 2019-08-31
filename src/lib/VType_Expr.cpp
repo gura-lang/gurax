@@ -326,6 +326,8 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Expr
 //------------------------------------------------------------------------------
+VType& Value_Expr::vtype = VTYPE_Expr;
+
 String Value_Expr::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

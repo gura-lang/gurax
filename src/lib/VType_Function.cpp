@@ -78,6 +78,8 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Function
 //------------------------------------------------------------------------------
+VType& Value_Function::vtype = VTYPE_Function;
+
 String Value_Function::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

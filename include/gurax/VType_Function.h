@@ -30,6 +30,8 @@ public:
 protected:
 	RefPtr<Function> _pFunction;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Function() = delete;
 	explicit Value_Function(Function* pFunction, VType& vtype = VTYPE_Function) :

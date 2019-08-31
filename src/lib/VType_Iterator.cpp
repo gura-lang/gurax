@@ -1147,18 +1147,22 @@ Value* VType_Iterator::Method_Sort(
 	bool validFlag_directive = false;
 	bool validFlag_keys = false;
 	const Value& directive = (validFlag_directive = args.IsValid())? args.PickValue() : Value::C_nil();
-	const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
+	//const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
 	bool stableFlag = argument.IsSet(Gurax_Symbol(stable));
 	// Function body
 	RefPtr<ValueTypedOwner> pValueTypedOwner(valueTypedOwner.Clone());
+	ValueOwner& valueOwner = pValueTypedOwner->GetValueOwnerToSort();
 	if (!validFlag_directive) {
 		if (stableFlag) {
-			pValueTypedOwner->StableSort(SortOrder::Ascend);
+			valueOwner.StableSort(SortOrder::Ascend);
 		} else {
-			pValueTypedOwner->Sort(SortOrder::Ascend);
+			valueOwner.Sort(SortOrder::Ascend);
 		}
-	} else if (directive.IsType(VTYPE_Symbol)) {
-		const Symbol* pSymbol = dynamic_cast<const Value_Symbol&>(directive).GetSymbol();
+	} else if (directive.IsType(VTYPE_Expr)) {
+#if 0
+		RefPtr<Value_Symbol>* pValueCasted(directive.Cast<Value_Symbol>());
+		if (!pValueCasted) return Value::nil();
+		const Symbol* pSymbol = dynamic_cast<const Value_Symbol&>(*pValueCasted).GetSymbol();
 		SortOrder sortOrder =
 			pSymbol->IsIdentical(Gurax_Symbol(ascend))? SortOrder::Ascend :
 			pSymbol->IsIdentical(Gurax_Symbol(ascend))? SortOrder::Descend :
@@ -1168,17 +1172,21 @@ Value* VType_Iterator::Method_Sort(
 			return Value::nil();
 		}
 		if (stableFlag) {
-			pValueTypedOwner->StableSort(sortOrder);
+			valueOwner.StableSort(sortOrder);
 		} else {
-			pValueTypedOwner->Sort(sortOrder);
+			valueOwner.Sort(sortOrder);
 		}
+#endif
 	} else if (directive.IsType(VTYPE_Function)) {
 		const Function& function = dynamic_cast<const Value_Function&>(directive).GetFunction();
 		if (stableFlag) {
-			pValueTypedOwner->StableSort(processor, function);
+			valueOwner.StableSort(processor, function);
 		} else {
-			pValueTypedOwner->Sort(processor, function);
+			valueOwner.Sort(processor, function);
 		}
+	} else {
+		Error::Issue(ErrorType::ValueError, "argument 'directive' must be a symbol or a function");
+		return Value::nil();
 	}
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_List(pValueTypedOwner.release());
@@ -1393,6 +1401,8 @@ Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) cons
 //------------------------------------------------------------------------------
 // Value_Iterator
 //------------------------------------------------------------------------------
+VType& Value_Iterator::vtype = VTYPE_Iterator;
+
 String Value_Iterator::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

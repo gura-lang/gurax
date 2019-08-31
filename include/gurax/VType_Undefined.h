@@ -29,6 +29,8 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Undefined");
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Undefined() : Value(VTYPE_Undefined) {}
 	// Copy constructor/operator

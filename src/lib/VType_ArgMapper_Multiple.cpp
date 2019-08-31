@@ -19,6 +19,8 @@ void VType_ArgMapper_Multiple::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_ArgMapper_Multiple
 //------------------------------------------------------------------------------
+VType& Value_ArgMapper_Multiple::vtype = VTYPE_ArgMapper_Multiple;
+
 String Value_ArgMapper_Multiple::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

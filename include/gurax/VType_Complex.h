@@ -32,6 +32,8 @@ public:
 protected:
 	Complex _num;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Complex(VType& vtype = VTYPE_Complex) :
 		Value_Object(vtype), _num(0.) {}

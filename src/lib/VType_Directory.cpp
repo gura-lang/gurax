@@ -19,5 +19,6 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Directory
 //------------------------------------------------------------------------------
+VType& Value_Directory::vtype = VTYPE_Directory;
 
 }

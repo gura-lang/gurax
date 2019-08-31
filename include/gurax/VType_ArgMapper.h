@@ -31,9 +31,11 @@ protected:
 	RefPtr<Iterator> _pIterator;
 	RefPtr<Value> _pValue;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_ArgMapper() = delete;
-	explicit Value_ArgMapper(Iterator* pIterator, VType& vtype = VTYPE_ArgMapper) :
+	explicit Value_ArgMapper(Iterator* pIterator, VType& vtype = VTYPE_Any) :
 		Value_Object(vtype), _pIterator(pIterator) {}
 	// Copy constructor/operator
 	Value_ArgMapper(const Value_ArgMapper& src) = delete;

@@ -30,6 +30,8 @@ public:
 protected:
 	bool _flag;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	explicit Value_Bool(VType& vtype = VTYPE_Bool) :
 		Value_Bool(false, vtype) {}

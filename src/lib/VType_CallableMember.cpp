@@ -19,6 +19,8 @@ void VType_CallableMember::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_CallableMember
 //------------------------------------------------------------------------------
+VType& Value_CallableMember::vtype = VTYPE_CallableMember;
+
 String Value_CallableMember::ToStringDetail(const StringStyle& ss) const
 {
 	String str;

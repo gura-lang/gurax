@@ -31,6 +31,8 @@ public:
 protected:
 	RefPtr<Palette> _pPalette;
 public:
+	static VType& vtype;
+public:
 	// Constructor
 	Value_Palette() = delete;
 	Value_Palette(Palette* pPalette, VType& vtype = VTYPE_Palette) :

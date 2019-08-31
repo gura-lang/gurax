@@ -206,6 +206,8 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_Error
 //------------------------------------------------------------------------------
+VType& Value_Error::vtype = VTYPE_Error;
+
 String Value_Error::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

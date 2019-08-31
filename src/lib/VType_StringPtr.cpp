@@ -20,6 +20,8 @@ void VType_StringPtr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 // Value_StringPtr
 //------------------------------------------------------------------------------
+VType& Value_StringPtr::vtype = VTYPE_StringPtr;
+
 bool Value_StringPtr::Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	return formatter.PutAlignedString(formatterFlags, GetString(), formatterFlags.precision);
