@@ -1147,16 +1147,32 @@ Value* VType_Iterator::Method_Sort(
 	bool validFlag_directive = false;
 	bool validFlag_keys = false;
 	const Value& directive = (validFlag_directive = args.IsValid())? args.PickValue() : Value::C_nil();
-	//const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
+	const ValueList& keys = (validFlag_keys = args.IsValid())? args.PickList() : ValueList::Empty;
 	bool stableFlag = argument.IsSet(Gurax_Symbol(stable));
 	// Function body
-	RefPtr<ValueTypedOwner> pValueTypedOwner(valueTypedOwner.Clone());
-	ValueOwner& valueOwner = pValueTypedOwner->GetValueOwnerToSort();
+	RefPtr<ValueTypedOwner> pValueTypedOwner;
+	RefPtr<ValueOwner> pValueOwner;
+	if (validFlag_keys) {
+		if (valueTypedOwner.GetSize() < keys.size()) {
+			Error::Issue(ErrorType::RangeError, "the length of keys mus be equal to that of values");
+			return Value::nil();
+		}
+		pValueOwner.reset(new ValueOwner());
+		pValueOwner->reserve(valueTypedOwner.GetSize());
+		auto ppValueKey = keys.begin();
+		auto ppValue = valueTypedOwner.GetValueOwner().begin();
+		for ( ; ppValueKey != keys.end(); ppValueKey++, ppValue++) {
+			pValueOwner->push_back(new Value_KeyValuePair((*ppValueKey)->Reference(), (*ppValue)->Reference()));
+		}
+	} else {
+		pValueTypedOwner.reset(valueTypedOwner.Clone());
+		pValueOwner.reset(pValueTypedOwner->GetValueOwnerToSort().Reference());
+	}
 	if (!validFlag_directive) {
 		if (stableFlag) {
-			valueOwner.StableSort(SortOrder::Ascend);
+			pValueOwner->StableSort(SortOrder::Ascend);
 		} else {
-			valueOwner.Sort(SortOrder::Ascend);
+			pValueOwner->Sort(SortOrder::Ascend);
 		}
 	} else if (directive.IsType(VTYPE_Expr)) {
 		RefPtr<Value_Symbol> pValueCasted(directive.Cast<Value_Symbol>());
@@ -1171,22 +1187,30 @@ Value* VType_Iterator::Method_Sort(
 			return Value::nil();
 		}
 		if (stableFlag) {
-			valueOwner.StableSort(sortOrder);
+			pValueOwner->StableSort(sortOrder);
 		} else {
-			valueOwner.Sort(sortOrder);
+			pValueOwner->Sort(sortOrder);
 		}
 	} else if (directive.IsType(VTYPE_Function)) {
 		const Function& function = dynamic_cast<const Value_Function&>(directive).GetFunction();
 		if (stableFlag) {
-			valueOwner.StableSort(processor, function);
+			pValueOwner->StableSort(processor, function);
 		} else {
-			valueOwner.Sort(processor, function);
+			pValueOwner->Sort(processor, function);
 		}
 	} else {
 		Error::Issue(ErrorType::ValueError, "argument 'directive' must be a symbol or a function");
 		return Value::nil();
 	}
 	if (Error::IsIssued()) return Value::nil();
+	if (validFlag_keys) {
+		RefPtr<ValueOwner> pValueOwnerResult(new ValueOwner());
+		pValueOwnerResult->reserve(pValueOwner->size());
+		for (Value* pValue : *pValueOwner) {
+			pValueOwnerResult->push_back(pValue->GetValue().Reference());
+		}
+		pValueTypedOwner.reset(new ValueTypedOwner(pValueOwnerResult.release()));
+	}
 	return new Value_List(pValueTypedOwner.release());
 }
 
