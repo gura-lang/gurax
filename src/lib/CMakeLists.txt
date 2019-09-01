@@ -93,6 +93,7 @@ add_library(guraxcore SHARED
 	VType_Function.cpp
 	VType_Index.cpp
 	VType_Iterator.cpp
+	VType_KeyValuePair.cpp
 	VType_List.cpp
 	VType_Module.cpp
 	VType_Nil.cpp

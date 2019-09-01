@@ -63,27 +63,27 @@ public:
 	};
 	struct KeyEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue1->GetKey().IsEqualTo(&pValue2->GetKey());
+			return pValue1->GetValueKey().IsEqualTo(&pValue2->GetValueKey());
 		}
 	};
 	struct KeyLessThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue1->GetKey().IsLessThan(&pValue2->GetKey());
+			return pValue1->GetValueKey().IsLessThan(&pValue2->GetValueKey());
 		}
 	};
 	struct KeyLessThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return !pValue2->GetKey().IsLessThan(&pValue1->GetKey());
+			return !pValue2->GetValueKey().IsLessThan(&pValue1->GetValueKey());
 		}
 	};
 	struct KeyGreaterThan {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return pValue2->GetKey().IsLessThan(&pValue1->GetKey());
+			return pValue2->GetValueKey().IsLessThan(&pValue1->GetValueKey());
 		}
 	};
 	struct KeyGreaterThanOrEqualTo {
 		bool operator()(const Value* pValue1, const Value* pValue2) const {
-			return !pValue1->GetKey().IsLessThan(&pValue2->GetKey());
+			return !pValue1->GetValueKey().IsLessThan(&pValue2->GetValueKey());
 		}
 	};
 	struct KeyCustomCompare {
@@ -183,7 +183,8 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
-	virtual const Value& GetKey() const { return *this; }
+	virtual const Value& GetValueKey() const { return *this; }
+	virtual const Value& GetValue() const { return *this; }
 	virtual bool IsValid() const { return true; }
 	virtual bool IsUndefined() const { return false; }
 	virtual bool IsNil() const { return false; }

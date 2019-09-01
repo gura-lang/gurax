@@ -222,8 +222,8 @@ bool Value::KeyCustomCompare::operator()(const Value* pValue1, const Value* pVal
 	if (Error::IsIssued()) return false;
 	ArgFeeder args(_argument);
 	RefPtr<Frame> pFrame(_function.LockFrameOuter());
-	args.FeedValue(*pFrame, pValue1->GetKey().Reference());
-	args.FeedValue(*pFrame, pValue2->GetKey().Reference());
+	args.FeedValue(*pFrame, pValue1->GetValueKey().Reference());
+	args.FeedValue(*pFrame, pValue2->GetValueKey().Reference());
 	if (Error::IsIssued()) return false;
 	RefPtr<Value> pValueRtn(_function.DoEval(_processor, _argument));
 	return pValueRtn->GetBool();

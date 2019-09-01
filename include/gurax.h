@@ -95,6 +95,7 @@
 #include "gurax/VType_Function.h"
 #include "gurax/VType_Index.h"
 #include "gurax/VType_Iterator.h"
+#include "gurax/VType_KeyValuePair.h"
 #include "gurax/VType_List.h"
 #include "gurax/VType_Module.h"
 #include "gurax/VType_Nil.h"

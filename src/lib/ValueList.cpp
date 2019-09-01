@@ -12,27 +12,27 @@ const ValueList ValueList::Empty;
 
 ValueList& ValueList::Sort(SortOrder sortOrder)
 {
-	SortListByOrder<ValueList, Value::LessThan, Value::GreaterThan>(*this, sortOrder);
+	SortListByOrder<ValueList, Value::KeyLessThan, Value::KeyGreaterThan>(*this, sortOrder);
 	return *this;
 }
 
 ValueList& ValueList::Sort(Processor& processor, const Function& function)
 {
 	RefPtr<Argument> pArgument(new Argument(function.GetDeclCallable().Reference()));
-	std::sort(begin(), end(), Value::CustomCompare(processor, function, *pArgument));
+	std::sort(begin(), end(), Value::KeyCustomCompare(processor, function, *pArgument));
 	return *this;
 }
 
 ValueList& ValueList::StableSort(SortOrder sortOrder)
 {
-	StableSortListByOrder<ValueList, Value::LessThan, Value::GreaterThan>(*this, sortOrder);
+	StableSortListByOrder<ValueList, Value::KeyLessThan, Value::KeyGreaterThan>(*this, sortOrder);
 	return *this;
 }
 
 ValueList& ValueList::StableSort(Processor& processor, const Function& function)
 {
 	RefPtr<Argument> pArgument(new Argument(function.GetDeclCallable().Reference()));
-	std::stable_sort(begin(), end(), Value::CustomCompare(processor, function, *pArgument));
+	std::stable_sort(begin(), end(), Value::KeyCustomCompare(processor, function, *pArgument));
 	return *this;
 }
 
