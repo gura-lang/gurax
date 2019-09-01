@@ -61,6 +61,41 @@ public:
 			_processor(processor), _function(function), _argument(argument) {}
 		bool operator()(const Value* pValue1, const Value* pValue2) const;
 	};
+	struct KeyEqualTo {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
+			return pValue1->GetKey().IsEqualTo(&pValue2->GetKey());
+		}
+	};
+	struct KeyLessThan {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
+			return pValue1->GetKey().IsLessThan(&pValue2->GetKey());
+		}
+	};
+	struct KeyLessThanOrEqualTo {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
+			return !pValue2->GetKey().IsLessThan(&pValue1->GetKey());
+		}
+	};
+	struct KeyGreaterThan {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
+			return pValue2->GetKey().IsLessThan(&pValue1->GetKey());
+		}
+	};
+	struct KeyGreaterThanOrEqualTo {
+		bool operator()(const Value* pValue1, const Value* pValue2) const {
+			return !pValue1->GetKey().IsLessThan(&pValue2->GetKey());
+		}
+	};
+	struct KeyCustomCompare {
+	private:
+		Processor& _processor;
+		const Function& _function;
+		Argument& _argument;
+	public:
+		KeyCustomCompare(Processor& processor, const Function& function, Argument& argument) :
+			_processor(processor), _function(function), _argument(argument) {}
+		bool operator()(const Value* pValue1, const Value* pValue2) const;
+	};
 	struct Hash {
 		size_t operator()(const Value* pValue) const {
 			return pValue->CalcHash();
@@ -148,6 +183,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
+	virtual const Value& GetKey() const { return *this; }
 	virtual bool IsValid() const { return true; }
 	virtual bool IsUndefined() const { return false; }
 	virtual bool IsNil() const { return false; }
