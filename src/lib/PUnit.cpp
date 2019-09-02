@@ -219,6 +219,9 @@ void PUnit_AssignToSymbol<nExprSrc, discardValueFlag>::Exec(Processor& processor
 	if (pValueAssigned->IsVType()) {
 		VType& vtype = Value_VType::GetVTypeThis(*pValueAssigned);
 		vtype.PrepareForAssignment(processor, GetSymbol());
+	} else if (pValueAssigned->IsType(VTYPE_Function)) {
+		Function& function = Value_Function::GetFunction(*pValueAssigned);
+		if (function.GetSymbol()->IsEmpty()) function.SetSymbol(GetSymbol());
 	}
 	frame.Assign(GetSymbol(), pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());

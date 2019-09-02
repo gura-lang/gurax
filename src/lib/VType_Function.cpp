@@ -6,6 +6,34 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Function(`arg*) {block}
+Gurax_DeclareFunction(Function)
+{
+	Declare(VTYPE_Random, Flag::Map);
+	DeclareArg("arg", VTYPE_Quote, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Function)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	RefPtr<FunctionCustom> pFunction(
+		new FunctionCustom(
+			Type::Function, Symbol::Empty,
+			pExprOfBlock->GetDeclCallable().Reference(), pExprOfBlock->Reference()));
+	pFunction->Declare(VTYPE_Any, Flag::None);
+	return new Value_Function(pFunction.release());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Function#expr
@@ -69,6 +97,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	SetConstructor(Gurax_CreateFunction(Function));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));

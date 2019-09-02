@@ -25,10 +25,10 @@ Gurax_ImplementFunction(Random)
 {
 	// Arguments
 	ArgPicker args(argument);
-	bool seedFlag = false;
-	Int32 seed = (seedFlag = args.IsValid())? args.PickNumber<Int32>() : 0;
+	bool validFlag_seed = false;
+	Int32 seed = (validFlag_seed = args.IsValid())? args.PickNumber<Int32>() : 0;
 	// Function body
-	RefPtr<Random> pRandom(seedFlag? new Random(seed) : Random::Global().Reference());
+	RefPtr<Random> pRandom(validFlag_seed? new Random(seed) : Random::Global().Reference());
 	return ReturnValue(processor, argument, new Value_Random(pRandom.release()));
 }
 
