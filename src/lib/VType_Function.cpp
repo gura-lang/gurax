@@ -8,12 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Function(`arg*) {block}
+// Function(`exprs*) {block}
 Gurax_DeclareFunction(Function)
 {
 	Declare(VTYPE_Random, Flag::Map);
-	DeclareArg("arg", VTYPE_Quote, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	DeclareArg("argDecls", VTYPE_Quote, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -23,12 +23,18 @@ Gurax_ImplementFunction(Function)
 {
 	// Arguments
 	ArgPicker args(argument);
+	const ValueList& argDecls = args.PickList();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
+	RefPtr<ExprLink> pExprLink(new ExprLink());
+	for (const Value* pExpr : argDecls) {
+		pExprLink->AddExpr(Value_Expr::GetExpr(*pExpr).Reference());
+	}
+	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
+	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return Value::nil();
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(
-			Type::Function, Symbol::Empty,
-			pExprOfBlock->GetDeclCallable().Reference(), pExprOfBlock->Reference()));
+			Type::Function, Symbol::Empty, pDeclCallable.release(), pExprOfBlock->Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::None);
 	pFunction->SetFrameOuter(processor.GetFrameCur());
 	return new Value_Function(pFunction.release());
