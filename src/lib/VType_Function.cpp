@@ -30,6 +30,7 @@ Gurax_ImplementFunction(Function)
 			Type::Function, Symbol::Empty,
 			pExprOfBlock->GetDeclCallable().Reference(), pExprOfBlock->Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::None);
+	pFunction->SetFrameOuter(processor.GetFrameCur());
 	return new Value_Function(pFunction.release());
 }
 
