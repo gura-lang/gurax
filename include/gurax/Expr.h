@@ -157,10 +157,10 @@ public:
 		Visitor_Prepare visitor;
 		return Traverse(visitor);
 	}
-	SymbolList GatherArgSymbols() {
+	SymbolList GatherArgSymbols() const {
 		SymbolList symbolList;
 		Visitor_GatherArgSymbols visitor(symbolList);
-		Traverse(visitor);
+		const_cast<Expr*>(this)->Traverse(visitor);
 		return symbolList;
 	}
 	static size_t CountSequence(const Expr* pExpr);

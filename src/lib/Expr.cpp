@@ -121,7 +121,9 @@ bool Expr::Visitor_GatherArgSymbols::Visit(Expr* pExpr)
 {
 	if (pExpr->IsType<Expr_Identifier>()) {
 		const Symbol* pSymbol = dynamic_cast<Expr_Identifier*>(pExpr)->GetSymbol();
-		if (*pSymbol->GetName() == '$') _symbolList.push_back(pSymbol);
+		if (*pSymbol->GetName() == '$' && !_symbolList.DoesContain(pSymbol)) {
+			_symbolList.push_back(pSymbol);
+		}
 	}
 	return true;
 }

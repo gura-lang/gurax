@@ -11,7 +11,7 @@ namespace Gurax {
 // &{block}
 Gurax_DeclareFunctionAlias(_function_, "&")
 {
-	Declare(VTYPE_Dict, Flag::None);
+	Declare(VTYPE_Function, Flag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -20,43 +20,20 @@ Gurax_DeclareFunctionAlias(_function_, "&")
 
 Gurax_ImplementFunction(_function_)
 {
+	// Arguments
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	SymbolList symbolList(pExprOfBlock->GatherArgSymbols());
+	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 #if 0
-	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
-	composer.Add_CreateDict(&exprCaller);						// [Dict]
-	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-		if (pExpr->IsType<Expr_BinaryOp>() &&
-			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
-			// %{ .. key => value .. }
-			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-			pExprEx->GetExprLeft().ComposeOrNil(composer);		// [Dict Key]
-			pExprEx->GetExprRight().ComposeOrNil(composer);		// [Dict Key Elem]
-		} else if (pExpr->IsType<Expr_Block>()) {
-			// %{ .. {key, value} .. }
-			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
-			if (pExprEx->CountExprElem() != 2) {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "block is expected to have a format of {key, value}");
-				return;
-			}
-			Expr* pExprElem = pExprEx->GetExprElemFirst();
-			pExprElem->ComposeOrNil(composer);					// [Dict Key]
-			pExprElem = pExprElem->GetExprNext();
-			pExprElem->ComposeOrNil(composer);					// [Dict Key Elem]
-		} else {
-			// %{ .. key, value .. }
-			pExpr->ComposeOrNil(composer);						// [Dict Key]
-			pExpr = pExpr->GetExprNext();
-			if (!pExpr) {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "value is missing in the initialization list for dictionary");
-				return;
-			}
-			pExpr->ComposeOrNil(composer);						// [Dict Key Elem]
-		}
-		composer.Add_DictElem(0, &exprCaller);					// [Dict]
-	}
+	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return Value::nil();
 #endif
-	return Value::nil();
+	RefPtr<FunctionCustom> pFunction(
+		new FunctionCustom(
+			Type::Function, Symbol::Empty, pDeclCallable.release(), pExprOfBlock->Reference()));
+	pFunction->Declare(VTYPE_Any, Flag::None);
+	pFunction->SetFrameOuter(processor.GetFrameCur());
+	return new Value_Function(pFunction.release());
 }
 
 // Function(`exprs*) {block}
@@ -157,7 +134,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Function));
 	// Assignment of function
-	Assign(Gurax_CreateFunction(_function_));
+	frameOuter.Assign(Gurax_CreateFunction(_function_));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));
