@@ -25,9 +25,11 @@ Gurax_ImplementFunction(_function_)
 	// Function body
 	SymbolList symbolList(pExprOfBlock->GatherArgSymbols());
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
-#if 0
-	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return Value::nil();
-#endif
+	for (const Symbol* pSymbol : symbolList) {
+		RefPtr<DeclArg> pDeclArg(
+			new DeclArg(pSymbol, VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr));
+		pDeclCallable->GetDeclArgOwner().push_back(pDeclArg.release());
+	}
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(
 			Type::Function, Symbol::Empty, pDeclCallable.release(), pExprOfBlock->Reference()));
