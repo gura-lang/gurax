@@ -165,3 +165,21 @@ TestCase('Property') {
 	Tester(`Fact.name)
 	Tester(`Fact.type)
 }
+
+TestCase('Function()') {
+	g(v*) = {'[' + v.Join(',') + ']'}
+	Tester(`{f = Function {}, f})
+	Tester(`{f = Function {}, f()})
+	Tester(`{f = Function {g()}, f()})
+	Tester(`{f = Function(v) {}, f})
+	Tester(`{f = Function(v) {}, f(3)})
+	Tester(`{f = Function(v) {g(v)}, f(3)})
+	Tester(`{f = Function(v) {}, f()})
+	Tester(`{f = Function(v[]) {}, f})
+	Tester(`{f = Function(v[]) {}, f([1, 2, 3])})
+	Tester(`{f = Function(v[]) {}, f()})
+	Tester(`{f = Function(v1, v2, v3, v4, v5, v6) {}, f})
+	Tester(`{f = Function(v1, v2, v3, v4, v5, v6) {}, f(1, 2, 3, 4, 5, 6)})
+	Tester(`{f = Function(v1, v2, v3, v4, v5, v6) {g(v1, v2, v3, v4, v5, v6)}, f(1, 2, 3, 4, 5, 6)})
+	Tester(`{f = Function(v1, v2, v3, v4, v5, v6) {}, f(3)})
+}

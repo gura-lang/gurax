@@ -250,3 +250,18 @@ g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}
 Fact.expr .. if (n <= 1) {1} else {n * Fact(n - 1)}
 Fact.name .. Fact
 Fact.type .. `function
+======== Function() ========
+{f = Function {}, f} .. f()
+{f = Function {}, f()} .. <Nil>
+{f = Function {g()}, f()} .. []
+{f = Function(v) {}, f} .. f(v)
+{f = Function(v) {}, f(3)} .. <Nil>
+{f = Function(v) {g(v)}, f(3)} .. [3]
+{f = Function(v) {}, f()} .. lacking value for argument 'v'
+{f = Function(v[]) {}, f} .. f(v[])
+{f = Function(v[]) {}, f([1, 2, 3])} .. <Nil>
+{f = Function(v[]) {}, f()} .. lacking value for argument 'v'
+{f = Function(v1, v2, v3, v4, v5, v6) {}, f} .. f(v1, v2, v3, v4, v5, v6)
+{f = Function(v1, v2, v3, v4, v5, v6) {}, f(1, 2, 3, 4, 5, 6)} .. <Nil>
+{f = Function(v1, v2, v3, v4, v5, v6) {g(v1, v2, v3, v4, v5, v6)}, f(1, 2, 3, 4, 5, 6)} .. [1,2,3,4,5,6]
+{f = Function(v1, v2, v3, v4, v5, v6) {}, f(3)} .. lacking value for argument 'v2'
