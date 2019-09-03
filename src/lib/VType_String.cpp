@@ -1223,9 +1223,67 @@ Gurax_ImplementPropertyGetter(String, width)
 Gurax_ImplementOpBinary(Add, String, String)
 {
 	String strL = Value_String::GetStringSTL(valueL);
-	const char* strR = Value_String::GetString(valueR);
+	const String& strR = Value_String::GetStringSTL(valueR);
 	strL += strR;
 	return new Value_String(strL);
+}
+
+// String == String
+Gurax_ImplementOpBinary(Eq, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Bool(strL == strR);
+}
+
+// String >= String
+Gurax_ImplementOpBinary(Ge, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Bool(strL >= strR);
+}
+
+// String > String
+Gurax_ImplementOpBinary(Gt, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Bool(strL > strR);
+}
+
+// String <= String
+Gurax_ImplementOpBinary(Le, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Bool(strL <= strR);
+}
+
+// String < String
+Gurax_ImplementOpBinary(Lt, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Bool(strL < strR);
+}
+
+#if 0
+// String * Number
+Gurax_ImplementOpBinary(Mul, String, Number)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	return new Value_Number(numL * numR);
+}
+#endif
+
+// String != String
+Gurax_ImplementOpBinary(Ne, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Bool(strL != strR);
 }
 
 //------------------------------------------------------------------------------
@@ -1287,6 +1345,13 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(String, width));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, String, String);
+	Gurax_AssignOpBinary(Eq, String, String);
+	Gurax_AssignOpBinary(Ge, String, String);
+	Gurax_AssignOpBinary(Gt, String, String);
+	Gurax_AssignOpBinary(Le, String, String);
+	Gurax_AssignOpBinary(Lt, String, String);
+	//Gurax_AssignOpBinary(Mul, String, String);
+	Gurax_AssignOpBinary(Ne, String, String);
 }
 
 Value* VType_String::DoCastFrom(const Value& value, DeclArg::Flags flags) const
