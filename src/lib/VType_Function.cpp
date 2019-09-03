@@ -14,7 +14,7 @@ Gurax_DeclareFunction(Function)
 	Declare(VTYPE_Random, Flag::Map);
 	DeclareArg("argDecls", VTYPE_Quote, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::Once);
-	AddHelp(
+		AddHelp(
 		Gurax_Symbol(en),
 		"");
 }

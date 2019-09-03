@@ -86,6 +86,14 @@ public:
 	public:
 		virtual bool Visit(Expr* pExpr) override { return pExpr->DoPrepare(); }
 	};
+	class Visitor_GatherArgSymbols : public Visitor {
+	private:
+		SymbolList& _symbolList;
+	public:
+		Visitor_GatherArgSymbols(SymbolList& symbolList) : _symbolList(symbolList) {}
+	public:
+		virtual bool Visit(Expr* pExpr) override;
+	};
 protected:
 	const TypeInfo& _typeInfo;
 	bool _silentFlag = false;
@@ -148,6 +156,12 @@ public:
 	bool Prepare() {
 		Visitor_Prepare visitor;
 		return Traverse(visitor);
+	}
+	SymbolList GatherArgSymbols() {
+		SymbolList symbolList;
+		Visitor_GatherArgSymbols visitor(symbolList);
+		Traverse(visitor);
+		return symbolList;
 	}
 	static size_t CountSequence(const Expr* pExpr);
 	static void ComposeForArgSlot(Composer& composer, Expr* pExpr);
