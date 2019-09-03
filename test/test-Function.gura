@@ -183,3 +183,28 @@ TestCase('Function()') {
 	Tester(`{f = Function(v1, v2, v3, v4, v5, v6) {g(v1, v2, v3, v4, v5, v6)}, f(1, 2, 3, 4, 5, 6)})
 	Tester(`{f = Function(v1, v2, v3, v4, v5, v6) {}, f(3)})
 }
+
+TestCase('Function Creation by &{}') {
+	g(b, c, d) = b + c + d
+	Tester(`{f = &{}, f})
+	Tester(`{f = &{}, f()})
+	Tester(`{f = &{}, f(3)})
+	Tester(`{f = &{$a}, f})
+	Tester(`{f = &{$a}, f()})
+	Tester(`{f = &{$a}, f(3)})
+	Tester(`{f = &{$a}, f(3, 4)})
+	Tester(`{f = &{$a + $b}, f})
+	Tester(`{f = &{$a + $b}, f(3, 4)})
+	Tester(`{f = &{$a + $b + $c + $d + $e}, f})
+	Tester(`{f = &{$a + $b + $c + $d + $e}, f(3, 4, 5, 6, 7)})
+	Tester(`{f = &{$a + $b * $c}, f})
+	Tester(`{f = &{$a + $b * $c}, f(3, 4, 5)})
+	Tester(`{f = &{$a * $b + $c}, f})
+	Tester(`{f = &{$a * $b + $c}, f(3, 4, 5)})
+	Tester(`{f = &{g($a, $b, $c) + $d}, f})
+	Tester(`{f = &{g($a, $b, $c) + $d}, f(3, 4, 5, 6)})
+	Tester(`{f = &{$a + g($b, $c, $d)}, f})
+	Tester(`{f = &{$a + g($b, $c, $d)}, f(3, 4, 5, 6)})
+	Tester(`{f = &{$a + $a}, f})
+	Tester(`{f = &{$a + $a}, f(3)})
+}
