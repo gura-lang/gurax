@@ -240,6 +240,74 @@ void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 }
 
 //------------------------------------------------------------------------------
+// Expr_Member
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_Member::typeInfo;
+
+void Expr_Member::Compose(Composer& composer)
+{
+	GetExprTarget().ComposeOrNil(composer);										// [Target]
+	switch (GetMemberMode()) {
+	case MemberMode::Normal: {
+		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		break;
+	}
+	case MemberMode::MapAlong: {
+		composer.Add_Member_MapAlong(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		break;
+	}
+	case MemberMode::MapToList: {
+		composer.Add_Member_MapToList(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
+		break;
+	}
+	case MemberMode::MapToIter: {
+		composer.Add_Member_MapToIter(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
+		break;
+	}
+	default: {
+		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		break;
+	}
+	}
+}
+
+void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+{
+	if (pOperator) {
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in lister assigment");
+		return;
+	}
+	GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
+	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), true, this);	// [Assigned]
+	composer.FlushDiscard();
+}
+
+void Expr_Member::ComposeForAssignment(
+	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+{
+	GetExprTarget().ComposeOrNil(composer);									// [Target]
+	if (pOperator) {
+		composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
+		exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
+		composer.Add_BinaryOp(pOperator, this);								// [Target Assigned]
+	} else {
+		exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
+	}
+	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), false, this);	// [Assigned]
+}
+
+String Expr_Member::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += GetExprTarget().ToString(ss);
+	str += MemberModeToSymbol(GetMemberMode())->GetName();
+	str += GetSymbol()->ToString();
+	str += GetAttr().ToString(ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Value::typeInfo;
@@ -560,74 +628,6 @@ String Expr_Assign::ToString(const StringStyle& ss) const
 	str += '=';
 	if (!ss.IsCram()) str += ' ';
 	str += GetExprRight().ToString(ss);
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// Expr_Member : Expr_Binary
-//------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Member::typeInfo;
-
-void Expr_Member::Compose(Composer& composer)
-{
-	GetExprTarget().ComposeOrNil(composer);									// [Target]
-	switch (GetMemberMode()) {
-	case MemberMode::Normal: {
-		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
-		break;
-	}
-	case MemberMode::MapAlong: {
-		composer.Add_Member_MapAlong(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
-		break;
-	}
-	case MemberMode::MapToList: {
-		composer.Add_Member_MapToList(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
-		break;
-	}
-	case MemberMode::MapToIter: {
-		composer.Add_Member_MapToIter(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
-		break;
-	}
-	default: {
-		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
-		break;
-	}
-	}
-}
-
-void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
-{
-	if (pOperator) {
-		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in lister assigment");
-		return;
-	}
-	GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
-	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), true, this);	// [Assigned]
-	composer.FlushDiscard();
-}
-
-void Expr_Member::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
-{
-	GetExprTarget().ComposeOrNil(composer);									// [Target]
-	if (pOperator) {
-		composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
-		exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
-		composer.Add_BinaryOp(pOperator, this);								// [Target Assigned]
-	} else {
-		exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
-	}
-	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), false, this);	// [Assigned]
-}
-
-String Expr_Member::ToString(const StringStyle& ss) const
-{
-	String str;
-	str += GetExprTarget().ToString(ss);
-	str += MemberModeToSymbol(GetMemberMode())->GetName();
-	str += GetSymbol()->ToString();
-	str += GetAttr().ToString(ss);
 	return str;
 }
 

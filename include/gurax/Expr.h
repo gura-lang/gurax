@@ -407,6 +407,44 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Expr_Member
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_Member : public Expr {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Member);
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<Expr> _pExprTarget;
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	MemberMode _memberMode;
+public:
+	Expr_Member(Expr* pExprTarget, const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode) :
+		Expr(typeInfo), _pExprTarget(pExprTarget), _pSymbol(pSymbol), _pAttr(pAttr),
+		_memberMode(memberMode) {}
+public:
+	Expr& GetExprTarget() { return *_pExprTarget; }
+	const Expr& GetExprTarget() const { return *_pExprTarget; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+	MemberMode GetMemberMode() const { return _memberMode; }
+public:
+	// Virtual functions of Expr
+	virtual bool Traverse(Visitor& visitor) override {
+		if (!visitor.Visit(this)) return false;
+		if (!_pExprTarget->Traverse(visitor)) return false;
+		return true;
+	}
+	virtual void Compose(Composer& composer) override;
+	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
+	virtual void ComposeForAssignment(
+		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Value : public Expr_Node {
@@ -516,39 +554,6 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Expr_Member : Expr_Node
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Member : public Expr_Node {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Expr_Member);
-public:
-	static const TypeInfo typeInfo;
-protected:
-	RefPtr<Expr> _pExprTarget;
-	const Symbol* _pSymbol;
-	RefPtr<Attribute> _pAttr;
-	MemberMode _memberMode;
-public:
-	Expr_Member(Expr* pExprTarget, const Symbol* pSymbol, Attribute* pAttr, MemberMode memberMode) :
-		Expr_Node(typeInfo), _pExprTarget(pExprTarget), _pSymbol(pSymbol), _pAttr(pAttr),
-		_memberMode(memberMode) {}
-public:
-	Expr& GetExprTarget() { return *_pExprTarget; }
-	const Expr& GetExprTarget() const { return *_pExprTarget; }
-	const Symbol* GetSymbol() const { return _pSymbol; }
-	const Attribute& GetAttr() const { return *_pAttr; }
-	MemberMode GetMemberMode() const { return _memberMode; }
-public:
-	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) override;
-	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
-	virtual void ComposeForAssignment(
-		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
