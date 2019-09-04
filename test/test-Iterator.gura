@@ -275,14 +275,14 @@ TestCase('Iterator#Head()') {
 }
 
 TestCase('Iterator#Join()') {
-	Tester(`[].Each().Join(), true)
-	Tester(`[].Each().Join(','), true)
-	Tester(`['abc'].Each().Join(), true)
-	Tester(`['abc'].Each().Join(','), true)
-	Tester(`['abc', 'def'].Each().Join(), true)
-	Tester(`['abc', 'def'].Each().Join(','), true)
-	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(), true)
-	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(','), true)
+	Tester(`[].Each().Join()):quote
+	Tester(`[].Each().Join(',')):quote
+	Tester(`['abc'].Each().Join()):quote
+	Tester(`['abc'].Each().Join(',')):quote
+	Tester(`['abc', 'def'].Each().Join()):quote
+	Tester(`['abc', 'def'].Each().Join(',')):quote
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join()):quote
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(',')):quote
 }
 
 TestCase('Iterator#Joinb()') {

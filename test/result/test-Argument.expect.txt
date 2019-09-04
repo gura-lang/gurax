@@ -1,0 +1,8 @@
+======== Property ========
+======== Argument#IsSet() ========
+f() .. attr1:false, attr2:false, attr3:false, attr4:false
+f():attr1 .. attr1:true, attr2:false, attr3:false, attr4:false
+f():attr1:attr2 .. attr1:true, attr2:true, attr3:false, attr4:false
+f():attr1:attr2:attr3 .. attr1:true, attr2:true, attr3:true, attr4:false
+f():attr1:attr2:attr3:attr4 .. attr1:true, attr2:true, attr3:true, attr4:true
+f():attrX .. invalid attribute symbol: attrX

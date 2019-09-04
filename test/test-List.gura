@@ -389,14 +389,14 @@ TestCase('List#Head()') {
 }
 
 TestCase('List#Join()') {
-	Tester(`[].Join(), true)
-	Tester(`[].Join(','), true)
-	Tester(`['abc'].Join(), true)
-	Tester(`['abc'].Join(','), true)
-	Tester(`['abc', 'def'].Join(), true)
-	Tester(`['abc', 'def'].Join(','), true)
-	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join(), true)
-	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join(','), true)
+	Tester(`[].Join()):quote
+	Tester(`[].Join(',')):quote
+	Tester(`['abc'].Join()):quote
+	Tester(`['abc'].Join(',')):quote
+	Tester(`['abc', 'def'].Join()):quote
+	Tester(`['abc', 'def'].Join(',')):quote
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join()):quote
+	Tester(`['abc', 'def', 'ghi', 'jkl', 'mno'].Join(',')):quote
 }
 
 TestCase('List#Joinb()') {

@@ -19,12 +19,14 @@ words100 = [
 	'move', 'miniature', 'reading', 'possess', 'nebulous'
 ]
 
+/*
 TestCase('String#first') {
-	Tester(`''.first, true)
+	Tester(`''.first):quote
 	
 }
 sys.Exit()
-	
+*/
+
 TestCase('Property') {
 	Tester(`String.__PropHandler__(`len))
 	Tester(`String.__PropHandler__(`width))
@@ -332,45 +334,45 @@ TestCase('String#Split()') {
 }
 
 TestCase('String#Strip()') {
-	Tester(`''.Strip(), true)
-	Tester(`'abcdefg'.Strip(), true)
-	Tester(`' abcdefg'.Strip(), true)
-	Tester(`'abcdefg '.Strip(), true)
-	Tester(`' abcdefg '.Strip(), true)
-	Tester(`'   abcdefg'.Strip(), true)
-	Tester(`'abcdefg   '.Strip(), true)
-	Tester(`'   abcdefg   '.Strip(), true)
-	Tester(`'\nabcdefg\n'.Strip(), true)
-	Tester(`'\tabcdefg\t'.Strip(), true)
-	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.Strip(), true)
+	Tester(`''.Strip()):quote
+	Tester(`'abcdefg'.Strip()):quote
+	Tester(`' abcdefg'.Strip()):quote
+	Tester(`'abcdefg '.Strip()):quote
+	Tester(`' abcdefg '.Strip()):quote
+	Tester(`'   abcdefg'.Strip()):quote
+	Tester(`'abcdefg   '.Strip()):quote
+	Tester(`'   abcdefg   '.Strip()):quote
+	Tester(`'\nabcdefg\n'.Strip()):quote
+	Tester(`'\tabcdefg\t'.Strip()):quote
+	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.Strip()):quote
 }
 
 TestCase('String#StripLeft()') {
-	Tester(`''.StripLeft(), true)
-	Tester(`'abcdefg'.StripLeft(), true)
-	Tester(`' abcdefg'.StripLeft(), true)
-	Tester(`'abcdefg '.StripLeft(), true)
-	Tester(`' abcdefg '.StripLeft(), true)
-	Tester(`'   abcdefg'.StripLeft(), true)
-	Tester(`'abcdefg   '.StripLeft(), true)
-	Tester(`'   abcdefg   '.StripLeft(), true)
-	Tester(`'\nabcdefg\n'.StripLeft(), true)
-	Tester(`'\tabcdefg\t'.StripLeft(), true)
-	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.StripLeft(), true)
+	Tester(`''.StripLeft()):quote
+	Tester(`'abcdefg'.StripLeft()):quote
+	Tester(`' abcdefg'.StripLeft()):quote
+	Tester(`'abcdefg '.StripLeft()):quote
+	Tester(`' abcdefg '.StripLeft()):quote
+	Tester(`'   abcdefg'.StripLeft()):quote
+	Tester(`'abcdefg   '.StripLeft()):quote
+	Tester(`'   abcdefg   '.StripLeft()):quote
+	Tester(`'\nabcdefg\n'.StripLeft()):quote
+	Tester(`'\tabcdefg\t'.StripLeft()):quote
+	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.StripLeft()):quote
 }
 
 TestCase('String#StripRight()') {
-	Tester(`''.StripRight(), true)
-	Tester(`'abcdefg'.StripRight(), true)
-	Tester(`' abcdefg'.StripRight(), true)
-	Tester(`'abcdefg '.StripRight(), true)
-	Tester(`' abcdefg '.StripRight(), true)
-	Tester(`'   abcdefg'.StripRight(), true)
-	Tester(`'abcdefg   '.StripRight(), true)
-	Tester(`'   abcdefg   '.StripRight(), true)
-	Tester(`'\nabcdefg\n'.StripRight(), true)
-	Tester(`'\tabcdefg\t'.StripRight(), true)
-	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.StripRight(), true)
+	Tester(`''.StripRight()):quote
+	Tester(`'abcdefg'.StripRight()):quote
+	Tester(`' abcdefg'.StripRight()):quote
+	Tester(`'abcdefg '.StripRight()):quote
+	Tester(`' abcdefg '.StripRight()):quote
+	Tester(`'   abcdefg'.StripRight()):quote
+	Tester(`'abcdefg   '.StripRight()):quote
+	Tester(`'   abcdefg   '.StripRight()):quote
+	Tester(`'\nabcdefg\n'.StripRight()):quote
+	Tester(`'\tabcdefg\t'.StripRight()):quote
+	Tester(`'\n \t\n \tabcdefg\n \t\n \t'.StripRight()):quote
 }
 
 TestCase('String#ToBinary()') {

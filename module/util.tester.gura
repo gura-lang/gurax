@@ -12,12 +12,12 @@ PrintTitle(title:String) = {
 	Printf('======== %s ========\n', title)
 }
 
-Tester(expr:Expr, quoteFlag:Bool = false):void:dynamic_scope:map {block?} = {
+Tester(expr:Expr, arg%%):void:dynamic_scope:map:[quote] {block?} = {
 	Printf('%s ..', expr)
 	try {
 		rtn = expr.Eval()
 		rtnStr = rtn.ToString()
-		if (quoteFlag) { rtnStr = rtnStr.Escape():surround }
+		if (arg.IsSet(`quote)) { rtnStr = rtnStr.Escape():surround }
 		Printf(cond(rtnStr.Find('\n'), '\n%s\n', ' %s\n'), rtnStr):nomap
 		block && block(rtn)
 	} catch {|e|
