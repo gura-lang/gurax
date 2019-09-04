@@ -16,16 +16,8 @@ words100 = [
 	'cover', 'encourage', 'experience', 'disgusting', 'entertaining', 'purring', 'tired'
 	'clap', 'cause', 'complain', 'flat', 'curve', 'change', 'boil', 'part', 'living', 'steam'
 	'detect', 'milk', 'pine', 'ray', 'sudden', 'person', 'roasted', 'cannon', 'hate', 'heal'
-	'move', 'miniature', 'reading', 'possess', 'nebulous'
+	'move', 'miniature', 'reading', 'possess', 'nebulous', 'cattle'
 ]
-
-/*
-TestCase('String#first') {
-	Tester(`''.first):quote
-	
-}
-sys.Exit()
-*/
 
 TestCase('Property') {
 	Tester(`String.__PropHandler__(`len))
@@ -406,4 +398,20 @@ TestCase('String#len, String#width') {
 	Tester(exprs)
 	str = 'あいうえおかきくけこ'
 	Tester(exprs)
+}
+
+TestCase('String#first') {
+	Tester(`''.first):quote
+	Tester(`'a'.first):quote
+	Tester(`'abcdefg'.first):quote
+	Tester(`'あ'.first):quote
+	Tester(`'あいうえお'.first):quote
+}
+
+TestCase('String#last') {
+	Tester(`''.last):quote
+	Tester(`'a'.last):quote
+	Tester(`'abcdefg'.last):quote
+	Tester(`'あ'.last):quote
+	Tester(`'あいうえお'.last):quote
 }

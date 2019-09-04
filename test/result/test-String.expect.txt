@@ -371,3 +371,15 @@ str.width .. 14
 str .. あいうえおかきくけこ
 str.len .. 10
 str.width .. 20
+======== String#first ========
+''.first .. ''
+'a'.first .. 'a'
+'abcdefg'.first .. 'a'
+'あ'.first .. 'あ'
+'あいうえお'.first .. 'あ'
+======== String#last ========
+''.last .. ''
+'a'.last .. 'a'
+'abcdefg'.last .. 'g'
+'あ'.last .. 'あ'
+'あいうえお'.last .. 'お'

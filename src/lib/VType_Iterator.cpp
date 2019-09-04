@@ -1154,7 +1154,7 @@ Value* VType_Iterator::Method_Sort(
 	RefPtr<ValueOwner> pValueOwner;
 	if (validFlag_keys) {
 		if (valueTypedOwner.GetSize() < keys.size()) {
-			Error::Issue(ErrorType::RangeError, "the length of keys mus be equal to that of values");
+			Error::Issue(ErrorType::RangeError, "the length of keys must be equal to that of values");
 			return Value::nil();
 		}
 		pValueOwner.reset(new ValueOwner());
