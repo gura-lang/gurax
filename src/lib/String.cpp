@@ -145,6 +145,18 @@ const char* String::Forward(const char* p, size_t nChars, size_t *pnCharsActual)
 	return p;
 }
 
+const char* String::Backward(const char* p, const char* pHead, size_t nChars, size_t *pnCharsActual)
+{
+	size_t nCharsActual = 0;
+	for ( ; p != pHead && nCharsActual < nChars; nCharsActual++) {
+		p--;
+		char ch = *p;
+		while (p != pHead && IsUTF8Follower(*p)) p--;
+	}
+	if (pnCharsActual) *pnCharsActual = nCharsActual;
+	return p;
+}
+
 String::const_iterator String::Forward(const_iterator p, const_iterator pEnd, size_t nChars, size_t *pnCharsActual)
 {
 	size_t nCharsActual = 0;

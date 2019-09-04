@@ -127,7 +127,9 @@ public:
 	static char ToEscaped(char ch)			{ return _toEscapedTbl[static_cast<UChar>(ch)];		}
 public:
 	String PickChar(size_t idx) const;
+	static const char* ForwardToTerminal(const char* p) { return p + ::strlen(p); }
 	static const char* Forward(const char* p, size_t nChars = 1, size_t *pnCharsActual = nullptr);
+	static const char* Backward(const char* p, const char* pHead, size_t nChars = 1, size_t *pnCharsActual = nullptr);
 	static const_iterator Forward(const_iterator p, const_iterator pEnd,
 								  size_t nChars = 1, size_t *pnCharsActual = nullptr);
 	const_iterator Forward(const_iterator p, size_t nChars = 1, size_t *pnCharsActual = nullptr) const {

@@ -1184,6 +1184,39 @@ Gurax_ImplementMethod(String, ZenToHan)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// String#first
+Gurax_DeclareProperty_R(String, first)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The first character in the string.");
+}
+
+Gurax_ImplementPropertyGetter(String, first)
+{
+	const char* str = GetValueThis(valueTarget).GetString();
+	const char* p = String::Forward(str);
+	return new Value_String(String(str, p));
+}
+
+// String#last
+Gurax_DeclareProperty_R(String, last)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The last character in the string.");
+}
+
+Gurax_ImplementPropertyGetter(String, last)
+{
+	const char* str = GetValueThis(valueTarget).GetString();
+	const char* pBtm = String::ForwardToTerminal(str);
+	const char* p = String::Backward(pBtm, str);
+	return new Value_String(String(p, pBtm));
+}
+
 // String#len
 Gurax_DeclareProperty_R(String, len)
 {
@@ -1195,8 +1228,7 @@ Gurax_DeclareProperty_R(String, len)
 
 Gurax_ImplementPropertyGetter(String, len)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
+	const String& str = GetValueThis(valueTarget).GetStringSTL();
 	return new Value_Number(str.Length());
 }
 
@@ -1211,8 +1243,7 @@ Gurax_DeclareProperty_R(String, width)
 
 Gurax_ImplementPropertyGetter(String, width)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	const String& str = valueThis.GetStringSTL();
+	const String& str = GetValueThis(valueTarget).GetStringSTL();
 	return new Value_Number(str.Width());
 }
 
@@ -1341,6 +1372,8 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Upper));
 	Assign(Gurax_CreateMethod(String, ZenToHan));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(String, first));
+	Assign(Gurax_CreateProperty(String, last));
 	Assign(Gurax_CreateProperty(String, len));
 	Assign(Gurax_CreateProperty(String, width));
 	// Assignment of operator
