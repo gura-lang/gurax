@@ -215,13 +215,14 @@ Gurax_ImplementMethod(List, Put)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	valueTypedOwner.Set(pos, value.Reference());
-	return Value::nil();
+	return argument.GetValueThis().Reference();
 }
 
-// List#Shuffle():reduce
+// List#Shuffle(random?:Random):reduce
 Gurax_DeclareMethod(List, Shuffle)
 {
 	Declare(VTYPE_List, Flag::Reduce);
+	DeclareArg("random", VTYPE_Random, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Shuffle the order of the list content based on random numbers.");
@@ -229,15 +230,15 @@ Gurax_DeclareMethod(List, Shuffle)
 
 Gurax_ImplementMethod(List, Shuffle)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	Random& random = args.IsValid()? Value_Random::GetRandom(args.PickValue()) : Random::Global();
 	// Function body
-#endif
-	return Value::nil();
+	valueTypedOwner.GetValueOwnerToSort().Shuffle(random);
+	return argument.GetValueThis().Reference();
 }
 
 // List#Shift():[raise]

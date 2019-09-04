@@ -7,6 +7,8 @@
 
 namespace Gurax {
 
+class Random;
+
 //------------------------------------------------------------------------------
 // ValueList
 //------------------------------------------------------------------------------
@@ -20,6 +22,7 @@ public:
 	ValueList& Sort(Processor& processor, const Function& function);
 	ValueList& StableSort(SortOrder sortOrder = SortOrder::Ascend);
 	ValueList& StableSort(Processor& processor, const Function& function);
+	ValueList& Shuffle(Random& random);
 	VType& GetVTypeOfElems() const;
 	void IncCntRefOfEach() const;
 	bool CheckPosition(Int pos, Int posRaw) const;

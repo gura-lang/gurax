@@ -146,6 +146,8 @@ TestCase('List#Shift()') {
 }
 
 TestCase('List#Shuffle()') {
+	rnd = Random(0)
+	Tester(`(tbl = [0..99].Shuffle(rnd)))
 }
 
 TestCase('List#After()') {

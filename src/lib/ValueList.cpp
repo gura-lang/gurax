@@ -36,6 +36,12 @@ ValueList& ValueList::StableSort(Processor& processor, const Function& function)
 	return *this;
 }
 
+ValueList& ValueList::Shuffle(Random& random)
+{
+	std::shuffle(begin(), end(), random.GetEngine());
+	return *this;
+}
+
 VType& ValueList::GetVTypeOfElems() const
 {
 	if (empty()) return VTYPE_Undefined;

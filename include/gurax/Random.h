@@ -35,6 +35,7 @@ public:
 	static void Bootup(UInt32 seed);
 	static void Bootup();
 	static Random &Global() { return *_pRandomGlobal; }
+	std::mt19937& GetEngine() { return  _engine; }
 	void Reset() { _engine.seed(_seed); }
 	UInt32 GetSeed() const { return _seed; }
 	template<typename T = Double> T Uniform() { return std::uniform_real_distribution<T>()(_engine); }
