@@ -1,0 +1,18 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+}
+
+TestCase('Argument#IsSet()') {
+	f(arg%%):[attr1, attr2, attr3, attr4] = {
+		Format('attr1:%s, attr2:%s, attr3:%s, attr4:%s',
+			   arg.IsSet(`attr1), arg.IsSet(`attr2), arg.IsSet(`attr3), arg.IsSet(`attr4))
+	}
+	Tester(`f())
+	Tester(`f():attr1)
+	Tester(`f():attr1:attr2)
+	Tester(`f():attr1:attr2:attr3)
+	Tester(`f():attr1:attr2:attr3:attr4)
+	Tester(`f():attrX)
+}

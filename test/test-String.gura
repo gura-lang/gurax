@@ -19,6 +19,12 @@ words100 = [
 	'move', 'miniature', 'reading', 'possess', 'nebulous'
 ]
 
+TestCase('String#first') {
+	Tester(`''.first, true)
+	
+}
+sys.Exit()
+	
 TestCase('Property') {
 	Tester(`String.__PropHandler__(`len))
 	Tester(`String.__PropHandler__(`width))
