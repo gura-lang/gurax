@@ -438,6 +438,107 @@ Gurax_ImplementMethod(Iterator, Flatten)
 	return Value::nil();
 }
 
+//-----------------------------------------------------------------------------
+// Iterator_Fold
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Fold : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	size_t _cnt;
+	size_t _cntStep;
+	bool _listItemFlag;
+	bool _neatFlag;
+	ValueList _valListRemain;
+	bool _doneFlag;
+public:
+	Iterator_Fold(Iterator* pIteratorSrc, size_t cnt,
+				  size_t cntStep, bool listItemFlag, bool neatFlag) :
+		_pIteratorSrc(pIteratorSrc), _cnt(cnt), _cntStep(cntStep),
+		_listItemFlag(listItemFlag), _neatFlag(neatFlag), _doneFlag(false) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return GetIteratorSrc().GetFlags() & (Flag::Finite | Flag::LenDetermined);
+	}
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//-----------------------------------------------------------------------------
+// Iterator_Fold
+//-----------------------------------------------------------------------------
+Value* Iterator_Fold::DoNextValue()
+{
+#if 0
+	if (_doneFlag) return false;
+	Value valueElem;
+	Value valueNext;
+	Object_list *pObjList = valueNext.InitAsList(env);
+	pObjList->Reserve(_cnt);
+	if (_cntStep < _cnt) {
+		foreach (ValueList, pValue, _valListRemain) {
+			pObjList->Add(*pValue);
+		}
+		_valListRemain.clear();
+		bool newElemFlag = false;
+		while (pObjList->Size() < _cnt) {
+			if (!_pIterator->Next(env, valueElem)) {
+				_doneFlag = true;
+				break;
+			}
+			newElemFlag = true;
+			pObjList->Add(valueElem);
+		}
+		if (!newElemFlag || sig.IsSignalled()) return false;
+		if (pObjList->Size() > _cntStep) {
+			for (ValueList::const_iterator pValue = pObjList->GetList().begin() + _cntStep;
+								 pValue != pObjList->GetList().end(); pValue++) {
+				_valListRemain.push_back(*pValue);
+			}
+		}
+	} else {
+		while (pObjList->Size() < _cnt) {
+			if (!_pIterator->Next(env, valueElem)) {
+				_doneFlag = true;
+				break;
+			}
+			pObjList->Add(valueElem);
+		}
+		if (sig.IsSignalled()) return false;
+		for (size_t n = _cntStep - _cnt; n > 0; n--) {
+			if (!_pIterator->Next(env, valueElem)) {
+				_doneFlag = true;
+				break;
+			}
+		}
+		if (sig.IsSignalled()) return false;
+	}
+	if (pObjList->Empty() || (_neatFlag && pObjList->Size() < _cnt)) {
+		return false;
+	} else if (_listItemFlag) {
+		value = valueNext;
+	} else {
+		Iterator *pIterator = new Object_list::IteratorEach(
+							Object_list::GetObject(valueNext)->Reference());
+		value = Value(new Object_iterator(env, pIterator));
+	}
+	return true;
+#endif
+	return Value::nil();
+}
+
+String Iterator_Fold::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "fold(";
+	rtn += GetIteratorSrc().ToString();
+	rtn += ")";
+	return rtn;
+}
+
 // Iterator#Fold(n:number, nstep?:number):map:[iteritem,neat] {block?}
 Gurax_DeclareMethod(Iterator, Fold)
 {
