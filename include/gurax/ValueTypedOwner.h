@@ -257,6 +257,7 @@ public:
 	bool Insert(Int pos, Iterator& iterator);
 	bool Erase(Int pos);
 	bool Erase(const NumList<Int>& posList);
+	Value* Shift() { return GetValueOwner().Shift(); }
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }

@@ -248,7 +248,8 @@ Gurax_DeclareMethod(List, Shift)
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en), 
-		"Shifts the elements of the list. If the content of the list is `[1, 2, 3, 4]`,\n"
+		"Shifts the elements of the list and returns the value of the shifted top element.\n"
+		"If the content of the list is `[1, 2, 3, 4]`,\n"
 		"it becomes `[2, 3, 4]` after calling this method. In default, no error occurs\n"
 		"even when the list is empty. To raise an error for executing this method on\n"
 		"an empty list, specify :raise attribute.");
@@ -256,15 +257,18 @@ Gurax_DeclareMethod(List, Shift)
 
 Gurax_ImplementMethod(List, Shift)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	if (argument.IsSet(Gurax_Symbol(raise)) && valueTypedOwner.IsEmpty()) {
+		Error::Issue(ErrorType::RangeError, "the list is empty");
+		return Value::nil();
+	}
+	RefPtr<Value> pValue(valueTypedOwner.Shift());
+	return pValue.release();
 }
 
 //-----------------------------------------------------------------------------

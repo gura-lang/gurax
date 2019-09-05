@@ -86,6 +86,14 @@ void ValueOwner::Insert(Int pos, const ValueList& values)
 	insert(begin() + pos, values.begin(), values.end());
 }
 
+Value* ValueOwner::Shift()
+{
+	if (empty()) return Value::nil();
+	RefPtr<Value> pValue(front());
+	erase(begin());
+	return pValue.release();
+}
+
 //------------------------------------------------------------------------------
 // ValueStack
 //------------------------------------------------------------------------------

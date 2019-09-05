@@ -45,6 +45,7 @@ public:
 	void Add(const ValueList& values);
 	void Insert(Int pos, Value* pValue) { insert(begin() + pos, pValue); }
 	void Insert(Int pos, const ValueList& values);
+	Value* Shift();
 public:
 	template<typename T_Map> static ValueOwner* CollectKeys(const T_Map& map);
 };
