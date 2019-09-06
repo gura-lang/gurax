@@ -444,17 +444,15 @@ Gurax_ImplementMethod(Iterator, Flatten)
 class GURAX_DLLDECLARE Iterator_Fold : public Iterator {
 private:
 	RefPtr<Iterator> _pIteratorSrc;
-	size_t _cnt;
-	size_t _cntStep;
-	bool _listItemFlag;
+	size_t _nSize;
+	size_t _nAdvance;
+	bool _itemAsIterFlag;
 	bool _neatFlag;
-	ValueList _valListRemain;
+	RefPtr<ValueOwner> _pValueOwnerRemain;
 	bool _doneFlag;
 public:
-	Iterator_Fold(Iterator* pIteratorSrc, size_t cnt,
-				  size_t cntStep, bool listItemFlag, bool neatFlag) :
-		_pIteratorSrc(pIteratorSrc), _cnt(cnt), _cntStep(cntStep),
-		_listItemFlag(listItemFlag), _neatFlag(neatFlag), _doneFlag(false) {}
+	Iterator_Fold(Iterator* pIteratorSrc, size_t nSize, size_t nAdvance,
+				  bool itemAsIterFlag, bool neatFlag);
 public:
 	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
 	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
@@ -470,60 +468,68 @@ public:
 //-----------------------------------------------------------------------------
 // Iterator_Fold
 //-----------------------------------------------------------------------------
+Iterator_Fold::Iterator_Fold(Iterator* pIteratorSrc, size_t nSize, size_t nAdvance,
+							 bool itemAsIterFlag, bool neatFlag) :
+	_pIteratorSrc(pIteratorSrc), _nSize(nSize), _nAdvance(nAdvance),
+	_itemAsIterFlag(itemAsIterFlag), _neatFlag(neatFlag), _doneFlag(false)
+{
+	if (_nAdvance < _nSize) {
+		_pValueOwnerRemain.reset(new ValueOwner());
+		_pValueOwnerRemain->reserve(_nSize - _nAdvance);
+	}
+}
+
 Value* Iterator_Fold::DoNextValue()
 {
-#if 0
-	if (_doneFlag) return false;
-	Value valueElem;
-	Value valueNext;
-	Object_list *pObjList = valueNext.InitAsList(env);
-	pObjList->Reserve(_cnt);
-	if (_cntStep < _cnt) {
-		foreach (ValueList, pValue, _valListRemain) {
-			pObjList->Add(*pValue);
-		}
-		_valListRemain.clear();
-		bool newElemFlag = false;
-		while (pObjList->Size() < _cnt) {
-			if (!_pIterator->Next(env, valueElem)) {
+	if (_doneFlag) return nullptr;
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(_nSize);
+	if (_nAdvance < _nSize) {
+		std::copy(_pValueOwnerRemain->begin(), _pValueOwnerRemain->end(), std::back_inserter(*pValueOwner));
+		_pValueOwnerRemain->clear();	// don't use Clear() to avoid decrementation of reference counter
+		while (pValueOwner->size() < _nSize) {
+			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+			if (!pValueElem) {
 				_doneFlag = true;
+				if (Error::IsIssued()) return nullptr;
 				break;
 			}
-			newElemFlag = true;
-			pObjList->Add(valueElem);
+			pValueOwner->push_back(pValueElem.release());
 		}
-		if (!newElemFlag || sig.IsSignalled()) return false;
-		if (pObjList->Size() > _cntStep) {
-			for (ValueList::const_iterator pValue = pObjList->GetList().begin() + _cntStep;
-								 pValue != pObjList->GetList().end(); pValue++) {
-				_valListRemain.push_back(*pValue);
-			}
+		if (pValueOwner->size() > _nAdvance) {
+			std::copy(pValueOwner->begin() + _nAdvance, pValueOwner->end(), std::back_inserter(*_pValueOwnerRemain));
+			_pValueOwnerRemain->IncCntRefOfEach();
 		}
-	} else {
-		while (pObjList->Size() < _cnt) {
-			if (!_pIterator->Next(env, valueElem)) {
-				_doneFlag = true;
-				break;
-			}
-			pObjList->Add(valueElem);
-		}
-		if (sig.IsSignalled()) return false;
-		for (size_t n = _cntStep - _cnt; n > 0; n--) {
-			if (!_pIterator->Next(env, valueElem)) {
-				_doneFlag = true;
-				break;
-			}
-		}
-		if (sig.IsSignalled()) return false;
 	}
-	if (pObjList->Empty() || (_neatFlag && pObjList->Size() < _cnt)) {
-		return false;
-	} else if (_listItemFlag) {
-		value = valueNext;
+#if 0
 	} else {
+		while (pValueOwner->size() < _nSize) {
+			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+			if (!pValueElem) {
+				_doneFlag = true;
+				if (Error::IsIssued()) return nullptr;
+				break;
+			}
+			pValueOwner->push_back(pValueElem.release());
+		}
+		// dumb reading
+		for (size_t n = _nAdvance - _nSize; n > 0; n--) {
+			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+			if (!pValueElem) {
+				_doneFlag = true;
+				if (Error::IsIssued()) return nullptr;
+				break;
+			}
+		}
+	}
+	if (pValueOwner->empty() || (_neatFlag && pValueOwner->size() < _nSize)) {
+		return nullptr;
+	} else if (_itemAsIterFlag) {
 		Iterator *pIterator = new Object_list::IteratorEach(
 							Object_list::GetObject(valueNext)->Reference());
 		value = Value(new Object_iterator(env, pIterator));
+	} else {
+		return Value_List(pValueOwner.release());
 	}
 	return true;
 #endif
