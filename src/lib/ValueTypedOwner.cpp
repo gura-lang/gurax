@@ -2,7 +2,6 @@
 // ValueTypedOwner.cpp
 //==============================================================================
 #include "stdafx.h"
-#include "../boost/combination.hpp"
 
 namespace Gurax {
 
@@ -215,128 +214,6 @@ void ValueTypedOwner::UpdateVTypeOfElems(VType& vtypeAdded)
 bool ValueTypedOwner::HasDeterminedVTypeOfElems() const
 {
 	return !_pVTypeOfElems->IsIdentical(VTYPE_Undefined) && !_pVTypeOfElems->IsIdentical(VTYPE_Any);
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Reverse
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Reverse::DoNextValue()
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
-}
-
-String ValueTypedOwner::Iterator_Reverse::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Reverse:n=%zu", GetValueOwner().size());
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Cycle
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Cycle::DoNextValue()
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
-}
-
-String ValueTypedOwner::Iterator_Cycle::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Cycle:n=%zu", GetValueOwner().size());
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Pingpong
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Pingpong::DoNextValue()
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
-}
-
-String ValueTypedOwner::Iterator_Pingpong::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Pingpong:n=%zu", GetValueOwner().size());
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Fold
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Fold::DoNextValue()
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
-}
-
-String ValueTypedOwner::Iterator_Fold::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Fold:n=%zu", GetValueOwner().size());
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Permutation
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Permutation::DoNextValue()
-{
-	if (_doneFlag) return nullptr;
-	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract<size_t>(_indices)));
-	_doneFlag = !std::next_permutation(_indices.begin(), _indices.end());
-	return pValue.release();
-}
-
-String ValueTypedOwner::Iterator_Permutation::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Permutation:n=%zu", GetValueOwner().size());
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_PartialPermutation
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_PartialPermutation::DoNextValue()
-{
-	if (_doneFlag) return nullptr;
-	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_indices, _nExtract)));
-	_doneFlag = !boost::next_partial_permutation(_indices.begin(), _indices.begin() + _nExtract, _indices.end());
-	return pValue.release();
-}
-
-String ValueTypedOwner::Iterator_PartialPermutation::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#PartialPermutation:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
-	return str;
-}
-
-//------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Combination
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Combination::DoNextValue()
-{
-	if (_doneFlag) return nullptr;
-	RefPtr<Value> pValue(new Value_List(GetValueTypedOwner().Extract(_indices, _nExtract)));
-	_doneFlag = !boost::next_combination(_indices.begin(), _indices.begin() + _nExtract, _indices.end());
-	return pValue.release();
-}
-
-String ValueTypedOwner::Iterator_Combination::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
-	return str;
 }
 
 }

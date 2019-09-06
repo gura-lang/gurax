@@ -50,6 +50,146 @@ public:
 		virtual Value* DoNextValue() override;
 		virtual String ToString(const StringStyle& ss) const override;
 	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Reverse
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Reverse : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Reverse");
+	private:
+		size_t _idx;
+	public:
+		Iterator_Reverse(ValueOwner* pValueOwner) : IteratorBase(pValueOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Cycle
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Cycle : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Cycle");
+	private:
+		size_t _idx;
+	public:
+		Iterator_Cycle(ValueOwner* pValueOwner) : IteratorBase(pValueOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Pingpong
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Pingpong : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Pingpong");
+	private:
+		size_t _idx;
+	public:
+		Iterator_Pingpong(ValueOwner* pValueOwner) : IteratorBase(pValueOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Fold
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Fold : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Fold");
+	private:
+		size_t _idx;
+	public:
+		Iterator_Fold(ValueOwner* pValueOwner) : IteratorBase(pValueOwner), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Permutation
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Permutation : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Permutation");
+	private:
+		NumList<size_t> _indices;
+		bool _doneFlag;
+	public:
+		Iterator_Permutation(ValueOwner* pValueOwner) :
+			IteratorBase(pValueOwner), _doneFlag(false) {
+			_indices.FillSeq(GetValueOwner().size());
+		}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_PartialPermutation
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_PartialPermutation : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_PartialPermutation");
+	private:
+		size_t _nExtract;
+		bool _doneFlag;
+		NumList<size_t> _indices;
+	public:
+		Iterator_PartialPermutation(ValueOwner* pValueOwner, size_t nExtract) :
+			IteratorBase(pValueOwner), _nExtract(nExtract), _doneFlag(false) {
+			_indices.FillSeq(GetValueOwner().size());
+		}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Combination
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Combination : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Combination");
+	private:
+		size_t _nExtract;
+		bool _doneFlag;
+		NumList<size_t> _indices;
+	public:
+		Iterator_Combination(ValueOwner* pValueOwner, size_t nExtract) :
+			IteratorBase(pValueOwner), _nExtract(nExtract), _doneFlag(false) {
+			_indices.FillSeq(GetValueOwner().size());
+		}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 public:
 	//using ValueList::ValueList;
 	ValueOwner() {}

@@ -264,7 +264,8 @@ Value* VType_Iterator::Method_Combination(
 		Error::Issue(ErrorType::RangeError, "range over");
 		return Value::nil();
 	}
-	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Combination(valueTypedOwner.Reference(), n));
+	RefPtr<Iterator> pIterator(new ValueOwner::Iterator_Combination(
+								   valueTypedOwner.GetValueOwnerReference(), n));
 	return function.ReturnIterator(processor, argument, pIterator.release());
 }
 
@@ -886,9 +887,11 @@ Value* VType_Iterator::Method_Permutation(
 	}
 	RefPtr<Iterator> pIterator;
 	if (validFlag_n && n < valueTypedOwner.GetSize()) {
-		pIterator.reset(new ValueTypedOwner::Iterator_PartialPermutation(valueTypedOwner.Reference(), n));
+		pIterator.reset(new ValueOwner::Iterator_PartialPermutation(
+							valueTypedOwner.GetValueOwnerReference(), n));
 	} else {
-		pIterator.reset(new ValueTypedOwner::Iterator_Permutation(valueTypedOwner.Reference()));
+		pIterator.reset(new ValueOwner::Iterator_Permutation(
+							valueTypedOwner.GetValueOwnerReference()));
 	}
 	return function.ReturnIterator(processor, argument, pIterator.release());
 }
