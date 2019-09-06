@@ -23,6 +23,9 @@ public:
 	static Value* Method_Combination(
 		const Function& function, Processor& processor,
 		Argument& argument, const ValueTypedOwner& valueTypedOwner);
+	static Value* Method_Fold(
+		const Function& function, Processor& processor,
+		Argument& argument, Iterator& iteratorSrc);
 	static Value* Method_Permutation(
 		const Function& function, Processor& processor,
 		Argument& argument, const ValueTypedOwner& valueTypedOwner);

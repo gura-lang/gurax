@@ -559,12 +559,12 @@ Gurax_ImplementMethod(List, Flatten)
 	return Value::nil();
 }
 
-// List#Fold(n:number, nstep?:number):map:[iteritem,neat] {block?}
+// List#Fold(size:number, advance?:number):map:[iteritem,neat] {block?}
 Gurax_DeclareMethod(List, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nstep", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("sizen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("advance", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(iteritem));
 	DeclareAttrOpt(Gurax_Symbol(neat));
@@ -574,15 +574,11 @@ Gurax_DeclareMethod(List, Fold)
 
 Gurax_ImplementMethod(List, Fold)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Fold(*this, processor, argument, *pIteratorSrc);
 }
 
 // List#Format(format:String):map {block?}

@@ -439,119 +439,12 @@ Gurax_ImplementMethod(Iterator, Flatten)
 	return Value::nil();
 }
 
-//-----------------------------------------------------------------------------
-// Iterator_Fold
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Fold : public Iterator {
-private:
-	RefPtr<Iterator> _pIteratorSrc;
-	size_t _nSize;
-	size_t _nAdvance;
-	bool _itemAsIterFlag;
-	bool _neatFlag;
-	RefPtr<ValueOwner> _pValueOwnerRemain;
-	bool _doneFlag;
-public:
-	Iterator_Fold(Iterator* pIteratorSrc, size_t nSize, size_t nAdvance,
-				  bool itemAsIterFlag, bool neatFlag);
-public:
-	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
-	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return GetIteratorSrc().GetFlags() & (Flag::Finite | Flag::LenDetermined);
-	}
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//-----------------------------------------------------------------------------
-// Iterator_Fold
-//-----------------------------------------------------------------------------
-Iterator_Fold::Iterator_Fold(Iterator* pIteratorSrc, size_t nSize, size_t nAdvance,
-							 bool itemAsIterFlag, bool neatFlag) :
-	_pIteratorSrc(pIteratorSrc), _nSize(nSize), _nAdvance(nAdvance),
-	_itemAsIterFlag(itemAsIterFlag), _neatFlag(neatFlag), _doneFlag(false)
-{
-	if (_nAdvance < _nSize) {
-		_pValueOwnerRemain.reset(new ValueOwner());
-		_pValueOwnerRemain->reserve(_nSize - _nAdvance);
-	}
-}
-
-Value* Iterator_Fold::DoNextValue()
-{
-	if (_doneFlag) return nullptr;
-	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(_nSize);
-	if (_nAdvance < _nSize) {
-		std::copy(_pValueOwnerRemain->begin(), _pValueOwnerRemain->end(), std::back_inserter(*pValueOwner));
-		_pValueOwnerRemain->clear();	// don't use Clear() to avoid decrementation of reference counter
-		while (pValueOwner->size() < _nSize) {
-			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
-			if (!pValueElem) {
-				_doneFlag = true;
-				if (Error::IsIssued()) return nullptr;
-				break;
-			}
-			pValueOwner->push_back(pValueElem.release());
-		}
-		if (pValueOwner->size() > _nAdvance) {
-			std::copy(pValueOwner->begin() + _nAdvance, pValueOwner->end(), std::back_inserter(*_pValueOwnerRemain));
-			_pValueOwnerRemain->IncCntRefOfEach();
-		}
-	}
-#if 0
-	} else {
-		while (pValueOwner->size() < _nSize) {
-			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
-			if (!pValueElem) {
-				_doneFlag = true;
-				if (Error::IsIssued()) return nullptr;
-				break;
-			}
-			pValueOwner->push_back(pValueElem.release());
-		}
-		// dumb reading
-		for (size_t n = _nAdvance - _nSize; n > 0; n--) {
-			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
-			if (!pValueElem) {
-				_doneFlag = true;
-				if (Error::IsIssued()) return nullptr;
-				break;
-			}
-		}
-	}
-	if (pValueOwner->empty() || (_neatFlag && pValueOwner->size() < _nSize)) {
-		return nullptr;
-	} else if (_itemAsIterFlag) {
-		Iterator *pIterator = new Object_list::IteratorEach(
-							Object_list::GetObject(valueNext)->Reference());
-		value = Value(new Object_iterator(env, pIterator));
-	} else {
-		return Value_List(pValueOwner.release());
-	}
-	return true;
-#endif
-	return Value::nil();
-}
-
-String Iterator_Fold::ToString(const StringStyle& ss) const
-{
-	String rtn;
-	rtn += "fold(";
-	rtn += GetIteratorSrc().ToString();
-	rtn += ")";
-	return rtn;
-}
-
-// Iterator#Fold(n:number, nstep?:number):map:[iteritem,neat] {block?}
+// Iterator#Fold(size:number, advance?:number):map:[iteritem,neat] {block?}
 Gurax_DeclareMethod(Iterator, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("nstep", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("advance", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(iteritem));
 	DeclareAttrOpt(Gurax_Symbol(neat));
@@ -563,15 +456,27 @@ Gurax_DeclareMethod(Iterator, Fold)
 
 Gurax_ImplementMethod(Iterator, Fold)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	return VType_Iterator::Method_Fold(*this, processor, argument, iteratorSrc);
+}
+
+Value* VType_Iterator::Method_Fold(
+	const Function& function, Processor& processor, Argument& argument, Iterator& iteratorSrc)
+{
 	// Arguments
 	ArgPicker args(argument);
+	size_t nSize = args.PickNumberPos<size_t>();
+	size_t nAdvance = args.IsValid()? args.PickNumberPos<size_t>() : nSize;
+	if (Error::IsIssued()) return Value::nil();
+	bool itemAsIterFlag = argument.IsSet(Gurax_Symbol(iteritem));
+	bool neatFlag = argument.IsSet(Gurax_Symbol(neat));
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new ValueOwner::Iterator_Fold(
+								   iteratorSrc.Reference(), nSize, nAdvance, itemAsIterFlag, neatFlag));
+	return function.ReturnIterator(processor, argument, pIterator.release());
 }
 
 // Iterator#Format(format:String):map {block?}
