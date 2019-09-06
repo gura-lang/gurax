@@ -32,26 +32,6 @@ public:
 		const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
 	};
 	//--------------------------------------------------------------------------
-	// ValueTypedOwner::Iterator_Each
-	//--------------------------------------------------------------------------
-	class GURAX_DLLDECLARE Iterator_Each : public IteratorBase {
-	public:
-		// Uses MemoryPool allocator
-		Gurax_MemoryPoolAllocator("ValueTypedOwner::Iterator_Each");
-	private:
-		size_t _idx;
-		size_t _idxBegin;
-	public:
-		Iterator_Each(ValueTypedOwner* pValueTypedOwner, size_t idxBegin = 0) :
-			IteratorBase(pValueTypedOwner), _idx(idxBegin), _idxBegin(idxBegin) {}
-	public:
-		// Virtual functions of Iterator
-		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-		virtual size_t GetLength() const override { return GetValueOwner().size(); }
-		virtual Value* DoNextValue() override;
-		virtual String ToString(const StringStyle& ss) const override;
-	};
-	//--------------------------------------------------------------------------
 	// ValueTypedOwner::Iterator_Reverse
 	//--------------------------------------------------------------------------
 	class GURAX_DLLDECLARE Iterator_Reverse : public IteratorBase {
@@ -262,11 +242,14 @@ public:
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 	ValueOwner& GetValueOwnerToSort() { return *_pValueOwner; }
+	ValueOwner* GetValueOwnerReference() { return _pValueOwner->Reference(); }
 	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
 	bool CheckPosition(Int pos) const { return GetValueOwner().CheckPosition(pos); }
 	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;
-	Iterator* GenerateIterator() const { return new Iterator_Each(Reference()); }
+	Iterator* GenerateIterator() const {
+		return new ValueOwner::Iterator_Each(GetValueOwner().Reference());
+	}
 private:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 };

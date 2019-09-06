@@ -18,6 +18,39 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("ValueOwner");
 public:
+	//--------------------------------------------------------------------------
+	// ValueTypedOwner::IteratorBase
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE IteratorBase : public Iterator {
+	private:
+		RefPtr<ValueOwner> _pValueOwner;
+	public:
+		IteratorBase(ValueOwner* pValueOwner) : _pValueOwner(pValueOwner) {}
+	public:
+		ValueOwner& GetValueOwner() { return *_pValueOwner; }
+		const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
+	};
+	//--------------------------------------------------------------------------
+	// ValueOwner::Iterator_Each
+	//--------------------------------------------------------------------------
+	class GURAX_DLLDECLARE Iterator_Each : public IteratorBase {
+	public:
+		// Uses MemoryPool allocator
+		Gurax_MemoryPoolAllocator("ValueOwner::Iterator_Each");
+	private:
+		size_t _idx;
+		size_t _idxBegin;
+	public:
+		Iterator_Each(ValueOwner* pValueOwner, size_t idxBegin = 0) :
+			IteratorBase(pValueOwner), _idx(idxBegin), _idxBegin(idxBegin) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+		virtual size_t GetLength() const override { return GetValueOwner().size(); }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	//using ValueList::ValueList;
 	ValueOwner() {}
 protected:

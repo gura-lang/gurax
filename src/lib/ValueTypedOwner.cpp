@@ -218,23 +218,6 @@ bool ValueTypedOwner::HasDeterminedVTypeOfElems() const
 }
 
 //------------------------------------------------------------------------------
-// ValueTypedOwner::Iterator_Each
-//------------------------------------------------------------------------------
-Value* ValueTypedOwner::Iterator_Each::DoNextValue()
-{
-	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
-}
-
-String ValueTypedOwner::Iterator_Each::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("List#Each:begin=%zu:n=%zu", _idxBegin, GetValueOwner().size());
-	return str;
-}
-
-//------------------------------------------------------------------------------
 // ValueTypedOwner::Iterator_Reverse
 //------------------------------------------------------------------------------
 Value* ValueTypedOwner::Iterator_Reverse::DoNextValue()

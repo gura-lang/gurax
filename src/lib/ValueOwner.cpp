@@ -95,6 +95,23 @@ Value* ValueOwner::Shift()
 }
 
 //------------------------------------------------------------------------------
+// ValueOwner::Iterator_Each
+//------------------------------------------------------------------------------
+Value* ValueOwner::Iterator_Each::DoNextValue()
+{
+	const ValueOwner& valueOwner = GetValueOwner();
+	if (_idx >= valueOwner.size()) return nullptr;
+	return valueOwner[_idx++]->Reference();
+}
+
+String ValueOwner::Iterator_Each::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("List#Each:begin=%zu:n=%zu", _idxBegin, GetValueOwner().size());
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // ValueStack
 //------------------------------------------------------------------------------
 void ValueStack::Remove(size_t offset)

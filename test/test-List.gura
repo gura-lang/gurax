@@ -149,7 +149,7 @@ TestCase('List#Shift()') {
 	Tester(`x.Shift())
 	Tester(`x.Shift())
 	Tester(`x.Shift())
-
+	Tester(`x.Shift():raise)
 }
 
 TestCase('List#Shuffle()') {

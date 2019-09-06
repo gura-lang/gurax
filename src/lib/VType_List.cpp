@@ -783,7 +783,7 @@ Gurax_ImplementMethod(List, Offset)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	if (argument.IsSet(Gurax_Symbol(raise)) && !valueTypedOwner.CheckPosition(offset)) return Value::nil();
-	RefPtr<Iterator> pIterator(new ValueTypedOwner::Iterator_Each(valueTypedOwner.Reference(), offset));
+	RefPtr<Iterator> pIterator(new ValueOwner::Iterator_Each(valueTypedOwner.GetValueOwnerReference(), offset));
 	return ReturnIterator(processor, argument, pIterator.release());
 }
 
