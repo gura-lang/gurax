@@ -300,7 +300,8 @@ void Expr_Member::ComposeForAssignment(
 String Expr_Member::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += GetExprTarget().ToString(ss);
+	const Expr& exprTarget = GetExprTarget();
+	str += exprTarget.ToString(ss);
 	str += MemberModeToSymbol(GetMemberMode())->GetName();
 	str += GetSymbol()->ToString();
 	str += GetAttr().ToString(ss);

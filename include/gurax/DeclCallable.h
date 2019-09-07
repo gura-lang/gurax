@@ -120,6 +120,7 @@ public:
 	Flags GetFlags() const { return _flags; }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool HasAttr() const { return GetFlags() != 0 || !GetAttr().IsEmpty(); }
 	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
 	bool IsSet(const Symbol* pSymbol) const { return GetAttr().IsSet(pSymbol); }
 	bool IsSetOpt(const Symbol* pSymbol) const { return GetAttr().IsSetOpt(pSymbol); }

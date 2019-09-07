@@ -490,6 +490,7 @@ public:
 	String ToString(const StringStyle& ss, const char* strInsert) const;
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool HasAttr() const { return !GetAttr().IsEmpty(); }
 	bool IsPureSymbol() const { return GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
