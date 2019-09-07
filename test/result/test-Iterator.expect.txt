@@ -72,6 +72,10 @@
 ======== Iterator#Contains() ========
 ======== Iterator#Count() ========
 ======== Iterator#Cycle() ========
+[].Each().Cycle(10) .. empty list can not be specified
+['A'].Each().Cycle(10):list .. ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+['A', 'B'].Each().Cycle(10):list .. ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
+['A', 'B', 'C', 'D', 'E'].Each().Cycle(10):list .. ['A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E']
 ======== Iterator#Each() ========
 Each { .. }
 ----
@@ -297,6 +301,7 @@ x.Each().Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11
 ======== Iterator#Reduce() ========
 ======== Iterator#Replace() ========
 ======== Iterator#Reverse() ========
+['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Reverse():list .. ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one', 'zero']
 ======== Iterator#RoundOff() ========
 ======== Iterator#RunLength() ========
 ======== Iterator#Since() ========

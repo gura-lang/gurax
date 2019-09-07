@@ -338,6 +338,10 @@ Gurax_ImplementMethod(Iterator, Cycle)
 Value* VType_Iterator::Method_Cycle(
 	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
+	if (valueTypedOwner.IsEmpty()) {
+		Error::Issue(ErrorType::RangeError, "empty list can not be specified");
+		return Value::nil();
+	}
 	// Arguments
 	ArgPicker args(argument);
 	bool validFlag_n = false;

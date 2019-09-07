@@ -89,6 +89,10 @@ TestCase('Iterator#Count()') {
 }
 
 TestCase('Iterator#Cycle()') {
+	Tester(`[].Each().Cycle(10))
+	Tester(`['A'].Each().Cycle(10):list)
+	Tester(`['A', 'B'].Each().Cycle(10):list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].Each().Cycle(10):list)
 }
 
 TestCase('Iterator#Each()') {
@@ -398,6 +402,7 @@ TestCase('Iterator#Replace()') {
 }
 
 TestCase('Iterator#Reverse()') {
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Reverse():list)
 }
 
 TestCase('Iterator#RoundOff()') {

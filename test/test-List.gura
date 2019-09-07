@@ -212,6 +212,10 @@ TestCase('List#Count()') {
 }
 
 TestCase('List#Cycle()') {
+	Tester(`[].Cycle(10))
+	Tester(`['A'].Cycle(10):list)
+	Tester(`['A', 'B'].Cycle(10):list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].Cycle(10):list)
 }
 
 TestCase('List#Each()') {
@@ -519,6 +523,7 @@ TestCase('List#Replace()') {
 }
 
 TestCase('List#Reverse()') {
+	Tester(`['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Reverse():list)
 }
 
 TestCase('List#RoundOff()') {
