@@ -375,14 +375,14 @@ String Iterator_DoEach::ToString(const StringStyle& ss) const
 Value* Iterator_Each::DoNextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
+	if (_idx >= _idxEnd) return nullptr;
 	return valueOwner[_idx++]->Reference();
 }
 
 String Iterator_Each::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Each:begin=%zu:n=%zu", _idxBegin, GetValueOwner().size());
+	str.Printf("List#Each:begin=%zu:end=%zu", _idxBegin, _idxEnd);
 	return str;
 }
 

@@ -610,15 +610,18 @@ Gurax_DeclareMethod(List, Head)
 
 Gurax_ImplementMethod(List, Head)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	size_t n = args.PickNumberNonNeg<size_t>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(
+		new Iterator_Each(
+			valueTypedOwner.GetValueOwnerReference(), 0, std::min(n, valueTypedOwner.GetSize())));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // List#Join(sep?:String):map
@@ -771,7 +774,7 @@ Gurax_ImplementMethod(List, Offset)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
-	Int offset = args.PickNumberNonNeg<Int>();
+	size_t offset = args.PickNumberNonNeg<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	if (argument.IsSet(Gurax_Symbol(raise)) && !valueTypedOwner.CheckPosition(offset)) return Value::nil();

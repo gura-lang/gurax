@@ -150,7 +150,6 @@ const char* String::Backward(const char* p, const char* pHead, size_t nChars, si
 	size_t nCharsActual = 0;
 	for ( ; p != pHead && nCharsActual < nChars; nCharsActual++) {
 		p--;
-		char ch = *p;
 		while (p != pHead && IsUTF8Follower(*p)) p--;
 	}
 	if (pnCharsActual) *pnCharsActual = nCharsActual;

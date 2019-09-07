@@ -393,9 +393,14 @@ private:
 	RefPtr<ValueOwner> _pValueOwner;
 	size_t _idx;
 	size_t _idxBegin;
+	size_t _idxEnd;
 public:
-	Iterator_Each(ValueOwner* pValueOwner, size_t idxBegin = 0) :
-		_pValueOwner(pValueOwner), _idx(idxBegin), _idxBegin(idxBegin) {}
+	Iterator_Each(ValueOwner* pValueOwner) :
+		_pValueOwner(pValueOwner), _idx(0), _idxBegin(0), _idxEnd(pValueOwner->size()) {}
+	Iterator_Each(ValueOwner* pValueOwner, size_t idxBegin) :
+		_pValueOwner(pValueOwner), _idx(idxBegin), _idxBegin(idxBegin), _idxEnd(pValueOwner->size()) {}
+	Iterator_Each(ValueOwner* pValueOwner, size_t idxBegin, size_t idxEnd) :
+		_pValueOwner(pValueOwner), _idx(idxBegin), _idxBegin(idxBegin), _idxEnd(idxEnd) {}
 public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
