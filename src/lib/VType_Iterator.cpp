@@ -530,15 +530,16 @@ Gurax_DeclareMethod(Iterator, Head)
 
 Gurax_ImplementMethod(Iterator, Head)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_Head(iteratorSrc.Reference(), n));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // Iterator#Join(sep?:String):map

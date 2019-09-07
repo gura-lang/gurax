@@ -424,6 +424,27 @@ String Iterator_Cycle::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_Head
+//------------------------------------------------------------------------------
+Value* Iterator_Head::DoNextValue()
+{
+	if (_doneFlag || _idxCur >= _cnt) return nullptr;
+	RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+	if (!pValueElem) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	return pValueElem.release();
+}
+
+String Iterator_Head::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("List#Head:n=%zu", _cnt);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Pingpong
 //------------------------------------------------------------------------------
 Value* Iterator_Pingpong::DoNextValue()

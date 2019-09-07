@@ -479,6 +479,32 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Head
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Head : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Cycle");
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	Int _cnt;
+	bool _doneFlag;
+public:
+	Iterator_Head(Iterator* pIteratorSrc, Int cnt) : _pIteratorSrc(pIteratorSrc), _cnt(cnt), _doneFlag(false) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override {
+		return std::min(GetIteratorSrc().GetLength(), static_cast<size_t>(_cnt));
+	}
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Pingpong
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Pingpong : public Iterator {
