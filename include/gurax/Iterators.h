@@ -457,9 +457,11 @@ public:
 	Gurax_MemoryPoolAllocator("Iterator_Cycle");
 private:
 	RefPtr<ValueOwner> _pValueOwner;
-	size_t _idx;
+	Int _cnt;
+	Int _idx;
 public:
-	Iterator_Cycle(ValueOwner* pValueOwner) : _pValueOwner(pValueOwner), _idx(0) {}
+	Iterator_Cycle(ValueOwner* pValueOwner, Int cnt) :
+		_pValueOwner(pValueOwner), _cnt(cnt), _idx(0) {}
 public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
@@ -483,9 +485,12 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 private:
 	RefPtr<ValueOwner> _pValueOwner;
+	size_t _cnt;
+	bool _stickyFlagTop, _stickyFlagBtm;
 	size_t _idx;
 public:
-	Iterator_Pingpong(ValueOwner* pValueOwner) : _pValueOwner(pValueOwner), _idx(0) {}
+	Iterator_Pingpong(ValueOwner* pValueOwner, size_t cnt, bool stickyFlagTop, bool stickyFlagBtm) :
+		_pValueOwner(pValueOwner), _cnt(cnt), _stickyFlagTop(stickyFlagTop), _stickyFlagBtm(stickyFlagBtm), _idx(0) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

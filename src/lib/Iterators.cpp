@@ -393,7 +393,9 @@ Value* Iterator_Reverse::DoNextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
 	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
+	RefPtr<Value> pValue((*(valueOwner.rbegin() + _idx))->Reference());
+	_idx++;
+	return pValue.release();
 }
 
 String Iterator_Reverse::ToString(const StringStyle& ss) const
@@ -409,7 +411,8 @@ String Iterator_Reverse::ToString(const StringStyle& ss) const
 Value* Iterator_Cycle::DoNextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
+	if (_cnt >= 0 && _idxCur >= _cnt) return nullptr;
+	if (_idx == static_cast<Int>(valueOwner.size())) _idx = 0;
 	return valueOwner[_idx++]->Reference();
 }
 

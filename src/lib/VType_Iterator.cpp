@@ -327,15 +327,25 @@ Gurax_DeclareMethod(Iterator, Cycle)
 
 Gurax_ImplementMethod(Iterator, Cycle)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	return VType_Iterator::Method_Cycle(*this, processor, argument, *pValueTypedOwner);
+}
+
+Value* VType_Iterator::Method_Cycle(
+	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+{
 	// Arguments
 	ArgPicker args(argument);
+	bool validFlag_n = false;
+	Int n = (validFlag_n = args.IsValid())? args.PickNumberPos<Int>() : -1;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_Cycle(valueTypedOwner.GetValueOwnerReference(), n));
+	return function.ReturnIterator(processor, argument, pIterator.release());
 }
 
 // Iterator#Each() {`block?}
@@ -817,13 +827,23 @@ Gurax_DeclareMethod(Iterator, PingPong)
 
 Gurax_ImplementMethod(Iterator, PingPong)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	return VType_Iterator::Method_PingPong(*this, processor, argument, *pValueTypedOwner);
+}
+
+Value* VType_Iterator::Method_PingPong(
+	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+{
+#if 0
 	// Arguments
 	ArgPicker args(argument);
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
+	return function.ReturnIterator(processor, argument, pIterator.release());
 #endif
 	return Value::nil();
 }
@@ -1002,15 +1022,20 @@ Gurax_DeclareMethod(Iterator, Reverse)
 
 Gurax_ImplementMethod(Iterator, Reverse)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Reverse(*this, processor, argument, *pValueTypedOwner);
+}
+
+Value* VType_Iterator::Method_Reverse(
+	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+{
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Reverse(valueTypedOwner.GetValueOwnerReference()));
+	return function.ReturnIterator(processor, argument, pIterator.release());
 }
 
 // Iterator#RoundOff(threshold?:number) {block?}

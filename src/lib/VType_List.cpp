@@ -463,15 +463,11 @@ Gurax_DeclareMethod(List, Cycle)
 
 Gurax_ImplementMethod(List, Cycle)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Cycle(*this, processor, argument, valueTypedOwner);
 }
 
 // List#Each() {`block?}
@@ -852,15 +848,11 @@ Gurax_DeclareMethod(List, PingPong)
 
 Gurax_ImplementMethod(List, PingPong)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_PingPong(*this, processor, argument, valueTypedOwner);
 }
 
 // List#Print(stream?:Stream:w):void
@@ -1021,15 +1013,11 @@ Gurax_DeclareMethod(List, Reverse)
 
 Gurax_ImplementMethod(List, Reverse)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Reverse(*this, processor, argument, valueTypedOwner);
 }
 
 // List#RoundOff(threshold?:number) {block?}
