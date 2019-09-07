@@ -216,4 +216,9 @@ bool ValueTypedOwner::HasDeterminedVTypeOfElems() const
 	return !_pVTypeOfElems->IsIdentical(VTYPE_Undefined) && !_pVTypeOfElems->IsIdentical(VTYPE_Any);
 }
 
+Iterator* ValueTypedOwner::GenerateIterator() const
+{
+	return new Iterator_Each(GetValueOwner().Reference());
+}
+
 }

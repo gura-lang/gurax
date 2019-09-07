@@ -92,9 +92,7 @@ public:
 	bool CheckPosition(Int pos) const { return GetValueOwner().CheckPosition(pos); }
 	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
 	bool HasDeterminedVTypeOfElems() const;
-	Iterator* GenerateIterator() const {
-		return new ValueOwner::Iterator_Each(GetValueOwner().Reference());
-	}
+	Iterator* GenerateIterator() const;
 private:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 };

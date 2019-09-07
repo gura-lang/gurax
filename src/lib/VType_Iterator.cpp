@@ -264,7 +264,7 @@ Value* VType_Iterator::Method_Combination(
 		Error::Issue(ErrorType::RangeError, "range over");
 		return Value::nil();
 	}
-	RefPtr<Iterator> pIterator(new ValueOwner::Iterator_Combination(
+	RefPtr<Iterator> pIterator(new Iterator_Combination(
 								   valueTypedOwner.GetValueOwnerReference(), n));
 	return function.ReturnIterator(processor, argument, pIterator.release());
 }
@@ -474,7 +474,7 @@ Value* VType_Iterator::Method_Fold(
 	bool itemAsIterFlag = argument.IsSet(Gurax_Symbol(iteritem));
 	bool neatFlag = argument.IsSet(Gurax_Symbol(neat));
 	// Function body
-	RefPtr<Iterator> pIterator(new ValueOwner::Iterator_Fold(
+	RefPtr<Iterator> pIterator(new Iterator_Fold(
 								   iteratorSrc.Reference(), nSize, nAdvance, itemAsIterFlag, neatFlag));
 	return function.ReturnIterator(processor, argument, pIterator.release());
 }
@@ -792,10 +792,10 @@ Value* VType_Iterator::Method_Permutation(
 	}
 	RefPtr<Iterator> pIterator;
 	if (validFlag_n && n < valueTypedOwner.GetSize()) {
-		pIterator.reset(new ValueOwner::Iterator_PartialPermutation(
+		pIterator.reset(new Iterator_PartialPermutation(
 							valueTypedOwner.GetValueOwnerReference(), n));
 	} else {
-		pIterator.reset(new ValueOwner::Iterator_Permutation(
+		pIterator.reset(new Iterator_Permutation(
 							valueTypedOwner.GetValueOwnerReference()));
 	}
 	return function.ReturnIterator(processor, argument, pIterator.release());
