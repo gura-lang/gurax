@@ -389,6 +389,23 @@ TestCase('List#Flatten()') {
 }
 
 TestCase('List#Fold()') {
+	x = [0..19]
+	Tester(`x.Fold(1).Join(', '))
+	Tester(`x.Fold(5).Join(', '))
+	Tester(`x.Fold(8).Join(', '))
+	Tester(`(x.Fold(1):neat).Join(', '))
+	Tester(`(x.Fold(5):neat).Join(', '))
+	Tester(`(x.Fold(8):neat).Join(', '))
+	Tester(`x.Fold(5, 1).Join(', '))
+	Tester(`x.Fold(5, 2).Join(', '))
+	Tester(`x.Fold(5, 3).Join(', '))
+	Tester(`x.Fold(5, 4).Join(', '))
+	Tester(`x.Fold(5, 5).Join(', '))
+	Tester(`(x.Fold(5, 1):neat).Join(', '))
+	Tester(`(x.Fold(5, 2):neat).Join(', '))
+	Tester(`(x.Fold(5, 3):neat).Join(', '))
+	Tester(`(x.Fold(5, 4):neat).Join(', '))
+	Tester(`(x.Fold(5, 5):neat).Join(', '))
 }
 
 TestCase('List#Format()') {
