@@ -28,6 +28,7 @@ public:
 	void Clear();
 	ValueOwner* Clone() const;
 	ValueOwner* Extract(size_t n) const;
+	ValueOwner* ExtractTail(size_t index) const;
 	template<typename T_Num>
 	ValueOwner* Extract(NumList<T_Num>& indices) const;
 	template<typename T_Num>

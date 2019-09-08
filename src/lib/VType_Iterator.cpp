@@ -1309,15 +1309,30 @@ Gurax_DeclareMethod(Iterator, Tail)
 
 Gurax_ImplementMethod(Iterator, Tail)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	return VType_Iterator::Method_Tail(*this, processor, argument, *pValueTypedOwner);
+}
+
+Value* VType_Iterator::Method_Tail(
+	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+{
 	// Arguments
 	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	const ValueOwner& valueOwner = valueTypedOwner.GetValueOwner();
+	RefPtr<ValueOwner> pValueOwner;
+	if (valueOwner.size() <= n) {
+		pValueOwner.reset(valueOwner.Reference());
+	} else {
+		pValueOwner.reset(valueOwner.ExtractTail(valueOwner.size() - n));
+	}
+	return function.ReturnIterator(processor, argument, new Iterator_Each(pValueOwner.release()));
 }
 
 // Iterator#Until(criteria) {block?}

@@ -1192,15 +1192,11 @@ Gurax_DeclareMethod(List, Tail)
 
 Gurax_ImplementMethod(List, Tail)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Tail(*this, processor, argument, valueTypedOwner);
 }
 
 // List#Until(criteria) {block?}

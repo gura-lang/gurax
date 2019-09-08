@@ -28,6 +28,13 @@ ValueOwner* ValueOwner::Extract(size_t n) const
 	return pValueOwner.release();
 }
 
+ValueOwner* ValueOwner::ExtractTail(size_t index) const
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner(begin() + index, end()));
+	pValueOwner->IncCntRefOfEach();
+	return pValueOwner.release();
+}
+
 ValueOwner* ValueOwner::CloneDeep() const
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());

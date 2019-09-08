@@ -416,6 +416,12 @@ TestCase('List#Format()') {
 }
 
 TestCase('List#Head()') {
+	Tester(`[].Head(10):list)
+	Tester(`[0].Head(10):list)
+	Tester(`[0..8].Head(10):list)
+	Tester(`[0..9].Head(10):list)
+	Tester(`[0..10].Head(10):list)
+	Tester(`[0..100].Head(10):list)
 }
 
 TestCase('List#Join()') {

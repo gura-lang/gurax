@@ -42,6 +42,9 @@ public:
 	ValueTypedOwner* Extract(size_t n) const {
 		return new ValueTypedOwner(_pValueOwner->Extract(n));
 	}
+	ValueTypedOwner* ExtractTail(size_t index) const {
+		return new ValueTypedOwner(_pValueOwner->ExtractTail(index));
+	}
 	template<typename T_Num>
 	ValueTypedOwner* Extract(NumList<T_Num>& indices) const {
 		return new ValueTypedOwner(_pValueOwner->Extract<T_Num>(indices));
