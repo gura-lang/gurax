@@ -458,7 +458,7 @@ Value* Iterator_Offset::DoNextValue()
 			} else {
 				if (Error::IsIssued()) return nullptr;
 				if (_raiseFlag) {
-					Error::Issue(ErrorType::RangeError, "not enough number of elements");
+					Error::Issue(ErrorType::RangeError, "offset value exceeds the length of elements");
 				}
 				return nullptr;
 			}

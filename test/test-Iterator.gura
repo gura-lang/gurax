@@ -341,7 +341,6 @@ TestCase('Iterator#NilTo()') {
 }
 
 TestCase('Iterator#Offset()') {
-	/*
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`[tbl.Each().Offset(0)])
 	Tester(`[tbl.Each().Offset(1)])
@@ -350,8 +349,9 @@ TestCase('Iterator#Offset()') {
 	Tester(`[tbl.Each().Offset(10)])
 	Tester(`[tbl.Each().Offset(11)])
 	Tester(`[tbl.Each().Offset(11):raise])
+	Tester(`[tbl.Each().Offset(12)])
+	Tester(`[tbl.Each().Offset(12):raise])
 	Tester(`[tbl.Each().Offset(-1)])
-	*/
 }
 
 TestCase('Iterator#Or()') {

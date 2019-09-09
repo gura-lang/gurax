@@ -393,7 +393,9 @@ x.Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 1
 [tbl.Offset(3)] .. ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 [tbl.Offset(10)] .. ['ten']
 [tbl.Offset(11)] .. []
-[tbl.Offset(11):raise] .. specified position 11 exceeds the list's size of 11
+[tbl.Offset(11):raise] .. []
+[tbl.Offset(12)] .. []
+[tbl.Offset(12):raise] .. offset value exceeds the length of elements
 [tbl.Offset(-1)] .. negative value is not acceptable
 ======== List#Or() ========
 [].Or() .. <Nil>

@@ -777,7 +777,12 @@ Gurax_ImplementMethod(List, Offset)
 	size_t offset = args.PickNumberNonNeg<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	if (argument.IsSet(Gurax_Symbol(raise)) && !valueTypedOwner.CheckPosition(offset)) return Value::nil();
+	if (argument.IsSet(Gurax_Symbol(raise))) {
+		if (offset > valueTypedOwner.GetSize()) {
+			Error::Issue(ErrorType::RangeError, "offset value exceeds the length of elements");
+			return Value::nil();
+		}
+	}
 	RefPtr<Iterator> pIterator(new Iterator_Each(valueTypedOwner.GetValueOwnerReference(), offset));
 	return ReturnIterator(processor, argument, pIterator.release());
 }
