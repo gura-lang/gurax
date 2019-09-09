@@ -200,6 +200,28 @@ Value* Iterator::Var(Processor& processor)
 	return Value::nil();
 }
 
+ValueOwner* Iterator::Tail(size_t n)
+{
+	ValueDeque valueDeque;
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		valueDeque.push_back(pValueElem.release());
+		if (valueDeque.size() > n) {
+			Value::Delete(valueDeque.front());
+			valueDeque.pop_front();
+		}
+	}
+	if (Error::IsIssued()) {
+		valueDeque.DeleteEach();
+		return nullptr;
+	}
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(valueDeque.size());
+	std::copy(valueDeque.begin(), valueDeque.end(), std::back_inserter(*pValueOwner));
+	return pValueOwner.release();
+}
+
 bool Iterator::MustBeFinite() const
 {
 	if (IsFinite()) return true;

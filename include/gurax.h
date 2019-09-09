@@ -64,6 +64,7 @@
 #include "gurax/Token.h"
 #include "gurax/Tokenizer.h"
 #include "gurax/Value.h"
+#include "gurax/ValueDeque.h"
 #include "gurax/ValueDict.h"
 #include "gurax/ValueList.h"
 #include "gurax/ValueMap.h"

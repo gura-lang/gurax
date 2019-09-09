@@ -10,6 +10,7 @@
 namespace Gurax {
 
 class Processor;
+class ValueOwner;
 
 //------------------------------------------------------------------------------
 // Iterator
@@ -73,6 +74,7 @@ public:
 	Value* Sum(Processor& processor);
 	Value* Sum(Processor& processor, size_t* pCnt);
 	Value* Var(Processor& processor);
+	ValueOwner* Tail(size_t n);
 public:
 	Value* NextValue() {
 		_idxCur = _idxNext++;

@@ -595,6 +595,7 @@ TestCase('List#Sum()') {
 }
 
 TestCase('List#Tail()') {
+	Tester(`[0..100].Tail(10):list)
 }
 
 TestCase('List#Until()') {
