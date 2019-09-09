@@ -39,11 +39,11 @@ public:
 	ValueTypedOwner* Clone() const {
 		return new ValueTypedOwner(*_pVTypeOfElems, _pValueOwner->Clone());
 	}
-	ValueTypedOwner* Extract(size_t n) const {
-		return new ValueTypedOwner(_pValueOwner->Extract(n));
+	ValueTypedOwner* Head(size_t n) const {
+		return new ValueTypedOwner(_pValueOwner->Head(n));
 	}
-	ValueTypedOwner* ExtractTail(size_t index) const {
-		return new ValueTypedOwner(_pValueOwner->ExtractTail(index));
+	ValueTypedOwner* Tail(size_t n) const {
+		return new ValueTypedOwner(_pValueOwner->Tail(n));
 	}
 	template<typename T_Num>
 	ValueTypedOwner* Extract(NumList<T_Num>& indices) const {
@@ -85,7 +85,7 @@ public:
 	bool Insert(Int pos, Iterator& iterator);
 	bool Erase(Int pos);
 	bool Erase(const NumList<Int>& posList);
-	Value* Shift() { return GetValueOwner().Shift(); }
+	Value* Shift() { return GetValueOwner_().Shift(); }
 	void UpdateVTypeOfElems(const Value& value);
 	void UpdateVTypeOfElems(VType& vtypeAdded);
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
@@ -97,7 +97,7 @@ public:
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const;
 private:
-	ValueOwner& GetValueOwner() { return *_pValueOwner; }
+	ValueOwner& GetValueOwner_() { return *_pValueOwner; }
 };
 
 }

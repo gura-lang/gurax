@@ -1311,28 +1311,15 @@ Gurax_ImplementMethod(Iterator, Tail)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
-	if (Error::IsIssued()) return Value::nil();
-	// Function body
-	return VType_Iterator::Method_Tail(*this, processor, argument, *pValueTypedOwner);
-}
-
-Value* VType_Iterator::Method_Tail(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
-{
+	Iterator& iterator = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
 	size_t n = args.PickNumberPos<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	const ValueOwner& valueOwner = valueTypedOwner.GetValueOwner();
-	RefPtr<ValueOwner> pValueOwner;
-	if (valueOwner.size() <= n) {
-		pValueOwner.reset(valueOwner.Reference());
-	} else {
-		pValueOwner.reset(valueOwner.ExtractTail(valueOwner.size() - n));
-	}
-	return function.ReturnIterator(processor, argument, new Iterator_Each(pValueOwner.release()));
+	RefPtr<ValueOwner> pValueOwner(iterator.Tail(n));
+	if (Error::IsIssued()) return Value::nil();
+	return ReturnIterator(processor, argument, new Iterator_Each(pValueOwner.release()));
 }
 
 // Iterator#Until(criteria) {block?}

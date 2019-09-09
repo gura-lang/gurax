@@ -21,16 +21,18 @@ ValueOwner* ValueOwner::Clone() const
 	return pValueOwner.release();
 }
 
-ValueOwner* ValueOwner::Extract(size_t n) const
+ValueOwner* ValueOwner::Head(size_t n) const
 {
-	RefPtr<ValueOwner> pValueOwner(new ValueOwner(begin(), begin() + n));
+	ValueOwner::const_iterator ppValueEnd = (size() <= n)? end() : begin() + n;
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner(begin(), ppValueEnd));
 	pValueOwner->IncCntRefOfEach();
 	return pValueOwner.release();
 }
 
-ValueOwner* ValueOwner::ExtractTail(size_t index) const
+ValueOwner* ValueOwner::Tail(size_t n) const
 {
-	RefPtr<ValueOwner> pValueOwner(new ValueOwner(begin() + index, end()));
+	ValueOwner::const_iterator ppValueBegin = (size() <= n)? begin() : begin() + size() - n;
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner(ppValueBegin, end()));
 	pValueOwner->IncCntRefOfEach();
 	return pValueOwner.release();
 }

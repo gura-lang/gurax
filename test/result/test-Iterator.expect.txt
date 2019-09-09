@@ -537,6 +537,11 @@ words100.Each().Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'r
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].Each().Sum() .. 55
 [0, 1, `a, 3, 4, 5, 6, 7, 8, 9, 10].Each().Sum() .. unsuppported binary operation: Number + Expr
 ======== Iterator#Tail() ========
+0 .. 100.Tail(0):list .. must be positive value
+0 .. 100.Tail(1):list .. [100]
+0 .. 100.Tail(10):list .. [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+0 .. 4.Tail(5):list .. [0, 1, 2, 3, 4]
+0 .. 4.Tail(6):list .. [0, 1, 2, 3, 4]
 ======== Iterator#Until() ========
 ======== Iterator#Var() ========
 ======== Iterator#While() ========

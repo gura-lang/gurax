@@ -1195,8 +1195,13 @@ Gurax_ImplementMethod(List, Tail)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	// Arguments
+	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Tail(*this, processor, argument, valueTypedOwner);
+	RefPtr<ValueOwner> pValueOwner(valueTypedOwner.GetValueOwner().Tail(n));
+	return ReturnIterator(processor, argument, new Iterator_Each(pValueOwner.release()));
 }
 
 // List#Until(criteria) {block?}

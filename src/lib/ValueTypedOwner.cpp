@@ -15,14 +15,14 @@ ValueTypedOwner::ValueTypedOwner(VType& vtypeOfElems, ValueOwner* pValueOwner) :
 
 void ValueTypedOwner::Clear()
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	_pVTypeOfElems = &VTYPE_Undefined;
 	valueOwner.Clear();
 }
 
 bool ValueTypedOwner::Set(Int pos, Value* pValue)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	if (!valueOwner.FixPosition(&pos)) return false;
 	UpdateVTypeOfElems(*pValue);
 	valueOwner.Set(pos, pValue);
@@ -38,7 +38,7 @@ Value* ValueTypedOwner::Get(Int pos) const
 
 bool ValueTypedOwner::IndexSet(const Value* pValueIndex, Value* pValue)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	UpdateVTypeOfElems(*pValue);
 	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
 		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
@@ -87,28 +87,28 @@ bool ValueTypedOwner::IndexGet(const Value* pValueIndex, Value** ppValue) const
 
 void ValueTypedOwner::Add(Value* pValue)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	UpdateVTypeOfElems(*pValue);
 	valueOwner.Add(pValue);
 }
 
 void ValueTypedOwner::Add(const ValueList& values)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
 	valueOwner.Add(values);
 }
 	
 void ValueTypedOwner::Add(const ValueTypedOwner& values)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
 	valueOwner.Add(values.GetValueOwner());
 }
 
 bool ValueTypedOwner::Add(Iterator& iterator)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
@@ -134,7 +134,7 @@ bool ValueTypedOwner::Append(const ValueList& values)
 
 bool ValueTypedOwner::Insert(Int pos, const ValueList& values)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	if (!valueOwner.FixPosition(&pos)) return false;
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
 	valueOwner.Insert(pos, values);
@@ -143,7 +143,7 @@ bool ValueTypedOwner::Insert(Int pos, const ValueList& values)
 
 bool ValueTypedOwner::Insert(Int pos, const ValueTypedOwner& values)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	if (!valueOwner.FixPosition(&pos)) return false;
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
 	valueOwner.Add(values.GetValueOwner());
@@ -152,7 +152,7 @@ bool ValueTypedOwner::Insert(Int pos, const ValueTypedOwner& values)
 
 bool ValueTypedOwner::Insert(Int pos, Iterator& iterator)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	if (!valueOwner.FixPosition(&pos)) return false;
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
@@ -166,7 +166,7 @@ bool ValueTypedOwner::Insert(Int pos, Iterator& iterator)
 
 bool ValueTypedOwner::Erase(Int pos)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	if (!valueOwner.FixPosition(&pos)) return false;
 	ValueOwner::iterator ppValue = valueOwner.begin() + pos;
 	Value::Delete(*ppValue);
@@ -177,7 +177,7 @@ bool ValueTypedOwner::Erase(Int pos)
 // Elements in posList must be fixed and sorted in a descending order.
 bool ValueTypedOwner::Erase(const NumList<Int>& posList)
 {
-	ValueOwner& valueOwner = GetValueOwner();
+	ValueOwner& valueOwner = GetValueOwner_();
 	for (Int pos : posList) {
 		if (!valueOwner.CheckPosition(pos)) return false;
 		ValueOwner::iterator ppValue = valueOwner.begin() + pos;
