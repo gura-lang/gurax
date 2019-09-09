@@ -382,7 +382,7 @@ Value* Iterator_Each::DoNextValue()
 String Iterator_Each::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Each:begin=%zu:end=%zu", _idxBegin, _idxEnd);
+	str.Printf("Each:begin=%zu:end=%zu", _idxBegin, _idxEnd);
 	return str;
 }
 
@@ -401,7 +401,7 @@ Value* Iterator_Reverse::DoNextValue()
 String Iterator_Reverse::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Reverse:n=%zu", GetValueOwner().size());
+	str.Printf("Reverse:n=%zu", GetValueOwner().size());
 	return str;
 }
 
@@ -419,7 +419,7 @@ Value* Iterator_Cycle::DoNextValue()
 String Iterator_Cycle::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Cycle:n=%zu", GetValueOwner().size());
+	str.Printf("Cycle:n=%zu", GetValueOwner().size());
 	return str;
 }
 
@@ -440,7 +440,37 @@ Value* Iterator_Head::DoNextValue()
 String Iterator_Head::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Head:n=%zu", _cnt);
+	str.Printf("Head:n=%zu", _cnt);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_Offset
+//------------------------------------------------------------------------------
+Value* Iterator_Offset::DoNextValue()
+{
+	if (_firstFlag) {
+		_firstFlag = false;
+		for (size_t i = 0; i < _offset; i++) {
+			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+			if (pValueElem) {
+				// nothing to do
+			} else {
+				if (Error::IsIssued()) return nullptr;
+				if (_raiseFlag) {
+					Error::Issue(ErrorType::RangeError, "not enough number of elements");
+				}
+				return nullptr;
+			}
+		}
+	}
+	return GetIteratorSrc().NextValue();
+}
+
+String Iterator_Offset::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("Offset:offset=%d", _offset);
 	return str;
 }
 
@@ -457,7 +487,7 @@ Value* Iterator_Pingpong::DoNextValue()
 String Iterator_Pingpong::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Pingpong:n=%zu", GetValueOwner().size());
+	str.Printf("Pingpong:n=%zu", GetValueOwner().size());
 	return str;
 }
 
@@ -536,11 +566,9 @@ size_t Iterator_Fold::GetLength() const
 
 String Iterator_Fold::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "List#Fold(";
-	rtn += GetIteratorSrc().ToString();
-	rtn += ")";
-	return rtn;
+	String str;
+	str.Printf("Fold:%s", GetIteratorSrc().ToString().c_str());
+	return str;
 }
 
 //------------------------------------------------------------------------------
@@ -557,7 +585,7 @@ Value* Iterator_Permutation::DoNextValue()
 String Iterator_Permutation::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Permutation:n=%zu", GetValueOwner().size());
+	str.Printf("Permutation:n=%zu", GetValueOwner().size());
 	return str;
 }
 
@@ -575,7 +603,7 @@ Value* Iterator_PartialPermutation::DoNextValue()
 String Iterator_PartialPermutation::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#PartialPermutation:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
+	str.Printf("PartialPermutation:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
 	return str;
 }
 
@@ -593,7 +621,7 @@ Value* Iterator_Combination::DoNextValue()
 String Iterator_Combination::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("List#Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
+	str.Printf("Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
 	return str;
 }
 

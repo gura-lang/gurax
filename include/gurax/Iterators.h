@@ -472,8 +472,10 @@ public:
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-	virtual size_t GetLength() const override { return GetValueOwner().size(); }
+	virtual Flags GetFlags() const override {
+		return (_cnt < 0)? (Flag::Infinite | Flag::LenUndetermined) : (Flag::Finite | Flag::LenDetermined);
+	}
+	virtual size_t GetLength() const override { return (_cnt < 0)? -1 : _cnt; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -484,7 +486,7 @@ public:
 class GURAX_DLLDECLARE Iterator_Head : public Iterator {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_Cycle");
+	Gurax_MemoryPoolAllocator("Iterator_Head");
 private:
 	RefPtr<Iterator> _pIteratorSrc;
 	Int _cnt;
@@ -499,6 +501,38 @@ public:
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
 	virtual size_t GetLength() const override {
 		return std::min(GetIteratorSrc().GetLength(), static_cast<size_t>(_cnt));
+	}
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Offset
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Offset : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Offset");
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	Int _offset;
+	bool _raiseFlag;
+	bool _firstFlag;
+public:
+	Iterator_Offset(Iterator* pIteratorSrc, Int offset, bool raiseFlag) :
+		_pIteratorSrc(pIteratorSrc), _offset(offset), _raiseFlag(raiseFlag), _firstFlag(true) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return GetIteratorSrc().GetFlags() & (Flag::Finite | Flag::LenDetermined);
+	}
+	virtual size_t GetLength() const override {
+		if (!GetIteratorSrc().IsLenDetermined()) return -1;
+		size_t len = GetIteratorSrc().GetLength();
+		return (len < static_cast<size_t>(_offset))? 0 : len - _offset;
 	}
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;

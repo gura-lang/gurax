@@ -705,28 +705,17 @@ Gurax_DeclareMethod(Iterator, Offset)
 
 Gurax_ImplementMethod(Iterator, Offset)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
 	Int offset = args.PickNumberNonNeg<Int>();
+	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	if (argument.IsSet(Gurax_Symbol(raise)) && !valueTypedOwner.CheckPosition(offset)) return Value::nil();
-	RefPtr<Iterator> pIterator(new ValueOwner::Iterator_Each(valueTypedOwner.GetValueOwner().Reference(), offset));
+	RefPtr<Iterator> pIterator(new Iterator_Offset(iteratorThis.Reference(), offset, raiseFlag));
 	return ReturnIterator(processor, argument, pIterator.release());
-#endif
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
 }
 
 // Iterator#Or()
