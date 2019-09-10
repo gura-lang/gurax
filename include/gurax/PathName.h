@@ -39,6 +39,7 @@ public:
 	// Destructor
 	virtual ~PathName() = default;
 public:
+	PathName& SetSep(char sep) { _sep = sep; return *this; }
 	PathName& SetSepMSWIN() { _sep = SepMSWIN; return *this; }
 	PathName& SetSepUNIX() { _sep = SepUNIX; return *this; }
 	PathName& SetCaseFlag(bool caseFlag) { _caseFlag = caseFlag; return *this; }

@@ -316,7 +316,16 @@ Gurax_ImplementFunction(Join)
 	}
 	return Value(str);
 #endif
-	return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& valList = args.PickList();
+	// Function body
+	String str;
+	char sep = argument.IsSet(Gurax_Symbol(uri))? PathName::SepUNIX : PathName::SepPlatform;
+	for (const Value* pValue : valList) {
+		str = PathName(str).SetSep(sep).JoinAfter(Value_String::GetString(*pValue));
+	}
+	return new Value_String(str);
 }
 
 // path.Match(pattern:string, name:string):map:[case,icase]
