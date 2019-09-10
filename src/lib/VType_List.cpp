@@ -1442,6 +1442,44 @@ Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_List::vtype = VTYPE_List;
 
+Value_List* Value_List::Create(Value* pValue)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(1);
+	pValueOwner->push_back(pValue);
+	return new Value_List(pValueOwner.release());
+}
+
+Value_List* Value_List::Create(Value* pValue1, Value* pValue2)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(2);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	return new Value_List(pValueOwner.release());
+}
+
+Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(3);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	pValueOwner->push_back(pValue3);
+	return new Value_List(pValueOwner.release());
+}
+
+Value_List* Value_List::Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(4);
+	pValueOwner->push_back(pValue1);
+	pValueOwner->push_back(pValue2);
+	pValueOwner->push_back(pValue3);
+	pValueOwner->push_back(pValue4);
+	return new Value_List(pValueOwner.release());
+}
+
 String Value_List::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

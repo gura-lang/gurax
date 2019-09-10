@@ -57,6 +57,11 @@ protected:
 	// Destructor
 	~Value_List() = default;
 public:
+	static Value_List* Create(Value* pValue);
+	static Value_List* Create(Value* pValue1, Value* pValue2);
+	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3);
+	static Value_List* Create(Value* pValue1, Value* pValue2, Value* pValue3, Value* pValue4);
+public:
 	ValueTypedOwner& GetValueTypedOwner() { return *_pValueTypedOwner; }
 	const ValueTypedOwner& GetValueTypedOwner() const { return *_pValueTypedOwner; }
 	const ValueOwner& GetValueOwner() const { return GetValueTypedOwner().GetValueOwner(); }
