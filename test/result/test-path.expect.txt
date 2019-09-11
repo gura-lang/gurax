@@ -1,18 +1,64 @@
-======== AbsName ========
-======== BaseName ========
-======== BottomName ========
-======== Dir ========
-======== DirName ========
-======== Exists ========
-======== ExtName ========
-======== FileName ========
-======== Glob ========
-======== HeadName ========
-======== Join ========
-======== Match ========
-======== Regulate ========
-======== Split ========
-======== SplitBottom ========
-======== SplitExt ========
-======== Stat ========
-======== Walk ========
+======== path.AbsName() ========
+======== path.BaseName() ========
+======== path.BottomName() ========
+======== path.Dir() ========
+======== path.DirName() ========
+======== path.Exists() ========
+======== path.ExtName() ========
+======== path.FileName() ========
+======== path.Glob() ========
+======== path.HeadName() ========
+======== path.Join() ========
+======== path.Match() ========
+path.Match('a*', 'abcdefg') .. true
+path.Match('a*efg', 'abcdefg') .. true
+path.Match('a*ef', 'abcdefg') .. false
+path.Match('a?cdefg', 'abcdefg') .. true
+path.Match('a????fg', 'abcdefg') .. true
+path.Match('a????f?', 'abcdefg') .. true
+path.Match('a???f?', 'abcdefg') .. false
+path.Match('A*', 'abcdefg'):case .. false
+path.Match('A*', 'abcdefg'):icase .. true
+======== path.Regulate() ========
+''                              -> ''
+'a'                             -> 'a'
+'a/b'                           -> 'a/b'
+'a/b/c'                         -> 'a/b/c'
+'a/b/c/d'                       -> 'a/b/c/d'
+'a/..'                          -> ''
+'a/../..'                       -> '..'
+'a/../../..'                    -> '../..'
+'a/b/c'                         -> 'a/b/c'
+'a/b/c/..'                      -> 'a/b'
+'a/b/c/../..'                   -> 'a'
+'a/b/c/../../..'                -> ''
+'a/b/c/../../../..'             -> '..'
+'a/'                            -> 'a/'
+'/a'                            -> '/a'
+'/a/'                           -> '/a/'
+'/a/..'                         -> '/'
+'/a/../..'                      -> '/'
+'a/b/c/'                        -> 'a/b/c/'
+'/a/b/c'                        -> '/a/b/c'
+'/a/b/c/'                       -> '/a/b/c/'
+'c:'                            -> 'c:'
+'c:a/b/c'                       -> 'c:a/b/c'
+'c:a/b/c/..'                    -> 'c:a/b'
+'c:a/b/c/../..'                 -> 'c:a'
+'c:a/b/c/../../..'              -> 'c:'
+'c:a/b/c/../../../..'           -> 'c:..'
+'c:/'                           -> 'c:/'
+'c:/a/b/c'                      -> 'c:/a/b/c'
+'c:/a/b/c/..'                   -> 'c:/a/b'
+'c:/a/b/c/../..'                -> 'c:/a'
+'c:/a/b/c/../../..'             -> 'c:/'
+'c:/a/b/c/../../../..'          -> 'c:/'
+'a/b/c/./d/e/./f/g'             -> 'a/b/c/d/e/f/g'
+'dir1/dir2///dir3//dir4/'       -> 'dir1/dir2/dir3/dir4/'
+'///dir1/dir2///dir3//dir4/'    -> '///dir1/dir2/dir3/dir4/'
+'dir1/dir2/../dir3/../dir4/../' -> 'dir1/'
+======== path.Split() ========
+======== path.SplitBottom() ========
+======== path.SplitExt() ========
+======== path.Stat() ========
+======== path.Walk() ========

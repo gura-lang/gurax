@@ -1,56 +1,106 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('AbsName') {
+TestCase('path.AbsName()') {
 }
 
-TestCase('BaseName') {
+TestCase('path.BaseName()') {
 }
 
-TestCase('BottomName') {
+TestCase('path.BottomName()') {
 }
 
-TestCase('Dir') {
+TestCase('path.Dir()') {
 }
 
-TestCase('DirName') {
+TestCase('path.DirName()') {
 }
 
-TestCase('Exists') {
+TestCase('path.Exists()') {
 }
 
-TestCase('ExtName') {
+TestCase('path.ExtName()') {
 }
 
-TestCase('FileName') {
+TestCase('path.FileName()') {
 }
 
-TestCase('Glob') {
+TestCase('path.Glob()') {
 }
 
-TestCase('HeadName') {
+TestCase('path.HeadName()') {
 }
 
-TestCase('Join') {
+TestCase('path.Join()') {
 }
 
-TestCase('Match') {
+TestCase('path.Match()') {
+	Tester(`path.Match('a*', 'abcdefg'))
+	Tester(`path.Match('a*efg', 'abcdefg'))
+	Tester(`path.Match('a*ef', 'abcdefg'))
+	Tester(`path.Match('a?cdefg', 'abcdefg'))
+	Tester(`path.Match('a????fg', 'abcdefg'))
+	Tester(`path.Match('a????f?', 'abcdefg'))
+	Tester(`path.Match('a???f?', 'abcdefg'))
+	Tester(`path.Match('A*', 'abcdefg'):case)
+	Tester(`path.Match('A*', 'abcdefg'):icase)
 }
 
-TestCase('Regulate') {
+TestCase('path.Regulate()') {
+	patterns = [
+		''
+		'a'
+		'a/b'
+		'a/b/c'
+		'a/b/c/d'
+		'a/..'
+		'a/../..'
+		'a/../../..'
+		'a/b/c'
+		'a/b/c/..'
+		'a/b/c/../..'
+		'a/b/c/../../..'
+		'a/b/c/../../../..'
+		'a/'
+		'/a'
+		'/a/'
+		'/a/..'
+		'/a/../..'
+		'a/b/c/'
+		'/a/b/c'
+		'/a/b/c/'
+		'c:'
+		'c:a/b/c'
+		'c:a/b/c/..'
+		'c:a/b/c/../..'
+		'c:a/b/c/../../..'
+		'c:a/b/c/../../../..'
+		'c:/'
+		'c:/a/b/c'
+		'c:/a/b/c/..'
+		'c:/a/b/c/../..'
+		'c:/a/b/c/../../..'
+		'c:/a/b/c/../../../..'
+		'a/b/c/./d/e/./f/g'
+		'dir1/dir2///dir3//dir4/'
+		'///dir1/dir2///dir3//dir4/'
+		'dir1/dir2/../dir3/../dir4/../'
+	]
+	patternsQuoted = "'" + patterns + "'"
+	Printf('%-*s -> \'%s\'\n', patternsQuoted:*len.Max(), patternsQuoted, path.Regulate(patterns):uri)
 }
 
-TestCase('Split') {
+TestCase('path.Split()') {
 }
 
-TestCase('SplitBottom') {
+TestCase('path.SplitBottom()') {
 }
 
-TestCase('SplitExt') {
+TestCase('path.SplitExt()') {
 }
 
-TestCase('Stat') {
+TestCase('path.Stat()') {
 }
 
-TestCase('Walk') {
+TestCase('path.Walk()') {
 }
