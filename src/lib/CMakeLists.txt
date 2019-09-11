@@ -120,6 +120,8 @@ add_library(guraxcore SHARED
 	../module-codecs_iso8859/module-codecs_iso8859.cpp
 	../module-codecs_japanese/module-codecs_japanese.cpp
 	../module-fs/module-fs.cpp
+	../module-fs/Stat.cpp
+	../module-fs/VType_Stat.cpp
 	../module-math/module-math.cpp
 	../module-os/module-os.cpp
 	../module-path/module-path.cpp
