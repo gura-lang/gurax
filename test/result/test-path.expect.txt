@@ -1,13 +1,334 @@
 ======== path.AbsName() ========
-======== path.BaseName() ========
-======== path.BottomName() ========
+======== path.BaseName(), path.ExtName() and path.SplitExt() ========
+path.BaseName('') .. ''
+path.BaseName('hoge') .. 'hoge'
+path.BaseName('hoge.txt') .. 'hoge'
+path.BaseName('hoge/') .. 'hoge/'
+path.BaseName('hoge.txt/') .. 'hoge.txt/'
+path.BaseName('hoge/boke') .. 'hoge/boke'
+path.BaseName('hoge/boke.txt') .. 'hoge/boke'
+path.BaseName('hoge/boke/') .. 'hoge/boke/'
+path.BaseName('hoge/boke.txt/') .. 'hoge/boke.txt/'
+path.BaseName('hoge/aaaa/bbbb/ccc/boke.txt') .. 'hoge/aaaa/bbbb/ccc/boke'
+path.BaseName('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'hoge/aaaa/bbbb/ccc.tt/boke'
+path.BaseName('hoge/aaaa/bbbb/ccc/.boke') .. 'hoge/aaaa/bbbb/ccc/.boke'
+path.BaseName('/') .. '/'
+path.BaseName('/hoge') .. '/hoge'
+path.BaseName('/hoge.txt') .. '/hoge'
+path.BaseName('/hoge/') .. '/hoge/'
+path.BaseName('/hoge.txt/') .. '/hoge.txt/'
+path.BaseName('/hoge/boke') .. '/hoge/boke'
+path.BaseName('/hoge/boke.txt') .. '/hoge/boke'
+path.BaseName('/hoge/boke/') .. '/hoge/boke/'
+path.BaseName('/hoge/boke.txt/') .. '/hoge/boke.txt/'
+path.BaseName('/hoge/aaaa/bbbb/ccc/boke.txt') .. '/hoge/aaaa/bbbb/ccc/boke'
+path.BaseName('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '/hoge/aaaa/bbbb/ccc.tt/boke'
+path.BaseName('/hoge/aaaa/bbbb/ccc/.boke') .. '/hoge/aaaa/bbbb/ccc/.boke'
+path.BaseName('C:/') .. 'C:/'
+path.BaseName('C:/hoge') .. 'C:/hoge'
+path.BaseName('C:/hoge.txt') .. 'C:/hoge'
+path.BaseName('C:/hoge/') .. 'C:/hoge/'
+path.BaseName('C:/hoge.txt/') .. 'C:/hoge.txt/'
+path.BaseName('C:/hoge/boke') .. 'C:/hoge/boke'
+path.BaseName('C:/hoge/boke.txt') .. 'C:/hoge/boke'
+path.BaseName('C:/hoge/boke/') .. 'C:/hoge/boke/'
+path.BaseName('C:/hoge/boke.txt/') .. 'C:/hoge/boke.txt/'
+path.BaseName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc/boke'
+path.BaseName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc.tt/boke'
+path.BaseName('C:/hoge/aaaa/bbbb/ccc/.boke') .. 'C:/hoge/aaaa/bbbb/ccc/.boke'
+path.ExtName('') .. ''
+path.ExtName('hoge') .. ''
+path.ExtName('hoge.txt') .. '.txt'
+path.ExtName('hoge/') .. ''
+path.ExtName('hoge.txt/') .. ''
+path.ExtName('hoge/boke') .. ''
+path.ExtName('hoge/boke.txt') .. '.txt'
+path.ExtName('hoge/boke/') .. ''
+path.ExtName('hoge/boke.txt/') .. ''
+path.ExtName('hoge/aaaa/bbbb/ccc/boke.txt') .. '.txt'
+path.ExtName('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '.txt'
+path.ExtName('hoge/aaaa/bbbb/ccc/.boke') .. ''
+path.ExtName('/') .. ''
+path.ExtName('/hoge') .. ''
+path.ExtName('/hoge.txt') .. '.txt'
+path.ExtName('/hoge/') .. ''
+path.ExtName('/hoge.txt/') .. ''
+path.ExtName('/hoge/boke') .. ''
+path.ExtName('/hoge/boke.txt') .. '.txt'
+path.ExtName('/hoge/boke/') .. ''
+path.ExtName('/hoge/boke.txt/') .. ''
+path.ExtName('/hoge/aaaa/bbbb/ccc/boke.txt') .. '.txt'
+path.ExtName('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '.txt'
+path.ExtName('/hoge/aaaa/bbbb/ccc/.boke') .. ''
+path.ExtName('C:/') .. ''
+path.ExtName('C:/hoge') .. ''
+path.ExtName('C:/hoge.txt') .. '.txt'
+path.ExtName('C:/hoge/') .. ''
+path.ExtName('C:/hoge.txt/') .. ''
+path.ExtName('C:/hoge/boke') .. ''
+path.ExtName('C:/hoge/boke.txt') .. '.txt'
+path.ExtName('C:/hoge/boke/') .. ''
+path.ExtName('C:/hoge/boke.txt/') .. ''
+path.ExtName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. '.txt'
+path.ExtName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '.txt'
+path.ExtName('C:/hoge/aaaa/bbbb/ccc/.boke') .. ''
+path.SplitExt('') .. ['', '']
+path.SplitExt('hoge') .. ['hoge', '']
+path.SplitExt('hoge.txt') .. ['hoge', '.txt']
+path.SplitExt('hoge/') .. ['hoge/', '']
+path.SplitExt('hoge.txt/') .. ['hoge.txt/', '']
+path.SplitExt('hoge/boke') .. ['hoge/boke', '']
+path.SplitExt('hoge/boke.txt') .. ['hoge/boke', '.txt']
+path.SplitExt('hoge/boke/') .. ['hoge/boke/', '']
+path.SplitExt('hoge/boke.txt/') .. ['hoge/boke.txt/', '']
+path.SplitExt('hoge/aaaa/bbbb/ccc/boke.txt') .. ['hoge/aaaa/bbbb/ccc/boke', '.txt']
+path.SplitExt('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['hoge/aaaa/bbbb/ccc.tt/boke', '.txt']
+path.SplitExt('hoge/aaaa/bbbb/ccc/.boke') .. ['hoge/aaaa/bbbb/ccc/.boke', '']
+path.SplitExt('/') .. ['/', '']
+path.SplitExt('/hoge') .. ['/hoge', '']
+path.SplitExt('/hoge.txt') .. ['/hoge', '.txt']
+path.SplitExt('/hoge/') .. ['/hoge/', '']
+path.SplitExt('/hoge.txt/') .. ['/hoge.txt/', '']
+path.SplitExt('/hoge/boke') .. ['/hoge/boke', '']
+path.SplitExt('/hoge/boke.txt') .. ['/hoge/boke', '.txt']
+path.SplitExt('/hoge/boke/') .. ['/hoge/boke/', '']
+path.SplitExt('/hoge/boke.txt/') .. ['/hoge/boke.txt/', '']
+path.SplitExt('/hoge/aaaa/bbbb/ccc/boke.txt') .. ['/hoge/aaaa/bbbb/ccc/boke', '.txt']
+path.SplitExt('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['/hoge/aaaa/bbbb/ccc.tt/boke', '.txt']
+path.SplitExt('/hoge/aaaa/bbbb/ccc/.boke') .. ['/hoge/aaaa/bbbb/ccc/.boke', '']
+path.SplitExt('C:/') .. ['C:/', '']
+path.SplitExt('C:/hoge') .. ['C:/hoge', '']
+path.SplitExt('C:/hoge.txt') .. ['C:/hoge', '.txt']
+path.SplitExt('C:/hoge/') .. ['C:/hoge/', '']
+path.SplitExt('C:/hoge.txt/') .. ['C:/hoge.txt/', '']
+path.SplitExt('C:/hoge/boke') .. ['C:/hoge/boke', '']
+path.SplitExt('C:/hoge/boke.txt') .. ['C:/hoge/boke', '.txt']
+path.SplitExt('C:/hoge/boke/') .. ['C:/hoge/boke/', '']
+path.SplitExt('C:/hoge/boke.txt/') .. ['C:/hoge/boke.txt/', '']
+path.SplitExt('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/boke', '.txt']
+path.SplitExt('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/boke', '.txt']
+path.SplitExt('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/.boke', '']
 ======== path.Dir() ========
-======== path.DirName() ========
+======== path.DirName(), path.FileName() and path.Split() ========
+path.DirName('') .. ''
+path.DirName('hoge') .. ''
+path.DirName('hoge.txt') .. ''
+path.DirName('hoge/') .. 'hoge/'
+path.DirName('hoge.txt/') .. 'hoge.txt/'
+path.DirName('hoge/boke') .. 'hoge/'
+path.DirName('hoge/boke.txt') .. 'hoge/'
+path.DirName('hoge/boke/') .. 'hoge/boke/'
+path.DirName('hoge/boke.txt/') .. 'hoge/boke.txt/'
+path.DirName('hoge/aaaa/bbbb/ccc/boke.txt') .. 'hoge/aaaa/bbbb/ccc/'
+path.DirName('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'hoge/aaaa/bbbb/ccc.tt/'
+path.DirName('hoge/aaaa/bbbb/ccc/.boke') .. 'hoge/aaaa/bbbb/ccc/'
+path.DirName('/') .. '/'
+path.DirName('/hoge') .. '/'
+path.DirName('/hoge.txt') .. '/'
+path.DirName('/hoge/') .. '/hoge/'
+path.DirName('/hoge.txt/') .. '/hoge.txt/'
+path.DirName('/hoge/boke') .. '/hoge/'
+path.DirName('/hoge/boke.txt') .. '/hoge/'
+path.DirName('/hoge/boke/') .. '/hoge/boke/'
+path.DirName('/hoge/boke.txt/') .. '/hoge/boke.txt/'
+path.DirName('/hoge/aaaa/bbbb/ccc/boke.txt') .. '/hoge/aaaa/bbbb/ccc/'
+path.DirName('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '/hoge/aaaa/bbbb/ccc.tt/'
+path.DirName('/hoge/aaaa/bbbb/ccc/.boke') .. '/hoge/aaaa/bbbb/ccc/'
+path.DirName('C:/') .. 'C:/'
+path.DirName('C:/hoge') .. 'C:/'
+path.DirName('C:/hoge.txt') .. 'C:/'
+path.DirName('C:/hoge/') .. 'C:/hoge/'
+path.DirName('C:/hoge.txt/') .. 'C:/hoge.txt/'
+path.DirName('C:/hoge/boke') .. 'C:/hoge/'
+path.DirName('C:/hoge/boke.txt') .. 'C:/hoge/'
+path.DirName('C:/hoge/boke/') .. 'C:/hoge/boke/'
+path.DirName('C:/hoge/boke.txt/') .. 'C:/hoge/boke.txt/'
+path.DirName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc/'
+path.DirName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc.tt/'
+path.DirName('C:/hoge/aaaa/bbbb/ccc/.boke') .. 'C:/hoge/aaaa/bbbb/ccc/'
+path.FileName('') .. ''
+path.FileName('hoge') .. 'hoge'
+path.FileName('hoge.txt') .. 'hoge.txt'
+path.FileName('hoge/') .. ''
+path.FileName('hoge.txt/') .. ''
+path.FileName('hoge/boke') .. 'boke'
+path.FileName('hoge/boke.txt') .. 'boke.txt'
+path.FileName('hoge/boke/') .. ''
+path.FileName('hoge/boke.txt/') .. ''
+path.FileName('hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
+path.FileName('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
+path.FileName('hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.FileName('/') .. ''
+path.FileName('/hoge') .. 'hoge'
+path.FileName('/hoge.txt') .. 'hoge.txt'
+path.FileName('/hoge/') .. ''
+path.FileName('/hoge.txt/') .. ''
+path.FileName('/hoge/boke') .. 'boke'
+path.FileName('/hoge/boke.txt') .. 'boke.txt'
+path.FileName('/hoge/boke/') .. ''
+path.FileName('/hoge/boke.txt/') .. ''
+path.FileName('/hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
+path.FileName('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
+path.FileName('/hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.FileName('C:/') .. ''
+path.FileName('C:/hoge') .. 'hoge'
+path.FileName('C:/hoge.txt') .. 'hoge.txt'
+path.FileName('C:/hoge/') .. ''
+path.FileName('C:/hoge.txt/') .. ''
+path.FileName('C:/hoge/boke') .. 'boke'
+path.FileName('C:/hoge/boke.txt') .. 'boke.txt'
+path.FileName('C:/hoge/boke/') .. ''
+path.FileName('C:/hoge/boke.txt/') .. ''
+path.FileName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
+path.FileName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
+path.FileName('C:/hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.Split('') .. ['', '']
+path.Split('hoge') .. ['', 'hoge']
+path.Split('hoge.txt') .. ['', 'hoge.txt']
+path.Split('hoge/') .. ['hoge/', '']
+path.Split('hoge.txt/') .. ['hoge.txt/', '']
+path.Split('hoge/boke') .. ['hoge/', 'boke']
+path.Split('hoge/boke.txt') .. ['hoge/', 'boke.txt']
+path.Split('hoge/boke/') .. ['hoge/boke/', '']
+path.Split('hoge/boke.txt/') .. ['hoge/boke.txt/', '']
+path.Split('hoge/aaaa/bbbb/ccc/boke.txt') .. ['hoge/aaaa/bbbb/ccc/', 'boke.txt']
+path.Split('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
+path.Split('hoge/aaaa/bbbb/ccc/.boke') .. ['hoge/aaaa/bbbb/ccc/', '.boke']
+path.Split('/') .. ['/', '']
+path.Split('/hoge') .. ['/', 'hoge']
+path.Split('/hoge.txt') .. ['/', 'hoge.txt']
+path.Split('/hoge/') .. ['/hoge/', '']
+path.Split('/hoge.txt/') .. ['/hoge.txt/', '']
+path.Split('/hoge/boke') .. ['/hoge/', 'boke']
+path.Split('/hoge/boke.txt') .. ['/hoge/', 'boke.txt']
+path.Split('/hoge/boke/') .. ['/hoge/boke/', '']
+path.Split('/hoge/boke.txt/') .. ['/hoge/boke.txt/', '']
+path.Split('/hoge/aaaa/bbbb/ccc/boke.txt') .. ['/hoge/aaaa/bbbb/ccc/', 'boke.txt']
+path.Split('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
+path.Split('/hoge/aaaa/bbbb/ccc/.boke') .. ['/hoge/aaaa/bbbb/ccc/', '.boke']
+path.Split('C:/') .. ['C:/', '']
+path.Split('C:/hoge') .. ['C:/', 'hoge']
+path.Split('C:/hoge.txt') .. ['C:/', 'hoge.txt']
+path.Split('C:/hoge/') .. ['C:/hoge/', '']
+path.Split('C:/hoge.txt/') .. ['C:/hoge.txt/', '']
+path.Split('C:/hoge/boke') .. ['C:/hoge/', 'boke']
+path.Split('C:/hoge/boke.txt') .. ['C:/hoge/', 'boke.txt']
+path.Split('C:/hoge/boke/') .. ['C:/hoge/boke/', '']
+path.Split('C:/hoge/boke.txt/') .. ['C:/hoge/boke.txt/', '']
+path.Split('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/', 'boke.txt']
+path.Split('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
+path.Split('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/', '.boke']
 ======== path.Exists() ========
-======== path.ExtName() ========
-======== path.FileName() ========
 ======== path.Glob() ========
-======== path.HeadName() ========
+======== path.HeadName() and path.BottomName() and path.SplitBottom() ========
+path.HeadName('') .. ''
+path.HeadName('hoge') .. ''
+path.HeadName('hoge.txt') .. ''
+path.HeadName('hoge/') .. ''
+path.HeadName('hoge.txt/') .. ''
+path.HeadName('hoge/boke') .. 'hoge/'
+path.HeadName('hoge/boke.txt') .. 'hoge/'
+path.HeadName('hoge/boke/') .. 'hoge/'
+path.HeadName('hoge/boke.txt/') .. 'hoge/'
+path.HeadName('hoge/aaaa/bbbb/ccc/boke.txt') .. 'hoge/aaaa/bbbb/ccc/'
+path.HeadName('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'hoge/aaaa/bbbb/ccc.tt/'
+path.HeadName('hoge/aaaa/bbbb/ccc/.boke') .. 'hoge/aaaa/bbbb/ccc/'
+path.HeadName('/') .. '/'
+path.HeadName('/hoge') .. '/'
+path.HeadName('/hoge.txt') .. '/'
+path.HeadName('/hoge/') .. '/'
+path.HeadName('/hoge.txt/') .. '/'
+path.HeadName('/hoge/boke') .. '/hoge/'
+path.HeadName('/hoge/boke.txt') .. '/hoge/'
+path.HeadName('/hoge/boke/') .. '/hoge/'
+path.HeadName('/hoge/boke.txt/') .. '/hoge/'
+path.HeadName('/hoge/aaaa/bbbb/ccc/boke.txt') .. '/hoge/aaaa/bbbb/ccc/'
+path.HeadName('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. '/hoge/aaaa/bbbb/ccc.tt/'
+path.HeadName('/hoge/aaaa/bbbb/ccc/.boke') .. '/hoge/aaaa/bbbb/ccc/'
+path.HeadName('C:/') .. 'C:/'
+path.HeadName('C:/hoge') .. 'C:/'
+path.HeadName('C:/hoge.txt') .. 'C:/'
+path.HeadName('C:/hoge/') .. 'C:/'
+path.HeadName('C:/hoge.txt/') .. 'C:/'
+path.HeadName('C:/hoge/boke') .. 'C:/hoge/'
+path.HeadName('C:/hoge/boke.txt') .. 'C:/hoge/'
+path.HeadName('C:/hoge/boke/') .. 'C:/hoge/'
+path.HeadName('C:/hoge/boke.txt/') .. 'C:/hoge/'
+path.HeadName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc/'
+path.HeadName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'C:/hoge/aaaa/bbbb/ccc.tt/'
+path.HeadName('C:/hoge/aaaa/bbbb/ccc/.boke') .. 'C:/hoge/aaaa/bbbb/ccc/'
+path.BottomName('') .. ''
+path.BottomName('hoge') .. 'hoge'
+path.BottomName('hoge.txt') .. 'hoge.txt'
+path.BottomName('hoge/') .. 'hoge'
+path.BottomName('hoge.txt/') .. 'hoge.txt'
+path.BottomName('hoge/boke') .. 'boke'
+path.BottomName('hoge/boke.txt') .. 'boke.txt'
+path.BottomName('hoge/boke/') .. 'boke'
+path.BottomName('hoge/boke.txt/') .. 'boke.txt'
+path.BottomName('hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
+path.BottomName('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
+path.BottomName('hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.BottomName('/') .. ''
+path.BottomName('/hoge') .. 'hoge'
+path.BottomName('/hoge.txt') .. 'hoge.txt'
+path.BottomName('/hoge/') .. 'hoge'
+path.BottomName('/hoge.txt/') .. 'hoge.txt'
+path.BottomName('/hoge/boke') .. 'boke'
+path.BottomName('/hoge/boke.txt') .. 'boke.txt'
+path.BottomName('/hoge/boke/') .. 'boke'
+path.BottomName('/hoge/boke.txt/') .. 'boke.txt'
+path.BottomName('/hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
+path.BottomName('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
+path.BottomName('/hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.BottomName('C:/') .. ''
+path.BottomName('C:/hoge') .. 'hoge'
+path.BottomName('C:/hoge.txt') .. 'hoge.txt'
+path.BottomName('C:/hoge/') .. 'hoge'
+path.BottomName('C:/hoge.txt/') .. 'hoge.txt'
+path.BottomName('C:/hoge/boke') .. 'boke'
+path.BottomName('C:/hoge/boke.txt') .. 'boke.txt'
+path.BottomName('C:/hoge/boke/') .. 'boke'
+path.BottomName('C:/hoge/boke.txt/') .. 'boke.txt'
+path.BottomName('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. 'boke.txt'
+path.BottomName('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. 'boke.txt'
+path.BottomName('C:/hoge/aaaa/bbbb/ccc/.boke') .. '.boke'
+path.SplitBottom('') .. ['', '']
+path.SplitBottom('hoge') .. ['', 'hoge']
+path.SplitBottom('hoge.txt') .. ['', 'hoge.txt']
+path.SplitBottom('hoge/') .. ['', 'hoge']
+path.SplitBottom('hoge.txt/') .. ['', 'hoge.txt']
+path.SplitBottom('hoge/boke') .. ['hoge/', 'boke']
+path.SplitBottom('hoge/boke.txt') .. ['hoge/', 'boke.txt']
+path.SplitBottom('hoge/boke/') .. ['hoge/', 'boke']
+path.SplitBottom('hoge/boke.txt/') .. ['hoge/', 'boke.txt']
+path.SplitBottom('hoge/aaaa/bbbb/ccc/boke.txt') .. ['hoge/aaaa/bbbb/ccc/', 'boke.txt']
+path.SplitBottom('hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
+path.SplitBottom('hoge/aaaa/bbbb/ccc/.boke') .. ['hoge/aaaa/bbbb/ccc/', '.boke']
+path.SplitBottom('/') .. ['/', '']
+path.SplitBottom('/hoge') .. ['/', 'hoge']
+path.SplitBottom('/hoge.txt') .. ['/', 'hoge.txt']
+path.SplitBottom('/hoge/') .. ['/', 'hoge']
+path.SplitBottom('/hoge.txt/') .. ['/', 'hoge.txt']
+path.SplitBottom('/hoge/boke') .. ['/hoge/', 'boke']
+path.SplitBottom('/hoge/boke.txt') .. ['/hoge/', 'boke.txt']
+path.SplitBottom('/hoge/boke/') .. ['/hoge/', 'boke']
+path.SplitBottom('/hoge/boke.txt/') .. ['/hoge/', 'boke.txt']
+path.SplitBottom('/hoge/aaaa/bbbb/ccc/boke.txt') .. ['/hoge/aaaa/bbbb/ccc/', 'boke.txt']
+path.SplitBottom('/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
+path.SplitBottom('/hoge/aaaa/bbbb/ccc/.boke') .. ['/hoge/aaaa/bbbb/ccc/', '.boke']
+path.SplitBottom('C:/') .. ['C:/', '']
+path.SplitBottom('C:/hoge') .. ['C:/', 'hoge']
+path.SplitBottom('C:/hoge.txt') .. ['C:/', 'hoge.txt']
+path.SplitBottom('C:/hoge/') .. ['C:/', 'hoge']
+path.SplitBottom('C:/hoge.txt/') .. ['C:/', 'hoge.txt']
+path.SplitBottom('C:/hoge/boke') .. ['C:/hoge/', 'boke']
+path.SplitBottom('C:/hoge/boke.txt') .. ['C:/hoge/', 'boke.txt']
+path.SplitBottom('C:/hoge/boke/') .. ['C:/hoge/', 'boke']
+path.SplitBottom('C:/hoge/boke.txt/') .. ['C:/hoge/', 'boke.txt']
+path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/', 'boke.txt']
+path.SplitBottom('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
+path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/', '.boke']
 ======== path.Join() ========
 ======== path.Match() ========
 path.Match('a*', 'abcdefg') .. true
@@ -57,8 +378,5 @@ path.Match('A*', 'abcdefg'):icase .. true
 'dir1/dir2///dir3//dir4/'       -> 'dir1/dir2/dir3/dir4/'
 '///dir1/dir2///dir3//dir4/'    -> '///dir1/dir2/dir3/dir4/'
 'dir1/dir2/../dir3/../dir4/../' -> 'dir1/'
-======== path.Split() ========
-======== path.SplitBottom() ========
-======== path.SplitExt() ========
 ======== path.Stat() ========
 ======== path.Walk() ========

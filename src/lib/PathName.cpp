@@ -155,7 +155,7 @@ void PathName::SplitBottomName(String* pHeadName, String* pBottomName) const
 	if (p != _pathName && IsSep(*(p - 1))) p--;
 	const char* pEnd = p;
 	for ( ; p != _pathName && !IsSepEx(*(p - 1)); p--) ;
-	if (pHeadName) *pHeadName = String(_pathName, p);
+	if (pHeadName) *pHeadName = (p == pEnd)? String(_pathName) : String(_pathName, p);
 	if (pBottomName) *pBottomName = String(p, pEnd);
 }
 
