@@ -33,6 +33,7 @@ public:
 	static const ErrorType IOError;
 	static const ErrorType IteratorError;
 	static const ErrorType KeyError;
+	static const ErrorType PathError;
 	static const ErrorType PropertyError;
 	static const ErrorType RangeError;
 	static const ErrorType StreamError;

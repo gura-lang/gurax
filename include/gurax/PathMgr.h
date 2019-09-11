@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_PATHMGR_H
 #define GURAX_PATHMGR_H
+#include "Directory.h"
 
 namespace Gurax {
 
@@ -14,6 +15,8 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(PathMgr);
 public:
+	enum NotFoundMode { Signal, NoSignal, Wouldbe, };
+public:
 	// Constructor
 	PathMgr() {}
 	// Copy constructor/operator
@@ -23,7 +26,13 @@ public:
 	PathMgr(PathMgr&& src) = delete;
 	PathMgr& operator=(PathMgr&& src) noexcept = delete;
 protected:
-	~PathMgr() = default;
+	virtual ~PathMgr() = default;
+public:
+	static Directory* OpenDirectory(const char* pathName);
+	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
+protected:
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent,
+									   const char** pPathName, NotFoundMode notFoundMode) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PathMgr& pathMgr) const { return this == &pathMgr; }
@@ -38,6 +47,8 @@ public:
 class GURAX_DLLDECLARE PathMgrList : public std::vector<PathMgr*> {
 public:
 	using std::vector<PathMgr*>::vector;
+public:
+	PathMgr* FindResponsible(Directory* pDirectoryParent, const char* pathName) const;
 };
 
 //------------------------------------------------------------------------------

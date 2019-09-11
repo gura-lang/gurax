@@ -16,6 +16,17 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 }
 
+Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_String)) {
+		const char* pathName = Value_String::GetString(value);
+		RefPtr<Directory> pDirectory(PathMgr::OpenDirectory(pathName));
+		if (!pDirectory) return nullptr;
+		return new Value_Directory(pDirectory.release());
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_Directory
 //------------------------------------------------------------------------------
