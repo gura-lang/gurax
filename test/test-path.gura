@@ -1,0 +1,56 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('AbsName') {
+}
+
+TestCase('BaseName') {
+}
+
+TestCase('BottomName') {
+}
+
+TestCase('Dir') {
+}
+
+TestCase('DirName') {
+}
+
+TestCase('Exists') {
+}
+
+TestCase('ExtName') {
+}
+
+TestCase('FileName') {
+}
+
+TestCase('Glob') {
+}
+
+TestCase('HeadName') {
+}
+
+TestCase('Join') {
+}
+
+TestCase('Match') {
+}
+
+TestCase('Regulate') {
+}
+
+TestCase('Split') {
+}
+
+TestCase('SplitBottom') {
+}
+
+TestCase('SplitExt') {
+}
+
+TestCase('Stat') {
+}
+
+TestCase('Walk') {
+}

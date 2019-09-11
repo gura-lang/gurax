@@ -319,12 +319,12 @@ Gurax_ImplementFunction(Join)
 	return new Value_String(str);
 }
 
-// path.Match(pattern:String, name:String):map:[case,icase]
+// path.Match(pattern:String, pathName:String):map:[case,icase]
 Gurax_DeclareFunction(Match)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(case_));
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
@@ -337,15 +337,14 @@ Gurax_DeclareFunction(Match)
 
 Gurax_ImplementFunction(Match)
 {
-#if 0
-	const char *pattern = arg.GetString(0);
-	const char *name = arg.GetString(1);
-	bool ignoreCaseFlag = OAL::IgnoreCaseInPathNameFlag;
-	if (arg.IsSet(Gurax_Symbol(case_))) ignoreCaseFlag = false;
-	if (arg.IsSet(Gurax_Symbol(icase))) ignoreCaseFlag = true;
-	return Value(PathMgr::DoesMatchName(pattern, name, ignoreCaseFlag));
-#endif
-	return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	const char* pattern = args.PickString();
+	PathName pathName(args.PickString());
+	// Function body
+	if (argument.IsSet(Gurax_Symbol(case_))) pathName.SetCaseFlag(true);
+	if (argument.IsSet(Gurax_Symbol(icase))) pathName.SetCaseFlag(false);
+	return new Value_Bool(pathName.DoesMatch(pattern));
 }
 
 // path.Regulate(pathName:String):map:[uri]
@@ -473,22 +472,19 @@ Gurax_DeclareFunction(Stat)
 
 Gurax_ImplementFunction(Stat)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	Directory *pDirectory = Object_directory::GetObject(arg, 0)->GetDirectory();
-	AutoPtr<Object> pObj(pDirectory->GetStatObj(sig));
-	if (sig.IsSignalled()) return Value::Nil;
-	return Value(pObj.release());
-#endif
-	return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	Directory& directory = Value_Directory::GetDirectory(args.PickValue());
+	// Function body
+	return directory.GetStatValue();
 }
 
-// path.Walk(directory?:Directory, maxdepth?:number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Walk(directory?:Directory, maxDepth?:number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Walk)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
 	DeclareArg("directory", VTYPE_Directory, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("maxdepth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("maxDepth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(stat));
@@ -562,7 +558,6 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(SplitExt));
 	Assign(Gurax_CreateFunction(Stat));
 	Assign(Gurax_CreateFunction(Walk));
-	//Assign(Gurax_CreateFunction(Exit));
 	return true;
 }
 

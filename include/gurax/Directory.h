@@ -23,7 +23,15 @@ public:
 	Directory(Directory&& src) = delete;
 	Directory& operator=(Directory&& src) noexcept = delete;
 protected:
-	~Directory() = default;
+	virtual ~Directory() = default;
+public:
+	Directory* Next() { return DoNext(); }
+	Stream* OpenStream() { return DoOpenStream(); }
+	Value* GetStatValue() { return DoGetStatValue(); }
+protected:
+	virtual Directory* DoNext() = 0;
+	virtual Stream* DoOpenStream() = 0;
+	virtual Value* DoGetStatValue();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Directory& pathMgr) const { return this == &pathMgr; }

@@ -8,6 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
+Value* Directory::DoGetStatValue()
+{
+	Error::Issue(ErrorType::PropertyError, "no status value available");
+	return Value::nil();
+}
+
 String Directory::ToString(const StringStyle& ss) const
 {
 	return "";
