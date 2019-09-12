@@ -1,3 +1,49 @@
+list(APPEND files-module
+	../module-codecs/module-codecs.cpp
+)
+
+list(APPEND files-module
+	../module-codecs_basic/module-codecs_basic.cpp
+)
+
+list(APPEND files-module
+	../module-codecs_chinese/module-codecs_chinese.cpp
+)
+
+list(APPEND files-module
+	../module-codecs_iso8859/module-codecs_iso8859.cpp
+)
+
+list(APPEND files-module
+	../module-codecs_japanese/module-codecs_japanese.cpp
+)
+
+list(APPEND files-module
+	../module-fs/module-fs.cpp
+	../module-fs/Stat.cpp
+	../module-fs/VType_Stat.cpp
+)
+
+list(APPEND files-module
+	../module-math/module-math.cpp
+)
+
+list(APPEND files-module
+	../module-os/module-os.cpp
+)
+
+list(APPEND files-module
+	../module-path/module-path.cpp
+)
+
+list(APPEND files-module
+	../module-re/module-re.cpp
+)
+
+list(APPEND files-module
+	../module-sys/module-sys.cpp
+)
+
 add_library(guraxcore SHARED
 	guraxcore.cpp
 	ArgFeeder.cpp
@@ -114,19 +160,7 @@ add_library(guraxcore SHARED
 	VType_TimeDelta.cpp
 	VType_Undefined.cpp
 	VType_VType.cpp
-	../module-codecs/module-codecs.cpp
-	../module-codecs_basic/module-codecs_basic.cpp
-	../module-codecs_chinese/module-codecs_chinese.cpp
-	../module-codecs_iso8859/module-codecs_iso8859.cpp
-	../module-codecs_japanese/module-codecs_japanese.cpp
-	../module-fs/module-fs.cpp
-	../module-fs/Stat.cpp
-	../module-fs/VType_Stat.cpp
-	../module-math/module-math.cpp
-	../module-os/module-os.cpp
-	../module-path/module-path.cpp
-	../module-re/module-re.cpp
-	../module-sys/module-sys.cpp
+	${files-module}
 )
 
 target_link_libraries(guraxcore dl pthread)
