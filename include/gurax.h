@@ -122,8 +122,6 @@
 #include "../src/module-codecs_iso8859/module-codecs_iso8859.h"
 #include "../src/module-codecs_japanese/module-codecs_japanese.h"
 #include "../src/module-fs/module-fs.h"
-#include "../src/module-fs/Stat.h"
-#include "../src/module-fs/VType_Stat.h"
 #include "../src/module-math/module-math.h"
 #include "../src/module-os/module-os.h"
 #include "../src/module-path/module-path.h"
