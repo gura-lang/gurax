@@ -21,9 +21,8 @@ protected:
 //------------------------------------------------------------------------------
 class DirectoryEx : public Directory {
 protected:
-	
 public:
-	//DirectoryEx(Directory* pDirectoryParent, const char* name, Type type, OAL::FileStat* pFileStat);
+	//DirectoryEx(Directory* pDirectoryParent, String name, Type type, OAL::FileStat* pFileStat);
 protected:
 	~DirectoryEx();
 protected:
