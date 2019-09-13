@@ -25,11 +25,11 @@ public:
 protected:
 	virtual ~Directory() = default;
 public:
-	Directory* Next() { return DoNext(); }
+	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream() { return DoOpenStream(); }
 	Value* GetStatValue() { return DoGetStatValue(); }
 protected:
-	virtual Directory* DoNext() = 0;
+	virtual Directory* DoNextChild() = 0;
 	virtual Stream* DoOpenStream() = 0;
 	virtual Value* DoGetStatValue();
 public:

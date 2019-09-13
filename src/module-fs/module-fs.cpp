@@ -21,7 +21,13 @@ protected:
 //------------------------------------------------------------------------------
 class DirectoryEx : public Directory {
 protected:
-	virtual Directory* DoNext() override;
+	
+public:
+	//DirectoryEx(Directory* pDirectoryParent, const char* name, Type type, OAL::FileStat* pFileStat);
+protected:
+	~DirectoryEx();
+protected:
+	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream() override;
 	virtual Value* DoGetStatValue() override;
 };
@@ -44,7 +50,7 @@ public:
 	virtual ~StreamEx() {
 		if (_closeAtDeletionFlag) ::fclose(_fp);
 	}
-	static Stream* Open(const char* fileName, const char* mode);
+	static Stream* Open(const char* pathName, const char* mode);
 	virtual const char* GetName() const override { return _name.c_str(); };
 	virtual const char* GetIdentifier() const override { return _identifier.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }
@@ -63,7 +69,7 @@ public:
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
-	return false;
+	return pDirectoryParent == nullptr;
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent,
@@ -75,7 +81,15 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent,
 //------------------------------------------------------------------------------
 // DirectoryEx
 //------------------------------------------------------------------------------
-Directory* DirectoryEx::DoNext()
+//DirectoryEx::DirectoryEx(Directory* pDirectoryParent, const char *name, Type type, OAL::FileStat *pFileStat)
+//{
+//}
+
+DirectoryEx::~DirectoryEx()
+{
+}
+
+Directory* DirectoryEx::DoNextChild()
 {
 	return nullptr;
 }
@@ -93,6 +107,11 @@ Value* DirectoryEx::DoGetStatValue()
 //------------------------------------------------------------------------------
 // StreamEx
 //------------------------------------------------------------------------------
+Stream* StreamEx::Open(const char* pathName, const char* mode)
+{
+	FILE* fp = ::fopen(pathName, mode);
+	return fp? new Stream_File(fp, true, pathName, pathName) : nullptr;
+}
 
 //------------------------------------------------------------------------------
 // Implementation of function
