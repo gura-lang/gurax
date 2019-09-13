@@ -13,14 +13,14 @@ namespace Gurax {
 class Stream_Dumb : public Stream {
 public:
 	Stream_Dumb() {}
-	virtual bool IsDumb() const { return true; }
-	virtual const char* GetName() const { return "dumb"; };
-	virtual const char* GetIdentifier() const { return "dumb"; }
-	virtual void Close() {}
-	virtual int GetChar() { return 0; }
-	virtual bool PutChar(char ch) { return true; }
-	virtual size_t Read(void* buff, size_t len) { ::memset(buff, 0x00, len); return len; }
-	virtual size_t Write(const void* buff, size_t len) { return len; }
+	virtual bool IsDumb() const override { return true; }
+	virtual const char* GetName() const override { return "dumb"; };
+	virtual const char* GetIdentifier() const override { return "dumb"; }
+	virtual void Close() override {}
+	virtual int GetChar() override { return 0; }
+	virtual bool PutChar(char ch) override { return true; }
+	virtual size_t Read(void* buff, size_t len) override { ::memset(buff, 0x00, len); return len; }
+	virtual size_t Write(const void* buff, size_t len) override { return len; }
 };
 
 //------------------------------------------------------------------------------
@@ -42,15 +42,15 @@ public:
 		if (_closeAtDeletionFlag) ::fclose(_fp);
 	}
 	static Stream* Open(const char* fileName, const char* mode);
-	virtual const char* GetName() const { return _name.c_str(); };
-	virtual const char* GetIdentifier() const { return _identifier.c_str(); }
-	virtual void Close() { ::fclose(_fp); }
-	virtual int GetChar() { return ::fgetc(_fp); }
-	virtual bool PutChar(char ch) { ::fputc(ch, _fp); return true; }
-	virtual size_t Read(void* buff, size_t len) {
+	virtual const char* GetName() const override { return _name.c_str(); };
+	virtual const char* GetIdentifier() const override { return _identifier.c_str(); }
+	virtual void Close() override { ::fclose(_fp); }
+	virtual int GetChar() override { return ::fgetc(_fp); }
+	virtual bool PutChar(char ch) override { ::fputc(ch, _fp); return true; }
+	virtual size_t Read(void* buff, size_t len) override {
 		return ::fread(buff, 1, len, _fp);
 	}
-	virtual size_t Write(const void* buff, size_t len) {
+	virtual size_t Write(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp);
 	}
 };
@@ -65,14 +65,14 @@ private:
 public:
 	Stream_Binary(BinaryReferable* pBuff, size_t offset);
 	Stream_Binary();
-	virtual bool IsDumb() const { return false; }
-	virtual const char* GetName() const { return "binary"; };
-	virtual const char* GetIdentifier() const { return "binary"; }
-	virtual void Close() {}
-	virtual int GetChar();
-	virtual bool PutChar(char ch);
-	virtual size_t Read(void* buff, size_t len);
-	virtual size_t Write(const void* buff, size_t len);
+	virtual bool IsDumb() const override { return false; }
+	virtual const char* GetName() const override { return "binary"; };
+	virtual const char* GetIdentifier() const override { return "binary"; }
+	virtual void Close() override {}
+	virtual int GetChar() override;
+	virtual bool PutChar(char ch) override;
+	virtual size_t Read(void* buff, size_t len) override;
+	virtual size_t Write(const void* buff, size_t len) override;
 };
 
 }
