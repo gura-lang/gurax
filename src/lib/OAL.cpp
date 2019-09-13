@@ -219,16 +219,18 @@ String OAL::GetCurDir()
 
 bool OAL::DoesExistDir(const char* pathName)
 {
-	struct stat stat;
-	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
-	return S_ISDIR(stat.st_mode);
+	//struct stat stat;
+	//if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
+	//return S_ISDIR(stat.st_mode);
+	return false;
 }
 
 bool OAL::DoesExistFile(const char* pathName)
 {
-	struct stat stat;
-	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
-	return S_ISREG(stat.st_mode);
+	//struct stat stat;
+	//if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
+	//return S_ISREG(stat.st_mode);
+	return false;
 }
 
 int OAL::ExecProgram(
