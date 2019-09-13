@@ -25,6 +25,8 @@ set(GURAX_SRCDIR_INCLUDE	${GURAX_SRCDIR_ROOT}/include)
 include_directories(
 	${GURAX_SRCDIR_INCLUDE})
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
+
 add_subdirectory(lib)
 add_subdirectory(gurax)
 add_subdirectory(unittest)

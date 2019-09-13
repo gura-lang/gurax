@@ -1,48 +1,35 @@
-list(APPEND files-module
-	../module-codecs/module-codecs.cpp
-)
+set(GURAX_RELDIR ../module-codecs)
+include(module-codecs/build)
 
-list(APPEND files-module
-	../module-codecs_basic/module-codecs_basic.cpp
-)
+set(GURAX_RELDIR ../module-codecs_basic)
+include(module-codecs_basic/build)
 
-list(APPEND files-module
-	../module-codecs_chinese/module-codecs_chinese.cpp
-)
+set(GURAX_RELDIR ../module-codecs_chinese)
+include(module-codecs_chinese/build)
 
-list(APPEND files-module
-	../module-codecs_iso8859/module-codecs_iso8859.cpp
-)
+set(GURAX_RELDIR ../module-codecs_iso8859)
+include(module-codecs_iso8859/build)
 
-list(APPEND files-module
-	../module-codecs_japanese/module-codecs_japanese.cpp
-)
+set(GURAX_RELDIR ../module-codecs_japanese)
+include(module-codecs_japanese/build)
 
-list(APPEND files-module
-	../module-fs/module-fs.cpp
-	../module-fs/Stat.cpp
-	../module-fs/VType_Stat.cpp
-)
+set(GURAX_RELDIR ../module-fs)
+include(module-fs/build)
 
-list(APPEND files-module
-	../module-math/module-math.cpp
-)
+set(GURAX_RELDIR ../module-math)
+include(module-math/build)
 
-list(APPEND files-module
-	../module-os/module-os.cpp
-)
+set(GURAX_RELDIR ../module-os)
+include(module-os/build)
 
-list(APPEND files-module
-	../module-path/module-path.cpp
-)
+set(GURAX_RELDIR ../module-path)
+include(module-path/build)
 
-list(APPEND files-module
-	../module-re/module-re.cpp
-)
+set(GURAX_RELDIR ../module-re)
+include(module-re/build)
 
-list(APPEND files-module
-	../module-sys/module-sys.cpp
-)
+set(GURAX_RELDIR ../module-sys)
+include(module-sys/build)
 
 add_library(guraxcore SHARED
 	guraxcore.cpp
