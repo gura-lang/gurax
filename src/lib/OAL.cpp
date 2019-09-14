@@ -167,26 +167,6 @@ String OAL::ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
 	return rtn;
 }
 
-//------------------------------------------------------------------------------
-// OAL::FileStat (MSWIN)
-//------------------------------------------------------------------------------
-OAL::FileStat::FileStat(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
-{
-}
-
-OAL::FileStat::FileStat(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
-{
-}
-
-OAL::FileStat::FileStat(const char* pathName, const WIN32_FIND_DATA& findData)
-{
-}
-
-OAL::FileStat* OAL::FileStat::Generate(const char* pathName)
-{
-	return nullptr;
-}
-
 //-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (MSWIN)
 //-----------------------------------------------------------------------------
@@ -404,37 +384,6 @@ DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
 		secsOffset = 0;
 	}
 	return CreateDateTime(tm, secsOffset);
-}
-
-//------------------------------------------------------------------------------
-// OAL::FileStat (POSIX)
-//------------------------------------------------------------------------------
-OAL::FileStat::FileStat(const char* pathName, const struct stat& stat) :
-	_pathName(pathName), _attr(0), _bytes(stat.st_size),
-	_pDateTimeA(OAL::CreateDateTime(stat.st_atime)),
-	_pDateTimeM(OAL::CreateDateTime(stat.st_mtime)),
-	_pDateTimeC(OAL::CreateDateTime(stat.st_ctime)),
-	_uid(stat.st_uid), _gid(stat.st_gid)
-{
-	if (S_ISDIR(stat.st_mode)) _attr |= Attr::Dir;
-	if (S_ISCHR(stat.st_mode)) _attr |= Attr::Chr;
-	if (S_ISBLK(stat.st_mode)) _attr |= Attr::Blk;
-	if (S_ISREG(stat.st_mode)) _attr |= Attr::Reg;
-	if (S_ISFIFO(stat.st_mode)) _attr |= Attr::Fifo;
-	if (S_ISLNK(stat.st_mode)) _attr |= Attr::Lnk;
-	if (S_ISSOCK(stat.st_mode)) _attr |= Attr::Sock;
-	_attr |= (stat.st_mode & 0777);
-}
-
-OAL::FileStat* OAL::FileStat::Generate(const char* pathName)
-{
-	struct stat stat;
-	String pathNameN = ToNativeString(PathName(pathName).MakeAbsName().c_str());
-	if (::stat(pathNameN.c_str(), &stat) != 0) {
-		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName);
-		return nullptr;
-	}
-	return new FileStat(pathName, stat);
 }
 
 //-----------------------------------------------------------------------------
