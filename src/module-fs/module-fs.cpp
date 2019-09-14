@@ -21,10 +21,13 @@ protected:
 //------------------------------------------------------------------------------
 class DirectoryEx : public Directory {
 protected:
+	RefPtr<Stat> _pStat;
 public:
-	//DirectoryEx(Directory* pDirectoryParent, String name, Type type, OAL::FileStat* pFileStat);
+	DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat);
 protected:
 	~DirectoryEx();
+public:
+	const Stat& GetStat() const { return *_pStat; }
 protected:
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream() override;
@@ -74,15 +77,21 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent,
 									  const char** pPathName, NotFoundMode notFoundMode)
 {
-	return nullptr;
+	const char* pathName = *pPathName;
+	RefPtr<Stat> pStat(Stat::Generate(pathName));
+	if (!pStat) return nullptr;
+	Directory::Type type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
+	return new DirectoryEx(pDirectoryParent, pathName, type, pStat.release());
 }
 
 //------------------------------------------------------------------------------
 // DirectoryEx
 //------------------------------------------------------------------------------
-//DirectoryEx::DirectoryEx(Directory* pDirectoryParent, const char *name, Type type, OAL::FileStat *pFileStat)
-//{
-//}
+DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat) :
+	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
+	_pStat(pStat)
+{
+}
 
 DirectoryEx::~DirectoryEx()
 {
@@ -100,7 +109,7 @@ Stream* DirectoryEx::DoOpenStream()
 
 Value* DirectoryEx::DoGetStatValue()
 {
-	return nullptr;
+	return new Value_Stat(GetStat().Reference());
 }
 
 //------------------------------------------------------------------------------
