@@ -2,38 +2,6 @@
 // OAL.cpp
 //==============================================================================
 #include "stdafx.h"
-#if defined(GURAX_ON_MSWIN)
-#include <shlobj.h>
-#if defined(_MSC_VER)
-typedef int mode_t;
-#define S_IRUSR 0x0100
-#define S_IWUSR 0x0080
-#define S_IXUSR 0x0040
-#else
-#include <sys/stat.h>
-#endif
-#define S_IRGRP 0x0020
-#define S_IWGRP 0x0010
-#define S_IXGRP 0x0008
-#define S_IROTH 0x0004
-#define S_IWOTH 0x0002
-#define S_IXOTH 0x0001
-#else
-#include <unistd.h>
-#include <dlfcn.h>
-#include <pthread.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/time.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <sys/types.h>
-#endif
-
-#if defined(GURAX_ON_DARWIN)
-#include <mach-o/dyld.h>
-#endif
 
 namespace Gurax {
 
@@ -300,18 +268,16 @@ String OAL::GetCurDir()
 
 bool OAL::DoesExistDir(const char* pathName)
 {
-	//struct stat stat;
-	//if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
-	//return S_ISDIR(stat.st_mode);
-	return false;
+	struct stat stat;
+	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
+	return S_ISDIR(stat.st_mode);
 }
 
 bool OAL::DoesExistFile(const char* pathName)
 {
-	//struct stat stat;
-	//if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
-	//return S_ISREG(stat.st_mode);
-	return false;
+	struct stat stat;
+	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
+	return S_ISREG(stat.st_mode);
 }
 
 int OAL::ExecProgram(
@@ -443,35 +409,32 @@ DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
 //------------------------------------------------------------------------------
 // OAL::FileStat (POSIX)
 //------------------------------------------------------------------------------
-OAL::FileStat::FileStat(const char* pathName, const struct stat& stat)
+OAL::FileStat::FileStat(const char* pathName, const struct stat& stat) :
+	_pathName(pathName), _attr(0), _bytes(stat.st_size),
+	_pDateTimeA(OAL::CreateDateTime(stat.st_atime)),
+	_pDateTimeM(OAL::CreateDateTime(stat.st_mtime)),
+	_pDateTimeC(OAL::CreateDateTime(stat.st_ctime)),
+	_uid(stat.st_uid), _gid(stat.st_gid)
 {
-	//_atime = ToDateTime(stat.st_atime);
-	//_mtime = ToDateTime(stat.st_mtime);
-	//_ctime = ToDateTime(stat.st_ctime);
-#if 0
-	if (S_ISDIR(stat.st_mode)) _attr |= ATTR_Dir;
-	if (S_ISCHR(stat.st_mode)) _attr |= ATTR_Chr;
-	if (S_ISBLK(stat.st_mode)) _attr |= ATTR_Blk;
-	if (S_ISREG(stat.st_mode)) _attr |= ATTR_Reg;
-	if (S_ISFIFO(stat.st_mode)) _attr |= ATTR_Fifo;
-	if (S_ISLNK(stat.st_mode)) _attr |= ATTR_Lnk;
-	if (S_ISSOCK(stat.st_mode)) _attr |= ATTR_Sock;
+	if (S_ISDIR(stat.st_mode)) _attr |= Attr::Dir;
+	if (S_ISCHR(stat.st_mode)) _attr |= Attr::Chr;
+	if (S_ISBLK(stat.st_mode)) _attr |= Attr::Blk;
+	if (S_ISREG(stat.st_mode)) _attr |= Attr::Reg;
+	if (S_ISFIFO(stat.st_mode)) _attr |= Attr::Fifo;
+	if (S_ISLNK(stat.st_mode)) _attr |= Attr::Lnk;
+	if (S_ISSOCK(stat.st_mode)) _attr |= Attr::Sock;
 	_attr |= (stat.st_mode & 0777);
-#endif
 }
 
 OAL::FileStat* OAL::FileStat::Generate(const char* pathName)
 {
-#if 0
 	struct stat stat;
-	String pathNameN = ToNativeString(PathName(pathName).MakeAbs().c_str());
+	String pathNameN = ToNativeString(PathName(pathName).MakeAbsName().c_str());
 	if (::stat(pathNameN.c_str(), &stat) != 0) {
-		Error::Issue(FileType::IOError, "failed to get file status of %s", pathName);
+		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName);
 		return nullptr;
 	}
 	return new FileStat(pathName, stat);
-#endif
-	return nullptr;
 }
 
 //-----------------------------------------------------------------------------

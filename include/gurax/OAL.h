@@ -6,6 +6,39 @@
 #include "Common.h"
 #include "StringPicker.h"
 
+#if defined(GURAX_ON_MSWIN)
+#include <shlobj.h>
+#if defined(_MSC_VER)
+using mode_t = int;
+#define S_IRUSR 0x0100
+#define S_IWUSR 0x0080
+#define S_IXUSR 0x0040
+#else
+#include <sys/stat.h>
+#endif
+#define S_IRGRP 0x0020
+#define S_IWGRP 0x0010
+#define S_IXGRP 0x0008
+#define S_IROTH 0x0004
+#define S_IWOTH 0x0002
+#define S_IXOTH 0x0001
+#else
+#include <unistd.h>
+#include <dlfcn.h>
+#include <pthread.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <sys/types.h>
+#endif
+
+#if defined(GURAX_ON_DARWIN)
+#include <mach-o/dyld.h>
+#endif
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
