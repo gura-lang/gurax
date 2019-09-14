@@ -116,11 +116,19 @@ public:
 		return ExecProgram(pathName, StringPicker_StringList(args), pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
 	}
 	static Double GetTickTime();
+public:
+	static DateTime* CreateDateTime(const struct tm& tm, int secsOffset);
+	static DateTime* CreateDateTime(time_t t, bool utcFlag = false);
+#if defined(GURAX_ON_MSWIN)
+	static DateTime* CreateDateTime(const SYSTEMTIME& st, int secsOffset);
+	static DateTime* CreateDateTime(const FILETIME& ft, bool utcFlag = false);
+	static SYSTEMTIME DateTimeToSYSTEMTIME(const DateTime& dt);
+	static FILETIME DateTimeToFILETIME(const DateTime& dt);
+#endif
 private:
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)
 	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
-#else
 #endif
 };
 

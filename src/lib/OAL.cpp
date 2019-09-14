@@ -51,6 +51,18 @@ void OAL::AppendCmdLine(String& cmdLine, const char* arg)
 	}
 }
 
+DateTime* OAL::CreateDateTime(const struct tm& tm, int secsOffset)
+{
+	return new DateTime(
+		static_cast<Int16>(tm.tm_year) + 1900,
+		static_cast<Int8>(tm.tm_mon) + 1,
+		static_cast<Int8>(tm.tm_mday),
+		DateTime::CalcSecPacked(static_cast<Int8>(tm.tm_hour),
+								static_cast<Int8>(tm.tm_min),
+								static_cast<Int8>(tm.tm_sec)),
+		0, secsOffset);
+}
+
 #if defined(GURAX_ON_MSWIN)
 
 //------------------------------------------------------------------------------
@@ -122,6 +134,52 @@ Double OAL::GetTickTime()
 	} else {
 		return static_cast<Double>(::GetTickCount()) / 1000;
 	}
+}
+
+DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
+{
+	struct tm tm;
+	int secsOffset = 0;
+	if (utcFlag) {
+		gmtime_s(&tm, &t);
+	} else {
+		localtime_s(&tm, &t);
+		secsOffset = GetSecsOffsetTZ();
+	}
+	return CreateDateTime(tm, secsOffset);
+}
+
+DateTime* OAL::CreateDateTime(const SYSTEMTIME& st, int secsOffset)
+{
+	return nullptr;
+}
+
+DateTime* OAL::CreateDateTime(const FILETIME& ft, bool utcFlag)
+{
+	return nullptr;
+}
+
+SYSTEMTIME OAL::DateTimeToSYSTEMTIME(const DateTime& dt)
+{
+	SYSTEMTIME st;
+	st.wYear			= dt.GetYear();
+	st.wMonth			= dt.GetMonth();
+	st.wDayOfWeek		= dt.GetDayOfWeek();
+	st.wDay				= dt.GetDay();
+	st.wHour			= dt.GetHour();
+	st.wMinute			= dt.GetMin();
+	st.wSecond			= dt.GetSec();
+	st.wMilliseconds	= static_cast<WORD>(dt.GetUSec() / 1000);
+	return st;
+}
+
+FILETIME OAL::DateTimeToFILETIME(const DateTime& dt)
+{
+	SYSTEMTIME st = ToSYSTEMTIME(dt);
+	FILETIME ftLocal, ft;
+	::SystemTimeToFileTime(&st, &ftLocal);
+	::LocalFileTimeToFileTime(&ftLocal, &ft);
+	return ft;
 }
 
 String OAL::ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
@@ -368,15 +426,51 @@ Double OAL::GetTickTime()
 	return num;
 }
 
+DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
+{
+	struct tm tm;
+	int secsOffset = 0;
+	if (utcFlag) {
+		gmtime_r(&t, &tm);
+	} else {
+		localtime_r(&t, &tm);
+		//secsOffset = GetSecsOffsetTZ();
+		secsOffset = 0;
+	}
+	return CreateDateTime(tm, secsOffset);
+}
+
 //------------------------------------------------------------------------------
 // OAL::FileStat (POSIX)
 //------------------------------------------------------------------------------
 OAL::FileStat::FileStat(const char* pathName, const struct stat& stat)
 {
+	//_atime = ToDateTime(stat.st_atime);
+	//_mtime = ToDateTime(stat.st_mtime);
+	//_ctime = ToDateTime(stat.st_ctime);
+#if 0
+	if (S_ISDIR(stat.st_mode)) _attr |= ATTR_Dir;
+	if (S_ISCHR(stat.st_mode)) _attr |= ATTR_Chr;
+	if (S_ISBLK(stat.st_mode)) _attr |= ATTR_Blk;
+	if (S_ISREG(stat.st_mode)) _attr |= ATTR_Reg;
+	if (S_ISFIFO(stat.st_mode)) _attr |= ATTR_Fifo;
+	if (S_ISLNK(stat.st_mode)) _attr |= ATTR_Lnk;
+	if (S_ISSOCK(stat.st_mode)) _attr |= ATTR_Sock;
+	_attr |= (stat.st_mode & 0777);
+#endif
 }
 
 OAL::FileStat* OAL::FileStat::Generate(const char* pathName)
 {
+#if 0
+	struct stat stat;
+	String pathNameN = ToNativeString(PathName(pathName).MakeAbs().c_str());
+	if (::stat(pathNameN.c_str(), &stat) != 0) {
+		Error::Issue(FileType::IOError, "failed to get file status of %s", pathName);
+		return nullptr;
+	}
+	return new FileStat(pathName, stat);
+#endif
 	return nullptr;
 }
 
