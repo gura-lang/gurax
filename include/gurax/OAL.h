@@ -54,6 +54,8 @@ public:
 #else
 		FileStat(const char* pathName, const struct stat& stat);
 #endif
+public:
+		static FileStat* Generate(const char* pathName);
 		const char* GetPathName() const { return _pathName.c_str(); }
 		ULong GetSize() const { return _bytes; }
 		const DateTime& GetDateTimeA() const { return *_pDateTimeA; }
@@ -69,7 +71,6 @@ public:
 		bool IsFifo() const { return (_attr & Attr::Fifo) != 0; }
 		bool IsLnk() const { return (_attr & Attr::Lnk) != 0; }
 		bool IsSock() const { return (_attr & Attr::Sock) != 0; }
-		static FileStat* Generate(const char* pathName);
 	};
 	class GURAX_DLLDECLARE DynamicLibrary {
 	private:
@@ -115,6 +116,12 @@ public:
 		return ExecProgram(pathName, StringPicker_StringList(args), pStreamCIn, pStreamCOut, pStreamCErr, forkFlag);
 	}
 	static Double GetTickTime();
+private:
+	static void AppendCmdLine(String& cmdLine, const char* arg);
+#if defined(GURAX_ON_MSWIN)
+	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
+#else
+#endif
 };
 
 }

@@ -37,7 +37,10 @@ typedef int mode_t;
 
 namespace Gurax {
 
-void AppendCmdLine(String& cmdLine, const char* arg)
+//------------------------------------------------------------------------------
+// OAL (common)
+//------------------------------------------------------------------------------
+void OAL::AppendCmdLine(String& cmdLine, const char* arg)
 {
 	if (::strchr(arg, ' ')) {
 		cmdLine += '"';
@@ -53,23 +56,6 @@ void AppendCmdLine(String& cmdLine, const char* arg)
 //------------------------------------------------------------------------------
 // OAL (MSWIN)
 //------------------------------------------------------------------------------
-String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
-{
-	int cchWideChar = ::MultiByteToWideChar(codePageSrc, 0, str, -1, nullptr, 0);
-	WCHAR* wcharBuff = new WCHAR [cchWideChar + 1];
-	::MultiByteToWideChar(codePageSrc, 0, str, -1, wcharBuff, cchWideChar);
-	int cchMultiByte = ::WideCharToMultiByte(codePageDst, 0,
-				wcharBuff, cchWideChar, nullptr, 0, nullptr, nullptr);
-	char* charBuff = new char [cchMultiByte + 1];
-	::WideCharToMultiByte(codePageDst, 0,
-				wcharBuff, cchWideChar, charBuff, cchMultiByte, nullptr, nullptr);
-	charBuff[cchMultiByte] = '\0';
-	String rtn(charBuff); // don't use String(charBuff, cchMultiByte) here!
-	delete[] wcharBuff;
-	delete[] charBuff;
-	return rtn;
-}
-
 void OAL::PutEnv(const char* name, const char* value)
 {
 	::SetEnvironmentVariable(ToNativeString(name).c_str(), ToNativeString(value).c_str());
@@ -136,6 +122,43 @@ Double OAL::GetTickTime()
 	} else {
 		return static_cast<Double>(::GetTickCount()) / 1000;
 	}
+}
+
+String OAL::ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
+{
+	int cchWideChar = ::MultiByteToWideChar(codePageSrc, 0, str, -1, nullptr, 0);
+	WCHAR* wcharBuff = new WCHAR [cchWideChar + 1];
+	::MultiByteToWideChar(codePageSrc, 0, str, -1, wcharBuff, cchWideChar);
+	int cchMultiByte = ::WideCharToMultiByte(codePageDst, 0,
+				wcharBuff, cchWideChar, nullptr, 0, nullptr, nullptr);
+	char* charBuff = new char [cchMultiByte + 1];
+	::WideCharToMultiByte(codePageDst, 0,
+				wcharBuff, cchWideChar, charBuff, cchMultiByte, nullptr, nullptr);
+	charBuff[cchMultiByte] = '\0';
+	String rtn(charBuff); // don't use String(charBuff, cchMultiByte) here!
+	delete[] wcharBuff;
+	delete[] charBuff;
+	return rtn;
+}
+
+//------------------------------------------------------------------------------
+// OAL::FileStat (MSWIN)
+//------------------------------------------------------------------------------
+OAL::FileStat::FileStat(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
+{
+}
+
+OAL::FileStat::FileStat(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
+{
+}
+
+OAL::FileStat::FileStat(const char* pathName, const WIN32_FIND_DATA& findData)
+{
+}
+
+OAL::FileStat* OAL::FileStat::Generate(const char* pathName)
+{
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------
@@ -343,6 +366,18 @@ Double OAL::GetTickTime()
 	Double num = tv.tv_sec;
 	num += static_cast<Double>(tv.tv_usec) / 1000000;
 	return num;
+}
+
+//------------------------------------------------------------------------------
+// OAL::FileStat (POSIX)
+//------------------------------------------------------------------------------
+OAL::FileStat::FileStat(const char* pathName, const struct stat& stat)
+{
+}
+
+OAL::FileStat* OAL::FileStat::Generate(const char* pathName)
+{
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------
