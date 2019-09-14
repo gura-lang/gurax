@@ -46,9 +46,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OAL {
 public:
-	class GURAX_DLLDECLARE FileStat {
-		using Attrs = UInt32;
+	class GURAX_DLLDECLARE FileStat : public Referable {
 	public:
+		// Referable declaration
+		Gurax_DeclareReferable(FileStat);
+	public:
+		using Attrs = UInt32;
 		struct Attr {
 			static const Attrs Dir	= (1 << 22);
 			static const Attrs Chr	= (1 << 21);
@@ -87,7 +90,9 @@ public:
 #else
 		FileStat(const char* pathName, const struct stat& stat);
 #endif
-public:
+	protected:
+		~FileStat() = default;
+	public:
 		static FileStat* Generate(const char* pathName);
 		const char* GetPathName() const { return _pathName.c_str(); }
 		ULong GetSize() const { return _bytes; }
