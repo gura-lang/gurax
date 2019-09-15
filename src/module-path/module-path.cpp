@@ -460,11 +460,12 @@ Gurax_ImplementFunction(SplitExt)
 	return Value_List::Create(new Value_String(baseName), new Value_String(extName));
 }
 
-// path.Stat(directory:Directory):map
+// path.Stat(directory:Directory):map {block?}
 Gurax_DeclareFunction(Stat)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("directory", VTYPE_Directory, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a stat object associated with the specified item.");
@@ -476,7 +477,9 @@ Gurax_ImplementFunction(Stat)
 	ArgPicker args(argument);
 	Directory& directory = Value_Directory::GetDirectory(args.PickValue());
 	// Function body
-	return directory.GetStatValue();
+	RefPtr<Value> pValue(directory.GetStatValue());
+	if (!pValue) return Value::nil();
+	return ReturnValue(processor, argument, pValue.release());
 }
 
 // path.Walk(directory?:Directory, maxDepth?:number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
