@@ -10,7 +10,9 @@ Gurax_BeginModuleScope(fs)
 //------------------------------------------------------------------------------
 String Stat::ToString(const StringStyle& ss) const
 {
-	return "";
+	String str;
+	str.Printf("%s:%dbytes", GetPathName(), GetSize());
+	return str;
 }
 
 #if defined(GURAX_ON_MSWIN)

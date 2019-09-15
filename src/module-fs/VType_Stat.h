@@ -72,9 +72,8 @@ public:
 			GetStat().IsLessThan(Value_Stat::GetStat(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetStat().ToString(ss);
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(fs)
