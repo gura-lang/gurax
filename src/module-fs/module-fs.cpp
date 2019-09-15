@@ -77,11 +77,11 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent,
 									  const char** pPathName, NotFoundMode notFoundMode)
 {
-	const char* pathName = *pPathName;
-	RefPtr<Stat> pStat(Stat::Generate(pathName));
+	String pathName = PathName(*pPathName).MakeAbsName();
+	RefPtr<Stat> pStat(Stat::Generate(pathName.c_str()));
 	if (!pStat) return nullptr;
 	Directory::Type type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
-	return new DirectoryEx(pDirectoryParent, pathName, type, pStat.release());
+	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStat.release());
 }
 
 //------------------------------------------------------------------------------
