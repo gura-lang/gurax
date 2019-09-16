@@ -6,6 +6,32 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Stream(pathName:string)
+Gurax_DeclareFunction(Stream)
+{
+	Declare(VTYPE_DateTime, Flag::Map);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Stream` instance.");
+}
+
+Gurax_ImplementFunction(Stream)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	Stream::Flags flags = Stream::Flag::None;
+	RefPtr<Stream> pStream(Stream::Open(pathName, flags));
+	if (!pStream) return Value::nil();
+	return ReturnValue(processor, argument, new Value_Stream(pStream.release()));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Stream#Print(values*):void:map
@@ -152,6 +178,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	SetConstructor(Gurax_CreateFunction(Stream));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));
@@ -165,7 +192,11 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
-		
+		const char* pathName = Value_String::GetString(value);
+		Stream::Flags flags = Stream::Flag::None;
+		RefPtr<Stream> pStream(Stream::Open(pathName, flags));
+		if (!pStream) return nullptr;
+		return new Value_Stream(pStream.release());
 	} else if (value.IsType(VTYPE_Binary)) {
 		const BinaryReferable& binary = Value_Binary::GetBinaryReferable(value);
 		size_t offset = (flags & DeclArg::Flag::StreamW)? binary.GetBinary().size() : 0;

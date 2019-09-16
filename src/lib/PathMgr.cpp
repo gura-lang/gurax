@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PathMgr
 //------------------------------------------------------------------------------
-Directory* PathMgr::OpenDirectory(const char* pathName)
+PathMgr* PathMgr::FindResponsible(const char* pathName)
 {
 	const PathMgrList& pathMgrList = Basement::Inst.GetPathMgrList();
 	PathMgr* pPathMgr = pathMgrList.FindResponsible(nullptr, pathName);
@@ -16,7 +16,7 @@ Directory* PathMgr::OpenDirectory(const char* pathName)
 		Error::Issue(ErrorType::PathError, "unsupported path name");
 		return nullptr;
 	}
-	return pPathMgr->DoOpenDirectory(nullptr, &pathName, NotFoundMode::Signal);
+	return pPathMgr;
 }
 
 String PathMgr::ToString(const StringStyle& ss) const

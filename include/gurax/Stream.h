@@ -70,6 +70,7 @@ protected:
 	// Destructor
 	virtual ~Stream() = default;
 public:
+	static Stream* Open(const char* pathName, Flags flags);
 	Stream& Print(const char* str);
 	Stream& Print(StringPicker&& strPicker);
 	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }

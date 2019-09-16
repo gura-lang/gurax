@@ -28,7 +28,10 @@ public:
 protected:
 	virtual ~PathMgr() = default;
 public:
-	static Directory* OpenDirectory(const char* pathName);
+	static PathMgr* FindResponsible(const char* pathName);
+	Directory* OpenDirectory(const char* pathName) {
+		return DoOpenDirectory(nullptr, &pathName, NotFoundMode::Signal);
+	}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
 protected:
 	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent,

@@ -4,6 +4,7 @@
 #ifndef GURAX_DIRECTORY_H
 #define GURAX_DIRECTORY_H
 #include "PathName.h"
+#include "Stream.h"
 
 namespace Gurax {
 
@@ -35,8 +36,10 @@ public:
 protected:
 	virtual ~Directory() = default;
 public:
+	static Directory* Open(const char* pathName);
+public:
 	Directory* NextChild() { return DoNextChild(); }
-	Stream* OpenStream() { return DoOpenStream(); }
+	Stream* OpenStream(Stream::Flags flags) { return DoOpenStream(flags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
 	const char *GetName() const { return _name.c_str(); }
 	Directory* GetParentDirectory() const { return _pDirectoryParent.get(); }
@@ -55,7 +58,7 @@ public:
 	int CountDepth() const;
 protected:
 	virtual Directory* DoNextChild() = 0;
-	virtual Stream* DoOpenStream() = 0;
+	virtual Stream* DoOpenStream(Stream::Flags flags) = 0;
 	virtual Value* DoGetStatValue();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

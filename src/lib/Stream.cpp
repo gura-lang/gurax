@@ -21,6 +21,13 @@ void Stream::Bootup()
 	CErr.reset(new Stream_File(stderr, false, "CErr"));
 }
 
+Stream* Stream::Open(const char* pathName, Flags flags)
+{
+	RefPtr<Directory> pDirectory(Directory::Open(pathName));
+	if (!pDirectory) return nullptr;
+	return pDirectory->OpenStream(flags);
+}
+
 Stream& Stream::Print(const char* str)
 {
 	for (const char* p = str; *p != '\0'; ++p) PutChar(*p);

@@ -30,7 +30,7 @@ public:
 	const Stat& GetStat() const { return *_pStat; }
 protected:
 	virtual Directory* DoNextChild() override;
-	virtual Stream* DoOpenStream() override;
+	virtual Stream* DoOpenStream(Stream::Flags flags) override;
 	virtual Value* DoGetStatValue() override;
 };
 
@@ -102,7 +102,7 @@ Directory* DirectoryEx::DoNextChild()
 	return nullptr;
 }
 
-Stream* DirectoryEx::DoOpenStream()
+Stream* DirectoryEx::DoOpenStream(Stream::Flags flags)
 {
 	return nullptr;
 }

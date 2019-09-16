@@ -8,6 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
+Directory* Directory::Open(const char* pathName)
+{
+	PathMgr* pPathMgr = PathMgr::FindResponsible(pathName);
+	if (!pPathMgr) return nullptr;
+	return pPathMgr->OpenDirectory(pathName);
+}
+
 String Directory::MakePathName(bool addSepFlag, const char* pathNameTrail) const
 {
 	return "";
