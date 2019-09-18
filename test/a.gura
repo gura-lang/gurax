@@ -1,8 +1,2 @@
 #!/usr/bin/env gurax
-words10 = [
-	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining'
-]
-words10:*Upper()
-nil
-//''.Upper()
-//nil
+Println(path.Dir('.'))

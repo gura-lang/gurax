@@ -80,11 +80,11 @@ Gurax_ImplementFunction(BottomName)
 	return new Value_String(pathName.ExtractBottomName());
 }
 
-// path.Dir(directory?:directory, pattern*:string):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Dir(directory?:Directory, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Dir)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
-	DeclareArg("directory", VTYPE_Directory, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("directory", VTYPE_Directory, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(stat));
@@ -103,30 +103,24 @@ Gurax_DeclareFunction(Dir)
 
 Gurax_ImplementFunction(Dir)
 {
-#if 0
+	// Arguments
+	ArgPicker args(argument);
+	RefPtr<Directory> pDirectory(Value_Directory::GetDirectory(args.PickValue()).Reference());
+	StringList patterns = args.PickStringList();
 	bool addSepFlag = true;
-	bool statFlag = arg.IsSet(Gurax_Symbol(stat));
-	bool fileFlag = arg.IsSet(Gurax_Symbol(file)) || !arg.IsSet(Gurax_Symbol(dir));
-	bool dirFlag = arg.IsSet(Gurax_Symbol(dir)) || !arg.IsSet(Gurax_Symbol(file));
+	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
+	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
+	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
+	bool caseFlag = pDirectory->IsCaseSensitive();
+	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
+	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	// Function body
 	int depthMax = 0;
-	StringList patterns;
-	arg.GetList(1).ToStringList(patterns);
-	AutoPtr<Directory> pDirectory;
-	if (arg.Is_directory(0)) {
-		pDirectory.reset(Directory::Reference(Object_directory::GetObject(arg, 0)->GetDirectory()));
-	} else {
-		pDirectory.reset(Directory::Open(env, "", PathMgr::NF_Signal));
-		if (pDirectory.IsNull()) return Value::Nil;
-	}
-	bool ignoreCaseFlag = pDirectory->DoesIgnoreCase();
-	if (arg.IsSet(Gurax_Symbol(case_))) ignoreCaseFlag = false;
-	if (arg.IsSet(Gurax_Symbol(icase))) ignoreCaseFlag = true;
-	Directory::Iterator_Walk *pIterator = new Directory::Iterator_Walk(
-					addSepFlag, statFlag, ignoreCaseFlag, fileFlag, dirFlag,
-					pDirectory.release(), depthMax, patterns);
-	return ReturnIterator(env, arg, pIterator);
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(
+		new Iterator_DirectoryWalk(
+			pDirectory.release(), depthMax, patterns,
+			addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // path.DirName(pathName:String):map

@@ -66,6 +66,13 @@ public:
 	TimeDelta& PickTimeDelta()		{ return Value_TimeDelta::GetTimeDelta(PickValue()); }
 	Stream& PickStream();
 	Iterator& PickIterator();
+	template<typename T_Num>
+	NumList<T_Num> PickNumList() {
+		return Value_Number::GetNumList<T_Num>(Value_List::GetValueOwner(PickValue()));
+	}
+	StringList PickStringList() {
+		return Value_String::GetStringList(Value_List::GetValueOwner(PickValue()));
+	}
 };
 
 }

@@ -5,115 +5,6 @@
 
 namespace Gurax {
 
-//-----------------------------------------------------------------------------
-// DirectoryDeque
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirectoryDeque : public std::deque<Directory*> {
-};
-
-//-----------------------------------------------------------------------------
-// DirectoryDequeOwner
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirectoryDequeOwner : public DirectoryDeque {
-public:
-	~DirectoryDequeOwner() { Clear(); }
-	void Clear();
-};
-
-void DirectoryDequeOwner::Clear()
-{
-	for (Directory* pDirectory : *this) Directory::Delete(pDirectory);
-	clear();
-}
-
-//------------------------------------------------------------------------------
-// Iterator_DirectoryWalk
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_DirectoryWalk : public Iterator {
-private:
-	bool _addSepFlag;
-	bool _statFlag;
-	bool _caseFlag;
-	bool _fileFlag;
-	bool _dirFlag;
-	RefPtr<Directory> _pDirectoryCur;
-	int _depthMax;
-	StringList _patterns;
-	DirectoryDequeOwner _directoryDeque;
-public:
-	Iterator_DirectoryWalk(
-		bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag,
-		Directory* pDirectory, int depthMax, const StringList& patterns);
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//-----------------------------------------------------------------------------
-// Iterator_DirectoryWalk
-//-----------------------------------------------------------------------------
-Iterator_DirectoryWalk::Iterator_DirectoryWalk(
-	bool addSepFlag, bool statFlag,
-	bool caseFlag, bool fileFlag, bool dirFlag,
-	Directory* pDirectory, int depthMax, const StringList& patterns) :
-	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
-	_fileFlag(fileFlag), _dirFlag(dirFlag), _depthMax(0), _patterns(patterns)
-{
-	_depthMax = (depthMax < 0)? -1 : pDirectory->CountDepth() + depthMax + 1;
-	_directoryDeque.push_back(pDirectory);
-}
-
-Value* Iterator_DirectoryWalk::DoNextValue()
-{
-	RefPtr<Value> pValueRtn;
-	for (;;) {
-		RefPtr<Directory> pDirectoryChild;
-		while (!_pDirectoryCur) {
-			pDirectoryChild.reset(_pDirectoryCur->NextChild());
-			if (pDirectoryChild) break;
-			if (_directoryDeque.empty()) {
-				_pDirectoryCur.reset(nullptr);
-				return nullptr;
-			}
-			_pDirectoryCur.reset(_directoryDeque.front());
-			_directoryDeque.pop_front();
-		}
-		if (!pDirectoryChild) return nullptr;
-		if (pDirectoryChild->IsContainer() &&
-			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
-			_directoryDeque.push_back(pDirectoryChild->Reference());
-		}
-		if ((pDirectoryChild->IsContainer() && _dirFlag) || (!pDirectoryChild->IsContainer() && _fileFlag)) {
-			bool matchFlag = false;
-			for (const String& pattern : _patterns) {
-				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(pattern.c_str())) {
-					matchFlag = true;
-					break;
-				}
-			}
-			if (_patterns.empty() || matchFlag) {
-				if (_statFlag) {
-					pValueRtn.reset(pDirectoryChild->GetStatValue());
-				} else {
-					pValueRtn.reset(new Value_String(pDirectoryChild->MakePathName(_addSepFlag)));
-				}
-				break;
-			}
-		}
-	}
-	return pValueRtn.release();
-}
-
-String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
-{
-	String str;
-	str = "DirectoryWalk";
-	str += _statFlag? ":stat" : ":name";
-	return str;
-}
-
 //------------------------------------------------------------------------------
 // Iterator_DirectoryGlob
 //------------------------------------------------------------------------------
@@ -136,6 +27,7 @@ public:
 	bool Init(const char* pattern);
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -325,6 +217,83 @@ void DirectoryOwner::Clear()
 {
 	for (Directory* pDirectory : *this) Directory::Delete(pDirectory);
 	clear();
+}
+
+//------------------------------------------------------------------------------
+// DirectoryDeque
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// DirectoryDequeOwner
+//------------------------------------------------------------------------------
+void DirectoryDequeOwner::Clear()
+{
+	for (Directory* pDirectory : *this) Directory::Delete(pDirectory);
+	clear();
+}
+
+//-----------------------------------------------------------------------------
+// Iterator_DirectoryWalk
+//-----------------------------------------------------------------------------
+Iterator_DirectoryWalk::Iterator_DirectoryWalk(
+	Directory* pDirectory, int depthMax, const StringList& patterns,
+	bool addSepFlag, bool statFlag,
+	bool caseFlag, bool fileFlag, bool dirFlag) :
+	_pDirectoryCur(pDirectory), _depthMax(depthMax), _patterns(patterns),
+	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
+	_fileFlag(fileFlag), _dirFlag(dirFlag)
+{
+	_depthMax = (depthMax < 0)? -1 : pDirectory->CountDepth() + depthMax + 1;
+	//_directoryDeque.push_back(pDirectory);
+}
+
+Value* Iterator_DirectoryWalk::DoNextValue()
+{
+	RefPtr<Value> pValueRtn;
+	for (;;) {
+		RefPtr<Directory> pDirectoryChild;
+		for (;;) {
+			pDirectoryChild.reset(_pDirectoryCur->NextChild());
+			if (pDirectoryChild) break;
+			if (_directoryDeque.empty()) {
+				_pDirectoryCur.reset(nullptr);
+				return nullptr;
+			}
+			_pDirectoryCur.reset(_directoryDeque.front());
+			_directoryDeque.pop_front();
+		}
+		if (!pDirectoryChild) return nullptr;
+		if (pDirectoryChild->IsContainer() &&
+			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
+			_directoryDeque.push_back(pDirectoryChild->Reference());
+		}
+		if ((pDirectoryChild->IsContainer() && _dirFlag) || (!pDirectoryChild->IsContainer() && _fileFlag)) {
+			bool matchFlag = false;
+			for (const String& pattern : _patterns) {
+				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(pattern.c_str())) {
+					matchFlag = true;
+					break;
+				}
+			}
+			if (_patterns.empty() || matchFlag) {
+				if (_statFlag) {
+					pValueRtn.reset(pDirectoryChild->GetStatValue());
+				} else {
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakePathName(_addSepFlag)));
+				}
+				break;
+			}
+		}
+	}
+	return pValueRtn.release();
+}
+
+String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
+{
+	String str;
+	str = "DirectoryWalk";
+	str += _statFlag? ":stat" : ":name";
+	return str;
 }
 
 }

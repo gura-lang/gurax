@@ -119,7 +119,7 @@ DirectoryEx::~DirectoryEx()
 Directory* DirectoryEx::DoNextChild()
 {
 	if (!_pDir) {
-		String pathName(GetName());
+		String pathName(MakePathName(false));
 		String pathNameEnc = OAL::ToNativeString(pathName.c_str());
 		_pDir = opendir(pathNameEnc.empty()? "." : pathNameEnc.c_str());
 		if (!_pDir) return nullptr;

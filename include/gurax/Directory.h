@@ -85,6 +85,47 @@ public:
 	void Clear();
 };
 
+//-----------------------------------------------------------------------------
+// DirectoryDeque
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE DirectoryDeque : public std::deque<Directory*> {
+};
+
+//-----------------------------------------------------------------------------
+// DirectoryDequeOwner
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE DirectoryDequeOwner : public DirectoryDeque {
+public:
+	~DirectoryDequeOwner() { Clear(); }
+	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// Iterator_DirectoryWalk
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_DirectoryWalk : public Iterator {
+private:
+	DirectoryDequeOwner _directoryDeque;
+	RefPtr<Directory> _pDirectoryCur;
+	int _depthMax;
+	StringList _patterns;
+	bool _addSepFlag;
+	bool _statFlag;
+	bool _caseFlag;
+	bool _fileFlag;
+	bool _dirFlag;
+public:
+	Iterator_DirectoryWalk(
+		Directory* pDirectory, int depthMax, const StringList& patterns,
+		bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag);
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif
