@@ -42,7 +42,7 @@ public:
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
 	const char *GetName() const { return _name.c_str(); }
-	Directory* GetParentDirectory() const { return _pDirectoryParent.get(); }
+	Directory* GetDirectoryParent() const { return _pDirectoryParent.get(); }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
 	bool IsItem() const { return _type == Type::Item; }

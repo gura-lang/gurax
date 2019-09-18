@@ -152,10 +152,10 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Append))? "a+b" :
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Write | Stream::OpenFlag::Append))? "w+b" :
 		"rb";
-	const char* pathName = GetName();
-	FILE* fp = ::fopen(pathName, mode);
+	String pathName = MakePathName(false);
+	FILE* fp = ::fopen(pathName.c_str(), mode);
 	if (!fp) {
-		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName);
+		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName.c_str());
 		return nullptr;
 	}
 	return new StreamEx(fp, pathName);
@@ -164,7 +164,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 Value* DirectoryEx::DoGetStatValue()
 {
 	if (_pStat) {
-		_pStat.reset(Stat::Generate(GetName()));
+		_pStat.reset(Stat::Generate(MakePathName(false).c_str()));
 		if (!_pStat) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");
 			return Value::nil();
