@@ -77,19 +77,15 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 				_pDirectoryCur.reset(nullptr);
 				return nullptr;
 			}
-			RefPtr<Directory> pDirectoryNext(_directoryDeque.front());
+			_pDirectoryCur.reset(_directoryDeque.front());
 			_directoryDeque.pop_front();
-			_pDirectoryCur.reset(pDirectoryNext.release());
 		}
 		if (!pDirectoryChild) return nullptr;
 		if (pDirectoryChild->IsContainer() &&
 			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
 			_directoryDeque.push_back(pDirectoryChild->Reference());
 		}
-		bool typeMatchFlag =
-			(pDirectoryChild->IsContainer() && _dirFlag) ||
-			(!pDirectoryChild->IsContainer() && _fileFlag);
-		if (typeMatchFlag) {
+		if ((pDirectoryChild->IsContainer() && _dirFlag) || (!pDirectoryChild->IsContainer() && _fileFlag)) {
 			bool matchFlag = false;
 			for (const String& pattern : _patterns) {
 				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(pattern.c_str())) {
