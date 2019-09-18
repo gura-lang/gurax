@@ -26,10 +26,7 @@ int Main(int argc, char* argv[])
 	}
 	const char* fileName = argv[1];
 	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
-	if (!pStream) {
-		Stream::CErr->Printf("failed to open file '%s'\n", fileName);
-		return 1;
-	}
+	if (!pStream) return 1;
 	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);

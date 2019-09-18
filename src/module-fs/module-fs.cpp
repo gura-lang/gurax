@@ -52,7 +52,6 @@ public:
 	virtual ~StreamEx() {
 		if (_closeAtDeletionFlag) ::fclose(_fp);
 	}
-	static Stream* Open(const char* pathName, const char* mode);
 	virtual const char* GetName() const override { return _name.c_str(); };
 	virtual const char* GetIdentifier() const override { return _identifier.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }
@@ -114,7 +113,13 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Append))? "a+b" :
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Write | Stream::OpenFlag::Append))? "w+b" :
 		"rb";
-	return StreamEx::Open(GetName(), mode);
+	const char* pathName = GetName();
+	FILE* fp = ::fopen(pathName, mode);
+	if (!fp) {
+		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName);
+		return nullptr;
+	}
+	return new StreamEx(fp, true, pathName, pathName);
 }
 
 Value* DirectoryEx::DoGetStatValue()
@@ -125,11 +130,6 @@ Value* DirectoryEx::DoGetStatValue()
 //------------------------------------------------------------------------------
 // StreamEx
 //------------------------------------------------------------------------------
-Stream* StreamEx::Open(const char* pathName, const char* mode)
-{
-	FILE* fp = ::fopen(pathName, mode);
-	return fp? new Stream_File(fp, true, pathName, pathName) : nullptr;
-}
 
 //------------------------------------------------------------------------------
 // Implementation of function
