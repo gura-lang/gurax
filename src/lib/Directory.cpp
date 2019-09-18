@@ -30,21 +30,21 @@ void DirectoryDequeOwner::Clear()
 // Iterator_DirectoryWalk
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_DirectoryWalk : public Iterator {
-public:
 private:
 	bool _addSepFlag;
 	bool _statFlag;
-	bool _ignoreCaseFlag;
+	bool _caseFlag;
 	bool _fileFlag;
 	bool _dirFlag;
-	RefPtr<Directory> _pDirectory;
+	RefPtr<Directory> _pDirectoryCur;
 	int _depthMax;
 	StringList _patterns;
 	DirectoryDequeOwner _directoryDeque;
 public:
-	Iterator_DirectoryWalk(bool addSepFlag, bool statFlag,
-						   bool ignoreCaseFlag, bool fileFlag, bool dirFlag,
-						   Directory* pDirectory, int depthMax, const StringList& patterns);
+	Iterator_DirectoryWalk(
+		bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag,
+		Directory* pDirectory, int depthMax, const StringList& patterns);
+public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual Value* DoNextValue() override;
@@ -56,11 +56,10 @@ public:
 //-----------------------------------------------------------------------------
 Iterator_DirectoryWalk::Iterator_DirectoryWalk(
 	bool addSepFlag, bool statFlag,
-	bool ignoreCaseFlag, bool fileFlag, bool dirFlag,
+	bool caseFlag, bool fileFlag, bool dirFlag,
 	Directory* pDirectory, int depthMax, const StringList& patterns) :
-	_addSepFlag(addSepFlag), _statFlag(statFlag), _ignoreCaseFlag(ignoreCaseFlag),
-	_fileFlag(fileFlag), _dirFlag(dirFlag), _pDirectory(nullptr), _depthMax(0),
-	_patterns(patterns)
+	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
+	_fileFlag(fileFlag), _dirFlag(dirFlag), _depthMax(0), _patterns(patterns)
 {
 	_depthMax = (depthMax < 0)? -1 : pDirectory->CountDepth() + depthMax + 1;
 	_directoryDeque.push_back(pDirectory);
@@ -68,54 +67,47 @@ Iterator_DirectoryWalk::Iterator_DirectoryWalk(
 
 Value* Iterator_DirectoryWalk::DoNextValue()
 {
-#if 0
-	Signal &sig = env.GetSignal();
+	RefPtr<Value> pValueRtn;
 	for (;;) {
-		Directory *pDirectoryChild = nullptr;
-		while (_pDirectory.IsNull() ||
-				(pDirectoryChild = _pDirectory->Next(env)) == nullptr) {
-			if (_directoryQue.empty()) {
-				_pDirectory.reset(nullptr);
-				return false;
+		RefPtr<Directory> pDirectoryChild;
+		while (!_pDirectoryCur) {
+			pDirectoryChild.reset(_pDirectoryCur->NextChild());
+			if (pDirectoryChild) break;
+			if (_directoryDeque.empty()) {
+				_pDirectoryCur.reset(nullptr);
+				return nullptr;
 			}
-			Directory *pDirectoryNext = _directoryQue.front();
-			_directoryQue.pop_front();
-			_pDirectory.reset(pDirectoryNext);
+			RefPtr<Directory> pDirectoryNext(_directoryDeque.front());
+			_directoryDeque.pop_front();
+			_pDirectoryCur.reset(pDirectoryNext.release());
 		}
-		if (sig.IsSignalled()) return false;
+		if (!pDirectoryChild) return nullptr;
 		if (pDirectoryChild->IsContainer() &&
-					(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
-			_directoryQue.push_back(Directory::Reference(pDirectoryChild));
+			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
+			_directoryDeque.push_back(pDirectoryChild->Reference());
 		}
 		bool typeMatchFlag =
-				(pDirectoryChild->IsContainer() && _dirFlag) ||
-				(!pDirectoryChild->IsContainer() && _fileFlag);
+			(pDirectoryChild->IsContainer() && _dirFlag) ||
+			(!pDirectoryChild->IsContainer() && _fileFlag);
 		if (typeMatchFlag) {
 			bool matchFlag = false;
-			foreach_const (StringList, pPattern, _patterns) {
-				if (PathMgr::DoesMatchName(pPattern->c_str(),
-									pDirectoryChild->GetName(), _ignoreCaseFlag)) {
+			for (const String& pattern : _patterns) {
+				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(pattern.c_str())) {
 					matchFlag = true;
 					break;
 				}
 			}
 			if (_patterns.empty() || matchFlag) {
 				if (_statFlag) {
-					Object *pObj = pDirectoryChild->GetStatObj(sig);
-					if (sig.IsSignalled()) return false;
-					if (pObj != nullptr) value = Value(pObj);
+					pValueRtn.reset(pDirectoryChild->GetStatValue());
 				} else {
-					value = Value(pDirectoryChild->MakePathName(_addSepFlag));
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakePathName(_addSepFlag)));
 				}
-				Directory::Delete(pDirectoryChild);
 				break;
 			}
 		}
-		Directory::Delete(pDirectoryChild);
 	}
-	return true;
-#endif
-	return nullptr;
+	return pValueRtn.release();
 }
 
 String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
@@ -130,8 +122,6 @@ String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
 // Iterator_DirectoryGlob
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_DirectoryGlob : public Iterator {
-public:
-	typedef std::deque<size_t> DepthDeque;
 private:
 	bool _addSepFlag;
 	bool _statFlag;
@@ -140,12 +130,13 @@ private:
 	bool _dirFlag;
 	RefPtr<Directory> _pDirectory;
 	size_t _depth;
-	DepthDeque _depthDeque;
+	NumDeque<size_t> _depthDeque;
 	StringList _patternSegs;
 	DirectoryDequeOwner _directoryDeque;
 public:
 	Iterator_DirectoryGlob(bool addSepFlag, bool statFlag,
 						   bool ignoreCaseFlag, bool fileFlag, bool dirFlag);
+public:
 	bool Init(const char* pattern);
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }

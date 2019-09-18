@@ -62,7 +62,7 @@ template<typename T_Num>
 class NumDeque : public std::deque<T_Num>
 {
 public:
-	using std::deque<T_Num>::vector;
+	using std::deque<T_Num>::deque;
 };
 
 }
