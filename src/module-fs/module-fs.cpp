@@ -3,6 +3,11 @@
 //==============================================================================
 #include "stdafx.h"
 
+#if defined(GURAX_ON_MSWIN)
+#else
+#include <dirent.h>
+#endif
+
 Gurax_BeginModule(fs)
 
 //------------------------------------------------------------------------------
@@ -22,12 +27,15 @@ protected:
 class DirectoryEx : public Directory {
 protected:
 	RefPtr<Stat> _pStat;
+#if defined(GURAX_ON_MSWIN)
+	HANDLE _hFind;
+#else
+	DIR *_pDir;
+#endif
 public:
 	DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat);
 protected:
 	~DirectoryEx();
-public:
-	const Stat& GetStat() const { return *_pStat; }
 protected:
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
@@ -78,20 +86,59 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent,
 //------------------------------------------------------------------------------
 // DirectoryEx
 //------------------------------------------------------------------------------
+#if defined(GURAX_ON_MSWIN)
 DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat) :
 	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
-	_pStat(pStat)
+	_pStat(pStat), _hFind(INVALID_HANDLE_VALUE)
 {
 }
 
 DirectoryEx::~DirectoryEx()
 {
+	::FindClose(_hFind);
 }
 
 Directory* DirectoryEx::DoNextChild()
 {
 	return nullptr;
 }
+
+#else
+
+DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat) :
+	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
+	_pStat(pStat), _pDir(nullptr)
+{
+}
+
+DirectoryEx::~DirectoryEx()
+{
+	if (_pDir) closedir(_pDir);
+}
+
+Directory* DirectoryEx::DoNextChild()
+{
+	if (!_pDir) {
+		String pathName(GetName());
+		String pathNameEnc = OAL::ToNativeString(pathName.c_str());
+		_pDir = opendir(pathNameEnc.empty()? "." : pathNameEnc.c_str());
+		if (!_pDir) return nullptr;
+	}
+	struct dirent* pEnt = nullptr;
+	for (;;) {
+		pEnt = readdir(_pDir);
+		if (!pEnt) {
+			closedir(_pDir);
+			_pDir = nullptr;
+			return nullptr;
+		}
+		if (::strcmp(pEnt->d_name, ".") != 0 && ::strcmp(pEnt->d_name, "..") != 0) break;
+	}
+	Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
+	return new DirectoryEx(Reference(), OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr);
+}
+
+#endif
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
@@ -116,7 +163,14 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* DirectoryEx::DoGetStatValue()
 {
-	return new Value_Stat(GetStat().Reference());
+	if (_pStat) {
+		_pStat.reset(Stat::Generate(GetName()));
+		if (!_pStat) {
+			Error::Issue(ErrorType::IOError, "failed to get file status");
+			return Value::nil();
+		}
+	}
+	return new Value_Stat(_pStat->Reference());
 }
 
 //------------------------------------------------------------------------------
