@@ -40,20 +40,12 @@ protected:
 class StreamEx : public Stream {
 private:
 	FILE* _fp;
-	bool _closeAtDeletionFlag;
-	String _name;
-	String _identifier;
+	String _pathName;
 public:
-	StreamEx(FILE* fp, bool closeAtDeletionFlag, String name, String identifier) :
-		_fp(fp), _closeAtDeletionFlag(closeAtDeletionFlag),
-		_name(std::move(name)), _identifier(std::move(identifier)) {}
-	StreamEx(FILE* fp, bool closeAtDeletionFlag, String name) :
-		StreamEx(fp, closeAtDeletionFlag, name, name) {}
-	virtual ~StreamEx() {
-		if (_closeAtDeletionFlag) ::fclose(_fp);
-	}
-	virtual const char* GetName() const override { return _name.c_str(); };
-	virtual const char* GetIdentifier() const override { return _identifier.c_str(); }
+	StreamEx(FILE* fp, String pathName) : _fp(fp), _pathName(pathName) {}
+	virtual ~StreamEx() { ::fclose(_fp); }
+	virtual const char* GetName() const override { return _pathName.c_str(); };
+	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }
 	virtual int GetChar() override { return ::fgetc(_fp); }
 	virtual bool PutChar(char ch) override { ::fputc(ch, _fp); return true; }
@@ -119,7 +111,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName);
 		return nullptr;
 	}
-	return new StreamEx(fp, true, pathName, pathName);
+	return new StreamEx(fp, pathName);
 }
 
 Value* DirectoryEx::DoGetStatValue()

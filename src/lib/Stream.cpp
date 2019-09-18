@@ -16,9 +16,9 @@ RefPtr<Stream> Stream::CErr;
 void Stream::Bootup()
 {
 	Dumb.reset(new Stream_Dumb());
-	CIn.reset(new Stream_File(stdin, false, "CIn"));
-	COut.reset(new Stream_File(stdout, false, "COut"));
-	CErr.reset(new Stream_File(stderr, false, "CErr"));
+	CIn.reset(new Stream_Console(stdin, "CIn"));
+	COut.reset(new Stream_Console(stdout, "COut"));
+	CErr.reset(new Stream_Console(stderr, "CErr"));
 }
 
 Stream* Stream::Open(const char* pathName, Flags flags)

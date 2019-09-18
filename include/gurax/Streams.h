@@ -24,26 +24,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Stream_File
+// Stream_Console
 //------------------------------------------------------------------------------
-class Stream_File : public Stream {
+class Stream_Console : public Stream {
 private:
 	FILE* _fp;
-	bool _closeAtDeletionFlag;
 	String _name;
-	String _identifier;
 public:
-	Stream_File(FILE* fp, bool closeAtDeletionFlag, String name, String identifier) :
-		_fp(fp), _closeAtDeletionFlag(closeAtDeletionFlag),
-		_name(std::move(name)), _identifier(std::move(identifier)) {}
-	Stream_File(FILE* fp, bool closeAtDeletionFlag, String name) :
-		Stream_File(fp, closeAtDeletionFlag, name, name) {}
-	virtual ~Stream_File() {
-		if (_closeAtDeletionFlag) ::fclose(_fp);
-	}
-	static Stream* Open(const char* fileName, const char* mode);
+	Stream_Console(FILE* fp, String name) : _fp(fp), _name(name) {}
 	virtual const char* GetName() const override { return _name.c_str(); };
-	virtual const char* GetIdentifier() const override { return _identifier.c_str(); }
+	virtual const char* GetIdentifier() const override { return _name.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }
 	virtual int GetChar() override { return ::fgetc(_fp); }
 	virtual bool PutChar(char ch) override { ::fputc(ch, _fp); return true; }
