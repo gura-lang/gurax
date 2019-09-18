@@ -87,7 +87,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 
 Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName)
 {
-	RefPtr<Stream> pStream(Stream_File::Open(pathName, "rt"));
+	RefPtr<Stream> pStream(Stream::Open(pathName, Stream::OpenFlag::Read));
 	if (!pStream) {
 		Error::Issue(ErrorType::ImportError, "failed to open a module file '%s'", pathName);
 		return nullptr;

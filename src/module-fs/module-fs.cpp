@@ -30,7 +30,7 @@ public:
 	const Stat& GetStat() const { return *_pStat; }
 protected:
 	virtual Directory* DoNextChild() override;
-	virtual Stream* DoOpenStream(Stream::Flags flags) override;
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoGetStatValue() override;
 };
 
@@ -102,9 +102,19 @@ Directory* DirectoryEx::DoNextChild()
 	return nullptr;
 }
 
-Stream* DirectoryEx::DoOpenStream(Stream::Flags flags)
+Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
-	return nullptr;
+	openFlags &= Stream::OpenFlag::Read | Stream::OpenFlag::Write | Stream::OpenFlag::Append;
+	const char* mode =
+		(openFlags == Stream::OpenFlag::Read)? "rb" :
+		(openFlags == Stream::OpenFlag::Write)? "wb" :
+		(openFlags == Stream::OpenFlag::Append)? "ab" :
+		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Write))? "r+b" :
+		(openFlags == (Stream::OpenFlag::Write | Stream::OpenFlag::Append))? "w+b" :
+		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Append))? "a+b" :
+		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Write | Stream::OpenFlag::Append))? "w+b" :
+		"rb";
+	return StreamEx::Open(GetName(), mode);
 }
 
 Value* DirectoryEx::DoGetStatValue()

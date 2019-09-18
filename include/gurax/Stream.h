@@ -36,7 +36,13 @@ public:
 		static const Flags BwdSeekable	= (1 << 1);
 		static const Flags Readable		= (1 << 2);
 		static const Flags Writable		= (1 << 3);
-		static const Flags Append		= (1 << 4);
+	};
+	using OpenFlags = UInt32;
+	struct OpenFlag {
+		static const Flags None			= 0;
+		static const Flags Read			= (1 << 0);
+		static const Flags Write		= (1 << 1);
+		static const Flags Append		= (1 << 2);
 	};
 	struct Info {
 	public:
@@ -70,7 +76,7 @@ protected:
 	// Destructor
 	virtual ~Stream() = default;
 public:
-	static Stream* Open(const char* pathName, Flags flags);
+	static Stream* Open(const char* pathName, OpenFlags openFlags);
 	Stream& Print(const char* str);
 	Stream& Print(StringPicker&& strPicker);
 	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }
