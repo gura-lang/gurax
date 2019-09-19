@@ -247,22 +247,22 @@ Gurax_DeclareFunction(Glob)
 
 Gurax_ImplementFunction(Glob)
 {
-#if 0
+	// Arguments
+	ArgPicker args(argument);
+	const char* pattern = args.PickString();
+	if (Error::IsIssued()) return Value::nil();
 	bool addSepFlag = true;
-	bool statFlag = arg.IsSet(Gurax_Symbol(stat));
-	bool ignoreCaseFlag = OAL::IgnoreCaseInPathNameFlag;
-	bool fileFlag = arg.IsSet(Gurax_Symbol(file)) || !arg.IsSet(Gurax_Symbol(dir));
-	bool dirFlag = arg.IsSet(Gurax_Symbol(dir)) || !arg.IsSet(Gurax_Symbol(file));
-	if (arg.IsSet(Gurax_Symbol(case_))) ignoreCaseFlag = false;
-	if (arg.IsSet(Gurax_Symbol(icase))) ignoreCaseFlag = true;
-	AutoPtr<Directory::Iterator_Glob> pIterator(new Directory::Iterator_Glob(
-					addSepFlag, statFlag, ignoreCaseFlag, fileFlag, dirFlag));
-	if (!pIterator->Init(env, arg.GetString(0))) {
-		return Value::Nil;
-	}
-	return ReturnIterator(env, arg, pIterator.release());
-#endif
-	return Value::nil();
+	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
+	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
+	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
+	bool caseFlag = PathName::CaseFlagPlatform;
+	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
+	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	// Function body
+	RefPtr<Iterator_DirectoryGlob> pIterator(
+		new Iterator_DirectoryGlob(addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+	if (!pIterator->Init(pattern)) return Value::nil();
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 // path.HeadName(pathName:String):map

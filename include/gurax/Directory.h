@@ -127,6 +127,33 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_DirectoryGlob
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_DirectoryGlob : public Iterator {
+private:
+	DirectoryDequeOwner _directoryDeque;
+	RefPtr<Directory> _pDirectoryCur;
+	StringList _patternSegs;
+	bool _addSepFlag;
+	bool _statFlag;
+	bool _caseFlag;
+	bool _fileFlag;
+	bool _dirFlag;
+	size_t _depth;
+	NumDeque<size_t> _depthDeque;
+public:
+	Iterator_DirectoryGlob(bool addSepFlag, bool statFlag,
+						   bool caseFlag, bool fileFlag, bool dirFlag);
+public:
+	bool Init(const char* pattern);
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif
