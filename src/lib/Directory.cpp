@@ -80,46 +80,37 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 
 Value* Iterator_DirectoryGlob::DoNextValue()
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	Directory *pDirectoryChild = nullptr;
+	RefPtr<Value> pValueRtn;
 	for (;;) {
-		while (_pDirectoryCur.IsNull() ||
-				(pDirectoryChild = _pDirectoryCur->Next(env)) == nullptr) {
-			if (_directoryQue.empty()) {
+		RefPtr<Directory> pDirectoryChild;
+		for (;;) {
+			pDirectoryChild.reset(_pDirectoryCur->NextChild());
+			if (pDirectoryChild) break;
+			if (_directoryDeque.empty()) {
 				_pDirectoryCur.reset(nullptr);
-				return false;
+				return nullptr;
 			}
-			Directory *pDirectoryNext = _directoryQue.front();
-			_depth = _depthQue.front();
-			_directoryQue.pop_front();
-			_depthQue.pop_front();
-			if (pDirectoryNext->IsContainer()) {
-				_pDirectoryCur.reset(pDirectoryNext);
-			} else {
-				_pDirectoryCur.reset(nullptr);
-				pDirectoryChild = pDirectoryNext;
-				goto found;
-			}
+			_pDirectoryCur.reset(_directoryDeque.front());
+			_depth = _depthDeque.front();
+			_directoryDeque.pop_front();
+			_depthDeque.pop_front();
 		}
-		if (sig.IsSignalled()) return false;
-		if (PathMgr::DoesMatchName(_patternSegs[_depth].c_str(),
-								pDirectoryChild->GetName(), _ignoreCaseFlag)) {
+		if (!pDirectoryChild) return nullptr;
+		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(_patternSegs[_depth].c_str())) {
 			bool typeMatchFlag =
-					(pDirectoryChild->IsContainer() && _dirFlag) ||
-					(!pDirectoryChild->IsContainer() && _fileFlag);
+				(pDirectoryChild->IsContainer() && _dirFlag) ||
+				(!pDirectoryChild->IsContainer() && _fileFlag);
 			if (_depth + 1 < _patternSegs.size()) {
 				if (pDirectoryChild->IsContainer()) {
-					_directoryQue.push_back(Directory::Reference(pDirectoryChild));
-					_depthQue.push_back(static_cast<UInt>(_depth + 1));
+					_directoryDeque.push_back(pDirectoryChild->Reference());
+					_depthDeque.push_back(static_cast<UInt>(_depth + 1));
 				}
 			} else if (typeMatchFlag) {
 				break;
 			}
 		}
-		Directory::Delete(pDirectoryChild);
 	}
-found:
+#if 0
 	if (_statFlag) {
 		Object *pObj = pDirectoryChild->GetStatObj(sig);
 		if (sig.IsSignalled()) return false;
@@ -127,7 +118,6 @@ found:
 	} else {
 		value = Value(pDirectoryChild->MakePathName(_addSepFlag));
 	}
-	Directory::Delete(pDirectoryChild);
 	return true;
 #endif
 	return nullptr;
