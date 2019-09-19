@@ -71,11 +71,8 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 			field += ch;
 		}
 	}
-	_pDirectoryCur.reset(Directory::Open(pathName.c_str()));
-	//_pDirectoryCur.reset(Directory::Open(pathName.c_str(), PathMgr::NotFoundMode::Signal));
-	if (!_pDirectoryCur) return false;
-	//_depthQue.push_back(0);
-	return true;
+	_pDirectoryCur.reset(Directory::Open(pathName.c_str(), Directory::OpenMode::Signal));
+	return !!_pDirectoryCur;
 }
 
 Value* Iterator_DirectoryGlob::DoNextValue()
@@ -124,11 +121,11 @@ String Iterator_DirectoryGlob::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
-Directory* Directory::Open(const char* pathName)
+Directory* Directory::Open(const char* pathName, OpenMode openMode)
 {
 	PathMgr* pPathMgr = PathMgr::FindResponsible(pathName);
 	if (!pPathMgr) return nullptr;
-	return pPathMgr->OpenDirectory(pathName);
+	return pPathMgr->OpenDirectory(pathName, openMode);
 }
 
 String Directory::MakePathName(bool addSepFlag, const char* pathNameTrail) const

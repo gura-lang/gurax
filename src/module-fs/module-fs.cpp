@@ -17,8 +17,8 @@ class PathMgrEx : public PathMgr {
 public:
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) override;
 protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent,
-									   const char** pPathName, NotFoundMode notFoundMode) override;
+	virtual Directory* DoOpenDirectory(
+		Directory* pDirectoryParent, const char** pPathName, Directory::OpenMode openMode) override;
 };
 
 //------------------------------------------------------------------------------
@@ -73,8 +73,8 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 	return pDirectoryParent == nullptr;
 }
 
-Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent,
-									  const char** pPathName, NotFoundMode notFoundMode)
+Directory* PathMgrEx::DoOpenDirectory(
+	Directory* pDirectoryParent, const char** pPathName, Directory::OpenMode openMode)
 {
 	String pathName = PathName(*pPathName).MakeAbsName();
 	RefPtr<Stat> pStat(Stat::Generate(pathName.c_str()));

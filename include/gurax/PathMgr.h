@@ -15,8 +15,6 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(PathMgr);
 public:
-	enum NotFoundMode { Signal, NoSignal, Wouldbe, };
-public:
 	// Constructor
 	PathMgr() {}
 	// Copy constructor/operator
@@ -29,13 +27,13 @@ protected:
 	virtual ~PathMgr() = default;
 public:
 	static PathMgr* FindResponsible(const char* pathName);
-	Directory* OpenDirectory(const char* pathName) {
-		return DoOpenDirectory(nullptr, &pathName, NotFoundMode::Signal);
+	Directory* OpenDirectory(const char* pathName, Directory::OpenMode openMode) {
+		return DoOpenDirectory(nullptr, &pathName, openMode);
 	}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
 protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent,
-									   const char** pPathName, NotFoundMode notFoundMode) = 0;
+	virtual Directory* DoOpenDirectory(
+		Directory* pDirectoryParent, const char** pPathName, Directory::OpenMode openMode) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PathMgr& pathMgr) const { return this == &pathMgr; }

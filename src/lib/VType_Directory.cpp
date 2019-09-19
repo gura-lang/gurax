@@ -25,7 +25,7 @@ Gurax_ImplementFunction(Directory)
 	const char* pathName = args.PickString();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Directory> pDirectory(Directory::Open(pathName));
+	RefPtr<Directory> pDirectory(Directory::Open(pathName, Directory::OpenMode::Signal));
 	if (!pDirectory) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Directory(pDirectory.release()));
 }
@@ -46,7 +46,7 @@ Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) con
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pathName = Value_String::GetString(value);
-		RefPtr<Directory> pDirectory(Directory::Open(pathName));
+		RefPtr<Directory> pDirectory(Directory::Open(pathName, Directory::OpenMode::Signal));
 		if (!pDirectory) return nullptr;
 		return new Value_Directory(pDirectory.release());
 	}

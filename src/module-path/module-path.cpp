@@ -107,7 +107,7 @@ Gurax_ImplementFunction(Dir)
 	ArgPicker args(argument);
 	RefPtr<Directory> pDirectory(
 		args.IsValid()? Value_Directory::GetDirectory(args.PickValue()).Reference() :
-		Directory::Open(""));
+		Directory::Open("", Directory::OpenMode::Signal));
 	int depthMax = 0;
 	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();
@@ -507,7 +507,7 @@ Gurax_ImplementFunction(Walk)
 	ArgPicker args(argument);
 	RefPtr<Directory> pDirectory(
 		args.IsValid()? Value_Directory::GetDirectory(args.PickValue()).Reference() :
-		Directory::Open(""));
+		Directory::Open("", Directory::OpenMode::Signal));
 	int depthMax = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
 	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();

@@ -16,6 +16,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Directory);
 public:
+	enum class OpenMode { Signal, NoSignal, WouldBe, };
 	enum class Type { None, Item, Container, BoundaryContainer, RootContainer, };
 protected:
 	RefPtr<Directory> _pDirectoryParent;
@@ -36,7 +37,7 @@ public:
 protected:
 	virtual ~Directory() = default;
 public:
-	static Directory* Open(const char* pathName);
+	static Directory* Open(const char* pathName, OpenMode openMode);
 public:
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }

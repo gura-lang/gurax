@@ -23,7 +23,7 @@ void Stream::Bootup()
 
 Stream* Stream::Open(const char* pathName, Flags flags)
 {
-	RefPtr<Directory> pDirectory(Directory::Open(pathName));
+	RefPtr<Directory> pDirectory(Directory::Open(pathName, Directory::OpenMode::Signal));
 	if (!pDirectory) return nullptr;
 	return pDirectory->OpenStream(flags);
 }
