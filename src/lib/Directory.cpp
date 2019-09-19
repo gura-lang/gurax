@@ -97,29 +97,22 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 		}
 		if (!pDirectoryChild) return nullptr;
 		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(_patternSegs[_depth].c_str())) {
-			bool typeMatchFlag =
-				(pDirectoryChild->IsContainer() && _dirFlag) ||
-				(!pDirectoryChild->IsContainer() && _fileFlag);
 			if (_depth + 1 < _patternSegs.size()) {
 				if (pDirectoryChild->IsContainer()) {
 					_directoryDeque.push_back(pDirectoryChild->Reference());
 					_depthDeque.push_back(static_cast<UInt>(_depth + 1));
 				}
-			} else if (typeMatchFlag) {
+			} else if ((pDirectoryChild->IsContainer() && _dirFlag) ||
+					   (!pDirectoryChild->IsContainer() && _fileFlag)) {
+				if (_statFlag) {
+					pValueRtn.reset(pDirectoryChild->GetStatValue());
+				} else {
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakePathName(_addSepFlag)));
+				}
 				break;
 			}
 		}
 	}
-#if 0
-	if (_statFlag) {
-		Object *pObj = pDirectoryChild->GetStatObj(sig);
-		if (sig.IsSignalled()) return false;
-		if (pObj != nullptr) value = Value(pObj);
-	} else {
-		value = Value(pDirectoryChild->MakePathName(_addSepFlag));
-	}
-	return true;
-#endif
 	return nullptr;
 }
 
