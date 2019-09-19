@@ -19,6 +19,7 @@ private:
 	char** _argv;
 	bool _debugFlag;
 	bool _listingFlag;
+	bool _commandDoneFlag;
 	RefPtr<Frame> _pFrame;
 	RefPtr<Stream> _pStreamCIn;
 	RefPtr<Stream> _pStreamCOut;
@@ -29,6 +30,7 @@ private:
 	String _ps1;
 	String _ps2;
 	StringList _pathList;
+	RefPtr<Processor> _pProcessor;
 public:
 	static Basement Inst;
 public:
@@ -48,6 +50,7 @@ public:
 	char** GetArgv() const { return _argv; }
 	bool GetDebugFlag() const { return _debugFlag; }
 	bool GetListingFlag() const { return _listingFlag; }
+	bool GetCommandDoneFlag() const { return _commandDoneFlag; }
 	void PrepareVType(Frame& frame);
 	void PrepareValue(Frame& frame);
 	void AppendPathList(const String& str);
@@ -77,6 +80,7 @@ public:
 	void SetPS2(const char* ps2) { _ps2 = ps2; }
 	StringList& GetPathList() { return _pathList; }
 	const StringList& GetPathList() const { return _pathList; }
+	Processor& GetProcessor() { return *_pProcessor; }
 };
 
 }

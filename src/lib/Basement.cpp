@@ -11,7 +11,7 @@ namespace Gurax {
 Basement Basement::Inst;
 
 Basement::Basement() :
-	_argc(0), _argv(nullptr), _debugFlag(false), _listingFlag(false),
+	_argc(0), _argv(nullptr), _debugFlag(false), _listingFlag(false), _commandDoneFlag(false),
 	_pFrame(new Frame_Basement()),
 	_pSuffixMgrMap_Number(new SuffixMgrMap()), _pSuffixMgrMap_String(new SuffixMgrMap()),
 	_ps1(">>> "), _ps2("... ")
@@ -22,6 +22,8 @@ bool Basement::Initialize(int& argc, char** argv)
 {
 	CommandLine cmdLine;
 	if (!cmdLine
+		.OptMultiString	("import",		'i')
+		.OptMultiString	("command",		'c')
 		.OptMultiString	("module-path",	'I')
 		.OptBool		("debug",		'g')
 		.OptBool		("list",		'L')
@@ -33,6 +35,7 @@ bool Basement::Initialize(int& argc, char** argv)
 	_argv = argv;
 	_debugFlag = cmdLine.GetBool("debug");
 	_listingFlag = cmdLine.GetBool("list");
+	_pProcessor.reset(Processor::Create(GetDebugFlag()));
 	Frame& frame = GetFrame();
 	PrepareVType(frame);
 	PrepareValue(frame);
@@ -55,6 +58,18 @@ bool Basement::Initialize(int& argc, char** argv)
 	frame.Assign(Module_path::Create(frame.Reference()));
 	frame.Assign(Module_re::Create(frame.Reference()));
 	frame.Assign(Module_sys::Create(frame.Reference()));
+	Processor& processor = GetProcessor();
+	for (const String& str : cmdLine.GetStringList("import")) {
+		StringList moduleNames;
+		str.Split(moduleNames, ',');
+		for (const String& moduleName : moduleNames) {
+			if (!processor.ImportModule(moduleName.c_str())) return false;
+		}
+	}
+	for (const String& cmd : cmdLine.GetStringList("command")) {
+		if (!processor.EvalCommand(cmd.c_str())) return false;
+		_commandDoneFlag = true;
+	}
 	return true;
 }
 

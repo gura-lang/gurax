@@ -14,15 +14,18 @@ namespace Gurax {
 bool ReadLine(const char* prompt, String& strLine);
 void RunREPL();
 
+//------------------------------------------------------------------------------
+// Main
+//------------------------------------------------------------------------------
 int Main(int argc, char* argv[])
 {
-	if (!Gurax::Initialize(argc, argv)) {
+	if (!Initialize(argc, argv)) {
 		Error::Print(*Stream::CErr);
 		return 1;
 	}
 	if (argc < 2) {
-		RunREPL();
-		return 1;
+		if (!Basement::Inst.GetCommandDoneFlag()) RunREPL();
+		return 0;
 	}
 	const char* fileName = argv[1];
 	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
@@ -41,8 +44,8 @@ int Main(int argc, char* argv[])
 	if (Basement::Inst.GetListingFlag()) {
 		composer.PrintPUnit();
 	} else {
-		RefPtr<Processor> pProcessor(Processor::Create(Basement::Inst.GetDebugFlag()));
-		RefPtr<Value> pValue(pProcessor->ProcessExpr(*pExprOfRoot));
+		Processor& processor = Basement::Inst.GetProcessor();
+		RefPtr<Value> pValue(processor.ProcessExpr(*pExprOfRoot));
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			return 1;
@@ -51,12 +54,15 @@ int Main(int argc, char* argv[])
 	return 0;
 }
 
+//------------------------------------------------------------------------------
+// RunREPL
+//------------------------------------------------------------------------------
 void RunREPL()
 {
 	Stream& stream = *Stream::COut;
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
 	Composer composer(true);
-	RefPtr<Processor> pProcessor(Processor::Create(false));
+	Processor& processor = Basement::Inst.GetProcessor();
 	Expr_Root& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
 	const PUnit* pPUnit = nullptr;
@@ -94,25 +100,28 @@ void RunREPL()
 			if (Error::IsIssued()) break;
 			const PUnit* pPUnitSentinel = composer.PeekPUnitCont();
 			if (!pPUnit && !(pPUnit = composer.GetPUnitFirst())) continue;
-			pProcessor->SetPUnitNext(pPUnit);
-			while (pPUnit != pPUnitSentinel && pProcessor->GetContFlag()) {
-				pPUnit->Exec(*pProcessor);
-				pPUnit = pProcessor->GetPUnitNext();
+			processor.SetPUnitNext(pPUnit);
+			while (pPUnit != pPUnitSentinel && processor.GetContFlag()) {
+				pPUnit->Exec(processor);
+				pPUnit = processor.GetPUnitNext();
 				if (Error::IsIssued()) break;
 			}
 			if (Error::IsIssued()) break;
-			RefPtr<Value> pValue(pProcessor->PopValue());
+			RefPtr<Value> pValue(processor.PopValue());
 			if (pValue->IsValid()) stream.Printf("%s\n", pValue->ToString().c_str());
 		}
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
-			pProcessor->ClearValueStack();
-			pProcessor->ClearError();
+			processor.ClearValueStack();
+			processor.ClearError();
 			pPUnit = composer.PeekPUnitCont();
 		}
 	}
 }
 
+//------------------------------------------------------------------------------
+// ReadLine
+//------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
 bool ReadLine(const char* prompt, String& strLine)
 {

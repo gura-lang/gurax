@@ -117,9 +117,14 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 	return true;
 }
 
-bool CommandLine::GetBool(const char* keyLong)
+bool CommandLine::IsSpecified(const char* keyLong)
 {
 	return _map.find(keyLong) != _map.end();
+}
+
+bool CommandLine::GetBool(const char* keyLong)
+{
+	return IsSpecified(keyLong);
 }
 
 const char* CommandLine::GetString(const char* keyLong, const char* defValue) const

@@ -98,6 +98,7 @@ public:
 	void ClearMap() { _map.Clear(); }
 	bool Parse(int& argc, const char* argv[]);
 	bool Parse(int& argc, char* argv[]) { return Parse(argc, const_cast<const char**>(argv)); }
+	bool IsSpecified(const char* keyLong);
 	bool GetBool(const char* keyLong);
 	const char* GetString(const char* keyLong, const char* defValue) const;
 	const StringList& GetStringList(const char* keyLong) const;

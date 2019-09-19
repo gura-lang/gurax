@@ -84,6 +84,30 @@ bool Processor::DoExceptionHandling()
 	}
 }
 
+bool Processor::ImportModule(const char* moduleName)
+{
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromString(moduleName));
+	if (!pDottedSymbol) {
+		Error::Issue(ErrorType::ImportError, "invalid module name");
+		return false;
+	}
+	RefPtr<Module> pModule(Module::ImportHierarchy(*this, *pDottedSymbol));
+	if (!pModule) return false;
+	if (!pModule->AssignToFrame(*this, nullptr, false)) return false;
+	return true;
+}
+
+bool Processor::EvalCommand(const char *cmd)
+{
+	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseString(cmd));
+	if (Error::IsIssued()) return false;
+	Composer composer;
+	pExprOfRoot->Compose(composer);
+	if (Error::IsIssued()) return false;
+	RefPtr<Value> pValue(ProcessExpr(*pExprOfRoot));
+	return !Error::IsIssued();
+}
+
 void Processor::Print() const
 {
 	Stream& stream = *Stream::COut;
