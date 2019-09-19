@@ -163,7 +163,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* DirectoryEx::DoGetStatValue()
 {
-	if (_pStat) {
+	if (!_pStat) {
 		_pStat.reset(Stat::Generate(MakePathName(false).c_str()));
 		if (!_pStat) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");

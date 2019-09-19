@@ -84,7 +84,7 @@ Gurax_ImplementFunction(BottomName)
 Gurax_DeclareFunction(Dir)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
-	DeclareArg("directory", VTYPE_Directory, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("directory", VTYPE_Directory, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(stat));
@@ -105,9 +105,12 @@ Gurax_ImplementFunction(Dir)
 {
 	// Arguments
 	ArgPicker args(argument);
-	RefPtr<Directory> pDirectory(Value_Directory::GetDirectory(args.PickValue()).Reference());
+	RefPtr<Directory> pDirectory(
+		args.IsValid()? Value_Directory::GetDirectory(args.PickValue()).Reference() :
+		Directory::Open(""));
 	int depthMax = 0;
 	StringList patterns = args.PickStringList();
+	if (Error::IsIssued()) return Value::nil();
 	bool addSepFlag = true;
 	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
 	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
@@ -502,9 +505,12 @@ Gurax_ImplementFunction(Walk)
 {
 	// Arguments
 	ArgPicker args(argument);
-	RefPtr<Directory> pDirectory(Value_Directory::GetDirectory(args.PickValue()).Reference());
+	RefPtr<Directory> pDirectory(
+		args.IsValid()? Value_Directory::GetDirectory(args.PickValue()).Reference() :
+		Directory::Open(""));
 	int depthMax = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
 	StringList patterns = args.PickStringList();
+	if (Error::IsIssued()) return Value::nil();
 	bool addSepFlag = true;
 	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
 	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
