@@ -10,19 +10,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_DirectoryGlob : public Iterator {
 private:
+	DirectoryDequeOwner _directoryDeque;
+	RefPtr<Directory> _pDirectoryCur;
+	StringList _patternSegs;
 	bool _addSepFlag;
 	bool _statFlag;
-	bool _ignoreCaseFlag;
+	bool _caseFlag;
 	bool _fileFlag;
 	bool _dirFlag;
-	RefPtr<Directory> _pDirectory;
 	size_t _depth;
 	NumDeque<size_t> _depthDeque;
-	StringList _patternSegs;
-	DirectoryDequeOwner _directoryDeque;
 public:
 	Iterator_DirectoryGlob(bool addSepFlag, bool statFlag,
-						   bool ignoreCaseFlag, bool fileFlag, bool dirFlag);
+						   bool caseFlag, bool fileFlag, bool dirFlag);
 public:
 	bool Init(const char* pattern);
 	// Virtual functions of Iterator
@@ -36,49 +36,45 @@ public:
 // Iterator_DirectoryGlob
 //-----------------------------------------------------------------------------
 Iterator_DirectoryGlob::Iterator_DirectoryGlob(
-	bool addSepFlag, bool statFlag, bool ignoreCaseFlag, bool fileFlag, bool dirFlag) :
-	_addSepFlag(addSepFlag), _statFlag(statFlag), _ignoreCaseFlag(ignoreCaseFlag),
-	_fileFlag(fileFlag), _dirFlag(dirFlag), _pDirectory(nullptr), _depth(0)
+	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
+	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
+	_fileFlag(fileFlag), _dirFlag(dirFlag), _depth(0)
 {
 }
 
 bool Iterator_DirectoryGlob::Init(const char* pattern)
 {
-#if 0
-	Signal &sig = env.GetSignal();
 	String pathName, field;
-	const char *patternTop = pattern;
-	for (const char *p = pattern; ; p++) {
+	const char* patternTop = pattern;
+	for (const char* p = pattern; ; p++) {
 		char ch = *p;
-		if (IsFileSeparator(ch) || ch == '\0') {
+		if (PathName::IsSep(ch) || ch == '\0') {
 			patternTop = p;
 			pathName += field;
 			if (ch == '\0') break;
 			patternTop++;
 			pathName += ch;
 			field.clear();
-		} else if (PathMgr::IsWildCardChar(ch)) {
+		} else if (PathName::IsWildCardChar(ch)) {
 			break;
 		} else {
 			field += ch;
 		}
 	}
 	field.clear();
-	for (const char *p = patternTop; ; p++) {
+	for (const char* p = patternTop; ; p++) {
 		char ch = *p;
-		if (IsFileSeparator(ch) || ch == '\0') {
+		if (PathName::IsSep(ch) || ch == '\0') {
 			_patternSegs.push_back(field);
 			if (ch == '\0') break;
 		} else {
 			field += ch;
 		}
 	}
-	AutoPtr<Directory> pDirectory(Directory::Open(env,
-									pathName.c_str(), PathMgr::NF_Signal));
-	if (sig.IsSignalled()) return false;
-	_directoryQue.push_back(pDirectory.release());
-	_depthQue.push_back(0);
-#endif
+	_pDirectoryCur.reset(Directory::Open(pathName.c_str()));
+	//_pDirectoryCur.reset(Directory::Open(pathName.c_str(), PathMgr::NotFoundMode::Signal));
+	if (!_pDirectoryCur) return false;
+	//_depthQue.push_back(0);
 	return true;
 }
 
@@ -88,10 +84,10 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 	Signal &sig = env.GetSignal();
 	Directory *pDirectoryChild = nullptr;
 	for (;;) {
-		while (_pDirectory.IsNull() ||
-				(pDirectoryChild = _pDirectory->Next(env)) == nullptr) {
+		while (_pDirectoryCur.IsNull() ||
+				(pDirectoryChild = _pDirectoryCur->Next(env)) == nullptr) {
 			if (_directoryQue.empty()) {
-				_pDirectory.reset(nullptr);
+				_pDirectoryCur.reset(nullptr);
 				return false;
 			}
 			Directory *pDirectoryNext = _directoryQue.front();
@@ -99,9 +95,9 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 			_directoryQue.pop_front();
 			_depthQue.pop_front();
 			if (pDirectoryNext->IsContainer()) {
-				_pDirectory.reset(pDirectoryNext);
+				_pDirectoryCur.reset(pDirectoryNext);
 			} else {
-				_pDirectory.reset(nullptr);
+				_pDirectoryCur.reset(nullptr);
 				pDirectoryChild = pDirectoryNext;
 				goto found;
 			}
