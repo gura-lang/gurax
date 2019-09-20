@@ -174,8 +174,7 @@ Gurax_ImplementFunction(CopyDir)
 	const char *dirNameSrc = arg.GetString(0);
 	const char *dirNameDst = arg.GetString(1);
 	bool rtn = arg.IsSet(Gurax_Symbol(tree))?
-				OAL::CopyDirTree(dirNameSrc, dirNameDst) :
-				OAL::CopyDir(dirNameSrc, dirNameDst);
+		OAL::CopyDirTree(dirNameSrc, dirNameDst) : OAL::CopyDir(dirNameSrc, dirNameDst);
 	if (!rtn) {
 		sig.SetError(ERR_IOError, "failed to copies a directory '%s' to '%s'",
 													dirNameSrc, dirNameDst);
@@ -204,8 +203,7 @@ Gurax_ImplementFunction(CreateDir)
 	Signal &sig = env.GetSignal();
 	const char *pathName = arg.GetString(0);
 	bool rtn = arg.IsSet(Gurax_Symbol(tree))?
-				OAL::CreateDirTree(pathName) :
-				OAL::CreateDir(pathName);
+		OAL::CreateDirTree(pathName) : OAL::CreateDir(pathName);
 	if (!rtn) {
 		sig.SetError(ERR_IOError, "failed to create a directory %s", pathName);
 	}
@@ -254,29 +252,6 @@ Gurax_ImplementFunction(Remove)
 	return Value::nil();
 }
 
-// fs.Rename(src:string, dst:string):map:void
-Gurax_DeclareFunction(Rename)
-{
-	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("src", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Renames a file or directory.");
-}
-
-Gurax_ImplementFunction(Rename)
-{
-#if 0
-	Signal &sig = env.GetSignal();
-	if (!OAL::Rename(arg.GetString(0), arg.GetString(1))) {
-		sig.SetError(ERR_IOError, "failed to rename a file or directory");
-	}
-	return Value::Nil;
-#endif
-	return Value::nil();
-}
-
 // fs.RemoveDir(pathname:string):map:void[:tree]
 Gurax_DeclareFunction(RemoveDir)
 {
@@ -306,6 +281,29 @@ Gurax_ImplementFunction(RemoveDir)
 	return Value::nil();
 }
 
+// fs.Rename(src:string, dst:string):map:void
+Gurax_DeclareFunction(Rename)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("src", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Renames a file or directory.");
+}
+
+Gurax_ImplementFunction(Rename)
+{
+#if 0
+	Signal &sig = env.GetSignal();
+	if (!OAL::Rename(arg.GetString(0), arg.GetString(1))) {
+		sig.SetError(ERR_IOError, "failed to rename a file or directory");
+	}
+	return Value::Nil;
+#endif
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -327,8 +325,8 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(CreateDir));
 	Assign(Gurax_CreateFunction(GetCurDir));
 	Assign(Gurax_CreateFunction(Remove));
-	Assign(Gurax_CreateFunction(Rename));
 	Assign(Gurax_CreateFunction(RemoveDir));
+	Assign(Gurax_CreateFunction(Rename));
 	// Assignment of path manager
 	Basement::Inst.AssignPathMgr(new PathMgrEx());
 	return true;

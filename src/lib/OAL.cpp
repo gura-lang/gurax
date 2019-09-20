@@ -67,6 +67,34 @@ String OAL::FromNativeString(const char* str)
 	return ConvCodePage(str, CP_THREAD_ACP, CP_UTF8);
 }
 
+void OAL::ChangeDir(const char* pathName)
+{
+}
+
+void OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
+{
+}
+
+void OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
+{
+}
+
+void OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
+{
+}
+
+void OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
+{
+}
+
+void OAL::CreateDir(const char* dirName)
+{
+}
+
+void OAL::CreateDirTree(const char* dirName)
+{
+}
+
 String OAL::GetCurDir()
 {
 	char rtn[MAX_PATH];
@@ -76,6 +104,22 @@ String OAL::GetCurDir()
 		dirName += PathName::SepPlatform;
 	}
 	return dirName;
+}
+
+void OAL::Remove(const char* pathName)
+{
+}
+
+void OAL::RemoveDir(const char* dirName)
+{
+}
+
+void OAL::RemoveDirTree(const char* dirName)
+{
+}
+
+void OAL::Rename(const char* pathNameOld, const char* pathNameNew)
+{
 }
 
 bool OAL::DoesExistDir(const char* pathName)
@@ -235,6 +279,34 @@ String OAL::FromNativeString(const char* str)
 	return String(str);
 }
 
+void OAL::ChangeDir(const char* pathName)
+{
+}
+
+void OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
+{
+}
+
+void OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
+{
+}
+
+void OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
+{
+}
+
+void OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
+{
+}
+
+void OAL::CreateDir(const char* dirName)
+{
+}
+
+void OAL::CreateDirTree(const char* dirName)
+{
+}
+
 String OAL::GetCurDir()
 {
 	char* rtn = ::getcwd(nullptr, 0);
@@ -244,6 +316,22 @@ String OAL::GetCurDir()
 		dirName += PathName::SepPlatform;
 	}
 	return dirName;
+}
+
+void OAL::Remove(const char* pathName)
+{
+}
+
+void OAL::RemoveDir(const char* dirName)
+{
+}
+
+void OAL::RemoveDirTree(const char* dirName)
+{
+}
+
+void OAL::Rename(const char* pathNameOld, const char* pathNameNew)
+{
 }
 
 bool OAL::DoesExistDir(const char* pathName)

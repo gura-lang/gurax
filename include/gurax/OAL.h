@@ -74,7 +74,6 @@ public:
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
-	static String GetCurDir();
 	static bool DoesExistDir(const char* pathName);
 	static bool DoesExistFile(const char* pathName);
 	static int ExecProgram(
@@ -100,6 +99,19 @@ public:
 	static SYSTEMTIME DateTimeToSYSTEMTIME(const DateTime& dt);
 	static FILETIME DateTimeToFILETIME(const DateTime& dt);
 #endif
+public:
+	static void ChangeDir(const char* pathName);
+	static void ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
+	static void Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
+	static void CopyDir(const char* dirNameSrc, const char* dirNameDst);
+	static void CopyDirTree(const char* dirNameSrc, const char* dirNameDst);
+	static void CreateDir(const char* dirName);
+	static void CreateDirTree(const char* dirName);
+	static String GetCurDir();
+	static void Remove(const char* pathName);
+	static void RemoveDir(const char* dirName);
+	static void RemoveDirTree(const char* dirName);
+	static void Rename(const char* pathNameOld, const char* pathNameNew);
 private:
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)
