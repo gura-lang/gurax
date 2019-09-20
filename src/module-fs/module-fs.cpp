@@ -105,33 +105,34 @@ Gurax_ImplementFunction(ChangeMode)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* dirName = args.PickString();
-	const Value& mode = args.PickValue();
+	const char* pathName = args.PickString();
+	const Value& valueMode = args.PickValue();
 	bool followLinkFlag = argument.IsSet(Gurax_Symbol(follow_link));
-#if 0
-	Signal &sig = env.GetSignal();
+	// Function body
 	bool rtn = false;
-	if (arg.Is_string(0)) {
-		rtn = OAL::ChangeMode(arg.GetString(0), arg.GetString(1), followLinkFlag);
-	} else if (arg.Is_number(0)) {
-		rtn = OAL::ChangeMode(arg.GetInt(0), arg.GetString(1), followLinkFlag);
+	if (valueMode.IsType(VTYPE_String)) {
+		const char* mode = Value_String::GetString(valueMode);
+		rtn = OAL::ChangeMode(pathName, mode, followLinkFlag);
+	} else if (valueMode.IsType(VTYPE_Number)) {
+		Int mode = Value_Number::GetNumberNonNeg<Int>(valueMode);
+		if (Error::IsIssued()) return Value::nil();
+		rtn = OAL::ChangeMode(pathName, mode, followLinkFlag);
 	} else {
-		sig.SetError(ERR_ValueError, "number or string must be specified as mode");
-		return Value::Nil;
+		Error::Issue(ErrorType::ValueError, "Number or String value must be specified as mode");
+		return Value::nil();
 	}
 	if (!rtn) {
-		sig.SetError(ERR_IOError, "failed to change access mode");
+		Error::Issue(ErrorType::IOError, "failed to change access mode");
 	}
-#endif
 	return Value::nil();
 }
 
-// fs.Copy(src:string, dst:string):map:void:[overwrite]
+// fs.Copy(pathNameSrc:String, pathNameDst:String):map:void:[overwrite]
 Gurax_DeclareFunction(Copy)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("src", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	//DeclareAttrOpt(Gurax_Symbol(follow_link));
 	AddHelp(
@@ -149,23 +150,25 @@ Gurax_DeclareFunction(Copy)
 
 Gurax_ImplementFunction(Copy)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	bool failIfExistsFlag = !arg.IsSet(Gurax_Symbol(overwrite));
-	bool followLinkFlag = arg.IsSet(Gurax_Symbol(follow_link));
-	if (!OAL::Copy(arg.GetString(0), arg.GetString(1), failIfExistsFlag, followLinkFlag)) {
-		sig.SetError(ERR_IOError, "failed to copy a file %s", arg.GetString(0));
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathNameSrc = args.PickString();
+	const char* pathNameDst = args.PickString();
+	bool failIfExistsFlag = !argument.IsSet(Gurax_Symbol(overwrite));
+	bool followLinkFlag = argument.IsSet(Gurax_Symbol(follow_link));
+	// Function body
+	if (!OAL::Copy(pathNameSrc, pathNameDst, failIfExistsFlag, followLinkFlag)) {
+		Error::Issue(ErrorType::IOError, "failed to copy a file");
 	}
-#endif
 	return Value::nil();
 }
 
-// fs.CopyDir(src:string, dst:string):map:void[:tree]
+// fs.CopyDir(dirNameSrc:string, dirNameDst:string):map:void[:tree]
 Gurax_DeclareFunction(CopyDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("src", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -178,25 +181,23 @@ Gurax_DeclareFunction(CopyDir)
 
 Gurax_ImplementFunction(CopyDir)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	const char *dirNameSrc = arg.GetString(0);
-	const char *dirNameDst = arg.GetString(1);
-	bool rtn = arg.IsSet(Gurax_Symbol(tree))?
-		OAL::CopyDirTree(dirNameSrc, dirNameDst) : OAL::CopyDir(dirNameSrc, dirNameDst);
-	if (!rtn) {
-		sig.SetError(ERR_IOError, "failed to copies a directory '%s' to '%s'",
-													dirNameSrc, dirNameDst);
+	// Arguments
+	ArgPicker args(argument);
+	const char* dirNameSrc = args.PickString();
+	const char* dirNameDst = args.PickString();
+	bool treeFlag = argument.IsSet(Gurax_Symbol(tree));
+	// Function body
+	if (!(treeFlag? OAL::CopyDirTree(dirNameSrc, dirNameDst) : OAL::CopyDir(dirNameSrc, dirNameDst))) {
+		Error::Issue(ErrorType::IOError, "failed to copy a directory");
 	}
-#endif
 	return Value::nil();
 }
 
-// fs.CreateDir(pathname:string):map:void[:tree]
+// fs.CreateDir(dirName:string):map:void[:tree]
 Gurax_DeclareFunction(CreateDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("pathname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -208,23 +209,21 @@ Gurax_DeclareFunction(CreateDir)
 
 Gurax_ImplementFunction(CreateDir)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	const char *pathName = arg.GetString(0);
-	bool rtn = arg.IsSet(Gurax_Symbol(tree))?
-		OAL::CreateDirTree(pathName) : OAL::CreateDir(pathName);
-	if (!rtn) {
-		sig.SetError(ERR_IOError, "failed to create a directory %s", pathName);
+	// Arguments
+	ArgPicker args(argument);
+	const char* dirName = args.PickString();
+	bool treeFlag = argument.IsSet(Gurax_Symbol(tree));
+	// Function body
+	if (!(treeFlag? OAL::CreateDirTree(dirName) : OAL::CreateDir(dirName))) {
+		Error::Issue(ErrorType::IOError, "failed to create a directory");
 	}
-	return Value::Nil;
-#endif
 	return Value::nil();
 }
 
 // fs.GetCurDir()
 Gurax_DeclareFunction(GetCurDir)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns the current working directory.");
@@ -232,18 +231,15 @@ Gurax_DeclareFunction(GetCurDir)
 
 Gurax_ImplementFunction(GetCurDir)
 {
-#if 0
-	String pathName = OAL::GetCurDir();
-	return Value(pathName);
-#endif
-	return Value::nil();
+	// Function body
+	return new Value_String(OAL::GetCurDir());
 }
 
-// fs.Remove(pathname:string):map:void
+// fs.Remove(pathName:String):map:void
 Gurax_DeclareFunction(Remove)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("pathname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Removes a file from the file system.");
@@ -251,21 +247,21 @@ Gurax_DeclareFunction(Remove)
 
 Gurax_ImplementFunction(Remove)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	if (!OAL::Remove(arg.GetString(0))) {
-		sig.SetError(ERR_IOError, "failed to remove a file");
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	// Function body
+	if (!OAL::Remove(pathName)) {
+		Error::Issue(ErrorType::IOError, "failed to remove a file");
 	}
-	return Value::Nil;
-#endif
 	return Value::nil();
 }
 
-// fs.RemoveDir(pathname:string):map:void[:tree]
+// fs.RemoveDir(dirName:String):map:void[:tree]
 Gurax_DeclareFunction(RemoveDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("pathname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -277,25 +273,23 @@ Gurax_DeclareFunction(RemoveDir)
 
 Gurax_ImplementFunction(RemoveDir)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	const char *pathName = arg.GetString(0);
-	bool rtn = arg.IsSet(Gurax_Symbol(tree))?
-		OAL::RemoveDirTree(pathName) : OAL::RemoveDir(pathName);
-	if (!rtn) {
-		sig.SetError(ERR_IOError, "failed to remove a directory %s", pathName);
+	// Arguments
+	ArgPicker args(argument);
+	const char* dirName = args.PickString();
+	bool treeFlag = argument.IsSet(Gurax_Symbol(tree));
+	// Function body
+	if (!(treeFlag? OAL::RemoveDirTree(dirName) : OAL::RemoveDir(dirName))) {
+		Error::Issue(ErrorType::IOError, "failed to remove a directory");
 	}
-	return Value::Nil;
-#endif
 	return Value::nil();
 }
 
-// fs.Rename(src:string, dst:string):map:void
+// fs.Rename(pathNameSrc:string, pathNameDst:string):map:void
 Gurax_DeclareFunction(Rename)
 {
 	Declare(VTYPE_Nil, Flag::Map);
-	DeclareArg("src", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Renames a file or directory.");
@@ -303,13 +297,14 @@ Gurax_DeclareFunction(Rename)
 
 Gurax_ImplementFunction(Rename)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	if (!OAL::Rename(arg.GetString(0), arg.GetString(1))) {
-		sig.SetError(ERR_IOError, "failed to rename a file or directory");
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathNameSrc = args.PickString();
+	const char* pathNameDst = args.PickString();
+	// Function body
+	if (!OAL::Rename(pathNameSrc, pathNameDst)) {
+		Error::Issue(ErrorType::IOError, "failed to copy a file");
 	}
-	return Value::Nil;
-#endif
 	return Value::nil();
 }
 

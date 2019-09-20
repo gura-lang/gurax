@@ -101,6 +101,7 @@ public:
 #endif
 public:
 	static bool ChangeDir(const char* pathName);
+	static bool ChangeMode(const char* pathName, Int mode, bool followLinkFlag);
 	static bool ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
 	static bool Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
 	static bool CopyDir(const char* dirNameSrc, const char* dirNameDst);

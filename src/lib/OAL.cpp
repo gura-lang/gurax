@@ -72,6 +72,11 @@ bool OAL::ChangeDir(const char* pathName)
 	return false;
 }
 
+bool OAL::ChangeMode(const char* pathName, Int mode, bool followLinkFlag)
+{
+	return false;
+}
+
 bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
 {
 	return false;
@@ -291,6 +296,11 @@ String OAL::FromNativeString(const char* str)
 }
 
 bool OAL::ChangeDir(const char* pathName)
+{
+	return false;
+}
+
+bool OAL::ChangeMode(const char* pathName, Int mode, bool followLinkFlag)
 {
 	return false;
 }
