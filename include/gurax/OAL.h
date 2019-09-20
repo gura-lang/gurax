@@ -23,6 +23,7 @@ using mode_t = int;
 #define S_IWOTH 0x0002
 #define S_IXOTH 0x0001
 #else
+#include <dirent.h>
 #include <unistd.h>
 #include <dlfcn.h>
 #include <pthread.h>
