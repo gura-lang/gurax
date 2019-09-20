@@ -8,6 +8,94 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // OAL (common)
 //------------------------------------------------------------------------------
+bool OAL::ParseStatMode(const char* mode, mode_t& st_mode)
+{
+	mode_t st_mode_r = 0, st_mode_w = 0, st_mode_x = 0;
+	mode_t st_mode_mask = 0;
+	enum {
+		STAT_Target, STAT_ModeOp, STAT_Mode_Plus, STAT_Mode_Minus,
+	} stat = STAT_Target;
+	// state machine to parse regular expression: [ugoa]*([-+=]([rwxXst]*|[ugo]))+
+	char ch = '\0';
+	bool eatNextChar = true;
+	for (const char* p = mode; *p != '\0'; ) {
+		if (eatNextChar) ch = *p++;
+		eatNextChar = true;
+		if (stat == STAT_Target) {
+			if (ch == 'u') {
+				st_mode_r |= S_IRUSR;
+				st_mode_w |= S_IWUSR;
+				st_mode_x |= S_IXUSR;
+				st_mode_mask |= S_IRUSR | S_IWUSR | S_IXUSR;
+			} else if (ch == 'g') {
+				st_mode_r |= S_IRGRP;
+				st_mode_w |= S_IWGRP;
+				st_mode_x |= S_IXGRP;
+				st_mode_mask |= S_IRGRP | S_IWGRP | S_IXGRP;
+			} else if (ch == 'o') {
+				st_mode_r |= S_IROTH;
+				st_mode_w |= S_IWOTH;
+				st_mode_x |= S_IXOTH;
+				st_mode_mask |= S_IROTH | S_IWOTH | S_IXOTH;
+			} else if (ch == 'a') {
+				st_mode_r |= S_IRUSR | S_IRGRP | S_IROTH;
+				st_mode_w |= S_IWUSR | S_IWGRP | S_IWOTH;
+				st_mode_x |= S_IXUSR | S_IXGRP | S_IXOTH;
+				st_mode_mask |=
+					S_IRUSR | S_IWUSR | S_IXUSR |
+					S_IRGRP | S_IWGRP | S_IXGRP |
+					S_IROTH | S_IWOTH | S_IXOTH;
+			} else {
+				if (st_mode_mask == 0) {
+					st_mode_r |= S_IRUSR | S_IRGRP | S_IROTH;
+					st_mode_w |= S_IWUSR | S_IWGRP | S_IWOTH;
+					st_mode_x |= S_IXUSR | S_IXGRP | S_IXOTH;
+					st_mode_mask |=
+						S_IRUSR | S_IWUSR | S_IXUSR |
+						S_IRGRP | S_IWGRP | S_IXGRP |
+						S_IROTH | S_IWOTH | S_IXOTH;
+				}
+				eatNextChar = false;
+				stat = STAT_ModeOp;
+			}
+		} else if (stat == STAT_ModeOp) {
+			if (ch == '+') {
+				stat = STAT_Mode_Plus;
+			} else if (ch == '-') {
+				stat = STAT_Mode_Minus;
+			} else if (ch == '=') {
+				st_mode &= ~st_mode_mask;
+				stat = STAT_Mode_Plus;
+			} else {
+				return false;
+			}
+		} else if (stat == STAT_Mode_Plus) {
+			if (ch == 'r') {
+				st_mode |= st_mode_r;
+			} else if (ch == 'w') {
+				st_mode |= st_mode_w;
+			} else if (ch == 'x') {
+				st_mode |= st_mode_x;
+			} else {
+				eatNextChar = false;
+				stat = STAT_ModeOp;
+			}
+		} else if (stat == STAT_Mode_Minus) {
+			if (ch == 'r') {
+				st_mode &= ~st_mode_r;
+			} else if (ch == 'w') {
+				st_mode &= ~st_mode_w;
+			} else if (ch == 'x') {
+				st_mode &= ~st_mode_x;
+			} else {
+				eatNextChar = false;
+				stat = STAT_ModeOp;
+			}
+		}
+	}
+	return true;
+}
+
 void OAL::AppendCmdLine(String& cmdLine, const char* arg)
 {
 	if (::strchr(arg, ' ')) {
@@ -72,7 +160,7 @@ bool OAL::ChangeDir(const char* pathName)
 	return false;
 }
 
-bool OAL::ChangeMode(const char* pathName, Int mode, bool followLinkFlag)
+bool OAL::ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag)
 {
 	return false;
 }
@@ -228,6 +316,45 @@ String OAL::ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
 }
 
 //-----------------------------------------------------------------------------
+// OAL::DirLister (MSWIN)
+//-----------------------------------------------------------------------------
+OAL::DirLister::DirLister(const char* dirName, bool joinPathNameFlag) :
+	_dirName(dirName), _joinPathNameFlag(joinPathNameFlag), _hFind(INVALID_HANDLE_VALUE)
+{
+}
+
+OAL::DirLister::~DirLister()
+{
+	::FindClose(_hFind);
+}
+
+bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
+{
+	WIN32_FIND_DATA findData;
+	pathName.clear();
+	String fileName;
+	for (;;) {
+		if (_hFind == INVALID_HANDLE_VALUE) {
+			String pattern = JoinPathName(_dirName.c_str(), "*.*");
+			_hFind = ::FindFirstFile(ToNativeString(pattern.c_str()).c_str(), &findData);
+			if (_hFind == INVALID_HANDLE_VALUE) return false;
+		} else {
+			if (!::FindNextFile(_hFind, &findData)) return false;
+		}
+		fileName = FromNativeString(findData.cFileName);
+		if (fileName != "." && fileName != ".." &&
+			(!pattern || PathName(fileName).DoesMatch(pattern))) break;
+	}
+	if (_joinPathNameFlag) {
+		pathName = JoinPathName(_dirName.c_str(), fileName.c_str());
+	} else {
+		pathName = fileName;
+	}
+	*pDirFlag = (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)? true : false;
+	return true;
+}
+
+//-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (MSWIN)
 //-----------------------------------------------------------------------------
 OAL::DynamicLibrary::DynamicLibrary() : _hModule(nullptr)
@@ -271,11 +398,11 @@ void* OAL::DynamicLibrary::GetEntry(const char* funcName)
 String OAL::GetEnv(const char* name, bool* pFoundFlag)
 {
 	const char* str = ::getenv(ToNativeString(name).c_str());
-	if (str == nullptr) {
-		if (pFoundFlag != nullptr) *pFoundFlag = false;
+	if (!str) {
+		if (pFoundFlag) *pFoundFlag = false;
 		return String("");
 	}
-	if (pFoundFlag != nullptr) *pFoundFlag = true;
+	if (pFoundFlag) *pFoundFlag = true;
 	return FromNativeString(str);
 }
 
@@ -297,17 +424,33 @@ String OAL::FromNativeString(const char* str)
 
 bool OAL::ChangeDir(const char* pathName)
 {
-	return false;
+	return ::chdir(ToNativeString(pathName).c_str()) == 0;
 }
 
-bool OAL::ChangeMode(const char* pathName, Int mode, bool followLinkFlag)
+bool OAL::ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag)
 {
-	return false;
+	return followLinkFlag?
+		::chmod(ToNativeString(pathName).c_str(), mode) == 0 :
+		lchmod(ToNativeString(pathName).c_str(), mode) == 0;
 }
 
 bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
 {
-	return false;
+	String pathNameEnc = ToNativeString(pathName);
+	mode_t st_mode = 0;
+	do {
+		struct stat statFs;
+		if (followLinkFlag) {
+			if (::stat(pathNameEnc.c_str(), &statFs) < 0) return false;
+		} else {
+			if (::lstat(pathNameEnc.c_str(), &statFs) < 0) return false;
+		}
+		st_mode = statFs.st_mode;
+	} while (0);
+	if (!ParseStatMode(mode, st_mode)) return false;
+	return followLinkFlag?
+		::chmod(pathNameEnc.c_str(), st_mode) == 0 :
+		lchmod(pathNameEnc.c_str(), st_mode) == 0;
 }
 
 bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
@@ -507,6 +650,44 @@ DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
 }
 
 //-----------------------------------------------------------------------------
+// OAL::DirLister (POSIX)
+//-----------------------------------------------------------------------------
+OAL::DirLister::DirLister(const char* dirName, bool joinPathNameFlag) :
+	_dirName(dirName), _dirp(nullptr), _joinPathNameFlag(joinPathNameFlag)
+{
+}
+
+OAL::DirLister::~DirLister()
+{
+	if (_dirp) ::closedir(_dirp);
+}
+
+bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
+{
+	struct dirent* direntp = nullptr;
+	pathName.clear();
+	String fileName;
+	for (;;) {
+		if (!_dirp) {
+			_dirp = ::opendir(_dirName.empty()? "." : _dirName.c_str());
+			if (!_dirp) return false;
+		}
+		direntp = ::readdir(_dirp);
+		if (!direntp) return false;
+		fileName = FromNativeString(direntp->d_name);
+		if (fileName != "." && fileName != ".." &&
+			(!pattern || PathName(fileName).DoesMatch(pattern))) break;
+	}
+	if (_joinPathNameFlag) {
+		pathName = PathName(_dirName).JoinAfter(fileName.c_str());
+	} else {
+		pathName = fileName;
+	}
+	*pDirFlag = (direntp->d_type == DT_DIR);
+	return true;
+}
+
+//-----------------------------------------------------------------------------
 // OAL::DynamicLibrary (POSIX)
 //-----------------------------------------------------------------------------
 OAL::DynamicLibrary::DynamicLibrary() : _hLibrary(nullptr)
@@ -516,7 +697,7 @@ OAL::DynamicLibrary::DynamicLibrary() : _hLibrary(nullptr)
 bool OAL::DynamicLibrary::Open(const char* pathName)
 {
 	_hLibrary = dlopen(ToNativeString(pathName).c_str(), RTLD_LAZY);
-	if (_hLibrary == nullptr) {
+	if (!_hLibrary) {
 		Error::Issue(ErrorType::ImportError, "%s", dlerror());
 		return false;
 	}

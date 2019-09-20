@@ -47,6 +47,19 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OAL {
 public:
+	class DirLister {
+		String _dirName;
+#if defined(GURA_ON_MSWIN)
+		HANDLE _hFind;
+#else
+		DIR* _dirp;
+#endif
+		bool _joinPathNameFlag;
+	public:
+		DirLister(const char* dirName, bool joinPathNameFlag = true);
+		~DirLister();
+		bool Next(const char* pattern, String& pathName, bool* pDirFlag);
+	};
 	class GURAX_DLLDECLARE DynamicLibrary {
 	private:
 #if defined(GURAX_ON_MSWIN)
@@ -101,7 +114,7 @@ public:
 #endif
 public:
 	static bool ChangeDir(const char* pathName);
-	static bool ChangeMode(const char* pathName, Int mode, bool followLinkFlag);
+	static bool ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag);
 	static bool ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
 	static bool Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
 	static bool CopyDir(const char* dirNameSrc, const char* dirNameDst);
@@ -114,6 +127,7 @@ public:
 	static bool RemoveDirTree(const char* dirName);
 	static bool Rename(const char* pathNameOld, const char* pathNameNew);
 private:
+	static bool ParseStatMode(const char* mode, mode_t& st_mode);
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)
 	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
