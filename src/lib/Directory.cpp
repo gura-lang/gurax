@@ -194,6 +194,7 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 		if (PathName::IsSep(ch) || ch == '\0') {
 			_patternSegs.push_back(field);
 			if (ch == '\0') break;
+			field.clear();
 		} else {
 			field += ch;
 		}
@@ -237,7 +238,7 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 			}
 		}
 	}
-	return nullptr;
+	return pValueRtn.release();
 }
 
 String Iterator_DirectoryGlob::ToString(const StringStyle& ss) const

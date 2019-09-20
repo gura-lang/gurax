@@ -1,2 +1,2 @@
 #!/usr/bin/env gurax
-Println(path.Dir('.'))
+Println(path.Glob('../*/*/test-*'):dir)
