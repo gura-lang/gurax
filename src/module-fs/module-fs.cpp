@@ -8,11 +8,11 @@ Gurax_BeginModule(fs)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// fs.ChangeDir(pathName:String) {block?}
+// fs.ChangeDir(dirName:String) {block?}
 Gurax_DeclareFunction(ChangeDir)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Changes the current working directory to `pathname`.\n"
@@ -24,34 +24,39 @@ Gurax_DeclareFunction(ChangeDir)
 
 Gurax_ImplementFunction(ChangeDir)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	if (arg.IsBlockSpecified()) {
-		String pathNameOrg = OAL::GetCurDir();
-		if (!OAL::ChangeCurDir(arg.GetString(0))) {
-			sig.SetError(ERR_IOError, "failed to change current directory");
-			return Value::Nil;
+	// Arguments
+	ArgPicker args(argument);
+	const char* dirName = args.PickString();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	const char* errMsg = "failed to change current directory";
+	if (pExprOfBlock) {
+		String dirNameOrg = OAL::GetCurDir();
+		if (!OAL::ChangeDir(dirName)) {
+			Error::Issue(ErrorType::IOError, errMsg);
+			return Value::nil();
 		}
-		const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
-		if (sig.IsSignalled()) return Value::Nil;
-		Value rtn = pExprBlock->Exec(env);
-		OAL::ChangeCurDir(pathNameOrg.c_str());
-		return rtn;
-	} else if (!OAL::ChangeCurDir(arg.GetString(0))) {
-		sig.SetError(ERR_IOError, "failed to change current directory");
-		return Value::Nil;
+		RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
+		RefPtr<Value> pValue(processor.EvalExpr(*pExprOfBlock, *pArgumentSub));
+		if (!OAL::ChangeDir(dirNameOrg.c_str())) {
+			Error::Issue(ErrorType::IOError, errMsg);
+			return Value::nil();
+		}
+		return pValue.release();
+	} else {
+		if (!OAL::ChangeDir(dirName)) {
+			Error::Issue(ErrorType::IOError, errMsg);
+		}
+		return Value::nil();
 	}
-	return Value::Nil;
-#endif
-	return Value::nil();
 }
 
-// fs.ChangeMode(mode, pathname:string):map:void:[follow_link]
+// fs.ChangeMode(pathname:String, mode):map:void:[follow_link]
 Gurax_DeclareFunction(ChangeMode)
 {
 	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pathname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(follow_link));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -98,10 +103,14 @@ Gurax_DeclareFunction(ChangeMode)
 
 Gurax_ImplementFunction(ChangeMode)
 {
+	// Arguments
+	ArgPicker args(argument);
+	const char* dirName = args.PickString();
+	const Value& mode = args.PickValue();
+	bool followLinkFlag = argument.IsSet(Gurax_Symbol(follow_link));
 #if 0
 	Signal &sig = env.GetSignal();
 	bool rtn = false;
-	bool followLinkFlag = arg.IsSet(Gurax_Symbol(follow_link));
 	if (arg.Is_string(0)) {
 		rtn = OAL::ChangeMode(arg.GetString(0), arg.GetString(1), followLinkFlag);
 	} else if (arg.Is_number(0)) {

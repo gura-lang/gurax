@@ -67,32 +67,39 @@ String OAL::FromNativeString(const char* str)
 	return ConvCodePage(str, CP_THREAD_ACP, CP_UTF8);
 }
 
-void OAL::ChangeDir(const char* pathName)
+bool OAL::ChangeDir(const char* pathName)
 {
+	return false;
 }
 
-void OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
+bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
 {
+	return false;
 }
 
-void OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
+bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
 {
+	return false;
 }
 
-void OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
+bool OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
 {
+	return false;
 }
 
-void OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
+bool OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
 {
+	return false;
 }
 
-void OAL::CreateDir(const char* dirName)
+bool OAL::CreateDir(const char* dirName)
 {
+	return false;
 }
 
-void OAL::CreateDirTree(const char* dirName)
+bool OAL::CreateDirTree(const char* dirName)
 {
+	return false;
 }
 
 String OAL::GetCurDir()
@@ -106,20 +113,24 @@ String OAL::GetCurDir()
 	return dirName;
 }
 
-void OAL::Remove(const char* pathName)
+bool OAL::Remove(const char* pathName)
 {
+	return false;
 }
 
-void OAL::RemoveDir(const char* dirName)
+bool OAL::RemoveDir(const char* dirName)
 {
+	return false;
 }
 
-void OAL::RemoveDirTree(const char* dirName)
+bool OAL::RemoveDirTree(const char* dirName)
 {
+	return false;
 }
 
-void OAL::Rename(const char* pathNameOld, const char* pathNameNew)
+bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 {
+	return false;
 }
 
 bool OAL::DoesExistDir(const char* pathName)
@@ -279,32 +290,39 @@ String OAL::FromNativeString(const char* str)
 	return String(str);
 }
 
-void OAL::ChangeDir(const char* pathName)
+bool OAL::ChangeDir(const char* pathName)
 {
+	return false;
 }
 
-void OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
+bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag)
 {
+	return false;
 }
 
-void OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
+bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
 {
+	return false;
 }
 
-void OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
+bool OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
 {
+	return false;
 }
 
-void OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
+bool OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
 {
+	return false;
 }
 
-void OAL::CreateDir(const char* dirName)
+bool OAL::CreateDir(const char* dirName)
 {
+	return false;
 }
 
-void OAL::CreateDirTree(const char* dirName)
+bool OAL::CreateDirTree(const char* dirName)
 {
+	return false;
 }
 
 String OAL::GetCurDir()
@@ -318,20 +336,24 @@ String OAL::GetCurDir()
 	return dirName;
 }
 
-void OAL::Remove(const char* pathName)
+bool OAL::Remove(const char* pathName)
 {
+	return false;
 }
 
-void OAL::RemoveDir(const char* dirName)
+bool OAL::RemoveDir(const char* dirName)
 {
+	return false;
 }
 
-void OAL::RemoveDirTree(const char* dirName)
+bool OAL::RemoveDirTree(const char* dirName)
 {
+	return false;
 }
 
-void OAL::Rename(const char* pathNameOld, const char* pathNameNew)
+bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 {
+	return false;
 }
 
 bool OAL::DoesExistDir(const char* pathName)

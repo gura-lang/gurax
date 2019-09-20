@@ -100,18 +100,18 @@ public:
 	static FILETIME DateTimeToFILETIME(const DateTime& dt);
 #endif
 public:
-	static void ChangeDir(const char* pathName);
-	static void ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
-	static void Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
-	static void CopyDir(const char* dirNameSrc, const char* dirNameDst);
-	static void CopyDirTree(const char* dirNameSrc, const char* dirNameDst);
-	static void CreateDir(const char* dirName);
-	static void CreateDirTree(const char* dirName);
+	static bool ChangeDir(const char* pathName);
+	static bool ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
+	static bool Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
+	static bool CopyDir(const char* dirNameSrc, const char* dirNameDst);
+	static bool CopyDirTree(const char* dirNameSrc, const char* dirNameDst);
+	static bool CreateDir(const char* dirName);
+	static bool CreateDirTree(const char* dirName);
 	static String GetCurDir();
-	static void Remove(const char* pathName);
-	static void RemoveDir(const char* dirName);
-	static void RemoveDirTree(const char* dirName);
-	static void Rename(const char* pathNameOld, const char* pathNameNew);
+	static bool Remove(const char* pathName);
+	static bool RemoveDir(const char* dirName);
+	static bool RemoveDirTree(const char* dirName);
+	static bool Rename(const char* pathNameOld, const char* pathNameNew);
 private:
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)
