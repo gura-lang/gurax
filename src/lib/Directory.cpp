@@ -155,7 +155,10 @@ String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
 {
 	String str;
 	str = "DirectoryWalk";
-	str += _statFlag? ":stat" : ":name";
+	if (_statFlag) str += ":stat";
+	if (_caseFlag) str += ":case";
+	if (_fileFlag) str += ":file";
+	if (_dirFlag) str += ":dir";
 	return str;
 }
 
@@ -243,7 +246,13 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 
 String Iterator_DirectoryGlob::ToString(const StringStyle& ss) const
 {
-	return "DirectoryGlob";
+	String str;
+	str = "DirectoryGlob";
+	if (_statFlag) str += ":stat";
+	if (_caseFlag) str += ":case";
+	if (_fileFlag) str += ":file";
+	if (_dirFlag) str += ":dir";
+	return str;
 }
 
 }
