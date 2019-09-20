@@ -8,11 +8,11 @@ Gurax_BeginModule(fs)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// fs.ChangeDir(pathname:string) {block?}
+// fs.ChangeDir(pathName:String) {block?}
 Gurax_DeclareFunction(ChangeDir)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("pathname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Changes the current working directory to `pathname`.\n"
@@ -184,26 +184,8 @@ Gurax_ImplementFunction(CopyDir)
 	return Value::nil();
 }
 
-// fs.GetCwd()
-Gurax_DeclareFunction(GetCwd)
-{
-	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns the current working directory.");
-}
-
-Gurax_ImplementFunction(GetCwd)
-{
-#if 0
-	String pathName = OAL::GetCurDir();
-	return Value(pathName);
-#endif
-	return Value::nil();
-}
-
-// fs.MakeDir(pathname:string):map:void[:tree]
-Gurax_DeclareFunction(MakeDir)
+// fs.CreateDir(pathname:string):map:void[:tree]
+Gurax_DeclareFunction(CreateDir)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -216,18 +198,36 @@ Gurax_DeclareFunction(MakeDir)
 		"an error occurs. Specifying `:tree` attribute would create such directories.\n");
 }
 
-Gurax_ImplementFunction(MakeDir)
+Gurax_ImplementFunction(CreateDir)
 {
 #if 0
 	Signal &sig = env.GetSignal();
 	const char *pathName = arg.GetString(0);
 	bool rtn = arg.IsSet(Gurax_Symbol(tree))?
-				OAL::MakeDirTree(pathName) :
-				OAL::MakeDir(pathName);
+				OAL::CreateDirTree(pathName) :
+				OAL::CreateDir(pathName);
 	if (!rtn) {
 		sig.SetError(ERR_IOError, "failed to create a directory %s", pathName);
 	}
 	return Value::Nil;
+#endif
+	return Value::nil();
+}
+
+// fs.GetCurDir()
+Gurax_DeclareFunction(GetCurDir)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the current working directory.");
+}
+
+Gurax_ImplementFunction(GetCurDir)
+{
+#if 0
+	String pathName = OAL::GetCurDir();
+	return Value(pathName);
 #endif
 	return Value::nil();
 }
@@ -324,8 +324,8 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(ChangeMode));
 	Assign(Gurax_CreateFunction(Copy));
 	Assign(Gurax_CreateFunction(CopyDir));
-	Assign(Gurax_CreateFunction(GetCwd));
-	Assign(Gurax_CreateFunction(MakeDir));
+	Assign(Gurax_CreateFunction(CreateDir));
+	Assign(Gurax_CreateFunction(GetCurDir));
 	Assign(Gurax_CreateFunction(Remove));
 	Assign(Gurax_CreateFunction(Rename));
 	Assign(Gurax_CreateFunction(RemoveDir));
