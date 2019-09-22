@@ -156,7 +156,7 @@ public:
 	static bool Remove(const char* pathName);
 	static bool RemoveDir(const char* dirName);
 	static bool Rename(const char* pathNameOld, const char* pathNameNew);
-private:
+public:
 	static bool ParseStatMode(const char* mode, mode_t& st_mode);
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)

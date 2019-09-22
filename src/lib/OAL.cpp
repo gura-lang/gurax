@@ -12,16 +12,14 @@ bool OAL::ParseStatMode(const char* mode, mode_t& st_mode)
 {
 	mode_t st_mode_r = 0, st_mode_w = 0, st_mode_x = 0;
 	mode_t st_mode_mask = 0;
-	enum {
-		STAT_Target, STAT_ModeOp, STAT_Mode_Plus, STAT_Mode_Minus,
-	} stat = STAT_Target;
+	enum class Stat { Target, ModeOp, Mode_Plus, Mode_Minus } stat = Stat::Target;
 	// state machine to parse regular expression: [ugoa]*([-+=]([rwxXst]*|[ugo]))+
 	char ch = '\0';
 	bool eatNextChar = true;
 	for (const char* p = mode; *p != '\0'; ) {
 		if (eatNextChar) ch = *p++;
 		eatNextChar = true;
-		if (stat == STAT_Target) {
+		if (stat == Stat::Target) {
 			if (ch == 'u') {
 				st_mode_r |= S_IRUSR;
 				st_mode_w |= S_IWUSR;
@@ -56,20 +54,20 @@ bool OAL::ParseStatMode(const char* mode, mode_t& st_mode)
 						S_IROTH | S_IWOTH | S_IXOTH;
 				}
 				eatNextChar = false;
-				stat = STAT_ModeOp;
+				stat = Stat::ModeOp;
 			}
-		} else if (stat == STAT_ModeOp) {
+		} else if (stat == Stat::ModeOp) {
 			if (ch == '+') {
-				stat = STAT_Mode_Plus;
+				stat = Stat::Mode_Plus;
 			} else if (ch == '-') {
-				stat = STAT_Mode_Minus;
+				stat = Stat::Mode_Minus;
 			} else if (ch == '=') {
 				st_mode &= ~st_mode_mask;
-				stat = STAT_Mode_Plus;
+				stat = Stat::Mode_Plus;
 			} else {
 				return false;
 			}
-		} else if (stat == STAT_Mode_Plus) {
+		} else if (stat == Stat::Mode_Plus) {
 			if (ch == 'r') {
 				st_mode |= st_mode_r;
 			} else if (ch == 'w') {
@@ -78,9 +76,9 @@ bool OAL::ParseStatMode(const char* mode, mode_t& st_mode)
 				st_mode |= st_mode_x;
 			} else {
 				eatNextChar = false;
-				stat = STAT_ModeOp;
+				stat = Stat::ModeOp;
 			}
-		} else if (stat == STAT_Mode_Minus) {
+		} else if (stat == Stat::Mode_Minus) {
 			if (ch == 'r') {
 				st_mode &= ~st_mode_r;
 			} else if (ch == 'w') {
@@ -89,7 +87,7 @@ bool OAL::ParseStatMode(const char* mode, mode_t& st_mode)
 				st_mode &= ~st_mode_x;
 			} else {
 				eatNextChar = false;
-				stat = STAT_ModeOp;
+				stat = Stat::ModeOp;
 			}
 		}
 	}
