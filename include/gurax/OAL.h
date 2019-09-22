@@ -113,18 +113,20 @@ public:
 	static FILETIME DateTimeToFILETIME(const DateTime& dt);
 #endif
 public:
+	static bool CopyDir(const char* dirNameSrc, const char* dirNameDst);
+	static bool CopyDirTree(const char* dirNameSrc, const char* dirNameDst);
+	static bool CreateDirTree(const char* dirName);
+	static bool RemoveDirTree(const char* dirName);
+public:
 	static bool ChangeDir(const char* pathName);
 	static bool ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag);
 	static bool ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
 	static bool Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
-	static bool CopyDir(const char* dirNameSrc, const char* dirNameDst);
-	static bool CopyDirTree(const char* dirNameSrc, const char* dirNameDst);
 	static bool CreateDir(const char* dirName);
-	static bool CreateDirTree(const char* dirName);
+	static bool IsDir(const char* pathName, bool* pExistFlag = nullptr);
 	static String GetCurDir();
 	static bool Remove(const char* pathName);
 	static bool RemoveDir(const char* dirName);
-	static bool RemoveDirTree(const char* dirName);
 	static bool Rename(const char* pathNameOld, const char* pathNameNew);
 private:
 	static bool ParseStatMode(const char* mode, mode_t& st_mode);

@@ -119,6 +119,26 @@ DateTime* OAL::CreateDateTime(const struct tm& tm, int secsOffset)
 		0, secsOffset);
 }
 
+bool OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
+{
+	return false;
+}
+
+bool OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
+{
+	return false;
+}
+
+bool OAL::CreateDirTree(const char* dirName)
+{
+	return false;
+}
+
+bool OAL::RemoveDirTree(const char* dirName)
+{
+	return false;
+}
+
 #if defined(GURAX_ON_MSWIN)
 
 //------------------------------------------------------------------------------
@@ -175,24 +195,9 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 	return false;
 }
 
-bool OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
-{
-	return false;
-}
-
-bool OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
-{
-	return false;
-}
-
 bool OAL::CreateDir(const char* dirName)
 {
-	return false;
-}
-
-bool OAL::CreateDirTree(const char* dirName)
-{
-	return false;
+	return ::CreateDirectory(ToNativeString(dirName).c_str(), nullptr)? true : false;
 }
 
 String OAL::GetCurDir()
@@ -206,17 +211,22 @@ String OAL::GetCurDir()
 	return dirName;
 }
 
+bool OAL::IsDir(const char* pathName, bool* pExistFlag)
+{
+	WIN32_FILE_ATTRIBUTE_DATA attrData;
+	bool existFlag = (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
+											GetFileExInfoStandard, &attrData) != 0);
+	if (pExistFlag != nullptr) *pExistFlag = existFlag;
+	if (!existFlag) return false;
+	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
+}
+
 bool OAL::Remove(const char* pathName)
 {
 	return false;
 }
 
 bool OAL::RemoveDir(const char* dirName)
-{
-	return false;
-}
-
-bool OAL::RemoveDirTree(const char* dirName)
 {
 	return false;
 }
@@ -455,27 +465,106 @@ bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag
 
 bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
 {
-	return false;
-}
-
-bool OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
-{
-	return false;
-}
-
-bool OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
-{
+	int fdSrc = -1, fdDst = -1;
+	struct stat statSrc, statDst;
+	String pathNameSrcN = ToNativeString(pathNameSrc);
+	String pathNameTmp;
+	if (IsDir(pathNameDst)) {
+		pathNameTmp = PathName(pathNameDst).JoinAfter(PathName(pathNameSrc).ExtractFileName().c_str());
+	} else {
+		pathNameTmp = pathNameDst;
+	}
+	String pathNameDstN = ToNativeString(pathNameTmp.c_str());
+	if (followLinkFlag) {
+		if (::stat(pathNameSrcN.c_str(), &statSrc) < 0) return false;
+	} else {
+		if (::lstat(pathNameSrcN.c_str(), &statSrc) < 0) return false;
+	}
+	if (S_ISREG(statSrc.st_mode)) {
+		if (::stat(pathNameDstN.c_str(), &statDst) < 0) {
+			// nothing to do
+		} else if (failIfExistFlag) {
+			return false;
+		} else if (!Remove(pathNameTmp.c_str())) {
+			//ChangeMode("u+w", pathNameTmp.c_str());
+			//if (!Remove(pathNameTmp.c_str())) return false;
+			return false;
+		}
+		fdSrc = ::open(pathNameSrcN.c_str(), O_RDONLY);
+		if (fdSrc < 0) return false;
+		fdDst = ::open(pathNameDstN.c_str(), O_WRONLY | O_CREAT | O_TRUNC, statSrc.st_mode);
+		if (fdDst < 0) {
+			::close(fdSrc);
+			return false;
+		}
+		size_t bytesSrc = statSrc.st_size;
+		void *addrSrc = ::mmap(nullptr, bytesSrc, PROT_READ, MAP_PRIVATE, fdSrc, 0);
+		if (addrSrc == MAP_FAILED) {
+			const size_t bytesBuff = 65536;
+			void *buff = ::malloc(bytesBuff);
+			for (;;) {
+				int bytesRead = ::read(fdSrc, buff, bytesBuff);
+				if (bytesRead == 0) break;
+				if (::write(fdDst, buff, bytesRead) < bytesRead) {
+					::close(fdSrc);
+					::close(fdDst);
+					return false;
+				}
+			}
+		} else {
+			if (::write(fdDst, addrSrc, bytesSrc) < static_cast<int>(bytesSrc)) {
+				::munmap(addrSrc, bytesSrc);
+				::close(fdSrc);
+				::close(fdDst);
+				return false;
+			}
+			::munmap(addrSrc, bytesSrc);
+		}
+		::close(fdSrc);
+		::close(fdDst);
+		return true;
+	} else if (S_ISDIR(statSrc.st_mode)) {
+		// nothing to do
+	} else if (S_ISCHR(statSrc.st_mode)) {
+		// nothing to do
+	} else if (S_ISBLK(statSrc.st_mode)) {
+		// nothing to do
+	} else if (S_ISFIFO(statSrc.st_mode)) {
+		// nothing to do
+	} else if (S_ISLNK(statSrc.st_mode)) {
+		// still buggy
+		if (::stat(pathNameDstN.c_str(), &statDst) < 0) {
+			// nothing to do
+		} else if (failIfExistFlag) {
+			return false;
+		} else if (!Remove(pathNameTmp.c_str())) {
+			//ChangeMode("u+w", pathNameTmp.c_str());
+			//if (!Remove(pathNameTmp.c_str())) return false;
+			return false;
+		}
+		char *tgt = new char [statSrc.st_size];
+		if (::readlink(pathNameSrcN.c_str(), tgt, statSrc.st_size) < 0) return false;
+		if (::symlink(tgt, pathNameDstN.c_str()) < 0) return false;
+		delete[] tgt;
+		return true;
+	} else if (S_ISSOCK(statSrc.st_mode)) {
+		// nothing to do
+	}
 	return false;
 }
 
 bool OAL::CreateDir(const char* dirName)
 {
-	return false;
+	return ::mkdir(ToNativeString(dirName).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0;
 }
 
-bool OAL::CreateDirTree(const char* dirName)
+bool OAL::IsDir(const char* pathName, bool* pExistFlag)
 {
-	return false;
+	struct stat stat;
+	bool existFlag = (::stat(ToNativeString(pathName).c_str(), &stat) == 0);
+	if (pExistFlag != nullptr) *pExistFlag = existFlag;
+	if (!existFlag) return false;
+	return S_ISDIR(stat.st_mode);
 }
 
 String OAL::GetCurDir()
@@ -491,22 +580,17 @@ String OAL::GetCurDir()
 
 bool OAL::Remove(const char* pathName)
 {
-	return false;
+	return ::unlink(ToNativeString(pathName).c_str()) == 0;
 }
 
 bool OAL::RemoveDir(const char* dirName)
 {
-	return false;
-}
-
-bool OAL::RemoveDirTree(const char* dirName)
-{
-	return false;
+	return ::rmdir(ToNativeString(dirName).c_str()) == 0;
 }
 
 bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 {
-	return false;
+	return ::rename(ToNativeString(pathNameOld).c_str(), ToNativeString(pathNameNew).c_str()) == 0;
 }
 
 bool OAL::DoesExistDir(const char* pathName)
