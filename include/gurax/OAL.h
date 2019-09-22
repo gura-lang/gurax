@@ -82,6 +82,34 @@ public:
 		bool Open(const char* pathName);
 		void* GetEntry(const char* funcName);
 	};
+	class GURAX_DLLDECLARE FILECloser {
+	private:
+		FILE* _fp;
+	public:
+		FILECloser(FILE* fp) : _fp(fp) {}
+		~FILECloser() { ::fclose(_fp); _fp = nullptr; }
+		FILE* get() { return _fp; }
+	};
+	class GURAX_DLLDECLARE FDCloser {
+	private:
+		int _fd;
+	public:
+		FDCloser(int fd) : _fd(fd) {}
+		~FDCloser() { ::close(_fd); _fd = -1;}
+		int get() { return _fd; }
+	};
+#if defined(GURAX_ON_MSWIN)
+#else
+	class GURAX_DLLDECLARE MemoryUnmapper {
+	private:
+		void* _p;
+		size_t _bytes;
+	public:
+		MemoryUnmapper(void* p, size_t bytes) : _p(p), _bytes(bytes) {}
+		MemoryUnmapper() { ::munmap(_p, _bytes); _p = nullptr;}
+		void* get() { return _p; }
+	};
+#endif
 public:
 	static void PutEnv(const char* name, const char* value);
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
@@ -133,6 +161,7 @@ private:
 	static void AppendCmdLine(String& cmdLine, const char* arg);
 #if defined(GURAX_ON_MSWIN)
 	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
+#else
 #endif
 };
 

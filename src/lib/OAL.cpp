@@ -121,22 +121,97 @@ DateTime* OAL::CreateDateTime(const struct tm& tm, int secsOffset)
 
 bool OAL::CopyDir(const char* dirNameSrc, const char* dirNameDst)
 {
-	return false;
+	if (!CreateDirTree(dirNameDst)) return false;
+	DirLister dirLister(dirNameSrc, false);
+	bool dirFlag = false;
+	String fileName;
+	while (dirLister.Next(nullptr, fileName, &dirFlag)) {
+		if (dirFlag) continue;
+		String pathNameSrc = PathName(dirNameSrc).JoinAfter(fileName.c_str());
+		String pathNameDst = PathName(dirNameDst).JoinAfter(fileName.c_str());
+		if (!Copy(pathNameSrc.c_str(), pathNameDst.c_str(), false, false)) return false;
+	}
+	return true;
 }
 
 bool OAL::CopyDirTree(const char* dirNameSrc, const char* dirNameDst)
 {
-	return false;
+	std::list<String> relNames;
+	relNames.push_back("");
+	for (const String& relNameIter : relNames) {
+		String dirNameIterSrc = PathName(dirNameSrc).JoinAfter(relNameIter.c_str());
+		String dirNameIterDst = PathName(dirNameDst).JoinAfter(relNameIter.c_str());
+		if (!CreateDirTree(dirNameIterDst.c_str())) return false;
+		DirLister dirLister(dirNameIterSrc.c_str(), false);
+		bool dirFlag = false;
+		String fileName;
+		while (dirLister.Next(nullptr, fileName, &dirFlag)) {
+			if (dirFlag) {
+				String relName = PathName(relNameIter).JoinAfter(fileName.c_str());
+				relNames.push_back(relName);
+				continue;
+			}
+			String pathNameSrc = PathName(dirNameIterSrc).JoinAfter(fileName.c_str());
+			String pathNameDst = PathName(dirNameIterDst).JoinAfter(fileName.c_str());
+			if (!Copy(pathNameSrc.c_str(), pathNameDst.c_str(), false, false)) return false;
+		}
+	}
+	return true;
 }
 
 bool OAL::CreateDirTree(const char* dirName)
 {
-	return false;
+	bool existFlag = false;
+	if (IsDir(dirName, &existFlag)) return true;
+	if (existFlag) return false;
+	StringList dirNames;
+	dirNames.push_back(dirName);
+	String dirNameParent = PathName(dirName).ExtractHeadName();
+	while (!dirNameParent.empty()) {
+		if (IsDir(dirNameParent.c_str(), &existFlag)) break;
+		if (existFlag) return false;
+		dirNames.push_back(dirNameParent);
+		dirNameParent = PathName(dirNameParent).ExtractHeadName();
+	}
+	for (auto pDirName = dirNames.rbegin(); pDirName != dirNames.rend(); pDirName++) {
+		const String &dirName = *pDirName;
+		if (!CreateDir(dirName.c_str())) return false;
+	}
+	return true;
 }
 
 bool OAL::RemoveDirTree(const char* dirName)
 {
-	return false;
+	bool rtn = true;
+	std::list<String> dirNames;
+	dirNames.push_back(dirName);
+	for (const String& dirNameIter : dirNames) {
+		DirLister dirLister(dirNameIter.c_str());
+		bool dirFlag = false;
+		String pathName;
+		while (dirLister.Next(nullptr, pathName, &dirFlag)) {
+			if (dirFlag) dirNames.push_back(pathName);
+		}
+	}
+	for (auto pDirNameIter = dirNames.rbegin(); pDirNameIter != dirNames.rend(); pDirNameIter++) {
+		const char *dirNameIter = pDirNameIter->c_str();
+		DirLister dirLister(dirNameIter);
+		bool dirFlag = false;
+		String pathName;
+		while (dirLister.Next(nullptr, pathName, &dirFlag)) {
+			if (dirFlag) {
+				// nothing to do
+			} else if (!Remove(pathName.c_str())) {
+				ChangeMode("u+w", pathName.c_str(), false);
+				if (!Remove(pathName.c_str())) rtn = false;
+			}
+		}
+		if (!RemoveDir(dirNameIter)) {
+			ChangeMode("u+w", dirNameIter, false);
+			if (!RemoveDir(dirNameIter)) rtn = false;
+		}
+	}
+	return rtn;
 }
 
 #if defined(GURAX_ON_MSWIN)
@@ -424,12 +499,12 @@ void OAL::PutEnv(const char* name, const char* value)
 
 String OAL::ToNativeString(const char* str)
 {
-	return String(str);
+	return str;
 }
 
 String OAL::FromNativeString(const char* str)
 {
-	return String(str);
+	return str;
 }
 
 bool OAL::ChangeDir(const char* pathName)
@@ -465,15 +540,10 @@ bool OAL::ChangeMode(const char* pathName, const char* mode, bool followLinkFlag
 
 bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag)
 {
-	int fdSrc = -1, fdDst = -1;
 	struct stat statSrc, statDst;
 	String pathNameSrcN = ToNativeString(pathNameSrc);
-	String pathNameTmp;
-	if (IsDir(pathNameDst)) {
-		pathNameTmp = PathName(pathNameDst).JoinAfter(PathName(pathNameSrc).ExtractFileName().c_str());
-	} else {
-		pathNameTmp = pathNameDst;
-	}
+	String pathNameTmp = IsDir(pathNameDst)?
+		PathName(pathNameDst).JoinAfter(PathName(pathNameSrc).ExtractFileName().c_str()) : pathNameDst;
 	String pathNameDstN = ToNativeString(pathNameTmp.c_str());
 	if (followLinkFlag) {
 		if (::stat(pathNameSrcN.c_str(), &statSrc) < 0) return false;
@@ -490,38 +560,24 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 			//if (!Remove(pathNameTmp.c_str())) return false;
 			return false;
 		}
-		fdSrc = ::open(pathNameSrcN.c_str(), O_RDONLY);
-		if (fdSrc < 0) return false;
-		fdDst = ::open(pathNameDstN.c_str(), O_WRONLY | O_CREAT | O_TRUNC, statSrc.st_mode);
-		if (fdDst < 0) {
-			::close(fdSrc);
-			return false;
-		}
+		FDCloser fdSrc(::open(pathNameSrcN.c_str(), O_RDONLY));
+		if (fdSrc.get() < 0) return false;
+		FDCloser fdDst(::open(pathNameDstN.c_str(), O_WRONLY | O_CREAT | O_TRUNC, statSrc.st_mode));
+		if (fdDst.get() < 0) return false;
 		size_t bytesSrc = statSrc.st_size;
-		void *addrSrc = ::mmap(nullptr, bytesSrc, PROT_READ, MAP_PRIVATE, fdSrc, 0);
-		if (addrSrc == MAP_FAILED) {
-			const size_t bytesBuff = 65536;
-			void *buff = ::malloc(bytesBuff);
+		MemoryUnmapper memSrc(::mmap(nullptr, bytesSrc, PROT_READ, MAP_PRIVATE, fdSrc.get(), 0), bytesSrc);
+		if (memSrc.get() == MAP_FAILED) {
+			RefPtr<Memory> pMemory(new MemoryHeap(65536));
 			for (;;) {
-				int bytesRead = ::read(fdSrc, buff, bytesBuff);
+				int bytesRead = ::read(fdSrc.get(), pMemory->GetPointer(), pMemory->GetSize());
 				if (bytesRead == 0) break;
-				if (::write(fdDst, buff, bytesRead) < bytesRead) {
-					::close(fdSrc);
-					::close(fdDst);
-					return false;
-				}
+				if (::write(fdDst.get(), pMemory->GetPointer(), bytesRead) < bytesRead) return false;
 			}
 		} else {
-			if (::write(fdDst, addrSrc, bytesSrc) < static_cast<int>(bytesSrc)) {
-				::munmap(addrSrc, bytesSrc);
-				::close(fdSrc);
-				::close(fdDst);
+			if (::write(fdDst.get(), memSrc.get(), bytesSrc) < static_cast<int>(bytesSrc)) {
 				return false;
 			}
-			::munmap(addrSrc, bytesSrc);
 		}
-		::close(fdSrc);
-		::close(fdDst);
 		return true;
 	} else if (S_ISDIR(statSrc.st_mode)) {
 		// nothing to do
