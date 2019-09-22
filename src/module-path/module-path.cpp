@@ -164,13 +164,13 @@ Gurax_DeclareFunction(Exists)
 
 Gurax_ImplementFunction(Exists)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	bool existFlag = PathMgr::DoesExist(env, arg.GetString(0));
-	if (sig.IsSignalled()) return Value::Nil;
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	// Function body
+	bool existFlag = PathMgr::DoesExist(pathName);
+	if (Error::IsIssued()) return Value::nil();
 	return Value(existFlag);
-#endif
-	return Value::nil();
 }
 
 // path.ExtName(pathName:String):map
