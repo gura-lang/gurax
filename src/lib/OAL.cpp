@@ -309,27 +309,15 @@ bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 	return false;
 }
 
-bool OAL::DoesExist(const char* pathName)
-{
-	WIN32_FILE_ATTRIBUTE_DATA attrData;
-	return ::GetFileAttributesEx(ToNativeString(pathName).c_str(),
-								 GetFileExInfoStandard, &attrData) != 0;
-}
-
-bool OAL::DoesExistDir(const char* pathName)
+OAL::FileType OAL::GetFileType(const char* pathName)
 {
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
 	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
-							  GetFileExInfoStandard, &attrData) == 0) return false;
-	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
-}
-
-bool OAL::DoesExistFile(const char* pathName)
-{
-	WIN32_FILE_ATTRIBUTE_DATA attrData;
-	if (::GetFileAttributesEx(ToNativeString(pathName).c_str(),
-							  GetFileExInfoStandard, &attrData) == 0) return false;
-	return (attrData.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) == 0;
+							  GetFileExInfoStandard, &attrData) == 0) return FileType::None;
+	return
+		((attrData.dwFileAttributes & FILE_ATTRIBUTE_NORMAL) != 0)? FileType::Normal :
+		((attrData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)? FileType::Directory :
+		FileType::Unknown;
 }
 
 Double OAL::GetTickTime()
@@ -654,24 +642,19 @@ bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 	return ::rename(ToNativeString(pathNameOld).c_str(), ToNativeString(pathNameNew).c_str()) == 0;
 }
 
-bool OAL::DoesExist(const char* pathName)
+OAL::FileType OAL::GetFileType(const char* pathName)
 {
 	struct stat stat;
-	return ::stat(ToNativeString(pathName).c_str(), &stat) == 0;
-}
-
-bool OAL::DoesExistDir(const char* pathName)
-{
-	struct stat stat;
-	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
-	return S_ISDIR(stat.st_mode);
-}
-
-bool OAL::DoesExistFile(const char* pathName)
-{
-	struct stat stat;
-	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return false;
-	return S_ISREG(stat.st_mode);
+	if (::stat(ToNativeString(pathName).c_str(), &stat) != 0) return FileType::None;
+	return
+		S_ISREG(stat.st_mode)? FileType::Normal :
+		S_ISDIR(stat.st_mode)? FileType::Directory :
+		S_ISBLK(stat.st_mode)? FileType::Device :
+		S_ISCHR(stat.st_mode)? FileType::Device :
+		S_ISFIFO(stat.st_mode)? FileType::FIFO :
+		S_ISLNK(stat.st_mode)? FileType::Link :
+		S_ISSOCK(stat.st_mode)? FileType::Socket :
+		FileType::Unknown;
 }
 
 int OAL::ExecProgram(

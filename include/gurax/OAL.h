@@ -47,7 +47,31 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OAL {
 public:
-	class DirLister {
+	enum class FileType { None, Unknown, Normal, Directory, Device, FIFO, Link, Socket };
+	class GURAX_DLLDECLARE SymbolAssoc_FileType : public SymbolAssoc<FileType, FileType::None> {
+	public:
+		SymbolAssoc_FileType() {
+			Assoc(Gurax_Symbol(unknown),	FileType::Unknown);
+			Assoc(Gurax_Symbol(normal),		FileType::Normal);
+			Assoc(Gurax_Symbol(directory),	FileType::Directory);
+			Assoc(Gurax_Symbol(device),		FileType::Device);
+			Assoc(Gurax_Symbol(fifo),		FileType::FIFO);
+			Assoc(Gurax_Symbol(link),		FileType::Link);
+			Assoc(Gurax_Symbol(socket),		FileType::Socket);
+		}
+		static const SymbolAssoc& GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_FileType());
+		}
+	};
+	static FileType SymbolToFileType(const Symbol* pSymbol) {
+		return SymbolAssoc_FileType::GetInstance().ToAssociated(pSymbol);
+	}
+	static const Symbol* FileTypeToSymbol(FileType fileType) {
+		return SymbolAssoc_FileType::GetInstance().ToSymbol(fileType);
+	}
+public:
+	class GURAX_DLLDECLARE DirLister {
 		String _dirName;
 #if defined(GURA_ON_MSWIN)
 		HANDLE _hFind;
@@ -60,6 +84,7 @@ public:
 		~DirLister();
 		bool Next(const char* pattern, String& pathName, bool* pDirFlag);
 	};
+public:
 	class GURAX_DLLDECLARE DynamicLibrary {
 	private:
 #if defined(GURAX_ON_MSWIN)
@@ -82,6 +107,7 @@ public:
 		bool Open(const char* pathName);
 		void* GetEntry(const char* funcName);
 	};
+public:
 	class GURAX_DLLDECLARE FILECloser {
 	private:
 		FILE* _fp;
@@ -90,6 +116,7 @@ public:
 		~FILECloser() { ::fclose(_fp); _fp = nullptr; }
 		FILE* get() { return _fp; }
 	};
+public:
 	class GURAX_DLLDECLARE FDCloser {
 	private:
 		int _fd;
@@ -115,9 +142,13 @@ public:
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
-	static bool DoesExist(const char* pathName);
-	static bool DoesExistDir(const char* pathName);
-	static bool DoesExistFile(const char* pathName);
+	static bool DoesExist(const char* pathName) {
+		return GetFileType(pathName) != FileType::None;
+	}
+	static bool IsFileType(const char* pathName, FileType fileType) {
+		return GetFileType(pathName) == fileType;
+	}
+	static FileType GetFileType(const char* pathName);
 	static int ExecProgram(
 		const char* pathName, StringPicker&& args,
 		Stream* pStreamCIn, Stream* pStreamCOut, Stream* pStreamCErr, bool forkFlag);

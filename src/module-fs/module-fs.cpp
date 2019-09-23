@@ -236,7 +236,9 @@ Gurax_ImplementFunction(Exists)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
-	return new Value_Bool(OAL::DoesExist(pathName));
+	OAL::FileType fileType = OAL::GetFileType(pathName);
+	if (fileType == OAL::FileType::None) return Value::nil();
+	return new Value_Symbol(OAL::FileTypeToSymbol(fileType));
 }
 
 // fs.GetCurDir()

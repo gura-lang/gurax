@@ -49,19 +49,19 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 		baseName = PathName(baseName).MakeAbsName();
 		pathName = baseName;
 		pathName += ".gura";
-		if (OAL::DoesExistFile(pathName.c_str())) {
+		if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
 			type = Type::Script;
 			break;
 		}
 		pathName = baseName;
 		pathName += ".gurc";
-		if (OAL::DoesExistFile(pathName.c_str())) {
+		if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
 			type = Type::Compressed;
 			break;
 		}
 		pathName = baseName;
 		pathName += ".gurd";
-		if (OAL::DoesExistFile(pathName.c_str())) {
+		if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
 			type = Type::Binary;
 			break;
 		}
