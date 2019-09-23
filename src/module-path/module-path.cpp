@@ -159,7 +159,7 @@ Gurax_DeclareFunction(Exists)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns true if the specified file exists in a file system.");
+		"Returns true if the specified path exists.");
 }
 
 Gurax_ImplementFunction(Exists)

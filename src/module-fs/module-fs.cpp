@@ -220,6 +220,25 @@ Gurax_ImplementFunction(CreateDir)
 	return Value::nil();
 }
 
+// fs.Exists(pathName:String):map
+Gurax_DeclareFunction(Exists)
+{
+	Declare(VTYPE_Bool, Flag::Map);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns true if the specified file exists in a file system.");
+}
+
+Gurax_ImplementFunction(Exists)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	// Function body
+	return new Value_Bool(OAL::DoesExist(pathName));
+}
+
 // fs.GetCurDir()
 Gurax_DeclareFunction(GetCurDir)
 {
@@ -327,6 +346,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Copy));
 	Assign(Gurax_CreateFunction(CopyDir));
 	Assign(Gurax_CreateFunction(CreateDir));
+	Assign(Gurax_CreateFunction(Exists));
 	Assign(Gurax_CreateFunction(GetCurDir));
 	Assign(Gurax_CreateFunction(Remove));
 	Assign(Gurax_CreateFunction(RemoveDir));

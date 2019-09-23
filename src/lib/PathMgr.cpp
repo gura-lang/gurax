@@ -29,7 +29,7 @@ Directory* PathMgr::OpenDirectory(const char* pathName)
 PathMgr::Existence PathMgr::CheckExistence(const char* pathName)
 {
 	PathMgr* pPathMgr = PathMgr::FindResponsible(pathName);
-	if (pPathMgr) return Existence::None;
+	if (!pPathMgr) return Existence::None;
 	return pPathMgr->CheckExistence(nullptr, pathName);
 }
 
