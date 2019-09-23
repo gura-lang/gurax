@@ -212,6 +212,42 @@ bool OAL::RemoveDirTree(const char* dirName)
 	return rtn;
 }
 
+//-----------------------------------------------------------------------------
+// OAL::GetExecutablePath (MSWIN/DARWIN/LINUX/Others)
+//-----------------------------------------------------------------------------
+#if defined(GURAX_ON_MSWIN)
+#elif defined(GURAX_ON_DARWIN)
+
+String OAL::GetExecutablePath()
+{
+	String pathName;
+	uint32_t bytes = 1024;
+	char* buff = new char [bytes];
+	if (::_NSGetExecutablePath(buff, &bytes) != 0) {
+		delete[] buff;
+		buff = new char [bytes];
+		if (::_NSGetExecutablePath(buff, &bytes) != 0) return "";
+	}
+	return PathName(FromNativeString(buff)).Regulate();
+}
+
+#elif defined(GURAX_ON_LINUX)
+
+String OAL::GetExecutablePath()
+{
+	return PathName(ReadLink("/proc/self/exe")).Regulate();
+}
+
+#else
+
+String OAL::GetExecutablePath()
+{
+	return "/usr/bin/gurax";
+}
+
+#endif
+
+
 #if defined(GURAX_ON_MSWIN)
 
 //------------------------------------------------------------------------------
@@ -781,6 +817,25 @@ DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
 		secsOffset = 0;
 	}
 	return CreateDateTime(tm, secsOffset);
+}
+
+String OAL::ReadLink(const char* pathName)
+{
+	size_t bytes = 1024;
+	for (int i = 0; i < 8; i++) {
+		char* buff = new char [bytes + 1];
+		int size = ::readlink(pathName, buff, bytes);
+		if (size >= 0) {
+			buff[size] = '\0';
+			String rtn = FromNativeString(buff);
+			delete[] buff;
+			return rtn;
+		}
+		delete[] buff;
+		if (errno != EFAULT) return "";
+		bytes *= 2;
+	}
+	return String("");
 }
 
 //-----------------------------------------------------------------------------

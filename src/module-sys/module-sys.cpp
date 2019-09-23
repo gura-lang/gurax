@@ -111,6 +111,118 @@ Gurax_ImplementModulePropertySetter(cerr)
 		value.IsNil()? Stream::Dumb->Reference() : Value_Stream::GetStream(value).Reference());
 }
 
+// sys.dirFont
+Gurax_DeclareModuleProperty_R(dirFont)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the directory for font files.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirFont)
+{
+	return new Value_String("");
+}
+
+// sys.dirInclude
+Gurax_DeclareModuleProperty_R(dirInclude)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the directory for include files.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirInclude)
+{
+	return new Value_String("");
+}
+
+// sys.dirLib
+Gurax_DeclareModuleProperty_R(dirLib)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the directory for library files.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirLib)
+{
+	return new Value_String("");
+}
+
+// sys.dirLocal
+Gurax_DeclareModuleProperty_R(dirLocal)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the base directory for local files.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirLocal)
+{
+	return new Value_String("");
+}
+
+// sys.dirMain
+Gurax_DeclareModuleProperty_R(dirMain)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the main directory.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirMain)
+{
+	return new Value_String("");
+}
+
+// sys.dirModule
+Gurax_DeclareModuleProperty_R(dirModule)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the base directory for module files.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirModule)
+{
+	return new Value_String("");
+}
+
+// sys.dirScript
+Gurax_DeclareModuleProperty_R(dirScript)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the base directory for script files.");
+}
+
+Gurax_ImplementModulePropertyGetter(dirScript)
+{
+	return new Value_String("");
+}
+
+// sys.executable
+Gurax_DeclareModuleProperty_R(executable)
+{
+	Declare(VTYPE_String, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The path name of the executable.");
+}
+
+Gurax_ImplementModulePropertyGetter(executable)
+{
+	return new Value_String(OAL::GetExecutablePath());
+}
+
 // sys.path[]:String
 Gurax_DeclareModuleProperty_RW(path)
 {
@@ -210,6 +322,14 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateModuleProperty(cin));
 	Assign(Gurax_CreateModuleProperty(cout));
 	Assign(Gurax_CreateModuleProperty(cerr));
+	Assign(Gurax_CreateModuleProperty(dirFont));
+	Assign(Gurax_CreateModuleProperty(dirInclude));
+	Assign(Gurax_CreateModuleProperty(dirLib));
+	Assign(Gurax_CreateModuleProperty(dirLocal));
+	Assign(Gurax_CreateModuleProperty(dirMain));
+	Assign(Gurax_CreateModuleProperty(dirModule));
+	Assign(Gurax_CreateModuleProperty(dirScript));
+	Assign(Gurax_CreateModuleProperty(executable));
 	Assign(Gurax_CreateModuleProperty(path));
 	Assign(Gurax_CreateModuleProperty(ps1));
 	Assign(Gurax_CreateModuleProperty(ps2));

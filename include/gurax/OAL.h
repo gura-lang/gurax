@@ -138,6 +138,7 @@ public:
 	};
 #endif
 public:
+	static String GetExecutablePath();
 	static void PutEnv(const char* name, const char* value);
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
 	static String ToNativeString(const char* str);
@@ -194,6 +195,7 @@ public:
 #if defined(GURAX_ON_MSWIN)
 	static String ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
 #else
+	String ReadLink(const char* pathName);
 #endif
 };
 

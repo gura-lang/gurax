@@ -7,12 +7,12 @@
 // BuildRule
 //------------------------------------------------------------------------------
 BuildRule = struct {
-	fileNameTgt:String
-	fileNamesSrc[]:String
+	pathNameTgt:String
+	pathNamesSrc[]:String
 	func:Function
 	Execute() = {
-		if (!path.Exists(this.fileNameTgt) || \
-			(path.Stat(this.fileNameTgt).mtime < path.Stat(this.fileNamesSrc):*mtime).Or()) {
+		if (!fs.Exists(this.pathNameTgt) || \
+			(fs.Stat(this.pathNameTgt).mtime < fs.Stat(this.pathNamesSrc):*mtime).Or()) {
 			this.func()
 		} else {
 			true
@@ -30,3 +30,5 @@ BuilderBase = class {
 // Builder
 //------------------------------------------------------------------------------
 
+
+BuildRule('', '', Compile)
