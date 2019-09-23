@@ -32,7 +32,7 @@ Stat::Stat(const char* pathName, const WIN32_FIND_DATA& findData)
 {
 }
 
-Stat* Stat::Generate(const char* pathName)
+Stat* Stat::Create(const char* pathName)
 {
 	return nullptr;
 }
@@ -59,7 +59,7 @@ Stat::Stat(const char* pathName, const struct stat& stat) :
 	_attr |= (stat.st_mode & 0777);
 }
 
-Stat* Stat::Generate(const char* pathName)
+Stat* Stat::Create(const char* pathName)
 {
 	struct stat stat;
 	String pathNameN = OAL::ToNativeString(PathName(pathName).MakeAbsName().c_str());

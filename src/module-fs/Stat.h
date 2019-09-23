@@ -57,7 +57,7 @@ public:
 protected:
 	~Stat() = default;
 public:
-	static Stat* Generate(const char* pathName);
+	static Stat* Create(const char* pathName);
 	const char* GetPathName() const { return _pathName.c_str(); }
 	ULong GetSize() const { return _bytes; }
 	const DateTime& GetDateTimeA() const { return *_pDateTimeA; }

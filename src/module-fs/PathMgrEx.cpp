@@ -13,14 +13,18 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 	return pDirectoryParent == nullptr;
 }
 
-Directory* PathMgrEx::DoOpenDirectory(
-	Directory* pDirectoryParent, const char** pPathName, Directory::OpenMode openMode)
+Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName)
 {
 	String pathName = PathName(*pPathName).MakeAbsName();
-	RefPtr<Stat> pStat(Stat::Generate(pathName.c_str()));
+	RefPtr<Stat> pStat(Stat::Create(pathName.c_str()));
 	if (!pStat) return nullptr;
 	Directory::Type type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
 	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStat.release());
+}
+
+PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char* pathName)
+{
+	return Existence::None;
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +108,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 Value* DirectoryEx::DoGetStatValue()
 {
 	if (!_pStat) {
-		_pStat.reset(Stat::Generate(MakePathName(false).c_str()));
+		_pStat.reset(Stat::Create(MakePathName(false).c_str()));
 		if (!_pStat) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");
 			return Value::nil();

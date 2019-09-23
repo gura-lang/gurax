@@ -107,7 +107,7 @@ Gurax_ImplementFunction(Dir)
 	ArgPicker args(argument);
 	RefPtr<Directory> pDirectory(
 		args.IsValid()? Value_Directory::GetDirectory(args.PickValue()).Reference() :
-		Directory::Open("", Directory::OpenMode::Signal));
+		Directory::Open(""));
 	int depthMax = 0;
 	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();
@@ -168,9 +168,8 @@ Gurax_ImplementFunction(Exists)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
-	bool existFlag = PathMgr::DoesExist(pathName);
-	if (Error::IsIssued()) return Value::nil();
-	return Value(existFlag);
+	PathMgr::Existence existence = PathMgr::CheckExistence(pathName);
+	return new Value_Bool(existence != PathMgr::Existence::None);
 }
 
 // path.ExtName(pathName:String):map
@@ -507,7 +506,7 @@ Gurax_ImplementFunction(Walk)
 	ArgPicker args(argument);
 	RefPtr<Directory> pDirectory(
 		args.IsValid()? Value_Directory::GetDirectory(args.PickValue()).Reference() :
-		Directory::Open("", Directory::OpenMode::Signal));
+		Directory::Open(""));
 	int depthMax = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
 	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();

@@ -15,8 +15,8 @@ class PathMgrEx : public PathMgr {
 public:
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) override;
 protected:
-	virtual Directory* DoOpenDirectory(
-		Directory* pDirectoryParent, const char** pPathName, Directory::OpenMode openMode) override;
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName) override;
+	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char* pathName) override;
 };
 
 //------------------------------------------------------------------------------

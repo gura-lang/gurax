@@ -15,6 +15,8 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(PathMgr);
 public:
+	enum class Existence { None, Exist, MayBe };
+public:
 	// Constructor
 	PathMgr() {}
 	// Copy constructor/operator
@@ -27,13 +29,20 @@ protected:
 	virtual ~PathMgr() = default;
 public:
 	static PathMgr* FindResponsible(const char* pathName);
-	Directory* OpenDirectory(const char* pathName, Directory::OpenMode openMode) {
-		return DoOpenDirectory(nullptr, &pathName, openMode);
+	static Directory* OpenDirectory(const char* pathName);
+	static Existence CheckExistence(const char* pathName);
+public:
+	Directory* OpenDirectory(
+		Directory* pDirectoryParent, const char** pPathName) {
+		return DoOpenDirectory(pDirectoryParent, pPathName);
+	}
+	Existence CheckExistence(Directory* pDirectoryParent, const char* pathName) {
+		return DoCheckExistence(pDirectoryParent, pathName);
 	}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
 protected:
-	virtual Directory* DoOpenDirectory(
-		Directory* pDirectoryParent, const char** pPathName, Directory::OpenMode openMode) = 0;
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName) = 0;
+	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char* pathName) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PathMgr& pathMgr) const { return this == &pathMgr; }

@@ -8,11 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
-Directory* Directory::Open(const char* pathName, OpenMode openMode)
+Directory* Directory::Open(const char* pathName)
 {
-	PathMgr* pPathMgr = PathMgr::FindResponsible(pathName);
-	if (!pPathMgr) return nullptr;
-	return pPathMgr->OpenDirectory(pathName, openMode);
+	return PathMgr::OpenDirectory(pathName);
 }
 
 String Directory::MakePathName(bool addSepFlag, const char* pathNameTrail) const
@@ -202,7 +200,7 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 			field += ch;
 		}
 	}
-	_pDirectoryCur.reset(Directory::Open(pathName.c_str(), Directory::OpenMode::Signal));
+	_pDirectoryCur.reset(Directory::Open(pathName.c_str()));
 	return !!_pDirectoryCur;
 }
 
