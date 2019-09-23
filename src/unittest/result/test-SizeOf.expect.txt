@@ -12,8 +12,9 @@ PUnit_AssignMethod_              16
 PUnit_AssignPropHandler_         32
 PUnit_Cast_                      24
 PUnit_GenIterator_               8
-PUnit_GenRangeIterator_          8
-PUnit_EvalIterator_              24
+PUnit_GenIterator_Range_         8
+PUnit_GenIterator_Counter_       8
+PUnit_EvalIterator_              32
 PUnit_ForEach_                   32
 PUnit_UnaryOp_                   16
 PUnit_BinaryOp_                  16
@@ -26,9 +27,9 @@ PUnit_DictElem_                  16
 PUnit_Index_                     24
 PUnit_FeedIndex_                 8
 PUnit_IndexGet_                  8
-PUnit_IndexSet_                  8
+PUnit_IndexSet_                  16
 PUnit_PropGet_                   24
-PUnit_PropSet_                   24
+PUnit_PropSet_                   32
 PUnit_Member_Normal_             24
 PUnit_Member_MapAlong_           24
 PUnit_Member_MapToList_          24
@@ -75,6 +76,7 @@ Value_Argument                   40
 Value_Attribute                  40
 Value_Binary                     40
 Value_Bool                       40
+Value_CallableMember             48
 Value_DateTime                   40
 Value_Dict                       40
 Value_Error                      40
@@ -84,10 +86,6 @@ Value_Function                   40
 Value_Index                      40
 Value_Iterator                   40
 Value_List                       40
-Value_Member_MapAlong            48
-Value_Member_MapToIter           48
-Value_Member_MapToList           48
-Value_Member_Normal              48
 Value_Module                     40
 Value_Nil                        32
 Value_Number                     40

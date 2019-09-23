@@ -1,164 +1,43 @@
 [OAL]
-======== RegulatePathName ========
-'' .. ''
-'' .. ''
-'/' .. '/'
-'\' .. '/'
-'/aaa' .. '/aaa'
-'\aaa' .. '/aaa'
-'/aaa/' .. '/aaa/'
-'\aaa\' .. '/aaa/'
-'/aaa/bbb' .. '/aaa/bbb'
-'\aaa\bbb' .. '/aaa/bbb'
-'/aaa/bbb/ccc' .. '/aaa/bbb/ccc'
-'\aaa\bbb\ccc' .. '/aaa/bbb/ccc'
-'/aaa/..' .. '/'
-'\aaa\..' .. '/'
-'/aaa/../' .. '/'
-'\aaa\..\' .. '/'
-'/aaa/bbb/..' .. '/aaa'
-'\aaa\bbb\..' .. '/aaa'
-'/aaa/bbb/../' .. '/aaa/'
-'\aaa\bbb\..\' .. '/aaa/'
-'/aaa/bbb/../..' .. '/'
-'\aaa\bbb\..\..' .. '/'
-'/aaa/bbb/../../' .. '/'
-'\aaa\bbb\..\..\' .. '/'
-'/aaa/../ccc' .. '/ccc'
-'\aaa\..\ccc' .. '/ccc'
-'/aaa/bbb/../ccc' .. '/aaa/ccc'
-'\aaa\bbb\..\ccc' .. '/aaa/ccc'
-'/aaa/bbb/../../ccc' .. '/ccc'
-'\aaa\bbb\..\..\ccc' .. '/ccc'
-'/aaa/bbb/ccc/ddd/../../eee/fff/../ggg' .. '/aaa/bbb/eee/ggg'
-'\aaa\bbb\ccc\ddd\..\..\eee\fff\..\ggg' .. '/aaa/bbb/eee/ggg'
-'/aaa/.' .. '/aaa'
-'\aaa\.' .. '/aaa'
-'/aaa/./' .. '/aaa/'
-'\aaa\.\' .. '/aaa/'
-'/aaa/./bbb/./ccc' .. '/aaa/bbb/ccc'
-'\aaa\.\bbb\.\ccc' .. '/aaa/bbb/ccc'
-'/aaa/./bbb/./ccc/' .. '/aaa/bbb/ccc/'
-'\aaa\.\bbb\.\ccc\' .. '/aaa/bbb/ccc/'
-'..' .. '..'
-'..' .. '..'
-'/..' .. '/'
-'\..' .. '/'
-'/../aaa' .. '/aaa'
-'\..\aaa' .. '/aaa'
-'/.' .. '/'
-'\.' .. '/'
-'/./aaa' .. '/aaa'
-'\.\aaa' .. '/aaa'
-'aaa' .. 'aaa'
-'aaa' .. 'aaa'
-'aaa/' .. 'aaa/'
-'aaa\' .. 'aaa/'
-'aaa/bbb' .. 'aaa/bbb'
-'aaa\bbb' .. 'aaa/bbb'
-'aaa/bbb/ccc' .. 'aaa/bbb/ccc'
-'aaa\bbb\ccc' .. 'aaa/bbb/ccc'
-'aaa/..' .. ''
-'aaa\..' .. ''
-'aaa/../' .. ''
-'aaa\..\' .. ''
-'aaa/bbb/..' .. 'aaa'
-'aaa\bbb\..' .. 'aaa'
-'aaa/bbb/../' .. 'aaa/'
-'aaa\bbb\..\' .. 'aaa/'
-'aaa/bbb/../..' .. ''
-'aaa\bbb\..\..' .. ''
-'aaa/bbb/../../' .. ''
-'aaa\bbb\..\..\' .. ''
-'aaa/../ccc' .. 'ccc'
-'aaa\..\ccc' .. 'ccc'
-'aaa/bbb/../ccc' .. 'aaa/ccc'
-'aaa\bbb\..\ccc' .. 'aaa/ccc'
-'aaa/bbb/../../ccc' .. 'ccc'
-'aaa\bbb\..\..\ccc' .. 'ccc'
-'aaa/bbb/ccc/ddd/../../eee/fff/../ggg' .. 'aaa/bbb/eee/ggg'
-'aaa\bbb\ccc\ddd\..\..\eee\fff\..\ggg' .. 'aaa/bbb/eee/ggg'
-'aaa/.' .. 'aaa'
-'aaa\.' .. 'aaa'
-'aaa/./' .. 'aaa/'
-'aaa\.\' .. 'aaa/'
-'aaa/./bbb/./ccc' .. 'aaa/bbb/ccc'
-'aaa\.\bbb\.\ccc' .. 'aaa/bbb/ccc'
-'aaa/./bbb/./ccc/' .. 'aaa/bbb/ccc/'
-'aaa\.\bbb\.\ccc\' .. 'aaa/bbb/ccc/'
-'C:/' .. 'C:/'
-'C:\' .. 'C:/'
-'C:/aaa' .. 'C:/aaa'
-'C:\aaa' .. 'C:/aaa'
-'C:/aaa/' .. 'C:/aaa/'
-'C:\aaa\' .. 'C:/aaa/'
-'C:/aaa/bbb' .. 'C:/aaa/bbb'
-'C:\aaa\bbb' .. 'C:/aaa/bbb'
-'C:/aaa/bbb/ccc' .. 'C:/aaa/bbb/ccc'
-'C:\aaa\bbb\ccc' .. 'C:/aaa/bbb/ccc'
-'C:/aaa/..' .. 'C:/'
-'C:\aaa\..' .. 'C:/'
-'C:/aaa/../' .. 'C:/'
-'C:\aaa\..\' .. 'C:/'
-'C:/aaa/bbb/..' .. 'C:/aaa'
-'C:\aaa\bbb\..' .. 'C:/aaa'
-'C:/aaa/bbb/../' .. 'C:/aaa/'
-'C:\aaa\bbb\..\' .. 'C:/aaa/'
-'C:/aaa/bbb/../..' .. 'C:/'
-'C:\aaa\bbb\..\..' .. 'C:/'
-'C:/aaa/bbb/../../' .. 'C:/'
-'C:\aaa\bbb\..\..\' .. 'C:/'
-'C:/aaa/../ccc' .. 'C:/ccc'
-'C:\aaa\..\ccc' .. 'C:/ccc'
-'C:/aaa/bbb/../ccc' .. 'C:/aaa/ccc'
-'C:\aaa\bbb\..\ccc' .. 'C:/aaa/ccc'
-'C:/aaa/bbb/../../ccc' .. 'C:/ccc'
-'C:\aaa\bbb\..\..\ccc' .. 'C:/ccc'
-'C:/aaa/bbb/ccc/ddd/../../eee/fff/../ggg' .. 'C:/aaa/bbb/eee/ggg'
-'C:\aaa\bbb\ccc\ddd\..\..\eee\fff\..\ggg' .. 'C:/aaa/bbb/eee/ggg'
-'C:/aaa/.' .. 'C:/aaa'
-'C:\aaa\.' .. 'C:/aaa'
-'C:/aaa/./' .. 'C:/aaa/'
-'C:\aaa\.\' .. 'C:/aaa/'
-'C:/aaa/./bbb/./ccc' .. 'C:/aaa/bbb/ccc'
-'C:\aaa\.\bbb\.\ccc' .. 'C:/aaa/bbb/ccc'
-'C:/aaa/./bbb/./ccc/' .. 'C:/aaa/bbb/ccc/'
-'C:\aaa\.\bbb\.\ccc\' .. 'C:/aaa/bbb/ccc/'
-'C:' .. 'C:'
-'C:' .. 'C:'
-'C:aaa' .. 'C:aaa'
-'C:aaa' .. 'C:aaa'
-'C:aaa/' .. 'C:aaa/'
-'C:aaa\' .. 'C:aaa/'
-'C:aaa/bbb' .. 'C:aaa/bbb'
-'C:aaa\bbb' .. 'C:aaa/bbb'
-'C:aaa/bbb/ccc' .. 'C:aaa/bbb/ccc'
-'C:aaa\bbb\ccc' .. 'C:aaa/bbb/ccc'
-'C:aaa/..' .. 'C:'
-'C:aaa\..' .. 'C:'
-'C:aaa/../' .. 'C:/'
-'C:aaa\..\' .. 'C:/'
-'C:aaa/bbb/..' .. 'C:aaa'
-'C:aaa\bbb\..' .. 'C:aaa'
-'C:aaa/bbb/../' .. 'C:aaa/'
-'C:aaa\bbb\..\' .. 'C:aaa/'
-'C:aaa/bbb/../..' .. 'C:'
-'C:aaa\bbb\..\..' .. 'C:'
-'C:aaa/bbb/../../' .. 'C:/'
-'C:aaa\bbb\..\..\' .. 'C:/'
-'C:aaa/../ccc' .. 'C:ccc'
-'C:aaa\..\ccc' .. 'C:ccc'
-'C:aaa/bbb/../ccc' .. 'C:aaa/ccc'
-'C:aaa\bbb\..\ccc' .. 'C:aaa/ccc'
-'C:aaa/bbb/../../ccc' .. 'C:ccc'
-'C:aaa\bbb\..\..\ccc' .. 'C:ccc'
-'C:aaa/bbb/ccc/ddd/../../eee/fff/../ggg' .. 'C:aaa/bbb/eee/ggg'
-'C:aaa\bbb\ccc\ddd\..\..\eee\fff\..\ggg' .. 'C:aaa/bbb/eee/ggg'
-'C:aaa/.' .. 'C:aaa'
-'C:aaa\.' .. 'C:aaa'
-'C:aaa/./' .. 'C:aaa/'
-'C:aaa\.\' .. 'C:aaa/'
-'C:aaa/./bbb/./ccc' .. 'C:aaa/bbb/ccc'
-'C:aaa\.\bbb\.\ccc' .. 'C:aaa/bbb/ccc'
-'C:aaa/./bbb/./ccc/' .. 'C:aaa/bbb/ccc/'
-'C:aaa\.\bbb\.\ccc\' .. 'C:aaa/bbb/ccc/'
+o+x          000->001
+o+w          000->002
+o+r          000->004
+g+x          000->010
+g+w          000->020
+g+r          000->040
+u+x          000->100
+u+w          000->200
+u+r          000->400
+og+x         000->011
+ou+x         000->101
+gu+x         000->110
+og+w         000->022
+ou+w         000->202
+gu+w         000->220
+og+r         000->044
+ou+r         000->404
+gu+r         000->440
+ogu+x        000->111
+ogu+w        000->222
+ogu+r        000->444
+a+x          000->111
+a+x          000->111
+a+x          000->111
+a+w          000->222
+a+w          000->222
+a+w          000->222
+a+r          000->444
+a+r          000->444
+a+r          000->444
+a+xw         000->333
+a+xr         000->555
+a+wr         000->666
+o-x          777->776
+o-w          777->775
+o-r          777->773
+g-x          777->767
+g-w          777->757
+g-r          777->737
+u-x          777->677
+u-w          777->577
+u-r          777->377

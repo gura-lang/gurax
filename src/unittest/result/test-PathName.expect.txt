@@ -264,7 +264,7 @@
 '/aaa/bbb.ccc/' .. '/aaa/bbb.ccc/', ''
 ======== SplitBottomName ========
 '' .. '', ''
-'/' .. '', ''
+'/' .. '/', ''
 '/aaa' .. '/', 'aaa'
 '/aaa/' .. '/', 'aaa'
 '/aaa/bbb' .. '/aaa/', 'bbb'
@@ -306,7 +306,7 @@
 'aaa/./' .. 'aaa/', '.'
 'aaa/./bbb/./ccc' .. 'aaa/./bbb/./', 'ccc'
 'aaa/./bbb/./ccc/' .. 'aaa/./bbb/./', 'ccc'
-'C:/' .. 'C:', ''
+'C:/' .. 'C:/', ''
 'C:/aaa' .. 'C:/', 'aaa'
 'C:/aaa/' .. 'C:/', 'aaa'
 'C:/aaa/bbb' .. 'C:/aaa/', 'bbb'
