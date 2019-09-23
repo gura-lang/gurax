@@ -24,7 +24,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char* pathName)
 {
-	return Existence::None;
+	return (pDirectoryParent == nullptr && OAL::DoesExist(pathName))? Existence::Exist : Existence::None;
 }
 
 //------------------------------------------------------------------------------

@@ -115,6 +115,7 @@ public:
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
 	static String ToNativeString(const char* str);
 	static String FromNativeString(const char* str);
+	static bool DoesExist(const char* pathName);
 	static bool DoesExistDir(const char* pathName);
 	static bool DoesExistFile(const char* pathName);
 	static int ExecProgram(

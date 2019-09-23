@@ -309,6 +309,13 @@ bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 	return false;
 }
 
+bool OAL::DoesExist(const char* pathName)
+{
+	WIN32_FILE_ATTRIBUTE_DATA attrData;
+	return ::GetFileAttributesEx(ToNativeString(pathName).c_str(),
+								 GetFileExInfoStandard, &attrData) != 0;
+}
+
 bool OAL::DoesExistDir(const char* pathName)
 {
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
@@ -645,6 +652,12 @@ bool OAL::RemoveDir(const char* dirName)
 bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 {
 	return ::rename(ToNativeString(pathNameOld).c_str(), ToNativeString(pathNameNew).c_str()) == 0;
+}
+
+bool OAL::DoesExist(const char* pathName)
+{
+	struct stat stat;
+	return ::stat(ToNativeString(pathName).c_str(), &stat) == 0;
 }
 
 bool OAL::DoesExistDir(const char* pathName)
