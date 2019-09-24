@@ -122,7 +122,7 @@ Gurax_DeclareModuleProperty_R(dirFont)
 
 Gurax_ImplementModulePropertyGetter(dirFont)
 {
-	return new Value_String("");
+	return new Value_String(OAL::GetDirName_Font());
 }
 
 // sys.dirInclude
@@ -136,7 +136,7 @@ Gurax_DeclareModuleProperty_R(dirInclude)
 
 Gurax_ImplementModulePropertyGetter(dirInclude)
 {
-	return new Value_String("");
+	return new Value_String(OAL::GetDirName_Include());
 }
 
 // sys.dirLib
@@ -150,7 +150,7 @@ Gurax_DeclareModuleProperty_R(dirLib)
 
 Gurax_ImplementModulePropertyGetter(dirLib)
 {
-	return new Value_String("");
+	return new Value_String(OAL::GetDirName_Library());
 }
 
 // sys.dirLocal
@@ -164,7 +164,7 @@ Gurax_DeclareModuleProperty_R(dirLocal)
 
 Gurax_ImplementModulePropertyGetter(dirLocal)
 {
-	return new Value_String("");
+	return new Value_String(OAL::GetDirName_Local());
 }
 
 // sys.dirMain
@@ -192,7 +192,7 @@ Gurax_DeclareModuleProperty_R(dirModule)
 
 Gurax_ImplementModulePropertyGetter(dirModule)
 {
-	return new Value_String("");
+	return new Value_String(OAL::GetDirName_Module());
 }
 
 // sys.dirScript
@@ -206,7 +206,7 @@ Gurax_DeclareModuleProperty_R(dirScript)
 
 Gurax_ImplementModulePropertyGetter(dirScript)
 {
-	return new Value_String("");
+	return new Value_String(OAL::GetDirName_Script());
 }
 
 // sys.executable
@@ -220,7 +220,7 @@ Gurax_DeclareModuleProperty_R(executable)
 
 Gurax_ImplementModulePropertyGetter(executable)
 {
-	return new Value_String(OAL::GetExecutablePath());
+	return new Value_String(OAL::GetPathName_Executable());
 }
 
 // sys.path[]:String

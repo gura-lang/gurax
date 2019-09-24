@@ -213,12 +213,18 @@ bool OAL::RemoveDirTree(const char* dirName)
 }
 
 //-----------------------------------------------------------------------------
-// OAL::GetExecutablePath (MSWIN/DARWIN/LINUX/Others)
+// Path Information (MSWIN/DARWIN/LINUX/Others)
 //-----------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
+
+String OAL::GetPathName_Executable()
+{
+	return "";
+}
+
 #elif defined(GURAX_ON_DARWIN)
 
-String OAL::GetExecutablePath()
+String OAL::GetPathName_Executable()
 {
 	String pathName;
 	uint32_t bytes = 1024;
@@ -233,20 +239,64 @@ String OAL::GetExecutablePath()
 
 #elif defined(GURAX_ON_LINUX)
 
-String OAL::GetExecutablePath()
+String OAL::GetPathName_Executable()
 {
 	return PathName(ReadLink("/proc/self/exe")).Regulate();
 }
 
 #else
 
-String OAL::GetExecutablePath()
+String OAL::GetPathName_Executable()
 {
 	return "/usr/bin/gurax";
 }
 
 #endif
 
+String OAL::GetDirName_Base()
+{
+	return PathName(GetPathName_Executable()).ExtractHeadName();
+}
+
+String OAL::GetDirName_Executable()
+{
+	return PathName(GetPathName_Executable()).ExtractDirName();
+}
+
+String OAL::GetDirName_Data()
+{
+	return PathName(GetDirName_Base()).JoinAfter("share/gurax");
+}
+
+String OAL::GetDirName_Module()
+{
+	return PathName(GetDirName_Base()).JoinAfter("lib/gurax/module");
+}
+
+String OAL::GetDirName_Include()
+{
+	return PathName(GetDirName_Base()).JoinAfter("include/gura");
+}
+
+String OAL::GetDirName_Library()
+{
+	return PathName(GetDirName_Base()).JoinAfter("lib");
+}
+
+String OAL::GetDirName_Font()
+{
+	return PathName(GetDirName_Data()).JoinAfter("font");
+}
+
+String OAL::GetDirName_Script()
+{
+	return PathName(GetDirName_Data()).JoinAfter("script");
+}
+
+String OAL::GetDirName_Local()
+{
+	return "";
+}
 
 #if defined(GURAX_ON_MSWIN)
 

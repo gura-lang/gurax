@@ -24,4 +24,4 @@ if (sys.platform == `mswin) {
 builder.build('re', ['module-re.cpp'], path.Join('script', [
 	'sed.gura', 'sed.doc.gura', 'tokenizer.gura', 'tokenizer.doc.gura']))
 */
-builder.build('re', ['module-re.cpp'])
+builder.Build('re', ['module-re.cpp'])

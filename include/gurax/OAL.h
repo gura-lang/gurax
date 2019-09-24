@@ -138,7 +138,17 @@ public:
 	};
 #endif
 public:
-	static String GetExecutablePath();
+	static String GetPathName_Executable();
+	static String GetDirName_Base();
+	static String GetDirName_Executable();
+	static String GetDirName_Data();
+	static String GetDirName_Module();
+	static String GetDirName_Include();
+	static String GetDirName_Library();
+	static String GetDirName_Font();
+	static String GetDirName_Script();
+	static String GetDirName_Local();
+public:
 	static void PutEnv(const char* name, const char* value);
 	static String GetEnv(const char* name, bool* pFoundFlag = nullptr);
 	static String ToNativeString(const char* str);
