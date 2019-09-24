@@ -2018,14 +2018,68 @@ PUnit* PUnitFactory_EndArgSlot::Create(bool discardValueFlag)
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_EndArgSlotExpand<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
+	auto CheckArgSlot = [](Argument& argument) {
+		ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+		if (!pArgSlot) {
+			if (argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
+				// just ignore extra arguments
+			} else {
+				Error::Issue(ErrorType::ArgumentError, "too many arguments");
+				return false;
+			}
+		} else if (!pArgSlot->IsVacant()) {
+			Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
+			return false;
+		} else if (pArgSlot->IsVType(VTYPE_Quote)) {
+			Error::Issue(ErrorType::ArgumentError, "invalid argument assignment");
+			return false;
+		}
+		return true;
+	};
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
-	argument.FeedValue(frame, pValue.release());
-	if (Error::IsIssued()) {
-		processor.ErrorDone();
-		return;
+	if (pValue->IsList()) {
+		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValue);
+		for (const Value* pValueElem : valueOwner) {
+			if (!CheckArgSlot(argument)) {
+				processor.ErrorDone();
+				return;
+			}
+			argument.FeedValue(frame, pValueElem->Reference());
+			if (Error::IsIssued()) {
+				processor.ErrorDone();
+				return;
+			}
+		}
+	} else if (pValue->IsIterator()) {
+		Iterator& iterator = Value_Iterator::GetIterator(*pValue);
+		for (;;) {
+			RefPtr<Value> pValueElem(iterator.NextValue());
+			if (!pValueElem) {
+				if (Error::IsIssued()) {
+					processor.ErrorDone();
+					return;
+				}
+				break;
+			}
+			if (!CheckArgSlot(argument)) {
+				processor.ErrorDone();
+				return;
+			}
+			argument.FeedValue(frame, pValueElem.release());
+			if (Error::IsIssued()) {
+				processor.ErrorDone();
+				return;
+			}
+		}
+	} else {
+		argument.FeedValue(frame, pValue.release());
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
+		}
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }
