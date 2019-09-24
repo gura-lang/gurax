@@ -1802,6 +1802,44 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_EndArgSlotExpand
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_EndArgSlotExpand : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	explicit PUnit_EndArgSlotExpand() {}
+	explicit PUnit_EndArgSlotExpand(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_EndArgSlotExpand : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_EndArgSlotExpand");
+private:
+public:
+	PUnitFactory_EndArgSlotExpand(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_EndArgSlotExpand<1, false>) : sizeof(PUnit_EndArgSlotExpand<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlotNamed
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>

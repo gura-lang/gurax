@@ -2012,6 +2012,52 @@ PUnit* PUnitFactory_EndArgSlot::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_EndArgSlotExpand
+// Stack View: [Argument(Car) Any] -> [Argument(Car)] (continue)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_EndArgSlotExpand<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Value> pValue(processor.PopValue());
+	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
+	argument.FeedValue(frame, pValue.release());
+	if (Error::IsIssued()) {
+		processor.ErrorDone();
+		return;
+	}
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_EndArgSlotExpand<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "EndArgSlotExpand()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_EndArgSlotExpand::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_EndArgSlotExpand<1, true>(_pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_EndArgSlotExpand<1, false>(_pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_EndArgSlotExpand<0, true>();
+		} else {
+			_pPUnitCreated = new PUnit_EndArgSlotExpand<0, false>();
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlotNamed
 // Stack View: [Argument(Car)] -> [Argument(Car) ArgSlot] (continue)
 //                             -> [Argument(Car)]         (discard)

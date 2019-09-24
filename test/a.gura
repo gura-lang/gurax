@@ -1,2 +1,8 @@
 #!/usr/bin/env gurax
-Println(path.Glob('../*/*/test-*'):dir)
+f(a, b, c, d) = {
+	Printf('%s %s %s %s\n', a, b, c, d)
+}
+g(a) = {
+	Printf('%s\n', a):nomap
+}
+g(['AA', 'BB', 'CC', 'DD']*)

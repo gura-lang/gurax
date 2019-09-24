@@ -203,6 +203,9 @@ public:
 	void Add_EndArgSlot(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_EndArgSlot(Expr::Reference(pExprSrc)));
 	}
+	void Add_EndArgSlotExpand(const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_EndArgSlotExpand(Expr::Reference(pExprSrc)));
+	}
 	void Add_BeginArgSlotNamed(const Symbol* pSymbol, Expr* pExprAssigned, const Expr* pExprSrc = nullptr) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_BeginArgSlotNamed(

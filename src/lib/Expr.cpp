@@ -467,7 +467,17 @@ void Expr_UnaryOp::Compose(Composer& composer)
 
 void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 {
-	Expr_Unary::ComposeForArgSlot(composer);
+	if (!GetOperator()->IsType(OpType::PostMul)) {
+		Expr_Unary::ComposeForArgSlot(composer);
+		return;
+	}
+	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+	composer.Add_BeginArgSlot(this);								// [Argument]
+	GetExprChild().ComposeOrNil(composer);							// [Argument Any]
+	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
+	composer.Add_EndArgSlotExpand(this);							// [Argument]
+	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+	SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
