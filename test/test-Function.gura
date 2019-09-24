@@ -208,3 +208,39 @@ TestCase('Function Creation by &{}') {
 	Tester(`{f = &{$a + $a}, f})
 	Tester(`{f = &{$a + $a}, f(3)})
 }
+
+TestCase('Variable Expansion by Asterisk Operator') {
+	f1(a, b*) = {
+		Format('a=%d b=[%s]', a, b.Join(','))
+	}
+	f2(a, b, c, d, e*) = {
+		Format('a=%d b=%d c=%d d=%d e=[%s]', a, b, c, d, e.Join(','))
+	}
+	f3(a, b, c, d, e) = {
+		Format('a=%d b=%d c=%d d=%d e=%s', a, b, c, d, e)
+	}
+	f4(a, b, `c) = {
+		Format('a=%d b=%s c=%s', a, b, c)
+	}
+	Tester(`f1)
+	Tester(`f2)
+	Tester(`f3)
+	x = [1, 2, 3, 4]
+	Tester(`f1(x*))
+	Tester(`f2(x*))
+	Tester(`f3(x*))
+	x = [1, 2, 3, 4, 5]
+	Tester(`f1(x*))
+	Tester(`f2(x*))
+	Tester(`f3(x*))
+	x = [1, 2, 3, 4, 5, 6]
+	Tester(`f1(x*))
+	Tester(`f2(x*))
+	Tester(`f3(x*))
+	x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	Tester(`f1(x*))
+	Tester(`f2(x*))
+	Tester(`f3(x*))
+	Tester(`f4([1, 2]*, 3))
+	Tester(`f4([1, 2, 3]*))
+}

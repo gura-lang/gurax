@@ -287,3 +287,21 @@ Fact.type .. `function
 {f = & {$a + g($b, $c, $d)}, f(3, 4, 5, 6)} .. 18
 {f = & {$a + $a}, f} .. f($a:Any)
 {f = & {$a + $a}, f(3)} .. 6
+======== Variable Expansion by Asterisk Operator ========
+f1 .. f1(a, b*)
+f2 .. f2(a, b, c, d, e*)
+f3 .. f3(a, b, c, d, e)
+f1(x*) .. a=1 b=[2,3,4]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[]
+f3(x*) .. lacking value for argument 'e'
+f1(x*) .. a=1 b=[2,3,4,5]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[5]
+f3(x*) .. a=1 b=2 c=3 d=4 e=5
+f1(x*) .. a=1 b=[2,3,4,5,6]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[5,6]
+f3(x*) .. too many arguments
+f1(x*) .. a=1 b=[2,3,4,5,6,7,8,9,10]
+f2(x*) .. a=1 b=2 c=3 d=4 e=[5,6,7,8,9,10]
+f3(x*) .. too many arguments
+f4([1, 2]*, 3) .. a=1 b=2 c=3
+f4([1, 2, 3]*) .. invalid argument assignment
