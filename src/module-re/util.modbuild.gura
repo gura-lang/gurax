@@ -32,10 +32,11 @@ Builder = class {
 	__init__() = {
 	}
 	Exec(pathName:String, args*:String) = {
-		os.Exec(pathName, args*)
+		rtn = (os.Exec(pathName, args*) == 0)
+		rtn
 	}
-	Compile() = {
-		
+	Compile(pathNameSrc:String) = {
+		this.Exec('gcc', cflags*, '-o', pathNameObj, '-c', pathNameSrc)
 	}
 	Build(name:String, pathNamesSrc[]:String) = {
 		pathNameTgt = name + '.gurd'

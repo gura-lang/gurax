@@ -44,7 +44,7 @@ protected:
 	virtual ~Value_Object() = default;
 public:
 	// Virtual functions of Value
-	virtual Value* Clone() const override { return Reference(); }
+	virtual Value* Clone() const override { return nullptr; }
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Value* pValue) const override { return IsSameType(pValue); }
 	virtual bool IsLessThan(const Value* pValue) const override {

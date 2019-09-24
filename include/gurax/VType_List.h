@@ -77,7 +77,7 @@ public:
 	}
 public:
 	// Virtual functions of Value
-	virtual Value* Clone() const override { return new Value_List(*this); }
+	virtual Value* Clone() const override { return new Value_List(GetValueTypedOwner().Clone()); }
 	virtual size_t DoCalcHash() const override {
 		return GetValueOwner().CalcHash();
 	}
