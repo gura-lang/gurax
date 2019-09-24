@@ -576,6 +576,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeForArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

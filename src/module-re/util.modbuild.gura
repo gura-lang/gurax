@@ -1,0 +1,44 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// util.builder.gura
+//==============================================================================
+
+//------------------------------------------------------------------------------
+// BuildRule
+//------------------------------------------------------------------------------
+BuildRule = struct {
+	pathNameTgt:String
+	pathNamesSrc[]:String
+	func:Function
+	Execute() = {
+		if (!fs.Exists(this.pathNameTgt) || \
+			(fs.Stat(this.pathNameTgt).mtime < fs.Stat(this.pathNamesSrc):*mtime).Or()) {
+			this.func()
+		} else {
+			true
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+// Builder
+//------------------------------------------------------------------------------
+Builder = class {
+	cflags = [
+		'-DGURA_MODULE_SEPARATED', '-fPIC'
+	]
+	ldflags = ['-shared']
+	libs = []
+	__init__() = {
+	}
+	Exec(pathName:String, args*:String) = {
+		os.Exec(pathName, args*)
+	}
+	Compile() = {
+		
+	}
+	Build(name:String, pathNamesSrc[]:String) = {
+		pathNameTgt = name + '.gurd'
+		
+	}
+}

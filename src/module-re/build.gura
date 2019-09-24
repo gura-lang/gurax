@@ -1,0 +1,27 @@
+#!/usr/bin/env gurax
+import(util.modbuild)
+
+builder = util.modbuild.Builder()
+/*
+if (sys.platform == `mswin) {
+	baseDir = path.join(builder.guestDir, 'onig-5.9.5')
+	builder.incDirs.append(baseDir)
+	builder.libDirs.append(baseDir)
+	builder.libs.append('onig_s.lib')
+	builder.cflags.append('-DONIG_EXTERN=extern')
+} elsif (sys.platform == `linux) {
+	builder.libs.append('onig')
+	builder.debFiles = ['libonig']
+	builder.rpmFiles = ['oniguruma']
+	builder.debFilesDevel = ['libonig-dev']
+	builder.rpmFilesDevel = ['oniguruma-devel']
+} elsif (sys.platform == `darwin) {
+	builder.incDirs.append('guest/include/onig')
+	builder.libDirs.append('guest/lib')
+	builder.libs.append('onig')
+	builder.cflags.append('-DONIG_EXTERN=extern')
+}
+builder.build('re', ['module-re.cpp'], path.Join('script', [
+	'sed.gura', 'sed.doc.gura', 'tokenizer.gura', 'tokenizer.doc.gura']))
+*/
+builder.build('re', ['module-re.cpp'])

@@ -465,6 +465,11 @@ void Expr_UnaryOp::Compose(Composer& composer)
 	}
 }
 
+void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
+{
+	Expr_Unary::ComposeForArgSlot(composer);
+}
+
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
 {
 	String str;
