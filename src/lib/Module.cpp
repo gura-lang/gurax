@@ -124,11 +124,11 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 		Error::Issue(ErrorType::ImportError, "failed to open a module file '%s'", pathName);
 		return nullptr;
 	}
-	auto ModuleValidate = reinterpret_cast<ModuleValidateT>(GetEntry(dll, "Gurax_ModuleValidate"));
+	auto ModuleValidate = reinterpret_cast<ModuleValidateT>(GetEntry(dll, "GuraxEntry_ModuleValidate"));
 	if (!ModuleValidate) return nullptr;
-	auto ModuleCreate = reinterpret_cast<ModuleCreateT>(GetEntry(dll, "Gurax_ModuleCreate"));
+	auto ModuleCreate = reinterpret_cast<ModuleCreateT>(GetEntry(dll, "GuraxEntry_ModuleCreate"));
 	if (!ModuleCreate) return nullptr;
-	//auto ModuleTerminate = reinterpret_cast<ModuleTerminateT>(GetEntry(dll, "Gurax_ModuleTerminate"));
+	//auto ModuleTerminate = reinterpret_cast<ModuleTerminateT>(GetEntry(dll, "GuraxEntry_ModuleTerminate"));
 	//if (!ModuleTerminate) return nullptr;
 	if (!ModuleValidate()) return nullptr;
 	RefPtr<Module> pModule(ModuleCreate(processor.GetFrameCur().Reference()));

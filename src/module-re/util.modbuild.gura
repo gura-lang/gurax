@@ -2,14 +2,15 @@
 //==============================================================================
 // util.builder.gura
 //==============================================================================
+import(argopt)
 
 //------------------------------------------------------------------------------
 // Builder
 //------------------------------------------------------------------------------
 Builder = class {
-	cflags = ['-DGURA_MODULE_SEPARATED', '-fPIC']
-	ldflags = ['-shared']
-	libs = []
+	cflags = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC', '-I', sys.dirInclude]
+	ldflags = ['-shared', '-L', sys.dirLib]
+	libs = ['-lstdc++', '-lguraxcore']
 	__init__() = {
 	}
 	ShouldProcess(pathNameTgt:String, pathNamesDep+:String) = {
@@ -22,15 +23,28 @@ Builder = class {
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		cflags = this.cflags.Clone()
+		Printf('-- compiling: %s\n', pathNameSrc)
 		this.Exec('gcc', cflags*, '-o', pathNameObj, '-c', pathNameSrc)
 	}
-	Build(name:String, pathNamesSrc[]:String) = {
-		pathNameTgt = name + '.gurd'
+	Link(pathNameGurd:String, pathNamesObj+:String) = {
+		ldflags = this.ldflags.Clone()
+		libs = this.libs.Clone()
+		if (this.Exec('gcc', ldflags*, '-o', pathNameGurd, pathNamesObj*, libs*)) {
+			Printf('-- generated: %s\n', pathNameGurd)
+		}
+	}
+	Main(name:String, pathNamesSrc[]:String) = {
+		pathNameGurd = name + '.gurd'
 		pathNamesObj = path.BaseName(pathNamesSrc) + '.o'
+		errorFlag = false
 		for (pathNameObj in pathNamesObj, pathNameSrc in pathNamesSrc) {
-			if (this.ShouldProcess(pathNameObj, pathNameSrc)) {
-				this.Compile(pathNameObj, pathNameSrc)
+			if (this.ShouldProcess(pathNameObj, pathNameSrc) && \
+				!this.Compile(pathNameObj, pathNameSrc)) {
+				return
 			}
+		}
+		if (this.ShouldProcess(pathNameGurd, pathNamesObj*)) {
+			this.Link(pathNameGurd, pathNamesObj*)
 		}
 	}
 }

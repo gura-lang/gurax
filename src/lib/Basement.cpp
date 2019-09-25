@@ -40,6 +40,7 @@ bool Basement::Initialize(int& argc, char** argv)
 	PrepareVType(frame);
 	PrepareValue(frame);
 	AppendPathList(".");
+	AppendPathList(OAL::GetDirName_Module());
 	AppendPathList(cmdLine.GetStringList("module-path"));
 	AppendPathList(OAL::GetEnv("GURAXPATH"));
 	Statements::AssignToBasement(frame);

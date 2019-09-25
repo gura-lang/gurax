@@ -35,17 +35,17 @@ namespace Gurax { namespace Module_##name {
 #if defined(GURAX_MODULE_SEPARATED)
 #define Gurax_EndModule(name) \
 extern "C" GURAX_DLLEXPORT \
-bool Gurax_ModuleValidate() \
+bool GuraxEntry_ModuleValidate() \
 { \
 	return Gurax::Module_##name::Validate(); \
 } \
 extern "C" GURAX_DLLEXPORT \
-Gurax::Module* Gurax_ModuleCreate(Gurax::Frame* pFrameOuter) \
+Gurax::Module* GuraxEntry_ModuleCreate(Gurax::Frame* pFrameOuter) \
 { \
 	return Gurax::Module_##name::Create(pFrameOuter); \
 } \
 extern "C" GURAX_DLLEXPORT \
-void Gurax_ModuleTerminate(Gurax::Module& module) \
+void GuraxEntry_ModuleTerminate(Gurax::Module& module) \
 { \
 	Gurax::Module_##name::Terminate(module); \
 } \

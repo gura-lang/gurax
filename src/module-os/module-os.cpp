@@ -42,7 +42,7 @@ Gurax_ImplementFunction(Clock)
 // os.Exec(pathName:string, args*:String):map:[fork]
 Gurax_DeclareFunction(Exec)
 {
-	Declare(VTYPE_Nil, Flag::Map);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(fork));
@@ -59,10 +59,11 @@ Gurax_ImplementFunction(Exec)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	const ValueList& valList = Value_List::GetValueOwner(args.PickValue());
-	// Function body
 	bool forkFlag = argument.IsSet(Gurax_Symbol(fork));
-	OAL::ExecProgram(pathName, valList, g_pStreamCIn, g_pStreamCOut, g_pStreamCErr, forkFlag);
-	return Value::nil();
+	// Function body
+	int rtn = OAL::ExecProgram(pathName, valList, g_pStreamCIn, g_pStreamCOut, g_pStreamCErr, forkFlag);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(rtn);
 }
 
 // os.Redirect(cin:Stream:nil:r, cout:Stream:nil:w, cerr?:Stream:w) {block}
@@ -89,8 +90,8 @@ Gurax_ImplementFunction(Redirect)
 	g_pStreamCIn = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
 	g_pStreamCOut = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
 	g_pStreamCErr = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
-	// Function body
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
 	RefPtr<Value> pValueRtn(processor.EvalExpr(*pExprOfBlock, *pArgument));
 	g_pStreamCIn = pStreamCIn;

@@ -278,7 +278,7 @@ String OAL::GetDirName_Module()
 
 String OAL::GetDirName_Include()
 {
-	return PathName(GetDirName_Base()).JoinAfter("include/gura");
+	return PathName(GetDirName_Base()).JoinAfter("include/gurax");
 }
 
 String OAL::GetDirName_Library()
