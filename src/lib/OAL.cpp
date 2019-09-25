@@ -255,7 +255,10 @@ String OAL::GetPathName_Executable()
 
 String OAL::GetDirName_Base()
 {
-	return PathName(GetPathName_Executable()).ExtractHeadName();
+	String pathName = GetPathName_Executable();
+	FollowLink(pathName);
+	pathName = PathName(pathName).ExtractDirName();
+	return PathName(pathName).ExtractHeadName();
 }
 
 String OAL::GetDirName_Executable()
@@ -886,6 +889,30 @@ String OAL::ReadLink(const char* pathName)
 		bytes *= 2;
 	}
 	return String("");
+}
+
+bool OAL::FollowLink(String& pathName)
+{
+	for (int i = 0; i < 100; i++) {
+		struct stat stat;
+		int rtn = ::lstat(pathName.c_str(), &stat);
+		if (rtn < 0) break;
+		if (!S_ISLNK(stat.st_mode)) {
+			pathName = PathName(pathName).Regulate();
+			return true;
+		}
+		String pathNameLink = ReadLink(pathName.c_str());
+		if (pathNameLink.empty()) {
+			break;
+		} else if (PathName(pathNameLink).IsAbsName()) {
+			pathName = pathNameLink;
+		} else {
+			String dirName = PathName(pathName).ExtractDirName();
+			if (dirName.empty()) dirName = "/";
+			pathName = PathName(dirName).JoinAfter(pathNameLink.c_str());
+		}
+	}
+	return false;
 }
 
 //-----------------------------------------------------------------------------
