@@ -27,6 +27,257 @@ Template::Parser::Parser(bool autoIndentFlag, bool appendLastEOLFlag) :
 
 bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 {
+	RefPtr<StringReferable> pSourceName(new StringReferable(streamSrc.GetName()));
+	const char chMarker = '$';
+	enum class Stat {
+		LineTop, Indent, String,
+		ScriptPre, ScriptFirst, ScriptSecond,
+		Script, ScriptPost,
+		Comment, Comment_LineTop,
+		CommentEnd_Second, CommentEnd_SeekR, CommentEnd_Marker,
+		CommentPost,
+	} stat = Stat::LineTop;
+	bool stringAheadFlag = false;
+	String str;
+	String strTmplScript;
+	String strIndent;
+	int cntLine = 0;
+	int cntLineTop = 0;
+	int nDepth = 0;
+	_exprLeaderStack.clear();
+#if 0
+	if (pTemplate->GetFuncForBody() == nullptr) {
+		AutoPtr<FunctionCustom> pFunc(new FunctionCustom(env,
+				Gurax_Symbol(_anonymous_), new Expr_Block(), FUNCTYPE_Instance));
+		pFunc->SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_DynamicScope);
+		pTemplate->SetFuncForBody(pFunc.release());
+	}
+	Expr_Block *pExprBlockRoot = dynamic_cast<Expr_Block *>(
+									pTemplate->GetFuncForBody()->GetExprBody());
+#endif
+	for (;;) {
+#if 0
+		int chRaw = streamSrc.GetChar(env);
+		if (env.IsSignalled()) return false;
+		if (chRaw < 0) break;
+		char ch = static_cast<char>(chRaw);
+		Gurax_BeginPushbackRegion();
+		switch (stat) {
+		case Stat::LineTop: {
+			if (ch == '\n') {
+				str += ch;
+			} else if (IsWhite(ch)) {
+				Gurax_Pushback();
+				stat = Stat::Indent;
+			} else if (ch == chMarker) {
+				stat = Stat::ScriptPre;
+			} else {
+				stringAheadFlag = true;
+				Gurax_Pushback();
+				stat = Stat::String;
+			}
+			break;
+		}
+		case Stat::Indent: {
+			if (IsWhite(ch)) {
+				strIndent += ch;
+			} else if (ch == chMarker) {
+				stat = Stat::ScriptPre;
+			} else {
+				str += strIndent;
+				strIndent.clear();
+				stringAheadFlag = true;
+				Gurax_Pushback();
+				stat = Stat::String;
+			}
+			break;
+		}
+		case Stat::String: {
+			if (ch == chMarker) {
+				stat = Stat::ScriptPre;
+			} else if (ch == '\n') {
+				str += ch;
+				stringAheadFlag = false;
+				stat = Stat::LineTop;
+			} else {
+				str += ch;
+			}
+			break;
+		}
+		case Stat::ScriptPre: {
+			if (ch == '{') {
+				if (!str.empty()) {
+					ExprOwner &exprOwner = _exprLeaderStack.empty()?
+						pExprBlockRoot->GetExprOwner() :
+						_exprLeaderStack.back()->GetBlock()->GetExprOwner();
+					Expr *pExpr = new Expr_TmplString(pTemplate, str);
+					pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
+					exprOwner.push_back(pExpr);
+					str.clear();
+				}
+				cntLineTop = cntLine;
+				nDepth = 1;
+				strTmplScript.clear();
+				stat = Stat::ScriptFirst;
+			} else {
+				str += strIndent;
+				strIndent.clear();
+				str += chMarker;
+				stringAheadFlag = true;
+				Gurax_Pushback();
+				stat = Stat::String;
+			}
+			break;
+		}
+		case Stat::ScriptFirst: {
+			if (ch == '=') {
+				stat = Stat::ScriptSecond;
+			} else {
+				Gurax_Pushback();
+				stat = Stat::Script;
+			}
+			break;
+		}
+		case Stat::ScriptSecond: {
+			if (ch == '=') {
+				stat = Stat::Comment;
+			} else {
+				strTmplScript += '=';
+				Gurax_Pushback();
+				stat = Stat::Script;
+			}
+			break;
+		}
+		case Stat::Script: {
+			if (ch == '{') {
+				strTmplScript += ch;
+				nDepth++;
+			} else if (ch == '}') {
+				nDepth--;
+				if (nDepth > 0) {
+					strTmplScript += ch;
+					break;
+				}
+				stat = Stat::ScriptPost;
+			} else {
+				strTmplScript += ch;
+			}
+			break;
+		}
+		case Stat::ScriptPost: {
+			const char *strPost = (ch == '\n')? "\n" : "";
+			if (!CreateTmplScript(
+					env, strIndent.c_str(), strTmplScript.c_str(), strPost,
+					pTemplate, pExprBlockRoot,
+					pSourceName.get(), cntLineTop, cntLine)) return false;
+			strIndent.clear();
+			strTmplScript.clear();
+			if (ch == '\n') {
+				stringAheadFlag = false;
+				stat = Stat::LineTop;
+			} else {
+				stringAheadFlag = true;
+				Gurax_Pushback();
+				stat = Stat::String;
+			}
+			break;
+		}
+		case Stat::Comment: {
+			if (ch == '=') {
+				stat = Stat::CommentEnd_Second;
+			} else if (ch == '\n') {
+				stringAheadFlag = false;
+				stat = Stat::Comment_LineTop;
+			} else {
+				// nothing to do
+			}
+			break;
+		}
+		case Stat::Comment_LineTop: {
+			if (ch == '=') {
+				stat = Stat::CommentEnd_Second;
+			} else if (ch == '\n') {
+				// nothing to do
+			} else if (IsWhite(ch)) {
+				// nothing to do
+			} else {
+				stringAheadFlag = true;
+				stat = Stat::Comment;
+			}
+			break;
+		}
+		case Stat::CommentEnd_Second: {
+			if (ch == '=') {
+				stat = Stat::CommentEnd_SeekR;
+			} else if (ch == '\n') {
+				stringAheadFlag = false;
+				stat = Stat::Comment_LineTop;
+			} else {
+				stringAheadFlag = true;
+				stat = Stat::Comment;
+			}
+			break;
+		}
+		case Stat::CommentEnd_SeekR: {
+			if (ch == '}') {
+				stat = Stat::CommentEnd_Marker;
+			} else if (ch == '\n') {
+				stringAheadFlag = false;
+				stat = Stat::Comment_LineTop;
+			} else {
+				stringAheadFlag = true;
+				stat = Stat::Comment;
+			}
+			break;
+		}
+		case Stat::CommentEnd_Marker: {
+			if (ch == chMarker) {
+				stat = Stat::CommentPost;
+			} else if (ch == '\n') {
+				stringAheadFlag = false;
+				stat = Stat::Comment_LineTop;
+			} else {
+				stringAheadFlag = true;
+				stat = Stat::Comment;
+			}
+			break;
+		}
+		case Stat::CommentPost: {
+			if (!stringAheadFlag && ch == '\n') {
+				stringAheadFlag = false;
+				stat = Stat::LineTop;
+			} else {
+				stringAheadFlag = true;
+				Gurax_Pushback();
+				stat = Stat::String;
+			}
+			break;
+		}
+		}
+		Gurax_EndPushbackRegion();
+		if (ch == '\n') cntLine++;
+#endif
+	}
+#if 0
+	if (!strTmplScript.empty()) {
+		const char *strPost = "";
+		if (!CreateTmplScript(env,
+				strIndent.c_str(), strTmplScript.c_str(), strPost,
+				pTemplate, pExprBlockRoot,
+				pSourceName.get(), cntLineTop, cntLine)) return false;
+	}
+	if (!_exprLeaderStack.empty()) {
+		env.SetError(ERR_SyntaxError, "lacking end statement for block expression");
+		return false;
+	}
+	if (!str.empty()) {
+		Expr *pExpr = new Expr_TmplString(pTemplate, str);
+		pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
+		pExprBlockRoot->GetExprOwner().push_back(pExpr);
+		str.clear();
+	}
+	return pExprBlockRoot->Prepare(env);
+#endif
 	return false;
 }
 
