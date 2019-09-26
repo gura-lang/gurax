@@ -52,12 +52,11 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 		if (chRaw < 0) break;
 		char ch = static_cast<char>(chRaw);
 		Gurax_BeginPushbackRegion();
-#if 0
 		switch (stat) {
 		case Stat::LineTop: {
 			if (ch == '\n') {
 				str += ch;
-			} else if (IsWhite(ch)) {
+			} else if (String::IsWhite(ch)) {
 				Gurax_Pushback();
 				stat = Stat::Indent;
 			} else if (ch == chMarker) {
@@ -70,7 +69,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			break;
 		}
 		case Stat::Indent: {
-			if (IsWhite(ch)) {
+			if (String::IsWhite(ch)) {
 				strIndent += ch;
 			} else if (ch == chMarker) {
 				stat = Stat::ScriptPre;
@@ -95,6 +94,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
+#if 0
 		case Stat::ScriptPre: {
 			if (ch == '{') {
 				if (!str.empty()) {
@@ -189,7 +189,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 				stat = Stat::CommentEnd_Second;
 			} else if (ch == '\n') {
 				// nothing to do
-			} else if (IsWhite(ch)) {
+			} else if (String::IsWhite(ch)) {
 				// nothing to do
 			} else {
 				stringAheadFlag = true;
@@ -244,8 +244,8 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
-		}
 #endif
+		}
 		Gurax_EndPushbackRegion();
 		if (ch == '\n') cntLine++;
 	}
