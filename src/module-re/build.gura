@@ -25,4 +25,4 @@ builder.build('re', ['module-re.cpp'], path.Join('script', [
 	'sed.gura', 'sed.doc.gura', 'tokenizer.gura', 'tokenizer.doc.gura']))
 */
 
-builder.Main()
+builder.Run()

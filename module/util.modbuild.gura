@@ -59,7 +59,7 @@ Builder = class {
 		fs.Remove(this.pathNamesObj)
 		Printf('-- cleaned\n')
 	}
-	Main() = {
+	Run() = {
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
 		[argv, opt] = argopt.Parser {|p|
 			p.Parse(sys.argv)
