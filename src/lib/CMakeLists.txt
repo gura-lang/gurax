@@ -143,7 +143,7 @@ add_library(guraxcore SHARED
 	VType_String.cpp
 	VType_StringPtr.cpp
 	VType_Symbol.cpp
-	VType_Template.cpp
+#	VType_Template.cpp
 	VType_TimeDelta.cpp
 	VType_Undefined.cpp
 	VType_VType.cpp

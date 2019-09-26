@@ -4,7 +4,7 @@
 #ifndef GURAX_VTYPE_TEMPLATE_H
 #define GURAX_VTYPE_TEMPLATE_H
 #include "VType_Object.h"
-#include "Template.h"
+//#include "Template.h"
 
 namespace Gurax {
 

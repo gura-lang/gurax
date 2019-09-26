@@ -18,7 +18,7 @@ bool Initialize(int& argc, char** argv)
 	Function::Bootup();
 	Random::Bootup();
 	Stream::Bootup();
-	Template::Bootup();
+	//Template::Bootup();
 	Token::Bootup();
 	return Basement::Inst.Initialize(argc, argv);
 }
