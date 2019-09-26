@@ -13,8 +13,15 @@ void Template::Bootup()
 {
 }
 
-Template::Template()
+Template::Template() :
+	_pExprOwnerForInit(new ExprOwner()),
+	_pFuncForBody(new FunctionCustom(
+					  Function::Type::Function, Symbol::Empty, DeclCallable::Empty->Reference(),
+					  new Expr_Block(nullptr))),
+	_pValueMap(new ValueMap()), _chLast('\0')				  
 {
+	_pFuncForBody->Declare(VTYPE_Nil, DeclCallable::Flag::DynamicScope);
+	//_pFuncForBody->SetFrameOuter(processor.GetFrameCur());
 }
 
 //-----------------------------------------------------------------------------
@@ -45,23 +52,14 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 	int cntLineTop = 0;
 	int nDepth = 0;
 	_exprLeaderStack.clear();
-#if 0
-	if (pTemplate->GetFuncForBody() == nullptr) {
-		AutoPtr<FunctionCustom> pFunc(new FunctionCustom(env,
-				Gurax_Symbol(_anonymous_), new Expr_Block(), FUNCTYPE_Instance));
-		pFunc->SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_DynamicScope);
-		pTemplate->SetFuncForBody(pFunc.release());
-	}
-	Expr_Block *pExprBlockRoot = dynamic_cast<Expr_Block *>(
-									pTemplate->GetFuncForBody()->GetExprBody());
-#endif
+	//Expr_Block& exprBlockRoot = dynamic_cast<Expr_Block&>(tmpl.GetFuncForBody().GetExprBody());
 	for (;;) {
-#if 0
-		int chRaw = streamSrc.GetChar(env);
-		if (env.IsSignalled()) return false;
+		int chRaw = streamSrc.GetChar();
+		if (Error::IsIssued()) return false;
 		if (chRaw < 0) break;
 		char ch = static_cast<char>(chRaw);
 		Gurax_BeginPushbackRegion();
+#if 0
 		switch (stat) {
 		case Stat::LineTop: {
 			if (ch == '\n') {
@@ -254,9 +252,9 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			break;
 		}
 		}
+#endif
 		Gurax_EndPushbackRegion();
 		if (ch == '\n') cntLine++;
-#endif
 	}
 #if 0
 	if (!strTmplScript.empty()) {
@@ -282,10 +280,6 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 }
 
 #if 0
-Template::Template() : _cntRef(1), _pExprOwnerForInit(new ExprOwner()),
-				   _pValueExMap(new ValueExMap()), _pStreamDst(nullptr), _chLast('\0')
-{
-}
 
 bool Template::Read(Environment &env,
 			SimpleStream &streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)

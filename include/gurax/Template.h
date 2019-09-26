@@ -31,6 +31,13 @@ public:
 		//	Template* pTemplate, Expr_Block* pExprBlock,
 		//	StringShared* pSourceName, int cntLineTop, int cntLineBtm);
 	};
+private:
+	RefPtr<Template> _pTemplateSuper;
+	RefPtr<ExprOwner> _pExprOwnerForInit;
+	RefPtr<FunctionCustom> _pFuncForBody;
+	RefPtr<ValueMap> _pValueMap;
+	RefPtr<Stream> _pStreamDst;
+	char _chLast;
 public:
 	// Constructor
 	Template();
@@ -45,6 +52,20 @@ protected:
 	virtual ~Template() = default;
 public:
 	static void Bootup();
+public:
+	void SetTemplateSuper(Template *pTemplateSuper) { _pTemplateSuper.reset(pTemplateSuper); }
+	Template& GetTemplateSuper() { return *_pTemplateSuper; }
+	const Template& GetTemplateSuper() const { return *_pTemplateSuper; }
+	void SetFuncForBody(FunctionCustom* pFuncForBody) { _pFuncForBody.reset(pFuncForBody); }
+	ExprOwner &GetExprOwnerForInit() { return *_pExprOwnerForInit; }
+	FunctionCustom& GetFuncForBody() { return *_pFuncForBody; }
+	const FunctionCustom& GetFuncForBody() const { return *_pFuncForBody; }
+	ValueMap &GetValueMap() { return *_pValueMap; }
+	const ValueMap &GetValueMap() const { return *_pValueMap; }
+	void SetStreamDst(Stream *pStream) { _pStreamDst.reset(pStream); }
+	Stream& GetStreamDst() { return *_pStreamDst; }
+	void ClearLastChar()  { _chLast = '\0'; }
+	char GetLastChar() const { return _chLast; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Template& templ) const { return this == &templ; }
