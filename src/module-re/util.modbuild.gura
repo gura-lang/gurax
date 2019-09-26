@@ -61,15 +61,15 @@ Builder = class {
 	}
 	Main() = {
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
-		argopt.Parser {|p|
-			[argv, opt] = p.Parse(sys.argv)
+		[argv, opt] = argopt.Parser {|p|
+			p.Parse(sys.argv)
 		}
 		if (argv.IsEmpty()) {
 			this.Command_build()
 		} elsif (argv[0] == 'clean') {
 			this.Command_clean()
 		} else {
-			sys.stderr.Printf('unknown command: %s\n', argv[0])
+			sys.cerr.Printf('unknown command: %s\n', argv[0])
 			sys.Exit(1)
 		}
 	}
