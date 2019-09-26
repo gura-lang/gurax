@@ -150,12 +150,12 @@ bool Parser::ReduceOneToken()
 		pExprGen.reset(new Expr_Value(new Value_Binary(pToken->GetBinaryReferable()->Reference())));
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
-		RefPtr<Template> pTempl(new Template());
+		//RefPtr<Template> pTempl(new Template());
 		//bool autoIndentFlag = true;
 		//bool appendLastEOLFlag = false;
 		//if (!pTempl->Parse(env, pToken->GetString(), nullptr,
 		//				   autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetSegmentReferable()->Reference()));
+		//pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetSegmentReferable()->Reference()));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
 		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetSegment())));

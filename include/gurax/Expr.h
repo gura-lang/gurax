@@ -6,7 +6,7 @@
 #include "Attribute.h"
 #include "DeclCallable.h"
 #include "Operator.h"
-#include "Template.h"
+//#include "Template.h"
 #include "Value.h"
 
 namespace Gurax {
@@ -534,6 +534,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // Expr_Embedded : Expr_Node
 //------------------------------------------------------------------------------
@@ -557,6 +558,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
+#endif
 
 //------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary

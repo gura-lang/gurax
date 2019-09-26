@@ -2,7 +2,7 @@
 // Template
 //=============================================================================
 #include "stdafx.h"
-#include "./Template.h"
+#include "../../include/gurax/Template.h"
 
 namespace Gurax {
 

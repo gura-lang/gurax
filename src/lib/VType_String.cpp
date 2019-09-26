@@ -1061,7 +1061,7 @@ Gurax_ImplementMethod(String, ToSymbol)
 // String#ToTemplate():Template:[noindent,lasteol] {block?}
 Gurax_DeclareMethod(String, ToTemplate)
 {
-	Declare(VTYPE_Template, Flag::None);
+	//Declare(VTYPE_Template, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(noindent));
 	DeclareAttrOpt(Gurax_Symbol(lasteol));
 	DeclareBlock(BlkOccur::ZeroOrOnce);

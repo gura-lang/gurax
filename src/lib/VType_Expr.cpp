@@ -77,7 +77,8 @@ Gurax_DeclareProperty_R(Expr, isEmbedded)
 Gurax_ImplementPropertyGetter(Expr, isEmbedded)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Bool(valueThis.GetExpr().IsType<Expr_Embedded>());
+	//return new Value_Bool(valueThis.GetExpr().IsType<Expr_Embedded>());
+	return Value::nil();
 }
 
 Gurax_DeclareProperty_R(Expr, isMember)

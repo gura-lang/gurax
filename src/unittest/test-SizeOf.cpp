@@ -164,7 +164,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(Value_Stream);
 	PrintSizeOf(Value_String);
 	PrintSizeOf(Value_Symbol);
-	PrintSizeOf(Value_Template);
+	//PrintSizeOf(Value_Template);
 	PrintSizeOf(Value_TimeDelta);
 	PrintSizeOf(Value_Undefined);
 	PrintSizeOf(Value_VType);

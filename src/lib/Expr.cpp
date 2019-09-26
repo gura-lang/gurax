@@ -433,6 +433,7 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 	return str;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // Expr_Embedded : Expr_Node
 //------------------------------------------------------------------------------
@@ -449,6 +450,7 @@ String Expr_Embedded::ToString(const StringStyle& ss) const
 	str += GetStringSTL().MakeQuoted(true);
 	return str;
 }
+#endif
 
 //------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary
