@@ -34,7 +34,7 @@ public:
 private:
 	RefPtr<Template> _pTemplateSuper;
 	RefPtr<ExprOwner> _pExprOwnerForInit;
-	RefPtr<FunctionCustom> _pFuncForBody;
+	RefPtr<Expr_Block> _pExprForBody;
 	RefPtr<ValueMap> _pValueMap;
 	RefPtr<Stream> _pStreamDst;
 	char _chLast;
@@ -56,10 +56,9 @@ public:
 	void SetTemplateSuper(Template *pTemplateSuper) { _pTemplateSuper.reset(pTemplateSuper); }
 	Template& GetTemplateSuper() { return *_pTemplateSuper; }
 	const Template& GetTemplateSuper() const { return *_pTemplateSuper; }
-	void SetFuncForBody(FunctionCustom* pFuncForBody) { _pFuncForBody.reset(pFuncForBody); }
 	ExprOwner &GetExprOwnerForInit() { return *_pExprOwnerForInit; }
-	FunctionCustom& GetFuncForBody() { return *_pFuncForBody; }
-	const FunctionCustom& GetFuncForBody() const { return *_pFuncForBody; }
+	Expr_Block& GetExprForBody() { return *_pExprForBody; }
+	const Expr_Block& GetExprForBody() const { return *_pExprForBody; }
 	ValueMap &GetValueMap() { return *_pValueMap; }
 	const ValueMap &GetValueMap() const { return *_pValueMap; }
 	void SetStreamDst(Stream *pStream) { _pStreamDst.reset(pStream); }

@@ -14,13 +14,10 @@ void Template::Bootup()
 }
 
 Template::Template() :
-	_pExprOwnerForInit(new ExprOwner()),
-	_pFuncForBody(new FunctionCustom(
-					  Function::Type::Function, Symbol::Empty, DeclCallable::Empty->Reference(),
-					  new Expr_Block(nullptr))),
+	_pExprOwnerForInit(new ExprOwner()), _pExprForBody(new Expr_Block(nullptr)),
 	_pValueMap(new ValueMap()), _chLast('\0')				  
 {
-	_pFuncForBody->Declare(VTYPE_Nil, DeclCallable::Flag::DynamicScope);
+	//_pFuncForBody->Declare(VTYPE_Nil, DeclCallable::Flag::DynamicScope);
 	//_pFuncForBody->SetFrameOuter(processor.GetFrameCur());
 }
 
@@ -37,12 +34,8 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 	RefPtr<StringReferable> pSourceName(new StringReferable(streamSrc.GetName()));
 	const char chMarker = '$';
 	enum class Stat {
-		LineTop, Indent, String,
-		ScriptPre, ScriptFirst, ScriptSecond,
-		Script, ScriptPost,
-		Comment, Comment_LineTop,
-		CommentEnd_Second, CommentEnd_SeekR, CommentEnd_Marker,
-		CommentPost,
+		LineTop, Indent, String, ScriptPre, ScriptFirst, ScriptSecond, Script, ScriptPost,
+		Comment, Comment_LineTop, CommentEnd_Second, CommentEnd_SeekR, CommentEnd_Marker, CommentPost,
 	} stat = Stat::LineTop;
 	bool stringAheadFlag = false;
 	String str;
@@ -52,7 +45,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 	int cntLineTop = 0;
 	int nDepth = 0;
 	_exprLeaderStack.clear();
-	//Expr_Block& exprBlockRoot = dynamic_cast<Expr_Block&>(tmpl.GetFuncForBody().GetExprBody());
+	Expr_Block& exprBlockRoot = tmpl.GetExprForBody();
 	for (;;) {
 		int chRaw = streamSrc.GetChar();
 		if (Error::IsIssued()) return false;
