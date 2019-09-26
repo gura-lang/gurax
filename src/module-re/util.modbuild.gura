@@ -8,10 +8,19 @@ import(argopt)
 // Builder
 //------------------------------------------------------------------------------
 Builder = class {
+	targetName:String
+	pathNameGurd:String
+	pathNamesSrc[]:String
+	pathNamesObj[]:String
+	dirNameOut = 'gnuc'
 	cflags = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC', '-I', sys.dirInclude]
 	ldflags = ['-shared', '-L', sys.dirLib]
 	libs = ['-lstdc++', '-lguraxcore']
-	__init__() = {
+	__init__(targetName:String, pathNamesSrc[]:String) = {
+		this.targetName = targetName
+		this.pathNamesSrc = pathNamesSrc
+		this.pathNameGurd = path.Join(this.dirNameOut, targetName + '.gurd')
+		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
 	}
 	ShouldProcess(pathNameTgt:String, pathNamesDep+:String) = {
 		!fs.Exists(pathNameTgt) || \
@@ -33,18 +42,35 @@ Builder = class {
 			Printf('-- generated: %s\n', pathNameGurd)
 		}
 	}
-	Main(name:String, pathNamesSrc[]:String) = {
-		pathNameGurd = name + '.gurd'
-		pathNamesObj = path.BaseName(pathNamesSrc) + '.o'
+	Command_build() = {
 		errorFlag = false
-		for (pathNameObj in pathNamesObj, pathNameSrc in pathNamesSrc) {
+		for (pathNameObj in this.pathNamesObj, pathNameSrc in this.pathNamesSrc) {
 			if (this.ShouldProcess(pathNameObj, pathNameSrc) && \
 				!this.Compile(pathNameObj, pathNameSrc)) {
 				return
 			}
 		}
-		if (this.ShouldProcess(pathNameGurd, pathNamesObj*)) {
-			this.Link(pathNameGurd, pathNamesObj*)
+		if (this.ShouldProcess(this.pathNameGurd, this.pathNamesObj*)) {
+			this.Link(this.pathNameGurd, this.pathNamesObj*)
+		}
+	}
+	Command_clean() = {
+		fs.Remove(this.pathNameGurd)
+		fs.Remove(this.pathNamesObj)
+		Printf('-- cleaned\n')
+	}
+	Main() = {
+		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
+		argopt.Parser {|p|
+			[argv, opt] = p.Parse(sys.argv)
+		}
+		if (argv.IsEmpty()) {
+			this.Command_build()
+		} elsif (argv[0] == 'clean') {
+			this.Command_clean()
+		} else {
+			sys.stderr.Printf('unknown command: %s\n', argv[0])
+			sys.Exit(1)
 		}
 	}
 }

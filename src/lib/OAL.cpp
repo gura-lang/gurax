@@ -268,17 +268,17 @@ String OAL::GetDirName_Executable()
 
 String OAL::GetDirName_Data()
 {
-	return PathName(GetDirName_Base()).JoinAfter("share/gurax");
+	return PathName(GetDirName_Base()).JoinAfter("share/gurax/" GURAX_VERSION);
 }
 
 String OAL::GetDirName_Module()
 {
-	return PathName(GetDirName_Base()).JoinAfter("lib/gurax/module");
+	return PathName(GetDirName_Base()).JoinAfter("lib/gurax/" GURAX_VERSION "/module");
 }
 
 String OAL::GetDirName_Include()
 {
-	return PathName(GetDirName_Base()).JoinAfter("include/gurax");
+	return PathName(GetDirName_Base()).JoinAfter("include/gurax/" GURAX_VERSION);
 }
 
 String OAL::GetDirName_Library()
