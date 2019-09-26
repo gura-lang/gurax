@@ -15,6 +15,23 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Template);
 public:
+	class GURAX_DLLDECLARE Parser {
+	public:
+		using ExprLeaderStack = std::vector<Expr_Caller*>;
+	private:
+		bool _autoIndentFlag;
+		bool _appendLastEOLFlag;
+		ExprLeaderStack _exprLeaderStack;
+	public:
+		Parser(bool autoIndentFlag, bool appendLastEOLFlag);
+		bool ParseStream(Template& tmpl, Stream &streamSrc);
+	private:
+		//bool CreateTmplScript(
+		//	const char* strIndent, const char* strTmplScript, const char* strPost,
+		//	Template* pTemplate, Expr_Block* pExprBlock,
+		//	StringShared* pSourceName, int cntLineTop, int cntLineBtm);
+	};
+public:
 	// Constructor
 	Template();
 	// Copy constructor/operator
@@ -42,23 +59,6 @@ public:
 //-----------------------------------------------------------------------------
 class GURA_DLLDECLARE Template {
 public:
-	class GURA_DLLDECLARE Parser {
-	public:
-		typedef std::vector<Expr_Caller *> ExprLeaderStack;
-	private:
-		bool _autoIndentFlag;
-		bool _appendLastEOLFlag;
-		ExprLeaderStack _exprLeaderStack;
-	public:
-		Parser(bool autoIndentFlag, bool appendLastEOLFlag);
-		bool ParseStream(Environment &env,
-							Template *pTemplate, SimpleStream &streamSrc);
-	private:
-		bool CreateTmplScript(Environment &env,
-				const char *strIndent, const char *strTmplScript, const char *strPost,
-				Template *pTemplate, Expr_Block *pExprBlock,
-				StringShared *pSourceName, int cntLineTop, int cntLineBtm);
-	};
 private:
 	int _cntRef;
 	AutoPtr<Template> _pTemplateSuper;

@@ -17,6 +17,19 @@ Template::Template()
 {
 }
 
+//-----------------------------------------------------------------------------
+// Template::Parser
+//-----------------------------------------------------------------------------
+Template::Parser::Parser(bool autoIndentFlag, bool appendLastEOLFlag) :
+	_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag)
+{
+}
+
+bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
+{
+	return false;
+}
+
 #if 0
 Template::Template() : _cntRef(1), _pExprOwnerForInit(new ExprOwner()),
 				   _pValueExMap(new ValueExMap()), _pStreamDst(nullptr), _chLast('\0')
@@ -75,7 +88,7 @@ bool Template::Render(Environment &env, String &strDst)
 bool Template::Prepare(Environment &env)
 {
 	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pEnvBlock->AssignValue(Gura_Symbol(this_),
+	pEnvBlock->AssignValue(Gurax_Symbol(this_),
 				Value(new Object_template(env, Reference())), EXTRA_Public);
 	_pValueExMap->clear();
 	_pExprOwnerForInit->Exec(*pEnvBlock);
@@ -137,7 +150,7 @@ bool Template::Parser::ParseStream(Environment &env,
 	_exprLeaderStack.clear();
 	if (pTemplate->GetFuncForBody() == nullptr) {
 		AutoPtr<FunctionCustom> pFunc(new FunctionCustom(env,
-				Gura_Symbol(_anonymous_), new Expr_Block(), FUNCTYPE_Instance));
+				Gurax_Symbol(_anonymous_), new Expr_Block(), FUNCTYPE_Instance));
 		pFunc->SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_DynamicScope);
 		pTemplate->SetFuncForBody(pFunc.release());
 	}
@@ -148,19 +161,19 @@ bool Template::Parser::ParseStream(Environment &env,
 		if (env.IsSignalled()) return false;
 		if (chRaw < 0) break;
 		char ch = static_cast<char>(chRaw);
-		Gura_BeginPushbackRegion();
+		Gurax_BeginPushbackRegion();
 		switch (stat) {
 		case STAT_LineTop: {
 			if (ch == '\n') {
 				str += ch;
 			} else if (IsWhite(ch)) {
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_Indent;
 			} else if (ch == chMarker) {
 				stat = STAT_ScriptPre;
 			} else {
 				stringAheadFlag = true;
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_String;
 			}
 			break;
@@ -174,7 +187,7 @@ bool Template::Parser::ParseStream(Environment &env,
 				str += strIndent;
 				strIndent.clear();
 				stringAheadFlag = true;
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_String;
 			}
 			break;
@@ -211,7 +224,7 @@ bool Template::Parser::ParseStream(Environment &env,
 				strIndent.clear();
 				str += chMarker;
 				stringAheadFlag = true;
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_String;
 			}
 			break;
@@ -220,7 +233,7 @@ bool Template::Parser::ParseStream(Environment &env,
 			if (ch == '=') {
 				stat = STAT_ScriptSecond;
 			} else {
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_Script;
 			}
 			break;
@@ -230,7 +243,7 @@ bool Template::Parser::ParseStream(Environment &env,
 				stat = STAT_Comment;
 			} else {
 				strTmplScript += '=';
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_Script;
 			}
 			break;
@@ -264,7 +277,7 @@ bool Template::Parser::ParseStream(Environment &env,
 				stat = STAT_LineTop;
 			} else {
 				stringAheadFlag = true;
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_String;
 			}
 			break;
@@ -335,13 +348,13 @@ bool Template::Parser::ParseStream(Environment &env,
 				stat = STAT_LineTop;
 			} else {
 				stringAheadFlag = true;
-				Gura_Pushback();
+				Gurax_Pushback();
 				stat = STAT_String;
 			}
 			break;
 		}
 		}
-		Gura_EndPushbackRegion();
+		Gurax_EndPushbackRegion();
 		if (ch == '\n') cntLine++;
 	}
 	if (!strTmplScript.empty()) {
@@ -415,7 +428,7 @@ bool Template::Parser::CreateTmplScript(Environment &env,
 				Expr_Member *pExprCar = dynamic_cast<Expr_Member *>(pExprLastCaller->GetCar());
 				if (pExprCar->GetTarget()->IsIdentifier() &&
 					dynamic_cast<const Expr_Identifier *>(pExprCar->GetTarget())->
-									GetSymbol()->IsIdentical(Gura_Symbol(this_))) {
+									GetSymbol()->IsIdentical(Gurax_Symbol(this_))) {
 					pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
 				}
 			} else {
@@ -486,7 +499,7 @@ bool Template::Parser::CreateTmplScript(Environment &env,
 				Expr_Member *pExprCar = dynamic_cast<Expr_Member *>(pExprLastCaller->GetCar());
 				if (pExprCar->GetTarget()->IsIdentifier() &&
 						dynamic_cast<const Expr_Identifier *>(pExprCar->GetTarget())->GetSymbol()->
-														IsIdentical(Gura_Symbol(this_))) {
+														IsIdentical(Gurax_Symbol(this_))) {
 					pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
 				}
 			} else {
