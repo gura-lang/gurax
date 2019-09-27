@@ -278,6 +278,7 @@ const Expr::TypeInfo Expr_TmplString::typeInfo;
 
 void Expr_TmplString::Compose(Composer& composer)
 {
+	//_pTemplate->Print(_str.c_str());
 }
 
 String Expr_TmplString::ToString(const StringStyle& ss) const
@@ -285,13 +286,98 @@ String Expr_TmplString::ToString(const StringStyle& ss) const
 	return "";
 }
 
-#if 0
-Value Expr_TmplString::DoExec(Environment &env) const
+//-----------------------------------------------------------------------------
+// Expr_TmplScript
+//-----------------------------------------------------------------------------
+const Expr::TypeInfo Expr_TmplScript::typeInfo;
+
+void Expr_TmplScript::Compose(Composer& composer)
 {
-	_pTemplate->Print(_str.c_str());
+}
+
+#if 0
+Value Expr_TmplScript::DoExec(Environment &env) const
+{
+	if (GetExprOwner().empty()) return Value::Nil;
+	Value value;
+	foreach_const (ExprList, ppExpr, GetExprOwner()) {
+		value = (*ppExpr)->Exec(env, true);
+		if (env.IsSignalled()) return Value::Nil;
+	}
+	if (value.IsInvalid()) return Value::Nil;
+	String strLast;
+	if (value.Is_string()) {
+		_pTemplate->Print(env, _strIndent.c_str());
+		strLast = value.GetStringSTL();
+	} else if (value.Is_list() || value.Is_iterator()) {
+		AutoPtr<Iterator> pIterator(value.CreateIterator(env));
+		if (env.IsSignalled()) return Value::Nil;
+		bool firstFlag = true;
+		Value valueElem;
+		while (pIterator->Next(env, valueElem)) {
+			if (firstFlag) {
+				firstFlag = false;
+				_pTemplate->Print(env, _strIndent.c_str());
+			}
+			foreach_const (String, p, strLast) {
+				char ch = *p;
+				if (ch == '\n') {
+					_pTemplate->PutChar(env, ch);
+					if (_autoIndentFlag && valueElem.IsValid()) {
+						_pTemplate->Print(env, _strIndent.c_str());
+					}
+				} else {
+					_pTemplate->PutChar(env, ch);
+				}
+			}
+			if (valueElem.Is_string()) {
+				strLast = valueElem.GetStringSTL();
+			} else if (valueElem.IsInvalid()) {
+				strLast.clear();
+			} else if (valueElem.Is_number()) {
+				strLast = valueElem.ToString();
+				if (env.IsSignalled()) return Value::Nil;
+			} else {
+				env.SetError(ERR_TypeError,
+							 "an iterable returned by a template script must contain "
+							 "elements of nil, string or number");
+				env.GetSignal().AddExprCause(this);
+				return Value::Nil;
+			}
+		}
+		if (firstFlag) return Value::Nil;
+	} else if (value.Is_number()) {
+		_pTemplate->Print(env, _strIndent.c_str());
+		strLast = value.ToString();
+		if (env.IsSignalled()) return Value::Nil;
+	} else {
+		env.SetError(ERR_TypeError,
+			"template script must return nil, string or number");
+		env.GetSignal().AddExprCause(this);
+		return Value::Nil;
+	}
+	foreach_const (String, p, strLast) {
+		char ch = *p;
+		if (ch != '\n') {
+			_pTemplate->PutChar(env, ch);
+		} else if (p + 1 != strLast.end()) {
+			_pTemplate->PutChar(env, ch);
+			if (_autoIndentFlag) {
+				_pTemplate->Print(env, _strIndent.c_str());
+			}
+		} else if (_appendLastEOLFlag) {
+			_pTemplate->PutChar(env, ch);
+		}
+	}
+	_pTemplate->Print(env, _strPost.c_str());
 	return Value::Nil;
 }
 #endif
+
+String Expr_TmplScript::ToString(const StringStyle& ss) const
+{
+	return "";
+}
 
 #if 0
 
@@ -781,102 +867,6 @@ bool Template::Parser::CreateTmplScript(Environment &env,
 	return true;
 }
 
-//-----------------------------------------------------------------------------
-// Expr_TmplScript
-//-----------------------------------------------------------------------------
-Expr *Expr_TmplScript::Clone() const
-{
-	return new Expr_TmplScript(*this);
-}
-
-Value Expr_TmplScript::DoExec(Environment &env) const
-{
-	if (GetExprOwner().empty()) return Value::Nil;
-	Value value;
-	foreach_const (ExprList, ppExpr, GetExprOwner()) {
-		value = (*ppExpr)->Exec(env, true);
-		if (env.IsSignalled()) return Value::Nil;
-	}
-	if (value.IsInvalid()) return Value::Nil;
-	String strLast;
-	if (value.Is_string()) {
-		_pTemplate->Print(env, _strIndent.c_str());
-		strLast = value.GetStringSTL();
-	} else if (value.Is_list() || value.Is_iterator()) {
-		AutoPtr<Iterator> pIterator(value.CreateIterator(env));
-		if (env.IsSignalled()) return Value::Nil;
-		bool firstFlag = true;
-		Value valueElem;
-		while (pIterator->Next(env, valueElem)) {
-			if (firstFlag) {
-				firstFlag = false;
-				_pTemplate->Print(env, _strIndent.c_str());
-			}
-			foreach_const (String, p, strLast) {
-				char ch = *p;
-				if (ch == '\n') {
-					_pTemplate->PutChar(env, ch);
-					if (_autoIndentFlag && valueElem.IsValid()) {
-						_pTemplate->Print(env, _strIndent.c_str());
-					}
-				} else {
-					_pTemplate->PutChar(env, ch);
-				}
-			}
-			if (valueElem.Is_string()) {
-				strLast = valueElem.GetStringSTL();
-			} else if (valueElem.IsInvalid()) {
-				strLast.clear();
-			} else if (valueElem.Is_number()) {
-				strLast = valueElem.ToString();
-				if (env.IsSignalled()) return Value::Nil;
-			} else {
-				env.SetError(ERR_TypeError,
-							 "an iterable returned by a template script must contain "
-							 "elements of nil, string or number");
-				env.GetSignal().AddExprCause(this);
-				return Value::Nil;
-			}
-		}
-		if (firstFlag) return Value::Nil;
-	} else if (value.Is_number()) {
-		_pTemplate->Print(env, _strIndent.c_str());
-		strLast = value.ToString();
-		if (env.IsSignalled()) return Value::Nil;
-	} else {
-		env.SetError(ERR_TypeError,
-			"template script must return nil, string or number");
-		env.GetSignal().AddExprCause(this);
-		return Value::Nil;
-	}
-	foreach_const (String, p, strLast) {
-		char ch = *p;
-		if (ch != '\n') {
-			_pTemplate->PutChar(env, ch);
-		} else if (p + 1 != strLast.end()) {
-			_pTemplate->PutChar(env, ch);
-			if (_autoIndentFlag) {
-				_pTemplate->Print(env, _strIndent.c_str());
-			}
-		} else if (_appendLastEOLFlag) {
-			_pTemplate->PutChar(env, ch);
-		}
-	}
-	_pTemplate->Print(env, _strPost.c_str());
-	return Value::Nil;
-}
-
-bool Expr_TmplScript::GenerateCode(Environment &env, CodeGenerator &codeGenerator) const
-{
-	//stream.Println(sig, "TmplScript");
-	return true;
-}
-
-bool Expr_TmplScript::GenerateScript(Signal &sig, SimpleStream &stream,
-							ScriptStyle scriptStyle, int nestLevel, const char *strIndent) const
-{
-	return false;
-}
 #endif
 
 }

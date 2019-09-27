@@ -93,6 +93,34 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//-----------------------------------------------------------------------------
+// Expr_TmplScript
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_TmplScript : public Expr_Collector {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<Template> _pTemplate;
+	String _strIndent;
+	String _strPost;
+	bool _autoIndentFlag;
+	bool _appendLastEOLFlag;
+public:
+	Expr_TmplScript(ExprLink* pExprLinkElem, Template *pTemplate,
+					const String& strIndent, const String& strPost,
+					bool autoIndentFlag, bool appendLastEOLFlag) :
+		Expr_Collector(typeInfo, pExprLinkElem), _pTemplate(pTemplate),
+		_strIndent(strIndent), _strPost(strPost),
+		_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag) {}
+public:
+	Template& GetTemplate() { return *_pTemplate; }
+	void SetStringIndent(const String &strIndent) { _strIndent = strIndent; }
+	void SetStringPost(const String &strPost) { _strPost = strPost; }
+public:
+	virtual void Compose(Composer& composer) override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 #if 0
 //-----------------------------------------------------------------------------
 // Template
@@ -143,40 +171,6 @@ public:
 	inline SimpleStream *GetStreamDst() { return _pStreamDst; }
 	inline void ClearLastChar()  { _chLast = '\0'; }
 	inline char GetLastChar() const { return _chLast; }
-};
-
-
-//-----------------------------------------------------------------------------
-// Expr_TmplScript
-//-----------------------------------------------------------------------------
-class GURA_DLLDECLARE Expr_TmplScript : public Expr_Collector {
-protected:
-	Template *_pTemplate;
-	String _strIndent;
-	String _strPost;
-	bool _autoIndentFlag;
-	bool _appendLastEOLFlag;
-public:
-	inline Expr_TmplScript(Template *pTemplate,
-							const String &strIndent, const String &strPost,
-							bool autoIndentFlag, bool appendLastEOLFlag) :
-			Expr_Collector(EXPRTYPE_None), _pTemplate(pTemplate),
-			_strIndent(strIndent), _strPost(strPost),
-			_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag) {}
-	inline Expr_TmplScript(const Expr_TmplScript &expr) :
-			Expr_Collector(expr), _pTemplate(expr._pTemplate),
-			_strIndent(expr._strIndent), _strPost(expr._strPost),
-			_autoIndentFlag(expr._autoIndentFlag), _appendLastEOLFlag(expr._appendLastEOLFlag) {}
-	inline void SetStringIndent(const String &strIndent) { _strIndent = strIndent; }
-	inline void SetStringPost(const String &strPost) { _strPost = strPost; }
-	inline static Expr_TmplScript *Reference(const Expr_TmplScript *pExpr) {
-		return dynamic_cast<Expr_TmplScript *>(Expr::Reference(pExpr));
-	}
-	virtual Expr *Clone() const;
-	virtual Value DoExec(Environment &env) const;
-	virtual bool GenerateCode(Environment &env, CodeGenerator &codeGenerator) const;
-	virtual bool GenerateScript(Signal &sig, SimpleStream &stream,
-							ScriptStyle scriptStyle, int nestLevel, const char *strIndent) const;
 };
 
 #endif
