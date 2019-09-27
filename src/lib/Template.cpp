@@ -118,7 +118,6 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
-#if 0
 		case Stat::ScriptFirst: {
 			if (ch == '=') {
 				stat = Stat::ScriptSecond;
@@ -154,6 +153,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
+#if 0
 		case Stat::ScriptPost: {
 			const char *strPost = (ch == '\n')? "\n" : "";
 			if (!CreateTmplScript(
@@ -172,6 +172,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
+#endif
 		case Stat::Comment: {
 			if (ch == '=') {
 				stat = Stat::CommentEnd_Second;
@@ -243,7 +244,6 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
-#endif
 		}
 		Gurax_EndPushbackRegion();
 		if (ch == '\n') cntLine++;
