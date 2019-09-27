@@ -99,9 +99,9 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 				if (!str.empty()) {
 					Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
 						exprBlockRoot : *_exprLeaderStack.back();
-					Expr* pExpr = new Expr_TmplString(tmpl.Reference(), str);
+					RefPtr<Expr> pExpr(new Expr_TmplString(tmpl.Reference(), str));
 					pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
-					exprOfBlock.AddExprElem(pExpr);
+					exprOfBlock.AddExprElem(pExpr.release());
 					str.clear();
 				}
 				cntLineTop = cntLine;
@@ -245,27 +245,23 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 		Gurax_EndPushbackRegion();
 		if (ch == '\n') cntLine++;
 	}
-#if 0
 	if (!strTmplScript.empty()) {
-		const char *strPost = "";
-		if (!CreateTmplScript(env,
+		const char* strPost = "";
+		if (!CreateTmplScript(
 				strIndent.c_str(), strTmplScript.c_str(), strPost,
-				pTemplate, pExprBlockRoot,
-				pSourceName.get(), cntLineTop, cntLine)) return false;
+				tmpl, exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
 	}
 	if (!_exprLeaderStack.empty()) {
-		env.SetError(ERR_SyntaxError, "missing end statement for block expression");
+		Error::Issue(ErrorType::SyntaxError, "missing end statement for block expression");
 		return false;
 	}
 	if (!str.empty()) {
-		Expr *pExpr = new Expr_TmplString(pTemplate, str);
+		RefPtr<Expr> pExpr(new Expr_TmplString(tmpl.Reference(), str));
 		pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
-		pExprBlockRoot->GetExprOwner().push_back(pExpr);
+		exprBlockRoot.AddExprElem(pExpr.release());
 		str.clear();
 	}
-	return pExprBlockRoot->Prepare(env);
-#endif
-	return false;
+	return exprBlockRoot.Prepare();
 }
 
 bool Template::Parser::CreateTmplScript(
