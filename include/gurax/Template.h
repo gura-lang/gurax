@@ -17,7 +17,7 @@ public:
 public:
 	class GURAX_DLLDECLARE Parser {
 	public:
-		using ExprLeaderStack = std::vector<Expr_Caller*>;
+		using ExprLeaderStack = std::vector<Expr_Block*>;
 	private:
 		bool _autoIndentFlag;
 		bool _appendLastEOLFlag;
@@ -73,6 +73,26 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(template)"; }
 };
 
+//-----------------------------------------------------------------------------
+// Expr_TmplString
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_TmplString : public Expr_Node {
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<Template> _pTemplate;
+	String _str;
+public:
+	Expr_TmplString(Template* pTemplate, const String& str) :
+		Expr_Node(typeInfo), _pTemplate(pTemplate), _str(str) {}
+public:
+	Template& GetTemplate() { return *_pTemplate; }
+	const char *GetString() const { return _str.c_str(); }
+public:
+	virtual void Compose(Composer& composer) override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 #if 0
 //-----------------------------------------------------------------------------
 // Template
@@ -125,29 +145,6 @@ public:
 	inline char GetLastChar() const { return _chLast; }
 };
 
-//-----------------------------------------------------------------------------
-// Expr_TmplString
-//-----------------------------------------------------------------------------
-class GURA_DLLDECLARE Expr_TmplString : public Expr {
-protected:
-	Template *_pTemplate;
-	String _str;
-public:
-	inline Expr_TmplString(Template *pTemplate, const String &str) :
-				Expr(EXPRTYPE_None), _pTemplate(pTemplate), _str(str) {}
-	inline Expr_TmplString(const Expr_TmplString &expr) :
-				Expr(expr), _pTemplate(expr._pTemplate), _str(expr._str) {}
-	inline const char *GetString() const { return _str.c_str(); }
-	inline static Expr_TmplString *Reference(const Expr_TmplString *pExpr) {
-		return dynamic_cast<Expr_TmplString *>(Expr::Reference(pExpr));
-	}
-	virtual Expr *Clone() const;
-	virtual Value DoExec(Environment &env) const;
-	virtual void Accept(ExprVisitor &visitor);
-	virtual bool GenerateCode(Environment &env, CodeGenerator &codeGenerator) const;
-	virtual bool GenerateScript(Signal &sig, SimpleStream &stream,
-							ScriptStyle scriptStyle, int nestLevel, const char *strIndent) const;
-};
 
 //-----------------------------------------------------------------------------
 // Expr_TmplScript

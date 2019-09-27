@@ -94,16 +94,14 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
-#if 0
 		case Stat::ScriptPre: {
 			if (ch == '{') {
 				if (!str.empty()) {
-					ExprOwner &exprOwner = _exprLeaderStack.empty()?
-						pExprBlockRoot->GetExprOwner() :
-						_exprLeaderStack.back()->GetBlock()->GetExprOwner();
-					Expr *pExpr = new Expr_TmplString(pTemplate, str);
+					Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
+						exprBlockRoot : *_exprLeaderStack.back();
+					Expr* pExpr = new Expr_TmplString(tmpl.Reference(), str);
 					pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
-					exprOwner.push_back(pExpr);
+					exprOfBlock.AddExprElem(pExpr);
 					str.clear();
 				}
 				cntLineTop = cntLine;
@@ -120,6 +118,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			}
 			break;
 		}
+#if 0
 		case Stat::ScriptFirst: {
 			if (ch == '=') {
 				stat = Stat::ScriptSecond;
@@ -258,7 +257,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 				pSourceName.get(), cntLineTop, cntLine)) return false;
 	}
 	if (!_exprLeaderStack.empty()) {
-		env.SetError(ERR_SyntaxError, "lacking end statement for block expression");
+		env.SetError(ERR_SyntaxError, "missing end statement for block expression");
 		return false;
 	}
 	if (!str.empty()) {
@@ -271,6 +270,28 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 #endif
 	return false;
 }
+
+//-----------------------------------------------------------------------------
+// Expr_TmplString
+//-----------------------------------------------------------------------------
+const Expr::TypeInfo Expr_TmplString::typeInfo;
+
+void Expr_TmplString::Compose(Composer& composer)
+{
+}
+
+String Expr_TmplString::ToString(const StringStyle& ss) const
+{
+	return "";
+}
+
+#if 0
+Value Expr_TmplString::DoExec(Environment &env) const
+{
+	_pTemplate->Print(_str.c_str());
+	return Value::Nil;
+}
+#endif
 
 #if 0
 
@@ -758,37 +779,6 @@ bool Template::Parser::CreateTmplScript(Environment &env,
 		}
 	}
 	return true;
-}
-
-//-----------------------------------------------------------------------------
-// Expr_TmplString
-//-----------------------------------------------------------------------------
-Expr *Expr_TmplString::Clone() const
-{
-	return new Expr_TmplString(*this);
-}
-
-Value Expr_TmplString::DoExec(Environment &env) const
-{
-	_pTemplate->Print(env, _str.c_str());
-	return Value::Nil;
-}
-
-void Expr_TmplString::Accept(ExprVisitor &visitor)
-{
-	visitor.Visit(this);
-}
-
-bool Expr_TmplString::GenerateCode(Environment &env, CodeGenerator &codeGenerator) const
-{
-	//stream.Println(sig, "TmplString");
-	return true;
-}
-
-bool Expr_TmplString::GenerateScript(Signal &sig, SimpleStream &stream,
-							ScriptStyle scriptStyle, int nestLevel, const char *strIndent) const
-{
-	return false;
 }
 
 //-----------------------------------------------------------------------------
