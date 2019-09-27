@@ -26,10 +26,10 @@ public:
 		Parser(bool autoIndentFlag, bool appendLastEOLFlag);
 		bool ParseStream(Template& tmpl, Stream &streamSrc);
 	private:
-		//bool CreateTmplScript(
-		//	const char* strIndent, const char* strTmplScript, const char* strPost,
-		//	Template* pTemplate, Expr_Block* pExprBlock,
-		//	StringShared* pSourceName, int cntLineTop, int cntLineBtm);
+		bool CreateTmplScript(
+			const char* strIndent, const char* strTmplScript, const char* strPost,
+			Template& tmpl, Expr_Block& exprBlock,
+			StringReferable& sourceName, int cntLineTop, int cntLineBtm);
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;
