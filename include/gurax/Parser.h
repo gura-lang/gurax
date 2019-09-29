@@ -20,7 +20,8 @@ private:
 public:
 	// Constructor
 	Parser() = delete;
-	explicit Parser(String pathNameSrc);
+	Parser(String pathNameSrc, Expr_Collector* pExprRoot);
+	explicit Parser(String pathNameSrc) : Parser(pathNameSrc, new Expr_Root(new ExprLink())) {}
 	// Copy constructor/operator
 	Parser(const Parser& src) = delete;
 	Parser& operator=(const Parser& src) = delete;

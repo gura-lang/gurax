@@ -11,9 +11,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Parser
 //------------------------------------------------------------------------------
-Parser::Parser(String pathNameSrc) :
+Parser::Parser(String pathNameSrc, Expr_Collector* pExprRoot) :
 	_pTokenizer(new Tokenizer(*this, std::move(pathNameSrc))),
-	_pExprRoot(new Expr_Root(new ExprLink()))
+	_pExprRoot(pExprRoot)
 {
 }
 
@@ -45,11 +45,10 @@ Expr_Collector* Parser::ParseString(const char* text)
 }
 
 #if 0
-bool Parser::ParseString(ExprOwner &exprOwner,
+bool Parser::ParseString(Expr_Collector* pExprRoot,
 						 const char* text, size_t len, bool parseNullFlag)
 {
-	_pExprOwner = &exprOwner;
-	_pExprParent = nullptr;
+	_pExprRoot.reset(pExprRoot.Reference());
 	for (const char* p = text; ; p++, len--) {
 		if (!parseNullFlag && len == 0) break;
 		char ch = (len == 0)? '\0' : *p;
