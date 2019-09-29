@@ -341,6 +341,9 @@ public:
 // Expr_Collector
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_Collector : public Expr {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_Collector);
 protected:
 	RefPtr<ExprLink> _pExprLinkElem;
 public:

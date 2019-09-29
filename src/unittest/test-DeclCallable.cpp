@@ -120,7 +120,7 @@ Gurax_TesterEntry(DeclCallable)
 {
 	for (const char* src : srcTbl) {
 		::printf("%s .. ", src);
-		RefPtr<Expr_Root> pExprRoot(Parser::ParseString(src));
+		RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(src));
 		if (Error::IsIssued()) {
 			::printf("error: %s\n", Error::GetLastError()->GetText());
 			Error::Clear();

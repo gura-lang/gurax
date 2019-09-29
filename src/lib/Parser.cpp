@@ -17,7 +17,7 @@ Parser::Parser(String pathNameSrc) :
 {
 }
 
-Expr_Root* Parser::ParseStream(Stream& stream)
+Expr_Collector* Parser::ParseStream(Stream& stream)
 {
 	RefPtr<Parser> pParser(new Parser(stream.GetIdentifier()));
 	for (;;) {
@@ -31,7 +31,7 @@ Expr_Root* Parser::ParseStream(Stream& stream)
 	return pParser->GetExprRoot().Reference();
 }
 
-Expr_Root* Parser::ParseString(const char* text)
+Expr_Collector* Parser::ParseString(const char* text)
 {
 	RefPtr<Parser> pParser(new Parser("*string*"));
 	for (const char* p = text; ; ++p) {
@@ -43,6 +43,23 @@ Expr_Root* Parser::ParseString(const char* text)
 	pParser->GetExprRoot().Prepare();
 	return pParser->GetExprRoot().Reference();
 }
+
+#if 0
+bool Parser::ParseString(ExprOwner &exprOwner,
+						 const char* text, size_t len, bool parseNullFlag)
+{
+	_pExprOwner = &exprOwner;
+	_pExprParent = nullptr;
+	for (const char* p = text; ; p++, len--) {
+		if (!parseNullFlag && len == 0) break;
+		char ch = (len == 0)? '\0' : *p;
+		ParseChar(ch);
+		if (Error::IsIssued()) return false;
+		if (ch == '\0') break;
+	}
+	return true;
+}
+#endif
 
 void Parser::FeedToken(RefPtr<Token> pToken)
 {

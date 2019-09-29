@@ -89,7 +89,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 {
 	RefPtr<Stream> pStream(Stream::Open(pathName, Stream::OpenFlag::Read));
 	if (!pStream) return nullptr;
-	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
+	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseStream(*pStream));
 	if (Error::IsIssued()) return nullptr;
 	Composer composer;
 	pExprOfRoot->Compose(composer);

@@ -30,7 +30,7 @@ int Main(int argc, char* argv[])
 	const char* fileName = argv[1];
 	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
 	if (!pStream) return 1;
-	RefPtr<Expr_Root> pExprOfRoot(Parser::ParseStream(*pStream));
+	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseStream(*pStream));
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		return 1;
@@ -63,7 +63,7 @@ void RunREPL()
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
 	Composer composer(true);
 	Processor& processor = Basement::Inst.GetProcessor();
-	Expr_Root& exprRoot = pParser->GetExprRoot();
+	Expr_Collector& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
 	const PUnit* pPUnit = nullptr;
 	stream.Printf("%s\n", Version::GetBanner(false));

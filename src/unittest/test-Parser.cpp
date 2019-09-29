@@ -226,7 +226,7 @@ Gurax_TesterEntry(Parser)
 	auto TestFunc = [](const Info& info) {
 		PrintTitle(info.title);
 		Error::Clear();
-		RefPtr<Expr_Root> pExprRoot = Parser::ParseString(info.src);
+		RefPtr<Expr_Collector> pExprRoot = Parser::ParseString(info.src);
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			return;
