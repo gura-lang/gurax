@@ -30,11 +30,12 @@ int Main(int argc, char* argv[])
 	const char* fileName = argv[1];
 	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
 	if (!pStream) return 1;
-	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseStream(*pStream));
-	if (Error::IsIssued()) {
+	RefPtr<Parser> pParser(new Parser(pStream->GetIdentifier()));
+	if (!pParser->ParseStream(*pStream, true)) {
 		Error::Print(*Stream::CErr);
 		return 1;
 	}
+	RefPtr<Expr_Collector> pExprOfRoot(pParser->GetExprRoot().Reference());
 	Composer composer;
 	pExprOfRoot->Compose(composer);
 	if (Error::IsIssued()) {

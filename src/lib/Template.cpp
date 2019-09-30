@@ -14,7 +14,7 @@ void Template::Bootup()
 }
 
 Template::Template() :
-	_pExprOwnerForInit(new ExprOwner()), _pExprForBody(new Expr_Block(nullptr)),
+	_pExprForInit(new Expr_Block()), _pExprForBody(new Expr_Block()),
 	_pValueMap(new ValueMap()), _chLast('\0')				  
 {
 	//_pFuncForBody->Declare(VTYPE_Nil, DeclCallable::Flag::DynamicScope);
@@ -275,18 +275,19 @@ bool Template::Parser::CreateTmplScript(
 	//	new Expr_TmplScript(
 	//		tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
 	//pExprTmplScript->SetSourceInfo(pSourceName->Reference(), cntLineTop + 1, cntLineBtm + 1);
-	RefPtr<ExprLink> pExprLink(new ExprLink());
+	//RefPtr<ExprLink> pExprLink(new ExprLink());
 	if (*strTmplScript == '=') {
-#if 0
 		// Parsing template directive that looks like "${=foo()}".
 		strTmplScript++;
-		RefPtr<ExprOwner> pExprOwnerForInit(new ExprOwner());
+		//RefPtr<ExprOwner> pExprOwnerForInit(new ExprOwner());
+#if 0
 		do {
-			Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
+			Expr_Block& expr = tmpl.GetExprForInit();
+			Gurax::Parser parser(sourceName.GetString(), tmpl.GetExprForInit().Reference());
 			// Appends "this.init_" before the script string while parsing
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
-			if (!parser.ParseString(env, *pExprOwnerForInit, "this.init_", false)) return false;
-			if (!parser.ParseString(env, *pExprOwnerForInit, strTmplScript, true)) return false;
+			if (!parser.ParseString("this.init_", false)) return false;
+			if (!parser.ParseString(strTmplScript, true)) return false;
 		} while (0);
 		do {
 			ExprOwner &exprOwner = pExprTmplScript->GetExprOwner();

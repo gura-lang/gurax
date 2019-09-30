@@ -664,6 +664,7 @@ protected:
 public:
 	explicit Expr_Block(ExprLink* pExprLinkElem) :
 		Expr_Collector(typeInfo, pExprLinkElem), _pDeclCallable(new DeclCallable()) {}
+	Expr_Block() : Expr_Block(new ExprLink()) {}
 	void SetExprLinkParam(ExprLink* pExprLinkParam) {
 		_pExprLinkParam.reset(pExprLinkParam);
 		_pExprLinkParam->SetExprParent(this);

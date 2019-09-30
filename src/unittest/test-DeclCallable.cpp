@@ -120,12 +120,13 @@ Gurax_TesterEntry(DeclCallable)
 {
 	for (const char* src : srcTbl) {
 		::printf("%s .. ", src);
-		RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(src));
-		if (Error::IsIssued()) {
+		RefPtr<Parser> pParser(new Parser("*string*"));
+		if (!pParser->ParseString(src, true)) {
 			::printf("error: %s\n", Error::GetLastError()->GetText());
 			Error::Clear();
 			continue;
 		}
+		RefPtr<Expr_Collector> pExprRoot(pParser->GetExprRoot().Reference());
 		const Expr* pExpr = pExprRoot->GetExprElemFirst();
 		if (pExpr->IsType<Expr_Assign>()) {
 			const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);

@@ -17,6 +17,7 @@ Parser::Parser(String pathNameSrc, Expr_Collector* pExprRoot) :
 {
 }
 
+#if 0
 Expr_Collector* Parser::ParseStream(Stream& stream)
 {
 	RefPtr<Parser> pParser(new Parser(stream.GetIdentifier()));
@@ -30,7 +31,9 @@ Expr_Collector* Parser::ParseStream(Stream& stream)
 	pParser->GetExprRoot().Prepare();
 	return pParser->GetExprRoot().Reference();
 }
+#endif
 
+#if 0
 Expr_Collector* Parser::ParseString(const char* text)
 {
 	RefPtr<Parser> pParser(new Parser("*string*"));
@@ -43,22 +46,55 @@ Expr_Collector* Parser::ParseString(const char* text)
 	pParser->GetExprRoot().Prepare();
 	return pParser->GetExprRoot().Reference();
 }
+#endif
 
-#if 0
-bool Parser::ParseString(Expr_Collector* pExprRoot,
-						 const char* text, size_t len, bool parseNullFlag)
+bool Parser::ParseStream(Stream& stream, bool eofFlag)
 {
-	_pExprRoot.reset(pExprRoot.Reference());
-	for (const char* p = text; ; p++, len--) {
-		if (!parseNullFlag && len == 0) break;
-		char ch = (len == 0)? '\0' : *p;
+	for (;;) {
+		int chRaw = stream.GetChar();
+		if (chRaw < 0) break;
+		char ch = static_cast<char>(chRaw);
 		ParseChar(ch);
 		if (Error::IsIssued()) return false;
-		if (ch == '\0') break;
+	}
+	if (eofFlag) {
+		ParseChar('\0');
+		if (Error::IsIssued()) return false;
+		GetExprRoot().Prepare();
+		if (Error::IsIssued()) return false;
 	}
 	return true;
 }
-#endif
+
+bool Parser::ParseString(const char* text, bool eofFlag)
+{
+	for (const char* p = text; *p; p++) {
+		ParseChar(*p);
+		if (Error::IsIssued()) return false;
+	}
+	if (eofFlag) {
+		ParseChar('\0');
+		if (Error::IsIssued()) return false;
+		GetExprRoot().Prepare();
+		if (Error::IsIssued()) return false;
+	}
+	return true;
+}
+
+bool Parser::ParseString(const char* text, size_t len, bool eofFlag)
+{
+	for (const char* p = text; len > 0; p++, len--) {
+		ParseChar(*p);
+		if (Error::IsIssued()) return false;
+	}
+	if (eofFlag) {
+		ParseChar('\0');
+		if (Error::IsIssued()) return false;
+		GetExprRoot().Prepare();
+		if (Error::IsIssued()) return false;
+	}
+	return true;
+}
 
 void Parser::FeedToken(RefPtr<Token> pToken)
 {

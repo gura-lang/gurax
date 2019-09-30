@@ -33,7 +33,7 @@ public:
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;
-	RefPtr<ExprOwner> _pExprOwnerForInit;
+	RefPtr<Expr_Block> _pExprForInit;
 	RefPtr<Expr_Block> _pExprForBody;
 	RefPtr<ValueMap> _pValueMap;
 	RefPtr<Stream> _pStreamDst;
@@ -56,7 +56,8 @@ public:
 	void SetTemplateSuper(Template *pTemplateSuper) { _pTemplateSuper.reset(pTemplateSuper); }
 	Template& GetTemplateSuper() { return *_pTemplateSuper; }
 	const Template& GetTemplateSuper() const { return *_pTemplateSuper; }
-	ExprOwner &GetExprOwnerForInit() { return *_pExprOwnerForInit; }
+	Expr_Block& GetExprForInit() { return *_pExprForInit; }
+	const Expr_Block& GetExprForInit() const { return *_pExprForInit; }
 	Expr_Block& GetExprForBody() { return *_pExprForBody; }
 	const Expr_Block& GetExprForBody() const { return *_pExprForBody; }
 	ValueMap &GetValueMap() { return *_pValueMap; }
