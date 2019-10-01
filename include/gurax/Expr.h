@@ -228,10 +228,10 @@ public:
 	Gurax_DeclareReferable(ExprLink);
 private:
 	RefPtr<Expr> _pExprFirst;
-	Expr* _pExprTail;
+	Expr* _pExprLast;
 public:
 	// Constructor
-	ExprLink() : _pExprTail(nullptr) {}
+	ExprLink() : _pExprLast(nullptr) {}
 	// Copy constructor/operator
 	ExprLink(const ExprLink& src) = delete;
 	ExprLink& operator=(const ExprLink& src) = delete;
@@ -245,15 +245,15 @@ public:
 	bool IsEmpty() const { return _pExprFirst.get() == nullptr; }
 	Expr* GetExprFirst() { return _pExprFirst.get(); }
 	const Expr* GetExprFirst() const { return _pExprFirst.get(); }
-	Expr* GetExprTail() { return _pExprTail; }
-	const Expr* GetExprTail() const { return _pExprTail; }
+	Expr* GetExprLast() { return _pExprLast; }
+	const Expr* GetExprLast() const { return _pExprLast; }
 	void AddExpr(Expr* pExpr) {
-		if (_pExprTail) {
-			_pExprTail->SetExprNext(pExpr);
+		if (_pExprLast) {
+			_pExprLast->SetExprNext(pExpr);
 		} else {
 			_pExprFirst.reset(pExpr);
 		}
-		_pExprTail = pExpr;
+		_pExprLast = pExpr;
 	}
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
@@ -357,6 +357,8 @@ public:
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
 	Expr* GetExprElemFirst() { return _pExprLinkElem->GetExprFirst(); }
 	const Expr* GetExprElemFirst() const { return _pExprLinkElem->GetExprFirst(); }
+	Expr* GetExprElemLast() { return _pExprLinkElem->GetExprLast(); }
+	const Expr* GetExprElemLast() const { return _pExprLinkElem->GetExprLast(); }
 	void AddExprElem(Expr* pExprElem);
 public:
 	// Virtual functions of Expr

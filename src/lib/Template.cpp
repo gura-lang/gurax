@@ -270,16 +270,13 @@ bool Template::Parser::CreateTmplScript(
 	StringReferable& sourceName, int cntLineTop, int cntLineBtm)
 {
 	//Class *pClass = env.LookupClass(VTYPE_template);
-	Expr* pExprLast = nullptr;
-	//RefPtr<Expr_TmplScript> pExprTmplScript(
-	//	new Expr_TmplScript(
-	//		tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
-	//pExprTmplScript->SetSourceInfo(pSourceName->Reference(), cntLineTop + 1, cntLineBtm + 1);
-	//RefPtr<ExprLink> pExprLink(new ExprLink());
+	RefPtr<Expr_TmplScript> pExprTmplScript(
+		new Expr_TmplScript(
+			tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
+	pExprTmplScript->SetSourceInfo(sourceName.Reference(), cntLineTop + 1, cntLineBtm + 1);
 	if (*strTmplScript == '=') {
 		// Parsing template directive that looks like "${=foo()}".
 		strTmplScript++;
-		//RefPtr<ExprOwner> pExprOwnerForInit(new ExprOwner());
 		do {
 			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), tmpl.GetExprForInit().Reference()));
 			// Appends "this.init_" before the script string while parsing
@@ -287,29 +284,20 @@ bool Template::Parser::CreateTmplScript(
 			if (!pParser->FeedString("this.init_") || !pParser->FeedString(strTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
-#if 0
 		do {
-			ExprOwner &exprOwner = pExprTmplScript->GetExprOwner();
-			Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
+			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), pExprTmplScript->Reference()));
 			// Appends "this." before the script string while parsing
 			// so that it generates an expression "this.foo()" from the directive "${=foo()}".
-			if (!parser.ParseString(env, exprOwner, "this.", false)) return false;
-			if (!parser.ParseString(env, exprOwner, strTmplScript, true)) return false;
+			if (!pParser->FeedString("this.") || !pParser->FeedString(strTmplScript) ||
+				!pParser->Flush()) return false;
 		} while (0);
-		do {
-			ExprOwner &exprOwnerForPresent = _exprLeaderStack.empty()?
-				pExprBlockRoot->GetExprOwner() :
-				_exprLeaderStack.back()->GetBlock()->GetExprOwner();
-			exprOwnerForPresent.push_back(Expr::Reference(pExprTmplScript.get()));
-		} while (0);
-		do {
-			ExprOwner &exprOwnerForInit = pTemplate->GetExprOwnerForInit();
-			foreach (ExprOwner, ppExpr, *pExprOwnerForInit) {
-				Expr *pExpr = *ppExpr;
-				exprOwnerForInit.push_back(Expr::Reference(pExpr));
-				pExprLast = pExpr;
-			}
-		} while (0);
+		if (_exprLeaderStack.empty()) {
+			tmpl.GetExprForBody().AddExprElem(pExprTmplScript->Reference());
+		} else {
+			_exprLeaderStack.back()->AddExprElem(pExprTmplScript->Reference());
+		}
+		Expr* pExprLast = pExprTmplScript->GetExprElemLast();
+#if 0
 		if (!pExprLast->IsCaller()) return true;
 		Expr_Caller *pExprLastCaller = dynamic_cast<Expr_Caller *>(pExprLast);
 		if (pExprLastCaller->GetBlock() == nullptr) {

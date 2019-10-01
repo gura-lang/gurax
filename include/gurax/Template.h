@@ -107,10 +107,9 @@ protected:
 	bool _autoIndentFlag;
 	bool _appendLastEOLFlag;
 public:
-	Expr_TmplScript(ExprLink* pExprLinkElem, Template *pTemplate,
-					const String& strIndent, const String& strPost,
+	Expr_TmplScript(Template* pTemplate, const String& strIndent, const String& strPost,
 					bool autoIndentFlag, bool appendLastEOLFlag) :
-		Expr_Collector(typeInfo, pExprLinkElem), _pTemplate(pTemplate),
+		Expr_Collector(typeInfo, new ExprLink()), _pTemplate(pTemplate),
 		_strIndent(strIndent), _strPost(strPost),
 		_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag) {}
 public:

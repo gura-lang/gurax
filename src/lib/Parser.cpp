@@ -976,8 +976,8 @@ bool Parser::EmitExpr(ExprLink& exprLink, Expr* pExpr)
 		Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExpr);
 		if (!pExprCaller->IsTrailer() || exprLink.IsEmpty()) {
 			// nothing to do
-		} else if (exprLink.GetExprTail()->IsType<Expr_Caller>()) {
-			dynamic_cast<Expr_Caller *>(exprLink.GetExprTail())->GetExprTrailerLast()->SetExprTrailer(pExprCaller);
+		} else if (exprLink.GetExprLast()->IsType<Expr_Caller>()) {
+			dynamic_cast<Expr_Caller *>(exprLink.GetExprLast())->GetExprTrailerLast()->SetExprTrailer(pExprCaller);
 			return true;
 		} else {
 			Expr::Delete(pExpr);
