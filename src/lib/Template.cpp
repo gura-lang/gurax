@@ -300,23 +300,25 @@ bool Template::Parser::CreateTmplScript(
 		if (!pExprLast->IsType<Expr_Caller>()) return true;
 		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
 		if (!pExprLastCaller->GetExprOfBlock()) {
-			//Callable *pCallable = nullptr;
+			Value* pValue = nullptr;
 			if (pExprLastCaller->GetExprCar().IsType<Expr_Member>()) {
 				Expr_Member& exprCar = dynamic_cast<Expr_Member&>(pExprLastCaller->GetExprCar());
 				if (exprCar.GetExprTarget().IsType<Expr_Identifier>() &&
 					dynamic_cast<const Expr_Identifier&>(exprCar.GetExprTarget()).GetSymbol()->
 					IsIdentical(Gurax_Symbol(this_))) {
-					//pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
+					exprCar.GetSymbol();
+					//pValue = VTYPE_Template.GetFrame().Lookup(exprCar.GetSymbol());
 				}
-			} else {
-				//pCallable = pExprLastCaller->LookupCallable(env);
+			} else if (pExprLastCaller->GetExprCar().IsType<Expr_Identifier>()) {
+				Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(pExprLastCaller->GetExprCar());
+				pValue = Basement::Inst.GetFrame().Lookup(exprCar.GetSymbol());
 			}
-			//env.ClearSignal();
-			//if (pCallable != nullptr && pCallable->GetBlockOccurPattern() == OCCUR_Once) {
-			//	Expr_Block *pExprBlock = new Expr_Block();
-			//	pExprLastCaller->SetBlock(pExprBlock);
-			//	_exprLeaderStack.push_back(pExprLastCaller);
-			//}
+			if (pValue && pValue->IsType(VTYPE_Function) &&
+				dynamic_cast<Value_Function&>(*pValue).GetDeclCallable()->GetDeclBlock().IsOccurOnce()) {
+				Expr_Block* pExprOfBlock = new Expr_Block();
+				pExprLastCaller->SetExprOfBlock(pExprOfBlock);
+				_exprLeaderStack.push_back(pExprOfBlock);
+			}
 		} else if (!pExprLastCaller->GetExprOfBlock()->HasExprElem()) {
 			_exprLeaderStack.push_back(pExprLastCaller->GetExprOfBlock());
 		}
