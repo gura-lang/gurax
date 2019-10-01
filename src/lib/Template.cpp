@@ -297,31 +297,29 @@ bool Template::Parser::CreateTmplScript(
 			_exprLeaderStack.back()->AddExprElem(pExprTmplScript->Reference());
 		}
 		Expr* pExprLast = pExprTmplScript->GetExprElemLast();
-#if 0
-		if (!pExprLast->IsCaller()) return true;
-		Expr_Caller *pExprLastCaller = dynamic_cast<Expr_Caller *>(pExprLast);
-		if (pExprLastCaller->GetBlock() == nullptr) {
-			Callable *pCallable = nullptr;
-			if (pExprLastCaller->GetCar()->IsMember()) {
-				Expr_Member *pExprCar = dynamic_cast<Expr_Member *>(pExprLastCaller->GetCar());
-				if (pExprCar->GetTarget()->IsIdentifier() &&
-					dynamic_cast<const Expr_Identifier *>(pExprCar->GetTarget())->
-									GetSymbol()->IsIdentical(Gurax_Symbol(this_))) {
-					pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
+		if (!pExprLast->IsType<Expr_Caller>()) return true;
+		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
+		if (!pExprLastCaller->GetExprOfBlock()) {
+			//Callable *pCallable = nullptr;
+			if (pExprLastCaller->GetExprCar().IsType<Expr_Member>()) {
+				Expr_Member& exprCar = dynamic_cast<Expr_Member&>(pExprLastCaller->GetExprCar());
+				if (exprCar.GetExprTarget().IsType<Expr_Identifier>() &&
+					dynamic_cast<const Expr_Identifier&>(exprCar.GetExprTarget()).GetSymbol()->
+					IsIdentical(Gurax_Symbol(this_))) {
+					//pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
 				}
 			} else {
-				pCallable = pExprLastCaller->LookupCallable(env);
+				//pCallable = pExprLastCaller->LookupCallable(env);
 			}
-			env.ClearSignal();
-			if (pCallable != nullptr && pCallable->GetBlockOccurPattern() == OCCUR_Once) {
-				Expr_Block *pExprBlock = new Expr_Block();
-				pExprLastCaller->SetBlock(pExprBlock);
-				_exprLeaderStack.push_back(pExprLastCaller);
-			}
-		} else if (pExprLastCaller->GetBlock()->GetExprOwner().empty()) {
-			_exprLeaderStack.push_back(pExprLastCaller);
+			//env.ClearSignal();
+			//if (pCallable != nullptr && pCallable->GetBlockOccurPattern() == OCCUR_Once) {
+			//	Expr_Block *pExprBlock = new Expr_Block();
+			//	pExprLastCaller->SetBlock(pExprBlock);
+			//	_exprLeaderStack.push_back(pExprLastCaller);
+			//}
+		} else if (!pExprLastCaller->GetExprOfBlock()->HasExprElem()) {
+			_exprLeaderStack.push_back(pExprLastCaller->GetExprOfBlock());
 		}
-#endif
 	}
 #if 0
 		if ()
