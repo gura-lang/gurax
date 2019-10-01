@@ -99,9 +99,8 @@ bool Processor::ImportModule(const char* moduleName)
 
 bool Processor::EvalCommand(const char *cmd)
 {
-	RefPtr<Parser> pParser(new Parser("*string*"));
-	if (!pParser->ParseString(cmd, true)) return false;
-	RefPtr<Expr_Collector> pExprOfRoot(pParser->GetExprRoot().Reference());
+	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseString(cmd));
+	if (!pExprOfRoot) return false;
 	Composer composer;
 	pExprOfRoot->Compose(composer);
 	if (Error::IsIssued()) return false;

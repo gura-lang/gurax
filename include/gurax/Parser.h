@@ -34,12 +34,13 @@ protected:
 public:
 	Expr_Collector& GetExprRoot() { return *_pExprRoot; }
 	const Expr_Collector& GetExprRoot() const { return *_pExprRoot; }
-	//static Expr_Collector* ParseStream(Stream& stream);
-	//static Expr_Collector* ParseString(const char* text);
-	bool ParseStream(Stream& stream, bool eofFlag);
-	bool ParseString(const char* text, bool eofFlag);
-	bool ParseString(const char* text, size_t len, bool eofFlag);
-	void ParseChar(char ch) { _pTokenizer->FeedChar(ch); }
+	static Expr_Collector* ParseStream(Stream& stream);
+	static Expr_Collector* ParseString(const char* text);
+	void FeedChar(char ch) { _pTokenizer->FeedChar(ch); }
+	bool FeedStream(Stream& stream);
+	bool FeedString(const char* text);
+	bool FeedString(const char* text, size_t len);
+	bool FeedEOF();
 	int GetLineNo() const { return _pTokenizer->GetLineNo(); }
 	bool IsContinued() const { return !_pTokenizer->GetTokenStack().IsEmpty(); }
 private:

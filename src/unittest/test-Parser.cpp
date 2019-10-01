@@ -226,12 +226,11 @@ Gurax_TesterEntry(Parser)
 	auto TestFunc = [](const Info& info) {
 		PrintTitle(info.title);
 		Error::Clear();
-		RefPtr<Parser> pParser(new Parser("*string*"));
-		if (!pParser->ParseString(info.src, true)) {
+		RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(info.src));
+		if (!pExprRoot) {
 			Error::Print(*Stream::CErr);
 			return;
 		}
-		RefPtr<Expr_Collector> pExprRoot(pParser->GetExprRoot().Reference());
 		for (const Expr* pExpr = pExprRoot->GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			::printf("%s\n", pExpr->ToString().c_str());
 		}

@@ -7,10 +7,8 @@ namespace Gurax {
 
 static DeclCallable* ComposeDeclCallable(const char* src)
 {
-	RefPtr<Parser> pParser(new Parser("*string*"));
-	if (!pParser->ParseString(String(src).append("={}").c_str(), true)) return nullptr;
-	RefPtr<Expr_Collector> pExprRoot(pParser->GetExprRoot().Reference());
-	if (Error::IsIssued()) return nullptr;
+	RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(String(src).append("={}").c_str()));
+	if (!pExprRoot) return nullptr;
 	const Expr* pExpr = pExprRoot->GetExprElemFirst();
 	if (pExpr->IsType<Expr_Assign>()) {
 		const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);

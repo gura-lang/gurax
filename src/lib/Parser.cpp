@@ -17,83 +17,56 @@ Parser::Parser(String pathNameSrc, Expr_Collector* pExprRoot) :
 {
 }
 
-#if 0
 Expr_Collector* Parser::ParseStream(Stream& stream)
 {
 	RefPtr<Parser> pParser(new Parser(stream.GetIdentifier()));
-	for (;;) {
-		int chRaw = stream.GetChar();
-		char ch = (chRaw > 0)? static_cast<char>(chRaw) : '\0';
-		pParser->ParseChar(ch);
-		if (Error::IsIssued()) return nullptr;
-		if (ch == '\0') break;
-	}
-	pParser->GetExprRoot().Prepare();
+	if (!pParser->FeedStream(stream) || !pParser->FeedEOF()) return nullptr;
 	return pParser->GetExprRoot().Reference();
 }
-#endif
 
-#if 0
 Expr_Collector* Parser::ParseString(const char* text)
 {
 	RefPtr<Parser> pParser(new Parser("*string*"));
-	for (const char* p = text; ; ++p) {
-		char ch = *p;
-		pParser->ParseChar(ch);
-		if (Error::IsIssued()) return nullptr;
-		if (ch == '\0') break;
-	}
-	pParser->GetExprRoot().Prepare();
+	if (!pParser->FeedString(text) || !pParser->FeedEOF()) return nullptr;
 	return pParser->GetExprRoot().Reference();
 }
-#endif
 
-bool Parser::ParseStream(Stream& stream, bool eofFlag)
+bool Parser::FeedStream(Stream& stream)
 {
 	for (;;) {
 		int chRaw = stream.GetChar();
 		if (chRaw < 0) break;
 		char ch = static_cast<char>(chRaw);
-		ParseChar(ch);
-		if (Error::IsIssued()) return false;
-	}
-	if (eofFlag) {
-		ParseChar('\0');
-		if (Error::IsIssued()) return false;
-		GetExprRoot().Prepare();
+		FeedChar(ch);
 		if (Error::IsIssued()) return false;
 	}
 	return true;
 }
 
-bool Parser::ParseString(const char* text, bool eofFlag)
+bool Parser::FeedString(const char* text)
 {
 	for (const char* p = text; *p; p++) {
-		ParseChar(*p);
-		if (Error::IsIssued()) return false;
-	}
-	if (eofFlag) {
-		ParseChar('\0');
-		if (Error::IsIssued()) return false;
-		GetExprRoot().Prepare();
+		FeedChar(*p);
 		if (Error::IsIssued()) return false;
 	}
 	return true;
 }
 
-bool Parser::ParseString(const char* text, size_t len, bool eofFlag)
+bool Parser::FeedString(const char* text, size_t len)
 {
 	for (const char* p = text; len > 0; p++, len--) {
-		ParseChar(*p);
-		if (Error::IsIssued()) return false;
-	}
-	if (eofFlag) {
-		ParseChar('\0');
-		if (Error::IsIssued()) return false;
-		GetExprRoot().Prepare();
+		FeedChar(*p);
 		if (Error::IsIssued()) return false;
 	}
 	return true;
+}
+
+bool Parser::FeedEOF()
+{
+	FeedChar('\0');
+	if (Error::IsIssued()) return false;
+	GetExprRoot().Prepare();
+	return !Error::IsIssued();
 }
 
 void Parser::FeedToken(RefPtr<Token> pToken)
