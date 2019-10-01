@@ -280,15 +280,14 @@ bool Template::Parser::CreateTmplScript(
 		// Parsing template directive that looks like "${=foo()}".
 		strTmplScript++;
 		//RefPtr<ExprOwner> pExprOwnerForInit(new ExprOwner());
-#if 0
 		do {
-			Expr_Block& expr = tmpl.GetExprForInit();
-			Gurax::Parser parser(sourceName.GetString(), tmpl.GetExprForInit().Reference());
+			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.GetString(), tmpl.GetExprForInit().Reference()));
 			// Appends "this.init_" before the script string while parsing
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
-			if (!parser.ParseString("this.init_", false)) return false;
-			if (!parser.ParseString(strTmplScript, true)) return false;
+			if (!pParser->FeedString("this.init_") || !pParser->FeedString(strTmplScript) ||
+				!pParser->Flush()) return false;
 		} while (0);
+#if 0
 		do {
 			ExprOwner &exprOwner = pExprTmplScript->GetExprOwner();
 			Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);

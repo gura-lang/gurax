@@ -40,7 +40,8 @@ public:
 	bool FeedStream(Stream& stream);
 	bool FeedString(const char* text);
 	bool FeedString(const char* text, size_t len);
-	bool FeedEOF();
+	bool Flush();
+	bool Finish();
 	int GetLineNo() const { return _pTokenizer->GetLineNo(); }
 	bool IsContinued() const { return !_pTokenizer->GetTokenStack().IsEmpty(); }
 private:

@@ -20,14 +20,14 @@ Parser::Parser(String pathNameSrc, Expr_Collector* pExprRoot) :
 Expr_Collector* Parser::ParseStream(Stream& stream)
 {
 	RefPtr<Parser> pParser(new Parser(stream.GetIdentifier()));
-	if (!pParser->FeedStream(stream) || !pParser->FeedEOF()) return nullptr;
+	if (!pParser->FeedStream(stream) || !pParser->Finish()) return nullptr;
 	return pParser->GetExprRoot().Reference();
 }
 
 Expr_Collector* Parser::ParseString(const char* text)
 {
 	RefPtr<Parser> pParser(new Parser("*string*"));
-	if (!pParser->FeedString(text) || !pParser->FeedEOF()) return nullptr;
+	if (!pParser->FeedString(text) || !pParser->Finish()) return nullptr;
 	return pParser->GetExprRoot().Reference();
 }
 
@@ -61,7 +61,13 @@ bool Parser::FeedString(const char* text, size_t len)
 	return true;
 }
 
-bool Parser::FeedEOF()
+bool Parser::Flush()
+{
+	FeedChar('\0');
+	return !Error::IsIssued();
+}
+
+bool Parser::Finish()
 {
 	FeedChar('\0');
 	if (Error::IsIssued()) return false;
