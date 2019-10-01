@@ -30,13 +30,13 @@ int Main(int argc, char* argv[])
 	const char* fileName = argv[1];
 	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
 	if (!pStream) return 1;
-	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseStream(*pStream));
-	if (!pExprOfRoot) {
+	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(*pStream));
+	if (!pExprRoot) {
 		Error::Print(*Stream::CErr);
 		return 1;
 	}
 	Composer composer;
-	pExprOfRoot->Compose(composer);
+	pExprRoot->Compose(composer);
 	if (Error::IsIssued()) {
 		Error::Print(*Stream::CErr);
 		return 1;
@@ -45,7 +45,7 @@ int Main(int argc, char* argv[])
 		composer.PrintPUnit();
 	} else {
 		Processor& processor = Basement::Inst.GetProcessor();
-		RefPtr<Value> pValue(processor.ProcessExpr(*pExprOfRoot));
+		RefPtr<Value> pValue(processor.ProcessExpr(*pExprRoot));
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
 			return 1;

@@ -89,10 +89,10 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 {
 	RefPtr<Stream> pStream(Stream::Open(pathName, Stream::OpenFlag::Read));
 	if (!pStream) return nullptr;
-	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseStream(*pStream));
-	if (!pExprOfRoot) return nullptr;
+	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(*pStream));
+	if (!pExprRoot) return nullptr;
 	Composer composer;
-	pExprOfRoot->Compose(composer);
+	pExprRoot->Compose(composer);
 	composer.Flush();
 	if (Error::IsIssued()) return nullptr;
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
