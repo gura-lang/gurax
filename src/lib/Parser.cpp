@@ -11,9 +11,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Parser
 //------------------------------------------------------------------------------
-Parser::Parser(String pathNameSrc, Expr_Collector* pExprRoot) :
-	_pTokenizer(new Tokenizer(*this, std::move(pathNameSrc))),
-	_pExprRoot(pExprRoot)
+Parser::Parser(StringReferable* pPathNameSrc, Expr_Collector* pExprRoot) :
+	_pTokenizer(new Tokenizer(*this, pPathNameSrc)), _pExprRoot(pExprRoot)
 {
 }
 

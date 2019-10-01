@@ -281,7 +281,7 @@ bool Template::Parser::CreateTmplScript(
 		strTmplScript++;
 		//RefPtr<ExprOwner> pExprOwnerForInit(new ExprOwner());
 		do {
-			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.GetString(), tmpl.GetExprForInit().Reference()));
+			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), tmpl.GetExprForInit().Reference()));
 			// Appends "this.init_" before the script string while parsing
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
 			if (!pParser->FeedString("this.init_") || !pParser->FeedString(strTmplScript) ||

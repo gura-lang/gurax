@@ -20,8 +20,11 @@ private:
 public:
 	// Constructor
 	Parser() = delete;
-	Parser(String pathNameSrc, Expr_Collector* pExprRoot);
-	explicit Parser(String pathNameSrc) : Parser(pathNameSrc, new Expr_Root(new ExprLink())) {}
+	Parser(StringReferable* pPathNameSrc, Expr_Collector* pExprRoot);
+	Parser(String pathNameSrc, Expr_Collector* pExprRoot) :
+		Parser(new StringReferable(std::move(pathNameSrc)), pExprRoot) {}
+	explicit Parser(StringReferable* pPathNameSrc) : Parser(pPathNameSrc, new Expr_Root(new ExprLink())) {}
+	explicit Parser(String pathNameSrc) : Parser(new StringReferable(std::move(pathNameSrc))) {}
 	// Copy constructor/operator
 	Parser(const Parser& src) = delete;
 	Parser& operator=(const Parser& src) = delete;

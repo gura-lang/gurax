@@ -97,7 +97,7 @@ private:
 public:
 	// Constructor
 	Tokenizer() = delete;
-	Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc);
+	Tokenizer(TokenWatcher& tokenWatcher, StringReferable* pPathNameSrc);
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
 	Tokenizer& operator=(const Tokenizer& src) = delete;

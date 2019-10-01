@@ -26,7 +26,7 @@ public:
 Gurax_TesterEntry(Tokenizer)
 {
 	TokenWatcher tokenWatcher;
-	RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, "string"));
+	RefPtr<Tokenizer> pTokenizer(new Tokenizer(tokenWatcher, new StringReferable("string")));
 	for (const char* p = text; ; ++p) {
 		char ch = *p;
 		pTokenizer->FeedChar(ch);

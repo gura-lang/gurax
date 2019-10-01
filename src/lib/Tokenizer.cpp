@@ -8,9 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Tokenizer
 //------------------------------------------------------------------------------
-Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, String pathNameSrc) :
-	_tokenWatcher(tokenWatcher), _pPathNameSrc(new StringReferable(std::move(pathNameSrc))),
-	_pTokenStack(new TokenStack())
+Tokenizer::Tokenizer(TokenWatcher& tokenWatcher, StringReferable* pPathNameSrc) :
+	_tokenWatcher(tokenWatcher), _pPathNameSrc(pPathNameSrc), _pTokenStack(new TokenStack())
 {
 	_pTokenStack->Initialize();
 	_segment.reserve(1024 * 64);
