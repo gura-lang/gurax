@@ -322,10 +322,8 @@ bool Template::Parser::CreateTmplScript(
 		} else if (!pExprLastCaller->GetExprOfBlock()->HasExprElem()) {
 			_exprLeaderStack.push_back(pExprLastCaller->GetExprOfBlock());
 		}
-	}
-#if 0
-		if ()
 	} else {
+#if 0
 		// Parsing a normal script other than template directive.
 		AutoPtr<ExprOwner> pExprOwnerPart(new ExprOwner());
 		Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
@@ -400,9 +398,8 @@ bool Template::Parser::CreateTmplScript(
 			pExprTmplScript->SetStringIndent("");
 			pExprTmplScript->SetStringPost("");
 		}
-	}
-	return true;
 #endif
+	}
 	return false;
 }
 
