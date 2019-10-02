@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_BASEMENT_H
 #define GURAX_BASEMENT_H
+#include "CommandLine.h"
 #include "Frame.h"
 #include "Value.h"
 #include "SuffixMgr.h"
@@ -31,6 +32,7 @@ private:
 	String _ps2;
 	StringList _pathList;
 	RefPtr<Processor> _pProcessor;
+	CommandLine _cmdLine;
 public:
 	static Basement Inst;
 public:
@@ -48,11 +50,17 @@ public:
 	bool Initialize(int& argc, char** argv);
 	int GetArgc() const { return _argc; }
 	char** GetArgv() const { return _argv; }
+	const CommandLine& GetCommandLine() const { return _cmdLine; }
 	bool GetDebugFlag() const { return _debugFlag; }
 	bool GetListingFlag() const { return _listingFlag; }
 	bool GetCommandDoneFlag() const { return _commandDoneFlag; }
-	void PrepareVType(Frame& frame);
-	void PrepareValue(Frame& frame);
+	void PrepareVType();
+	void PrepareValue();
+	void PreparePathList();
+	void PrepareFunction();
+	void PrepareConsoleStream();
+	bool ImportModule();
+	bool ExecCommand();
 	void AppendPathList(const String& str);
 	void AppendPathList(const StringList& strs);
 	Frame& GetFrame() { return *_pFrame; }

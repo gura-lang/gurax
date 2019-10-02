@@ -20,6 +20,12 @@ public: \
 inline Module* Create(Frame* pFrameOuter) { \
 	RefPtr<Module> pModule(new ModuleEx(pFrameOuter));  \
 	return pModule->Prepare(#name, '_')? pModule.release() : nullptr; \
+} \
+inline bool ImportBuiltIn(Frame& frame) { \
+	RefPtr<Module> pModule(Create(frame.Reference())); \
+	if (!pModule) return false; \
+	frame.Assign(pModule.release()); \
+	return true; \
 }
 
 #define Gurax_EndModuleHeader(name) }}

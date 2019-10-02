@@ -20,62 +20,33 @@ Basement::Basement() :
 
 bool Basement::Initialize(int& argc, char** argv)
 {
-	CommandLine cmdLine;
-	if (!cmdLine
+	if (!_cmdLine
 		.OptMultiString	("import",		'i')
 		.OptMultiString	("command",		'c')
 		.OptMultiString	("module-path",	'I')
 		.OptBool		("debug",		'g')
 		.OptBool		("list",		'L')
 		.Parse(argc, argv)) {
-		Error::Issue(ErrorType::CommandError, "%s", cmdLine.GetError());
+		Error::Issue(ErrorType::CommandError, "%s", _cmdLine.GetError());
 		return false;
 	}
 	_argc = argc;
 	_argv = argv;
-	_debugFlag = cmdLine.GetBool("debug");
-	_listingFlag = cmdLine.GetBool("list");
+	_debugFlag = _cmdLine.GetBool("debug");
+	_listingFlag = _cmdLine.GetBool("list");
 	_pProcessor.reset(Processor::Create(GetDebugFlag()));
-	Frame& frame = GetFrame();
-	PrepareVType(frame);
-	PrepareValue(frame);
-	AppendPathList(".");
-	AppendPathList(OAL::GetDirName_Module());
-	AppendPathList(cmdLine.GetStringList("module-path"));
-	AppendPathList(OAL::GetEnv("GURAXPATH"));
-	Statements::AssignToBasement(frame);
-	Functions::AssignToBasement(frame);
-	SetStreamCIn(Stream::CIn->Reference());
-	SetStreamCOut(Stream::COut->Reference());
-	SetStreamCErr(Stream::CErr->Reference());
-	frame.Assign(Module_codecs::Create(frame.Reference()));
-	frame.Assign(Module_codecs_basic::Create(frame.Reference()));
-	frame.Assign(Module_codecs_chinese::Create(frame.Reference()));
-	frame.Assign(Module_codecs_iso8859::Create(frame.Reference()));
-	frame.Assign(Module_codecs_japanese::Create(frame.Reference()));
-	frame.Assign(Module_fs::Create(frame.Reference()));
-	frame.Assign(Module_math::Create(frame.Reference()));
-	frame.Assign(Module_os::Create(frame.Reference()));
-	frame.Assign(Module_path::Create(frame.Reference()));
-	frame.Assign(Module_re::Create(frame.Reference()));
-	frame.Assign(Module_sys::Create(frame.Reference()));
-	Processor& processor = GetProcessor();
-	for (const String& str : cmdLine.GetStringList("import")) {
-		StringList moduleNames;
-		str.Split(moduleNames, ',');
-		for (const String& moduleName : moduleNames) {
-			if (!processor.ImportModule(moduleName.c_str())) return false;
-		}
-	}
-	for (const String& cmd : cmdLine.GetStringList("command")) {
-		if (!processor.EvalCommand(cmd.c_str())) return false;
-		_commandDoneFlag = true;
-	}
-	return true;
+	PrepareVType();
+	PrepareValue();
+	PreparePathList();
+	PrepareFunction();
+	PrepareConsoleStream();
+	ImportModule();
+	return ExecCommand();
 }
 
-void Basement::PrepareVType(Frame& frame)
+void Basement::PrepareVType()
 {
+	Frame& frame = GetFrame();
 	VTYPE_Object.Prepare(frame);
 	VTYPE_Any.Prepare(frame);
 	VTYPE_ArgMapper.Prepare(frame);
@@ -120,12 +91,70 @@ void Basement::PrepareVType(Frame& frame)
 	VTYPE_Undefined.Prepare(frame);
 }
 
-void Basement::PrepareValue(Frame& frame)
+void Basement::PrepareValue()
 {
+	Frame& frame = GetFrame();
 	Value::CreateConstant();
 	frame.Assign("nil",		Value::nil());
 	frame.Assign("false",	Value::false_());
 	frame.Assign("true",	Value::true_());
+}
+
+void Basement::PreparePathList()
+{
+	AppendPathList(".");
+	AppendPathList(OAL::GetDirName_Module());
+	AppendPathList(_cmdLine.GetStringList("module-path"));
+	AppendPathList(OAL::GetEnv("GURAXPATH"));
+}
+
+void Basement::PrepareFunction()
+{
+	Frame& frame = GetFrame();
+	Statements::AssignToBasement(frame);
+	Functions::AssignToBasement(frame);
+}
+
+void Basement::PrepareConsoleStream()
+{
+	SetStreamCIn(Stream::CIn->Reference());
+	SetStreamCOut(Stream::COut->Reference());
+	SetStreamCErr(Stream::CErr->Reference());
+}
+
+bool Basement::ImportModule()
+{
+	Frame& frame = GetFrame();
+	Processor& processor = GetProcessor();
+	if (!Module_codecs::ImportBuiltIn(frame)) return false;
+	if (!Module_codecs_basic::ImportBuiltIn(frame)) return false;
+	if (!Module_codecs_chinese::ImportBuiltIn(frame)) return false;
+	if (!Module_codecs_iso8859::ImportBuiltIn(frame)) return false;
+	if (!Module_codecs_japanese::ImportBuiltIn(frame)) return false;
+	if (!Module_fs::ImportBuiltIn(frame)) return false;
+	if (!Module_math::ImportBuiltIn(frame)) return false;
+	if (!Module_os::ImportBuiltIn(frame)) return false;
+	if (!Module_path::ImportBuiltIn(frame)) return false;
+	if (!Module_re::ImportBuiltIn(frame)) return false;
+	if (!Module_sys::ImportBuiltIn(frame)) return false;
+	for (const String& str : _cmdLine.GetStringList("import")) {
+		StringList moduleNames;
+		str.Split(moduleNames, ',');
+		for (const String& moduleName : moduleNames) {
+			if (!processor.ImportModule(moduleName.c_str())) return false;
+		}
+	}
+	return true;
+}
+
+bool Basement::ExecCommand()
+{
+	Processor& processor = GetProcessor();
+	for (const String& cmd : _cmdLine.GetStringList("command")) {
+		if (!processor.EvalCommand(cmd.c_str())) return false;
+		_commandDoneFlag = true;
+	}
+	return true;
 }
 
 void Basement::AppendPathList(const String& str)

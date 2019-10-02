@@ -4,6 +4,8 @@
 #ifndef GURAX_MODULE_RE_H
 #define GURAX_MODULE_RE_H
 #include <gurax.h>
+#include "Match.h"
+#include "VType_Match.h"
 
 Gurax_BeginModuleHeader(re)
 
