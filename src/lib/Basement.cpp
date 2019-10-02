@@ -135,7 +135,7 @@ bool Basement::ImportModule()
 	if (!Module_math::ImportBuiltIn(frame)) return false;
 	if (!Module_os::ImportBuiltIn(frame)) return false;
 	if (!Module_path::ImportBuiltIn(frame)) return false;
-	if (!Module_re::ImportBuiltIn(frame)) return false;
+	//if (!Module_re::ImportBuiltIn(frame)) return false;
 	if (!Module_sys::ImportBuiltIn(frame)) return false;
 	for (const String& str : _cmdLine.GetStringList("import")) {
 		StringList moduleNames;

@@ -39,6 +39,9 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	Frame& frame = GetFrame();
+	// Preparation of VType
+	VTYPE_Match.Prepare(frame);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(test));
 	return true;

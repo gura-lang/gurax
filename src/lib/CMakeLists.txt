@@ -25,8 +25,8 @@ include(module-os/build)
 set(GURAX_RELDIR ../module-path)
 include(module-path/build)
 
-set(GURAX_RELDIR ../module-re)
-include(module-re/build)
+#set(GURAX_RELDIR ../module-re)
+#include(module-re/build)
 
 set(GURAX_RELDIR ../module-sys)
 include(module-sys/build)
