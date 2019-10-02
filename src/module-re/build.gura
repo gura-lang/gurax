@@ -1,7 +1,9 @@
 #!/usr/bin/env gurax
 import(util.modbuild)
 
-builder = util.modbuild.Builder('re', ['module-re.cpp', 'Match.cpp', 'VType_Match.cpp'])
+builder = util.modbuild.Builder('re', [
+	'module-re.cpp', 'Group.cpp', 'Match.cpp', 'Pattern.cpp',
+	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'])
 /*
 if (sys.platform == `mswin) {
 	baseDir = path.join(builder.guestDir, 'onig-5.9.5')
