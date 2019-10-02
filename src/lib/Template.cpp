@@ -269,7 +269,6 @@ bool Template::Parser::CreateTmplScript(
 	Template& tmpl, Expr_Block& exprBlock,
 	StringReferable& sourceName, int cntLineTop, int cntLineBtm)
 {
-	//Class *pClass = env.LookupClass(VTYPE_template);
 	RefPtr<Expr_TmplScript> pExprTmplScript(
 		new Expr_TmplScript(
 			tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
@@ -313,8 +312,9 @@ bool Template::Parser::CreateTmplScript(
 				Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(pExprLastCaller->GetExprCar());
 				pValue = Basement::Inst.GetFrame().Lookup(exprCar.GetSymbol());
 			}
-			if (pValue && pValue->IsType(VTYPE_Function) &&
-				dynamic_cast<Value_Function&>(*pValue).GetDeclCallable()->GetDeclBlock().IsOccurOnce()) {
+			const DeclCallable* pDeclCallable;
+			if (pValue && (pDeclCallable = pValue->GetDeclCallable()) &&
+				pDeclCallable->GetDeclBlock().IsOccurOnce()) {
 				Expr_Block* pExprOfBlock = new Expr_Block();
 				pExprLastCaller->SetExprOfBlock(pExprOfBlock);
 				_exprLeaderStack.push_back(pExprOfBlock);
@@ -323,25 +323,34 @@ bool Template::Parser::CreateTmplScript(
 			_exprLeaderStack.push_back(pExprLastCaller->GetExprOfBlock());
 		}
 	} else {
-#if 0
 		// Parsing a normal script other than template directive.
-		AutoPtr<ExprOwner> pExprOwnerPart(new ExprOwner());
-		Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
-		if (!parser.ParseString(env, *pExprOwnerPart, strTmplScript, true)) return false;
-		ExprOwner::iterator ppExpr = pExprOwnerPart->begin();
-		//::printf("[%s], [%s], [%s]\n", strIndent, strTmplScript, strPost);
-		if (ppExpr != pExprOwnerPart->end()) {
+		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), pExprTmplScript->Reference()));
+		if (!pParser->FeedString(strTmplScript) || !pParser->Flush()) return false;
+		Expr* pExprFirst = pExprTmplScript->GetExprElemFirst();
+		if (pExprFirst && pExprFirst->IsType<Expr_Caller>()) {
 			// check if the first Expr is a trailer
-			Expr *pExpr = *ppExpr;
-			Callable *pCallable = pExpr->LookupCallable(env);
-			env.ClearSignal();
-			if (pCallable != nullptr && pCallable->IsTrailer()) {
+			Expr_Caller* pExprFirstCaller = dynamic_cast<Expr_Caller*>(pExprFirst);
+			Value* pValue = nullptr;
+			if (pExprFirstCaller->GetExprCar().IsType<Expr_Identifier>()) {
+				Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(pExprFirstCaller->GetExprCar());
+				pValue = Basement::Inst.GetFrame().Lookup(exprCar.GetSymbol());
+			}
+			const DeclCallable* pDeclCallable;
+			if (pValue && (pDeclCallable = pValue->GetDeclCallable()) &&
+				pDeclCallable->IsSet(DeclCallable::Flag::Trailer)) {
 				pExprTmplScript->SetStringIndent("");
 				if (_exprLeaderStack.empty()) {
-					env.SetError(ERR_SyntaxError, "unmatching trailer expression");
-					env.GetSignal().AddExprCause(pExprTmplScript.get());
+					Error::IssueWith(ErrorType::SyntaxError, *pExprTmplScript, "unmatching trailer expression");
 					return false;
 				}
+				if (!pDeclCallable->IsSet(DeclCallable::Flag::EndMarker)) {
+					
+				}
+			}
+		}
+
+#if 0
+			if (pCallable != nullptr && pCallable->IsTrailer()) {
 				if (!pCallable->IsEndMarker()) {
 					Expr_Caller *pExprCaller = nullptr;
 					if (pExpr->IsCaller()) {
