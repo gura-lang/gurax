@@ -1,0 +1,524 @@
+#/bin/sh
+# Global variables
+prefix=/usr
+libdir_guest=$prefix/lib/gura/guest
+make_option=-j3
+
+labels="expat freetype fontconfig libusb pixman libpng"
+labels="$labels cairo eigen fftw gmp jpegsrc liblinear libmtp libsvm onig sdl2 tiff wx yaml"
+
+#---------------------------------------------------------------------------
+function main() {
+	if [ "$1" == "install" ] ; then
+		mkdir -p $libdir_guest
+		cp -v -a dylib/* $libdir_guest
+		exit
+	fi
+	if [ $# -gt 0 ] ; then
+		label=$1
+		packages=""
+		getinfo_$label
+		download_packages
+		clean_$label
+		failed=""
+		build_$label
+		exit
+	fi
+	# Download packages
+	packages=""
+	for label in $labels; do
+		getinfo_$label
+	done
+	download_packages
+	# Build packages at first that are used by other packages
+	failed=""
+	for label in $labels; do
+		build_$label
+	done
+	# Prints a list of package names that have occcured errors
+	if [ -n "$failed" ] ; then
+		echo ======================================================================
+		echo Error occured:$failed
+		echo ======================================================================
+	fi
+}
+
+#---------------------------------------------------------------------------
+function download_packages() {
+	for package in $packages; do
+		echo $package
+		if [ ! -f $package ]; then
+			curl -O http://www.gura-lang.org/guest/$package
+		fi
+	done
+}
+
+#---------------------------------------------------------------------------
+function setup_dylib() {
+	local srcdir=$1
+	local dstdir=$2
+	for file in $srcdir/*.dylib; do
+		if [ ! -h $file ]; then
+			install_name_tool -id "@executable_path/../lib/gura/guest/`basename $file`" $file
+		fi
+		cp -a $file $dstdir
+	done
+}
+
+#---------------------------------------------------------------------------
+# depends on: fontconfig, freetype, pixman, libpng
+function getinfo_cairo() {
+	ver_cairo=1.12.18
+	packages="$packages cairo-$ver_cairo.tar.xz"
+}
+
+function clean_cairo() {
+	rm -rf cairo-$ver_cairo
+}
+
+function build_cairo() {
+	tar xfz cairo-$ver_cairo.tar.xz
+	pushd cairo-$ver_cairo
+	./configure pixman_CFLAGS=-I`pwd`/../include/pixman pixman_LIBS="-L`pwd`/../lib -lpixman-1" PKG_CONFIG=../pkg-config-fake png_CFLAGS=-I`pwd`/../include/png png_LIBS="-L`pwd`/../lib -lpng16" FONTCONFIG_CFLAGS=-I`pwd`/../include/fontconfig FONTCONFIG_LDFLAGS="-L`pwd`/../dylib -lfontconfig" FREETYPE_CFLAGS=-I`pwd`/../include/freetype FREETYPE_LIBS="-L`pwd`/../lib -lfreetype -lbz2" --disable-xlib --disable-xcb --disable-gobject --disable-fc --disable-ps
+	make $make_option || failed="$failed cairo"
+	popd
+	rm -f include/cairo
+	ln -sf ../cairo-$ver_cairo/src/ include/cairo
+	setup_dylib cairo-$ver_cairo/src/.libs dylib
+}
+
+#---------------------------------------------------------------------------
+function getinfo_eigen() {
+	ver_eigen=5a0156e40feb
+	packages="$packages eigen-eigen-$ver_eigen.zip"
+}
+
+function clean_eigen() {
+	rm -rf eigen-eigen-$ver_eigen
+}
+
+function build_eigen() {
+	unzip -o eigen-eigen-$ver_eigen.zip
+	ln -sf ../eigen-eigen-$ver_eigen/Eigen include/Eigen
+}
+
+#---------------------------------------------------------------------------
+function getinfo_expat() {
+	ver_expat=2.1.0
+	packages="$packages expat-$ver_expat.tar.gz"
+}
+
+function clean_expat() {
+	rm -rf expat-$ver_expat
+}
+
+function build_expat() {
+	tar xfz expat-$ver_expat.tar.gz
+	pushd expat-$ver_expat
+	./configure
+	make $make_option || failed="$failed expat"
+	popd
+	rm -f include/expat
+	ln -sf ../expat-$ver_expat/lib/ include/expat
+	ln -sf ../expat-$ver_expat/.libs/libexpat.a lib/libexpat.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_fftw() {
+	ver_fftw=3.3.6-pl2
+	packages="$packages fftw-$ver_fftw.tar.gz"
+}
+
+function clean_fftw() {
+	rm -rf fftw-$ver_fftw
+}
+
+function build_fftw() {
+	tar xfz fftw-$ver_fftw.tar.gz
+	pushd fftw-$ver_fftw
+	./configure
+	make
+	popd
+	rm -f include/fftw
+	ln -sf ../fftw-$ver_fftw/api include/fftw
+	ln -sf ../fftw-$ver_fftw/.libs/libfftw3.a lib/libfftw3.a
+}
+
+#---------------------------------------------------------------------------
+# depends on: expat, freetype
+function getinfo_fontconfig() {
+	ver_fontconfig=2.11.1
+	packages="$packages fontconfig-$ver_fontconfig.tar.bz2"
+}
+
+function clean_fontconfig() {
+	rm -rf fontconfig-$ver_fontconfig
+}
+
+function build_fontconfig() {
+	tar xfz fontconfig-$ver_fontconfig.tar.bz2
+	pushd fontconfig-$ver_fontconfig
+	./configure PKG_CONFIG=../pkg-config-fake FREETYPE_CFLAGS=-I../../include/freetype FREETYPE_LIBS="-L../../lib -lfreetype -lz -lbz2" EXPAT_CFLAGS=-I../../include/expat EXPAT_LIBS="-L../../lib -lexpat"
+	make $make_option || failed="$failed fontconfig"
+	popd
+	rm -f include/fontconfig
+	ln -sf ../fontconfig-$ver_fontconfig/ include/fontconfig
+	setup_dylib fontconfig-$ver_fontconfig/src/.libs dylib
+}
+
+#---------------------------------------------------------------------------
+function getinfo_freetype() {
+	ver_freetype=2.5.3
+	packages="$packages freetype-$ver_freetype.tar.bz2"
+}
+
+function clean_freetype() {
+	rm -rf freetype-$ver_freetype
+}
+
+function build_freetype() {
+	tar xfz freetype-$ver_freetype.tar.bz2
+	pushd freetype-$ver_freetype
+	./configure --with-png=no
+	make $make_option || failed="$failed freetype"
+	popd
+	rm -f include/freetype
+	ln -sf ../freetype-$ver_freetype/include/ include/freetype
+	ln -sf ../freetype-$ver_freetype/objs/.libs/libfreetype.a lib/libfreetype.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_gmp() {
+	ver_gmp=6.0.0
+	packages="$packages gmp-${ver_gmp}a.tar.bz2"
+}
+
+function clean_gmp() {
+	rm -rf gmp-$ver_gmp
+}
+
+function build_gmp() {
+	tar xfz gmp-${ver_gmp}a.tar.bz2
+	pushd gmp-$ver_gmp
+	./configure
+	make $make_option || failed="$failed gmp"
+	popd
+	rm -f include/gmp
+	ln -sf ../gmp-$ver_gmp/ include/gmp
+	setup_dylib gmp-$ver_gmp/.libs dylib
+}
+
+#---------------------------------------------------------------------------
+function getinfo_jpegsrc() {
+	ver_jpegsrc=9a
+	packages="$packages jpegsrc.v$ver_jpegsrc.tar.gz"
+}
+
+function clean_jpegsrc() {
+	rm -rf jpeg-$ver_jpegsrc
+}
+
+function build_jpegsrc() {
+	tar xfz jpegsrc.v$ver_jpegsrc.tar.gz
+	pushd jpeg-$ver_jpegsrc
+	./configure
+	make $make_option || failed="$failed jpegsrc"
+	popd
+	rm -f include/jpeg
+	ln -sf ../jpeg-$ver_jpegsrc/ include/jpeg
+	ln -sf ../jpeg-$ver_jpegsrc/.libs/libjpeg.a lib/libjpeg.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_liblinear() {
+	ver_liblinear=2.11
+	packages="$packages liblinear-$ver_liblinear.zip"
+	packages="$packages liblinear-$ver_liblinear-gurapatch.zip"
+}
+
+function clean_liblinear() {
+	rm -rf liblinear-$ver_liblinear
+}
+
+function build_liblinear() {
+	unzip -o liblinear-$ver_liblinear.zip
+	unzip -o liblinear-$ver_liblinear-gurapatch.zip
+	pushd liblinear-$ver_liblinear
+	make lib
+	popd
+	rm -f include/liblinear
+	ln -sf ../liblinear-$ver_liblinear include/liblinear
+	setup_dylib liblinear-$ver_liblinear dylib
+}
+
+#---------------------------------------------------------------------------
+# depends on: libusb
+function getinfo_libmtp() {
+	ver_libmtp=1.1.15
+	packages="$packages libmtp-$ver_libmtp.tar.gz"
+	packages="$packages libmtp-$ver_libmtp-gurapatch.tar.gz"
+}
+
+function clean_libmtp() {
+	rm -rf libmtp-$ver_libmtp
+}
+
+function build_libmtp() {
+	tar xfz libmtp-$ver_libmtp.tar.gz
+	tar xfz libmtp-$ver_libmtp-gurapatch.tar.gz
+	pushd libmtp-$ver_libmtp
+	./configure LIBUSB_CFLAGS=-I`pwd`/../include/libusb LIBUSB_LIBS="-framework Carbon -framework IOKit -L`pwd`/../lib -lusb"
+	make
+	popd
+	rm -f include/libmtp
+	ln -sf ../libmtp-$ver_libmtp/src include/libmtp
+	ln -sf ../libmtp-$ver_libmtp/src/.libs/libmtp.a lib/libmtp.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_libpng() {
+	ver_libpng=1.6.12
+	packages="$packages libpng-$ver_libpng.tar.gz"
+}
+
+function clean_libpng() {
+	rm -rf libpng-$ver_libpng
+}
+
+function build_libpng() {
+	tar xfz libpng-$ver_libpng.tar.gz
+	pushd libpng-$ver_libpng
+	./configure
+	make $make_option || failed="$failed libpng"
+	popd
+	rm -f include/png
+	ln -sf ../libpng-$ver_libpng/ include/png
+	ln -sf ../libpng-$ver_libpng/.libs/libpng16.a lib/libpng16.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_libspectre() {
+	ver_spectre=0.2.7
+	packages="$packages libspectre-$ver_spectre.tar.gz"
+}
+
+function clean_libspectre() {
+	rm -rf libspectre-$ver_spectre
+}
+
+function build_libspectre() {
+	tar xfz libspectre-$ver_spectre.tar.gz
+	pushd libspectre-$ver_spectre
+	./configure 
+	make $make_option || failed="$failed libspectre"
+	popd
+}
+
+#---------------------------------------------------------------------------
+function getinfo_libsvm() {
+	ver_libsvm=3.22
+	packages="$packages libsvm-$ver_libsvm.zip"
+	packages="$packages libsvm-$ver_libsvm-gurapatch.zip"
+}
+
+function clean_libsvm() {
+	rm -rf libsvm-$ver_libsvm
+}
+
+function build_libsvm() {
+	unzip -o libsvm-$ver_libsvm.zip
+	unzip -o libsvm-$ver_libsvm-gurapatch.zip
+	pushd libsvm-$ver_libsvm
+	make lib
+	popd
+	rm -f include/libsvm
+	ln -sf ../libsvm-$ver_libsvm include/libsvm
+	setup_dylib libsvm-$ver_libsvm dylib
+}
+
+#---------------------------------------------------------------------------
+function getinfo_libusb() {
+	ver_libusb=1.0.22
+	packages="$packages libusb-$ver_libusb.tar.bz2"
+}
+
+function clean_libusb() {
+	rm -rf libusb-$ver_libusb
+}
+
+function build_libusb() {
+	tar xfz libusb-$ver_libusb.tar.bz2
+	pushd libusb-$ver_libusb
+	./configure
+	make
+	popd
+	rm -f include/libusb
+	ln -sf ../libusb-$ver_libusb/libusb include/libusb
+	ln -sf ../libusb-$ver_libusb/libusb/.libs/libusb-1.0.a lib/libusb.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_llvm() {
+	ver_llvm=3.6.1
+	packages="$packages llvm-$ver_llvm.src.tar.xz"
+}
+
+function clean_llvm() {
+	rm -rf llvm-$ver_llvm.src
+}
+
+function build_llvm() {
+	tar xfJ llvm-$ver_llvm.src.tar.xz
+	pushd llvm-$ver_llvm.src
+	mkdir build
+	cd build
+	cmake ..
+	make $make_option || failed="$failed llvm"
+	popd
+}
+
+#---------------------------------------------------------------------------
+function getinfo_onig() {
+	ver_onig=5.9.5
+	packages="$packages onig-$ver_onig.tar.gz"
+}
+
+function clean_onig() {
+	rm -rf onig-$ver_onig
+}
+
+function build_onig() {
+	tar xfz onig-$ver_onig.tar.gz
+	pushd onig-$ver_onig
+	./configure
+	make $make_option || failed="$failed onig"
+	popd
+	rm -f include/onig
+	ln -sf ../onig-$ver_onig/ include/onig
+	ln -sf ../onig-$ver_onig/.libs/libonig.a lib/libonig.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_pixman() {
+	ver_pixman=0.34.0
+	packages="$packages pixman-$ver_pixman.tar.gz"
+}
+
+function clean_pixman() {
+	rm -rf pixman-$ver_pixman
+}
+
+function build_pixman() {
+	tar xfz pixman-$ver_pixman.tar.gz
+	pushd pixman-$ver_pixman
+	./configure
+	make $make_option || failed="$failed pixman"
+	popd
+	rm -f include/pixman
+	ln -sf ../pixman-$ver_pixman/pixman/ include/pixman
+	ln -sf ../pixman-$ver_pixman/pixman/.libs/libpixman-1.a lib/libpixman-1.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_sdl() {
+	ver_sdl=1.2.15
+	packages="$packages SDL-$ver_sdl.tar.gz"
+}
+
+function clean_sdl() {
+	rm -rf SDL-$ver_sdl
+}
+
+function build_sdl() {
+	tar xfz SDL-$ver_sdl.tar.gz
+	pushd SDL-$ver_sdl
+	./configure --disable-video-x11
+	popd
+}
+
+#---------------------------------------------------------------------------
+function getinfo_sdl2() {
+	ver_sdl2=2.0.4
+	packages="$packages SDL2-$ver_sdl2.tar.gz"
+}
+
+function clean_sdl2() {
+	rm -rf SDL2-$ver_sdl2
+}
+
+function build_sdl2() {
+	tar xfz SDL2-$ver_sdl2.tar.gz
+	pushd SDL2-$ver_sdl2
+	./configure
+	make $make_option || failed="$failed sdl2"
+	popd
+	rm -f include/SDL2
+	ln -sf ../SDL2-$ver_sdl2/include/ include/SDL2
+	setup_dylib SDL2-$ver_sdl2/build/.libs dylib
+}
+
+#---------------------------------------------------------------------------
+function getinfo_tiff() {
+	ver_tiff=3.8.2
+	packages="$packages tiff-$ver_tiff.tar.gz"
+}
+
+function clean_tiff() {
+	rm -rf tiff-$ver_tiff
+}
+
+function build_tiff() {
+	tar xfz tiff-$ver_tiff.tar.gz
+	pushd tiff-$ver_tiff
+	./configure
+	make $make_option || failed="$failed tiff"
+	popd
+	rm -f include/tiff
+	ln -sf ../tiff-$ver_tiff/libtiff/ include/tiff
+	ln -sf ../tiff-$ver_tiff/libtiff/.libs/libtiff.a lib/libtiff.a
+}
+
+#---------------------------------------------------------------------------
+function getinfo_wx() {
+	ver_wx=3.1.1
+	packages="$packages wxWidgets-$ver_wx.tar.bz2"
+}
+
+function clean_wx() {
+	rm -rf wxWidgets-$ver_wx
+}
+
+function build_wx() {
+	tar xfz wxWidgets-$ver_wx.tar.bz2
+	pushd wxWidgets-$ver_wx
+	./configure --with-macosx-version-min=10.9 --disable-shared
+	make $make_option || failed="$failed wx"
+	popd
+	rm -f include/wx
+	rm -f lib/wx
+	ln -sf ../wxWidgets-$ver_wx/include/ include/wx
+	ln -sf ../wxWidgets-$ver_wx/lib/ lib/wx
+}
+
+#---------------------------------------------------------------------------
+function getinfo_yaml() {
+	ver_yaml=0.1.5
+	packages="$packages yaml-$ver_yaml.tar.gz"
+}
+
+function clean_yaml() {
+	rm -rf yaml-$ver_yaml
+}
+
+function build_yaml() {
+	tar xfz yaml-$ver_yaml.tar.gz
+	pushd yaml-$ver_yaml
+	./configure
+	make $make_option || failed="$failed yaml"
+	popd
+	rm -f include/yaml
+	ln -sf ../yaml-$ver_yaml/include/ include/yaml
+	ln -sf ../yaml-$ver_yaml/src/.libs/libyaml.a lib/libyaml.a
+}
+
+main $*
