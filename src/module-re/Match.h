@@ -14,9 +14,11 @@ class GURAX_DLLDECLARE Match : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Match);
+private:
+	OnigRegion* _pRegion;
 public:
 	// Constructor
-	Match() {}
+	Match(OnigRegion* pRegion);
 	// Copy constructor/operator
 	Match(const Match& src) = delete;
 	Match& operator=(const Match& src) = delete;
@@ -24,7 +26,7 @@ public:
 	Match(Match&& src) = delete;
 	Match& operator=(Match&& src) noexcept = delete;
 protected:
-	virtual ~Match() = default;
+	virtual ~Match();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Match& pathMgr) const { return this == &pathMgr; }

@@ -44,6 +44,10 @@ public:
 public:
 	Value& PeekValue();
 	Value& PickValue();
+	template<typename T_Value>
+	T_Value& Peek()					{ return dynamic_cast<T_Value&>(PeekValue()); }
+	template<typename T_Value>
+	T_Value& Pick()					{ return dynamic_cast<T_Value&>(PickValue()); }
 	Bool PickBool()					{ return PickValue().GetBool(); }
 	template<typename T_Num> T_Num PickNumber() {
 		return Value_Number::GetNumber<T_Num>(PickValue());

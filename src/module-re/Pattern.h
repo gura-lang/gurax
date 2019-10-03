@@ -15,10 +15,10 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Pattern);
 private:
-	regex_t* _reg;
+	regex_t* _pRegex;
 public:
 	// Constructor
-	Pattern() : _reg(nullptr) {}
+	Pattern();
 	// Copy constructor/operator
 	Pattern(const Pattern& src) = delete;
 	Pattern& operator=(const Pattern& src) = delete;
@@ -26,9 +26,10 @@ public:
 	Pattern(Pattern&& src) = delete;
 	Pattern& operator=(Pattern&& src) noexcept = delete;
 protected:
-	virtual ~Pattern() = default;
+	virtual ~Pattern();
 public:
 	bool Prepare(const char* pattern);
+	Match* CreateMatch(const char* str);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Pattern& pathMgr) const { return this == &pathMgr; }

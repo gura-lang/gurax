@@ -70,6 +70,16 @@ Gurax_ImplementFunction(test)
 }
 
 //------------------------------------------------------------------------------
+// utilities
+//------------------------------------------------------------------------------
+void IssueGuestError(int rtn, const OnigErrorInfo& einfo)
+{
+	OnigUChar str[ONIG_MAX_ERROR_MESSAGE_LEN];
+	::onig_error_code_to_str(str, rtn, &einfo);
+	Error::Issue(ErrorType::GuestError, "%s", str);
+}
+
+//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()

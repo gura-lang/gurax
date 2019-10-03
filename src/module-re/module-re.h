@@ -13,6 +13,9 @@
 #include "VType_Pattern.h"
 
 Gurax_BeginModuleHeader(re)
+
+void IssueGuestError(int rtn, const OnigErrorInfo& einfo);
+
 Gurax_EndModuleHeader(re)
 
 #endif
