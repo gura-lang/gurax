@@ -31,6 +31,12 @@ public:
 protected:
 	virtual ~Group() = default;
 public:
+	Match& GetMatch() { return *_pMatch; }
+	const Match& GetMatch() const { return *_pMatch; }
+	int GetPosBegin() const { return _posBegin; }
+	int GetPosEnd() const { return _posEnd; }
+	String GetString() const;
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Group& pathMgr) const { return this == &pathMgr; }
 	bool IsEqualTo(const Group& pathMgr) const { return IsIdentical(pathMgr); }

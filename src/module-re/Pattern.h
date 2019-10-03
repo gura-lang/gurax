@@ -17,7 +17,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Pattern);
 private:
-	regex_t* _pRegex;
+	OnigRegex _regex;
 public:
 	// Constructor
 	Pattern();

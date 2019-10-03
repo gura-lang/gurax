@@ -13,6 +13,11 @@ Group::Group(Match* pMatch, int posBegin, int posEnd) :
 {
 }
 
+String Group::GetString() const
+{
+	return GetMatch().GetStringSTL().substr(_posBegin, _posEnd - _posBegin);
+}
+
 String Group::ToString(const StringStyle& ss) const
 {
 	String str;

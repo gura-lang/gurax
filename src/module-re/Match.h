@@ -19,10 +19,11 @@ public:
 	Gurax_DeclareReferable(Match);
 private:
 	RefPtr<Pattern> _pPattern;
-	OnigRegion* _pRegion;
+	OnigRegion* _region;
+	String _str;
 public:
 	// Constructor
-	Match(Pattern* pPattern, OnigRegion* pRegion);
+	Match(Pattern* pPattern, OnigRegion* region, String str);
 	// Copy constructor/operator
 	Match(const Match& src) = delete;
 	Match& operator=(const Match& src) = delete;
@@ -33,8 +34,11 @@ protected:
 	virtual ~Match();
 public:
 	Pattern& GetPattern() { return *_pPattern; }
-	int CountGroups() const { return _pRegion->num_regs; }
+	const String& GetStringSTL() const { return _str; }
+	const char* GetString() const { return _str.c_str(); }
+	int CountGroups() const { return _region->num_regs; }
 	Group* CreateGroup(int iGroup) const;
+	int LookupGroupNum(const char* name);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Match& pathMgr) const { return this == &pathMgr; }
