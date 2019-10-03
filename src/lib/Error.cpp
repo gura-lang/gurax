@@ -16,6 +16,7 @@ const ErrorType ErrorType::ContextError		("ContextError",		"context error");
 const ErrorType ErrorType::DeclarationError	("DeclarationError",	"declaration error");
 const ErrorType ErrorType::DividedByZero	("DividedByZero",		"divided by zero");
 const ErrorType ErrorType::FormatError		("FormatError",			"format error");
+const ErrorType ErrorType::GuestError		("GuestError",			"guest error");
 const ErrorType ErrorType::ImportError		("ImportError",			"import error");
 const ErrorType ErrorType::IndexError		("IndexError",			"index error");
 const ErrorType ErrorType::InvalidOperation	("InvalidOperation",	"invalid operation");

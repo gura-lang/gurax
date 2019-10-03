@@ -14,9 +14,11 @@ class GURAX_DLLDECLARE Pattern : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Pattern);
+private:
+	regex_t* _reg;
 public:
 	// Constructor
-	Pattern() {}
+	Pattern() : _reg(nullptr) {}
 	// Copy constructor/operator
 	Pattern(const Pattern& src) = delete;
 	Pattern& operator=(const Pattern& src) = delete;
@@ -25,6 +27,8 @@ public:
 	Pattern& operator=(Pattern&& src) noexcept = delete;
 protected:
 	virtual ~Pattern() = default;
+public:
+	bool Prepare(const char* pattern);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Pattern& pathMgr) const { return this == &pathMgr; }

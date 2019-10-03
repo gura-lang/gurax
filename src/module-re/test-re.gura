@@ -1,4 +1,4 @@
 #!/usr/bin/env gurax
 import(re)
 
-Println(re.test(3, 4))
+re.test()

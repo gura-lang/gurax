@@ -150,6 +150,7 @@ ImplementErrorTypeProperty(ContextError)
 ImplementErrorTypeProperty(DeclarationError)
 ImplementErrorTypeProperty(DividedByZero)
 ImplementErrorTypeProperty(FormatError)
+ImplementErrorTypeProperty(GuestError)
 ImplementErrorTypeProperty(ImportError)
 ImplementErrorTypeProperty(IndexError)
 ImplementErrorTypeProperty(InvalidOperation)
@@ -192,6 +193,7 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassProperty(Error, DeclarationError));
 	Assign(Gurax_CreateClassProperty(Error, DividedByZero));
 	Assign(Gurax_CreateClassProperty(Error, FormatError));
+	Assign(Gurax_CreateClassProperty(Error, GuestError));
 	Assign(Gurax_CreateClassProperty(Error, ImportError));
 	Assign(Gurax_CreateClassProperty(Error, InvalidOperation));
 	Assign(Gurax_CreateClassProperty(Error, IOError));
