@@ -4,8 +4,11 @@
 #ifndef GURAX_MODULE_RE_MATCH_H
 #define GURAX_MODULE_RE_MATCH_H
 #include <gurax.h>
+#include "Pattern.h"
 
 Gurax_BeginModuleScope(re)
+
+class Group;
 
 //------------------------------------------------------------------------------
 // Match
@@ -15,10 +18,11 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Match);
 private:
+	RefPtr<Pattern> _pPattern;
 	OnigRegion* _pRegion;
 public:
 	// Constructor
-	Match(OnigRegion* pRegion);
+	Match(Pattern* pPattern, OnigRegion* pRegion);
 	// Copy constructor/operator
 	Match(const Match& src) = delete;
 	Match& operator=(const Match& src) = delete;
@@ -27,6 +31,10 @@ public:
 	Match& operator=(Match&& src) noexcept = delete;
 protected:
 	virtual ~Match();
+public:
+	Pattern& GetPattern() { return *_pPattern; }
+	int CountGroups() const { return _pRegion->num_regs; }
+	Group* CreateGroup(int iGroup) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Match& pathMgr) const { return this == &pathMgr; }

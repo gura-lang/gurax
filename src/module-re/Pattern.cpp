@@ -45,7 +45,7 @@ Match* Pattern::CreateMatch(const char* str)
 		::onig_region_free(pRegion, 1);
 		return nullptr;
 	}
-	return new Match(pRegion);
+	return new Match(Reference(), pRegion);
 }
 
 String Pattern::ToString(const StringStyle& ss) const

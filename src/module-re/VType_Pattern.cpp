@@ -30,6 +30,33 @@ Gurax_ImplementFunction(Pattern)
 	return ReturnValue(processor, argument, new Value_Pattern(pPattern.release()));
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// Pattern#Match(str:String):map {block?}
+Gurax_DeclareMethod(Pattern, Match)
+{
+	Declare(VTYPE_List, Flag::Map);
+	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Adds values to the list.");
+}
+
+Gurax_ImplementMethod(Pattern, Match)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Pattern& pattern = valueThis.GetPattern();
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.PickString();
+	// Function body
+	RefPtr<Match> pMatch(pattern.CreateMatch(str));
+	if (!pMatch) return Value::nil();
+	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+}
+
 //------------------------------------------------------------------------------
 // VType_Pattern
 //------------------------------------------------------------------------------
@@ -40,6 +67,19 @@ void VType_Pattern::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Pattern));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Pattern, Match));
+}
+
+Value* VType_Pattern::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_String)) {
+		const char* pattern = Value_String::GetString(value);
+		RefPtr<Pattern> pPattern(new Pattern());
+		if (!pPattern->Prepare(pattern)) return nullptr;
+		return new Value_Pattern(pPattern.release());
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------

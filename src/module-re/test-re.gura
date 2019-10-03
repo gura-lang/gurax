@@ -1,4 +1,8 @@
 #!/usr/bin/env gurax
 import(re)
 
-re.test()
+//re.test()
+m = re.Match('a(.*)b|[e-f]+', 'zzzzaffffffffb')
+Println(m)
+Println(m[0])
+Println(m[1])

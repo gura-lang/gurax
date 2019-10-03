@@ -75,6 +75,8 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return GetMatch().ToString(ss);
 	}
+public:
+	virtual Value* DoIndexGet(const Index& index) const override;
 };
 
 Gurax_EndModuleScope(re)

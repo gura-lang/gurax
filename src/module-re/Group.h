@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_RE_GROUP_H
 #define GURAX_MODULE_RE_GROUP_H
 #include <gurax.h>
+#include "Match.h"
 
 Gurax_BeginModuleScope(re)
 
@@ -14,9 +15,13 @@ class GURAX_DLLDECLARE Group : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Group);
+private:
+	RefPtr<Match> _pMatch;
+	int _posBegin;
+	int _posEnd;
 public:
 	// Constructor
-	Group() {}
+	Group(Match* pMatch, int posBegin, int posEnd);
 	// Copy constructor/operator
 	Group(const Group& src) = delete;
 	Group& operator=(const Group& src) = delete;
