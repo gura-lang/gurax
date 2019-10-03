@@ -235,7 +235,7 @@ Gurax_ImplementMethod(List, Shuffle)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
-	Random& random = args.IsValid()? Value_Random::GetRandom(args.PickValue()) : Random::Global();
+	Random& random = args.IsValid()? args.Pick<Value_Random>().GetRandom() : Random::Global();
 	// Function body
 	valueTypedOwner.GetValueOwnerToSort().Shuffle(random);
 	return argument.GetValueThis().Reference();

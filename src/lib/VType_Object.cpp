@@ -44,7 +44,7 @@ Gurax_ImplementMethod(Object, IsInstanceOf)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const VType& vtype = Value_VType::GetVTypeThis(args.PickValue());
+	const VType& vtype = args.Pick<Value_VType>().GetVTypeThis();
 	// Function body
 	return new Value_Bool(valueThis.IsInstanceOf(vtype));
 }

@@ -35,7 +35,7 @@ Gurax_ImplementClassMethod(Error, Raise)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const ErrorType& errorType = Value_ErrorType::GetErrorType(args.PickValue());
+	const ErrorType& errorType = args.Pick<Value_ErrorType>().GetErrorType();
 	const char* format = args.PickString();
 	const ValueList& values = args.PickList();
 	// Function body

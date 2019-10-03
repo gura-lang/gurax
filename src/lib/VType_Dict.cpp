@@ -99,7 +99,7 @@ Gurax_ImplementMethod(Dict, Append)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const ValueDict& valDict = Value_Dict::GetValueDict(args.PickValue());
+	const ValueDict& valDict = args.Pick<Value_Dict>().GetValueDict();
 	// Function body
 	ValueDict::StoreMode storeMode =
 		argument.IsSet(Gurax_Symbol(strict))? ValueDict::StoreMode::Strict :
