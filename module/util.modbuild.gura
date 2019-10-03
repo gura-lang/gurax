@@ -13,9 +13,11 @@ Builder = class {
 	pathNamesSrc[]:String
 	pathNamesObj[]:String
 	dirNameOut = 'gnuc'
-	cflags = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC', '-I', sys.dirInclude]
-	ldflags = ['-shared', '-L', sys.dirLib]
-	libs = ['-lstdc++', '-lguraxcore']
+	dirNamesInc = [sys.dirInclude]
+	dirNamesLib = [sys.dirLib]
+	cflags = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC']
+	ldflags = ['-shared']
+	libs = ['stdc++', 'guraxcore']
 	__init__(targetName:String, pathNamesSrc[]:String) = {
 		this.targetName = targetName
 		this.pathNamesSrc = pathNamesSrc
@@ -27,18 +29,19 @@ Builder = class {
 			(fs.Stat(pathNameTgt).mtime < fs.Stat(pathNamesDep):*mtime).Or()
 	}
 	Exec(pathName:String, args*:String) = {
+		Printf('%s %s\n', pathName, args.Join(' '))
 		rtn = (os.Exec(pathName, args*) == 0)
 		rtn
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		cflags = this.cflags.Clone()
 		Printf('-- compiling: %s\n', pathNameSrc)
-		this.Exec('gcc', cflags*, '-o', pathNameObj, '-c', pathNameSrc)
+		this.Exec('gcc', cflags*, ('-I' + this.dirNamesInc)*, '-o', pathNameObj, '-c', pathNameSrc)
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
 		ldflags = this.ldflags.Clone()
 		libs = this.libs.Clone()
-		if (this.Exec('gcc', ldflags*, '-o', pathNameGurd, pathNamesObj*, libs*)) {
+		if (this.Exec('gcc', ldflags*, ('-L' + this.dirNamesLib)*, '-o', pathNameGurd, pathNamesObj*, ('-l' + libs)*)) {
 			Printf('-- generated: %s\n', pathNameGurd)
 		}
 	}

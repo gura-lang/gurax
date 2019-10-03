@@ -29,4 +29,8 @@ builder.build('re', ['module-re.cpp'], path.Join('script', [
 	'sed.gura', 'sed.doc.gura', 'tokenizer.gura', 'tokenizer.doc.gura']))
 */
 
+builder.dirNamesInc.Append('guest/onigmo-6.2.0/include')
+builder.dirNamesLib.Append('guest/onigmo-6.2.0/.libs')
+builder.libs.Append('onigmo')
+//builder.cflags.Append('-DONIG_EXTERN=extern')
 builder.Run()
