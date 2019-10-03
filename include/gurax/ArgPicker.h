@@ -50,32 +50,32 @@ public:
 	T_Value& Pick()					{ return dynamic_cast<T_Value&>(PickValue()); }
 	Bool PickBool()					{ return PickValue().GetBool(); }
 	template<typename T_Num> T_Num PickNumber() {
-		return Value_Number::GetNumber<T_Num>(PickValue());
+		return Pick<Value_Number>().GetNumber<T_Num>();
 	}
 	template<typename T_Num> T_Num PickNumberRanged(T_Num numMin, T_Num numMax) {
-		return Value_Number::GetNumberRanged<T_Num>(PickValue(), numMin, numMax);
+		return Pick<Value_Number>().GetNumberRanged<T_Num>(numMin, numMax);
 	}
 	template<typename T_Num> T_Num PickNumberNonNeg() {
-		return Value_Number::GetNumberNonNeg<T_Num>(PickValue());
+		return Pick<Value_Number>().GetNumberNonNeg<T_Num>();
 	}
 	template<typename T_Num> T_Num PickNumberPos() {
-		return Value_Number::GetNumberPos<T_Num>(PickValue());
+		return Pick<Value_Number>().GetNumberPos<T_Num>();
 	}
-	const Symbol* PickSymbol()		{ return Value_Symbol::GetSymbol(PickValue()); }
-	const char* PickString()		{ return Value_String::GetString(PickValue()); }
-	const String& PickStringSTL()	{ return Value_String::GetStringSTL(PickValue()); }
-	const ValueList& PickList()		{ return Value_List::GetValueOwner(PickValue()); }
-	const Expr& PickExpr()			{ return Value_Expr::GetExpr(PickValue()); }
-	DateTime& PickDateTime()		{ return Value_DateTime::GetDateTime(PickValue()); }
-	TimeDelta& PickTimeDelta()		{ return Value_TimeDelta::GetTimeDelta(PickValue()); }
+	const Symbol* PickSymbol()		{ return Pick<Value_Symbol>().GetSymbol(); }
+	const char* PickString()		{ return Pick<Value_String>().GetString(); }
+	const String& PickStringSTL()	{ return Pick<Value_String>().GetStringSTL(); }
+	const ValueList& PickList()		{ return Pick<Value_List>().GetValueOwner(); }
+	const Expr& PickExpr()			{ return Pick<Value_Expr>().GetExpr(); }
+	DateTime& PickDateTime()		{ return Pick<Value_DateTime>().GetDateTime(); }
+	TimeDelta& PickTimeDelta()		{ return Pick<Value_TimeDelta>().GetTimeDelta(); }
 	Stream& PickStream();
 	Iterator& PickIterator();
 	template<typename T_Num>
 	NumList<T_Num> PickNumList() {
-		return Value_Number::GetNumList<T_Num>(Value_List::GetValueOwner(PickValue()));
+		return Value_Number::GetNumList<T_Num>(Pick<Value_List>().GetValueOwner());
 	}
 	StringList PickStringList() {
-		return Value_String::GetStringList(Value_List::GetValueOwner(PickValue()));
+		return Value_String::GetStringList(Pick<Value_List>().GetValueOwner());
 	}
 };
 

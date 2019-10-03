@@ -39,12 +39,12 @@ Value& ArgPicker::PickValue()
 
 Stream& ArgPicker::PickStream()
 {
-	return Value_Stream::GetStream(PickValue());
+	return Pick<Value_Stream>().GetStream();
 }
 
 Iterator& ArgPicker::PickIterator()
 {
-	return Value_Iterator::GetIterator(PickValue());
+	return Pick<Value_Iterator>().GetIterator();
 }
 
 }
