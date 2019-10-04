@@ -49,7 +49,7 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 {
 	enum class Stat { Start, Escape };
 	size_t len = ::strlen(str);
-	String result;
+	String strRtn;
 	OnigRegion_Ptr region(::onig_region_new());
 	int idx = 0;
 	for ( ; cnt != 0; cnt--) {
@@ -58,100 +58,81 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 								reinterpret_cast<const OnigUChar *>(str + idx),
 								reinterpret_cast<const OnigUChar *>(str + len),
 								region.get(), ONIG_OPTION_NONE);
-		if (rtn >= 0) {
-			if (rtn < idx || region->num_regs == 0 || region->end[0] <= idx) {
-				IssueError_Onigmo();
-				return String::Empty;
-			}
-#if 0
-			result += String(str + idx, rtn - idx);
-			Stat stat = Stat::Start;
-			for (const char *p = replace; *p != '\0'; p++) {
-				char ch = *p;
-				if (stat == STAT_Start) {
-					if (ch == '\\') {
-						stat = STAT_Escape;
-					} else {
-						result.push_back(*p);
-					}
-				} else if (stat == STAT_Escape) {
-					if (IsDigit(ch)) {
-						int iGroup = ch - '0';
-						if (iGroup < pRegion->num_regs) {
-							int idxBegin = pRegion->beg[iGroup];
-							int idxEnd = pRegion->end[iGroup];
-							result += String(str + idxBegin, idxEnd - idxBegin);
-						}
-						stat = STAT_Start;
-					} else {
-						result.push_back(GetEscaped(ch));
-						stat = STAT_Start;
-					}
-				}
-			}
-			idx = pRegion->end[0];
-#endif
-		} else if (rtn == ONIG_MISMATCH) {
+		if (rtn == ONIG_MISMATCH) {
 			break;
-		} else { // error
+		} else if (rtn < 0) { // error
 			IssueError_Onigmo(rtn);
 			return String::Empty;
+		} else if (rtn < idx || region->num_regs == 0 || region->end[0] <= idx) {
+			IssueError_Onigmo();
+			return String::Empty;
 		}
+		strRtn += String(str + idx, rtn - idx);
+		Stat stat = Stat::Start;
+		for (const char *p = replace; *p != '\0'; p++) {
+			char ch = *p;
+			if (stat == Stat::Start) {
+				if (ch == '\\') {
+					stat = Stat::Escape;
+				} else {
+					strRtn += *p;
+				}
+			} else if (stat == Stat::Escape) {
+				if (String::IsDigit(ch)) {
+					int iGroup = ch - '0';
+					if (iGroup < region->num_regs) {
+						int idxBegin = region->beg[iGroup];
+						int idxEnd = region->end[iGroup];
+						strRtn += String(str + idxBegin, idxEnd - idxBegin);
+					}
+					stat = Stat::Start;
+				} else {
+					strRtn += String::ToEscaped(ch);
+					stat = Stat::Start;
+				}
+			}
+		}
+		idx = region->end[0];
 	}
-#if 0
-	::onig_region_free(pRegion, 1); // 1:free self, 0:free contents only
-	result += String(str + idx);
-	return result;
-error_done:
-	::onig_region_free(pRegion, 1); // 1:free self, 0:free contents only
-#endif
-	return "";
+	strRtn += String(str + idx);
+	return strRtn;
 }
 
-String Pattern::SubstituteByFunction(const char* str, const Function& func, int cnt)
+String Pattern::SubstituteByFunction(const char* str, Processor& processor, const Function& func, int cnt)
 {
-#if 0
-	enum Stat { STAT_Start, STAT_Escape };
+	enum class Stat { Start, Escape };
 	size_t len = ::strlen(str);
-	String result;
-	OnigRegion *pRegion = ::onig_region_new();
+	String strRtn;
+	OnigRegion_Ptr region(::onig_region_new());
 	int idx = 0;
+	RefPtr<Frame> pFrame(func.LockFrameOuter());
 	for ( ; cnt != 0; cnt--) {
-		int rtn = ::onig_search(pRegEx,
-					reinterpret_cast<const OnigUChar *>(str),
-					reinterpret_cast<const OnigUChar *>(str + len),
-					reinterpret_cast<const OnigUChar *>(str + idx),
-					reinterpret_cast<const OnigUChar *>(str + len),
-					pRegion, ONIG_OPTION_NONE);
-		if (rtn >= 0) {
-			Object_match *pObj = new Object_match();
-			if (!pObj->SetMatchInfo(str, pRegEx, pRegion, 0)) {
-				SetError_FailInOniguruma(sig);
-				delete pObj;
-				goto error_done;
-			}
-			AutoPtr<Argument> pArg(new Argument(pFunc));
-			if (!pArg->StoreValue(env, Value(pObj))) goto error_done;
-			Value resultFunc = pFunc->Eval(env, *pArg);
-			if (sig.IsSignalled()) goto error_done;
-			result += String(str + idx, rtn - idx);
-			result += resultFunc.ToString(false);
-			if (sig.IsSignalled()) goto error_done;
-			idx = pRegion->end[0];
-		} else if (rtn == ONIG_MISMATCH) {
+		int rtn = ::onig_search(_regex, reinterpret_cast<const OnigUChar *>(str),
+								reinterpret_cast<const OnigUChar *>(str + len),
+								reinterpret_cast<const OnigUChar *>(str + idx),
+								reinterpret_cast<const OnigUChar *>(str + len),
+								region.get(), ONIG_OPTION_NONE);
+		if (rtn == ONIG_MISMATCH) {
 			break;
-		} else { // error
-			SetError_OnigurumaError(sig, rtn);
-			goto error_done;
+		} else if (rtn < 0) { // error
+			IssueError_Onigmo(rtn);
+			return String::Empty;
+		} else if (rtn < idx || region->num_regs == 0 || region->end[0] <= idx) {
+			IssueError_Onigmo();
+			return String::Empty;
 		}
+		RefPtr<Match> pMatch(new Match(Reference(), region.release(), str));
+		RefPtr<Argument> pArgument(new Argument(func));
+		ArgFeeder args(*pArgument);
+		if (!args.FeedValue(*pFrame, new Value_Match(pMatch.release()))) return String::Empty;
+		RefPtr<Value> pValueRtn(func.DoEval(processor, *pArgument));
+		if (Error::IsIssued()) return String::Empty;
+		strRtn += String(str + idx, rtn - idx);
+		strRtn += pValueRtn->ToString();
+		idx = region->end[0];
 	}
-	::onig_region_free(pRegion, 1); // 1:free self, 0:free contents only
-	result += String(str + idx);
-	return result;
-error_done:
-	::onig_region_free(pRegion, 1); // 1:free self, 0:free contents only
-#endif
-	return "";
+	strRtn += String(str + idx);
+	return strRtn;
 }
 
 String Pattern::ToString(const StringStyle& ss) const
