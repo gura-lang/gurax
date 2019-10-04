@@ -32,6 +32,8 @@ protected:
 public:
 	bool Prepare(const char* pattern);
 	Match* CreateMatch(const char* str);
+	String SubstituteByString(const char* str, const char* replace, int cnt);
+	String SubstituteByFunction(const char* str, const Function& func, int cnt);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Pattern& pathMgr) const { return this == &pathMgr; }
