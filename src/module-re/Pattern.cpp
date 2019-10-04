@@ -24,7 +24,7 @@ bool Pattern::Prepare(const char* pattern)
 						 reinterpret_cast<const OnigUChar*>(pattern) + ::strlen(pattern),
 						 ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF8, ONIG_SYNTAX_DEFAULT, &einfo);
 	if (rtn != ONIG_NORMAL) {
-		IssueGuestError(rtn, einfo);
+		IssueError_Onigmo(rtn, einfo);
 		return false;
 	}
 	return true;
@@ -32,7 +32,7 @@ bool Pattern::Prepare(const char* pattern)
 
 Match* Pattern::CreateMatch(const char* str)
 {
-	OnigRegion* region = ::onig_region_new();
+	OnigRegion_Ptr region(::onig_region_new());
 	const char* strEnd = str + ::strlen(str);
 	const char* strStart = str;
 	const char* strRange = strEnd;
@@ -40,36 +40,32 @@ Match* Pattern::CreateMatch(const char* str)
 							reinterpret_cast<const OnigUChar*>(strEnd),
 							reinterpret_cast<const OnigUChar*>(strStart),
 							reinterpret_cast<const OnigUChar*>(strRange),
-							region, ONIG_OPTION_NONE);
-	if (rtn < 0) {
-		::onig_region_free(region, 1);
-		return nullptr;
-	}
-	return new Match(Reference(), region, str);
+							region.get(), ONIG_OPTION_NONE);
+	if (rtn < 0) return nullptr;
+	return new Match(Reference(), region.release(), str);
 }
 
 String Pattern::SubstituteByString(const char* str, const char* replace, int cnt)
 {
-#if 0
-	enum Stat { STAT_Start, STAT_Escape };
+	enum class Stat { Start, Escape };
 	size_t len = ::strlen(str);
 	String result;
-	OnigRegion *pRegion = ::onig_region_new();
+	OnigRegion_Ptr region(::onig_region_new());
 	int idx = 0;
 	for ( ; cnt != 0; cnt--) {
-		int rtn = ::onig_search(pRegEx,
-						reinterpret_cast<const OnigUChar *>(str),
-						reinterpret_cast<const OnigUChar *>(str + len),
-						reinterpret_cast<const OnigUChar *>(str + idx),
-						reinterpret_cast<const OnigUChar *>(str + len),
-						pRegion, ONIG_OPTION_NONE);
+		int rtn = ::onig_search(_regex, reinterpret_cast<const OnigUChar *>(str),
+								reinterpret_cast<const OnigUChar *>(str + len),
+								reinterpret_cast<const OnigUChar *>(str + idx),
+								reinterpret_cast<const OnigUChar *>(str + len),
+								region.get(), ONIG_OPTION_NONE);
 		if (rtn >= 0) {
-			if (rtn < idx || pRegion->num_regs == 0 || pRegion->end[0] <= idx) {
-				SetError_FailInOniguruma(sig);
-				goto error_done;
+			if (rtn < idx || region->num_regs == 0 || region->end[0] <= idx) {
+				IssueError_Onigmo();
+				return String::Empty;
 			}
+#if 0
 			result += String(str + idx, rtn - idx);
-			Stat stat = STAT_Start;
+			Stat stat = Stat::Start;
 			for (const char *p = replace; *p != '\0'; p++) {
 				char ch = *p;
 				if (stat == STAT_Start) {
@@ -94,13 +90,15 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 				}
 			}
 			idx = pRegion->end[0];
+#endif
 		} else if (rtn == ONIG_MISMATCH) {
 			break;
 		} else { // error
-			SetError_OnigurumaError(sig, rtn);
-			goto error_done;
+			IssueError_Onigmo(rtn);
+			return String::Empty;
 		}
 	}
+#if 0
 	::onig_region_free(pRegion, 1); // 1:free self, 0:free contents only
 	result += String(str + idx);
 	return result;

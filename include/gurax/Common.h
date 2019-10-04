@@ -142,6 +142,34 @@ void StableSortListByOrder(T_List& list, SortOrder sortOrder)
 }
 
 //------------------------------------------------------------------------------
+// CustomPtr
+//------------------------------------------------------------------------------
+template<typename T> class CustomPtr {
+protected:
+	T* _p;
+public:
+	// Default constructor
+	CustomPtr(T* p) : _p(p) {}
+	// Copy constructor/operator
+	CustomPtr(const CustomPtr& obj) = delete;
+	CustomPtr& operator=(const CustomPtr& obj) = delete;
+	// Move constructor/operator
+	CustomPtr(CustomPtr&& obj) = delete;
+	CustomPtr& operator=(CustomPtr&& obj) noexcept = delete;
+	// Destructor
+	~CustomPtr() = default;
+public:
+	T& operator*() { return *_p; }
+	T& operator*() const { return *_p; }
+	T* operator->() { return _p; }
+	T* operator->() const { return _p; }
+	T* get() { return _p; }
+	T* get() const { return _p; }
+	T* release() { T* p = _p; _p = nullptr; return p; }
+	explicit operator bool() const { return static_cast<bool>(_p); }
+};
+
+//------------------------------------------------------------------------------
 // Number types
 //------------------------------------------------------------------------------
 using Bool		= bool;				// boolean

@@ -113,7 +113,7 @@ public:
 		FILE* _fp;
 	public:
 		FILECloser(FILE* fp) : _fp(fp) {}
-		~FILECloser() { ::fclose(_fp); _fp = nullptr; }
+		~FILECloser() { ::fclose(_fp); }
 		FILE* get() { return _fp; }
 	};
 public:
@@ -133,7 +133,7 @@ public:
 		size_t _bytes;
 	public:
 		MemoryUnmapper(void* p, size_t bytes) : _p(p), _bytes(bytes) {}
-		MemoryUnmapper() { ::munmap(_p, _bytes); _p = nullptr;}
+		~MemoryUnmapper() { ::munmap(_p, _bytes); }
 		void* get() { return _p; }
 	};
 #endif
