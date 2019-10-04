@@ -70,6 +70,32 @@ Gurax_ImplementFunction(test)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of method for String
+//------------------------------------------------------------------------------
+// String#Match(pattern:Pattern):map {block?}
+Gurax_DeclareMethod(String, Match)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::OnceOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Adds values to the list.");
+}
+
+Gurax_ImplementMethod(String, Match)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
+	// Function body
+	RefPtr<Match> pMatch(pattern.CreateMatch(valueThis.GetString()));
+	if (!pMatch) return Value::nil();
+	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+}
+
+//------------------------------------------------------------------------------
 // utilities
 //------------------------------------------------------------------------------
 void IssueError_Onigmo()
@@ -109,6 +135,8 @@ Gurax_ModulePrepare()
 	VTYPE_Pattern.Prepare(frame);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(test));
+	// Assignment of method to String
+	VTYPE_String.Assign(Gurax_CreateMethod(String, Match));
 	return true;
 }
 
