@@ -10,8 +10,7 @@ Gurax_BeginModuleScope(re)
 //-----------------------------------------------------------------------------
 Iterator_Split::Iterator_Split(Pattern* pPattern, const String& str, int cntMax) :
 	_pPattern(pPattern), _str(str), _cnt(cntMax), _idx(0),
-	_len(static_cast<int>(str.size())), _doneFlag(false),
-	_region(::onig_region_new())
+	_len(static_cast<int>(str.size())), _doneFlag(false), _region(::onig_region_new())
 {
 }
 
@@ -79,7 +78,7 @@ Iterator_Scan::Iterator_Scan(Pattern* pPattern, const String& str, int pos, int 
 	_idxEnd = (posEnd < 0)? _len : static_cast<int>(CalcCharOffset(str.c_str(), posEnd));
 }
 
-bool Iterator_Scan::DoNext(Environment& env, Value& value)
+Value* Iterator_Split::DoNextValue()
 {
 	Signal& sig = env.GetSignal();
 	if (_idx >= _idxEnd) return false;
@@ -130,7 +129,7 @@ Iterator_Grep::Iterator_Grep(Iterator* pIteratorSrc, Pattern* pPattern) :
 {
 }
 
-bool Iterator_Grep::DoNext(Environment& env, Value& value)
+Value* Iterator_Split::DoNextValue()
 {
 	Signal& sig = env.GetSignal();
 	const int pos = 0, posEnd = -1;
@@ -161,7 +160,7 @@ Iterator_Group::Iterator_Group(Match* pMatch) : _pMatch(pMatch), _iGroup(1)
 {
 }
 
-bool Iterator_Group::DoNext(Environment& env, Value& value)
+Value* Iterator_Split::DoNextValue()
 {
 	const GroupList& groupList = _pMatch->GetGroupList();
 	if (_iGroup < groupList.size()) {
