@@ -30,6 +30,7 @@ public:
 protected:
 	virtual ~Pattern();
 public:
+	OnigRegex GetRegex() { return _regex; }
 	bool Prepare(const char* pattern);
 	Match* CreateMatch(const char* str);
 	String SubstituteByString(const char* str, const char* replace, int cnt);

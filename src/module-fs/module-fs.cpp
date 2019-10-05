@@ -272,6 +272,7 @@ Gurax_ImplementFunction(Remove)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
+	if (OAL::GetFileType(pathName) == OAL::FileType::None) return Value::nil();
 	if (!OAL::Remove(pathName)) {
 		Error::Issue(ErrorType::IOError, "failed to remove a file");
 	}
