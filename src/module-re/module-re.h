@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <onigmo.h>
 #include "Group.h"
+#include "Iterators.h"
 #include "Match.h"
 #include "Pattern.h"
 #include "VType_Group.h"
