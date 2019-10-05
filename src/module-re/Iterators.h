@@ -31,7 +31,6 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
-#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Scan
 //-----------------------------------------------------------------------------
@@ -41,7 +40,6 @@ private:
 	String _str;
 	int _idx, _idxEnd;
 	int _len;
-	OnigRegion_Ptr _region;
 public:
 	Iterator_Scan(Pattern* pPattern, const String& str, int pos, int posEnd);
 public:
@@ -54,6 +52,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Grep class declaration
 //-----------------------------------------------------------------------------

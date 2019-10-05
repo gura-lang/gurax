@@ -142,6 +142,8 @@ public:
 	UInt64 NextUTF8(const_iterator* pp) const;
 	static UInt32 NextUTF32(const char** pp);
 	UInt32 NextUTF32(const_iterator* pp) const;
+	static size_t CalcCharOffset(const char* str, size_t pos) { return Forward(str, pos) - str; }
+	size_t CalcCharOffset(size_t pos) const { return CalcCharOffset(c_str(), pos); }
 public:
 	String& AppendNTimes(const char* str, size_t n);
 	String& AppendNChars(const char* str, size_t len);

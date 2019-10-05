@@ -62,54 +62,42 @@ String Iterator_Split::ToString(const StringStyle& ss) const
 	return String("<iterator:re.split>");
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Scan
 //-----------------------------------------------------------------------------
 Iterator_Scan::Iterator_Scan(Pattern* pPattern, const String& str, int pos, int posEnd) :
-		_pPattern(pPattern), _str(str),
-		_len(static_cast<int>(str.size())), _region(::onig_region_new())
+	_pPattern(pPattern), _str(str), _len(static_cast<int>(str.size()))
 {
-	_idx = static_cast<int>(CalcCharOffset(str.c_str(), pos));
-	_idxEnd = (posEnd < 0)? _len : static_cast<int>(CalcCharOffset(str.c_str(), posEnd));
+	_idx = static_cast<int>(str.CalcCharOffset(pos));
+	_idxEnd = (posEnd < 0)? _len : static_cast<int>(str.CalcCharOffset(posEnd));
 }
 
-Value* Iterator_Split::DoNextValue()
+Value* Iterator_Scan::DoNextValue()
 {
-	Signal& sig = env.GetSignal();
-	if (_idx >= _idxEnd) return false;
+	if (_idx >= _idxEnd) return nullptr;
 	const char* str = _str.c_str();
+	OnigRegion_Ptr region(::onig_region_new());
 	int rtn = ::onig_search(_pPattern->GetRegex(),
 							reinterpret_cast<const OnigUChar*>(str),
 							reinterpret_cast<const OnigUChar*>(str + _len),
 							reinterpret_cast<const OnigUChar*>(str + _idx),
 							reinterpret_cast<const OnigUChar*>(str + _idxEnd),
-							_region.get(), ONIG_OPTION_NONE);
+							region.get(), ONIG_OPTION_NONE);
 	if (rtn >= 0) {
-		if (rtn < _idx || _region->num_regs == 0 || _region->end[0] < _idx) {
-			SetError_FailInOniguruma(sig);
-			return false;
+		if (rtn < _idx || region->num_regs == 0 || region->end[0] < _idx) {
+			IssueError_Onigmo();
+			return nullptr;
 		}
-		if (_region->end[0] == _idx) {
-			return false;
-		}
-		Object_match* pObj = new Object_match();
-		if (!pObj->SetMatchInfo(str, _pPattern->GetRegex(), _region.get(), 0)) {
-			SetError_FailInOniguruma(sig);
-			delete pObj;
-			return false;
-		}
-		value = Value(pObj);
-		_idx = _region->end[0];
+		if (region->end[0] == _idx) return nullptr;
+		_idx = region->end[0];
+		return new Value_Match(new Match(_pPattern->Reference(), region.release(), _str));
 	} else if (rtn == ONIG_MISMATCH) {
-		value = Value(str + _idx);
 		_idx = _idxEnd;
-		return false;
+		return nullptr;
 	} else { // error
-		SetError_OnigurumaError(sig, rtn);
-		return false;
+		IssueError_Onigmo(rtn);
+		return nullptr;
 	}
-	return true;
 }
 
 String Iterator_Scan::ToString(const StringStyle& ss) const
@@ -117,6 +105,7 @@ String Iterator_Scan::ToString(const StringStyle& ss) const
 	return String("<iterator:re.scan>");
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Grep
 //-----------------------------------------------------------------------------
@@ -125,7 +114,7 @@ Iterator_Grep::Iterator_Grep(Iterator* pIteratorSrc, Pattern* pPattern) :
 {
 }
 
-Value* Iterator_Split::DoNextValue()
+Value* Iterator_Grep::DoNextValue()
 {
 	Signal& sig = env.GetSignal();
 	const int pos = 0, posEnd = -1;
@@ -156,7 +145,7 @@ Iterator_Group::Iterator_Group(Match* pMatch) : _pMatch(pMatch), _iGroup(1)
 {
 }
 
-Value* Iterator_Split::DoNextValue()
+Value* Iterator_Group::DoNextValue()
 {
 	const GroupList& groupList = _pMatch->GetGroupList();
 	if (_iGroup < groupList.size()) {
