@@ -36,14 +36,14 @@ Gurax_ImplementFunction(Pattern)
 // Pattern#Match(str:String, pos?:Number, posEnd?:Number):map {block?}
 Gurax_DeclareMethod(Pattern, Match)
 {
-	Declare(VTYPE_List, Flag::Map);
+	Declare(VTYPE_Match, Flag::Map);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Applies a pattern matching to the given string and returns a `re.match` instance\n"
+		"Applies a pattern matching to the given string and returns a `re.Match` instance\n"
 		"if the matching successes. If not, it would return `nil`.\n"
 		"\n"
 		"The argument `pos` specifies the starting position for matching process.\n"
@@ -86,7 +86,7 @@ Gurax_DeclareMethod(Pattern, Sub)
 		"If a `string` is specified, it would be used as a substituting string,\n"
 		"in which you can use macros `\\0`, `\\1`, `\\2` .. to refer to matched groups.\n"
 		"\n"
-		"If a `function` is specified, it would be called with an argument `m:re.match`\n"
+		"If a `function` is specified, it would be called with an argument `m:re.Match`\n"
 		"and is expected to return a string for subsitution.\n"
 		"\n"
 		"The argument `count` specifies the maximum number of substitutions.\n"

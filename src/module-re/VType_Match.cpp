@@ -32,6 +32,55 @@ Gurax_ImplementFunction(Match)
 	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
 }
 
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// Match#Group(index):map {block?}
+Gurax_DeclareMethod(Match, Group)
+{
+	Declare(VTYPE_Group, Flag::Map);
+	DeclareArg("index", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Match, Group)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Match& match = valueThis.GetMatch();
+	// Arguments
+	ArgPicker args(argument);
+	const Value& value = args.PickValue();
+	// Function body
+	return Value::nil();
+}
+
+// Match#Groups() {block?}
+Gurax_DeclareMethod(Match, Groups)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Match, Groups)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Match& match = valueThis.GetMatch();
+	// Arguments
+	ArgPicker args(argument);
+	const Value& value = args.PickValue();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Group(match.Reference()));
+	return ReturnIterator(processor, argument, pIterator.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_Match
 //------------------------------------------------------------------------------
@@ -42,6 +91,9 @@ void VType_Match::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Match));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Match, Group));
+	Assign(Gurax_CreateMethod(Match, Groups));
 }
 
 //------------------------------------------------------------------------------
