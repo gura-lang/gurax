@@ -116,7 +116,6 @@ Iterator_Grep::Iterator_Grep(Iterator* pIteratorSrc, Pattern* pPattern) :
 
 Value* Iterator_Grep::DoNextValue()
 {
-	const int pos = 0, posEnd = -1;
 	for (;;) {
 		RefPtr<Value> pValue(_pIteratorSrc->NextValue());
 		if (!pValue) break;
@@ -135,7 +134,6 @@ String Iterator_Grep::ToString(const StringStyle& ss) const
 	return rtn;
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Group
 //-----------------------------------------------------------------------------
@@ -145,19 +143,17 @@ Iterator_Group::Iterator_Group(Match* pMatch) : _pMatch(pMatch), _iGroup(1)
 
 Value* Iterator_Group::DoNextValue()
 {
-	const GroupList& groupList = _pMatch->GetGroupList();
-	if (_iGroup < groupList.size()) {
-		value = Value(new Object_group(groupList[_iGroup]));
+	if (_iGroup < _pMatch->CountGroups()) {
+		RefPtr<Value> pValue(new Value_Group(_pMatch->CreateGroup(_iGroup)));
 		_iGroup++;
-		return true;
+		return pValue.release();
 	}
-	return false;
+	return nullptr;
 }
 
 String Iterator_Group::ToString(const StringStyle& ss) const
 {
 	return "re.Group:";
 }
-#endif
 
 Gurax_EndModuleScope(re)

@@ -75,7 +75,6 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
-#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Group
 //-----------------------------------------------------------------------------
@@ -94,7 +93,6 @@ public:
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
-#endif
 
 Gurax_EndModuleScope(re)
 
