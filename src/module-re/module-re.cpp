@@ -99,11 +99,11 @@ Gurax_ImplementMethod(String, Match)
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
-	int pos = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
+	int pos = args.IsValid()? args.PickNumberNonNeg<Int>() : 0;
 	int posEnd = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Match> pMatch(pattern.CreateMatch(str));
+	RefPtr<Match> pMatch(pattern.CreateMatch(str, pos, posEnd));
 	if (!pMatch) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
 }

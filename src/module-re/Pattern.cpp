@@ -30,11 +30,11 @@ bool Pattern::Prepare(const char* pattern)
 	return true;
 }
 
-Match* Pattern::CreateMatch(const char* str)
+Match* Pattern::CreateMatch(const char* str, int pos, int posEnd)
 {
 	OnigRegion_Ptr region(::onig_region_new());
-	const char* strEnd = str + ::strlen(str);
-	const char* strStart = str;
+	const char* strEnd = (posEnd < 0)? str + ::strlen(str) : String::Forward(str, posEnd);
+	const char* strStart = String::Forward(str, pos);
 	const char* strRange = strEnd;
 	int rtn = ::onig_search(_regex, reinterpret_cast<const OnigUChar*>(str),
 							reinterpret_cast<const OnigUChar*>(strEnd),
