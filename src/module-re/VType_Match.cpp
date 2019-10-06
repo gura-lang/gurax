@@ -48,12 +48,14 @@ Gurax_DeclareMethod(Match, Group)
 
 Gurax_ImplementMethod(Match, Group)
 {
+#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Match& match = valueThis.GetMatch();
 	// Arguments
 	ArgPicker args(argument);
 	const Value& value = args.PickValue();
+#endif
 	// Function body
 	return Value::nil();
 }
@@ -73,12 +75,76 @@ Gurax_ImplementMethod(Match, Groups)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Match& match = valueThis.GetMatch();
-	// Arguments
-	ArgPicker args(argument);
-	const Value& value = args.PickValue();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Group(match.Reference()));
 	return ReturnIterator(processor, argument, pIterator.release());
+}
+
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
+// re.Match#begin
+Gurax_DeclareProperty_R(Match, begin)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Match, begin)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Match& match = valueThis.GetMatch();
+	return new Value_Number(match.GetPosBegin());
+}
+
+// re.Match#end
+Gurax_DeclareProperty_R(Match, end)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Match, end)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Match& match = valueThis.GetMatch();
+	return new Value_Number(match.GetPosEnd());
+}
+
+// re.Match#source
+Gurax_DeclareProperty_R(Match, source)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Match, source)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Match& match = valueThis.GetMatch();
+	return new Value_String(match.GetSourceString());
+}
+
+// re.Match#string
+Gurax_DeclareProperty_R(Match, string)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Match, string)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Match& match = valueThis.GetMatch();
+	return new Value_String(match.GetString());
 }
 
 //------------------------------------------------------------------------------
@@ -94,6 +160,11 @@ void VType_Match::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Match, Group));
 	Assign(Gurax_CreateMethod(Match, Groups));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Match, begin));
+	Assign(Gurax_CreateProperty(Match, end));
+	Assign(Gurax_CreateProperty(Match, source));
+	Assign(Gurax_CreateProperty(Match, string));
 }
 
 //------------------------------------------------------------------------------

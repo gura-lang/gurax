@@ -28,20 +28,22 @@ Group* Match::CreateGroup(int iGroup) const
 	return new Group(Reference(), _region->beg[iGroup], _region->end[iGroup]);
 }
 
-#if 0
 int Match::LookupGroupNum(const char* name)
 {
-	if (!_pNameMap) {
-		_pNameMap.reset(new NameMap());
-		//::onig_name_to_group_numbers(
-	}
+    return ::onig_name_to_backref_number(
+		_pPattern->GetRegex(), reinterpret_cast<const OnigUChar*>(name),
+		reinterpret_cast<const OnigUChar*>(name + ::strlen(name)), _region);
 }
-#endif
+
+String Match::GetString() const
+{
+	return GetSourceStringSTL().substr(GetPosBegin(), GetPosEnd() - GetPosBegin());
+}
 
 String Match::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("re.Match:%dregions", _region->num_regs);
+	str.Printf("re.Match:%d-%d", GetPosBegin(), GetPosEnd());
 	return str;
 }
 

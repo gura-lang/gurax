@@ -15,13 +15,13 @@ Group::Group(Match* pMatch, int posBegin, int posEnd) :
 
 String Group::GetString() const
 {
-	return GetMatch().GetStringSTL().substr(_posBegin, _posEnd - _posBegin);
+	return GetMatch().GetSourceStringSTL().substr(GetPosBegin(), GetPosEnd() - GetPosBegin());
 }
 
 String Group::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("re.Group:%d-%d", _posBegin, _posEnd);
+	str.Printf("re.Group:%d-%d", GetPosBegin(), GetPosEnd());
 	return str;
 }
 

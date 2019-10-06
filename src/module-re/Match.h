@@ -35,12 +35,15 @@ protected:
 	virtual ~Match();
 public:
 	Pattern& GetPattern() { return *_pPattern; }
-	const StringReferable& GetStringReferable() const { return *_pStr; }
-	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
-	const char* GetString() const { return _pStr->GetString(); }
+	const StringReferable& GetSourceStringReferable() const { return *_pStr; }
+	const String& GetSourceStringSTL() const { return _pStr->GetStringSTL(); }
+	const char* GetSourceString() const { return _pStr->GetString(); }
 	int CountGroups() const { return _region->num_regs; }
 	Group* CreateGroup(int iGroup) const;
 	int LookupGroupNum(const char* name);
+	int GetPosBegin() const { return _region->beg[0]; }
+	int GetPosEnd() const { return _region->end[0]; }
+	String GetString() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Match& pathMgr) const { return this == &pathMgr; }
