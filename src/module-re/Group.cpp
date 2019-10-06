@@ -21,7 +21,7 @@ String Group::GetString() const
 String Group::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("re.Group:%d:%d", _posBegin, _posEnd);
+	str.Printf("re.Group:%d-%d", _posBegin, _posEnd);
 	return str;
 }
 
