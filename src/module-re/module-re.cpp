@@ -72,7 +72,7 @@ Gurax_ImplementFunction(test)
 //------------------------------------------------------------------------------
 // Implementation of method for String
 //------------------------------------------------------------------------------
-// String#Match(pattern:Pattern, pos?:Number, posEnd?:Number):map {block?}
+// String#Match(pattern:re.Pattern, pos?:Number, posEnd?:Number):map {block?}
 Gurax_DeclareMethod(String, Match)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -154,7 +154,7 @@ Gurax_ImplementMethod(String, Sub)
 	return ReturnValue(processor, argument, new Value_String(strRtn));
 }
 
-// String#SplitReg(pattern:Pattern):map {block?}
+// String#SplitReg(pattern:Pattern, cntMax?:Number):map {block?}
 Gurax_DeclareMethod(String, SplitReg)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -175,17 +175,20 @@ Gurax_ImplementMethod(String, SplitReg)
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
+	int cntMax = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Match> pMatch(pattern.CreateMatch(str));
-	if (!pMatch) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+	RefPtr<Iterator> pIterator(new Iterator_Split(pattern.Reference(), str, cntMax));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
-// String#Scan(pattern:Pattern):map {block?}
+// String#Scan(pattern:Pattern, pos?:Number, posEnd?:Number):map {block?}
 Gurax_DeclareMethod(String, Scan)
 {
 	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that returns strings that match the specified pattern.\n"
@@ -205,10 +208,11 @@ Gurax_ImplementMethod(String, Scan)
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
+	int pos = args.IsValid()? args.PickNumberNonNeg<Int>() : 0;
+	int posEnd = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	// Function body
-	RefPtr<Match> pMatch(pattern.CreateMatch(str));
-	if (!pMatch) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+	RefPtr<Iterator> pIterator(new Iterator_Scan(pattern.Reference(), new StringReferable(str), pos, posEnd));
+	return ReturnIterator(processor, argument, pIterator.release());
 }
 
 //------------------------------------------------------------------------------
