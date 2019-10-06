@@ -56,7 +56,6 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
-#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Grep class declaration
 //-----------------------------------------------------------------------------
@@ -76,6 +75,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Group
 //-----------------------------------------------------------------------------

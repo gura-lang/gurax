@@ -59,7 +59,7 @@ Value* Iterator_Split::DoNextValue()
 
 String Iterator_Split::ToString(const StringStyle& ss) const
 {
-	return String("<iterator:re.split>");
+	return "re.Split";
 }
 
 //-----------------------------------------------------------------------------
@@ -103,42 +103,39 @@ Value* Iterator_Scan::DoNextValue()
 
 String Iterator_Scan::ToString(const StringStyle& ss) const
 {
-	return String("<iterator:re.scan>");
+	return "re.Scan";
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Grep
 //-----------------------------------------------------------------------------
 Iterator_Grep::Iterator_Grep(Iterator* pIteratorSrc, Pattern* pPattern) :
-		_pIteratorSrc(pIteratorSrc), _pPattern(pPattern)
+	_pIteratorSrc(pIteratorSrc), _pPattern(pPattern)
 {
 }
 
 Value* Iterator_Grep::DoNextValue()
 {
-	Signal& sig = env.GetSignal();
 	const int pos = 0, posEnd = -1;
-	while (_pIteratorSrc->Next(env, value)) {
-		String str = value.ToString(false);
-		if (Error::IsIssued()) return false;
-		value = DoMatch(env, sig,
-					_pPattern->GetRegex(), str.c_str(), pos, posEnd);
-		if (Error::IsIssued()) return false;
-		if (value.IsValid()) return true;
+	for (;;) {
+		RefPtr<Value> pValue(_pIteratorSrc->NextValue());
+		if (!pValue) break;
+		String str = pValue->ToString();
+		RefPtr<Match> pMatch(_pPattern->CreateMatch(str.c_str()));
+		if (pMatch) return new Value_Match(pMatch.release());
 	}
-	return false;
+	return nullptr;
 }
 
 String Iterator_Grep::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "<iterator:re.grep:";
+	rtn += "re.Grep:";
 	rtn += _pIteratorSrc->ToString();
-	rtn += ">";
 	return rtn;
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // Iterator_Group
 //-----------------------------------------------------------------------------
@@ -159,10 +156,7 @@ Value* Iterator_Group::DoNextValue()
 
 String Iterator_Group::ToString(const StringStyle& ss) const
 {
-	String rtn;
-	rtn += "<iterator:re.group:";
-	rtn += ">";
-	return rtn;
+	return "re.Group:";
 }
 #endif
 
