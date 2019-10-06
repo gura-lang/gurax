@@ -95,6 +95,7 @@ Gurax_ImplementMethod(String, Match)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const char* str = valueThis.GetString();
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
@@ -102,7 +103,7 @@ Gurax_ImplementMethod(String, Match)
 	int posEnd = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	RefPtr<Match> pMatch(pattern.CreateMatch(valueThis.GetString()));
+	RefPtr<Match> pMatch(pattern.CreateMatch(str));
 	if (!pMatch) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
 }
@@ -134,6 +135,7 @@ Gurax_ImplementMethod(String, Sub)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const char* str = valueThis.GetString();
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
@@ -142,11 +144,9 @@ Gurax_ImplementMethod(String, Sub)
 	// Function body
 	String strRtn;
 	if (replace.IsType(VTYPE_String)) {
-		strRtn = pattern.SubstituteByString(valueThis.GetString(),
-											Value_String::GetString(replace), cnt);
+		strRtn = pattern.SubstituteByString(str, Value_String::GetString(replace), cnt);
 	} else if (replace.IsType(VTYPE_Function)) {
-		strRtn = pattern.SubstituteByFunction(valueThis.GetString(), processor,
-											  Value_Function::GetFunction(replace), cnt);
+		strRtn = pattern.SubstituteByFunction(str, processor, Value_Function::GetFunction(replace), cnt);
 	} else {
 		Error::Issue(ErrorType::ValueError, "string or function must be specified");
 		return Value::nil();
@@ -171,11 +171,12 @@ Gurax_ImplementMethod(String, SplitReg)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const char* str = valueThis.GetString();
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
 	// Function body
-	RefPtr<Match> pMatch(pattern.CreateMatch(valueThis.GetString()));
+	RefPtr<Match> pMatch(pattern.CreateMatch(str));
 	if (!pMatch) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
 }
@@ -200,11 +201,12 @@ Gurax_ImplementMethod(String, Scan)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	const char* str = valueThis.GetString();
 	// Arguments
 	ArgPicker args(argument);
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
 	// Function body
-	RefPtr<Match> pMatch(pattern.CreateMatch(valueThis.GetString()));
+	RefPtr<Match> pMatch(pattern.CreateMatch(str));
 	if (!pMatch) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
 }
