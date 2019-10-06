@@ -40,7 +40,7 @@ public:
 	const char* GetSourceString() const { return _pStr->GetString(); }
 	int CountGroups() const { return _region->num_regs; }
 	Group* CreateGroup(int iGroup) const;
-	int LookupGroupNum(const char* name);
+	int LookupGroupNum(const char* name) const;
 	int GetPosBegin() const { return _region->beg[0]; }
 	int GetPosEnd() const { return _region->end[0]; }
 	String GetString() const;

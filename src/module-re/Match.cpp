@@ -28,7 +28,7 @@ Group* Match::CreateGroup(int iGroup) const
 	return new Group(Reference(), _region->beg[iGroup], _region->end[iGroup]);
 }
 
-int Match::LookupGroupNum(const char* name)
+int Match::LookupGroupNum(const char* name) const
 {
     return ::onig_name_to_backref_number(
 		_pPattern->GetRegex(), reinterpret_cast<const OnigUChar*>(name),

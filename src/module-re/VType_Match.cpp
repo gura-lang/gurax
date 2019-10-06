@@ -48,16 +48,13 @@ Gurax_DeclareMethod(Match, Group)
 
 Gurax_ImplementMethod(Match, Group)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	Match& match = valueThis.GetMatch();
 	// Arguments
 	ArgPicker args(argument);
-	const Value& value = args.PickValue();
-#endif
+	const Value& valueIndex = args.PickValue();
 	// Function body
-	return Value::nil();
+	return valueThis.GetValueOfGroup(valueIndex);
 }
 
 // Match#Groups() {block?}
@@ -176,23 +173,33 @@ Value* Value_Match::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
-		if (pValueIndex->IsType(VTYPE_Number)) {
-			int iGroup = Value_Number::GetNumber<Int>(*pValueIndex);
-			if (iGroup < 0 || iGroup >= GetMatch().CountGroups()) {
-				Error::Issue(ErrorType::IndexError, "index is out of range");
-				return nullptr;
-			}
-			return new Value_Group(GetMatch().CreateGroup(iGroup));
-		} else if (pValueIndex->IsType(VTYPE_String)) {
-			
-		} else {
-			Error::Issue(ErrorType::ValueError, "string or number value must be specified");
-			return nullptr;
-		}
+		return GetValueOfGroup(*valuesIndex.front());
 	} else {
 	}
 	return Value::nil();
+}
+
+Value* Value_Match::GetValueOfGroup(const Value& valueIndex) const
+{
+	if (valueIndex.IsType(VTYPE_Number)) {
+		int iGroup = Value_Number::GetNumber<int>(valueIndex);
+		if (iGroup < 0 || iGroup >= GetMatch().CountGroups()) {
+			Error::Issue(ErrorType::IndexError, "index is out of range");
+			return nullptr;
+		}
+		return new Value_Group(GetMatch().CreateGroup(iGroup));
+	} else if (valueIndex.IsType(VTYPE_String)) {
+		const char* name = Value_String::GetString(valueIndex);
+		int iGroup = GetMatch().LookupGroupNum(name);
+		if (iGroup < 0) {
+			Error::Issue(ErrorType::IndexError, "the name '%s' is not found", name);
+			return nullptr;
+		}
+		return new Value_Group(GetMatch().CreateGroup(iGroup));
+	} else {
+		Error::Issue(ErrorType::ValueError, "string or number value must be specified");
+		return nullptr;
+	}
 }
 
 Gurax_EndModuleScope(re)
