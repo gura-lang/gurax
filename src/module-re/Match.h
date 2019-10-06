@@ -20,9 +20,10 @@ public:
 private:
 	RefPtr<Pattern> _pPattern;
 	OnigRegion* _region;
-	String _str;
+	RefPtr<StringReferable> _pStr;
 public:
 	// Constructor
+	Match(Pattern* pPattern, OnigRegion* region, StringReferable* pStr);
 	Match(Pattern* pPattern, OnigRegion* region, String str);
 	// Copy constructor/operator
 	Match(const Match& src) = delete;
@@ -34,8 +35,9 @@ protected:
 	virtual ~Match();
 public:
 	Pattern& GetPattern() { return *_pPattern; }
-	const String& GetStringSTL() const { return _str; }
-	const char* GetString() const { return _str.c_str(); }
+	const StringReferable& GetStringReferable() const { return *_pStr; }
+	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+	const char* GetString() const { return _pStr->GetString(); }
 	int CountGroups() const { return _region->num_regs; }
 	Group* CreateGroup(int iGroup) const;
 	int LookupGroupNum(const char* name);

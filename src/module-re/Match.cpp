@@ -8,8 +8,13 @@ Gurax_BeginModuleScope(re)
 //------------------------------------------------------------------------------
 // Match
 //------------------------------------------------------------------------------
+Match::Match(Pattern* pPattern, OnigRegion* region, StringReferable* pStr) :
+	_pPattern(pPattern), _region(region), _pStr(pStr)
+{
+}
+
 Match::Match(Pattern* pPattern, OnigRegion* region, String str) :
-	_pPattern(pPattern), _region(region), _str(std::move(str))
+	Match(pPattern, region, new StringReferable(std::move(str)))
 {
 }
 

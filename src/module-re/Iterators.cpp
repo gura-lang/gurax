@@ -65,9 +65,10 @@ String Iterator_Split::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 // Iterator_Scan
 //-----------------------------------------------------------------------------
-Iterator_Scan::Iterator_Scan(Pattern* pPattern, const String& str, int pos, int posEnd) :
-	_pPattern(pPattern), _str(str), _len(static_cast<int>(str.size()))
+Iterator_Scan::Iterator_Scan(Pattern* pPattern, StringReferable* pStr, int pos, int posEnd) :
+	_pPattern(pPattern), _pStr(pStr), _len(static_cast<int>(pStr->GetStringSTL().size()))
 {
+	const String& str = GetStringSTL();
 	_idx = static_cast<int>(str.CalcCharOffset(pos));
 	_idxEnd = (posEnd < 0)? _len : static_cast<int>(str.CalcCharOffset(posEnd));
 }
@@ -75,7 +76,7 @@ Iterator_Scan::Iterator_Scan(Pattern* pPattern, const String& str, int pos, int 
 Value* Iterator_Scan::DoNextValue()
 {
 	if (_idx >= _idxEnd) return nullptr;
-	const char* str = _str.c_str();
+	const char* str = GetString();
 	OnigRegion_Ptr region(::onig_region_new());
 	int rtn = ::onig_search(_pPattern->GetRegex(),
 							reinterpret_cast<const OnigUChar*>(str),
@@ -90,7 +91,7 @@ Value* Iterator_Scan::DoNextValue()
 		}
 		if (region->end[0] == _idx) return nullptr;
 		_idx = region->end[0];
-		return new Value_Match(new Match(_pPattern->Reference(), region.release(), _str));
+		return new Value_Match(new Match(_pPattern->Reference(), region.release(), GetStringReferable().Reference()));
 	} else if (rtn == ONIG_MISMATCH) {
 		_idx = _idxEnd;
 		return nullptr;

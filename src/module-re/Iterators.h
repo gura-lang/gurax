@@ -37,11 +37,15 @@ public:
 class Iterator_Scan : public Iterator {
 private:
 	RefPtr<Pattern> _pPattern;
-	String _str;
+	RefPtr<StringReferable> _pStr;
 	int _idx, _idxEnd;
 	int _len;
 public:
-	Iterator_Scan(Pattern* pPattern, const String& str, int pos, int posEnd);
+	Iterator_Scan(Pattern* pPattern, StringReferable* pStr, int pos, int posEnd);
+public:
+	const StringReferable& GetStringReferable() const { return *_pStr; }
+	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+	const char* GetString() const { return _pStr->GetString(); }
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
