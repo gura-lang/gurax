@@ -1,8 +1,24 @@
 #!/usr/bin/env gurax
+import(util.tester) {*}
 import(re)
 
-//re.test()
-m = re.Match('a(.*)b|[e-f]+', 'zzzzaffffffffb')
-Println(m)
-Println(m[0])
-Println(m[1])
+TestCase('Property') {
+	Tester(`re.Match.__PropHandler__(`begin))
+	Tester(`re.Match.__PropHandler__(`end))
+	Tester(`re.Match.__PropHandler__(`source))
+	Tester(`re.Match.__PropHandler__(`string))
+	Tester(`re.Group.__PropHandler__(`begin))
+	Tester(`re.Group.__PropHandler__(`end))
+	Tester(`re.Group.__PropHandler__(`string))
+}
+
+TestCase('re.Match() / re.Pattern#Match() / String#Match()') {
+	m = re.Match('', '')
+	Println(m)
+	m = re.Match('abc', 'abcdefg')
+	Println(m)
+	m = re.Pattern('abc').Match('abcdefg')
+	Println(m)
+	m = 'abcdefg'.Match('abc')
+	Println(m)
+}
