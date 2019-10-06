@@ -79,16 +79,8 @@ Gurax_DeclareMethod(String, Match)
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Applies a pattern matching to the given string and returns a `re.match` instance\n"
-		"if the matching successes. If not, it would return `nil`.\n"
-		"\n"
-		"The argument `pos` specifies the starting position for matching process.\n"
-		"If omitted, it starts from the beginning of the string.\n"
-		"\n"
-		"The argument `endpos` specifies the ending position for matching process.\n"
-		"If omitted, it would be processed until the end of the string.\n");
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	LinkHelp(VTYPE_Pattern, GetSymbol());
 }
 
 Gurax_ImplementMethod(String, Match)
@@ -115,20 +107,8 @@ Gurax_DeclareMethod(String, Sub)
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Substitutes strings that matches `pattern` with the specified replacer.\n"
-		"\n"
-		"The argument `replace` takes a `string` or `function`.\n"
-		"\n"
-		"If a `string` is specified, it would be used as a substituting string,\n"
-		"in which you can use macros `\\0`, `\\1`, `\\2` .. to refer to matched groups.\n"
-		"\n"
-		"If a `function` is specified, it would be called with an argument `m:re.match`\n"
-		"and is expected to return a string for subsitution.\n"
-		"\n"
-		"The argument `count` specifies the maximum number of substitutions.\n"
-		"If omitted, no limit would be applied.\n");
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	LinkHelp(VTYPE_Pattern, GetSymbol());
 }
 
 Gurax_ImplementMethod(String, Sub)
@@ -159,12 +139,8 @@ Gurax_DeclareMethod(String, SplitReg)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that splits the source string with the specified pattern.\n"
-		"\n"
-		"The argument `count` specifies the maximum number for splitting.\n"
-		"If omitted, no limit would be applied.\n");
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	LinkHelp(VTYPE_Pattern, Symbol::Add("Split"));
 }
 
 Gurax_ImplementMethod(String, SplitReg)
@@ -189,15 +165,8 @@ Gurax_DeclareMethod(String, Scan)
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that returns strings that match the specified pattern.\n"
-		"\n"
-		"The argument `pos` specifies the starting position for matching process.\n"
-		"If omitted, it starts from the beginning of the string.\n"
-		"\n"
-		"The argument `endpos` specifies the ending position for matching process.\n"
-		"If omitted, it would be processed until the end of the string.\n");
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	LinkHelp(VTYPE_Pattern, GetSymbol());
 }
 
 Gurax_ImplementMethod(String, Scan)
@@ -212,6 +181,60 @@ Gurax_ImplementMethod(String, Scan)
 	int posEnd = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Scan(pattern.Reference(), new StringReferable(str), pos, posEnd));
+	return ReturnIterator(processor, argument, pIterator.release());
+}
+
+//------------------------------------------------------------------------------
+// Implementation of method for List
+//------------------------------------------------------------------------------
+// List#Grep(pattern:Pattern) {block?}
+Gurax_DeclareMethod(List, Grep)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(List, Grep)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
+	// Arguments
+	ArgPicker args(argument);
+	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Grep(pIteratorThis.release(), pattern.Reference()));
+	return ReturnIterator(processor, argument, pIterator.release());
+}
+
+//------------------------------------------------------------------------------
+// Implementation of method for Iterator
+//------------------------------------------------------------------------------
+// Iterator#Grep(pattern:Pattern) {block?}
+Gurax_DeclareMethod(Iterator, Grep)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Iterator, Grep)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetIterator().Reference());
+	// Arguments
+	ArgPicker args(argument);
+	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Grep(pIteratorThis.release(), pattern.Reference()));
 	return ReturnIterator(processor, argument, pIterator.release());
 }
 
@@ -237,6 +260,10 @@ Gurax_ModulePrepare()
 	VTYPE_String.Assign(Gurax_CreateMethod(String, Sub));
 	VTYPE_String.Assign(Gurax_CreateMethod(String, SplitReg));
 	VTYPE_String.Assign(Gurax_CreateMethod(String, Scan));
+	// Assignment of method to List
+	VTYPE_List.Assign(Gurax_CreateMethod(List, Grep));
+	// Assignment of method to Iterator
+	VTYPE_Iterator.Assign(Gurax_CreateMethod(Iterator, Grep));
 	return true;
 }
 

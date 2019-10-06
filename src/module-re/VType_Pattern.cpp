@@ -40,6 +40,7 @@ Gurax_DeclareMethod(Pattern, Match)
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Applies a pattern matching to the given string and returns a `re.match` instance\n"
@@ -75,6 +76,7 @@ Gurax_DeclareMethod(Pattern, Sub)
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Substitutes strings that matches `pattern` with the specified replacer.\n"
@@ -120,6 +122,7 @@ Gurax_DeclareMethod(Pattern, Split)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cntMax", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that splits the source string with the specified pattern.\n"
@@ -150,6 +153,7 @@ Gurax_DeclareMethod(Pattern, Scan)
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that returns strings that match the specified pattern.\n"
