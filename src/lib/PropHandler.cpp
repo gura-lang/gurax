@@ -102,6 +102,11 @@ PropHandlerOwner* PropHandlerMap::CreatePropHandlerOwner() const
 	return pPropHandlerOwner.release();
 }
 
+void PropHandlerMap::GatherSymbol(SymbolList& symbolList) const
+{
+	for (auto iter : *this) symbolList.push_back(iter.first);
+}
+
 String PropHandlerMap::ToString(const StringStyle& ss) const
 {
 	String str;

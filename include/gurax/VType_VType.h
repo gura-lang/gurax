@@ -73,8 +73,13 @@ public:
 	}
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
+public:
+	// Virtual functions for runtime process
 	virtual bool IsVType() const override { return true; }
 	virtual bool CanBeCallableMember() const override { return !GetVTypeThis().GetConstructor().IsEmpty(); }
+	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
+		GetVTypeThis().GatherMemberSymbol(symbolList);
+	}
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;

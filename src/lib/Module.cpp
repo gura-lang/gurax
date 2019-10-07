@@ -16,6 +16,12 @@ Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 {
 }
 
+void Module::GatherMemberSymbol(SymbolList& symbolList) const
+{
+	GetFrame().GatherSymbol(symbolList);
+	GetPropHandlerMap().GatherSymbol(symbolList);
+}
+
 bool Module::Prepare(DottedSymbol* pDottedSymbol)
 {
 	SetDottedSymbol(pDottedSymbol);

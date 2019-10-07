@@ -281,6 +281,7 @@ public:
 	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	PropHandlerOwner* CreatePropHandlerOwner() const;
+	void GatherSymbol(SymbolList& symbolList) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

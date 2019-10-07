@@ -147,6 +147,7 @@ public:
 	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
 	void Assign(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
+	void GatherMemberSymbol(SymbolList& symbolList) const;
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);

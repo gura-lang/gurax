@@ -24,6 +24,15 @@ void VType::Assign(Function* pFunction)
 	GetFrame().Assign(pFunction);
 }
 
+void VType::GatherMemberSymbol(SymbolList& symbolList) const
+{
+	GetFrame().GatherSymbol(symbolList);
+	//RefPtr<Frame> pFrameOuter(LockFrameOuter());
+	//if (pFrameOuter) pFrameOuter->GatherSymbol(symbolList);
+	GetPropHandlerMap().GatherSymbol(symbolList);
+	GetPropHandlerMapOfClass().GatherSymbol(symbolList);
+}
+
 void VType::Prepare(Frame& frameOuter)
 {
 	_pConstructor.reset(Function::Empty.Reference()); // _pConstructor must be initialized here

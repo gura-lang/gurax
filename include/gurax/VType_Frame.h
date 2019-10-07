@@ -15,7 +15,6 @@ class GURAX_DLLDECLARE VType_Frame : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
-	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern VType_Frame VTYPE_Frame;
@@ -68,6 +67,11 @@ public:
 		return IsSameType(pValue)?
 			GetFrame().IsLessThan(dynamic_cast<const Value_Frame*>(pValue)->GetFrame()) :
 			GetVType().IsLessThan(pValue->GetVType());
+	}
+public:
+	// Virtual functions for runtime process
+	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
+		GetFrame().GatherSymbol(symbolList);
 	}
 };
 

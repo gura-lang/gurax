@@ -8,11 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Functions
 //------------------------------------------------------------------------------
-// dir(frame?:Frame)
+// dir(value)
 Gurax_DeclareFunction(dir)
 {
 	Declare(VTYPE_List, Flag::None);
-	DeclareArg("frame", VTYPE_Frame, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -22,10 +22,13 @@ Gurax_ImplementFunction(dir)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const Frame& frame = args.IsValid()? Value_Frame::GetFrame(args.PickValue()) : Basement::Inst.GetFrame();
-	// Function body
 	SymbolList symbolList;
-	frame.GatherSymbol(symbolList);
+	if (args.IsValid()) {
+		args.PickValue().GatherMemberSymbol(symbolList);
+	} else {
+		Basement::Inst.GetFrame().GatherSymbol(symbolList);
+	}
+	// Function body
 	symbolList.Sort();
 	RefPtr<ValueOwner> pValues(new ValueOwner());
 	pValues->reserve(symbolList.size());

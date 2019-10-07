@@ -99,6 +99,7 @@ public:
 		(pPropHandler->IsSet(PropHandler::Flag::OfClass)?
 		 GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
 	}
+	void GatherMemberSymbol(SymbolList& symbolList) const;
 public:
 	void Prepare(Frame& frameOuter);
 public:
