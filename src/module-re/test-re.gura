@@ -22,3 +22,15 @@ TestCase('re.Match() / re.Pattern#Match() / String#Match()') {
 	m = 'abcdefg'.Match('abc')
 	Println(m)
 }
+
+TestCase('re.Pattern#Scan() / String#Scan()') {
+}
+
+TestCase('re.Pattern#Split() / String#SplitReg()') {
+}
+
+TestCase('re.Pattern#Sub() / String#Sub()') {
+}
+
+TestCase('iterable#Grep()') {
+}
