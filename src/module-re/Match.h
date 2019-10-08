@@ -44,6 +44,7 @@ public:
 	int GetPosBegin() const { return _region->beg[0]; }
 	int GetPosEnd() const { return _region->end[0]; }
 	String GetString() const;
+	String GetGroupString(int iGroup) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Match& pathMgr) const { return this == &pathMgr; }

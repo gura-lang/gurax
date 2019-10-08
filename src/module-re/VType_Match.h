@@ -58,6 +58,7 @@ public:
 		return dynamic_cast<const Value_Match&>(value).GetMatch();
 	}
 	Value* GetValueOfGroup(const Value& valueIndex) const;
+	Value* GetValueOfGroupString(const Value& valueIndex) const;
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

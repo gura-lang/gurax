@@ -173,8 +173,15 @@ Value* Value_Match::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
-		return GetValueOfGroup(*valuesIndex.front());
+		return GetValueOfGroupString(*valuesIndex.front());
 	} else {
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		for (const Value* pValueIndex : valuesIndex) {
+			RefPtr<Value> pValue(GetValueOfGroupString(*pValueIndex));
+			if (Error::IsIssued()) return Value::nil();
+			pValueOwner->push_back(pValue.release());
+		}
+		return new Value_List(pValueOwner.release());
 	}
 	return Value::nil();
 }
@@ -196,6 +203,29 @@ Value* Value_Match::GetValueOfGroup(const Value& valueIndex) const
 			return nullptr;
 		}
 		return new Value_Group(GetMatch().CreateGroup(iGroup));
+	} else {
+		Error::Issue(ErrorType::ValueError, "string or number value must be specified");
+		return nullptr;
+	}
+}
+
+Value* Value_Match::GetValueOfGroupString(const Value& valueIndex) const
+{
+	if (valueIndex.IsType(VTYPE_Number)) {
+		int iGroup = Value_Number::GetNumber<int>(valueIndex);
+		if (iGroup < 0 || iGroup >= GetMatch().CountGroups()) {
+			Error::Issue(ErrorType::IndexError, "index is out of range");
+			return nullptr;
+		}
+		return new Value_String(GetMatch().GetGroupString(iGroup));
+	} else if (valueIndex.IsType(VTYPE_String)) {
+		const char* name = Value_String::GetString(valueIndex);
+		int iGroup = GetMatch().LookupGroupNum(name);
+		if (iGroup < 0) {
+			Error::Issue(ErrorType::IndexError, "the name '%s' is not found", name);
+			return nullptr;
+		}
+		return new Value_String(GetMatch().GetGroupString(iGroup));
 	} else {
 		Error::Issue(ErrorType::ValueError, "string or number value must be specified");
 		return nullptr;

@@ -40,6 +40,13 @@ String Match::GetString() const
 	return GetSourceStringSTL().substr(GetPosBegin(), GetPosEnd() - GetPosBegin());
 }
 
+String Match::GetGroupString(int iGroup) const
+{
+	int posBegin = _region->beg[iGroup];
+	int posEnd = _region->end[iGroup];
+	return GetSourceStringSTL().substr(posBegin, posEnd - posBegin);
+}
+
 String Match::ToString(const StringStyle& ss) const
 {
 	String str;

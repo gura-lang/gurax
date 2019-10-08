@@ -106,7 +106,7 @@ Gurax_DeclareMethod(String, Sub)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("cnt", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	LinkHelp(VTYPE_Pattern, GetSymbol());
 }
@@ -138,7 +138,8 @@ Gurax_ImplementMethod(String, Sub)
 Gurax_DeclareMethod(String, SplitReg)
 {
 	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("cntMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	LinkHelp(VTYPE_Pattern, Symbol::Add("Split"));
 }
