@@ -8,15 +8,22 @@ Gurax_BeginModuleScope(re)
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// re.Pattern(pattern:String):map {block?}
+// re.Pattern(pattern:String):map:[icase,multiline] {block?}
 Gurax_DeclareFunction(Pattern)
 {
 	Declare(VTYPE_Pattern, Flag::Map);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	DeclareAttrOpt(Gurax_Symbol(multiline));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `re.Pattern` instance from a pattern string.\n");
+		"Creates a `re.pattern` instance from the given pattern string.\n"
+		"\n"
+		"Following attributes would customize some traits of the pattern:\n"
+		"\n"
+		"- `:icase` .. Ignores character cases.\n"
+		"- `:multiline` .. Matches \"`.`\" with a line break.\n");
 }
 
 Gurax_ImplementFunction(Pattern)
@@ -24,9 +31,11 @@ Gurax_ImplementFunction(Pattern)
 	// Arguments
 	ArgPicker args(argument);
 	const char* pattern = args.PickString();
+	bool icaseFlag = argument.IsSet(Gurax_Symbol(icase));
+	bool multilineFlag = argument.IsSet(Gurax_Symbol(multiline));
 	// Function body
 	RefPtr<Pattern> pPattern(new Pattern());
-	if (!pPattern->Prepare(pattern)) return Value::nil();
+	if (!pPattern->Prepare(pattern, icaseFlag, multilineFlag)) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Pattern(pPattern.release()));
 }
 
@@ -202,7 +211,7 @@ Value* VType_Pattern::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	if (value.IsType(VTYPE_String)) {
 		const char* pattern = Value_String::GetString(value);
 		RefPtr<Pattern> pPattern(new Pattern());
-		if (!pPattern->Prepare(pattern)) return nullptr;
+		if (!pPattern->Prepare(pattern, false, false)) return nullptr;
 		return new Value_Pattern(pPattern.release());
 	}
 	return nullptr;

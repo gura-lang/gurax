@@ -35,7 +35,6 @@ TestCase('re.Pattern#Sub() / String#Sub()') {
 }
 
 TestCase('iterable#Grep()') {
-	/*
 	x = ['apple', 'orange', 'pencil', '1234', 'grape', '5678']
 	Tester(`x.Grep(r'\w+'):*source.Join(','))
 	Tester(`x.Grep(r'r'):*source.Join(','))
@@ -44,5 +43,4 @@ TestCase('iterable#Grep()') {
 	Tester(`x.Grep(r'pe$'):*source.Join(','))
 	Tester(`x.Grep(r'\d+'):*source.Join(','))
 	Tester(`['1-1', '11-a', '1', '00-', '1-0'].Grep(r'\d+-\d+'):*source.Join(','))
-	*/
 }

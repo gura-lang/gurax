@@ -17,12 +17,16 @@ Pattern::~Pattern()
 	::onig_free(_regex);
 }
 
-bool Pattern::Prepare(const char* pattern)
+bool Pattern::Prepare(const char* pattern, bool icaseFlag, bool multilineFlag)
 {
 	OnigErrorInfo einfo;
+	OnigOptionType option = ONIG_OPTION_CAPTURE_GROUP;
+	OnigEncoding encoding = ONIG_ENCODING_UTF8;
+	if (icaseFlag) option |= ONIG_OPTION_IGNORECASE;
+	if (multilineFlag) option |= ONIG_OPTION_MULTILINE;
 	int rtn = ::onig_new(&_regex, reinterpret_cast<const OnigUChar*>(pattern),
 						 reinterpret_cast<const OnigUChar*>(pattern) + ::strlen(pattern),
-						 ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF8, ONIG_SYNTAX_DEFAULT, &einfo);
+						 option, encoding, ONIG_SYNTAX_DEFAULT, &einfo);
 	if (rtn != ONIG_NORMAL) {
 		IssueError_Onigmo(rtn, einfo);
 		return false;

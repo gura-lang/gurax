@@ -119,8 +119,12 @@ Value* Iterator_Grep::DoNextValue()
 	for (;;) {
 		RefPtr<Value> pValue(_pIteratorSrc->NextValue());
 		if (!pValue) break;
-		String str = pValue->ToString();
-		RefPtr<Match> pMatch(_pPattern->CreateMatch(str.c_str()));
+		RefPtr<Match> pMatch;
+		if (pValue->IsType(VTYPE_String)) {
+			pMatch.reset(_pPattern->CreateMatch(dynamic_cast<Value_String&>(*pValue).GetString()));
+		} else {
+			pMatch.reset(_pPattern->CreateMatch(pValue->ToString().c_str()));
+		}
 		if (pMatch) return new Value_Match(pMatch.release());
 	}
 	return nullptr;
