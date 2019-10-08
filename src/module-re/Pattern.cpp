@@ -56,7 +56,7 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 	String strRtn;
 	OnigRegion_Ptr region(::onig_region_new());
 	int idx = 0;
-	for ( ; cnt != 0; cnt--) {
+	while (cnt != 0) {
 		int rtn = ::onig_search(_regex, reinterpret_cast<const OnigUChar *>(str),
 								reinterpret_cast<const OnigUChar *>(str + len),
 								reinterpret_cast<const OnigUChar *>(str + idx),
@@ -97,6 +97,7 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 			}
 		}
 		idx = region->end[0];
+		if (cnt > 0) cnt--;
 	}
 	strRtn += String(str + idx);
 	return strRtn;
@@ -107,10 +108,10 @@ String Pattern::SubstituteByFunction(const char* str, Processor& processor, cons
 	enum class Stat { Start, Escape };
 	size_t len = ::strlen(str);
 	String strRtn;
-	OnigRegion_Ptr region(::onig_region_new());
 	int idx = 0;
 	RefPtr<Frame> pFrame(func.LockFrameOuter());
-	for ( ; cnt != 0; cnt--) {
+	while (cnt != 0) {
+		OnigRegion_Ptr region(::onig_region_new());
 		int rtn = ::onig_search(_regex, reinterpret_cast<const OnigUChar *>(str),
 								reinterpret_cast<const OnigUChar *>(str + len),
 								reinterpret_cast<const OnigUChar *>(str + idx),
@@ -125,6 +126,7 @@ String Pattern::SubstituteByFunction(const char* str, Processor& processor, cons
 			IssueError_Onigmo();
 			return String::Empty;
 		}
+		int idxNext = region->end[0];
 		RefPtr<Match> pMatch(new Match(Reference(), region.release(), str));
 		RefPtr<Argument> pArgument(new Argument(func));
 		ArgFeeder args(*pArgument);
@@ -132,8 +134,13 @@ String Pattern::SubstituteByFunction(const char* str, Processor& processor, cons
 		RefPtr<Value> pValueRtn(func.DoEval(processor, *pArgument));
 		if (Error::IsIssued()) return String::Empty;
 		strRtn += String(str + idx, rtn - idx);
-		strRtn += pValueRtn->ToString();
-		idx = region->end[0];
+		if (pValueRtn->IsType(VTYPE_String)) {
+			strRtn += dynamic_cast<Value_String&>(*pValueRtn).GetString();
+		} else {
+			strRtn += pValueRtn->ToString();
+		}
+		idx = idxNext;
+		if (cnt > 0) cnt--;
 	}
 	strRtn += String(str + idx);
 	return strRtn;

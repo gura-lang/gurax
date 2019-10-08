@@ -33,8 +33,8 @@ TestCase('re.Pattern#Split() / String#SplitReg()') {
 }
 
 TestCase('re.Pattern#Sub() / String#Sub()') {
-	//Tester(`'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub(r'(\w+\()(\w+)', &{$m[1] + $m[2].Lower()}))
-	Tester(`'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub(r'(\w+\()(\w+)', 'AAA'))
+	Tester(`'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub(r'(\w+\()(\w+)', &{$m[1] + $m[2].Lower()}))
+	//Tester(`'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub(r'(\w+\()(\w+)', 'AAA'))
 }
 
 TestCase('iterable#Grep()') {
