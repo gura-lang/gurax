@@ -22,6 +22,24 @@ TestCase('re.Match() / re.Pattern#Match() / String#Match()') {
 	f(re.Match('abc', 'abcdefg'))
 	f(re.Pattern('abc').Match('abcdefg'))
 	f('abcdefg'.Match('abc'))
+	re.Match('(?<foo>a*)(?<bar>b*)(?<foo>c*)', 'aaabbbbcc') {|m|
+		Tester(`m['foo'])
+		Tester(`m['bar'])
+		Tester(`m[0])
+		Tester(`m[1])
+		Tester(`m[2])
+		Tester(`m[3])
+		Tester(`m[4])
+		Tester(`m['foo', 'bar'])
+		Tester(`m[0, 1, 2, 3])
+		Tester(`m.Groups():list)
+		Tester(`m.Group(0))
+		Tester(`m.Group(1))
+		Tester(`m.Group(2))
+		Tester(`m.Group(3))
+		Tester(`m.Group('foo'))
+		Tester(`m.Group('bar'))
+	}
 }
 
 TestCase('re.Pattern#Scan() / String#Scan()') {
