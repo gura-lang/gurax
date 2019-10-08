@@ -103,10 +103,10 @@ void Basement::PrepareValue()
 void Basement::PreparePathList()
 {
 	AppendPathList(".");
-	AppendPathList(PathName(OAL::GetDirName_Module()).JoinAfter("site"));
-	AppendPathList(OAL::GetDirName_Module());
 	AppendPathList(_cmdLine.GetStringList("module-path"));
 	AppendPathList(OAL::GetEnv("GURAXPATH"));
+	AppendPathList(OAL::GetDirName_Module());
+	AppendPathList(PathName(OAL::GetDirName_Module()).JoinAfter("site"));
 }
 
 void Basement::PrepareFunction()

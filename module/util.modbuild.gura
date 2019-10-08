@@ -62,6 +62,10 @@ Builder = class {
 		fs.Remove(this.pathNamesObj)
 		Printf('-- cleaned\n')
 	}
+	Command_install() = {
+		fs.Copy(this.pathNameGurd, path.Join(sys.dirModule, 'site'))
+		Printf('-- installed\n')
+	}
 	Run() = {
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
 		[argv, opt] = argopt.Parser {|p|
@@ -71,6 +75,8 @@ Builder = class {
 			this.Command_build()
 		} elsif (argv[0] == 'clean') {
 			this.Command_clean()
+		} elsif (argv[0] == 'install') {
+			this.Command_install()
 		} else {
 			sys.cerr.Printf('unknown command: %s\n', argv[0])
 			sys.Exit(1)
