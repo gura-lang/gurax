@@ -17,8 +17,34 @@ Template::Template() :
 	_pExprForInit(new Expr_Block()), _pExprForBody(new Expr_Block()),
 	_pValueMap(new ValueMap()), _chLast('\0')				  
 {
-	//_pFuncForBody->Declare(VTYPE_Nil, DeclCallable::Flag::DynamicScope);
-	//_pFuncForBody->SetFrameOuter(processor.GetFrameCur());
+}
+
+bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+{
+	Parser parser(autoIndentFlag, appendLastEOLFlag);
+	return parser.ParseStream(*this, streamSrc);
+}
+
+bool Template::ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
+						   bool autoIndentFlag, bool appendLastEOLFlag)
+{
+	return false;
+}
+
+bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
+						   bool autoIndentFlag, bool appendLastEOLFlag)
+{
+	return false;
+}
+
+bool Template::Render(Stream& streamDst)
+{
+	return false;
+}
+
+bool Template::Render(String& strDst)
+{
+	return false;
 }
 
 //-----------------------------------------------------------------------------

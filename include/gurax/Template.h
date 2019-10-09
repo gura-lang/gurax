@@ -67,6 +67,14 @@ public:
 	void ClearLastChar()  { _chLast = '\0'; }
 	char GetLastChar() const { return _chLast; }
 public:
+	bool ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
+	bool ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
+					 bool autoIndentFlag, bool appendLastEOLFlag);
+	bool ParseString(const char* strSrc, const char* strSrcEnd,
+					 bool autoIndentFlag, bool appendLastEOLFlag);
+	bool Render(Stream& streamDst);
+	bool Render(String& strDst);
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Template& templ) const { return this == &templ; }
 	bool IsEqualTo(const Template& templ) const { return IsIdentical(templ); }

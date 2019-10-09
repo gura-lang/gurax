@@ -41,7 +41,7 @@ Gurax_ImplementFunction(_function_)
 // Function(`exprs*) {block}
 Gurax_DeclareFunction(Function)
 {
-	Declare(VTYPE_Random, Flag::Map);
+	Declare(VTYPE_Random, Flag::None);
 	DeclareArg("argDecls", VTYPE_Quote, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(
