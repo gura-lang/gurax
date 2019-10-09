@@ -27,16 +27,21 @@ public:
 		RefPtr<StringReferable> _pSourceName;
 		bool _autoIndentFlag;
 		bool _appendLastEOLFlag;
-		ExprLeaderStack _exprLeaderStack;
 		Stat _stat;
+		bool _stringAheadFlag;
+		int _cntLine;
+		int _cntLineTop;
+		int _nDepth;
+		String _str;
+		String _strTmplScript;
+		String _strIndent;
+		ExprLeaderStack _exprLeaderStack;
 	public:
 		Parser(Template& tmpl, StringReferable* pSourceName, bool autoIndentFlag, bool appendLastEOLFlag);
 		bool ParseStream(Stream &streamSrc);
 		bool FeedChar(char ch);
 	private:
-		bool CreateTmplScript(
-			const char* strIndent, const char* strTmplScript, const char* strPost,
-			Expr_Block& exprBlock, int cntLineTop, int cntLineBtm);
+		bool CreateTmplScript(const char* strPost, Expr_Block& exprBlock);
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;
