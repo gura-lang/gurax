@@ -2,6 +2,7 @@
 // Basement.cpp
 //==============================================================================
 #include "stdafx.h"
+#include "gurax/VType_Template.h"
 
 namespace Gurax {
 
@@ -86,7 +87,7 @@ void Basement::PrepareVType()
 	VTYPE_String.Prepare(frame);
 	VTYPE_StringPtr.Prepare(frame);
 	VTYPE_Symbol.Prepare(frame);
-	//VTYPE_Template.Prepare(frame);
+	VTYPE_Template.Prepare(frame);
 	VTYPE_TimeDelta.Prepare(frame);
 	VTYPE_Undefined.Prepare(frame);
 }
