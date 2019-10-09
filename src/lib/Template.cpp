@@ -62,6 +62,7 @@ bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendL
 
 bool Template::Render(Stream& streamDst)
 {
+	//Expr_Block& exprForBody = GetExprForBody();
 	return false;
 }
 
@@ -602,7 +603,9 @@ void Expr_TmplString::Compose(Composer& composer)
 
 String Expr_TmplString::ToString(const StringStyle& ss) const
 {
-	return "";
+	String str;
+	str.Printf("TmplString(%s)", GetStringSTL().MakeQuoted(true).c_str());
+	return str;
 }
 
 //-----------------------------------------------------------------------------
@@ -695,7 +698,9 @@ Value Expr_TmplScript::DoExec(Environment &env) const
 
 String Expr_TmplScript::ToString(const StringStyle& ss) const
 {
-	return "";
+	String str;
+	str += "TmplScript";
+	return str;
 }
 
 #if 0

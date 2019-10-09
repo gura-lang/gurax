@@ -111,7 +111,8 @@ public:
 		Expr_Node(typeInfo), _pTemplate(pTemplate), _str(str) {}
 public:
 	Template& GetTemplate() { return *_pTemplate; }
-	const char *GetString() const { return _str.c_str(); }
+	const char* GetString() const { return _str.c_str(); }
+	const String& GetStringSTL() const { return _str; }
 public:
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;

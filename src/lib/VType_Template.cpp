@@ -14,7 +14,7 @@ Gurax_DeclareFunction(Template)
 {
 	Declare(VTYPE_Template, Flag::Map);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(DeclBlock::Occur::Once);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `template` instance.\n"
@@ -145,6 +145,24 @@ Gurax_ImplementMethod(Template, Render)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Template#expr
+Gurax_DeclareProperty_R(Template, expr)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Generated instance of `Expr`.");
+}
+
+Gurax_ImplementPropertyGetter(Template, expr)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Expr(valueThis.GetTemplate().GetExprForBody().Reference());
+}
+
+//------------------------------------------------------------------------------
 // VType_Template
 //------------------------------------------------------------------------------
 VType_Template VTYPE_Template("Template");
@@ -158,6 +176,8 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Template, Parse));
 	Assign(Gurax_CreateMethod(Template, Read));
 	Assign(Gurax_CreateMethod(Template, Render));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Template, expr));
 }
 
 //------------------------------------------------------------------------------

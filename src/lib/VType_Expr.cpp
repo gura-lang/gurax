@@ -319,9 +319,9 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
 	// Assignment of operator
-	Gurax_AssignOpBinary(Eq,			Expr, Expr);
-	Gurax_AssignOpBinary(Eq,			Symbol, Expr);
-	Gurax_AssignOpBinary(Eq,			Expr, Symbol);
+	Gurax_AssignOpBinary(Eq, Expr, Expr);
+	Gurax_AssignOpBinary(Eq, Symbol, Expr);
+	Gurax_AssignOpBinary(Eq, Expr, Symbol);
 }
 
 //------------------------------------------------------------------------------
