@@ -21,8 +21,8 @@ Template::Template() :
 
 bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
-	Parser parser(autoIndentFlag, appendLastEOLFlag);
-	return parser.ParseStream(*this, streamSrc);
+	Parser parser(*this, autoIndentFlag, appendLastEOLFlag);
+	return parser.ParseStream(streamSrc);
 }
 
 bool Template::ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
@@ -50,12 +50,12 @@ bool Template::Render(String& strDst)
 //-----------------------------------------------------------------------------
 // Template::Parser
 //-----------------------------------------------------------------------------
-Template::Parser::Parser(bool autoIndentFlag, bool appendLastEOLFlag) :
-	_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag)
+Template::Parser::Parser(Template& tmpl, bool autoIndentFlag, bool appendLastEOLFlag) :
+	_tmpl(tmpl), _autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag)
 {
 }
 
-bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
+bool Template::Parser::ParseStream(Stream& streamSrc)
 {
 	RefPtr<StringReferable> pSourceName(new StringReferable(streamSrc.GetName()));
 	const char chMarker = '$';
@@ -71,7 +71,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 	int cntLineTop = 0;
 	int nDepth = 0;
 	_exprLeaderStack.clear();
-	Expr_Block& exprBlockRoot = tmpl.GetExprForBody();
+	Expr_Block& exprBlockRoot = _tmpl.GetExprForBody();
 	for (;;) {
 		int chRaw = streamSrc.GetChar();
 		if (Error::IsIssued()) return false;
@@ -125,7 +125,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 				if (!str.empty()) {
 					Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
 						exprBlockRoot : *_exprLeaderStack.back();
-					RefPtr<Expr> pExpr(new Expr_TmplString(tmpl.Reference(), str));
+					RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), str));
 					pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
 					exprOfBlock.AddExprElem(pExpr.release());
 					str.clear();
@@ -183,7 +183,7 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 			const char *strPost = (ch == '\n')? "\n" : "";
 			if (!CreateTmplScript(
 					strIndent.c_str(), strTmplScript.c_str(), strPost,
-					tmpl, exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
+					exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
 			strIndent.clear();
 			strTmplScript.clear();
 			if (ch == '\n') {
@@ -275,14 +275,14 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 		const char* strPost = "";
 		if (!CreateTmplScript(
 				strIndent.c_str(), strTmplScript.c_str(), strPost,
-				tmpl, exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
+				exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
 	}
 	if (!_exprLeaderStack.empty()) {
 		Error::Issue(ErrorType::SyntaxError, "missing end statement for block expression");
 		return false;
 	}
 	if (!str.empty()) {
-		RefPtr<Expr> pExpr(new Expr_TmplString(tmpl.Reference(), str));
+		RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), str));
 		pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
 		exprBlockRoot.AddExprElem(pExpr.release());
 		str.clear();
@@ -292,18 +292,17 @@ bool Template::Parser::ParseStream(Template& tmpl, Stream& streamSrc)
 
 bool Template::Parser::CreateTmplScript(
 	const char* strIndent, const char* strTmplScript, const char* strPost,
-	Template& tmpl, Expr_Block& exprBlock,
-	StringReferable& sourceName, int cntLineTop, int cntLineBtm)
+	Expr_Block& exprBlock, StringReferable& sourceName, int cntLineTop, int cntLineBtm)
 {
 	RefPtr<Expr_TmplScript> pExprTmplScript(
 		new Expr_TmplScript(
-			tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
+			_tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
 	pExprTmplScript->SetSourceInfo(sourceName.Reference(), cntLineTop + 1, cntLineBtm + 1);
 	if (*strTmplScript == '=') {
 		// Parsing template directive that looks like "${=foo()}".
 		strTmplScript++;
 		do {
-			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), tmpl.GetExprForInit().Reference()));
+			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), _tmpl.GetExprForInit().Reference()));
 			// Appends "this.init_" before the script string while parsing
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
 			if (!pParser->FeedString("this.init_") || !pParser->FeedString(strTmplScript) ||
@@ -317,7 +316,7 @@ bool Template::Parser::CreateTmplScript(
 				!pParser->Flush()) return false;
 		} while (0);
 		if (_exprLeaderStack.empty()) {
-			tmpl.GetExprForBody().AddExprElem(pExprTmplScript->Reference());
+			_tmpl.GetExprForBody().AddExprElem(pExprTmplScript->Reference());
 		} else {
 			_exprLeaderStack.back()->AddExprElem(pExprTmplScript->Reference());
 		}

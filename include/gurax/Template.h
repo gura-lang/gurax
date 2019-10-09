@@ -19,17 +19,18 @@ public:
 	public:
 		using ExprLeaderStack = std::vector<Expr_Block*>;
 	private:
+		Template& _tmpl;
 		bool _autoIndentFlag;
 		bool _appendLastEOLFlag;
 		ExprLeaderStack _exprLeaderStack;
 	public:
-		Parser(bool autoIndentFlag, bool appendLastEOLFlag);
-		bool ParseStream(Template& tmpl, Stream &streamSrc);
+		Parser(Template& tmpl, bool autoIndentFlag, bool appendLastEOLFlag);
+		bool ParseStream(Stream &streamSrc);
+		bool FeedChar(char ch);
 	private:
 		bool CreateTmplScript(
 			const char* strIndent, const char* strTmplScript, const char* strPost,
-			Template& tmpl, Expr_Block& exprBlock,
-			StringReferable& sourceName, int cntLineTop, int cntLineBtm);
+			Expr_Block& exprBlock, StringReferable& sourceName, int cntLineTop, int cntLineBtm);
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;
