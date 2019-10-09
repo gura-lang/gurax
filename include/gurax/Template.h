@@ -38,8 +38,10 @@ public:
 		ExprLeaderStack _exprLeaderStack;
 	public:
 		Parser(Template& tmpl, StringReferable* pSourceName, bool autoIndentFlag, bool appendLastEOLFlag);
-		bool ParseStream(Stream &streamSrc);
+		Parser(Template& tmpl, String sourceName, bool autoIndentFlag, bool appendLastEOLFlag) :
+			Parser(tmpl, new StringReferable(std::move(sourceName)), autoIndentFlag, appendLastEOLFlag) {}
 		bool FeedChar(char ch);
+		bool Flush();
 	private:
 		bool CreateTmplScript(const char* strPost, Expr_Block& exprBlock);
 	};

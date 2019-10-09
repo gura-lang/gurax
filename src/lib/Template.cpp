@@ -21,20 +21,34 @@ Template::Template() :
 
 bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
-	Parser parser(*this, new StringReferable(streamSrc.GetName()), autoIndentFlag, appendLastEOLFlag);
-	return parser.ParseStream(streamSrc);
+	Parser parser(*this, streamSrc.GetName(), autoIndentFlag, appendLastEOLFlag);
+	for (;;) {
+		int chRaw = streamSrc.GetChar();
+		if (Error::IsIssued()) return false;
+		if (chRaw < 0) break;
+		if (!parser.FeedChar(static_cast<char>(chRaw))) return false;
+	}
+	return parser.Flush();
 }
 
 bool Template::ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
 						   bool autoIndentFlag, bool appendLastEOLFlag)
 {
-	return false;
+	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
+	for (String::const_iterator p = strSrc; p != strSrcEnd; p++) {
+		if (!parser.FeedChar(*p)) return false;
+	}
+	return parser.Flush();
 }
 
 bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
 						   bool autoIndentFlag, bool appendLastEOLFlag)
 {
-	return false;
+	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
+	for (const char* p = strSrc; p != strSrcEnd; p++) {
+		if (!parser.FeedChar(*p)) return false;
+	}
+	return parser.Flush();
 }
 
 bool Template::Render(Stream& streamDst)
@@ -56,211 +70,210 @@ Template::Parser::Parser(Template& tmpl, StringReferable* pSourceName, bool auto
 {
 }
 
-bool Template::Parser::ParseStream(Stream& streamSrc)
+bool Template::Parser::FeedChar(char ch)
 {
 	const char chMarker = '$';
-	_exprLeaderStack.clear();
-	Expr_Block& exprBlockRoot = _tmpl.GetExprForBody();
-	for (;;) {
-		int chRaw = streamSrc.GetChar();
-		if (Error::IsIssued()) return false;
-		if (chRaw < 0) break;
-		char ch = static_cast<char>(chRaw);
-		Gurax_BeginPushbackRegion();
-		switch (_stat) {
-		case Stat::LineTop: {
-			if (ch == '\n') {
-				_str += ch;
-			} else if (String::IsWhite(ch)) {
-				Gurax_Pushback();
-				_stat = Stat::Indent;
-			} else if (ch == chMarker) {
-				_stat = Stat::ScriptPre;
-			} else {
-				_stringAheadFlag = true;
-				Gurax_Pushback();
-				_stat = Stat::String;
-			}
-			break;
+	Expr_Block& exprForBody = _tmpl.GetExprForBody();
+	Gurax_BeginPushbackRegion();
+	switch (_stat) {
+	case Stat::LineTop: {
+		if (ch == '\n') {
+			_str += ch;
+		} else if (String::IsWhite(ch)) {
+			Gurax_Pushback();
+			_stat = Stat::Indent;
+		} else if (ch == chMarker) {
+			_stat = Stat::ScriptPre;
+		} else {
+			_stringAheadFlag = true;
+			Gurax_Pushback();
+			_stat = Stat::String;
 		}
-		case Stat::Indent: {
-			if (String::IsWhite(ch)) {
-				_strIndent += ch;
-			} else if (ch == chMarker) {
-				_stat = Stat::ScriptPre;
-			} else {
-				_str += _strIndent;
-				_strIndent.clear();
-				_stringAheadFlag = true;
-				Gurax_Pushback();
-				_stat = Stat::String;
-			}
-			break;
-		}
-		case Stat::String: {
-			if (ch == chMarker) {
-				_stat = Stat::ScriptPre;
-			} else if (ch == '\n') {
-				_str += ch;
-				_stringAheadFlag = false;
-				_stat = Stat::LineTop;
-			} else {
-				_str += ch;
-			}
-			break;
-		}
-		case Stat::ScriptPre: {
-			if (ch == '{') {
-				if (!_str.empty()) {
-					Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
-						exprBlockRoot : *_exprLeaderStack.back();
-					RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
-					pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
-					exprOfBlock.AddExprElem(pExpr.release());
-					_str.clear();
-				}
-				_cntLineTop = _cntLine;
-				_nDepth = 1;
-				_strTmplScript.clear();
-				_stat = Stat::ScriptFirst;
-			} else {
-				_str += _strIndent;
-				_strIndent.clear();
-				_str += chMarker;
-				_stringAheadFlag = true;
-				Gurax_Pushback();
-				_stat = Stat::String;
-			}
-			break;
-		}
-		case Stat::ScriptFirst: {
-			if (ch == '=') {
-				_stat = Stat::ScriptSecond;
-			} else {
-				Gurax_Pushback();
-				_stat = Stat::Script;
-			}
-			break;
-		}
-		case Stat::ScriptSecond: {
-			if (ch == '=') {
-				_stat = Stat::Comment;
-			} else {
-				_strTmplScript += '=';
-				Gurax_Pushback();
-				_stat = Stat::Script;
-			}
-			break;
-		}
-		case Stat::Script: {
-			if (ch == '{') {
-				_strTmplScript += ch;
-				_nDepth++;
-			} else if (ch == '}') {
-				_nDepth--;
-				if (_nDepth > 0) {
-					_strTmplScript += ch;
-					break;
-				}
-				_stat = Stat::ScriptPost;
-			} else {
-				_strTmplScript += ch;
-			}
-			break;
-		}
-		case Stat::ScriptPost: {
-			const char *strPost = (ch == '\n')? "\n" : "";
-			if (!CreateTmplScript(strPost, exprBlockRoot)) return false;
-			_strIndent.clear();
-			_strTmplScript.clear();
-			if (ch == '\n') {
-				_stringAheadFlag = false;
-				_stat = Stat::LineTop;
-			} else {
-				_stringAheadFlag = true;
-				Gurax_Pushback();
-				_stat = Stat::String;
-			}
-			break;
-		}
-		case Stat::Comment: {
-			if (ch == '=') {
-				_stat = Stat::CommentEnd_Second;
-			} else if (ch == '\n') {
-				_stringAheadFlag = false;
-				_stat = Stat::Comment_LineTop;
-			} else {
-				// nothing to do
-			}
-			break;
-		}
-		case Stat::Comment_LineTop: {
-			if (ch == '=') {
-				_stat = Stat::CommentEnd_Second;
-			} else if (ch == '\n') {
-				// nothing to do
-			} else if (String::IsWhite(ch)) {
-				// nothing to do
-			} else {
-				_stringAheadFlag = true;
-				_stat = Stat::Comment;
-			}
-			break;
-		}
-		case Stat::CommentEnd_Second: {
-			if (ch == '=') {
-				_stat = Stat::CommentEnd_SeekR;
-			} else if (ch == '\n') {
-				_stringAheadFlag = false;
-				_stat = Stat::Comment_LineTop;
-			} else {
-				_stringAheadFlag = true;
-				_stat = Stat::Comment;
-			}
-			break;
-		}
-		case Stat::CommentEnd_SeekR: {
-			if (ch == '}') {
-				_stat = Stat::CommentEnd_Marker;
-			} else if (ch == '\n') {
-				_stringAheadFlag = false;
-				_stat = Stat::Comment_LineTop;
-			} else {
-				_stringAheadFlag = true;
-				_stat = Stat::Comment;
-			}
-			break;
-		}
-		case Stat::CommentEnd_Marker: {
-			if (ch == chMarker) {
-				_stat = Stat::CommentPost;
-			} else if (ch == '\n') {
-				_stringAheadFlag = false;
-				_stat = Stat::Comment_LineTop;
-			} else {
-				_stringAheadFlag = true;
-				_stat = Stat::Comment;
-			}
-			break;
-		}
-		case Stat::CommentPost: {
-			if (!_stringAheadFlag && ch == '\n') {
-				_stringAheadFlag = false;
-				_stat = Stat::LineTop;
-			} else {
-				_stringAheadFlag = true;
-				Gurax_Pushback();
-				_stat = Stat::String;
-			}
-			break;
-		}
-		}
-		Gurax_EndPushbackRegion();
-		if (ch == '\n') _cntLine++;
+		break;
 	}
+	case Stat::Indent: {
+		if (String::IsWhite(ch)) {
+			_strIndent += ch;
+		} else if (ch == chMarker) {
+			_stat = Stat::ScriptPre;
+		} else {
+			_str += _strIndent;
+			_strIndent.clear();
+			_stringAheadFlag = true;
+			Gurax_Pushback();
+			_stat = Stat::String;
+		}
+		break;
+	}
+	case Stat::String: {
+		if (ch == chMarker) {
+			_stat = Stat::ScriptPre;
+		} else if (ch == '\n') {
+			_str += ch;
+			_stringAheadFlag = false;
+			_stat = Stat::LineTop;
+		} else {
+			_str += ch;
+		}
+		break;
+	}
+	case Stat::ScriptPre: {
+		if (ch == '{') {
+			if (!_str.empty()) {
+				Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
+					exprForBody : *_exprLeaderStack.back();
+				RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
+				pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
+				exprOfBlock.AddExprElem(pExpr.release());
+				_str.clear();
+			}
+			_cntLineTop = _cntLine;
+			_nDepth = 1;
+			_strTmplScript.clear();
+			_stat = Stat::ScriptFirst;
+		} else {
+			_str += _strIndent;
+			_strIndent.clear();
+			_str += chMarker;
+			_stringAheadFlag = true;
+			Gurax_Pushback();
+			_stat = Stat::String;
+		}
+		break;
+	}
+	case Stat::ScriptFirst: {
+		if (ch == '=') {
+			_stat = Stat::ScriptSecond;
+		} else {
+			Gurax_Pushback();
+			_stat = Stat::Script;
+		}
+		break;
+	}
+	case Stat::ScriptSecond: {
+		if (ch == '=') {
+			_stat = Stat::Comment;
+		} else {
+			_strTmplScript += '=';
+			Gurax_Pushback();
+			_stat = Stat::Script;
+		}
+		break;
+	}
+	case Stat::Script: {
+		if (ch == '{') {
+			_strTmplScript += ch;
+			_nDepth++;
+		} else if (ch == '}') {
+			_nDepth--;
+			if (_nDepth > 0) {
+				_strTmplScript += ch;
+				break;
+			}
+			_stat = Stat::ScriptPost;
+		} else {
+			_strTmplScript += ch;
+		}
+		break;
+	}
+	case Stat::ScriptPost: {
+		const char *strPost = (ch == '\n')? "\n" : "";
+		if (!CreateTmplScript(strPost, exprForBody)) return false;
+		_strIndent.clear();
+		_strTmplScript.clear();
+		if (ch == '\n') {
+			_stringAheadFlag = false;
+			_stat = Stat::LineTop;
+		} else {
+			_stringAheadFlag = true;
+			Gurax_Pushback();
+			_stat = Stat::String;
+		}
+		break;
+	}
+	case Stat::Comment: {
+		if (ch == '=') {
+			_stat = Stat::CommentEnd_Second;
+		} else if (ch == '\n') {
+			_stringAheadFlag = false;
+			_stat = Stat::Comment_LineTop;
+		} else {
+			// nothing to do
+		}
+		break;
+	}
+	case Stat::Comment_LineTop: {
+		if (ch == '=') {
+			_stat = Stat::CommentEnd_Second;
+		} else if (ch == '\n') {
+			// nothing to do
+		} else if (String::IsWhite(ch)) {
+			// nothing to do
+		} else {
+			_stringAheadFlag = true;
+			_stat = Stat::Comment;
+		}
+		break;
+	}
+	case Stat::CommentEnd_Second: {
+		if (ch == '=') {
+			_stat = Stat::CommentEnd_SeekR;
+		} else if (ch == '\n') {
+			_stringAheadFlag = false;
+			_stat = Stat::Comment_LineTop;
+		} else {
+			_stringAheadFlag = true;
+			_stat = Stat::Comment;
+		}
+		break;
+	}
+	case Stat::CommentEnd_SeekR: {
+		if (ch == '}') {
+			_stat = Stat::CommentEnd_Marker;
+		} else if (ch == '\n') {
+			_stringAheadFlag = false;
+			_stat = Stat::Comment_LineTop;
+		} else {
+			_stringAheadFlag = true;
+			_stat = Stat::Comment;
+		}
+		break;
+	}
+	case Stat::CommentEnd_Marker: {
+		if (ch == chMarker) {
+			_stat = Stat::CommentPost;
+		} else if (ch == '\n') {
+			_stringAheadFlag = false;
+			_stat = Stat::Comment_LineTop;
+		} else {
+			_stringAheadFlag = true;
+			_stat = Stat::Comment;
+		}
+		break;
+	}
+	case Stat::CommentPost: {
+		if (!_stringAheadFlag && ch == '\n') {
+			_stringAheadFlag = false;
+			_stat = Stat::LineTop;
+		} else {
+			_stringAheadFlag = true;
+			Gurax_Pushback();
+			_stat = Stat::String;
+		}
+		break;
+	}
+	}
+	Gurax_EndPushbackRegion();
+	if (ch == '\n') _cntLine++;
+	return true;
+}
+
+bool Template::Parser::Flush()
+{
+	Expr_Block& exprForBody = _tmpl.GetExprForBody();
 	if (!_strTmplScript.empty()) {
 		const char* strPost = "";
-		if (!CreateTmplScript(strPost, exprBlockRoot)) return false;
+		if (!CreateTmplScript(strPost, exprForBody)) return false;
 	}
 	if (!_exprLeaderStack.empty()) {
 		Error::Issue(ErrorType::SyntaxError, "missing end statement for block expression");
@@ -269,10 +282,10 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 	if (!_str.empty()) {
 		RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
 		pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
-		exprBlockRoot.AddExprElem(pExpr.release());
+		exprForBody.AddExprElem(pExpr.release());
 		_str.clear();
 	}
-	return exprBlockRoot.Prepare();
+	return exprForBody.Prepare();
 }
 
 bool Template::Parser::CreateTmplScript(const char* strPost, Expr_Block& exprBlock)
