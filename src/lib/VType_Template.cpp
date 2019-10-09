@@ -9,11 +9,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Template(src:Stream:r):map:[lasteol,noindent] {block}
+// Template(src?:Stream:r):map:[lasteol,noindent] {block}
 Gurax_DeclareFunction(Template)
 {
 	Declare(VTYPE_Template, Flag::Map);
-	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("src", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::Once);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -32,18 +32,84 @@ Gurax_ImplementFunction(Template)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& streamSrc = args.Pick<Value_Stream>().GetStream();
+	Stream* pStreamSrc = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
 	RefPtr<Template> pTmpl(new Template());
-	if (!pTmpl->ParseStream(streamSrc, autoIndentFlag, appendLastEOLFlag)) return Value::nil();
+	if (pStreamSrc && !pTmpl->ParseStream(*pStreamSrc, autoIndentFlag, appendLastEOLFlag)) {
+		return Value::nil();
+	}
 	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Template#Parse(str:String):void:[lasteol,noindent]
+Gurax_DeclareMethod(Template, Parse)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(noindent));
+	DeclareAttrOpt(Gurax_Symbol(lasteol));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `template` instance by parsing a script-embedded text in a string.\n"
+		"\n"
+		"Following attributes would customize the parser's behavior:\n"
+		"\n"
+		"- `:lasteol`\n"
+		"- `:noindent`\n");
+}
+
+Gurax_ImplementMethod(Template, Parse)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.PickString();
+	// Function body
+	tmpl.ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	return Value::nil();
+}
+
+// Template#Read(src:Stream:r):void:[lasteol,noindent]
+Gurax_DeclareMethod(Template, Read)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareAttrOpt(Gurax_Symbol(noindent));
+	DeclareAttrOpt(Gurax_Symbol(lasteol));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `template` instance by parsing a script-embedded text from a stream.\n"
+		"\n"
+		"Following attributes would customize the parser's behavior:\n"
+		"\n"
+		"- `:lasteol`\n"
+		"- `:noindent`\n");
+}
+
+Gurax_ImplementMethod(Template, Read)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamSrc = args.Pick<Value_Stream>().GetStream();
+	// Function body
+	tmpl.ParseStream(streamSrc, autoIndentFlag, appendLastEOLFlag);
+	return Value::nil();
+}
+
 // Template#Render(dst?:Stream:w)
 Gurax_DeclareMethod(Template, Render)
 {
@@ -58,20 +124,24 @@ Gurax_DeclareMethod(Template, Render)
 
 Gurax_ImplementMethod(Template, Render)
 {
-#if 0
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	if (arg.Is_stream(0)) {
-		Stream &streamDst = arg.GetStream(0);
-		pTemplate->Render(env, &streamDst);
-		return Value::Nil;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	Stream* pStreamDst = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
+	// Function body
+	if (pStreamDst) {
+		tmpl.Render(*pStreamDst);
+		return Value::nil();
 	} else {
+		/*
 		String strDst;
 		SimpleStream_StringWriter streamDst(strDst);
 		if (!pTemplate->Render(env, &streamDst)) return Value::Nil;
-		return Value(strDst);
+		*/
+		return Value::nil();
 	}
-#endif
-	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -85,6 +155,8 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Template));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Template, Parse));
+	Assign(Gurax_CreateMethod(Template, Read));
 	Assign(Gurax_CreateMethod(Template, Render));
 }
 

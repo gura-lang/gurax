@@ -51,6 +51,15 @@ bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
 	return parser.Flush();
 }
 
+bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+{
+	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
+	for (const char* p = strSrc; *p; p++) {
+		if (!parser.FeedChar(*p)) return false;
+	}
+	return parser.Flush();
+}
+
 bool Template::Render(Stream& streamDst)
 {
 	return false;
