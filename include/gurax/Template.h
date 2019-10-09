@@ -18,19 +18,25 @@ public:
 	class GURAX_DLLDECLARE Parser {
 	public:
 		using ExprLeaderStack = std::vector<Expr_Block*>;
+		enum class Stat {
+			LineTop, Indent, String, ScriptPre, ScriptFirst, ScriptSecond, Script, ScriptPost,
+			Comment, Comment_LineTop, CommentEnd_Second, CommentEnd_SeekR, CommentEnd_Marker, CommentPost,
+		} stat = Stat::LineTop;
 	private:
 		Template& _tmpl;
+		RefPtr<StringReferable> _pSourceName;
 		bool _autoIndentFlag;
 		bool _appendLastEOLFlag;
 		ExprLeaderStack _exprLeaderStack;
+		Stat _stat;
 	public:
-		Parser(Template& tmpl, bool autoIndentFlag, bool appendLastEOLFlag);
+		Parser(Template& tmpl, StringReferable* pSourceName, bool autoIndentFlag, bool appendLastEOLFlag);
 		bool ParseStream(Stream &streamSrc);
 		bool FeedChar(char ch);
 	private:
 		bool CreateTmplScript(
 			const char* strIndent, const char* strTmplScript, const char* strPost,
-			Expr_Block& exprBlock, StringReferable& sourceName, int cntLineTop, int cntLineBtm);
+			Expr_Block& exprBlock, int cntLineTop, int cntLineBtm);
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;

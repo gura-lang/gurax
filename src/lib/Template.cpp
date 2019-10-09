@@ -21,7 +21,7 @@ Template::Template() :
 
 bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
-	Parser parser(*this, autoIndentFlag, appendLastEOLFlag);
+	Parser parser(*this, new StringReferable(streamSrc.GetName()), autoIndentFlag, appendLastEOLFlag);
 	return parser.ParseStream(streamSrc);
 }
 
@@ -50,19 +50,15 @@ bool Template::Render(String& strDst)
 //-----------------------------------------------------------------------------
 // Template::Parser
 //-----------------------------------------------------------------------------
-Template::Parser::Parser(Template& tmpl, bool autoIndentFlag, bool appendLastEOLFlag) :
-	_tmpl(tmpl), _autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag)
+Template::Parser::Parser(Template& tmpl, StringReferable* pSourceName, bool autoIndentFlag, bool appendLastEOLFlag) :
+	_tmpl(tmpl), _pSourceName(pSourceName), _autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag)
 {
 }
 
 bool Template::Parser::ParseStream(Stream& streamSrc)
 {
-	RefPtr<StringReferable> pSourceName(new StringReferable(streamSrc.GetName()));
 	const char chMarker = '$';
-	enum class Stat {
-		LineTop, Indent, String, ScriptPre, ScriptFirst, ScriptSecond, Script, ScriptPost,
-		Comment, Comment_LineTop, CommentEnd_Second, CommentEnd_SeekR, CommentEnd_Marker, CommentPost,
-	} stat = Stat::LineTop;
+	_stat = Stat::LineTop;
 	bool stringAheadFlag = false;
 	String str;
 	String strTmplScript;
@@ -78,19 +74,19 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 		if (chRaw < 0) break;
 		char ch = static_cast<char>(chRaw);
 		Gurax_BeginPushbackRegion();
-		switch (stat) {
+		switch (_stat) {
 		case Stat::LineTop: {
 			if (ch == '\n') {
 				str += ch;
 			} else if (String::IsWhite(ch)) {
 				Gurax_Pushback();
-				stat = Stat::Indent;
+				_stat = Stat::Indent;
 			} else if (ch == chMarker) {
-				stat = Stat::ScriptPre;
+				_stat = Stat::ScriptPre;
 			} else {
 				stringAheadFlag = true;
 				Gurax_Pushback();
-				stat = Stat::String;
+				_stat = Stat::String;
 			}
 			break;
 		}
@@ -98,23 +94,23 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 			if (String::IsWhite(ch)) {
 				strIndent += ch;
 			} else if (ch == chMarker) {
-				stat = Stat::ScriptPre;
+				_stat = Stat::ScriptPre;
 			} else {
 				str += strIndent;
 				strIndent.clear();
 				stringAheadFlag = true;
 				Gurax_Pushback();
-				stat = Stat::String;
+				_stat = Stat::String;
 			}
 			break;
 		}
 		case Stat::String: {
 			if (ch == chMarker) {
-				stat = Stat::ScriptPre;
+				_stat = Stat::ScriptPre;
 			} else if (ch == '\n') {
 				str += ch;
 				stringAheadFlag = false;
-				stat = Stat::LineTop;
+				_stat = Stat::LineTop;
 			} else {
 				str += ch;
 			}
@@ -126,40 +122,40 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 					Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
 						exprBlockRoot : *_exprLeaderStack.back();
 					RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), str));
-					pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
+					pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
 					exprOfBlock.AddExprElem(pExpr.release());
 					str.clear();
 				}
 				cntLineTop = cntLine;
 				nDepth = 1;
 				strTmplScript.clear();
-				stat = Stat::ScriptFirst;
+				_stat = Stat::ScriptFirst;
 			} else {
 				str += strIndent;
 				strIndent.clear();
 				str += chMarker;
 				stringAheadFlag = true;
 				Gurax_Pushback();
-				stat = Stat::String;
+				_stat = Stat::String;
 			}
 			break;
 		}
 		case Stat::ScriptFirst: {
 			if (ch == '=') {
-				stat = Stat::ScriptSecond;
+				_stat = Stat::ScriptSecond;
 			} else {
 				Gurax_Pushback();
-				stat = Stat::Script;
+				_stat = Stat::Script;
 			}
 			break;
 		}
 		case Stat::ScriptSecond: {
 			if (ch == '=') {
-				stat = Stat::Comment;
+				_stat = Stat::Comment;
 			} else {
 				strTmplScript += '=';
 				Gurax_Pushback();
-				stat = Stat::Script;
+				_stat = Stat::Script;
 			}
 			break;
 		}
@@ -173,7 +169,7 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 					strTmplScript += ch;
 					break;
 				}
-				stat = Stat::ScriptPost;
+				_stat = Stat::ScriptPost;
 			} else {
 				strTmplScript += ch;
 			}
@@ -183,25 +179,25 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 			const char *strPost = (ch == '\n')? "\n" : "";
 			if (!CreateTmplScript(
 					strIndent.c_str(), strTmplScript.c_str(), strPost,
-					exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
+					exprBlockRoot, cntLineTop, cntLine)) return false;
 			strIndent.clear();
 			strTmplScript.clear();
 			if (ch == '\n') {
 				stringAheadFlag = false;
-				stat = Stat::LineTop;
+				_stat = Stat::LineTop;
 			} else {
 				stringAheadFlag = true;
 				Gurax_Pushback();
-				stat = Stat::String;
+				_stat = Stat::String;
 			}
 			break;
 		}
 		case Stat::Comment: {
 			if (ch == '=') {
-				stat = Stat::CommentEnd_Second;
+				_stat = Stat::CommentEnd_Second;
 			} else if (ch == '\n') {
 				stringAheadFlag = false;
-				stat = Stat::Comment_LineTop;
+				_stat = Stat::Comment_LineTop;
 			} else {
 				// nothing to do
 			}
@@ -209,61 +205,61 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 		}
 		case Stat::Comment_LineTop: {
 			if (ch == '=') {
-				stat = Stat::CommentEnd_Second;
+				_stat = Stat::CommentEnd_Second;
 			} else if (ch == '\n') {
 				// nothing to do
 			} else if (String::IsWhite(ch)) {
 				// nothing to do
 			} else {
 				stringAheadFlag = true;
-				stat = Stat::Comment;
+				_stat = Stat::Comment;
 			}
 			break;
 		}
 		case Stat::CommentEnd_Second: {
 			if (ch == '=') {
-				stat = Stat::CommentEnd_SeekR;
+				_stat = Stat::CommentEnd_SeekR;
 			} else if (ch == '\n') {
 				stringAheadFlag = false;
-				stat = Stat::Comment_LineTop;
+				_stat = Stat::Comment_LineTop;
 			} else {
 				stringAheadFlag = true;
-				stat = Stat::Comment;
+				_stat = Stat::Comment;
 			}
 			break;
 		}
 		case Stat::CommentEnd_SeekR: {
 			if (ch == '}') {
-				stat = Stat::CommentEnd_Marker;
+				_stat = Stat::CommentEnd_Marker;
 			} else if (ch == '\n') {
 				stringAheadFlag = false;
-				stat = Stat::Comment_LineTop;
+				_stat = Stat::Comment_LineTop;
 			} else {
 				stringAheadFlag = true;
-				stat = Stat::Comment;
+				_stat = Stat::Comment;
 			}
 			break;
 		}
 		case Stat::CommentEnd_Marker: {
 			if (ch == chMarker) {
-				stat = Stat::CommentPost;
+				_stat = Stat::CommentPost;
 			} else if (ch == '\n') {
 				stringAheadFlag = false;
-				stat = Stat::Comment_LineTop;
+				_stat = Stat::Comment_LineTop;
 			} else {
 				stringAheadFlag = true;
-				stat = Stat::Comment;
+				_stat = Stat::Comment;
 			}
 			break;
 		}
 		case Stat::CommentPost: {
 			if (!stringAheadFlag && ch == '\n') {
 				stringAheadFlag = false;
-				stat = Stat::LineTop;
+				_stat = Stat::LineTop;
 			} else {
 				stringAheadFlag = true;
 				Gurax_Pushback();
-				stat = Stat::String;
+				_stat = Stat::String;
 			}
 			break;
 		}
@@ -275,7 +271,7 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 		const char* strPost = "";
 		if (!CreateTmplScript(
 				strIndent.c_str(), strTmplScript.c_str(), strPost,
-				exprBlockRoot, *pSourceName, cntLineTop, cntLine)) return false;
+				exprBlockRoot, cntLineTop, cntLine)) return false;
 	}
 	if (!_exprLeaderStack.empty()) {
 		Error::Issue(ErrorType::SyntaxError, "missing end statement for block expression");
@@ -283,7 +279,7 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 	}
 	if (!str.empty()) {
 		RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), str));
-		pExpr->SetSourceInfo(pSourceName->Reference(), 0, 0);
+		pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
 		exprBlockRoot.AddExprElem(pExpr.release());
 		str.clear();
 	}
@@ -292,24 +288,24 @@ bool Template::Parser::ParseStream(Stream& streamSrc)
 
 bool Template::Parser::CreateTmplScript(
 	const char* strIndent, const char* strTmplScript, const char* strPost,
-	Expr_Block& exprBlock, StringReferable& sourceName, int cntLineTop, int cntLineBtm)
+	Expr_Block& exprBlock, int cntLineTop, int cntLineBtm)
 {
 	RefPtr<Expr_TmplScript> pExprTmplScript(
 		new Expr_TmplScript(
 			_tmpl.Reference(), strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
-	pExprTmplScript->SetSourceInfo(sourceName.Reference(), cntLineTop + 1, cntLineBtm + 1);
+	pExprTmplScript->SetSourceInfo(_pSourceName->Reference(), cntLineTop + 1, cntLineBtm + 1);
 	if (*strTmplScript == '=') {
 		// Parsing template directive that looks like "${=foo()}".
 		strTmplScript++;
 		do {
-			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), _tmpl.GetExprForInit().Reference()));
+			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), _tmpl.GetExprForInit().Reference()));
 			// Appends "this.init_" before the script string while parsing
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
 			if (!pParser->FeedString("this.init_") || !pParser->FeedString(strTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
 		do {
-			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), pExprTmplScript->Reference()));
+			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
 			// Appends "this." before the script string while parsing
 			// so that it generates an expression "this.foo()" from the directive "${=foo()}".
 			if (!pParser->FeedString("this.") || !pParser->FeedString(strTmplScript) ||
@@ -349,7 +345,7 @@ bool Template::Parser::CreateTmplScript(
 		}
 	} else {
 		// Parsing a normal script other than template directive.
-		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(sourceName.Reference(), pExprTmplScript->Reference()));
+		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
 		if (!pParser->FeedString(strTmplScript) || !pParser->Flush()) return false;
 		Expr* pExprFirst = pExprTmplScript->GetExprElemFirst();
 		if (pExprFirst && pExprFirst->IsType<Expr_Caller>()) {
@@ -383,7 +379,7 @@ bool Template::Parser::CreateTmplScript(
 					} else {
 						pExprCaller = new Expr_Caller(
 							Expr::Reference(pExpr), nullptr, nullptr, FLAG_None);
-						pExprCaller->SetSourceInfo(pSourceName->Reference(),
+						pExprCaller->SetSourceInfo(_pSourceName->Reference(),
 										pExpr->GetLineNoTop(), pExpr->GetLineNoBtm());
 					}
 					_exprLeaderStack.back()->SetTrailer(pExprCaller);
