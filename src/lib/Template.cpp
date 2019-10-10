@@ -285,19 +285,16 @@ bool Template::Parser::Flush()
 void Template::Parser::CreateTmplString()
 {
 	if (_str.empty()) return;
-	Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
-		_tmpl.GetExprForBody() : *_exprLeaderStack.back();
 	RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
-	pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
-	exprOfBlock.AddExprElem(pExpr.release());
+	pExpr->SetSourceInfo(_pSourceName->Reference(), _cntLineTop + 1, _cntLine + 1);
+	AddExpr(pExpr.release());
 	_str.clear();
 }
 
 bool Template::Parser::CreateTmplScript(const char* strPost)
 {
 	RefPtr<Expr_TmplScript> pExprTmplScript(
-		new Expr_TmplScript(
-			_tmpl.Reference(), _strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
+		new Expr_TmplScript(_tmpl.Reference(), _strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
 	pExprTmplScript->SetSourceInfo(_pSourceName->Reference(), _cntLineTop + 1, _cntLine + 1);
 	const char* pStrTmplScript = _strTmplScript.c_str();
 	if (*pStrTmplScript == '=') {
@@ -372,8 +369,6 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 					
 				}
 			}
-		}
-
 #if 0
 			if (pCallable != nullptr && pCallable->IsTrailer()) {
 				if (!pCallable->IsEndMarker()) {
@@ -392,18 +387,12 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 				_exprLeaderStack.pop_back();
 				ppExpr++;
 			}
+#endif
 		}
-		if (ppExpr != pExprOwnerPart->end()) {
-			for ( ; ppExpr != pExprOwnerPart->end(); ppExpr++) {
-				Expr *pExpr = *ppExpr;
-				pExprTmplScript->GetExprOwner().push_back(Expr::Reference(pExpr));
-				pExprLast = pExpr;
-			}
-			ExprOwner &exprOwnerForPresent = _exprLeaderStack.empty()?
-					pExprBlockRoot->GetExprOwner() :
-					_exprLeaderStack.back()->GetBlock()->GetExprOwner();
-			exprOwnerForPresent.push_back(Expr::Reference(pExprTmplScript.get()));
-		}
+		if (!pExprTmplScript->HasExprElem()) return true;
+		AddExpr(pExprTmplScript->Reference());
+		//Expr* pExprLast = pExprTmplScript->GetExprElemLast();
+#if 0
 		if (pExprLast == nullptr) return true;
 		if (!pExprLast->IsCaller()) return true;
 		Expr_Caller *pExprLastCaller = dynamic_cast<Expr_Caller *>(pExprLast);
@@ -608,17 +597,163 @@ const Expr::TypeInfo Expr_TmplScript::typeInfo;
 
 void Expr_TmplScript::Compose(Composer& composer)
 {
+	ComposeSequence(composer, GetExprElemFirst());						// [Any]
+}
+
+String Expr_TmplScript::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += "$";
+	if (ss.IsMultiLine()) {
+		String indent = MakeIndent(ss);
+		String indentDown = indent;
+		indentDown += ss.GetIndentUnit();
+		str += indent;
+		str += "{\n";
+		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+			str += indentDown;
+			str += pExpr->ToString(ss);
+			str += '\n';
+		}
+		str += indent;
+		str += "}\n";
+	} else {
+		str += '{';
+		const Expr* pExprFirst = GetExprElemFirst();
+		for (const Expr* pExpr = pExprFirst; pExpr; pExpr = pExpr->GetExprNext()) {
+			if (pExpr != pExprFirst) {
+				str += ',';
+				if (!ss.IsCram()) str += ' ';
+			}
+			str += pExpr->ToString(ss);
+		}
+		str += '}';
+	}
+	return str;
+}
+
+#if 0
+bool Template::Render(Environment &env, SimpleStream *pStreamDst)
+{
+	Template *pTemplateTop = nullptr;
+	for (Template *pTemplate = this; pTemplate != nullptr;
+							pTemplate = pTemplate->GetTemplateSuper()) {
+		if (!pTemplate->Prepare(env)) return false;
+		pTemplate->SetStreamDst(pStreamDst);
+		pTemplateTop = pTemplate;
+	}
+	if (pTemplateTop->GetFuncForBody() == nullptr) return true;
+	AutoPtr<Argument> pArg(new Argument(pTemplateTop->GetFuncForBody()));
+	pArg->SetValueThis(Value(new Object_template(env, Reference())));
+	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
+	pTemplateTop->GetFuncForBody()->Eval(*pEnvBlock, *pArg);
+	for (Template *pTemplate = this; pTemplate != nullptr;
+							pTemplate = pTemplate->GetTemplateSuper()) {
+		pTemplate->SetStreamDst(nullptr);
+	}
+	return !env.IsSignalled();
+}
+
+bool Template::Render(Environment &env, String &strDst)
+{
+	SimpleStream_StringWriter streamDst(strDst);
+	return Render(env, &streamDst);
+}
+
+bool Template::Prepare(Environment &env)
+{
+	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
+	pEnvBlock->AssignValue(Gurax_Symbol(this_),
+				Value(new Object_template(env, Reference())), EXTRA_Public);
+	_pValueExMap->clear();
+	_pExprOwnerForInit->Exec(*pEnvBlock);
+	return !env.IsSignalled();
+}
+
+const ValueEx *Template::LookupValue(const Symbol *pSymbol) const
+{
+	for (const Template *pTemplate = this; pTemplate != nullptr;
+							pTemplate = pTemplate->GetTemplateSuper()) {
+		const ValueExMap &valueExMap = pTemplate->GetValueExMap();
+		ValueExMap::const_iterator iter = valueExMap.find(pSymbol);
+		if (iter != valueExMap.end()) return &iter->second;
+	}
+	return nullptr;
+}
+
+void Template::PutChar(Signal &sig, char ch)
+{
+	_pStreamDst->PutChar(sig, ch);
+	_chLast = ch;
+}
+
+void Template::Print(Signal &sig, const char *str)
+{
+	_pStreamDst->Print(sig, str);
+	size_t len = ::strlen(str);
+	if (len > 0) _chLast = str[len - 1];
+}
+
+#endif
+
+//------------------------------------------------------------------------------
+// PUnit_TmplString
+// Stack View: [Any] -> []
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_TmplString<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+#if 0
+	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
+	processor.SetPUnitNext(_GetPUnitCont());
+#endif
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_TmplString<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("TmplString()");
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_TmplString::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_TmplString<1, true>(_pTmpl.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_TmplString<1, false>(_pTmpl.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_TmplString<0, true>(_pTmpl.release());
+		} else {
+			_pPUnitCreated = new PUnit_TmplString<0, false>(_pTmpl.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_TmplScript
+// Stack View: [Any] -> []
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+#if 0
+	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
+	processor.SetPUnitNext(_GetPUnitCont());
+#endif
 }
 
 #if 0
 Value Expr_TmplScript::DoExec(Environment &env) const
 {
-	if (GetExprOwner().empty()) return Value::Nil;
-	Value value;
-	foreach_const (ExprList, ppExpr, GetExprOwner()) {
-		value = (*ppExpr)->Exec(env, true);
-		if (env.IsSignalled()) return Value::Nil;
-	}
 	if (value.IsInvalid()) return Value::Nil;
 	String strLast;
 	if (value.Is_string()) {
@@ -689,98 +824,31 @@ Value Expr_TmplScript::DoExec(Environment &env) const
 }
 #endif
 
-String Expr_TmplScript::ToString(const StringStyle& ss) const
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_TmplScript<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "TmplScript";
+	str.Printf("TmplScript()");
+	AppendInfoToString(str, ss);
 	return str;
 }
 
-#if 0
-
-bool Template::Read(Environment &env,
-			SimpleStream &streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+PUnit* PUnitFactory_TmplScript::Create(bool discardValueFlag)
 {
-	Parser parser(autoIndentFlag, appendLastEOLFlag);
-	return parser.ParseStream(env, this, streamSrc);
-}
-
-bool Template::Parse(Environment &env,
-		String::const_iterator strSrc, String::const_iterator strSrcEnd,
-		bool autoIndentFlag, bool appendLastEOLFlag)
-{
-	SimpleStream_StringReader streamSrc(strSrc, strSrcEnd);
-	return Read(env, streamSrc, autoIndentFlag, appendLastEOLFlag);
-}
-
-bool Template::Parse(Environment &env,
-		const char *strSrc, const char *strSrcEnd, bool autoIndentFlag, bool appendLastEOLFlag)
-{
-	SimpleStream_CStringReader streamSrc(strSrc, strSrcEnd);
-	return Read(env, streamSrc, autoIndentFlag, appendLastEOLFlag);
-}
-
-bool Template::Render(Environment &env, SimpleStream *pStreamDst)
-{
-	Template *pTemplateTop = nullptr;
-	for (Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		if (!pTemplate->Prepare(env)) return false;
-		pTemplate->SetStreamDst(pStreamDst);
-		pTemplateTop = pTemplate;
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_TmplScript<1, true>(_pTmpl.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_TmplScript<1, false>(_pTmpl.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_TmplScript<0, true>(_pTmpl.release());
+		} else {
+			_pPUnitCreated = new PUnit_TmplScript<0, false>(_pTmpl.release());
+		}
 	}
-	if (pTemplateTop->GetFuncForBody() == nullptr) return true;
-	AutoPtr<Argument> pArg(new Argument(pTemplateTop->GetFuncForBody()));
-	pArg->SetValueThis(Value(new Object_template(env, Reference())));
-	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pTemplateTop->GetFuncForBody()->Eval(*pEnvBlock, *pArg);
-	for (Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		pTemplate->SetStreamDst(nullptr);
-	}
-	return !env.IsSignalled();
+	return _pPUnitCreated;
 }
-
-bool Template::Render(Environment &env, String &strDst)
-{
-	SimpleStream_StringWriter streamDst(strDst);
-	return Render(env, &streamDst);
-}
-
-bool Template::Prepare(Environment &env)
-{
-	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pEnvBlock->AssignValue(Gurax_Symbol(this_),
-				Value(new Object_template(env, Reference())), EXTRA_Public);
-	_pValueExMap->clear();
-	_pExprOwnerForInit->Exec(*pEnvBlock);
-	return !env.IsSignalled();
-}
-
-const ValueEx *Template::LookupValue(const Symbol *pSymbol) const
-{
-	for (const Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		const ValueExMap &valueExMap = pTemplate->GetValueExMap();
-		ValueExMap::const_iterator iter = valueExMap.find(pSymbol);
-		if (iter != valueExMap.end()) return &iter->second;
-	}
-	return nullptr;
-}
-
-void Template::PutChar(Signal &sig, char ch)
-{
-	_pStreamDst->PutChar(sig, ch);
-	_chLast = ch;
-}
-
-void Template::Print(Signal &sig, const char *str)
-{
-	_pStreamDst->Print(sig, str);
-	size_t len = ::strlen(str);
-	if (len > 0) _chLast = str[len - 1];
-}
-
-#endif
 
 }
