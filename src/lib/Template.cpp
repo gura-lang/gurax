@@ -83,7 +83,6 @@ Template::Parser::Parser(Template& tmpl, StringReferable* pSourceName, bool auto
 bool Template::Parser::FeedChar(char ch)
 {
 	const char chMarker = '$';
-	Expr_Block& exprForBody = _tmpl.GetExprForBody();
 	Gurax_BeginPushbackRegion();
 	switch (_stat) {
 	case Stat::LineTop: {
@@ -129,14 +128,7 @@ bool Template::Parser::FeedChar(char ch)
 	}
 	case Stat::ScriptPre: {
 		if (ch == '{') {
-			if (!_str.empty()) {
-				Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
-					exprForBody : *_exprLeaderStack.back();
-				RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
-				pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
-				exprOfBlock.AddExprElem(pExpr.release());
-				_str.clear();
-			}
+			CreateTmplString();
 			_cntLineTop = _cntLine;
 			_nDepth = 1;
 			_strTmplScript.clear();
@@ -187,8 +179,7 @@ bool Template::Parser::FeedChar(char ch)
 		break;
 	}
 	case Stat::ScriptPost: {
-		const char *strPost = (ch == '\n')? "\n" : "";
-		if (!CreateTmplScript(strPost, exprForBody)) return false;
+		if (!CreateTmplScript((ch == '\n')? "\n" : "")) return false;
 		_strIndent.clear();
 		_strTmplScript.clear();
 		if (ch == '\n') {
@@ -280,25 +271,29 @@ bool Template::Parser::FeedChar(char ch)
 
 bool Template::Parser::Flush()
 {
-	Expr_Block& exprForBody = _tmpl.GetExprForBody();
 	if (!_strTmplScript.empty()) {
-		const char* strPost = "";
-		if (!CreateTmplScript(strPost, exprForBody)) return false;
+		if (!CreateTmplScript("")) return false;
 	}
 	if (!_exprLeaderStack.empty()) {
 		Error::Issue(ErrorType::SyntaxError, "missing end statement for block expression");
 		return false;
 	}
-	if (!_str.empty()) {
-		RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
-		pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
-		exprForBody.AddExprElem(pExpr.release());
-		_str.clear();
-	}
-	return exprForBody.Prepare();
+	CreateTmplString();
+	return _tmpl.GetExprForBody().Prepare();
 }
 
-bool Template::Parser::CreateTmplScript(const char* strPost, Expr_Block& exprBlock)
+void Template::Parser::CreateTmplString()
+{
+	if (_str.empty()) return;
+	Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
+		_tmpl.GetExprForBody() : *_exprLeaderStack.back();
+	RefPtr<Expr> pExpr(new Expr_TmplString(_tmpl.Reference(), _str));
+	pExpr->SetSourceInfo(_pSourceName->Reference(), 0, 0);
+	exprOfBlock.AddExprElem(pExpr.release());
+	_str.clear();
+}
+
+bool Template::Parser::CreateTmplScript(const char* strPost)
 {
 	RefPtr<Expr_TmplScript> pExprTmplScript(
 		new Expr_TmplScript(
@@ -322,11 +317,9 @@ bool Template::Parser::CreateTmplScript(const char* strPost, Expr_Block& exprBlo
 			if (!pParser->FeedString("this.") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
-		if (_exprLeaderStack.empty()) {
-			_tmpl.GetExprForBody().AddExprElem(pExprTmplScript->Reference());
-		} else {
-			_exprLeaderStack.back()->AddExprElem(pExprTmplScript->Reference());
-		}
+		Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
+			_tmpl.GetExprForBody() : *_exprLeaderStack.back();
+		exprOfBlock.AddExprElem(pExprTmplScript->Reference());
 		Expr* pExprLast = pExprTmplScript->GetExprElemLast();
 		if (!pExprLast->IsType<Expr_Caller>()) return true;
 		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);

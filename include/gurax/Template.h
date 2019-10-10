@@ -43,7 +43,8 @@ public:
 		bool FeedChar(char ch);
 		bool Flush();
 	private:
-		bool CreateTmplScript(const char* strPost, Expr_Block& exprBlock);
+		void CreateTmplString();
+		bool CreateTmplScript(const char* strPost);
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;
