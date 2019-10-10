@@ -93,6 +93,8 @@ public:
 					 bool autoIndentFlag, bool appendLastEOLFlag);
 	bool Render(Stream& streamDst);
 	bool Render(String& strDst);
+	void PutChar(char ch);
+	void Print(const char* str);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Template& templ) const { return this == &templ; }
@@ -159,13 +161,16 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<Template> _pTmpl;
+	String _str;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_TmplString(Template* pTmpl) : _pTmpl(pTmpl) {}
-	PUnit_TmplString(Template* pTmpl, Expr* pExpr) : PUnit_TmplString(pTmpl) { _ppExprSrc[0] = pExpr; }
+	PUnit_TmplString(Template* pTmpl, String str) : _pTmpl(pTmpl), _str(std::move(str)) {}
+	PUnit_TmplString(Template* pTmpl, String str, Expr* pExpr) :
+		PUnit_TmplString(pTmpl, std::move(str)) { _ppExprSrc[0] = pExpr; }
 public:
-	const Template& GetTemplate() const { return *_pTmpl; }
+	Template& GetTemplate() const { return *_pTmpl; }
+	const char* GetString() const { return _str.c_str(); }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -183,8 +188,10 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_TmplString");
 private:
 	RefPtr<Template> _pTmpl;
+	String _str;
 public:
-	PUnitFactory_TmplString(Template* pTmpl, Expr* pExprSrc) : PUnitFactory(pExprSrc), _pTmpl(pTmpl) {}
+	PUnitFactory_TmplString(Template* pTmpl, String str, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pTmpl(pTmpl), _str(std::move(str)) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_TmplString<1, false>) : sizeof(PUnit_TmplString<0, false>);
 	}
@@ -207,7 +214,7 @@ public:
 	PUnit_TmplScript(Template* pTmpl) : _pTmpl(pTmpl) {}
 	PUnit_TmplScript(Template* pTmpl, Expr* pExpr) : PUnit_TmplScript(pTmpl) { _ppExprSrc[0] = pExpr; }
 public:
-	const Template& GetTemplate() const { return *_pTmpl; }
+	Template& GetTemplate() const { return *_pTmpl; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }

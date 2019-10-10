@@ -71,6 +71,19 @@ bool Template::Render(String& strDst)
 	return false;
 }
 
+void Template::PutChar(char ch)
+{
+	if (_pStreamDst) _pStreamDst->PutChar(ch);
+	_chLast = ch;
+}
+
+void Template::Print(const char* str)
+{
+	if (_pStreamDst) _pStreamDst->Print(str);
+	size_t len = ::strlen(str);
+	if (len > 0) _chLast = str[len - 1];
+}
+
 //-----------------------------------------------------------------------------
 // Template::Parser
 //-----------------------------------------------------------------------------
@@ -580,13 +593,13 @@ const Expr::TypeInfo Expr_TmplString::typeInfo;
 
 void Expr_TmplString::Compose(Composer& composer)
 {
-	composer.SetFactory(new PUnitFactory_TmplString(GetTemplate().Reference(), Reference()));
+	composer.SetFactory(new PUnitFactory_TmplString(GetTemplate().Reference(), GetStringSTL(), Reference()));
 }
 
 String Expr_TmplString::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("TmplString(%s)", GetStringSTL().MakeQuoted(true).c_str());
+	str.Printf("%sT", GetStringSTL().MakeQuoted(true).c_str());
 	return str;
 }
 
@@ -682,19 +695,6 @@ const ValueEx *Template::LookupValue(const Symbol *pSymbol) const
 	return nullptr;
 }
 
-void Template::PutChar(Signal &sig, char ch)
-{
-	_pStreamDst->PutChar(sig, ch);
-	_chLast = ch;
-}
-
-void Template::Print(Signal &sig, const char *str)
-{
-	_pStreamDst->Print(sig, str);
-	size_t len = ::strlen(str);
-	if (len > 0) _chLast = str[len - 1];
-}
-
 #endif
 
 //------------------------------------------------------------------------------
@@ -705,10 +705,8 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_TmplString<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-#if 0
-	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
+	GetTemplate().Print(GetString());
 	processor.SetPUnitNext(_GetPUnitCont());
-#endif
 }
 
 template<int nExprSrc, bool discardValueFlag>
@@ -724,15 +722,15 @@ PUnit* PUnitFactory_TmplString::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplString<1, true>(_pTmpl.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_TmplString<1, true>(_pTmpl.release(), std::move(_str), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_TmplString<1, false>(_pTmpl.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_TmplString<1, false>(_pTmpl.release(), std::move(_str), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_TmplString<0, true>(_pTmpl.release());
+			_pPUnitCreated = new PUnit_TmplString<0, true>(_pTmpl.release(), std::move(_str));
 		} else {
-			_pPUnitCreated = new PUnit_TmplString<0, false>(_pTmpl.release());
+			_pPUnitCreated = new PUnit_TmplString<0, false>(_pTmpl.release(), std::move(_str));
 		}
 	}
 	return _pPUnitCreated;
