@@ -434,7 +434,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		}
 #endif
 	}
-	return false;
+	return true;
 }
 
 #if 0
