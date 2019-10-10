@@ -170,6 +170,8 @@ public:
 	// Virtual functions
 	virtual bool IsEmpty() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
+	virtual bool DoesExpectBlockFollowed() const { return false; }
+	virtual bool IsEndMarker() const { return false; }
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
@@ -499,6 +501,7 @@ public:
 	bool IsPureSymbol() const { return GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
+	virtual bool IsEndMarker() const override;
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
@@ -796,6 +799,8 @@ public:
 	Function* CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag);
 public:
 	// Virtual functions of Expr
+	virtual bool DoesExpectBlockFollowed() const override;
+	virtual bool IsEndMarker() const override;
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;
 		if (_pExprOfBlock && !_pExprOfBlock->Traverse(visitor)) return false;

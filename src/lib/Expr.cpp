@@ -328,6 +328,11 @@ String Expr_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Identifier::typeInfo;
 
+bool Expr_Identifier::IsEndMarker() const
+{
+	return false;
+}
+
 void Expr_Identifier::Compose(Composer& composer)
 {
 	const Symbol* pSymbol = GetSymbol();
@@ -997,6 +1002,18 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 // Expr_Caller : Expr_Compound
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Caller::typeInfo;
+
+// This method is used by Template.
+bool Expr_Caller::DoesExpectBlockFollowed() const
+{
+	return false;
+}
+
+// This method is used by Template.
+bool Expr_Caller::IsEndMarker() const
+{
+	return false;
+}
 
 void Expr_Caller::Compose(Composer& composer)
 {
