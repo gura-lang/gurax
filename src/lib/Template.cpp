@@ -580,7 +580,7 @@ const Expr::TypeInfo Expr_TmplString::typeInfo;
 
 void Expr_TmplString::Compose(Composer& composer)
 {
-	//_pTemplate->Print(_str.c_str());
+	composer.SetFactory(new PUnitFactory_TmplString(GetTemplate().Reference(), Reference()));
 }
 
 String Expr_TmplString::ToString(const StringStyle& ss) const
@@ -598,6 +598,7 @@ const Expr::TypeInfo Expr_TmplScript::typeInfo;
 void Expr_TmplScript::Compose(Composer& composer)
 {
 	ComposeSequence(composer, GetExprElemFirst());						// [Any]
+	composer.SetFactory(new PUnitFactory_TmplScript(GetTemplate().Reference(), Reference()));
 }
 
 String Expr_TmplScript::ToString(const StringStyle& ss) const
@@ -698,7 +699,7 @@ void Template::Print(Signal &sig, const char *str)
 
 //------------------------------------------------------------------------------
 // PUnit_TmplString
-// Stack View: [Any] -> []
+// Stack View: [] -> []
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_TmplString<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
