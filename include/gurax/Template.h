@@ -17,7 +17,7 @@ public:
 public:
 	class GURAX_DLLDECLARE Parser {
 	public:
-		using ExprLeaderStack = std::vector<Expr_Block*>;
+		using ExprLeaderStack = std::vector<Expr_Caller*>;
 		enum class Stat {
 			LineTop, Indent, String, ScriptPre, ScriptFirst, ScriptSecond, Script, ScriptPost,
 			Comment, Comment_LineTop, CommentEnd_Second, CommentEnd_SeekR, CommentEnd_Marker, CommentPost,
@@ -46,7 +46,8 @@ public:
 		void CreateTmplString();
 		bool CreateTmplScript(const char* strPost);
 		void AddExpr(Expr* pExpr) {
-			(_exprLeaderStack.empty()? _tmpl.GetExprForBody() : *_exprLeaderStack.back()).AddExprElem(pExpr);
+			(_exprLeaderStack.empty()? _tmpl.GetExprForBody() : *_exprLeaderStack.back()->GetExprOfBlock()).
+				AddExprElem(pExpr);
 		}
 	};
 private:

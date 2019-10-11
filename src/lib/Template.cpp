@@ -327,9 +327,10 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			if (!pParser->FeedString("this.") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
-		Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
-			_tmpl.GetExprForBody() : *_exprLeaderStack.back();
-		exprOfBlock.AddExprElem(pExprTmplScript->Reference());
+		AddExpr(pExprTmplScript->Reference());
+		//Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
+		//	_tmpl.GetExprForBody() : *_exprLeaderStack.back();
+		//exprOfBlock.AddExprElem(pExprTmplScript->Reference());
 		Expr* pExprLast = pExprTmplScript->GetExprElemLast();
 		if (!pExprLast->IsType<Expr_Caller>()) return true;
 		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
@@ -352,10 +353,10 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 				pDeclCallable->GetDeclBlock().IsOccurOnce()) {
 				Expr_Block* pExprOfBlock = new Expr_Block();
 				pExprLastCaller->SetExprOfBlock(pExprOfBlock);
-				_exprLeaderStack.push_back(pExprOfBlock);
+				_exprLeaderStack.push_back(pExprLastCaller);
 			}
 		} else if (!pExprLastCaller->GetExprOfBlock()->HasExprElem()) {
-			_exprLeaderStack.push_back(pExprLastCaller->GetExprOfBlock());
+			_exprLeaderStack.push_back(pExprLastCaller);
 		}
 	} else {
 		// Parsing a normal script other than template directive.
