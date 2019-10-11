@@ -362,6 +362,8 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
 		if (!pParser->FeedString(pStrTmplScript) || !pParser->Flush()) return false;
 		Expr* pExprFirst = pExprTmplScript->GetExprElemFirst();
+		
+
 		if (pExprFirst && pExprFirst->IsType<Expr_Caller>()) {
 			// check if the first Expr is a trailer
 			Expr_Caller* pExprFirstCaller = dynamic_cast<Expr_Caller*>(pExprFirst);

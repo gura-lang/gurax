@@ -170,8 +170,9 @@ public:
 	// Virtual functions
 	virtual bool IsEmpty() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
-	virtual bool DoesExpectBlockFollowed() const { return false; }
-	virtual bool IsEndMarker() const { return false; }
+	virtual bool DoesExpectBlockFollowed() const { return false; }	// used by Template
+	virtual bool IsTrailer() const { return false; }				// used by Template
+	virtual bool IsEndMarker() const { return false; }				// used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
@@ -794,12 +795,12 @@ public:
 	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
 	Expr_Caller* GetExprTrailerLast();
-	bool IsTrailer() const { return false; }
 	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
 	Function* CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag);
 public:
 	// Virtual functions of Expr
 	virtual bool DoesExpectBlockFollowed() const override;
+	virtual bool IsTrailer() const override;
 	virtual bool IsEndMarker() const override;
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;

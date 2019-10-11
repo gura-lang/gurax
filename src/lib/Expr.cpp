@@ -1010,6 +1010,12 @@ bool Expr_Caller::DoesExpectBlockFollowed() const
 }
 
 // This method is used by Template.
+bool Expr_Caller::IsTrailer() const
+{
+	return false;
+}
+
+// This method is used by Template.
 bool Expr_Caller::IsEndMarker() const
 {
 	return false;
