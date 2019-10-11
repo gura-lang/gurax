@@ -71,7 +71,7 @@ Gurax_DeclareProperty_R(Expr, isEmbedded)
 	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns `true` if the expression is Suffixed");
+		"Returns `true` if the expression is Embedded");
 }
 
 Gurax_ImplementPropertyGetter(Expr, isEmbedded)

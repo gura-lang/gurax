@@ -1003,24 +1003,6 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Caller::typeInfo;
 
-// This method is used by Template.
-bool Expr_Caller::DoesExpectBlockFollowed() const
-{
-	return false;
-}
-
-// This method is used by Template.
-bool Expr_Caller::IsTrailer() const
-{
-	return false;
-}
-
-// This method is used by Template.
-bool Expr_Caller::IsEndMarker() const
-{
-	return false;
-}
-
 void Expr_Caller::Compose(Composer& composer)
 {
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(GetExprCar()));
@@ -1118,6 +1100,39 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;
 	return new FunctionCustom(type, pSymbol,
 							  GetDeclCallable().Reference(), exprAssigned.Reference());
+}
+
+// This method is used by Template.
+const DeclCallable* Expr_Caller::LookupDeclCallableOfCar() const
+{
+	if (!GetExprCar().IsType<Expr_Identifier>()) return nullptr;
+	Value* pValue = Basement::Inst.GetFrame().Lookup(
+		dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol());
+	if (!pValue) return nullptr;
+	return pValue->GetDeclCallable();
+}
+
+// This method is used by Template.
+bool Expr_Caller::DoesExpectBlockFollowed() const
+{
+	const Expr_Block* pExprOfBlock = GetExprOfBlock();
+	if (pExprOfBlock && !pExprOfBlock->HasExprElem()) return true;
+	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
+	return pDeclCallable && pDeclCallable->GetDeclBlock().IsOccurOnce();
+}
+
+// This method is used by Template.
+bool Expr_Caller::IsTrailer() const
+{
+	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
+	return pDeclCallable && pDeclCallable->IsSet(DeclCallable::Flag::Trailer);
+}
+
+// This method is used by Template.
+bool Expr_Caller::IsEndMarker() const
+{
+	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
+	return pDeclCallable && pDeclCallable->IsSet(DeclCallable::Flag::EndMarker);
 }
 
 String Expr_Caller::ToString(const StringStyle& ss) const

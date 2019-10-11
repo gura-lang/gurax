@@ -797,6 +797,7 @@ public:
 	Expr_Caller* GetExprTrailerLast();
 	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
 	Function* CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag);
+	const DeclCallable* LookupDeclCallableOfCar() const;			// used by Template
 public:
 	// Virtual functions of Expr
 	virtual bool DoesExpectBlockFollowed() const override;
