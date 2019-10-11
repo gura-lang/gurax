@@ -309,6 +309,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 	RefPtr<Expr_TmplScript> pExprTmplScript(
 		new Expr_TmplScript(_tmpl.Reference(), _strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
 	pExprTmplScript->SetSourceInfo(_pSourceName->Reference(), _cntLineTop + 1, _cntLine + 1);
+	AddExpr(pExprTmplScript->Reference());
 	const char* pStrTmplScript = _strTmplScript.c_str();
 	if (*pStrTmplScript == '=') {
 		// Parsing template directive that looks like "${=foo()}".
@@ -327,117 +328,38 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			if (!pParser->FeedString("this.") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
-		AddExpr(pExprTmplScript->Reference());
-		//Expr_Block& exprOfBlock = _exprLeaderStack.empty()?
-		//	_tmpl.GetExprForBody() : *_exprLeaderStack.back();
-		//exprOfBlock.AddExprElem(pExprTmplScript->Reference());
-		Expr* pExprLast = pExprTmplScript->GetExprElemLast();
-		if (!pExprLast->IsType<Expr_Caller>()) return true;
-		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
-		if (!pExprLastCaller->GetExprOfBlock()) {
-			Value* pValue = nullptr;
-			if (pExprLastCaller->GetExprCar().IsType<Expr_Member>()) {
-				Expr_Member& exprCar = dynamic_cast<Expr_Member&>(pExprLastCaller->GetExprCar());
-				if (exprCar.GetExprTarget().IsType<Expr_Identifier>() &&
-					dynamic_cast<const Expr_Identifier&>(exprCar.GetExprTarget()).GetSymbol()->
-					IsIdentical(Gurax_Symbol(this_))) {
-					exprCar.GetSymbol();
-					//pValue = VTYPE_Template.GetFrame().Lookup(exprCar.GetSymbol());
-				}
-			} else if (pExprLastCaller->GetExprCar().IsType<Expr_Identifier>()) {
-				Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(pExprLastCaller->GetExprCar());
-				pValue = Basement::Inst.GetFrame().Lookup(exprCar.GetSymbol());
-			}
-			const DeclCallable* pDeclCallable;
-			if (pValue && (pDeclCallable = pValue->GetDeclCallable()) &&
-				pDeclCallable->GetDeclBlock().IsOccurOnce()) {
-				Expr_Block* pExprOfBlock = new Expr_Block();
-				pExprLastCaller->SetExprOfBlock(pExprOfBlock);
-				_exprLeaderStack.push_back(pExprLastCaller);
-			}
-		} else if (!pExprLastCaller->GetExprOfBlock()->HasExprElem()) {
-			_exprLeaderStack.push_back(pExprLastCaller);
-		}
 	} else {
 		// Parsing a normal script other than template directive.
 		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
 		if (!pParser->FeedString(pStrTmplScript) || !pParser->Flush()) return false;
 		Expr* pExprFirst = pExprTmplScript->GetExprElemFirst();
-		
-
-		if (pExprFirst && pExprFirst->IsType<Expr_Caller>()) {
-			// check if the first Expr is a trailer
-			Expr_Caller* pExprFirstCaller = dynamic_cast<Expr_Caller*>(pExprFirst);
-			Value* pValue = nullptr;
-			if (pExprFirstCaller->GetExprCar().IsType<Expr_Identifier>()) {
-				Expr_Identifier& exprCar = dynamic_cast<Expr_Identifier&>(pExprFirstCaller->GetExprCar());
-				pValue = Basement::Inst.GetFrame().Lookup(exprCar.GetSymbol());
+		if (!pExprFirst || !pExprFirst->IsType<Expr_Caller>()) {
+			// nothing to do
+		} else if (pExprFirst->IsEndMarker()) {
+			if (_exprLeaderStack.empty()) {
+				Error::Issue(ErrorType::SyntaxError, "unmatching end expression");
+				return false;
 			}
-			const DeclCallable* pDeclCallable;
-			if (pValue && (pDeclCallable = pValue->GetDeclCallable()) &&
-				pDeclCallable->IsSet(DeclCallable::Flag::Trailer)) {
-				pExprTmplScript->SetStringIndent("");
-				if (_exprLeaderStack.empty()) {
-					Error::IssueWith(ErrorType::SyntaxError, *pExprTmplScript, "unmatching trailer expression");
-					return false;
-				}
-				if (!pDeclCallable->IsSet(DeclCallable::Flag::EndMarker)) {
-					
-				}
+			_exprLeaderStack.pop_back();
+			pExprTmplScript->GetExprLinkElem().RemoveExprFirst();
+		} else if (pExprFirst->IsTrailer()) {
+			if (_exprLeaderStack.empty()) {
+				Error::Issue(ErrorType::SyntaxError, "unmatching trailer expression");
+				return false;
 			}
-#if 0
-			if (pCallable != nullptr && pCallable->IsTrailer()) {
-				if (!pCallable->IsEndMarker()) {
-					Expr_Caller *pExprCaller = nullptr;
-					if (pExpr->IsCaller()) {
-						pExprCaller = dynamic_cast<Expr_Caller *>(Expr::Reference(pExpr));
-					} else {
-						pExprCaller = new Expr_Caller(
-							Expr::Reference(pExpr), nullptr, nullptr, FLAG_None);
-						pExprCaller->SetSourceInfo(_pSourceName->Reference(),
-										pExpr->GetLineNoTop(), pExpr->GetLineNoBtm());
-					}
-					_exprLeaderStack.back()->SetTrailer(pExprCaller);
-					pExprLast = pExprCaller;
-				}
-				_exprLeaderStack.pop_back();
-				ppExpr++;
-			}
-#endif
+			_exprLeaderStack.back()->SetExprTrailer(dynamic_cast<Expr_Caller*>(pExprFirst));
+			_exprLeaderStack.pop_back();
+			pExprTmplScript->GetExprLinkElem().RemoveExprFirst();
 		}
-		if (!pExprTmplScript->HasExprElem()) return true;
-		AddExpr(pExprTmplScript->Reference());
-		//Expr* pExprLast = pExprTmplScript->GetExprElemLast();
-#if 0
-		if (pExprLast == nullptr) return true;
-		if (!pExprLast->IsCaller()) return true;
-		Expr_Caller *pExprLastCaller = dynamic_cast<Expr_Caller *>(pExprLast);
-		if (pExprLastCaller->GetBlock() == nullptr) {
-			Callable *pCallable = nullptr;
-			if (pExprLastCaller->GetCar()->IsMember()) {
-				Expr_Member *pExprCar = dynamic_cast<Expr_Member *>(pExprLastCaller->GetCar());
-				if (pExprCar->GetTarget()->IsIdentifier() &&
-						dynamic_cast<const Expr_Identifier *>(pExprCar->GetTarget())->GetSymbol()->
-														IsIdentical(Gurax_Symbol(this_))) {
-					pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
-				}
-			} else {
-				pCallable = pExprLastCaller->LookupCallable(env);
-			}
-			env.ClearSignal();
-			if (pCallable != nullptr && pCallable->GetBlockOccurPattern() == OCCUR_Once) {
-				Expr_Block *pExprBlock = new Expr_Block();
-				pExprLastCaller->SetBlock(pExprBlock);
-				_exprLeaderStack.push_back(pExprLastCaller);
-				pExprTmplScript->SetStringIndent("");
-				pExprTmplScript->SetStringPost("");
-			}
-		} else if (pExprLastCaller->GetBlock()->GetExprOwner().empty()) {
-			_exprLeaderStack.push_back(pExprLastCaller);
-			pExprTmplScript->SetStringIndent("");
-			pExprTmplScript->SetStringPost("");
-		}
-#endif
+	}
+	if (!pExprTmplScript->HasExprElem()) return true;
+	Expr* pExprLast = pExprTmplScript->GetExprElemLast();
+	if (pExprLast->IsType<Expr_Caller>() && pExprLast->DoesExpectBlockFollowed()) {
+		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
+		if (!pExprLastCaller->HasExprOfBlock()) pExprLastCaller->SetExprOfBlock(new Expr_Block());
+		_exprLeaderStack.push_back(pExprLastCaller);
+		pExprTmplScript->SetStringIndent("");
+		pExprTmplScript->SetStringPost("");
 	}
 	return true;
 }

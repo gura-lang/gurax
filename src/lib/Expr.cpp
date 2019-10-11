@@ -1116,7 +1116,7 @@ const DeclCallable* Expr_Caller::LookupDeclCallableOfCar() const
 bool Expr_Caller::DoesExpectBlockFollowed() const
 {
 	const Expr_Block* pExprOfBlock = GetExprOfBlock();
-	if (pExprOfBlock && !pExprOfBlock->HasExprElem()) return true;
+	if (pExprOfBlock) return !pExprOfBlock->HasExprElem();
 	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
 	return pDeclCallable && pDeclCallable->GetDeclBlock().IsOccurOnce();
 }

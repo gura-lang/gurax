@@ -258,6 +258,16 @@ public:
 		}
 		_pExprLast = pExpr;
 	}
+	void RemoveExprFirst() {
+		if (_pExprFirst) {
+			RefPtr<Expr> pExprFirst(_pExprFirst.release());
+			if (pExprFirst->GetExprNext()) {
+				_pExprFirst.reset(pExprFirst->GetExprNext()->Reference());
+			} else {
+				_pExprLast = nullptr;
+			}
+		}
+	}
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);

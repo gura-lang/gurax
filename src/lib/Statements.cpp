@@ -167,6 +167,22 @@ Gurax_ImplementStatement(else_)
 	exprCaller.GetExprOfBlock()->ComposeOrNil(composer);				// [Any]
 }
 
+// end ():trailer:end_marker
+Gurax_DeclareStatement(end)
+{
+	Declare(VTYPE_Any, Flag::Trailer | Flag::EndMarker);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Specify an end of a sequence.\n"
+		"\n"
+		"This function is supposed to be used as a block terminator\n"
+		"in an embedded script of a template.\n");
+}
+
+Gurax_ImplementStatement(end)
+{
+}
+
 // try {`block}
 Gurax_DeclareStatementAlias(try_, "try")
 {
@@ -853,6 +869,7 @@ void Statements::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateStatement(if_));
 	frame.Assign(Gurax_CreateStatement(elsif));
 	frame.Assign(Gurax_CreateStatement(else_));
+	frame.Assign(Gurax_CreateStatement(end));
 	frame.Assign(Gurax_CreateStatement(try_));
 	frame.Assign(Gurax_CreateStatement(catch_));
 	frame.Assign(Gurax_CreateStatement(finally));
