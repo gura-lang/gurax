@@ -309,7 +309,6 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 	RefPtr<Expr_TmplScript> pExprTmplScript(
 		new Expr_TmplScript(_tmpl.Reference(), _strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
 	pExprTmplScript->SetSourceInfo(_pSourceName->Reference(), _cntLineTop + 1, _cntLine + 1);
-	AddExpr(pExprTmplScript->Reference());
 	const char* pStrTmplScript = _strTmplScript.c_str();
 	if (*pStrTmplScript == '=') {
 		// Parsing template directive that looks like "${=foo()}".
@@ -358,6 +357,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		}
 	}
 	if (!pExprTmplScript->HasExprElem()) return true;
+	AddExpr(pExprTmplScript->Reference());
 	Expr* pExprLast = pExprTmplScript->GetExprElemLast();
 	if (pExprLast->IsType<Expr_Caller>()) {
 		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
@@ -377,153 +377,6 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 	}
 	return true;
 }
-
-#if 0
-bool Template::Parser::CreateTmplScript(
-	const char *strIndent, const char *strTmplScript, const char *strPost,
-	Template *pTemplate, Expr_Block *pExprBlockRoot,
-	StringShared *pSourceName, int cntLineTop, int cntLineBtm)
-{
-	Class *pClass = env.LookupClass(VTYPE_template);
-	Expr *pExprLast = nullptr;
-	AutoPtr<Expr_TmplScript> pExprTmplScript(new Expr_TmplScript(
-			pTemplate, strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
-	pExprTmplScript->SetSourceInfo(pSourceName->Reference(), cntLineTop + 1, cntLineBtm + 1);
-	if (*strTmplScript == '=') {
-		// Parsing template directive that looks like "${=foo()}".
-		strTmplScript++;
-		AutoPtr<ExprOwner> pExprOwnerForInit(new ExprOwner());
-		do {
-			Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
-			// Appends "this.init_" before the script string while parsing
-			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
-			if (!parser.ParseString(env, *pExprOwnerForInit, "this.init_", false)) return false;
-			if (!parser.ParseString(env, *pExprOwnerForInit, strTmplScript, true)) return false;
-		} while (0);
-		do {
-			ExprOwner &exprOwner = pExprTmplScript->GetExprOwner();
-			Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
-			// Appends "this." before the script string while parsing
-			// so that it generates an expression "this.foo()" from the directive "${=foo()}".
-			if (!parser.ParseString(env, exprOwner, "this.", false)) return false;
-			if (!parser.ParseString(env, exprOwner, strTmplScript, true)) return false;
-		} while (0);
-		do {
-			ExprOwner &exprOwnerForPresent = _exprLeaderStack.empty()?
-				pExprBlockRoot->GetExprOwner() :
-				_exprLeaderStack.back()->GetBlock()->GetExprOwner();
-			exprOwnerForPresent.push_back(Expr::Reference(pExprTmplScript.get()));
-		} while (0);
-		do {
-			ExprOwner &exprOwnerForInit = pTemplate->GetExprOwnerForInit();
-			foreach (ExprOwner, ppExpr, *pExprOwnerForInit) {
-				Expr *pExpr = *ppExpr;
-				exprOwnerForInit.push_back(Expr::Reference(pExpr));
-				pExprLast = pExpr;
-			}
-		} while (0);
-		if (!pExprLast->IsCaller()) return true;
-		Expr_Caller *pExprLastCaller = dynamic_cast<Expr_Caller *>(pExprLast);
-		if (pExprLastCaller->GetBlock() == nullptr) {
-			Callable *pCallable = nullptr;
-			if (pExprLastCaller->GetCar()->IsMember()) {
-				Expr_Member *pExprCar = dynamic_cast<Expr_Member *>(pExprLastCaller->GetCar());
-				if (pExprCar->GetTarget()->IsIdentifier() &&
-					dynamic_cast<const Expr_Identifier *>(pExprCar->GetTarget())->
-									GetSymbol()->IsIdentical(Gurax_Symbol(this_))) {
-					pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
-				}
-			} else {
-				pCallable = pExprLastCaller->LookupCallable(env);
-			}
-			env.ClearSignal();
-			if (pCallable != nullptr && pCallable->GetBlockOccurPattern() == OCCUR_Once) {
-				Expr_Block *pExprBlock = new Expr_Block();
-				pExprLastCaller->SetBlock(pExprBlock);
-				_exprLeaderStack.push_back(pExprLastCaller);
-			}
-		} else if (pExprLastCaller->GetBlock()->GetExprOwner().empty()) {
-			_exprLeaderStack.push_back(pExprLastCaller);
-		}
-	} else {
-		// Parsing a normal script other than template directive.
-		AutoPtr<ExprOwner> pExprOwnerPart(new ExprOwner());
-		Gura::Parser parser(env, pSourceName->GetString(), cntLineTop, false);
-		if (!parser.ParseString(env, *pExprOwnerPart, strTmplScript, true)) return false;
-		ExprOwner::iterator ppExpr = pExprOwnerPart->begin();
-		//::printf("[%s], [%s], [%s]\n", strIndent, strTmplScript, strPost);
-		if (ppExpr != pExprOwnerPart->end()) {
-			// check if the first Expr is a trailer
-			Expr *pExpr = *ppExpr;
-			Callable *pCallable = pExpr->LookupCallable(env);
-			env.ClearSignal();
-			if (pCallable != nullptr && pCallable->IsTrailer()) {
-				pExprTmplScript->SetStringIndent("");
-				if (_exprLeaderStack.empty()) {
-					env.SetError(ERR_SyntaxError, "unmatching trailer expression");
-					env.GetSignal().AddExprCause(pExprTmplScript.get());
-					return false;
-				}
-				if (!pCallable->IsEndMarker()) {
-					Expr_Caller *pExprCaller = nullptr;
-					if (pExpr->IsCaller()) {
-						pExprCaller = dynamic_cast<Expr_Caller *>(Expr::Reference(pExpr));
-					} else {
-						pExprCaller = new Expr_Caller(
-							Expr::Reference(pExpr), nullptr, nullptr, FLAG_None);
-						pExprCaller->SetSourceInfo(pSourceName->Reference(),
-										pExpr->GetLineNoTop(), pExpr->GetLineNoBtm());
-					}
-					_exprLeaderStack.back()->SetTrailer(pExprCaller);
-					pExprLast = pExprCaller;
-				}
-				_exprLeaderStack.pop_back();
-				ppExpr++;
-			}
-		}
-		if (ppExpr != pExprOwnerPart->end()) {
-			for ( ; ppExpr != pExprOwnerPart->end(); ppExpr++) {
-				Expr *pExpr = *ppExpr;
-				pExprTmplScript->GetExprOwner().push_back(Expr::Reference(pExpr));
-				pExprLast = pExpr;
-			}
-			ExprOwner &exprOwnerForPresent = _exprLeaderStack.empty()?
-					pExprBlockRoot->GetExprOwner() :
-					_exprLeaderStack.back()->GetBlock()->GetExprOwner();
-			exprOwnerForPresent.push_back(Expr::Reference(pExprTmplScript.get()));
-		}
-		if (pExprLast == nullptr) return true;
-		if (!pExprLast->IsCaller()) return true;
-		Expr_Caller *pExprLastCaller = dynamic_cast<Expr_Caller *>(pExprLast);
-		if (pExprLastCaller->GetBlock() == nullptr) {
-			Callable *pCallable = nullptr;
-			if (pExprLastCaller->GetCar()->IsMember()) {
-				Expr_Member *pExprCar = dynamic_cast<Expr_Member *>(pExprLastCaller->GetCar());
-				if (pExprCar->GetTarget()->IsIdentifier() &&
-						dynamic_cast<const Expr_Identifier *>(pExprCar->GetTarget())->GetSymbol()->
-														IsIdentical(Gurax_Symbol(this_))) {
-					pCallable = pExprCar->GetSelector()->LookupCallable(*pClass);
-				}
-			} else {
-				pCallable = pExprLastCaller->LookupCallable(env);
-			}
-			env.ClearSignal();
-			if (pCallable != nullptr && pCallable->GetBlockOccurPattern() == OCCUR_Once) {
-				Expr_Block *pExprBlock = new Expr_Block();
-				pExprLastCaller->SetBlock(pExprBlock);
-				_exprLeaderStack.push_back(pExprLastCaller);
-				pExprTmplScript->SetStringIndent("");
-				pExprTmplScript->SetStringPost("");
-			}
-		} else if (pExprLastCaller->GetBlock()->GetExprOwner().empty()) {
-			_exprLeaderStack.push_back(pExprLastCaller);
-			pExprTmplScript->SetStringIndent("");
-			pExprTmplScript->SetStringPost("");
-		}
-	}
-	return true;
-}
-#endif
 
 //-----------------------------------------------------------------------------
 // Expr_TmplString
