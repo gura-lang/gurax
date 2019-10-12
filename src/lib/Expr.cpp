@@ -328,9 +328,10 @@ String Expr_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Identifier::typeInfo;
 
-bool Expr_Identifier::IsEndMarker() const
+const DeclCallable* Expr_Identifier::LookupDeclCallable() const
 {
-	return false;
+	Value* pValue = Basement::Inst.GetFrame().Lookup(GetSymbol());
+	return pValue? pValue->GetDeclCallable() : nullptr;
 }
 
 void Expr_Identifier::Compose(Composer& composer)
@@ -1103,15 +1104,15 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 }
 
 // This method is used by Template.
-const DeclCallable* Expr_Caller::LookupDeclCallableOfCar() const
+const DeclCallable* Expr_Caller::LookupDeclCallable() const
 {
 	if (!GetExprCar().IsType<Expr_Identifier>()) return nullptr;
 	Value* pValue = Basement::Inst.GetFrame().Lookup(
 		dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol());
-	if (!pValue) return nullptr;
-	return pValue->GetDeclCallable();
+	return pValue? pValue->GetDeclCallable() : nullptr;
 }
 
+#if 0
 // This method is used by Template.
 bool Expr_Caller::DoesExpectBlockFollowed() const
 {
@@ -1134,6 +1135,7 @@ bool Expr_Caller::IsEndMarker() const
 	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
 	return pDeclCallable && pDeclCallable->IsSet(DeclCallable::Flag::EndMarker);
 }
+#endif
 
 String Expr_Caller::ToString(const StringStyle& ss) const
 {

@@ -333,33 +333,47 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
 		if (!pParser->FeedString(pStrTmplScript) || !pParser->Flush()) return false;
 		Expr* pExprFirst = pExprTmplScript->GetExprElemFirst();
-		if (!pExprFirst || !pExprFirst->IsType<Expr_Caller>()) {
+		if (!pExprFirst) {
 			// nothing to do
-		} else if (pExprFirst->IsEndMarker()) {
-			if (_exprLeaderStack.empty()) {
-				Error::Issue(ErrorType::SyntaxError, "unmatching end expression");
-				return false;
+		} else {
+			const DeclCallable* pDeclCallable = pExprFirst->LookupDeclCallable();
+			if (!pDeclCallable) {
+				// nothing to do
+			} else if (pDeclCallable->IsSet(DeclCallable::Flag::EndMarker)) {
+				if (_exprLeaderStack.empty()) {
+					Error::Issue(ErrorType::SyntaxError, "unmatching end expression");
+					return false;
+				}
+				_exprLeaderStack.pop_back();
+				pExprTmplScript->GetExprLinkElem().RemoveExprFirst();
+			} else if (pExprFirst->IsType<Expr_Caller>() && pDeclCallable->IsSet(DeclCallable::Flag::Trailer)) {
+				if (_exprLeaderStack.empty()) {
+					Error::Issue(ErrorType::SyntaxError, "unmatching trailer expression");
+					return false;
+				}
+				_exprLeaderStack.back()->SetExprTrailer(dynamic_cast<Expr_Caller*>(pExprFirst));
+				_exprLeaderStack.pop_back();
+				pExprTmplScript->GetExprLinkElem().RemoveExprFirst();
 			}
-			_exprLeaderStack.pop_back();
-			pExprTmplScript->GetExprLinkElem().RemoveExprFirst();
-		} else if (pExprFirst->IsTrailer()) {
-			if (_exprLeaderStack.empty()) {
-				Error::Issue(ErrorType::SyntaxError, "unmatching trailer expression");
-				return false;
-			}
-			_exprLeaderStack.back()->SetExprTrailer(dynamic_cast<Expr_Caller*>(pExprFirst));
-			_exprLeaderStack.pop_back();
-			pExprTmplScript->GetExprLinkElem().RemoveExprFirst();
 		}
 	}
 	if (!pExprTmplScript->HasExprElem()) return true;
 	Expr* pExprLast = pExprTmplScript->GetExprElemLast();
-	if (pExprLast->IsType<Expr_Caller>() && pExprLast->DoesExpectBlockFollowed()) {
+	if (pExprLast->IsType<Expr_Caller>()) {
 		Expr_Caller* pExprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast);
-		if (!pExprLastCaller->HasExprOfBlock()) pExprLastCaller->SetExprOfBlock(new Expr_Block());
-		_exprLeaderStack.push_back(pExprLastCaller);
-		pExprTmplScript->SetStringIndent("");
-		pExprTmplScript->SetStringPost("");
+		if (pExprLastCaller->HasEmptyExprOfBlock()) {
+			_exprLeaderStack.push_back(pExprLastCaller);
+			pExprTmplScript->SetStringIndent("");
+			pExprTmplScript->SetStringPost("");
+		} else {
+			const DeclCallable* pDeclCallable = pExprLastCaller->LookupDeclCallable();
+			if (pDeclCallable && pDeclCallable->GetDeclBlock().IsOccurOnce()) {
+				if (!pExprLastCaller->HasExprOfBlock()) pExprLastCaller->SetExprOfBlock(new Expr_Block());
+				_exprLeaderStack.push_back(pExprLastCaller);
+				pExprTmplScript->SetStringIndent("");
+				pExprTmplScript->SetStringPost("");
+			}
+		}
 	}
 	return true;
 }

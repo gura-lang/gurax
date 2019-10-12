@@ -170,9 +170,7 @@ public:
 	// Virtual functions
 	virtual bool IsEmpty() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
-	virtual bool DoesExpectBlockFollowed() const { return false; }	// used by Template
-	virtual bool IsTrailer() const { return false; }				// used by Template
-	virtual bool IsEndMarker() const { return false; }				// used by Template
+	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
@@ -512,7 +510,7 @@ public:
 	bool IsPureSymbol() const { return GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
-	virtual bool IsEndMarker() const override;
+	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
@@ -797,6 +795,7 @@ public:
 	}
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	bool HasExprOfBlock() const { return _pExprOfBlock.get() != nullptr; }
+	bool HasEmptyExprOfBlock() const { return _pExprOfBlock && !_pExprOfBlock->HasExprElem(); }
 	Expr_Block* GetExprOfBlock() { return _pExprOfBlock.get(); }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);
@@ -807,12 +806,9 @@ public:
 	Expr_Caller* GetExprTrailerLast();
 	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
 	Function* CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag);
-	const DeclCallable* LookupDeclCallableOfCar() const;			// used by Template
 public:
 	// Virtual functions of Expr
-	virtual bool DoesExpectBlockFollowed() const override;
-	virtual bool IsTrailer() const override;
-	virtual bool IsEndMarker() const override;
+	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!Expr_Composite::Traverse(visitor)) return false;
 		if (_pExprOfBlock && !_pExprOfBlock->Traverse(visitor)) return false;

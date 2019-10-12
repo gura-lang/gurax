@@ -970,6 +970,7 @@ bool Parser::ReduceFiveTokens()
 	// never reaches here.
 }
 
+#if 0
 bool Parser::EmitExpr(ExprLink& exprLink, Expr* pExpr)
 {
 	if (pExpr->IsType<Expr_Caller>()) {
@@ -990,6 +991,7 @@ bool Parser::EmitExpr(ExprLink& exprLink, Expr* pExpr)
 	exprLink.AddExpr(pExpr);
 	return true;
 }
+#endif
 
 Expr_Block* Parser::CreateExprOfBlock(RefPtr<Token>& pToken)
 {
