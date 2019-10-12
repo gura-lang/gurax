@@ -153,13 +153,28 @@ Gurax_DeclareProperty_R(Template, expr)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Generated instance of `Expr`.");
+		"An `Expr` instance that represents parsed expressions of the template body.");
 }
 
 Gurax_ImplementPropertyGetter(Template, expr)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Expr(valueThis.GetTemplate().GetExprForBody().Reference());
+}
+
+// Template#exprForInit
+Gurax_DeclareProperty_R(Template, exprForInit)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"An `Expr` instance that represents parsed expressions of the template's initialization part.");
+}
+
+Gurax_ImplementPropertyGetter(Template, exprForInit)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Expr(valueThis.GetTemplate().GetExprForInit().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -178,6 +193,7 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Template, Render));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Template, expr));
+	Assign(Gurax_CreateProperty(Template, exprForInit));
 }
 
 //------------------------------------------------------------------------------
