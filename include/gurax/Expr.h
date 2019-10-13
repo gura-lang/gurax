@@ -803,7 +803,7 @@ public:
 	bool HasExprTrailer() const { return _pExprTrailer.get() != nullptr; }
 	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
-	Expr_Caller* GetExprTrailerLast();
+	Expr_Caller& GetExprTrailerLast();
 	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
 	Function* CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag);
 public:
@@ -821,7 +821,7 @@ public:
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag) override;
-	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast()->GetAttr(); }
+	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

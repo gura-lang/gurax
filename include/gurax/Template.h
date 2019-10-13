@@ -45,10 +45,7 @@ public:
 	private:
 		void CreateTmplString();
 		bool CreateTmplScript(const char* strPost);
-		void AddExpr(Expr* pExpr) {
-			(_exprLeaderStack.empty()? _tmpl.GetExprForBody() : *_exprLeaderStack.back()->GetExprOfBlock()).
-				AddExprElem(pExpr);
-		}
+		void AddExpr(Expr* pExpr);
 	};
 private:
 	RefPtr<Template> _pTemplateSuper;

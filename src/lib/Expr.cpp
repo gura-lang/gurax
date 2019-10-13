@@ -1189,14 +1189,14 @@ void Expr_Caller::AppendExprTrailer(Expr_Caller* pExprTrailer)
 		GetLastTrailer()->SetTrailer(pExprCaller);
 	}
 #endif
-	GetExprTrailerLast()->SetExprTrailer(pExprTrailer);
+	GetExprTrailerLast().SetExprTrailer(pExprTrailer);
 }
 
-Expr_Caller* Expr_Caller::GetExprTrailerLast()
+Expr_Caller& Expr_Caller::GetExprTrailerLast()
 {
 	Expr_Caller* pExpr = this;
 	for ( ; pExpr->GetExprTrailer() != nullptr; pExpr = pExpr->GetExprTrailer()) ;
-	return pExpr;
+	return *pExpr;
 }
 
 const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
