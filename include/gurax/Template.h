@@ -69,16 +69,16 @@ protected:
 public:
 	static void Bootup();
 public:
-	void SetTemplateSuper(Template *pTemplateSuper) { _pTemplateSuper.reset(pTemplateSuper); }
+	void SetTemplateSuper(Template* pTemplateSuper) { _pTemplateSuper.reset(pTemplateSuper); }
 	Template& GetTemplateSuper() { return *_pTemplateSuper; }
 	const Template& GetTemplateSuper() const { return *_pTemplateSuper; }
 	Expr_Block& GetExprForInit() { return *_pExprForInit; }
 	const Expr_Block& GetExprForInit() const { return *_pExprForInit; }
 	Expr_Block& GetExprForBody() { return *_pExprForBody; }
 	const Expr_Block& GetExprForBody() const { return *_pExprForBody; }
-	ValueMap &GetValueMap() { return *_pValueMap; }
-	const ValueMap &GetValueMap() const { return *_pValueMap; }
-	void SetStreamDst(Stream *pStream) { _pStreamDst.reset(pStream); }
+	ValueMap& GetValueMap() { return *_pValueMap; }
+	const ValueMap& GetValueMap() const { return *_pValueMap; }
+	void SetStreamDst(Stream* pStream) { _pStreamDst.reset(pStream); }
 	Stream& GetStreamDst() { return *_pStreamDst; }
 	void ClearLastChar()  { _chLast = '\0'; }
 	char GetLastChar() const { return _chLast; }
@@ -142,8 +142,8 @@ public:
 		_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag) {}
 public:
 	Template& GetTemplate() { return *_pTemplate; }
-	void SetStringIndent(const String &strIndent) { _strIndent = strIndent; }
-	void SetStringPost(const String &strPost) { _strPost = strPost; }
+	void SetStringIndent(const String& strIndent) { _strIndent = strIndent; }
+	void SetStringPost(const String& strPost) { _strPost = strPost; }
 public:
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -250,7 +250,7 @@ private:
 	AutoPtr<ExprOwner> _pExprOwnerForInit;
 	AutoPtr<FunctionCustom> _pFuncForBody;
 	AutoPtr<ValueExMap> _pValueExMap;
-	SimpleStream *_pStreamDst;
+	SimpleStream* _pStreamDst;
 	char _chLast;
 public:
 	Gura_DeclareReferenceAccessor(Template);
@@ -259,33 +259,33 @@ public:
 private:
 	inline ~Template() {}
 public:
-	bool Read(Environment &env,
-			  SimpleStream &streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Parse(Environment &env,
+	bool Read(Environment& env,
+			  SimpleStream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
+	bool Parse(Environment& env,
 			   String::const_iterator strSrc, String::const_iterator strSrcEnd,
 			   bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Parse(Environment &env,
-			   const char *strSrc, const char *strSrcEnd,
+	bool Parse(Environment& env,
+			   const char* strSrc, const char* strSrcEnd,
 			   bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Render(Environment &env, SimpleStream *pStreamDst);
-	bool Render(Environment &env, String &strDst);
-	bool Prepare(Environment &env);
-	const ValueEx *LookupValue(const Symbol *pSymbol) const;
-	void PutChar(Signal &sig, char ch);
-	void Print(Signal &sig, const char *str);
-	inline void SetTemplateSuper(Template *pTemplateSuper) {
+	bool Render(Environment& env, SimpleStream* pStreamDst);
+	bool Render(Environment& env, String& strDst);
+	bool Prepare(Environment& env);
+	const ValueEx* LookupValue(const Symbol* pSymbol) const;
+	void PutChar(Signal& sig, char ch);
+	void Print(Signal& sig, const char* str);
+	inline void SetTemplateSuper(Template* pTemplateSuper) {
 		_pTemplateSuper.reset(pTemplateSuper);
 	}
-	inline Template *GetTemplateSuper() { return _pTemplateSuper.get(); }
-	inline const Template *GetTemplateSuper() const { return _pTemplateSuper.get(); }
-	inline void SetFuncForBody(FunctionCustom *pFuncForBody) { _pFuncForBody.reset(pFuncForBody); }
-	inline ExprOwner &GetExprOwnerForInit() { return *_pExprOwnerForInit; }
-	inline FunctionCustom *GetFuncForBody() { return _pFuncForBody.get(); }
-	inline const FunctionCustom *GetFuncForBody() const { return _pFuncForBody.get(); }
-	inline ValueExMap &GetValueExMap() { return *_pValueExMap; }
-	inline const ValueExMap &GetValueExMap() const { return *_pValueExMap; }
-	inline void SetStreamDst(SimpleStream *pStreamDst) { _pStreamDst = pStreamDst; }
-	inline SimpleStream *GetStreamDst() { return _pStreamDst; }
+	inline Template* GetTemplateSuper() { return _pTemplateSuper.get(); }
+	inline const Template* GetTemplateSuper() const { return _pTemplateSuper.get(); }
+	inline void SetFuncForBody(FunctionCustom* pFuncForBody) { _pFuncForBody.reset(pFuncForBody); }
+	inline ExprOwner& GetExprOwnerForInit() { return *_pExprOwnerForInit; }
+	inline FunctionCustom* GetFuncForBody() { return _pFuncForBody.get(); }
+	inline const FunctionCustom* GetFuncForBody() const { return _pFuncForBody.get(); }
+	inline ValueExMap& GetValueExMap() { return *_pValueExMap; }
+	inline const ValueExMap& GetValueExMap() const { return *_pValueExMap; }
+	inline void SetStreamDst(SimpleStream* pStreamDst) { _pStreamDst = pStreamDst; }
+	inline SimpleStream* GetStreamDst() { return _pStreamDst; }
 	inline void ClearLastChar()  { _chLast = '\0'; }
 	inline char GetLastChar() const { return _chLast; }
 };
