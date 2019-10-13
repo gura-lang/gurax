@@ -310,6 +310,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		new Expr_TmplScript(_tmpl.Reference(), _strIndent, strPost, _autoIndentFlag, _appendLastEOLFlag));
 	pExprTmplScript->SetSourceInfo(_pSourceName->Reference(), _cntLineTop + 1, _cntLine + 1);
 	const char* pStrTmplScript = _strTmplScript.c_str();
+	RefPtr<Expr> pExprLast;
 	if (*pStrTmplScript == '=') {
 		// Parsing template directive that looks like "${=foo()}".
 		pStrTmplScript++;
@@ -351,6 +352,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 					return false;
 				}
 				if (pExprFirst->IsType<Expr_Caller>()) {
+					pExprLast.reset(pExprFirst->Reference());
 					_exprLeaderStack.back()->GetExprTrailerLast().
 						SetExprTrailer(dynamic_cast<Expr_Caller*>(pExprFirst)->Reference());
 					_exprLeaderStack.pop_back();
@@ -358,6 +360,7 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 				} else if (pExprFirst->IsType<Expr_Identifier>()) {
 					RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 					pExprCaller->SetExprCar(pExprFirst->Reference());
+					pExprLast.reset(pExprCaller.Reference());
 					_exprLeaderStack.back()->GetExprTrailerLast().
 						SetExprTrailer(pExprCaller.release());
 					_exprLeaderStack.pop_back();
@@ -366,11 +369,12 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			}
 		}
 	}
-	if (!pExprTmplScript->HasExprElem()) return true;
-	AddExpr(pExprTmplScript->Reference());
-	Expr* pExprLast = pExprTmplScript->GetExprElemLast();
-	if (pExprLast->IsType<Expr_Caller>()) {
-		Expr_Caller& exprLastCaller = dynamic_cast<Expr_Caller*>(pExprLast)->GetExprTrailerLast();
+	if (pExprTmplScript->HasExprElem()) {
+		AddExpr(pExprTmplScript->Reference());
+		pExprLast.reset(pExprTmplScript->GetExprElemLast()->Reference());
+	}
+	if (pExprLast && pExprLast->IsType<Expr_Caller>()) {
+		Expr_Caller& exprLastCaller = dynamic_cast<Expr_Caller&>(*pExprLast).GetExprTrailerLast();
 		if (exprLastCaller.HasEmptyExprOfBlock()) {
 			_exprLeaderStack.push_back(&exprLastCaller);
 			pExprTmplScript->SetStringIndent("");
