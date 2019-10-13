@@ -68,8 +68,7 @@ bool Parser::Flush()
 
 bool Parser::Finish()
 {
-	FeedChar('\0');
-	if (Error::IsIssued()) return false;
+	if (!Flush()) return false;
 	GetExprRoot().Prepare();
 	return !Error::IsIssued();
 }

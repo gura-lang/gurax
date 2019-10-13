@@ -42,6 +42,7 @@ public:
 			Parser(tmpl, new StringReferable(std::move(sourceName)), autoIndentFlag, appendLastEOLFlag) {}
 		bool FeedChar(char ch);
 		bool Flush();
+		bool Finish();
 	private:
 		void CreateTmplString();
 		bool CreateTmplScript(const char* strPost);

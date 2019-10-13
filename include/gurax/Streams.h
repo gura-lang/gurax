@@ -55,6 +55,10 @@ private:
 public:
 	Stream_Binary(BinaryReferable* pBuff, size_t offset);
 	Stream_Binary();
+public:
+	Binary& GetBuff() { return _pBuff->GetBinary(); }
+	BinaryReferable& GetBuffReferable() { return *_pBuff; }
+public:
 	virtual bool IsDumb() const override { return false; }
 	virtual const char* GetName() const override { return "binary"; };
 	virtual const char* GetIdentifier() const override { return "binary"; }

@@ -28,7 +28,7 @@ bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLa
 		if (chRaw < 0) break;
 		if (!parser.FeedChar(static_cast<char>(chRaw))) return false;
 	}
-	return parser.Flush();
+	return parser.Finish();
 }
 
 bool Template::ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
@@ -38,7 +38,7 @@ bool Template::ParseString(String::const_iterator strSrc, String::const_iterator
 	for (String::const_iterator p = strSrc; p != strSrcEnd; p++) {
 		if (!parser.FeedChar(*p)) return false;
 	}
-	return parser.Flush();
+	return parser.Finish();
 }
 
 bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
@@ -48,7 +48,7 @@ bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
 	for (const char* p = strSrc; p != strSrcEnd; p++) {
 		if (!parser.FeedChar(*p)) return false;
 	}
-	return parser.Flush();
+	return parser.Finish();
 }
 
 bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag)
@@ -57,7 +57,7 @@ bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendL
 	for (const char* p = strSrc; *p; p++) {
 		if (!parser.FeedChar(*p)) return false;
 	}
-	return parser.Flush();
+	return parser.Finish();
 }
 
 bool Template::Render(Stream& streamDst)
@@ -292,7 +292,27 @@ bool Template::Parser::Flush()
 		return false;
 	}
 	CreateTmplString();
-	return _tmpl.GetExprForBody().Prepare();
+	return true;
+}
+
+bool Template::Parser::Finish()
+{
+	if (!Flush()) return false;
+	_tmpl.GetExprForInit().Prepare();
+	if (Error::IsIssued()) return false;
+	do {
+		Composer composer;
+		_tmpl.GetExprForInit().Compose(composer);
+		if (Error::IsIssued()) return false;
+	} while (0);
+	_tmpl.GetExprForBody().Prepare();
+	if (Error::IsIssued()) return false;
+	do {
+		Composer composer;
+		_tmpl.GetExprForBody().Compose(composer);
+		if (Error::IsIssued()) return false;
+	} while (0);
+	return true;
 }
 
 void Template::Parser::CreateTmplString()

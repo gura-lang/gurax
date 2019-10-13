@@ -46,6 +46,7 @@ public:
 public:
 	static void Bootup();
 public:
+	String ConvertToString() { return String(reinterpret_cast<const char*>(data()), size()); }
 	String MakeQuoted(bool surroundFlag = false) const;
 public:
 	size_t CalcHash() const { return CalcHash(data(), size()); }

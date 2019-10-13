@@ -113,7 +113,7 @@ Gurax_ImplementMethod(Template, Read)
 // Template#Render(dst?:Stream:w)
 Gurax_DeclareMethod(Template, Render)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -135,12 +135,9 @@ Gurax_ImplementMethod(Template, Render)
 		tmpl.Render(*pStreamDst);
 		return Value::nil();
 	} else {
-		/*
-		String strDst;
-		SimpleStream_StringWriter streamDst(strDst);
-		if (!pTemplate->Render(env, &streamDst)) return Value::Nil;
-		*/
-		return Value::nil();
+		RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
+		tmpl.Render(*pStreamDst);
+		return new Value_String(pStreamDst->GetBuff().ConvertToString());
 	}
 }
 
