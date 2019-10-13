@@ -44,6 +44,7 @@ public:
 		bool Flush();
 		bool Finish();
 	private:
+		static bool PrepareAndCompose(Expr& expr);
 		void CreateTmplString();
 		bool CreateTmplScript(const char* strPost);
 		void AddExpr(Expr* pExpr);

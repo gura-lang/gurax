@@ -297,22 +297,18 @@ bool Template::Parser::Flush()
 
 bool Template::Parser::Finish()
 {
-	if (!Flush()) return false;
-	_tmpl.GetExprForInit().Prepare();
+	return Flush() && PrepareAndCompose(_tmpl.GetExprForInit()) && PrepareAndCompose(_tmpl.GetExprForBody());
+}
+
+bool Template::Parser::PrepareAndCompose(Expr& expr)
+{
+	expr.Prepare();
 	if (Error::IsIssued()) return false;
-	do {
-		Composer composer;
-		_tmpl.GetExprForInit().Compose(composer);
-		if (Error::IsIssued()) return false;
-	} while (0);
-	_tmpl.GetExprForBody().Prepare();
-	if (Error::IsIssued()) return false;
-	do {
-		Composer composer;
-		_tmpl.GetExprForBody().Compose(composer);
-		if (Error::IsIssued()) return false;
-	} while (0);
-	return true;
+	Composer composer;
+	expr.SetPUnitFirst(composer.PeekPUnitCont());
+	expr.ComposeOrNil(composer);
+	composer.Add_Return(&expr);
+	return !Error::IsIssued();
 }
 
 void Template::Parser::CreateTmplString()
