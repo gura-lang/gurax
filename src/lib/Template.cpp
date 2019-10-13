@@ -528,13 +528,15 @@ const ValueEx *Template::LookupValue(const Symbol *pSymbol) const
 
 //------------------------------------------------------------------------------
 // PUnit_TmplString
-// Stack View: [] -> []
+// Stack View: [] -> [nil] (continue)
+//                -> []    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_TmplString<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	GetTemplate().Print(GetString());
+	if (!discardValueFlag) processor.PushValue(Value::nil());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -567,16 +569,16 @@ PUnit* PUnitFactory_TmplString::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_TmplScript
-// Stack View: [Any] -> []
+// Stack View: [Any] -> [nil] (continue)
+//                   -> []    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-#if 0
-	if (!discardValueFlag) processor.PushValue(GetValue()->Reference());
+
+	if (!discardValueFlag) processor.PushValue(Value::nil());
 	processor.SetPUnitNext(_GetPUnitCont());
-#endif
 }
 
 #if 0
