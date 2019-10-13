@@ -308,6 +308,7 @@ bool Template::Parser::PrepareAndCompose(Expr& expr)
 	expr.SetPUnitFirst(composer.PeekPUnitCont());
 	expr.ComposeOrNil(composer);
 	composer.Add_Return(&expr);
+	composer.Add_Terminate();
 	return !Error::IsIssued();
 }
 
