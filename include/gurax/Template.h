@@ -129,6 +129,9 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Expr_TmplScript : public Expr_Collector {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_TmplScript);
+public:
 	static const TypeInfo typeInfo;
 protected:
 	RefPtr<Template> _pTemplate;
@@ -144,8 +147,10 @@ public:
 		_autoIndentFlag(autoIndentFlag), _appendLastEOLFlag(appendLastEOLFlag) {}
 public:
 	Template& GetTemplate() { return *_pTemplate; }
-	void SetStringIndent(const String& strIndent) { _strIndent = strIndent; }
+	const char* GetStringPost() const { return _strPost.c_str(); }
+	const char* GetStringIndent() const { return _strIndent.c_str(); }
 	void SetStringPost(const String& strPost) { _strPost = strPost; }
+	void SetStringIndent(const String& strIndent) { _strIndent = strIndent; }
 public:
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -207,14 +212,18 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	RefPtr<Template> _pTmpl;
+	RefPtr<Expr_TmplScript> _pExprTmplScript;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_TmplScript(Template* pTmpl) : _pTmpl(pTmpl) {}
-	PUnit_TmplScript(Template* pTmpl, Expr* pExpr) : PUnit_TmplScript(pTmpl) { _ppExprSrc[0] = pExpr; }
+	PUnit_TmplScript(Expr_TmplScript* pExprTmplScript) : _pExprTmplScript(pExprTmplScript) {}
+	PUnit_TmplScript(Expr_TmplScript* pExprTmplScript, Expr* pExpr) : PUnit_TmplScript(pExprTmplScript) {
+		_ppExprSrc[0] = pExpr;
+	}
 public:
-	Template& GetTemplate() const { return *_pTmpl; }
+	Template& GetTemplate() const { return _pExprTmplScript->GetTemplate(); }
+	const char* GetStringPost() const { return _pExprTmplScript->GetStringPost(); }
+	const char* GetStringIndent() const { return _pExprTmplScript->GetStringIndent(); }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -231,9 +240,9 @@ class PUnitFactory_TmplScript : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_TmplScript");
 private:
-	RefPtr<Template> _pTmpl;
+	RefPtr<Expr_TmplScript> _pExprTmplScript;
 public:
-	PUnitFactory_TmplScript(Template* pTmpl, Expr* pExprSrc) : PUnitFactory(pExprSrc), _pTmpl(pTmpl) {}
+	PUnitFactory_TmplScript(Expr_TmplScript* pExprTmplScript, Expr* pExprSrc) : PUnitFactory(pExprSrc), _pExprTmplScript(pExprTmplScript) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_TmplScript<1, false>) : sizeof(PUnit_TmplScript<0, false>);
 	}
