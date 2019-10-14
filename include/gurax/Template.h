@@ -150,6 +150,8 @@ public:
 	const char* GetStringIndent() const { return _strIndent.c_str(); }
 	void SetStringPost(const String& strPost) { _strPost = strPost; }
 	void SetStringIndent(const String& strIndent) { _strIndent = strIndent; }
+	bool GetAutoIndentFlag() const { return _autoIndentFlag; }
+	bool GetAppendLastEOLFlag() const { return _appendLastEOLFlag; }
 public:
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -223,6 +225,8 @@ public:
 	Template& GetTemplate() const { return _pExprTmplScript->GetTemplate(); }
 	const char* GetStringPost() const { return _pExprTmplScript->GetStringPost(); }
 	const char* GetStringIndent() const { return _pExprTmplScript->GetStringIndent(); }
+	bool GetAutoIndentFlag() const { return _pExprTmplScript->GetAutoIndentFlag(); }
+	bool GetAppendLastEOLFlag() const { return _pExprTmplScript->GetAppendLastEOLFlag(); }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }

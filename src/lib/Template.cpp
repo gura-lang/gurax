@@ -569,11 +569,12 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValue(processor.PopValue());
+	String strLast;
 	if (!pValue->IsValid()) {
 		// nothing to do
 	} else if (pValue->IsType(VTYPE_String)) {
 		GetTemplate().Print(GetStringIndent());
-		//strLast = value.GetStringSTL();
+		strLast = dynamic_cast<Value_String&>(*pValue).GetStringSTL();
 	} else if (pValue->IsType(VTYPE_List) || pValue->IsType(VTYPE_Iterator)) {
 		RefPtr<Iterator> pIterator(pValue->DoGenIterator());
 		bool firstFlag = true;
@@ -584,7 +585,6 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 				firstFlag = false;
 				GetTemplate().Print(GetStringIndent());
 			}
-		}
 #if 0
 			foreach_const (String, p, strLast) {
 				char ch = *p;
@@ -611,35 +611,30 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 				env.GetSignal().AddExprCause(this);
 				return Value::Nil;
 			}
-		}
-		if (firstFlag) return Value::Nil;
-	} else if (value.Is_number()) {
-		_pTemplate->Print(env, _strIndent.c_str());
-		strLast = value.ToString();
-		if (env.IsSignalled()) return Value::Nil;
-	} else {
-		env.SetError(ERR_TypeError,
-			"template script must return nil, string or number");
-		env.GetSignal().AddExprCause(this);
-		return Value::Nil;
 #endif
+		}
+		if (firstFlag) return;
+	} else if (pValue->IsType(VTYPE_Number)) {
+		GetTemplate().Print(GetStringIndent());
+		strLast = pValue->ToString();
+	} else {
+		Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
+		return;
 	}
-#if 0
-	foreach_const (String, p, strLast) {
+	for (auto p = strLast.begin(); p != strLast.end(); p++) {
 		char ch = *p;
 		if (ch != '\n') {
-			_pTemplate->PutChar(env, ch);
+			GetTemplate().PutChar(ch);
 		} else if (p + 1 != strLast.end()) {
-			_pTemplate->PutChar(env, ch);
-			if (_autoIndentFlag) {
-				_pTemplate->Print(env, _strIndent.c_str());
+			GetTemplate().PutChar(ch);
+			if (GetAutoIndentFlag()) {
+				GetTemplate().Print(GetStringIndent());
 			}
-		} else if (_appendLastEOLFlag) {
-			_pTemplate->PutChar(env, ch);
+		} else if (GetAppendLastEOLFlag()) {
+			GetTemplate().PutChar(ch);
 		}
 	}
-	_pTemplate->Print(env, _strPost.c_str());
-#endif
+	GetTemplate().Print(GetStringPost());
 	if (!discardValueFlag) processor.PushValue(Value::nil());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
