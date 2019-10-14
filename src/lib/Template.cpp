@@ -60,14 +60,12 @@ bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendL
 	return parser.Finish();
 }
 
-bool Template::Render(Stream& streamDst)
+bool Template::Render(Processor& processor, Stream& streamDst)
 {
-	//Expr_Block& exprForBody = GetExprForBody();
-	return false;
-}
-
-bool Template::Render(String& strDst)
-{
+	_pStreamDst.reset(streamDst.Reference());
+	Value::Delete(processor.EvalExpr(GetExprForInit()));
+	Value::Delete(processor.EvalExpr(GetExprForBody()));
+	_pStreamDst.reset();
 	return false;
 }
 
@@ -495,12 +493,6 @@ bool Template::Render(Environment &env, SimpleStream *pStreamDst)
 		pTemplate->SetStreamDst(nullptr);
 	}
 	return !env.IsSignalled();
-}
-
-bool Template::Render(Environment &env, String &strDst)
-{
-	SimpleStream_StringWriter streamDst(strDst);
-	return Render(env, &streamDst);
 }
 
 bool Template::Prepare(Environment &env)

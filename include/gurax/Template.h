@@ -91,8 +91,7 @@ public:
 	bool ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag);
 	bool ParseString(const char* strSrc, const char* strSrcEnd,
 					 bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Render(Stream& streamDst);
-	bool Render(String& strDst);
+	bool Render(Processor& processor, Stream& streamDst);
 	void PutChar(char ch);
 	void Print(const char* str);
 public:

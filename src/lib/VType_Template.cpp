@@ -132,11 +132,11 @@ Gurax_ImplementMethod(Template, Render)
 	Stream* pStreamDst = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
 	// Function body
 	if (pStreamDst) {
-		tmpl.Render(*pStreamDst);
+		tmpl.Render(processor, *pStreamDst);
 		return Value::nil();
 	} else {
 		RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
-		tmpl.Render(*pStreamDst);
+		tmpl.Render(processor, *pStreamDst);
 		return new Value_String(pStreamDst->GetBuff().ConvertToString());
 	}
 }

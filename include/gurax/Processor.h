@@ -109,6 +109,7 @@ public:
 	}
 	ExceptionInfo* EndTryBlock() { return GetExceptionInfoStack().Pop(); }
 public:
+	Value* EvalExpr(const Expr& expr, Event* pEvent = nullptr);
 	Value* EvalExpr(const Expr& expr, Argument& argument, Event* pEvent = nullptr);
 public:
 	void SetExprCur(const Expr* pExpr) { _pExprCur = pExpr; }
