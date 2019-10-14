@@ -204,6 +204,7 @@ public:
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const {
 		GetVType().GatherMemberSymbol(symbolList);
 	}
+	virtual const DeclCallable* GetDeclCallableWithError();
 	virtual const DeclCallable* GetDeclCallable();
 	virtual void DoCall(Processor& processor, Argument& argument) {}
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }

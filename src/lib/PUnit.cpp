@@ -1851,7 +1851,7 @@ void PUnit_Argument<nExprSrc, discardValueFlag>::Exec(Processor& processor) cons
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueCar(processor.PopValue());
-	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallable();
+	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallableWithError();
 	if (!pDeclCallable || !pDeclCallable->CheckAttribute(GetAttr())) {
 		processor.ErrorDone();
 		return;

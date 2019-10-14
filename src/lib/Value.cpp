@@ -59,10 +59,17 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Printf(":%p", this);
 }
 
-const DeclCallable* Value::GetDeclCallable()
+const DeclCallable* Value::GetDeclCallableWithError()
 {
+	const DeclCallable* pDeclCallable = GetDeclCallable();
+	if (pDeclCallable) return pDeclCallable;
 	Error::Issue(ErrorType::ValueError,
 				 "value type '%s' can not be called", GetVType().MakeFullName().c_str());
+	return nullptr;
+}
+
+const DeclCallable* Value::GetDeclCallable()
+{
 	return nullptr;
 }
 

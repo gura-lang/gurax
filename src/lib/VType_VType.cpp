@@ -94,15 +94,19 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
+const DeclCallable* Value_VType::GetDeclCallableWithError()
+{
+	const DeclCallable* pDeclCallable = GetDeclCallable();
+	if (pDeclCallable) return pDeclCallable;
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s does not have a constructor", GetVTypeThis().MakeFullName().c_str());
+	return nullptr;
+}
+
 const DeclCallable* Value_VType::GetDeclCallable()
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();
-	if (constructor.IsEmpty()) {
-		Error::Issue(ErrorType::ValueError,
-					 "value type %s does not have a constructor", GetVTypeThis().MakeFullName().c_str());
-		return nullptr;
-	}
-	return &constructor.GetDeclCallable();
+	return constructor.IsEmpty()? nullptr : &constructor.GetDeclCallable();
 }
 
 void Value_VType::DoCall(Processor& processor, Argument& argument)

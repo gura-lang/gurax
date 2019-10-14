@@ -80,6 +80,7 @@ public:
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
 		GetVTypeThis().GatherMemberSymbol(symbolList);
 	}
+	virtual const DeclCallable* GetDeclCallableWithError() override;
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
