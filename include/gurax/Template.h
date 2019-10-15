@@ -237,6 +237,8 @@ public:
 	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
 private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
+	void RenderValue(const Value& value) const;
+	void PrintScriptResult(const char* str) const;
 };
 
 class PUnitFactory_TmplScript : public PUnitFactory {

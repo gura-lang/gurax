@@ -574,7 +574,7 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 		// nothing to do
 	} else if (pValue->IsType(VTYPE_String)) {
 		GetTemplate().Print(GetStringIndent());
-		strLast = dynamic_cast<Value_String&>(*pValue).GetStringSTL();
+		PrintScriptResult(dynamic_cast<Value_String&>(*pValue).GetString());
 	} else if (pValue->IsType(VTYPE_List) || pValue->IsType(VTYPE_Iterator)) {
 		RefPtr<Iterator> pIterator(pValue->DoGenIterator());
 		bool firstFlag = true;
@@ -585,47 +585,49 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 				firstFlag = false;
 				GetTemplate().Print(GetStringIndent());
 			}
-#if 0
-			foreach_const (String, p, strLast) {
+			for (auto p = strLast.c_str(); *p; p++) {
 				char ch = *p;
 				if (ch == '\n') {
-					_pTemplate->PutChar(env, ch);
-					if (_autoIndentFlag && valueElem.IsValid()) {
-						_pTemplate->Print(env, _strIndent.c_str());
+					GetTemplate().PutChar(ch);
+					if (GetAutoIndentFlag() && pValue->IsValid()) {
+						GetTemplate().Print(GetStringIndent());
 					}
 				} else {
-					_pTemplate->PutChar(env, ch);
+					GetTemplate().PutChar(ch);
 				}
 			}
-			if (valueElem.Is_string()) {
-				strLast = valueElem.GetStringSTL();
-			} else if (valueElem.IsInvalid()) {
+			if (pValue->IsType(VTYPE_String)) {
+				strLast = dynamic_cast<Value_String&>(*pValue).GetStringSTL();
+			} else if (!pValue->IsValid()) {
 				strLast.clear();
-			} else if (valueElem.Is_number()) {
-				strLast = valueElem.ToString();
-				if (env.IsSignalled()) return Value::Nil;
+			} else if (pValue->IsType(VTYPE_Number)) {
+				strLast = pValue->ToString();
+				if (Error::IsIssued()) return;
 			} else {
-				env.SetError(ERR_TypeError,
-							 "an iterable returned by a template script must contain "
-							 "elements of nil, string or number");
-				env.GetSignal().AddExprCause(this);
-				return Value::Nil;
+				Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
+				return;
 			}
-#endif
 		}
 		if (firstFlag) return;
 	} else if (pValue->IsType(VTYPE_Number)) {
 		GetTemplate().Print(GetStringIndent());
-		strLast = pValue->ToString();
+		PrintScriptResult(pValue->ToString().c_str());
 	} else {
 		Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
 		return;
 	}
-	for (auto p = strLast.begin(); p != strLast.end(); p++) {
+	if (!discardValueFlag) processor.PushValue(Value::nil());
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_TmplScript<nExprSrc, discardValueFlag>::PrintScriptResult(const char* str) const
+{
+	for (auto p = str; *p; p++) {
 		char ch = *p;
 		if (ch != '\n') {
 			GetTemplate().PutChar(ch);
-		} else if (p + 1 != strLast.end()) {
+		} else if (*(p + 1)) {
 			GetTemplate().PutChar(ch);
 			if (GetAutoIndentFlag()) {
 				GetTemplate().Print(GetStringIndent());
@@ -635,8 +637,6 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 		}
 	}
 	GetTemplate().Print(GetStringPost());
-	if (!discardValueFlag) processor.PushValue(Value::nil());
-	processor.SetPUnitNext(_GetPUnitCont());
 }
 
 #if 0
@@ -694,6 +694,7 @@ Value Expr_TmplScript::DoExec(Environment &env) const
 		env.GetSignal().AddExprCause(this);
 		return Value::Nil;
 	}
+	PrintScriptResult(strLast, GetStringIdent(), GetAutoIndentFlag(), GetAppendLastEOLFlag());
 	foreach_const (String, p, strLast) {
 		char ch = *p;
 		if (ch != '\n') {
