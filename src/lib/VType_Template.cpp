@@ -46,10 +46,10 @@ Gurax_ImplementFunction(Template)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Template#Parse(str:String):void:[lasteol,noindent]
+// Template#Parse(str:String):reduce:[lasteol,noindent]
 Gurax_DeclareMethod(Template, Parse)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Template, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(noindent));
 	DeclareAttrOpt(Gurax_Symbol(lasteol));
@@ -75,13 +75,13 @@ Gurax_ImplementMethod(Template, Parse)
 	const char* str = args.PickString();
 	// Function body
 	tmpl.ParseString(str, autoIndentFlag, appendLastEOLFlag);
-	return Value::nil();
+	return valueThis.Reference();
 }
 
-// Template#Read(src:Stream:r):void:[lasteol,noindent]
+// Template#Read(src:Stream:r):reduce:[lasteol,noindent]
 Gurax_DeclareMethod(Template, Read)
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Template, Flag::Reduce);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(noindent));
 	DeclareAttrOpt(Gurax_Symbol(lasteol));
@@ -107,7 +107,7 @@ Gurax_ImplementMethod(Template, Read)
 	Stream& streamSrc = args.Pick<Value_Stream>().GetStream();
 	// Function body
 	tmpl.ParseStream(streamSrc, autoIndentFlag, appendLastEOLFlag);
-	return Value::nil();
+	return valueThis.Reference();
 }
 
 // Template#Render(dst?:Stream:w)
@@ -136,7 +136,7 @@ Gurax_ImplementMethod(Template, Render)
 		return Value::nil();
 	} else {
 		RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
-		tmpl.Render(processor, *pStreamDst);
+		if (!tmpl.Render(processor, *pStreamDst)) return Value::nil();
 		return new Value_String(pStreamDst->GetBuff().ConvertToString());
 	}
 }

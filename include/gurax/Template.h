@@ -72,8 +72,8 @@ public:
 	static void Bootup();
 public:
 	void SetTemplateSuper(Template* pTemplateSuper) { _pTemplateSuper.reset(pTemplateSuper); }
-	Template& GetTemplateSuper() { return *_pTemplateSuper; }
-	const Template& GetTemplateSuper() const { return *_pTemplateSuper; }
+	Template* GetTemplateSuper() { return _pTemplateSuper.get(); }
+	const Template* GetTemplateSuper() const { return _pTemplateSuper.get(); }
 	Expr_Block& GetExprForInit() { return *_pExprForInit; }
 	const Expr_Block& GetExprForInit() const { return *_pExprForInit; }
 	Expr_Block& GetExprForBody() { return *_pExprForBody; }
@@ -94,6 +94,7 @@ public:
 	bool Render(Processor& processor, Stream& streamDst);
 	void PutChar(char ch);
 	void Print(const char* str);
+	const Value* LookupValue(const Symbol* pSymbol) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Template& templ) const { return this == &templ; }

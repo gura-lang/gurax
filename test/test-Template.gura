@@ -1,0 +1,28 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+//hoge${if (a)}hoge${end}ABCDE
+//${if (a)}${if (b)}body${end}${end}
+//hoge${a = 3}foo
+//${if (a)}if-expr${elsif (b)}elsif-expr${else}else-expr${end}
+//hoge${'aaaa' + 'bbbb' + a}
+test(text:String) = {
+	Template {|t|
+		Printf('\'%s\' -> \'%s\'\n', text, t.Parse(text).Render())
+	}
+}
+test('')
+test('a')
+test(R'''
+${repeat (10){|i|}}
+item#${i}
+${end}
+''')
+test(R'''
+${repeat (10){|i|}}
+  item#${i}
+${end}
+''')
+test('${for (i in 0..9)}${i}${end}')
+test('${for (i in 0..9)}${if (i % 2 == 0)}${i}${end}${end}')
+test('${for (i in 0..9)}${if (i % 2 == 0)}[${i}]${else}{${i}}${end}${end}')

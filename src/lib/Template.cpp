@@ -2,7 +2,7 @@
 // Template
 //=============================================================================
 #include "stdafx.h"
-#include "../../include/gurax/Template.h"
+#include "../../include/gurax/VType_Template.h"
 
 namespace Gurax {
 
@@ -62,11 +62,14 @@ bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendL
 
 bool Template::Render(Processor& processor, Stream& streamDst)
 {
+	Frame& frame = processor.PushFrame<Frame_Block>();
+	frame.Assign(Gurax_Symbol(this_), new Value_Template(Reference()));
 	_pStreamDst.reset(streamDst.Reference());
 	Value::Delete(processor.EvalExpr(GetExprForInit()));
-	Value::Delete(processor.EvalExpr(GetExprForBody()));
+	if (!Error::IsIssued()) Value::Delete(processor.EvalExpr(GetExprForBody()));
 	_pStreamDst.reset();
-	return false;
+	processor.PopFrame();
+	return !Error::IsIssued();
 }
 
 void Template::PutChar(char ch)
@@ -80,6 +83,16 @@ void Template::Print(const char* str)
 	if (_pStreamDst) _pStreamDst->Print(str);
 	size_t len = ::strlen(str);
 	if (len > 0) _chLast = str[len - 1];
+}
+
+const Value* Template::LookupValue(const Symbol* pSymbol) const
+{
+	for (const Template* pTmpl = this; pTmpl; pTmpl = pTmpl->GetTemplateSuper()) {
+		const ValueMap& valueMap = pTmpl->GetValueMap();
+		auto iter = valueMap.find(pSymbol);
+		if (iter != valueMap.end()) return iter->second;
+	}
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------
@@ -503,17 +516,6 @@ bool Template::Prepare(Environment &env)
 	_pValueExMap->clear();
 	_pExprOwnerForInit->Exec(*pEnvBlock);
 	return !env.IsSignalled();
-}
-
-const ValueEx *Template::LookupValue(const Symbol *pSymbol) const
-{
-	for (const Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		const ValueExMap &valueExMap = pTemplate->GetValueExMap();
-		ValueExMap::const_iterator iter = valueExMap.find(pSymbol);
-		if (iter != valueExMap.end()) return &iter->second;
-	}
-	return nullptr;
 }
 
 #endif
