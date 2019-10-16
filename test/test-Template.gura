@@ -109,8 +109,8 @@ TestCase('Template script that returns nil value') {
 	
 	hello ${nil}world
 	hello ${-}world
-	hello ${//(1..10) + ','} world
-	hello ${//(1..10) + '\n'} world
+	hello ${(1..10) + ','} world
+	hello ${(1..10) + '\n'} world
 	foo${nil}bar
 	foo${-}bar
 	foo${''}bar

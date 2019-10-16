@@ -1268,6 +1268,24 @@ Gurax_ImplementOpBinary(Add, String, String)
 	return new Value_String(strL);
 }
 
+// String + Any
+Gurax_ImplementOpBinary(Add, String, Any)
+{
+	String strL = Value_String::GetStringSTL(valueL);
+	const String strR = valueR.ToString();
+	strL += strR;
+	return new Value_String(strL);
+}
+
+// Any + String
+Gurax_ImplementOpBinary(Add, Any, String)
+{
+	String strL = valueL.ToString();
+	const String& strR = Value_String::GetStringSTL(valueR);
+	strL += strR;
+	return new Value_String(strL);
+}
+
 // String == String
 Gurax_ImplementOpBinary(Eq, String, String)
 {
@@ -1387,6 +1405,8 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(String, width));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, String, String);
+	Gurax_AssignOpBinary(Add, String, Any);
+	Gurax_AssignOpBinary(Add, Any, String);
 	Gurax_AssignOpBinary(Eq, String, String);
 	Gurax_AssignOpBinary(Ge, String, String);
 	Gurax_AssignOpBinary(Gt, String, String);
