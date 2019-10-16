@@ -247,15 +247,17 @@ Gurax_ImplementMethod(Template, call)
 	const ValueList& values = args.PickList();
 	// Function body
 	const Value* pValue = tmpl.LookupValue(pSymbol);
-	if (pValue && pValue->IsType(VTYPE_Function)) {
-		const Function& function = Value_Function::GetFunction(*pValue);
-		Frame& frame = processor.GetFrameCur();
-		RefPtr<Argument> pArgument(new Argument(function));
+	if (!pValue || !pValue->IsType(VTYPE_Function)) return Value::nil();
+	const Function& function = Value_Function::GetFunction(*pValue);
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Argument> pArgument(new Argument(function));
+	do {
 		ArgFeeder args(*pArgument);
 		if (!args.FeedValues(frame, values)) return Value::nil();
-		function.DoEvalVoid(processor, *pArgument);
-	}
-	return Value::nil();
+	} while (0);
+	tmpl.ClearLastChar();
+	function.DoEvalVoid(processor, *pArgument);
+	return (tmpl.GetLastChar() == '\n')? Value::nil() : new Value_String(String::Empty);
 #if 0
 	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
 	const Symbol *pSymbol = arg.GetSymbol(0);
