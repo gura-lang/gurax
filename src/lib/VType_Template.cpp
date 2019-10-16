@@ -198,7 +198,7 @@ Gurax_DeclareMethod(Template, block)
 
 Gurax_ImplementMethod(Template, block)
 {
-	// Target
+   	// Target
 	auto& valueThis = GetValueThis(argument);
 	Template& tmpl = valueThis.GetTemplate();
 	// Arguments
@@ -206,12 +206,11 @@ Gurax_ImplementMethod(Template, block)
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
 	const Value* pValue = tmpl.LookupValue(pSymbol);
-	if (pValue && pValue->IsType(VTYPE_Expr)) {
-		const Expr& expr = Value_Expr::GetExpr(*pValue);
-		processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), valueThis.Reference());
-		processor.EvalExpr(expr);
-		processor.PopFrame();
-	}
+	if (!pValue || !pValue->IsType(VTYPE_Expr)) return Value::nil();
+	const Expr& expr = Value_Expr::GetExpr(*pValue);
+	processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), valueThis.Reference());
+	processor.EvalExpr(expr);
+	processor.PopFrame();
 	return Value::nil();
 }
 
@@ -258,22 +257,6 @@ Gurax_ImplementMethod(Template, call)
 	tmpl.ClearLastChar();
 	function.DoEvalVoid(processor, *pArgument);
 	return (tmpl.GetLastChar() == '\n')? Value::nil() : new Value_String(String::Empty);
-#if 0
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	const Symbol *pSymbol = arg.GetSymbol(0);
-	const ValueEx *pValue = pTemplate->LookupValue(pSymbol);
-	if (pValue == nullptr || !pValue->Is_function()) {
-		return Value::Nil;
-	}
-	const Function *pFunc = pValue->GetFunction();
-	AutoPtr<Argument> pArgument(new Argument(pFunc));
-	pArg->SetValueThis(arg.GetValueThis());
-	if (!pArgument->StoreValues(arg.GetList(1))) return Value::Nil;
-	pTemplate->ClearLastChar();
-	pFunc->Eval(*pArgument);
-	return (pTemplate->GetLastChar() == '\n')? Value::Nil : Value("");
-#endif
-	return Value::nil();
 }
 
 // Template#define(symbol:symbol, `args*):void
@@ -340,14 +323,6 @@ Gurax_ImplementMethod(Template, embed)
 	tmplEmbedded.ClearLastChar();
 	if (!tmplEmbedded.Render(processor, tmpl.GetStreamDst())) return Value::nil();
 	return (tmplEmbedded.GetLastChar() == '\n')? Value::nil() : new Value_String(String::Empty);
-#if 0
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	Template *pTemplateEmbedded = Object_template::GetObject(arg, 0)->GetTemplate();
-	SimpleStream *pStreamDst = pTemplate->GetStreamDst();
-	pTemplateEmbedded->ClearLastChar();
-	pTemplateEmbedded->Render(pStreamDst);
-	return (pTemplateEmbedded->GetLastChar() == '\n')? Value::Nil : Value("");
-#endif
 }
 
 // Template#extends(template:Template):void
@@ -430,20 +405,21 @@ Gurax_DeclareMethod(Template, super)
 
 Gurax_ImplementMethod(Template, super)
 {
-#if 0
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	const Symbol *pSymbol = arg.GetSymbol(0);
-	Template *pTemplateSuper = pTemplate->GetTemplateSuper();
-	if (pTemplateSuper == nullptr) return Value::Nil;
-	const ValueEx *pValue = pTemplateSuper->LookupValue(pSymbol);
-	if (pValue != nullptr && pValue->Is_function()) {
-		const Function *pFunc = pValue->GetFunction();
-		AutoPtr<Argument> pArgument(new Argument(pFunc));
-		pArgument->SetValueThis(arg.GetValueThis());
-		pFunc->Eval(*pArgument);
-	}
-	return Value::Nil;
-#endif
+   	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	Template* pTmplSuper = tmpl.GetTemplateSuper();
+	if (!pTmplSuper) return Value::nil();
+	const Value* pValue = pTmplSuper->LookupValue(pSymbol);
+	if (!pValue || !pValue->IsType(VTYPE_Expr)) return Value::nil();
+	const Expr& expr = Value_Expr::GetExpr(*pValue);
+	processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), new Value_Template(pTmplSuper->Reference()));
+	processor.EvalExpr(expr);
+	processor.PopFrame();
 	return Value::nil();
 }
 
