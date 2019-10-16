@@ -33,10 +33,11 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 
-Argument::Argument(const Function& function) : Argument(function.GetDeclCallable().Reference())
+Argument::Argument(const Function& function, DeclCallable::Flags flags) :
+	Argument(function.GetDeclCallable().Reference(), flags)
 {
 }
-	
+
 void Argument::ResetAllValues()
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {

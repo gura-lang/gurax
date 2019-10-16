@@ -53,12 +53,13 @@ Gurax_ImplementFunction(Function)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const ValueList& argDecls = args.PickList();
+	const ValueList& valuesExpr = args.PickList();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
+#if 0
 	RefPtr<ExprLink> pExprLink(new ExprLink());
-	for (const Value* pExpr : argDecls) {
-		pExprLink->AddExpr(Value_Expr::GetExpr(*pExpr).Reference());
+	for (const Value* pValue : valuesExpr) {
+		pExprLink->AddExpr(Value_Expr::GetExpr(*pValue).Reference());
 	}
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return Value::nil();
@@ -66,6 +67,10 @@ Gurax_ImplementFunction(Function)
 		new FunctionCustom(
 			Type::Function, Symbol::Empty, pDeclCallable.release(), pExprOfBlock->Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::None);
+	pFunction->SetFrameOuter(processor.GetFrameCur());
+#endif
+	RefPtr<Function> pFunction(Function::CreateDynamicFunction(Symbol::Empty, valuesExpr, *pExprOfBlock));
+	if (!pFunction) return Value::nil();
 	pFunction->SetFrameOuter(processor.GetFrameCur());
 	return new Value_Function(pFunction.release());
 }

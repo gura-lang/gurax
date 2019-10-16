@@ -198,18 +198,20 @@ Gurax_DeclareMethod(Template, block)
 
 Gurax_ImplementMethod(Template, block)
 {
-#if 0
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	const Symbol *pSymbol = arg.GetSymbol(0);
-	const ValueEx *pValue = pTemplate->LookupValue(pSymbol);
-	if (pValue != nullptr && pValue->Is_function()) {
-		const Function *pFunc = pValue->GetFunction();
-		AutoPtr<Argument> pArg(new Argument(pFunc));
-		pArg->SetValueThis(arg.GetValueThis());
-		pFunc->Eval(*pArg);
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	const Value* pValue = tmpl.LookupValue(pSymbol);
+	if (pValue && pValue->IsType(VTYPE_Expr)) {
+		const Expr& expr = Value_Expr::GetExpr(*pValue);
+		processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), valueThis.Reference());
+		processor.EvalExpr(expr);
+		processor.PopFrame();
 	}
-	return Value::Nil;
-#endif
 	return Value::nil();
 }
 
@@ -236,6 +238,24 @@ Gurax_DeclareMethod(Template, call)
 
 Gurax_ImplementMethod(Template, call)
 {
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	const ValueList& values = args.PickList();
+	// Function body
+	const Value* pValue = tmpl.LookupValue(pSymbol);
+	if (pValue && pValue->IsType(VTYPE_Function)) {
+		const Function& function = Value_Function::GetFunction(*pValue);
+		Frame& frame = processor.GetFrameCur();
+		RefPtr<Argument> pArgument(new Argument(function));
+		ArgFeeder args(*pArgument);
+		if (!args.FeedValues(frame, values)) return Value::nil();
+		function.DoEvalVoid(processor, *pArgument);
+	}
+	return Value::nil();
 #if 0
 	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
 	const Symbol *pSymbol = arg.GetSymbol(0);
@@ -244,11 +264,11 @@ Gurax_ImplementMethod(Template, call)
 		return Value::Nil;
 	}
 	const Function *pFunc = pValue->GetFunction();
-	AutoPtr<Argument> pArg(new Argument(pFunc));
+	AutoPtr<Argument> pArgument(new Argument(pFunc));
 	pArg->SetValueThis(arg.GetValueThis());
-	if (!pArg->StoreValues(arg.GetList(1))) return Value::Nil;
+	if (!pArgument->StoreValues(arg.GetList(1))) return Value::Nil;
 	pTemplate->ClearLastChar();
-	pFunc->Eval(*pArg);
+	pFunc->Eval(*pArgument);
 	return (pTemplate->GetLastChar() == '\n')? Value::Nil : Value("");
 #endif
 	return Value::nil();
@@ -282,7 +302,7 @@ Gurax_ImplementMethod(Template, define)
 	return Value::nil();
 }
 
-// Template#embed(template:template)
+// Template#embed(template:Template)
 Gurax_DeclareMethod(Template, embed)
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -308,6 +328,16 @@ Gurax_DeclareMethod(Template, embed)
 
 Gurax_ImplementMethod(Template, embed)
 {
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	Template& tmplEmbedded = args.Pick<Value_Template>().GetTemplate();
+	// Function body
+	tmplEmbedded.ClearLastChar();
+	if (!tmplEmbedded.Render(processor, tmpl.GetStreamDst())) return Value::nil();
+	return (tmplEmbedded.GetLastChar() == '\n')? Value::nil() : new Value_String(String::Empty);
 #if 0
 	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
 	Template *pTemplateEmbedded = Object_template::GetObject(arg, 0)->GetTemplate();
@@ -316,7 +346,6 @@ Gurax_ImplementMethod(Template, embed)
 	pTemplateEmbedded->Render(pStreamDst);
 	return (pTemplateEmbedded->GetLastChar() == '\n')? Value::Nil : Value("");
 #endif
-	return Value::nil();
 }
 
 // Template#extends(template:Template):void
@@ -407,9 +436,9 @@ Gurax_ImplementMethod(Template, super)
 	const ValueEx *pValue = pTemplateSuper->LookupValue(pSymbol);
 	if (pValue != nullptr && pValue->Is_function()) {
 		const Function *pFunc = pValue->GetFunction();
-		AutoPtr<Argument> pArg(new Argument(pFunc));
-		pArg->SetValueThis(arg.GetValueThis());
-		pFunc->Eval(*pArg);
+		AutoPtr<Argument> pArgument(new Argument(pFunc));
+		pArgument->SetValueThis(arg.GetValueThis());
+		pFunc->Eval(*pArgument);
 	}
 	return Value::Nil;
 #endif
@@ -466,29 +495,19 @@ Gurax_DeclareMethod(Template, init_define)
 
 Gurax_ImplementMethod(Template, init_define)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	const Symbol *pSymbol = arg.GetSymbol(0);
-	const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
-	if (sig.IsSignalled()) return Value::Nil;
-	AutoPtr<FunctionCustom> pFunc(new FunctionCustom(env,
-						pSymbol, Expr::Reference(pExprBlock), FUNCTYPE_Instance));
-	pFunc->SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_DynamicScope);
-	AutoPtr<ExprOwner> pExprOwnerArg(new ExprOwner());
-	foreach_const (ValueList, pValue, arg.GetList(1)) {
-		pExprOwnerArg->push_back(pValue->GetExpr()->Reference());
-	}
-	CallerInfo callerInfo(*pExprOwnerArg, nullptr, nullptr, nullptr);
-	if (!pFunc->CustomDeclare(callerInfo, SymbolSet::Empty)) return Value::Nil;
-	ValueExMap &valueExMap = pTemplate->GetValueExMap();
-	if (valueExMap.find(pSymbol) != valueExMap.end()) {
-		sig.SetError(ERR_KeyError, "duplicated symbol: %s", pSymbol->GetName());
-		return Value::Nil;
-	}
-	valueExMap[pSymbol] = Value(new Object_function(pFunc->Reference()));
-	return Value::Nil;
-#endif
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	const ValueList& valuesExpr = args.PickList();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	RefPtr<Function> pFunction(Function::CreateDynamicFunction(pSymbol, valuesExpr, *pExprOfBlock));
+	if (!pFunction) return Value::nil();
+	pFunction->SetFrameOuter(processor.GetFrameCur());
+	tmpl.AssignValue(pSymbol, new Value_Function(pFunction.release()));
 	return Value::nil();
 }
 

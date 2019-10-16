@@ -31,6 +31,7 @@ public:
 	bool IsValid() const { return _pArgSlot != nullptr; }
 public:
 	bool FeedValue(Frame& frame, Value* pValue);
+	bool FeedValues(Frame& frame, const ValueList& values);
 };
 
 }

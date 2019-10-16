@@ -21,9 +21,24 @@ Function* Function::CreateBlockFunction(const Symbol* pSymbol, const Expr_Block&
 	//if (pPUnit->IsBeginSequence()) pPUnit = pPUnit->GetPUnitCont();
 	RefPtr<FunctionCustom> pFunction(
 		new FunctionCustom(
-			Type::Function, pSymbol,
-			exprOfBlock.GetDeclCallable().Reference(), exprOfBlock.Reference()));
+			Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), exprOfBlock.Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::CutExtraArgs);
+	return pFunction.release();
+}
+
+Function* Function::CreateDynamicFunction(
+	const Symbol* pSymbol, const ValueList& valuesExpr, const Expr_Block& exprOfBlock)
+{
+	RefPtr<ExprLink> pExprLink(new ExprLink());
+	for (const Value* pValue : valuesExpr) {
+		pExprLink->AddExpr(Value_Expr::GetExpr(*pValue).Reference());
+	}
+	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
+	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return nullptr;
+	RefPtr<FunctionCustom> pFunction(
+		new FunctionCustom(
+			Type::Function, pSymbol, pDeclCallable.release(), exprOfBlock.Reference()));
+	pFunction->Declare(VTYPE_Any, Flag::None);
 	return pFunction.release();
 }
 

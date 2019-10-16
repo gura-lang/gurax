@@ -161,7 +161,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	argument.AssignToFrame(processor.PushFrameForFunction(*this, dynamicScopeFlag));
 	if (_pConstructorInh) {
 		const Expr& exprBody = GetExprBody();
-		RefPtr<Argument> pArgument(new Argument(_pConstructorInh->GetDeclCallable().Reference()));
+		RefPtr<Argument> pArgument(new Argument(*_pConstructorInh));
 		pArgument->SetValueThis(pValueThis.Reference());
 		if (exprBody.IsType<Expr_Block>()) {
 			const Expr_Block& exprBodyEx = dynamic_cast<const Expr_Block&>(exprBody);

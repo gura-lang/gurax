@@ -25,4 +25,12 @@ bool ArgFeeder::FeedValue(Frame& frame, Value* pValue)
 	return true;
 }
 
+bool ArgFeeder::FeedValues(Frame& frame, const ValueList& values)
+{
+	for (const Value* pValue : values) {
+		if (!FeedValue(frame, pValue->Reference())) return false;
+	}
+	return true;
+}
+
 }

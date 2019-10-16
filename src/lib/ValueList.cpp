@@ -18,7 +18,7 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 
 ValueList& ValueList::Sort(Processor& processor, const Function& function)
 {
-	RefPtr<Argument> pArgument(new Argument(function.GetDeclCallable().Reference()));
+	RefPtr<Argument> pArgument(new Argument(function));
 	std::sort(begin(), end(), Value::KeyCustomCompare(processor, function, *pArgument));
 	return *this;
 }
@@ -31,7 +31,7 @@ ValueList& ValueList::StableSort(SortOrder sortOrder)
 
 ValueList& ValueList::StableSort(Processor& processor, const Function& function)
 {
-	RefPtr<Argument> pArgument(new Argument(function.GetDeclCallable().Reference()));
+	RefPtr<Argument> pArgument(new Argument(function));
 	std::stable_sort(begin(), end(), Value::KeyCustomCompare(processor, function, *pArgument));
 	return *this;
 }
