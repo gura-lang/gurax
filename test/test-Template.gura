@@ -2,8 +2,8 @@
 import(util.tester) {*}
 
 TestCase('Basic test') {
-	test(text:String) = Template {|t|
-		Printf('\'%s\' -> \'%s\'\n', text, t.Parse(text).Render())
+	test(text:String) = {
+		Printf('\'%s\' -> \'%s\'\n', text, text.Embed())
 		Println()
 	}
 	test('')
@@ -58,4 +58,8 @@ TestCase('Basic test') {
 	    ${i} is another
 	  ${end}
 	${end}''')
+}
+
+TestCase('Reference to external variables') {
+	
 }

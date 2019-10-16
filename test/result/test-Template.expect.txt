@@ -1,0 +1,134 @@
+======== Basic test ========
+'' -> ''
+
+'a' -> 'a'
+
+'${repeat (10){|i|}}item#${i}${end}' -> 'item#0item#1item#2item#3item#4item#5item#6item#7item#8item#9'
+
+'${repeat (10){|i|}}
+item#${i}
+${end}
+' -> 'item#0
+item#1
+item#2
+item#3
+item#4
+item#5
+item#6
+item#7
+item#8
+item#9
+'
+
+'${repeat (10){|i|}}item#${i}
+${end}
+' -> 'item#0
+item#1
+item#2
+item#3
+item#4
+item#5
+item#6
+item#7
+item#8
+item#9
+'
+
+'${repeat (10){|i|}}
+  item#${i}
+${end}
+' -> '  item#0
+  item#1
+  item#2
+  item#3
+  item#4
+  item#5
+  item#6
+  item#7
+  item#8
+  item#9
+'
+
+'${for (i in 0..9)}item${i}${end}' -> 'item0item1item2item3item4item5item6item7item8item9'
+
+'${for (i in 0..9)}
+item${i}
+${end}' -> 'item0
+item1
+item2
+item3
+item4
+item5
+item6
+item7
+item8
+item9
+'
+
+'${for (i in 0..9)}
+  item${i}
+${end}
+' -> '  item0
+  item1
+  item2
+  item3
+  item4
+  item5
+  item6
+  item7
+  item8
+  item9
+'
+
+'${for (i in 0..9)}${if (i % 2 == 0)}item${i}${end}${end}' -> 'item0item2item4item6item8'
+
+'${for (i in 0..9)}
+  ${if (i % 2 == 0)}
+    item${i}
+  ${end}
+${end}' -> '    item0
+    item2
+    item4
+    item6
+    item8
+'
+
+'${for (i in 0..9)}
+  ${if (i % 2 == 0)}
+    ${i} is even
+  ${else}
+    ${i} is odd
+  ${end}
+${end}' -> '    0 is even
+    1 is odd
+    2 is even
+    3 is odd
+    4 is even
+    5 is odd
+    6 is even
+    7 is odd
+    8 is even
+    9 is odd
+'
+
+'${for (i in 0..9)}
+  ${if (i % 2 == 0)}
+    ${i} is a multiple of two
+  ${elsif (i % 3 == 0)}
+    ${i} is a multiple of three
+  ${else}
+    ${i} is another
+  ${end}
+${end}' -> '    0 is a multiple of two
+    1 is another
+    2 is a multiple of two
+    3 is a multiple of three
+    4 is a multiple of two
+    5 is another
+    6 is a multiple of two
+    7 is another
+    8 is a multiple of two
+    9 is a multiple of three
+'
+
+======== Reference to external variables ========
