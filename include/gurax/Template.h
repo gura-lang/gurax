@@ -94,6 +94,7 @@ public:
 	bool Render(Processor& processor, Stream& streamDst);
 	void PutChar(char ch);
 	void Print(const char* str);
+	bool AssignValue(const Symbol* pSymbol, Value* pValue);
 	const Value* LookupValue(const Symbol* pSymbol) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

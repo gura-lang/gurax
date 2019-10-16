@@ -68,11 +68,11 @@ Gurax_ImplementMethod(Template, Parse)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Template& tmpl = valueThis.GetTemplate();
-	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Arguments
 	ArgPicker args(argument);
 	const char* str = args.PickString();
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
 	tmpl.ParseString(str, autoIndentFlag, appendLastEOLFlag);
 	return valueThis.Reference();
@@ -100,11 +100,11 @@ Gurax_ImplementMethod(Template, Read)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Template& tmpl = valueThis.GetTemplate();
-	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Arguments
 	ArgPicker args(argument);
 	Stream& streamSrc = args.Pick<Value_Stream>().GetStream();
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
 	tmpl.ParseStream(streamSrc, autoIndentFlag, appendLastEOLFlag);
 	return valueThis.Reference();
@@ -427,23 +427,15 @@ Gurax_DeclareMethod(Template, init_block)
 
 Gurax_ImplementMethod(Template, init_block)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	const Symbol *pSymbol = arg.GetSymbol(0);
-	const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
-	if (sig.IsSignalled()) return Value::Nil;
-	AutoPtr<FunctionCustom> pFunc(new FunctionCustom(env,
-						pSymbol, Expr::Reference(pExprBlock), FUNCTYPE_Instance));
-	pFunc->SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_DynamicScope);
-	ValueExMap &valueExMap = pTemplate->GetValueExMap();
-	if (valueExMap.find(pSymbol) != valueExMap.end()) {
-		sig.SetError(ERR_KeyError, "duplicated symbol: %s", pSymbol->GetName());
-		return Value::Nil;
-	}
-	valueExMap[pSymbol] = Value(new Object_function(pFunc->Reference()));
-	return Value::Nil;
-#endif
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	tmpl.AssignValue(pSymbol, new Value_Expr(pExprOfBlock->Reference()));
 	return Value::nil();
 }
 
@@ -524,12 +516,14 @@ Gurax_DeclareMethod(Template, init_extends)
 
 Gurax_ImplementMethod(Template, init_extends)
 {
-#if 0
-	Template *pTemplate = Object_template::GetObjectThis(arg)->GetTemplate();
-	Template *pTemplateSuper = Object_template::GetObject(arg, 0)->GetTemplate();
-	pTemplate->SetTemplateSuper(pTemplateSuper->Reference());
-	return Value::Nil;
-#endif
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Arguments
+	ArgPicker args(argument);
+	const Template& tmplSuper = args.Pick<Value_Template>().GetTemplate();
+	// Function body
+	tmpl.SetTemplateSuper(tmplSuper.Reference());
 	return Value::nil();
 }
 

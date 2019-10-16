@@ -85,6 +85,17 @@ void Template::Print(const char* str)
 	if (len > 0) _chLast = str[len - 1];
 }
 
+bool Template::AssignValue(const Symbol* pSymbol, Value* pValue)
+{
+	ValueMap& valueMap = GetValueMap();
+	if (valueMap.DoesExist(pSymbol)) {
+		Error::Issue(ErrorType::KeyError, "duplicated symbol: %s", pSymbol->GetName());
+		return false;
+	}
+	valueMap.Assign(pSymbol, pValue);
+	return true;
+}
+
 const Value* Template::LookupValue(const Symbol* pSymbol) const
 {
 	for (const Template* pTmpl = this; pTmpl; pTmpl = pTmpl->GetTemplateSuper()) {
