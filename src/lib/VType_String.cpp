@@ -192,16 +192,25 @@ Gurax_DeclareMethod(String, Embed)
 
 Gurax_ImplementMethod(String, Embed)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	Stream* pStreamDst = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const char* str = valueThis.GetString();
+	RefPtr<Template> pTmpl(new Template());
+	pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	if (pStreamDst) {
+		pTmpl->Render(processor, *pStreamDst);
+		return Value::nil();
+	} else {
+		RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
+		if (!pTmpl->Render(processor, *pStreamDst)) return Value::nil();
+		return new Value_String(pStreamDst->GetBuff().ConvertToString());
+	}
 }
 
 // String#Encode(codec:Codec):String {block?}
@@ -1073,16 +1082,16 @@ Gurax_DeclareMethod(String, ToTemplate)
 
 Gurax_ImplementMethod(String, ToTemplate)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const char* str = valueThis.GetString();
+	RefPtr<Template> pTmpl(new Template());
+	pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
 }
 
 // String.Translator():void {block}

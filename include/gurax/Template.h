@@ -256,60 +256,6 @@ public:
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
-#if 0
-//-----------------------------------------------------------------------------
-// Template
-//-----------------------------------------------------------------------------
-class GURA_DLLDECLARE Template {
-public:
-private:
-	int _cntRef;
-	AutoPtr<Template> _pTemplateSuper;
-	AutoPtr<ExprOwner> _pExprOwnerForInit;
-	AutoPtr<FunctionCustom> _pFuncForBody;
-	AutoPtr<ValueExMap> _pValueExMap;
-	SimpleStream* _pStreamDst;
-	char _chLast;
-public:
-	Gura_DeclareReferenceAccessor(Template);
-public:
-	Template();
-private:
-	inline ~Template() {}
-public:
-	bool Read(Environment& env,
-			  SimpleStream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Parse(Environment& env,
-			   String::const_iterator strSrc, String::const_iterator strSrcEnd,
-			   bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Parse(Environment& env,
-			   const char* strSrc, const char* strSrcEnd,
-			   bool autoIndentFlag, bool appendLastEOLFlag);
-	bool Render(Environment& env, SimpleStream* pStreamDst);
-	bool Render(Environment& env, String& strDst);
-	bool Prepare(Environment& env);
-	const ValueEx* LookupValue(const Symbol* pSymbol) const;
-	void PutChar(Signal& sig, char ch);
-	void Print(Signal& sig, const char* str);
-	inline void SetTemplateSuper(Template* pTemplateSuper) {
-		_pTemplateSuper.reset(pTemplateSuper);
-	}
-	inline Template* GetTemplateSuper() { return _pTemplateSuper.get(); }
-	inline const Template* GetTemplateSuper() const { return _pTemplateSuper.get(); }
-	inline void SetFuncForBody(FunctionCustom* pFuncForBody) { _pFuncForBody.reset(pFuncForBody); }
-	inline ExprOwner& GetExprOwnerForInit() { return *_pExprOwnerForInit; }
-	inline FunctionCustom* GetFuncForBody() { return _pFuncForBody.get(); }
-	inline const FunctionCustom* GetFuncForBody() const { return _pFuncForBody.get(); }
-	inline ValueExMap& GetValueExMap() { return *_pValueExMap; }
-	inline const ValueExMap& GetValueExMap() const { return *_pValueExMap; }
-	inline void SetStreamDst(SimpleStream* pStreamDst) { _pStreamDst = pStreamDst; }
-	inline SimpleStream* GetStreamDst() { return _pStreamDst; }
-	inline void ClearLastChar()  { _chLast = '\0'; }
-	inline char GetLastChar() const { return _chLast; }
-};
-
-#endif
-
 }
 
 #endif
