@@ -1,28 +1,61 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-//hoge${if (a)}hoge${end}ABCDE
-//${if (a)}${if (b)}body${end}${end}
-//hoge${a = 3}foo
-//${if (a)}if-expr${elsif (b)}elsif-expr${else}else-expr${end}
-//hoge${'aaaa' + 'bbbb' + a}
-test(text:String) = {
-	Template {|t|
+TestCase('Basic test') {
+	test(text:String) = Template {|t|
 		Printf('\'%s\' -> \'%s\'\n', text, t.Parse(text).Render())
+		Println()
 	}
+	test('')
+	test('a')
+	test(R'''${repeat (10){|i|}}item#${i}${end}''')
+	test(R'''
+	${repeat (10){|i|}}
+	item#${i}
+	${end}
+	''')
+	test(R'''
+	${repeat (10){|i|}}item#${i}
+	${end}
+	''')
+	test(R'''
+	${repeat (10){|i|}}
+	  item#${i}
+	${end}
+	''')
+	test(R'''${for (i in 0..9)}item${i}${end}''')
+	test(R'''
+	${for (i in 0..9)}
+	item${i}
+	${end}''')
+	test(R'''
+	${for (i in 0..9)}
+	  item${i}
+	${end}
+	''')
+	test(R'''${for (i in 0..9)}${if (i % 2 == 0)}item${i}${end}${end}''')
+	test(R'''
+	${for (i in 0..9)}
+	  ${if (i % 2 == 0)}
+	    item${i}
+	  ${end}
+	${end}''')
+	test(R'''
+	${for (i in 0..9)}
+	  ${if (i % 2 == 0)}
+	    ${i} is even
+	  ${else}
+	    ${i} is odd
+	  ${end}
+	${end}''')
+	test(R'''
+	${for (i in 0..9)}
+	  ${if (i % 2 == 0)}
+	    ${i} is a multiple of two
+	  ${elsif (i % 3 == 0)}
+	    ${i} is a multiple of three
+	  ${else}
+	    ${i} is another
+	  ${end}
+	${end}''')
 }
-test('')
-test('a')
-test(R'''
-${repeat (10){|i|}}
-item#${i}
-${end}
-''')
-test(R'''
-${repeat (10){|i|}}
-  item#${i}
-${end}
-''')
-test('${for (i in 0..9)}${i}${end}')
-test('${for (i in 0..9)}${if (i % 2 == 0)}${i}${end}${end}')
-test('${for (i in 0..9)}${if (i % 2 == 0)}[${i}]${else}{${i}}${end}${end}')
