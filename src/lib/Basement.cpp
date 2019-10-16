@@ -95,6 +95,7 @@ void Basement::PrepareValue()
 {
 	Frame& frame = GetFrame();
 	Value::CreateConstant();
+	frame.Assign("-",		Value::nil());
 	frame.Assign("nil",		Value::nil());
 	frame.Assign("false",	Value::false_());
 	frame.Assign("true",	Value::true_());

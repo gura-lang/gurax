@@ -132,3 +132,35 @@ ${end}' -> '    0 is a multiple of two
 '
 
 ======== Reference to external variables ========
+abcde fghij klmno
+abcde AA
+v1 .. abcde
+======== Comment ========
+  line.1
+  line.2
+  line.3
+  line.4
+======== Block paramter ========
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10
+======== Template script that returns nil value ========
+hello
+gura
+
+world
+
+hello world
+hello world
+hello  world
+hello  world
+foobar
+foobar
+foobar

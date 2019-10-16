@@ -2,8 +2,8 @@
 import(util.tester) {*}
 
 TestCase('Basic test') {
-	test(text:String) = {
-		Printf('\'%s\' -> \'%s\'\n', text, text.Embed())
+	test(str:String) = {
+		Printf('\'%s\' -> \'%s\'\n', str, str.Embed())
 		Println()
 	}
 	test('')
@@ -61,5 +61,58 @@ TestCase('Basic test') {
 }
 
 TestCase('Reference to external variables') {
+	v1 = 'abcde'
+	v2 = 'fghij'
+	v3 = 'klmno'
+	R'''
+	${v1} ${v2} ${v3}
+	${v1 += ' AA'}
+	'''.Embed(sys.cout)
+	Tester(`v1)
+}
+
+TestCase('Comment') {
+	R'''
+	  ${// comment}
+	  line.1
+	    ${# comment}
+	  line.2
+	      ${/* comment */}
+	  line.3
+	  line.4${//comment}
 	
+	'''.Embed(sys.cout)
+}
+
+TestCase('Block paramter') {
+	R'''
+	${(1..10).Each {|i|}}
+	  ${i}
+	${end}
+	'''.Embed(sys.cout)
+}
+
+TestCase('Template script that returns nil value') {
+	R'''
+	hello
+	${
+	nil
+	}
+	${
+	-
+	}
+	${nil}
+	${-}
+	gura
+	${''}
+	world
+	
+	hello ${nil}world
+	hello ${-}world
+	hello ${//(1..10) + ','} world
+	hello ${//(1..10) + '\n'} world
+	foo${nil}bar
+	foo${-}bar
+	foo${''}bar
+	'''.Embed(sys.cout)
 }

@@ -62,7 +62,7 @@ bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendL
 
 bool Template::Render(Processor& processor, Stream& streamDst)
 {
-	Frame& frame = processor.PushFrame<Frame_Block>();
+	Frame& frame = processor.PushFrame<Frame_Scope>();
 	frame.Assign(Gurax_Symbol(this_), new Value_Template(Reference()));
 	_pStreamDst.reset(streamDst.Reference());
 	Value::Delete(processor.EvalExpr(GetExprForInit()));
@@ -593,7 +593,13 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 		bool firstFlag = true;
 		for (;;) {
 			RefPtr<Value> pValue(pIterator->NextValue());
-			if (!pValue) break;
+			if (!pValue) {
+				if (Error::IsIssued()) {
+					processor.ErrorDone();
+					return;
+				}
+				break;
+			}
 			if (firstFlag) {
 				firstFlag = false;
 				GetTemplate().Print(GetStringIndent());
@@ -615,9 +621,13 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 				strLast.clear();
 			} else if (pValue->IsType(VTYPE_Number)) {
 				strLast = pValue->ToString();
-				if (Error::IsIssued()) return;
+				if (Error::IsIssued()) {
+					processor.ErrorDone();
+					return;
+				}
 			} else {
 				Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
+				processor.ErrorDone();
 				return;
 			}
 		}
@@ -627,6 +637,7 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 		PrintScriptResult(pValue->ToString().c_str());
 	} else {
 		Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
+		processor.ErrorDone();
 		return;
 	}
 	if (!discardValueFlag) processor.PushValue(Value::nil());
