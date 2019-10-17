@@ -173,3 +173,20 @@ hello 1
 foobar
 foobar
 foobar
+======== Repeat sequence ========
+[Companies]
+    Company: Gura company
+    Company: Guri corporation
+    Company: (not defined)
+[Products]
+- apple
+- grape
+- orange
+[Companies]
+    Company: Gura company
+    Company: Guri corporation
+    Company: (not defined)
+[Products]
+- apple
+- grape
+- orange

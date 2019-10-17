@@ -117,10 +117,10 @@ TestCase('Template script that returns nil value') {
 	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
-TestCase('repeat sequence') {
+TestCase('Repeat sequence') {
 	companies = ['Gura company', 'Guri corporation', nil]
 	products = ['apple', 'grape', 'orange']
-	// iteration with for function
+	// iteration with for statement
 	R'''
 	[Companies]
 	${for (company in companies)}
@@ -134,11 +134,11 @@ TestCase('repeat sequence') {
 	${for (product in products)}
 	- ${product}
 	${end}
-	'''.Embed(sys.stdout)
-	// iteration with each method
+	'''.Embed(sys.cout)
+	// iteration with Each() method
 	R'''
 	[Companies]
-	${companies.each {|company|}}
+	${companies.Each {|company|}}
 	  ${if (company)}
 	    Company: ${company}
 	  ${else}
@@ -146,10 +146,10 @@ TestCase('repeat sequence') {
 	  ${end}
 	${end}
 	[Products]
-	${products.each {|product|}}
+	${products.Each {|product|}}
 	- ${product}
 	${end}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 sys.Exit()
 /*
