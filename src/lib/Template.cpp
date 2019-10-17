@@ -546,6 +546,7 @@ const Expr::TypeInfo Expr_TmplEmbedded::typeInfo;
 
 void Expr_TmplEmbedded::Compose(Composer& composer)
 {
+	composer.SetFactory(new PUnitFactory_TmplEmbedded(GetTemplate().Reference(), Reference()));
 }
 
 String Expr_TmplEmbedded::ToString(const StringStyle& ss) const
@@ -784,6 +785,51 @@ PUnit* PUnitFactory_TmplScript::Create(bool discardValueFlag)
 			_pPUnitCreated = new PUnit_TmplScript<0, true>(_pExprTmplScript.release());
 		} else {
 			_pPUnitCreated = new PUnit_TmplScript<0, false>(_pExprTmplScript.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_TmplEmbedded
+// Stack View: [] -> [Value] (continue)
+//                -> []      (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	String strDst;
+	if (!GetTemplate().Render(processor, strDst)) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(new Value_String(strDst));
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_TmplEmbedded<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("TmplEmbedded()");
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_TmplEmbedded::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_TmplEmbedded<1, true>(_pTmpl.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_TmplEmbedded<1, false>(_pTmpl.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_TmplEmbedded<0, true>(_pTmpl.release());
+		} else {
+			_pPUnitCreated = new PUnit_TmplEmbedded<0, false>(_pTmpl.release());
 		}
 	}
 	return _pPUnitCreated;

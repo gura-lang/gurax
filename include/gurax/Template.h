@@ -281,6 +281,50 @@ public:
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
+//------------------------------------------------------------------------------
+// PUnit_TmplEmbedded
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_TmplEmbedded : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	RefPtr<Template> _pTmpl;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_TmplEmbedded(Template* pTmpl) : _pTmpl(pTmpl) {}
+	PUnit_TmplEmbedded(Template* pTmpl, Expr* pExpr) :
+		PUnit_TmplEmbedded(pTmpl) { _ppExprSrc[0] = pExpr; }
+public:
+	Template& GetTemplate() const { return *_pTmpl; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_TmplEmbedded : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_TmplEmbedded");
+private:
+	RefPtr<Template> _pTmpl;
+public:
+	PUnitFactory_TmplEmbedded(Template* pTmpl, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pTmpl(pTmpl) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_TmplEmbedded<1, false>) : sizeof(PUnit_TmplEmbedded<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
 }
 
 #endif
