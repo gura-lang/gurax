@@ -208,10 +208,10 @@ public:
 	const String& GetSegmentSTL() const { return _pSegment->GetStringSTL(); }
 	const String& GetSuffixSTL() const { return _pSuffix->GetStringSTL(); }
 	const String& GetSourceSTL() const { return _pSource->GetStringSTL(); }
-	const StringReferable* GetSegmentReferable() const { return _pSegment.get(); }
-	const BinaryReferable* GetBinaryReferable() const { return _pBinary.get(); }
-	const StringReferable* GetSuffixReferable() const { return _pSuffix.get(); }
-	const StringReferable* GetSourceReferable() const { return _pSource.get(); }
+	const StringReferable& GetSegmentReferable() const { return *_pSegment; }
+	const BinaryReferable& GetBinaryReferable() const { return *_pBinary; }
+	const StringReferable& GetSuffixReferable() const { return *_pSuffix; }
+	const StringReferable& GetSourceReferable() const { return *_pSource; }
 	void AppendSegment(const char* segment) { _pSegment->GetStringSTL().append(segment); }
 	void AppendSegment(const String& segment) { _pSegment->GetStringSTL().append(segment); }
 	void SetExpr(Expr* pExpr) { _pExpr.reset(pExpr); }

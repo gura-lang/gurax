@@ -170,13 +170,13 @@ bool Parser::ReduceOneToken()
 			return false;
 		}
 		pExprGen.reset(
-			new Expr_Value(new Value_Number(num), pToken->GetSegmentReferable()->Reference()));
+			new Expr_Value(new Value_Number(num), pToken->GetSegmentReferable().Reference()));
 	} else if (pToken->IsType(TokenType::String)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> String\n"));
-		pExprGen.reset(new Expr_Value(new Value_String(pToken->GetSegmentReferable()->Reference())));
+		pExprGen.reset(new Expr_Value(new Value_String(pToken->GetSegmentReferable().Reference())));
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> Binary\n"));
-		pExprGen.reset(new Expr_Value(new Value_Binary(pToken->GetBinaryReferable()->Reference())));
+		pExprGen.reset(new Expr_Value(new Value_Binary(pToken->GetBinaryReferable().Reference())));
 	} else if (pToken->IsType(TokenType::EmbedString)) {
 		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
 		//RefPtr<Template> pTempl(new Template());
@@ -184,7 +184,7 @@ bool Parser::ReduceOneToken()
 		//bool appendLastEOLFlag = false;
 		//if (!pTempl->Parse(env, pToken->GetString(), nullptr,
 		//				   autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		//pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetSegmentReferable()->Reference()));
+		//pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetSegmentReferable().Reference()));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
 		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetSegment())));
@@ -202,11 +202,11 @@ bool Parser::ReduceOneToken()
 		pExprGen.reset(new Expr_Identifier(Gurax_SymbolMark(Sub)));
 	} else if (pToken->IsType(TokenType::NumberSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> NumberSuffixed\n"));
-		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable()->Reference(),
+		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable().Reference(),
 									  Symbol::Add(pToken->GetSuffix()), true));
 	} else if (pToken->IsType(TokenType::StringSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> StringSuffixed\n"));
-		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable()->Reference(),
+		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable().Reference(),
 									  Symbol::Add(pToken->GetSuffix()), false));
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken, "unexpected token: %s", pToken->GetSymbol());
@@ -968,29 +968,6 @@ bool Parser::ReduceFiveTokens()
 	}
 	// never reaches here.
 }
-
-#if 0
-bool Parser::EmitExpr(ExprLink& exprLink, Expr* pExpr)
-{
-	if (pExpr->IsType<Expr_Caller>()) {
-		Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pExpr);
-		if (!pExprCaller->IsTrailer() || exprLink.IsEmpty()) {
-			// nothing to do
-		} else if (exprLink.GetExprLast()->IsType<Expr_Caller>()) {
-			dynamic_cast<Expr_Caller *>(exprLink.GetExprLast())->GetExprTrailerLast().SetExprTrailer(pExprCaller);
-			return true;
-		} else {
-			Expr::Delete(pExpr);
-			Error::IssueAt(ErrorType::SyntaxError, _pTokenizer->GetPathNameSrcReferable().Reference(),
-						   pExpr->GetLineNoTop(), pExpr->GetLineNoBtm(),
-						   "trailer must be placed after a caller expression");
-			return false;
-		}
-	}
-	exprLink.AddExpr(pExpr);
-	return true;
-}
-#endif
 
 Expr_Block* Parser::CreateExprOfBlock(RefPtr<Token>& pToken)
 {
