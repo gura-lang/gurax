@@ -1,8 +1,5 @@
 #!/usr/bin/env gurax
-f(a, b, c, d) = {
-	Printf('%s %s %s %s\n', a, b, c, d)
-}
-g(a) = {
-	Printf('%s\n', a):nomap
-}
-f(['AA', 'BB', 'CC', 'DD', 'EE']*)
+x = [] //Format('embedded #%d line\n', 1..4)
+R'''
+${x}
+'''.Embed(sys.cout)

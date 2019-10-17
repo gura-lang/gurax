@@ -212,3 +212,189 @@ Company: hoge
 - car
 - bicycle
 - boat
+======== Empty list ========
+hello
+gura
+
+world
+!!!
+ABCDEFG
+======== Empty iterator ========
+hello
+gura
+
+world
+!!!
+ABCDEFG
+======== Auto indentation ========
+** auto-indent **
+space 1
+ embedded #1 line
+ embedded #2 line
+ embedded #3 line
+ embedded #4 line
+space 2
+  embedded #1 line
+  embedded #2 line
+  embedded #3 line
+  embedded #4 line
+space 3
+   embedded #1 line
+   embedded #2 line
+   embedded #3 line
+   embedded #4 line
+space 4
+    embedded #1 line
+    embedded #2 line
+    embedded #3 line
+    embedded #4 line
+tab 1
+	embedded #1 line
+	embedded #2 line
+	embedded #3 line
+	embedded #4 line
+tab 2
+		embedded #1 line
+		embedded #2 line
+		embedded #3 line
+		embedded #4 line
+not line top:  embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+** append last-eol **
+space 1
+ embedded #1 line
+ embedded #2 line
+ embedded #3 line
+ embedded #4 line
+
+space 2
+  embedded #1 line
+  embedded #2 line
+  embedded #3 line
+  embedded #4 line
+
+space 3
+   embedded #1 line
+   embedded #2 line
+   embedded #3 line
+   embedded #4 line
+
+space 4
+    embedded #1 line
+    embedded #2 line
+    embedded #3 line
+    embedded #4 line
+
+tab 1
+	embedded #1 line
+	embedded #2 line
+	embedded #3 line
+	embedded #4 line
+
+tab 2
+		embedded #1 line
+		embedded #2 line
+		embedded #3 line
+		embedded #4 line
+
+not line top:  embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+** no-indent **
+space 1
+ embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+space 2
+  embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+space 3
+   embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+space 4
+    embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+tab 1
+	embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+tab 2
+		embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+not line top:  embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+** no-indent, append last-eol **
+space 1
+ embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+space 2
+  embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+space 3
+   embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+space 4
+    embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+tab 1
+	embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+tab 2
+		embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+not line top:  embedded #1 line
+embedded #2 line
+embedded #3 line
+embedded #4 line
+
+space 1
+ single string
+space 2
+  single string
+space 3
+   single string
+space 4
+    single string
+tab 1
+	single string
+tab 2
+		single string
+not line top:  single string
+======== Error in template ========
+expected error occurs: symbol 'not_defined' is not found
+======== Format() in tempate script ========
+'hello ${Format("%d", 0..10).Join(",")}'.Embed() .. hello 0,1,2,3,4,5,6,7,8,9,10

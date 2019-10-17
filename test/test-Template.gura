@@ -193,10 +193,41 @@ ${R"""
 		tmpl.Embed(sys.cout)
 	}
 }
-/*
 //-----------------------------------------------------------------------------
-TestCase('auto-indentation') {
-	x = format('embedded #%d line\n', 1..4)
+TestCase('Empty list') {
+	R'''
+	hello
+	${
+	[]
+	}
+	${[]}
+	gura
+	${''}
+	world
+	${[]}
+	!!!
+	ABCD${[]}EFG
+	'''.Embed(sys.cout)
+}
+//-----------------------------------------------------------------------------
+TestCase('Empty iterator') {
+	R'''
+	hello
+	${
+	()
+	}
+	${()}
+	gura
+	${''}
+	world
+	${()}
+	!!!
+	ABCD${()}EFG
+	'''.Embed(sys.cout)
+}
+//-----------------------------------------------------------------------------
+TestCase('Auto indentation') {
+	x = Format('embedded #%d line\n', 1..4):list
 	tmpl = R'''
 	space 1
 	 ${x}
@@ -212,46 +243,46 @@ TestCase('auto-indentation') {
 			${x}
 	not line top:  ${x}
 	'''
-	println('** auto-indent **')
-	tmpl.Embed(sys.cout)
-	template(tmpl.reader()).render(sys.cout)
-	println('** append last-eol **')
-	(tmpl.template():lasteol).render(sys.cout)
-	println('** no-indent **')
-	(tmpl.template():noindent).render(sys.cout)
-	println('** no-indent, append last-eol **')
-	(tmpl.template():noindent:lasteol).render(sys.cout)
+	Println('** auto-indent **')
+	tmpl.ToTemplate().Render(sys.cout)
+	Println('** append last-eol **')
+	(tmpl.ToTemplate():lasteol).Render(sys.cout)
+	Println('** no-indent **')
+	(tmpl.ToTemplate():noindent).Render(sys.cout)
+	Println('** no-indent, append last-eol **')
+	(tmpl.ToTemplate():noindent:lasteol).Render(sys.cout)
 	x = 'single string'
-	tmpl.Embed(sys.cout)
+	tmpl.ToTemplate().Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
-TestCase('error in template') {
+TestCase('Error in template') {
 	try {
-		'abcdefg${hoge}hijklmn'.Embed()
+		'abcdefg${not_defined}hijklmn'.Embed()
 	} catch {|e|
-		println('expected error occurs: ', e.text)
+		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
-TestCase('format in tempate script') {
-	tester(`'hello ${format("%d", 0..10).join(",")}'.Embed())
+TestCase('Format() in tempate script') {
+	Tester(`'hello ${Format("%d", 0..10).Join(",")}'.Embed())
 }
+/*
 //-----------------------------------------------------------------------------
-TestCase('variable reference') {
+TestCase('Variable reference') {
 	var = 'HOGE'
-	tester(`'hello ${var} world'.Embed())
-	tester(`'hello ${var * 2} world'.Embed())
-	tester(`'''hello '${format('%8s', var)}' world'''.Embed())
+	Tester(`'hello ${var} world'.Embed())
+	Tester(`'hello ${var * 2} world'.Embed())
+	Tester(`'''hello '${format('%8s', var)}' world'''.Embed())
 	var = 3.14
-	tester(`'hello ${var} world'.Embed())
+	Tester(`'hello ${var} world'.Embed())
 }
 //-----------------------------------------------------------------------------
 TestCase('nil, number, string, and list') {
-	tester(`'${nil}'.Embed())
-	tester(`'${-}'.Embed())
-	tester(`'${3}'.Embed())
-	tester(`'${"hello"}'.Embed())
-	tester(`'${["first", "second", "third"]}'.Embed())
+	Tester(`'${nil}'.Embed())
+	Tester(`'${-}'.Embed())
+	Tester(`'${3}'.Embed())
+	Tester(`'${"hello"}'.Embed())
+	Tester(`'${["first", "second", "third"]}'.Embed())
 	try {
 		'${color(`red)}'.Embed()
 	} catch {|e|
@@ -591,63 +622,30 @@ TestCase('macro and line-break') {
 	'''.Embed(sys.cout)
 }
 
-//-----------------------------------------------------------------------------
-TestCase('empty list') {
-	R'''
-	hello
-	${
-	[]
-	}
-	${[]}
-	gura
-	${''}
-	world
-	${[]}
-	!!!
-	ABCD${[]}EFG
-	'''.Embed(sys.cout)
-}
-
-//-----------------------------------------------------------------------------
-TestCase('empty iterator') {
-	R'''
-	hello
-	${
-	()
-	}
-	${()}
-	gura
-	${''}
-	world
-	${()}
-	!!!
-	ABCD${()}EFG
-	'''.Embed(sys.cout)
-}
 
 //-----------------------------------------------------------------------------
 TestCase('embedded string') {
 	var = 'hoge'
-	tester(`e'')
-	tester(`e'simple string')
-	tester(`e'variable ${var} reference')
-	tester(`eR'''
+	Tester(`e'')
+	Tester(`e'simple string')
+	Tester(`e'variable ${var} reference')
+	Tester(`eR'''
 	variable ${var} reference
 	''')
 	// inheritance
 	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'.template()
-	tester(`e'${=extends(base)}')
-	tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
-	tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
-	tester(`e'${=extends(base)}${=block(`head)}replaced${end}${=block(`body)}replaced${end}')
+	Tester(`e'${=extends(base)}')
+	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
+	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
+	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}${=block(`body)}replaced${end}')
 	f(a, b) = e'${a} + ${b} = ${a + b}'
-	tester(`f(3, 4))
-	tester(`f(10, 2))
+	Tester(`f(3, 4))
+	Tester(`f(10, 2))
 }
 
 //-----------------------------------------------------------------------------
 TestCase('suffix T') {
-	tester(`''T)
-	tester(`'${hoge}'T)
+	Tester(`''T)
+	Tester(`'${hoge}'T)
 }
 */
