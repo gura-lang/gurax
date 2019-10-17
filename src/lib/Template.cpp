@@ -658,6 +658,7 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 			}
 		}
 		if (firstFlag) return;
+		PrintScriptResult(strLast.c_str());
 	} else if (pValue->IsType(VTYPE_Number)) {
 		GetTemplate().Print(GetStringIndent());
 		PrintScriptResult(pValue->ToString().c_str());
