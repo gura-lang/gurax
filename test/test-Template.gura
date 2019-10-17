@@ -151,10 +151,8 @@ TestCase('Repeat sequence') {
 	${end}
 	'''.Embed(sys.cout)
 }
-sys.Exit()
-/*
 //-----------------------------------------------------------------------------
-TestCase('repeat and branch sequence') {
+TestCase('Repeat and if-else sequence') {
 	R'''
 	${for (i in 1..10)}
 	  ${if (i < 5)}
@@ -162,17 +160,19 @@ TestCase('repeat and branch sequence') {
 	  ${elsif (i < 8)}
 	    ${i} is less than eight
 	  ${else}
-	    ${i} is greater or equal to eight
+	    ${i} is greater than or equal to eight
 	  ${end}
 	${end}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
+/*
 //-----------------------------------------------------------------------------
 TestCase() {
 	println('漢字のテスト ${"スクリプト文字列"}'.Embed())
 }
+*/
 //-----------------------------------------------------------------------------
-TestCase('template script that handles template internally') {
+TestCase('Template script that handles template internally') {
 tmpl = R'''
 ${if (company) {R"""
 Company: ${company}
@@ -182,17 +182,18 @@ Company: ${company}
 [Products]
 ${R"""
 - %s
-""".format(products)}
+""".Format(products)}
 '''
 	scope {
 		company = 'hoge'
 		products = ['apple', 'grape', 'orange']
-		tmpl.Embed(sys.stdout)
+		tmpl.Embed(sys.cout)
 		company = nil
 		products = ['car', 'bicycle', 'boat']
-		tmpl.Embed(sys.stdout)
+		tmpl.Embed(sys.cout)
 	}
 }
+/*
 //-----------------------------------------------------------------------------
 TestCase('auto-indentation') {
 	x = format('embedded #%d line\n', 1..4)
@@ -212,16 +213,16 @@ TestCase('auto-indentation') {
 	not line top:  ${x}
 	'''
 	println('** auto-indent **')
-	tmpl.Embed(sys.stdout)
-	template(tmpl.reader()).render(sys.stdout)
+	tmpl.Embed(sys.cout)
+	template(tmpl.reader()).render(sys.cout)
 	println('** append last-eol **')
-	(tmpl.template():lasteol).render(sys.stdout)
+	(tmpl.template():lasteol).render(sys.cout)
 	println('** no-indent **')
-	(tmpl.template():noindent).render(sys.stdout)
+	(tmpl.template():noindent).render(sys.cout)
 	println('** no-indent, append last-eol **')
-	(tmpl.template():noindent:lasteol).render(sys.stdout)
+	(tmpl.template():noindent:lasteol).render(sys.cout)
 	x = 'single string'
-	tmpl.Embed(sys.stdout)
+	tmpl.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('error in template') {
@@ -278,7 +279,7 @@ TestCase('branch sequence') {
 	    hoge ${x}
 	${end}
 	
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {
@@ -313,32 +314,32 @@ TestCase('test of inheritance') {
 	println('inherit from base1')
 	R'''
 	${=extends(base1)}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 	println('inherit from base2')
 	R'''
 	${=extends(base2)}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 	println('inherit from base3')
 	R'''
 	${=extends(base3)}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of scope') {
 	x = '${value}\n'.template()
 	try {
-		x.render(sys.stdout)
+		x.render(sys.cout)
 	} catch {|e|
 		println('expected error occurs: ', e.text)
 	}
 	value = 'hoge'
-	x.render(sys.stdout)
+	x.render(sys.cout)
 	scope {
 		value = 'hoge-inside'
-		x.render(sys.stdout)
+		x.render(sys.cout)
 		scope {
 			value = 'hoge-inside-inside'
-			x.render(sys.stdout)
+			x.render(sys.cout)
 		}
 	}
 }
@@ -374,7 +375,7 @@ TestCase {
 			{'Yamada', 23}, {'Honda', 21}, {'Tanaka', 24}
 		}
 		title = 'Member List'
-		tmpl.render(sys.stdout)
+		tmpl.render(sys.cout)
 	}
 }
 //-----------------------------------------------------------------------------
@@ -407,7 +408,7 @@ TestCase('test of comment') {
 	9th ${==*comment-out*==}$line
 	10th line${==*comment-out*==}$
 	11th line
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of embed') {
@@ -431,7 +432,7 @@ TestCase('test of embed') {
 	${=embed(tmpl2)}
 	embed tmpl3
 	${=embed(tmpl3)}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of local variable in embed') {
@@ -447,7 +448,7 @@ TestCase('test of local variable in embed') {
 	embed tmpl
 	${=embed(tmpl)}
 	x = ${x}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of detecting duplicated symbol') {
@@ -459,7 +460,7 @@ TestCase('test of detecting duplicated symbol') {
 	${=block(`hoge1)}${end}
 	'''.template()
 	try {
-		tmpl.render(sys.stdout)
+		tmpl.render(sys.cout)
 	} catch {|e|
 		println('expected error occurs: ', e.text)
 	}
@@ -503,7 +504,7 @@ TestCase('test of inheritance') {
 	      Welcome on my awesome homepage.
 	    </p>
 	${end}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance and loop') {
@@ -533,7 +534,7 @@ TestCase('test of inheritance and loop') {
 	  ${end}
 	  </ul>
 	${end}
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 TestCase('marker handling') {
 	x = 'hoge'
@@ -552,7 +553,7 @@ TestCase('marker handling') {
 	$$$${x}
 	${x}$
 	${x}$$
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 
 //-----------------------------------------------------------------------------
@@ -565,7 +566,7 @@ TestCase('define and call') {
 	${=call(`show_person, 'Harry', 24)}
 	
 	[${=call(`calc_mean, 12, 23)}]
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 
 //-----------------------------------------------------------------------------
@@ -587,7 +588,7 @@ TestCase('macro and line-break') {
 	LineBreak${=call(`macro5)}Here
 	Macro:${=call(`macro2)}
 	Next Line
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 
 //-----------------------------------------------------------------------------
@@ -604,7 +605,7 @@ TestCase('empty list') {
 	${[]}
 	!!!
 	ABCD${[]}EFG
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 
 //-----------------------------------------------------------------------------
@@ -621,7 +622,7 @@ TestCase('empty iterator') {
 	${()}
 	!!!
 	ABCD${()}EFG
-	'''.Embed(sys.stdout)
+	'''.Embed(sys.cout)
 }
 
 //-----------------------------------------------------------------------------

@@ -426,10 +426,10 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			_exprLeaderStack.push_back(&exprLastCaller);
 			pExprTmplScript->SetStringIndent("");
 			pExprTmplScript->SetStringPost("");
-		} else {
+		} else if (!exprLastCaller.HasExprOfBlock()) {
 			const DeclCallable* pDeclCallable = exprLastCaller.LookupDeclCallable();
 			if (pDeclCallable && pDeclCallable->GetDeclBlock().IsOccurOnce()) {
-				if (!exprLastCaller.HasExprOfBlock()) exprLastCaller.SetExprOfBlock(new Expr_Block());
+				exprLastCaller.SetExprOfBlock(new Expr_Block());
 				_exprLeaderStack.push_back(&exprLastCaller);
 				pExprTmplScript->SetStringIndent("");
 				pExprTmplScript->SetStringPost("");

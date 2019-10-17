@@ -445,10 +445,10 @@ Gurax_ImplementMethod(String, Foldw)
 	return Value::nil();
 }
 
-// String#Format(values*):String:reduce:map
+// String#Format(values*):String:map
 Gurax_DeclareMethod(String, Format)
 {
-	Declare(VTYPE_String, Flag::Reduce | Flag::Map);
+	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -458,16 +458,16 @@ Gurax_DeclareMethod(String, Format)
 
 Gurax_ImplementMethod(String, Format)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	const ValueList& values = args.PickList();
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	String str;
+	str.PrintFmt(valueThis.GetString(), values);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_String(str);
 }
 
 // String#IsAlnum()
