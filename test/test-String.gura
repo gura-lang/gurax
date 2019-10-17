@@ -415,3 +415,26 @@ TestCase('String#last') {
 	Tester(`'あ'.last):quote
 	Tester(`'あいうえお'.last):quote
 }
+
+TestCase('Operators') {
+	Tester(`('abcdefg' + 'hijklmn'))
+	Tester(`('abcdefg' * 3))
+	Tester(`('abcdefg' == 'abcdefg'))
+	Tester(`('abcdefg' == 'hijklmn'))
+	Tester(`('hijklmn' == 'abcdefg'))
+	Tester(`('abcdefg' > 'abcdefg'))
+	Tester(`('abcdefg' > 'hijklmn'))
+	Tester(`('hijklmn' > 'abcdefg'))
+	Tester(`('abcdefg' >= 'abcdefg'))
+	Tester(`('abcdefg' >= 'hijklmn'))
+	Tester(`('hijklmn' >= 'abcdefg'))
+	Tester(`('abcdefg' < 'abcdefg'))
+	Tester(`('abcdefg' < 'hijklmn'))
+	Tester(`('hijklmn' < 'abcdefg'))
+	Tester(`('abcdefg' <= 'abcdefg'))
+	Tester(`('abcdefg' <= 'hijklmn'))
+	Tester(`('hijklmn' <= 'abcdefg'))
+	Tester(`('abcdefg' != 'abcdefg'))
+	Tester(`('abcdefg' != 'hijklmn'))
+	Tester(`('hijklmn' != 'abcdefg'))
+}

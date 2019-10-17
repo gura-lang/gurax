@@ -272,6 +272,8 @@ public:
 	static String Chop(const char* str, bool eolOnlyFlag);
 	void Split(StringList& strs, char sep) const { return Split(strs, c_str(), sep); }
 	static void Split(StringList& strs, const char* str, char sep);
+	String Repeat(size_t n) const { return Repeat(c_str(), n); }
+	static String Repeat(const char* str, size_t n);
 public:
 	static bool IsCTypes(const char* str, CTypes ctypes);
 	static bool IsAlnum(const char* str) { return IsCTypes(str, CType::Alpha | CType::Digit); }

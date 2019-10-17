@@ -642,6 +642,14 @@ void String::Split(StringList& strs, const char* str, char sep)
 	}
 }
 
+String String::Repeat(const char* str, size_t n)
+{
+	String strRtn;
+	strRtn.reserve(::strlen(str) * n);
+	for (size_t i = 0; i < n; i++) strRtn += str;
+	return strRtn;
+}
+
 bool String::IsCTypes(const char* str, CTypes ctypes)
 {
 	if (!*str) return false;

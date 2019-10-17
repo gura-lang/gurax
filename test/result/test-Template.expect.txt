@@ -398,3 +398,8 @@ not line top:  single string
 expected error occurs: symbol 'not_defined' is not found
 ======== Format() in tempate script ========
 'hello ${Format("%d", 0..10).Join(",")}'.Embed() .. hello 0,1,2,3,4,5,6,7,8,9,10
+======== Variable reference ========
+'hello ${var} world'.Embed() .. hello HOGE world
+'hello ${var * 2} world'.Embed() .. hello HOGEHOGE world
+"hello '${Format('%8s', var)}' world".Embed() .. hello '    HOGE' world
+'hello ${var} world'.Embed() .. hello 3.14 world

@@ -266,16 +266,16 @@ TestCase('Error in template') {
 TestCase('Format() in tempate script') {
 	Tester(`'hello ${Format("%d", 0..10).Join(",")}'.Embed())
 }
-/*
 //-----------------------------------------------------------------------------
 TestCase('Variable reference') {
 	var = 'HOGE'
 	Tester(`'hello ${var} world'.Embed())
 	Tester(`'hello ${var * 2} world'.Embed())
-	Tester(`'''hello '${format('%8s', var)}' world'''.Embed())
+	Tester(`'''hello '${Format('%8s', var)}' world'''.Embed())
 	var = 3.14
 	Tester(`'hello ${var} world'.Embed())
 }
+/*
 //-----------------------------------------------------------------------------
 TestCase('nil, number, string, and list') {
 	Tester(`'${nil}'.Embed())
