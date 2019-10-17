@@ -6,7 +6,6 @@
 #include "Attribute.h"
 #include "DeclCallable.h"
 #include "Operator.h"
-//#include "Template.h"
 #include "Value.h"
 
 namespace Gurax {
@@ -57,7 +56,6 @@ inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
 // Expr <-+- Expr_Node <------+- Expr_Value
 //        |                   +- Expr_Identifier
 //        |                   +- Expr_Suffixed
-//        |                   +- Expr_Embedded
 //        |                   `- Expr_Member
 //        +- Expr_Unary <------- Expr_UnaryOp
 //        +- Expr_Binary <----+- Expr_BinaryOp
@@ -550,32 +548,6 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
-
-#if 0
-//------------------------------------------------------------------------------
-// Expr_Embedded : Expr_Node
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_Embedded : public Expr_Node {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(Expr_Embedded);
-public:
-	static const TypeInfo typeInfo;
-protected:
-	RefPtr<Template> _pTempl;
-	RefPtr<StringReferable> _pStr;
-public:
-	Expr_Embedded(Template* pTempl, StringReferable* pStr) : Expr_Node(typeInfo), _pTempl(pTempl), _pStr(pStr) {}
-	const Template& GetTemplate() const { return *_pTempl; }
-	const StringReferable& GetStringReferable() const { return *_pStr; }
-	const char* GetString() const { return _pStr->GetString(); }
-	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
-public:
-	// Virtual functions of Expr
-	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-#endif
 
 //------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary

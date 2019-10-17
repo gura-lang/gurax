@@ -108,7 +108,7 @@ void Parser::FeedToken(RefPtr<Token> pToken)
 				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else if (pTokenLast->IsType(TokenType::Binary) && pToken->IsType(TokenType::Binary)) {
 				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
-			} else if (pTokenLast->IsType(TokenType::EmbedString) && pToken->IsType(TokenType::EmbedString)) {
+			} else if (pTokenLast->IsType(TokenType::TmplEmbedded) && pToken->IsType(TokenType::TmplEmbedded)) {
 				pTokenLast->AppendSegment(pToken->GetSegmentSTL());
 			} else {
 				tokenStack.Push(pToken->Reference());
@@ -177,14 +177,13 @@ bool Parser::ReduceOneToken()
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> Binary\n"));
 		pExprGen.reset(new Expr_Value(new Value_Binary(pToken->GetBinaryReferable().Reference())));
-	} else if (pToken->IsType(TokenType::EmbedString)) {
-		DBGPARSER(::printf("Reduce: Expr -> EmbedString\n"));
-		//RefPtr<Template> pTempl(new Template());
-		//bool autoIndentFlag = true;
-		//bool appendLastEOLFlag = false;
-		//if (!pTempl->Parse(env, pToken->GetString(), nullptr,
-		//				   autoIndentFlag, appendLastEOLFlag)) goto error_done;
-		//pExprGen.reset(new Expr_Embedded(pTempl.release(), pToken->GetSegmentReferable().Reference()));
+	} else if (pToken->IsType(TokenType::TmplEmbedded)) {
+		DBGPARSER(::printf("Reduce: Expr -> TmplEmbedded\n"));
+		RefPtr<Template> pTmpl(new Template());
+		bool autoIndentFlag = true;
+		bool appendLastEOLFlag = false;
+		if (!pTmpl->ParseString(pToken->GetSegment(), autoIndentFlag, appendLastEOLFlag)) return false;
+		pExprGen.reset(new Expr_TmplEmbedded(pTmpl.release(), pToken->GetSegmentReferable().Reference()));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));
 		pExprGen.reset(new Expr_Identifier(Symbol::Add(pToken->GetSegment())));

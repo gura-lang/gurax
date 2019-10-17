@@ -88,7 +88,7 @@ public:
 	static const TokenType String;
 	static const TokenType StringSuffixed;
 	static const TokenType Binary;
-	static const TokenType EmbedString;
+	static const TokenType TmplEmbedded;
 	static const TokenType Symbol;
 	static const TokenType EndOfFile;
 	static const TokenType Expr;
@@ -123,7 +123,7 @@ private:
 	const TokenType& _tokenType;
 	int _lineNoTop;
 	int _lineNoBtm;
-	RefPtr<StringReferable> _pSegment;	// for Symbol, Space, Escape, Number, NumberSuffixed, EmbedString
+	RefPtr<StringReferable> _pSegment;	// for Symbol, Space, Escape, Number, NumberSuffixed, TmplEmbedded
 										//     CommentLine, CommentBlock, String and StringSuffixed
 	RefPtr<BinaryReferable> _pBinary;	// for Binary
 	RefPtr<StringReferable> _pSuffix;	// for NumberSuffixed, StringSuffixed

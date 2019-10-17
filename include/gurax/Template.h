@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_TEMPLATE_H
 #define GURAX_TEMPLATE_H
-#include "Referable.h"
+#include "Expr.h"
 
 namespace Gurax {
 
@@ -92,6 +92,7 @@ public:
 	bool ParseString(const char* strSrc, const char* strSrcEnd,
 					 bool autoIndentFlag, bool appendLastEOLFlag);
 	bool Render(Processor& processor, Stream& streamDst);
+	bool Render(Processor& processor, String& strDst);
 	void PutChar(char ch);
 	void Print(const char* str);
 	bool AssignValue(const Symbol* pSymbol, Value* pValue);
@@ -155,6 +156,30 @@ public:
 	bool GetAutoIndentFlag() const { return _autoIndentFlag; }
 	bool GetAppendLastEOLFlag() const { return _appendLastEOLFlag; }
 public:
+	virtual void Compose(Composer& composer) override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Expr_TmplEmbedded : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_TmplEmbedded : public Expr_Node {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_TmplEmbedded);
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<Template> _pTmpl;
+	RefPtr<StringReferable> _pStr;
+public:
+	Expr_TmplEmbedded(Template* pTmpl, StringReferable* pStr) : Expr_Node(typeInfo), _pTmpl(pTmpl), _pStr(pStr) {}
+	const Template& GetTemplate() const { return *_pTmpl; }
+	const StringReferable& GetStringReferable() const { return *_pStr; }
+	const char* GetString() const { return _pStr->GetString(); }
+	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
+public:
+	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

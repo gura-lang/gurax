@@ -59,10 +59,10 @@ private:
 	};
 	struct StringInfo {
 		char chBorder;
-		bool rawFlag;		// prefixed by 'r' or 'R'
-		bool binaryFlag;	// prefixed by 'b' or 'B'
-		bool wiseFlag;		// prefixed by 'R'
-		bool embedFlag;		// prefixed by 'e'
+		bool rawFlag;			// prefixed by 'r' or 'R'
+		bool binaryFlag;		// prefixed by 'b' or 'B'
+		bool wiseFlag;			// prefixed by 'R'
+		bool tmplEmbeddedFlag;	// prefixed by 'e'
 		Stat statRtn;
 		int cntRest;
 		UInt32 accum;

@@ -88,7 +88,7 @@ void Tokenizer::FeedChar(char ch)
 			_stringInfo.rawFlag = false;
 			_stringInfo.binaryFlag = false;
 			_stringInfo.wiseFlag = false;
-			_stringInfo.embedFlag = false;
+			_stringInfo.tmplEmbeddedFlag = false;
 			_segment.clear();
 			if (_verboseFlag) {
 				_source.clear();
@@ -837,8 +837,8 @@ void Tokenizer::FeedChar(char ch)
 			if (_stringInfo.binaryFlag) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
 												  new BinaryReferable(_segment), _source));
-			} else if (_stringInfo.embedFlag) {
-				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo,
+			} else if (_stringInfo.tmplEmbeddedFlag) {
+				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
 												  _segment, "", _source));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo,
@@ -1049,8 +1049,8 @@ void Tokenizer::FeedChar(char ch)
 			if (_stringInfo.binaryFlag) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
 												  new BinaryReferable(_segment), _source));
-			} else if (_stringInfo.embedFlag) {
-				_tokenWatcher.FeedToken(new Token(TokenType::EmbedString, _lineNoTop, lineNo,
+			} else if (_stringInfo.tmplEmbeddedFlag) {
+				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
 												  _segment, "", _source));
 			} else {
 				_tokenWatcher.FeedToken(new Token(TokenType::String, _lineNoTop, lineNo,
@@ -1068,7 +1068,7 @@ void Tokenizer::FeedChar(char ch)
 		} else if (_stringInfo.binaryFlag) {
 			IssueError(ErrorType::SyntaxError, "binary literal can not be specified with suffix");
 			_stat = Stat::Error;
-		} else if (_stringInfo.embedFlag) {
+		} else if (_stringInfo.tmplEmbeddedFlag) {
 			IssueError(ErrorType::SyntaxError, "embedded literal can not be specified with suffix");
 			_stat = Stat::Error;
 		} else {
@@ -1105,7 +1105,7 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 	stringInfo.rawFlag = false;
 	stringInfo.binaryFlag = false;
 	stringInfo.wiseFlag = false;
-	stringInfo.embedFlag = false;
+	stringInfo.tmplEmbeddedFlag = false;
 	for (const char ch : field) {
 		if (ch == 'r') {
 			if (stringInfo.rawFlag) return false;
@@ -1122,8 +1122,8 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 			stringInfo.binaryFlag = true;
 			stringInfo.wiseFlag = true;
 		} else if (ch == 'e') {
-			if (stringInfo.embedFlag) return false;
-			stringInfo.embedFlag = true;
+			if (stringInfo.tmplEmbeddedFlag) return false;
+			stringInfo.tmplEmbeddedFlag = true;
 		} else {
 			return false;
 		}

@@ -134,9 +134,9 @@ Gurax_ImplementMethod(Template, Render)
 		tmpl.Render(processor, *pStreamDst);
 		return Value::nil();
 	} else {
-		RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
-		if (!tmpl.Render(processor, *pStreamDst)) return Value::nil();
-		return new Value_String(pStreamDst->GetBuff().ConvertToString());
+		String strDst;
+		if (!tmpl.Render(processor, strDst)) return Value::nil();
+		return new Value_String(strDst);
 	}
 }
 

@@ -72,6 +72,14 @@ bool Template::Render(Processor& processor, Stream& streamDst)
 	return !Error::IsIssued();
 }
 
+bool Template::Render(Processor& processor, String& strDst)
+{
+	RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
+	if (!Render(processor, *pStreamDst)) return false;
+	strDst = pStreamDst->GetBuff().ConvertToString();
+	return true;
+}
+
 void Template::PutChar(char ch)
 {
 	if (_pStreamDst) _pStreamDst->PutChar(ch);
@@ -530,6 +538,23 @@ bool Template::Prepare(Environment &env)
 }
 
 #endif
+
+//------------------------------------------------------------------------------
+// Expr_TmplEmbedded : Expr_Node
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_TmplEmbedded::typeInfo;
+
+void Expr_TmplEmbedded::Compose(Composer& composer)
+{
+}
+
+String Expr_TmplEmbedded::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += 'e';
+	str += GetStringSTL().MakeQuoted(true);
+	return str;
+}
 
 //------------------------------------------------------------------------------
 // PUnit_TmplString

@@ -80,7 +80,7 @@ const TokenType TokenType::NumberSuffixed	{ 28, "NumberSuffixed",	"[NmS]",	OpTyp
 const TokenType TokenType::String			{ 28, "String",			"[Str]",	OpType::None	};
 const TokenType TokenType::StringSuffixed	{ 28, "StringSuffixed",	"[StS]",	OpType::None	};
 const TokenType TokenType::Binary			{ 28, "Binary",			"[Bin]",	OpType::None	};
-const TokenType TokenType::EmbedString		{ 28, "EmbedString",	"[EmS]",	OpType::None	};
+const TokenType TokenType::TmplEmbedded		{ 28, "TmplEmbedded",	"[EmS]",	OpType::None	};
 const TokenType TokenType::Symbol			{ 29, "Symbol",			"[Sym]",	OpType::None	};	// S
 const TokenType TokenType::EndOfFile		{ 30, "EndOfFile",		"[EOF]",	OpType::None	};	// E
 const TokenType TokenType::Expr				{  0, "Expr",			"[Exp]",	OpType::None	};
