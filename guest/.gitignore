@@ -1,0 +1,5 @@
+*
+!.gitignore
+!prepare-for-darwin
+!prepare-for-linux
+!prepare-for-mswin.bat

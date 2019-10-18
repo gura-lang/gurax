@@ -42,8 +42,11 @@
 *.result.txt
 
 # Directories
+gnuc/
 /build
 /src/Debug
 /src/Release
 /src/gurax/Debug
 /src/gurax/Release
+/guest/*
+!/guest/prepare-for-darwin
