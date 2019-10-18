@@ -275,7 +275,6 @@ TestCase('Variable reference') {
 	var = 3.14
 	Tester(`'hello ${var} world'.Embed())
 }
-/*
 //-----------------------------------------------------------------------------
 TestCase('nil, number, string, and list') {
 	Tester(`'${nil}'.Embed())
@@ -284,11 +283,12 @@ TestCase('nil, number, string, and list') {
 	Tester(`'${"hello"}'.Embed())
 	Tester(`'${["first", "second", "third"]}'.Embed())
 	try {
-		'${color(`red)}'.Embed()
+		'${Color(`red)}'.Embed()
 	} catch {|e|
 		println('expected error occurs: ', e.text)
 	}
 }
+/*
 //-----------------------------------------------------------------------------
 TestCase('branch sequence') {
 	R'''

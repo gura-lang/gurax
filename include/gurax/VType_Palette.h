@@ -35,11 +35,9 @@ public:
 public:
 	// Constructor
 	Value_Palette() = delete;
-	Value_Palette(Palette* pPalette, VType& vtype = VTYPE_Palette) :
-		Value_Object(vtype), _pPalette(pPalette) {}
+	Value_Palette(Palette* pPalette, VType& vtype = VTYPE_Palette) : Value_Object(vtype), _pPalette(pPalette) {}
 	// Copy constructor/operator
-	Value_Palette(const Value_Palette& src) :
-		Value_Object(src), _pPalette(src._pPalette->Reference()) {}
+	Value_Palette(const Value_Palette& src) : Value_Object(src), _pPalette(src._pPalette.Reference()) {}
 	Value_Palette& operator=(const Value_Palette& src) = delete;
 	// Move constructor/operator
 	Value_Palette(Value_Palette&& src) = delete;

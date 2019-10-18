@@ -1,51 +1,51 @@
 //==============================================================================
-// DirStructure.h
+// Color.h
 //==============================================================================
-#ifndef GURAX_DIRSTRUCTURE_H
-#define GURAX_DIRSTRUCTURE_H
+#ifndef GURAX_COLOR_H
+#define GURAX_COLOR_H
 
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// DirStructure
+// Color
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirStructure : public Referable {
+class GURAX_DLLDECLARE Color : public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(DirStructure);
+	Gurax_DeclareReferable(Color);
 public:
 	// Constructor
-	DirStructure() {}
+	Color() {}
 	// Copy constructor/operator
-	DirStructure(const DirStructure& src) = delete;
-	DirStructure& operator=(const DirStructure& src) = delete;
+	Color(const Color& src) = delete;
+	Color& operator=(const Color& src) = delete;
 	// Move constructor/operator
-	DirStructure(DirStructure&& src) = delete;
-	DirStructure& operator=(DirStructure&& src) noexcept = delete;
+	Color(Color&& src) = delete;
+	Color& operator=(Color&& src) noexcept = delete;
 protected:
-	~DirStructure() = default;
+	~Color() = default;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const DirStructure& dirStructure) const { return this == &dirStructure; }
-	bool IsEqualTo(const DirStructure& dirStructure) const { return IsIdentical(dirStructure); }
-	bool IsLessThan(const DirStructure& dirStructure) const { return this < &dirStructure; }
+	bool IsIdentical(const Color& color) const { return this == &color; }
+	bool IsEqualTo(const Color& color) const { return IsIdentical(color); }
+	bool IsLessThan(const Color& color) const { return this < &color; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// DirStructureList
+// ColorList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirStructureList : public std::vector<DirStructure*> {
+class GURAX_DLLDECLARE ColorList : public std::vector<Color*> {
 public:
-	using std::vector<DirStructure*>::vector;
+	using std::vector<Color*>::vector;
 };
 
 //------------------------------------------------------------------------------
-// DirStructureOwner
+// ColorOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirStructureOwner : public DirStructureList {
+class GURAX_DLLDECLARE ColorOwner : public ColorList {
 public:
-	~DirStructureOwner() { Clear(); }
+	~ColorOwner() { Clear(); }
 	void Clear();
 };
 

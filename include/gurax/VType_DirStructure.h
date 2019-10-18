@@ -39,7 +39,7 @@ public:
 		Value_Object(vtype), _pDirStructure(pDirStructure) {}
 	// Copy constructor/operator
 	Value_DirStructure(const Value_DirStructure& src) :
-		Value_Object(src), _pDirStructure(src._pDirStructure->Reference()) {}
+		Value_Object(src), _pDirStructure(src._pDirStructure.Reference()) {}
 	Value_DirStructure& operator=(const Value_DirStructure& src) = delete;
 	// Move constructor/operator
 	Value_DirStructure(Value_DirStructure&& src) = delete;

@@ -41,6 +41,7 @@ add_library(guraxcore SHARED
 	Basement.cpp
 	Binary.cpp
 	Codec.cpp
+	Color.cpp
 	CommandLine.cpp
 	Common.cpp
 	Complex.cpp
@@ -114,6 +115,7 @@ add_library(guraxcore SHARED
 	VType_Bool.cpp
 	VType_CallableMember.cpp
 	VType_Codec.cpp
+	VType_Color.cpp
 	VType_Complex.cpp
 	VType_DateTime.cpp
 	VType_Dict.cpp
