@@ -283,9 +283,9 @@ TestCase('nil, number, string, and list') {
 	Tester(`'${"hello"}'.Embed())
 	Tester(`'${["first", "second", "third"]}'.Embed())
 	try {
-		'${Color(`red)}'.Embed()
+		'${Color.red}'.Embed()
 	} catch {|e|
-		println('expected error occurs: ', e.text)
+		Println('expected error occurs: ', e.text)
 	}
 }
 /*
