@@ -10,6 +10,7 @@ bool Initialize(int& argc, char** argv)
 	Symbol::Bootup(); String::Bootup();	// must be at first
 	Attribute::Bootup();
 	Binary::Bootup();
+	Color::Bootup();
 	Codec::Bootup();
 	DeclCallable::Bootup();
 	DeclArg::Bootup();

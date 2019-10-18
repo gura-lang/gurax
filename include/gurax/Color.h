@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_COLOR_H
 #define GURAX_COLOR_H
+#include "String.h"
 
 namespace Gurax {
 
@@ -42,6 +43,8 @@ public:
 	Color(Color&& src) = delete;
 	Color& operator=(Color&& src) noexcept = delete;
 	~Color() = default;
+public:
+	static void Bootup();
 public:
 	UInt8 GetR() const { return _r; }
 	UInt8 GetG() const { return _g; }
@@ -84,6 +87,26 @@ public:
 	bool IsLessThan(const Color& color) const { return this < &color; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+#if 0
+//------------------------------------------------------------------------------
+// NamedColorMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE NamedColorMap : public std::unordered_map<String, Color, String::Hash, String::EqualTo> {
+public:
+	struct Entry {
+		const char* name;
+		UChar r, g, b;
+	};
+private:
+	static const Entry _entryTbl[];
+public:
+	NamedColorMap Inst;
+public:
+	void Initialize();
+	const Color* Lookup(const char* naem);
+};
+#endif
 
 }
 
