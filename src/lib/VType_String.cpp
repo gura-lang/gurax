@@ -1331,6 +1331,7 @@ Gurax_ImplementOpBinary(Mul, String, Number)
 {
 	const String& strL = Value_String::GetStringSTL(valueL);
 	size_t numR = Value_Number::GetNumberNonNeg<size_t>(valueR);
+	if (Error::IsIssued()) return Value::nil();
 	return new Value_String(strL.Repeat(numR));
 }
 

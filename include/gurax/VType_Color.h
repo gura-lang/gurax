@@ -29,15 +29,15 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Color");
 protected:
-	RefPtr<Color> _pColor;
+	Color _color;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Color() = delete;
-	Value_Color(Color* pColor, VType& vtype = VTYPE_Color) : Value_Object(vtype), _pColor(pColor) {}
+	Value_Color(const Color& color, VType& vtype = VTYPE_Color) : Value_Object(vtype), _color(color) {}
 	// Copy constructor/operator
-	Value_Color(const Value_Color& src) : Value_Object(src), _pColor(src._pColor.Reference()) {}
+	Value_Color(const Value_Color& src) : Value_Object(src), _color(src._color) {}
 	Value_Color& operator=(const Value_Color& src) = delete;
 	// Move constructor/operator
 	Value_Color(Value_Color&& src) = delete;
@@ -46,8 +46,8 @@ protected:
 	// Destructor
 	~Value_Color() = default;
 public:
-	Color& GetColor() { return *_pColor; }
-	const Color& GetColor() const { return *_pColor; }
+	Color& GetColor() { return _color; }
+	const Color& GetColor() const { return _color; }
 public:
 	static Color& GetColor(Value& value) {
 		return dynamic_cast<Value_Color&>(value).GetColor();
