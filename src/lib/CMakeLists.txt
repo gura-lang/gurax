@@ -62,6 +62,7 @@ add_library(guraxcore SHARED
 	FunctionCustom.cpp
 	Functions.cpp
 	Help.cpp
+	Image.cpp
 	Index.cpp
 	Iterator.cpp
 	Iterators.cpp
@@ -127,6 +128,7 @@ add_library(guraxcore SHARED
 	VType_Expr.cpp
 	VType_Frame.cpp
 	VType_Function.cpp
+	VType_Image.cpp
 	VType_Index.cpp
 	VType_Iterator.cpp
 	VType_KeyValuePair.cpp
