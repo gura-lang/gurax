@@ -131,6 +131,21 @@ ${end}' -> '    0 is a multiple of two
     9 is a multiple of three
 '
 
+======== marker handling ========
+$
+$$
+$$$
+$$$$
+$$$$$
+$$$$$$
+$abc
+$0
+hoge
+$hoge
+$$hoge
+$$$hoge
+hoge$
+hoge$$
 ======== Reference to external variables ========
 abcde fghij klmno
 abcde AA
@@ -467,3 +482,15 @@ hoge-inside-inside
   <tr><td>2</td><td>Honda</td><td>21</td></tr>
   <tr><td>3</td><td>Tanaka</td><td>24</td></tr>
 </table>
+======== test of comment ========
+1st line
+2nd line
+3rd line
+4th line
+5th line
+6th line
+7th line
+8th line
+9th line
+10th line
+11th line

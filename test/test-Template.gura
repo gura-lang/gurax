@@ -60,6 +60,26 @@ TestCase('Basic test') {
 	${end}''')
 }
 //-----------------------------------------------------------------------------
+TestCase('marker handling') {
+	x = 'hoge'
+	R'''
+	$
+	$$
+	$$$
+	$$$$
+	$$$$$
+	$$$$$$
+	$abc
+	$0
+	${x}
+	$${x}
+	$$${x}
+	$$$${x}
+	${x}$
+	${x}$$
+	'''.Embed(sys.cout)
+}
+//-----------------------------------------------------------------------------
 TestCase('Reference to external variables') {
 	v1 = 'abcde'
 	v2 = 'fghij'
@@ -370,6 +390,38 @@ TestCase('Rendering HTML') {
 		tmpl.Render(sys.cout)
 	}
 }
+//-----------------------------------------------------------------------------
+TestCase('test of comment') {
+	tmpl = R'''
+	1st line
+	2nd line
+	3rd line
+	${==
+	*comment-out*
+	*comment-out*
+	*comment-out*
+	==}$
+	4th line
+	${==
+	*comment-out*
+	${=*comment-out*
+	*comment-out*==
+	*comment-out*=}
+	*comment-out*
+	==}$
+	5th line
+	${==
+	${==*comment-out*
+	==}$
+	6th line
+	${==*comment-out*==}$
+	7th line
+	8th line
+	9th ${==*comment-out*==}$line
+	10th line${==*comment-out*==}$
+	11th line
+	'''.Embed(sys.cout)
+}
 /*
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {
@@ -412,38 +464,6 @@ TestCase('test of inheritance') {
 	println('inherit from base3')
 	R'''
 	${=extends(base3)}
-	'''.Embed(sys.cout)
-}
-//-----------------------------------------------------------------------------
-TestCase('test of comment') {
-	tmpl = R'''
-	1st line
-	2nd line
-	3rd line
-	${==
-	*comment-out*
-	*comment-out*
-	*comment-out*
-	==}$
-	4th line
-	${==
-	*comment-out*
-	${=*comment-out*
-	*comment-out*==
-	*comment-out*=}
-	*comment-out*
-	==}$
-	5th line
-	${==
-	${==*comment-out*
-	==}$
-	6th line
-	${==*comment-out*==}$
-	7th line
-	8th line
-	9th ${==*comment-out*==}$line
-	10th line${==*comment-out*==}$
-	11th line
 	'''.Embed(sys.cout)
 }
 //-----------------------------------------------------------------------------
@@ -572,26 +592,6 @@ TestCase('test of inheritance and loop') {
 	${end}
 	'''.Embed(sys.cout)
 }
-TestCase('marker handling') {
-	x = 'hoge'
-	R'''
-	$
-	$$
-	$$$
-	$$$$
-	$$$$$
-	$$$$$$
-	$abc
-	$0
-	${x}
-	$${x}
-	$$${x}
-	$$$${x}
-	${x}$
-	${x}$$
-	'''.Embed(sys.cout)
-}
-
 //-----------------------------------------------------------------------------
 TestCase('define and call') {
 	R'''
