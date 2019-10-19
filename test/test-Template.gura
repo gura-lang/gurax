@@ -244,15 +244,15 @@ TestCase('Auto indentation') {
 	not line top:  ${x}
 	'''
 	Println('** auto-indent **')
-	tmpl.ToTemplate().Render(sys.cout)
+	tmpl.Template().Render(sys.cout)
 	Println('** append last-eol **')
-	(tmpl.ToTemplate():lasteol).Render(sys.cout)
+	(tmpl.Template():lasteol).Render(sys.cout)
 	Println('** no-indent **')
-	(tmpl.ToTemplate():noindent).Render(sys.cout)
+	(tmpl.Template():noindent).Render(sys.cout)
 	Println('** no-indent, append last-eol **')
-	(tmpl.ToTemplate():noindent:lasteol).Render(sys.cout)
+	(tmpl.Template():noindent:lasteol).Render(sys.cout)
 	x = 'single string'
-	tmpl.ToTemplate().Render(sys.cout)
+	tmpl.Template().Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Error in template') {
@@ -288,7 +288,6 @@ TestCase('nil, number, string, and list') {
 		Println('expected error occurs: ', e.text)
 	}
 }
-/*
 //-----------------------------------------------------------------------------
 TestCase('branch sequence') {
 	R'''
@@ -301,8 +300,13 @@ TestCase('branch sequence') {
 	  ${else}
 	    B
 	  ${end}
-	  ${for (x in 1..10)}
-	    ${for (y in 1..10)}XXX${end, ''}
+	  ${for (x in 1..8)}
+	    ${for (y in 0..9)}${y}${end}
+	  ${end}
+
+	----
+	  ${for (x in 1..8)}
+	    ${for (y in 0..9)}${y}${end, ''}
 	  ${end}
 	hoge
 	
@@ -312,6 +316,61 @@ TestCase('branch sequence') {
 	
 	'''.Embed(sys.cout)
 }
+//-----------------------------------------------------------------------------
+TestCase('test of scope') {
+	x = '${value}\n'.Template()
+	try {
+		x.Render(sys.cout)
+	} catch {|e|
+		Println('expected error occurs: ', e.text)
+	}
+	value = 'hoge'
+	x.Render(sys.cout)
+	scope {
+		value = 'hoge-inside'
+		x.Render(sys.cout)
+		scope {
+			value = 'hoge-inside-inside'
+			x.Render(sys.cout)
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+TestCase('Rendering HTML') {
+	tmpl = R'''
+	<h2>${title}</h2>
+	<p>number of people: ${people.len}</p>
+	
+	<table>
+	  <tr><th>No</th><th>Name</th><th>Age</th></tr>
+	${for (person in people) {|i|}}
+	  <tr><td>${i + 1}</td><td>${person.name}</td><td>${person.age}</td></tr>
+	${end}
+	</table>
+	
+	<table>
+	  <tr><th>No</th><th>Name</th><th>Age</th></tr>
+	${people.Each {|person, i|}}
+	  <tr><td>${i + 1}</td><td>${person.name}</td><td>${person.age}</td></tr>
+	${end}
+	</table>
+	
+	<table>
+	  <tr><th>No</th><th>Name</th><th>Age</th></tr>
+	  ${Format('<tr><td>%d</td><td>%s</td><td>%d</td></tr>\n',
+	  										1.., people:*name, people:*age)}
+	</table>
+	'''.Template()
+	scope {
+		Person = struct { name:string, age:number }
+		people = [
+			Person('Yamada', 23), Person('Honda', 21), Person('Tanaka', 24)
+		]
+		title = 'Member List'
+		tmpl.Render(sys.cout)
+	}
+}
+/*
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {
 	// base1 template
@@ -354,60 +413,6 @@ TestCase('test of inheritance') {
 	R'''
 	${=extends(base3)}
 	'''.Embed(sys.cout)
-}
-//-----------------------------------------------------------------------------
-TestCase('test of scope') {
-	x = '${value}\n'.template()
-	try {
-		x.render(sys.cout)
-	} catch {|e|
-		println('expected error occurs: ', e.text)
-	}
-	value = 'hoge'
-	x.render(sys.cout)
-	scope {
-		value = 'hoge-inside'
-		x.render(sys.cout)
-		scope {
-			value = 'hoge-inside-inside'
-			x.render(sys.cout)
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-TestCase {
-	tmpl = R'''
-	<h2>${title}</h2>
-	<p>number of people: ${people.len()}</p>
-	
-	<table>
-	  <tr><th>No</th><th>Name</th><th>Age</th></tr>
-	${for (person in people) {|i|}}
-	  <tr><td>${i + 1}</td><td>${person.name}</td><td>${person.age}</td></tr>
-	${end}
-	</table>
-	
-	<table>
-	  <tr><th>No</th><th>Name</th><th>Age</th></tr>
-	${people.each {|person, i|}}
-	  <tr><td>${i + 1}</td><td>${person.name}</td><td>${person.age}</td></tr>
-	${end}
-	</table>
-	
-	<table>
-	  <tr><th>No</th><th>Name</th><th>Age</th></tr>
-	  ${format('<tr><td>%d</td><td>%s</td><td>%d</td></tr>\n',
-	  										1.., people:*name, people:*age)}
-	</table>
-	'''.template()
-	scope {
-		Person = struct(name:string, age:number)
-		people = @(Person) {
-			{'Yamada', 23}, {'Honda', 21}, {'Tanaka', 24}
-		}
-		title = 'Member List'
-		tmpl.render(sys.cout)
-	}
 }
 //-----------------------------------------------------------------------------
 TestCase('test of comment') {

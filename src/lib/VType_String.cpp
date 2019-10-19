@@ -186,8 +186,8 @@ Gurax_DeclareMethod(String, Embed)
 		"\n"
 		"If the stream is omitted, the function returns the rendered result as a string.\n"
 		"\n"
-		"Calling this method is equivalent to calling a method `String#template()` to\n"
-		"create a `template` instance on which a method `template#render()` is applied afterward.\n");
+		"Calling this method is equivalent to calling a method `String#Template()` to\n"
+		"create a `Template` instance on which a method `Template#Render()` is applied afterward.\n");
 }
 
 Gurax_ImplementMethod(String, Embed)
@@ -995,6 +995,33 @@ Gurax_ImplementMethod(String, StripRight)
 	return new Value_String(str.Strip(false, true));
 }
 
+// String#Template():Template:[noindent,lasteol] {block?}
+Gurax_DeclareMethod(String, Template)
+{
+	//Declare(VTYPE_Template, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(noindent));
+	DeclareAttrOpt(Gurax_Symbol(lasteol));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Parses the content of the string as a text containing embedded scripts\n"
+		"and returns a `Template` instance.\n");
+}
+
+Gurax_ImplementMethod(String, Template)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
+	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
+	// Function body
+	const char* str = valueThis.GetString();
+	RefPtr<Template> pTmpl(new Template());
+	pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
+}
+
 // String#ToBinary():Binary {block?}
 Gurax_DeclareMethod(String, ToBinary)
 {
@@ -1065,33 +1092,6 @@ Gurax_ImplementMethod(String, ToSymbol)
 	const String& str = valueThis.GetStringSTL();
 #endif
 	return Value::nil();
-}
-
-// String#ToTemplate():Template:[noindent,lasteol] {block?}
-Gurax_DeclareMethod(String, ToTemplate)
-{
-	//Declare(VTYPE_Template, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(noindent));
-	DeclareAttrOpt(Gurax_Symbol(lasteol));
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Parses the content of the string as a text containing embedded scripts\n"
-		"and returns a `template` instance.\n");
-}
-
-Gurax_ImplementMethod(String, ToTemplate)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
-	// Function body
-	const char* str = valueThis.GetString();
-	RefPtr<Template> pTmpl(new Template());
-	pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag);
-	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
 }
 
 // String.Translator():void {block}
@@ -1389,10 +1389,10 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Strip));
 	Assign(Gurax_CreateMethod(String, StripLeft));
 	Assign(Gurax_CreateMethod(String, StripRight));
+	Assign(Gurax_CreateMethod(String, Template));
 	Assign(Gurax_CreateMethod(String, ToBinary));
 	Assign(Gurax_CreateMethod(String, ToReader));
 	Assign(Gurax_CreateMethod(String, ToSymbol));
-	Assign(Gurax_CreateMethod(String, ToTemplate));
 	Assign(Gurax_CreateMethod(String, Translator));
 	Assign(Gurax_CreateMethod(String, UnescapeHTML));
 	Assign(Gurax_CreateMethod(String, Upper));
