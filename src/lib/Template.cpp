@@ -62,15 +62,61 @@ bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendL
 
 bool Template::Render(Processor& processor, Stream& streamDst)
 {
-	Frame& frame = processor.PushFrame<Frame_Scope>();
-	frame.Assign(Gurax_Symbol(this_), new Value_Template(Reference()));
-	_pStreamDst.reset(streamDst.Reference());
-	Value::Delete(processor.EvalExpr(GetExprForInit()));
-	if (!Error::IsIssued()) Value::Delete(processor.EvalExpr(GetExprForBody()));
-	_pStreamDst.reset();
-	processor.PopFrame();
+	Template* pTmplTop = this;
+	for (Template* pTmpl = this; pTmpl; pTmpl = pTmpl->GetTemplateSuper()) {
+		Frame& frame = processor.PushFrame<Frame_Scope>();
+		frame.Assign(Gurax_Symbol(this_), new Value_Template(pTmpl->Reference()));
+		pTmpl->SetStreamDst(streamDst.Reference());
+		Value::Delete(processor.EvalExpr(pTmpl->GetExprForInit()));
+		processor.PopFrame();
+		if (Error::IsIssued()) break;
+		pTmplTop = pTmpl;
+	}
+	if (!Error::IsIssued()) {
+		Frame& frame = processor.PushFrame<Frame_Scope>();
+		frame.Assign(Gurax_Symbol(this_), new Value_Template(pTmplTop->Reference()));
+		Value::Delete(processor.EvalExpr(pTmplTop->GetExprForBody()));
+		processor.PopFrame();
+	}
+	for (Template* pTmpl = this; pTmpl; pTmpl = pTmpl->GetTemplateSuper()) {
+		pTmpl->SetStreamDst(nullptr);
+	}
 	return !Error::IsIssued();
 }
+
+#if 0
+bool Template::Render(Environment &env, SimpleStream *pStreamDst)
+{
+	Template *pTemplateTop = nullptr;
+	for (Template *pTemplate = this; pTemplate != nullptr;
+							pTemplate = pTemplate->GetTemplateSuper()) {
+		if (!pTemplate->Prepare(env)) return false;
+		pTemplate->SetStreamDst(pStreamDst);
+		pTemplateTop = pTemplate;
+	}
+	if (pTemplateTop->GetFuncForBody() == nullptr) return true;
+	AutoPtr<Argument> pArg(new Argument(pTemplateTop->GetFuncForBody()));
+	pArg->SetValueThis(Value(new Object_template(env, Reference())));
+	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
+	pTemplateTop->GetFuncForBody()->Eval(*pEnvBlock, *pArg);
+	for (Template *pTemplate = this; pTemplate != nullptr;
+							pTemplate = pTemplate->GetTemplateSuper()) {
+		pTemplate->SetStreamDst(nullptr);
+	}
+	return !env.IsSignalled();
+}
+
+bool Template::Prepare(Environment &env)
+{
+	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
+	pEnvBlock->AssignValue(Gurax_Symbol(this_),
+				Value(new Object_template(env, Reference())), EXTRA_Public);
+	_pValueExMap->clear();
+	_pExprOwnerForInit->Exec(*pEnvBlock);
+	return !env.IsSignalled();
+}
+
+#endif
 
 bool Template::Render(Processor& processor, String& strDst)
 {
@@ -504,40 +550,6 @@ String Expr_TmplScript::ToString(const StringStyle& ss) const
 	}
 	return str;
 }
-
-#if 0
-bool Template::Render(Environment &env, SimpleStream *pStreamDst)
-{
-	Template *pTemplateTop = nullptr;
-	for (Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		if (!pTemplate->Prepare(env)) return false;
-		pTemplate->SetStreamDst(pStreamDst);
-		pTemplateTop = pTemplate;
-	}
-	if (pTemplateTop->GetFuncForBody() == nullptr) return true;
-	AutoPtr<Argument> pArg(new Argument(pTemplateTop->GetFuncForBody()));
-	pArg->SetValueThis(Value(new Object_template(env, Reference())));
-	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pTemplateTop->GetFuncForBody()->Eval(*pEnvBlock, *pArg);
-	for (Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		pTemplate->SetStreamDst(nullptr);
-	}
-	return !env.IsSignalled();
-}
-
-bool Template::Prepare(Environment &env)
-{
-	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pEnvBlock->AssignValue(Gurax_Symbol(this_),
-				Value(new Object_template(env, Reference())), EXTRA_Public);
-	_pValueExMap->clear();
-	_pExprOwnerForInit->Exec(*pEnvBlock);
-	return !env.IsSignalled();
-}
-
-#endif
 
 //------------------------------------------------------------------------------
 // Expr_TmplEmbedded : Expr_Node
