@@ -494,7 +494,7 @@ void Template::Parser::AddExpr(Expr* pExpr)
 //-----------------------------------------------------------------------------
 // Expr_TmplString
 //-----------------------------------------------------------------------------
-const Expr::TypeInfo Expr_TmplString::typeInfo;
+const Expr::TypeInfo Expr_TmplString::typeInfo("TmplString");
 
 void Expr_TmplString::Compose(Composer& composer)
 {
@@ -511,7 +511,7 @@ String Expr_TmplString::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 // Expr_TmplScript
 //-----------------------------------------------------------------------------
-const Expr::TypeInfo Expr_TmplScript::typeInfo;
+const Expr::TypeInfo Expr_TmplScript::typeInfo("TmplScript");
 
 void Expr_TmplScript::Compose(Composer& composer)
 {
@@ -554,7 +554,7 @@ String Expr_TmplScript::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_TmplEmbedded : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_TmplEmbedded::typeInfo;
+const Expr::TypeInfo Expr_TmplEmbedded::typeInfo("TmplEmbedded");
 
 void Expr_TmplEmbedded::Compose(Composer& composer)
 {

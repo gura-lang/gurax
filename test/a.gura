@@ -1,5 +1,5 @@
 #!/usr/bin/env gurax
-x = [] //Format('embedded #%d line\n', 1..4)
-R'''
-${x}
-'''.Embed(sys.cout)
+x = `a.b()
+Println(x.type)
+Println(x.car)
+Println(x.car.type)

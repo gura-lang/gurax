@@ -199,10 +199,15 @@ void ExprLink::ComposeInClass(Composer& composer, bool publicFlag)
 	}
 }
 
+Iterator* ExprLink::CreateIterator() const
+{
+	return new Iterator_ExprLink(Reference());
+}
+
 //------------------------------------------------------------------------------
 // Expr_Empty
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Empty::typeInfo;
+const Expr::TypeInfo Expr_Empty::typeInfo("Empty");
 
 //------------------------------------------------------------------------------
 // Expr_Node
@@ -225,11 +230,6 @@ void Expr_Collector::AddExprElem(Expr* pExprElem)
 	_pExprLinkElem->AddExpr(pExprElem);
 }
 
-Iterator* Expr_Collector::EachChild() const
-{
-	return new Iterator_Expr(_pExprLinkElem->Reference());
-}
-
 //------------------------------------------------------------------------------
 // Expr_Composite
 //------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ void Expr_Composite::AddExprCdr(Expr* pExprCdr)
 //------------------------------------------------------------------------------
 // Expr_Member
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Member::typeInfo;
+const Expr::TypeInfo Expr_Member::typeInfo("Member");
 
 void Expr_Member::Compose(Composer& composer)
 {
@@ -311,7 +311,7 @@ String Expr_Member::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Value::typeInfo;
+const Expr::TypeInfo Expr_Value::typeInfo("Value");
 
 void Expr_Value::Compose(Composer& composer)
 {
@@ -326,7 +326,7 @@ String Expr_Value::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Identifier : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Identifier::typeInfo;
+const Expr::TypeInfo Expr_Identifier::typeInfo("Identifier");
 
 const DeclCallable* Expr_Identifier::LookupDeclCallable() const
 {
@@ -414,7 +414,7 @@ bool Expr_Identifier::IsEqualTo(const Expr& expr) const
 //------------------------------------------------------------------------------
 // Expr_Suffixed : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Suffixed::typeInfo;
+const Expr::TypeInfo Expr_Suffixed::typeInfo("Suffixed");
 
 void Expr_Suffixed::Compose(Composer& composer)
 {
@@ -442,7 +442,7 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_UnaryOp::typeInfo;
+const Expr::TypeInfo Expr_UnaryOp::typeInfo("UnaryOp");
 
 void Expr_UnaryOp::Compose(Composer& composer)
 {
@@ -513,7 +513,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_BinaryOp : Expr_Binary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_BinaryOp::typeInfo;
+const Expr::TypeInfo Expr_BinaryOp::typeInfo("BinaryOp");
 
 #if 0
 bool Expr_BinaryOp::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
@@ -578,7 +578,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Assign : Expr_Binary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Assign::typeInfo;
+const Expr::TypeInfo Expr_Assign::typeInfo("Assign");
 
 bool Expr_Assign::DoPrepare()
 {
@@ -639,7 +639,7 @@ String Expr_Assign::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Root : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Root::typeInfo;
+const Expr::TypeInfo Expr_Root::typeInfo("Root");
 
 void Expr_Root::Compose(Composer& composer)
 {
@@ -678,7 +678,7 @@ String Expr_Root::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Block : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Block::typeInfo;
+const Expr::TypeInfo Expr_Block::typeInfo("Block");
 
 bool Expr_Block::DoPrepare()
 {
@@ -767,7 +767,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Iterer : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Iterer::typeInfo;
+const Expr::TypeInfo Expr_Iterer::typeInfo("Iterer");
 
 void Expr_Iterer::Compose(Composer& composer)
 {
@@ -818,7 +818,7 @@ String Expr_Iterer::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Lister : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Lister::typeInfo;
+const Expr::TypeInfo Expr_Lister::typeInfo("Lister");
 
 void Expr_Lister::Compose(Composer& composer)
 {
@@ -877,7 +877,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Indexer : Expr_Compound
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Indexer::typeInfo;
+const Expr::TypeInfo Expr_Indexer::typeInfo("Indexer");
 
 void Expr_Indexer::Compose(Composer& composer)
 {
@@ -983,7 +983,7 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 //------------------------------------------------------------------------------
 // Expr_Caller : Expr_Compound
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Caller::typeInfo;
+const Expr::TypeInfo Expr_Caller::typeInfo("Caller");
 
 void Expr_Caller::Compose(Composer& composer)
 {
@@ -1195,14 +1195,14 @@ const Expr* Expr_Caller::GetTrailerSymbols(SymbolList& symbols) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Expr
+// Iterator_ExprLink
 //------------------------------------------------------------------------------
-size_t Iterator_Expr::GetLength() const
+size_t Iterator_ExprLink::GetLength() const
 {
-	return _pExprLinkElem->CountSequence();
+	return _pExprLink->CountSequence();
 }
 
-Value* Iterator_Expr::DoNextValue()
+Value* Iterator_ExprLink::DoNextValue()
 {
 	if (!_pExprCur) return nullptr;
 	RefPtr<Value> pValue(new Value_Expr(_pExprCur->Reference()));
@@ -1210,10 +1210,10 @@ Value* Iterator_Expr::DoNextValue()
 	return pValue.release();
 }
 
-String Iterator_Expr::ToString(const StringStyle& ss) const
+String Iterator_ExprLink::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "Expr";
+	str += "ExprLink";
 	return str;
 }
 

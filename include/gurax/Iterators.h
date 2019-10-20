@@ -413,15 +413,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Expr
+// Iterator_ExprLink
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Expr : public Iterator {
+class GURAX_DLLDECLARE Iterator_ExprLink : public Iterator {
 private:
-	RefPtr<ExprLink> _pExprLinkElem;
+	RefPtr<ExprLink> _pExprLink;
 	const Expr* _pExprCur;
 public:
-	Iterator_Expr(ExprLink* pExprLinkElem) :
-		_pExprLinkElem(pExprLinkElem), _pExprCur(_pExprLinkElem->GetExprFirst()) {}
+	Iterator_ExprLink(ExprLink* pExprLink) :
+		_pExprLink(pExprLink), _pExprCur(_pExprLink->GetExprFirst()) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }

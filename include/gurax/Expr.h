@@ -73,7 +73,11 @@ public:
 	Gurax_DeclareReferable(Expr);
 public:
 	class TypeInfo {
+	private:
+		const char* _name;
 	public:
+		TypeInfo(const char* name) : _name(name) {}
+		const char* GetName() const { return _name; }
 		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 	};
 	class Visitor {
@@ -149,6 +153,7 @@ public:
 	Iterator* EachPUnit() const;
 	int CalcIndentLevel() const;
 	String MakeIndent(const StringStyle& ss) const;
+	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 	bool Prepare() {
@@ -180,7 +185,18 @@ public:
 	virtual void ComposeForArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
 	virtual bool DoPrepare() { return true; }
+public:
+	// Virtual functions for structure inspecting
+	virtual const Expr* InspectChild() const { return nullptr; }
+	virtual const Expr* InspectLeft() const { return nullptr; }
+	virtual const Expr* InspectRight() const { return nullptr; }
+	virtual const Expr* InspectCar() const { return nullptr; }
+	virtual const Expr* InspectTarget() const { return nullptr; }
+	virtual const Expr* InspectBlock() const { return nullptr; }
+	virtual const Expr* InspectTrailer() const { return nullptr; }
 	virtual Iterator* EachChild() const { return nullptr; }
+	virtual Iterator* EachCdr() const { return nullptr; }
+	virtual Iterator* EachParam() const { return nullptr; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
@@ -268,6 +284,7 @@ public:
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
 	void ComposeInClass(Composer& composer, bool publicFlag);
+	Iterator* CreateIterator() const;
 };
 
 //------------------------------------------------------------------------------
@@ -318,6 +335,9 @@ public:
 		if (_pExprChild && !_pExprChild->Traverse(visitor)) return false;
 		return true;
 	}
+public:
+	// Virtual functions for structure inspecting
+	virtual const Expr* InspectChild() const override { return &GetExprChild(); }
 };
 
 //------------------------------------------------------------------------------
@@ -344,6 +364,10 @@ public:
 		if (_pExprRight && !_pExprRight->Traverse(visitor)) return false;
 		return true;
 	}
+public:
+	// Virtual functions for structure inspecting
+	virtual const Expr* InspectLeft() const override { return &GetExprLeft(); }
+	virtual const Expr* InspectRight() const override { return &GetExprRight(); }
 };
 
 //------------------------------------------------------------------------------
@@ -376,7 +400,9 @@ public:
 		if (!_pExprLinkElem->Traverse(visitor)) return false;
 		return true;
 	}
-	virtual Iterator* EachChild() const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual Iterator* EachChild() const override { return GetExprLinkElem().CreateIterator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -418,6 +444,10 @@ public:
 		return true;
 	}
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
+public:
+	// Virtual functions for structure inspecting
+	virtual const Expr* InspectCar() const override { return &GetExprCar(); }
+	virtual Iterator* EachChild() const override { return GetExprLinkCdr().CreateIterator(); }
 };
 
 //------------------------------------------------------------------------------
@@ -456,6 +486,9 @@ public:
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Expr* InspectTarget() const override { return &GetExprTarget(); }
 };
 
 //------------------------------------------------------------------------------
@@ -679,6 +712,11 @@ public:
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual Iterator* EachParam() const override {
+		return HasExprParam()? GetExprLinkParam().CreateIterator() : nullptr;
+	}
 };
 
 //------------------------------------------------------------------------------
@@ -795,6 +833,10 @@ public:
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for structure inspecting
+	virtual const Expr* InspectBlock() const override { return HasExprOfBlock()? GetExprOfBlock() : nullptr; }
+	virtual const Expr* InspectTrailer() const override { return HasExprTrailer()? GetExprTrailer() : nullptr; }
 };
 
 }
