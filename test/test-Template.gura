@@ -422,6 +422,7 @@ TestCase('test of comment') {
 	11th line
 	'''.Embed(sys.cout)
 }
+/*
 TestCase('') {
 	base1 = R'''
 	${=block(`body)}
@@ -432,6 +433,7 @@ TestCase('') {
 	${=extends(base1)}
 	'''.Embed(sys.cout)
 }
+*/
 /*
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {

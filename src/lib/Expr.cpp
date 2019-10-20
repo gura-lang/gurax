@@ -1087,10 +1087,20 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 // This method is used by Template.
 const DeclCallable* Expr_Caller::LookupDeclCallable() const
 {
-	if (!GetExprCar().IsType<Expr_Identifier>()) return nullptr;
-	Value* pValue = Basement::Inst.GetFrame().Lookup(
-		dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol());
-	return pValue? pValue->GetDeclCallable() : nullptr;
+	if (GetExprCar().IsType<Expr_Identifier>()) {
+		const Expr_Identifier& exprCar = dynamic_cast<const Expr_Identifier&>(GetExprCar());
+		Value* pValue = Basement::Inst.GetFrame().Lookup(exprCar.GetSymbol());
+		return pValue? pValue->GetDeclCallable() : nullptr;
+	} else if (GetExprCar().IsType<Expr_Member>()) {
+		const Expr_Member& exprCar = dynamic_cast<const Expr_Member&>(GetExprCar());
+		if (exprCar.GetExprTarget().IsType<Expr_Identifier>() &&
+			dynamic_cast<const Expr_Identifier&>(exprCar.GetExprTarget()).GetSymbol()->
+				IsIdentical(Gurax_Symbol(this_))) {
+			Value* pValue = VTYPE_Template.GetFrame().Lookup(exprCar.GetSymbol());
+			return pValue? pValue->GetDeclCallable() : nullptr;
+		}
+	}
+	return nullptr;
 }
 
 #if 0
