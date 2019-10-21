@@ -414,6 +414,11 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
 			if (!pParser->FeedString("this.init_") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
+			//if (!_tmpl.GetExprForInit().HasSingleExprElem()) {
+			//	Error::Issue(ErrorType::SyntaxError, "template directive must be a single expression");
+			//	return false;
+			//}
+			pExprLast.reset(_tmpl.GetExprForInit().GetExprElemLast()->Reference());
 		} while (0);
 		do {
 			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
@@ -422,6 +427,9 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 			if (!pParser->FeedString("this.") || !pParser->FeedString(pStrTmplScript) ||
 				!pParser->Flush()) return false;
 		} while (0);
+		if (pExprTmplScript->HasExprElem()) {
+			AddExpr(pExprTmplScript->Reference());
+		}
 	} else {
 		// Parsing a normal script other than template directive.
 		RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), pExprTmplScript->Reference()));
@@ -462,10 +470,10 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 				}
 			}
 		}
-	}
-	if (pExprTmplScript->HasExprElem()) {
-		AddExpr(pExprTmplScript->Reference());
-		pExprLast.reset(pExprTmplScript->GetExprElemLast()->Reference());
+		if (pExprTmplScript->HasExprElem()) {
+			AddExpr(pExprTmplScript->Reference());
+			pExprLast.reset(pExprTmplScript->GetExprElemLast()->Reference());
+		}
 	}
 	if (pExprLast && pExprLast->IsType<Expr_Caller>()) {
 		Expr_Caller& exprLastCaller = dynamic_cast<Expr_Caller&>(*pExprLast).GetExprTrailerLast();

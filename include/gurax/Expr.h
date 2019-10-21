@@ -258,6 +258,7 @@ protected:
 	virtual ~ExprLink() = default;
 public:	
 	bool IsEmpty() const { return _pExprFirst.get() == nullptr; }
+	bool HasSingle() const { return _pExprLast && _pExprFirst.get() == _pExprLast; }
 	Expr* GetExprFirst() { return _pExprFirst.get(); }
 	const Expr* GetExprFirst() const { return _pExprFirst.get(); }
 	Expr* GetExprLast() { return _pExprLast; }
@@ -388,6 +389,7 @@ public:
 	const ExprLink& GetExprLinkElem() const { return *_pExprLinkElem; }
 	size_t CountExprElem() const { return _pExprLinkElem->CountSequence(); }
 	bool HasExprElem() const { return !_pExprLinkElem->IsEmpty(); }
+	bool HasSingleExprElem() const { return _pExprLinkElem->HasSingle(); }
 	Expr* GetExprElemFirst() { return _pExprLinkElem->GetExprFirst(); }
 	const Expr* GetExprElemFirst() const { return _pExprLinkElem->GetExprFirst(); }
 	Expr* GetExprElemLast() { return _pExprLinkElem->GetExprLast(); }

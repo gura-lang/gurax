@@ -1,17 +1,45 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('') {
+TestCase('test of inheritance') {
+	// base1 template
 	base1 = R'''
+	=== ${=block(`head)}base1-head${end} ===
+	<start-of-body>
 	${=block(`body)}
 	base1-body
 	${end}
+	<end-of-body>
 	'''.Template()
-	Println(base1.expr)
-	Println(base1.exprForInit)
-	/*
+	// base2 template
+	base2 = R'''
+	${=extends(base1)}
+	
+	${=block(`head)}base2-head${end}
+	
+	${=block(`body)}
+	${end}
+	'''.Template()
+	// base3 template
+	base3 = R'''
+	${=extends(base2)}
+	
+	${=block(`head)}base3-head${end}
+	
+	${=block(`body)}
+	base3-body
+	${end}
+	'''.Template()
+	Println('inherit from base1')
 	R'''
 	${=extends(base1)}
 	'''.Embed(sys.cout)
-	*/
+	Println('inherit from base2')
+	R'''
+	${=extends(base2)}
+	'''.Embed(sys.cout)
+	Println('inherit from base3')
+	R'''
+	${=extends(base3)}
+	'''.Embed(sys.cout)
 }

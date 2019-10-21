@@ -423,18 +423,6 @@ TestCase('test of comment') {
 	'''.Embed(sys.cout)
 }
 /*
-TestCase('') {
-	base1 = R'''
-	${=block(`body)}
-	base1-body
-	${end}
-	'''.Template()
-	R'''
-	${=extends(base1)}
-	'''.Embed(sys.cout)
-}
-*/
-/*
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {
 	// base1 template
@@ -445,7 +433,7 @@ TestCase('test of inheritance') {
 	base1-body
 	${end}
 	<end-of-body>
-	'''.template()
+	'''.Template()
 	// base2 template
 	base2 = R'''
 	${=extends(base1)}
@@ -454,7 +442,7 @@ TestCase('test of inheritance') {
 	
 	${=block(`body)}
 	${end}
-	'''.template()
+	'''.Template()
 	// base3 template
 	base3 = R'''
 	${=extends(base2)}
@@ -464,16 +452,16 @@ TestCase('test of inheritance') {
 	${=block(`body)}
 	base3-body
 	${end}
-	'''.template()
-	println('inherit from base1')
+	'''.Template()
+	Println('inherit from base1')
 	R'''
 	${=extends(base1)}
 	'''.Embed(sys.cout)
-	println('inherit from base2')
+	Println('inherit from base2')
 	R'''
 	${=extends(base2)}
 	'''.Embed(sys.cout)
-	println('inherit from base3')
+	Println('inherit from base3')
 	R'''
 	${=extends(base3)}
 	'''.Embed(sys.cout)
@@ -485,15 +473,15 @@ TestCase('test of embed') {
 	//--------
 	tmpl1 = R'''
 	This is a rendering result of tmpl1
-	'''.template()
+	'''.Template()
 	//--------
 	tmpl2 = R'''
 	This is a rendering result of tmpl2
-	'''.template()
+	'''.Template()
 	//--------
 	tmpl3 = R'''
 	This is a rendering result of tmpl3
-	'''.template()
+	'''.Template()
 	//--------
 	R'''
 	embed tmpl1
@@ -510,7 +498,7 @@ TestCase('test of local variable in embed') {
 	tmpl = R'''
 	${x = 'embed', -}
 	x = ${x}
-	'''.template()
+	'''.Template()
 	//--------
 	R'''
 	${x = 'body', -}
@@ -528,11 +516,11 @@ TestCase('test of detecting duplicated symbol') {
 	${=block(`hoge3)}${end}
 	${=block(`hoge4)}${end}
 	${=block(`hoge1)}${end}
-	'''.template()
+	'''.Template()
 	try {
 		tmpl.render(sys.cout)
 	} catch {|e|
-		println('expected error occurs: ', e.text)
+		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
@@ -558,7 +546,7 @@ TestCase('test of inheritance') {
 	        ${end}
 	    </div>
 	</body>
-	'''.template()
+	'''.Template()
 	R'''
 	${=extends(base)}
 	${=block(`title)}Index${end}
@@ -594,7 +582,7 @@ TestCase('test of inheritance and loop') {
 	${=block(`body)}${end}
 	</body>
 	</html>
-	'''.template()
+	'''.Template()
 	R'''
 	${=extends(layout)}
 	${=block(`body)}
@@ -652,7 +640,7 @@ TestCase('embedded string') {
 	variable ${var} reference
 	''')
 	// inheritance
-	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'.template()
+	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'.Template()
 	Tester(`e'${=extends(base)}')
 	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
 	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
