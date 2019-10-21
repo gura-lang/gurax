@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('test of inheritance') {
+TestCase('Inheritance') {
 	//------------------------------------
 	// base1 template
 	base1 = R'''
@@ -39,11 +39,13 @@ TestCase('test of inheritance') {
 	${=extends(base1)}
 	'''.RenderTemplate(sys.cout)
 	//------------------------------------
+	Println()
 	Println('inherit from base2')
 	R'''
 	${=extends(base2)}
 	'''.RenderTemplate(sys.cout)
 	//------------------------------------
+	Println()
 	Println('inherit from base3')
 	R'''
 	${=extends(base3)}

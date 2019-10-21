@@ -520,3 +520,35 @@ x = body
 embed tmpl
 x = embed
 x = body
+======== Inheritance ========
+inherit from base1
+=== base1-head ===
+<start-of-body>
+base1-body
+<end-of-body>
+
+inherit from base2
+=== base2-head ===
+<start-of-body>
+<end-of-body>
+
+inherit from base3
+=== base3-head ===
+<start-of-body>
+base3-body
+<end-of-body>
+======== Detecting duplicated symbol ========
+expected error occurs: duplicated symbol: hoge1
+======== Embedded string ========
+e'' .. 
+e'simple string' .. simple string
+e'variable ${var} reference' .. variable hoge reference
+e'variable ${var} reference\n' ..
+variable hoge reference
+
+e'${=extends(base)}' .. [original] original
+e'${=extends(base)}${=block(`head)}replaced${end}' .. [replaced] original
+e'${=extends(base)}${=block(`body)}replaced${end}' .. [original] replaced
+e'${=extends(base)}${=block(`head)}replaced${end}${=block(`body)}replaced${end}' .. [replaced] replaced
+f(3, 4) .. 3 + 4 = 7
+f(10, 2) .. 10 + 2 = 12

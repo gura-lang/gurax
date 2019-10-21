@@ -495,9 +495,8 @@ TestCase('Local variables in embed') {
 	x = ${x}
 	'''.RenderTemplate(sys.cout)
 }
-/*
-//-----------------------------------------------------------------------------
-TestCase('test of inheritance') {
+TestCase('Inheritance') {
+	//------------------------------------
 	// base1 template
 	base1 = R'''
 	=== ${=block(`head)}base1-head${end} ===
@@ -507,6 +506,7 @@ TestCase('test of inheritance') {
 	${end}
 	<end-of-body>
 	'''.Template()
+	//------------------------------------
 	// base2 template
 	base2 = R'''
 	${=extends(base1)}
@@ -516,6 +516,7 @@ TestCase('test of inheritance') {
 	${=block(`body)}
 	${end}
 	'''.Template()
+	//------------------------------------
 	// base3 template
 	base3 = R'''
 	${=extends(base2)}
@@ -526,23 +527,26 @@ TestCase('test of inheritance') {
 	base3-body
 	${end}
 	'''.Template()
+	//------------------------------------
 	Println('inherit from base1')
 	R'''
 	${=extends(base1)}
 	'''.RenderTemplate(sys.cout)
+	//------------------------------------
+	Println()
 	Println('inherit from base2')
 	R'''
 	${=extends(base2)}
 	'''.RenderTemplate(sys.cout)
+	//------------------------------------
+	Println()
 	Println('inherit from base3')
 	R'''
 	${=extends(base3)}
 	'''.RenderTemplate(sys.cout)
 }
-*/
-/*
 //-----------------------------------------------------------------------------
-TestCase('test of detecting duplicated symbol') {
+TestCase('Detecting duplicated symbol') {
 	tmpl = R'''
 	${=block(`hoge1)}${end}
 	${=block(`hoge2)}${end}
@@ -551,13 +555,33 @@ TestCase('test of detecting duplicated symbol') {
 	${=block(`hoge1)}${end}
 	'''.Template()
 	try {
-		tmpl.render(sys.cout)
+		tmpl.Render(sys.cout)
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
-TestCase('test of inheritance') {
+TestCase('Embedded string') {
+	var = 'hoge'
+	Tester(`e'')
+	Tester(`e'simple string')
+	Tester(`e'variable ${var} reference')
+	Tester(`eR'''
+	variable ${var} reference
+	''')
+	// inheritance
+	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'.Template()
+	Tester(`e'${=extends(base)}')
+	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
+	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
+	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}${=block(`body)}replaced${end}')
+	f(a, b) = e'${a} + ${b} = ${a + b}'
+	Tester(`f(3, 4))
+	Tester(`f(10, 2))
+}
+/*
+//-----------------------------------------------------------------------------
+TestCase('HTML output using inheritance') {
 	// this sample originated from an example in http://jinja.pocoo.org/.
 	base = R'''
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
@@ -627,26 +651,6 @@ TestCase('test of inheritance and loop') {
 	${end}
 	'''.RenderTemplate(sys.cout)
 }
-//-----------------------------------------------------------------------------
-TestCase('embedded string') {
-	var = 'hoge'
-	Tester(`e'')
-	Tester(`e'simple string')
-	Tester(`e'variable ${var} reference')
-	Tester(`eR'''
-	variable ${var} reference
-	''')
-	// inheritance
-	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'.Template()
-	Tester(`e'${=extends(base)}')
-	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
-	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
-	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}${=block(`body)}replaced${end}')
-	f(a, b) = e'${a} + ${b} = ${a + b}'
-	Tester(`f(3, 4))
-	Tester(`f(10, 2))
-}
-
 //-----------------------------------------------------------------------------
 TestCase('suffix T') {
 	Tester(`''T)
