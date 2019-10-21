@@ -408,7 +408,8 @@ bool Template::Parser::CreateTmplScript(const char* strPost)
 		// Parsing template directive that looks like "${=foo()}".
 		pStrTmplScript++;
 		do {
-			RefPtr<Gurax::Parser> pParser(new Gurax::Parser(_pSourceName->Reference(), _tmpl.GetExprForInit().Reference()));
+			RefPtr<Gurax::Parser> pParser(
+				new Gurax::Parser(_pSourceName->Reference(), _tmpl.GetExprForInit().Reference()));
 			// Appends "this.init_" before the script string while parsing
 			// so that it generates an expression "this.init_foo()" from the directive "${=foo()}".
 			if (!pParser->FeedString("this.init_") || !pParser->FeedString(pStrTmplScript) ||

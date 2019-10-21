@@ -1,5 +1,17 @@
 #!/usr/bin/env gurax
-x = `a.b()
-Println(x.type)
-Println(x.car)
-Println(x.car.type)
+import(util.tester) {*}
+
+TestCase('') {
+	base1 = R'''
+	${=block(`body)}
+	base1-body
+	${end}
+	'''.Template()
+	Println(base1.expr)
+	Println(base1.exprForInit)
+	/*
+	R'''
+	${=extends(base1)}
+	'''.Embed(sys.cout)
+	*/
+}
