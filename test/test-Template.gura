@@ -422,6 +422,39 @@ TestCase('test of comment') {
 	11th line
 	'''.RenderTemplate(sys.cout)
 }
+//-----------------------------------------------------------------------------
+TestCase('Macro') {
+	R'''
+	${=define(`calc_mean, num1:Number, num2:Number)}${(num1 + num2) / 2}${end}
+	${=define(`show_person, name:String, age:Number)}
+	${name} is ${age} years old.
+	${end}
+
+	${=call(`show_person, 'Harry', 24)}
+	[${=call(`calc_mean, 12, 23)}]
+	'''.RenderTemplate(sys.cout)
+}
+//-----------------------------------------------------------------------------
+TestCase('Macro and line-break') {
+	R'''
+	${=define(`macro1)}${end}
+	${=define(`macro2)}Gura${end}
+	${=define(`macro3)}
+	Gura${end}
+	${=define(`macro4)}Gura
+	${end}
+	${=define(`macro5)}
+	Gura
+	${end}
+	Empty${=call(`macro1)}Here
+	NoLineBreak${=call(`macro2)}Here
+	NoLineBreak${=call(`macro3)}Here
+	LineBreak${=call(`macro4)}Here
+	LineBreak${=call(`macro5)}Here
+	Macro:${=call(`macro2)}
+	Next Line
+	'''.RenderTemplate(sys.cout)
+}
 /*
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {
@@ -594,42 +627,6 @@ TestCase('test of inheritance and loop') {
 	${end}
 	'''.RenderTemplate(sys.cout)
 }
-//-----------------------------------------------------------------------------
-TestCase('define and call') {
-	R'''
-	${=define(`calc_mean, num1:number, num2:number)}${(num1 + num2) / 2}${end}
-	${=define(`show_person, name:string, age:number)}
-	${name} is ${age} years old.
-	${end}
-	${=call(`show_person, 'Harry', 24)}
-	
-	[${=call(`calc_mean, 12, 23)}]
-	'''.RenderTemplate(sys.cout)
-}
-
-//-----------------------------------------------------------------------------
-TestCase('macro and line-break') {
-	R'''
-	${=define(`macro1)}${end}
-	${=define(`macro2)}Gura${end}
-	${=define(`macro3)}
-	Gura${end}
-	${=define(`macro4)}Gura
-	${end}
-	${=define(`macro5)}
-	Gura
-	${end}
-	Empty${=call(`macro1)}Here
-	NoLineBreak${=call(`macro2)}Here
-	NoLineBreak${=call(`macro3)}Here
-	LineBreak${=call(`macro4)}Here
-	LineBreak${=call(`macro5)}Here
-	Macro:${=call(`macro2)}
-	Next Line
-	'''.RenderTemplate(sys.cout)
-}
-
-
 //-----------------------------------------------------------------------------
 TestCase('embedded string') {
 	var = 'hoge'

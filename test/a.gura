@@ -1,45 +1,24 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-TestCase('test of inheritance') {
-	// base1 template
-	base1 = R'''
-	=== ${=block(`head)}base1-head${end} ===
-	<start-of-body>
-	${=block(`body)}
-	base1-body
-	${end}
-	<end-of-body>
-	'''.Template()
-	// base2 template
-	base2 = R'''
-	${=extends(base1)}
-	
-	${=block(`head)}base2-head${end}
-	
-	${=block(`body)}
-	${end}
-	'''.Template()
-	// base3 template
-	base3 = R'''
-	${=extends(base2)}
-	
-	${=block(`head)}base3-head${end}
-	
-	${=block(`body)}
-	base3-body
-	${end}
-	'''.Template()
-	Println('inherit from base1')
+//-----------------------------------------------------------------------------
+TestCase('macro and line-break') {
 	R'''
-	${=extends(base1)}
-	'''.Embed(sys.cout)
-	Println('inherit from base2')
-	R'''
-	${=extends(base2)}
-	'''.Embed(sys.cout)
-	Println('inherit from base3')
-	R'''
-	${=extends(base3)}
-	'''.Embed(sys.cout)
+	${=define(`macro1)}${end}
+	${=define(`macro2)}Gura${end}
+	${=define(`macro3)}
+	Gura${end}
+	${=define(`macro4)}Gura
+	${end}
+	${=define(`macro5)}
+	Gura
+	${end}
+	Empty${=call(`macro1)}Here
+	NoLineBreak${=call(`macro2)}Here
+	NoLineBreak${=call(`macro3)}Here
+	LineBreak${=call(`macro4)}Here
+	LineBreak${=call(`macro5)}Here
+	Macro:${=call(`macro2)}
+	Next Line
+	'''.RenderTemplate(sys.cout)
 }

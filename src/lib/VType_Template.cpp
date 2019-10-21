@@ -218,7 +218,7 @@ Gurax_DeclareMethod(Template, call)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Calls a template macro that has been created by directive `${=define}`.\n"
