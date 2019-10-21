@@ -508,3 +508,15 @@ LineBreakGura
 Here
 Macro:Gura
 Next Line
+======== embed directive ========
+embed tmpl1
+This is a rendering result of tmpl1
+embed tmpl2
+This is a rendering result of tmpl2
+embed tmpl3
+This is a rendering result of tmpl3
+======== Local variables in embed ========
+x = body
+embed tmpl
+x = embed
+x = body

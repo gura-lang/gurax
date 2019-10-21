@@ -455,6 +455,46 @@ TestCase('Macro and line-break') {
 	Next Line
 	'''.RenderTemplate(sys.cout)
 }
+//-----------------------------------------------------------------------------
+TestCase('embed directive') {
+	//--------
+	tmpl1 = R'''
+	This is a rendering result of tmpl1
+	'''.Template()
+	//--------
+	tmpl2 = R'''
+	This is a rendering result of tmpl2
+	'''.Template()
+	//--------
+	tmpl3 = R'''
+	This is a rendering result of tmpl3
+	'''.Template()
+	//--------
+	R'''
+	embed tmpl1
+	${=embed(tmpl1)}
+	embed tmpl2
+	${=embed(tmpl2)}
+	embed tmpl3
+	${=embed(tmpl3)}
+	'''.RenderTemplate(sys.cout)
+}
+//-----------------------------------------------------------------------------
+TestCase('Local variables in embed') {
+	//--------
+	tmpl = R'''
+	${x = 'embed', -}
+	x = ${x}
+	'''.Template()
+	//--------
+	R'''
+	${x = 'body', -}
+	x = ${x}
+	embed tmpl
+	${=embed(tmpl)}
+	x = ${x}
+	'''.RenderTemplate(sys.cout)
+}
 /*
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance') {
@@ -501,46 +541,6 @@ TestCase('test of inheritance') {
 }
 */
 /*
-//-----------------------------------------------------------------------------
-TestCase('test of embed') {
-	//--------
-	tmpl1 = R'''
-	This is a rendering result of tmpl1
-	'''.Template()
-	//--------
-	tmpl2 = R'''
-	This is a rendering result of tmpl2
-	'''.Template()
-	//--------
-	tmpl3 = R'''
-	This is a rendering result of tmpl3
-	'''.Template()
-	//--------
-	R'''
-	embed tmpl1
-	${=embed(tmpl1)}
-	embed tmpl2
-	${=embed(tmpl2)}
-	embed tmpl3
-	${=embed(tmpl3)}
-	'''.RenderTemplate(sys.cout)
-}
-//-----------------------------------------------------------------------------
-TestCase('test of local variable in embed') {
-	//--------
-	tmpl = R'''
-	${x = 'embed', -}
-	x = ${x}
-	'''.Template()
-	//--------
-	R'''
-	${x = 'body', -}
-	x = ${x}
-	embed tmpl
-	${=embed(tmpl)}
-	x = ${x}
-	'''.RenderTemplate(sys.cout)
-}
 //-----------------------------------------------------------------------------
 TestCase('test of detecting duplicated symbol') {
 	tmpl = R'''
