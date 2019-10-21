@@ -74,7 +74,7 @@ bool Template::Render(Processor& processor, Stream& streamDst)
 	}
 	if (!Error::IsIssued()) {
 		Frame& frame = processor.PushFrame<Frame_Scope>();
-		frame.Assign(Gurax_Symbol(this_), new Value_Template(pTmplTop->Reference()));
+		frame.Assign(Gurax_Symbol(this_), new Value_Template(Reference()));
 		Value::Delete(processor.EvalExpr(pTmplTop->GetExprForBody()));
 		processor.PopFrame();
 	}
