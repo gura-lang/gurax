@@ -3,7 +3,7 @@ import(util.tester) {*}
 
 TestCase('Basic test') {
 	test(str:String) = {
-		Printf('\'%s\' -> \'%s\'\n', str, str.Embed())
+		Printf('\'%s\' -> \'%s\'\n', str, str.RenderTemplate())
 		Println()
 	}
 	test('')
@@ -77,7 +77,7 @@ TestCase('marker handling') {
 	$$$${x}
 	${x}$
 	${x}$$
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Reference to external variables') {
@@ -87,7 +87,7 @@ TestCase('Reference to external variables') {
 	R'''
 	${v1} ${v2} ${v3}
 	${v1 += ' AA'}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 	Tester(`v1)
 }
 //-----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ TestCase('Comment') {
 	  line.3
 	  line.4${//comment}
 	
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Block paramter') {
@@ -109,7 +109,7 @@ TestCase('Block paramter') {
 	${(1..10).Each {|i|}}
 	  ${i}
 	${end}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Template script that returns nil value') {
@@ -134,7 +134,7 @@ TestCase('Template script that returns nil value') {
 	foo${nil}bar
 	foo${-}bar
 	foo${''}bar
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Repeat sequence') {
@@ -154,7 +154,7 @@ TestCase('Repeat sequence') {
 	${for (product in products)}
 	- ${product}
 	${end}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 	// iteration with Each() method
 	R'''
 	[Companies]
@@ -169,7 +169,7 @@ TestCase('Repeat sequence') {
 	${products.Each {|product|}}
 	- ${product}
 	${end}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Repeat and if-else sequence') {
@@ -183,12 +183,12 @@ TestCase('Repeat and if-else sequence') {
 	    ${i} is greater than or equal to eight
 	  ${end}
 	${end}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 /*
 //-----------------------------------------------------------------------------
 TestCase() {
-	println('漢字のテスト ${"スクリプト文字列"}'.Embed())
+	println('漢字のテスト ${"スクリプト文字列"}'.RenderTemplate())
 }
 */
 //-----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ TestCase('Template script that handles template internally') {
 tmpl = R'''
 ${if (company) {R"""
 Company: ${company}
-""".Embed()} else {R"""
+""".RenderTemplate()} else {R"""
 (not defined)
 """}}
 [Products]
@@ -207,10 +207,10 @@ ${R"""
 	scope {
 		company = 'hoge'
 		products = ['apple', 'grape', 'orange']
-		tmpl.Embed(sys.cout)
+		tmpl.RenderTemplate(sys.cout)
 		company = nil
 		products = ['car', 'bicycle', 'boat']
-		tmpl.Embed(sys.cout)
+		tmpl.RenderTemplate(sys.cout)
 	}
 }
 //-----------------------------------------------------------------------------
@@ -227,7 +227,7 @@ TestCase('Empty list') {
 	${[]}
 	!!!
 	ABCD${[]}EFG
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Empty iterator') {
@@ -243,7 +243,7 @@ TestCase('Empty iterator') {
 	${()}
 	!!!
 	ABCD${()}EFG
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Auto indentation') {
@@ -277,33 +277,33 @@ TestCase('Auto indentation') {
 //-----------------------------------------------------------------------------
 TestCase('Error in template') {
 	try {
-		'abcdefg${not_defined}hijklmn'.Embed()
+		'abcdefg${not_defined}hijklmn'.RenderTemplate()
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
 TestCase('Format() in tempate script') {
-	Tester(`'hello ${Format("%d", 0..10).Join(",")}'.Embed())
+	Tester(`'hello ${Format("%d", 0..10).Join(",")}'.RenderTemplate())
 }
 //-----------------------------------------------------------------------------
 TestCase('Variable reference') {
 	var = 'HOGE'
-	Tester(`'hello ${var} world'.Embed())
-	Tester(`'hello ${var * 2} world'.Embed())
-	Tester(`'''hello '${Format('%8s', var)}' world'''.Embed())
+	Tester(`'hello ${var} world'.RenderTemplate())
+	Tester(`'hello ${var * 2} world'.RenderTemplate())
+	Tester(`'''hello '${Format('%8s', var)}' world'''.RenderTemplate())
 	var = 3.14
-	Tester(`'hello ${var} world'.Embed())
+	Tester(`'hello ${var} world'.RenderTemplate())
 }
 //-----------------------------------------------------------------------------
 TestCase('nil, number, string, and list') {
-	Tester(`'${nil}'.Embed())
-	Tester(`'${-}'.Embed())
-	Tester(`'${3}'.Embed())
-	Tester(`'${"hello"}'.Embed())
-	Tester(`'${["first", "second", "third"]}'.Embed())
+	Tester(`'${nil}'.RenderTemplate())
+	Tester(`'${-}'.RenderTemplate())
+	Tester(`'${3}'.RenderTemplate())
+	Tester(`'${"hello"}'.RenderTemplate())
+	Tester(`'${["first", "second", "third"]}'.RenderTemplate())
 	try {
-		'${Color.red}'.Embed()
+		'${Color.red}'.RenderTemplate()
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
@@ -334,7 +334,7 @@ TestCase('branch sequence') {
 	    hoge ${x}
 	${end}
 	
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of scope') {
@@ -420,7 +420,7 @@ TestCase('test of comment') {
 	9th ${==*comment-out*==}$line
 	10th line${==*comment-out*==}$
 	11th line
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 /*
 //-----------------------------------------------------------------------------
@@ -456,15 +456,15 @@ TestCase('test of inheritance') {
 	Println('inherit from base1')
 	R'''
 	${=extends(base1)}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 	Println('inherit from base2')
 	R'''
 	${=extends(base2)}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 	Println('inherit from base3')
 	R'''
 	${=extends(base3)}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 */
 /*
@@ -490,7 +490,7 @@ TestCase('test of embed') {
 	${=embed(tmpl2)}
 	embed tmpl3
 	${=embed(tmpl3)}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of local variable in embed') {
@@ -506,7 +506,7 @@ TestCase('test of local variable in embed') {
 	embed tmpl
 	${=embed(tmpl)}
 	x = ${x}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of detecting duplicated symbol') {
@@ -562,7 +562,7 @@ TestCase('test of inheritance') {
 	      Welcome on my awesome homepage.
 	    </p>
 	${end}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('test of inheritance and loop') {
@@ -592,7 +592,7 @@ TestCase('test of inheritance and loop') {
 	  ${end}
 	  </ul>
 	${end}
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('define and call') {
@@ -604,7 +604,7 @@ TestCase('define and call') {
 	${=call(`show_person, 'Harry', 24)}
 	
 	[${=call(`calc_mean, 12, 23)}]
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 
 //-----------------------------------------------------------------------------
@@ -626,7 +626,7 @@ TestCase('macro and line-break') {
 	LineBreak${=call(`macro5)}Here
 	Macro:${=call(`macro2)}
 	Next Line
-	'''.Embed(sys.cout)
+	'''.RenderTemplate(sys.cout)
 }
 
 
