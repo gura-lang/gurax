@@ -1155,8 +1155,8 @@ PUnit* PUnitFactory_CreateList::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_ListElem
-// Stack View: [List Elem] -> [List] (continue)
-//                         -> []     (discard)
+// Stack View: [List .. Elem] -> [List ..] (continue)
+//                            -> []        (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool xlistFlag>
 void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::Exec(Processor& processor) const
@@ -1179,7 +1179,7 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::Exec(Processor& proc
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 		valueTypedOwner.Add(pValueElem.release());
 	}
-	if (discardValueFlag) processor.DiscardValue();
+	if (discardValueFlag) processor.RemoveValues(0, GetOffset() + 1);
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

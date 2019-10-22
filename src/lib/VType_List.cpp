@@ -25,64 +25,32 @@ Gurax_ImplementStatement(_create_list_)
 	size_t nExprs = exprLinkElem.CountSequence();
 	composer.Add_CreateList(nExprs, &exprCaller);				// [List]
 	if (exprCaller.GetExprCdrFirst()) {
-		//**********************
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);	// [List Car]
-		composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr,
-							  true, &exprCaller);				// [List Car Argument]
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			if (!pExpr->IsType<Expr_Block>()) {
+			if (pExpr->IsType<Expr_Block>()) {
+				// @{ .. {args*} .. }
+				Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
+				composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr,
+									  true, &exprCaller);		// [List Car Argument]
+				Expr::ComposeForArgSlot(composer, pExprEx->GetExprElemFirst());
+				if (Error::IsIssued()) return;
+				composer.Add_Call(&exprCaller);					// [List Car Result]
+				composer.Add_ListElem(1, false, &exprCaller);	// [List Car]
+			} else {
 				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
 								 "block is expected as an element in the initializer");
 				return;
 			}
-			// @{ .. {args*} .. }
-			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
-			Expr::ComposeForArgSlot(composer, pExprEx->GetExprElemFirst());
-			if (Error::IsIssued()) return;
-			composer.Add_Call(&exprCaller);						// [List Car Result]
 		}
+		composer.Add_DiscardValue(&exprCaller);					// [List]
 	} else {
+		composer.SetListElemFlag(true);
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ComposeOrNil(composer);						// [List Elem]
-			composer.Add_ListElem(0, false, pExpr);				// [List]
+			pExpr->ComposeOrNil(composer);					// [List Elem]
+			composer.Add_ListElem(0, false, pExpr);			// [List]
 		}
+		composer.SetListElemFlag(false);
 	}
-#if 0
-	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
-	composer.Add_CreateDict(&exprCaller);						// [Dict]
-	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-		if (pExpr->IsType<Expr_BinaryOp>() &&
-			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
-			// %{ .. key => value .. }
-			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-			pExprEx->GetExprLeft().ComposeOrNil(composer);		// [Dict Key]
-			pExprEx->GetExprRight().ComposeOrNil(composer);		// [Dict Key Elem]
-		} else if (pExpr->IsType<Expr_Block>()) {
-			// %{ .. {key, value} .. }
-			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
-			if (pExprEx->CountExprElem() != 2) {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "block is expected to have a format of {key, value}");
-				return;
-			}
-			Expr* pExprElem = pExprEx->GetExprElemFirst();
-			pExprElem->ComposeOrNil(composer);					// [Dict Key]
-			pExprElem = pExprElem->GetExprNext();
-			pExprElem->ComposeOrNil(composer);					// [Dict Key Elem]
-		} else {
-			// %{ .. key, value .. }
-			pExpr->ComposeOrNil(composer);						// [Dict Key]
-			pExpr = pExpr->GetExprNext();
-			if (!pExpr) {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "value is missing in the initialization list for dictionary");
-				return;
-			}
-			pExpr->ComposeOrNil(composer);						// [Dict Key Elem]
-		}
-		composer.Add_DictElem(0, &exprCaller);					// [Dict]
-	}
-#endif
 }
 
 //-----------------------------------------------------------------------------

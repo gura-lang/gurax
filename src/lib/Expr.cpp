@@ -687,18 +687,27 @@ bool Expr_Block::DoPrepare()
 
 void Expr_Block::Compose(Composer& composer)
 {
-	if (!HasCallerAsParent() && HasExprParam()) {
-		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-		composer.Add_Jump(this);
-		SetPUnitSubFirst(composer.PeekPUnitCont());
-		PUnit* pPUnitSequence = composer.PeekPUnitCont();
-		composer.Add_BeginSequence(this);
-		Expr::ComposeForArgSlot(composer, GetExprParamFirst());
-		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
-		composer.Add_Return(this);
-		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+	if (composer.GetListElemFlag()) {
+		size_t nExprs = GetExprLinkElem().CountSequence();
+		composer.Add_CreateList(nExprs, this);						// [List]
+		for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+			pExpr->ComposeOrNil(composer);							// [List Elem]
+			composer.Add_ListElem(0, false, pExpr);					// [List]
+		}	
+	} else {
+		if (!HasCallerAsParent() && HasExprParam()) {
+			PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+			composer.Add_Jump(this);
+			SetPUnitSubFirst(composer.PeekPUnitCont());
+			PUnit* pPUnitSequence = composer.PeekPUnitCont();
+			composer.Add_BeginSequence(this);
+			Expr::ComposeForArgSlot(composer, GetExprParamFirst());
+			pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
+			composer.Add_Return(this);
+			pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+		}
+		ComposeSequence(composer, GetExprElemFirst());				// [Any]
 	}
-	ComposeSequence(composer, GetExprElemFirst());					// [Any]
 }
 
 bool Expr_Block::HasCallerAsParent() const
@@ -824,10 +833,12 @@ void Expr_Lister::Compose(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List]
+	//composer.SetListElemFlag(true);
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ComposeOrNil(composer);							// [List Elem]
 		composer.Add_ListElem(0, false, pExpr);					// [List]
 	}	
+	//composer.SetListElemFlag(false);
 }
 
 void Expr_Lister::ComposeForAssignment(
