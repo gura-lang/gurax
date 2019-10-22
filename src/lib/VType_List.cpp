@@ -5,6 +5,59 @@
 
 namespace Gurax {
 
+//------------------------------------------------------------------------------
+// Implementation of statement
+//------------------------------------------------------------------------------
+// @(callable) {block}
+Gurax_DeclareStatementAlias(_create_list_, "@")
+{
+	Declare(VTYPE_Dict, Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `List` instance.\n");
+}
+
+Gurax_ImplementStatement(_create_list_)
+{
+#if 0
+	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
+	composer.Add_CreateDict(&exprCaller);						// [Dict]
+	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+		if (pExpr->IsType<Expr_BinaryOp>() &&
+			dynamic_cast<Expr_BinaryOp*>(pExpr)->GetOperator()->IsType(OpType::Pair)) {
+			// %{ .. key => value .. }
+			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
+			pExprEx->GetExprLeft().ComposeOrNil(composer);		// [Dict Key]
+			pExprEx->GetExprRight().ComposeOrNil(composer);		// [Dict Key Elem]
+		} else if (pExpr->IsType<Expr_Block>()) {
+			// %{ .. {key, value} .. }
+			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
+			if (pExprEx->CountExprElem() != 2) {
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
+								 "block is expected to have a format of {key, value}");
+				return;
+			}
+			Expr* pExprElem = pExprEx->GetExprElemFirst();
+			pExprElem->ComposeOrNil(composer);					// [Dict Key]
+			pExprElem = pExprElem->GetExprNext();
+			pExprElem->ComposeOrNil(composer);					// [Dict Key Elem]
+		} else {
+			// %{ .. key, value .. }
+			pExpr->ComposeOrNil(composer);						// [Dict Key]
+			pExpr = pExpr->GetExprNext();
+			if (!pExpr) {
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
+								 "value is missing in the initialization list for dictionary");
+				return;
+			}
+			pExpr->ComposeOrNil(composer);						// [Dict Key Elem]
+		}
+		composer.Add_DictElem(0, &exprCaller);					// [Dict]
+	}
+#endif
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
@@ -1358,6 +1411,8 @@ void VType_List::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Mutable);
+	// Assignment of statement
+	frameOuter.Assign(Gurax_CreateStatement(_create_list_));
 	// Assignment of method specific to List
 	Assign(Gurax_CreateMethod(List, Add));
 	Assign(Gurax_CreateMethod(List, Append));

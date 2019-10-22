@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of statement
 //------------------------------------------------------------------------------
 // %{block}
-Gurax_DeclareStatementAlias(_dict_, "%")
+Gurax_DeclareStatementAlias(_create_dict_, "%")
 {
 	Declare(VTYPE_Dict, Flag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
@@ -32,7 +32,7 @@ Gurax_DeclareStatementAlias(_dict_, "%")
 		"    }\n");
 }
 
-Gurax_ImplementStatement(_dict_)
+Gurax_ImplementStatement(_create_dict_)
 {
 	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
 	composer.Add_CreateDict(&exprCaller);						// [Dict]
@@ -351,7 +351,7 @@ void VType_Dict::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Mutable);
 	// Assignment of statement
-	frameOuter.Assign(Gurax_CreateStatement(_dict_));
+	frameOuter.Assign(Gurax_CreateStatement(_create_dict_));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Dict, Append));
 	Assign(Gurax_CreateMethod(Dict, Clear));
