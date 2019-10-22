@@ -165,14 +165,15 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetSymbolSuffix(), IsNumber());
+	const SuffixMgr* pSuffixMgr = IsNumber()?
+		Basement::Inst.LookupSuffixMgr_Number(GetSymbolSuffix()) :
+		Basement::Inst.LookupSuffixMgr_String(GetSymbolSuffix());
 	if (!pSuffixMgr) {
 		Error::Issue(ErrorType::SuffixError, "suffix '%s' can not be handled", GetSymbolSuffix()->GetName());
 		processor.ErrorDone();
 		return;
 	}
-	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Value> pValueResult(pSuffixMgr->Eval(processor, *pValue));
+	RefPtr<Value> pValueResult(pSuffixMgr->Eval(processor, GetString()));
 	if (!discardValueFlag) processor.PushValue(pValueResult.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -190,15 +191,15 @@ PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStr.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStr.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag);
+			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStr.Reference(), _pSymbolSuffix, _numberFlag);
 		} else {
-			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStrSegment.Reference(), _pSymbolSuffix, _numberFlag);
+			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStr.Reference(), _pSymbolSuffix, _numberFlag);
 		}
 	}
 	return _pPUnitCreated;

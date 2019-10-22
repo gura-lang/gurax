@@ -60,6 +60,11 @@ TestCase('Basic test') {
 	${end}''')
 }
 //-----------------------------------------------------------------------------
+TestCase('suffix T') {
+	Tester(`''T)
+	Tester(`'${hoge}'T)
+}
+//-----------------------------------------------------------------------------
 TestCase('marker handling') {
 	x = 'hoge'
 	R'''
@@ -338,7 +343,7 @@ TestCase('branch sequence') {
 }
 //-----------------------------------------------------------------------------
 TestCase('test of scope') {
-	x = '${value}\n'.Template()
+	x = '${value}\n'T
 	try {
 		x.Render(sys.cout)
 	} catch {|e|
@@ -380,7 +385,7 @@ TestCase('Rendering HTML') {
 	  ${Format('<tr><td>%d</td><td>%s</td><td>%d</td></tr>\n',
 	  										1.., people:*name, people:*age)}
 	</table>
-	'''.Template()
+	'''T
 	scope {
 		Person = struct { name:string, age:number }
 		people = [
@@ -460,15 +465,15 @@ TestCase('embed directive') {
 	//--------
 	tmpl1 = R'''
 	This is a rendering result of tmpl1
-	'''.Template()
+	'''T
 	//--------
 	tmpl2 = R'''
 	This is a rendering result of tmpl2
-	'''.Template()
+	'''T
 	//--------
 	tmpl3 = R'''
 	This is a rendering result of tmpl3
-	'''.Template()
+	'''T
 	//--------
 	R'''
 	embed tmpl1
@@ -485,7 +490,7 @@ TestCase('Local variables in embed') {
 	tmpl = R'''
 	${x = 'embed', -}
 	x = ${x}
-	'''.Template()
+	'''T
 	//--------
 	R'''
 	${x = 'body', -}
@@ -505,7 +510,7 @@ TestCase('Inheritance') {
 	base1-body
 	${end}
 	<end-of-body>
-	'''.Template()
+	'''T
 	//------------------------------------
 	// base2 template
 	base2 = R'''
@@ -515,7 +520,7 @@ TestCase('Inheritance') {
 	
 	${=block(`body)}
 	${end}
-	'''.Template()
+	'''T
 	//------------------------------------
 	// base3 template
 	base3 = R'''
@@ -526,7 +531,7 @@ TestCase('Inheritance') {
 	${=block(`body)}
 	base3-body
 	${end}
-	'''.Template()
+	'''T
 	//------------------------------------
 	Println('inherit from base1')
 	R'''
@@ -553,7 +558,7 @@ TestCase('Detecting duplicated symbol') {
 	${=block(`hoge3)}${end}
 	${=block(`hoge4)}${end}
 	${=block(`hoge1)}${end}
-	'''.Template()
+	'''T
 	try {
 		tmpl.Render(sys.cout)
 	} catch {|e|
@@ -570,7 +575,7 @@ TestCase('Embedded string') {
 	variable ${var} reference
 	''')
 	// inheritance
-	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'.Template()
+	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'T
 	Tester(`e'${=extends(base)}')
 	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
 	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
@@ -603,7 +608,7 @@ TestCase('HTML output using inheritance') {
 	        ${end}
 	    </div>
 	</body>
-	'''.Template()
+	'''T
 	R'''
 	${=extends(base)}
 	${=block(`title)}Index${end}
@@ -639,7 +644,7 @@ TestCase('test of inheritance and loop') {
 	${=block(`body)}${end}
 	</body>
 	</html>
-	'''.Template()
+	'''T
 	R'''
 	${=extends(layout)}
 	${=block(`body)}
@@ -650,10 +655,5 @@ TestCase('test of inheritance and loop') {
 	  </ul>
 	${end}
 	'''.RenderTemplate(sys.cout)
-}
-//-----------------------------------------------------------------------------
-TestCase('suffix T') {
-	Tester(`''T)
-	Tester(`'${hoge}'T)
 }
 */

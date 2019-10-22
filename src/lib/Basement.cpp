@@ -175,20 +175,4 @@ void Basement::AppendPathList(const StringList& strs)
 	for (const String& str : strs) AppendPathList(str);
 }
 
-void Basement::AssignSuffixMgr(SuffixMgr* pSuffixMgr, bool numberFlag)
-{
-	if (numberFlag) {
-		GetSuffixMgrMap_Number().Assign(pSuffixMgr);
-	} else {
-		GetSuffixMgrMap_String().Assign(pSuffixMgr);
-	}
-}
-
-const SuffixMgr* Basement::LookupSuffixMgr(const Symbol* pSymbolSuffix, bool numberFlag) const
-{
-	return numberFlag?
-		GetSuffixMgrMap_Number().Lookup(pSymbolSuffix) :
-		GetSuffixMgrMap_String().Lookup(pSymbolSuffix);
-}
-
 }

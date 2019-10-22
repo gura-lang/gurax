@@ -131,6 +131,9 @@ ${end}' -> '    0 is a multiple of two
     9 is a multiple of three
 '
 
+======== suffix T ========
+''T .. (template)
+'${hoge}'T .. (template)
 ======== marker handling ========
 $
 $$

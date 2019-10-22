@@ -3,6 +3,20 @@
 //==============================================================================
 #include "stdafx.h"
 
+//------------------------------------------------------------------------------
+// Macros to implement unary operators
+//------------------------------------------------------------------------------
+#define Gurax_ImplementSuffixMgr(target, symbol) \
+class SuffixMgr_##target##_##symbol : public SuffixMgr { \
+public: \
+	SuffixMgr_##target##_##symbol() : SuffixMgr(Symbol::Add(#symbol)) {} \
+	virtual Value* Eval(Processor& processor, const char* str) const override; \
+}; \
+Value* SuffixMgr_##target##_##symbol::Eval(Processor& processor, const char* str) const
+
+#define Gurax_AssignSuffixMgr(target, symbol) \
+Basement::Inst.AssignSuffixMgr_##target(new SuffixMgr_##target##_##symbol())
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -571,6 +585,18 @@ Gurax_ImplementPropertyGetter(Template, exprForInit)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of suffix manager
+//------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr(String, T)
+{
+	RefPtr<Template> pTmpl(new Template());
+	bool autoIndentFlag = true;
+	bool appendLastEOLFlag = false;
+	if (!pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag)) return Value::nil();
+	return new Value_Template(pTmpl.release());
+}
+
+//------------------------------------------------------------------------------
 // VType_Template
 //------------------------------------------------------------------------------
 VType_Template VTYPE_Template("Template");
@@ -584,7 +610,7 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Template, Parse));
 	Assign(Gurax_CreateMethod(Template, Read));
 	Assign(Gurax_CreateMethod(Template, Render));
-	// assignment of directive methods
+	// Assignment of directive methods
 	Assign(Gurax_CreateMethod(Template, block));
 	Assign(Gurax_CreateMethod(Template, call));
 	Assign(Gurax_CreateMethod(Template, define));
@@ -600,6 +626,8 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Template, expr));
 	Assign(Gurax_CreateProperty(Template, exprForInit));
+	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(String, T);
 }
 
 //------------------------------------------------------------------------------

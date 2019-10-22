@@ -229,19 +229,19 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	RefPtr<StringReferable> _pStrSegment;
+	RefPtr<StringReferable> _pStr;
 	const Symbol* _pSymbolSuffix;
 	bool _numberFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag) :
-		_pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
-	PUnit_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag, Expr* pExpr) :
-		PUnit_Suffixed(pStrSegment, pSymbolSuffix, numberFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_Suffixed(StringReferable* pStr, const Symbol* pSymbolSuffix, bool numberFlag) :
+		_pStr(pStr), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	PUnit_Suffixed(StringReferable* pStr, const Symbol* pSymbolSuffix, bool numberFlag, Expr* pExpr) :
+		PUnit_Suffixed(pStr, pSymbolSuffix, numberFlag) { _ppExprSrc[0] = pExpr; }
 public:
-	const char* GetSegment() const { return _pStrSegment->GetString(); }
-	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
+	const char* GetString() const { return _pStr->GetString(); }
+	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
 	bool IsNumber() const { return _numberFlag; }
 	bool IsString() const { return !_numberFlag; }
@@ -261,12 +261,12 @@ class PUnitFactory_Suffixed : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Suffixed");
 private:
-	RefPtr<StringReferable> _pStrSegment;
+	RefPtr<StringReferable> _pStr;
 	const Symbol* _pSymbolSuffix;
 	bool _numberFlag;
 public:
-	PUnitFactory_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	PUnitFactory_Suffixed(StringReferable* pStr, const Symbol* pSymbolSuffix, bool numberFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pStr(pStr), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Suffixed<1, false>) : sizeof(PUnit_Suffixed<0, false>);
 	}
