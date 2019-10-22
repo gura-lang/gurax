@@ -25,9 +25,10 @@ Gurax_ImplementStatement(_create_list_)
 	size_t nExprs = exprLinkElem.CountSequence();
 	composer.Add_CreateList(nExprs, &exprCaller);				// [List]
 	if (exprCaller.GetExprCdrFirst()) {
+		//**********************
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);	// [List Car]
-		composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr, &exprCaller);
-																// [List Argument]
+		composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr,
+							  true, &exprCaller);				// [List Car Argument]
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			if (!pExpr->IsType<Expr_Block>()) {
 				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
@@ -36,10 +37,9 @@ Gurax_ImplementStatement(_create_list_)
 			}
 			// @{ .. {args*} .. }
 			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
-			for (Expr* pExprElem = pExprEx->GetExprElemFirst();
-				 pExprElem; pExprElem = pExprElem->GetExprNext()) {
-				pExprElem->ComposeOrNil(composer);				// [List arg ...]
-			}
+			Expr::ComposeForArgSlot(composer, pExprEx->GetExprElemFirst());
+			if (Error::IsIssued()) return;
+			composer.Add_Call(&exprCaller);						// [List Car Result]
 		}
 	} else {
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
