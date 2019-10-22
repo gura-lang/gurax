@@ -1670,7 +1670,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Argument
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, bool keepCarFlag>
 class GURAX_DLLDECLARE PUnit_Argument : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1706,12 +1706,13 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Argument");
 private:
 	RefPtr<Attribute> _pAttr;
+	bool _keepCarFlag;
 	RefPtr<Expr_Block> _pExprOfBlock;		// this may be nullptr
 public:
-	PUnitFactory_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pAttr(pAttr), _pExprOfBlock(pExprOfBlock) {}
+	PUnitFactory_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, bool keepCarFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pAttr(pAttr), _keepCarFlag(keepCarFlag), _pExprOfBlock(pExprOfBlock) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_Argument<1, false>) : sizeof(PUnit_Argument<0, false>);
+		return _pExprSrc? sizeof(PUnit_Argument<1, false, false>) : sizeof(PUnit_Argument<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
@@ -2723,7 +2724,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_Break
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag, bool breakPointFlag>
+template<int nExprSrc, bool discardValueFlag, bool branchDestFlag>
 class GURAX_DLLDECLARE PUnit_Break : public PUnit {
 public:
 	// Uses MemoryPool allocator

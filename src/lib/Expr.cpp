@@ -999,8 +999,8 @@ void Expr_Caller::Compose(Composer& composer)
 		}
 	}
 	GetExprCar().ComposeOrNil(composer);									// [Car]
-	composer.Add_Argument(GetAttr().Reference(),
-						  Expr_Block::Reference(GetExprOfBlock()), this);	// [Argument]
+	composer.Add_Argument(GetAttr().Reference(), Expr_Block::Reference(GetExprOfBlock()),
+						  false, this);										// [Argument]
 	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
 	if (Error::IsIssued()) return;
 	if (GetExprOfBlock()) {

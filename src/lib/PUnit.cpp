@@ -1832,11 +1832,13 @@ PUnit* PUnitFactory_Member_MapToIter::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_Argument
-// Stack View: [Car] -> [Argument(Car)] (continue)
-//                   -> []              (discard)
+// Stack View: keepCarFlag = false: [Car] -> [Argument(Car)]     (continue)
+//                                        -> []                  (discard)
+//             keepCarFlag = true:  [Car] -> [Car Argument(Car)] (continue)
+//                                        -> [Car]               (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-PUnit_Argument<nExprSrc, discardValueFlag>::PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock) :
+template<int nExprSrc, bool discardValueFlag, bool keepCarFlag>
+PUnit_Argument<nExprSrc, discardValueFlag, keepCarFlag>::PUnit_Argument(const Attribute& attr, Expr_Block* pExprOfBlock) :
 	_pAttr(new Attribute()), _flags(DeclCallable::Flag::None), _pExprOfBlock(pExprOfBlock)
 {
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
@@ -1847,11 +1849,11 @@ PUnit_Argument<nExprSrc, discardValueFlag>::PUnit_Argument(const Attribute& attr
 	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_Argument<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, bool keepCarFlag>
+void PUnit_Argument<nExprSrc, discardValueFlag, keepCarFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Value> pValueCar(processor.PopValue());
+	RefPtr<Value> pValueCar(keepCarFlag? processor.PeekValue(0).Reference() : processor.PopValue());
 	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallableWithError();
 	if (!pDeclCallable || !pDeclCallable->CheckAttribute(GetAttr())) {
 		processor.ErrorDone();
@@ -1865,8 +1867,8 @@ void PUnit_Argument<nExprSrc, discardValueFlag>::Exec(Processor& processor) cons
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_Argument<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, bool keepCarFlag>
+String PUnit_Argument<nExprSrc, discardValueFlag, keepCarFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	if (_pExprOfBlock) {
@@ -1882,16 +1884,32 @@ String PUnit_Argument<nExprSrc, discardValueFlag>::ToString(const StringStyle& s
 PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Argument<1, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+		if (_keepCarFlag) {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_Argument<1, true, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_Argument<1, false, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_Argument<1, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_Argument<1, true, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_Argument<1, false, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+			}
 		}
 	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Argument<0, true>(*_pAttr, _pExprOfBlock.release());
+		if (_keepCarFlag) {
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_Argument<0, true, true>(*_pAttr, _pExprOfBlock.release());
+			} else {
+				_pPUnitCreated = new PUnit_Argument<0, false, true>(*_pAttr, _pExprOfBlock.release());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_Argument<0, false>(*_pAttr, _pExprOfBlock.release());
+			if (discardValueFlag) {
+				_pPUnitCreated = new PUnit_Argument<0, true, true>(*_pAttr, _pExprOfBlock.release());
+			} else {
+				_pPUnitCreated = new PUnit_Argument<0, false, true>(*_pAttr, _pExprOfBlock.release());
+			}
 		}
 	}
 	return _pPUnitCreated;

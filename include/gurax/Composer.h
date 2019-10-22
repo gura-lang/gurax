@@ -193,8 +193,8 @@ public:
 	void Add_Member_MapToIter(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Member_MapToIter(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
-	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_Argument(pAttr, pExprOfBlock, Expr::Reference(pExprSrc)));
+	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, bool keepCarFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_Argument(pAttr, pExprOfBlock, keepCarFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_BeginArgSlot(const Expr* pExprSrc = nullptr) {
 		const PUnit* pPUnitBranchDest = nullptr;

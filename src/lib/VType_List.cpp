@@ -8,10 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of statement
 //------------------------------------------------------------------------------
-// @(callable) {block}
+// @(`callable?) {block}
 Gurax_DeclareStatementAlias(_create_list_, "@")
 {
 	Declare(VTYPE_Dict, Flag::None);
+	DeclareArg("callable", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -20,6 +21,32 @@ Gurax_DeclareStatementAlias(_create_list_, "@")
 
 Gurax_ImplementStatement(_create_list_)
 {
+	ExprLink& exprLinkElem = exprCaller.GetExprOfBlock()->GetExprLinkElem();
+	size_t nExprs = exprLinkElem.CountSequence();
+	composer.Add_CreateList(nExprs, &exprCaller);				// [List]
+	if (exprCaller.GetExprCdrFirst()) {
+		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);	// [List Car]
+		composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr, &exprCaller);
+																// [List Argument]
+		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+			if (!pExpr->IsType<Expr_Block>()) {
+				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
+								 "block is expected as an element in the initializer");
+				return;
+			}
+			// @{ .. {args*} .. }
+			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
+			for (Expr* pExprElem = pExprEx->GetExprElemFirst();
+				 pExprElem; pExprElem = pExprElem->GetExprNext()) {
+				pExprElem->ComposeOrNil(composer);				// [List arg ...]
+			}
+		}
+	} else {
+		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+			pExpr->ComposeOrNil(composer);						// [List Elem]
+			composer.Add_ListElem(0, false, pExpr);				// [List]
+		}
+	}
 #if 0
 	Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
 	composer.Add_CreateDict(&exprCaller);						// [Dict]
