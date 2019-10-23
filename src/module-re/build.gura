@@ -1,9 +1,14 @@
 #!/usr/bin/env gurax
 import(util.modbuild)
 
-builder = util.modbuild.Builder('re', [
+builder = util.modbuild.Builder('re')
+builder.pathNamesSrc = [
 	'module-re.cpp', 'Common.cpp', 'Group.cpp', 'Iterators.cpp', 'Match.cpp', 'Pattern.cpp',
-	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'])
+	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'
+]
+builder.pathNamesScript = [
+	'script/sed.gura', 'script/sed.doc.gura', 'script/tokenizer.gura', 'script/tokenizer.doc.gura'
+]
 /*
 if (sys.platform == `mswin) {
 	baseDir = path.join(builder.guestDir, 'onig-5.9.5')
@@ -24,13 +29,7 @@ if (sys.platform == `mswin) {
 	builder.cflags.append('-DONIG_EXTERN=extern')
 }
 */
-/*
-builder.build('re', ['module-re.cpp'], path.Join('script', [
-	'sed.gura', 'sed.doc.gura', 'tokenizer.gura', 'tokenizer.doc.gura']))
-*/
-
 builder.dirNamesInc.Append('guest/include/onigmo')
 builder.dirNamesLib.Append('guest/lib')
 builder.libs.Append('onigmo')
-//builder.cflags.Append('-DONIG_EXTERN=extern')
 builder.Run()

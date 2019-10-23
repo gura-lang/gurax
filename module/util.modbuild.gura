@@ -8,28 +8,26 @@ import(argopt)
 // Builder
 //------------------------------------------------------------------------------
 Builder = class {
-	targetName:String
-	pathNameGurd:String
-	pathNamesSrc[]:String
-	pathNamesObj[]:String
+	targetName = ''
+	pathNameGurd = ''
+	pathNamesSrc = []
+	pathNamesScript = []
+	pathNamesObj = []
 	dirNameOut = 'gnuc'
 	dirNamesInc = [sys.dirInclude]
 	dirNamesLib = [sys.dirLib]
 	cflags = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC']
 	ldflags = ['-shared']
 	libs = ['stdc++', 'guraxcore']
-	__init__(targetName:String, pathNamesSrc[]:String) = {
+	__init__(targetName:String) = {
 		this.targetName = targetName
-		this.pathNamesSrc = pathNamesSrc
-		this.pathNameGurd = path.Join(this.dirNameOut, targetName + '.gurd')
-		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
 	}
 	ShouldProcess(pathNameTgt:String, pathNamesDep+:String) = {
 		!fs.Exists(pathNameTgt) || \
 			(fs.Stat(pathNameTgt).mtime < fs.Stat(pathNamesDep):*mtime).Or()
 	}
 	Exec(pathName:String, args*:String) = {
-		Printf('%s %s\n', pathName, args.Join(' '))
+		//Printf('%s %s\n', pathName, args.Join(' '))
 		rtn = (os.Exec(pathName, args*) == 0)
 		rtn
 	}
@@ -67,6 +65,8 @@ Builder = class {
 		Printf('-- installed\n')
 	}
 	Run() = {
+		this.pathNameGurd = path.Join(this.dirNameOut, this.targetName + '.gurd')
+		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
 		[argv, opt] = argopt.Parser {|p|
 			p.Parse(sys.argv)
