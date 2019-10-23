@@ -1,0 +1,153 @@
+#!/usr/bin/env gurax
+
+//------------------------------------------------------------------------------
+// Template of build.gura
+//------------------------------------------------------------------------------
+tmpl_build = R'''
+#!/usr/bin/env gura
+import(modbuild)
+
+builder = modbuild.Builder()
+builder.build('${dotName}', ['module-${ubarName}.cpp'])
+'''T
+
+//------------------------------------------------------------------------------
+// Template of test-NAME.gura
+//------------------------------------------------------------------------------
+tmpl_test = R'''
+#!/usr/bin/env gura
+import(helper.test) {*}
+import(${dotName})
+
+testcase {
+	println(${dotName}.test(3, 4))
+}
+'''T
+
+//------------------------------------------------------------------------------
+// Template of stdafx.h
+//------------------------------------------------------------------------------
+tmpl_stdafx = R'''
+#ifndef ${incOnceMacroNameAfx}
+#define ${incOnceMacroNameAfx}
+#include "${fileHdr}"
+#endif
+'''T
+
+//------------------------------------------------------------------------------
+// Template of module-NAME.h
+//------------------------------------------------------------------------------
+tmpl_header = R'''
+//=============================================================================
+// Gura module: ${dotName}
+//=============================================================================
+#ifndef ${incOnceMacroName}
+#define ${incOnceMacroName}
+#include <gura.h>
+
+Gura_BeginModuleHeader(${ubarName})
+Gura_EndModuleHeader(${ubarName})
+
+#endif
+'''T
+
+//------------------------------------------------------------------------------
+// Template of module-NAME.cpp
+//------------------------------------------------------------------------------
+tmpl_source = R'''
+//==============================================================================
+// Gura module: ${dotName}
+//==============================================================================
+#include "${fileAfx}"
+
+Gura_BeginModuleBody(${ubarName})
+
+//------------------------------------------------------------------------------
+// Implementation of function
+//------------------------------------------------------------------------------
+// ${dotName}.test(num1:number, num2:number)
+Gura_DeclareFunction(test)
+{
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	DeclareArg(env, "num1", VTYPE_number);
+	DeclareArg(env, "num2", VTYPE_number);
+	AddHelp(
+		Gura_Symbol(en),
+		"This function adds two numbers and returns the result.\n");
+}
+
+Gura_ImplementFunction(test)
+{
+	return Value(arg.GetNumber(0) + arg.GetNumber(1));
+}
+
+//------------------------------------------------------------------------------
+// Module Entry
+//------------------------------------------------------------------------------
+Gura_ModuleValidate()
+{
+	return Version::CheckCoreVersion(GURA_VERSION, nullptr);
+}
+
+Gura_ModuleEntry()
+{
+	// Assignment of function
+	Gura_AssignFunction(test);
+	return true;
+}
+
+Gura_ModuleTerminate()
+{
+}
+
+Gura_EndModuleBody(${ubarName}, ${baseName})
+
+Gura_RegisterModule(${ubarName})
+'''T
+
+strHelp = R'''
+Generates a set of files to build a Gura binary module.
+usage: genmod.gura module-name
+'''
+
+//------------------------------------------------------------------------------
+// main
+//------------------------------------------------------------------------------
+main() = {
+	if (sys.argv.len < 2) {
+		sys.cerr.Print(strHelp)
+		sys.Exit(1)
+	}
+	fields = path.FileName(sys.argv[1]).Split('.'):list
+	dotName = fields.Join('.')
+	ubarName = fields.Join('_')
+	baseName = fields[-1]
+	fileName_build = 'build.gura'
+	fileName_test = 'test-' + ubarName + '.gura'
+	fileName_stdafx = 'stdafx.h'
+	fileName_header = 'module-' + ubarName + '.h'
+	fileName_source = 'module-' + ubarName + '.cpp'
+	incOnceMacroName = 'GURAX_MODULE_' + ubarName.Upper()  + '_H'
+	if (fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_source]).Or()) {
+		sys.cerr.Println('file already exists')
+		sys.Exit(1)
+	}
+	//tmpl_build.Render(
+	/*
+	tmpl_fileBuild.render(open(fileBuild, 'w').addcr(false))
+	tmpl_fileTest.render(open(fileTest, 'w').addcr(false))
+	tmpl_fileAfx.render(open(fileAfx, 'w').addcr(false))
+	tmpl_fileHdr.render(open(fileHdr, 'w').addcr(false))
+	tmpl_fileSrc.render(open(fileSrc, 'w').addcr(false))
+	fs.chmod('a+x', fileBuild)
+	fs.chmod('a+x', fileTest)
+	R'''
+	Following files were generated.
+	- Build Script: ${fileBuild}
+	- Test Script:  ${fileTest}
+	- Source Files: ${fileAfx}, ${fileHdr}, ${fileSrc}
+	'''.template().render(sys.stdout)
+	*/
+}
+
+main()

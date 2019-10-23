@@ -8,10 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Stream(pathName:string)
+// Stream(pathName:String, mode?:String) {block?}
 Gurax_DeclareFunction(Stream)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mode", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -23,6 +25,7 @@ Gurax_ImplementFunction(Stream)
 	// Arguments
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
+	const char* mode = args.IsValid()? args.PickString() : "";
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	Stream::Flags flags = Stream::Flag::None;

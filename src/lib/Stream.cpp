@@ -97,6 +97,35 @@ bool Stream::ReadLines(StringList& strList, bool includeEOLFlag)
 	return !Error::IsIssued();
 }
 
+Stream::OpenFlags Stream::CreateOpenFlags(const char* mode)
+{
+	OpenFlags openFlags = OpenFlag::None;
+#if 0
+	const char* p = mode;
+	if (*p == 'r') {
+		openFlags |= OpenFlag::Read;
+	} else if (*p == 'w') {
+		openFlags |= OpenFlag::Write;
+	} else if (*p == 'a') {
+		openFlags |= OpenFlag::Write | OpenFLag::Append;
+	} else {
+		Error::Issue(ErrorType::SyntaxError, "invalid open mode");
+		return OpenFlag::None;
+	}
+	p++;
+	for ( ; *p; p++) {
+		char ch = *p;
+		if (ch == '+') {
+			openFlags |= OpenFlag::Read | OpenFlag::Write;
+		} else {
+			Error::Issue(ErrorType::SyntaxError, "invalid open mode");
+			return OpenFlag::None;
+		}
+	}
+#endif
+	return openFlags;
+}
+
 void Stream::Dump(const void* buff, size_t bytes, const StringStyle& stringStyle)
 {
 	const int nCols = 16;

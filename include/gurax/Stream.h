@@ -91,6 +91,7 @@ public:
 	Stream& PrintFmt(const char* format, const ValueList& valueList);
 	bool ReadLine(String& str, bool includeEOLFlag);
 	bool ReadLines(StringList& strList, bool includeEOLFlag);
+	static OpenFlags CreateOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
