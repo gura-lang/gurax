@@ -48,7 +48,6 @@ public:
 	};
 private:
 	bool _replFlag;
-	bool _listElemFlag;
 	PUnit* _pPUnitFirst;
 	PUnit* _pPUnitLast;
 	PUnitStack _punitStack;
@@ -66,8 +65,6 @@ public:
 	// Destructor
 	virtual ~Composer() = default;
 public:
-	void SetListElemFlag(bool listElemFlag) { _listElemFlag = listElemFlag; }
-	bool GetListElemFlag() const { return _listElemFlag; }
 	PUnitStack& GetPUnitStack() { return _punitStack; }
 	const PUnit* GetPUnitFirst() const { return _pPUnitFirst; }
 	PUnit* PeekPUnitCont() const;

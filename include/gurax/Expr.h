@@ -177,6 +177,7 @@ public:
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeInClass(Composer& composer, bool publicFlag);
+	virtual void ComposeInList(Composer& composer)  { ComposeOrNil(composer); }
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator);
@@ -713,6 +714,7 @@ public:
 	}
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeInList(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting

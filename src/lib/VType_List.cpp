@@ -38,18 +38,16 @@ Gurax_ImplementStatement(_create_list_)
 				composer.Add_ListElem(1, false, &exprCaller);	// [List Car]
 			} else {
 				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "block is expected as an element in the initializer");
+								 "blocks ares expected as elements in the initializer");
 				return;
 			}
 		}
 		composer.Add_DiscardValue(&exprCaller);					// [List]
 	} else {
-		composer.SetListElemFlag(true);
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			pExpr->ComposeOrNil(composer);					// [List Elem]
-			composer.Add_ListElem(0, false, pExpr);			// [List]
+			pExpr->ComposeInList(composer);						// [List Elem]
+			composer.Add_ListElem(0, false, pExpr);				// [List]
 		}
-		composer.SetListElemFlag(false);
 	}
 }
 

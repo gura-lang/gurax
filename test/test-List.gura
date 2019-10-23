@@ -36,6 +36,27 @@ TestCase('Property') {
 
 TestCase('Initializer') {
 	Tester(`[3, 1, 4, 1, 5, 9, 2, 6])
+	Tester(`[{1, 2}, {3, 4, {5, 6}}, {7, 8}])
+	Tester(`@{{1, 2}, {3, 4, {5, 6}}, {7, 8}})
+	Person = struct {
+		name:String, email:String, age:Number
+		ToString() = Format('%s, %s, %d', this.name, this.email, this.age)
+	}
+	people = @(Person) {
+		{ 'hayasaka hiroko',	'hayasaka_hiroko@example.com',	33	},
+		{ 'hannda takashi',		'hannda_takashi@example.com',	75	},
+		{ 'honma masahiko',		'honma_masahiko@example.com',	46	},
+		{ 'kawahata nana',		'kawahata_nana@example.com',	47	},
+	}
+	Println(people::ToString()):nomap
+	f(a, b, c, d) = a + b + c + d
+	x = @(f) {
+		{1, 2, 3, 4},
+		{3, 1, 4, 1},
+		{5, 9, 2, 6},
+		{5, 3, 5, 8},
+	}
+	Println(x):nomap
 }
 
 TestCase('Get') {

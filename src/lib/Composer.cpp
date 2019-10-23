@@ -8,8 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Composer
 //------------------------------------------------------------------------------
-Composer::Composer(bool replFlag) :
-	_replFlag(replFlag), _listElemFlag(false), _pPUnitFirst(nullptr), _pPUnitLast(nullptr)
+Composer::Composer(bool replFlag) : _replFlag(replFlag), _pPUnitFirst(nullptr), _pPUnitLast(nullptr)
 {
 }
 
