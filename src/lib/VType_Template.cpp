@@ -426,11 +426,11 @@ Gurax_ImplementMethod(Template, super)
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
 	Template* pTmplSuper = tmpl.GetTemplateSuper();
-	if (!pTmplSuper) return Value::nil();
+	if (!pTmplSuper) pTmplSuper = &tmpl;
 	const Value* pValue = pTmplSuper->LookupValue(pSymbol);
 	if (!pValue || !pValue->IsType(VTYPE_Expr)) return Value::nil();
 	const Expr& expr = Value_Expr::GetExpr(*pValue);
-	processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), new Value_Template(pTmplSuper->Reference()));
+	processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), valueThis.Reference());
 	processor.EvalExpr(expr);
 	processor.PopFrame();
 	return Value::nil();

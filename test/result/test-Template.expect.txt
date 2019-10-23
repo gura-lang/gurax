@@ -428,7 +428,7 @@ expected error occurs: symbol 'not_defined' is not found
 '${"hello"}'.RenderTemplate() .. hello
 '${["first", "second", "third"]}'.RenderTemplate() .. firstsecondthird
 expected error occurs: template script must return nil, string or number
-======== branch sequence ========
+======== Loop and branch sequence ========
 10
 10
 hello world
@@ -456,7 +456,7 @@ hoge
     hoge 9
     hoge 10
 
-======== test of scope ========
+======== Scope ========
 expected error occurs: symbol 'value' is not found
 hoge
 hoge-inside
@@ -485,7 +485,7 @@ hoge-inside-inside
   <tr><td>2</td><td>Honda</td><td>21</td></tr>
   <tr><td>3</td><td>Tanaka</td><td>24</td></tr>
 </table>
-======== test of comment ========
+======== Comment ========
 1st line
 2nd line
 3rd line
@@ -555,3 +555,38 @@ e'${=extends(base)}${=block(`body)}replaced${end}' .. [original] replaced
 e'${=extends(base)}${=block(`head)}replaced${end}${=block(`body)}replaced${end}' .. [replaced] replaced
 f(3, 4) .. 3 + 4 = 7
 f(10, 2) .. 10 + 2 = 12
+======== Inheritance and loop ========
+<html>
+<body>
+  <ul>
+    <li><a href="iwai_michiko@example.com">Iwai Michiko</a></li>
+    <li><a href="kasai_satoshi@example.com">Kasai Satoshi</a></li>
+    <li><a href="shima_masashi@example.com">Shima Masashi</a></li>
+    <li><a href="suenaga_rena@example.com">Suenaga Rena</a></li>
+    <li><a href="yokokawa_fumiyo@example.com">Yokokawa Fumiyo</a></li>
+    <li><a href="yamanaka_mayuko@example.com">Yamanaka Mayuko</a></li>
+  </ul>
+</body>
+</html>
+======== HTML output using inheritance ========
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>Index - My Webpage</title>
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+</head>
+<body>
+    <div id="content">
+    <h1>Index</h1>
+    <p class="important">
+      Welcome on my awesome homepage.
+    </p>
+    </div>
+    <div id="footer">
+        &copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
+    </div>
+</body>

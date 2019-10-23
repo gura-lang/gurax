@@ -314,7 +314,7 @@ TestCase('nil, number, string, and list') {
 	}
 }
 //-----------------------------------------------------------------------------
-TestCase('branch sequence') {
+TestCase('Loop and branch sequence') {
 	R'''
 	${x = 10}
 	${x}
@@ -342,7 +342,7 @@ TestCase('branch sequence') {
 	'''.RenderTemplate(sys.cout)
 }
 //-----------------------------------------------------------------------------
-TestCase('test of scope') {
+TestCase('Scope') {
 	x = '${value}\n'T
 	try {
 		x.Render(sys.cout)
@@ -394,7 +394,7 @@ TestCase('Rendering HTML') {
 	}
 }
 //-----------------------------------------------------------------------------
-TestCase('test of comment') {
+TestCase('Comment') {
 	tmpl = R'''
 	1st line
 	2nd line
@@ -498,6 +498,7 @@ TestCase('Local variables in embed') {
 	x = ${x}
 	'''.RenderTemplate(sys.cout)
 }
+//-----------------------------------------------------------------------------
 TestCase('Inheritance') {
 	//------------------------------------
 	// base1 template
@@ -582,7 +583,36 @@ TestCase('Embedded string') {
 	Tester(`f(3, 4))
 	Tester(`f(10, 2))
 }
-/*
+//-----------------------------------------------------------------------------
+TestCase('Inheritance and loop') {
+	// this sample originated from an example in http://jinja.pocoo.org/.
+	Users = struct {username:String, url:String}
+	users = @(Users) {
+		{ 'Iwai Michiko',		'iwai_michiko@example.com'		},
+		{ 'Kasai Satoshi',		'kasai_satoshi@example.com'		},
+		{ 'Shima Masashi',		'shima_masashi@example.com'		},
+		{ 'Suenaga Rena',		'suenaga_rena@example.com'		},
+		{ 'Yokokawa Fumiyo',	'yokokawa_fumiyo@example.com'	},
+		{ 'Yamanaka Mayuko',	'yamanaka_mayuko@example.com'	},
+	}
+	layout = R'''
+	<html>
+	<body>
+	${=block(`body)}${end}
+	</body>
+	</html>
+	'''T
+	R'''
+	${=extends(layout)}
+	${=block(`body)}
+	  <ul>
+	  ${for (user in users)}
+	    <li><a href="${user.url}">${user.username}</a></li>
+	  ${end}
+	  </ul>
+	${end}
+	'''.RenderTemplate(sys.cout)
+}
 //-----------------------------------------------------------------------------
 TestCase('HTML output using inheritance') {
 	// this sample originated from an example in http://jinja.pocoo.org/.
@@ -593,7 +623,7 @@ TestCase('HTML output using inheritance') {
 	<head>
 	    ${=block(`head)}
 	    <link rel="stylesheet" href="style.css" />
-	    <title>${=block(`title)}${end} - My Webpage</title>
+	    <title>${=block(`title)}AAAA${end} - My Webpage</title>
 	    ${end}
 	</head>
 	<body>
@@ -624,34 +654,3 @@ TestCase('HTML output using inheritance') {
 	${end}
 	'''.RenderTemplate(sys.cout)
 }
-//-----------------------------------------------------------------------------
-TestCase('test of inheritance and loop') {
-	// this sample originated from an example in http://jinja.pocoo.org/.
-	Users = struct(username:string, url:string)
-	users = @(Users) {
-		{ 'Iwai Michiko',		'iwai_michiko@example.com'		},
-		{ 'Kasai Satoshi',		'kasai_satoshi@example.com'		},
-		{ 'Shima Masashi',		'shima_masashi@example.com'		},
-		{ 'Suenaga Rena',		'suenaga_rena@example.com'		},
-		{ 'Yokokawa Fumiyo',	'yokokawa_fumiyo@example.com'	},
-		{ 'Yamanaka Mayuko',	'yamanaka_mayuko@example.com'	},
-	}
-	layout = R'''
-	<html>
-	<body>
-	${=block(`body)}${end}
-	</body>
-	</html>
-	'''T
-	R'''
-	${=extends(layout)}
-	${=block(`body)}
-	  <ul>
-	  ${for (user in users)}
-	    <li><a href="${user.url}">${user.username}</a></li>
-	  ${end}
-	  </ul>
-	${end}
-	'''.RenderTemplate(sys.cout)
-}
-*/
