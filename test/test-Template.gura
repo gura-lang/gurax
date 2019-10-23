@@ -198,17 +198,17 @@ TestCase() {
 */
 //-----------------------------------------------------------------------------
 TestCase('Template script that handles template internally') {
-tmpl = R'''
-${if (company) {R"""
-Company: ${company}
-""".RenderTemplate()} else {R"""
-(not defined)
-"""}}
-[Products]
-${R"""
-- %s
-""".Format(products)}
-'''
+	tmpl = R'''
+	${if (company) {R"""
+	Company: ${company}
+	""".RenderTemplate()} else {R"""
+	(not defined)
+	"""}}
+	[Products]
+	${R"""
+	- %s
+	""".Format(products)}
+	'''
 	scope {
 		company = 'hoge'
 		products = ['apple', 'grape', 'orange']
@@ -388,9 +388,7 @@ TestCase('Rendering HTML') {
 	'''T
 	scope {
 		Person = struct { name:string, age:number }
-		people = [
-			Person('Yamada', 23), Person('Honda', 21), Person('Tanaka', 24)
-		]
+		people = @(Person) {{'Yamada', 23}, {'Honda', 21}, {'Tanaka', 24}}
 		title = 'Member List'
 		tmpl.Render(sys.cout)
 	}
