@@ -8,9 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
-Directory* Directory::Open(const char* pathName)
+Directory* Directory::Open(const char* pathName, Type typeWouldBe)
 {
-	return PathMgr::OpenDirectory(pathName);
+	return PathMgr::OpenDirectory(pathName, typeWouldBe);
 }
 
 String Directory::MakePathName(bool addSepFlag, const char* pathNameTrail) const

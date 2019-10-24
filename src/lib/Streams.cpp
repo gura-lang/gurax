@@ -12,11 +12,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Stream_Binary
 //------------------------------------------------------------------------------
-Stream_Binary::Stream_Binary(BinaryReferable* pBuff, size_t offset) : _pBuff(pBuff), _offset(offset)
+Stream_Binary::Stream_Binary(BinaryReferable* pBuff, size_t offset) :
+	Stream(Flag::Readable | Flag::Writable), _pBuff(pBuff), _offset(offset)
 {
 }
 
-Stream_Binary::Stream_Binary() : _pBuff(new BinaryReferable()), _offset(0)
+Stream_Binary::Stream_Binary() : Stream_Binary(new BinaryReferable(), 0)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	buffTgt.reserve(1024);

@@ -36,7 +36,7 @@ public:
 protected:
 	virtual ~Directory() = default;
 public:
-	static Directory* Open(const char* pathName);
+	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }

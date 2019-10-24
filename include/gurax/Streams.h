@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class Stream_Dumb : public Stream {
 public:
-	Stream_Dumb() {}
+	Stream_Dumb() : Stream(Flag::Readable | Flag::Writable) {}
 	virtual bool IsDumb() const override { return true; }
 	virtual const char* GetName() const override { return "dumb"; };
 	virtual const char* GetIdentifier() const override { return "dumb"; }
@@ -31,7 +31,7 @@ private:
 	FILE* _fp;
 	String _name;
 public:
-	Stream_Console(FILE* fp, String name) : _fp(fp), _name(name) {}
+	Stream_Console(Flags flags, FILE* fp, String name) : Stream(flags),  _fp(fp), _name(name) {}
 	virtual const char* GetName() const override { return _name.c_str(); };
 	virtual const char* GetIdentifier() const override { return _name.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }

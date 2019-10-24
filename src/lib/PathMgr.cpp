@@ -19,11 +19,11 @@ PathMgr* PathMgr::FindResponsible(const char* pathName)
 	return pPathMgr;
 }
 
-Directory* PathMgr::OpenDirectory(const char* pathName)
+Directory* PathMgr::OpenDirectory(const char* pathName, Directory::Type typeWouldBe)
 {
 	PathMgr* pPathMgr = PathMgr::FindResponsible(pathName);
 	if (!pPathMgr) return nullptr;
-	return pPathMgr->OpenDirectory(nullptr, &pathName);
+	return pPathMgr->OpenDirectory(nullptr, &pathName, typeWouldBe);
 }
 
 PathMgr::Existence PathMgr::CheckExistence(const char* pathName)

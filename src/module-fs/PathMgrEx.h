@@ -15,7 +15,7 @@ class PathMgrEx : public PathMgr {
 public:
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) override;
 protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName) override;
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) override;
 	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char* pathName) override;
 };
 
@@ -48,7 +48,7 @@ private:
 	FILE* _fp;
 	String _pathName;
 public:
-	StreamEx(FILE* fp, String pathName) : _fp(fp), _pathName(pathName) {}
+	StreamEx(Flags flags, FILE* fp, String pathName) : Stream(flags), _fp(fp), _pathName(pathName) {}
 	virtual ~StreamEx() { ::fclose(_fp); }
 	virtual const char* GetName() const override { return _pathName.c_str(); };
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }

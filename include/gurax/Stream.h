@@ -28,7 +28,7 @@ public:
 		virtual bool PutChar(char ch) override { return _stream.PutChar(ch); }
 	};
 	enum class SeekMode { Set, Cur, End };
-	enum class ErrorType { None, Codec };
+	//enum class ErrorType { None, Codec };
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None			= 0;
@@ -44,28 +44,18 @@ public:
 		static const Flags Write		= (1 << 1);
 		static const Flags Append		= (1 << 2);
 	};
-	struct Info {
-	public:
-		//DateTime atime;
-		//DateTime mtime;
-		//DateTime ctime;
-		Int32 uid;
-		Int32 gid;
-		Flags flags;
-		Flags flagsMask;
-	public:
-		inline Info() : uid(0), gid(0), flags(Flag::None), flagsMask(Flag::None) {}
-	};
 public:
 	static RefPtr<Stream> Dumb;
 	static RefPtr<Stream> CIn;
 	static RefPtr<Stream> COut;
 	static RefPtr<Stream> CErr;
+protected:
+	Flags _flags;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	Stream() {}
+	Stream(Flags flags) : _flags(flags) {}
 	// Copy constructor/operator
 	Stream(const Stream& src) = delete;
 	Stream& operator=(const Stream& src) = delete;
@@ -77,6 +67,7 @@ protected:
 	virtual ~Stream() = default;
 public:
 	static Stream* Open(const char* pathName, OpenFlags openFlags);
+	Flags GetFlags() const { return _flags; }
 	Stream& Print(const char* str);
 	Stream& Print(StringPicker&& strPicker);
 	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }
@@ -91,7 +82,7 @@ public:
 	Stream& PrintFmt(const char* format, const ValueList& valueList);
 	bool ReadLine(String& str, bool includeEOLFlag);
 	bool ReadLines(StringList& strList, bool includeEOLFlag);
-	static OpenFlags CreateOpenFlags(const char* mode);
+	static OpenFlags ModeToOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
@@ -106,7 +97,7 @@ public:
 	bool IsIdentical(const Stream& stream) const { return this == &stream; }
 	bool IsEqualTo(const Stream& stream) const { return IsIdentical(stream); }
 	bool IsLessThan(const Stream& stream) const { return this < &stream; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(stream)"; }
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 }

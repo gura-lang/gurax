@@ -16,16 +16,24 @@ RefPtr<Stream> Stream::CErr;
 void Stream::Bootup()
 {
 	Dumb.reset(new Stream_Dumb());
-	CIn.reset(new Stream_Console(stdin, "CIn"));
-	COut.reset(new Stream_Console(stdout, "COut"));
-	CErr.reset(new Stream_Console(stderr, "CErr"));
+	CIn.reset(new Stream_Console(Stream::Flag::Readable, stdin, "CIn"));
+	COut.reset(new Stream_Console(Stream::Flag::Writable, stdout, "COut"));
+	CErr.reset(new Stream_Console(Stream::Flag::Writable, stderr, "CErr"));
 }
 
-Stream* Stream::Open(const char* pathName, Flags flags)
+Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 {
-	RefPtr<Directory> pDirectory(Directory::Open(pathName));
+	if (*pathName == '>') {
+		pathName++;
+		openFlags = (openFlags & ~OpenFlag::Read) | OpenFlag::Write;
+		if (*pathName == '>') {
+			pathName++;
+			openFlags |= OpenFlag::Append;
+		}
+	}
+	RefPtr<Directory> pDirectory(Directory::Open(pathName, Directory::Type::Item));
 	if (!pDirectory) return nullptr;
-	return pDirectory->OpenStream(flags);
+	return pDirectory->OpenStream(openFlags);
 }
 
 Stream& Stream::Print(const char* str)
@@ -97,32 +105,31 @@ bool Stream::ReadLines(StringList& strList, bool includeEOLFlag)
 	return !Error::IsIssued();
 }
 
-Stream::OpenFlags Stream::CreateOpenFlags(const char* mode)
+Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
 {
-	OpenFlags openFlags = OpenFlag::None;
-#if 0
 	const char* p = mode;
-	if (*p == 'r') {
-		openFlags |= OpenFlag::Read;
-	} else if (*p == 'w') {
-		openFlags |= OpenFlag::Write;
-	} else if (*p == 'a') {
-		openFlags |= OpenFlag::Write | OpenFLag::Append;
-	} else {
-		Error::Issue(ErrorType::SyntaxError, "invalid open mode");
+	char chFirst = *p++;
+	OpenFlags openFlags =
+		(chFirst == 'r')? OpenFlag::Read :
+		(chFirst == 'w')? OpenFlag::Write :
+		(chFirst == 'a')? OpenFlag::Append : OpenFlag::None;
+	if (openFlags == OpenFlag::None) {
+		Error::Issue(ErrorType::ValueError, "invalid open mode");
 		return OpenFlag::None;
 	}
-	p++;
-	for ( ; *p; p++) {
-		char ch = *p;
-		if (ch == '+') {
-			openFlags |= OpenFlag::Read | OpenFlag::Write;
-		} else {
-			Error::Issue(ErrorType::SyntaxError, "invalid open mode");
-			return OpenFlag::None;
-		}
+	char chSecond = *p++;
+	if (chSecond == 'b') chSecond = *p++;
+	if (chSecond == '\0') {
+		// nothing to do
+	} else if (chSecond == '+') {
+		openFlags =
+			(chFirst == 'r')? (OpenFlag::Read | OpenFlag::Write) :
+			(chFirst == 'w')? (OpenFlag::Write | OpenFlag::Append) :
+			(chFirst == 'a')? (OpenFlag::Append | OpenFlag::Read) : OpenFlag::None;
+	} else {
+		Error::Issue(ErrorType::ValueError, "invalid open mode");
+		return OpenFlag::None;
 	}
-#endif
 	return openFlags;
 }
 
@@ -156,6 +163,15 @@ void Stream::Dump(const void* buff, size_t bytes, const StringStyle& stringStyle
 		strLine += strASCII;
 		Println(strLine.c_str());
 	}
+}
+
+String Stream::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += GetName();
+	if (GetFlags() & Flag::Readable) str += ":r";
+	if (GetFlags() & Flag::Writable) str += ":w";
+	return str;
 }
 
 }

@@ -63,10 +63,7 @@ Stat* Stat::Create(const char* pathName)
 {
 	struct stat stat;
 	String pathNameN = OAL::ToNativeString(PathName(pathName).MakeAbsName().c_str());
-	if (::stat(pathNameN.c_str(), &stat) != 0) {
-		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName);
-		return nullptr;
-	}
+	if (::stat(pathNameN.c_str(), &stat) != 0) return nullptr;
 	return new Stat(pathName, stat);
 }
 

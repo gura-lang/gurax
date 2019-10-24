@@ -25,11 +25,11 @@ Gurax_ImplementFunction(Stream)
 	// Arguments
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
-	const char* mode = args.IsValid()? args.PickString() : "";
+	Stream::OpenFlags openFlags = args.IsValid()?
+		Stream::ModeToOpenFlags(args.PickString()) : Stream::OpenFlag::None;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	Stream::Flags flags = Stream::Flag::None;
-	RefPtr<Stream> pStream(Stream::Open(pathName, flags));
+	RefPtr<Stream> pStream(Stream::Open(pathName, openFlags));
 	if (!pStream) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Stream(pStream.release()));
 }
@@ -196,8 +196,9 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* pathName = Value_String::GetString(value);
-		Stream::Flags flags = Stream::Flag::None;
-		RefPtr<Stream> pStream(Stream::Open(pathName, flags));
+		Stream::OpenFlags openFlags = (flags & DeclArg::Flag::StreamW)?
+			Stream::OpenFlag::Write : Stream::OpenFlag::None;
+		RefPtr<Stream> pStream(Stream::Open(pathName, openFlags));
 		if (!pStream) return nullptr;
 		return new Value_Stream(pStream.release());
 	} else if (value.IsType(VTYPE_Binary)) {
@@ -218,7 +219,7 @@ String Value_Stream::ToStringDigest(const StringStyle& ss) const
 	String str;
 	_ToStringDigest(str, ss);
 	str += ":";
-	str += GetStream().GetName();
+	str += GetStream().ToString(ss);
 	str += ">";
 	return str;
 }

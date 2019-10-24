@@ -13,12 +13,17 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 	return pDirectoryParent == nullptr;
 }
 
-Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName)
+Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
+	Directory::Type type = typeWouldBe;
 	String pathName = PathName(*pPathName).MakeAbsName();
 	RefPtr<Stat> pStat(Stat::Create(pathName.c_str()));
-	if (!pStat) return nullptr;
-	Directory::Type type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
+	if (pStat) {
+		type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
+	} else if (type == Directory::Type::None) {
+		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
+		return nullptr;
+	}
 	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStat.release());
 }
 
@@ -102,7 +107,9 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName.c_str());
 		return nullptr;
 	}
-	return new StreamEx(fp, pathName);
+	Stream::Flags flags = Stream::Flag::Readable;
+	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) flags |= Stream::Flag::Writable;
+	return new StreamEx(flags, fp, pathName);
 }
 
 Value* DirectoryEx::DoGetStatValue()

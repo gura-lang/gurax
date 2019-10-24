@@ -29,19 +29,18 @@ protected:
 	virtual ~PathMgr() = default;
 public:
 	static PathMgr* FindResponsible(const char* pathName);
-	static Directory* OpenDirectory(const char* pathName);
+	static Directory* OpenDirectory(const char* pathName, Directory::Type typeWouldBe = Directory::Type::None);
 	static Existence CheckExistence(const char* pathName);
 public:
-	Directory* OpenDirectory(
-		Directory* pDirectoryParent, const char** pPathName) {
-		return DoOpenDirectory(pDirectoryParent, pPathName);
+	Directory* OpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) {
+		return DoOpenDirectory(pDirectoryParent, pPathName, typeWouldBe);
 	}
 	Existence CheckExistence(Directory* pDirectoryParent, const char* pathName) {
 		return DoCheckExistence(pDirectoryParent, pathName);
 	}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
 protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName) = 0;
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) = 0;
 	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char* pathName) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
