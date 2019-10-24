@@ -35,6 +35,7 @@ CodecFactory* CodecFactory::Lookup(const char* encoding)
 // Codec
 //-----------------------------------------------------------------------------
 CodecFactory* Codec::_pCodecFactory_Dumb = nullptr;
+RefPtr<Codec> Codec::Dumb;
 
 Codec::Codec(CodecFactory* pCodecFactory, Decoder* pDecoder, Encoder* pEncoder) :
 	_pCodecFactory(pCodecFactory), _pDecoder(pDecoder), _pEncoder(pEncoder)
@@ -46,7 +47,7 @@ Codec* Codec::Duplicate() const
 	return _pCodecFactory->CreateCodec(_pDecoder->GetDelcrFlag(), _pEncoder->GetAddcrFlag());
 }
 
-Codec* Codec::CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag)
+Codec* Codec::Create(const char* encoding, bool delcrFlag, bool addcrFlag)
 {
 	if (encoding == nullptr) {
 		return _pCodecFactory_Dumb->CreateCodec(delcrFlag, addcrFlag);
@@ -63,6 +64,7 @@ void Codec::Bootup()
 {
 	_pCodecFactory_Dumb = new CodecFactoryTmpl<Codec_Dumb>("dumb");
 	CodecFactory::Register(_pCodecFactory_Dumb);
+	Dumb.reset(_pCodecFactory_Dumb->CreateCodec(true, true));
 }
 
 UShort Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UShort codeDBCS)
@@ -124,7 +126,10 @@ Codec::WidthProp Codec::GetWidthProp(UInt32 codeUTF32)
 
 String Codec::ToString(const StringStyle& ss) const
 {
-	return "";
+	String str;
+	str += "Codec:";
+	str += GetEncoding();
+	return str;
 }
 
 //-----------------------------------------------------------------------------

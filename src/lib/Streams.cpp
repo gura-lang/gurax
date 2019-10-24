@@ -23,13 +23,13 @@ Stream_Binary::Stream_Binary() : Stream_Binary(new BinaryReferable(), 0)
 	buffTgt.reserve(1024);
 }
 
-int Stream_Binary::GetChar()
+int Stream_Binary::DoGetChar()
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	return (_offset < buffTgt.size())? buffTgt[_offset++] : -1;
 }
 
-bool Stream_Binary::PutChar(char ch)
+bool Stream_Binary::DoPutChar(char ch)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset < buffTgt.size()) {

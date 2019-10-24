@@ -17,8 +17,8 @@ public:
 	virtual const char* GetName() const override { return "dumb"; };
 	virtual const char* GetIdentifier() const override { return "dumb"; }
 	virtual void Close() override {}
-	virtual int GetChar() override { return 0; }
-	virtual bool PutChar(char ch) override { return true; }
+	virtual int DoGetChar() override { return 0; }
+	virtual bool DoPutChar(char ch) override { return true; }
 	virtual size_t Read(void* buff, size_t len) override { ::memset(buff, 0x00, len); return len; }
 	virtual size_t Write(const void* buff, size_t len) override { return len; }
 };
@@ -35,8 +35,8 @@ public:
 	virtual const char* GetName() const override { return _name.c_str(); };
 	virtual const char* GetIdentifier() const override { return _name.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }
-	virtual int GetChar() override { return ::fgetc(_fp); }
-	virtual bool PutChar(char ch) override { ::fputc(ch, _fp); return true; }
+	virtual int DoGetChar() override { return ::fgetc(_fp); }
+	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
 	virtual size_t Read(void* buff, size_t len) override {
 		return ::fread(buff, 1, len, _fp);
 	}
@@ -63,8 +63,8 @@ public:
 	virtual const char* GetName() const override { return "binary"; };
 	virtual const char* GetIdentifier() const override { return "binary"; }
 	virtual void Close() override {}
-	virtual int GetChar() override;
-	virtual bool PutChar(char ch) override;
+	virtual int DoGetChar() override;
+	virtual bool DoPutChar(char ch) override;
 	virtual size_t Read(void* buff, size_t len) override;
 	virtual size_t Write(const void* buff, size_t len) override;
 };

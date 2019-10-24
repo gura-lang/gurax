@@ -15,6 +15,7 @@ class GURAX_DLLDECLARE VType_Codec : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 };
 
 extern VType_Codec VTYPE_Codec;

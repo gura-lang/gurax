@@ -53,8 +53,8 @@ public:
 	virtual const char* GetName() const override { return _pathName.c_str(); };
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
 	virtual void Close() override { ::fclose(_fp); }
-	virtual int GetChar() override { return ::fgetc(_fp); }
-	virtual bool PutChar(char ch) override { ::fputc(ch, _fp); return true; }
+	virtual int DoGetChar() override { return ::fgetc(_fp); }
+	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
 	virtual size_t Read(void* buff, size_t len) override {
 		return ::fread(buff, 1, len, _fp);
 	}

@@ -13,6 +13,10 @@ RefPtr<Stream> Stream::CIn;
 RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
+Stream::Stream(Flags flags) : _flags(flags), _pCodec(Codec::Dumb->Reference())
+{
+}
+
 void Stream::Bootup()
 {
 	Dumb.reset(new Stream_Dumb());
@@ -34,6 +38,16 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 	RefPtr<Directory> pDirectory(Directory::Open(pathName, Directory::Type::Item));
 	if (!pDirectory) return nullptr;
 	return pDirectory->OpenStream(openFlags);
+}
+
+int Stream::GetChar()
+{
+	return DoGetChar();
+}
+
+bool Stream::PutChar(char ch)
+{
+	return DoPutChar(ch);
 }
 
 Stream& Stream::Print(const char* str)

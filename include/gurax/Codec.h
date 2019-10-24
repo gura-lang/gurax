@@ -3,11 +3,10 @@
 //=============================================================================
 #ifndef GURAX_CODEC_H
 #define GURAX_CODEC_H
-#include "Common.h"
+#include "Binary.h"
 
 namespace Gurax {
 
-class Binary;
 class Codec;
 class CodecFactory;
 
@@ -100,6 +99,8 @@ private:
 	static CodecFactory* _pCodecFactory_Dumb;
 	static const WidthInfo _widthInfoTbl[];
 public:
+	static RefPtr<Codec> Dumb;
+public:
 	// Constructor
 	Codec(CodecFactory* pCodecFactory, Decoder* pDecoder, Encoder* pEncoder);
 	// Copy constructor/operator
@@ -118,7 +119,7 @@ public:
 	Decoder* GetDecoder() { return _pDecoder.get(); }
 	Encoder* GetEncoder() { return _pEncoder.get(); }
 	Codec* Duplicate() const;
-	static Codec* CreateCodec(const char* encoding, bool delcrFlag, bool addcrFlag);
+	static Codec* Create(const char* encoding, bool delcrFlag, bool addcrFlag);
 	static void Bootup();
 	static UInt16 DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS);
 	static UInt16 UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UInt16 codeUTF16, Map** ppMap);
@@ -223,7 +224,7 @@ public:
 	const UInt16* _tblToUTF16;
 	Codec::Map _mapToSBCS;
 public:
-	explicit CodecFactory_SBCS(String encoding, const UInt16* tblToUTF16);
+	CodecFactory_SBCS(String encoding, const UInt16* tblToUTF16);
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override;
 };
 

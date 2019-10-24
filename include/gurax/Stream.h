@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_STREAM_H
 #define GURAX_STREAM_H
+#include "Codec.h"
 #include "DateTime.h"
 #include "Formatter.h"
 #include "StringPicker.h"
@@ -51,11 +52,12 @@ public:
 	static RefPtr<Stream> CErr;
 protected:
 	Flags _flags;
+	RefPtr<Codec> _pCodec;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	Stream(Flags flags) : _flags(flags) {}
+	Stream(Flags flags);
 	// Copy constructor/operator
 	Stream(const Stream& src) = delete;
 	Stream& operator=(const Stream& src) = delete;
@@ -68,6 +70,10 @@ protected:
 public:
 	static Stream* Open(const char* pathName, OpenFlags openFlags);
 	Flags GetFlags() const { return _flags; }
+	void SetCodec(Codec* pCodec) { _pCodec.reset(pCodec); }
+	Codec& GetCodec() const { return *_pCodec; }
+	int GetChar();
+	bool PutChar(char ch);
 	Stream& Print(const char* str);
 	Stream& Print(StringPicker&& strPicker);
 	Stream& Print(const StringList& strList) { return Print(StringPicker_StringList(strList)); }
@@ -88,10 +94,11 @@ public:
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
 	virtual void Close() = 0;
-	virtual int GetChar() = 0;
-	virtual bool PutChar(char ch) = 0;
 	virtual size_t Read(void* buff, size_t len) = 0;
 	virtual size_t Write(const void* buff, size_t len) = 0;
+protected:
+	virtual int DoGetChar() = 0;
+	virtual bool DoPutChar(char ch) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stream& stream) const { return this == &stream; }
