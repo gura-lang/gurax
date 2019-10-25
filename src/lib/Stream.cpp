@@ -42,17 +42,74 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 
 int Stream::GetChar()
 {
-	return DoGetChar();
+	Codec::Decoder& decoder = GetCodec().GetDecoder();
+	char chConv = '\0';
+	if (decoder.FollowChar(chConv)) return static_cast<UChar>(chConv);
+	for (;;) {
+		int ch = DoGetChar();
+		if (ch < 0) return ch;
+		Codec::Result rtn = decoder.FeedChar(static_cast<UChar>(ch), chConv);
+		if (rtn == Codec::Result::Error) {
+			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetEncoding());
+			return -1;
+		}
+		if (rtn == Codec::Result::Complete) break;
+	}
+	return static_cast<UChar>(chConv);
+}
+
+String Stream::ReadChar()
+{
+	String str;
+	Codec::Decoder& decoder = GetCodec().GetDecoder();
+	char chConv = '\0';
+	for (;;) {
+		int ch = DoGetChar();
+		if (ch < 0) break;
+		Codec::Result rtn = decoder.FeedChar(static_cast<UChar>(ch), chConv);
+		if (rtn == Codec::Result::Error) {
+			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetEncoding());
+			return String::Empty;
+		}
+		if (rtn == Codec::Result::Complete) {
+			str += chConv;
+			break;
+		}
+	}
+	while (decoder.FollowChar(chConv)) str += chConv;
+	return str;
 }
 
 bool Stream::PutChar(char ch)
 {
-	return DoPutChar(ch);
+	char chConv;
+	Codec::Encoder& encoder = GetCodec().GetEncoder();
+	Codec::Result rtn = encoder.FeedChar(ch, chConv);
+	if (rtn == Codec::Result::Error) return false;
+	if (rtn == Codec::Result::Complete) {
+		if (!DoPutChar(chConv)) return false;
+		while (encoder.FollowChar(chConv)) {
+			if (!DoPutChar(chConv)) return false;
+		}
+	}
+	return true;
 }
 
 Stream& Stream::Print(const char* str)
 {
-	for (const char* p = str; *p != '\0'; ++p) PutChar(*p);
+	char chConv;
+	Codec::Encoder& encoder = GetCodec().GetEncoder();
+	for (const char* p = str; *p != '\0'; ++p) {
+		char ch = *p;
+		Codec::Result rtn = encoder.FeedChar(ch, chConv);
+		if (rtn == Codec::Result::Error) return *this;
+		if (rtn == Codec::Result::Complete) {
+			if (!DoPutChar(chConv)) return *this;
+			while (encoder.FollowChar(chConv)) {
+				if (!DoPutChar(chConv)) return *this;
+			}
+		}
+	}
 	return *this;
 }
 

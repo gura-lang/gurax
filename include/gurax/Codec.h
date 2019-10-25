@@ -116,8 +116,8 @@ public:
 	CodecFactory& GetCodecFactory() { return *_pCodecFactory; }
 	const CodecFactory& GetCodecFactory() const { return *_pCodecFactory; }
 	const char* GetEncoding() const { return GetCodecFactory().GetEncoding(); }
-	Decoder* GetDecoder() { return _pDecoder.get(); }
-	Encoder* GetEncoder() { return _pEncoder.get(); }
+	Decoder& GetDecoder() { return *_pDecoder; }
+	Encoder& GetEncoder() { return *_pEncoder; }
 	Codec* Duplicate() const;
 	static Codec* Create(const char* encoding, bool delcrFlag, bool addcrFlag);
 	static void Bootup();

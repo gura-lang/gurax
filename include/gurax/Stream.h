@@ -73,6 +73,7 @@ public:
 	void SetCodec(Codec* pCodec) { _pCodec.reset(pCodec); }
 	Codec& GetCodec() const { return *_pCodec; }
 	int GetChar();
+	String ReadChar();
 	bool PutChar(char ch);
 	Stream& Print(const char* str);
 	Stream& Print(StringPicker&& strPicker);
