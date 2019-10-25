@@ -69,7 +69,7 @@ void Codec::Bootup()
 	Dumb.reset(_pCodecFactory_Dumb->CreateCodec(delcrFlag, addcrFlag));
 }
 
-UShort Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UShort codeDBCS)
+UInt16 Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS)
 {
 	int codeH = (codeDBCS >> 8) & 0xff;
 	int codeL = codeDBCS & 0xff;
@@ -85,7 +85,7 @@ UShort Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UShort codeDB
 	}
 }
 
-UShort Codec::UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UShort codeUTF16, Map** ppMap)
+UInt16 Codec::UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UInt16 codeUTF16, Map** ppMap)
 {
 	Map* pMap = *ppMap;
 	if (*ppMap == nullptr) {
@@ -93,20 +93,20 @@ UShort Codec::UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UShort codeUT
 		pMap = *ppMap;
 		const CodeRow* pCodeRow = codeRows;
 		for (int codeL = 0; codeL < pCodeRow->nCols; codeL++) {
-			UShort codeUTF16 = pCodeRow->row[codeL];
-			UShort codeDBCS = static_cast<UShort>(codeL);
+			UInt16 codeUTF16 = pCodeRow->row[codeL];
+			UInt16 codeDBCS = static_cast<UInt16>(codeL);
 			if (pMap->find(codeUTF16) == pMap->end()) {
 				(*pMap)[codeUTF16] = codeDBCS;
 			}
 		}
 		pCodeRow++;
 		for (int codeH = 1; codeH < nCodeRows; codeH++, pCodeRow++) {
-			UShort codeDBCSBase = static_cast<UShort>(codeH << 8);
+			UInt16 codeDBCSBase = static_cast<UInt16>(codeH << 8);
 			for (int iCol = 0; iCol < pCodeRow->nCols; iCol++) {
-				UShort codeUTF16 = pCodeRow->row[iCol];
+				UInt16 codeUTF16 = pCodeRow->row[iCol];
 				if (codeUTF16 == 0x0000) continue;
-				UShort codeL = static_cast<UShort>(iCol + 0x40);
-				UShort codeDBCS = codeDBCSBase + codeL;
+				UInt16 codeL = static_cast<UInt16>(iCol + 0x40);
+				UInt16 codeDBCS = codeDBCSBase + codeL;
 				//printf("%04x -> %04x\n", codeUTF16, codeDBCS);
 				if (pMap->find(codeUTF16) == pMap->end()) {
 					(*pMap)[codeUTF16] = codeDBCS;
@@ -320,7 +320,7 @@ Codec::Result Codec_SBCS::Decoder::FeedChar(char ch, char& chConv)
 
 Codec::Result Codec_SBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 {
-	auto pPair = _mapToSBCS.find(static_cast<UShort>(codeUTF32));
+	auto pPair = _mapToSBCS.find(static_cast<UInt16>(codeUTF32));
 	if (pPair == _mapToSBCS.end()) return Result::Error;
 	chConv = static_cast<UChar>(pPair->second);
 	return Result::Complete;
@@ -370,7 +370,7 @@ Codec::Result Codec_DBCS::Decoder::FeedChar(char ch, char& chConv)
 
 Codec::Result Codec_DBCS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 {
-	UShort codeDBCS = UTF16ToDBCS(static_cast<UShort>(codeUTF32));
+	UInt16 codeDBCS = UTF16ToDBCS(static_cast<UInt16>(codeUTF32));
 	if (codeDBCS == 0x0000) {
 		chConv = '\0';
 		return Result::Error;
