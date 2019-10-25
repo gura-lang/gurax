@@ -4,23 +4,24 @@
 // Template of build.gura
 //------------------------------------------------------------------------------
 tmpl_build = R'''
-#!/usr/bin/env gura
-import(modbuild)
+#!/usr/bin/env gurax
+import(util.modbuild) {Builder}
 
-builder = modbuild.Builder()
-builder.build('${dotName}', ['module-${ubarName}.cpp'])
+builder = Builder('${dotName}')
+builder.pathNamesSrc = ['module-${ubarName}.cpp']
+builder.Run()
 '''T
 
 //------------------------------------------------------------------------------
 // Template of test-NAME.gura
 //------------------------------------------------------------------------------
 tmpl_test = R'''
-#!/usr/bin/env gura
-import(helper.test) {*}
+#!/usr/bin/env gurax
+import(util.test) {*}
 import(${dotName})
 
-testcase {
-	println(${dotName}.test(3, 4))
+TestCase('Basic test') {
+	Println(${dotName}.Test(3, 4))
 }
 '''T
 
@@ -28,25 +29,22 @@ testcase {
 // Template of stdafx.h
 //------------------------------------------------------------------------------
 tmpl_stdafx = R'''
-#ifndef ${incOnceMacroNameAfx}
-#define ${incOnceMacroNameAfx}
-#include "${fileHdr}"
-#endif
+#include "${fileName_header}"
 '''T
 
 //------------------------------------------------------------------------------
 // Template of module-NAME.h
 //------------------------------------------------------------------------------
 tmpl_header = R'''
-//=============================================================================
+//==============================================================================
 // Gura module: ${dotName}
-//=============================================================================
+//==============================================================================
 #ifndef ${incOnceMacroName}
 #define ${incOnceMacroName}
-#include <gura.h>
+#include <gurax.h>
 
-Gura_BeginModuleHeader(${ubarName})
-Gura_EndModuleHeader(${ubarName})
+Gurax_BeginModuleHeader(${ubarName})
+Gurax_EndModuleHeader(${ubarName})
 
 #endif
 '''T
@@ -58,51 +56,10 @@ tmpl_source = R'''
 //==============================================================================
 // Gura module: ${dotName}
 //==============================================================================
-#include "${fileAfx}"
+#include "${fileName_stdafx}"
 
-Gura_BeginModuleBody(${ubarName})
-
-//------------------------------------------------------------------------------
-// Implementation of function
-//------------------------------------------------------------------------------
-// ${dotName}.test(num1:number, num2:number)
-Gura_DeclareFunction(test)
-{
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "num1", VTYPE_number);
-	DeclareArg(env, "num2", VTYPE_number);
-	AddHelp(
-		Gura_Symbol(en),
-		"This function adds two numbers and returns the result.\n");
-}
-
-Gura_ImplementFunction(test)
-{
-	return Value(arg.GetNumber(0) + arg.GetNumber(1));
-}
-
-//------------------------------------------------------------------------------
-// Module Entry
-//------------------------------------------------------------------------------
-Gura_ModuleValidate()
-{
-	return Version::CheckCoreVersion(GURA_VERSION, nullptr);
-}
-
-Gura_ModuleEntry()
-{
-	// Assignment of function
-	Gura_AssignFunction(test);
-	return true;
-}
-
-Gura_ModuleTerminate()
-{
-}
-
-Gura_EndModuleBody(${ubarName}, ${baseName})
-
-Gura_RegisterModule(${ubarName})
+Gurax_BeginModuleBody(${ubarName})
+Gurax_EndModuleBody(${ubarName}, ${baseName})
 '''T
 
 strHelp = R'''
@@ -132,22 +89,19 @@ main() = {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
-	//tmpl_build.Render(
-	/*
-	tmpl_fileBuild.render(open(fileBuild, 'w').addcr(false))
-	tmpl_fileTest.render(open(fileTest, 'w').addcr(false))
-	tmpl_fileAfx.render(open(fileAfx, 'w').addcr(false))
-	tmpl_fileHdr.render(open(fileHdr, 'w').addcr(false))
-	tmpl_fileSrc.render(open(fileSrc, 'w').addcr(false))
-	fs.chmod('a+x', fileBuild)
-	fs.chmod('a+x', fileTest)
+	tmpl_build.Render(Open(fileName_build, 'w'))
+	tmpl_test.Render(Open(fileName_test, 'w'))
+	tmpl_stdafx.Render(Open(fileName_stdafx, 'w'))
+	tmpl_header.Render(Open(fileName_header, 'w'))
+	tmpl_source.Render(Open(fileName_source, 'w'))
+	//fs.ChangeMode('a+x', fileName_build)
+	//fs.ChangeMode('a+x', fileName_test)
 	R'''
 	Following files were generated.
-	- Build Script: ${fileBuild}
-	- Test Script:  ${fileTest}
-	- Source Files: ${fileAfx}, ${fileHdr}, ${fileSrc}
-	'''.template().render(sys.stdout)
-	*/
+	- Build Script: ${fileName_build}
+	- Test Script:  ${fileName_test}
+	- Source Files: ${fileName_stdafx}, ${fileName_header}, ${fileName_source}
+	'''.RenderTemplate(sys.cout)
 }
 
 main()
