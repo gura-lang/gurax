@@ -23,6 +23,8 @@ private:
 	String _encoding;
 	static CodecFactoryList _codecFactoryList;
 public:
+	static CodecFactory* Dumb;
+public:
 	CodecFactory(String encoding);
 	const char* GetEncoding() const { return _encoding.c_str(); }
 	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) = 0;
@@ -96,7 +98,6 @@ private:
 	CodecFactory* _pCodecFactory;
 	std::unique_ptr<Decoder> _pDecoder;
 	std::unique_ptr<Encoder> _pEncoder;
-	static CodecFactory* _pCodecFactory_Dumb;
 	static const WidthInfo _widthInfoTbl[];
 public:
 	static RefPtr<Codec> Dumb;
@@ -135,19 +136,6 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// CodecFactoryTmpl
-//-----------------------------------------------------------------------------
-template<typename T>
-class CodecFactoryTmpl : public CodecFactory {
-public:
-	explicit CodecFactoryTmpl(const char* encoding) : CodecFactory(encoding) {}
-	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
-		return new Codec(this, new typename T::Decoder(delcrFlag),
-						 new typename T::Encoder(addcrFlag));
-	}
-};
-
-//-----------------------------------------------------------------------------
 // Codec_Dumb
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Codec_Dumb : public Codec {
@@ -164,6 +152,18 @@ public:
 		explicit Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
+};
+
+//-----------------------------------------------------------------------------
+// CodecFactory_Dumb
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE CodecFactory_Dumb : public CodecFactory {
+public:
+	explicit CodecFactory_Dumb(const char* encoding) : CodecFactory(encoding) {}
+	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
+		return new Codec(this, new typename Codec_Dumb::Decoder(delcrFlag),
+						 new typename Codec_Dumb::Encoder(addcrFlag));
+	}
 };
 
 //-----------------------------------------------------------------------------
@@ -250,6 +250,18 @@ public:
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 		virtual UInt16 UTF16ToDBCS(UInt16 codeUTF16) = 0;
 	};
+};
+
+//-----------------------------------------------------------------------------
+// CodecFactory_DBCS
+//-----------------------------------------------------------------------------
+template<typename T>
+class CodecFactory_DBCS : public CodecFactory {
+public:
+	explicit CodecFactory_DBCS(const char* encoding) : CodecFactory(encoding) {}
+	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
+		return new Codec(this, new typename T::Decoder(delcrFlag), new typename T::Encoder(addcrFlag));
+	}
 };
 
 }

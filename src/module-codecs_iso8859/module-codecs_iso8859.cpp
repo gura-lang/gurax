@@ -585,7 +585,7 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	// Registration of Codec
+	// Registration of CodecFactory
 	CodecFactory::Register(new CodecFactory_SBCS("iso-8859-1", g_codeTbl_ISO8859_1));
 	CodecFactory::Register(new CodecFactory_SBCS("iso-8859-2", g_codeTbl_ISO8859_2));
 	CodecFactory::Register(new CodecFactory_SBCS("iso-8859-3", g_codeTbl_ISO8859_3));

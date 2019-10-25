@@ -10,6 +10,7 @@ namespace Gurax {
 // CodecFactory
 //-----------------------------------------------------------------------------
 CodecFactoryList CodecFactory::_codecFactoryList;
+CodecFactory* CodecFactory::Dumb = nullptr;
 
 CodecFactory::CodecFactory(String encoding) : _encoding(std::move(encoding))
 {
@@ -34,7 +35,6 @@ CodecFactory* CodecFactory::Lookup(const char* encoding)
 //-----------------------------------------------------------------------------
 // Codec
 //-----------------------------------------------------------------------------
-CodecFactory* Codec::_pCodecFactory_Dumb = nullptr;
 RefPtr<Codec> Codec::Dumb;
 
 Codec::Codec(CodecFactory* pCodecFactory, Decoder* pDecoder, Encoder* pEncoder) :
@@ -50,7 +50,7 @@ Codec* Codec::Duplicate() const
 Codec* Codec::Create(const char* encoding, bool delcrFlag, bool addcrFlag)
 {
 	if (encoding == nullptr) {
-		return _pCodecFactory_Dumb->CreateCodec(delcrFlag, addcrFlag);
+		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);
 	}
 	CodecFactory* pCodecFactory = CodecFactory::Lookup(encoding);
 	if (pCodecFactory == nullptr) {
@@ -62,11 +62,11 @@ Codec* Codec::Create(const char* encoding, bool delcrFlag, bool addcrFlag)
 
 void Codec::Bootup()
 {
-	_pCodecFactory_Dumb = new CodecFactoryTmpl<Codec_Dumb>("dumb");
-	CodecFactory::Register(_pCodecFactory_Dumb);
+	CodecFactory::Dumb = new CodecFactory_Dumb("dumb");
+	CodecFactory::Register(CodecFactory::Dumb);
 	bool delcrFlag = true;
 	bool addcrFlag = false;
-	Dumb.reset(_pCodecFactory_Dumb->CreateCodec(delcrFlag, addcrFlag));
+	Dumb.reset(CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag));
 }
 
 UInt16 Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS)
