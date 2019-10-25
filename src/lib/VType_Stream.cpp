@@ -8,12 +8,13 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Stream(pathName:String, mode?:String) {block?}
+// Stream(pathName:String, mode?:String, codec?:Codec) {block?}
 Gurax_DeclareFunction(Stream)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -27,10 +28,12 @@ Gurax_ImplementFunction(Stream)
 	const char* pathName = args.PickString();
 	Stream::OpenFlags openFlags = args.IsValid()?
 		Stream::ModeToOpenFlags(args.PickString()) : Stream::OpenFlag::None;
+	const Codec* pCodec = args.IsValid()? &Value_Codec::GetCodec(args.PickValue()) : nullptr;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Stream> pStream(Stream::Open(pathName, openFlags));
 	if (!pStream) return Value::nil();
+	if (pCodec) pStream->SetCodec(pCodec->Reference());
 	return ReturnValue(processor, argument, new Value_Stream(pStream.release()));
 }
 
@@ -182,6 +185,8 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
 	SetConstructor(Gurax_CreateFunction(Stream));
+	// Assignment of function
+	frameOuter.Assign(Gurax_CreateFunctionAlias(Stream, "Open"));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));

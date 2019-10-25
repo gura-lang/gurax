@@ -42,6 +42,7 @@ Function_##name::Function_##name(const char* name_) : Function(Function::Type::F
 Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateFunction(name) (new Function_##name())
+#define Gurax_CreateFunctionAlias(name, strName) (new Function_##name(strName))
 
 // Declaration/implementation/creation of Method
 #define Gurax_DeclareMethodAlias(nameVType, name, strName)	\
