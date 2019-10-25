@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
-import(util.modbuild)
+import(util.modbuild) {Builder}
 
-builder = util.modbuild.Builder('re')
+builder = Builder('re')
 builder.pathNamesSrc = [
 	'module-re.cpp', 'Common.cpp', 'Group.cpp', 'Iterators.cpp', 'Match.cpp', 'Pattern.cpp',
 	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'
@@ -29,7 +29,7 @@ if (sys.platform == `mswin) {
 	builder.cflags.append('-DONIG_EXTERN=extern')
 }
 */
-builder.dirNamesInc.Append('guest/include/onigmo')
-builder.dirNamesLib.Append('guest/lib')
+builder.dirNamesInc = ['guest/include/onigmo']
+builder.dirNamesLib = ['guest/lib']
 builder.libs.Append('onigmo')
 builder.Run()

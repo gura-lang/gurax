@@ -14,11 +14,15 @@ Builder = class {
 	pathNamesScript = []
 	pathNamesObj = []
 	dirNameOut = 'gnuc'
-	dirNamesInc = [sys.dirInclude]
-	dirNamesLib = [sys.dirLib]
-	cflags = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC']
-	ldflags = ['-shared']
-	libs = ['stdc++', 'guraxcore']
+	dirNamesInc = []
+	dirNamesLib = []
+	cflags = []
+	ldflags = []
+	libs = []
+	opt = %{}
+	cflagsBase = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC']
+	ldflagsBase = ['-shared']
+	libsBase = ['stdc++', 'guraxcore']
 	__init__(targetName:String) = {
 		this.targetName = targetName
 	}
@@ -27,19 +31,22 @@ Builder = class {
 			(fs.Stat(pathNameTgt).mtime < fs.Stat(pathNamesDep):*mtime).Or()
 	}
 	Exec(pathName:String, args*:String) = {
-		//Printf('%s %s\n', pathName, args.Join(' '))
+		this.opt['verbose'] && Printf('%s %s\n', pathName, args.Join(' '))
 		rtn = (os.Exec(pathName, args*) == 0)
 		rtn
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		cflags = this.cflags.Clone()
 		Printf('-- compiling: %s\n', pathNameSrc)
-		this.Exec('gcc', cflags*, ('-I' + this.dirNamesInc)*, '-o', pathNameObj, '-c', pathNameSrc)
+		this.Exec('gcc', this.cflagsBase*, this.cflags*,
+				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
+				  '-o', pathNameObj, '-c', pathNameSrc)
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
-		ldflags = this.ldflags.Clone()
-		libs = this.libs.Clone()
-		if (this.Exec('gcc', ldflags*, ('-L' + this.dirNamesLib)*, '-o', pathNameGurd, pathNamesObj*, ('-l' + libs)*)) {
+		if (this.Exec('gcc', this.ldflagsBase*, this.ldflags*,
+					  '-L' + sys.dirLib, ('-L' + this.dirNamesLib)*,
+					  '-o', pathNameGurd, pathNamesObj*,
+					  ('-l' + this.libsBase)*, ('-l' + this.libs)*)) {
 			Printf('-- generated: %s\n', pathNameGurd)
 		}
 	}
@@ -68,7 +75,8 @@ Builder = class {
 		this.pathNameGurd = path.Join(this.dirNameOut, this.targetName + '.gurd')
 		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
-		[argv, opt] = argopt.Parser {|p|
+		[argv, this.opt] = argopt.Parser {|p|
+			p.AddFlag('verbose', 'v', 'verbose mode')
 			p.Parse(sys.argv)
 		}
 		if (argv.IsEmpty()) {
