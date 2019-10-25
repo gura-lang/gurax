@@ -31,7 +31,7 @@ Builder = class {
 			(fs.Stat(pathNameTgt).mtime < fs.Stat(pathNamesDep):*mtime).Or()
 	}
 	Exec(pathName:String, args*:String) = {
-		this.opt['verbose'] && Printf('%s %s\n', pathName, args.Join(' '))
+		this.opt.Get('verbose') && Printf('%s %s\n', pathName, args.Join(' '))
 		rtn = (os.Exec(pathName, args*) == 0)
 		rtn
 	}
