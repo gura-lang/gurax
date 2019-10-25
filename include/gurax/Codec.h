@@ -136,6 +136,18 @@ public:
 };
 
 //-----------------------------------------------------------------------------
+// CodecFactory_Generic
+//-----------------------------------------------------------------------------
+template<typename T>
+class CodecFactory_Generic : public CodecFactory {
+public:
+	explicit CodecFactory_Generic(const char* encoding) : CodecFactory(encoding) {}
+	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
+		return new Codec(this, new typename T::Decoder(delcrFlag), new typename T::Encoder(addcrFlag));
+	}
+};
+
+//-----------------------------------------------------------------------------
 // Codec_Dumb
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Codec_Dumb : public Codec {
@@ -152,18 +164,6 @@ public:
 		explicit Encoder(bool addcrFlag) : Codec::Encoder(addcrFlag) {}
 		virtual Result FeedChar(char ch, char& chConv) override;
 	};
-};
-
-//-----------------------------------------------------------------------------
-// CodecFactory_Dumb
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE CodecFactory_Dumb : public CodecFactory {
-public:
-	explicit CodecFactory_Dumb(const char* encoding) : CodecFactory(encoding) {}
-	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
-		return new Codec(this, new typename Codec_Dumb::Decoder(delcrFlag),
-						 new typename Codec_Dumb::Encoder(addcrFlag));
-	}
 };
 
 //-----------------------------------------------------------------------------
@@ -250,18 +250,6 @@ public:
 		virtual Result FeedUTF32(UInt32 codeUTF32, char& chConv) override;
 		virtual UInt16 UTF16ToDBCS(UInt16 codeUTF16) = 0;
 	};
-};
-
-//-----------------------------------------------------------------------------
-// CodecFactory_DBCS
-//-----------------------------------------------------------------------------
-template<typename T>
-class CodecFactory_DBCS : public CodecFactory {
-public:
-	explicit CodecFactory_DBCS(const char* encoding) : CodecFactory(encoding) {}
-	virtual Codec* CreateCodec(bool delcrFlag, bool addcrFlag) override {
-		return new Codec(this, new typename T::Decoder(delcrFlag), new typename T::Encoder(addcrFlag));
-	}
 };
 
 }

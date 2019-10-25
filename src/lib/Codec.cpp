@@ -62,7 +62,7 @@ Codec* Codec::Create(const char* encoding, bool delcrFlag, bool addcrFlag)
 
 void Codec::Bootup()
 {
-	CodecFactory::Dumb = new CodecFactory_Dumb("dumb");
+	CodecFactory::Dumb = new CodecFactory_Generic<Codec_Dumb>("dumb");
 	CodecFactory::Register(CodecFactory::Dumb);
 	bool delcrFlag = true;
 	bool addcrFlag = false;
