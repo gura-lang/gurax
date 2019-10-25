@@ -54,7 +54,7 @@ Codec* Codec::Create(const char* encoding, bool delcrFlag, bool addcrFlag)
 	}
 	CodecFactory* pCodecFactory = CodecFactory::Lookup(encoding);
 	if (pCodecFactory == nullptr) {
-		Error::Issue(ErrorType::CodecError, "unsupported encoding %s", encoding);
+		Error::Issue(ErrorType::CodecError, "unsupported encoding: %s", encoding);
 		return nullptr;
 	}
 	return pCodecFactory->CreateCodec(delcrFlag, addcrFlag);
@@ -64,7 +64,9 @@ void Codec::Bootup()
 {
 	_pCodecFactory_Dumb = new CodecFactoryTmpl<Codec_Dumb>("dumb");
 	CodecFactory::Register(_pCodecFactory_Dumb);
-	Dumb.reset(_pCodecFactory_Dumb->CreateCodec(true, true));
+	bool delcrFlag = true;
+	bool addcrFlag = false;
+	Dumb.reset(_pCodecFactory_Dumb->CreateCodec(delcrFlag, addcrFlag));
 }
 
 UShort Codec::DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UShort codeDBCS)

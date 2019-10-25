@@ -82,7 +82,7 @@ String Stream::ReadChar()
 
 bool Stream::PutChar(char ch)
 {
-	char chConv;
+	char chConv = '\0';
 	Codec::Encoder& encoder = GetCodec().GetEncoder();
 	Codec::Result rtn = encoder.FeedChar(ch, chConv);
 	if (rtn == Codec::Result::Error) return false;
@@ -97,7 +97,7 @@ bool Stream::PutChar(char ch)
 
 Stream& Stream::Print(const char* str)
 {
-	char chConv;
+	char chConv = '\0';
 	Codec::Encoder& encoder = GetCodec().GetEncoder();
 	for (const char* p = str; *p != '\0'; ++p) {
 		char ch = *p;

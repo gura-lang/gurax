@@ -26,7 +26,7 @@ Gurax_ImplementFunction(Codec)
 	const char* encoding = args.PickString();
 	// Function body
 	bool delcrFlag = true;
-	bool addcrFlag = true;
+	bool addcrFlag = false;
 	RefPtr<Codec> pCodec(Codec::Create(encoding, delcrFlag, addcrFlag));
 	if (!pCodec) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Codec(pCodec.release()));
@@ -53,7 +53,7 @@ Value* VType_Codec::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	if (value.IsType(VTYPE_String)) {
 		const char* encoding = Value_String::GetString(value);
 		bool delcrFlag = true;
-		bool addcrFlag = true;
+		bool addcrFlag = false;
 		RefPtr<Codec> pCodec(Codec::Create(encoding, delcrFlag, addcrFlag));
 		if (!pCodec) return Value::nil();
 		return new Value_Codec(pCodec.release());
