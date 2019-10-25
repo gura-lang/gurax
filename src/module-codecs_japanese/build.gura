@@ -1,0 +1,6 @@
+#!/usr/bin/env gurax
+import(util.modbuild)
+
+builder = util.modbuild.Builder('codecs_japanese')
+builder.pathNamesSrc = ['module-codecs_japanese.cpp', 'CP932.cpp']
+builder.Run()
