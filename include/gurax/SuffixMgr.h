@@ -17,7 +17,7 @@ public: \
 Value* SuffixMgr_##target##_##symbol::Eval(Processor& processor, const char* str) const
 
 #define Gurax_AssignSuffixMgr(target, symbol) \
-Basement::Inst.AssignSuffixMgr_##target(new SuffixMgr_##target##_##symbol())
+Basement::Inst.AssignSuffixMgr(new SuffixMgr_##target##_##symbol())
 
 namespace Gurax {
 
@@ -59,23 +59,31 @@ public:
 //------------------------------------------------------------------------------
 // SuffixMgrMap
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE SuffixMgrMap :
-	public std::unordered_map<const Symbol*, SuffixMgr*,
-			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+class GURAX_DLLDECLARE SuffixMgrMap : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(SuffixMgrMap);
+public:
+	using Map = std::unordered_map<const Symbol*, SuffixMgr*,
+								   Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+private:
+	Map _mapForNumber;
+	Map _mapForString;
+public:
+	SuffixMgrMap() {}
 protected:
 	~SuffixMgrMap() { Clear(); }
 public:
 	void Clear();
-	void Assign(SuffixMgr* pSuffixMgr);
-	SuffixMgr* Lookup(const Symbol* pSymbol) const {
-		auto pPair = find(pSymbol);
-		return (pPair == end())? nullptr : pPair->second;
+	Map& GetMap(SuffixMgr::Target target) {
+		return (target == SuffixMgr::Target::Number)? _mapForNumber : _mapForString;
 	}
-	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
-	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
+	const Map& GetMap(SuffixMgr::Target target) const {
+		return (target == SuffixMgr::Target::Number)? _mapForNumber : _mapForString;
+	}
+	void Assign(SuffixMgr* pSuffixMgr);
+	SuffixMgr* Lookup(SuffixMgr::Target target, const Symbol* pSymbol) const;
+	bool DoesExist(SuffixMgr::Target target, const Symbol* pSymbol) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

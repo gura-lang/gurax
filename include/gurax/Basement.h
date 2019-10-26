@@ -25,8 +25,7 @@ private:
 	RefPtr<Stream> _pStreamCIn;
 	RefPtr<Stream> _pStreamCOut;
 	RefPtr<Stream> _pStreamCErr;
-	RefPtr<SuffixMgrMap> _pSuffixMgrMap_Number;
-	RefPtr<SuffixMgrMap> _pSuffixMgrMap_String;
+	RefPtr<SuffixMgrMap> _pSuffixMgrMap;
 	PathMgrOwner _pathMgrOwner;
 	String _ps1;
 	String _ps2;
@@ -72,17 +71,11 @@ public:
 	void SetStreamCOut(Stream* pStreamCOut) { _pStreamCOut.reset(pStreamCOut); }
 	void SetStreamCErr(Stream* pStreamCErr) { _pStreamCErr.reset(pStreamCErr); }
 public:
-	SuffixMgrMap& GetSuffixMgrMap_Number() { return *_pSuffixMgrMap_Number; }
-	SuffixMgrMap& GetSuffixMgrMap_String() { return *_pSuffixMgrMap_String; }
-	const SuffixMgrMap& GetSuffixMgrMap_Number() const { return *_pSuffixMgrMap_Number; }
-	const SuffixMgrMap& GetSuffixMgrMap_String() const { return *_pSuffixMgrMap_String; }
-	void AssignSuffixMgr_Number(SuffixMgr* pSuffixMgr) { GetSuffixMgrMap_Number().Assign(pSuffixMgr); }
-	void AssignSuffixMgr_String(SuffixMgr* pSuffixMgr) { GetSuffixMgrMap_String().Assign(pSuffixMgr); }
-	const SuffixMgr* LookupSuffixMgr_Number(const Symbol* pSymbolSuffix) const {
-		return GetSuffixMgrMap_Number().Lookup(pSymbolSuffix);
-	}
-	const SuffixMgr* LookupSuffixMgr_String(const Symbol* pSymbolSuffix) const {
-		return GetSuffixMgrMap_String().Lookup(pSymbolSuffix);
+	SuffixMgrMap& GetSuffixMgrMap() { return *_pSuffixMgrMap; }
+	const SuffixMgrMap& GetSuffixMgrMap() const { return *_pSuffixMgrMap; }
+	void AssignSuffixMgr(SuffixMgr* pSuffixMgr) { GetSuffixMgrMap().Assign(pSuffixMgr); }
+	const SuffixMgr* LookupSuffixMgr(SuffixMgr::Target target, const Symbol* pSymbolSuffix) const {
+		return GetSuffixMgrMap().Lookup(target, pSymbolSuffix);
 	}
 public:
 	const PathMgrList& GetPathMgrList() { return _pathMgrOwner; }

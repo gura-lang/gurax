@@ -12,8 +12,7 @@ Basement Basement::Inst;
 
 Basement::Basement() :
 	_argc(0), _argv(nullptr), _debugFlag(false), _listingFlag(false), _commandDoneFlag(false),
-	_pFrame(new Frame_Basement()),
-	_pSuffixMgrMap_Number(new SuffixMgrMap()), _pSuffixMgrMap_String(new SuffixMgrMap()),
+	_pFrame(new Frame_Basement()), _pSuffixMgrMap(new SuffixMgrMap()),
 	_ps1(">>> "), _ps2("... ")
 {
 }

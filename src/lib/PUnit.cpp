@@ -165,9 +165,7 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	const SuffixMgr* pSuffixMgr = (GetTarget() == SuffixMgr::Target::Number) ?
-		Basement::Inst.LookupSuffixMgr_Number(GetSymbolSuffix()) :
-		Basement::Inst.LookupSuffixMgr_String(GetSymbolSuffix());
+	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbolSuffix());
 	if (!pSuffixMgr) {
 		Error::Issue(ErrorType::SuffixError, "suffix '%s' can not be handled", GetSymbolSuffix()->GetName());
 		processor.ErrorDone();
