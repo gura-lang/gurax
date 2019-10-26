@@ -778,7 +778,7 @@ bool Parser::ReduceFourTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			pExprCaller->SetExprLinkCdr(exprLink.Reference());
-			pExprLeader->AppendExprTrailer(pExprCaller.release());
+			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else if (pToken4->IsType(TokenType::EndOfLine)) {
@@ -808,7 +808,7 @@ bool Parser::ReduceFourTokens()
 				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			}
 			pExprCaller->GetExprTrailerLast().SetExprOfBlock(CreateExprOfBlock(pToken3));
-			pExprLeader->AppendExprTrailer(pExprCaller.release());
+			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else if (pToken4->IsType(TokenType::EndOfLine)) {
@@ -915,7 +915,7 @@ bool Parser::ReduceFiveTokens()
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			pExprCaller->SetExprLinkCdr(exprLink.Reference());
-			pExprLeader->AppendExprTrailer(pExprCaller.release());
+			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else if (pToken5->IsType(TokenType::Comma) || pToken5->IsType(TokenType::EndOfLine)) {
@@ -947,7 +947,7 @@ bool Parser::ReduceFiveTokens()
 				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			}
 			pExprCaller->SetExprOfBlock(CreateExprOfBlock(pToken3));
-			pExprLeader->AppendExprTrailer(pExprCaller.release());
+			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
 			tokenStack.Push(pToken1->Reference());
 			return true;
 		} else if (pToken5->IsType(TokenType::Comma) ||

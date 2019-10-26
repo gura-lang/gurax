@@ -813,7 +813,6 @@ public:
 	Expr_Block* GetExprOfBlock() { return _pExprOfBlock.get(); }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	void SetExprTrailer(Expr_Caller* pExprTrailer);
-	void AppendExprTrailer(Expr_Caller* pExprTrailer);
 	bool HasExprTrailer() const { return _pExprTrailer.get() != nullptr; }
 	Expr_Caller* GetExprTrailer() { return _pExprTrailer.get(); }
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }

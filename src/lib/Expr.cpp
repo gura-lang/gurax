@@ -515,15 +515,6 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_BinaryOp::typeInfo("BinaryOp");
 
-#if 0
-bool Expr_BinaryOp::IsDeclArgWithDefault(Expr_Binary** ppExpr) const
-{
-	if (!GetOperator()->IsType(OpType::Pair)) return false;
-	*ppExpr = const_cast<Expr_BinaryOp*>(this);
-	return true;
-}
-#endif
-
 void Expr_BinaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
@@ -1113,31 +1104,6 @@ const DeclCallable* Expr_Caller::LookupDeclCallable() const
 	return nullptr;
 }
 
-#if 0
-// This method is used by Template.
-bool Expr_Caller::DoesExpectBlockFollowed() const
-{
-	const Expr_Block* pExprOfBlock = GetExprOfBlock();
-	if (pExprOfBlock) return !pExprOfBlock->HasExprElem();
-	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
-	return pDeclCallable && pDeclCallable->GetDeclBlock().IsOccurOnce();
-}
-
-// This method is used by Template.
-bool Expr_Caller::IsTrailer() const
-{
-	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
-	return pDeclCallable && pDeclCallable->IsSet(DeclCallable::Flag::Trailer);
-}
-
-// This method is used by Template.
-bool Expr_Caller::IsEndMarker() const
-{
-	const DeclCallable* pDeclCallable = LookupDeclCallableOfCar();
-	return pDeclCallable && pDeclCallable->IsSet(DeclCallable::Flag::EndMarker);
-}
-#endif
-
 String Expr_Caller::ToString(const StringStyle& ss) const
 {
 	bool argListFlag = HasExprCdr() || !GetAttr().IsEmpty() || !HasExprOfBlock();
@@ -1175,22 +1141,6 @@ void Expr_Caller::SetExprTrailer(Expr_Caller* pExprTrailer)
 {
 	_pExprTrailer.reset(pExprTrailer);
 	if (_pExprTrailer) _pExprTrailer->SetExprParent(this);
-}
-
-void Expr_Caller::AppendExprTrailer(Expr_Caller* pExprTrailer)
-{
-#if 0
-	if (_pExprOfBlock.IsNull()) {
-		SetBlock(new Expr_Block());
-		_implicitBlockFlag = true;
-	}
-	if (_implicitBlockFlag) {
-		_pExprOfBlock->AddExpr(pExprCaller);
-	} else {
-		GetLastTrailer()->SetTrailer(pExprCaller);
-	}
-#endif
-	GetExprTrailerLast().SetExprTrailer(pExprTrailer);
 }
 
 Expr_Caller& Expr_Caller::GetExprTrailerLast()
