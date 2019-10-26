@@ -189,15 +189,15 @@ PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStr.Reference(), _pSymbolSuffix, _target, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStr.Reference(), _target, _pSymbolSuffix, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStr.Reference(), _pSymbolSuffix, _target, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStr.Reference(), _target, _pSymbolSuffix, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStr.Reference(), _pSymbolSuffix, _target);
+			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStr.Reference(), _target, _pSymbolSuffix);
 		} else {
-			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStr.Reference(), _pSymbolSuffix, _target);
+			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStr.Reference(), _target, _pSymbolSuffix);
 		}
 	}
 	return _pPUnitCreated;

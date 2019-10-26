@@ -230,20 +230,20 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	RefPtr<StringReferable> _pStr;
-	const Symbol* _pSymbolSuffix;
 	SuffixMgr::Target _target;
+	const Symbol* _pSymbolSuffix;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Suffixed(StringReferable* pStr, const Symbol* pSymbolSuffix, SuffixMgr::Target target) :
-		_pStr(pStr), _pSymbolSuffix(pSymbolSuffix), _target(target) {}
-	PUnit_Suffixed(StringReferable* pStr, const Symbol* pSymbolSuffix, SuffixMgr::Target target, Expr* pExpr) :
-		PUnit_Suffixed(pStr, pSymbolSuffix, target) { _ppExprSrc[0] = pExpr; }
+	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix) :
+		_pStr(pStr), _target(target), _pSymbolSuffix(pSymbolSuffix) {}
+	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExpr) :
+		PUnit_Suffixed(pStr, target, pSymbolSuffix) { _ppExprSrc[0] = pExpr; }
 public:
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
-	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
 	SuffixMgr::Target GetTarget() const { return _target; }
+	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -261,11 +261,11 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_Suffixed");
 private:
 	RefPtr<StringReferable> _pStr;
-	const Symbol* _pSymbolSuffix;
 	SuffixMgr::Target _target;
+	const Symbol* _pSymbolSuffix;
 public:
-	PUnitFactory_Suffixed(StringReferable* pStr, const Symbol* pSymbolSuffix, SuffixMgr::Target target, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pStr(pStr), _pSymbolSuffix(pSymbolSuffix), _target(target) {}
+	PUnitFactory_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pStr(pStr), _target(target), _pSymbolSuffix(pSymbolSuffix) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Suffixed<1, false>) : sizeof(PUnit_Suffixed<0, false>);
 	}

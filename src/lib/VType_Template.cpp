@@ -573,7 +573,7 @@ Gurax_ImplementPropertyGetter(Template, exprForInit)
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
 //------------------------------------------------------------------------------
-Gurax_ImplementSuffixMgr(String, T)
+Gurax_ImplementSuffixMgr_Eval(String, T)
 {
 	RefPtr<Template> pTmpl(new Template());
 	bool autoIndentFlag = true;

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 // Macros to implement suffix managers
 //------------------------------------------------------------------------------
-#define Gurax_ImplementSuffixMgr(target, symbol) \
+#define Gurax_ImplementSuffixMgr_Eval(target, symbol) \
 class SuffixMgr_##target##_##symbol : public SuffixMgr { \
 public: \
 	SuffixMgr_##target##_##symbol() : SuffixMgr(SuffixMgr::Target::target, Symbol::Add(#symbol)) {} \
@@ -16,10 +16,20 @@ public: \
 }; \
 Value* SuffixMgr_##target##_##symbol::Eval(Processor& processor, const char* str) const
 
+#define Gurax_ImplementSuffixMgr_Compose(target, symbol) \
+class SuffixMgr_##target##_##symbol : public SuffixMgr { \
+public: \
+	SuffixMgr_##target##_##symbol() : SuffixMgr(SuffixMgr::Target::target, Symbol::Add(#symbol)) {} \
+	virtual void Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const override; \
+}; \
+void SuffixMgr_##target##_##symbol::Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const
+
 #define Gurax_AssignSuffixMgr(target, symbol) \
 Basement::Inst.AssignSuffixMgr(new SuffixMgr_##target##_##symbol())
 
 namespace Gurax {
+
+class Composer;
 
 //------------------------------------------------------------------------------
 // SuffixMgr
@@ -47,7 +57,8 @@ protected:
 public:
 	Target GetTarget() const { return _target; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
-	virtual Value* Eval(Processor& processor, const char* str) const = 0;
+	virtual Value* Eval(Processor& processor, const char* str) const;
+	virtual void Compose(Composer& composer, const StringReferable& strRef, const Expr* pExpr) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const SuffixMgr& suffixMgr) const { return this == &suffixMgr; }

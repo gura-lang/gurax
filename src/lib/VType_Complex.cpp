@@ -281,6 +281,20 @@ Gurax_ImplementOpBinary(Sub, Number, Complex)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of suffix manager
+//------------------------------------------------------------------------------
+Gurax_ImplementSuffixMgr_Compose(Number, j)
+{
+	bool successFlag = false;
+	Double num = strRef.GetStringSTL().ToNumber(&successFlag);
+	if (!successFlag) {
+		String::IssueError_InvalidFormatOfNumber();
+		return;
+	}
+	composer.Add_Value(new Value_Complex(Complex(0, num)), pExpr);	// [Value]
+}
+
+//------------------------------------------------------------------------------
 // VType_Complex
 //------------------------------------------------------------------------------
 VType_Complex VTYPE_Complex("Complex");
@@ -317,6 +331,8 @@ void VType_Complex::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Sub,	Complex, Complex);
 	Gurax_AssignOpBinary(Sub,	Complex, Number);
 	Gurax_AssignOpBinary(Sub,	Number, Complex);
+	// Assignment of suffix manager
+	Gurax_AssignSuffixMgr(Number, j);
 }
 
 Value* VType_Complex::DoCastFrom(const Value& value, DeclArg::Flags flags) const

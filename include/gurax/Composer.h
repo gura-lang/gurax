@@ -90,9 +90,9 @@ public:
 	void Add_Lookup(const Symbol* pSymbol, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Lookup(pSymbol, Expr::Reference(pExprSrc)));
 	}
-	void Add_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, SuffixMgr::Target target,
+	void Add_Suffixed(StringReferable* pStrSegment, SuffixMgr::Target target, const Symbol* pSymbolSuffix,
 					  const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_Suffixed(pStrSegment, pSymbolSuffix, target, Expr::Reference(pExprSrc)));
+		SetFactory(new PUnitFactory_Suffixed(pStrSegment, target, pSymbolSuffix, Expr::Reference(pExprSrc)));
 	}
 	void Add_AssignToSymbol(const Symbol* pSymbol, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_AssignToSymbol(pSymbol, Expr::Reference(pExprSrc)));
