@@ -573,6 +573,16 @@ Gurax_ImplementPropertyGetter(Template, exprForInit)
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
 //------------------------------------------------------------------------------
+#if 0
+Gurax_ImplementSuffixMgr_Compose(String, T)
+{
+	RefPtr<Template> pTmpl(new Template());
+	bool autoIndentFlag = true;
+	bool appendLastEOLFlag = false;
+	if (!pTmpl->ParseString(strRef.GetString(), autoIndentFlag, appendLastEOLFlag)) return;
+	composer.Add_Value(new Value_Template(pTmpl.release()));		// [Value]
+}
+#else
 Gurax_ImplementSuffixMgr_Eval(String, T)
 {
 	RefPtr<Template> pTmpl(new Template());
@@ -581,6 +591,7 @@ Gurax_ImplementSuffixMgr_Eval(String, T)
 	if (!pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag)) return Value::nil();
 	return new Value_Template(pTmpl.release());
 }
+#endif
 
 //------------------------------------------------------------------------------
 // VType_Template

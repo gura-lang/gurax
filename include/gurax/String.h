@@ -350,7 +350,7 @@ protected:
 	// Destructor
 	virtual ~StringReferable() = default;
 public:
-	const char* GetString() { return _str.c_str(); }
+	const char* GetString() const { return _str.c_str(); }
 	String& GetStringSTL() { return _str; }
 	const String& GetStringSTL() const { return _str; }
 };
