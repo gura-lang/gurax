@@ -7,6 +7,7 @@
 #include "DeclCallable.h"
 #include "Operator.h"
 #include "Value.h"
+#include "SuffixMgr.h"
 
 namespace Gurax {
 
@@ -569,16 +570,15 @@ public:
 protected:
 	RefPtr<StringReferable> _pStrSegment;
 	const Symbol* _pSymbolSuffix;
-	bool _numberFlag;
+	SuffixMgr::Target _target;
 public:
-	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, bool numberFlag) :
-		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _numberFlag(numberFlag) {}
+	Expr_Suffixed(StringReferable* pStrSegment, const Symbol* pSymbolSuffix, SuffixMgr::Target target) :
+		Expr_Node(typeInfo), _pStrSegment(pStrSegment), _pSymbolSuffix(pSymbolSuffix), _target(target) {}
 	const StringReferable& GetSegmentReferable() const { return *_pStrSegment; }
 	const char* GetSegment() const { return _pStrSegment->GetString(); }
 	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
 	const Symbol* GetSymbolSuffix() const { return _pSymbolSuffix; }
-	bool IsNumber() const { return _numberFlag; }
-	bool IsString() const { return !_numberFlag; }
+	SuffixMgr::Target GetTarget() const { return _target; }
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;

@@ -418,7 +418,7 @@ const Expr::TypeInfo Expr_Suffixed::typeInfo("Suffixed");
 
 void Expr_Suffixed::Compose(Composer& composer)
 {
-	if (IsNumber() && GetSymbolSuffix()->IsIdentical(Gurax_Symbol(j))) {
+	if (GetTarget() == SuffixMgr::Target::Number && GetSymbolSuffix()->IsIdentical(Gurax_Symbol(j))) {
 		bool successFlag = false;
 		Double num = GetSegmentSTL().ToNumber(&successFlag);
 		if (!successFlag) {
@@ -427,14 +427,14 @@ void Expr_Suffixed::Compose(Composer& composer)
 		}
 		composer.Add_Value(new Value_Complex(Complex(0, num)), this);	// [Value]
 	} else {
-		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetSymbolSuffix(), IsNumber());
+		composer.Add_Suffixed(GetSegmentReferable().Reference(), GetSymbolSuffix(), GetTarget());
 	}
 }
 
 String Expr_Suffixed::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += IsNumber()? GetSegmentSTL() : GetSegmentSTL().MakeQuoted(true);
+	str += (GetTarget() == SuffixMgr::Target::Number)? GetSegmentSTL() : GetSegmentSTL().MakeQuoted(true);
 	str += GetSymbolSuffix()->GetName();
 	return str;
 }

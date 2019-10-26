@@ -202,11 +202,11 @@ bool Parser::ReduceOneToken()
 	} else if (pToken->IsType(TokenType::NumberSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> NumberSuffixed\n"));
 		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable().Reference(),
-									  Symbol::Add(pToken->GetSuffix()), true));
+										 Symbol::Add(pToken->GetSuffix()), SuffixMgr::Target::Number));
 	} else if (pToken->IsType(TokenType::StringSuffixed)) {
 		DBGPARSER(::printf("Reduce: Expr(Suffixed) -> StringSuffixed\n"));
 		pExprGen.reset(new Expr_Suffixed(pToken->GetSegmentReferable().Reference(),
-									  Symbol::Add(pToken->GetSuffix()), false));
+										 Symbol::Add(pToken->GetSuffix()), SuffixMgr::Target::String));
 	} else {
 		IssueError(ErrorType::SyntaxError, pToken, "unexpected token: %s", pToken->GetSymbol());
 		return false;

@@ -165,7 +165,7 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	const SuffixMgr* pSuffixMgr = IsNumber()?
+	const SuffixMgr* pSuffixMgr = (GetTarget() == SuffixMgr::Target::Number) ?
 		Basement::Inst.LookupSuffixMgr_Number(GetSymbolSuffix()) :
 		Basement::Inst.LookupSuffixMgr_String(GetSymbolSuffix());
 	if (!pSuffixMgr) {
@@ -191,15 +191,15 @@ PUnit* PUnitFactory_Suffixed::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStr.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Suffixed<1, true>(_pStr.Reference(), _pSymbolSuffix, _target, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStr.Reference(), _pSymbolSuffix, _numberFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Suffixed<1, false>(_pStr.Reference(), _pSymbolSuffix, _target, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStr.Reference(), _pSymbolSuffix, _numberFlag);
+			_pPUnitCreated = new PUnit_Suffixed<0, true>(_pStr.Reference(), _pSymbolSuffix, _target);
 		} else {
-			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStr.Reference(), _pSymbolSuffix, _numberFlag);
+			_pPUnitCreated = new PUnit_Suffixed<0, false>(_pStr.Reference(), _pSymbolSuffix, _target);
 		}
 	}
 	return _pPUnitCreated;
