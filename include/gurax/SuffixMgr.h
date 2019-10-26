@@ -5,6 +5,20 @@
 #define GURAX_SUFFIXMGR_H
 #include "Referable.h"
 
+//------------------------------------------------------------------------------
+// Macros to implement suffix managers
+//------------------------------------------------------------------------------
+#define Gurax_ImplementSuffixMgr(target, symbol) \
+class SuffixMgr_##target##_##symbol : public SuffixMgr { \
+public: \
+	SuffixMgr_##target##_##symbol() : SuffixMgr(SuffixMgr::Target::target, Symbol::Add(#symbol)) {} \
+	virtual Value* Eval(Processor& processor, const char* str) const override; \
+}; \
+Value* SuffixMgr_##target##_##symbol::Eval(Processor& processor, const char* str) const
+
+#define Gurax_AssignSuffixMgr(target, symbol) \
+Basement::Inst.AssignSuffixMgr_##target(new SuffixMgr_##target##_##symbol())
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
@@ -14,11 +28,14 @@ class GURAX_DLLDECLARE SuffixMgr : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(SuffixMgr);
+public:
+	enum class Target { Number, String };
 private:
+	Target _target;
 	const Symbol* _pSymbol;
 public:
 	// Constructor
-	SuffixMgr(const Symbol* pSymbol) : _pSymbol(pSymbol) {}
+	SuffixMgr(Target target, const Symbol* pSymbol) : _target(target), _pSymbol(pSymbol) {}
 	// Copy constructor/operator
 	SuffixMgr(const SuffixMgr& src) = delete;
 	SuffixMgr& operator=(const SuffixMgr& src) = delete;
@@ -28,6 +45,7 @@ public:
 protected:
 	virtual ~SuffixMgr() = default;
 public:
+	Target GetTarget() const { return _target; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	virtual Value* Eval(Processor& processor, const char* str) const = 0;
 public:

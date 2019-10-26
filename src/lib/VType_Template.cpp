@@ -3,20 +3,6 @@
 //==============================================================================
 #include "stdafx.h"
 
-//------------------------------------------------------------------------------
-// Macros to implement unary operators
-//------------------------------------------------------------------------------
-#define Gurax_ImplementSuffixMgr(target, symbol) \
-class SuffixMgr_##target##_##symbol : public SuffixMgr { \
-public: \
-	SuffixMgr_##target##_##symbol() : SuffixMgr(Symbol::Add(#symbol)) {} \
-	virtual Value* Eval(Processor& processor, const char* str) const override; \
-}; \
-Value* SuffixMgr_##target##_##symbol::Eval(Processor& processor, const char* str) const
-
-#define Gurax_AssignSuffixMgr(target, symbol) \
-Basement::Inst.AssignSuffixMgr_##target(new SuffixMgr_##target##_##symbol())
-
 namespace Gurax {
 
 //------------------------------------------------------------------------------
