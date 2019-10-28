@@ -17,7 +17,7 @@ builder.Run()
 //------------------------------------------------------------------------------
 tmpl_test = R'''
 #!/usr/bin/env gurax
-import(util.test) {*}
+import(util.tester) {*}
 import(${dotName})
 
 TestCase('Basic test') {
@@ -54,12 +54,56 @@ Gurax_EndModuleHeader(${ubarName})
 //------------------------------------------------------------------------------
 tmpl_source = R'''
 //==============================================================================
-// Gura module: ${dotName}
+// ${fileName_main}
 //==============================================================================
-#include "${fileName_stdafx}"
+#include "stdafx.h"
 
-Gurax_BeginModuleBody(${ubarName})
-Gurax_EndModuleBody(${ubarName}, ${baseName})
+Gurax_BeginModule(${ubarName})
+
+//------------------------------------------------------------------------------
+// Implementation of function
+//------------------------------------------------------------------------------
+// re.Test()
+Gurax_DeclareFunction(Test)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Test)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Double num1 = args.PickNumber<Double>();
+	Double num2 = args.PickNumber<Double>();
+	// Function body
+	return new Value_Number(num1 + num2);
+}
+
+//------------------------------------------------------------------------------
+// Entries
+//------------------------------------------------------------------------------
+Gurax_ModuleValidate()
+{
+	return true;
+}
+
+Gurax_ModulePrepare()
+{
+	// Assignment of function
+	Assign(Gurax_CreateFunction(Test));
+	return true;
+}
+
+Gurax_ModuleTerminate()
+{
+}
+
+Gurax_EndModule(${ubarName})
 '''T
 
 strHelp = R'''
@@ -83,9 +127,9 @@ main() = {
 	fileName_test = 'test-' + ubarName + '.gura'
 	fileName_stdafx = 'stdafx.h'
 	fileName_header = 'module-' + ubarName + '.h'
-	fileName_source = 'module-' + ubarName + '.cpp'
+	fileName_main = 'module-' + ubarName + '.cpp'
 	incOnceMacroName = 'GURAX_MODULE_' + ubarName.Upper()  + '_H'
-	if (fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_source]).Or()) {
+	if (fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
@@ -93,14 +137,14 @@ main() = {
 	tmpl_test.Render(Open(fileName_test, 'w'))
 	tmpl_stdafx.Render(Open(fileName_stdafx, 'w'))
 	tmpl_header.Render(Open(fileName_header, 'w'))
-	tmpl_source.Render(Open(fileName_source, 'w'))
+	tmpl_source.Render(Open(fileName_main, 'w'))
 	//fs.ChangeMode('a+x', fileName_build)
 	//fs.ChangeMode('a+x', fileName_test)
 	R'''
 	Following files were generated.
 	- Build Script: ${fileName_build}
 	- Test Script:  ${fileName_test}
-	- Source Files: ${fileName_stdafx}, ${fileName_header}, ${fileName_source}
+	- Source Files: ${fileName_stdafx}, ${fileName_header}, ${fileName_main}
 	'''.RenderTemplate(sys.cout)
 }
 

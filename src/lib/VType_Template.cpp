@@ -580,7 +580,6 @@ Gurax_ImplementSuffixMgr_Compose(String, T)
 	bool autoIndentFlag = true;
 	bool appendLastEOLFlag = false;
 	if (!pTmpl->ParseString(strRef.GetString(), autoIndentFlag, appendLastEOLFlag)) return;
-	//if (!pTmpl->ParseString("${value}", autoIndentFlag, appendLastEOLFlag)) return;
 	composer.Add_Value(new Value_Template(pTmpl.release()));		// [Value]
 }
 #else
