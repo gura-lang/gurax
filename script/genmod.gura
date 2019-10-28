@@ -1,4 +1,5 @@
 #!/usr/bin/env gurax
+import(argopt)
 
 //------------------------------------------------------------------------------
 // Template of build.gura
@@ -115,11 +116,15 @@ usage: genmod.gura module-name
 // main
 //------------------------------------------------------------------------------
 main() = {
-	if (sys.argv.len < 2) {
+	[argv, opt] = argopt.Parser {|p|
+		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
+		p.Parse(sys.argv)
+	}
+	if (argv.len < 1) {
 		sys.cerr.Print(strHelp)
 		sys.Exit(1)
 	}
-	fields = path.FileName(sys.argv[1]).Split('.'):list
+	fields = path.FileName(argv[0]).Split('.'):list
 	dotName = fields.Join('.')
 	ubarName = fields.Join('_')
 	baseName = fields[-1]
@@ -129,7 +134,8 @@ main() = {
 	fileName_header = 'module-' + ubarName + '.h'
 	fileName_main = 'module-' + ubarName + '.cpp'
 	incOnceMacroName = 'GURAX_MODULE_' + ubarName.Upper()  + '_H'
-	if (fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
+	if (!opt.Get('force') && \
+		fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
@@ -138,8 +144,8 @@ main() = {
 	tmpl_stdafx.Render(Open(fileName_stdafx, 'w'))
 	tmpl_header.Render(Open(fileName_header, 'w'))
 	tmpl_source.Render(Open(fileName_main, 'w'))
-	//fs.ChangeMode('a+x', fileName_build)
-	//fs.ChangeMode('a+x', fileName_test)
+	fs.ChangeMode(fileName_build, 'a+x')
+	fs.ChangeMode(fileName_test, 'a+x')
 	R'''
 	Following files were generated.
 	- Build Script: ${fileName_build}
