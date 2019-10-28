@@ -1,0 +1,216 @@
+#!/usr/bin/env gurax
+import(argopt)
+
+//------------------------------------------------------------------------------
+// Class_Template of build.gura
+//------------------------------------------------------------------------------
+tmpl_header = R'''
+//==============================================================================
+// VType_${className}.h
+//==============================================================================
+#ifndef ${incOnceMacroName}
+#define ${incOnceMacroName}
+#include <gurax.h>
+
+Gurax_BeginModuleScope(${ubarModuleName})
+
+//------------------------------------------------------------------------------
+// VType_${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE VType_${className} : public VType {
+public:
+	using VType::VType;
+	virtual void DoPrepare(Frame& frameOuter) override;
+};
+
+extern VType_${className} VTYPE_${className};
+
+//------------------------------------------------------------------------------
+// Value_${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Value_${className} : public Value_Object {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Value_${className});
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Value_${className}");
+protected:
+	RefPtr<${className}> _p${className};
+public:
+	static VType& vtype;
+public:
+	// Constructor
+	Value_${className}() = delete;
+	Value_${className}(${className}* p${className}, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _p${className}(p${className}) {}
+	// Copy constructor/operator
+	Value_${className}(const Value_${className}& src) :
+		Value_Object(src), _p${className}(src._p${className}->Reference()) {}
+	Value_${className}& operator=(const Value_${className}& src) = delete;
+	// Move constructor/operator
+	Value_${className}(Value_${className}&& src) = delete;
+	Value_${className}& operator=(Value_${className}&& src) noexcept = delete;
+protected:
+	// Destructor
+	~Value_${className}() = default;
+public:
+	${className}& Get${className}() { return *_p${className}; }
+	const ${className}& Get${className}() const { return *_p${className}; }
+public:
+	static ${className}& Get${className}(Value& value) {
+		return dynamic_cast<Value_${className}&>(value).Get${className}();
+	}
+	static const ${className}& Get${className}(const Value& value) {
+		return dynamic_cast<const Value_${className}&>(value).Get${className}();
+	}
+public:
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override {
+		return Get${className}().CalcHash();
+	}
+	virtual bool IsEqualTo(const Value* pValue) const override {
+		return IsSameType(pValue) &&
+			Get${className}().IsEqualTo(Value_${className}::Get${className}(*pValue));
+	}
+	virtual bool IsLessThan(const Value* pValue) const override {
+		return IsSameType(pValue)?
+			Get${className}().IsLessThan(Value_${className}::Get${className}(*pValue)) :
+			GetVType().IsLessThan(pValue->GetVType());
+	}
+	virtual String ToStringDetail(const StringStyle& ss) const override {
+		return Get${className}().ToString(ss);
+	}
+};
+
+Gurax_EndModuleScope(${ubarModuleName})
+
+#endif
+'''T
+
+//------------------------------------------------------------------------------
+// Template of test-NAME.gura
+//------------------------------------------------------------------------------
+tmpl_source = R'''
+//==============================================================================
+// VType_Group.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(re)
+
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
+// re.Group#begin
+Gurax_DeclareProperty_R(Group, begin)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Group, begin)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Group& group = valueThis.GetGroup();
+	return new Value_Number(group.GetPosBegin());
+}
+
+// re.Group#end
+Gurax_DeclareProperty_R(Group, end)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Group, end)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Group& group = valueThis.GetGroup();
+	return new Value_Number(group.GetPosEnd());
+}
+
+// re.Group#string
+Gurax_DeclareProperty_R(Group, string)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Group, string)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Group& group = valueThis.GetGroup();
+	return new Value_String(group.GetString());
+}
+
+//------------------------------------------------------------------------------
+// VType_Group
+//------------------------------------------------------------------------------
+VType_Group VTYPE_Group("Group");
+
+void VType_Group::DoPrepare(Frame& frameOuter)
+{
+	// VType settings
+	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Group, begin));
+	Assign(Gurax_CreateProperty(Group, end));
+	Assign(Gurax_CreateProperty(Group, string));
+}
+
+//------------------------------------------------------------------------------
+// Value_Group
+//------------------------------------------------------------------------------
+VType& Value_Group::vtype = VTYPE_Group;
+
+Gurax_EndModuleScope(re)
+'''T
+
+//------------------------------------------------------------------------------
+// main
+//------------------------------------------------------------------------------
+main() = {
+	[argv, opt] = argopt.Parser {|p|
+		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
+		p.Parse(sys.argv)
+	}
+	if (argv.len < 1) {
+		sys.cerr.Print(strHelp)
+		sys.Exit(1)
+	}
+	fields = path.FileName(argv[0]).Split('.'):list
+	if (fields.len == 1) {
+		ubarModuleName = nil
+	} else {
+		fieldsSub = fields.Head(fields.len - 1):list
+		ubarModuleName = fieldsSub.Join('_')
+	}
+	className = fields[-1]
+	fileName_header = 'VType_' + className + '.h'
+	fileName_source = 'VType_' + className + '.cpp'
+	incOnceMacroName = if (ubarModuleName) {
+		'GURAX_MODULE_' + ubarModuleName.Upper() + '_VTYPE_' + className.Upper() + '_H'
+	} else {
+		'GURAX_VTYPE_' + className.Upper() + '_H'
+	}
+	if (!opt.Get('force') && \
+		fs.Exists([fileName_header, fileName_source]).Or()) {
+		sys.cerr.Println('file already exists')
+		sys.Exit(1)
+	}
+	tmpl_header.Render(Open(fileName_header, 'w'))
+	tmpl_source.Render(Open(fileName_source, 'w'))
+	R'''
+	Following files were generated.
+	- Source Files: ${fileName_header}, ${fileName_source}
+	'''.RenderTemplate(sys.cout)
+}
+
+main()
