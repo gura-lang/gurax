@@ -133,7 +133,7 @@ Gurax_DeclareMethod(${className}, MethodSkeleton)
 Gurax_ImplementMethod(${className}, MethodSkeleton)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
+	//auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
 	Double num1 = args.PickNumber<Double>();
