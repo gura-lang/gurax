@@ -64,6 +64,9 @@ public:
 			clear();
 		}
 	};
+public:
+	int argc;
+	const char** argv;
 private:
 	OptOwner _optOwner;
 	OptMapByKeyLong _optMapByKeyLong;
@@ -72,7 +75,7 @@ private:
 	String _strErr;
 public:
 	// Constructor
-	CommandLine() {}
+	CommandLine();
 	// Copy constructor/operator
 	CommandLine(const CommandLine& src) = delete;
 	CommandLine& operator=(const CommandLine& src) = delete;
@@ -80,7 +83,7 @@ public:
 	CommandLine(CommandLine&& src) = delete;
 	CommandLine& operator=(CommandLine&& src) noexcept = delete;
 	// Destructor
-	~CommandLine() = default;
+	~CommandLine();
 public:
 	CommandLine& AddOpt(Opt* pOpt);
 	CommandLine& OptBool(String keyLong, char keyShort) {
@@ -96,10 +99,10 @@ public:
 		return AddOpt(new Opt(Type::MultiString, std::move(keyLong), keyShort));
 	}
 	void ClearMap() { _map.Clear(); }
-	bool Parse(int& argc, const char* argv[]);
-	bool Parse(int& argc, char* argv[]) { return Parse(argc, const_cast<const char**>(argv)); }
-	bool IsSpecified(const char* keyLong);
-	bool GetBool(const char* keyLong);
+	bool Parse(int argc, const char* argv[]);
+	bool Parse(int argc, char* argv[]) { return Parse(argc, const_cast<const char**>(argv)); }
+	bool IsSpecified(const char* keyLong) const;
+	bool GetBool(const char* keyLong) const;
 	const char* GetString(const char* keyLong, const char* defValue) const;
 	const StringList& GetStringList(const char* keyLong) const;
 	Int GetInt(const char* keyLong, Int defValue) const;

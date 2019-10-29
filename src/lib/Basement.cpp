@@ -11,8 +11,7 @@ namespace Gurax {
 Basement Basement::Inst;
 
 Basement::Basement() :
-	_argc(0), _argv(nullptr), _debugFlag(false), _listingFlag(false), _commandDoneFlag(false),
-	_pFrame(new Frame_Basement()), _pSuffixMgrMap(new SuffixMgrMap()),
+	_commandDoneFlag(false), _pFrame(new Frame_Basement()), _pSuffixMgrMap(new SuffixMgrMap()),
 	_ps1(">>> "), _ps2("... ")
 {
 }
@@ -20,20 +19,17 @@ Basement::Basement() :
 bool Basement::Initialize(int& argc, char** argv)
 {
 	if (!_cmdLine
-		.OptMultiString	("import",		'i')
-		.OptMultiString	("command",		'c')
-		.OptMultiString	("module-path",	'I')
-		.OptBool		("debug",		'g')
-		.OptBool		("list",		'L')
+		.OptMultiString	("import",			'i')
+		.OptMultiString	("command",			'c')
+		.OptMultiString	("module-path",		'I')
+		.OptBool		("debug",			'g')
+		.OptBool		("list",			'L')
+		.OptBool		("shared-script",	'S')
 		.Parse(argc, argv)) {
 		Error::Issue(ErrorType::CommandError, "%s", _cmdLine.GetError());
 		return false;
 	}
-	_argc = argc;
-	_argv = argv;
-	_debugFlag = _cmdLine.GetBool("debug");
-	_listingFlag = _cmdLine.GetBool("list");
-	_pProcessor.reset(Processor::Create(GetDebugFlag()));
+	_pProcessor.reset(Processor::Create(_cmdLine.GetBool("debug")));
 	PrepareVType();
 	PrepareValue();
 	PreparePathList();

@@ -18,8 +18,6 @@ class GURAX_DLLDECLARE Basement {
 private:
 	int _argc;
 	char** _argv;
-	bool _debugFlag;
-	bool _listingFlag;
 	bool _commandDoneFlag;
 	RefPtr<Frame> _pFrame;
 	RefPtr<Stream> _pStreamCIn;
@@ -50,8 +48,6 @@ public:
 	int GetArgc() const { return _argc; }
 	char** GetArgv() const { return _argv; }
 	const CommandLine& GetCommandLine() const { return _cmdLine; }
-	bool GetDebugFlag() const { return _debugFlag; }
-	bool GetListingFlag() const { return _listingFlag; }
 	bool GetCommandDoneFlag() const { return _commandDoneFlag; }
 	void PrepareVType();
 	void PrepareValue();

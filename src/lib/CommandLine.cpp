@@ -8,6 +8,15 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // CommandLine
 //------------------------------------------------------------------------------
+CommandLine::CommandLine() : argc(0), argv(nullptr)
+{
+}
+
+CommandLine::~CommandLine()
+{
+	delete[] argv;
+}
+
 CommandLine& CommandLine::AddOpt(Opt* pOpt)
 {
 	_optOwner.push_back(pOpt);
@@ -16,7 +25,7 @@ CommandLine& CommandLine::AddOpt(Opt* pOpt)
 	return *this;
 }
 
-bool CommandLine::Parse(int& argc, const char* argv[])
+bool CommandLine::Parse(int _argc, const char* _argv[])
 {
 	enum class Stat { Key, Value };
 	Stat stat = Stat::Key;
@@ -51,9 +60,12 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 		argc--;
 		for ( ; iArg < argc; iArg++) argv[iArg] = argv[iArg + 1];
 	};
+	this->argc = _argc;
+	this->argv = new const char*[this->argc];
+	for (int iArg = 0; iArg < this->argc; iArg++) this->argv[iArg] = _argv[iArg];
 	_strErr.clear();
-	for (int iArg = 1; iArg < argc; ) {
-		const char* arg = argv[iArg];
+	for (int iArg = 1; iArg < this->argc; ) {
+		const char* arg = this->argv[iArg];
 		if (stat == Stat::Key) {
 			if (arg[0] != '-') { // non-option argument
 				break;
@@ -103,10 +115,10 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 					} else if (!FeedValue(pOpt, value, false)) return false;
 				}
 			}
-			ShiftArg(argc, argv, iArg);
+			ShiftArg(this->argc, this->argv, iArg);
 		} else if (stat == Stat::Value) {
 			if (!FeedValue(pOpt, arg, false)) return false;
-			ShiftArg(argc, argv, iArg);
+			ShiftArg(this->argc, this->argv, iArg);
 			stat = Stat::Key;
 		}
 	}
@@ -117,12 +129,12 @@ bool CommandLine::Parse(int& argc, const char* argv[])
 	return true;
 }
 
-bool CommandLine::IsSpecified(const char* keyLong)
+bool CommandLine::IsSpecified(const char* keyLong) const
 {
 	return _map.find(keyLong) != _map.end();
 }
 
-bool CommandLine::GetBool(const char* keyLong)
+bool CommandLine::GetBool(const char* keyLong) const
 {
 	return IsSpecified(keyLong);
 }

@@ -17,41 +17,29 @@ void RunREPL();
 //------------------------------------------------------------------------------
 // Main
 //------------------------------------------------------------------------------
-int Main(int argc, char* argv[])
+bool Main()
 {
-	if (!Initialize(argc, argv)) {
-		Error::Print(*Stream::CErr);
-		return 1;
-	}
-	if (argc < 2) {
+	const CommandLine& cmdLine = Basement::Inst.GetCommandLine();
+	if (cmdLine.argc < 2) {
 		if (!Basement::Inst.GetCommandDoneFlag()) RunREPL();
-		return 0;
+		return true;
 	}
-	const char* fileName = argv[1];
+	const char* fileName = cmdLine.argv[1];
 	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
-	if (!pStream) return 1;
+	if (!pStream) return false;
 	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(*pStream));
-	if (!pExprRoot) {
-		Error::Print(*Stream::CErr);
-		return 1;
-	}
+	if (!pExprRoot) return false;
 	Composer composer;
 	pExprRoot->Compose(composer);
-	if (Error::IsIssued()) {
-		Error::Print(*Stream::CErr);
-		return 1;
-	}
-	if (Basement::Inst.GetListingFlag()) {
+	if (Error::IsIssued()) return false;
+	if (cmdLine.GetBool("list")) {
 		composer.PrintPUnit();
 	} else {
 		Processor& processor = Basement::Inst.GetProcessor();
 		RefPtr<Value> pValue(processor.ProcessExpr(*pExprRoot));
-		if (Error::IsIssued()) {
-			Error::Print(*Stream::CErr);
-			return 1;
-		}
+		if (Error::IsIssued()) return false;
 	}
-	return 0;
+	return true;
 }
 
 //------------------------------------------------------------------------------
@@ -149,5 +137,7 @@ bool ReadLine(const char* prompt, String& strLine)
 
 int main(int argc, char* argv[])
 {
-	return Gurax::Main(argc, argv);
+	if (Gurax::Initialize(argc, argv) && Gurax::Main()) return 0;
+	Gurax::Error::Print(*Gurax::Stream::CErr);
+	return 1;
 }
