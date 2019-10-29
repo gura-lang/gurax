@@ -220,6 +220,30 @@ Gurax_ImplementFunction(CreateDir)
 	return Value::nil();
 }
 
+// fs.CreateLink(pathNameSrc:String, pathNameDst:String):map:void
+Gurax_DeclareFunction(CreateLink)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Copies a symbolic link.\n");
+}
+
+Gurax_ImplementFunction(CreateLink)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathNameSrc = args.PickString();
+	const char* pathNameDst = args.PickString();
+	// Function body
+	if (!OAL::CreateLink(pathNameSrc, pathNameDst)) {
+		Error::Issue(ErrorType::IOError, "failed to create a link");
+	}
+	return Value::nil();
+}
+
 // fs.Exists(pathName:String):map
 Gurax_DeclareFunction(Exists)
 {
@@ -349,6 +373,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Copy));
 	Assign(Gurax_CreateFunction(CopyDir));
 	Assign(Gurax_CreateFunction(CreateDir));
+	Assign(Gurax_CreateFunction(CreateLink));
 	Assign(Gurax_CreateFunction(Exists));
 	Assign(Gurax_CreateFunction(GetCurDir));
 	Assign(Gurax_CreateFunction(Remove));

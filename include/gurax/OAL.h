@@ -193,6 +193,7 @@ public:
 	static bool ChangeMode(const char* pathName, mode_t mode, bool followLinkFlag);
 	static bool ChangeMode(const char* pathName, const char* mode, bool followLinkFlag);
 	static bool Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExistFlag, bool followLinkFlag);
+	static bool CreateLink(const char* pathNameSrc, const char* pathNameDst);
 	static bool CreateDir(const char* dirName);
 	static bool IsDir(const char* pathName, bool* pExistFlag = nullptr);
 	static String GetCurDir();

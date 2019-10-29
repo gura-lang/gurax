@@ -357,6 +357,11 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 	return false;
 }
 
+bool OAL::CreateLink(const char* pathNameSrc, const char* pathNameDst)
+{
+	return false;
+}
+
 bool OAL::CreateDir(const char* dirName)
 {
 	return ::CreateDirectory(ToNativeString(dirName).c_str(), nullptr)? true : false;
@@ -689,6 +694,11 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 		// nothing to do
 	}
 	return false;
+}
+
+bool OAL::CreateLink(const char* pathNameSrc, const char* pathNameDst)
+{
+	return ::symlink(pathNameSrc, pathNameDst) == 0;
 }
 
 bool OAL::CreateDir(const char* dirName)

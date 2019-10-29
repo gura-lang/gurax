@@ -24,8 +24,12 @@ bool Main()
 		if (!Basement::Inst.GetCommandDoneFlag()) RunREPL();
 		return true;
 	}
-	const char* fileName = cmdLine.argv[1];
-	RefPtr<Stream> pStream(Stream::Open(PathName(fileName).MakeAbsName().c_str(), Stream::OpenFlag::Read));
+	const char* arg = cmdLine.argv[1];
+	String pathName =
+		PathName(pathName).IsAbsName()? arg :
+		cmdLine.GetBool("shared-script")? PathName(arg).JoinBefore(OAL::GetDirName_Script().c_str()) :
+		PathName(arg).MakeAbsName();
+	RefPtr<Stream> pStream(Stream::Open(pathName.c_str(), Stream::OpenFlag::Read));
 	if (!pStream) return false;
 	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(*pStream));
 	if (!pExprRoot) return false;
