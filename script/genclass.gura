@@ -8,11 +8,20 @@ tmpl_header = R'''
 //==============================================================================
 // VType_${className}.h
 //==============================================================================
-#ifndef ${incOnceMacroName}
-#define ${incOnceMacroName}
+${if (ubarModuleName)}
+#ifndef GURAX_MODULE_${ubarModuleName.Upper()}_VTYPE_${className.Upper()}_H
+#define GURAX_MODULE_${ubarModuleName.Upper()}_VTYPE_${className.Upper()}_H
+${else}
+#ifndef GURAX_VTYPE_${className.Upper()}_H
+#define GURAX_VTYPE_${className.Upper()}_H
+${end}
 #include <gurax.h>
 
+${if (ubarModuleName)}
 Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
 
 //------------------------------------------------------------------------------
 // VType_${className}
@@ -83,7 +92,11 @@ public:
 	}
 };
 
+${if (ubarModuleName)}
 Gurax_EndModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
 
 #endif
 '''T
@@ -97,7 +110,11 @@ tmpl_source = R'''
 //==============================================================================
 #include "stdafx.h"
 
-Gurax_BeginModuleScope(re)
+${if (ubarModuleName)}
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -170,7 +187,11 @@ void VType_Group::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Group::vtype = VTYPE_Group;
 
-Gurax_EndModuleScope(re)
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
 '''T
 
 strHelp = R'''
@@ -198,11 +219,6 @@ main() = {
 	className = fields[-1]
 	fileName_header = 'VType_' + className + '.h'
 	fileName_source = 'VType_' + className + '.cpp'
-	incOnceMacroName = if (ubarModuleName) {
-		'GURAX_MODULE_' + ubarModuleName.Upper() + '_VTYPE_' + className.Upper() + '_H'
-	} else {
-		'GURAX_VTYPE_' + className.Upper() + '_H'
-	}
 	if (!opt.Get('force') && \
 		fs.Exists([fileName_header, fileName_source]).Or()) {
 		sys.cerr.Println('file already exists')

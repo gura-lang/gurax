@@ -10,6 +10,12 @@ import(util.modbuild) {Builder}
 
 builder = Builder('${dotName}')
 builder.pathNamesSrc = ['module-${ubarName}.cpp']
+builder.pathNamesScript = []
+builder.dirNamesInc = []
+builder.dirNamesLib = []
+builder.cflags = []
+builder.ldflags = []
+builder.libs = []
 builder.Run()
 '''T
 
@@ -40,8 +46,8 @@ tmpl_header = R'''
 //==============================================================================
 // Gura module: ${dotName}
 //==============================================================================
-#ifndef ${incOnceMacroName}
-#define ${incOnceMacroName}
+#ifndef GURAX_MODULE_${ubarName.Upper()}_H
+#define GURAX_MODULE_${ubarName.Upper()}_H
 #include <gurax.h>
 
 Gurax_BeginModuleHeader(${ubarName})
@@ -72,7 +78,7 @@ Gurax_DeclareFunction(Test)
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Adds up the given two numbers and returns the result.");
 }
 
 Gurax_ImplementFunction(Test)
@@ -133,7 +139,6 @@ main() = {
 	fileName_stdafx = 'stdafx.h'
 	fileName_header = 'module-' + ubarName + '.h'
 	fileName_main = 'module-' + ubarName + '.cpp'
-	incOnceMacroName = 'GURAX_MODULE_' + ubarName.Upper()  + '_H'
 	if (!opt.Get('force') && \
 		fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
 		sys.cerr.Println('file already exists')
