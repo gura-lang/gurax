@@ -304,13 +304,12 @@ Gurax_ModulePrepare()
 {
 	// Initialization of global variable
 	do {
+		const CommandLine& cmdLine = Basement::Inst.GetCommandLine();
 		RefPtr<ValueOwner> pValues(new ValueOwner());
-		int argc = Basement::Inst.GetArgc();
-		char** argv = Basement::Inst.GetArgv();
-		if (argc > 1) {
-			pValues->reserve(argc - 1);
-			for (int iArg = 1; iArg < argc; iArg++) {
-				pValues->push_back(new Value_String(argv[iArg]));
+		if (cmdLine.argc > 1) {
+			pValues->reserve(cmdLine.argc - 1);
+			for (int iArg = 1; iArg < cmdLine.argc; iArg++) {
+				pValues->push_back(new Value_String(cmdLine.argv[iArg]));
 			}
 		}
 		g_pValue_argv.reset(new Value_List(VTYPE_String, pValues.release()));

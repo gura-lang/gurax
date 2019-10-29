@@ -16,8 +16,6 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Basement {
 private:
-	int _argc;
-	char** _argv;
 	bool _commandDoneFlag;
 	RefPtr<Frame> _pFrame;
 	RefPtr<Stream> _pStreamCIn;
@@ -44,9 +42,7 @@ public:
 	// Destructor
 	~Basement() = default;
 public:
-	bool Initialize(int& argc, char** argv);
-	int GetArgc() const { return _argc; }
-	char** GetArgv() const { return _argv; }
+	bool Initialize(int argc, char** argv);
 	const CommandLine& GetCommandLine() const { return _cmdLine; }
 	bool GetCommandDoneFlag() const { return _commandDoneFlag; }
 	void PrepareVType();

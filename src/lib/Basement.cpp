@@ -16,7 +16,7 @@ Basement::Basement() :
 {
 }
 
-bool Basement::Initialize(int& argc, char** argv)
+bool Basement::Initialize(int argc, char** argv)
 {
 	if (!_cmdLine
 		.OptMultiString	("import",			'i')
