@@ -8,8 +8,8 @@ tmpl_build = R'''
 #!/usr/bin/env gurax
 import(util.modbuild) {Builder}
 
-builder = Builder('${dotName}')
-builder.pathNamesSrc = ['module-${ubarName}.cpp']
+builder = Builder('${dotModuleName}')
+builder.pathNamesSrc = ['module-${ubarModuleName}.cpp']
 builder.pathNamesScript = []
 builder.dirNamesInc = []
 builder.dirNamesLib = []
@@ -25,10 +25,10 @@ builder.Run()
 tmpl_test = R'''
 #!/usr/bin/env gurax
 import(util.tester) {*}
-import(${dotName})
+import(${dotModuleName})
 
 TestCase('Basic test') {
-	Println(${dotName}.Test(3, 4))
+	Println(${dotModuleName}.Test(3, 4))
 }
 '''T
 
@@ -44,14 +44,14 @@ tmpl_stdafx = R'''
 //------------------------------------------------------------------------------
 tmpl_header = R'''
 //==============================================================================
-// Gura module: ${dotName}
+// Gura module: ${dotModuleName}
 //==============================================================================
-#ifndef GURAX_MODULE_${ubarName.Upper()}_H
-#define GURAX_MODULE_${ubarName.Upper()}_H
+#ifndef GURAX_MODULE_${ubarModuleName.Upper()}_H
+#define GURAX_MODULE_${ubarModuleName.Upper()}_H
 #include <gurax.h>
 
-Gurax_BeginModuleHeader(${ubarName})
-Gurax_EndModuleHeader(${ubarName})
+Gurax_BeginModuleHeader(${ubarModuleName})
+Gurax_EndModuleHeader(${ubarModuleName})
 
 #endif
 '''T
@@ -65,7 +65,7 @@ tmpl_source = R'''
 //==============================================================================
 #include "stdafx.h"
 
-Gurax_BeginModule(${ubarName})
+Gurax_BeginModule(${ubarModuleName})
 
 //------------------------------------------------------------------------------
 // Implementation of function
@@ -110,7 +110,7 @@ Gurax_ModuleTerminate()
 {
 }
 
-Gurax_EndModule(${ubarName})
+Gurax_EndModule(${ubarModuleName})
 '''T
 
 strHelp = R'''
@@ -131,14 +131,14 @@ main() = {
 		sys.Exit(1)
 	}
 	fields = path.FileName(argv[0]).Split('.'):list
-	dotName = fields.Join('.')
-	ubarName = fields.Join('_')
+	dotModuleName = fields.Join('.')
+	ubarModuleName = fields.Join('_')
 	baseName = fields[-1]
 	fileName_build = 'build.gura'
-	fileName_test = 'test-' + ubarName + '.gura'
+	fileName_test = 'test-' + ubarModuleName + '.gura'
 	fileName_stdafx = 'stdafx.h'
-	fileName_header = 'module-' + ubarName + '.h'
-	fileName_main = 'module-' + ubarName + '.cpp'
+	fileName_header = 'module-' + ubarModuleName + '.h'
+	fileName_main = 'module-' + ubarModuleName + '.cpp'
 	if (!opt.Get('force') && \
 		fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
 		sys.cerr.Println('file already exists')

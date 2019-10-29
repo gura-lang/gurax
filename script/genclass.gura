@@ -50,11 +50,11 @@ public:
 public:
 	// Constructor
 	Value_${className}() = delete;
-	explicit Value_${className}(${className}* p${className}, VType& vtype = VTYPE_${className}) :
-		Value_Object(vtype), _p${className}(p${className}) {}
+	explicit Value_${className}(${entityName}* p${entityName}, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _p${entityName}(p${entityName}) {}
 	// Copy constructor/operator
 	Value_${className}(const Value_${className}& src) :
-		Value_Object(src), _p${className}(src._p${className}->Reference()) {}
+		Value_Object(src), _p${entityName}(src._p${entityName}->Reference()) {}
 	Value_${className}& operator=(const Value_${className}& src) = delete;
 	// Move constructor/operator
 	Value_${className}(Value_${className}&& src) = delete;
@@ -63,32 +63,32 @@ protected:
 	// Destructor
 	~Value_${className}() = default;
 public:
-	${className}& Get${className}() { return *_p${className}; }
-	const ${className}& Get${className}() const { return *_p${className}; }
+	${entityName}& Get${entityName}() { return *_p${entityName}; }
+	const ${entityName}& Get${entityName}() const { return *_p${entityName}; }
 public:
-	static ${className}& Get${className}(Value& value) {
-		return dynamic_cast<Value_${className}&>(value).Get${className}();
+	static ${entityName}& Get${entityName}(Value& value) {
+		return dynamic_cast<Value_${entityName}&>(value).Get${entityName}();
 	}
-	static const ${className}& Get${className}(const Value& value) {
-		return dynamic_cast<const Value_${className}&>(value).Get${className}();
+	static const ${entityName}& Get${entityName}(const Value& value) {
+		return dynamic_cast<const Value_${entityName}&>(value).Get${entityName}();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return Get${className}().CalcHash();
+		return Get${entityName}().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			Get${className}().IsEqualTo(Value_${className}::Get${className}(*pValue));
+			Get${entityName}().IsEqualTo(Value_${className}::Get${entityName}(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			Get${className}().IsLessThan(Value_${className}::Get${className}(*pValue)) :
+			Get${entityName}().IsLessThan(Value_${className}::Get${entityName}(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return Get${className}().ToString(ss);
+		return Get${entityName}().ToString(ss);
 	}
 };
 
@@ -117,10 +117,36 @@ namespace Gurax {
 ${end}
 
 //-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// ${dotClassName}#MethodSkeleton(num1:Number, num2:Number):reduce
+Gurax_DeclareMethod(${className}, MethodSkeleton)
+{
+	Declare(VTYPE_List, Flag::Reduce);
+	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(${className}, MethodSkeleton)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Double num1 = args.PickNumber<Double>();
+	Double num2 = args.PickNumber<Double>();
+	// Function body
+	return new Value_Number(num1 + num2);
+}
+
+//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// re.${className}#begin
-Gurax_DeclareProperty_R(${className}, begin)
+// ${dotClassName}#propSkeleton
+Gurax_DeclareProperty_R(${className}, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -128,11 +154,10 @@ Gurax_DeclareProperty_R(${className}, begin)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(${className}, begin)
+Gurax_ImplementPropertyGetter(${className}, propSkeleton)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	const ${className}& group = valueThis.Get${className}();
-	return new Value_Number(group.GetPosBegin());
+	//auto& valueThis = GetValueThis(valueTarget);
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -144,10 +169,10 @@ void VType_${className}::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(${className}, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(${className}, begin));
-	Assign(Gurax_CreateProperty(${className}, end));
-	Assign(Gurax_CreateProperty(${className}, string));
+	Assign(Gurax_CreateProperty(${className}, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -158,7 +183,7 @@ VType& Value_${className}::vtype = VTYPE_${className};
 ${if (ubarModuleName)}
 Gurax_EndModuleScope(${ubarModuleName})
 ${else}
-namespace Gurax {
+}
 ${end}
 '''T
 
@@ -177,14 +202,18 @@ main() = {
 		sys.cerr.Print(strHelp)
 		sys.Exit(1)
 	}
-	fields = path.FileName(argv[0]).Split('.'):list
+	dotClassName = path.FileName(argv[0])
+	fields = dotClassName.Split('.'):list
 	if (fields.len == 1) {
 		ubarModuleName = nil
+		dotModuleName = nil
 	} else {
 		fieldsSub = fields.Head(fields.len - 1):list
 		ubarModuleName = fieldsSub.Join('_')
+		dotModuleName = fieldsSub.Join('.')
 	}
 	className = fields[-1]
+	entityName = className
 	fileName_header = 'VType_' + className + '.h'
 	fileName_source = 'VType_' + className + '.cpp'
 	if (!opt.Get('force') && \
