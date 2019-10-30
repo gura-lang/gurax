@@ -572,6 +572,7 @@ Gurax_ImplementPropertyGetter(Template, exprForInit)
 	return new Value_Expr(valueThis.GetTemplate().GetExprForInit().Reference());
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // Implementation of suffix manager
 //------------------------------------------------------------------------------
@@ -598,6 +599,7 @@ Gurax_ImplementSuffixMgr_Eval(String, T)
 		!pTmpl->PrepareAndCompose()) return Value::nil();
 	return new Value_Template(pTmpl.release());
 }
+#endif
 #endif
 
 //------------------------------------------------------------------------------
@@ -631,7 +633,7 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Template, expr));
 	Assign(Gurax_CreateProperty(Template, exprForInit));
 	// Assignment of suffix manager
-	Gurax_AssignSuffixMgr(String, T);
+	//Gurax_AssignSuffixMgr(String, T);
 }
 
 //------------------------------------------------------------------------------

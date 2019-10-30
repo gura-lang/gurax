@@ -61,13 +61,13 @@ TestCase('Basic test') {
 }
 //-----------------------------------------------------------------------------
 TestCase('suffix T') {
-	Tester(`''T)
-	Tester(`'${hoge}'T)
+	Tester(`T'')
+	Tester(`T'${hoge}')
 }
 //-----------------------------------------------------------------------------
 TestCase('marker handling') {
 	x = 'hoge'
-	R'''
+	tR'''
 	$
 	$$
 	$$$
@@ -82,22 +82,22 @@ TestCase('marker handling') {
 	$$$${x}
 	${x}$
 	${x}$$
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Reference to external variables') {
 	v1 = 'abcde'
 	v2 = 'fghij'
 	v3 = 'klmno'
-	R'''
+	tR'''
 	${v1} ${v2} ${v3}
 	${v1 += ' AA'}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 	Tester(`v1)
 }
 //-----------------------------------------------------------------------------
 TestCase('Comment') {
-	R'''
+	tR'''
 	  ${// comment}
 	  line.1
 	    ${# comment}
@@ -106,19 +106,19 @@ TestCase('Comment') {
 	  line.3
 	  line.4${//comment}
 	
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Block paramter') {
-	R'''
+	tR'''
 	${(1..10).Each {|i|}}
 	  ${i}
 	${end}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Template script that returns nil value') {
-	R'''
+	tR'''
 	hello
 	${
 	nil
@@ -139,14 +139,14 @@ TestCase('Template script that returns nil value') {
 	foo${nil}bar
 	foo${-}bar
 	foo${''}bar
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Repeat sequence') {
 	companies = ['Gura company', 'Guri corporation', nil]
 	products = ['apple', 'grape', 'orange']
 	// iteration with for statement
-	R'''
+	tR'''
 	[Companies]
 	${for (company in companies)}
 	  ${if (company)}
@@ -159,9 +159,9 @@ TestCase('Repeat sequence') {
 	${for (product in products)}
 	- ${product}
 	${end}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 	// iteration with Each() method
-	R'''
+	tR'''
 	[Companies]
 	${companies.Each {|company|}}
 	  ${if (company)}
@@ -174,11 +174,11 @@ TestCase('Repeat sequence') {
 	${products.Each {|product|}}
 	- ${product}
 	${end}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Repeat and if-else sequence') {
-	R'''
+	tR'''
 	${for (i in 1..10)}
 	  ${if (i < 5)}
 	    ${i} is less than five
@@ -188,20 +188,20 @@ TestCase('Repeat and if-else sequence') {
 	    ${i} is greater than or equal to eight
 	  ${end}
 	${end}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 /*
 //-----------------------------------------------------------------------------
 TestCase() {
-	Println('漢字のテスト ${"スクリプト文字列"}'.RenderTemplate())
+	Println(t'漢字のテスト ${"スクリプト文字列"}'.Render())
 }
 */
 //-----------------------------------------------------------------------------
 TestCase('Template script that handles template internally') {
-	tmpl = R'''
-	${if (company) {R"""
+	tmpl = tR'''
+	${if (company) {tR"""
 	Company: ${company}
-	""".RenderTemplate()} else {R"""
+	""".Render()} else {R"""
 	(not defined)
 	"""}}
 	[Products]
@@ -212,15 +212,15 @@ TestCase('Template script that handles template internally') {
 	scope {
 		company = 'hoge'
 		products = ['apple', 'grape', 'orange']
-		tmpl.RenderTemplate(sys.cout)
+		tmpl.Render(sys.cout)
 		company = nil
 		products = ['car', 'bicycle', 'boat']
-		tmpl.RenderTemplate(sys.cout)
+		tmpl.Render(sys.cout)
 	}
 }
 //-----------------------------------------------------------------------------
 TestCase('Empty list') {
-	R'''
+	tR'''
 	hello
 	${
 	[]
@@ -232,11 +232,11 @@ TestCase('Empty list') {
 	${[]}
 	!!!
 	ABCD${[]}EFG
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Empty iterator') {
-	R'''
+	tR'''
 	hello
 	${
 	()
@@ -248,7 +248,7 @@ TestCase('Empty iterator') {
 	${()}
 	!!!
 	ABCD${()}EFG
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Auto indentation') {
@@ -282,40 +282,40 @@ TestCase('Auto indentation') {
 //-----------------------------------------------------------------------------
 TestCase('Error in template') {
 	try {
-		'abcdefg${not_defined}hijklmn'.RenderTemplate()
+		t'abcdefg${not_defined}hijklmn'.Render()
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
 TestCase('Format() in tempate script') {
-	Tester(`'hello ${Format("%d", 0..10).Join(",")}'.RenderTemplate())
+	Tester(`t'hello ${Format("%d", 0..10).Join(",")}'.Render())
 }
 //-----------------------------------------------------------------------------
 TestCase('Variable reference') {
 	var = 'HOGE'
-	Tester(`'hello ${var} world'.RenderTemplate())
-	Tester(`'hello ${var * 2} world'.RenderTemplate())
-	Tester(`'''hello '${Format('%8s', var)}' world'''.RenderTemplate())
+	Tester(`t'hello ${var} world'.Render())
+	Tester(`t'hello ${var * 2} world'.Render())
+	Tester(`t'''hello '${Format('%8s', var)}' world'''.Render())
 	var = 3.14
-	Tester(`'hello ${var} world'.RenderTemplate())
+	Tester(`t'hello ${var} world'.Render())
 }
 //-----------------------------------------------------------------------------
 TestCase('nil, number, string, and list') {
-	Tester(`'${nil}'.RenderTemplate())
-	Tester(`'${-}'.RenderTemplate())
-	Tester(`'${3}'.RenderTemplate())
-	Tester(`'${"hello"}'.RenderTemplate())
-	Tester(`'${["first", "second", "third"]}'.RenderTemplate())
+	Tester(`t'${nil}'.Render())
+	Tester(`t'${-}'.Render())
+	Tester(`t'${3}'.Render())
+	Tester(`t'${"hello"}'.Render())
+	Tester(`t'${["first", "second", "third"]}'.Render())
 	try {
-		'${Color.red}'.RenderTemplate()
+		t'${Color.red}'.Render()
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
 TestCase('Loop and branch sequence') {
-	R'''
+	tR'''
 	${x = 10}
 	${x}
 	hello world
@@ -339,11 +339,11 @@ TestCase('Loop and branch sequence') {
 	    hoge ${x}
 	${end}
 	
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Scope') {
-	x = '${value}\n'T
+	x = T'${value}\n'
 	try {
 		x.Render(sys.cout)
 	} catch {|e|
@@ -362,7 +362,7 @@ TestCase('Scope') {
 }
 //-----------------------------------------------------------------------------
 TestCase('Rendering HTML') {
-	tmpl = R'''
+	tmpl = tR'''
 	<h2>${title}</h2>
 	<p>number of people: ${people.len}</p>
 	
@@ -385,7 +385,7 @@ TestCase('Rendering HTML') {
 	  ${Format('<tr><td>%d</td><td>%s</td><td>%d</td></tr>\n',
 	  										1.., people:*name, people:*age)}
 	</table>
-	'''T
+	'''
 	scope {
 		Person = struct { name:string, age:number }
 		people = @(Person) {{'Yamada', 23}, {'Honda', 21}, {'Tanaka', 24}}
@@ -395,7 +395,7 @@ TestCase('Rendering HTML') {
 }
 //-----------------------------------------------------------------------------
 TestCase('Comment') {
-	tmpl = R'''
+	tmpl = tR'''
 	1st line
 	2nd line
 	3rd line
@@ -423,11 +423,11 @@ TestCase('Comment') {
 	9th ${==*comment-out*==}$line
 	10th line${==*comment-out*==}$
 	11th line
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Macro') {
-	R'''
+	tR'''
 	${=define(`calc_mean, num1:Number, num2:Number)}${(num1 + num2) / 2}${end}
 	${=define(`show_person, name:String, age:Number)}
 	${name} is ${age} years old.
@@ -435,11 +435,11 @@ TestCase('Macro') {
 
 	${=call(`show_person, 'Harry', 24)}
 	[${=call(`calc_mean, 12, 23)}]
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Macro and line-break') {
-	R'''
+	tR'''
 	${=define(`macro1)}${end}
 	${=define(`macro2)}Gura${end}
 	${=define(`macro3)}
@@ -456,73 +456,73 @@ TestCase('Macro and line-break') {
 	LineBreak${=call(`macro5)}Here
 	Macro:${=call(`macro2)}
 	Next Line
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('embed directive') {
 	//--------
-	tmpl1 = R'''
+	tmpl1 = tR'''
 	This is a rendering result of tmpl1
-	'''T
+	'''
 	//--------
-	tmpl2 = R'''
+	tmpl2 = tR'''
 	This is a rendering result of tmpl2
-	'''T
+	'''
 	//--------
-	tmpl3 = R'''
+	tmpl3 = tR'''
 	This is a rendering result of tmpl3
-	'''T
+	'''
 	//--------
-	R'''
+	tR'''
 	embed tmpl1
 	${=embed(tmpl1)}
 	embed tmpl2
 	${=embed(tmpl2)}
 	embed tmpl3
 	${=embed(tmpl3)}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Local variables in embed') {
 	//--------
-	tmpl = R'''
+	tmpl = tR'''
 	${x = 'embed', -}
 	x = ${x}
-	'''T
+	'''
 	//--------
-	R'''
+	tR'''
 	${x = 'body', -}
 	x = ${x}
 	embed tmpl
 	${=embed(tmpl)}
 	x = ${x}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Inheritance') {
 	//------------------------------------
 	// base1 template
-	base1 = R'''
+	base1 = tR'''
 	=== ${=block(`head)}base1-head${end} ===
 	<start-of-body>
 	${=block(`body)}
 	base1-body
 	${end}
 	<end-of-body>
-	'''T
+	'''
 	//------------------------------------
 	// base2 template
-	base2 = R'''
+	base2 = tR'''
 	${=extends(base1)}
 	
 	${=block(`head)}base2-head${end}
 	
 	${=block(`body)}
 	${end}
-	'''T
+	'''
 	//------------------------------------
 	// base3 template
-	base3 = R'''
+	base3 = tR'''
 	${=extends(base2)}
 	
 	${=block(`head)}base3-head${end}
@@ -530,34 +530,34 @@ TestCase('Inheritance') {
 	${=block(`body)}
 	base3-body
 	${end}
-	'''T
+	'''
 	//------------------------------------
 	Println('inherit from base1')
-	R'''
+	tR'''
 	${=extends(base1)}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 	//------------------------------------
 	Println()
 	Println('inherit from base2')
-	R'''
+	tR'''
 	${=extends(base2)}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 	//------------------------------------
 	Println()
 	Println('inherit from base3')
-	R'''
+	tR'''
 	${=extends(base3)}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Detecting duplicated symbol') {
-	tmpl = R'''
+	tmpl = tR'''
 	${=block(`hoge1)}${end}
 	${=block(`hoge2)}${end}
 	${=block(`hoge3)}${end}
 	${=block(`hoge4)}${end}
 	${=block(`hoge1)}${end}
-	'''T
+	'''
 	try {
 		tmpl.Render(sys.cout)
 	} catch {|e|
@@ -574,7 +574,7 @@ TestCase('Embedded string') {
 	variable ${var} reference
 	''')
 	// inheritance
-	base = '[${=block(`head)}original${end}] ${=block(`body)}original${end}'T
+	base = T'[${=block(`head)}original${end}] ${=block(`body)}original${end}'
 	Tester(`e'${=extends(base)}')
 	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
 	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')
@@ -595,14 +595,14 @@ TestCase('Inheritance and loop') {
 		{ 'Yokokawa Fumiyo',	'yokokawa_fumiyo@example.com'	},
 		{ 'Yamanaka Mayuko',	'yamanaka_mayuko@example.com'	},
 	}
-	layout = R'''
+	layout = tR'''
 	<html>
 	<body>
 	${=block(`body)}${end}
 	</body>
 	</html>
-	'''T
-	R'''
+	'''
+	tR'''
 	${=extends(layout)}
 	${=block(`body)}
 	  <ul>
@@ -611,12 +611,12 @@ TestCase('Inheritance and loop') {
 	  ${end}
 	  </ul>
 	${end}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('HTML output using inheritance') {
 	// this sample originated from an example in http://jinja.pocoo.org/.
-	base = R'''
+	base = tR'''
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 	<html lang="en">
 	<html xmlns="http://www.w3.org/1999/xhtml">
@@ -636,8 +636,8 @@ TestCase('HTML output using inheritance') {
 	        ${end}
 	    </div>
 	</body>
-	'''T
-	R'''
+	'''
+	tR'''
 	${=extends(base)}
 	${=block(`title)}Index${end}
 	${=block(`head)}
@@ -652,5 +652,5 @@ TestCase('HTML output using inheritance') {
 	      Welcome on my awesome homepage.
 	    </p>
 	${end}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
