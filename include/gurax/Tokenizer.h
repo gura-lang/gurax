@@ -59,17 +59,15 @@ private:
 	};
 	enum class StringType {
 		String,
-		Binary,			// prefixed by 'b' or 'B'
-		Template,		// prefixed by 'T'
-		TmplEmbeddd,	// prefixed by 'e'
+		Binary,					// prefixed by 'b' or 'B'
+		Template,				// prefixed by 'T'
+		TmplEmbedded,			// prefixed by 'e'
 	};
 	struct StringInfo {
 		char chBorder;
 		bool rawFlag;			// prefixed by 'r' or 'R'
 		bool wiseFlag;			// prefixed by 'R'
 		StringType type;
-		bool binaryFlag;		// prefixed by 'b' or 'B'
-		bool tmplEmbeddedFlag;	// prefixed by 'e'
 		Stat statRtn;
 		int cntRest;
 		UInt32 accum;

@@ -88,8 +88,8 @@ void Tokenizer::FeedChar(char ch)
 			_stringInfo.rawFlag = false;
 			_stringInfo.wiseFlag = false;
 			_stringInfo.type = StringType::String;
-			_stringInfo.binaryFlag = false;
-			_stringInfo.tmplEmbeddedFlag = false;
+			//_stringInfo.binaryFlag = false;
+			//_stringInfo.tmplEmbeddedFlag = false;
 			_segment.clear();
 			if (_verboseFlag) {
 				_source.clear();
@@ -835,10 +835,10 @@ void Tokenizer::FeedChar(char ch)
 			_stat = Stat::StringSuffixed;
 		} else {
 			int lineNo = GetLineNo();
-			if (_stringInfo.binaryFlag) {
+			if (_stringInfo.type == StringType::Binary) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
 												  new BinaryReferable(_segment), _source));
-			} else if (_stringInfo.tmplEmbeddedFlag) {
+			} else if (_stringInfo.type == StringType::TmplEmbedded) {
 				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
 												  _segment, "", _source));
 			} else {
@@ -1047,10 +1047,10 @@ void Tokenizer::FeedChar(char ch)
 			_stat = Stat::StringSuffixed;
 		} else {
 			int lineNo = GetLineNo();
-			if (_stringInfo.binaryFlag) {
+			if (_stringInfo.type == StringType::Binary) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
 												  new BinaryReferable(_segment), _source));
-			} else if (_stringInfo.tmplEmbeddedFlag) {
+			} else if (_stringInfo.type == StringType::TmplEmbedded) {
 				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
 												  _segment, "", _source));
 			} else {
@@ -1066,10 +1066,10 @@ void Tokenizer::FeedChar(char ch)
 		if (String::IsSymbolFollower(ch)) {
 			if (_verboseFlag) _source.push_back(ch);
 			_suffix.push_back(ch);
-		} else if (_stringInfo.binaryFlag) {
+		} else if (_stringInfo.type == StringType::Binary) {
 			IssueError(ErrorType::SyntaxError, "binary literal can not be specified with suffix");
 			_stat = Stat::Error;
-		} else if (_stringInfo.tmplEmbeddedFlag) {
+		} else if (_stringInfo.type == StringType::TmplEmbedded) {
 			IssueError(ErrorType::SyntaxError, "embedded literal can not be specified with suffix");
 			_stat = Stat::Error;
 		} else {
@@ -1106,8 +1106,8 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 	stringInfo.rawFlag = false;
 	stringInfo.wiseFlag = false;
 	stringInfo.type = StringType::String;
-	stringInfo.binaryFlag = false;
-	stringInfo.tmplEmbeddedFlag = false;
+	//stringInfo.binaryFlag = false;
+	//stringInfo.tmplEmbeddedFlag = false;
 	for (const char ch : field) {
 		if (ch == 'r') {
 			if (stringInfo.rawFlag) return false;
@@ -1117,15 +1117,15 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 			stringInfo.rawFlag = true;
 			stringInfo.wiseFlag = true;
 		} else if (ch == 'b') {
-			if (stringInfo.binaryFlag) return false;
-			stringInfo.binaryFlag = true;
+			if (stringInfo.type != StringType::String) return false;
+			stringInfo.type = StringType::Binary;
 		} else if (ch == 'B') {
-			if (stringInfo.binaryFlag) return false;
-			stringInfo.binaryFlag = true;
+			if (stringInfo.type != StringType::String) return false;
+			stringInfo.type = StringType::Binary;
 			stringInfo.wiseFlag = true;
 		} else if (ch == 'e') {
-			if (stringInfo.tmplEmbeddedFlag) return false;
-			stringInfo.tmplEmbeddedFlag = true;
+			if (stringInfo.type != StringType::String) return false;
+			stringInfo.type = StringType::TmplEmbedded;
 		} else {
 			return false;
 		}
