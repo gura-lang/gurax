@@ -85,12 +85,14 @@ public:
 	void ClearLastChar()  { _chLast = '\0'; }
 	char GetLastChar() const { return _chLast; }
 public:
-	bool ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
-	bool ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
+	bool ParseStream_(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag);
+	bool ParseString_(String::const_iterator strSrc, String::const_iterator strSrcEnd,
 					 bool autoIndentFlag, bool appendLastEOLFlag);
-	bool ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag);
-	bool ParseString(const char* strSrc, const char* strSrcEnd,
+	bool ParseString_(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag);
+	bool ParseString_(const char* strSrc, const char* strSrcEnd,
 					 bool autoIndentFlag, bool appendLastEOLFlag);
+	bool PrepareAndCompose();
+	bool PrepareAndCompose(Composer& composer);
 	bool Render(Processor& processor, Stream& streamDst);
 	bool Render(Processor& processor, String& strDst);
 	void PutChar(char ch);
@@ -174,6 +176,7 @@ protected:
 	RefPtr<StringReferable> _pStr;
 public:
 	Expr_TmplEmbedded(Template* pTmpl, StringReferable* pStr) : Expr_Node(typeInfo), _pTmpl(pTmpl), _pStr(pStr) {}
+	Template& GetTemplate() { return *_pTmpl; }
 	const Template& GetTemplate() const { return *_pTmpl; }
 	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }

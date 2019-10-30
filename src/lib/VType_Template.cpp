@@ -36,9 +36,9 @@ Gurax_ImplementFunction(Template)
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
 	RefPtr<Template> pTmpl(new Template());
-	if (pStreamSrc && !pTmpl->ParseStream(*pStreamSrc, autoIndentFlag, appendLastEOLFlag)) {
-		return Value::nil();
-	}
+	if (pStreamSrc &&
+		(!pTmpl->ParseStream_(*pStreamSrc, autoIndentFlag, appendLastEOLFlag) ||
+		 !pTmpl->PrepareAndCompose())) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
 }
 
@@ -73,7 +73,8 @@ Gurax_ImplementMethod(Template, Parse)
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
-	tmpl.ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	if (!tmpl.ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
+		!tmpl.PrepareAndCompose()) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -105,7 +106,8 @@ Gurax_ImplementMethod(Template, Read)
 	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
 	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
 	// Function body
-	tmpl.ParseStream(streamSrc, autoIndentFlag, appendLastEOLFlag);
+	if (!tmpl.ParseStream_(streamSrc, autoIndentFlag, appendLastEOLFlag) ||
+		!tmpl.PrepareAndCompose()) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -579,7 +581,11 @@ Gurax_ImplementSuffixMgr_Compose(String, T)
 	RefPtr<Template> pTmpl(new Template());
 	bool autoIndentFlag = true;
 	bool appendLastEOLFlag = false;
-	if (!pTmpl->ParseString(strRef.GetString(), autoIndentFlag, appendLastEOLFlag)) return;
+	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+	composer.Add_Jump(this);
+	if (!pTmpl->ParseString(strRef.GetString(), autoIndentFlag, appendLastEOLFlag) ||
+		!pTmpl->PrepareAndCompose(composer)) return;
+	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	composer.Add_Value(new Value_Template(pTmpl.release()));		// [Value]
 }
 #else
@@ -588,7 +594,8 @@ Gurax_ImplementSuffixMgr_Eval(String, T)
 	RefPtr<Template> pTmpl(new Template());
 	bool autoIndentFlag = true;
 	bool appendLastEOLFlag = false;
-	if (!pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag)) return Value::nil();
+	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
+		!pTmpl->PrepareAndCompose()) return Value::nil();
 	return new Value_Template(pTmpl.release());
 }
 #endif

@@ -703,7 +703,8 @@ Gurax_ImplementMethod(String, RenderTemplate)
 	// Function body
 	const char* str = valueThis.GetString();
 	RefPtr<Template> pTmpl(new Template());
-	pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
+		!pTmpl->PrepareAndCompose()) return Value::nil();
 	if (pStreamDst) {
 		pTmpl->Render(processor, *pStreamDst);
 		return Value::nil();
@@ -1018,7 +1019,8 @@ Gurax_ImplementMethod(String, Template)
 	// Function body
 	const char* str = valueThis.GetString();
 	RefPtr<Template> pTmpl(new Template());
-	pTmpl->ParseString(str, autoIndentFlag, appendLastEOLFlag);
+	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
+		!pTmpl->PrepareAndCompose()) return Value::nil();
 	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
 }
 

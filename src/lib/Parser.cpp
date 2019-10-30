@@ -182,7 +182,7 @@ bool Parser::ReduceOneToken()
 		RefPtr<Template> pTmpl(new Template());
 		bool autoIndentFlag = true;
 		bool appendLastEOLFlag = false;
-		if (!pTmpl->ParseString(pToken->GetSegment(), autoIndentFlag, appendLastEOLFlag)) return false;
+		if (!pTmpl->ParseString_(pToken->GetSegment(), autoIndentFlag, appendLastEOLFlag)) return false;
 		pExprGen.reset(new Expr_TmplEmbedded(pTmpl.release(), pToken->GetSegmentReferable().Reference()));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));

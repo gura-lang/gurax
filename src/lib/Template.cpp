@@ -19,7 +19,7 @@ Template::Template() :
 {
 }
 
-bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+bool Template::ParseStream_(Stream& streamSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, streamSrc.GetName(), autoIndentFlag, appendLastEOLFlag);
 	for (;;) {
@@ -28,36 +28,58 @@ bool Template::ParseStream(Stream& streamSrc, bool autoIndentFlag, bool appendLa
 		if (chRaw < 0) break;
 		if (!parser.FeedChar(static_cast<char>(chRaw))) return false;
 	}
-	return parser.Finish();
+	return parser.Flush();
 }
 
-bool Template::ParseString(String::const_iterator strSrc, String::const_iterator strSrcEnd,
+bool Template::ParseString_(String::const_iterator strSrc, String::const_iterator strSrcEnd,
 						   bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
 	for (String::const_iterator p = strSrc; p != strSrcEnd; p++) {
 		if (!parser.FeedChar(*p)) return false;
 	}
-	return parser.Finish();
+	return parser.Flush();
 }
 
-bool Template::ParseString(const char* strSrc, const char* strSrcEnd,
+bool Template::ParseString_(const char* strSrc, const char* strSrcEnd,
 						   bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
 	for (const char* p = strSrc; p != strSrcEnd; p++) {
 		if (!parser.FeedChar(*p)) return false;
 	}
-	return parser.Finish();
+	return parser.Flush();
 }
 
-bool Template::ParseString(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag)
+bool Template::ParseString_(const char* strSrc, bool autoIndentFlag, bool appendLastEOLFlag)
 {
 	Parser parser(*this, "*string*", autoIndentFlag, appendLastEOLFlag);
 	for (const char* p = strSrc; *p; p++) {
 		if (!parser.FeedChar(*p)) return false;
 	}
-	return parser.Finish();
+	return parser.Flush();
+}
+
+bool Template::PrepareAndCompose()
+{
+	//****** Need to implement dynamic memory allocator for PUnit ******
+	Composer composer;
+	if (!PrepareAndCompose(composer)) return false;
+	composer.Add_Terminate();
+	return !Error::IsIssued();
+}
+
+bool Template::PrepareAndCompose(Composer& composer)
+{
+	auto Sub = [](Composer& composer, Expr& expr) {
+		expr.Prepare();
+		if (Error::IsIssued()) return false;
+		expr.SetPUnitFirst(composer.PeekPUnitCont());
+		expr.ComposeOrNil(composer);
+		composer.Add_Return(&expr);
+		return !Error::IsIssued();
+	};
+	return Sub(composer, GetExprForInit()) && Sub(composer, GetExprForBody());
 }
 
 bool Template::Render(Processor& processor, Stream& streamDst)
@@ -372,11 +394,14 @@ bool Template::Parser::Flush()
 	return true;
 }
 
+#if 0
 bool Template::Parser::Finish()
 {
 	return Flush() && PrepareAndCompose(_tmpl.GetExprForInit()) && PrepareAndCompose(_tmpl.GetExprForBody());
 }
+#endif
 
+#if 0
 bool Template::Parser::PrepareAndCompose(Expr& expr)
 {
 	expr.Prepare();
@@ -388,6 +413,7 @@ bool Template::Parser::PrepareAndCompose(Expr& expr)
 	composer.Add_Terminate();
 	return !Error::IsIssued();
 }
+#endif
 
 void Template::Parser::CreateTmplString()
 {
@@ -568,6 +594,10 @@ const Expr::TypeInfo Expr_TmplEmbedded::typeInfo("TmplEmbedded");
 
 void Expr_TmplEmbedded::Compose(Composer& composer)
 {
+	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
+	composer.Add_Jump(this);
+	if (!GetTemplate().PrepareAndCompose(composer)) return;
+	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	composer.SetFactory(new PUnitFactory_TmplEmbedded(GetTemplate().Reference(), Reference()));
 }
 
