@@ -588,23 +588,31 @@ String Expr_TmplScript::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Expr_TmplEmbedded : Expr_Node
+// Expr_Template : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_TmplEmbedded::typeInfo("TmplEmbedded");
+const Expr::TypeInfo Expr_Template::typeInfo("Template");
 
-void Expr_TmplEmbedded::Compose(Composer& composer)
+void Expr_Template::Compose(Composer& composer)
 {
+	bool autoIndentFlag = true;
+	bool appendLastEOLFlag = false;
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
-	if (!GetTemplate().PrepareAndCompose(composer)) return;
+	RefPtr<Template> pTmpl(new Template());
+	if (!pTmpl->ParseString_(GetString(), autoIndentFlag, appendLastEOLFlag) ||
+		!pTmpl->PrepareAndCompose(composer)) return;
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	composer.SetFactory(new PUnitFactory_TmplEmbedded(GetTemplate().Reference(), Reference()));
+	if (_embedFlag) {
+		composer.SetFactory(new PUnitFactory_TmplEmbedded(pTmpl.release(), Reference()));
+	} else {
+		composer.Add_Value(new Value_Template(pTmpl.release()), this);
+	}
 }
 
-String Expr_TmplEmbedded::ToString(const StringStyle& ss) const
+String Expr_Template::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += 'e';
+	str += _embedFlag? 'e' : 't';
 	str += GetStringSTL().MakeQuoted(true);
 	return str;
 }

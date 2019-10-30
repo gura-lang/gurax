@@ -163,21 +163,20 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Expr_TmplEmbedded : Expr_Node
+// Expr_Template : Expr_Node
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Expr_TmplEmbedded : public Expr_Node {
+class GURAX_DLLDECLARE Expr_Template : public Expr_Node {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Expr_TmplEmbedded);
+	Gurax_DeclareReferable(Expr_Template);
 public:
 	static const TypeInfo typeInfo;
 protected:
-	RefPtr<Template> _pTmpl;
 	RefPtr<StringReferable> _pStr;
+	bool _embedFlag;
 public:
-	Expr_TmplEmbedded(Template* pTmpl, StringReferable* pStr) : Expr_Node(typeInfo), _pTmpl(pTmpl), _pStr(pStr) {}
-	Template& GetTemplate() { return *_pTmpl; }
-	const Template& GetTemplate() const { return *_pTmpl; }
+	Expr_Template(StringReferable* pStr, bool embedFlag) :
+		Expr_Node(typeInfo), _pStr(pStr), _embedFlag(embedFlag) {}
 	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }

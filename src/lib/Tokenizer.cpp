@@ -836,6 +836,9 @@ void Tokenizer::FeedChar(char ch)
 			if (_stringInfo.type == StringType::Binary) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
 												  new BinaryReferable(_segment), _source));
+			} else if (_stringInfo.type == StringType::Template) {
+				_tokenWatcher.FeedToken(new Token(TokenType::Template, _lineNoTop, lineNo,
+												  _segment, "", _source));
 			} else if (_stringInfo.type == StringType::TmplEmbedded) {
 				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
 												  _segment, "", _source));
@@ -1048,6 +1051,9 @@ void Tokenizer::FeedChar(char ch)
 			if (_stringInfo.type == StringType::Binary) {
 				_tokenWatcher.FeedToken(new Token(TokenType::Binary, _lineNoTop, lineNo,
 												  new BinaryReferable(_segment), _source));
+			} else if (_stringInfo.type == StringType::Template) {
+				_tokenWatcher.FeedToken(new Token(TokenType::Template, _lineNoTop, lineNo,
+												  _segment, "", _source));
 			} else if (_stringInfo.type == StringType::TmplEmbedded) {
 				_tokenWatcher.FeedToken(new Token(TokenType::TmplEmbedded, _lineNoTop, lineNo,
 												  _segment, "", _source));
@@ -1066,6 +1072,9 @@ void Tokenizer::FeedChar(char ch)
 			_suffix.push_back(ch);
 		} else if (_stringInfo.type == StringType::Binary) {
 			IssueError(ErrorType::SyntaxError, "binary literal can not be specified with suffix");
+			_stat = Stat::Error;
+		} else if (_stringInfo.type == StringType::Template) {
+			IssueError(ErrorType::SyntaxError, "template literal can not be specified with suffix");
 			_stat = Stat::Error;
 		} else if (_stringInfo.type == StringType::TmplEmbedded) {
 			IssueError(ErrorType::SyntaxError, "embedded literal can not be specified with suffix");
@@ -1119,9 +1128,20 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 			if (stringInfo.type != StringType::String) return false;
 			stringInfo.type = StringType::Binary;
 			stringInfo.wiseFlag = true;
+		} else if (ch == 't') {
+			if (stringInfo.type != StringType::String) return false;
+			stringInfo.type = StringType::Template;
+		} else if (ch == 'T') {
+			if (stringInfo.type != StringType::String) return false;
+			stringInfo.type = StringType::Template;
+			stringInfo.wiseFlag = true;
 		} else if (ch == 'e') {
 			if (stringInfo.type != StringType::String) return false;
 			stringInfo.type = StringType::TmplEmbedded;
+		} else if (ch == 'E') {
+			if (stringInfo.type != StringType::String) return false;
+			stringInfo.type = StringType::TmplEmbedded;
+			stringInfo.wiseFlag = true;
 		} else {
 			return false;
 		}
