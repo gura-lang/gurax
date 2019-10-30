@@ -88,8 +88,6 @@ void Tokenizer::FeedChar(char ch)
 			_stringInfo.rawFlag = false;
 			_stringInfo.wiseFlag = false;
 			_stringInfo.type = StringType::String;
-			//_stringInfo.binaryFlag = false;
-			//_stringInfo.tmplEmbeddedFlag = false;
 			_segment.clear();
 			if (_verboseFlag) {
 				_source.clear();
@@ -1106,8 +1104,6 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 	stringInfo.rawFlag = false;
 	stringInfo.wiseFlag = false;
 	stringInfo.type = StringType::String;
-	//stringInfo.binaryFlag = false;
-	//stringInfo.tmplEmbeddedFlag = false;
 	for (const char ch : field) {
 		if (ch == 'r') {
 			if (stringInfo.rawFlag) return false;
