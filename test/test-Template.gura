@@ -3,7 +3,7 @@ import(util.tester) {*}
 
 TestCase('Basic test') {
 	test(str:String) = {
-		Printf('\'%s\' -> \'%s\'\n', str, str.RenderTemplate())
+		Printf('\'%s\' -> \'%s\'\n', str, str.Template().Render())
 		Println()
 	}
 	test('')

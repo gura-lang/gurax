@@ -673,48 +673,6 @@ Gurax_ImplementMethod(String, Println)
 	return Value::nil();
 }
 
-// String#RenderTemplate(dst?:Stream:w):String:[noindent,lasteol]
-Gurax_DeclareMethod(String, RenderTemplate)
-{
-	Declare(VTYPE_String, Flag::None);
-	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	DeclareAttrOpt(Gurax_Symbol(noindent));
-	DeclareAttrOpt(Gurax_Symbol(lasteol));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Evaluates a string that contains embedded scripts\n"
-		"and renders the result to the specified stream.\n"
-		"\n"
-		"If the stream is omitted, the function returns the rendered result as a string.\n"
-		"\n"
-		"Calling this method is equivalent to calling a method `String#Template()` to\n"
-		"create a `Template` instance on which a method `Template#Render()` is applied afterward.\n");
-}
-
-Gurax_ImplementMethod(String, RenderTemplate)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Stream* pStreamDst = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
-	bool autoIndentFlag = !argument.IsSet(Gurax_Symbol(noindent));
-	bool appendLastEOLFlag = argument.IsSet(Gurax_Symbol(lasteol));
-	// Function body
-	const char* str = valueThis.GetString();
-	RefPtr<Template> pTmpl(new Template());
-	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
-		!pTmpl->PrepareAndCompose()) return Value::nil();
-	if (pStreamDst) {
-		pTmpl->Render(processor, *pStreamDst);
-		return Value::nil();
-	} else {
-		RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
-		if (!pTmpl->Render(processor, *pStreamDst)) return Value::nil();
-		return new Value_String(pStreamDst->GetBuff().ConvertToString());
-	}
-}
-
 // String#Replace(match:String, sub:String, count?:number):String:map:[icase] {block?}
 Gurax_DeclareMethod(String, Replace)
 {
@@ -1381,7 +1339,6 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, Mid));
 	Assign(Gurax_CreateMethod(String, Print));
 	Assign(Gurax_CreateMethod(String, Println));
-	Assign(Gurax_CreateMethod(String, RenderTemplate));
 	Assign(Gurax_CreateMethod(String, Replace));
 	Assign(Gurax_CreateMethod(String, ReplaceM));
 	Assign(Gurax_CreateMethod(String, Right));
