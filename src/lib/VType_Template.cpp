@@ -572,36 +572,6 @@ Gurax_ImplementPropertyGetter(Template, exprForInit)
 	return new Value_Expr(valueThis.GetTemplate().GetExprForInit().Reference());
 }
 
-#if 0
-//------------------------------------------------------------------------------
-// Implementation of suffix manager
-//------------------------------------------------------------------------------
-#if 0
-Gurax_ImplementSuffixMgr_Compose(String, T)
-{
-	RefPtr<Template> pTmpl(new Template());
-	bool autoIndentFlag = true;
-	bool appendLastEOLFlag = false;
-	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
-	composer.Add_Jump(this);
-	if (!pTmpl->ParseString(strRef.GetString(), autoIndentFlag, appendLastEOLFlag) ||
-		!pTmpl->PrepareAndCompose(composer)) return;
-	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	composer.Add_Value(new Value_Template(pTmpl.release()));		// [Value]
-}
-#else
-Gurax_ImplementSuffixMgr_Eval(String, T)
-{
-	RefPtr<Template> pTmpl(new Template());
-	bool autoIndentFlag = true;
-	bool appendLastEOLFlag = false;
-	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
-		!pTmpl->PrepareAndCompose()) return Value::nil();
-	return new Value_Template(pTmpl.release());
-}
-#endif
-#endif
-
 //------------------------------------------------------------------------------
 // VType_Template
 //------------------------------------------------------------------------------
@@ -632,8 +602,6 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Template, expr));
 	Assign(Gurax_CreateProperty(Template, exprForInit));
-	// Assignment of suffix manager
-	//Gurax_AssignSuffixMgr(String, T);
 }
 
 //------------------------------------------------------------------------------
