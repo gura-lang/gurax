@@ -1,0 +1,26 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Stream#ReadLine()') {
+	Open('test-Stream/sample.txt') {|f|
+		while (line = f.ReadLine()) {
+			Print(line)
+		}
+	}
+}
+
+TestCase('Stream#ReadLines()') {
+	Print(Open('test-Stream/sample.txt').ReadLines())
+	Println('using block')
+	Open('test-Stream/sample.txt').ReadLines() {|line|
+		Print(line)
+	}
+}
+
+TestCase('ReadLines()') {
+	Print(ReadLines('test-Stream/sample.txt'))
+	Println('using block')
+	ReadLines('test-Stream/sample.txt') {|line|
+		Print(line)
+	}
+}

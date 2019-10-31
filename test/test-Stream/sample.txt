@@ -1,136 +1,20 @@
-#!/usr/bin/env gurax
-import(util.tester) {*}
+line First
+line 2
+line 3
+line 4
+line 5
+line 6
+line 7
+line 8
+line 9
+line 10, blank line follows
 
-pathNames = [
-	''
-	'hoge'
-	'hoge.txt'
-	'hoge/'
-	'hoge.txt/'
-	'hoge/boke'
-	'hoge/boke.txt'
-	'hoge/boke/'
-	'hoge/boke.txt/'
-	'hoge/aaaa/bbbb/ccc/boke.txt'
-	'hoge/aaaa/bbbb/ccc.tt/boke.txt'
-	'hoge/aaaa/bbbb/ccc/.boke'
-	'/'
-	'/hoge'
-	'/hoge.txt'
-	'/hoge/'
-	'/hoge.txt/'
-	'/hoge/boke'
-	'/hoge/boke.txt'
-	'/hoge/boke/'
-	'/hoge/boke.txt/'
-	'/hoge/aaaa/bbbb/ccc/boke.txt'
-	'/hoge/aaaa/bbbb/ccc.tt/boke.txt'
-	'/hoge/aaaa/bbbb/ccc/.boke'
-	'C:/'
-	'C:/hoge'
-	'C:/hoge.txt'
-	'C:/hoge/'
-	'C:/hoge.txt/'
-	'C:/hoge/boke'
-	'C:/hoge/boke.txt'
-	'C:/hoge/boke/'
-	'C:/hoge/boke.txt/'
-	'C:/hoge/aaaa/bbbb/ccc/boke.txt'
-	'C:/hoge/aaaa/bbbb/ccc.tt/boke.txt'
-	'C:/hoge/aaaa/bbbb/ccc/.boke'
-]
-
-TestCase('path.AbsName()') {
-}
-
-TestCase('path.BaseName(), path.ExtName() and path.SplitExt()') {
-	Printf('path.BaseName(\'%s\') .. \'%s\'\n', pathNames, path.BaseName(pathNames))
-	Printf('path.ExtName(\'%s\') .. \'%s\'\n', pathNames, path.ExtName(pathNames))
-	Printf('path.SplitExt(\'%s\') .. %s\n', pathNames, path.SplitExt(pathNames):*ToString())
-}
-
-TestCase('path.Dir()') {
-}
-
-TestCase('path.DirName(), path.FileName() and path.Split()') {
-	Printf('path.DirName(\'%s\') .. \'%s\'\n', pathNames, path.DirName(pathNames))
-	Printf('path.FileName(\'%s\') .. \'%s\'\n', pathNames, path.FileName(pathNames))
-	Printf('path.Split(\'%s\') .. %s\n', pathNames, path.Split(pathNames):*ToString())
-}
-
-TestCase('path.Exists()') {
-}
-
-TestCase('path.Glob()') {
-}
-
-TestCase('path.HeadName() and path.BottomName() and path.SplitBottom()') {
-	Printf('path.HeadName(\'%s\') .. \'%s\'\n', pathNames, path.HeadName(pathNames))
-	Printf('path.BottomName(\'%s\') .. \'%s\'\n', pathNames, path.BottomName(pathNames))
-	Printf('path.SplitBottom(\'%s\') .. %s\n', pathNames, path.SplitBottom(pathNames):*ToString())
-}
-
-TestCase('path.Join()') {
-}
-
-TestCase('path.Match()') {
-	Tester(`path.Match('a*', 'abcdefg'))
-	Tester(`path.Match('a*efg', 'abcdefg'))
-	Tester(`path.Match('a*ef', 'abcdefg'))
-	Tester(`path.Match('a?cdefg', 'abcdefg'))
-	Tester(`path.Match('a????fg', 'abcdefg'))
-	Tester(`path.Match('a????f?', 'abcdefg'))
-	Tester(`path.Match('a???f?', 'abcdefg'))
-	Tester(`path.Match('A*', 'abcdefg'):case)
-	Tester(`path.Match('A*', 'abcdefg'):icase)
-}
-
-TestCase('path.Regulate()') {
-	pathNames = [
-		''
-		'a'
-		'a/b'
-		'a/b/c'
-		'a/b/c/d'
-		'a/..'
-		'a/../..'
-		'a/../../..'
-		'a/b/c'
-		'a/b/c/..'
-		'a/b/c/../..'
-		'a/b/c/../../..'
-		'a/b/c/../../../..'
-		'a/'
-		'/a'
-		'/a/'
-		'/a/..'
-		'/a/../..'
-		'a/b/c/'
-		'/a/b/c'
-		'/a/b/c/'
-		'c:'
-		'c:a/b/c'
-		'c:a/b/c/..'
-		'c:a/b/c/../..'
-		'c:a/b/c/../../..'
-		'c:a/b/c/../../../..'
-		'c:/'
-		'c:/a/b/c'
-		'c:/a/b/c/..'
-		'c:/a/b/c/../..'
-		'c:/a/b/c/../../..'
-		'c:/a/b/c/../../../..'
-		'a/b/c/./d/e/./f/g'
-		'dir1/dir2///dir3//dir4/'
-		'///dir1/dir2///dir3//dir4/'
-		'dir1/dir2/../dir3/../dir4/../'
-	]
-	pathNamesQuoted = "'" + pathNames + "'"
-	Printf('%-*s -> \'%s\'\n', pathNamesQuoted:*len.Max(), pathNamesQuoted, path.Regulate(pathNames):uri)
-}
-
-TestCase('path.Stat()') {
-}
-
-TestCase('path.Walk()') {
-}
+line 12
+line 13
+line 14
+line 15
+line 16
+line 17
+line 18
+line 19
+line Last
