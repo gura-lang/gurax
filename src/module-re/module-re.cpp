@@ -123,15 +123,16 @@ Gurax_ImplementMethod(String, Sub)
 	int cnt = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
 	// Function body
 	String strRtn;
+	int nReplaced = 0;
 	if (replace.IsType(VTYPE_String)) {
-		strRtn = pattern.SubstituteByString(str, Value_String::GetString(replace), cnt);
+		strRtn = pattern.ReplaceByString(str, Value_String::GetString(replace), cnt, nReplaced);
 	} else if (replace.IsType(VTYPE_Function)) {
-		strRtn = pattern.SubstituteByFunction(str, processor, Value_Function::GetFunction(replace), cnt);
+		strRtn = pattern.ReplaceByFunction(str, processor, Value_Function::GetFunction(replace), cnt, nReplaced);
 	} else {
 		Error::Issue(ErrorType::ValueError, "string or function must be specified");
 		return Value::nil();
 	}
-	return ReturnValue(processor, argument, new Value_String(strRtn));
+	return ReturnValue(processor, argument, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
 }
 
 // String#SplitReg(pattern:Pattern, cntMax?:Number):map {block?}

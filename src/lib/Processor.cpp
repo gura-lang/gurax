@@ -44,6 +44,7 @@ Value* Processor::EvalExpr(const Expr& expr, Event* pEvent)
 
 Value* Processor::EvalExpr(const Expr& expr, Argument& argument, Event* pEvent)
 {
+	if (!argument.Compensate(*this)) return Value::nil();
 	argument.AssignToFrame(PushFrame<Frame_Block>());
 	if (!expr.GetPUnitFirst()) return Value::nil();
 	RefPtr<Value> pValue(ProcessExpr(expr));

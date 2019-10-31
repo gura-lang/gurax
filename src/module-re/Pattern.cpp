@@ -49,7 +49,7 @@ Match* Pattern::CreateMatch(const char* str, int pos, int posEnd)
 	return new Match(Reference(), region.release(), str);
 }
 
-String Pattern::SubstituteByString(const char* str, const char* replace, int cnt)
+String Pattern::ReplaceByString(const char* str, const char* replace, int cnt, int& nReplaced)
 {
 	enum class Stat { Start, Escape };
 	size_t len = ::strlen(str);
@@ -71,6 +71,7 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 			IssueError_Onigmo();
 			return String::Empty;
 		}
+		nReplaced++;
 		strRtn += String(str + idx, rtn - idx);
 		Stat stat = Stat::Start;
 		for (const char *p = replace; *p != '\0'; p++) {
@@ -103,7 +104,7 @@ String Pattern::SubstituteByString(const char* str, const char* replace, int cnt
 	return strRtn;
 }
 
-String Pattern::SubstituteByFunction(const char* str, Processor& processor, const Function& func, int cnt)
+String Pattern::ReplaceByFunction(const char* str, Processor& processor, const Function& func, int cnt, int& nReplaced)
 {
 	enum class Stat { Start, Escape };
 	size_t len = ::strlen(str);
@@ -126,6 +127,7 @@ String Pattern::SubstituteByFunction(const char* str, Processor& processor, cons
 			IssueError_Onigmo();
 			return String::Empty;
 		}
+		nReplaced++;
 		int idxNext = region->end[0];
 		RefPtr<Match> pMatch(new Match(Reference(), region.release(), str));
 		RefPtr<Argument> pArgument(new Argument(func));

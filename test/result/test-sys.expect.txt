@@ -1,6 +1,6 @@
 ======== Streams ========
-sys.cin .. <Stream:CIn:r>
-sys.cout .. <Stream:COut:w>
-sys.cerr .. <Stream:CErr:w>
+sys.cin .. <Stream:CIn:r:delcr>
+sys.cout .. <Stream:COut:w:delcr>
+sys.cerr .. <Stream:CErr:w:delcr>
 print message on sys.cout
 ======== sys.Exit() ========

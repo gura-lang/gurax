@@ -97,6 +97,7 @@ public:
 	}
 	bool ReadyToPickValue();
 	void AssignToFrame(Frame& frame) const;
+	bool Compensate(Processor& processor);
 	void DoCall(Processor& processor);
 	static void AssignThisToFrame(Frame& frame, Value* pValueThis) {
 		frame.AssignFromArgument(Gurax_Symbol(this_), pValueThis);
