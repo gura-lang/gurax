@@ -60,9 +60,9 @@ TestCase('Basic test') {
 	${end}''')
 }
 //-----------------------------------------------------------------------------
-TestCase('suffix T') {
-	Tester(`T'')
-	Tester(`T'${hoge}')
+TestCase('suffix t') {
+	Tester(`t'')
+	Tester(`t'${hoge}')
 }
 //-----------------------------------------------------------------------------
 TestCase('marker handling') {
@@ -343,7 +343,7 @@ TestCase('Loop and branch sequence') {
 }
 //-----------------------------------------------------------------------------
 TestCase('Scope') {
-	x = T'${value}\n'
+	x = t'${value}\n'
 	try {
 		x.Render(sys.cout)
 	} catch {|e|
@@ -574,7 +574,7 @@ TestCase('Embedded string') {
 	variable ${var} reference
 	''')
 	// inheritance
-	base = T'[${=block(`head)}original${end}] ${=block(`body)}original${end}'
+	base = t'[${=block(`head)}original${end}] ${=block(`body)}original${end}'
 	Tester(`e'${=extends(base)}')
 	Tester(`e'${=extends(base)}${=block(`head)}replaced${end}')
 	Tester(`e'${=extends(base)}${=block(`body)}replaced${end}')

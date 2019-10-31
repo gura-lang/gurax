@@ -4,7 +4,7 @@ import(argopt)
 //------------------------------------------------------------------------------
 // Template of build.gura
 //------------------------------------------------------------------------------
-tmpl_build = R'''
+tmpl_build = tR'''
 #!/usr/bin/env gurax
 import(util.modbuild) {Builder}
 
@@ -17,12 +17,12 @@ builder.cflags = []
 builder.ldflags = []
 builder.libs = []
 builder.Run()
-'''T
+'''
 
 //------------------------------------------------------------------------------
 // Template of test-NAME.gura
 //------------------------------------------------------------------------------
-tmpl_test = R'''
+tmpl_test = tR'''
 #!/usr/bin/env gurax
 import(util.tester) {*}
 import(${dotModuleName})
@@ -30,19 +30,19 @@ import(${dotModuleName})
 TestCase('Basic test') {
 	Println(${dotModuleName}.Test(3, 4))
 }
-'''T
+'''
 
 //------------------------------------------------------------------------------
 // Template of stdafx.h
 //------------------------------------------------------------------------------
-tmpl_stdafx = R'''
+tmpl_stdafx = tR'''
 #include "${fileName_header}"
-'''T
+'''
 
 //------------------------------------------------------------------------------
 // Template of module-NAME.h
 //------------------------------------------------------------------------------
-tmpl_header = R'''
+tmpl_header = tR'''
 //==============================================================================
 // Gura module: ${dotModuleName}
 //==============================================================================
@@ -54,12 +54,12 @@ Gurax_BeginModuleHeader(${ubarModuleName})
 Gurax_EndModuleHeader(${ubarModuleName})
 
 #endif
-'''T
+'''
 
 //------------------------------------------------------------------------------
 // Template of module-NAME.cpp
 //------------------------------------------------------------------------------
-tmpl_source = R'''
+tmpl_source = tR'''
 //==============================================================================
 // ${fileName_main}
 //==============================================================================
@@ -111,9 +111,9 @@ Gurax_ModuleTerminate()
 }
 
 Gurax_EndModule(${ubarModuleName})
-'''T
+'''
 
-strHelp = R'''
+strHelp = tR'''
 Generates a set of files to build a Gura binary module.
 usage: genmod.gura module-name
 '''
@@ -151,12 +151,12 @@ main() = {
 	tmpl_source.Render(Open(fileName_main, 'w'))
 	fs.ChangeMode(fileName_build, 'a+x')
 	fs.ChangeMode(fileName_test, 'a+x')
-	R'''
+	tR'''
 	Following files were generated.
 	- Build Script: ${fileName_build}
 	- Test Script:  ${fileName_test}
 	- Source Files: ${fileName_stdafx}, ${fileName_header}, ${fileName_main}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 
 main()

@@ -4,7 +4,7 @@ import(argopt)
 //------------------------------------------------------------------------------
 // Class_Template of build.gura
 //------------------------------------------------------------------------------
-tmpl_header = R'''
+tmpl_header = tR'''
 //==============================================================================
 // VType_${className}.h
 //==============================================================================
@@ -99,12 +99,12 @@ namespace Gurax {
 ${end}
 
 #endif
-'''T
+'''
 
 //------------------------------------------------------------------------------
 // Template of test-NAME.gura
 //------------------------------------------------------------------------------
-tmpl_source = R'''
+tmpl_source = tR'''
 //==============================================================================
 // VType_${className}.cpp
 //==============================================================================
@@ -185,7 +185,7 @@ Gurax_EndModuleScope(${ubarModuleName})
 ${else}
 }
 ${end}
-'''T
+'''
 
 strHelp = R'''
 '''
@@ -223,10 +223,10 @@ main() = {
 	}
 	tmpl_header.Render(Open(fileName_header, 'w'))
 	tmpl_source.Render(Open(fileName_source, 'w'))
-	R'''
+	tR'''
 	Following files were generated.
 	- Source Files: ${fileName_header}, ${fileName_source}
-	'''.RenderTemplate(sys.cout)
+	'''.Render(sys.cout)
 }
 
 main()

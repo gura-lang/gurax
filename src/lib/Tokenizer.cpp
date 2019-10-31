@@ -1124,24 +1124,12 @@ bool Tokenizer::CheckStringPrefix(StringInfo& stringInfo, const String& field)
 		} else if (ch == 'b') {
 			if (stringInfo.type != StringType::String) return false;
 			stringInfo.type = StringType::Binary;
-		} else if (ch == 'B') {
-			if (stringInfo.type != StringType::String) return false;
-			stringInfo.type = StringType::Binary;
-			stringInfo.wiseFlag = true;
 		} else if (ch == 't') {
 			if (stringInfo.type != StringType::String) return false;
 			stringInfo.type = StringType::Template;
-		} else if (ch == 'T') {
-			if (stringInfo.type != StringType::String) return false;
-			stringInfo.type = StringType::Template;
-			stringInfo.wiseFlag = true;
 		} else if (ch == 'e') {
 			if (stringInfo.type != StringType::String) return false;
 			stringInfo.type = StringType::TmplEmbedded;
-		} else if (ch == 'E') {
-			if (stringInfo.type != StringType::String) return false;
-			stringInfo.type = StringType::TmplEmbedded;
-			stringInfo.wiseFlag = true;
 		} else {
 			return false;
 		}
