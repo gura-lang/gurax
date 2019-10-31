@@ -65,6 +65,12 @@ TestCase('suffix t') {
 	Tester(`t'${hoge}')
 }
 //-----------------------------------------------------------------------------
+TestCase('suffix e') {
+	Tester(`e'')
+	hoge = 'value of hoge'
+	Tester(`e'${hoge}')
+}
+//-----------------------------------------------------------------------------
 TestCase('marker handling') {
 	x = 'hoge'
 	tR'''

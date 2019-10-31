@@ -23,10 +23,10 @@ Expr_Collector* Parser::ParseStream(Stream& stream)
 	return pParser->GetExprRoot().Reference();
 }
 
-Expr_Collector* Parser::ParseString(const char* text)
+Expr_Collector* Parser::ParseString(const char* str)
 {
 	RefPtr<Parser> pParser(new Parser("*string*"));
-	if (!pParser->FeedString(text) || !pParser->Finish()) return nullptr;
+	if (!pParser->FeedString(str) || !pParser->Finish()) return nullptr;
 	return pParser->GetExprRoot().Reference();
 }
 
@@ -42,18 +42,18 @@ bool Parser::FeedStream(Stream& stream)
 	return true;
 }
 
-bool Parser::FeedString(const char* text)
+bool Parser::FeedString(const char* str)
 {
-	for (const char* p = text; *p; p++) {
+	for (const char* p = str; *p; p++) {
 		FeedChar(*p);
 		if (Error::IsIssued()) return false;
 	}
 	return true;
 }
 
-bool Parser::FeedString(const char* text, size_t len)
+bool Parser::FeedString(const char* str, size_t len)
 {
-	for (const char* p = text; len > 0; p++, len--) {
+	for (const char* p = str; len > 0; p++, len--) {
 		FeedChar(*p);
 		if (Error::IsIssued()) return false;
 	}

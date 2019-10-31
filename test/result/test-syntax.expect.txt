@@ -1,0 +1,5 @@
+======== Prefix ========
+Expr.Parse("b'abcdefg'") .. b'abcdefg'
+Expr.Parse("e'${foo}abcdefg'") .. e'${foo}abcdefg'
+Expr.Parse("t'${foo}abcdefg'") .. t'${foo}abcdefg'
+Expr.Parse("be'${foo}abcdefg'") .. invalid format of prefix

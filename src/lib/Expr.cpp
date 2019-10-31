@@ -1002,7 +1002,7 @@ void Expr_Caller::Compose(Composer& composer)
 	if (GetExprOfBlock()) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(this);
-		composer.ComposeAsSequence2(*GetExprOfBlock());
+		composer.ComposeAsSequence(*GetExprOfBlock());
 		composer.Add_Return(GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	}

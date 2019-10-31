@@ -134,6 +134,9 @@ ${end}' -> '    0 is a multiple of two
 ======== suffix t ========
 t'' .. (template)
 t'${hoge}' .. (template)
+======== suffix e ========
+e'' .. 
+e'${hoge}' .. value of hoge
 ======== marker handling ========
 $
 $$

@@ -215,7 +215,7 @@ void Operator_Quote::ComposeUnary(Composer& composer, Expr_Unary& expr) const
 	Expr& exprChild = expr.GetExprChild();
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(&expr);
-	composer.ComposeAsSequence2(exprChild);
+	composer.ComposeAsSequence(exprChild);
 	composer.Add_Return(&exprChild);
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	composer.Add_Value(new Value_Expr(exprChild.Reference()), &expr);				// [Result]

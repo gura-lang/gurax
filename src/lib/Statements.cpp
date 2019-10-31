@@ -558,7 +558,7 @@ Gurax_ImplementStatement(repeat)
 	if (iterFlag || xiterFlag) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(&exprCaller);
-		composer.ComposeAsSequence2(*exprCaller.GetExprOfBlock());
+		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
 		composer.Add_EndSequence(exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprCdr) {

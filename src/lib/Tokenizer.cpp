@@ -670,15 +670,20 @@ void Tokenizer::FeedChar(char ch)
 			_segment.push_back(ch);
 		} else if (ch == '!') {
 			_stat = Stat::SymbolExclamation;
-		} else if ((ch == '"' || ch == '\'') && CheckStringPrefix(_stringInfo, _segment)) {
-			_stringInfo.chBorder = ch;
-			if (_verboseFlag) {
-				_source.clear();
-				_source += _segment;
-				_source.push_back(ch);
+		} else if (ch == '"' || ch == '\'') {
+			if (CheckStringPrefix(_stringInfo, _segment)) {
+				_stringInfo.chBorder = ch;
+				if (_verboseFlag) {
+					_source.clear();
+					_source += _segment;
+					_source.push_back(ch);
+				}
+				_segment.clear();
+				_stat = Stat::StringFirst;
+			} else {
+				IssueError(ErrorType::SyntaxError, "invalid format of prefix");
+				_stat = Stat::Error;
 			}
-			_segment.clear();
-			_stat = Stat::StringFirst;
 		} else {
 			if (_segment == "in" && !GetTokenStack().back()->IsType(TokenType::Quote)) {
 				int lineNo = GetLineNo();

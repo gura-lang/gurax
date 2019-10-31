@@ -1,0 +1,9 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Prefix') {
+	Tester(`Expr.Parse("b'abcdefg'"))
+	Tester(`Expr.Parse("e'${foo}abcdefg'"))
+	Tester(`Expr.Parse("t'${foo}abcdefg'"))
+	Tester(`Expr.Parse("be'${foo}abcdefg'"))
+}

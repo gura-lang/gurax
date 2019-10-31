@@ -1,4 +1,4 @@
 ======== Operator == ========
-<VType:Expr>
+<VType:Expr(stream:Stream):map{block?}>
 (`a) == (`a) .. true
 x == (`a) .. true

@@ -6,6 +6,34 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Expr(stream:Stream):map
+Gurax_DeclareFunction(Expr)
+{
+	Declare(VTYPE_Expr, Flag::Map);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `Expr` instance by pasring the given stream.");
+}
+
+Gurax_ImplementFunction(Expr)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.Pick<Value_Stream>().GetStream();
+	// Function body
+	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(stream));
+	if (!pExprRoot) return Value::nil();
+	Composer composer;
+	pExprRoot->Compose(composer);
+	if (Error::IsIssued()) return Value::nil();
+	return ReturnValue(processor, argument, new Value_Expr(pExprRoot.release()));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Expr#EachPUnit()
@@ -47,11 +75,12 @@ Gurax_ImplementMethod(Expr, Eval)
 	return pValueRtn.release();
 }
 
-// Expr.Parse(script:String) {block?}
+// Expr.Parse(str:String):map {block?}
 Gurax_DeclareClassMethod(Expr, Parse)
 {
-	Declare(VTYPE_Expr, Flag::None);
+	Declare(VTYPE_Expr, Flag::Map);
 	DeclareArg("script", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an `Expr` instance by parsing the given script.");
@@ -59,15 +88,16 @@ Gurax_DeclareClassMethod(Expr, Parse)
 
 Gurax_ImplementClassMethod(Expr, Parse)
 {
-#if 0
 	// Argument
 	ArgPicker args(argument);
-	const char* script = args.PickString();
+	const char* str = args.PickString();
 	// Function body
-	
-	return pValueRtn.release();
-#endif
-	return Value::nil();
+	RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(str));
+	if (!pExprRoot) return Value::nil();
+	Composer composer;
+	pExprRoot->Compose(composer);
+	if (Error::IsIssued()) return Value::nil();
+	return ReturnValue(processor, argument, new Value_Expr(pExprRoot.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -489,6 +519,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	SetConstructor(Gurax_CreateFunction(Expr));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));
