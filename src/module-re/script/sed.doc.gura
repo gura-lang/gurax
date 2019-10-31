@@ -1,0 +1,16 @@
+#!/usr/bin/env gura
+import(markdown)
+
+text@en = R'''
+# sed Module
+
+The `sed` module ...
+
+## Module Function
+
+${markdown.makedoc@function(`en
+)}
+
+'''.embed()
+
+markdown.document_server(locals(), %{`en => text@en})

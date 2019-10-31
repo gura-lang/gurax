@@ -40,6 +40,52 @@ Gurax_ImplementFunction(Stream)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Stream#Addcr(flag:Bool):reduce
+Gurax_DeclareMethod(Stream, Addcr)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Indicates the stream to add carriage return code when putting strings.");
+}
+
+Gurax_ImplementMethod(Stream, Addcr)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	bool flag = args.PickBool();
+	// Function body
+	stream.GetCodec().SetAddcrFlag(flag);
+	return valueThis.Reference();
+}
+
+// Stream#Delcr(flag:Bool):reduce
+Gurax_DeclareMethod(Stream, Delcr)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Indicates the stream to add carriage return code when putting strings.");
+}
+
+Gurax_ImplementMethod(Stream, Delcr)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	bool flag = args.PickBool();
+	// Function body
+	stream.GetCodec().SetDelcrFlag(flag);
+	return valueThis.Reference();
+}
+
 // Stream#Print(values*):void:map
 Gurax_DeclareMethod(Stream, Print)
 {
@@ -203,6 +249,8 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateFunctionAlias(Stream, "Open"));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Stream, Addcr));
+	Assign(Gurax_CreateMethod(Stream, Delcr));
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));
 	Assign(Gurax_CreateMethod(Stream, Println));

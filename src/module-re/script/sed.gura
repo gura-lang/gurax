@@ -1,0 +1,33 @@
+#!/usr/bin/env gurax
+import(re)
+
+Exec(fileName:String, silentFlag:Bool) {block} = {
+	linesSub = []
+	cntReplaced = 0
+	ReadLines(fileName) {|line, iLine|
+		rtn = block(line, iLine)
+		if (rtn.IsInstanceOf(List) || line != rtn) {
+			if (!silentFlag) {
+				(cntReplaced == 0) && Printf('%s\n', fileName)
+				Printf('-- replaced at line.%d\n', iLine + 1)
+			}
+			cntReplaced += 1
+		}
+		rtn && linesSub.Append(rtn)
+	}
+	(cntReplaced > 0) && Open(fileName, 'w').Addcr(false).Print(linesSub)
+}
+
+Glob(pattern:String, arg%%):[silent] {`block} = {
+	silentFlag = arg.isset(`silent)
+	path.Glob(pattern):file {|fileName|
+		Exec(fileName, silentFlag) {|block|}
+	}
+}
+
+Walk(directory?:directory, maxdepth?:number, pattern*:string):[silent] {`block} = {
+	silentFlag = __arg__.isset(`silent)
+	path.walk(directory, maxdepth, pattern*):file {|fileName|
+		Exec(fileName, silentFlag) {|block|}
+	}
+}

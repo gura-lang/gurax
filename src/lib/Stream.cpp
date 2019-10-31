@@ -13,7 +13,7 @@ RefPtr<Stream> Stream::CIn;
 RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
-Stream::Stream(Flags flags) : _flags(flags), _pCodec(Codec::Dumb->Reference())
+Stream::Stream(Flags flags) : _flags(flags), _pCodec(CodecFactory::Dumb->CreateCodec(true, false))
 {
 }
 
@@ -237,6 +237,8 @@ String Stream::ToString(const StringStyle& ss) const
 	str += GetName();
 	if (GetFlags() & Flag::Readable) str += ":r";
 	if (GetFlags() & Flag::Writable) str += ":w";
+	if (GetCodec().GetAddcrFlag()) str += ":addcr";
+	if (GetCodec().GetDelcrFlag()) str += ":delcr";
 	return str;
 }
 

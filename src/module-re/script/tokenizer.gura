@@ -1,0 +1,55 @@
+#!/usr/bin/env gura
+import(re)
+
+Entry = struct(pattern:re.pattern, func:function)
+
+Tokenizer = class {
+	public {
+		match
+	}
+	__init__() = {
+		this.mode = `start
+		this.entriesDict = %{}
+	}
+	SetRule() {`block} = {
+		this.entriesDict[`start] = this.ParseBlock(block)
+	}
+	SetMode(mode:symbol) = {
+		this.mode = mode
+	}
+	Tokenize(stream:stream) = {
+		raw = 0
+		readlines(stream) {|lineBuff|
+			col = 0
+			while (col < lineBuff.len()) {
+				this.match = nil
+				for (entry in this.entriesDict[this.mode]) {
+					if (this.match = entry.pattern.match(lineBuff, col)) {
+						entry.func(this)
+						col = this.match.group(0).end
+						break
+					}
+				}
+				if (!this.match) {
+					raise(error.ValueError,
+						'unrecognizable token at %d:%d' % [raw + 1, col + 1])
+					break
+				}
+			}
+			raw += 1
+		}
+	}
+	ParseBlock(block:expr) = {
+		block.children.each():xlist {|expr|
+			if (!(expr.isbinaryop() && expr.operator.symbol == `=>)) {
+				raise(error.SyntaxError, 'invalid element')
+			} elsif (expr.left.isquote()) {
+				exprLeft = expr.left().unquote()
+				this.entriesDict[exprLeft.getsymbol()] = this.ParseBlock(expr.right())
+				nil
+			} else {
+				Entry(re.pattern('^' + expr.left.value), expr.right.tofunction())
+			}
+		}
+	}
+}

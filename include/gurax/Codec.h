@@ -119,6 +119,12 @@ public:
 	const char* GetEncoding() const { return GetCodecFactory().GetEncoding(); }
 	Decoder& GetDecoder() { return *_pDecoder; }
 	Encoder& GetEncoder() { return *_pEncoder; }
+	const Decoder& GetDecoder() const { return *_pDecoder; }
+	const Encoder& GetEncoder() const { return *_pEncoder; }
+	bool GetDelcrFlag() const { return GetDecoder().GetDelcrFlag(); }
+	bool GetAddcrFlag() const { return GetEncoder().GetAddcrFlag(); }
+	void SetDelcrFlag(bool delcrFlag) { GetDecoder().SetDelcrFlag(delcrFlag); }
+	void SetAddcrFlag(bool addcrFlag) { GetEncoder().SetAddcrFlag(addcrFlag); }
 	Codec* Duplicate() const;
 	static Codec* Create(const char* encoding, bool delcrFlag, bool addcrFlag);
 	static void Bootup();
