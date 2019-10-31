@@ -163,17 +163,12 @@ bool Stream::ReadLine(String& str, bool includeEOLFlag)
 		}
 		str += ch;
 	}
-	return !Error::IsIssued();
+	return true;
 }
 
-bool Stream::ReadLines(StringList& strList, bool includeEOLFlag)
+Iterator* Stream::ReadLines(bool includeEOLFlag)
 {
-	for (;;) {
-		String str;
-		if (!ReadLine(str, includeEOLFlag)) break;
-		strList.push_back(str);
-	}
-	return !Error::IsIssued();
+	return new Iterator_ReadLines(Reference(), includeEOLFlag);
 }
 
 Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
@@ -243,6 +238,30 @@ String Stream::ToString(const StringStyle& ss) const
 	if (GetFlags() & Flag::Readable) str += ":r";
 	if (GetFlags() & Flag::Writable) str += ":w";
 	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_ReadLines
+//------------------------------------------------------------------------------
+Iterator_ReadLines::Iterator_ReadLines(Stream* pStream, bool includeEOLFlag) :
+	_pStream(pStream), _includeEOLFlag(includeEOLFlag), _doneFlag(false)
+{
+}
+
+Value* Iterator_ReadLines::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	String str;
+	if (!GetStream().ReadLine(str, _includeEOLFlag)) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	return new Value_String(str);
+}
+
+String Iterator_ReadLines::ToString(const StringStyle& ss) const
+{
+	return "";
 }
 
 }

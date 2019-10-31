@@ -70,6 +70,10 @@ protected:
 public:
 	static Stream* Open(const char* pathName, OpenFlags openFlags);
 	Flags GetFlags() const { return _flags; }
+	bool IsInfinite() const { return _flags & Flag::Infinite; }
+	bool IsBwdSeekable() const { return _flags & Flag::BwdSeekable; }
+	bool IsReadable() const { return _flags & Flag::Readable; }
+	bool IsWritable() const { return _flags & Flag::Writable; }
 	void SetCodec(Codec* pCodec) { _pCodec.reset(pCodec); }
 	Codec& GetCodec() const { return *_pCodec; }
 	int GetChar();
@@ -88,7 +92,7 @@ public:
 	Stream& Printf(const char* format, ...);
 	Stream& PrintFmt(const char* format, const ValueList& valueList);
 	bool ReadLine(String& str, bool includeEOLFlag);
-	bool ReadLines(StringList& strList, bool includeEOLFlag);
+	Iterator* ReadLines(bool includeEOLFlag);
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 	virtual bool IsDumb() const { return false; }
@@ -106,6 +110,29 @@ public:
 	bool IsEqualTo(const Stream& stream) const { return IsIdentical(stream); }
 	bool IsLessThan(const Stream& stream) const { return this < &stream; }
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_ReadLines
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_ReadLines : public Iterator {
+private:
+	RefPtr<Stream> _pStream;
+	bool _includeEOLFlag;
+	bool _doneFlag;
+public:
+	Iterator_ReadLines(Stream* pStream, bool includeEOLFlag);
+public:
+	Stream& GetStream() { return *_pStream; }
+	const Stream& GetStream() const { return *_pStream; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetStream().IsInfinite()? Flag::Infinite : Flag::Finite) | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 }

@@ -237,6 +237,28 @@ Gurax_ImplementFunction(Range)
 	return ReturnIterator(processor, argument, pIterator.release());
 }
 
+// ReadLines(stream:Stream):[chop] {block?}
+Gurax_DeclareFunction(ReadLines)
+{
+	Declare(VTYPE_Binary, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(chop));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.");
+}
+
+Gurax_ImplementFunction(ReadLines)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.Pick<Value_Stream>().GetStream();
+	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
+	// Function body
+	return ReturnIterator(processor, argument, stream.ReadLines(includeEOLFlag));
+}
+
 // Test() {block}
 Gurax_DeclareFunction(Test)
 {
@@ -271,6 +293,7 @@ void Functions::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Printf));
 	frame.Assign(Gurax_CreateFunction(Println));
 	frame.Assign(Gurax_CreateFunction(Range));
+	frame.Assign(Gurax_CreateFunction(ReadLines));
 	frame.Assign(Gurax_CreateFunction(Test));
 }
 

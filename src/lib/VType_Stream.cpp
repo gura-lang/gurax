@@ -134,6 +134,7 @@ Gurax_DeclareMethod(Stream, ReadLine)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads one line from the `Stream` and returns it as a `String` instance.");
@@ -141,15 +142,23 @@ Gurax_DeclareMethod(Stream, ReadLine)
 
 Gurax_ImplementMethod(Stream, ReadLine)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
+	// Function body
+	String str;
+	if (!stream.ReadLine(str, includeEOLFlag)) return Value::nil();
+	return ReturnValue(processor, argument, new Value_String(str));
 }
 
-// Stream#ReadLines(nLines?:Number):[chop] {block?}
+// Stream#ReadLines():[chop] {block?}
 Gurax_DeclareMethod(Stream, ReadLines)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.");
@@ -157,7 +166,13 @@ Gurax_DeclareMethod(Stream, ReadLines)
 
 Gurax_ImplementMethod(Stream, ReadLines)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
+	// Function body
+	return ReturnIterator(processor, argument, stream.ReadLines(includeEOLFlag));
 }
 
 // Stream#Write(ptr:Pointer, bytes?:Number)
