@@ -6,6 +6,71 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// Expr#EachPUnit()
+Gurax_DeclareMethod(Expr, EachPUnit)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an iterator that enumerates `PUnit` instances stored in the target `Expr`.\n");
+}
+
+Gurax_ImplementMethod(Expr, EachPUnit)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Function body
+	RefPtr<Iterator> pIterator(expr.EachPUnit());
+	return new Value_Iterator(pIterator.release());
+}
+
+// Expr#Eval()
+Gurax_DeclareMethod(Expr, Eval)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Evaluates the target `Expr` and returns its result value.");
+}
+
+Gurax_ImplementMethod(Expr, Eval)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const Expr& expr = valueThis.GetExpr();
+	// Function body
+	RefPtr<Value> pValueRtn(processor.ProcessExpr(expr));
+	processor.ClearEvent();
+	return pValueRtn.release();
+}
+
+// Expr.Parse(script:String) {block?}
+Gurax_DeclareClassMethod(Expr, Parse)
+{
+	Declare(VTYPE_Expr, Flag::None);
+	DeclareArg("script", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `Expr` instance by parsing the given script.");
+}
+
+Gurax_ImplementClassMethod(Expr, Parse)
+{
+#if 0
+	// Argument
+	ArgPicker args(argument);
+	const char* script = args.PickString();
+	// Function body
+	
+	return pValueRtn.release();
+#endif
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Expr#child
@@ -389,48 +454,6 @@ Gurax_ImplementPropertyGetter(Expr, type)
 }
 
 //------------------------------------------------------------------------------
-// Implementation of method
-//------------------------------------------------------------------------------
-// Expr#EachPUnit()
-Gurax_DeclareMethod(Expr, EachPUnit)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns an iterator that enumerates `PUnit` instances stored in the target `Expr`.\n");
-}
-
-Gurax_ImplementMethod(Expr, EachPUnit)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	const Expr& expr = valueThis.GetExpr();
-	// Function body
-	RefPtr<Iterator> pIterator(expr.EachPUnit());
-	return new Value_Iterator(pIterator.release());
-}
-
-// Expr#Eval()
-Gurax_DeclareMethod(Expr, Eval)
-{
-	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Evaluates the target `Expr` and returns its result value.");
-}
-
-Gurax_ImplementMethod(Expr, Eval)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	const Expr& expr = valueThis.GetExpr();
-	// Function body
-	RefPtr<Value> pValueRtn(processor.ProcessExpr(expr));
-	processor.ClearEvent();
-	return pValueRtn.release();
-}
-
-//------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
 // Expr == Expr
@@ -466,6 +489,10 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
 	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Expr, EachPUnit));
+	Assign(Gurax_CreateMethod(Expr, Eval));
+	Assign(Gurax_CreateMethod(Expr, Parse));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Expr, child));
 	Assign(Gurax_CreateProperty(Expr, left));
@@ -491,9 +518,6 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, isIndexer));
 	Assign(Gurax_CreateProperty(Expr, isCaller));
 	Assign(Gurax_CreateProperty(Expr, type));
-	// Assignment of method
-	Assign(Gurax_CreateMethod(Expr, EachPUnit));
-	Assign(Gurax_CreateMethod(Expr, Eval));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Eq, Expr, Expr);
 	Gurax_AssignOpBinary(Eq, Symbol, Expr);
