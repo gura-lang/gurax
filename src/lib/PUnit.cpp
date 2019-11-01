@@ -1944,17 +1944,20 @@ void PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::Exec(Processor& proce
 		processor.ErrorDone();
 		return;
 	}
-	RefPtr<Value_Expr> pValueExprCasted(pValueExpr->Cast<Value_Expr>());
-	if (!pValueExprCasted) {
-		processor.ErrorDone();
-		return;
+	RefPtr<Expr_Block> pExprOfBlock;
+	if (pValueExpr->IsValid()) {
+		RefPtr<Value_Expr> pValueExprCasted(pValueExpr->Cast<Value_Expr>());
+		if (!pValueExprCasted) {
+			processor.ErrorDone();
+			return;
+		}
+		if (!pValueExprCasted->GetExpr().IsType<Expr_Block>()) {
+			Error::Issue(ErrorType::TypeError, "block expression must be specified for delegation");
+			processor.ErrorDone();
+			return;
+		}
+		pExprOfBlock.reset(dynamic_cast<Expr_Block*>(pValueExprCasted->GetExpr().Reference()));
 	}
-	if (!pValueExprCasted->GetExpr().IsType<Expr_Block>()) {
-		Error::Issue(ErrorType::TypeError, "block expression must be specified for delegation");
-		processor.ErrorDone();
-		return;
-	}
-	RefPtr<Expr_Block> pExprOfBlock(dynamic_cast<Expr_Block*>(pValueExprCasted->GetExpr().Reference()));
 	RefPtr<Argument> pArgument(
 		new Argument(pValueCar.release(), pDeclCallable->Reference(),
 					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::nil(),
