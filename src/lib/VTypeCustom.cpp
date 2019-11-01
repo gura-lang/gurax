@@ -221,10 +221,8 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return pValueThis.release();
 	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	do {
-		ArgFeeder args(*pArgumentSub);
-		if (!args.FeedValue(frame, pValueThis->Reference())) return Value::nil();
-	} while (0);
+	ArgFeeder argsSub(*pArgumentSub);
+	if (!argsSub.FeedValue(frame, pValueThis.release())) return Value::nil();
 	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
 }
 
