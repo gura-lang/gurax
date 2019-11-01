@@ -667,7 +667,7 @@ Gurax_ImplementMethod(List, Head)
 	RefPtr<Iterator> pIterator(
 		new Iterator_Each(
 			valueTypedOwner.GetValueOwnerReference(), 0, std::min(n, valueTypedOwner.GetSize())));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // List#Join(sep?:String):map
@@ -830,7 +830,7 @@ Gurax_ImplementMethod(List, Offset)
 		}
 	}
 	RefPtr<Iterator> pIterator(new Iterator_Each(valueTypedOwner.GetValueOwnerReference(), offset));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // List#Or()
@@ -1252,7 +1252,7 @@ Gurax_ImplementMethod(List, Tail)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<ValueOwner> pValueOwner(valueTypedOwner.GetValueOwner().Tail(n));
-	return ReturnIterator(processor, argument, new Iterator_Each(pValueOwner.release()));
+	return argument.ReturnIterator(processor, new Iterator_Each(pValueOwner.release()));
 }
 
 // List#Until(criteria) {block?}

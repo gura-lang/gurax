@@ -218,7 +218,7 @@ Gurax_ImplementMethod(Stream, ReadLines)
 	// Arguments
 	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
 	// Function body
-	return ReturnIterator(processor, argument, stream.ReadLines(includeEOLFlag));
+	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
 // Stream#Write(ptr:Pointer, bytes?:Number)

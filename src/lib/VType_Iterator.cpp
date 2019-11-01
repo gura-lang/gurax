@@ -266,7 +266,7 @@ Value* VType_Iterator::Method_Combination(
 	}
 	RefPtr<Iterator> pIterator(new Iterator_Combination(
 								   valueTypedOwner.GetValueOwnerReference(), n));
-	return function.ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Contains(value)
@@ -349,7 +349,7 @@ Value* VType_Iterator::Method_Cycle(
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Cycle(valueTypedOwner.GetValueOwnerReference(), n));
-	return function.ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Each() {`block?}
@@ -490,7 +490,7 @@ Value* VType_Iterator::Method_Fold(
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Fold(
 								   iteratorSrc.Reference(), nSize, nAdvance, itemAsIterFlag, neatFlag));
-	return function.ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Format(format:String):map {block?}
@@ -539,7 +539,7 @@ Gurax_ImplementMethod(Iterator, Head)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Head(iteratorSrc.Reference(), n));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Join(sep?:String):map
@@ -715,7 +715,7 @@ Gurax_ImplementMethod(Iterator, Offset)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Offset(iteratorThis.Reference(), offset, raiseFlag));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Or()
@@ -802,7 +802,7 @@ Value* VType_Iterator::Method_Permutation(
 		pIterator.reset(new Iterator_Permutation(
 							valueTypedOwner.GetValueOwnerReference()));
 	}
-	return function.ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}
@@ -837,7 +837,7 @@ Value* VType_Iterator::Method_PingPong(
 	ArgPicker args(argument);
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return function.ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 #endif
 	return Value::nil();
 }
@@ -1029,7 +1029,7 @@ Value* VType_Iterator::Method_Reverse(
 {
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Reverse(valueTypedOwner.GetValueOwnerReference()));
-	return function.ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#RoundOff(threshold?:number) {block?}
@@ -1308,7 +1308,7 @@ Gurax_ImplementMethod(Iterator, Tail)
 	// Function body
 	RefPtr<ValueOwner> pValueOwner(iterator.Tail(n));
 	if (Error::IsIssued()) return Value::nil();
-	return ReturnIterator(processor, argument, new Iterator_Each(pValueOwner.release()));
+	return argument.ReturnIterator(processor, new Iterator_Each(pValueOwner.release()));
 }
 
 // Iterator#Until(criteria) {block?}

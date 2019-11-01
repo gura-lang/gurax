@@ -234,7 +234,7 @@ Gurax_ImplementFunction(Range)
 		if ((numEnd - num) * step < 0) numEnd = num;
 		pIterator.reset(new Iterator_Range(num, numEnd, step));
 	}
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // ReadLines(stream:Stream):[chop] {block?}
@@ -256,7 +256,7 @@ Gurax_ImplementFunction(ReadLines)
 	Stream& stream = args.Pick<Value_Stream>().GetStream();
 	bool includeEOLFlag = !argument.IsSet(Gurax_Symbol(chop));
 	// Function body
-	return ReturnIterator(processor, argument, stream.ReadLines(includeEOLFlag));
+	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
 // Test() {block}

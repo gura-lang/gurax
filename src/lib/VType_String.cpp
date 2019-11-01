@@ -142,7 +142,7 @@ Gurax_ImplementMethod(String, Each)
 		VType_String::Iterator_Each::Type::String;
 	// Function body
 	const StringReferable& str = valueThis.GetStringReferable();
-	return ReturnIterator(processor, argument, new VType_String::Iterator_Each(str.Reference(), type));
+	return argument.ReturnIterator(processor, new VType_String::Iterator_Each(str.Reference(), type));
 }
 
 
@@ -169,7 +169,7 @@ Gurax_ImplementMethod(String, EachLine)
 	bool chopFlag = argument.IsSet(Gurax_Symbol(chop));
 	// Function body
 	const StringReferable& str = valueThis.GetStringReferable();
-	return ReturnIterator(processor, argument, new VType_String::Iterator_EachLine(str.Reference(), chopFlag));
+	return argument.ReturnIterator(processor, new VType_String::Iterator_EachLine(str.Reference(), chopFlag));
 }
 
 // String#Encode(codec:Codec):String {block?}
@@ -856,7 +856,7 @@ Gurax_ImplementMethod(String, Split)
 	} else {
 		pIterator.reset(new VType_String::Iterator_Split<CharCase>(str.Reference(), sep, cntMax));
 	}
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // String#StartsWith(sub:String, pos?:Number):map:[rest,icase]
