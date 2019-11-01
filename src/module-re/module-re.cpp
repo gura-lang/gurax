@@ -132,7 +132,11 @@ Gurax_ImplementMethod(String, Sub)
 		Error::Issue(ErrorType::ValueError, "string or function must be specified");
 		return Value::nil();
 	}
-	return argument.ReturnValue(processor, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
+	RefPtr<Value> pValueRtn(new Value_String(strRtn));
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	return pExprOfBlock?
+		pExprOfBlock->DoEval(processor, pValueRtn.release(), new Value_Number(nReplaced)) :
+		pValueRtn.release();
 }
 
 // String#SplitReg(pattern:Pattern, cntMax?:Number):map {block?}

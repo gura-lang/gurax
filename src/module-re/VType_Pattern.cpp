@@ -78,11 +78,11 @@ Gurax_ImplementMethod(Pattern, Match)
 	return argument.ReturnValue(processor, new Value_Match(pMatch.release()));
 }
 
-// Pattern#Sub(pattern:Pattern, replace, cnt?:Number):map {block?}
+// Pattern#Sub(str:String, replace, cnt?:Number):map {block?}
 Gurax_DeclareMethod(Pattern, Sub)
 {
 	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
@@ -123,7 +123,11 @@ Gurax_ImplementMethod(Pattern, Sub)
 		Error::Issue(ErrorType::ValueError, "string or function must be specified");
 		return Value::nil();
 	}
-	return argument.ReturnValue(processor, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
+	RefPtr<Value> pValueRtn(new Value_String(strRtn));
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	return pExprOfBlock?
+		pExprOfBlock->DoEval(processor, pValueRtn.release(), new Value_Number(nReplaced)) :
+		pValueRtn.release();
 }
 
 // Pattern#Split(str:String, cntMax?:Number):map {block?}

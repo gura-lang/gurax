@@ -5,11 +5,15 @@ import(re)
 TestCase('Property') {
 	Tester(`re.Match.__PropHandler__(`begin))
 }
-TestCase('String#Sub()') {
+TestCase('String#Sub(), Pattern#Sub()') {
 	x = ['hoge 123 foo', 'no number here', '456 aaaaaa 111']
 	x::Sub(r'\d+', 'NUM') {|str| Println(str)}
 	Println('---')
-	x::Sub(r'\d+', 'NUM') {|str, replaced| replaced && Println(str)}
+	x::Sub(r'\d+', 'NUM') {|str, nReplaced| (nReplaced > 0) && Println(str)}
+	Println('---')
+	re.Pattern(r'\d+').Sub(x, 'NUM') {|str| Println(str)}
+	Println('---')
+	re.Pattern(r'\d+').Sub(x, 'NUM') {|str, nReplaced| (nReplaced > 0) && Println(str)}
 }
 /*
 TestCase('') {
