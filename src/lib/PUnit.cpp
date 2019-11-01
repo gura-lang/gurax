@@ -1907,10 +1907,76 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 			}
 		} else {
 			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Argument<0, true, true>(*_pAttr, _pExprOfBlock.release());
+				_pPUnitCreated = new PUnit_Argument<0, true, false>(*_pAttr, _pExprOfBlock.release());
 			} else {
-				_pPUnitCreated = new PUnit_Argument<0, false, true>(*_pAttr, _pExprOfBlock.release());
+				_pPUnitCreated = new PUnit_Argument<0, false, false>(*_pAttr, _pExprOfBlock.release());
 			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_ArgumentDelegation
+// Stack View: keepCarFlag = false: [Car] -> [Argument(Car)]     (continue)
+//                                        -> []                  (discard)
+//             keepCarFlag = true:  [Car] -> [Car Argument(Car)] (continue)
+//                                        -> [Car]               (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::PUnit_ArgumentDelegation(const Attribute& attr) :
+	_pAttr(new Attribute()), _flags(DeclCallable::Flag::None)
+{
+	for (const Symbol* pSymbol : attr.GetSymbols()) {
+		DeclCallable::Flags flag = DeclCallable::SymbolToFlag(pSymbol);
+		_flags |= flag;
+		if (!flag) _pAttr->AddSymbol(pSymbol);
+	}
+	_pAttr->AddSymbolsOpt(attr.GetSymbolsOpt());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueCar(processor.PopValue());
+	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallableWithError();
+	if (!pDeclCallable || !pDeclCallable->CheckAttribute(GetAttr())) {
+		processor.ErrorDone();
+		return;
+	}
+	RefPtr<Expr_Block> pExprOfBlock;
+	RefPtr<Argument> pArgument(
+		new Argument(pValueCar.release(), pDeclCallable->Reference(),
+					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::nil(),
+					 pExprOfBlock.release()));
+	if (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "ArgumentDelegation()";
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_ArgumentDelegation::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_ArgumentDelegation<1, true>(*_pAttr, _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_ArgumentDelegation<1, false>(*_pAttr, _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_ArgumentDelegation<0, true>(*_pAttr);
+		} else {
+			_pPUnitCreated = new PUnit_ArgumentDelegation<0, false>(*_pAttr);
 		}
 	}
 	return _pPUnitCreated;

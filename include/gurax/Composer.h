@@ -201,6 +201,9 @@ public:
 	void Add_Argument(Attribute* pAttr, Expr_Block* pExprOfBlock, bool keepCarFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Argument(pAttr, pExprOfBlock, keepCarFlag, Expr::Reference(pExprSrc)));
 	}
+	void Add_ArgumentDelegation(Attribute* pAttr, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_ArgumentDelegation(pAttr, Expr::Reference(pExprSrc)));
+	}
 	void Add_BeginArgSlot(const Expr* pExprSrc = nullptr) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_BeginArgSlot(pPUnitBranchDest, Expr::Reference(pExprSrc)));

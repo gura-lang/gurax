@@ -1717,6 +1717,52 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_ArgumentDelegation
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_ArgumentDelegation : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	RefPtr<Attribute> _pAttr;
+	DeclCallable::Flags _flags;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_ArgumentDelegation(const Attribute& attr);
+	PUnit_ArgumentDelegation(const Attribute& attr, Expr* pExpr) :
+		PUnit_ArgumentDelegation(attr) { _ppExprSrc[0] = pExpr; }
+public:
+	const Attribute& GetAttr() const { return *_pAttr; }
+	DeclCallable::Flags GetFlags() const { return _flags; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_ArgumentDelegation : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_ArgumentDelegation");
+private:
+	RefPtr<Attribute> _pAttr;
+public:
+	PUnitFactory_ArgumentDelegation(Attribute* pAttr, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pAttr(pAttr) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_ArgumentDelegation<1, false>) : sizeof(PUnit_ArgumentDelegation<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_BeginArgSlot
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
