@@ -989,7 +989,7 @@ void Expr_Caller::Compose(Composer& composer)
 		if (pValue && pValue->IsType(VTYPE_Function)) {
 			const Function& func = Value_Function::GetFunction(*pValue);
 			if (func.IsTypeStatement()) {
-				func.Compose(composer, *this);						// [Result]
+				func.Compose(composer, *this);								// [Result]
 				return;
 			}
 		}

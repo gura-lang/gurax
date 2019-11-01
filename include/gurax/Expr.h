@@ -705,6 +705,9 @@ public:
 		return _pDeclCallable->Prepare(GetExprLinkParam(), *Attribute::Empty, nullptr);
 	}
 	bool HasCallerAsParent() const;
+	bool IsDelegation() const {
+		return !HasExprElem() && _pExprLinkParam && _pExprLinkParam->HasSingle();
+	}
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {

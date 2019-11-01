@@ -534,7 +534,7 @@ const Expr::TypeInfo Expr_TmplString::typeInfo("TmplString");
 
 void Expr_TmplString::Compose(Composer& composer)
 {
-	composer.SetFactory(new PUnitFactory_TmplString(GetTemplate().Reference(), GetStringSTL(), Reference()));
+	composer.Add_TmplString(GetTemplate().Reference(), GetStringSTL(), this);
 }
 
 String Expr_TmplString::ToString(const StringStyle& ss) const
@@ -552,7 +552,7 @@ const Expr::TypeInfo Expr_TmplScript::typeInfo("TmplScript");
 void Expr_TmplScript::Compose(Composer& composer)
 {
 	ComposeSequence(composer, GetExprElemFirst());						// [Any]
-	composer.SetFactory(new PUnitFactory_TmplScript(Reference(), Reference()));
+	composer.Add_TmplScript(Reference(), this);
 }
 
 String Expr_TmplScript::ToString(const StringStyle& ss) const
@@ -603,7 +603,7 @@ void Expr_Template::Compose(Composer& composer)
 		!pTmpl->PrepareAndCompose(composer)) return;
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	if (_embedFlag) {
-		composer.SetFactory(new PUnitFactory_TmplEmbedded(pTmpl.release(), Reference()));
+		composer.Add_TmplEmbedded(pTmpl.release(), this);
 	} else {
 		composer.Add_Value(new Value_Template(pTmpl.release()), this);
 	}

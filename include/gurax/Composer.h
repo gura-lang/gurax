@@ -4,6 +4,7 @@
 #ifndef GURAX_COMPOSER_H
 #define GURAX_COMPOSER_H
 #include "PUnit.h"
+#include "Template.h"
 
 namespace Gurax {
 
@@ -83,6 +84,9 @@ public:
 	}
 	PUnitFactory& GetFactory() { return *_pPUnitFactory; }
 	void ComposeAsSequence(Expr& expr);
+	void Print() const;
+	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
+	Iterator* EachPUnit() const;
 public:
 	void Add_Value(Value* pValue, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Value(pValue, Expr::Reference(pExprSrc)));
@@ -317,9 +321,16 @@ public:
 		SetFactory(new PUnitFactory_Terminate());
 		Flush();
 	}
-	void Print() const;
-	void PrintPUnit(const StringStyle& ss = StringStyle::Empty) const;
-	Iterator* EachPUnit() const;
+	// PUnit for Template
+	void Add_TmplString(Template* pTmpl, const String& str, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_TmplString(pTmpl, str, Expr::Reference(pExprSrc)));
+	}	
+	void Add_TmplScript(Expr_TmplScript* pExprTmplScript, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_TmplScript(pExprTmplScript, Expr::Reference(pExprSrc)));
+	}	
+	void Add_TmplEmbedded(Template* pTmpl, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_TmplEmbedded(pTmpl, Expr::Reference(pExprSrc)));
+	}	
 private:
 	void _Flush(bool discardValueFlag);
 };
