@@ -177,33 +177,6 @@ Value* Function::ReturnValue(Processor& processor, Argument& argument, RefPtr<Va
 	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
 }
 
-Value* Function::ReturnValue(Processor& processor, Argument& argument,
-							 RefPtr<Value> pValueRtn, RefPtr<Value> pValueAux) const
-{
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	if (!pExprOfBlock) return pValueRtn.release();
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder args(*pArgumentSub);
-	if (!args.FeedValue(frame, pValueRtn.release())) return Value::nil();
-	if (!args.FeedValue(frame, pValueAux.release())) return Value::nil();
-	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
-}
-
-Value* Function::ReturnValue(Processor& processor, Argument& argument,
-							 RefPtr<Value> pValueRtn, RefPtr<Value> pValueAux1, RefPtr<Value> pValueAux2) const
-{
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	if (!pExprOfBlock) return pValueRtn.release();
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder args(*pArgumentSub);
-	if (!args.FeedValue(frame, pValueRtn.release())) return Value::nil();
-	if (!args.FeedValue(frame, pValueAux1.release())) return Value::nil();
-	if (!args.FeedValue(frame, pValueAux2.release())) return Value::nil();
-	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
-}
-
 Value* Function::ReturnIterator(Processor& processor, Argument& argument, RefPtr<Iterator> pIterator) const
 {
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();

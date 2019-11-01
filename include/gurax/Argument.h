@@ -99,6 +99,10 @@ public:
 	void AssignToFrame(Frame& frame) const;
 	bool Compensate(Processor& processor);
 	void DoCall(Processor& processor);
+	Value* ReturnValue(Processor& processor, RefPtr<Value> pValueRtn) {
+		return _pExprOfBlock? _pExprOfBlock->DoEval(processor, pValueRtn.release()) : pValueRtn.release();
+	}
+	Value* ReturnIterator(Processor& processor, RefPtr<Iterator> pIterator);
 	static void AssignThisToFrame(Frame& frame, Value* pValueThis) {
 		frame.AssignFromArgument(Gurax_Symbol(this_), pValueThis);
 	}

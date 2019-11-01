@@ -143,6 +143,24 @@ void Argument::AssignToFrame(Frame& frame) const
 	} while (0);
 }
 
+Value* Argument::ReturnIterator(Processor& processor, RefPtr<Iterator> pIterator)
+{
+	const Expr_Block* pExprOfBlock = GetExprOfBlock();
+	if (pExprOfBlock) {
+		return pIterator->Each(processor, *pExprOfBlock, GetFlags());
+	} else if (IsSet(DeclCallable::Flag::List)) {
+		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, false));
+		if (Error::IsIssued()) return Value::nil();
+		return new Value_List(pValueOwner.release());
+	} else if (IsSet(DeclCallable::Flag::XList)) {
+		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, true));
+		if (Error::IsIssued()) return Value::nil();
+		return new Value_List(pValueOwner.release());
+	} else {
+		return new Value_Iterator(pIterator.release());
+	}
+}
+
 String Argument::ToString(const StringStyle& ss) const
 {
 	String str;

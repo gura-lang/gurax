@@ -174,13 +174,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	if (!pExprOfBlock) return pValueThis.release();
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder args(*pArgumentSub);
-	if (!args.FeedValue(frame, pValueThis.release())) return Value::nil();
-	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
+	return ReturnValue(processor, argument, pValueThis.release());
 }
 
 String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
@@ -203,7 +197,6 @@ VTypeCustom::ConstructorStruct::ConstructorStruct(
 
 Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& argument) const
 {
-	Frame& frame = processor.GetFrameCur();
 	RefPtr<ValueCustom> pValueThis(new ValueCustom(GetVTypeCustom(), processor.Reference()));
 	if (!pValueThis->InitCustomProp()) return Value::nil();
 	ArgPicker args(argument);
@@ -218,15 +211,7 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 			return Value::nil();
 		}
 	}
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-#if 0
-	if (!pExprOfBlock) return pValueThis.release();
-	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder argsSub(*pArgumentSub);
-	if (!argsSub.FeedValue(frame, pValueThis.release())) return Value::nil();
-	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
-#endif
-	return pExprOfBlock? pExprOfBlock->DoEval(processor, pValueThis.release()) : pValueThis.release();
+	return ReturnValue(processor, argument, pValueThis.release());
 }
 
 String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
