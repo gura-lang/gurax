@@ -454,7 +454,7 @@ Gurax_ImplementMethod(List, Combination)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_Combination(*this, processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_Combination(processor, argument, valueTypedOwner);
 }
 
 // List#Contains(value)
@@ -513,7 +513,7 @@ Gurax_ImplementMethod(List, Cycle)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_Cycle(*this, processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_Cycle(processor, argument, valueTypedOwner);
 }
 
 // List#Each() {`block?}
@@ -620,7 +620,7 @@ Gurax_ImplementMethod(List, Fold)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return VType_Iterator::Method_Fold(*this, processor, argument, *pIteratorSrc);
+	return VType_Iterator::Method_Fold(processor, argument, *pIteratorSrc);
 }
 
 // List#Format(format:String):map {block?}
@@ -885,7 +885,7 @@ Gurax_ImplementMethod(List, Permutation)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_Permutation(*this, processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_Permutation(processor, argument, valueTypedOwner);
 }
 
 // List#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}
@@ -906,7 +906,7 @@ Gurax_ImplementMethod(List, PingPong)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_PingPong(*this, processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_PingPong(processor, argument, valueTypedOwner);
 }
 
 // List#Print(stream?:Stream:w):void
@@ -1071,7 +1071,7 @@ Gurax_ImplementMethod(List, Reverse)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_Reverse(*this, processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_Reverse(processor, argument, valueTypedOwner);
 }
 
 // List#RoundOff(threshold?:number) {block?}
@@ -1196,7 +1196,7 @@ Gurax_ImplementMethod(List, Sort)
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
-	return VType_Iterator::Method_Sort(*this, processor, argument, valueTypedOwner);
+	return VType_Iterator::Method_Sort(processor, argument, valueTypedOwner);
 }
 
 // List#Std():[p]

@@ -249,11 +249,11 @@ Gurax_ImplementMethod(Iterator, Combination)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Combination(*this, processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_Combination(processor, argument, *pValueTypedOwner);
 }
 
 Value* VType_Iterator::Method_Combination(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -332,11 +332,11 @@ Gurax_ImplementMethod(Iterator, Cycle)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Cycle(*this, processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_Cycle(processor, argument, *pValueTypedOwner);
 }
 
 Value* VType_Iterator::Method_Cycle(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 	if (valueTypedOwner.IsEmpty()) {
 		Error::Issue(ErrorType::RangeError, "empty list can not be specified");
@@ -474,11 +474,10 @@ Gurax_ImplementMethod(Iterator, Fold)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-	return VType_Iterator::Method_Fold(*this, processor, argument, iteratorSrc);
+	return VType_Iterator::Method_Fold(processor, argument, iteratorSrc);
 }
 
-Value* VType_Iterator::Method_Fold(
-	const Function& function, Processor& processor, Argument& argument, Iterator& iteratorSrc)
+Value* VType_Iterator::Method_Fold(Processor& processor, Argument& argument, Iterator& iteratorSrc)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -778,11 +777,11 @@ Gurax_ImplementMethod(Iterator, Permutation)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Permutation(*this, processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_Permutation(processor, argument, *pValueTypedOwner);
 }
 
 Value* VType_Iterator::Method_Permutation(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -826,11 +825,11 @@ Gurax_ImplementMethod(Iterator, PingPong)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_PingPong(*this, processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_PingPong(processor, argument, *pValueTypedOwner);
 }
 
 Value* VType_Iterator::Method_PingPong(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 #if 0
 	// Arguments
@@ -1021,11 +1020,11 @@ Gurax_ImplementMethod(Iterator, Reverse)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Reverse(*this, processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_Reverse(processor, argument, *pValueTypedOwner);
 }
 
 Value* VType_Iterator::Method_Reverse(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Reverse(valueTypedOwner.GetValueOwnerReference()));
@@ -1170,11 +1169,11 @@ Gurax_ImplementMethod(Iterator, Sort)
 	RefPtr<ValueTypedOwner> pValueTypedOwner(ValueTypedOwner::CreateFromIterator(valueThis.GetIterator(), false));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return VType_Iterator::Method_Sort(*this, processor, argument, *pValueTypedOwner);
+	return VType_Iterator::Method_Sort(processor, argument, *pValueTypedOwner);
 }
 
 Value* VType_Iterator::Method_Sort(
-	const Function& function, Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
+	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
 	// Arguments
 	ArgPicker args(argument);

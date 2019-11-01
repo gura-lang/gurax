@@ -166,35 +166,6 @@ void Function::DoExec(Processor& processor, Argument& argument) const
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
-Value* Function::ReturnValue(Processor& processor, Argument& argument, RefPtr<Value> pValueRtn) const
-{
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	if (!pExprOfBlock) return pValueRtn.release();
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder args(*pArgumentSub);
-	if (!args.FeedValue(frame, pValueRtn.release())) return Value::nil();
-	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
-}
-
-Value* Function::ReturnIterator(Processor& processor, Argument& argument, RefPtr<Iterator> pIterator) const
-{
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	if (pExprOfBlock) {
-		return pIterator->Each(processor, *pExprOfBlock, argument.GetFlags());
-	} else if (argument.IsSet(DeclCallable::Flag::List)) {
-		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, false));
-		if (Error::IsIssued()) return Value::nil();
-		return new Value_List(pValueOwner.release());
-	} else if (argument.IsSet(DeclCallable::Flag::XList)) {
-		RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(*pIterator, true));
-		if (Error::IsIssued()) return Value::nil();
-		return new Value_List(pValueOwner.release());
-	} else {
-		return new Value_Iterator(pIterator.release());
-	}
-}
-
 String Function::ToString(const StringStyle& ss) const
 {
 	String str;

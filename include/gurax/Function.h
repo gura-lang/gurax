@@ -199,8 +199,6 @@ public:
 	}
 	void DoCall(Processor& processor, Argument& argument) const;
 	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
-	Value* ReturnValue(Processor& processor, Argument& argument, RefPtr<Value> pValueRtn) const;
-	Value* ReturnIterator(Processor& processor, Argument& argument, RefPtr<Iterator> pIterator) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Function& function) const { return this == &function; }
