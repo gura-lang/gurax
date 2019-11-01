@@ -60,22 +60,22 @@ f(1, 2, 3, 4, 5):attr1:attr2
   ##17 Call(cont=##18)
 f(1, 2) {f1(), f2()}
   ##0 Lookup(`f)
-  ##1 Argument(block=##9)
-  ##2 BeginArgSlot(`1:##2,sentinel=##4,branchdest=##5)
-  ##3 Value(<Number:1>)
-  ##4 EndArgSlot()
-  ##5 BeginArgSlot(`2:##5,sentinel=##7,branchdest=##8)
-  ##6 Value(<Number:2>)
-  ##7 EndArgSlot()
-  ##8 Jump(cont=##17)
-  ##9 BeginSequence(sentinel=##16)
-  ##10 Lookup(`f1)
-  ##11 Argument()
-  ##12 Call(cont=##13), DiscardValue()
-  ##13 Lookup(`f2)
-  ##14 Argument()
-  ##15 Call(cont=##16)
-  ##16 Return()
+  ##1 Jump(cont=##10)
+  ##2 BeginSequence(sentinel=##9)
+  ##3 Lookup(`f1)
+  ##4 Argument()
+  ##5 Call(cont=##6), DiscardValue()
+  ##6 Lookup(`f2)
+  ##7 Argument()
+  ##8 Call(cont=##9)
+  ##9 Return()
+  ##10 Argument(block=##2)
+  ##11 BeginArgSlot(`1:##11,sentinel=##13,branchdest=##14)
+  ##12 Value(<Number:1>)
+  ##13 EndArgSlot()
+  ##14 BeginArgSlot(`2:##14,sentinel=##16,branchdest=##17)
+  ##15 Value(<Number:2>)
+  ##16 EndArgSlot()
   ##17 Call(cont=##18)
 f(a)
   ##0 Lookup(`f)
@@ -244,6 +244,8 @@ g(a, b, c)
 ======== block ========
 f .. f() {block}
 g .. g() {`block}
+f {}.type .. `function
+g {}.type .. `Block
 f {|v1, v2| func(a, b, c)} .. block(v1, v2):cut_extra_args
 g {|v1, v2| func(a, b, c)} .. {|v1, v2| func(a, b, c)}
 ======== Property ========

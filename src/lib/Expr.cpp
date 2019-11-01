@@ -995,17 +995,27 @@ void Expr_Caller::Compose(Composer& composer)
 		}
 	}
 	GetExprCar().ComposeOrNil(composer);									// [Car]
-	composer.Add_Argument(GetAttr().Reference(), Expr_Block::Reference(GetExprOfBlock()),
-						  false, this);										// [Argument]
-	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
-	if (Error::IsIssued()) return;
-	if (GetExprOfBlock()) {
+	Expr_Block* pExprOfBlock = GetExprOfBlock();
+	if (pExprOfBlock) {
 		PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 		composer.Add_Jump(this);
-		composer.ComposeAsSequence(*GetExprOfBlock());
-		composer.Add_Return(GetExprOfBlock());
+		composer.ComposeAsSequence(*pExprOfBlock);
+		composer.Add_Return(pExprOfBlock);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
+		if (pExprOfBlock->IsDelegation()) {
+			// Delegation format: f() {|block|}
+			pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);		// [Any]
+			composer.Add_Argument(GetAttr().Reference(),
+								  pExprOfBlock->Reference(), false, this);	// [Argument]
+		} else {
+			composer.Add_Argument(GetAttr().Reference(),
+								  pExprOfBlock->Reference(), false, this);	// [Argument]
+		}
+	} else {
+		composer.Add_Argument(GetAttr().Reference(), nullptr, false, this);	// [Argument]
 	}
+	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
+	if (Error::IsIssued()) return;
 	composer.Add_Call(this);												// [Result]
 }
 

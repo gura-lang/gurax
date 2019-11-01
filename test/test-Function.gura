@@ -155,6 +155,8 @@ TestCase('block') {
 	g() {`block} = block
 	Tester(`f)
 	Tester(`g)
+	Tester(`f{}.type)
+	Tester(`g{}.type)
 	Tester(`f {|v1, v2| func(a, b, c) })
 	Tester(`g {|v1, v2| func(a, b, c) })
 }
