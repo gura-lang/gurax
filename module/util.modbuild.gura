@@ -68,7 +68,7 @@ Builder = class {
 		Printf('-- cleaned\n')
 	}
 	Command_install() = {
-		fs.Copy(this.pathNameGurd, path.Join(sys.dirModule, 'site'))
+		fs.Copy(this.pathNameGurd, path.Join(sys.dirModule, 'site')):overwrite
 		Printf('-- installed\n')
 	}
 	Run() = {
