@@ -708,6 +708,9 @@ public:
 	bool IsDelegation() const {
 		return !HasExprElem() && _pExprLinkParam && _pExprLinkParam->HasSingle();
 	}
+	Value* DoEval(Processor& processor) const;
+	Value* DoEval(Processor& processor, RefPtr<Value> pValueArg) const;
+	Value* DoEval(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {

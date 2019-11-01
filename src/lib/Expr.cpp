@@ -703,6 +703,32 @@ bool Expr_Block::HasCallerAsParent() const
 	return pExprParent && pExprParent->IsType<Expr_Caller>();
 }
 
+Value* Expr_Block::DoEval(Processor& processor) const
+{
+	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
+	ArgFeeder args(*pArgument);
+	return processor.EvalExpr(*this, *pArgument);
+}
+
+Value* Expr_Block::DoEval(Processor& processor, RefPtr<Value> pValueArg) const
+{
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
+	ArgFeeder args(*pArgument);
+	if (!args.FeedValue(frame, pValueArg.release())) return Value::nil();
+	return processor.EvalExpr(*this, *pArgument);
+}
+
+Value* Expr_Block::DoEval(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const
+{
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
+	ArgFeeder args(*pArgument);
+	if (!args.FeedValue(frame, pValueArg1.release())) return Value::nil();
+	if (!args.FeedValue(frame, pValueArg2.release())) return Value::nil();
+	return processor.EvalExpr(*this, *pArgument);
+}
+
 String Expr_Block::ToString(const StringStyle& ss) const
 {
 	String str;

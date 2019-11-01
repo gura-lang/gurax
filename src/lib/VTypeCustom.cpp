@@ -219,11 +219,14 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 		}
 	}
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+#if 0
 	if (!pExprOfBlock) return pValueThis.release();
 	RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
 	ArgFeeder argsSub(*pArgumentSub);
 	if (!argsSub.FeedValue(frame, pValueThis.release())) return Value::nil();
 	return processor.EvalExpr(*pExprOfBlock, *pArgumentSub);
+#endif
+	return pExprOfBlock? pExprOfBlock->DoEval(processor, pValueThis.release()) : pValueThis.release();
 }
 
 String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
