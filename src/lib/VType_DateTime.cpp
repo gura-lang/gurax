@@ -50,7 +50,7 @@ Gurax_ImplementFunction(DateTime)
 	if (validOffsetFlag) {
 		pDateTime->SetMinsOffset(minsOff);
 	}
-	return ReturnValue(processor, argument, new Value_DateTime(pDateTime.release()));
+	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
 }
 
 //------------------------------------------------------------------------------

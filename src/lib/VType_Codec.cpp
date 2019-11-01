@@ -29,7 +29,7 @@ Gurax_ImplementFunction(Codec)
 	bool addcrFlag = false;
 	RefPtr<Codec> pCodec(Codec::Create(encoding, delcrFlag, addcrFlag));
 	if (!pCodec) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Codec(pCodec.release()));
+	return argument.ReturnValue(processor, new Value_Codec(pCodec.release()));
 }
 
 //------------------------------------------------------------------------------

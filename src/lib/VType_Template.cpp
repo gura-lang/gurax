@@ -39,7 +39,7 @@ Gurax_ImplementFunction(Template)
 	if (pStreamSrc &&
 		(!pTmpl->ParseStream_(*pStreamSrc, autoIndentFlag, appendLastEOLFlag) ||
 		 !pTmpl->PrepareAndCompose())) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
+	return argument.ReturnValue(processor, new Value_Template(pTmpl.release()));
 }
 
 //-----------------------------------------------------------------------------

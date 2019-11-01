@@ -30,7 +30,7 @@ Gurax_ImplementFunction(Expr)
 	Composer composer;
 	pExprRoot->Compose(composer);
 	if (Error::IsIssued()) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Expr(pExprRoot.release()));
+	return argument.ReturnValue(processor, new Value_Expr(pExprRoot.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ Gurax_ImplementClassMethod(Expr, Parse)
 	Composer composer;
 	pExprRoot->Compose(composer);
 	if (Error::IsIssued()) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Expr(pExprRoot.release()));
+	return argument.ReturnValue(processor, new Value_Expr(pExprRoot.release()));
 }
 
 //------------------------------------------------------------------------------

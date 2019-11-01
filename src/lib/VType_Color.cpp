@@ -32,7 +32,7 @@ Gurax_ImplementFunction(Color)
 	UInt8 a = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	return ReturnValue(processor, argument, new Value_Color(Color(r, g, b, a)));
+	return argument.ReturnValue(processor, new Value_Color(Color(r, g, b, a)));
 }
 
 //------------------------------------------------------------------------------

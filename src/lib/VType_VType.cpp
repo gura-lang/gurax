@@ -32,7 +32,7 @@ Gurax_ImplementMethod(VType, __PropHandler__)
 		Error::Issue(ErrorType::PropertyError, "no property named '%s'", pSymbol->GetName());
 		return Value::nil();
 	}
-	return ReturnValue(processor, argument, new Value_PropHandler(pPropHandler->Reference()));
+	return argument.ReturnValue(processor, new Value_PropHandler(pPropHandler->Reference()));
 }
 
 //------------------------------------------------------------------------------

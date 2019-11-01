@@ -34,7 +34,7 @@ Gurax_ImplementFunction(Stream)
 	RefPtr<Stream> pStream(Stream::Open(pathName, openFlags));
 	if (!pStream) return Value::nil();
 	if (pCodec) pStream->SetCodec(pCodec->Reference());
-	return ReturnValue(processor, argument, new Value_Stream(pStream.release()));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ Gurax_ImplementMethod(Stream, ReadLine)
 	// Function body
 	String str;
 	if (!stream.ReadLine(str, includeEOLFlag)) return Value::nil();
-	return ReturnValue(processor, argument, new Value_String(str));
+	return argument.ReturnValue(processor, new Value_String(str));
 }
 
 // Stream#ReadLines():[chop] {block?}

@@ -38,7 +38,7 @@ Gurax_ImplementFunction(TimeDelta)
 	// Function body
 	RefPtr<TimeDelta> pTimeDelta(
 		new TimeDelta(days, TimeDelta::CalcSecsPacked(hours, mins, secs), TimeDelta::CalcUSecsPacked(msecs, usecs)));
-	return ReturnValue(processor, argument, new Value_TimeDelta(pTimeDelta.release()));
+	return argument.ReturnValue(processor, new Value_TimeDelta(pTimeDelta.release()));
 }
 
 //------------------------------------------------------------------------------

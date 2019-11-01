@@ -21,7 +21,7 @@ Gurax_ImplementFunction(Binary)
 {
 	// Function body
 	RefPtr<BinaryReferable> pBinary(new BinaryReferable());
-	return ReturnValue(processor, argument, new Value_Binary(pBinary.release()));
+	return argument.ReturnValue(processor, new Value_Binary(pBinary.release()));
 }
 
 //------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ Gurax_ImplementFunction(Directory)
 	// Function body
 	RefPtr<Directory> pDirectory(Directory::Open(pathName));
 	if (!pDirectory) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Directory(pDirectory.release()));
+	return argument.ReturnValue(processor, new Value_Directory(pDirectory.release()));
 }
 
 //------------------------------------------------------------------------------

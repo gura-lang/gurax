@@ -979,7 +979,7 @@ Gurax_ImplementMethod(String, Template)
 	RefPtr<Template> pTmpl(new Template());
 	if (!pTmpl->ParseString_(str, autoIndentFlag, appendLastEOLFlag) ||
 		!pTmpl->PrepareAndCompose()) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Template(pTmpl.release()));
+	return argument.ReturnValue(processor, new Value_Template(pTmpl.release()));
 }
 
 // String#ToBinary():Binary {block?}

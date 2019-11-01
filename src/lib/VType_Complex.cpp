@@ -27,7 +27,7 @@ Gurax_ImplementFunction(Complex)
 	Double real = args.PickNumber<Double>();
 	Double imag = args.IsValid()? args.PickNumber<Double>() : 0;
 	// Function body
-	return ReturnValue(processor, argument, new Value_Complex(Complex(real, imag)));
+	return argument.ReturnValue(processor, new Value_Complex(Complex(real, imag)));
 }
 
 //------------------------------------------------------------------------------

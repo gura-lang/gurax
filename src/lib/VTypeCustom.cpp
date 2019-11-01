@@ -174,7 +174,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	processor.PopFrame();
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
-	return ReturnValue(processor, argument, pValueThis.release());
+	return argument.ReturnValue(processor, pValueThis.release());
 }
 
 String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
@@ -211,7 +211,7 @@ Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& ar
 			return Value::nil();
 		}
 	}
-	return ReturnValue(processor, argument, pValueThis.release());
+	return argument.ReturnValue(processor, pValueThis.release());
 }
 
 String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const

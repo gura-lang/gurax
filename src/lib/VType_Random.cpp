@@ -29,7 +29,7 @@ Gurax_ImplementFunction(Random)
 	Int32 seed = (validFlag_seed = args.IsValid())? args.PickNumber<Int32>() : 0;
 	// Function body
 	RefPtr<Random> pRandom(validFlag_seed? new Random(seed) : Random::Global().Reference());
-	return ReturnValue(processor, argument, new Value_Random(pRandom.release()));
+	return argument.ReturnValue(processor, new Value_Random(pRandom.release()));
 }
 
 //------------------------------------------------------------------------------
