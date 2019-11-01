@@ -97,7 +97,7 @@ Gurax_ImplementMethod(String, Match)
 	// Function body
 	RefPtr<Match> pMatch(pattern.CreateMatch(str, pos, posEnd));
 	if (!pMatch) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+	return argument.ReturnValue(processor, new Value_Match(pMatch.release()));
 }
 
 // String#Sub(pattern:Pattern, replace, cnt?:Number):map {block?}
@@ -132,7 +132,7 @@ Gurax_ImplementMethod(String, Sub)
 		Error::Issue(ErrorType::ValueError, "string or function must be specified");
 		return Value::nil();
 	}
-	return ReturnValue(processor, argument, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
+	return argument.ReturnValue(processor, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
 }
 
 // String#SplitReg(pattern:Pattern, cntMax?:Number):map {block?}
@@ -157,7 +157,7 @@ Gurax_ImplementMethod(String, SplitReg)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Split(pattern.Reference(), str, cntMax));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // String#Scan(pattern:Pattern, pos?:Number, posEnd?:Number):map {block?}
@@ -183,7 +183,7 @@ Gurax_ImplementMethod(String, Scan)
 	int posEnd = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Scan(pattern.Reference(), new StringReferable(str), pos, posEnd));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ Gurax_ImplementMethod(List, Grep)
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Grep(pIteratorThis.release(), pattern.Reference()));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------
@@ -237,7 +237,7 @@ Gurax_ImplementMethod(Iterator, Grep)
 	Pattern& pattern = args.Pick<Value_Pattern>().GetPattern();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Grep(pIteratorThis.release(), pattern.Reference()));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------

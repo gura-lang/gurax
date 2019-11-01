@@ -36,7 +36,7 @@ Gurax_ImplementFunction(Pattern)
 	// Function body
 	RefPtr<Pattern> pPattern(new Pattern());
 	if (!pPattern->Prepare(pattern, icaseFlag, multilineFlag)) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Pattern(pPattern.release()));
+	return argument.ReturnValue(processor, new Value_Pattern(pPattern.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Gurax_ImplementMethod(Pattern, Match)
 	// Function body
 	RefPtr<Match> pMatch(pattern.CreateMatch(str, pos, posEnd));
 	if (!pMatch) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+	return argument.ReturnValue(processor, new Value_Match(pMatch.release()));
 }
 
 // Pattern#Sub(pattern:Pattern, replace, cnt?:Number):map {block?}
@@ -123,7 +123,7 @@ Gurax_ImplementMethod(Pattern, Sub)
 		Error::Issue(ErrorType::ValueError, "string or function must be specified");
 		return Value::nil();
 	}
-	return ReturnValue(processor, argument, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
+	return argument.ReturnValue(processor, new Value_String(strRtn), new Value_Bool(nReplaced > 0));
 }
 
 // Pattern#Split(str:String, cntMax?:Number):map {block?}
@@ -153,7 +153,7 @@ Gurax_ImplementMethod(Pattern, Split)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Split(pattern.Reference(), str, cntMax));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Pattern#Scan(str:String, pos?:Number, posEnd?:Number):map {block?}
@@ -187,7 +187,7 @@ Gurax_ImplementMethod(Pattern, Scan)
 	int posEnd = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Scan(pattern.Reference(), new StringReferable(str), pos, posEnd));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------

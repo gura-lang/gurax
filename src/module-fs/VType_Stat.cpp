@@ -27,7 +27,7 @@ Gurax_ImplementFunction(Stat)
 	// Function body
 	RefPtr<Stat> pStat(Stat::Create(pathName));
 	if (!pStat) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Stat(pStat.release()));
+	return argument.ReturnValue(processor, new Value_Stat(pStat.release()));
 }
 
 //------------------------------------------------------------------------------

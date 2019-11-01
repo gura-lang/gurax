@@ -123,7 +123,7 @@ Gurax_ImplementFunction(Dir)
 		new Iterator_DirectoryWalk(
 			pDirectory.release(), depthMax, patterns,
 			addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // path.DirName(pathName:String):map
@@ -261,7 +261,7 @@ Gurax_ImplementFunction(Glob)
 	RefPtr<Iterator_DirectoryGlob> pIterator(
 		new Iterator_DirectoryGlob(addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
 	if (!pIterator->Init(pattern)) return Value::nil();
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // path.HeadName(pathName:String):map
@@ -475,7 +475,7 @@ Gurax_ImplementFunction(Stat)
 	// Function body
 	RefPtr<Value> pValue(directory.GetStatValue());
 	if (!pValue) return Value::nil();
-	return ReturnValue(processor, argument, pValue.release());
+	return argument.ReturnValue(processor, pValue.release());
 }
 
 // path.Walk(directory?:Directory, depthMax?:number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
@@ -522,7 +522,7 @@ Gurax_ImplementFunction(Walk)
 		new Iterator_DirectoryWalk(
 			pDirectory.release(), depthMax, patterns,
 			addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------

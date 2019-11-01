@@ -29,7 +29,7 @@ Gurax_ImplementFunction(Match)
 	// Function body
 	RefPtr<Match> pMatch(pattern.CreateMatch(str));
 	if (!pMatch) return Value::nil();
-	return ReturnValue(processor, argument, new Value_Match(pMatch.release()));
+	return argument.ReturnValue(processor, new Value_Match(pMatch.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ Gurax_ImplementMethod(Match, Groups)
 	Match& match = valueThis.GetMatch();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Group(match.Reference()));
-	return ReturnIterator(processor, argument, pIterator.release());
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
