@@ -1005,7 +1005,7 @@ void Expr_Caller::Compose(Composer& composer)
 		if (pExprOfBlock->IsDelegation()) {
 			// Block-delegation format: f() {|block|}
 			pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);		// [Any]
-			//composer.Add_ArgumentDelegation(GetAttr().Reference(), this);	// [Argument]
+			composer.Add_ArgumentDelegation(GetAttr().Reference(), this);	// [Argument]
 		} else {
 			composer.Add_Argument(GetAttr().Reference(),
 								  pExprOfBlock->Reference(), false, this);	// [Argument]

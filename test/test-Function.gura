@@ -259,3 +259,9 @@ TestCase('Variable Expansion by Asterisk Operator') {
 	Tester(`f5([1, 2]*, 3))
 	Tester(`f5([1, 2, 3]*))
 }
+
+TestCase('Block delegation') {
+	f() {block} = { block(5) }
+	g() {`block} = { f {|block|} }
+	g {|n| Printf('n = %d\n', n) }
+}

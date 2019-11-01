@@ -1918,10 +1918,8 @@ PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_ArgumentDelegation
-// Stack View: keepCarFlag = false: [Car] -> [Argument(Car)]     (continue)
-//                                        -> []                  (discard)
-//             keepCarFlag = true:  [Car] -> [Car Argument(Car)] (continue)
-//                                        -> [Car]               (discard)
+// Stack View: keepCarFlag = false: [Car Expr] -> [Argument(Car)] (continue)
+//                                             -> []              (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::PUnit_ArgumentDelegation(const Attribute& attr) :
@@ -1939,13 +1937,24 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueExpr(processor.PopValue());
 	RefPtr<Value> pValueCar(processor.PopValue());
 	const DeclCallable* pDeclCallable = pValueCar->GetDeclCallableWithError();
 	if (!pDeclCallable || !pDeclCallable->CheckAttribute(GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
-	RefPtr<Expr_Block> pExprOfBlock;
+	RefPtr<Value_Expr> pValueExprCasted(pValueExpr->Cast<Value_Expr>());
+	if (!pValueExprCasted) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!pValueExprCasted->GetExpr().IsType<Expr_Block>()) {
+		Error::Issue(ErrorType::TypeError, "block expression must be specified for delegation");
+		processor.ErrorDone();
+		return;
+	}
+	RefPtr<Expr_Block> pExprOfBlock(dynamic_cast<Expr_Block*>(pValueExprCasted->GetExpr().Reference()));
 	RefPtr<Argument> pArgument(
 		new Argument(pValueCar.release(), pDeclCallable->Reference(),
 					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::nil(),
