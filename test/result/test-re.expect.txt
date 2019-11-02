@@ -1,0 +1,61 @@
+======== Property ========
+re.Match.__PropHandler__(`begin) .. <PropHandler:begin:Number:R>
+re.Match.__PropHandler__(`end) .. <PropHandler:end:Number:R>
+re.Match.__PropHandler__(`source) .. <PropHandler:source:String:R>
+re.Match.__PropHandler__(`string) .. <PropHandler:string:String:R>
+re.Group.__PropHandler__(`begin) .. <PropHandler:begin:Number:R>
+re.Group.__PropHandler__(`end) .. <PropHandler:end:Number:R>
+re.Group.__PropHandler__(`string) .. <PropHandler:string:String:R>
+======== String#Sub(), Pattern#Sub() ========
+hoge NUM foo
+no number here
+NUM aaaaaa NUM
+---
+hoge NUM foo
+NUM aaaaaa NUM
+---
+hoge NUM foo
+no number here
+NUM aaaaaa NUM
+---
+hoge NUM foo
+NUM aaaaaa NUM
+======== re.Match() ========
+re.Match('(\\d+)\\.(\\d*)', '3.14') .. re.Match:0-4
+m.source .. 3.14
+m[0] .. 3.14
+m[1] .. 3
+m[2] .. 14
+re.Match('q[\\c\\\\]', 'q\x1c') .. re.Match:0-2
+m.source .. q
+m[0] .. q
+re.Match('(\\b[a-z]+) \\1', 'cat in the the hat') .. re.Match:7-14
+m.source .. cat in the the hat
+m[0] .. the the
+m[1] .. the
+re.Match('A(a*)A', 'AaaaaA') .. re.Match:0-6
+m.source .. AaaaaA
+m[0] .. AaaaaA
+m[1] .. aaaa
+re.Match('(?<first>\\d+)\\.(?<second>\\d*)', '3.14') .. re.Match:0-4
+m.source .. 3.14
+m['first'] .. 3
+m['second'] .. 14
+re.Match('(?<first>\\d+)\\.(\\d*)', '3.14') .. re.Match:0-4
+m.source .. 3.14
+m['first'] .. 3
+m[2] .. 14
+re.Match('(\\d+)\\.(?<second>\\d*)', '3.14') .. re.Match:0-4
+m.source .. 3.14
+m[1] .. 3
+m['second'] .. 14
+cond(re.Match('hello', 'HELLO WORLD'), 'match', 'not match') .. not match
+cond(re.Match(re.Pattern('hello'):icase, 'HELLO WORLD'), 'match', 'not match') .. match
+======== List#Grep() ========
+x.Grep('\\w+'):*source.Join(',') .. apple,orange,pencil,1234,grape,5678
+x.Grep('r'):*source.Join(',') .. orange,grape
+x.Grep('^a'):*source.Join(',') .. apple
+x.Grep('^o'):*source.Join(',') .. orange
+x.Grep('pe$'):*source.Join(',') .. grape
+x.Grep('\\d+'):*source.Join(',') .. 1234,5678
+['1-1', '11-a', '1', '00-', '1-0'].Grep('\\d+-\\d+'):*source.Join(',') .. 1-1,1-0

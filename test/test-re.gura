@@ -4,7 +4,14 @@ import(re)
 
 TestCase('Property') {
 	Tester(`re.Match.__PropHandler__(`begin))
+	Tester(`re.Match.__PropHandler__(`end))
+	Tester(`re.Match.__PropHandler__(`source))
+	Tester(`re.Match.__PropHandler__(`string))
+	Tester(`re.Group.__PropHandler__(`begin))
+	Tester(`re.Group.__PropHandler__(`end))
+	Tester(`re.Group.__PropHandler__(`string))
 }
+
 TestCase('String#Sub(), Pattern#Sub()') {
 	x = ['hoge 123 foo', 'no number here', '456 aaaaaa 111']
 	x::Sub(r'\d+', 'NUM') {|str| Println(str)}
@@ -15,72 +22,110 @@ TestCase('String#Sub(), Pattern#Sub()') {
 	Println('---')
 	re.Pattern(r'\d+').Sub(x, 'NUM') {|str, nReplaced| (nReplaced > 0) && Println(str)}
 }
+
+TestCase('re.Match()') {
+	Tester(`re.Match(r'(\d+)\.(\d*)', '3.14')) {|m|
+		Tester(`m.source)
+		Tester(`m[0])
+		Tester(`m[1])
+		Tester(`m[2])
+	}
+	Tester(`re.Match('q[\\c\\\\]', 'q\034')) {|m|
+		Tester(`m.source)
+		Tester(`m[0])
+	}
+	Tester(`re.Match(r'(\b[a-z]+) \1', 'cat in the the hat')) {|m|
+		Tester(`m.source)
+		Tester(`m[0])
+		Tester(`m[1])
+	}
+	Tester(`re.Match(r'A(a*)A', 'AaaaaA')) {|m|
+		Tester(`m.source)
+		Tester(`m[0])
+		Tester(`m[1])
+	}
+	Tester(`re.Match(r'(?<first>\d+)\.(?<second>\d*)', '3.14')) {|m|
+		Tester(`m.source)
+		Tester(`m['first'])
+		Tester(`m['second'])
+	}
+	Tester(`re.Match(r'(?<first>\d+)\.(\d*)', '3.14')) {|m|
+		Tester(`m.source)
+		Tester(`m['first'])
+		Tester(`m[2])
+	}
+	Tester(`re.Match(r'(\d+)\.(?<second>\d*)', '3.14')) {|m|
+		Tester(`m.source)
+		Tester(`m[1])
+		Tester(`m['second'])
+	}
+	Tester(`cond(re.Match(r'hello', 'HELLO WORLD'), 'match', 'not match'))
+	Tester(`cond(re.Match(re.Pattern(r'hello'):icase, 'HELLO WORLD'), 'match', 'not match'))
+	//Tester(`(0..):*ToString():*Match('3').skipnil().head(30):*source.Join(','))
+}
+
+TestCase('List#Grep()') {
+	x = ['apple', 'orange', 'pencil', '1234', 'grape', '5678']
+	Tester(`x.Grep(r'\w+'):*source.Join(','))
+	Tester(`x.Grep(r'r'):*source.Join(','))
+	Tester(`x.Grep(r'^a'):*source.Join(','))
+	Tester(`x.Grep(r'^o'):*source.Join(','))
+	Tester(`x.Grep(r'pe$'):*source.Join(','))
+	Tester(`x.Grep(r'\d+'):*source.Join(','))
+	Tester(`['1-1', '11-a', '1', '00-', '1-0'].Grep(r'\d+-\d+'):*source.Join(','))
+}
+
 /*
 TestCase('') {
-	x = ['apple', 'orange', 'pencil', '1234', 'grape', '5678']
-	tester(`x.grep(r'\w+'):*source.join(','))
-	tester(`x.grep(r'r'):*source.join(','))
-	tester(`x.grep(r'^a'):*source.join(','))
-	tester(`x.grep(r'^o'):*source.join(','))
-	tester(`x.grep(r'pe$'):*source.join(','))
-	tester(`x.grep(r'\d+'):*source.join(','))
-	tester(`['1-1', '11-a', '1', '00-', '1-0'].grep(r'\d+-\d+'):*source.join(','))
-}
-
-TestCase('') {
-	tester(`(0..):*tostring():*match('3').skipnil().head(30):*source.join(','))
-}
-
-TestCase('') {
 	str = 'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'
-	tester(`str.sub(r'(\w+\()(\w+)', &{$m[1] + $m[2].lower()}))
+	Tester(`str.sub(r'(\w+\()(\w+)', &{$m[1] + $m[2].lower()}))
 }
 
 TestCase('') {
 	str = 'abcdefg hijklmn opqrstu vwxyz'
-	tester(`str.match(r'(\w+) (\w+) (\w+) (\w+)')[1..4].join())
+	Tester(`str.match(r'(\w+) (\w+) (\w+) (\w+)')[1..4].Join())
 }
 
 TestCase('') {
 	str = 'あいうえお かきくけこ さしすせそ たちつてと'
-	tester(`str)
-	tester(`re.scan(r'\w+', str)::string)
-	tester(`re.scan(r'\w+', str, 10)::string)
-	tester(`re.scan(r'\w+', str, 0, 10)::string)
-	tester(`re.scan(r'\w+', str):*group(0)::string)
-	tester(`re.scan(r'\w+', str, 10):*group(0)::string)
-	tester(`re.scan(r'\w+', str, 0, 10):*group(0)::string)
+	Tester(`str)
+	Tester(`re.scan(r'\w+', str)::string)
+	Tester(`re.scan(r'\w+', str, 10)::string)
+	Tester(`re.scan(r'\w+', str, 0, 10)::string)
+	Tester(`re.scan(r'\w+', str):*group(0)::string)
+	Tester(`re.scan(r'\w+', str, 10):*group(0)::string)
+	Tester(`re.scan(r'\w+', str, 0, 10):*group(0)::string)
 }
 
 TestCase('') {
 	str = 'あいうえお かきくけこ さしすせそ たちつてと'
-	tester(`str)
-	tester(`str.scan(r'\w+')::string)
-	tester(`str.scan(r'\w+', 10)::string)
-	tester(`str.scan(r'\w+', 0, 10)::string)
-	tester(`str.scan(r'\w+'):*group(0)::string)
-	tester(`str.scan(r'\w+', 10):*group(0)::string)
-	tester(`str.scan(r'\w+', 0, 10):*group(0)::string)
+	Tester(`str)
+	Tester(`str.scan(r'\w+')::string)
+	Tester(`str.scan(r'\w+', 10)::string)
+	Tester(`str.scan(r'\w+', 0, 10)::string)
+	Tester(`str.scan(r'\w+'):*group(0)::string)
+	Tester(`str.scan(r'\w+', 10):*group(0)::string)
+	Tester(`str.scan(r'\w+', 0, 10):*group(0)::string)
 }
 
 TestCase('') {
 	str = 'あいうえお かきくけこ さしすせそ たちつてと'
-	tester(`str)
-	tester(`str.match(r'\w+', 0)[0])
-	tester(`str.match(r'\w+', 6)[0])
-	tester(`str.match(r'\w+', 12)[0])
-	tester(`str.match(r'\w+', 12, 13)[0])
+	Tester(`str)
+	Tester(`str.match(r'\w+', 0)[0])
+	Tester(`str.match(r'\w+', 6)[0])
+	Tester(`str.match(r'\w+', 12)[0])
+	Tester(`str.match(r'\w+', 12, 13)[0])
 }
 
 TestCase('') {
 	m = '3.14'.match(r'(\d+)\.(\d*)')
-	tester(`m.source)
-	tester(`m[1])
-	tester(`m[2])
+	Tester(`m.source)
+	Tester(`m[1])
+	Tester(`m[2])
 }
 
 TestCase('') {
-	tester(`re.scan('(ba)(.)', 'foobarbazfoobarbaz'):list {|m| [m[0], m[1, 2]] })
+	Tester(`re.scan('(ba)(.)', 'foobarbazfoobarbaz'):list {|m| [m[0], m[1, 2]] })
 }
 
 TestCase('') {
@@ -92,131 +137,88 @@ http://slashdot.jp/
 http://www.google.com/
 hoge
 '''.eachline()
-	println(pattern.match(lines).skipnil():*group(1):*string)
+	Println(pattern.match(lines).skipnil():*group(1):*string)
 }
 
 TestCase('') {
 	ms = re.scan(r'\[([^]]+)\]', 'jkfdjf[hoge]kdsaa[foo]kfjdkjfkd[bar]saajkjkjfdsfdaaa');
-	println(ms:*group(1)::string):nomap
+	Println(ms:*group(1)::string):nomap
 	ms = re.pattern(r'\[([^]]+)\]').scan('jkfdjf[hoge]kdsaa[foo]kfjdkjfkd[bar]saajkjkjfdsfdaaa');
-	println(ms:*group(1)::string):nomap
+	Println(ms:*group(1)::string):nomap
 	text = 'fjdkjf[0]jfkdjk[100]fdfdsfjdsfjdkshe[300]llofkdjsk[999]fjdsfjdshello[9999]'
-	println(re.scan(r'\[(\d+)\]', text):*group(1):*string)
+	Println(re.scan(r'\[(\d+)\]', text):*group(1):*string)
 }
 
 TestCase('') {
 	fields = [re.split('a+', 'aaaaaaabbbbbbaaacccccDDa')];
-	println(fields):nomap
+	Println(fields):nomap
 	fields = [re.pattern('a+').split('aaaaaaabbbbbbaaacccccDDa')];
-	println(fields):nomap
+	Println(fields):nomap
 }
 
-TestCase('') {
-	m = re.match('q[\\c\\\\]', 'q\034');
-	println(m):nomap
-}
-
-TestCase('') {
-	m = re.match(r'(\b[a-z]+) \1', 'cat in the the hat')
-	println(m):nomap
-	tester(`re.match(r'A(a*)A', 'AA')[1])
-}
-
-TestCase('') {
-	m = re.match(r'(\d+)\.(\d*)', '3.14')
-	tester(`m.source)
-	tester(`m[1])
-	tester(`m[2])
-}
-
-TestCase('') {
-	m = re.match(r'(?<first>\d+)\.(?<second>\d*)', '3.14')
-	tester(`m.source)
-	tester(`m['first'])
-	tester(`m['second'])
-}
-
-TestCase('') {
-	m = re.match(r'(?<first>\d+)\.(\d*)', '3.14')
-	tester(`m.source)
-	tester(`m['first'])
-	tester(`m[2])
-}
-
-TestCase('') {
-	m = re.match(r'(\d+)\.(?<second>\d*)', '3.14')
-	tester(`m.source)
-	tester(`m[1])
-	tester(`m['second'])
-}
-
-TestCase('') {
-	tester(`cond(re.match(r'hello', 'HELLO WORLD'), 'match', 'not match'))
-	tester(`cond(re.match(re.pattern(r'hello'):icase, 'HELLO WORLD'), 'match', 'not match'))
-}
 // match with pattern object
 
 TestCase('') {
 	m = re.pattern(r'(\d+)\.(\d*)').match('3.14')
-	tester(`m.source)
-	tester(`m[1])
-	tester(`m[2])
+	Tester(`m.source)
+	Tester(`m[1])
+	Tester(`m[2])
 }
 
 TestCase('') {
 	m = re.pattern(r'(?<first>\d+)\.(?<second>\d*)').match('3.14')
-	tester(`m.source)
-	tester(`m['first'])
-	tester(`m['second'])
+	Tester(`m.source)
+	Tester(`m['first'])
+	Tester(`m['second'])
 }
 
 TestCase('') {
 	m = re.pattern(r'(?<first>\d+)\.(\d*)').match('3.14')
-	tester(`m.source)
-	tester(`m['first'])
-	tester(`m[2])
+	Tester(`m.source)
+	Tester(`m['first'])
+	Tester(`m[2])
 }
 
 TestCase('') {
 	m = re.pattern(r'(\d+)\.(?<second>\d*)').match('3.14')
-	tester(`m.source)
-	tester(`m[1])
-	tester(`m['second'])
+	Tester(`m.source)
+	Tester(`m[1])
+	Tester(`m['second'])
 }
 
 TestCase('') {
-	tester(`cond(re.pattern(r'hello').match('HELLO WORLD'), 'match', 'not match'))
-	tester(`cond((re.pattern(r'hello'):icase).match('HELLO WORLD'), 'match', 'not match'))
+	Tester(`cond(re.pattern(r'hello').match('HELLO WORLD'), 'match', 'not match'))
+	Tester(`cond((re.pattern(r'hello'):icase).match('HELLO WORLD'), 'match', 'not match'))
 }
 
 TestCase('') {
 	lines = format('%08d', rands(100000000, 10))
-	println(lines, ' ', lines:*sub(r'(\d)(\d)(\d)(\d)',
-				&{chr(ord('A') + int($m[1..4])).join()}))
+	Println(lines, ' ', lines:*sub(r'(\d)(\d)(\d)(\d)',
+				&{chr(ord('A') + int($m[1..4])).Join()}))
 }
 
 TestCase('') {
-	tester(`re.sub(r',\s*', ':', '1234, 567,    890,   123'))
-	tester(`re.sub(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):',
+	Tester(`re.sub(r',\s*', ':', '1234, 567,    890,   123'))
+	Tester(`re.sub(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):',
 		r'static PyObject*\npy_\1(void)\n{',
 		'def myfunc():'))
 	dashrepl(matchobj) = {
 		if (matchobj[0] == '-') { return(' ') } else { return('-') }
 	}
 	print_func(dashrepl)
-	tester(`re.sub('-{1,2}', dashrepl, 'pro----gram-files'))
+	Tester(`re.sub('-{1,2}', dashrepl, 'pro----gram-files'))
 }
 
 TestCase('') {
-	tester(`re.pattern(r',\s*').sub(':', '1234, 567,    890,   123'))
-	tester(`re.pattern(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):').sub(
+	Tester(`re.pattern(r',\s*').sub(':', '1234, 567,    890,   123'))
+	Tester(`re.pattern(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):').sub(
 		r'static PyObject*\npy_\1(void)\n{',
 		'def myfunc():'))
 	dashrepl(matchobj) = {
 		if (matchobj[0] == '-') { return(' ') } else { return('-') }
 	}
 	print_func(dashrepl)
-	tester(`re.pattern('-{1,2}').sub(dashrepl, 'pro----gram-files'))
+	Tester(`re.pattern('-{1,2}').sub(dashrepl, 'pro----gram-files'))
 }
 
 
@@ -231,7 +233,7 @@ hoge
 	for (line in lines) {
 		(m = re.match(r'^http://([^/]+)', line)) && print(' ', m[1])
 	}
-	println()
+	Println()
 }
 
 TestCase('') {
@@ -243,18 +245,18 @@ http://www.google.com/
 hoge
 '''.eachline()
 	print(' ', (re.match(r'^http://([^/]+)', lines):xlist):*group(1):*string)
-	println()
+	Println()
 }
 
 TestCase('group test') {
 	str = '12 345 6789 01 234 567 890'
 	m = str.match(r'(\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+)')
-	println('using re.match#group()')
+	Println('using re.match#group()')
 	repeat(7) {|i|
 		group = m.group(i + 1)
 		printf('%-10s %d-%d\n', group.string, group.begin, group.end)
 	}
-	println('using re.match#groups()')
+	Println('using re.match#groups()')
 	groups = m.groups()
 	printf('%-10s %d-%d\n', groups:*string, groups:*begin, groups:*end)
 }
@@ -262,25 +264,25 @@ TestCase('group test') {
 TestCase('named capturing group') {
 	str = '12:34:56'
 	m = str.match(r'(?<hour>\d\d):(?<min>\d\d):(?<sec>\d\d)')
-	println(m.group('hour').string)
-	println(m.group('min').string)
-	println(m.group('sec').string)
-	println(m['hour'])
-	println(m['min'])
-	println(m['sec'])
+	Println(m.group('hour').string)
+	Println(m.group('min').string)
+	Println(m.group('sec').string)
+	Println(m['hour'])
+	Println(m['min'])
+	Println(m['sec'])
 }
 
 TestCase('')('test of :multiline') {
-	tester(`re.pattern('foo.bar').match('foo\nbar'))
-	tester(`(re.pattern('foo.bar'):multiline).match('foo\nbar'))
+	Tester(`re.pattern('foo.bar').match('foo\nbar'))
+	Tester(`(re.pattern('foo.bar'):multiline).match('foo\nbar'))
 }
 
 TestCase('longest/shortest matching') {
 	str = '<p>hoge</p>'
-	tester(`str)
-	tester(`str.match('<.+>')[0])
-	tester(`str.match('<.+?>')[0])
-	tester(`str.sub('<.+>', '**'))
-	tester(`str.sub('<.+?>', '**'))
+	Tester(`str)
+	Tester(`str.match('<.+>')[0])
+	Tester(`str.match('<.+?>')[0])
+	Tester(`str.sub('<.+>', '**'))
+	Tester(`str.sub('<.+?>', '**'))
 }
 */
