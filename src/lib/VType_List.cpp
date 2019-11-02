@@ -1170,8 +1170,6 @@ Gurax_ImplementMethod(List, SkipNil)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
 	// Function body
 #endif
 	return Value::nil();
