@@ -168,7 +168,7 @@ public:
 		return symbolList;
 	}
 	static size_t CountSequence(const Expr* pExpr);
-	static void ComposeForArgSlot(Composer& composer, Expr* pExpr);
+	//static void ComposeForArgSlot(Composer& composer, Expr* pExpr);
 	void ComposeSequence(Composer& composer, Expr* pExpr) const;
 public:
 	// Virtual functions
@@ -261,10 +261,8 @@ protected:
 public:	
 	bool IsEmpty() const { return _pExprFirst.get() == nullptr; }
 	bool HasSingle() const { return _pExprLast && _pExprFirst.get() == _pExprLast; }
-	Expr* GetExprFirst() { return _pExprFirst.get(); }
-	const Expr* GetExprFirst() const { return _pExprFirst.get(); }
-	Expr* GetExprLast() { return _pExprLast; }
-	const Expr* GetExprLast() const { return _pExprLast; }
+	Expr* GetExprFirst() const { return _pExprFirst.get(); }
+	Expr* GetExprLast() const{ return _pExprLast; }
 	void AddExpr(Expr* pExpr) {
 		if (_pExprLast) {
 			_pExprLast->SetExprNext(pExpr);
@@ -286,7 +284,8 @@ public:
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
-	void ComposeInClass(Composer& composer, bool publicFlag);
+	void ComposeInClass(Composer& composer, bool publicFlag) const;
+	void ComposeForArgSlot(Composer& composer) const;
 	Iterator* CreateIterator() const;
 };
 

@@ -27,20 +27,18 @@ Gurax_ImplementStatement(_create_list_)
 	if (exprCaller.GetExprCdrFirst()) {
 		exprCaller.GetExprCdrFirst()->ComposeOrNil(composer);	// [List Car]
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+			composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr,
+								  true, &exprCaller);			// [List Car Argument]
 			if (pExpr->IsType<Expr_Block>()) {
 				// @{ .. {args*} .. }
-				Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
-				composer.Add_Argument(exprCaller.GetAttr().Reference(), nullptr,
-									  true, &exprCaller);		// [List Car Argument]
-				Expr::ComposeForArgSlot(composer, pExprEx->GetExprElemFirst());
-				if (Error::IsIssued()) return;
-				composer.Add_Call(&exprCaller);					// [List Car Result]
-				composer.Add_ListElem(1, false, &exprCaller);	// [List Car]
+				dynamic_cast<Expr_Block*>(pExpr)->GetExprLinkElem().ComposeForArgSlot(composer);
 			} else {
-				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "blocks ares expected as elements in the initializer");
-				return;
+				// @{ .. args .. }
+				pExpr->ComposeForArgSlot(composer);
 			}
+			if (Error::IsIssued()) return;
+			composer.Add_Call(&exprCaller);						// [List Car Result]
+			composer.Add_ListElem(1, false, &exprCaller);		// [List Car]
 		}
 		composer.Add_DiscardValue(&exprCaller);					// [List]
 	} else {

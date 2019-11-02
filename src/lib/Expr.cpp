@@ -95,6 +95,7 @@ void Expr::ComposeForAssignmentInClass(
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
+#if 0
 void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
 {
 	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
@@ -102,6 +103,7 @@ void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
 		if (Error::IsIssued()) return;
 	}
 }
+#endif
 
 void Expr::ComposeForArgSlot(Composer& composer)
 {
@@ -190,12 +192,20 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	return true;
 }
 
-void ExprLink::ComposeInClass(Composer& composer, bool publicFlag)
+void ExprLink::ComposeInClass(Composer& composer, bool publicFlag) const
 {
 	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ComposeInClass(composer, publicFlag);
 		if (Error::IsIssued()) return;
 		composer.FlushDiscard();
+	}
+}
+
+void ExprLink::ComposeForArgSlot(Composer& composer) const
+{
+	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		pExpr->ComposeForArgSlot(composer);
+		if (Error::IsIssued()) return;
 	}
 }
 
@@ -679,7 +689,8 @@ void Expr_Block::Compose(Composer& composer)
 		SetPUnitSubFirst(composer.PeekPUnitCont());
 		PUnit* pPUnitSequence = composer.PeekPUnitCont();
 		composer.Add_BeginSequence(this);
-		Expr::ComposeForArgSlot(composer, GetExprParamFirst());
+		//Expr::ComposeForArgSlot(composer, GetExprParamFirst());
+		GetExprLinkParam().ComposeForArgSlot(composer);
 		pPUnitSequence->SetPUnitSentinel(composer.PeekPUnitCont());
 		composer.Add_Return(this);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
@@ -1039,7 +1050,8 @@ void Expr_Caller::Compose(Composer& composer)
 	} else {
 		composer.Add_Argument(GetAttr().Reference(), nullptr, false, this);	// [Argument]
 	}
-	Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
+	//Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
+	GetExprLinkCdr().ComposeForArgSlot(composer);							// [Argument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(this);												// [Result]
 }
