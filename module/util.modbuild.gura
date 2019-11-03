@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
 //==============================================================================
-// util.builder.gura
+// util.modbuild.gura
 //==============================================================================
 import(argopt)
 
@@ -68,8 +68,10 @@ Builder = class {
 		Printf('-- cleaned\n')
 	}
 	Command_install() = {
-		fs.Copy(this.pathNameGurd, path.Join(sys.dirModule, 'site')):overwrite
-		Printf('-- installed\n')
+		for (pathName in ([this.pathNameGurd] |+| this.pathNamesScript)) {
+			fs.Copy(pathName, path.Join(sys.dirModule, 'site')):overwrite
+			Printf('-- installed: %s\n', pathName)
+		}
 	}
 	Run() = {
 		this.pathNameGurd = path.Join(this.dirNameOut, this.targetName + '.gurd')
