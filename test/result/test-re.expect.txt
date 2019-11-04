@@ -20,7 +20,8 @@ NUM aaaaaa NUM
 ---
 hoge NUM foo
 NUM aaaaaa NUM
-======== re.Match() ========
+'hoge(ABCD, EFGH, IJKL), foo(MNOP, QRST), bar(UVWX, 1234)'.Sub('(\\w+\\()(\\w+)', & {$m[1].Upper() + $m[2].Lower()}) .. HOGE(abcd, EFGH, IJKL), FOO(mnop, QRST), BAR(uvwx, 1234)
+======== re.Match(), String#Match() ========
 re.Match('(\\d+)\\.(\\d*)', '3.14') .. re.Match:0-4
 m.source .. 3.14
 m[0] .. 3.14
@@ -51,6 +52,11 @@ m[1] .. 3
 m['second'] .. 14
 cond(re.Match('hello', 'HELLO WORLD'), 'match', 'not match') .. not match
 cond(re.Match(re.Pattern('hello'):icase, 'HELLO WORLD'), 'match', 'not match') .. match
+'abcdefg hijklmn opqrstu vwxyz'.Match('(\\w+) (\\w+) (\\w+) (\\w+)')[1, 2, 3, 4].Join() .. abcdefghijklmnopqrstuvwxyz
+'3.14'.Match('(\\d+)\\.(\\d*)') .. re.Match:0-4
+m.source .. 3.14
+m[1] .. 3
+m[2] .. 14
 ======== List#Grep() ========
 x.Grep('\\w+'):*source.Join(',') .. apple,orange,pencil,1234,grape,5678
 x.Grep('r'):*source.Join(',') .. orange,grape

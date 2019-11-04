@@ -8,14 +8,15 @@ Exec(pathName:String, silentFlag:Bool) {block} = {
 		rtn = block(line, iLine)
 		if (rtn.IsInstanceOf(List) || line != rtn) {
 			if (!silentFlag) {
-				(cntReplaced == 0) && Printf('%s\n', fileName)
+				(cntReplaced == 0) && Printf('%s\n', pathName)
 				Printf('-- replaced at line.%d\n', iLine + 1)
 			}
 			cntReplaced += 1
 		}
 		rtn && linesSub.Append(rtn)
 	}
-	(cntReplaced > 0) && Open(pathName, 'w').Addcr(false).Print(linesSub)
+	Println(cntReplaced)
+	(cntReplaced > 0) && Open('#' + pathName, 'w').Addcr(false).Print(linesSub)
 }
 
 Glob(pattern:String, arg%%):[silent] {`block} = {
