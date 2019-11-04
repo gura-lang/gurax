@@ -21,7 +21,7 @@ private:
 	RefPtr<ValueOwner> _pValueOwner;
 public:
 	// Constructor
-	ValueTypedOwner() = delete;
+	ValueTypedOwner() : _pVTypeOfElems(&VTYPE_Undefined), _pValueOwner(new ValueOwner()) {}
 	ValueTypedOwner(VType& vtypeOfElems, ValueOwner* pValueOwner);
 	ValueTypedOwner(ValueOwner* pValueOwner) :
 		_pVTypeOfElems(&pValueOwner->GetVTypeOfElems()), _pValueOwner(pValueOwner) {}

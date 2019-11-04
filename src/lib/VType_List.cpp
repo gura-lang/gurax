@@ -1391,6 +1391,24 @@ Gurax_ImplementOpBinary(Concat, List, List)
 	return new Value_List(pValues.release());
 }
 
+// Any |+| List
+Gurax_ImplementOpBinary(Concat, Any, List)
+{
+	RefPtr<ValueTypedOwner> pValues(new ValueTypedOwner());
+	const ValueTypedOwner& valuesR = Value_List::GetValueTypedOwner(valueR);
+	pValues->Add(valueL.Reference());
+	pValues->Add(valuesR);
+	return new Value_List(pValues.release());
+}
+
+// List |+| Any
+Gurax_ImplementOpBinary(Concat, List, Any)
+{
+	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
+	pValues->Add(valueR.Reference());
+	return new Value_List(pValues.release());
+}
+
 //------------------------------------------------------------------------------
 // VType_List
 //------------------------------------------------------------------------------
@@ -1470,6 +1488,8 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Concat, List, List);
+	Gurax_AssignOpBinary(Concat, Any, List);
+	Gurax_AssignOpBinary(Concat, List, Any);
 }
 
 Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const

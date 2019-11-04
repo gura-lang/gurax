@@ -1,10 +1,10 @@
 #!/usr/bin/env gurax
 import(re)
 
-Exec(fileName:String, silentFlag:Bool) {block} = {
+Exec(pathName:String, silentFlag:Bool) {block} = {
 	linesSub = []
 	cntReplaced = 0
-	ReadLines(fileName) {|line, iLine|
+	ReadLines(pathName) {|line, iLine|
 		rtn = block(line, iLine)
 		if (rtn.IsInstanceOf(List) || line != rtn) {
 			if (!silentFlag) {
@@ -15,19 +15,20 @@ Exec(fileName:String, silentFlag:Bool) {block} = {
 		}
 		rtn && linesSub.Append(rtn)
 	}
-	(cntReplaced > 0) && Open(fileName, 'w').Addcr(false).Print(linesSub)
+	(cntReplaced > 0) && Open(pathName, 'w').Addcr(false).Print(linesSub)
 }
 
 Glob(pattern:String, arg%%):[silent] {`block} = {
-	silentFlag = arg.isset(`silent)
-	path.Glob(pattern):file {|fileName|
-		Exec(fileName, silentFlag) {|block|}
+	silentFlag = arg.IsSet(`silent)
+	path.Glob(pattern):file {|pathName|
+		Println(pathName)
+		Exec(pathName, silentFlag) {|block|}
 	}
 }
 
-Walk(directory?:directory, maxdepth?:number, pattern*:string):[silent] {`block} = {
-	silentFlag = __arg__.isset(`silent)
-	path.walk(directory, maxdepth, pattern*):file {|fileName|
-		Exec(fileName, silentFlag) {|block|}
+Walk(directory?:Directory, maxDepth?:Number, pattern*:String, arg%%):[silent] {`block} = {
+	silentFlag = arg.isSet(`silent)
+	path.Walk(directory, maxDepth, pattern*):file {|pathName|
+		Exec(pathName, silentFlag) {|block|}
 	}
 }
