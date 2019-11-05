@@ -15,19 +15,18 @@ Exec(pathName:String, silentFlag:Bool) {block} = {
 		}
 		rtn && linesSub.Append(rtn)
 	}
-	(cntReplaced > 0) && Open(pathName + '#', 'w').Addcr(false).Print(linesSub)
+	(cntReplaced > 0) && Open(pathName, 'w').Addcr(false).Print(linesSub)
 }
 
 Glob(pattern:String, arg%%):[silent] {`block} = {
 	silentFlag = arg.IsSet(`silent)
 	path.Glob(pattern):file {|pathName|
-		Println(pathName)
 		Exec(pathName, silentFlag) {|block|}
 	}
 }
 
 Walk(directory?:Directory, maxDepth?:Number, pattern*:String, arg%%):[silent] {`block} = {
-	silentFlag = arg.isSet(`silent)
+	silentFlag = arg.IsSet(`silent)
 	path.Walk(directory, maxDepth, pattern*):file {|pathName|
 		Exec(pathName, silentFlag) {|block|}
 	}
