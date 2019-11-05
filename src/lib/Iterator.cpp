@@ -49,7 +49,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 		size_t nArgs = declArgOwner.size();
 		bool contFlag = true;
 		size_t idx = 0;
-		Frame& frame = processor.PushFrame<Frame_Scope>();
+		Frame& frame = processor.PushFrame<Frame_Block>();
 		if ((flags & DeclCallable::Flag::List) || (skipNilFlag = flags & DeclCallable::Flag::XList)) {
 			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
