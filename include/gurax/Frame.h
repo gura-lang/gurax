@@ -39,19 +39,20 @@ public:
 	void SetFrameOuter(Frame* pFrame) { _pFrameOuter.reset(pFrame); }
 	const Frame* GetFrameOuter() const { return _pFrameOuter.get(); }
 	Value* Lookup(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
+	Value* Lookup(const Symbol* pSymbol) const;
+	Value* Lookup(const char* name) { return Lookup(Symbol::Add(name)); }
 	bool Assign(const DottedSymbol& dottedSymbol, Value* pValue);
 	void Assign(const char* name, Value* pValue) { Assign(Symbol::Add(name), pValue); }
 	bool AssignWithCast(DeclArg& declArg, const Value& value);
 	bool Assign(Module* pModule);
 	void Assign(VType& vtype);
 	void Assign(Function* pFunction);
-	Value* Lookup(const char* name) { return Lookup(Symbol::Add(name)); }
 	static String MakeFullName(const Frame* pFrame, const char* name);
 public:
 	// Virtual functions
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual Value* Lookup(const Symbol* pSymbol) const = 0;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const = 0;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
@@ -116,7 +117,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -159,7 +160,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
@@ -181,7 +182,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
@@ -207,7 +208,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -230,7 +231,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 
@@ -252,7 +253,7 @@ public:
 	// Virtual functions of Frame
 	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
 	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
-	virtual Value* Lookup(const Symbol* pSymbol) const override;
+	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
 

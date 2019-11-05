@@ -8,6 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Frame
 //------------------------------------------------------------------------------
+Value* Frame::Lookup(const Symbol* pSymbol) const
+{
+	const Frame* pFrameSrc = nullptr;
+	return DoLookup(pSymbol, &pFrameSrc);
+}
+
 Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail) const
 {
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
@@ -124,9 +130,11 @@ void Frame_ValueMap::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pValueMap->Assign(pSymbol, pValue);
 }
 
-Value* Frame_ValueMap::Lookup(const Symbol* pSymbol) const
+Value* Frame_ValueMap::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	return _pValueMap->Lookup(pSymbol);
+	Value* pValue = _pValueMap->Lookup(pSymbol);
+	if (pValue) *ppFrameSrc = this;
+	return pValue;
 }
 
 bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
@@ -185,9 +193,9 @@ void Frame_Basement::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	Value::Delete(pValue);
 }
 
-Value* Frame_Basement::Lookup(const Symbol* pSymbol) const
+Value* Frame_Basement::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	return _pFrameOuter->Lookup(pSymbol);
+	return _pFrameOuter->DoLookup(pSymbol, ppFrameSrc);
 }
 
 void Frame_Basement::GatherSymbol(SymbolList& symbolList) const
@@ -214,11 +222,11 @@ void Frame_VType::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	Value::Delete(pValue);
 }
 
-Value* Frame_VType::Lookup(const Symbol* pSymbol) const
+Value* Frame_VType::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	Value* pValue = _pFrameLocal->Lookup(pSymbol);
+	Value* pValue = _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 	if (pValue) return pValue;
-	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
 }
 
 void Frame_VType::GatherSymbol(SymbolList& symbolList) const
@@ -248,13 +256,13 @@ void Frame_Module::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->Assign(pSymbol, pValue);
 }
 
-Value* Frame_Module::Lookup(const Symbol* pSymbol) const
+Value* Frame_Module::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	if (_pFrameLocal) {
-		Value* pValue = _pFrameLocal->Lookup(pSymbol);
+		Value* pValue = _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 		if (pValue) return pValue;
 	}
-	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
 }
 
 void Frame_Module::GatherSymbol(SymbolList& symbolList) const
@@ -283,13 +291,13 @@ void Frame_Scope::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->Assign(pSymbol, pValue);
 }
 
-Value* Frame_Scope::Lookup(const Symbol* pSymbol) const
+Value* Frame_Scope::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
 	if (_pFrameLocal) {
-		Value* pValue = _pFrameLocal->Lookup(pSymbol);
+		Value* pValue = _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 		if (pValue) return pValue;
 	}
-	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
 }
 
 void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
@@ -316,11 +324,11 @@ void Frame_Block::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
 	_pFrameLocal->Assign(pSymbol, pValue);
 }
 
-Value* Frame_Block::Lookup(const Symbol* pSymbol) const
+Value* Frame_Block::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
 {
-	Value* pValue = _pFrameLocal->Lookup(pSymbol);
+	Value* pValue = _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 	if (pValue) return pValue;
-	return _pFrameOuter? _pFrameOuter->Lookup(pSymbol) : nullptr;
+	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
 }
 
 void Frame_Block::GatherSymbol(SymbolList& symbolList) const
