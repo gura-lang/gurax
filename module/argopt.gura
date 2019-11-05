@@ -98,4 +98,5 @@ Parser = class {
 		indices = this.entries::MakeHelpIndex(true, true)
 		Printf('%-*s  %s\n', indices::len.Max(), indices, this.entries:*help)
 	}
+	FormatHelp():[linefeed] = {}
 }

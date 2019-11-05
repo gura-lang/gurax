@@ -1,0 +1,45 @@
+#!/usr/bin/env gurax
+import(re)
+import(argopt)
+
+//sys.stdout.setcodec(nil)
+
+argopt.Parser {|p|
+	p.AddFlag('line-number',	'n', 'print line number with output lines')
+	p.AddFlag('recursive',		'r', 'recursively search sub directories')
+	p.AddParam('level',			'l', 'specify depth-level for recursive search', 'NUM')
+	try {
+		[argv, cfg] = p.Parse(sys.argv)
+	} catch {|e|
+		Println(e.text)
+		sys.Exit(1)
+	}
+	if (argv.len < 1) {
+		tR'''
+		usage: grep.gura [options] pattern file ...
+		options:
+		  ${p.FormatHelp():linefeed}
+		'''.Render(sys.cerr)
+		sys.Exit(1)
+	}
+	pattern = argv[0]
+}
+if (cfg.Get('recursive')) {
+	level = cfg['level']
+	fileNames = path.Walk('', level, argv.Offset(1)*):file
+} else {
+	fileNames = path.Glob(argv.Offset(1)):list:file
+}
+fileNames.Each {|fileName|
+	try {
+		ReadLines(fileName).Grep(pattern) {|m, i, iLine|
+			if (cfg['line-number']) {
+				Printf('%s:%d:%s', fileName, iLine + 1, m.source)
+			} else {
+				Printf('%s:%s', fileName, m.source)
+			}
+		}
+	} catch {|e|
+		Println('error while reading ', fileName)
+	}
+}
