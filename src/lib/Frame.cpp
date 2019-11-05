@@ -55,7 +55,9 @@ Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail)
 
 void Frame::Assign(const Symbol* pSymbol, Value* pValue)
 {
-	DoAssign(pSymbol, pValue);
+	Frame* pFrame = nullptr;
+	if (!_pFrameMap || !(pFrame = _pFrameMap->Lookup(pSymbol))) pFrame = this;
+	pFrame->DoAssign(pSymbol, pValue);
 }
 
 bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)

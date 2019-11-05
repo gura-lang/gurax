@@ -155,7 +155,7 @@ hoge$$
 ======== Reference to external variables ========
 abcde fghij klmno
 abcde AA
-v1 .. abcde
+v1 .. abcde AA
 ======== Comment ========
   line.1
   line.2
