@@ -8,11 +8,35 @@
 namespace Gurax {
 
 class DeclArg;
+class Frame;
 class Function;
+class Module;
 class VType;
 class Value;
 class ValueMap;
-class Module;
+
+//------------------------------------------------------------------------------
+// FrameMap
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE FrameMap :
+	public std::unordered_map<const Symbol*, Frame*,
+			Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(FrameMap);
+protected:
+	~FrameMap() { Clear(); }
+public:
+	void Clear();
+	void Assign(const Symbol* pSymbol, Frame* pFrame);
+	Frame* Lookup(const Symbol* pSymbol) {
+		auto pPair = find(pSymbol);
+		return (pPair == end())? nullptr : pPair->second;
+	}
+	bool DoesExist(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
+	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
+	//String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
 
 //------------------------------------------------------------------------------
 // Frame
@@ -23,6 +47,7 @@ public:
 	Gurax_DeclareReferable(Frame);
 protected:
 	RefPtr<Frame> _pFrameOuter;
+	RefPtr<FrameMap> _pFrameMap;
 public:
 	// Constructor
 	explicit Frame(Frame* pFrameOuter) : _pFrameOuter(pFrameOuter) {}
@@ -38,9 +63,11 @@ protected:
 public:
 	void SetFrameOuter(Frame* pFrame) { _pFrameOuter.reset(pFrame); }
 	const Frame* GetFrameOuter() const { return _pFrameOuter.get(); }
-	Value* Lookup(const DottedSymbol& dottedSymbol, size_t nTail = 0) const;
-	Value* Lookup(const Symbol* pSymbol) const;
+	Value* Lookup(const DottedSymbol& dottedSymbol, size_t nTail = 0);
+	Value* Lookup(const Symbol* pSymbol);
 	Value* Lookup(const char* name) { return Lookup(Symbol::Add(name)); }
+	void Assign(const Symbol* pSymbol, Value* pValue);
+	void AssignFromArgument(const Symbol* pSymbol, Value* pValue) { DoAssignFromArgument(pSymbol, pValue); }
 	bool Assign(const DottedSymbol& dottedSymbol, Value* pValue);
 	void Assign(const char* name, Value* pValue) { Assign(Symbol::Add(name), pValue); }
 	bool AssignWithCast(DeclArg& declArg, const Value& value);
@@ -50,8 +77,8 @@ public:
 	static String MakeFullName(const Frame* pFrame, const char* name);
 public:
 	// Virtual functions
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) = 0;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) = 0;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) = 0;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const = 0;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
@@ -115,8 +142,8 @@ protected:
 	virtual ~Frame_ValueMap() override;
 public:
 	// Virtual functions of Frame
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
@@ -158,8 +185,8 @@ public:
 	Frame_Basement();
 public:
 	// Virtual functions of Frame
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -180,8 +207,8 @@ public:
 	explicit Frame_VType(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -206,8 +233,8 @@ public:
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 public:
 	// Virtual functions of Frame
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
@@ -229,8 +256,8 @@ public:
 	explicit Frame_Scope(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };
@@ -251,8 +278,8 @@ public:
 	explicit Frame_Block(Frame* pFrameOuter);
 public:
 	// Virtual functions of Frame
-	virtual void Assign(const Symbol* pSymbol, Value* pValue) override;
-	virtual void AssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssign(const Symbol* pSymbol, Value* pValue) override;
+	virtual void DoAssignFromArgument(const Symbol* pSymbol, Value* pValue) override;
 	virtual Value* DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
 };

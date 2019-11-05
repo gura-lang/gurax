@@ -135,8 +135,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
 		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
 	}
-	Frame& GetFrame() { return *_pFrame; }
-	const Frame& GetFrame() const { return *_pFrame; }
+	Frame& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const {

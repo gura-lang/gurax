@@ -6,15 +6,40 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Frame
+// FrameMap
 //------------------------------------------------------------------------------
-Value* Frame::Lookup(const Symbol* pSymbol) const
+void FrameMap::Clear()
 {
-	const Frame* pFrameSrc = nullptr;
-	return DoLookup(pSymbol, &pFrameSrc);
+	for (auto& pair : *this) Frame::Delete(pair.second);
+	clear();
 }
 
-Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail) const
+void FrameMap::Assign(const Symbol* pSymbol, Frame* pFrame)
+{
+	auto pPair = find(pSymbol);
+	if (pPair == end()) {
+		emplace(pSymbol, pFrame);
+	} else {
+		Frame::Delete(pPair->second);
+		pPair->second = pFrame;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Frame
+//------------------------------------------------------------------------------
+Value* Frame::Lookup(const Symbol* pSymbol)
+{
+	const Frame* pFrameSrc = nullptr;
+	Value* pValue = DoLookup(pSymbol, &pFrameSrc);
+	if (pValue) {
+		if (!_pFrameMap) _pFrameMap.reset(new FrameMap());
+		_pFrameMap->Assign(pSymbol, pFrameSrc->Reference());
+	}
+	return pValue;
+}
+
+Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail)
 {
 	const SymbolList& symbolList = dottedSymbol.GetSymbolList();
 	if (symbolList.size() <= nTail) return nullptr;
@@ -26,6 +51,11 @@ Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail) const
 		pValue = pValue->DoPropGet(pSymbol, *Attribute::Empty, false);
 	}
 	return pValue;
+}
+
+void Frame::Assign(const Symbol* pSymbol, Value* pValue)
+{
+	DoAssign(pSymbol, pValue);
 }
 
 bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
@@ -120,12 +150,12 @@ Frame_ValueMap::~Frame_ValueMap()
 	ValueMap::Delete(_pValueMap);
 }
 
-void Frame_ValueMap::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_ValueMap::DoAssign(const Symbol* pSymbol, Value* pValue)
 {
 	_pValueMap->Assign(pSymbol, pValue);
 }
 
-void Frame_ValueMap::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_ValueMap::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	_pValueMap->Assign(pSymbol, pValue);
 }
@@ -183,12 +213,12 @@ Frame_Basement::Frame_Basement() : Frame_Branch(new Frame_ValueMap(), nullptr)
 {
 }
 
-void Frame_Basement::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_Basement::DoAssign(const Symbol* pSymbol, Value* pValue)
 {
-	_pFrameOuter->Assign(pSymbol, pValue);
+	_pFrameOuter->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Basement::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Basement::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	Value::Delete(pValue);
 }
@@ -212,12 +242,12 @@ Frame_VType::Frame_VType(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, new Fra
 {
 }
 
-void Frame_VType::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_VType::DoAssign(const Symbol* pSymbol, Value* pValue)
 {
-	_pFrameLocal->Assign(pSymbol, pValue);
+	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-void Frame_VType::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_VType::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	Value::Delete(pValue);
 }
@@ -244,16 +274,16 @@ Frame_Module::Frame_Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 {
 }
 
-void Frame_Module::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_Module::DoAssign(const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
-	_pFrameLocal->Assign(pSymbol, pValue);
+	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Module::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Module::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
-	_pFrameLocal->Assign(pSymbol, pValue);
+	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
 Value* Frame_Module::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
@@ -279,16 +309,16 @@ Frame_Scope::Frame_Scope(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, nullptr
 {
 }
 
-void Frame_Scope::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_Scope::DoAssign(const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
-	_pFrameLocal->Assign(pSymbol, pValue);
+	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Scope::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Scope::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	if (!_pFrameLocal) _pFrameLocal.reset(new Frame_ValueMap());
-	_pFrameLocal->Assign(pSymbol, pValue);
+	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
 Value* Frame_Scope::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
@@ -314,14 +344,14 @@ Frame_Block::Frame_Block(Frame* pFrameOuter) : Frame_Branch(pFrameOuter, new Fra
 {
 }
 
-void Frame_Block::Assign(const Symbol* pSymbol, Value* pValue)
+void Frame_Block::DoAssign(const Symbol* pSymbol, Value* pValue)
 {
-	_pFrameOuter->Assign(pSymbol, pValue);
+	_pFrameOuter->DoAssign(pSymbol, pValue);
 }
 
-void Frame_Block::AssignFromArgument(const Symbol* pSymbol, Value* pValue)
+void Frame_Block::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
-	_pFrameLocal->Assign(pSymbol, pValue);
+	_pFrameLocal->DoAssign(pSymbol, pValue);
 }
 
 Value* Frame_Block::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
