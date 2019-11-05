@@ -1,9 +1,28 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-a = 3
-scope {
-	a = 5
+TestCase('Explicit creation of scope') {
+	a = 3
+	scope {
+		a = 5
+		Println('a = ', a)
+	}
 	Println('a = ', a)
 }
-Println('a = ', a)
+
+TestCase('List#Each()\'s scope') {
+	a = 5
+	b = 3
+	Printf('#1 a = %d, b = %d\n', a, b)
+	[1..1].Each {|b|
+		Printf('#2 a = %d, b = %d\n', a, b)
+		[2..2].Each {|b|
+			Printf('#3 a = %d, b = %d\n', a, b)
+			a = -5
+			b = -3
+			Printf('#4 a = %d, b = %d\n', a, b)
+		}
+		Printf('#5 a = %d, b = %d\n', a, b)
+	}
+	Printf('#6 a = %d, b = %d\n', a, b)
+}

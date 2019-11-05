@@ -1,0 +1,10 @@
+======== Explicit creation of scope ========
+a = 5
+a = 3
+======== List#Each()'s scope ========
+#1 a = 5, b = 3
+#2 a = 5, b = 1
+#3 a = 5, b = 2
+#4 a = -5, b = -3
+#5 a = -5, b = 1
+#6 a = -5, b = 3

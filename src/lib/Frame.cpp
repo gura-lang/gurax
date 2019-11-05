@@ -354,6 +354,8 @@ void Frame_Block::DoAssign(const Symbol* pSymbol, Value* pValue)
 void Frame_Block::DoAssignFromArgument(const Symbol* pSymbol, Value* pValue)
 {
 	_pFrameLocal->DoAssign(pSymbol, pValue);
+	if (!_pFrameMap) _pFrameMap.reset(new FrameMap());
+	_pFrameMap->Assign(pSymbol, _pFrameLocal->Reference());
 }
 
 Value* Frame_Block::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) const
