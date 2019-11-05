@@ -15,8 +15,7 @@ Exec(pathName:String, silentFlag:Bool) {block} = {
 		}
 		rtn && linesSub.Append(rtn)
 	}
-	Println(cntReplaced)
-	(cntReplaced > 0) && Open('#' + pathName, 'w').Addcr(false).Print(linesSub)
+	(cntReplaced > 0) && Open(pathName + '#', 'w').Addcr(false).Print(linesSub)
 }
 
 Glob(pattern:String, arg%%):[silent] {`block} = {

@@ -69,8 +69,8 @@ Builder = class {
 	}
 	Command_install() = {
 		for (pathName in ([this.pathNameGurd] |+| this.pathNamesScript)) {
+			Printf('-- installing: %s\n', pathName)
 			fs.Copy(pathName, path.Join(sys.dirModule, 'site')):overwrite
-			Printf('-- installed: %s\n', pathName)
 		}
 	}
 	Run() = {
