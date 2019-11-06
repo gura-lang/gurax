@@ -216,7 +216,7 @@ main() = {
 	entityName = className
 	fileName_header = 'VType_' + className + '.h'
 	fileName_source = 'VType_' + className + '.cpp'
-	if (!opt.Get('force') && \
+	if (!opt['force'] && \
 		fs.Exists([fileName_header, fileName_source]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
@@ -224,8 +224,9 @@ main() = {
 	tmpl_header.Render(Open(fileName_header, 'w'))
 	tmpl_source.Render(Open(fileName_source, 'w'))
 	tR'''
-	Following files were generated.
-	- Source Files: ${fileName_header}, ${fileName_source}
+	Following files were generated for the ${dotClassName} class.
+	  ${fileName_header}
+	  ${fileName_source}
 	'''.Render(sys.cout)
 }
 

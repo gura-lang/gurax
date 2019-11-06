@@ -139,7 +139,7 @@ main() = {
 	fileName_stdafx = 'stdafx.h'
 	fileName_header = 'module-' + ubarModuleName + '.h'
 	fileName_main = 'module-' + ubarModuleName + '.cpp'
-	if (!opt.Get('force') && \
+	if (!opt['force'] && \
 		fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
@@ -152,10 +152,12 @@ main() = {
 	fs.ChangeMode(fileName_build, 'a+x')
 	fs.ChangeMode(fileName_test, 'a+x')
 	tR'''
-	Following files were generated.
+	Following files were generated for the ${dotModuleName} module.
 	- Build Script: ${fileName_build}
 	- Test Script:  ${fileName_test}
-	- Source Files: ${fileName_stdafx}, ${fileName_header}, ${fileName_main}
+	- Source Files: ${fileName_stdafx}
+	                ${fileName_header}
+	                ${fileName_main}
 	'''.Render(sys.cout)
 }
 

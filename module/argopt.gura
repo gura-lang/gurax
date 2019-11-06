@@ -51,13 +51,14 @@ Parser = class {
 		dictByLongName = %{}
 		dictByShortName = %{}
 		dictByLongName.Put(this.entries:*longName, this.entries)
+		argvRest = []
+		opt = %{}
 		this.entries.Each {|entry|
 			if (entry.shortName) {
 				dictByShortName.Put(entry.shortName, entry)
 			}
+			opt[entry.longName] = nil
 		}
-		argvRest = []
-		opt = %{}
 		iter = argv.Offset(1)
 		while (arg = iter.NextValue()) {
 			if ((argBody = arg.StartsWith('--'):rest) && !argBody.IsEmpty()) {
