@@ -18,19 +18,20 @@ argopt.Parser {|p|
 		tR'''
 		usage: grep.gura [options] pattern file ...
 		options:
-		  ${p.FormatHelp():linefeed}
+		  ${p.FormatHelp() + '\n'}
 		'''.Render(sys.cerr)
 		sys.Exit(1)
 	}
 	pattern = argv[0]
 }
-if (cfg.Get('recursive')) {
+if (cfg['recursive']) {
 	level = cfg['level']
 	fileNames = path.Walk('', level, argv.Offset(1)*):file
 } else {
 	fileNames = path.Glob(argv.Offset(1)):list:file
 }
 fileNames.Each {|fileName|
+	Println(fileName):nomap
 	try {
 		ReadLines(fileName).Grep(pattern) {|m, i, iLine|
 			if (cfg['line-number']) {
@@ -39,7 +40,7 @@ fileNames.Each {|fileName|
 				Printf('%s:%s', fileName, m.source)
 			}
 		}
-	} catch {|e|
-		Println('error while reading ', fileName)
+	//} catch {|e|
+	//	Println('error while reading ', fileName)
 	}
 }

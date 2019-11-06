@@ -258,6 +258,10 @@ TestCase('Variable Expansion by Asterisk Operator') {
 	Tester(`f4(x*))
 	Tester(`f5([1, 2]*, 3))
 	Tester(`f5([1, 2, 3]*))
+	Tester(`f1(x.Each()*))
+	Tester(`f2(x.Each()*))
+	Tester(`f3(x.Each()*))
+	Tester(`f4(x.Each()*))
 }
 
 TestCase('Block delegation') {

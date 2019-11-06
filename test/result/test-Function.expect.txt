@@ -316,6 +316,10 @@ f3(x*) .. too many arguments
 f4(x*) .. a=[1,2,3,4,5,6,7,8,9,10]
 f5([1, 2]*, 3) .. a=1 b=2 c=3
 f5([1, 2, 3]*) .. invalid argument assignment
+f1(x.Each()*) .. a=1 b=[2,3,4,5,6,7,8,9,10]
+f2(x.Each()*) .. a=1 b=2 c=3 d=4 e=[5,6,7,8,9,10]
+f3(x.Each()*) .. too many arguments
+f4(x.Each()*) .. a=[1,2,3,4,5,6,7,8,9,10]
 ======== Block delegation ========
 g1 {|str| Format('type = %s', str)} .. type = `function
 g1() .. (no block)
