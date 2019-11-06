@@ -1,0 +1,6 @@
+#!/usr/bin/env gurax
+import(sed)
+
+sed.Walk('', nil, '*.cpp', '*.h') {|strLine|
+	strLine.Sub('ORIGINAL', 'REPLACEMENT')
+}
