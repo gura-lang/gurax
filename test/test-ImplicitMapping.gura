@@ -31,3 +31,12 @@ TestCase('Function') {
 	Tester(`[f(x):iter])
 	Tester(`[f(x):xiter])
 }
+
+TestCase(':flat attribute') {
+	f(x):map = cond(x % 2 == 0, [x, x * 2, x * 3])
+	x = [0, 1, 2, 3, 4, 5]
+	Tester(`x)
+	Tester(`f(x))
+	Tester(`f(x):flat)
+	Tester(`f(x):xlist:flat)
+}
