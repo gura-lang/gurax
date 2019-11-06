@@ -5,6 +5,7 @@ import(argopt)
 //sys.stdout.setcodec(nil)
 
 argopt.Parser {|p|
+	p.AddFlag('ignore-case',	'i', 'ignore character cases')
 	p.AddFlag('line-number',	'n', 'print line number with output lines')
 	p.AddFlag('recursive',		'r', 'recursively search sub directories')
 	p.AddParam('level',			'l', 'specify depth-level for recursive search', 'NUM')
@@ -22,7 +23,7 @@ argopt.Parser {|p|
 		'''.Render(sys.cerr)
 		sys.Exit(1)
 	}
-	pattern = argv[0]
+	pattern = cond(cfg['ignore-case'], re.Pattern(argv[0]):icase, re.Pattern(argv[0]))
 }
 if (cfg['recursive']) {
 	level = cfg['level']
@@ -31,16 +32,15 @@ if (cfg['recursive']) {
 	fileNames = path.Glob(argv.Offset(1)):list:file
 }
 fileNames.Each {|fileName|
-	Println(fileName):nomap
 	try {
-		ReadLines(fileName).Grep(pattern) {|m, i, iLine|
+		ReadLines(fileName).Grep(pattern) {|m, iLine|
 			if (cfg['line-number']) {
 				Printf('%s:%d:%s', fileName, iLine + 1, m.source)
 			} else {
 				Printf('%s:%s', fileName, m.source)
 			}
 		}
-	//} catch {|e|
-	//	Println('error while reading ', fileName)
+	} catch {|e|
+		Println('error while reading ', fileName)
 	}
 }
