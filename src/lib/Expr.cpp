@@ -95,16 +95,6 @@ void Expr::ComposeForAssignmentInClass(
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
-#if 0
-void Expr::ComposeForArgSlot(Composer& composer, Expr* pExpr)
-{
-	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForArgSlot(composer);
-		if (Error::IsIssued()) return;
-	}
-}
-#endif
-
 void Expr::ComposeForArgSlot(Composer& composer)
 {
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
