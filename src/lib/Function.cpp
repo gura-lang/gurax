@@ -62,13 +62,18 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
 		while (argument.ReadyToPickValue()) {
 			RefPtr<Value> pValueRtn(DoEval(processor, argument));
 			if (Error::IsIssued()) {
 				processor.ErrorDone();
 				return;
 			}
-			valueTypedOwner.Add(pValueRtn.release());
+			if (flatFlag && pValueRtn->IsType(VTYPE_List)) {
+				valueTypedOwner.Add(dynamic_cast<Value_List&>(*pValueRtn).GetValueTypedOwner());
+			} else {
+				valueTypedOwner.Add(pValueRtn.release());
+			}
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
@@ -77,13 +82,18 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
+		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
 		while (argument.ReadyToPickValue()) {
 			RefPtr<Value> pValueRtn(DoEval(processor, argument));
 			if (Error::IsIssued()) {
 				processor.ErrorDone();
 				return;
 			}
-			if (pValueRtn->IsValid()) valueTypedOwner.Add(pValueRtn.release());
+			if (flatFlag && pValueRtn->IsType(VTYPE_List)) {
+				valueTypedOwner.Add(dynamic_cast<Value_List&>(*pValueRtn).GetValueTypedOwner());
+			} else if (pValueRtn->IsValid()) {
+				valueTypedOwner.Add(pValueRtn.release());
+			}
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());

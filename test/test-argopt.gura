@@ -13,7 +13,7 @@ p.AddParam('param-C', 'C', 'help-C')
 p.AddParam('param-D', 'D', 'help-D')
 p.AddParam('param-E', 'E', 'help-E')
 
-p.PrintHelp()
+Println(p.FormatHelp())
 
 
 Tester(argv[]:String) = {
