@@ -124,6 +124,7 @@ usage: genmod.gura module-name
 main() = {
 	[argv, opt] = argopt.Parser {|p|
 		p.AddFlag('force', 'f', 'forcibly overwrites existing files')
+		p.AddFlag('here', 'h', 'create files in the current directory')
 		p.Parse(sys.argv)
 	}
 	if (argv.len < 1) {
@@ -134,30 +135,41 @@ main() = {
 	dotModuleName = fields.Join('.')
 	ubarModuleName = fields.Join('_')
 	baseName = fields[-1]
+	if (opt['here']) {
+		dirNameOut = ''
+	} else {
+		dirNameOut = cond(opt['here'], '', 'module-' + ubarModuleName)
+		!fs.Exists(dirNameOut) && fs.CreateDir(dirNameOut)
+	}
 	fileName_build = 'build.gura'
 	fileName_test = 'test-' + ubarModuleName + '.gura'
 	fileName_stdafx = 'stdafx.h'
 	fileName_header = 'module-' + ubarModuleName + '.h'
 	fileName_main = 'module-' + ubarModuleName + '.cpp'
+	pathName_build = path.Join(dirNameOut, fileName_build)
+	pathName_test = path.Join(dirNameOut, fileName_test)
+	pathName_stdafx = path.Join(dirNameOut, fileName_stdafx)
+	pathName_header = path.Join(dirNameOut, fileName_header)
+	pathName_main = path.Join(dirNameOut, fileName_main)
 	if (!opt['force'] && \
-		fs.Exists([fileName_build, fileName_test, fileName_stdafx, fileName_header, fileName_main]).Or()) {
+		fs.Exists([pathName_build, pathName_test, pathName_stdafx, pathName_header, pathName_main]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
-	tmpl_build.Render(Open(fileName_build, 'w'))
-	tmpl_test.Render(Open(fileName_test, 'w'))
-	tmpl_stdafx.Render(Open(fileName_stdafx, 'w'))
-	tmpl_header.Render(Open(fileName_header, 'w'))
-	tmpl_source.Render(Open(fileName_main, 'w'))
-	fs.ChangeMode(fileName_build, 'a+x')
-	fs.ChangeMode(fileName_test, 'a+x')
+	tmpl_build.Render(Open(pathName_build, 'w'))
+	tmpl_test.Render(Open(pathName_test, 'w'))
+	tmpl_stdafx.Render(Open(pathName_stdafx, 'w'))
+	tmpl_header.Render(Open(pathName_header, 'w'))
+	tmpl_source.Render(Open(pathName_main, 'w'))
+	fs.ChangeMode(pathName_build, 'a+x')
+	fs.ChangeMode(pathName_test, 'a+x')
 	tR'''
 	Following files were generated for the ${dotModuleName} module.
-	- Build Script: ${fileName_build}
-	- Test Script:  ${fileName_test}
-	- Source Files: ${fileName_stdafx}
-	                ${fileName_header}
-	                ${fileName_main}
+	- Build Script: ${pathName_build}
+	- Test Script:  ${pathName_test}
+	- Source Files: ${pathName_stdafx}
+	                ${pathName_header}
+	                ${pathName_main}
 	'''.Render(sys.cout)
 }
 
