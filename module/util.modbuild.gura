@@ -22,10 +22,15 @@ Builder = class {
 	opt = %{}
 	cflagsBase = ['-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED', '-fPIC']
 	ldflagsBase = ['-shared']
+	cflagsCompile = []
+	cflagsPreCompile = ['-x', 'c++-header']
 	libsBase = ['stdc++', 'guraxcore']
+	precompile:String = nil
 	__init__(targetName:String) = {
 		this.targetName = targetName
-		//if (sys.platform.
+		if (sys.platform == `darwin) {
+			this.ldflagsBase.Add('-install_name', this.targetName + '.gurd')
+		}
 	}
 	ShouldProcess(pathNameTgt:String, pathNamesDep+:String) = {
 		!fs.Exists(pathNameTgt) || \
@@ -36,13 +41,25 @@ Builder = class {
 		rtn = (os.Exec(pathName, args*) == 0)
 		rtn
 	}
-	Compile(pathNameObj:String, pathNameSrc:String) = {
+	PreCompile() = {
+		pathNameSrc = this.precompile
+		pathNameObj = pathNameSrc + '.gch'
+		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
 		Printf('-- compiling: %s\n', pathNameSrc)
-		this.Exec('gcc', this.cflagsBase*, this.cflags*,
+		this.Exec('gcc', this.cflagsBase*, this.cflagsPreCompile*, this.cflags*,
+				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
+				  pathNameSrc)
+		
+	}
+	Compile(pathNameObj:String, pathNameSrc:String) = {
+		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
+		Printf('-- compiling: %s\n', pathNameSrc)
+		this.Exec('gcc', this.cflagsBase*, this.cflagsCompile*, this.cflags*,
 				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
 				  '-o' + pathNameObj, '-c', pathNameSrc)
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
+		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return
 		if (this.Exec('gcc', this.ldflagsBase*, this.ldflags*,
 					  '-L' + sys.dirLib, ('-L' + this.dirNamesLib)*,
 					  '-o' + pathNameGurd, pathNamesObj*,
@@ -51,20 +68,17 @@ Builder = class {
 		}
 	}
 	Command_build() = {
-		errorFlag = false
+		//errorFlag = false
+		this.precompile && !this.PreCompile() && return
 		for (pathNameObj in this.pathNamesObj, pathNameSrc in this.pathNamesSrc) {
-			if (this.ShouldProcess(pathNameObj, pathNameSrc) && \
-				!this.Compile(pathNameObj, pathNameSrc)) {
-				return
-			}
+			!this.Compile(pathNameObj, pathNameSrc) && return
 		}
-		if (this.ShouldProcess(this.pathNameGurd, this.pathNamesObj*)) {
-			this.Link(this.pathNameGurd, this.pathNamesObj*)
-		}
+		this.Link(this.pathNameGurd, this.pathNamesObj*)
 	}
 	Command_clean() = {
 		fs.Remove(this.pathNameGurd)
 		fs.Remove(this.pathNamesObj)
+		this.precompile && fs.Remove(this.precompile + '.gch')
 		Printf('-- cleaned\n')
 	}
 	Command_install() = {
@@ -74,6 +88,9 @@ Builder = class {
 		}
 	}
 	Run() = {
+		if (this.precompile) {
+			//this.cflagsCompile.Add('-install', this.precompile)
+		}
 		this.pathNameGurd = path.Join(this.dirNameOut, this.targetName + '.gurd')
 		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
