@@ -203,6 +203,28 @@ ${else}
 namespace Gurax {
 ${end}
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// ${className}() {block?}
+Gurax_DeclareFunction(${className})
+{
+	Declare(VTYPE_${className}, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `${className}` instance.");
+}
+
+Gurax_ImplementFunction(${className})
+{
+	// Arguments
+	//ArgPicker args(argument);
+	// Function body
+	RefPtr<${className}> p${className}(new ${className}());
+	return argument.ReturnValue(processor, new Value_${className}(p${className}.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -244,7 +266,7 @@ Gurax_DeclareProperty_R(${className}, propSkeleton)
 Gurax_ImplementPropertyGetter(${className}, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
-	return Value::nil();
+	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
@@ -254,8 +276,8 @@ VType_${className} VTYPE_${className}("${className}");
 
 void VType_${className}::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(${className}));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(${className}, MethodSkeleton));
 	// Assignment of property
