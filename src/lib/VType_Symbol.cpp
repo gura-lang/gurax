@@ -23,8 +23,8 @@ VType_Symbol VTYPE_Symbol("Symbol");
 
 void VType_Symbol::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Implementation of operator
 	Gurax_AssignOpBinary(Eq, Symbol, Symbol);
 }

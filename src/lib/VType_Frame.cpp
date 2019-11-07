@@ -16,8 +16,8 @@ VType_Frame VTYPE_Frame("Frame");
 
 void VType_Frame::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

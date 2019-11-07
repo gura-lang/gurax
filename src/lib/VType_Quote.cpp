@@ -12,8 +12,8 @@ VType_Quote VTYPE_Quote("Quote");
 
 void VType_Quote::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VType::Empty, Flag::Immutable);
+	// Declaration of VType
+	Declare(VType::Empty, Flag::Immutable);
 }
 
 Value* VType_Quote::DoCastFrom(const Value& value, DeclArg::Flags flags) const

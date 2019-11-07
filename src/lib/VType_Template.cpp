@@ -579,9 +579,8 @@ VType_Template VTYPE_Template("Template");
 
 void VType_Template::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Template));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Template));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Template, Parse));
 	Assign(Gurax_CreateMethod(Template, Read));

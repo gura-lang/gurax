@@ -37,9 +37,8 @@ VType_Directory VTYPE_Directory("Directory");
 
 void VType_Directory::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Directory));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Directory));
 }
 
 Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) const

@@ -358,9 +358,8 @@ VType_TimeDelta VTYPE_TimeDelta("TimeDelta");
 
 void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(TimeDelta));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(TimeDelta));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(TimeDelta, days));
 	Assign(Gurax_CreateProperty(TimeDelta, hours));

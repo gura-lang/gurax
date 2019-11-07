@@ -137,9 +137,8 @@ VType_Function VTYPE_Function("Function");
 
 void VType_Function::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Function));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Function));
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateFunction(_function_));
 	// Assignment of property

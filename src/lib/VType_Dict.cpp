@@ -348,8 +348,8 @@ VType_Dict VTYPE_Dict("Dict");
 
 void VType_Dict::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Mutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_create_dict_));
 	// Assignment of method

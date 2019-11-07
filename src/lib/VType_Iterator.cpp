@@ -1388,8 +1388,8 @@ VType_Iterator VTYPE_Iterator("Iterator");
 
 void VType_Iterator::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method specific to Iterator
 	Assign(Gurax_CreateMethod(Iterator, IsFinite));
 	Assign(Gurax_CreateMethod(Iterator, IsInfinite));

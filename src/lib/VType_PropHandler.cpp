@@ -30,8 +30,8 @@ VType_PropHandler VTYPE_PropHandler("PropHandler");
 
 void VType_PropHandler::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PropHandler, symbol));
 }

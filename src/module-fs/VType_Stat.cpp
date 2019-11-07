@@ -281,8 +281,7 @@ VType_Stat VTYPE_Stat("Stat");
 void VType_Stat::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Stat));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Stat));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stat, pathName));
 	Assign(Gurax_CreateProperty(Stat, dirName));

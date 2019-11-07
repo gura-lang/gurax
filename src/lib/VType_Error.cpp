@@ -173,8 +173,8 @@ VType_Error VTYPE_Error("Error");
 
 void VType_Error::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Error, Raise));
 	// Assignment of property

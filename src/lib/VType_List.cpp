@@ -1416,8 +1416,8 @@ VType_List VTYPE_List("List");
 
 void VType_List::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Mutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of statement
 	frameOuter.Assign(Gurax_CreateStatement(_create_list_));
 	// Assignment of method specific to List

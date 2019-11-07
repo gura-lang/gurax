@@ -365,8 +365,8 @@ VType_Number VTYPE_Number("Number");
 
 void VType_Number::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Number, abs));
 	Assign(Gurax_CreateProperty(Number, arg));

@@ -12,8 +12,8 @@ VType_KeyValuePair VTYPE_KeyValuePair("KeyValuePair");
 
 void VType_KeyValuePair::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

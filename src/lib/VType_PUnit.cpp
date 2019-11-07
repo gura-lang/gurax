@@ -50,8 +50,8 @@ VType_PUnit VTYPE_PUnit("PUnit");
 
 void VType_PUnit::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(PUnit, ToString));
 	// Assignment of property

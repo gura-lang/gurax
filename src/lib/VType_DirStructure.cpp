@@ -12,8 +12,8 @@ VType_DirStructure VTYPE_DirStructure("DirStructure");
 
 void VType_DirStructure::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

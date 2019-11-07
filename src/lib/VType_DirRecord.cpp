@@ -12,8 +12,8 @@ VType_DirRecord VTYPE_DirRecord("DirRecord");
 
 void VType_DirRecord::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

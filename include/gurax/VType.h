@@ -61,7 +61,6 @@ public:
 public:
 	UniqId GetUniqId() const { return _uniqId; }
 	void Declare(VType& vtypeInh, Flags flags, Function* pConstructor = nullptr);
-	void SetAttrs(VType& vtypeInh, Flags flags) { Declare(vtypeInh, flags); }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	VType* GetVTypeInh() const { return _pVTypeInh; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
@@ -87,7 +86,6 @@ public:
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMapOfClass() const { return *_pPropHandlerMapOfClass; }
 	const PropHandler* LookupPropHandler(const Symbol* pSymbol) const;
-	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
 	Function& GetConstructor() { return *_pConstructor; }
 	const Function& GetConstructor() const { return *_pConstructor; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const { return "(vtype)"; }

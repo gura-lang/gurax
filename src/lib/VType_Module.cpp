@@ -45,8 +45,8 @@ VType_Module VTYPE_Module("Module");
 
 void VType_Module::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Module, __PropHandler__));
 }

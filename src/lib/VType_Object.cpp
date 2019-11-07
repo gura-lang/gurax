@@ -92,8 +92,8 @@ VType_Object VTYPE_Object("Object");
 
 void VType_Object::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VType::Empty, Flag::Immutable);
+	// Declaration of VType
+	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Object, Clone));
 	Assign(Gurax_CreateMethod(Object, IsInstanceOf));

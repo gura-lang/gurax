@@ -1310,8 +1310,8 @@ VType_String VTYPE_String("String");
 
 void VType_String::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(String, Capitalize));
 	Assign(Gurax_CreateMethod(String, Center));

@@ -445,9 +445,8 @@ VType_DateTime VTYPE_DateTime("DateTime");
 
 void VType_DateTime::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(DateTime));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(DateTime));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DateTime, year));
 	Assign(Gurax_CreateProperty(DateTime, month));

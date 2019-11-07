@@ -16,8 +16,8 @@ VType_ErrorType VTYPE_ErrorType("ErrorType");
 
 void VType_ErrorType::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

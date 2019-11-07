@@ -243,9 +243,8 @@ VType_Stream VTYPE_Stream("Stream");
 
 void VType_Stream::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Stream));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Stream));
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateFunctionAlias(Stream, "Open"));
 	// Assignment of method

@@ -54,8 +54,8 @@ VType_Palette VTYPE_Palette("Palette");
 
 void VType_Palette::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of class method
 	Assign(Gurax_CreateClassMethod(Palette, Basic));
 	Assign(Gurax_CreateClassMethod(Palette, WebSafe));

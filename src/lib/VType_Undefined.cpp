@@ -30,8 +30,8 @@ VType_Undefined VTYPE_Undefined("Undefined");
 
 void VType_Undefined::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VType::Empty, Flag::Immutable);
+	// Declaration of VType
+	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Undefined, ToString));
 }

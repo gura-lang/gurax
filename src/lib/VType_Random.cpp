@@ -123,9 +123,8 @@ VType_Random VTYPE_Random("Random");
 
 void VType_Random::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Random));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Random));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Random, Normal));
 	Assign(Gurax_CreateMethod(Random, Range));

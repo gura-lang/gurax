@@ -51,6 +51,7 @@ public:
 	VTypeCustom();
 public:
 	void Inherit();
+	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
 	void SetDestructor(Function* pDestructor) { _pDestructor.reset(pDestructor); }
 	const Function& GetDestructor() const { return *_pDestructor; }
 	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }

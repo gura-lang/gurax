@@ -64,8 +64,8 @@ VType_VType VTYPE_VType("VType");
 
 void VType_VType::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(VType, __PropHandler__));
 	// Assignment of property
