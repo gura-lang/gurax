@@ -25,6 +25,7 @@ Builder = class {
 	libsBase = ['stdc++', 'guraxcore']
 	__init__(targetName:String) = {
 		this.targetName = targetName
+		//if (sys.platform.
 	}
 	ShouldProcess(pathNameTgt:String, pathNamesDep+:String) = {
 		!fs.Exists(pathNameTgt) || \
@@ -36,16 +37,15 @@ Builder = class {
 		rtn
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
-		cflags = this.cflags.Clone()
 		Printf('-- compiling: %s\n', pathNameSrc)
 		this.Exec('gcc', this.cflagsBase*, this.cflags*,
 				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
-				  '-o', pathNameObj, '-c', pathNameSrc)
+				  '-o' + pathNameObj, '-c', pathNameSrc)
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
 		if (this.Exec('gcc', this.ldflagsBase*, this.ldflags*,
 					  '-L' + sys.dirLib, ('-L' + this.dirNamesLib)*,
-					  '-o', pathNameGurd, pathNamesObj*,
+					  '-o' + pathNameGurd, pathNamesObj*,
 					  ('-l' + this.libsBase)*, ('-l' + this.libs)*)) {
 			Printf('-- generated: %s\n', pathNameGurd)
 		}

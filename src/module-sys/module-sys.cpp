@@ -254,6 +254,29 @@ Gurax_ImplementModulePropertySetter(path)
 	}
 }
 
+// sys.platform
+Gurax_DeclareModuleProperty_R(platform)
+{
+	Declare(VTYPE_Symbol, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The symbol of the current platform.");
+}
+
+Gurax_ImplementModulePropertyGetter(platform)
+{
+#if defined(GURAX_ON_MSWIN)
+	const Symbol* pSymbol = Gurax_Symbol(mswin);
+#elif defined(GURAX_ON_LINUX)
+	const Symbol* pSymbol = Gurax_Symbol(linux);
+#elif defined(GURAX_ON_DARWIN)
+	const Symbol* pSymbol = Gurax_Symbol(darwin);
+#else
+	const Symbol* pSymbol = Gurax_Symbol(unknown);
+#endif
+	return new Value_Symbol(pSymbol);
+}
+
 // sys.ps1:String
 Gurax_DeclareModuleProperty_RW(ps1)
 {
@@ -330,6 +353,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateModuleProperty(dirScript));
 	Assign(Gurax_CreateModuleProperty(executable));
 	Assign(Gurax_CreateModuleProperty(path));
+	Assign(Gurax_CreateModuleProperty(platform));
 	Assign(Gurax_CreateModuleProperty(ps1));
 	Assign(Gurax_CreateModuleProperty(ps2));
 	return true;
