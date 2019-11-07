@@ -151,9 +151,8 @@ VType_Match VTYPE_Match("Match");
 
 void VType_Match::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Match));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Match));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Match, Group));
 	Assign(Gurax_CreateMethod(Match, Groups));

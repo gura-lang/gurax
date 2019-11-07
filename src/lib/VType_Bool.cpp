@@ -12,8 +12,8 @@ VType_Bool VTYPE_Bool("Bool");
 
 void VType_Bool::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

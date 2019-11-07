@@ -35,16 +35,16 @@ void VType::GatherMemberSymbol(SymbolList& symbolList) const
 
 void VType::Prepare(Frame& frameOuter)
 {
-	_pConstructor.reset(Function::Empty.Reference()); // _pConstructor must be initialized here
 	frameOuter.Assign(*this);
 	DoPrepare(frameOuter);
 }
 
-void VType::SetAttrs(VType& vtypeInh, Flags flags)
+void VType::Declare(VType& vtypeInh, Flags flags, Function* pConstructor)
 {
 	_pVTypeInh = &vtypeInh;
 	_pFrame->SetFrameOuter(_pVTypeInh->GetFrame().Reference());
 	_flags = flags;
+	_pConstructor.reset(pConstructor? pConstructor : Function::Empty.Reference());
 }
 
 String VType::MakeFullName() const

@@ -301,9 +301,8 @@ VType_Complex VTYPE_Complex("Complex");
 
 void VType_Complex::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Complex));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Complex));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Complex, abs));
 	Assign(Gurax_CreateProperty(Complex, arg));

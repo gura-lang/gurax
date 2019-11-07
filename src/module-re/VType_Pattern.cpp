@@ -201,9 +201,8 @@ VType_Pattern VTYPE_Pattern("Pattern");
 
 void VType_Pattern::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Pattern));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Pattern));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Pattern, Match));
 	Assign(Gurax_CreateMethod(Pattern, Sub));

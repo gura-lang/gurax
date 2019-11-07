@@ -60,7 +60,8 @@ public:
 	virtual ~VType() = default;
 public:
 	UniqId GetUniqId() const { return _uniqId; }
-	void SetAttrs(VType& vtypeInh, Flags flags);
+	void Declare(VType& vtypeInh, Flags flags, Function* pConstructor = nullptr);
+	void SetAttrs(VType& vtypeInh, Flags flags) { Declare(vtypeInh, flags); }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	VType* GetVTypeInh() const { return _pVTypeInh; }
 	const Symbol* GetSymbol() const { return _pSymbol; }

@@ -12,8 +12,8 @@ VType_ArgMapper_Multiple VTYPE_ArgMapper_Multiple("ArgMapper_Multiple");
 
 void VType_ArgMapper_Multiple::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_List, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_List, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

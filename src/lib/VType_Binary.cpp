@@ -84,9 +84,8 @@ VType_Binary VTYPE_Binary("Binary");
 
 void VType_Binary::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Binary));
+	// Declaretion of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Binary));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Binary, bytes));
 	Assign(Gurax_CreateProperty(Binary, reader));

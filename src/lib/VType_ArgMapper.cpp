@@ -12,8 +12,8 @@ VType_ArgMapper VTYPE_ArgMapper("ArgMapper");
 
 void VType_ArgMapper::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

@@ -12,8 +12,8 @@ VType_Attribute VTYPE_Attribute("Attribute");
 
 void VType_Attribute::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaretion of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

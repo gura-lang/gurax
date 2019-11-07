@@ -36,8 +36,8 @@ VType_Argument VTYPE_Argument("Argument");
 
 void VType_Argument::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Argument, IsSet));
 }

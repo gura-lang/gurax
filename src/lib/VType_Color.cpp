@@ -153,9 +153,8 @@ VType_Color VTYPE_Color("Color");
 
 void VType_Color::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Color));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Color));
 	// Assignment of class value
 	Assign("zero", new Value_Color(Color::zero));
 	Assign("black", new Value_Color(Color::black));

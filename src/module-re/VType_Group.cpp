@@ -63,8 +63,8 @@ VType_Group VTYPE_Group("Group");
 
 void VType_Group::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Group, begin));
 	Assign(Gurax_CreateProperty(Group, end));

@@ -12,8 +12,8 @@ VType_CallableMember VTYPE_CallableMember("CallableMember");
 
 void VType_CallableMember::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
+	// Declaretion of VType
+	Declare(VTYPE_Object, Flag::Immutable);
 }
 
 //------------------------------------------------------------------------------

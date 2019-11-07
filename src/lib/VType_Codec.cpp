@@ -43,9 +43,8 @@ VType_Codec VTYPE_Codec("Codec");
 
 void VType_Codec::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VTYPE_Object, Flag::Immutable);
-	SetConstructor(Gurax_CreateFunction(Codec));
+	// Declaration of VType
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Codec));
 }
 
 Value* VType_Codec::DoCastFrom(const Value& value, DeclArg::Flags flags) const

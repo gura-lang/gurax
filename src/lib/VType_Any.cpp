@@ -39,8 +39,8 @@ VType_Any VTYPE_Any("Any");
 
 void VType_Any::DoPrepare(Frame& frameOuter)
 {
-	// VType settings
-	SetAttrs(VType::Empty, Flag::Immutable);
+	// Declaration of VType
+	Declare(VType::Empty, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Any, ToString));
 	// Assignment of operator
