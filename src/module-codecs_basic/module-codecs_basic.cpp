@@ -6,21 +6,15 @@
 Gurax_BeginModule(codecs_basic)
 
 //------------------------------------------------------------------------------
-// Implementation of function
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()
 {
-	// Assignment of function
-	//Assign(Gurax_CreateFunction(Exit));
 	return true;
 }
 

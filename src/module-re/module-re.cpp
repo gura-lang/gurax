@@ -190,11 +190,10 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	Frame& frame = GetFrame();
-	// Preparation of VType
-	VTYPE_Group.Prepare(frame);
-	VTYPE_Match.Prepare(frame);
-	VTYPE_Pattern.Prepare(frame);
+	// Assignment of VType
+	Assign(VTYPE_Group);
+	Assign(VTYPE_Match);
+	Assign(VTYPE_Pattern);
 	// Assignment of method to String
 	VTYPE_String.Assign(Gurax_CreateMethod(String, Match));
 	VTYPE_String.Assign(Gurax_CreateMethod(String, Sub));

@@ -2,24 +2,111 @@
 import(argopt)
 
 //------------------------------------------------------------------------------
-// Class_Template of build.gura
+// Template of ${className}.h
 //------------------------------------------------------------------------------
-tmpl_header = tR'''
+tmpl_Header = tR'''
+//==============================================================================
+// Image.h
+//==============================================================================
+${if (ubarModuleName)}
+#ifndef GURAX_MODULE_${ubarModuleName.Upper()}_${className.Upper()}_H
+#define GURAX_MODULE_${ubarModuleName.Upper()}_${className.Upper()}_H
+#include <gurax.h>
+
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+#ifndef GURAX_${className.Upper()}_H
+#define GURAX_${className.Upper()}_H
+#include "Referable.h"
+
+namespace Gurax {
+${end}
+
+//------------------------------------------------------------------------------
+// ${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ${className} : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(${className});
+public:
+	// Constructor
+	${className}() {}
+	// Copy constructor/operator
+	${className}(const ${className}& src) = delete;
+	${className}& operator=(const ${className}& src) = delete;
+	// Move constructor/operator
+	${className}(${className}&& src) = delete;
+	${className}& operator=(${className}&& src) noexcept = delete;
+protected:
+	~${className}() = default;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const ${className}& other) const { return this == &other; }
+	bool IsEqualTo(const ${className}& other) const { return IsIdentical(other); }
+	bool IsLessThan(const ${className}& other) const { return this < &other; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+}
+${end}
+
+#endif
+'''
+
+//------------------------------------------------------------------------------
+// Template of ${className}.cpp
+//------------------------------------------------------------------------------
+tmpl_Source = tR'''
+//==============================================================================
+// ${className}.cpp
+//==============================================================================
+#include "stdafx.h"
+
+${if (ubarModuleName)}
+Gurax_BeginModuleScope(${ubarModuleName})
+${else}
+namespace Gurax {
+${end}
+
+//------------------------------------------------------------------------------
+// ${className}
+//------------------------------------------------------------------------------
+String ${className}::ToString(const StringStyle& ss) const
+{
+	return "${className}";
+}
+
+${if (ubarModuleName)}
+Gurax_EndModuleScope(${ubarModuleName})
+${else}
+}
+${end}
+'''
+
+//------------------------------------------------------------------------------
+// Template of VType_${className}.h
+//------------------------------------------------------------------------------
+tmpl_VTypeHeader = tR'''
 //==============================================================================
 // VType_${className}.h
 //==============================================================================
 ${if (ubarModuleName)}
 #ifndef GURAX_MODULE_${ubarModuleName.Upper()}_VTYPE_${className.Upper()}_H
 #define GURAX_MODULE_${ubarModuleName.Upper()}_VTYPE_${className.Upper()}_H
+#include <gurax.h>
+#include "${className}.h"
+
+Gurax_BeginModuleScope(${ubarModuleName})
 ${else}
 #ifndef GURAX_VTYPE_${className.Upper()}_H
 #define GURAX_VTYPE_${className.Upper()}_H
-${end}
-#include <gurax.h>
+#include "VType_Object.h"
+#include "${className}.h"
 
-${if (ubarModuleName)}
-Gurax_BeginModuleScope(${ubarModuleName})
-${else}
 namespace Gurax {
 ${end}
 
@@ -95,16 +182,16 @@ public:
 ${if (ubarModuleName)}
 Gurax_EndModuleScope(${ubarModuleName})
 ${else}
-namespace Gurax {
+}
 ${end}
 
 #endif
 '''
 
 //------------------------------------------------------------------------------
-// Template of test-NAME.gura
+// Template of VType_${className}.cpp
 //------------------------------------------------------------------------------
-tmpl_source = tR'''
+tmpl_VTypeSource = tR'''
 //==============================================================================
 // VType_${className}.cpp
 //==============================================================================
@@ -214,19 +301,25 @@ main() = {
 	}
 	className = fields[-1]
 	entityName = className
-	fileName_header = 'VType_' + className + '.h'
-	fileName_source = 'VType_' + className + '.cpp'
+	fileName_Header = className + '.h'
+	fileName_Source = className + '.cpp'
+	fileName_VTypeHeader = 'VType_' + className + '.h'
+	fileName_VTypeSource = 'VType_' + className + '.cpp'
 	if (!opt['force'] && \
-		fs.Exists([fileName_header, fileName_source]).Or()) {
+		fs.Exists([fileName_Header, fileName_Source, fileName_VTypeHeader, fileName_VTypeSource]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
-	tmpl_header.Render(Open(fileName_header, 'w'))
-	tmpl_source.Render(Open(fileName_source, 'w'))
+	tmpl_Header.Render(Open(fileName_Header, 'w'))
+	tmpl_Source.Render(Open(fileName_Source, 'w'))
+	tmpl_VTypeHeader.Render(Open(fileName_VTypeHeader, 'w'))
+	tmpl_VTypeSource.Render(Open(fileName_VTypeSource, 'w'))
 	tR'''
 	Following files were generated for the ${dotClassName} class.
-	  ${fileName_header}
-	  ${fileName_source}
+	  ${fileName_Header}
+	  ${fileName_Source}
+	  ${fileName_VTypeHeader}
+	  ${fileName_VTypeSource}
 	'''.Render(sys.cout)
 }
 

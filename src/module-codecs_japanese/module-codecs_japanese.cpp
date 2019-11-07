@@ -247,7 +247,7 @@ Codec::Result Codec_JIS::Encoder::FeedUTF32(UInt32 codeUTF32, char& chConv)
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()

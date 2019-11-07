@@ -162,7 +162,7 @@ Gurax_ImplementModulePropertySetter(cerr)
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()

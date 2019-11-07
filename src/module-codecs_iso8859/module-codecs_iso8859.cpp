@@ -580,7 +580,7 @@ static const UInt16 g_codeTbl_ISO8859_16[] = {
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()

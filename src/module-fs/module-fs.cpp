@@ -359,14 +359,13 @@ Gurax_ImplementFunction(Rename)
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()
 {
-	Frame& frame = GetFrame();
-	// Prepare VType
-	VTYPE_Stat.Prepare(frame);
+	// Assignment of VType
+	Assign(VTYPE_Stat);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(ChangeDir));
 	Assign(Gurax_CreateFunction(ChangeMode));

@@ -123,9 +123,7 @@ protected:
 	// Destructor
 	virtual ~Module() = default;
 public:
-	//void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pDottedSymbol.reset(pDottedSymbol); }
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pFrame->SetDottedSymbol(pDottedSymbol); }
-	//const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	const DottedSymbol& GetDottedSymbol() const { return _pFrame->GetDottedSymbol(); }
 	void SetPathName(const char* pathName) { _pathName = pathName; }
 	const char* GetPathName() const { return _pathName.c_str(); }
@@ -143,7 +141,7 @@ public:
 	}
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrame().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrame().Assign(name, pValue); }
-	void Assign(VType& vtype) { GetFrame().Assign(vtype); }
+	void Assign(VType& vtype) { vtype.Prepare(GetFrame()); }
 	void Assign(Function* pFunction) { GetFrame().Assign(pFunction); }
 	void Assign(PropHandler* pPropHandler) { GetPropHandlerMap().Assign(pPropHandler); }
 	void GatherMemberSymbol(SymbolList& symbolList) const;
