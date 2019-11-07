@@ -24,6 +24,7 @@ public:
 	static const char* GetVersion() { return GURAX_VERSION; }
 	static const char* GetBanner(bool timeStampFlag);
 	static const char* GetTimeStamp();
+	static bool CheckCoreVersion(const char* strVer, ...);
 };
 
 }

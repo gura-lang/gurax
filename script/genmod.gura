@@ -74,8 +74,8 @@ Gurax_BeginModule(${ubarModuleName})
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Adds up the given two numbers and returns the result.");
@@ -85,10 +85,10 @@ Gurax_ImplementFunction(Test)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* str = args.PickString();
+	Int num = args.PickNumber<Int>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_String(String::Repeat(str, num));
 }
 
 //------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ Gurax_ImplementFunction(Test)
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()

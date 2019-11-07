@@ -249,7 +249,7 @@ Gurax_ImplementMethod(Iterator, Grep)
 //------------------------------------------------------------------------------
 Gurax_ModuleValidate()
 {
-	return true;
+	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
 Gurax_ModulePrepare()
