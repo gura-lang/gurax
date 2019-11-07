@@ -28,7 +28,7 @@ import(util.tester) {*}
 import(${dotModuleName})
 
 TestCase('Basic test') {
-	Println(${dotModuleName}.Test(3, 4))
+	Println(${dotModuleName}.Test('hello', 4))
 }
 '''
 
