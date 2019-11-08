@@ -1174,7 +1174,6 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::Exec(Processor& proc
 			if (!pValue) break;
 			if (!xlistFlag || pValue->IsValid()) valueTypedOwner.Add(pValue.release());
 		}
-		
 	} else if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
 		ValueTypedOwner& valueTypedOwner =
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
