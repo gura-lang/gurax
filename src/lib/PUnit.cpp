@@ -3372,8 +3372,8 @@ PUnit* PUnitFactory_Return::Create(bool discardValueFlag)
 // Stack View: [prev] -> [prev] (continue)
 //                    -> []     (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, typename T_Frame, bool discardValueFlag>
-void PUnit_PushFrame<nExprSrc, T_Frame, discardValueFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, typename T_Frame>
+void PUnit_PushFrame<nExprSrc, discardValueFlag, T_Frame>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	processor.PushFrame<T_Frame>();
@@ -3381,8 +3381,8 @@ void PUnit_PushFrame<nExprSrc, T_Frame, discardValueFlag>::Exec(Processor& proce
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, typename T_Frame, bool discardValueFlag>
-String PUnit_PushFrame<nExprSrc, T_Frame, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, typename T_Frame>
+String PUnit_PushFrame<nExprSrc, discardValueFlag, T_Frame>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("PushFrame<%s>()", T_Frame::name);
@@ -3395,15 +3395,15 @@ PUnit* PUnitFactory_PushFrame<T_Frame>::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PushFrame<1, T_Frame, true>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_PushFrame<1, true, T_Frame>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_PushFrame<1, T_Frame, false>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_PushFrame<1, false, T_Frame>(_pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PushFrame<0, T_Frame, true>();
+			_pPUnitCreated = new PUnit_PushFrame<0, true, T_Frame>();
 		} else {
-			_pPUnitCreated = new PUnit_PushFrame<0, T_Frame, false>();
+			_pPUnitCreated = new PUnit_PushFrame<0, false, T_Frame>();
 		}
 	}
 	return _pPUnitCreated;

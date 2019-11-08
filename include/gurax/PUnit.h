@@ -2938,7 +2938,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_PushFrame
 //------------------------------------------------------------------------------
-template<int nExprSrc, typename T_Frame, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, typename T_Frame>
 class GURAX_DLLDECLARE PUnit_PushFrame : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -2968,7 +2968,7 @@ public:
 public:
 	PUnitFactory_PushFrame(Expr* pExprSrc) : PUnitFactory(pExprSrc) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_PushFrame<1, T_Frame, false>) : sizeof(PUnit_PushFrame<0, T_Frame, false>);
+		return _pExprSrc? sizeof(PUnit_PushFrame<1, false, T_Frame>) : sizeof(PUnit_PushFrame<0, false, T_Frame>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
