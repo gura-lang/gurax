@@ -1884,29 +1884,29 @@ String PUnit_Argument<nExprSrc, discardValueFlag, keepCarFlag>::ToString(const S
 PUnit* PUnitFactory_Argument::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
-		if (_keepCarFlag) {
-			if (discardValueFlag) {
+		if (discardValueFlag) {
+			if (_keepCarFlag) {
 				_pPUnitCreated = new PUnit_Argument<1, true, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_Argument<1, false, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_Argument<1, true, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
 			}
 		} else {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Argument<1, true, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
+			if (_keepCarFlag) {
+				_pPUnitCreated = new PUnit_Argument<1, false, true>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
 			} else {
 				_pPUnitCreated = new PUnit_Argument<1, false, false>(*_pAttr, _pExprOfBlock.release(), _pExprSrc.Reference());
 			}
 		}
 	} else {
-		if (_keepCarFlag) {
-			if (discardValueFlag) {
+		if (discardValueFlag) {
+			if (_keepCarFlag) {
 				_pPUnitCreated = new PUnit_Argument<0, true, true>(*_pAttr, _pExprOfBlock.release());
 			} else {
-				_pPUnitCreated = new PUnit_Argument<0, false, true>(*_pAttr, _pExprOfBlock.release());
+				_pPUnitCreated = new PUnit_Argument<0, true, false>(*_pAttr, _pExprOfBlock.release());
 			}
 		} else {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Argument<0, true, false>(*_pAttr, _pExprOfBlock.release());
+			if (_keepCarFlag) {
+				_pPUnitCreated = new PUnit_Argument<0, false, true>(*_pAttr, _pExprOfBlock.release());
 			} else {
 				_pPUnitCreated = new PUnit_Argument<0, false, false>(*_pAttr, _pExprOfBlock.release());
 			}
