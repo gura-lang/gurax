@@ -3203,29 +3203,29 @@ String PUnit_Break<nExprSrc, discardValueFlag, branchDestFlag>::ToString(const S
 PUnit* PUnitFactory_Break::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
-		if (_branchDestFlag) {
-			if (discardValueFlag) {
+		if (discardValueFlag) {
+			if (_branchDestFlag) {
 				_pPUnitCreated = new PUnit_Break<1, true, true>(_pPUnitMarked, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_Break<1, false, true>(_pPUnitMarked, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_Break<1, true, false>(_pPUnitMarked, _pExprSrc.Reference());
 			}
 		} else {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Break<1, true, false>(_pPUnitMarked, _pExprSrc.Reference());
+			if (_branchDestFlag) {
+				_pPUnitCreated = new PUnit_Break<1, false, true>(_pPUnitMarked, _pExprSrc.Reference());
 			} else {
 				_pPUnitCreated = new PUnit_Break<1, false, false>(_pPUnitMarked, _pExprSrc.Reference());
 			}
 		}
 	} else {
-		if (_branchDestFlag) {
-			if (discardValueFlag) {
+		if (discardValueFlag) {
+			if (_branchDestFlag) {
 				_pPUnitCreated = new PUnit_Break<0, true, true>(_pPUnitMarked);
 			} else {
-				_pPUnitCreated = new PUnit_Break<0, false, true>(_pPUnitMarked);
+				_pPUnitCreated = new PUnit_Break<0, true, false>(_pPUnitMarked);
 			}
 		} else {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_Break<0, true, false>(_pPUnitMarked);
+			if (_branchDestFlag) {
+				_pPUnitCreated = new PUnit_Break<0, false, true>(_pPUnitMarked);
 			} else {
 				_pPUnitCreated = new PUnit_Break<0, false, false>(_pPUnitMarked);
 			}
