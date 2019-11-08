@@ -1020,30 +1020,30 @@ String PUnit_CreateVType<nExprSrc, discardValueFlag, inheritFlag>::ToString(cons
 
 PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
 {
-	if (_inheritFlag) {
-		if (_pExprSrc) {
-			if (discardValueFlag) {
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			if (_inheritFlag) {
 				_pPUnitCreated = new PUnit_CreateVType<1, true, true>(_pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_CreateVType<1, false, true>(_pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_CreateVType<1, true, false>(_pExprSrc.Reference());
 			}
 		} else {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_CreateVType<0, true, true>();
-			} else {
-				_pPUnitCreated = new PUnit_CreateVType<0, false, true>();
-			}
-		}
-	} else {
-		if (_pExprSrc) {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_CreateVType<1, true, false>(_pExprSrc.Reference());
+			if (_inheritFlag) {
+				_pPUnitCreated = new PUnit_CreateVType<1, false, true>(_pExprSrc.Reference());
 			} else {
 				_pPUnitCreated = new PUnit_CreateVType<1, false, false>(_pExprSrc.Reference());
 			}
-		} else {
-			if (discardValueFlag) {
+		}
+	} else {
+		if (discardValueFlag) {
+			if (_inheritFlag) {
+				_pPUnitCreated = new PUnit_CreateVType<0, true, true>();
+			} else {
 				_pPUnitCreated = new PUnit_CreateVType<0, true, false>();
+			}
+		} else {
+			if (_inheritFlag) {
+				_pPUnitCreated = new PUnit_CreateVType<0, false, true>();
 			} else {
 				_pPUnitCreated = new PUnit_CreateVType<0, false, false>();
 			}
