@@ -38,13 +38,13 @@ Gurax_ImplementStatement(_create_list_)
 			}
 			if (Error::IsIssued()) return;
 			composer.Add_Call(&exprCaller);						// [List Car Result]
-			composer.Add_ListElem(1, false, &exprCaller);		// [List Car]
+			composer.Add_ListElem(1, false, false, &exprCaller);// [List Car]
 		}
 		composer.Add_DiscardValue(&exprCaller);					// [List]
 	} else {
 		for (Expr* pExpr = exprLinkElem.GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			pExpr->ComposeForList(composer);					// [List Elem]
-			composer.Add_ListElem(0, false, pExpr);				// [List]
+			composer.Add_ListElem(0, false, false, pExpr);		// [List]
 		}
 	}
 }

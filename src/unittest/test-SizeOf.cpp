@@ -49,7 +49,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_CreateVType_);
 	using PUnit_CreateList_ = PUnit_CreateList<0, false>;
 	PrintSizeOf(PUnit_CreateList_);
-	using PUnit_ListElem_ = PUnit_ListElem<0, false, false>;
+	using PUnit_ListElem_ = PUnit_ListElem<0, false, false, false>;
 	PrintSizeOf(PUnit_ListElem_);
 	using PUnit_CreateDict_ = PUnit_CreateDict<0, false>;
 	PrintSizeOf(PUnit_CreateDict_);

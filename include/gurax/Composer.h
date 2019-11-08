@@ -159,8 +159,8 @@ public:
 	void Add_CreateList(size_t sizeReserve, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_CreateList(sizeReserve, Expr::Reference(pExprSrc)));
 	}
-	void Add_ListElem(size_t offset, bool xlistFlag, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_ListElem(offset, xlistFlag, Expr::Reference(pExprSrc)));
+	void Add_ListElem(size_t offset, bool xlistFlag, bool expandFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_ListElem(offset, xlistFlag, expandFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_CreateDict(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_CreateDict(Expr::Reference(pExprSrc)));

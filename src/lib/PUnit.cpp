@@ -1159,8 +1159,8 @@ PUnit* PUnitFactory_CreateList::Create(bool discardValueFlag)
 // Stack View: [List .. Elem] -> [List ..] (continue)
 //                            -> []        (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag, bool xlistFlag>
-void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, bool xlistFlag, bool expandFlag>
+void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueElem(processor.PopValue());
@@ -1174,6 +1174,10 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::Exec(Processor& proc
 			if (!pValue) break;
 			if (!xlistFlag || pValue->IsValid()) valueTypedOwner.Add(pValue.release());
 		}
+	} else if (expandFlag && pValueElem->IsList()) {
+		ValueTypedOwner& valueTypedOwner =
+			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
+		valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
 	} else if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
 		ValueTypedOwner& valueTypedOwner =
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
@@ -1183,12 +1187,13 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::Exec(Processor& proc
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag, bool xlistFlag>
-String PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, bool xlistFlag, bool expandFlag>
+String PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("ListElem(offsetToList=%zu)", GetOffset());
 	if (xlistFlag) str += ":xlist";
+	if (expandFlag) str += ":expand";
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -1198,29 +1203,61 @@ PUnit* PUnitFactory_ListElem::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_xlistFlag) {
-				_pPUnitCreated = new PUnit_ListElem<1, true, true>(_offset, _pExprSrc.Reference());
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<1, true, true, true>(_offset, _pExprSrc.Reference());
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<1, true, true, false>(_offset, _pExprSrc.Reference());
+				}
 			} else {
-				_pPUnitCreated = new PUnit_ListElem<1, true, false>(_offset, _pExprSrc.Reference());
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<1, true, false, true>(_offset, _pExprSrc.Reference());
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<1, true, false, false>(_offset, _pExprSrc.Reference());
+				}
 			}
 		} else {
 			if (_xlistFlag) {
-				_pPUnitCreated = new PUnit_ListElem<1, false, true>(_offset, _pExprSrc.Reference());
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<1, false, true, true>(_offset, _pExprSrc.Reference());
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<1, false, true, false>(_offset, _pExprSrc.Reference());
+				}
 			} else {
-				_pPUnitCreated = new PUnit_ListElem<1, false, false>(_offset, _pExprSrc.Reference());
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<1, false, false, true>(_offset, _pExprSrc.Reference());
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<1, false, false, false>(_offset, _pExprSrc.Reference());
+				}
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_xlistFlag) {
-				_pPUnitCreated = new PUnit_ListElem<0, true, true>(_offset);
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<0, true, true, true>(_offset);
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<0, true, true, false>(_offset);
+				}
 			} else {
-				_pPUnitCreated = new PUnit_ListElem<0, true, false>(_offset);
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<0, true, false, true>(_offset);
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<0, true, false, false>(_offset);
+				}
 			}
 		} else {
 			if (_xlistFlag) {
-				_pPUnitCreated = new PUnit_ListElem<0, false, true>(_offset);
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<0, false, true, true>(_offset);
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<0, false, true, false>(_offset);
+				}
 			} else {
-				_pPUnitCreated = new PUnit_ListElem<0, false, false>(_offset);
+				if (_expandFlag) {
+					_pPUnitCreated = new PUnit_ListElem<0, false, false, true>(_offset);
+				} else {
+					_pPUnitCreated = new PUnit_ListElem<0, false, false, false>(_offset);
+				}
 			}
 		}
 	}

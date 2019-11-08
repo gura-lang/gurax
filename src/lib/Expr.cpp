@@ -702,8 +702,8 @@ void Expr_Block::ComposeForList(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForList(composer);							// [List Elem]
-		composer.Add_ListElem(0, false, pExpr);					// [List]
+		pExpr->ComposeForList(composer);						// [List Elem]
+		composer.Add_ListElem(0, false, false, pExpr);			// [List]
 	}	
 }
 
@@ -807,7 +807,7 @@ void Expr_Iterer::Compose(Composer& composer)
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ComposeOrNil(composer);							// [List Elem]
-		composer.Add_ListElem(0, false);						// [List]
+		composer.Add_ListElem(0, false, false);					// [List]
 	}	
 	composer.Add_GenIterator(this);								// [Iterator]
 }
@@ -858,7 +858,7 @@ void Expr_Lister::Compose(Composer& composer)
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		pExpr->ComposeForList(composer);						// [List Elem]
-		composer.Add_ListElem(0, false, pExpr);					// [List]
+		composer.Add_ListElem(0, false, false, pExpr);			// [List]
 	}	
 }
 
