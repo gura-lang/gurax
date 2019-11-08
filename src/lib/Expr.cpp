@@ -449,6 +449,15 @@ void Expr_UnaryOp::Compose(Composer& composer)
 	}
 }
 
+void Expr_UnaryOp::ComposeForList(Composer& composer)
+{
+	if (!GetOperator()->IsType(OpType::PostMul)) {
+		Expr_Unary::ComposeForList(composer);
+		return;
+	}
+	Expr_Unary::ComposeForList(composer);
+}
+
 void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 {
 	if (!GetOperator()->IsType(OpType::PostMul)) {
