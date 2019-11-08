@@ -2,6 +2,7 @@
 import(util.modbuild) {Builder}
 
 builder = Builder('re')
+builder.pathNameHdr = nil
 builder.pathNamesSrc = [
 	'module-re.cpp', 'Common.cpp', 'Group.cpp', 'Iterators.cpp', 'Match.cpp', 'Pattern.cpp',
 	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'
@@ -9,6 +10,10 @@ builder.pathNamesSrc = [
 builder.pathNamesScript = [
 	'script/sed.gura', 'script/sed.doc.gura', 'script/tokenizer.gura', 'script/tokenizer.doc.gura'
 ]
+builder.dirNamesInc = ['guest/include/onigmo']
+builder.dirNamesLib = ['guest/lib']
+builder.libs = ['onigmo']
+builder.Run()
 /*
 if (sys.platform == `mswin) {
 	baseDir = path.join(builder.guestDir, 'onig-5.9.5')
@@ -22,13 +27,5 @@ if (sys.platform == `mswin) {
 	builder.rpmFiles = ['oniguruma']
 	builder.debFilesDevel = ['libonig-dev']
 	builder.rpmFilesDevel = ['oniguruma-devel']
-} elsif (sys.platform == `darwin) {
-	builder.dirNamesInc = ['guest/include/onigmo']
-	builder.dirNamesLib = ['guest/lib']
-	builder.libs = ['onigmo']
 }
 */
-builder.dirNamesInc = ['guest/include/onigmo']
-builder.dirNamesLib = ['guest/lib']
-builder.libs = ['onigmo']
-builder.Run()
