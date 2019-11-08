@@ -21,6 +21,7 @@ Builder = class {
 	ldflags = []
 	libs = []
 	opt = %{}
+	rebuildFlag = false
 	dirNameOut = ''
 	compiler = ''
 	linker = ''
@@ -42,7 +43,7 @@ Builder = class {
 		}
 	}
 	ShouldProcess(pathNameTgt:String, pathNamesDep+:String) = {
-		this.opt['rebuild'] || !fs.Exists(pathNameTgt) || \
+		this.rebuildFlag || !fs.Exists(pathNameTgt) || \
 			(fs.Stat(pathNameTgt).mtime < fs.Stat(pathNamesDep):*mtime).Or()
 	}
 	Exec(pathName:String, args*:String) = {
@@ -105,10 +106,12 @@ Builder = class {
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
 		[argv, this.opt] = argopt.Parser {|p|
 			p.AddFlag('verbose', 'v', 'verbose mode')
-			p.AddFlag('rebuild', 'r', 'rebuild all sources')
 			p.Parse(sys.argv)
 		}
 		if (argv.IsEmpty()) {
+			this.Command_build()
+		} elsif (argv[0] == 'rebuild') {
+			this.rebuildFlag = true
 			this.Command_build()
 		} elsif (argv[0] == 'clean') {
 			this.Command_clean()
