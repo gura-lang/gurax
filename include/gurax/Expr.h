@@ -177,8 +177,8 @@ public:
 	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
-	virtual void ComposeInClass(Composer& composer, bool publicFlag);
-	virtual void ComposeInList(Composer& composer)  { ComposeOrNil(composer); }
+	virtual void ComposeForClass(Composer& composer, bool publicFlag);
+	virtual void ComposeForList(Composer& composer)  { ComposeOrNil(composer); }
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator);
@@ -284,7 +284,7 @@ public:
 	size_t CountSequence() const;
 	void SetExprParent(const Expr* pExprParent);
 	bool Traverse(Expr::Visitor& visitor);
-	void ComposeInClass(Composer& composer, bool publicFlag) const;
+	void ComposeForClass(Composer& composer, bool publicFlag) const;
 	void ComposeForArgSlot(Composer& composer) const;
 	Iterator* CreateIterator() const;
 };
@@ -546,7 +546,7 @@ public:
 	// Virtual functions of Expr
 	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeForClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
@@ -648,7 +648,7 @@ public:
 	virtual bool DoPrepare() override;
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const override;
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeForClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
@@ -719,7 +719,7 @@ public:
 	}
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInList(Composer& composer) override;
+	virtual void ComposeForList(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for structure inspecting
@@ -781,7 +781,7 @@ public:
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
-	virtual void ComposeInClass(Composer& composer, bool publicFlag) override;
+	virtual void ComposeForClass(Composer& composer, bool publicFlag) override;
 	virtual void ComposeForAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
@@ -834,7 +834,7 @@ public:
 		return true;
 	}
 	virtual void Compose(Composer& composer) override;
-	virtual void ComposeInClass(Composer& composer, bool publiclFlag) override;
+	virtual void ComposeForClass(Composer& composer, bool publiclFlag) override;
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator) override;
 	virtual void ComposeForAssignmentInClass(

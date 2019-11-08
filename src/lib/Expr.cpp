@@ -73,7 +73,7 @@ void Expr::ComposeSequence(Composer& composer, Expr* pExpr) const
 	// [Value]
 }
 
-void Expr::ComposeInClass(Composer& composer, bool publicFlag)
+void Expr::ComposeForClass(Composer& composer, bool publicFlag)
 {
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
@@ -182,10 +182,10 @@ bool ExprLink::Traverse(Expr::Visitor& visitor)
 	return true;
 }
 
-void ExprLink::ComposeInClass(Composer& composer, bool publicFlag) const
+void ExprLink::ComposeForClass(Composer& composer, bool publicFlag) const
 {
 	for (Expr* pExpr = GetExprFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeInClass(composer, publicFlag);
+		pExpr->ComposeForClass(composer, publicFlag);
 		if (Error::IsIssued()) return;
 		composer.FlushDiscard();
 	}
@@ -374,7 +374,7 @@ void Expr_Identifier::ComposeForAssignment(
 	composer.Add_AssignToSymbol(GetSymbol(), this);			// [Assigned]
 }
 
-void Expr_Identifier::ComposeInClass(Composer& composer, bool publicFlag)
+void Expr_Identifier::ComposeForClass(Composer& composer, bool publicFlag)
 {
 	PropHandler::Flags flags = publicFlag? PropHandler::Flag::Public : 0;
 	composer.Add_AssignPropHandler(GetSymbol(), flags, GetAttr(), true, this);
@@ -587,7 +587,7 @@ void Expr_Assign::Compose(Composer& composer)
 	GetExprLeft().ComposeForAssignment(composer, GetExprRight(), GetOperator()); // [Assigned]
 }
 
-void Expr_Assign::ComposeInClass(Composer& composer, bool publicFlag)
+void Expr_Assign::ComposeForClass(Composer& composer, bool publicFlag)
 {
 	GetExprLeft().ComposeForAssignmentInClass(composer, GetExprRight(), GetOperator(), publicFlag); // [Assigned]
 }
@@ -688,12 +688,12 @@ void Expr_Block::Compose(Composer& composer)
 	ComposeSequence(composer, GetExprElemFirst());				// [Any]
 }
 
-void Expr_Block::ComposeInList(Composer& composer)
+void Expr_Block::ComposeForList(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeInList(composer);							// [List Elem]
+		pExpr->ComposeForList(composer);							// [List Elem]
 		composer.Add_ListElem(0, false, pExpr);					// [List]
 	}	
 }
@@ -848,7 +848,7 @@ void Expr_Lister::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeInList(composer);							// [List Elem]
+		pExpr->ComposeForList(composer);						// [List Elem]
 		composer.Add_ListElem(0, false, pExpr);					// [List]
 	}	
 }
@@ -951,7 +951,7 @@ void Expr_Indexer::ComposeForAssignment(
 	composer.Add_IndexSet(false, this);							// [Elems]
 }
 
-void Expr_Indexer::ComposeInClass(Composer& composer, bool publicFlag)
+void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
 {
 	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprCdr()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
@@ -1046,7 +1046,7 @@ void Expr_Caller::Compose(Composer& composer)
 	composer.Add_Call(this);												// [Result]
 }
 
-void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)
+void Expr_Caller::ComposeForClass(Composer& composer, bool publicFlag)
 {
 	const char* errMsg = "invalid class definition";
 	if (!GetExprCar().IsType<Expr_Identifier>()) {
@@ -1058,7 +1058,7 @@ void Expr_Caller::ComposeInClass(Composer& composer, bool publicFlag)
 		Error::IssueWith(ErrorType::SyntaxError, *this, errMsg);
 		return;
 	}
-	GetExprOfBlock()->GetExprLinkElem().ComposeInClass(composer, true);
+	GetExprOfBlock()->GetExprLinkElem().ComposeForClass(composer, true);
 }
 
 void Expr_Caller::ComposeForAssignment(
