@@ -78,6 +78,12 @@ void Expr::ComposeForClass(Composer& composer, bool publicFlag)
 	Error::Issue(ErrorType::SyntaxError, "invalid class definition");
 }
 
+void Expr::ComposeForList(Composer& composer)
+{
+	ComposeOrNil(composer);											// [List Any]
+	composer.Add_ListElem(0, false, false, this);					// [List]
+}
+
 void Expr::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
@@ -452,10 +458,11 @@ void Expr_UnaryOp::Compose(Composer& composer)
 void Expr_UnaryOp::ComposeForList(Composer& composer)
 {
 	if (!GetOperator()->IsType(OpType::PostMul)) {
-		Expr_Unary::ComposeForList(composer);
+		Expr_Unary::ComposeForList(composer);						// [List]
 		return;
 	}
-	Expr_Unary::ComposeForList(composer);
+	GetExprChild().ComposeOrNil(composer);							// [List Any]
+	composer.Add_ListElem(0, false, true, this);					// [List]
 }
 
 void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
@@ -700,11 +707,11 @@ void Expr_Block::Compose(Composer& composer)
 void Expr_Block::ComposeForList(Composer& composer)
 {
 	size_t nExprs = GetExprLinkElem().CountSequence();
-	composer.Add_CreateList(nExprs, this);						// [List]
+	composer.Add_CreateList(nExprs, this);						// [List List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForList(composer);						// [List Elem]
-		composer.Add_ListElem(0, false, false, pExpr);			// [List]
+		pExpr->ComposeForList(composer);						// [List List]
 	}	
+	composer.Add_ListElem(0, false, false, this);				// [List]
 }
 
 bool Expr_Block::HasCallerAsParent() const
@@ -857,8 +864,8 @@ void Expr_Lister::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateList(nExprs, this);						// [List]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeForList(composer);						// [List Elem]
-		composer.Add_ListElem(0, false, false, pExpr);			// [List]
+		pExpr->ComposeForList(composer);						// [List]
+		//composer.Add_ListElem(0, false, false, pExpr);		// [List]
 	}	
 }
 

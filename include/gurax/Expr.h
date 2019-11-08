@@ -178,7 +178,7 @@ public:
 	virtual bool Traverse(Visitor& visitor) = 0;
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeForClass(Composer& composer, bool publicFlag);
-	virtual void ComposeForList(Composer& composer)  { ComposeOrNil(composer); }
+	virtual void ComposeForList(Composer& composer);
 	virtual void ComposeForValueAssignment(Composer& composer, const Operator* pOperator);
 	virtual void ComposeForAssignment(
 		Composer& composer, Expr& exprAssigned, const Operator* pOperator);
