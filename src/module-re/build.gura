@@ -1,30 +1,30 @@
 #!/usr/bin/env gurax
 import(util.modbuild) {Builder}
 
-builder = Builder('re')
-builder.pathNamesSrc = [
+b = Builder('re')
+b.pathNamesSrc = [
 	'module-re.cpp', 'Common.cpp', 'Group.cpp', 'Iterators.cpp', 'Match.cpp', 'Pattern.cpp',
 	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'
 ]
-builder.pathNamesScript = [
+b.pathNamesScript = [
 	'script/sed.gura', 'script/sed.doc.gura', 'script/tokenizer.gura', 'script/tokenizer.doc.gura'
 ]
-builder.dirNamesInc = ['guest/include/onigmo']
-builder.dirNamesLib = ['guest/lib']
-builder.libs = ['onigmo']
-builder.Run()
+b.dirNamesInc = ['guest/include/onigmo']
+b.dirNamesLib = ['guest/lib']
+b.libs = ['onigmo']
+b.Run()
 /*
 if (sys.platform == `mswin) {
-	baseDir = path.join(builder.guestDir, 'onig-5.9.5')
-	builder.dirNamesInc = [baseDir]
-	builder.dirNamesLib = [baseDir]
-	builder.libs = ['onig_s.lib']
-	builder.cflags = ['-DONIG_EXTERN=extern']
+	baseDir = path.join(b.guestDir, 'onig-5.9.5')
+	b.dirNamesInc = [baseDir]
+	b.dirNamesLib = [baseDir]
+	b.libs = ['onig_s.lib']
+	b.cflags = ['-DONIG_EXTERN=extern']
 } elsif (sys.platform == `linux) {
-	builder.libs = ['onig']
-	builder.debFiles = ['libonig']
-	builder.rpmFiles = ['oniguruma']
-	builder.debFilesDevel = ['libonig-dev']
-	builder.rpmFilesDevel = ['oniguruma-devel']
+	b.libs = ['onig']
+	b.debFiles = ['libonig']
+	b.rpmFiles = ['oniguruma']
+	b.debFilesDevel = ['libonig-dev']
+	b.rpmFilesDevel = ['oniguruma-devel']
 }
 */

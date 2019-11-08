@@ -6,17 +6,20 @@ import(argopt)
 //------------------------------------------------------------------------------
 tmpl_build = tR'''
 #!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
 import(util.modbuild) {Builder}
 
-builder = Builder('${dotModuleName}')
-builder.pathNamesSrc = ['module-${ubarModuleName}.cpp']
-builder.pathNamesScript = []
-builder.dirNamesInc = []
-builder.dirNamesLib = []
-builder.cflags = []
-builder.ldflags = []
-builder.libs = []
-builder.Run()
+b = Builder('${dotModuleName}')
+b.pathNamesSrc = ['module-${ubarModuleName}.cpp']
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cflags = []
+b.ldflags = []
+b.libs = []
+b.Run()
 '''
 
 //------------------------------------------------------------------------------
@@ -24,6 +27,9 @@ builder.Run()
 //------------------------------------------------------------------------------
 tmpl_test = tR'''
 #!/usr/bin/env gurax
+//==============================================================================
+// test-${ubarModuleName}.gura
+//==============================================================================
 import(util.tester) {*}
 import(${dotModuleName})
 
@@ -36,6 +42,9 @@ TestCase('Basic test') {
 // Template of stdafx.h
 //------------------------------------------------------------------------------
 tmpl_stdafx = tR'''
+//==============================================================================
+// stdafx.h
+//==============================================================================
 #include "${fileName_header}"
 '''
 
@@ -44,7 +53,7 @@ tmpl_stdafx = tR'''
 //------------------------------------------------------------------------------
 tmpl_header = tR'''
 //==============================================================================
-// Gura module: ${dotModuleName}
+// ${fileName_header}
 //==============================================================================
 #ifndef GURAX_MODULE_${ubarModuleName.Upper()}_H
 #define GURAX_MODULE_${ubarModuleName.Upper()}_H
