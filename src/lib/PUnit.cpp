@@ -428,34 +428,34 @@ String PUnit_AssignPropHandler<nExprSrc, discardValueFlag, initByNilFlag>::ToStr
 
 PUnit* PUnitFactory_AssignPropHandler::Create(bool discardValueFlag)
 {
-	if (_initByNilFlag) {
-		if (_pExprSrc) {
-			if (discardValueFlag) {
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			if (_initByNilFlag) {
 				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, true>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, true>(
+				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, false>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			}
 		} else {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, true>(_pSymbol, _pDottedSymbol.release(), _flags);
-			} else {
-				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, true>(_pSymbol, _pDottedSymbol.release(), _flags);
-			}
-		}
-	} else {
-		if (_pExprSrc) {
-			if (discardValueFlag) {
-				_pPUnitCreated = new PUnit_AssignPropHandler<1, true, false>(
+			if (_initByNilFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, true>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			} else {
 				_pPUnitCreated = new PUnit_AssignPropHandler<1, false, false>(
 					_pSymbol, _pDottedSymbol.release(), _flags, _pExprSrc.Reference());
 			}
-		} else {
-			if (discardValueFlag) {
+		}
+	} else {
+		if (discardValueFlag) {
+			if (_initByNilFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, true>(_pSymbol, _pDottedSymbol.release(), _flags);
+			} else {
 				_pPUnitCreated = new PUnit_AssignPropHandler<0, true, false>(_pSymbol, _pDottedSymbol.release(), _flags);
+			}
+		} else {
+			if (_initByNilFlag) {
+				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, true>(_pSymbol, _pDottedSymbol.release(), _flags);
 			} else {
 				_pPUnitCreated = new PUnit_AssignPropHandler<0, false, false>(_pSymbol, _pDottedSymbol.release(), _flags);
 			}
