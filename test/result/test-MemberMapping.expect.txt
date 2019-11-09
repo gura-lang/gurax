@@ -10,7 +10,7 @@ a::Left(2) .. []
 ======== Map to Iterator ========
 a .. ['abcd', 'efg', 'hijklm']
 a:*len .. <Iterator:Member_MapToIter>
-[a:*len] .. [4, 3, 6]
+[a:*len*] .. [4, 3, 6]
 a .. []
 a:*len .. <Iterator:Member_MapToIter>
-[a:*len] .. []
+[a:*len*] .. []

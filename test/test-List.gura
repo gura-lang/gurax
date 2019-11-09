@@ -365,53 +365,53 @@ TestCase('List#Each():list') {
 
 TestCase('List#Each():iter') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-	Tester(`[tbl.Each():iter {|x| x}])
+	Tester(`[tbl.Each():iter {|x| x}*])
 	Tester(`[tbl.Each():xiter {|x|
 		if (x.StartsWith('t')) { x }
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x|
 		if (x.StartsWith('t')) { break }
 		x
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x|
 		if (x.StartsWith('t')) { break('end') }
 		x
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x|
 		if (x.StartsWith('t')) { continue }
 		x
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x|
 		if (x.StartsWith('t')) { continue('x') }
 		x
-	}])
+	}*])
 	Tester(`[tbl.Each():xiter {|x, i|
 		if (x.StartsWith('t')) { Format('%d-%s', i, x) }
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x, i|
 		if (x.StartsWith('t')) { break }
 		Format('%d-%s', i, x)
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x, i|
 		if (x.StartsWith('t')) { break('end') }
 		Format('%d-%s', i, x)
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x, i|
 		if (x.StartsWith('t')) { continue }
 		Format('%d-%s', i, x)
-	}])
+	}*])
 	Tester(`[tbl.Each():iter {|x, i|
 		if (x.StartsWith('t')) { continue('x') }
 		Format('%d-%s', i, x)
-	}])
-	Tester(`[tbl.Each():iter { break }])
-	Tester(`[tbl.Each():iter { break(nil) }])
-	Tester(`[tbl.Each():iter { continue }])
-	Tester(`[tbl.Each():iter { continue(nil) }])
-	Tester(`[tbl.Each():xiter { break }])
-	Tester(`[tbl.Each():xiter { break(nil) }])
-	Tester(`[tbl.Each():xiter { continue }])
-	Tester(`[tbl.Each():xiter { continue(nil) }])
+	}*])
+	Tester(`[tbl.Each():iter { break }*])
+	Tester(`[tbl.Each():iter { break(nil) }*])
+	Tester(`[tbl.Each():iter { continue }*])
+	Tester(`[tbl.Each():iter { continue(nil) }*])
+	Tester(`[tbl.Each():xiter { break }*])
+	Tester(`[tbl.Each():xiter { break(nil) }*])
+	Tester(`[tbl.Each():xiter { continue }*])
+	Tester(`[tbl.Each():xiter { continue(nil) }*])
 }
 
 TestCase('List#Filter()') {
@@ -495,16 +495,16 @@ TestCase('List#NilTo()') {
 
 TestCase('List#Offset()') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-	Tester(`[tbl.Offset(0)])
-	Tester(`[tbl.Offset(1)])
-	Tester(`[tbl.Offset(2)])
-	Tester(`[tbl.Offset(3)])
-	Tester(`[tbl.Offset(10)])
-	Tester(`[tbl.Offset(11)])
-	Tester(`[tbl.Offset(11):raise])
-	Tester(`[tbl.Offset(12)])
-	Tester(`[tbl.Offset(12):raise])
-	Tester(`[tbl.Offset(-1)])
+	Tester(`[tbl.Offset(0)*])
+	Tester(`[tbl.Offset(1)*])
+	Tester(`[tbl.Offset(2)*])
+	Tester(`[tbl.Offset(3)*])
+	Tester(`[tbl.Offset(10)*])
+	Tester(`[tbl.Offset(11)*])
+	Tester(`[tbl.Offset(11):raise*])
+	Tester(`[tbl.Offset(12)*])
+	Tester(`[tbl.Offset(12):raise*])
+	Tester(`[tbl.Offset(-1)*])
 }
 
 TestCase('List#Or()') {

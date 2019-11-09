@@ -4,7 +4,7 @@ import(util.tester) {*}
 TestCase('Unary Operator') {
 	Tester(`(-[]))
 	Tester(`(-[1, 2, 3, 4, 5]))
-	Tester(`[-(1, 2, 3, 4, 5)])
+	Tester(`[(-(1, 2, 3, 4, 5))*])
 }
 
 TestCase('Binary Operator') {
@@ -16,9 +16,9 @@ TestCase('Binary Operator') {
 	Tester(`([1, 2, 3, 4, 5] + [3, 4, 5, 6, 7]))
 	Tester(`([1, 2, 3, 4, 5] + [3, 4, 5]))
 	Tester(`([1, 2, 3] + [3, 4, 5, 6, 7]))
-	Tester(`[[1, 2, 3, 4, 5] + (3, 4, 5, 6, 7)])
-	Tester(`[(1, 2, 3, 4, 5) + [3, 4, 5, 6, 7]])
-	Tester(`[(1, 2, 3, 4, 5) + (3, 4, 5, 6, 7)])
+	Tester(`[([1, 2, 3, 4, 5] + (3, 4, 5, 6, 7))*])
+	Tester(`[((1, 2, 3, 4, 5) + [3, 4, 5, 6, 7])*])
+	Tester(`[((1, 2, 3, 4, 5) + (3, 4, 5, 6, 7))*])
 }
 
 TestCase('Function') {
@@ -28,8 +28,8 @@ TestCase('Function') {
 	Tester(`f(x))
 	Tester(`f(x):list)
 	Tester(`f(x):xlist)
-	Tester(`[f(x):iter])
-	Tester(`[f(x):xiter])
+	Tester(`[f(x):iter*])
+	Tester(`[f(x):xiter*])
 }
 
 TestCase(':flat attribute') {

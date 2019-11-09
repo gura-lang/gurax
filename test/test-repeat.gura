@@ -52,16 +52,16 @@ TestCase('repeat():list, repeat():xlist') {
 }
 
 TestCase('repeat():iter, repeat():xiter') {
-	Tester(`[repeat (10):iter {|i| i}])
-	Tester(`[repeat (10):xiter {|i| i}])
-	Tester(`[repeat (10):iter {|i| (i % 2 == 0) && continue, i}])
-	Tester(`[repeat (10):xiter {|i| (i % 2 == 0) && continue, i}])
-	Tester(`[repeat (10):iter {|i| (i % 2 == 0) && continue(99), i}])
-	Tester(`[repeat (10):xiter {|i| (i % 2 == 0) && continue(99), i}])
-	Tester(`[repeat (10):iter {|i| (i == 5) && break, i}])
-	Tester(`[repeat (10):xiter {|i| (i == 5) && break, i}])
-	Tester(`[repeat (10):iter {|i| (i == 5) && break(99), i}])
-	Tester(`[repeat (10):xiter {|i| (i == 5) && break(99), i}])
-	Tester(`[repeat (10):iter {|i| (i == 5) && break(nil), i}])
-	Tester(`[repeat (10):xiter {|i| (i == 5) && break(nil), i}])
+	Tester(`[repeat (10):iter {|i| i}*])
+	Tester(`[repeat (10):xiter {|i| i}*])
+	Tester(`[repeat (10):iter {|i| (i % 2 == 0) && continue, i}*])
+	Tester(`[repeat (10):xiter {|i| (i % 2 == 0) && continue, i}*])
+	Tester(`[repeat (10):iter {|i| (i % 2 == 0) && continue(99), i}*])
+	Tester(`[repeat (10):xiter {|i| (i % 2 == 0) && continue(99), i}*])
+	Tester(`[repeat (10):iter {|i| (i == 5) && break, i}*])
+	Tester(`[repeat (10):xiter {|i| (i == 5) && break, i}*])
+	Tester(`[repeat (10):iter {|i| (i == 5) && break(99), i}*])
+	Tester(`[repeat (10):xiter {|i| (i == 5) && break(99), i}*])
+	Tester(`[repeat (10):iter {|i| (i == 5) && break(nil), i}*])
+	Tester(`[repeat (10):xiter {|i| (i == 5) && break(nil), i}*])
 }
