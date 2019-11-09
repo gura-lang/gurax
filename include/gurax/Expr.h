@@ -624,8 +624,8 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
-	//virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const override;
 	virtual void Compose(Composer& composer) override;
+	virtual void ComposeForList(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

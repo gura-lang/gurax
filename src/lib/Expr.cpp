@@ -537,6 +537,18 @@ void Expr_BinaryOp::Compose(Composer& composer)
 	}
 }
 
+void Expr_BinaryOp::ComposeForList(Composer& composer)
+{
+	if (!GetOperator()->IsType(OpType::Seq)) {
+		Expr_Binary::ComposeForList(composer);						// [List]
+		return;
+	}
+	GetExprLeft().ComposeOrNil(composer);							// [List Left]
+	GetExprRight().ComposeOrNil(composer);							// [List Left Right]
+	composer.Add_BinaryOp(GetOperator(), this);						// [List Result]
+	composer.Add_ListElem(0, false, true, this);					// [List]
+}
+
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
 {
 	String str;

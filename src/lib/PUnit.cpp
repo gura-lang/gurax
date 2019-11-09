@@ -1164,6 +1164,7 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::Exec(Pro
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueElem(processor.PopValue());
+	//if (expandFlag && pValueElem->IsIterator()) {
 	if (pValueElem->IsIterator()) {
 		ValueTypedOwner& valueTypedOwner =
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
@@ -1177,7 +1178,9 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::Exec(Pro
 	} else if (expandFlag && pValueElem->IsList()) {
 		ValueTypedOwner& valueTypedOwner =
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
+
 		valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
+
 	} else if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
 		ValueTypedOwner& valueTypedOwner =
 			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
