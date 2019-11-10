@@ -79,6 +79,11 @@ TestCase('Get') {
 TestCase('Expansion') {
 	Tester(`[1, 2, 3, [4, [5, 6, 7]], 8, 9, 10])
 	Tester(`[1, 2, 3, [4, [5, 6, 7]*]*, 8, 9, 10])
+	Tester(`[1, 2, 3, [4, (5, 6, 7)], 8, 9, 10])
+	Tester(`[1, 2, 3, [4, (5, 6, 7)*]*, 8, 9, 10])
+	Tester(`[1 .. 10])
+	Tester(`[Range(10), Range(10, 20)])
+	Tester(`[Range(10)*, Range(10, 20)*])
 }
 
 TestCase('List#len, List#first and List#last') {
