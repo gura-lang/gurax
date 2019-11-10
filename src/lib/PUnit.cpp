@@ -1164,9 +1164,8 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::Exec(Pro
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueElem(processor.PopValue());
+	ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 	if (expandFlag && pValueElem->IsIterator()) {
-		ValueTypedOwner& valueTypedOwner =
-			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 		Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
 		if (!iterator.MustBeFinite()) return;
 		if (xlistFlag) {
@@ -1175,16 +1174,12 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::Exec(Pro
 			valueTypedOwner.Add(iterator);
 		}
 	} else if (expandFlag && pValueElem->IsList()) {
-		ValueTypedOwner& valueTypedOwner =
-			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 		if (xlistFlag) {
 			valueTypedOwner.AddX(Value_List::GetValueTypedOwner(*pValueElem));
 		} else {
 			valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
 		}
 	} else if (!pValueElem->IsUndefined() && (!xlistFlag || pValueElem->IsValid())) {
-		ValueTypedOwner& valueTypedOwner =
-			Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 		valueTypedOwner.Add(pValueElem.release());
 	}
 	if (discardValueFlag) processor.RemoveValues(0, GetOffset() + 1);
