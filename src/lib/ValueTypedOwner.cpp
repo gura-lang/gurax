@@ -118,6 +118,42 @@ bool ValueTypedOwner::Add(Iterator& iterator)
 	return !Error::IsIssued();
 }
 
+void ValueTypedOwner::AddX(const ValueList& values)
+{
+	ValueOwner& valueOwner = GetValueOwner_();
+	for (const Value* pValue : values) {
+		if (pValue->IsValid()) {
+			UpdateVTypeOfElems(*pValue);
+			valueOwner.Add(pValue->Reference());
+		}
+	}
+}
+	
+void ValueTypedOwner::AddX(const ValueTypedOwner& values)
+{
+	ValueOwner& valueOwner = GetValueOwner_();
+	for (const Value* pValue : values.GetValueOwner()) {
+		if (pValue->IsValid()) {
+			UpdateVTypeOfElems(*pValue);
+			valueOwner.Add(pValue->Reference());
+		}
+	}
+}
+
+bool ValueTypedOwner::AddX(Iterator& iterator)
+{
+	ValueOwner& valueOwner = GetValueOwner_();
+	for (;;) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		if (pValue->IsValid()) {
+			UpdateVTypeOfElems(*pValue);
+			valueOwner.Add(pValue.release());
+		}
+	}
+	return !Error::IsIssued();
+}
+
 bool ValueTypedOwner::Append(const ValueList& values)
 {
 	for (Value* pValue : values) {

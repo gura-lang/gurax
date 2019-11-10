@@ -79,6 +79,9 @@ public:
 	void Add(const ValueList& values);
 	void Add(const ValueTypedOwner& values);
 	bool Add(Iterator& iterator);
+	void AddX(const ValueList& values);
+	void AddX(const ValueTypedOwner& values);
+	bool AddX(Iterator& iterator);
 	bool Append(const ValueList& values);
 	bool Insert(Int pos, const ValueList& values);
 	bool Insert(Int pos, const ValueTypedOwner& values);

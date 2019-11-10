@@ -44,6 +44,7 @@ public:
 	Value* Get(Int pos) const { return at(pos); }
 	void Add(Value* pValue) { push_back(pValue); }
 	void Add(const ValueList& values);
+	void AddX(const ValueList& values);
 	void Insert(Int pos, Value* pValue) { insert(begin() + pos, pValue); }
 	void Insert(Int pos, const ValueList& values);
 	Value* Shift();

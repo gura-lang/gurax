@@ -89,6 +89,13 @@ void ValueOwner::Add(const ValueList& values)
 	insert(end(), values.begin(), values.end());
 }
 
+void ValueOwner::AddX(const ValueList& values)
+{
+	for (const Value* pValue : values) {
+		if (pValue->IsValid()) push_back(pValue->Reference());
+	}
+}
+
 void ValueOwner::Insert(Int pos, const ValueList& values)
 {
 	values.IncCntRefOfEach();
