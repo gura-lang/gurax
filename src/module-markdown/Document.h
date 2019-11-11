@@ -174,8 +174,8 @@ public:
 		return _pItemRefereeOwner.get();
 	}
 private:
-	bool _ParseString(const String& text);
-	bool ParseChar(char ch);
+	bool FeedChars(const String& text);
+	bool FeedChar(char ch);
 	bool CheckSpecialChar(char ch);
 	bool AdjustBlockQuote();
 	void AppendJointSpace();

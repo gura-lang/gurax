@@ -153,11 +153,11 @@ bool Document::ParseStream(Stream& stream)
 			Gurax_EndPushbackRegionEx();
 		}
 		if (textPrefetch.empty()) {
-			if (!ParseChar('\0')) return false;
+			if (!FeedChar('\0')) return false;
 			break;
 		}
 		if (nTrailingRows == 0) {
-			if (!_ParseString(textPrefetch)) return false;
+			if (!FeedChars(textPrefetch)) return false;
 		} else {
 			_alignList.clear();
 			for (const String& guide : guideList) {
@@ -180,11 +180,11 @@ bool Document::ParseStream(Stream& stream)
 				_alignList.push_back(align);
 			}
 			FlushItem(Item::Type::Paragraph, false, false);
-			//BeginTable();
+			BeginTable();
 			Stat statPrev = _stat;
 			_stat = Stat::LineTop;
-			if (!_ParseString(textPrefetch)) return false;
-			//EndTable();
+			if (!FeedChars(textPrefetch)) return false;
+			EndTable();
 			_stat = statPrev;
 		}
 	}
@@ -198,12 +198,6 @@ bool Document::ParseString(const char *text)
 	return ParseStream(sig, stream);
 }
 #endif
-
-bool Document::_ParseString(const String& text)
-{
-	for (char ch : text) if (!ParseChar(ch)) return false;
-	return true;
-}
 
 void Document::AddItemReferee(Item *pItem)
 {
@@ -227,7 +221,13 @@ void Document::ResolveReference()
 	_resolvedFlag = true;
 }
 
-bool Document::ParseChar(char ch)
+bool Document::FeedChars(const String& text)
+{
+	for (char ch : text) if (!FeedChar(ch)) return false;
+	return true;
+}
+
+bool Document::FeedChar(char ch)
 {
 	Gurax_BeginPushbackRegionEx(char, 16, ch);
 	//::printf("'%c' %d\n", ch, _stat);
@@ -795,7 +795,7 @@ bool Document::ParseChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!_ParseString(_textAhead)) return false;
+			if (!FeedChars(_textAhead)) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -816,7 +816,7 @@ bool Document::ParseChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!_ParseString(_textAhead)) return false;
+			if (!FeedChars(_textAhead)) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -837,7 +837,7 @@ bool Document::ParseChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!_ParseString(_textAhead)) return false;
+			if (!FeedChars(_textAhead)) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -861,7 +861,7 @@ bool Document::ParseChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!_ParseString(_textAhead)) return false;
+			if (!FeedChars(_textAhead)) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -882,7 +882,7 @@ bool Document::ParseChar(char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			_stat = Stat::LineTop;
-			if (!_ParseString(_textAhead)) return false;
+			if (!FeedChars(_textAhead)) return false;
 			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
 			Gurax_PushbackEx(ch);
@@ -1726,7 +1726,7 @@ bool Document::ParseChar(char ch)
 		} else {
 			Gurax_PushbackEx(ch);
 			_stat = Stat::Text;
-			if (!_ParseString(_textAhead)) return false;
+			if (!FeedChars(_textAhead)) return false;
 		}
 		break;
 	}
@@ -2024,7 +2024,6 @@ void Document::FlushText(Item::Type type, bool stripLeftFlag, bool stripRightFla
 
 void Document::FlushItem(Item::Type type, bool stripLeftFlag, bool stripRightFlag)
 {
-#if 0
 	Item *pItemParent = _itemStack.back();
 	FlushText(Item::Type::Text, stripLeftFlag, stripRightFlag);
 	if (!pItemParent->GetItemOwner()->empty() && pItemParent->GetItemOwner()->back()->IsInlineTag()) {
@@ -2038,12 +2037,10 @@ void Document::FlushItem(Item::Type type, bool stripLeftFlag, bool stripRightFla
 			_pItemOwner.reset(new ItemOwner());
 		}
 	}
-#endif
 }
 
 void Document::FlushElement(bool stripLeftFlag, bool stripRightFlag)
 {
-#if 0
 	Item *pItemParent = _itemStack.back();
 	FlushText(Item::Type::Text, stripLeftFlag, stripRightFlag);
 	if (pItemParent->GetItemOwner()->empty()) {
@@ -2061,56 +2058,46 @@ void Document::FlushElement(bool stripLeftFlag, bool stripRightFlag)
 			_pItemOwner.reset(new ItemOwner());
 		}
 	}
-#endif
 }
 
 void Document::BeginTable()
 {
-#if 0
 	Item *pItemParent = _itemStack.back();
 	Item *pItem = new Item(Item::Type::Tag, new ItemOwner());
 	pItem->SetText("table");
 	pItemParent->GetItemOwner()->push_back(pItem);
 	_itemStack.push_back(pItem);
 	_iTableRow = 0;
-#endif
 }
 
 void Document::EndTable()
 {
-#if 0
 	while (!_itemStack.empty()) {
 		Item *pItem = _itemStack.back();
 		_itemStack.pop_back();
 		if (pItem->IsTag() && ::strcmp(pItem->GetText(), "table") == 0) break;
 	}
 	_iTableRow = -1;
-#endif
 }
 
 void Document::BeginTableRow()
 {
-#if 0
 	Item *pItemParent = _itemStack.back();
 	Item *pItem = new Item(Item::Type::Tag, new ItemOwner());
 	pItem->SetText("tr");
 	pItemParent->GetItemOwner()->push_back(pItem);
 	_itemStack.push_back(pItem);
 	_iTableCol = 0;
-#endif
 }
 
 void Document::EndTableRow()
 {
-#if 0
 	_itemStack.pop_back();
 	AdvanceTableRow();
-#endif
 }
 
 void Document::FlushTableCol(bool eolFlag)
 {
-#if 0
 	bool stripLeftFlag = false, stripRightFlag = true;
 	Item *pItemParent = _itemStack.back();
 	FlushText(Item::Type::Text, stripLeftFlag, stripRightFlag);
@@ -2129,12 +2116,10 @@ void Document::FlushTableCol(bool eolFlag)
 		_pItemOwner.reset(new ItemOwner());
 		_iTableCol++;
 	}
-#endif
 }
 
 void Document::BeginCodeBlock(const char *textInit)
 {
-#if 0
 	FlushItem(Item::Type::Paragraph, false, false);
 	for (int i = 0; i < _indentLevel - GetIndentLevelForCodeBlock(); i++) _text += ' ';
 	if (textInit != nullptr) _text += textInit;
@@ -2145,7 +2130,6 @@ void Document::BeginCodeBlock(const char *textInit)
 		pItemParent->GetItemOwner()->push_back(pItem);
 		_itemStack.push_back(pItem);
 	} while (0);
-#endif
 }
 
 void Document::EndCodeBlock()
@@ -2155,7 +2139,6 @@ void Document::EndCodeBlock()
 
 void Document::BeginFencedCodeBlock()
 {
-#if 0
 	FlushItem(Item::Type::Paragraph, false, false);
 	do {
 		Item *pItemParent = _itemStack.back();
@@ -2164,7 +2147,6 @@ void Document::BeginFencedCodeBlock()
 		pItemParent->GetItemOwner()->push_back(pItem);
 		_itemStack.push_back(pItem);
 	} while (0);
-#endif
 }
 
 void Document::EndFencedCodeBlock()
@@ -2175,7 +2157,6 @@ void Document::EndFencedCodeBlock()
 // type must be Type::UList or Type::OList
 void Document::BeginListItem(Item::Type type)
 {
-#if 0
 	Item *pItemParent = _itemStack.back();
 	while (_indentLevel < pItemParent->GetIndentLevel()) {
 		if (pItemParent->IsRoot() || pItemParent->IsBlockQuote() || pItemParent->IsTag()) break;
@@ -2216,41 +2197,33 @@ void Document::BeginListItem(Item::Type type)
 		pItemParent->GetItemOwner()->push_back(pItem);
 		_itemStack.push_back(pItem);
 	} while (0);
-#endif
 }
 
 void Document::EndListItem()
 {
-#if 0
 	if (_itemStack.back()->IsListItem()) {
 		// EndTag() may already have ended the list.
 		FlushElement();
 		_itemStack.pop_back();
 	}
-#endif
 }
 
 void Document::BeginDecoration(Item::Type type)
 {
-#if 0
 	Item *pItem = new Item(type, new ItemOwner());
 	_pItemOwner->push_back(pItem);
 	_itemOwnerStack.Push(_pItemOwner.release());
 	_pItemOwner.reset(pItem->GetItemOwner()->Reference());
-#endif
 }
 
 void Document::EndDecoration()
 {
-#if 0
 	FlushText(Item::Type::Text, false, false);
 	_pItemOwner.reset(_itemOwnerStack.Pop());
-#endif
 }
 
 void Document::CancelDecoration(const char *textAhead)
 {
-#if 0
 	_text.insert(0, textAhead);
 	FlushText(Item::Type::Text, false, false);
 	_pItemOwner.reset(_itemOwnerStack.Pop());
@@ -2267,24 +2240,20 @@ void Document::CancelDecoration(const char *textAhead)
 		_pItemOwner->push_back((*ppItem)->Reference());
 	}
 	Item::Delete(pItemToCancel);
-#endif
 }
 
 void Document::ReplaceDecoration(Item::Type type, const char *textAhead)
 {
-#if 0
 	_text.insert(0, textAhead);
 	FlushText(Item::Type::Text, false, false);
 	_pItemOwner.reset(_itemOwnerStack.Pop());
 	Item *pItemToReplace = _pItemOwner->back();
 	pItemToReplace->SetType(type);
-#endif
 }
 
 // Marks the beginning of HTML tag.
 void Document::BeginTag(const char *tagName, const char *attrs, bool closedFlag, bool markdownAcceptableFlag)
 {
-#if 0
 	Item *pItemParent = _itemStack.back();
 	FlushElement();
 	Item *pItem = new Item(Item::Type::Tag);
@@ -2297,13 +2266,11 @@ void Document::BeginTag(const char *tagName, const char *attrs, bool closedFlag,
 		_itemStack.push_back(pItem);
 		_itemStackTag.push_back(pItem);
 	}
-#endif
 }
 
 // Marks the ending of HTML tag.
 bool Document::EndTag(const char *tagName)
 {
-#if 0
 	if (!IsWithinTag() || ::strcmp(_itemStackTag.back()->GetText(), tagName) != 0) {
 		return false;
 	}
@@ -2324,20 +2291,17 @@ bool Document::EndTag(const char *tagName)
 		_statStack.Pop();
 		_statStack.Push(Stat::Text);
 	}
-#endif
 	return true;
 }
 
 int Document::GetIndentLevel() const
 {
-#if 0
-	foreach_const_reverse (ItemStack, ppItem, _itemStack) {
+	for (auto ppItem = _itemStack.rbegin(); ppItem != _itemStack.rend(); ppItem++) {
 		const Item *pItem = *ppItem;
 		if (pItem->IsListItem()) {
 			return pItem->GetIndentLevelItemBody();
 		}
 	}
-#endif
 	return 0;
 }
 
@@ -2346,7 +2310,6 @@ int Document::GetIndentLevelForCodeBlock() const
 	return GetIndentLevel() + INDENT_CodeBlock;
 }
 
-#if 1
 void Document::UpdateIndentLevelItemBody(int indentLevelItemBody)
 {
 	for (Item* pItem : _itemStack) {
@@ -2395,7 +2358,7 @@ bool Document::IsHorzRule(const char *text)
 
 bool Document::IsLink(const char *text)
 {
-	enum Stat {
+	enum class Stat {
 		Begin,
 		Head,
 		EMail,
@@ -2479,7 +2442,7 @@ bool Document::IsLink(const char *text)
 bool Document::IsBeginTag(const char *text, String &tagName,
 						  String &attrs, bool &closedFlag, bool &markdownAcceptableFlag)
 {
-	enum Stat {
+	enum class Stat {
 		Begin,
 		AfterSpecialChar,
 		TagName,
@@ -2573,7 +2536,7 @@ bool Document::IsBeginTag(const char *text, String &tagName,
 
 bool Document::IsEndTag(const char *text, String &tagName)
 {
-	enum Stat {
+	enum class Stat {
 		Begin,
 		TagNameFirst,
 		AfterSpecialChar,
@@ -2627,7 +2590,6 @@ bool Document::IsEndTag(const char *text, String &tagName)
 	}
 	return true;
 }
-#endif
 
 String Document::ToString(const StringStyle& ss) const
 {
