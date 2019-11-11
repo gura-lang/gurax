@@ -179,12 +179,7 @@ size_t ItemList::CountByType(Item::Type type, bool recursiveFlag) const
 
 void ItemList::Print(Stream& stream, int indentLevel) const
 {
-#if 0
-	foreach_const (ItemList, ppItem, *this) {
-		const Item *pItem = *ppItem;
-		pItem->Print(stream, indentLevel);
-	}
-#endif
+	for (const Item* pItem : *this) pItem->Print(stream, indentLevel);
 }
 
 //------------------------------------------------------------------------------
@@ -203,7 +198,6 @@ void ItemOwner::Store(const ItemList &itemList)
 
 void ItemOwner::StripTextAtFront(bool stripLeftFlag, bool stripRightFlag)
 {
-#if 0
 	if (!empty()) {
 		Item* pItem = front();
 		if (pItem->IsText() && pItem->StripText(stripLeftFlag, stripRightFlag)) {
@@ -211,7 +205,6 @@ void ItemOwner::StripTextAtFront(bool stripLeftFlag, bool stripRightFlag)
 			Item::Delete(pItem);
 		}
 	}
-#endif
 }
 
 //------------------------------------------------------------------------------
@@ -228,24 +221,19 @@ void ItemOwnerStack::Clear()
 //------------------------------------------------------------------------------
 void ItemStack::ClearListItem()
 {
-#if 0
-	for (Item* pItem : *this) {
+	for (auto ppItem = begin(); ppItem != end(); ppItem++) {
+		Item* pItem = *ppItem;
 		if (pItem->Is_list()) {
 			erase(ppItem, end());
 			break;
 		}
 	}
-#endif
 }
 
 int ItemStack::CountQuoteLevel() const
 {
 	int quoteLevel = 0;
-#if 0
-	for (Item* pItem : *this) {
-		if (pItem->IsBlockQuote()) quoteLevel++;
-	}
-#endif
+	for (Item* pItem : *this) if (pItem->IsBlockQuote()) quoteLevel++;
 	return quoteLevel;
 }
 
