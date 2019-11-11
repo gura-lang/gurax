@@ -8,14 +8,17 @@ Gurax_BeginModuleScope(markdown)
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Document() {block?}
+// markdown.Document(stream?:Stream:r) {block?}
 Gurax_DeclareFunction(Document)
 {
 	Declare(VTYPE_Document, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Document` instance.");
+		"Returns an instance of `markdown.document`.\n"
+		"If `stream` is specified, the content of the instance shall be initialized\n"
+		"with the result of parsing the stream.\n");
 }
 
 Gurax_ImplementFunction(Document)
