@@ -11,14 +11,8 @@
 
 Gurax_BeginModuleHeader(markdown)
 
-#if 0
 //------------------------------------------------------------------------------
-// Utilities
-//------------------------------------------------------------------------------
-bool IsInlineTagName(const char *tagName);
-
-//------------------------------------------------------------------------------
-// symbols
+// Declaration of symbol
 //------------------------------------------------------------------------------
 Gurax_DeclareSymbol(root);
 Gurax_DeclareSymbol(refs);
@@ -33,12 +27,14 @@ Gurax_DeclareSymbol(align);
 //------------------------------------------------------------------------------
 // Align
 //------------------------------------------------------------------------------
-enum Align {
-	ALIGN_None, ALIGN_Left, ALIGN_Center, ALIGN_Right
-};
+enum Align { None, Left, Center, Right };
 
-typedef std::vector<Align> AlignList;
-#endif
+using AlignList = std::vector<Align>;
+
+//------------------------------------------------------------------------------
+// Utilities
+//------------------------------------------------------------------------------
+bool IsInlineTagName(const char* tagName);
 
 Gurax_EndModuleHeader(markdown)
 

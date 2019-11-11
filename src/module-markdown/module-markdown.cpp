@@ -6,6 +6,29 @@
 Gurax_BeginModule(markdown)
 
 #if 0
+inline bool IsTagNameFirst(char ch) { return IsAlpha(ch); }
+inline bool IsTagNameFollower(char ch) { return IsAlpha(ch) || IsDigit(ch) || ch == '.'; }
+
+const int WIDTH_Tab = 4;
+const int INDENT_CodeBlock = 4;
+#endif
+
+//StringSet g_inlineTagNames;
+
+//------------------------------------------------------------------------------
+// Realization of symbol
+//------------------------------------------------------------------------------
+Gurax_RealizeSymbol(root);
+Gurax_RealizeSymbol(refs);
+Gurax_RealizeSymbol(type);
+Gurax_RealizeSymbol(text);
+Gurax_RealizeSymbol(children);
+Gurax_RealizeSymbol(url);
+Gurax_RealizeSymbol(title);
+Gurax_RealizeSymbol(attrs);
+Gurax_RealizeSymbol(align);
+
+#if 0
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
@@ -66,15 +89,6 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Test));
 #if 0
 	// symbol realization
-	Gurax_RealizeSymbol(root);
-	Gurax_RealizeSymbol(refs);
-	Gurax_RealizeSymbol(type);
-	Gurax_RealizeSymbol(text);
-	Gurax_RealizeSymbol(children);
-	Gurax_RealizeSymbol(url);
-	Gurax_RealizeSymbol(title);
-	Gurax_RealizeSymbol(attrs);
-	Gurax_RealizeSymbol(align);
 	// class realization
 	Gurax_RealizeUserClass(document, env.LookupClass(VTYPE_object));
 	Gurax_RealizeUserClass(item, env.LookupClass(VTYPE_object));
@@ -91,6 +105,17 @@ Gurax_ModulePrepare()
 
 Gurax_ModuleTerminate()
 {
+}
+
+//-----------------------------------------------------------------------------
+// Utilities
+//-----------------------------------------------------------------------------
+bool IsInlineTagName(const char* tagName)
+{
+	if (tagName == nullptr) return false;
+	//String tagNameLower = Lower(tagName);
+	//return g_inlineTagNames.find(tagNameLower) != g_inlineTagNames.end();
+	return false;
 }
 
 Gurax_EndModule(markdown)
