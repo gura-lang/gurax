@@ -165,36 +165,17 @@ public:
 protected:
 	~Document() = default;
 public:
-	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Document& other) const { return this == &other; }
-	bool IsEqualTo(const Document& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Document& other) const { return this < &other; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
-};
-
-#if 0
-class Document {
-private:
-private:
-	int _cntRef;
-public:
-	Gurax_DeclareReferenceAccessor(Document);
-public:
-	Document();
-private:
-	inline ~Document() {}
-public:
-	bool ParseStream(Signal &sig, SimpleStream &stream);
-	bool ParseString(Signal &sig, const char *text);
-	void AddItemReferee(Item *pItem);
+	bool ParseStream(Stream& stream);
+	bool ParseString(const char* text);
+	void AddItemReferee(Item* pItem);
 	void ResolveReference();
-	inline const Item *GetItemRoot() { return _pItemRoot.get(); }
-	inline const ItemOwner *GetItemRefereeOwner() const {
+	const Item* GetItemRoot() { return _pItemRoot.get(); }
+	const ItemOwner* GetItemRefereeOwner() const {
 		return _pItemRefereeOwner.get();
 	}
 private:
-	bool _ParseString(Signal &sig, String text);
-	bool ParseChar(Signal &sig, char ch);
+	bool _ParseString(String text);
+	bool ParseChar(char ch);
 	bool CheckSpecialChar(char ch);
 	bool AdjustBlockQuote();
 	void AppendJointSpace();
@@ -206,49 +187,55 @@ private:
 	void BeginTableRow();
 	void EndTableRow();
 	void FlushTableCol(bool eolFlag);
-	void BeginCodeBlock(const char *textInit);
+	void BeginCodeBlock(const char* textInit);
 	void EndCodeBlock();
 	void BeginFencedCodeBlock();
 	void EndFencedCodeBlock();
-	//void BeginCodeBlockInList(const char *textInit);
+	//void BeginCodeBlockInList(const char* textInit);
 	//void EndCodeBlockInList();
 	void BeginListItem(Item::Type type);
 	void EndListItem();
 	void BeginDecoration(Item::Type type);
 	void EndDecoration();
-	void CancelDecoration(const char *textAhead);
-	void ReplaceDecoration(Item::Type type, const char *textAhead);
-	void BeginTag(const char *tagName, const char *attrs, bool closedFlag, bool markdownAcceptableFlag);
-	bool EndTag(const char *tagName);
+	void CancelDecoration(const char* textAhead);
+	void ReplaceDecoration(Item::Type type, const char* textAhead);
+	void BeginTag(const char* tagName, const char* attrs, bool closedFlag, bool markdownAcceptableFlag);
+	bool EndTag(const char* tagName);
 	int GetIndentLevel() const;
 	int GetIndentLevelForCodeBlock() const;
 	void UpdateIndentLevelItemBody(int indentLevelItemBody);
 	bool IsWithin(Item::Type type) const;
 	static Item::Type HeaderLevelToItemType(int headerLevel);
-	static bool IsAtxHeader2(const char *text);
-	static bool IsHorzRule(const char *text);
-	static bool IsLink(const char *text);
-	static bool IsBeginTag(const char *text, String &tagName,
-						   String &attrs, bool &closedFlag, bool &markdownAcceptableFlag);
-	static bool IsEndTag(const char *text, String &tagName);
-	inline bool IsWordChar(char ch) {
-		return (GetCType(ch) &
-				(CTYPE_Alpha | CTYPE_Digit | CTYPE_UTF8First | CTYPE_UTF8Follower)) != 0;
+	static bool IsAtxHeader2(const char* text);
+	static bool IsHorzRule(const char* text);
+	static bool IsLink(const char* text);
+	static bool IsBeginTag(const char* text, String& tagName,
+						   String& attrs, bool& closedFlag, bool& markdownAcceptableFlag);
+	static bool IsEndTag(const char* text, String& tagName);
+	bool IsWordChar(char ch) {
+		return (String::GetCTypes(ch) &
+				(String::CType::Alpha | String::CType::Digit |
+				 String::CType::UTF8First | String::CType::UTF8Follower)) != 0;
 	}
-	inline static bool IsEOL(char ch) { return ch == '\n'; }
-	inline static bool IsEOF(char ch) { return ch == '\0'; }
-	inline static bool IsDigit(char ch) { return '0' <= ch && ch <= '9'; }
-	inline void AdvanceTableRow() { if (_iTableRow >= 0) _iTableRow++; }
-	inline bool IsTableMode() const { return _iTableRow >= 0; }
-	inline bool IsTableFirstRow() const { return _iTableRow == 0; }
-	inline bool IsTableGuideRow() const { return _iTableRow == 1; }
-	inline bool IsTableTrailingRow() const { return _iTableRow >= 2; }
-	inline bool IsWithinTag() const { return !_itemStackTag.empty(); }
-	inline bool IsMarkdownAcceptable() const {
+	static bool IsEOL(char ch) { return ch == '\n'; }
+	static bool IsEOF(char ch) { return ch == '\0'; }
+	static bool IsDigit(char ch) { return '0' <= ch && ch <= '9'; }
+	void AdvanceTableRow() { if (_iTableRow >= 0) _iTableRow++; }
+	bool IsTableMode() const { return _iTableRow >= 0; }
+	bool IsTableFirstRow() const { return _iTableRow == 0; }
+	bool IsTableGuideRow() const { return _iTableRow == 1; }
+	bool IsTableTrailingRow() const { return _iTableRow >= 2; }
+	bool IsWithinTag() const { return !_itemStackTag.empty(); }
+	bool IsMarkdownAcceptable() const {
 		return _itemStackTag.empty() || _itemStackTag.back()->GetMarkdownAcceptableFlag();
 	}
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Document& other) const { return this == &other; }
+	bool IsEqualTo(const Document& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Document& other) const { return this < &other; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
-#endif
 
 Gurax_EndModuleScope(markdown)
 
