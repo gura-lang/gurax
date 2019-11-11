@@ -146,16 +146,12 @@ String Item::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Item* ItemList::FindByRefId(const char* refId) const
 {
-#if 0
-	if (refId == nullptr) return nullptr;
-	foreach_const (ItemList, ppItem, *this) {
-		Item *pItem = *ppItem;
-		if (pItem->GetRefId() != nullptr &&
-					::strcasecmp(pItem->GetRefId(), refId) == 0) {
+	if (!refId) return nullptr;
+	for (Item* pItem : *this) {
+		if (pItem->GetRefId() && ::strcasecmp(pItem->GetRefId(), refId) == 0) {
 			return pItem;
 		}
 	}
-#endif
 	return nullptr;
 }
 
