@@ -206,7 +206,7 @@ ${end}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// ${className}() {block?}
+// ${dotClassName}() {block?}
 Gurax_DeclareFunction(${className})
 {
 	Declare(VTYPE_${className}, Flag::None);
