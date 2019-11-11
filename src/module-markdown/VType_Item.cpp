@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(markdown)
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Item() {block?}
+// markdown.Item() {block?}
 Gurax_DeclareFunction(Item)
 {
 	Declare(VTYPE_Item, Flag::None);
