@@ -15,19 +15,6 @@ const int INDENT_CodeBlock = 4;
 
 //StringSet g_inlineTagNames;
 
-//------------------------------------------------------------------------------
-// Realization of symbol
-//------------------------------------------------------------------------------
-Gurax_RealizeSymbol(root);
-Gurax_RealizeSymbol(refs);
-Gurax_RealizeSymbol(type);
-Gurax_RealizeSymbol(text);
-Gurax_RealizeSymbol(children);
-Gurax_RealizeSymbol(url);
-Gurax_RealizeSymbol(title);
-Gurax_RealizeSymbol(attrs);
-Gurax_RealizeSymbol(align);
-
 #if 0
 //------------------------------------------------------------------------------
 // Implementation of function
@@ -105,17 +92,6 @@ Gurax_ModulePrepare()
 
 Gurax_ModuleTerminate()
 {
-}
-
-//-----------------------------------------------------------------------------
-// Utilities
-//-----------------------------------------------------------------------------
-bool IsInlineTagName(const char* tagName)
-{
-	if (tagName == nullptr) return false;
-	//String tagNameLower = Lower(tagName);
-	//return g_inlineTagNames.find(tagNameLower) != g_inlineTagNames.end();
-	return false;
 }
 
 Gurax_EndModule(markdown)

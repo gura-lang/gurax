@@ -8,52 +8,52 @@ Gurax_BeginModuleScope(markdown)
 //------------------------------------------------------------------------------
 // Item
 //------------------------------------------------------------------------------
-#if 0
 const Item::TypeNamePair Item::_typeNamePairs[] = {
-	{ TYPE_None,			"none",			},
-	{ TYPE_Root,			"root",			},	// container
-	{ TYPE_Header1,			"h1",			},	// container
-	{ TYPE_Header2,			"h2",			},	// container
-	{ TYPE_Header3,			"h3",			},	// container
-	{ TYPE_Header4,			"h4",			},	// container
-	{ TYPE_Header5,			"h5",			},	// container
-	{ TYPE_Header6,			"h6",			},	// container
-	{ TYPE_Paragraph,		"p",			},	// container
-	{ TYPE_BlockQuote,		"blockquote",	},	// container
-	{ TYPE_Emphasis,		"em",			},	// container
-	{ TYPE_Strong,			"strong",		},	// container
-	{ TYPE_Strike,			"strike",		},	// container
-	{ TYPE_CodeBlock,		"codeblock",	},	// container
-	{ TYPE_OList,			"ol",			},	// container
-	{ TYPE_UList,			"ul",			},	// container
-	{ TYPE_ListItem,		"li",			},	// container
-	{ TYPE_Line,			"line",			},	// container
-	{ TYPE_Link,			"a",			},	// container
-	{ TYPE_Image,			"img",			},	// text
-	{ TYPE_Text,			"text",			},	// text
-	{ TYPE_Comment,			"comment",		},	// text
-	{ TYPE_Code,			"code",			},	// text
-	{ TYPE_Entity,			"entity",		},	// text
-	{ TYPE_Tag,				"tag",			},	// container and text (attributes)
-	{ TYPE_HorzRule,		"hr",			},	// no-content
-	{ TYPE_LineBreak,		"br",			},	// no-content
-	{ TYPE_Referee,			"referee",		},	// no-content
+	{ Type::None,			"none",			},
+	{ Type::Root,			"root",			},	// container
+	{ Type::Header1,		"h1",			},	// container
+	{ Type::Header2,		"h2",			},	// container
+	{ Type::Header3,		"h3",			},	// container
+	{ Type::Header4,		"h4",			},	// container
+	{ Type::Header5,		"h5",			},	// container
+	{ Type::Header6,		"h6",			},	// container
+	{ Type::Paragraph,		"p",			},	// container
+	{ Type::BlockQuote,		"blockquote",	},	// container
+	{ Type::Emphasis,		"em",			},	// container
+	{ Type::Strong,			"strong",		},	// container
+	{ Type::Strike,			"strike",		},	// container
+	{ Type::CodeBlock,		"codeblock",	},	// container
+	{ Type::OList,			"ol",			},	// container
+	{ Type::UList,			"ul",			},	// container
+	{ Type::ListItem,		"li",			},	// container
+	{ Type::Line,			"line",			},	// container
+	{ Type::Link,			"a",			},	// container
+	{ Type::Image,			"img",			},	// text
+	{ Type::Text,			"text",			},	// text
+	{ Type::Comment,		"comment",		},	// text
+	{ Type::Code,			"code",			},	// text
+	{ Type::Entity,			"entity",		},	// text
+	{ Type::Tag,			"tag",			},	// container and text (attributes)
+	{ Type::HorzRule,		"hr",			},	// no-content
+	{ Type::LineBreak,		"br",			},	// no-content
+	{ Type::Referee,		"referee",		},	// no-content
 };
 
+#if 0
 Item::Item(Type type) :
-	_cntRef(1), _type(type), _align(ALIGN_None),
+	_cntRef(1), _type(type), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
 {
 }
 
 Item::Item(Type type, ItemOwner *pItemOwner) :
-	_cntRef(1), _type(type), _pItemOwner(pItemOwner), _align(ALIGN_None),
+	_cntRef(1), _type(type), _pItemOwner(pItemOwner), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
 {
 }
 
 Item::Item(Type type, const String &text) :
-	_cntRef(1), _type(type), _pText(new String(text)), _align(ALIGN_None),
+	_cntRef(1), _type(type), _pText(new String(text)), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
 {
 }
@@ -125,7 +125,7 @@ Item::Type Item::NameToType(const char *name)
 	for (int i = 0; i < ArraySizeOf(_typeNamePairs); i++) {
 		if (::strcmp(_typeNamePairs[i].name, name) == 0) return _typeNamePairs[i].type;
 	}
-	return TYPE_None;
+	return Type::None;
 }
 #endif
 
@@ -134,12 +134,12 @@ String Item::ToString(const StringStyle& ss) const
 	return "Item";
 }
 
-#if 0
 //------------------------------------------------------------------------------
 // ItemList
 //------------------------------------------------------------------------------
-Item *ItemList::FindByRefId(const char *refId) const
+Item* ItemList::FindByRefId(const char* refId) const
 {
+#if 0
 	if (refId == nullptr) return nullptr;
 	foreach_const (ItemList, ppItem, *this) {
 		Item *pItem = *ppItem;
@@ -148,12 +148,15 @@ Item *ItemList::FindByRefId(const char *refId) const
 			return pItem;
 		}
 	}
+#endif
 	return nullptr;
 }
 
+#if 0
 size_t ItemList::CountByType(Item::Type type, bool recursiveFlag) const
 {
 	size_t cnt = 0;
+#if 0
 	foreach_const (ItemList, ppItem, *this) {
 		Item *pItem = *ppItem;
 		if (pItem->GetType() == type) cnt++;
@@ -162,67 +165,54 @@ size_t ItemList::CountByType(Item::Type type, bool recursiveFlag) const
 			if (pItemOwner != nullptr) cnt += pItemOwner->CountByType(type, recursiveFlag);
 		}
 	}
+#endif
 	return cnt;
 }
+#endif
 
-void ItemList::Print(Signal &sig, Stream &stream, int indentLevel) const
+void ItemList::Print(Stream& stream, int indentLevel) const
 {
+#if 0
 	foreach_const (ItemList, ppItem, *this) {
 		const Item *pItem = *ppItem;
 		pItem->Print(sig, stream, indentLevel);
 	}
+#endif
 }
 
 //------------------------------------------------------------------------------
 // ItemOwner
 //------------------------------------------------------------------------------
-ItemOwner::~ItemOwner()
-{
-	Clear();
-}
-
 void ItemOwner::Clear()
 {
-	foreach (ItemOwner, ppItem, *this) {
-		Item *pItem = *ppItem;
-		Item::Delete(pItem);
-	}
+	for (Item* pItem : *this) Item::Delete(pItem);
 	clear();
 }
 
 void ItemOwner::Store(const ItemList &itemList)
 {
-	foreach_const (ItemList, ppItem, itemList) {
-		const Item *pItem = *ppItem;
-		push_back(pItem->Reference());
-	}
+	for (const Item* pItem : itemList) push_back(pItem->Reference());
 }
 
 void ItemOwner::StripTextAtFront(bool stripLeftFlag, bool stripRightFlag)
 {
+#if 0
 	if (!empty()) {
-		Item *pItem = front();
+		Item* pItem = front();
 		if (pItem->IsText() && pItem->StripText(stripLeftFlag, stripRightFlag)) {
 			erase(begin());
 			Item::Delete(pItem);
 		}
 	}
+#endif
 }
 
 //------------------------------------------------------------------------------
 // ItemOwnerStack
 //------------------------------------------------------------------------------
-ItemOwnerStack::~ItemOwnerStack()
-{
-	Clear();
-}
-
 void ItemOwnerStack::Clear()
 {
-	foreach (ItemOwnerStack, ppItemOwner, *this) {
-		ItemOwner *pItemOwner = *ppItemOwner;
-		ItemOwner::Delete(pItemOwner);
-	}
+	for (ItemOwner* pItemOwner : *this) ItemOwner::Delete(pItemOwner);
 	clear();
 }
 
@@ -231,25 +221,28 @@ void ItemOwnerStack::Clear()
 //------------------------------------------------------------------------------
 void ItemStack::ClearListItem()
 {
-	foreach (ItemStack, ppItem, *this) {
-		Item *pItem = *ppItem;
+#if 0
+	for (Item* pItem : *this) {
 		if (pItem->Is_list()) {
 			erase(ppItem, end());
 			break;
 		}
 	}
+#endif
 }
 
 int ItemStack::CountQuoteLevel() const
 {
 	int quoteLevel = 0;
-	foreach_const (ItemStack, ppItem, *this) {
-		Item *pItem = *ppItem;
+#if 0
+	for (Item* pItem : *this) {
 		if (pItem->IsBlockQuote()) quoteLevel++;
 	}
+#endif
 	return quoteLevel;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // Iterator_item
 //------------------------------------------------------------------------------

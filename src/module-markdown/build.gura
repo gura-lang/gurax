@@ -7,7 +7,7 @@ import(util.modbuild) {Builder}
 b = Builder('markdown')
 b.pathNamesSrc = [
 	'module-markdown.cpp'
-	'Document.cpp', 'Item.cpp'
+	'Common.cpp', 'Document.cpp', 'Item.cpp'
 	'VType_Document.cpp', 'VType_Item.cpp'
 ]
 b.pathNamesScript = []

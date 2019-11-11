@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MARKDOWN_DOCUMENT_H
 #define GURAX_MODULE_MARKDOWN_DOCUMENT_H
 #include <gurax.h>
+#include "Item.h"
 
 Gurax_BeginModuleScope(markdown)
 
@@ -14,6 +15,144 @@ class GURAX_DLLDECLARE Document : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Document);
+public:
+	enum class Stat {
+		LineTop,
+		LineHead,
+		LineHeadTable,
+		LineHeadNL,
+		BlockQuote,
+		EqualAtHead,
+		AsteriskAtHead,
+		PlusAtHead,
+		HyphenAtHead,
+		DigitAtHead,
+		DigitDotAtHead,
+		BackquoteAtHead,
+		BackquoteAtHead2nd,
+		SetextHeaderHead,
+		SetextHeaderPre,
+		SetextHeader,
+		SetextHeaderPost,
+		AtxHeader1,
+		AtxHeader2,
+		UListItemPre,
+		OListItemPre,
+		ListItem,
+		ListItem_LineHead,
+		ListItem_BlockQuoteAtHead,
+		ListItem_AsteriskAtHead,
+		ListItem_PlusAtHead,
+		ListItem_HyphenAtHead,
+		ListItem_DigitAtHead,
+		ListItem_DigitDotAtHead,
+		ListItemNL,
+		ListItemNL_AsteriskAtHead,
+		ListItemNL_PlusAtHead,
+		ListItemNL_HyphenAtHead,
+		ListItemNL_DigitAtHead,
+		ListItemNL_DigitDotAtHead,
+		CodeBlock,
+		CodeBlock_LineHead,
+		FencedCodeBlockAttr,
+		FencedCodeBlock,
+		FencedCodeBlock_LineHead,
+		FencedCodeBlock_LineHead2nd,
+		FencedCodeBlock_LineHead3rd,
+		FencedCodeBlock_SkipToEOL,
+		CodeBlockUnderBlockQuote,
+		Backquote,
+		Code,
+		CodeEsc,
+		CodeEsc_Backquote,
+		Text,
+		SkipWhiteAfterPipe,
+		SkipTableGuideRow,
+		Asterisk,
+		AsteriskEmphasis,
+		AsteriskStrong,
+		AsteriskStrongEnd,
+		Underscore,
+		UnderscoreEmphasis,
+		UnderscoreEmphasisPost,
+		UnderscoreStrong,
+		UnderscoreStrongEnd,
+		UnderscoreStrongPost,
+		Tilda,
+		TildaStrike,
+		TildaStrikeEnd,
+		DecorationPost,
+		Entity,
+		AngleBracketFirst,
+		AngleBracket,
+		CommentStartFirst,
+		CommentStartSecond,
+		Comment,
+		CommentEndFirst,
+		CommentEndSecond,
+		LinkAltTextPre,
+		LinkAltText,
+		LinkText,
+		LinkTextPost,
+		LinkRefId,
+		LinkURLPre,
+		LinkURL,
+		LinkURLAngle,
+		LinkURLAnglePost,
+		LinkTitleDoubleQuote,
+		LinkTitleSingleQuote,
+		LinkTitlePost,
+		RefereeRefId,
+		RefereeRefIdPost,
+		RefereeURLPreWhite,
+		RefereeURLPre,
+		RefereeURL,
+		RefereeURLAngle,
+		RefereeURLAnglePost,
+		RefereeTitleDoubleQuote,
+		RefereeTitleSingleQuote,
+		RefereeTitleParenthesis,
+		RefereeTitlePost,
+		Escape,
+		EscapeInLink,
+	};
+	class StatStack : public std::vector<Stat> {
+	public:
+		void Push(Stat stat) { push_back(stat); }
+		Stat Pop() {
+			Stat stat = back();
+			pop_back();
+			return stat;
+		}
+	};
+private:
+	bool _resolvedFlag;
+	bool _decoPrecedingFlag;
+	int _iTableRow;
+	int _iTableCol;
+	Stat _stat;
+	int _iLine;
+	int _iCol;
+	char _chPrev;
+	StatStack _statStack;
+	int _indentLevel;
+	int _indentLevelTableTop;
+	int _headerLevel;
+	int _headerLevelOffset;
+	int _quoteLevel;
+	int _cntEmptyLine;
+	String _text;
+	String _textAhead;
+	String _field;
+	RefPtr<ItemOwner> _pItemOwner;
+	RefPtr<ItemOwner> _pItemRefereeOwner;
+	RefPtr<Item> _pItemRoot;
+	RefPtr<Item> _pItemLink;
+	ItemList _itemsLinkReferrer;
+	ItemStack _itemStack;
+	ItemStack _itemStackTag;
+	ItemOwnerStack _itemOwnerStack;
+	AlignList _alignList;
 public:
 	// Constructor
 	Document() {}
@@ -36,144 +175,8 @@ public:
 #if 0
 class Document {
 private:
-	enum Stat {
-		STAT_LineTop,
-		STAT_LineHead,
-		STAT_LineHeadTable,
-		STAT_LineHeadNL,
-		STAT_BlockQuote,
-		STAT_EqualAtHead,
-		STAT_AsteriskAtHead,
-		STAT_PlusAtHead,
-		STAT_HyphenAtHead,
-		STAT_DigitAtHead,
-		STAT_DigitDotAtHead,
-		STAT_BackquoteAtHead,
-		STAT_BackquoteAtHead2nd,
-		STAT_SetextHeaderHead,
-		STAT_SetextHeaderPre,
-		STAT_SetextHeader,
-		STAT_SetextHeaderPost,
-		STAT_AtxHeader1,
-		STAT_AtxHeader2,
-		STAT_UListItemPre,
-		STAT_OListItemPre,
-		STAT_ListItem,
-		STAT_ListItem_LineHead,
-		STAT_ListItem_BlockQuoteAtHead,
-		STAT_ListItem_AsteriskAtHead,
-		STAT_ListItem_PlusAtHead,
-		STAT_ListItem_HyphenAtHead,
-		STAT_ListItem_DigitAtHead,
-		STAT_ListItem_DigitDotAtHead,
-		STAT_ListItemNL,
-		STAT_ListItemNL_AsteriskAtHead,
-		STAT_ListItemNL_PlusAtHead,
-		STAT_ListItemNL_HyphenAtHead,
-		STAT_ListItemNL_DigitAtHead,
-		STAT_ListItemNL_DigitDotAtHead,
-		STAT_CodeBlock,
-		STAT_CodeBlock_LineHead,
-		STAT_FencedCodeBlockAttr,
-		STAT_FencedCodeBlock,
-		STAT_FencedCodeBlock_LineHead,
-		STAT_FencedCodeBlock_LineHead2nd,
-		STAT_FencedCodeBlock_LineHead3rd,
-		STAT_FencedCodeBlock_SkipToEOL,
-		STAT_CodeBlockUnderBlockQuote,
-		STAT_Backquote,
-		STAT_Code,
-		STAT_CodeEsc,
-		STAT_CodeEsc_Backquote,
-		STAT_Text,
-		STAT_SkipWhiteAfterPipe,
-		STAT_SkipTableGuideRow,
-		STAT_Asterisk,
-		STAT_AsteriskEmphasis,
-		STAT_AsteriskStrong,
-		STAT_AsteriskStrongEnd,
-		STAT_Underscore,
-		STAT_UnderscoreEmphasis,
-		STAT_UnderscoreEmphasisPost,
-		STAT_UnderscoreStrong,
-		STAT_UnderscoreStrongEnd,
-		STAT_UnderscoreStrongPost,
-		STAT_Tilda,
-		STAT_TildaStrike,
-		STAT_TildaStrikeEnd,
-		STAT_DecorationPost,
-		STAT_Entity,
-		STAT_AngleBracketFirst,
-		STAT_AngleBracket,
-		STAT_CommentStartFirst,
-		STAT_CommentStartSecond,
-		STAT_Comment,
-		STAT_CommentEndFirst,
-		STAT_CommentEndSecond,
-		STAT_LinkAltTextPre,
-		STAT_LinkAltText,
-		STAT_LinkText,
-		STAT_LinkTextPost,
-		STAT_LinkRefId,
-		STAT_LinkURLPre,
-		STAT_LinkURL,
-		STAT_LinkURLAngle,
-		STAT_LinkURLAnglePost,
-		STAT_LinkTitleDoubleQuote,
-		STAT_LinkTitleSingleQuote,
-		STAT_LinkTitlePost,
-		STAT_RefereeRefId,
-		STAT_RefereeRefIdPost,
-		STAT_RefereeURLPreWhite,
-		STAT_RefereeURLPre,
-		STAT_RefereeURL,
-		STAT_RefereeURLAngle,
-		STAT_RefereeURLAnglePost,
-		STAT_RefereeTitleDoubleQuote,
-		STAT_RefereeTitleSingleQuote,
-		STAT_RefereeTitleParenthesis,
-		STAT_RefereeTitlePost,
-		STAT_Escape,
-		STAT_EscapeInLink,
-	};
-	class StatStack : public std::vector<Stat> {
-	public:
-		inline void Push(Stat stat) { push_back(stat); }
-		inline Stat Pop() {
-			Stat stat = back();
-			pop_back();
-			return stat;
-		}
-	};
 private:
 	int _cntRef;
-	bool _resolvedFlag;
-	bool _decoPrecedingFlag;
-	int _iTableRow;
-	int _iTableCol;
-	Stat _stat;
-	int _iLine;
-	int _iCol;
-	char _chPrev;
-	StatStack _statStack;
-	int _indentLevel;
-	int _indentLevelTableTop;
-	int _headerLevel;
-	int _headerLevelOffset;
-	int _quoteLevel;
-	int _cntEmptyLine;
-	String _text;
-	String _textAhead;
-	String _field;
-	AutoPtr<ItemOwner> _pItemOwner;
-	AutoPtr<ItemOwner> _pItemRefereeOwner;
-	AutoPtr<Item> _pItemRoot;
-	AutoPtr<Item> _pItemLink;
-	ItemList _itemsLinkReferrer;
-	ItemStack _itemStack;
-	ItemStack _itemStackTag;
-	ItemOwnerStack _itemOwnerStack;
-	AlignList _alignList;
 public:
 	Gurax_DeclareReferenceAccessor(Document);
 public:
