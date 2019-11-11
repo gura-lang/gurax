@@ -155,7 +155,7 @@ private:
 	AlignList _alignList;
 public:
 	// Constructor
-	Document() {}
+	Document();
 	// Copy constructor/operator
 	Document(const Document& src) = delete;
 	Document& operator=(const Document& src) = delete;
@@ -174,7 +174,7 @@ public:
 		return _pItemRefereeOwner.get();
 	}
 private:
-	bool _ParseString(String text);
+	bool _ParseString(const String& text);
 	bool ParseChar(char ch);
 	bool CheckSpecialChar(char ch);
 	bool AdjustBlockQuote();

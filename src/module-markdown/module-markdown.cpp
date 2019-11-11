@@ -5,14 +5,6 @@
 
 Gurax_BeginModule(markdown)
 
-#if 0
-inline bool IsTagNameFirst(char ch) { return IsAlpha(ch); }
-inline bool IsTagNameFollower(char ch) { return IsAlpha(ch) || IsDigit(ch) || ch == '.'; }
-
-const int WIDTH_Tab = 4;
-const int INDENT_CodeBlock = 4;
-#endif
-
 //StringSet g_inlineTagNames;
 
 #if 0

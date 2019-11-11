@@ -10,6 +10,12 @@
 Gurax_BeginModuleScope(markdown)
 
 //------------------------------------------------------------------------------
+// Constant
+//------------------------------------------------------------------------------
+const int WIDTH_Tab = 4;
+const int INDENT_CodeBlock = 4;
+
+//------------------------------------------------------------------------------
 // Declaration of symbol
 //------------------------------------------------------------------------------
 Gurax_DeclareSymbol(root);
@@ -33,6 +39,8 @@ using AlignList = std::vector<Align>;
 // Utilities
 //------------------------------------------------------------------------------
 bool IsInlineTagName(const char* tagName);
+inline bool IsTagNameFirst(char ch) { return String::IsAlpha(ch); }
+inline bool IsTagNameFollower(char ch) { return String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.'; }
 
 Gurax_EndModuleScope(markdown)
 
