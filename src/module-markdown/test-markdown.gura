@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-markdown.gura
+//==============================================================================
+import(util.tester) {*}
+import(markdown)
+
+TestCase('Basic test') {
+	Println(markdown.Test('hello', 4))
+}
