@@ -86,7 +86,7 @@ private:
 	int _indentLevelItemBody;			// valid when type is ListItem
 	bool _markdownAcceptableFlag;
 public:
-	Gura_DeclareReferenceAccessor(Item);
+	Gurax_DeclareReferenceAccessor(Item);
 public:
 	Item(Type type);
 	Item(Type type, ItemOwner *pItemOwner);
@@ -173,7 +173,7 @@ class ItemOwner : public ItemList {
 public:
 	int _cntRef;
 public:
-	Gura_DeclareReferenceAccessor(ItemOwner);
+	Gurax_DeclareReferenceAccessor(ItemOwner);
 public:
 	inline ItemOwner() : _cntRef(1) {}
 private:

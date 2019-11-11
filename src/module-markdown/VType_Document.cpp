@@ -29,21 +29,21 @@ Gurax_ImplementFunction(Document)
 
 #if 0
 // markdown.document(stream?:stream:r) {block?}
-Gura_DeclareFunction(document)
+Gurax_DeclareFunction(document)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareArg(env, "stream", VTYPE_stream, OCCUR_ZeroOrOnce, FLAG_Read);
-	SetClassToConstruct(Gura_UserClass(document));
+	SetClassToConstruct(Gurax_UserClass(document));
 	DeclareBlock(OCCUR_ZeroOrOnce);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Returns an instance of `markdown.document`.\n"
 		"If `stream` is specified, the content of the instance shall be initialized\n"
 		"with the result of parsing the stream.\n"
 	);
 }
 
-Gura_ImplementFunction(document)
+Gurax_ImplementFunction(document)
 {
 	Signal &sig = env.GetSignal();
 	AutoPtr<Document> pDocument(new Document());
@@ -54,9 +54,9 @@ Gura_ImplementFunction(document)
 	return ReturnValue(env, arg, Value(pObj.release()));
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Implementation of method
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // markdown.Document#MethodSkeleton(num1:Number, num2:Number):reduce
 Gurax_DeclareMethod(Document, MethodSkeleton)
 {
@@ -81,16 +81,16 @@ Gurax_ImplementMethod(Document, MethodSkeleton)
 }
 
 // markdown.document#countitem(type:symbol)
-Gura_DeclareMethod(document, countitem)
+Gurax_DeclareMethod(document, countitem)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareArg(env, "type", VTYPE_symbol);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Count the number of items of the specified type.");
 }
 
-Gura_ImplementMethod(document, countitem)
+Gurax_ImplementMethod(document, countitem)
 {
 	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
 	const Symbol *pSymbol = arg.GetSymbol(0);
@@ -104,16 +104,16 @@ Gura_ImplementMethod(document, countitem)
 }
 
 // markdown.document#parse(str:string):void
-Gura_DeclareMethod(document, parse)
+Gurax_DeclareMethod(document, parse)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
 	DeclareArg(env, "str", VTYPE_string);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Parses a Markdown text in a string.");
 }
 
-Gura_ImplementMethod(document, parse)
+Gurax_ImplementMethod(document, parse)
 {
 	Signal &sig = env.GetSignal();
 	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
@@ -122,16 +122,16 @@ Gura_ImplementMethod(document, parse)
 }
 
 // markdown.document#read(stream:stream:r):void
-Gura_DeclareMethod(document, read)
+Gurax_DeclareMethod(document, read)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
 	DeclareArg(env, "stream", VTYPE_stream, OCCUR_Once, FLAG_Read);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Parses a Markdown text from a stream.");
 }
 
-Gura_ImplementMethod(document, read)
+Gurax_ImplementMethod(document, read)
 {
 	Signal &sig = env.GetSignal();
 	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
@@ -139,19 +139,19 @@ Gura_ImplementMethod(document, read)
 	return Value::Nil;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Implementation of property
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // markdown.document#refs
-Gura_DeclareProperty_R(document, refs)
+Gurax_DeclareProperty_R(document, refs)
 {
 	SetPropAttr(VTYPE_iterator);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"An `iterator` that returns referee items as `markdown.item`.");
 }
 
-Gura_ImplementPropertyGetter(document, refs)
+Gurax_ImplementPropertyGetter(document, refs)
 {
 	Document *pDocument = Object_document::GetObject(valueThis)->GetDocument();
 	const ItemOwner *pItemOwner = pDocument->GetItemRefereeOwner();
@@ -160,15 +160,15 @@ Gura_ImplementPropertyGetter(document, refs)
 }
 
 // markdown.document#root
-Gura_DeclareProperty_R(document, root)
+Gurax_DeclareProperty_R(document, root)
 {
 	SetPropAttr(VTYPE_item);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"The root item of the parsed Markdown document.");
 }
 
-Gura_ImplementPropertyGetter(document, root)
+Gurax_ImplementPropertyGetter(document, root)
 {
 	Document *pDocument = Object_document::GetObject(valueThis)->GetDocument();
 	pDocument->ResolveReference();
@@ -190,11 +190,11 @@ Gurax_ImplementPropertyGetter(Document, propSkeleton)
 	return new Value_Number(3);
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Implementation of operators
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // operator <<
-Gura_ImplementBinaryOperator(Shl, document, string)
+Gurax_ImplementBinaryOperator(Shl, document, string)
 {
 	Signal &sig = env.GetSignal();
 	Document *pDocument = Object_document::GetObject(valueLeft)->GetDocument();
@@ -213,14 +213,14 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 {
 #if 0
 	// Assignment of property
-	Gura_AssignProperty(document, refs);
-	Gura_AssignProperty(document, root);
+	Gurax_AssignProperty(document, refs);
+	Gurax_AssignProperty(document, root);
 	// Assignment of function
-	Gura_AssignFunction(document);
+	Gurax_AssignFunction(document);
 	// Assignment of method
-	Gura_AssignMethod(document, countitem);
-	Gura_AssignMethod(document, parse);
-	Gura_AssignMethod(document, read);
+	Gurax_AssignMethod(document, countitem);
+	Gurax_AssignMethod(document, parse);
+	Gurax_AssignMethod(document, read);
 #endif
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Document));
@@ -246,8 +246,8 @@ bool Object_document::DoDirProp(Environment &env, SymbolSet &symbols)
 {
 	Signal &sig = GetSignal();
 	if (!Object::DoDirProp(env, symbols)) return false;
-	symbols.insert(Gura_UserSymbol(refs));
-	symbols.insert(Gura_UserSymbol(root));
+	symbols.insert(Gurax_UserSymbol(refs));
+	symbols.insert(Gurax_UserSymbol(root));
 	return true;
 }
 
@@ -255,11 +255,11 @@ Value Object_document::DoGetProp(Environment &env, const Symbol *pSymbol,
 							const SymbolSet &attrs, bool &evaluatedFlag)
 {
 	evaluatedFlag = true;
-	if (pSymbol->IsIdentical(Gura_UserSymbol(refs))) {
+	if (pSymbol->IsIdentical(Gurax_UserSymbol(refs))) {
 		const ItemOwner *pItemOwner = _pDocument->GetItemRefereeOwner();
 		Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
 		return Value(new Object_iterator(env, pIterator));
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(root))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(root))) {
 		_pDocument->ResolveReference();
 		return Value(new Object_item(_pDocument->GetItemRoot()->Reference()));
 	}

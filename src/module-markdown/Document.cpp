@@ -51,7 +51,7 @@ bool Document::ParseStream(Signal &sig, SimpleStream &stream)
 		while (prefetchFlag && (chRaw = stream.GetChar(sig)) >= 0) {
 			char ch = static_cast<char>(static_cast<UChar>(chRaw));
 			textPrefetch += ch;
-			Gura_BeginPushbackRegionEx(char, 16, ch);
+			Gurax_BeginPushbackRegionEx(char, 16, ch);
 			if (stat == STAT_FirstRowTop) {
 				if (ch == '|') {
 					pipeFoundFlag = true;
@@ -81,7 +81,7 @@ bool Document::ParseStream(Signal &sig, SimpleStream &stream)
 				} else if (ch == '\t') {
 					indentLevel += WIDTH_Tab;
 				} else if (indentLevel >= indentLevelForCodeBlock) {
-					Gura_PushbackEx(ch);
+					Gurax_PushbackEx(ch);
 					stat = STAT_SkipToEOL;
 				} else {
 					if (ch == '|') {
@@ -89,7 +89,7 @@ bool Document::ParseStream(Signal &sig, SimpleStream &stream)
 						_indentLevelTableTop = indentLevel + 1;
 					} else {
 						pipeFoundFlag = false;
-						Gura_PushbackEx(ch);
+						Gurax_PushbackEx(ch);
 					}
 					guideList.clear();
 					guide.clear();
@@ -119,7 +119,7 @@ bool Document::ParseStream(Signal &sig, SimpleStream &stream)
 					pipeFoundFlag = true;
 					stat = STAT_TrailingRowBody;
 				} else if (IsWhite(ch) || IsEOL(ch)) {
-					Gura_PushbackEx(ch);
+					Gurax_PushbackEx(ch);
 					stat = STAT_TrailingRowHead;
 				} else {
 					pipeFoundFlag = false;
@@ -132,7 +132,7 @@ bool Document::ParseStream(Signal &sig, SimpleStream &stream)
 					// detected a blank line
 					prefetchFlag = false;
 				} else {
-					Gura_PushbackEx(ch);
+					Gurax_PushbackEx(ch);
 					stat = STAT_TrailingRowBody;
 				}
 			} else if (stat == STAT_TrailingRowBody) {
@@ -151,7 +151,7 @@ bool Document::ParseStream(Signal &sig, SimpleStream &stream)
 					// nothing to do
 				}
 			}
-			Gura_EndPushbackRegionEx();
+			Gurax_EndPushbackRegionEx();
 		}
 		if (textPrefetch.empty()) {
 			if (!ParseChar(sig, '\0')) return false;
@@ -232,16 +232,16 @@ void Document::ResolveReference()
 
 bool Document::ParseChar(Signal &sig, char ch)
 {
-	Gura_BeginPushbackRegionEx(char, 16, ch);
+	Gurax_BeginPushbackRegionEx(char, 16, ch);
 	//::printf("'%c' %d\n", ch, _stat);
 	switch (_stat) {
 	case STAT_LineTop: {
 		_indentLevel = 0;
 		if (!IsTableMode()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineHead;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineHeadTable;
 		}
 		break;
@@ -249,14 +249,14 @@ bool Document::ParseChar(Signal &sig, char ch)
 	case STAT_LineHead: {
 		if (!IsMarkdownAcceptable()) {
 			// When within a tag, ignore special characters except for '<'.
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		} else if (ch == ' ') {
 			_indentLevel += 1;
 		} else if (ch == '\t') {
 			_indentLevel += WIDTH_Tab;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(nullptr);
 			_stat = STAT_CodeBlock;
 		} else if (ch == '>') {
@@ -305,7 +305,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			if (_decoPrecedingFlag) _text += ' ';
 			AppendJointSpace();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		_decoPrecedingFlag = false;
@@ -321,7 +321,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			BeginTableRow();
 			if (ch != '|' || _indentLevel >= _indentLevelTableTop) {
-				Gura_PushbackEx(ch);
+				Gurax_PushbackEx(ch);
 			}
 			_stat = STAT_Text;
 		}
@@ -333,12 +333,12 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (ch == '\t') {
 			_indentLevel += WIDTH_Tab;
 		} else if (ch == '>') {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineHead;
 		} else {
 			_quoteLevel = 0;
 			AdjustBlockQuote();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineHead;
 		}
 		break;
@@ -349,7 +349,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (ch == '\t') {
 			_indentLevel += WIDTH_Tab;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			AdjustBlockQuote();
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
@@ -358,7 +358,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_quoteLevel++;
 		} else {
 			AdjustBlockQuote();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineHead;
 		}
 		break;
@@ -368,16 +368,16 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_textAhead += ch;
 			_stat = STAT_AtxHeader1;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_AtxHeader1;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -387,14 +387,14 @@ bool Document::ParseChar(Signal &sig, char ch)
 			FlushItem(Item::TYPE_Paragraph, false, false);
 			_stat = STAT_UListItemPre;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			AppendJointSpace();
 			FlushText(Item::TYPE_Text, false, false);
 			_statStack.Push(STAT_Text);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Asterisk;
 		}
 		break;
@@ -404,13 +404,13 @@ bool Document::ParseChar(Signal &sig, char ch)
 			FlushItem(Item::TYPE_Paragraph, false, false);
 			_stat = STAT_UListItemPre;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -420,19 +420,19 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_textAhead += ch;
 			_stat = STAT_AtxHeader2;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_AtxHeader2;
 		} else if (ch == ' ' || ch == '\t') {
 			FlushItem(Item::TYPE_Paragraph, false, false);
 			_stat = STAT_UListItemPre;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -444,13 +444,13 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_textAhead += ch;
 			_stat = STAT_DigitDotAtHead;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -459,13 +459,13 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (ch == ' ' || ch == '\t') {
 			_stat = STAT_OListItemPre;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -477,8 +477,8 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			if (_decoPrecedingFlag) _text += ' ';
 			AppendJointSpace();
-			Gura_PushbackEx(ch);
-			Gura_PushbackEx('`');
+			Gurax_PushbackEx(ch);
+			Gurax_PushbackEx('`');
 			_stat = STAT_Text;
 		}
 		break;
@@ -490,9 +490,9 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			if (_decoPrecedingFlag) _text += ' ';
 			AppendJointSpace();
-			Gura_PushbackEx(ch);
-			Gura_PushbackEx('`');
-			Gura_PushbackEx('`');
+			Gurax_PushbackEx(ch);
+			Gurax_PushbackEx('`');
+			Gurax_PushbackEx('`');
 			_stat = STAT_Text;
 		}
 		break;
@@ -504,7 +504,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_SetextHeaderPre;
 		} else {
 			_text.clear();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_SetextHeader;
 		}
 		break;
@@ -514,7 +514,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			// nothing to do
 		} else {
 			_text.clear();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_SetextHeader;
 		}
 		break;
@@ -529,7 +529,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			int headerLevel = _headerLevel + _headerLevelOffset;
 			FlushItem(HeaderLevelToItemType(headerLevel), false, true);
-			if (IsEOF(ch)) Gura_PushbackEx(ch);
+			if (IsEOF(ch)) Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_text += ch;
@@ -540,11 +540,11 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (ch == '#') {
 			_textAhead += ch;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_SetextHeader;
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_SetextHeader;
 		}
 		break;
@@ -555,12 +555,12 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			int headerLevel = 1 + _headerLevelOffset;
 			FlushItem(HeaderLevelToItemType(headerLevel), false, false);
-			if (IsEOF(ch)) Gura_PushbackEx(ch);
+			if (IsEOF(ch)) Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -582,12 +582,12 @@ bool Document::ParseChar(Signal &sig, char ch)
 			} else {
 				_text += _textAhead;
 			}
-			if (IsEOF(ch)) Gura_PushbackEx(ch);
+			if (IsEOF(ch)) Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -597,7 +597,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			// nothing to do
 		} else {
 			BeginListItem(Item::TYPE_UList);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -607,7 +607,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			// nothing to do
 		} else {
 			BeginListItem(Item::TYPE_OList);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -617,7 +617,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			// nothing to do
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_indentLevel = 0;
-			if (IsEOF(ch)) Gura_PushbackEx(ch);
+			if (IsEOF(ch)) Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem_LineHead;
 		} else {
 			_text += ch;
@@ -655,12 +655,12 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (IsEOF(ch)) {
 			EndListItem();
 			_itemStack.ClearListItem();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			UpdateIndentLevelItemBody(_indentLevel);
 			_text += ' ';
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -671,7 +671,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (ch == '\t') {
 			_indentLevel += WIDTH_Tab;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else if (ch == '>') {
@@ -679,7 +679,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_quoteLevel++;
 		} else {
 			AdjustBlockQuote();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem_LineHead;
 		}
 		break;
@@ -691,7 +691,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_text += ' ';
 			FlushText(Item::TYPE_Text, false, false);
 			_statStack.Push(STAT_ListItem);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Asterisk;
 		}
 		break;
@@ -702,7 +702,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			_text += ' ';
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -713,7 +713,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			_text += ' ';
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -727,7 +727,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			_text += ' ';
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -738,7 +738,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			_text += ' ';
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -751,10 +751,10 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			EndListItem();
 			_itemStack.ClearListItem();
-			if (IsEOF(ch)) Gura_PushbackEx(ch);
+			if (IsEOF(ch)) Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(nullptr);
 			_stat = STAT_CodeBlock;
 		} else if (ch == '*') {
@@ -781,12 +781,12 @@ bool Document::ParseChar(Signal &sig, char ch)
 			EndListItem();
 			_itemStack.ClearListItem();
 			AdjustBlockQuote();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			UpdateIndentLevelItemBody(_indentLevel);
  			FlushItem(Item::TYPE_Paragraph, false, false);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -799,14 +799,14 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_itemStack.ClearListItem();
 			_stat = STAT_LineTop;
 			if (!_ParseString(sig, _textAhead)) return false;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			FlushItem(Item::TYPE_Paragraph, false, false);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_statStack.Push(STAT_ListItem);
 			_stat = STAT_Asterisk;
 		}
@@ -820,15 +820,15 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_itemStack.ClearListItem();
 			_stat = STAT_LineTop;
 			if (!_ParseString(sig, _textAhead)) return false;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
  			FlushItem(Item::TYPE_Paragraph, false, false);
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -841,15 +841,15 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_itemStack.ClearListItem();
 			_stat = STAT_LineTop;
 			if (!_ParseString(sig, _textAhead)) return false;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
  			FlushItem(Item::TYPE_Paragraph, false, false);
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -865,15 +865,15 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_itemStack.ClearListItem();
 			_stat = STAT_LineTop;
 			if (!_ParseString(sig, _textAhead)) return false;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
 			_text += ' ';
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -886,15 +886,15 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_itemStack.ClearListItem();
 			_stat = STAT_LineTop;
 			if (!_ParseString(sig, _textAhead)) return false;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			BeginCodeBlock(_textAhead.c_str());
 			_stat = STAT_CodeBlock;
 		} else {
  			FlushItem(Item::TYPE_Paragraph, false, false);
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_ListItem;
 		}
 		break;
@@ -943,14 +943,14 @@ bool Document::ParseChar(Signal &sig, char ch)
 			}
 			_text.clear();
 			for (int i = 0; i < _indentLevel - GetIndentLevelForCodeBlock(); i++) _text += ' ';
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_CodeBlock;
 		} else if (ch == '>' && _indentLevel == 0) {
 			_indentLevel = -1;
 			_quoteLevel = 1;
 			_stat = STAT_CodeBlockUnderBlockQuote;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			EndCodeBlock();
 			_stat = !IsWithin(Item::TYPE_ListItem)? STAT_LineTop :
 				(_cntEmptyLine == 0)? STAT_ListItem_LineHead : STAT_ListItemNL;
@@ -992,7 +992,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_textAhead += ch;
 			_stat = STAT_FencedCodeBlock_LineHead2nd;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_FencedCodeBlock;
 		}
 		break;
@@ -1003,7 +1003,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_FencedCodeBlock_LineHead3rd;
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_FencedCodeBlock;
 		}
 		break;
@@ -1013,7 +1013,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_FencedCodeBlock_SkipToEOL;
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_FencedCodeBlock;
 		}
 		break;
@@ -1033,7 +1033,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (ch == '\t') {
 			_indentLevel += WIDTH_Tab;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			if (AdjustBlockQuote()) {
 				EndCodeBlock();
 				BeginCodeBlock(_textAhead.c_str());
@@ -1046,7 +1046,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_indentLevel = -1;
 			_quoteLevel++;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			EndCodeBlock();
 			AdjustBlockQuote();
 			_stat = STAT_LineTop;
@@ -1057,7 +1057,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (ch == '`') {
 			_stat = STAT_CodeEsc;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Code;
 		}
 		break;
@@ -1068,7 +1068,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_DecorationPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			FlushText(Item::TYPE_Code, true, true);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1080,7 +1080,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_CodeEsc_Backquote;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			FlushText(Item::TYPE_Code, true, true);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1093,7 +1093,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = _statStack.Pop();
 		} else {
 			_text += '`';
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_CodeEsc;
 		}
 		break;
@@ -1128,7 +1128,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 				_text += ch;
 			}
 		} else if (IsEOF(ch)) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_text += ch;
@@ -1139,7 +1139,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (IsWhite(ch)) {
 			// nothing to do
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -1158,11 +1158,11 @@ bool Document::ParseChar(Signal &sig, char ch)
 			BeginDecoration(Item::TYPE_Strong);
 			_stat = STAT_AsteriskStrong;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			BeginDecoration(Item::TYPE_Emphasis);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_AsteriskEmphasis;
 		}
 		break;
@@ -1180,7 +1180,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_DecorationPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			CancelDecoration("*");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1199,7 +1199,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_AsteriskStrongEnd;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			CancelDecoration("**");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1212,13 +1212,13 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_DecorationPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			ReplaceDecoration(Item::TYPE_Emphasis, "*");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			FlushText(Item::TYPE_Text, true, true);
 			BeginDecoration(Item::TYPE_Emphasis);
 			_statStack.Push(STAT_AsteriskStrong);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_AsteriskEmphasis;
 		}
 		break;
@@ -1228,11 +1228,11 @@ bool Document::ParseChar(Signal &sig, char ch)
 			BeginDecoration(Item::TYPE_Strong);
 			_stat = STAT_UnderscoreStrong;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			BeginDecoration(Item::TYPE_Emphasis);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_UnderscoreEmphasis;
 		}
 		break;
@@ -1249,7 +1249,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_UnderscoreEmphasisPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			CancelDecoration("_");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1259,11 +1259,11 @@ bool Document::ParseChar(Signal &sig, char ch)
 	case STAT_UnderscoreEmphasisPost: {
 		if (IsWordChar(ch)) {
 			_text += '_';
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_UnderscoreEmphasis;
 		} else {
 			EndDecoration();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_DecorationPost;
 		}
 		break;
@@ -1280,7 +1280,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_UnderscoreStrongEnd;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			CancelDecoration("__");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1292,13 +1292,13 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_UnderscoreStrongPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			ReplaceDecoration(Item::TYPE_Emphasis, "_");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			FlushText(Item::TYPE_Text, true, true);
 			BeginDecoration(Item::TYPE_Emphasis);
 			_statStack.Push(STAT_UnderscoreStrong);
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_UnderscoreEmphasis;
 		}
 		break;
@@ -1306,11 +1306,11 @@ bool Document::ParseChar(Signal &sig, char ch)
 	case STAT_UnderscoreStrongPost: {
 		if (IsWordChar(ch)) {
 			_text += "__";
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_UnderscoreStrong;
 		} else {
 			EndDecoration();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_DecorationPost;
 		}
 		break;
@@ -1321,7 +1321,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_TildaStrike;
 		} else {
 			_text += '~';
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		}
 		break;
@@ -1338,7 +1338,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_TildaStrikeEnd;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			CancelDecoration("~~");
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_text += ch;
@@ -1352,7 +1352,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			CancelDecoration("~~");
 			_text += '~';
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		}
 		break;
@@ -1362,7 +1362,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (_stat == STAT_Text && IsEOL(ch)) {
 			_decoPrecedingFlag = true;
 		}
-		Gura_PushbackEx(ch);
+		Gurax_PushbackEx(ch);
 		break;
 	}
 	case STAT_Entity: {
@@ -1376,7 +1376,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_field += ch;
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		}
 		break;
@@ -1385,7 +1385,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (ch == '!') {
 			_stat = STAT_CommentStartFirst;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_AngleBracket;
 		}
 		break;
@@ -1394,8 +1394,8 @@ bool Document::ParseChar(Signal &sig, char ch)
 		if (ch == '-') {
 			_stat = STAT_CommentStartSecond;
 		} else {
-			Gura_PushbackEx(ch);
-			Gura_PushbackEx('!');
+			Gurax_PushbackEx(ch);
+			Gurax_PushbackEx('!');
 			_stat = STAT_AngleBracket;
 		}
 		break;
@@ -1408,7 +1408,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			_textAhead += "!-";
 			_field += "!-";
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_AngleBracket;
 		}
 		break;
@@ -1493,7 +1493,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = _statStack.Pop();
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1507,7 +1507,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkAltText;
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		}
 		break;
@@ -1519,7 +1519,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkTextPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1537,7 +1537,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkTextPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1555,7 +1555,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		}
 		break;
@@ -1569,7 +1569,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = _statStack.Pop();
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1586,7 +1586,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkURLAngle;
 		} else {
 			_field.clear();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LinkURL;
 		}
 		break;
@@ -1610,7 +1610,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = _statStack.Pop();
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1625,7 +1625,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkURLAnglePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1649,7 +1649,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = _statStack.Pop();
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1666,7 +1666,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkTitlePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1684,7 +1684,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_LinkTitlePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
 			_textAhead += ch;
@@ -1702,7 +1702,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = _statStack.Pop();
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		}
 		break;
@@ -1714,7 +1714,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_RefereeRefIdPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1727,7 +1727,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_textAhead += ch;
 			_stat = STAT_RefereeURLPreWhite;
 		} else {
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 			if (!_ParseString(sig, _textAhead)) return false;
 		}
@@ -1740,7 +1740,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else {
 			AppendJointSpace();
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -1753,7 +1753,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_RefereeURLAngle;
 		} else {
 			_field.clear();
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_RefereeURL;
 		}
 		break;
@@ -1778,7 +1778,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			FlushText(Item::TYPE_Text, false, false);
 			_pItemLink->SetURL(Strip(_field.c_str()));
 			AddItemReferee(_pItemLink.release());
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1793,7 +1793,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_RefereeURLAnglePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1813,7 +1813,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			FlushText(Item::TYPE_Text, false, false);
 			AddItemReferee(_pItemLink.release());
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1830,7 +1830,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_RefereeTitlePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1848,7 +1848,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_RefereeTitlePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1866,7 +1866,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 			_stat = STAT_RefereeTitlePost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_textAhead += ch;
@@ -1880,11 +1880,11 @@ bool Document::ParseChar(Signal &sig, char ch)
 		} else if (IsEOL(ch) || IsEOF(ch)) {
 			FlushText(Item::TYPE_Text, false, false);
 			AddItemReferee(_pItemLink.release());
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_LineTop;
 		} else {
 			_text += _textAhead;
-			Gura_PushbackEx(ch);
+			Gurax_PushbackEx(ch);
 			_stat = STAT_Text;
 		}
 		break;
@@ -1901,7 +1901,7 @@ bool Document::ParseChar(Signal &sig, char ch)
 		break;
 	}
 	}
-	Gura_EndPushbackRegionEx();
+	Gurax_EndPushbackRegionEx();
 	if (IsEOL(ch)) {
 		_iLine++;
 		_iCol = 0;

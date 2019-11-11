@@ -175,7 +175,7 @@ private:
 	ItemOwnerStack _itemOwnerStack;
 	AlignList _alignList;
 public:
-	Gura_DeclareReferenceAccessor(Document);
+	Gurax_DeclareReferenceAccessor(Document);
 public:
 	Document();
 private:

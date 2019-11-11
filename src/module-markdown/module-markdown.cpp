@@ -6,20 +6,20 @@
 Gurax_BeginModule(markdown)
 
 #if 0
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Implementation of function
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // markdown.isinlinetag(tagname:sting)
-Gura_DeclareFunction(isinlinetag)
+Gurax_DeclareFunction(isinlinetag)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareArg(env, "tagname", VTYPE_string);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Returns `true` if the specified tag is an inlined one.\n");
 }
 
-Gura_ImplementFunction(isinlinetag)
+Gurax_ImplementFunction(isinlinetag)
 {
 	return Value(IsInlineTagName(arg.GetString(0)));
 }
@@ -66,25 +66,25 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Test));
 #if 0
 	// symbol realization
-	Gura_RealizeUserSymbol(root);
-	Gura_RealizeUserSymbol(refs);
-	Gura_RealizeUserSymbol(type);
-	Gura_RealizeUserSymbol(text);
-	Gura_RealizeUserSymbol(children);
-	Gura_RealizeUserSymbol(url);
-	Gura_RealizeUserSymbol(title);
-	Gura_RealizeUserSymbol(attrs);
-	Gura_RealizeUserSymbol(align);
+	Gurax_RealizeUserSymbol(root);
+	Gurax_RealizeUserSymbol(refs);
+	Gurax_RealizeUserSymbol(type);
+	Gurax_RealizeUserSymbol(text);
+	Gurax_RealizeUserSymbol(children);
+	Gurax_RealizeUserSymbol(url);
+	Gurax_RealizeUserSymbol(title);
+	Gurax_RealizeUserSymbol(attrs);
+	Gurax_RealizeUserSymbol(align);
 	// class realization
-	Gura_RealizeUserClass(document, env.LookupClass(VTYPE_object));
-	Gura_RealizeUserClass(item, env.LookupClass(VTYPE_object));
+	Gurax_RealizeUserClass(document, env.LookupClass(VTYPE_object));
+	Gurax_RealizeUserClass(item, env.LookupClass(VTYPE_object));
 	// class preparation
-	Gura_PrepareUserClass(document);
-	Gura_PrepareUserClass(item);
+	Gurax_PrepareUserClass(document);
+	Gurax_PrepareUserClass(item);
 	// operator assignment
-	Gura_AssignBinaryOperator(Shl, document, string);
+	Gurax_AssignBinaryOperator(Shl, document, string);
 	// function assignment
-	Gura_AssignFunction(isinlinetag);
+	Gurax_AssignFunction(isinlinetag);
 #endif
 	return true;
 }

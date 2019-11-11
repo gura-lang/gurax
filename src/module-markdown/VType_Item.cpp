@@ -28,9 +28,9 @@ Gurax_ImplementFunction(Item)
 }
 
 #if 0
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Implementation of method
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // markdown.Item#MethodSkeleton(num1:Number, num2:Number):reduce
 Gurax_DeclareMethod(Item, MethodSkeleton)
 {
@@ -55,16 +55,16 @@ Gurax_ImplementMethod(Item, MethodSkeleton)
 }
 
 // markdown.item#countdescendant(type:symbol)
-Gura_DeclareMethod(item, countdescendant)
+Gurax_DeclareMethod(item, countdescendant)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
 	DeclareArg(env, "type", VTYPE_symbol);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Count the number of descendant items of the specified type.");
 }
 
-Gura_ImplementMethod(item, countdescendant)
+Gurax_ImplementMethod(item, countdescendant)
 {
 	Item *pItem = Object_item::GetObjectThis(arg)->GetItem();
 	const Symbol *pSymbol = arg.GetSymbol(0);
@@ -79,17 +79,17 @@ Gura_ImplementMethod(item, countdescendant)
 }
 
 // markdown.item#print(indent?:number):void
-Gura_DeclareMethod(item, print)
+Gurax_DeclareMethod(item, print)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
 	DeclareArg(env, "indent", VTYPE_number, OCCUR_ZeroOrOnce);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Prints structured content of the item.\n"
 		"Argument `indent` specifies an indentation level and is set to zero when omitted.\n");
 }
 
-Gura_ImplementMethod(item, print)
+Gurax_ImplementMethod(item, print)
 {
 	Signal &sig = env.GetSignal();
 	Item *pItem = Object_item::GetObjectThis(arg)->GetItem();
@@ -98,9 +98,9 @@ Gura_ImplementMethod(item, print)
 	return Value::Nil;
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Implementation of property
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // markdown.Item#propSkeleton
 Gurax_DeclareProperty_R(Item, propSkeleton)
 {
@@ -117,30 +117,30 @@ Gurax_ImplementPropertyGetter(Item, propSkeleton)
 }
 
 // markdown.item#type
-Gura_DeclareProperty_R(item, type)
+Gurax_DeclareProperty_R(item, type)
 {
 	SetPropAttr(VTYPE_symbol);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"");
 }
 
-Gura_ImplementPropertyGetter(item, type)
+Gurax_ImplementPropertyGetter(item, type)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	return Value(Symbol::Add(pItem->GetTypeName()));
 }
 
 // markdown.item#text
-Gura_DeclareProperty_R(item, text)
+Gurax_DeclareProperty_R(item, text)
 {
 	SetPropAttr(VTYPE_string, FLAG_Nil);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"");
 }
 
-Gura_ImplementPropertyGetter(item, text)
+Gurax_ImplementPropertyGetter(item, text)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *text = pItem->GetText();
@@ -149,15 +149,15 @@ Gura_ImplementPropertyGetter(item, text)
 }
 
 // markdown.item#children
-Gura_DeclareProperty_R(item, children)
+Gurax_DeclareProperty_R(item, children)
 {
 	SetPropAttr(VTYPE_iterator);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"");
 }
 
-Gura_ImplementPropertyGetter(item, children)
+Gurax_ImplementPropertyGetter(item, children)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const ItemOwner *pItemOwner = pItem->GetItemOwner();
@@ -167,15 +167,15 @@ Gura_ImplementPropertyGetter(item, children)
 }
 
 // markdown.item#url
-Gura_DeclareProperty_R(item, url)
+Gurax_DeclareProperty_R(item, url)
 {
 	SetPropAttr(VTYPE_string, FLAG_Nil);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"");
 }
 
-Gura_ImplementPropertyGetter(item, url)
+Gurax_ImplementPropertyGetter(item, url)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *url = pItem->GetURL();
@@ -184,15 +184,15 @@ Gura_ImplementPropertyGetter(item, url)
 }
 
 // markdown.item#title
-Gura_DeclareProperty_R(item, title)
+Gurax_DeclareProperty_R(item, title)
 {
 	SetPropAttr(VTYPE_string, FLAG_Nil);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"");
 }
 
-Gura_ImplementPropertyGetter(item, title)
+Gurax_ImplementPropertyGetter(item, title)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *title = pItem->GetTitle();
@@ -201,15 +201,15 @@ Gura_ImplementPropertyGetter(item, title)
 }
 
 // markdown.item#attrs
-Gura_DeclareProperty_R(item, attrs)
+Gurax_DeclareProperty_R(item, attrs)
 {
 	SetPropAttr(VTYPE_string, FLAG_Nil);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"");
 }
 
-Gura_ImplementPropertyGetter(item, attrs)
+Gurax_ImplementPropertyGetter(item, attrs)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *rtn = pItem->GetAttrs();
@@ -218,22 +218,22 @@ Gura_ImplementPropertyGetter(item, attrs)
 }
 
 // markdown.item#align
-Gura_DeclareProperty_R(item, align)
+Gurax_DeclareProperty_R(item, align)
 {
 	SetPropAttr(VTYPE_symbol);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"`` `none``, `` `left``, `` `center``, `` `right``");
 }
 
-Gura_ImplementPropertyGetter(item, align)
+Gurax_ImplementPropertyGetter(item, align)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	Align align = pItem->GetAlign();
 	return Value(
-		(align == ALIGN_Left)? Gura_Symbol(left) :
-		(align == ALIGN_Center)? Gura_Symbol(center) :
-		(align == ALIGN_Right)? Gura_Symbol(right) : Gura_Symbol(none));
+		(align == ALIGN_Left)? Gurax_Symbol(left) :
+		(align == ALIGN_Center)? Gurax_Symbol(center) :
+		(align == ALIGN_Right)? Gurax_Symbol(right) : Gurax_Symbol(none));
 }
 #endif
 
@@ -252,18 +252,18 @@ void VType_Item::DoPrepare(Frame& frameOuter)
 	//Assign(Gurax_CreateProperty(Item, propSkeleton));
 #if 0
 	// Assignment of property
-	Gura_AssignProperty(item, type);
-	Gura_AssignProperty(item, text);
-	Gura_AssignProperty(item, children);
-	Gura_AssignProperty(item, url);
-	Gura_AssignProperty(item, title);
-	Gura_AssignProperty(item, attrs);
-	Gura_AssignProperty(item, align);
+	Gurax_AssignProperty(item, type);
+	Gurax_AssignProperty(item, text);
+	Gurax_AssignProperty(item, children);
+	Gurax_AssignProperty(item, url);
+	Gurax_AssignProperty(item, title);
+	Gurax_AssignProperty(item, attrs);
+	Gurax_AssignProperty(item, align);
 	// Assignment of method
-	Gura_AssignMethod(item, countdescendant);
-	Gura_AssignMethod(item, print);
+	Gurax_AssignMethod(item, countdescendant);
+	Gurax_AssignMethod(item, print);
 	// Assignment of value
-	Gura_AssignValue(item, Value(Reference()));
+	Gurax_AssignValue(item, Value(Reference()));
 #endif
 }
 
@@ -283,13 +283,13 @@ bool Object_item::DoDirProp(Environment &env, SymbolSet &symbols)
 {
 	Signal &sig = GetSignal();
 	if (!Object::DoDirProp(env, symbols)) return false;
-	symbols.insert(Gura_UserSymbol(type));
-	symbols.insert(Gura_UserSymbol(text));
-	symbols.insert(Gura_UserSymbol(children));
-	symbols.insert(Gura_UserSymbol(url));
-	symbols.insert(Gura_UserSymbol(title));
-	symbols.insert(Gura_UserSymbol(attrs));
-	symbols.insert(Gura_UserSymbol(align));
+	symbols.insert(Gurax_UserSymbol(type));
+	symbols.insert(Gurax_UserSymbol(text));
+	symbols.insert(Gurax_UserSymbol(children));
+	symbols.insert(Gurax_UserSymbol(url));
+	symbols.insert(Gurax_UserSymbol(title));
+	symbols.insert(Gurax_UserSymbol(attrs));
+	symbols.insert(Gurax_UserSymbol(align));
 	return true;
 }
 
@@ -297,35 +297,35 @@ Value Object_item::DoGetProp(Environment &env, const Symbol *pSymbol,
 							const SymbolSet &attrs, bool &evaluatedFlag)
 {
 	evaluatedFlag = true;
-	if (pSymbol->IsIdentical(Gura_UserSymbol(type))) {
+	if (pSymbol->IsIdentical(Gurax_UserSymbol(type))) {
 		return Value(Symbol::Add(_pItem->GetTypeName()));
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(text))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(text))) {
 		const char *text = _pItem->GetText();
 		if (text == nullptr) return Value::Nil;
 		return Value(text);
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(children))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(children))) {
 		const ItemOwner *pItemOwner = _pItem->GetItemOwner();
 		if (pItemOwner == nullptr) return Value::Nil;
 		Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
 		return Value(new Object_iterator(env, pIterator));
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(url))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(url))) {
 		const char *url = _pItem->GetURL();
 		if (url == nullptr) return Value::Nil;
 		return Value(url);
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(title))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(title))) {
 		const char *title = _pItem->GetTitle();
 		if (title == nullptr) return Value::Nil;
 		return Value(title);
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(attrs))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(attrs))) {
 		const char *attrs = _pItem->GetAttrs();
 		if (attrs == nullptr) return Value::Nil;
 		return Value(attrs);
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(align))) {
+	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(align))) {
 		Align align = _pItem->GetAlign();
 		return Value(
-			(align == ALIGN_Left)? Gura_Symbol(left) :
-			(align == ALIGN_Center)? Gura_Symbol(center) :
-			(align == ALIGN_Right)? Gura_Symbol(right) : Gura_Symbol(none));
+			(align == ALIGN_Left)? Gurax_Symbol(left) :
+			(align == ALIGN_Center)? Gurax_Symbol(center) :
+			(align == ALIGN_Right)? Gurax_Symbol(right) : Gurax_Symbol(none));
 	}
 	evaluatedFlag = false;
 	return Value::Nil;
