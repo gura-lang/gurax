@@ -23,7 +23,7 @@ Gurax_ImplementFunction(Item)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Item> pItem(new Item());
+	RefPtr<Item> pItem(new Item(Item::Type::None));
 	return argument.ReturnValue(processor, new Value_Item(pItem.release()));
 }
 

@@ -94,7 +94,9 @@ private:
 	bool _markdownAcceptableFlag;
 public:
 	// Constructor
-	Item() {}
+	Item(Type type);
+	Item(Type type, ItemOwner* pItemOwner);
+	Item(Type type, const String& text);
 	// Copy constructor/operator
 	Item(const Item& src) = delete;
 	Item& operator=(const Item& src) = delete;
@@ -104,63 +106,31 @@ public:
 protected:
 	~Item() = default;
 public:
-	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Item& other) const { return this == &other; }
-	bool IsEqualTo(const Item& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Item& other) const { return this < &other; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
-};
-
-#if 0
-class Item {
-public:
-	Item(Type type);
-	Item(Type type, ItemOwner *pItemOwner);
-	Item(Type type, const String &text);
-private:
-	~Item() {}
-public:
 	void SetType(Item::Type type) { _type = type; }
 	const Type GetType() const { return _type; }
-	bool IsRoot() const { return _type == TYPE_Root; }
-	bool IsBlockQuote() const { return _type == TYPE_BlockQuote; }
-	bool Is_list() const { return _type == TYPE_UList || _type == TYPE_OList; }
-	bool IsListItem() const { return _type == TYPE_ListItem; }
-	bool IsTag() const { return _type == TYPE_Tag; }
-	bool IsInlineTag() const { return _type == TYPE_Tag && IsInlineTagName(GetText()); }
-	bool IsText() const { return _type == TYPE_Text; }
-	bool IsOwner() const { return !_pItemOwner.IsNull(); }
-	void SetItemOwner(ItemOwner *pItemOwner) { _pItemOwner.reset(pItemOwner); }
-	ItemOwner *GetItemOwner() { return _pItemOwner.get(); }
-	const ItemOwner *GetItemOwner() const { return _pItemOwner.get(); }
-	const char *GetText() const {
-		return (_pText.get() == nullptr)? nullptr : _pText->c_str();
-	}
-	const char *GetURL() const {
-		return (_pURL.get() == nullptr)? nullptr : _pURL->c_str();
-	}
-	const char *GetTitle() const {
-		return (_pTitle.get() == nullptr)? nullptr : _pTitle->c_str();
-	}
-	const char *GetRefId() const {
-		return (_pRefId.get() == nullptr)? nullptr : _pRefId->c_str();
-	}
-	const char *GetAttrs() const {
-		return (_pAttrs.get() == nullptr)? nullptr : _pAttrs->c_str();
-	}
+	bool IsRoot() const { return _type == Type::Root; }
+	bool IsBlockQuote() const { return _type == Type::BlockQuote; }
+	bool Is_list() const { return _type == Type::UList || _type == Type::OList; }
+	bool IsListItem() const { return _type == Type::ListItem; }
+	bool IsTag() const { return _type == Type::Tag; }
+	bool IsInlineTag() const { return _type == Type::Tag && IsInlineTagName(GetText()); }
+	bool IsText() const { return _type == Type::Text; }
+	bool IsOwner() const { return _pItemOwner.get() != nullptr; }
+	void SetItemOwner(ItemOwner* pItemOwner) { _pItemOwner.reset(pItemOwner); }
+	ItemOwner* GetItemOwner() { return _pItemOwner.get(); }
+	const ItemOwner* GetItemOwner() const { return _pItemOwner.get(); }
+	const char* GetText() const { return _pText? _pText->c_str() : nullptr; }
+	const char* GetURL() const { return _pURL? _pURL->c_str() : nullptr; }
+	const char* GetTitle() const { return _pTitle? _pTitle->c_str() : nullptr; }
+	const char* GetRefId() const { return _pRefId? _pRefId->c_str() : nullptr; }
+	const char* GetAttrs() const { return _pAttrs? _pAttrs->c_str() : nullptr; }
 	Align GetAlign() const { return _align; }
-	void SetText(const String &text) { _pText.reset(new String(text)); }
-	void AppendText(const String &text) {
-		if (_pText.get() == nullptr) {
-			_pText.reset(new String(text));
-		} else {
-			*_pText += text;
-		}
-	}
-	void SetURL(const String &url) { _pURL.reset(new String(url)); }
-	void SetTitle(const String &title) { _pTitle.reset(new String(title)); }
-	void SetRefId(const String &refId) { _pRefId.reset(new String(refId)); }
-	void SetAttrs(const String &attrs) { _pAttrs.reset(new String(attrs)); }
+	void SetText(const String& text) { _pText.reset(new String(text)); }
+	void AppendText(const String& text);
+	void SetURL(const String& url) { _pURL.reset(new String(url)); }
+	void SetTitle(const String& title) { _pTitle.reset(new String(title)); }
+	void SetRefId(const String& refId) { _pRefId.reset(new String(refId)); }
+	void SetAttrs(const String& attrs) { _pAttrs.reset(new String(attrs)); }
 	void SetAlign(Align align) { _align = align; }
 	void ClearURL() { _pURL.reset(nullptr); }
 	void ClearTitle() { _pTitle.reset(nullptr); }
@@ -176,12 +146,17 @@ public:
 	int GetIndentLevelItemBody() const { return _indentLevelItemBody; }
 	bool GetMarkdownAcceptableFlag() const { return _markdownAcceptableFlag; }
 	bool StripText(bool stripLeftFlag, bool stripRightFlag);
-	const char *GetTypeName() const;
-	void Print(Signal &sig, Stream &stream, int indentLevel) const;
-	static const char *TypeToName(Type type);
-	static Type NameToType(const char *name);
+	const char* GetTypeName() const;
+	void Print(Stream& stream, int indentLevel) const;
+	static const char* TypeToName(Type type);
+	static Type NameToType(const char* name);
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Item& other) const { return this == &other; }
+	bool IsEqualTo(const Item& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Item& other) const { return this < &other; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
-#endif
 
 //------------------------------------------------------------------------------
 // ItemOwnerStack

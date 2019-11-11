@@ -39,31 +39,39 @@ const Item::TypeNamePair Item::_typeNamePairs[] = {
 	{ Type::Referee,		"referee",		},	// no-content
 };
 
-#if 0
 Item::Item(Type type) :
-	_cntRef(1), _type(type), _align(Align::None),
+	_type(type), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
 {
 }
 
-Item::Item(Type type, ItemOwner *pItemOwner) :
-	_cntRef(1), _type(type), _pItemOwner(pItemOwner), _align(Align::None),
+Item::Item(Type type, ItemOwner* pItemOwner) :
+	_type(type), _pItemOwner(pItemOwner), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
 {
 }
 
-Item::Item(Type type, const String &text) :
-	_cntRef(1), _type(type), _pText(new String(text)), _align(Align::None),
+Item::Item(Type type, const String& text) :
+	_type(type), _pText(new String(text)), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
 {
+}
+
+void Item::AppendText(const String& text)
+{
+	if (_pText.get() == nullptr) {
+		_pText.reset(new String(text));
+	} else {
+		*_pText += text;
+	}
 }
 
 // return true if the stripped result turns out be an empty string.
 bool Item::StripText(bool stripLeftFlag, bool stripRightFlag)
 {
-	const char *text = GetText();
-	if (text == nullptr) return false;
-	SetText(Strip(text, stripLeftFlag, stripRightFlag));
+	const char* text = GetText();
+	if (!text) return false;
+	SetText(String::Strip(text, stripLeftFlag, stripRightFlag));
 	return *GetText() == '\0';
 }
 
@@ -75,40 +83,40 @@ const char *Item::GetTypeName() const
 	return "?";
 }
 
-void Item::Print(Signal &sig, Stream &stream, int indentLevel) const
+void Item::Print(Stream& stream, int indentLevel) const
 {
-	for (int i = 0; i < indentLevel; i++) stream.Print(sig, "  ");
-	stream.Print(sig, "<");
-	stream.Print(sig, GetTypeName());
-	if (_pURL.get() != nullptr) {
-		stream.Print(sig, " url='");
-		stream.Print(sig, _pURL->c_str());
-		stream.Print(sig, "'");
+	for (int i = 0; i < indentLevel; i++) stream.Print("  ");
+	stream.Print("<");
+	stream.Print(GetTypeName());
+	if (_pURL) {
+		stream.Print(" url='");
+		stream.Print(_pURL->c_str());
+		stream.Print("'");
 	}
-	if (_pTitle.get() != nullptr) {
-		stream.Print(sig, " title='");
-		stream.Print(sig, _pTitle->c_str());
-		stream.Print(sig, "'");
+	if (_pTitle) {
+		stream.Print(" title='");
+		stream.Print(_pTitle->c_str());
+		stream.Print("'");
 	}
-	if (_pRefId.get() != nullptr) {
-		stream.Print(sig, " refid='");
-		stream.Print(sig, _pRefId->c_str());
-		stream.Print(sig, "'");
+	if (_pRefId) {
+		stream.Print(" refid='");
+		stream.Print(_pRefId->c_str());
+		stream.Print("'");
 	}
-	if (_pAttrs.get() != nullptr) {
-		stream.Print(sig, " attrs='");
-		stream.Print(sig, _pAttrs->c_str());
-		stream.Print(sig, "'");
+	if (_pAttrs) {
+		stream.Print(" attrs='");
+		stream.Print(_pAttrs->c_str());
+		stream.Print("'");
 	}
-	stream.Print(sig, ">");
-	if (_pText.get() != nullptr) {
-		stream.Print(sig, "'");
-		stream.Print(sig, _pText->c_str());
-		stream.Print(sig, "'");
+	stream.Print(">");
+	if (_pText) {
+		stream.Print("'");
+		stream.Print(_pText->c_str());
+		stream.Print("'");
 	}
-	stream.Print(sig, "\n");
-	if (!_pItemOwner.IsNull()) {
-		_pItemOwner->Print(sig, stream, indentLevel + 1);
+	stream.Print("\n");
+	if (_pItemOwner) {
+		_pItemOwner->Print(stream, indentLevel + 1);
 	}
 }
 
@@ -120,14 +128,13 @@ const char *Item::TypeToName(Type type)
 	return "?";
 }
 
-Item::Type Item::NameToType(const char *name)
+Item::Type Item::NameToType(const char* name)
 {
 	for (int i = 0; i < ArraySizeOf(_typeNamePairs); i++) {
 		if (::strcmp(_typeNamePairs[i].name, name) == 0) return _typeNamePairs[i].type;
 	}
 	return Type::None;
 }
-#endif
 
 String Item::ToString(const StringStyle& ss) const
 {
@@ -175,7 +182,7 @@ void ItemList::Print(Stream& stream, int indentLevel) const
 #if 0
 	foreach_const (ItemList, ppItem, *this) {
 		const Item *pItem = *ppItem;
-		pItem->Print(sig, stream, indentLevel);
+		pItem->Print(stream, indentLevel);
 	}
 #endif
 }
