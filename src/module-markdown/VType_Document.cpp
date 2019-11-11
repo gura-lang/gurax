@@ -246,8 +246,8 @@ bool Object_document::DoDirProp(Environment &env, SymbolSet &symbols)
 {
 	Signal &sig = GetSignal();
 	if (!Object::DoDirProp(env, symbols)) return false;
-	symbols.insert(Gurax_UserSymbol(refs));
-	symbols.insert(Gurax_UserSymbol(root));
+	symbols.insert(Gurax_Symbol(refs));
+	symbols.insert(Gurax_Symbol(root));
 	return true;
 }
 
@@ -255,11 +255,11 @@ Value Object_document::DoGetProp(Environment &env, const Symbol *pSymbol,
 							const SymbolSet &attrs, bool &evaluatedFlag)
 {
 	evaluatedFlag = true;
-	if (pSymbol->IsIdentical(Gurax_UserSymbol(refs))) {
+	if (pSymbol->IsIdentical(Gurax_Symbol(refs))) {
 		const ItemOwner *pItemOwner = _pDocument->GetItemRefereeOwner();
 		Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
 		return Value(new Object_iterator(env, pIterator));
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(root))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(root))) {
 		_pDocument->ResolveReference();
 		return Value(new Object_item(_pDocument->GetItemRoot()->Reference()));
 	}

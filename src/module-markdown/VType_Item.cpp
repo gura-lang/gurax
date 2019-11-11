@@ -283,13 +283,13 @@ bool Object_item::DoDirProp(Environment &env, SymbolSet &symbols)
 {
 	Signal &sig = GetSignal();
 	if (!Object::DoDirProp(env, symbols)) return false;
-	symbols.insert(Gurax_UserSymbol(type));
-	symbols.insert(Gurax_UserSymbol(text));
-	symbols.insert(Gurax_UserSymbol(children));
-	symbols.insert(Gurax_UserSymbol(url));
-	symbols.insert(Gurax_UserSymbol(title));
-	symbols.insert(Gurax_UserSymbol(attrs));
-	symbols.insert(Gurax_UserSymbol(align));
+	symbols.insert(Gurax_Symbol(type));
+	symbols.insert(Gurax_Symbol(text));
+	symbols.insert(Gurax_Symbol(children));
+	symbols.insert(Gurax_Symbol(url));
+	symbols.insert(Gurax_Symbol(title));
+	symbols.insert(Gurax_Symbol(attrs));
+	symbols.insert(Gurax_Symbol(align));
 	return true;
 }
 
@@ -297,30 +297,30 @@ Value Object_item::DoGetProp(Environment &env, const Symbol *pSymbol,
 							const SymbolSet &attrs, bool &evaluatedFlag)
 {
 	evaluatedFlag = true;
-	if (pSymbol->IsIdentical(Gurax_UserSymbol(type))) {
+	if (pSymbol->IsIdentical(Gurax_Symbol(type))) {
 		return Value(Symbol::Add(_pItem->GetTypeName()));
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(text))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(text))) {
 		const char *text = _pItem->GetText();
 		if (text == nullptr) return Value::Nil;
 		return Value(text);
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(children))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(children))) {
 		const ItemOwner *pItemOwner = _pItem->GetItemOwner();
 		if (pItemOwner == nullptr) return Value::Nil;
 		Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
 		return Value(new Object_iterator(env, pIterator));
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(url))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(url))) {
 		const char *url = _pItem->GetURL();
 		if (url == nullptr) return Value::Nil;
 		return Value(url);
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(title))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(title))) {
 		const char *title = _pItem->GetTitle();
 		if (title == nullptr) return Value::Nil;
 		return Value(title);
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(attrs))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(attrs))) {
 		const char *attrs = _pItem->GetAttrs();
 		if (attrs == nullptr) return Value::Nil;
 		return Value(attrs);
-	} else if (pSymbol->IsIdentical(Gurax_UserSymbol(align))) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(align))) {
 		Align align = _pItem->GetAlign();
 		return Value(
 			(align == ALIGN_Left)? Gurax_Symbol(left) :

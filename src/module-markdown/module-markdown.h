@@ -20,15 +20,15 @@ bool IsInlineTagName(const char *tagName);
 //------------------------------------------------------------------------------
 // symbols
 //------------------------------------------------------------------------------
-Gurax_DeclareUserSymbol(root);
-Gurax_DeclareUserSymbol(refs);
-Gurax_DeclareUserSymbol(type);
-Gurax_DeclareUserSymbol(text);
-Gurax_DeclareUserSymbol(children);
-Gurax_DeclareUserSymbol(url);
-Gurax_DeclareUserSymbol(title);
-Gurax_DeclareUserSymbol(attrs);
-Gurax_DeclareUserSymbol(align);
+Gurax_DeclareSymbol(root);
+Gurax_DeclareSymbol(refs);
+Gurax_DeclareSymbol(type);
+Gurax_DeclareSymbol(text);
+Gurax_DeclareSymbol(children);
+Gurax_DeclareSymbol(url);
+Gurax_DeclareSymbol(title);
+Gurax_DeclareSymbol(attrs);
+Gurax_DeclareSymbol(align);
 
 //------------------------------------------------------------------------------
 // Align

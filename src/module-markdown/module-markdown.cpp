@@ -66,15 +66,15 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Test));
 #if 0
 	// symbol realization
-	Gurax_RealizeUserSymbol(root);
-	Gurax_RealizeUserSymbol(refs);
-	Gurax_RealizeUserSymbol(type);
-	Gurax_RealizeUserSymbol(text);
-	Gurax_RealizeUserSymbol(children);
-	Gurax_RealizeUserSymbol(url);
-	Gurax_RealizeUserSymbol(title);
-	Gurax_RealizeUserSymbol(attrs);
-	Gurax_RealizeUserSymbol(align);
+	Gurax_RealizeSymbol(root);
+	Gurax_RealizeSymbol(refs);
+	Gurax_RealizeSymbol(type);
+	Gurax_RealizeSymbol(text);
+	Gurax_RealizeSymbol(children);
+	Gurax_RealizeSymbol(url);
+	Gurax_RealizeSymbol(title);
+	Gurax_RealizeSymbol(attrs);
+	Gurax_RealizeSymbol(align);
 	// class realization
 	Gurax_RealizeUserClass(document, env.LookupClass(VTYPE_object));
 	Gurax_RealizeUserClass(item, env.LookupClass(VTYPE_object));
