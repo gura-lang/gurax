@@ -27,120 +27,92 @@ Gurax_ImplementFunction(Item)
 	return argument.ReturnValue(processor, new Value_Item(pItem.release()));
 }
 
-#if 0
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// markdown.Item#MethodSkeleton(num1:Number, num2:Number):reduce
-Gurax_DeclareMethod(Item, MethodSkeleton)
+// markdown.Item#CountDescendant(type:Symbol)
+Gurax_DeclareMethod(Item, CountDescendant)
 {
-	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Item, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-// markdown.item#countdescendant(type:symbol)
-Gurax_DeclareMethod(item, countdescendant)
-{
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "type", VTYPE_symbol);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("type", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Count the number of descendant items of the specified type.");
 }
 
-Gurax_ImplementMethod(item, countdescendant)
+Gurax_ImplementMethod(Item, CountDescendant)
 {
-	Item *pItem = Object_item::GetObjectThis(arg)->GetItem();
-	const Symbol *pSymbol = arg.GetSymbol(0);
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Item& item = valueThis.GetItem();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
 	Item::Type type = Item::NameToType(pSymbol->GetName());
-	if (type == Item::TYPE_None) {
-		env.SetError(ERR_ValueError, "invalid symbol for item type: `%s", pSymbol->GetName());
-		return Value::Nil;
+	if (type == Item::Type::None) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for item type: `%s", pSymbol->GetName());
+		return Value::nil();
 	}
-	const ItemOwner *pItemOwner = pItem->GetItemOwner();
-	size_t cnt = (pItemOwner == nullptr)? 0 : Item::CountByType(*pItemOwner, type, true);
-	return Value(cnt);
+	// Function body
+	const ItemOwner *pItemOwner = item.GetItemOwner();
+	size_t cnt = pItemOwner? Item::CountByType(*pItemOwner, type, true) : 0;
+	return new Value_Number(cnt);
 }
 
-// markdown.item#print(indent?:number):void
-Gurax_DeclareMethod(item, print)
+// markdown.Item#Print(indent?:Number):void
+Gurax_DeclareMethod(Item, Print)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareArg(env, "indent", VTYPE_number, OCCUR_ZeroOrOnce);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("indent", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Prints structured content of the item.\n"
 		"Argument `indent` specifies an indentation level and is set to zero when omitted.\n");
 }
 
-Gurax_ImplementMethod(item, print)
+Gurax_ImplementMethod(Item, Print)
 {
-	Signal &sig = env.GetSignal();
-	Item *pItem = Object_item::GetObjectThis(arg)->GetItem();
-	int indentLevel = arg.Is_number(0)? arg.GetInt(0) : 0;
-	pItem->Print(sig, *env.GetConsole(), indentLevel);
-	return Value::Nil;
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Item& item = valueThis.GetItem();
+	// Arguments
+	ArgPicker args(argument);
+	int indentLevel = args.IsValid()? args.PickNumberNonNeg<int>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	item.Print(Basement::Inst.GetStreamCOut(), indentLevel);
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// markdown.Item#propSkeleton
-Gurax_DeclareProperty_R(Item, propSkeleton)
+// markdown.Item#type
+Gurax_DeclareProperty_R(Item, type)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Item, propSkeleton)
+Gurax_ImplementPropertyGetter(Item, type)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	Item& item = GetValueThis(valueTarget).GetItem();
+	return new Value_Symbol(Symbol::Add(item.GetTypeName()));
 }
 
-// markdown.item#type
-Gurax_DeclareProperty_R(item, type)
+#if 0
+// markdown.Item#text
+Gurax_DeclareProperty_R(Item, text)
 {
-	SetPropAttr(VTYPE_symbol);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(item, type)
-{
-	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
-	return Value(Symbol::Add(pItem->GetTypeName()));
-}
-
-// markdown.item#text
-Gurax_DeclareProperty_R(item, text)
-{
-	SetPropAttr(VTYPE_string, FLAG_Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(item, text)
+Gurax_ImplementPropertyGetter(Item, text)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *text = pItem->GetText();
@@ -148,16 +120,16 @@ Gurax_ImplementPropertyGetter(item, text)
 	return Value(text);
 }
 
-// markdown.item#children
-Gurax_DeclareProperty_R(item, children)
+// markdown.Item#children
+Gurax_DeclareProperty_R(Item, children)
 {
-	SetPropAttr(VTYPE_iterator);
+	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(item, children)
+Gurax_ImplementPropertyGetter(Item, children)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const ItemOwner *pItemOwner = pItem->GetItemOwner();
@@ -166,16 +138,16 @@ Gurax_ImplementPropertyGetter(item, children)
 	return Value(new Object_iterator(env, pIterator));
 }
 
-// markdown.item#url
-Gurax_DeclareProperty_R(item, url)
+// markdown.Item#url:nil
+Gurax_DeclareProperty_R(Item, url)
 {
-	SetPropAttr(VTYPE_string, FLAG_Nil);
+	Declare(VTYPE_String, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(item, url)
+Gurax_ImplementPropertyGetter(Item, url)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *url = pItem->GetURL();
@@ -183,16 +155,16 @@ Gurax_ImplementPropertyGetter(item, url)
 	return Value(url);
 }
 
-// markdown.item#title
-Gurax_DeclareProperty_R(item, title)
+// markdown.Item#title:nil
+Gurax_DeclareProperty_R(Item, title)
 {
-	SetPropAttr(VTYPE_string, FLAG_Nil);
+	Declare(VTYPE_String, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(item, title)
+Gurax_ImplementPropertyGetter(Item, title)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *title = pItem->GetTitle();
@@ -200,16 +172,16 @@ Gurax_ImplementPropertyGetter(item, title)
 	return Value(title);
 }
 
-// markdown.item#attrs
-Gurax_DeclareProperty_R(item, attrs)
+// markdown.Item#attrs:nil
+Gurax_DeclareProperty_R(Item, attrs)
 {
-	SetPropAttr(VTYPE_string, FLAG_Nil);
+	Declare(VTYPE_String, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(item, attrs)
+Gurax_ImplementPropertyGetter(Item, attrs)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	const char *rtn = pItem->GetAttrs();
@@ -217,16 +189,16 @@ Gurax_ImplementPropertyGetter(item, attrs)
 	return Value(rtn);
 }
 
-// markdown.item#align
-Gurax_DeclareProperty_R(item, align)
+// markdown.Item#align:nil
+Gurax_DeclareProperty_R(Item, align)
 {
-	SetPropAttr(VTYPE_symbol);
+	Declare(VTYPE_Symbol, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"`` `none``, `` `left``, `` `center``, `` `right``");
 }
 
-Gurax_ImplementPropertyGetter(item, align)
+Gurax_ImplementPropertyGetter(Item, align)
 {
 	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
 	Align align = pItem->GetAlign();
@@ -247,23 +219,17 @@ void VType_Item::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Item));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Item, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Item, CountDescendant));
+	Assign(Gurax_CreateMethod(Item, Print));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Item, propSkeleton));
+	Assign(Gurax_CreateProperty(Item, type));
 #if 0
-	// Assignment of property
-	Gurax_AssignProperty(item, type);
-	Gurax_AssignProperty(item, text);
-	Gurax_AssignProperty(item, children);
-	Gurax_AssignProperty(item, url);
-	Gurax_AssignProperty(item, title);
-	Gurax_AssignProperty(item, attrs);
-	Gurax_AssignProperty(item, align);
-	// Assignment of method
-	Gurax_AssignMethod(item, countdescendant);
-	Gurax_AssignMethod(item, print);
-	// Assignment of value
-	Gurax_AssignValue(item, Value(Reference()));
+	Assign(Gurax_CreateProperty(Item, text));
+	Assign(Gurax_CreateProperty(Item, children));
+	Assign(Gurax_CreateProperty(Item, url));
+	Assign(Gurax_CreateProperty(Item, title));
+	Assign(Gurax_CreateProperty(Item, attrs));
+	Assign(Gurax_CreateProperty(Item, align));
 #endif
 }
 

@@ -228,10 +228,10 @@ Gurax_ImplementFunction(${className})
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// ${dotClassName}#MethodSkeleton(num1:Number, num2:Number):reduce
+// ${dotClassName}#MethodSkeleton(num1:Number, num2:Number)
 Gurax_DeclareMethod(${className}, MethodSkeleton)
 {
-	Declare(VTYPE_List, Flag::Reduce);
+	Declare(VTYPE_List, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
