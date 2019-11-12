@@ -102,7 +102,7 @@ Gurax_ImplementMethod(document, countitem)
 		env.SetError(ERR_ValueError, "invalid symbol for item type: `%s", pSymbol->GetName());
 		return Value::Nil;
 	}
-	size_t cnt = pDocument->GetItemRoot()->GetItemOwner()->CountByType(type, true);
+	size_t cnt = Item::CountByType(*pDocument->GetItemRoot()->GetItemOwner(), type, true);
 	return Value(cnt);
 }
 

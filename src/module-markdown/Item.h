@@ -150,6 +150,7 @@ public:
 	void Print(Stream& stream, int indentLevel) const;
 	static const char* TypeToName(Type type);
 	static Type NameToType(const char* name);
+	static size_t CountByType(const ItemList& itemList, Type type, bool recursiveFlag);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Item& other) const { return this == &other; }

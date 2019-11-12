@@ -74,7 +74,7 @@ Gurax_ImplementMethod(item, countdescendant)
 		return Value::Nil;
 	}
 	const ItemOwner *pItemOwner = pItem->GetItemOwner();
-	size_t cnt = (pItemOwner == nullptr)? 0 : pItemOwner->CountByType(type, true);
+	size_t cnt = (pItemOwner == nullptr)? 0 : Item::CountByType(*pItemOwner, type, true);
 	return Value(cnt);
 }
 

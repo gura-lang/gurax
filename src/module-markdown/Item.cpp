@@ -136,6 +136,19 @@ Item::Type Item::NameToType(const char* name)
 	return Type::None;
 }
 
+size_t Item::CountByType(const ItemList& itemList, Type type, bool recursiveFlag)
+{
+	size_t cnt = 0;
+	for (Item* pItem : itemList) {
+		if (pItem->GetType() == type) cnt++;
+		if (recursiveFlag) {
+			ItemOwner *pItemOwner = pItem->GetItemOwner();
+			if (pItemOwner != nullptr) cnt += CountByType(*pItemOwner, type, recursiveFlag);
+		}
+	}
+	return cnt;
+}
+
 String Item::ToString(const StringStyle& ss) const
 {
 	return "Item";
@@ -155,23 +168,6 @@ Item* ItemList::FindByRefId(const char* refId) const
 	return nullptr;
 }
 
-#if 0
-size_t ItemList::CountByType(Item::Type type, bool recursiveFlag) const
-{
-	size_t cnt = 0;
-#if 0
-	foreach_const (ItemList, ppItem, *this) {
-		Item *pItem = *ppItem;
-		if (pItem->GetType() == type) cnt++;
-		if (recursiveFlag) {
-			ItemOwner *pItemOwner = pItem->GetItemOwner();
-			if (pItemOwner != nullptr) cnt += pItemOwner->CountByType(type, recursiveFlag);
-		}
-	}
-#endif
-	return cnt;
-}
-#endif
 
 void ItemList::Print(Stream& stream, int indentLevel) const
 {
