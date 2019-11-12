@@ -60,17 +60,20 @@ Gurax_ImplementMethod(Document, MethodSkeleton)
 }
 
 // markdown.Document#CountItem(type:Symbol)
-Gurax_DeclareMethod(Document, countitem)
+Gurax_DeclareMethod(Document, CountItem)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareArg(env, "type", VTYPE_symbol);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("type", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Count the number of items of the specified type.");
 }
 
-Gurax_ImplementMethod(Document, countitem)
+Gurax_ImplementMethod(Document, CountItem)
 {
+	// Target
+	Document& document = GetValueThis(valueTarget).GetDocument();
+
 	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
 	const Symbol *pSymbol = arg.GetSymbol(0);
 	Item::Type type = Item::NameToType(pSymbol->GetName());
@@ -82,37 +85,38 @@ Gurax_ImplementMethod(Document, countitem)
 	return Value(cnt);
 }
 
-// markdown.document#parse(str:string):void
-Gurax_DeclareMethod(Document, parse)
+// markdown.Document#Parse(str:String):reduce
+Gurax_DeclareMethod(Document, Parse)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareArg(env, "str", VTYPE_string);
+	Declare(VTYPE_Document, Flag::Reduce);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Parses a Markdown text in a string.");
 }
 
-Gurax_ImplementMethod(Document, parse)
+Gurax_ImplementMethod(Document, Parse)
 {
-	Signal &sig = env.GetSignal();
+	// Target
+	Document& document = GetValueThis(valueTarget).GetDocument();
+
 	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
 	pDocument->ParseString(sig, arg.GetString(0));
 	return Value::Nil;
 }
 
-// markdown.document#read(stream:stream:r):void
-Gurax_DeclareMethod(Document, read)
+// markdown.Document#Read(stream:Stream:r):reduce
+Gurax_DeclareMethod(Document, Read)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareArg(env, "stream", VTYPE_stream, OCCUR_Once, FLAG_Read);
+	Declare(VTYPE_Document, Flag::Reduce);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Parses a Markdown text from a stream.");
 }
 
-Gurax_ImplementMethod(Document, read)
+Gurax_ImplementMethod(Document, Read)
 {
-	Signal &sig = env.GetSignal();
 	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
 	pDocument->ParseStream(sig, arg.GetStream(0));
 	return Value::Nil;
@@ -124,7 +128,7 @@ Gurax_ImplementMethod(Document, read)
 // markdown.document#refs
 Gurax_DeclareProperty_R(Document, refs)
 {
-	SetPropAttr(VTYPE_iterator);
+	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"An `iterator` that returns referee items as `markdown.item`.");
@@ -132,6 +136,9 @@ Gurax_DeclareProperty_R(Document, refs)
 
 Gurax_ImplementPropertyGetter(Document, refs)
 {
+	// Target
+	Document& document = GetValueThis(valueTarget).GetDocument();
+
 	Document *pDocument = Object_document::GetObject(valueThis)->GetDocument();
 	const ItemOwner *pItemOwner = pDocument->GetItemRefereeOwner();
 	Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
@@ -141,7 +148,7 @@ Gurax_ImplementPropertyGetter(Document, refs)
 // markdown.document#root
 Gurax_DeclareProperty_R(Document, root)
 {
-	SetPropAttr(VTYPE_item);
+	Declare(VTYPE_Item, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"The root item of the parsed Markdown document.");
@@ -149,24 +156,10 @@ Gurax_DeclareProperty_R(Document, root)
 
 Gurax_ImplementPropertyGetter(Document, root)
 {
-	Document *pDocument = Object_document::GetObject(valueThis)->GetDocument();
-	pDocument->ResolveReference();
-	return Value(new Object_item(pDocument->GetItemRoot()->Reference()));
-}
-
-// markdown.Document#propSkeleton
-Gurax_DeclareProperty_R(Document, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Document, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	// Target
+	Document& document = GetValueThis(valueTarget).GetDocument();
+	document.ResolveReference();
+	return new Value_Item(document.GetItemRoot()->Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -175,7 +168,6 @@ Gurax_ImplementPropertyGetter(Document, propSkeleton)
 // operator <<
 Gurax_ImplementBinaryOperator(Shl, document, string)
 {
-	Signal &sig = env.GetSignal();
 	Document *pDocument = Object_document::GetObject(valueLeft)->GetDocument();
 	const char *text = valueRight.GetString();
 	if (!pDocument->ParseString(sig, text)) return Value::Nil;
