@@ -19,7 +19,7 @@ Document::Document() :
 	_itemStack.push_back(_pItemRoot.get());
 }
 
-bool Document::ParseStream(Stream& stream)
+bool Document::ParseCharSeq(CharSeq& charSeq)
 {
 	enum class StatEx {
 		FirstRowTop,
@@ -38,7 +38,7 @@ bool Document::ParseStream(Stream& stream)
 	String guide;
 	StringList guideList;
 	for (;;) {
-		int chRaw;
+		char ch;
 		textPrefetch.clear();
 		int nTrailingRows = 0;
 		bool pipeFoundFlag = false;
@@ -47,8 +47,7 @@ bool Document::ParseStream(Stream& stream)
 		int indentLevelForCodeBlock = GetIndentLevelForCodeBlock();
 		int indentLevel = 0;
 		_indentLevelTableTop = 0;
-		while (prefetchFlag && (chRaw = stream.GetChar()) >= 0) {
-			char ch = static_cast<char>(static_cast<UChar>(chRaw));
+		while (prefetchFlag && (ch = charSeq.GetChar())) {
 			textPrefetch += ch;
 			Gurax_BeginPushbackRegionEx(char, 16, ch);
 			if (statEx == StatEx::FirstRowTop) {
@@ -191,15 +190,13 @@ bool Document::ParseStream(Stream& stream)
 	return true;
 }
 
-#if 0
-bool Document::ParseString(const char *text)
+bool Document::ParseString(const char* str)
 {
-	SimpleStream_CStringReader stream(text);
-	return ParseStream(sig, stream);
+	String::CharSeq charSeq(str);
+	return ParseCharSeq(charSeq);
 }
-#endif
 
-void Document::AddItemReferee(Item *pItem)
+void Document::AddItemReferee(Item* pItem)
 {
 	_pItemRefereeOwner->push_back(pItem);
 	_resolvedFlag = false;

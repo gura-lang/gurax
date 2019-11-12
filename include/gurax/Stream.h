@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Stream
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Stream : public Referable, public CharProvider {
+class GURAX_DLLDECLARE Stream : public Referable, public CharSeq {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Stream);

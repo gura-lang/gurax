@@ -165,7 +165,7 @@ public:
 protected:
 	~Document() = default;
 public:
-	bool ParseStream(Stream& stream);
+	bool ParseCharSeq(CharSeq& charSeq);
 	bool ParseString(const char* text);
 	void AddItemReferee(Item* pItem);
 	void ResolveReference();
