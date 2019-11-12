@@ -48,13 +48,9 @@ protected:
 	// Destructor
 	~Value_Document() = default;
 public:
-	Document& GetDocument() { return *_pDocument; }
-	const Document& GetDocument() const { return *_pDocument; }
+	Document& GetDocument() const { return *_pDocument; }
 public:
-	static Document& GetDocument(Value& value) {
-		return dynamic_cast<Value_Document&>(value).GetDocument();
-	}
-	static const Document& GetDocument(const Value& value) {
+	static Document& GetDocument(const Value& value) {
 		return dynamic_cast<const Value_Document&>(value).GetDocument();
 	}
 public:

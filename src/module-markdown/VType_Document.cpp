@@ -25,40 +25,16 @@ Gurax_ImplementFunction(Document)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream* pStream = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
+	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
 	// Function body
 	RefPtr<Document> pDocument(new Document());
-	if (pStream && !pDocument->ParseCharSeq(*pStream)) return Value::nil();
+	if (pStream && !pDocument->ParseStream(*pStream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Document(pDocument.release()));
 }
 
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-#if 0
-// markdown.Document#MethodSkeleton(num1:Number, num2:Number):reduce
-Gurax_DeclareMethod(Document, MethodSkeleton)
-{
-	Declare(VTYPE_List, Flag::Reduce);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Document, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
-
 // markdown.Document#CountItem(type:Symbol)
 Gurax_DeclareMethod(Document, CountItem)
 {
@@ -72,17 +48,18 @@ Gurax_DeclareMethod(Document, CountItem)
 Gurax_ImplementMethod(Document, CountItem)
 {
 	// Target
-	Document& document = GetValueThis(valueTarget).GetDocument();
-
-	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
-	const Symbol *pSymbol = arg.GetSymbol(0);
-	Item::Type type = Item::NameToType(pSymbol->GetName());
-	if (type == Item::TYPE_None) {
-		env.SetError(ERR_ValueError, "invalid symbol for item type: `%s", pSymbol->GetName());
-		return Value::Nil;
+	Document& document = GetValueThis(argument).GetDocument();
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	Item::Type type = Item::SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
+	if (type == Item::Type::None) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for item type: `%s", pSymbol->GetName());
+		return Value::nil();
 	}
-	size_t cnt = Item::CountByType(*pDocument->GetItemRoot()->GetItemOwner(), type, true);
-	return Value(cnt);
+	// Function body
+	size_t cnt = Item::CountByType(*document.GetItemRoot().GetItemOwner(), type, true);
+	return new Value_Number(cnt);
 }
 
 // markdown.Document#Parse(str:String):reduce
@@ -98,11 +75,13 @@ Gurax_DeclareMethod(Document, Parse)
 Gurax_ImplementMethod(Document, Parse)
 {
 	// Target
-	Document& document = GetValueThis(valueTarget).GetDocument();
-
-	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
-	pDocument->ParseString(sig, arg.GetString(0));
-	return Value::Nil;
+	Document& document = GetValueThis(argument).GetDocument();
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.PickString();
+	// Function body
+	if (!document.ParseString(str)) return Value::nil();
+	return argument.GetValueThis().Reference();
 }
 
 // markdown.Document#Read(stream:Stream:r):reduce
@@ -117,32 +96,34 @@ Gurax_DeclareMethod(Document, Read)
 
 Gurax_ImplementMethod(Document, Read)
 {
-	Document *pDocument = Object_document::GetObjectThis(arg)->GetDocument();
-	pDocument->ParseStream(sig, arg.GetStream(0));
-	return Value::Nil;
+	// Target
+	Document& document = GetValueThis(argument).GetDocument();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	// Function body
+	if (!document.ParseStream(stream)) return Value::nil();
+	return argument.GetValueThis().Reference();
 }
 
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// markdown.document#refs
+// markdown.Document#refs
 Gurax_DeclareProperty_R(Document, refs)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"An `iterator` that returns referee items as `markdown.item`.");
+		"An `iterator` that returns referee items typed as `markdown.Item`.");
 }
 
 Gurax_ImplementPropertyGetter(Document, refs)
 {
 	// Target
 	Document& document = GetValueThis(valueTarget).GetDocument();
-
-	Document *pDocument = Object_document::GetObject(valueThis)->GetDocument();
-	const ItemOwner *pItemOwner = pDocument->GetItemRefereeOwner();
-	Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
-	return Value(new Object_iterator(env, pIterator));
+	RefPtr<Iterator> pIterator(new Iterator_Item(document.GetItemRefereeOwner().Reference()));
+	return new Value_Iterator(pIterator.release());
 }
 
 // markdown.document#root
@@ -159,21 +140,20 @@ Gurax_ImplementPropertyGetter(Document, root)
 	// Target
 	Document& document = GetValueThis(valueTarget).GetDocument();
 	document.ResolveReference();
-	return new Value_Item(document.GetItemRoot()->Reference());
+	return new Value_Item(document.GetItemRoot().Reference());
 }
 
 //------------------------------------------------------------------------------
 // Implementation of operators
 //------------------------------------------------------------------------------
 // operator <<
-Gurax_ImplementBinaryOperator(Shl, document, string)
+Gurax_ImplementOpBinary(Shl, Document, String)
 {
-	Document *pDocument = Object_document::GetObject(valueLeft)->GetDocument();
-	const char *text = valueRight.GetString();
-	if (!pDocument->ParseString(sig, text)) return Value::Nil;
-	return valueLeft;
+	Document& document = Value_Document::GetDocument(valueL);
+	const char* str = Value_String::GetString(valueR);
+	if (!document.ParseString(str)) return Value::nil();
+	return valueL.Reference();
 }
-#endif
 
 //------------------------------------------------------------------------------
 // VType_Document
@@ -182,76 +162,22 @@ VType_Document VTYPE_Document("Document");
 
 void VType_Document::DoPrepare(Frame& frameOuter)
 {
-#if 0
-	// Assignment of property
-	Gurax_AssignProperty(Document, refs);
-	Gurax_AssignProperty(Document, root);
-	// Assignment of function
-	Gurax_AssignFunction(Document);
-	// Assignment of method
-	Gurax_AssignMethod(Document, countitem);
-	Gurax_AssignMethod(Document, parse);
-	Gurax_AssignMethod(Document, read);
-#endif
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Document));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Document, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Document, CountItem));
+	Assign(Gurax_CreateMethod(Document, Parse));
+	Assign(Gurax_CreateMethod(Document, Read));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Document, propSkeleton));
+	Assign(Gurax_CreateProperty(Document, refs));
+	Assign(Gurax_CreateProperty(Document, root));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Shl, Document, String);
 }
 
 //------------------------------------------------------------------------------
 // Value_Document
 //------------------------------------------------------------------------------
 VType& Value_Document::vtype = VTYPE_Document;
-
-#if 0
-Object *Object_document::Clone() const
-{
-	return nullptr;
-}
-
-#if 0
-bool Object_document::DoDirProp(Environment &env, SymbolSet &symbols)
-{
-	Signal &sig = GetSignal();
-	if (!Object::DoDirProp(env, symbols)) return false;
-	symbols.insert(Gurax_Symbol(refs));
-	symbols.insert(Gurax_Symbol(root));
-	return true;
-}
-
-Value Object_document::DoGetProp(Environment &env, const Symbol *pSymbol,
-							const SymbolSet &attrs, bool &evaluatedFlag)
-{
-	evaluatedFlag = true;
-	if (pSymbol->IsIdentical(Gurax_Symbol(refs))) {
-		const ItemOwner *pItemOwner = _pDocument->GetItemRefereeOwner();
-		Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
-		return Value(new Object_iterator(env, pIterator));
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(root))) {
-		_pDocument->ResolveReference();
-		return Value(new Object_item(_pDocument->GetItemRoot()->Reference()));
-	}
-	evaluatedFlag = false;
-	return Value::Nil;
-}
-
-Value Object_document::DoSetProp(Environment &env, const Symbol *pSymbol, const Value &value,
-							const SymbolSet &attrs, bool &evaluatedFlag)
-{
-	return Value::Nil;
-}
-#endif
-
-String Object_document::ToString(bool exprFlag)
-{
-	String rtn;
-	rtn += "<markdown.document";
-	rtn += ">";
-	return rtn;
-}
-#endif
 
 Gurax_EndModuleScope(markdown)

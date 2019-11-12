@@ -166,13 +166,12 @@ protected:
 	~Document() = default;
 public:
 	bool ParseCharSeq(CharSeq& charSeq);
+	bool ParseStream(Stream& stream) { return ParseCharSeq(stream); }
 	bool ParseString(const char* str);
 	void AddItemReferee(Item* pItem);
 	void ResolveReference();
-	const Item* GetItemRoot() { return _pItemRoot.get(); }
-	const ItemOwner* GetItemRefereeOwner() const {
-		return _pItemRefereeOwner.get();
-	}
+	const Item& GetItemRoot() { return *_pItemRoot; }
+	const ItemOwner& GetItemRefereeOwner() const { return *_pItemRefereeOwner; }
 private:
 	bool FeedChars(const String& text);
 	bool FeedChar(char ch);
