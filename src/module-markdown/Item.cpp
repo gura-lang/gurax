@@ -8,37 +8,6 @@ Gurax_BeginModuleScope(markdown)
 //------------------------------------------------------------------------------
 // Item
 //------------------------------------------------------------------------------
-const Item::TypeNamePair Item::_typeNamePairs[] = {
-	{ Type::None,			"none",			},
-	{ Type::Root,			"root",			},	// container
-	{ Type::Header1,		"h1",			},	// container
-	{ Type::Header2,		"h2",			},	// container
-	{ Type::Header3,		"h3",			},	// container
-	{ Type::Header4,		"h4",			},	// container
-	{ Type::Header5,		"h5",			},	// container
-	{ Type::Header6,		"h6",			},	// container
-	{ Type::Paragraph,		"p",			},	// container
-	{ Type::BlockQuote,		"blockquote",	},	// container
-	{ Type::Emphasis,		"em",			},	// container
-	{ Type::Strong,			"strong",		},	// container
-	{ Type::Strike,			"strike",		},	// container
-	{ Type::CodeBlock,		"codeblock",	},	// container
-	{ Type::OList,			"ol",			},	// container
-	{ Type::UList,			"ul",			},	// container
-	{ Type::ListItem,		"li",			},	// container
-	{ Type::Line,			"line",			},	// container
-	{ Type::Link,			"a",			},	// container
-	{ Type::Image,			"img",			},	// text
-	{ Type::Text,			"text",			},	// text
-	{ Type::Comment,		"comment",		},	// text
-	{ Type::Code,			"code",			},	// text
-	{ Type::Entity,			"entity",		},	// text
-	{ Type::Tag,			"tag",			},	// container and text (attributes)
-	{ Type::HorzRule,		"hr",			},	// no-content
-	{ Type::LineBreak,		"br",			},	// no-content
-	{ Type::Referee,		"referee",		},	// no-content
-};
-
 Item::Item(Type type) :
 	_type(type), _align(Align::None),
 	_indentLevel(0), _indentLevelItemBody(0), _markdownAcceptableFlag(true)
@@ -75,19 +44,11 @@ bool Item::StripText(bool stripLeftFlag, bool stripRightFlag)
 	return *GetText() == '\0';
 }
 
-const char *Item::GetTypeName() const
-{
-	for (int i = 0; i < ArraySizeOf(_typeNamePairs); i++) {
-		if (_typeNamePairs[i].type == _type) return _typeNamePairs[i].name;
-	}
-	return "?";
-}
-
 void Item::Print(Stream& stream, int indentLevel) const
 {
 	for (int i = 0; i < indentLevel; i++) stream.Print("  ");
 	stream.Print("<");
-	stream.Print(GetTypeName());
+	stream.Print(SymbolAssoc_Type::GetInstance().ToSymbol(GetType())->GetName());
 	if (_pURL) {
 		stream.Print(" url='");
 		stream.Print(_pURL->c_str());
@@ -118,22 +79,6 @@ void Item::Print(Stream& stream, int indentLevel) const
 	if (_pItemOwner) {
 		_pItemOwner->Print(stream, indentLevel + 1);
 	}
-}
-
-const char *Item::TypeToName(Type type)
-{
-	for (int i = 0; i < ArraySizeOf(_typeNamePairs); i++) {
-		if (_typeNamePairs[i].type == type) return _typeNamePairs[i].name;
-	}
-	return "?";
-}
-
-Item::Type Item::NameToType(const char* name)
-{
-	for (int i = 0; i < ArraySizeOf(_typeNamePairs); i++) {
-		if (::strcmp(_typeNamePairs[i].name, name) == 0) return _typeNamePairs[i].type;
-	}
-	return Type::None;
 }
 
 size_t Item::CountByType(const ItemList& itemList, Type type, bool recursiveFlag)

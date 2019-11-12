@@ -74,12 +74,42 @@ public:
 		LineBreak,		// no-content
 		Referee,		// no-content
 	};
-	struct TypeNamePair {
-		Type type;
-		const char* name;
+	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
+	public:
+		SymbolAssoc_Type() {
+			Assoc(Symbol::Add("Root"),		Type::Root);		// container, can be a parent
+			Assoc(Symbol::Add("Header1"),	Type::Header1);		// container
+			Assoc(Symbol::Add("Header2"),	Type::Header2);		// container
+			Assoc(Symbol::Add("Header3"),	Type::Header3);		// container
+			Assoc(Symbol::Add("Header4"),	Type::Header4);		// container
+			Assoc(Symbol::Add("Header5"),	Type::Header5);		// container
+			Assoc(Symbol::Add("Header6"),	Type::Header6);		// container
+			Assoc(Symbol::Add("Paragraph"),	Type::Paragraph);	// container
+			Assoc(Symbol::Add("BlockQuote"),Type::BlockQuote);	// container, can be a parent
+			Assoc(Symbol::Add("Emphasis"),	Type::Emphasis);	// container
+			Assoc(Symbol::Add("Strong"),	Type::Strong);		// container
+			Assoc(Symbol::Add("Strike"),	Type::Strike);		// container
+			Assoc(Symbol::Add("CodeBlock"),	Type::CodeBlock);	// container, can be a parent
+			Assoc(Symbol::Add("OList"),		Type::OList);		// container, can be a parent
+			Assoc(Symbol::Add("UList"),		Type::UList);		// container, can be a parent
+			Assoc(Symbol::Add("ListItem"),	Type::ListItem);	// container, can be a parent
+			Assoc(Symbol::Add("Line"),		Type::Line);		// container
+			Assoc(Symbol::Add("Link"),		Type::Link);		// container
+			Assoc(Symbol::Add("Image"),		Type::Image);		// text
+			Assoc(Symbol::Add("Text"),		Type::Text);		// text
+			Assoc(Symbol::Add("Comment"),	Type::Comment);		// text
+			Assoc(Symbol::Add("Code"),		Type::Code);		// text
+			Assoc(Symbol::Add("Entity"),	Type::Entity);		// text
+			Assoc(Symbol::Add("Tag"),		Type::Tag);			// container and text (attributes), can be a parent
+			Assoc(Symbol::Add("HorzRule"),	Type::HorzRule);	// no-content
+			Assoc(Symbol::Add("LineBreak"),	Type::LineBreak);	// no-content
+			Assoc(Symbol::Add("Referee"),	Type::Referee);		// no-content
+		}
+		static const SymbolAssoc& GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Type());
+		}
 	};
-private:
-	static const TypeNamePair _typeNamePairs[];
 private:
 	Type _type;
 	RefPtr<ItemOwner> _pItemOwner;
@@ -146,10 +176,7 @@ public:
 	int GetIndentLevelItemBody() const { return _indentLevelItemBody; }
 	bool GetMarkdownAcceptableFlag() const { return _markdownAcceptableFlag; }
 	bool StripText(bool stripLeftFlag, bool stripRightFlag);
-	const char* GetTypeName() const;
 	void Print(Stream& stream, int indentLevel) const;
-	static const char* TypeToName(Type type);
-	static Type NameToType(const char* name);
 	static size_t CountByType(const ItemList& itemList, Type type, bool recursiveFlag);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -47,7 +47,7 @@ Gurax_ImplementMethod(Item, CountDescendant)
 	// Arguments
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
-	Item::Type type = Item::NameToType(pSymbol->GetName());
+	Item::Type type = Item::SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
 	if (type == Item::Type::None) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for item type: `%s", pSymbol->GetName());
 		return Value::nil();
@@ -97,7 +97,7 @@ Gurax_DeclareProperty_R(Item, type)
 Gurax_ImplementPropertyGetter(Item, type)
 {
 	Item& item = GetValueThis(valueTarget).GetItem();
-	return new Value_Symbol(Symbol::Add(item.GetTypeName()));
+	return new Value_Symbol(Item::SymbolAssoc_Type::GetInstance().ToSymbol(item.GetType()));
 }
 
 // markdown.Item#text:nil

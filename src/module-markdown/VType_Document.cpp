@@ -59,7 +59,7 @@ Gurax_ImplementMethod(Document, MethodSkeleton)
 	return new Value_Number(num1 + num2);
 }
 
-// markdown.document#countitem(type:symbol)
+// markdown.Document#CountItem(type:Symbol)
 Gurax_DeclareMethod(Document, countitem)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
