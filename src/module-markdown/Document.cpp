@@ -2355,62 +2355,62 @@ bool Document::IsHorzRule(const char *text)
 
 bool Document::IsLink(const char *text)
 {
-	enum class Stat {
+	enum class StatEx {
 		Begin,
 		Head,
 		EMail,
 		EMailDot,
 		EMailAfterDot,
 		URL,
-	} stat = Stat::Begin;
+	} statEx = StatEx::Begin;
 	String head;
 	for (const char *p = text; ; p++) {
 		char ch = *p;
-		switch (stat) {
-		case Stat::Begin: {
+		switch (statEx) {
+		case StatEx::Begin: {
 			if (String::IsAlpha(ch)) {
 				head += ch;
-				stat = Stat::Head;
+				statEx = StatEx::Head;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::Head: {
+		case StatEx::Head: {
 			if (String::IsAlpha(ch)) {
 				head += ch;
 			} else if (ch == '@') {
-				stat = Stat::EMail;
+				statEx = StatEx::EMail;
 			} else if (ch == ':') {
-				stat = Stat::URL;
+				statEx = StatEx::URL;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::EMail: {
+		case StatEx::EMail: {
 			if (String::IsAlpha(ch)) {
 				// nothing to do
 			} else if (ch == '.') {
-				stat = Stat::EMailDot;
+				statEx = StatEx::EMailDot;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::EMailDot: {
+		case StatEx::EMailDot: {
 			if (String::IsAlpha(ch)) {
-				stat = Stat::EMailAfterDot;
+				statEx = StatEx::EMailAfterDot;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::EMailAfterDot: {
+		case StatEx::EMailAfterDot: {
 			if (String::IsAlpha(ch)) {
 				// nothing to do
 			} else if (ch == '.') {
-				stat = Stat::EMailDot;
+				statEx = StatEx::EMailDot;
 			} else if (ch == '\0') {
 				// nothing to do
 			} else {
@@ -2418,7 +2418,7 @@ bool Document::IsLink(const char *text)
 			}
 			break;
 		}
-		case Stat::URL: {
+		case StatEx::URL: {
 			if (String::IsURIC(ch)) {
 				// nothing to do
 			} else if (ch == '\0') {
@@ -2439,65 +2439,65 @@ bool Document::IsLink(const char *text)
 bool Document::IsBeginTag(const char *text, String &tagName,
 						  String &attrs, bool &closedFlag, bool &markdownAcceptableFlag)
 {
-	enum class Stat {
+	enum class StatEx {
 		Begin,
 		AfterSpecialChar,
 		TagName,
 		AttrsPre,
 		Attrs,
 		Slash,
-	} stat = Stat::Begin;
+	} statEx = StatEx::Begin;
 	tagName.clear();
 	attrs.clear();
 	closedFlag = false;
 	markdownAcceptableFlag = false;
 	for (const char *p = text; ; p++) {
 		char ch = *p;
-		switch (stat) {
-		case Stat::Begin: {
+		switch (statEx) {
+		case StatEx::Begin: {
 			if (IsTagNameFirst(ch)) {
 				tagName += ch;
-				stat = Stat::TagName;
+				statEx = StatEx::TagName;
 			} else if (ch == '@') {
 				// A special form of tag <@tag> within which MarkDown format is acceptable.
 				markdownAcceptableFlag = true;
-				stat = Stat::AfterSpecialChar;
+				statEx = StatEx::AfterSpecialChar;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::AfterSpecialChar: {
+		case StatEx::AfterSpecialChar: {
 			if (IsTagNameFirst(ch)) {
 				tagName += ch;
-				stat = Stat::TagName;
+				statEx = StatEx::TagName;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::TagName: {
+		case StatEx::TagName: {
 			if (IsTagNameFollower(ch)) {
 				tagName += ch;
 			} else if (ch == '/') {
-				stat = Stat::Slash;
+				statEx = StatEx::Slash;
 			} else if (ch == '\0') {
 				// nothing to do
 			} else if (ch == ' ' || ch == '\t') {
-				stat = Stat::AttrsPre;
+				statEx = StatEx::AttrsPre;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::AttrsPre: {
+		case StatEx::AttrsPre: {
 			if (ch == ' ' || ch == '\t') {
 				// nothing to do
 			} else if (String::IsAlpha(ch)) {
 				attrs += ch;
-				stat = Stat::Attrs;
+				statEx = StatEx::Attrs;
 			} else if (ch == '/') {
-				stat = Stat::Slash;
+				statEx = StatEx::Slash;
 			} else if (ch == '\0') {
 				return false;	// not allow "<hoge  >"
 			} else {
@@ -2505,23 +2505,23 @@ bool Document::IsBeginTag(const char *text, String &tagName,
 			}
 			break;
 		}
-		case Stat::Attrs: {
+		case StatEx::Attrs: {
 			if (ch == '\0') {
 				// nothing to do
 			} else if (ch == '/') {
-				stat = Stat::Slash;
+				statEx = StatEx::Slash;
 			} else {
 				attrs += ch;
 			}
 			break;
 		}
-		case Stat::Slash: {
+		case StatEx::Slash: {
 			if (ch == '\0') {
 				closedFlag = true;
 			} else {
 				attrs += '/';
 				attrs += ch;
-				stat = Stat::Attrs;
+				statEx = StatEx::Attrs;
 			}
 			break;
 		}
@@ -2533,46 +2533,46 @@ bool Document::IsBeginTag(const char *text, String &tagName,
 
 bool Document::IsEndTag(const char *text, String &tagName)
 {
-	enum class Stat {
+	enum class StatEx {
 		Begin,
 		TagNameFirst,
 		AfterSpecialChar,
 		TagName,
-	} stat = Stat::Begin;
+	} statEx = StatEx::Begin;
 	tagName.clear();
 	for (const char *p = text; ; p++) {
 		char ch = *p;
-		switch (stat) {
-		case Stat::Begin: {
+		switch (statEx) {
+		case StatEx::Begin: {
 			if (ch == '/') {
-				stat = Stat::TagNameFirst;
+				statEx = StatEx::TagNameFirst;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::TagNameFirst: {
+		case StatEx::TagNameFirst: {
 			if (IsTagNameFirst(ch)) {
 				tagName += ch;
-				stat = Stat::TagName;
+				statEx = StatEx::TagName;
 			} else if (ch == '@') {
 				// A special form of tag: </@tag>.
-				stat = Stat::AfterSpecialChar;
+				statEx = StatEx::AfterSpecialChar;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::AfterSpecialChar: {
+		case StatEx::AfterSpecialChar: {
 			if (IsTagNameFirst(ch)) {
 				tagName += ch;
-				stat = Stat::TagName;
+				statEx = StatEx::TagName;
 			} else {
 				return false;
 			}
 			break;
 		}
-		case Stat::TagName: {
+		case StatEx::TagName: {
 			if (IsTagNameFollower(ch)) {
 				tagName += ch;
 			} else if (ch == '\0') {

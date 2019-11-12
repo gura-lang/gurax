@@ -166,7 +166,7 @@ protected:
 	~Document() = default;
 public:
 	bool ParseCharSeq(CharSeq& charSeq);
-	bool ParseString(const char* text);
+	bool ParseString(const char* str);
 	void AddItemReferee(Item* pItem);
 	void ResolveReference();
 	const Item* GetItemRoot() { return _pItemRoot.get(); }
