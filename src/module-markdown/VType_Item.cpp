@@ -53,7 +53,7 @@ Gurax_ImplementMethod(Item, CountDescendant)
 		return Value::nil();
 	}
 	// Function body
-	const ItemOwner *pItemOwner = item.GetItemOwner();
+	const ItemOwner* pItemOwner = item.GetItemOwner();
 	size_t cnt = pItemOwner? Item::CountByType(*pItemOwner, type, true) : 0;
 	return new Value_Number(cnt);
 }
