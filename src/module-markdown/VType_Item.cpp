@@ -43,8 +43,7 @@ Gurax_DeclareMethod(Item, CountDescendant)
 Gurax_ImplementMethod(Item, CountDescendant)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
-	Item& item = valueThis.GetItem();
+	Item& item = GetValueThis(argument).GetItem();
 	// Arguments
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
@@ -73,8 +72,7 @@ Gurax_DeclareMethod(Item, Print)
 Gurax_ImplementMethod(Item, Print)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
-	Item& item = valueThis.GetItem();
+	Item& item = GetValueThis(argument).GetItem();
 	// Arguments
 	ArgPicker args(argument);
 	int indentLevel = args.IsValid()? args.PickNumberNonNeg<int>() : 0;
@@ -103,10 +101,10 @@ Gurax_ImplementPropertyGetter(Item, type)
 }
 
 #if 0
-// markdown.Item#text
+// markdown.Item#text:nil
 Gurax_DeclareProperty_R(Item, text)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_String, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -114,16 +112,15 @@ Gurax_DeclareProperty_R(Item, text)
 
 Gurax_ImplementPropertyGetter(Item, text)
 {
-	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
-	const char *text = pItem->GetText();
-	if (text == nullptr) return Value::Nil;
-	return Value(text);
+	Item& item = GetValueThis(valueTarget).GetItem();
+	const char* text = item.GetText();
+	return text? new Value_String(text) : Value::nil();
 }
 
-// markdown.Item#children
+// markdown.Item#children:nil
 Gurax_DeclareProperty_R(Item, children)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Iterator, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -131,11 +128,9 @@ Gurax_DeclareProperty_R(Item, children)
 
 Gurax_ImplementPropertyGetter(Item, children)
 {
-	Item *pItem = Object_item::GetObject(valueThis)->GetItem();
-	const ItemOwner *pItemOwner = pItem->GetItemOwner();
-	if (pItemOwner == nullptr) return Value::Nil;
-	Iterator *pIterator = new Iterator_item(pItemOwner->Reference());
-	return Value(new Object_iterator(env, pIterator));
+	Item& item = GetValueThis(valueTarget).GetItem();
+	const ItemOwner* pItemOwner = item.GetItemOwner();
+	return pItemOwner? new Value_Iterator(new Iterator_Item(pItemOwner->Reference()) : Value::nil();
 }
 
 // markdown.Item#url:nil

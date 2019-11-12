@@ -229,41 +229,21 @@ int ItemStack::CountQuoteLevel() const
 	return quoteLevel;
 }
 
-#if 0
 //------------------------------------------------------------------------------
-// Iterator_item
+// Iterator_Item
 //------------------------------------------------------------------------------
-Iterator_item::Iterator_item(ItemOwner *pItemOwner) :
-						Iterator(Finite), _idxItem(0), _pItemOwner(pItemOwner)
+Value* Iterator_Item::DoNextValue()
 {
+	if (_idx >= GetItemOwner().size()) return nullptr;
+	const Item* pItem = (*_pItemOwner)[_idx++];
+	return new Value_Item(pItem->Reference());
 }
 
-Iterator *Iterator_item::GetSource()
-{
-	return nullptr;
-}
-
-bool Iterator_item::DoNext(Environment &env, Value &value)
-{
-	if (_idxItem < _pItemOwner->size()) {
-		Item *pItem = (*_pItemOwner)[_idxItem++];
-		value = Value(new Object_item(pItem->Reference()));
-		return true;
-	}
-	return false;
-}
-
-String Iterator_item::ToString() const
+String Iterator_Item::ToString(const StringStyle& ss) const
 {
 	String rtn;
-	rtn += "<iterator:markdown.item";
-	rtn += ">";
+	rtn += "markdown.Item";
 	return rtn;
 }
-
-void Iterator_item::GatherFollower(Environment::Frame *pFrame, EnvironmentSet &envSet)
-{
-}
-#endif
 
 Gurax_EndModuleScope(markdown)

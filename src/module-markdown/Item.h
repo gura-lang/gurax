@@ -184,8 +184,27 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_item
+// Iterator_Item
 //------------------------------------------------------------------------------
+class Iterator_Item : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("markdown.Iterator_Item");
+private:
+	RefPtr<ItemOwner> _pItemOwner;
+	size_t _idx;
+public:
+	Iterator_Item(ItemOwner* pItemOwner) : _pItemOwner(pItemOwner), _idx(0) {}
+public:
+	ItemOwner& GetItemOwner() { return *_pItemOwner; }
+	const ItemOwner& GetItemOwner() const { return *_pItemOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetItemOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
 
 Gurax_EndModuleScope(markdown)
 
