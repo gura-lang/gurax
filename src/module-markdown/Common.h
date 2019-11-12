@@ -35,6 +35,19 @@ enum Align { None, Left, Center, Right };
 
 using AlignList = std::vector<Align>;
 
+class SymbolAssoc_Align : public SymbolAssoc<Align, Align::None> {
+public:
+	SymbolAssoc_Align() {
+		Assoc(Gurax_Symbol(left),	Align::Left);
+		Assoc(Gurax_Symbol(center),	Align::Center);
+		Assoc(Gurax_Symbol(right),	Align::Right);
+	}
+	static const SymbolAssoc& GetInstance() {
+		static SymbolAssoc* pSymbolAssoc = nullptr;
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Align());
+	}
+};
+
 //------------------------------------------------------------------------------
 // Utilities
 //------------------------------------------------------------------------------
