@@ -23,10 +23,10 @@ bool Template::ParseStream_(Stream& streamSrc, bool autoIndentFlag, bool appendL
 {
 	Parser parser(*this, streamSrc.GetName(), autoIndentFlag, appendLastEOLFlag);
 	for (;;) {
-		int chRaw = streamSrc.GetChar();
+		char ch = streamSrc.GetChar();
 		if (Error::IsIssued()) return false;
-		if (chRaw < 0) break;
-		if (!parser.FeedChar(static_cast<char>(chRaw))) return false;
+		if (!ch) break;
+		if (!parser.FeedChar(ch)) return false;
 	}
 	return parser.Flush();
 }

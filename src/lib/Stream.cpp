@@ -40,22 +40,22 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 	return pDirectory->OpenStream(openFlags);
 }
 
-int Stream::GetChar()
+char Stream::GetChar()
 {
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
 	char chConv = '\0';
-	if (decoder.FollowChar(chConv)) return static_cast<UChar>(chConv);
+	if (decoder.FollowChar(chConv)) return chConv;
 	for (;;) {
-		int ch = DoGetChar();
-		if (ch < 0) return ch;
-		Codec::Result rtn = decoder.FeedChar(static_cast<UChar>(ch), chConv);
+		int chRaw = DoGetChar();
+		if (chRaw < 0) return '\0';
+		Codec::Result rtn = decoder.FeedChar(static_cast<UChar>(chRaw), chConv);
 		if (rtn == Codec::Result::Error) {
 			Error::Issue(ErrorType::CodecError, "not a valid character of %s", GetCodec().GetEncoding());
 			return -1;
 		}
 		if (rtn == Codec::Result::Complete) break;
 	}
-	return static_cast<UChar>(chConv);
+	return chConv;
 }
 
 String Stream::ReadChar()
@@ -154,9 +154,9 @@ Stream& Stream::PrintFmt(const char* format, const ValueList& valueList)
 
 bool Stream::ReadLine(String& str, bool includeEOLFlag)
 {
-	int ch = GetChar();
-	if (ch < 0) return false;
-	for ( ; ch >= 0; ch = GetChar()) {
+	char ch = GetChar();
+	if (!ch) return false;
+	for ( ; ch; ch = GetChar()) {
 		if (ch == '\n') {
 			if (includeEOLFlag) str += ch;
 			break;

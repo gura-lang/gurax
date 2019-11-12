@@ -33,9 +33,8 @@ Expr_Collector* Parser::ParseString(const char* str)
 bool Parser::FeedStream(Stream& stream)
 {
 	for (;;) {
-		int chRaw = stream.GetChar();
-		if (chRaw < 0) break;
-		char ch = static_cast<char>(chRaw);
+		char ch = stream.GetChar();
+		if (!ch) break;
 		FeedChar(ch);
 		if (Error::IsIssued()) return false;
 	}

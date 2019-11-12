@@ -51,6 +51,15 @@ public:
 			return str.CalcHash();
 		}
 	};
+	class CharProvider : public Gurax::CharProvider {
+	private:
+		const char* _p;
+	public:
+		CharProvider(const char* str) : _p(str) {}
+		CharProvider(const String& str) : _p(str.c_str()) {}
+	public:
+		virtual char GetChar() override { return *_p? *_p++ : '\0'; }
+	};
 public:
 	using CTypes = UInt32;
 	struct CType {

@@ -13,7 +13,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Stream
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Stream : public Referable {
+class GURAX_DLLDECLARE Stream : public Referable, public CharProvider {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Stream);
@@ -76,7 +76,7 @@ public:
 	bool IsWritable() const { return _flags & Flag::Writable; }
 	void SetCodec(Codec* pCodec) { _pCodec.reset(pCodec); }
 	Codec& GetCodec() const { return *_pCodec; }
-	int GetChar();
+	virtual char GetChar() override;
 	String ReadChar();
 	bool PutChar(char ch);
 	Stream& Print(const char* str);
