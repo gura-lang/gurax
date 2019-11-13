@@ -1706,7 +1706,6 @@ void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processo
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
-		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 		return;
 	}
