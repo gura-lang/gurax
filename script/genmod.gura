@@ -12,7 +12,7 @@ tmpl_build = tR'''
 import(util.modbuild) {Builder}
 
 b = Builder('${dotModuleName}')
-b.pathNamesSrc = ['module-${ubarModuleName}.cpp']
+b.pathNamesSrc = ['module-${ubarModuleName}.cpp', 'Util.cpp']
 b.pathNamesScript = []
 b.dirNamesInc = []
 b.dirNamesLib = []
@@ -58,6 +58,7 @@ tmpl_mainHdr = tR'''
 #ifndef GURAX_MODULE_${ubarModuleName.Upper()}_H
 #define GURAX_MODULE_${ubarModuleName.Upper()}_H
 #include <gurax.h>
+#include "Util.h"
 
 Gurax_BeginModuleHeader(${ubarModuleName})
 Gurax_EndModuleHeader(${ubarModuleName})
@@ -127,7 +128,7 @@ Gurax_EndModule(${ubarModuleName})
 //------------------------------------------------------------------------------
 tmpl_utilHdr = tR'''
 //==============================================================================
-// ${fileName_mainHdr}
+// Util.h
 //==============================================================================
 #ifndef GURAX_MODULE_${ubarModuleName.Upper()}_UTIL_H
 #define GURAX_MODULE_${ubarModuleName.Upper()}_UTIL_H
@@ -144,56 +145,12 @@ Gurax_EndModuleScope(${ubarModuleName})
 //------------------------------------------------------------------------------
 tmpl_utilSrc = tR'''
 //==============================================================================
-// ${fileName_mainSrc}
+// Util.cpp
 //==============================================================================
 #include "stdafx.h"
 
-Gurax_BeginModule(${ubarModuleName})
-
-//------------------------------------------------------------------------------
-// Implementation of function
-//------------------------------------------------------------------------------
-// re.Test()
-Gurax_DeclareFunction(Test)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
-}
-
-Gurax_ImplementFunction(Test)
-{
-	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
-	// Function body
-	return new Value_String(String::Repeat(str, num));
-}
-
-//------------------------------------------------------------------------------
-// Entries
-//------------------------------------------------------------------------------
-Gurax_ModuleValidate()
-{
-	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
-}
-
-Gurax_ModulePrepare()
-{
-	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
-	return true;
-}
-
-Gurax_ModuleTerminate()
-{
-}
-
-Gurax_EndModule(${ubarModuleName})
+Gurax_BeginModuleScope(${ubarModuleName})
+Gurax_EndModuleScope(${ubarModuleName})
 '''
 
 strHelp = tR'''
@@ -229,13 +186,18 @@ main() = {
 	fileName_stdafx = 'stdafx.h'
 	fileName_mainHdr = 'module-' + ubarModuleName + '.h'
 	fileName_mainSrc = 'module-' + ubarModuleName + '.cpp'
+	fileName_utilHdr = 'Util.h'
+	fileName_utilSrc = 'Util.cpp'
 	pathName_build = path.Join(dirNameOut, fileName_build)
 	pathName_test = path.Join(dirNameOut, fileName_test)
 	pathName_stdafx = path.Join(dirNameOut, fileName_stdafx)
 	pathName_mainHdr = path.Join(dirNameOut, fileName_mainHdr)
 	pathName_mainSrc = path.Join(dirNameOut, fileName_mainSrc)
+	pathName_utilHdr = path.Join(dirNameOut, fileName_utilHdr)
+	pathName_utilSrc = path.Join(dirNameOut, fileName_utilSrc)
 	if (!opt['force'] && \
-		fs.Exists([pathName_build, pathName_test, pathName_stdafx, pathName_mainHdr, pathName_mainSrc]).Or()) {
+		fs.Exists([pathName_build, pathName_test, pathName_stdafx,
+			pathName_mainHdr, pathName_mainSrc, pathName_utilHdr, pathName_utilSrc]).Or()) {
 		sys.cerr.Println('file already exists')
 		sys.Exit(1)
 	}
@@ -244,6 +206,8 @@ main() = {
 	tmpl_stdafx.Render(Open(pathName_stdafx, 'w'))
 	tmpl_mainHdr.Render(Open(pathName_mainHdr, 'w'))
 	tmpl_mainSrc.Render(Open(pathName_mainSrc, 'w'))
+	tmpl_utilHdr.Render(Open(pathName_utilHdr, 'w'))
+	tmpl_utilSrc.Render(Open(pathName_utilSrc, 'w'))
 	fs.ChangeMode(pathName_build, 'a+x')
 	fs.ChangeMode(pathName_test, 'a+x')
 	tR'''
@@ -253,6 +217,8 @@ main() = {
 	- Source Files: ${pathName_stdafx}
 	                ${pathName_mainHdr}
 	                ${pathName_mainSrc}
+	                ${pathName_utilHdr}
+	                ${pathName_utilSrc}
 	'''.Render(sys.cout)
 }
 
