@@ -5,7 +5,7 @@
 import(util.modbuild) {Builder}
 
 b = Builder('conio')
-b.pathNamesSrc = ['module-conio.cpp']
+b.pathNamesSrc = ['module-conio.cpp', 'Util.cpp']
 b.pathNamesScript = []
 b.dirNamesInc = []
 b.dirNamesLib = []

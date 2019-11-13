@@ -1,12 +1,11 @@
 //==============================================================================
-// module-conio.h
+// Util.h
 //==============================================================================
-#ifndef GURAX_MODULE_CONIO_H
-#define GURAX_MODULE_CONIO_H
+#ifndef GURAX_MODULE_CONIO_UTIL_H
+#define GURAX_MODULE_CONIO_UTIL_H
 #include <gurax.h>
-#include "Util.h"
 
-Gurax_BeginModuleHeader(conio)
-Gurax_EndModuleHeader(conio)
+Gurax_BeginModuleScope(conio)
+Gurax_EndModuleScope(conio)
 
 #endif
