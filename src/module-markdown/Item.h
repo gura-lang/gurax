@@ -77,33 +77,33 @@ public:
 	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
 	public:
 		SymbolAssoc_Type() {
-			Assoc(Symbol::Add("Root"),		Type::Root);		// container, can be a parent
-			Assoc(Symbol::Add("Header1"),	Type::Header1);		// container
-			Assoc(Symbol::Add("Header2"),	Type::Header2);		// container
-			Assoc(Symbol::Add("Header3"),	Type::Header3);		// container
-			Assoc(Symbol::Add("Header4"),	Type::Header4);		// container
-			Assoc(Symbol::Add("Header5"),	Type::Header5);		// container
-			Assoc(Symbol::Add("Header6"),	Type::Header6);		// container
-			Assoc(Symbol::Add("Paragraph"),	Type::Paragraph);	// container
-			Assoc(Symbol::Add("BlockQuote"),Type::BlockQuote);	// container, can be a parent
-			Assoc(Symbol::Add("Emphasis"),	Type::Emphasis);	// container
-			Assoc(Symbol::Add("Strong"),	Type::Strong);		// container
-			Assoc(Symbol::Add("Strike"),	Type::Strike);		// container
-			Assoc(Symbol::Add("CodeBlock"),	Type::CodeBlock);	// container, can be a parent
-			Assoc(Symbol::Add("OList"),		Type::OList);		// container, can be a parent
-			Assoc(Symbol::Add("UList"),		Type::UList);		// container, can be a parent
-			Assoc(Symbol::Add("ListItem"),	Type::ListItem);	// container, can be a parent
-			Assoc(Symbol::Add("Line"),		Type::Line);		// container
-			Assoc(Symbol::Add("Link"),		Type::Link);		// container
-			Assoc(Symbol::Add("Image"),		Type::Image);		// text
-			Assoc(Symbol::Add("Text"),		Type::Text);		// text
-			Assoc(Symbol::Add("Comment"),	Type::Comment);		// text
-			Assoc(Symbol::Add("Code"),		Type::Code);		// text
-			Assoc(Symbol::Add("Entity"),	Type::Entity);		// text
-			Assoc(Symbol::Add("Tag"),		Type::Tag);			// container and text (attributes), can be a parent
-			Assoc(Symbol::Add("HorzRule"),	Type::HorzRule);	// no-content
-			Assoc(Symbol::Add("LineBreak"),	Type::LineBreak);	// no-content
-			Assoc(Symbol::Add("Referee"),	Type::Referee);		// no-content
+			Assoc(Symbol::Add("root"),			Type::Root);		// container, can be a parent
+			Assoc(Symbol::Add("h1"),			Type::Header1);		// container
+			Assoc(Symbol::Add("h2"),			Type::Header2);		// container
+			Assoc(Symbol::Add("h3"),			Type::Header3);		// container
+			Assoc(Symbol::Add("h4"),			Type::Header4);		// container
+			Assoc(Symbol::Add("h5"),			Type::Header5);		// container
+			Assoc(Symbol::Add("h6"),			Type::Header6);		// container
+			Assoc(Symbol::Add("p"),				Type::Paragraph);	// container
+			Assoc(Symbol::Add("blockquote"),	Type::BlockQuote);	// container, can be a parent
+			Assoc(Symbol::Add("em"),			Type::Emphasis);	// container
+			Assoc(Symbol::Add("strong"),		Type::Strong);		// container
+			Assoc(Symbol::Add("strike"),		Type::Strike);		// container
+			Assoc(Symbol::Add("codeblock"),		Type::CodeBlock);	// container, can be a parent
+			Assoc(Symbol::Add("ol"),			Type::OList);		// container, can be a parent
+			Assoc(Symbol::Add("ul"),			Type::UList);		// container, can be a parent
+			Assoc(Symbol::Add("li"),			Type::ListItem);	// container, can be a parent
+			Assoc(Symbol::Add("line"),			Type::Line);		// container
+			Assoc(Symbol::Add("a"),				Type::Link);		// container
+			Assoc(Symbol::Add("img"),			Type::Image);		// text
+			Assoc(Symbol::Add("text"),			Type::Text);		// text
+			Assoc(Symbol::Add("comment"),		Type::Comment);		// text
+			Assoc(Symbol::Add("code"),			Type::Code);		// text
+			Assoc(Symbol::Add("entity"),		Type::Entity);		// text
+			Assoc(Symbol::Add("tag"),			Type::Tag);			// container and text (attributes), can be a parent
+			Assoc(Symbol::Add("hr"),			Type::HorzRule);	// no-content
+			Assoc(Symbol::Add("br"),			Type::LineBreak);	// no-content
+			Assoc(Symbol::Add("referee"),		Type::Referee);		// no-content
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
