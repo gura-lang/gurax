@@ -55,10 +55,10 @@ public:
 
 bool Clear(const Symbol* pSymbol);
 void GetWinSize(size_t* pWidth, size_t* pHeight);
-void SetColor(const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprBlock);
-void MoveTo(int x, int y, const Expr_Block* pExprBlock);
+Value* SetColor(const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprOfBlock);
+Value* MoveTo(int x, int y, const Expr_Block* pExprOfBlock);
 bool CheckKey();
-int WaitKey(bool raiseFlag);
+int WaitKey(Processor* pProcessor);
 
 bool SymbolToNumber(const Symbol* pSymbol, int* pNum);
 

@@ -14,69 +14,68 @@
 
 Gurax_BeginModuleScope(conio)
 
-bool SymbolToNumber(const Symbol* pSymbol, int* pNum)
-{
-	return false;
-}
-
-#if 0
-bool SymbolToNumber(Signal &sig, const Symbol *pSymbol, int *pNum)
-{
-#if defined(GURA_ON_MSWIN)
-	int num =
-		(pSymbol == Gura_Symbol(black))?			0 :
-		(pSymbol == Gura_Symbol(blue))?				1 :
-		(pSymbol == Gura_Symbol(green))?			2 :
-		(pSymbol == Gura_Symbol(aqua))?				3 :
-		(pSymbol == Gura_Symbol(cyan))?				3 :
-		(pSymbol == Gura_Symbol(red))?				4 :
-		(pSymbol == Gura_Symbol(purple))?			5 :
-		(pSymbol == Gura_Symbol(magenta))?			5 :
-		(pSymbol == Gura_Symbol(yellow))?			6 :
-		(pSymbol == Gura_Symbol(white))?			7 :
-		(pSymbol == Gura_Symbol(gray))?				8 :
-		(pSymbol == Gura_Symbol(bright_blue))?		9 :
-		(pSymbol == Gura_Symbol(bright_green))?		10 :
-		(pSymbol == Gura_Symbol(bright_aqua))?		11 :
-		(pSymbol == Gura_Symbol(bright_cyan))?		11 :
-		(pSymbol == Gura_Symbol(bright_red))?		12 :
-		(pSymbol == Gura_Symbol(bright_purple))?	13 :
-		(pSymbol == Gura_Symbol(bright_magenta))?	13 :
-		(pSymbol == Gura_Symbol(bright_yellow))?	14 :
-		(pSymbol == Gura_Symbol(bright_white))?		15 : -1;
+class SymbolAssoc_ColorCode : public SymbolAssoc<int, -1> {
+public:
+	SymbolAssoc_ColorCode() {
+#if defined(GURAX_ON_MSWIN)
+		Assoc(Gurax_Symbol(black),			0);
+		Assoc(Gurax_Symbol(blue),			1);
+		Assoc(Gurax_Symbol(green),			2);
+		Assoc(Gurax_Symbol(aqua),			3);
+		Assoc(Gurax_Symbol(cyan),			3);
+		Assoc(Gurax_Symbol(red),			4);
+		Assoc(Gurax_Symbol(purple),			5);
+		Assoc(Gurax_Symbol(magenta),		5);
+		Assoc(Gurax_Symbol(yellow),			6);
+		Assoc(Gurax_Symbol(white),			7);
+		Assoc(Gurax_Symbol(gray),			8);
+		Assoc(Gurax_Symbol(bright_blue),	9);
+		Assoc(Gurax_Symbol(bright_green),	10);
+		Assoc(Gurax_Symbol(bright_aqua),	11);
+		Assoc(Gurax_Symbol(bright_cyan),	11);
+		Assoc(Gurax_Symbol(bright_red),		12);
+		Assoc(Gurax_Symbol(bright_purple),	13);
+		Assoc(Gurax_Symbol(bright_magenta),	13);
+		Assoc(Gurax_Symbol(bright_yellow),	14);
+		Assoc(Gurax_Symbol(bright_white),	15);
 #elif defined(GURA_ON_LINUX) || defined(GURA_ON_DARWIN)
-	int num =
-		(pSymbol == Gura_Symbol(black))?			0 :
-		(pSymbol == Gura_Symbol(red))?				1 :
-		(pSymbol == Gura_Symbol(green))?			2 :
-		(pSymbol == Gura_Symbol(yellow))?			3 :
-		(pSymbol == Gura_Symbol(blue))?				4 :
-		(pSymbol == Gura_Symbol(purple))?			5 :
-		(pSymbol == Gura_Symbol(magenta))?			5 :
-		(pSymbol == Gura_Symbol(aqua))?				6 :
-		(pSymbol == Gura_Symbol(cyan))?				6 :
-		(pSymbol == Gura_Symbol(white))?			7 :
-		(pSymbol == Gura_Symbol(gray))?				8 :
-		(pSymbol == Gura_Symbol(bright_red))?		9 :
-		(pSymbol == Gura_Symbol(bright_green))?		10 :
-		(pSymbol == Gura_Symbol(bright_yellow))?	11 :
-		(pSymbol == Gura_Symbol(bright_blue))?		12 :
-		(pSymbol == Gura_Symbol(bright_purple))?	13 :
-		(pSymbol == Gura_Symbol(bright_magenta))?	13 :
-		(pSymbol == Gura_Symbol(bright_aqua))?		14 :
-		(pSymbol == Gura_Symbol(bright_cyan))?		14 :
-		(pSymbol == Gura_Symbol(bright_white))?		15 : -1;
-#else
-#error unsupported platform
+		Assoc(Gurax_Symbol(black),			0);
+		Assoc(Gurax_Symbol(red),			1);
+		Assoc(Gurax_Symbol(green),			2);
+		Assoc(Gurax_Symbol(yellow),			3);
+		Assoc(Gurax_Symbol(blue),			4);
+		Assoc(Gurax_Symbol(purple),			5);
+		Assoc(Gurax_Symbol(magenta),		5);
+		Assoc(Gurax_Symbol(aqua),			6);
+		Assoc(Gurax_Symbol(cyan),			6);
+		Assoc(Gurax_Symbol(white),			7);
+		Assoc(Gurax_Symbol(gray),			8);
+		Assoc(Gurax_Symbol(bright_red),		9);
+		Assoc(Gurax_Symbol(bright_green),	10);
+		Assoc(Gurax_Symbol(bright_yellow),	11);
+		Assoc(Gurax_Symbol(bright_blue),	12);
+		Assoc(Gurax_Symbol(bright_purple),	13);
+		Assoc(Gurax_Symbol(bright_magenta),	13);
+		Assoc(Gurax_Symbol(bright_aqua),	14);
+		Assoc(Gurax_Symbol(bright_cyan),	14);
+		Assoc(Gurax_Symbol(bright_white),	15);
 #endif
-	if (num < 0) {
-		sig.SetError(ERR_ValueError, "invalid symbol for color: %s", pSymbol->GetName());
+	}
+	static const SymbolAssoc& GetInstance() {
+		static SymbolAssoc* pSymbolAssoc = nullptr;
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_ColorCode());
+	}
+};
+
+bool SymbolToColorCode(const Symbol* pSymbol, int* pNum)
+{
+	*pNum = SymbolAssoc_ColorCode::GetInstance().ToAssociated(pSymbol);
+	if (*pNum < 0) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for color: %s", pSymbol->GetName());
 		return false;
 	}
-	*pNum = num;
 	return true;
 }
-#endif
 
 #if defined(GURAX_ON_MSWIN)
 bool Clear(const Symbol* pSymbol)
@@ -141,37 +140,41 @@ void GetWinSize(size_t* pWidth, size_t* pHeight)
 	*pHeight = csbi.srWindow.Bottom + 1 - csbi.srWindow.Top;
 }
 
-void SetColor(const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprBlock)
+Value* SetColor(Processor& processor, const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprOfBlock)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	::GetConsoleScreenBufferInfo(hConsole, &csbi);
 	int fg = csbi.wAttributes & 0x000f;
 	int bg = (csbi.wAttributes & 0x00f0) >> 4;
-	if (pSymbolFg && !SymbolToNumber(pSymbolFg, &fg)) {
+	if (pSymbolFg && !SymbolToColorCode(pSymbolFg, &fg)) {
 		return;
 	}
-	if (pSymbolBg && !SymbolToNumber(pSymbolBg, &bg)) {
+	if (pSymbolBg && !SymbolToColorCode(pSymbolBg, &bg)) {
 		return;
 	}
 	::SetConsoleTextAttribute(hConsole, fg + (bg << 4));
-	if (pExprBlock) {
-		pExprBlock->Exec(env);
+	if (pExprOfBlock) {
+		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
 		::SetConsoleTextAttribute(hConsole, csbi.wAttributes);
+		return pValue.release();
 	}
+	return Value::nil();
 }
 
-void MoveTo(int x, int y, const Expr_Block* pExprBlock)
+Value* MoveTo(Processor& processor, int x, int y, const Expr_Block* pExprOfBlock)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	::GetConsoleScreenBufferInfo(hConsole, &csbi);
 	COORD pos = { x, y };
 	::SetConsoleCursorPosition(hConsole, pos);
-	if (pExprBlock) {
-		pExprBlock->Exec(env);
+	if (pExprOfBlock) {
+		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
 		::SetConsoleCursorPosition(hConsole, csbi.dwCursorPosition);
+		return pValue.release();
 	}
+	return Value::nil();
 }
 
 bool CheckKey()
@@ -179,9 +182,8 @@ bool CheckKey()
 	return ::_kbhit() != 0;
 }
 
-int WaitKey(bool raiseFlag)
+int WaitKey(Processor* pProcessor)
 {
-	//bool raiseFlag = arg.IsSet(Gurax_Symbol(raise));
 	int chRtn = 0;
 	enum class Stat { None, Special, } stat = Stat::None;
 	for (;;) {
@@ -193,8 +195,8 @@ int WaitKey(bool raiseFlag)
 			} else if (ch == 0x0d) {
 				chRtn = Key::RETURN;
 				break;
-			} else if (raiseFlag && ch == 0x03) {
-				sig.SetSignal(SIGTYPE_Terminate, Value::Nil);
+			} else if (pProcessor && ch == 0x03) {
+				pProcessor->Terminate();
 				return 0;
 			} else {
 				chRtn = ch;
@@ -275,14 +277,14 @@ void GetWinSize(size_t* pWidth, size_t* pHeight)
 
 StringList g_attrStack;
 
-void SetColor(const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprBlock)
+Value* SetColor(Processor& processor, const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprOfBlock)
 {
 	int fg = 0, bg = 0;
 	String str;
 	if (!pSymbolFg) {
 		// nothing to do
-	} else if (!SymbolToNumber(pSymbolFg, &fg)) {
-		return;
+	} else if (!SymbolToColorCode(pSymbolFg, &fg)) {
+		return Value::nil();
 	} else {
 		if (fg & 8) {
 			str += "1;";
@@ -294,8 +296,8 @@ void SetColor(const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block
 	}
 	if (!pSymbolBg) {
 		// nothing to do
-	} else if (!SymbolToNumber(pSymbolBg, &bg)) {
-		return;
+	} else if (!SymbolToColorCode(pSymbolBg, &bg)) {
+		return Value::nil();
 	} else {
 		if (!str.empty()) str += ';';
 		str += '4';
@@ -304,31 +306,33 @@ void SetColor(const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block
 	if (!str.empty()) {
 		::printf("\033[%sm", str.c_str());
 	}
-	if (pExprBlock) {
+	if (pExprOfBlock) {
 		g_attrStack.push_back(str);
-		//pExprBlock->Exec(env);
+		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
 		if (!g_attrStack.empty()) g_attrStack.pop_back();
 		if (g_attrStack.empty()) {
 			::printf("\033[0m");
 		} else {
 			::printf("\033[%sm", g_attrStack.back().c_str());
 		}
-	} else {
-		if (!g_attrStack.empty()) g_attrStack.pop_back();
-		g_attrStack.push_back(str);
+		return pValue.release();
 	}
+	if (!g_attrStack.empty()) g_attrStack.pop_back();
+	g_attrStack.push_back(str);
+	return Value::nil();
 }
 
-void MoveTo(int x, int y, const Expr_Block* pExprBlock)
+Value* MoveTo(Processor& processor, int x, int y, const Expr_Block* pExprOfBlock)
 {
-	if (!pExprBlock) {
-		::printf("\033[%d;%dH", y + 1, x + 1);
-	} else {
+	if (pExprOfBlock) {
 		::printf("\033[s");
 		::printf("\033[%d;%dH", y + 1, x + 1);
-		//pExprBlock->Exec(env);
+		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
 		::printf("\033[u");
+		return pValue.release();
 	}
+	::printf("\033[%d;%dH", y + 1, x + 1);
+	return Value::nil();
 }
 
 bool CheckKey()
@@ -340,9 +344,8 @@ bool CheckKey()
 	return ::select(1, &fds, NULL, NULL, &tv) > 0;
 }
 
-int WaitKey(bool raiseFlag)
+int WaitKey(Processor* pProcessor)
 {
-	//bool raiseFlag = arg.IsSet(Gurax_Symbol(raise));
 	struct termios termios_org, termios_new;
 	::tcgetattr(STDIN_FILENO, &termios_org);
 	termios_new = termios_org;
@@ -361,8 +364,8 @@ int WaitKey(bool raiseFlag)
 			} else if (ch == 0x7f) {
 				chRtn = Key::BACKSPACE;
 				break;
-			} else if (raiseFlag && ch == 0x03) {
-				//sig.SetSignal(SIGTYPE_Terminate, Value::Nil);
+			} else if (pProcessor && ch == 0x03) {
+				pProcessor->Terminate();
 				::tcsetattr(STDIN_FILENO, TCSANOW, &termios_org);
 				return 0;
 			} else {

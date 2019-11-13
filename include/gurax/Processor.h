@@ -142,7 +142,7 @@ public:
 	Value* ProcessExpr(const Expr& expr) { return ProcessPUnit(expr.GetPUnitFirst()); }
 public:
 	bool ImportModule(const char* moduleName);
-	bool EvalCommand(const char *cmd);
+	bool EvalCommand(const char* cmd);
 public:
 	void Print() const;
 protected:
