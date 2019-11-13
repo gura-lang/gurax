@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_MARKDOWN_ITEM_H
 #define GURAX_MODULE_MARKDOWN_ITEM_H
 #include <gurax.h>
-#include "Common.h"
+#include "Util.h"
 
 Gurax_BeginModuleScope(markdown)
 
