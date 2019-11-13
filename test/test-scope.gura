@@ -26,3 +26,7 @@ TestCase('List#Each()\'s scope') {
 	}
 	Printf('#6 a = %d, b = %d\n', a, b)
 }
+
+TestCase('Test of module scope') {
+	Tester(`path.Println)
+}

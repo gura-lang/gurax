@@ -167,6 +167,10 @@ public:
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override {
 		return GetFrameLocal()? GetFrameLocal()->ExportTo(frameDst, overwriteFlag) : true;
 	}
+	Value* LookupLocal(const Symbol* pSymbol) {
+		return _pFrameLocal? _pFrameLocal->Lookup(pSymbol) : nullptr;
+	}
+	Value* LookupLocal(const char* name) { return LookupLocal(Symbol::Add(name)); }
 };
 
 //------------------------------------------------------------------------------

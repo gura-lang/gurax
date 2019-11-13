@@ -5,6 +5,18 @@
 import(util.tester) {*}
 import(markdown)
 
+TestCase('Property') {
+	Tester(`markdown.Document.__PropHandler__(`refs))
+	Tester(`markdown.Document.__PropHandler__(`root))
+	Tester(`markdown.Item.__PropHandler__(`type))
+	Tester(`markdown.Item.__PropHandler__(`text))
+	Tester(`markdown.Item.__PropHandler__(`children))
+	Tester(`markdown.Item.__PropHandler__(`url))
+	Tester(`markdown.Item.__PropHandler__(`title))
+	Tester(`markdown.Item.__PropHandler__(`attrs))
+	Tester(`markdown.Item.__PropHandler__(`align))
+}
+
 TestCase('Basic test') {
-	Println(markdown.Test('hello', 4))
+
 }
