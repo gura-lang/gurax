@@ -74,15 +74,21 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);
-	if (!pPropHandler) {
-		Value* pValue = GetModule().GetFrame().Lookup(pSymbol);
-		return pValue? pValue : Value::DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	if (pPropHandler) {
+		if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
+			Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
+			return nullptr;
+		}
+		return pPropHandler->GetValue(*this, attr);
 	}
-	if (!pPropHandler->IsSet(PropHandler::Flag::Readable)) {
-		Error::Issue(ErrorType::PropertyError, "property '%s' is not readable", pSymbol->GetName());
-		return nullptr;
+	Value* pValue = GetModule().GetFrame().Lookup(pSymbol);
+	if (pValue) return pValue;
+	if (notFoundErrorFlag) {
+		Error::Issue(ErrorType::PropertyError,
+					 "module '%s' doesn't have a property '%s'",
+					 GetModule().GetDottedSymbol().ToString().c_str(), pSymbol->GetName());
 	}
-	return pPropHandler->GetValue(*this, attr);
+	return nullptr;
 }
 
 bool Value_Module::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
