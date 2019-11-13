@@ -1658,7 +1658,6 @@ void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor)
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
-		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 		return;
 	}
