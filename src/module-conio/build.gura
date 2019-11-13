@@ -1,0 +1,15 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
+import(util.modbuild) {Builder}
+
+b = Builder('conio')
+b.pathNamesSrc = ['module-conio.cpp']
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cflags = []
+b.ldflags = []
+b.libs = []
+b.Run()

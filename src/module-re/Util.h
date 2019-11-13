@@ -1,13 +1,13 @@
 //==============================================================================
-// Common.h
+// Util.h
 //==============================================================================
-#ifndef GURAX_MODULE_RE_COMMON_H
-#define GURAX_MODULE_RE_COMMON_H
+#ifndef GURAX_MODULE_RE_UTIL_H
+#define GURAX_MODULE_RE_UTIL_H
 
-Gurax_BeginModuleHeader(re)
+Gurax_BeginModuleScope(re)
 
 //------------------------------------------------------------------------------
-// utilities
+// Utility Functions
 //------------------------------------------------------------------------------
 void IssueError_Onigmo();
 void IssueError_Onigmo(int rtn);
@@ -22,6 +22,6 @@ public:
 	~OnigRegion_Ptr() { if (_p) ::onig_region_free(_p, 1); }
 };
 
-Gurax_EndModuleHeader(re)
+Gurax_EndModuleScope(re)
 
 #endif

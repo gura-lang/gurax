@@ -3,7 +3,7 @@ import(util.modbuild) {Builder}
 
 b = Builder('re')
 b.pathNamesSrc = [
-	'module-re.cpp', 'Common.cpp', 'Group.cpp', 'Iterators.cpp', 'Match.cpp', 'Pattern.cpp',
+	'module-re.cpp', 'Util.cpp', 'Group.cpp', 'Iterators.cpp', 'Match.cpp', 'Pattern.cpp',
 	'VType_Group.cpp', 'VType_Match.cpp', 'VType_Pattern.cpp'
 ]
 b.pathNamesScript = [
