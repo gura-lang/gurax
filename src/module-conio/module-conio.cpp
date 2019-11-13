@@ -29,14 +29,13 @@ Gurax_ImplementFunction(Test)
 	return new Value_String(String::Repeat(str, num));
 }
 
-#if 0
-// conio.clear(region?:symbol):void
-Gura_DeclareFunction(clear)
+// conio.Clear(region?:Symbol):void
+Gurax_DeclareFunction(Clear)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_None);
-	DeclareArg(env, "region", VTYPE_symbol, OCCUR_ZeroOrOnce);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("region", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Clears the screen.\n"
 		"\n"
 		"In default, it clears whole the screen.\n"
@@ -50,38 +49,43 @@ Gura_DeclareFunction(clear)
 		"- `` `bottom`` .. clears characters on the below side of the cursor.\n");
 }
 
-Gura_ImplementFunction(clear)
+Gurax_ImplementFunction(Clear)
 {
-	Clear(env, arg.Is_symbol(0)? arg.GetSymbol(0) : nullptr);
-	return Value::Nil;
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.IsValid()? args.PickSymbol() : nullptr;
+	// Function body
+	Clear(pSymbol);
+	return Value::nil();
 }
 
-// conio.getwinsize()
-Gura_DeclareFunction(getwinsize)
+// conio.GetWinSize()
+Gurax_DeclareFunction(GetWinSize)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
+	Declare(VTYPE_List, Flag::None);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Returns the screen size as a list `[width, height]`.");
 }
 
-Gura_ImplementFunction(getwinsize)
+Gurax_ImplementFunction(GetWinSize)
 {
+	// Function body
 	size_t width, height;
-	GetWinSize(env, &width, &height);
-	return ReturnValue(env, arg,
-		Value::CreateList(env, Value(width), Value(height)));
+	GetWinSize(&width, &height);
+	return Value_List::Create(new Value_Number(width), new Value_Number(height));
 }
 
+#if 0
 // conio.setcolor(fg:symbol:nil, bg?:symbol):map:void {block?}
-Gura_DeclareFunction(setcolor)
+Gurax_DeclareFunction(setcolor)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_Map);
-	DeclareArg(env, "fg", VTYPE_symbol, OCCUR_Once, FLAG_Nil);
-	DeclareArg(env, "bg", VTYPE_symbol, OCCUR_ZeroOrOnce);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("fg", VTYPE_Symbol, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("bg", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Sets foreground and background color of text by specifying a color symbol.\n"
 		"Available color symbols are listed below:\n"
 		"\n"
@@ -113,7 +117,7 @@ Gura_DeclareFunction(setcolor)
 		"and then gets back to what has been set when done.\n");
 }
 
-Gura_ImplementFunction(setcolor)
+Gurax_ImplementFunction(setcolor)
 {
 	Signal &sig = env.GetSignal();
 	const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
@@ -124,14 +128,14 @@ Gura_ImplementFunction(setcolor)
 }
 
 // conio.moveto(x:number, y:number):map:void {block?}
-Gura_DeclareFunction(moveto)
+Gurax_DeclareFunction(moveto)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Void, FLAG_Map);
-	DeclareArg(env, "x", VTYPE_number);
-	DeclareArg(env, "y", VTYPE_number);
-	DeclareBlock(OCCUR_ZeroOrOnce);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Moves cursor to the specified position.\n"
 		"The most top-left position on the screen is represented as `0, 0`.\n"
 		"\n"
@@ -139,7 +143,7 @@ Gura_DeclareFunction(moveto)
 		"and then gets back to where it has been when done.\n");
 }
 
-Gura_ImplementFunction(moveto)
+Gurax_ImplementFunction(moveto)
 {
 	const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
 	if (env.IsSignalled()) return Value::Nil;
@@ -148,12 +152,12 @@ Gura_ImplementFunction(moveto)
 }
 
 // conio.waitkey():[raise]
-Gura_DeclareFunction(waitkey)
+Gurax_DeclareFunction(waitkey)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gura_Symbol(raise));
+	Declare(VTYPE_Number, Flag::None);
+	DeclareAttr(Gurax_Symbol(raise));
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Waits for a keyboard input and returns a character code number associated with the key.\n"
 		"\n"
 		"If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal\n"
@@ -178,20 +182,20 @@ Gura_DeclareFunction(waitkey)
 		"- `conio.K_DELETE`\n");
 }
 
-Gura_ImplementFunction(waitkey)
+Gurax_ImplementFunction(waitkey)
 {
-	int chRtn = WaitKey(env, arg.IsSet(Gura_Symbol(raise)));
+	int chRtn = WaitKey(env, arg.IsSet(Gurax_Symbol(raise)));
 	if (env.IsSignalled()) return Value::Nil;
 	return Value(chRtn);
 }
 
 // conio.readkey():[raise]
-Gura_DeclareFunction(readkey)
+Gurax_DeclareFunction(readkey)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gura_Symbol(raise));
+	DeclareAttr(Gurax_Symbol(raise));
 	AddHelp(
-		Gura_Symbol(en),
+		Gurax_Symbol(en),
 		"Reads a keyboard input and returns a character code number associated with the key\n"
 		"without blocking."
 		"\n"
@@ -217,10 +221,10 @@ Gura_DeclareFunction(readkey)
 		"- `conio.K_DELETE`\n");
 }
 
-Gura_ImplementFunction(readkey)
+Gurax_ImplementFunction(readkey)
 {
 	if (!CheckKey()) return Value::Nil;
-	int chRtn = WaitKey(env, arg.IsSet(Gura_Symbol(raise)));
+	int chRtn = WaitKey(env, arg.IsSet(Gurax_Symbol(raise)));
 	if (env.IsSignalled()) return Value::Nil;
 	return Value(chRtn);
 }
@@ -237,7 +241,8 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(Clear));
+	Assign(Gurax_CreateFunction(GetWinSize));
 	return true;
 }
 
