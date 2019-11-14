@@ -403,6 +403,11 @@ bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 	return false;
 }
 
+void OAL::Sleep(Double secs)
+{
+	::Sleep(static_cast<long>(secs * 1000));	// unit: msec
+}
+
 OAL::FileType OAL::GetFileType(const char* pathName)
 {
 	WIN32_FILE_ATTRIBUTE_DATA attrData;
@@ -739,6 +744,14 @@ bool OAL::RemoveDir(const char* dirName)
 bool OAL::Rename(const char* pathNameOld, const char* pathNameNew)
 {
 	return ::rename(ToNativeString(pathNameOld).c_str(), ToNativeString(pathNameNew).c_str()) == 0;
+}
+
+void OAL::Sleep(Double secs)
+{
+	struct timeval tv;
+	tv.tv_sec = static_cast<long>(secs);
+	tv.tv_usec = static_cast<long>((secs - tv.tv_sec) * 1000000);
+	::select(0, nullptr, nullptr, nullptr, &tv);
 }
 
 OAL::FileType OAL::GetFileType(const char* pathName)

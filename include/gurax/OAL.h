@@ -200,6 +200,7 @@ public:
 	static bool Remove(const char* pathName);
 	static bool RemoveDir(const char* dirName);
 	static bool Rename(const char* pathNameOld, const char* pathNameNew);
+	static void Sleep(Double secs);
 public:
 	static bool ParseStatMode(const char* mode, mode_t& st_mode);
 	static void AppendCmdLine(String& cmdLine, const char* arg);

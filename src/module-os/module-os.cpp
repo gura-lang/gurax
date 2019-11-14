@@ -100,6 +100,27 @@ Gurax_ImplementFunction(Redirect)
 	return pValueRtn.release();
 }
 
+// os.Sleep(secs:Number)
+Gurax_DeclareFunction(Sleep)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("secs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Sleeps for a time specified in seconds.");
+}
+
+Gurax_ImplementFunction(Sleep)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Double secs = args.PickNumberNonNeg<Double>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	OAL::Sleep(secs);
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
@@ -175,6 +196,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Clock));
 	Assign(Gurax_CreateFunction(Exec));
 	Assign(Gurax_CreateFunction(Redirect));
+	Assign(Gurax_CreateFunction(Sleep));
 	// Assignment of property
 	Assign(Gurax_CreateModuleProperty(cin));
 	Assign(Gurax_CreateModuleProperty(cout));
