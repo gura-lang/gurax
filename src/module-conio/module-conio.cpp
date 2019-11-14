@@ -130,6 +130,7 @@ Gurax_ImplementFunction(MoveTo)
 	ArgPicker args(argument);
 	int x = args.PickNumberNonNeg<int>();
 	int y = args.PickNumberNonNeg<int>();
+	if (Error::IsIssued()) return Value::nil();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
 	return MoveTo(processor, x, y, pExprOfBlock);

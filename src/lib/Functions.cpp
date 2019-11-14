@@ -8,6 +8,28 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Functions
 //------------------------------------------------------------------------------
+// Chr(code:number):map
+Gurax_DeclareFunction(Chr)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts a UTF-32 code into a string.\n");
+}
+
+Gurax_ImplementFunction(Chr)
+{
+	// Arguments
+	ArgPicker args(argument);
+	UInt32 codeUTF32 = args.PickNumberNonNeg<UInt32>();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	String str;
+	str.AppendUTF32(codeUTF32);
+	return new Value_String(str);
+}
+
 // dir(value)
 Gurax_DeclareFunction(dir)
 {
@@ -116,6 +138,27 @@ Gurax_ImplementFunction(Format)
 	str.PrintFmt(format, values);
 	if (Error::IsIssued()) return Value::nil();
 	return new Value_String(str);
+}
+
+// Ord(str:String):map
+Gurax_DeclareFunction(Ord)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts the first character of a string into a number of UTF-32 code.\n"
+		"If the string contains more than one characters, it simply neglects trailing ones.\n");
+}
+
+Gurax_ImplementFunction(Ord)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* str = args.PickString();
+	// Function body
+	UInt32 codeUTF32 = String::NextUTF32(&str);
+	return new Value_Number(codeUTF32);
 }
 
 // Print(values*):void:map
@@ -259,42 +302,169 @@ Gurax_ImplementFunction(ReadLines)
 	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
-// Test() {block}
-Gurax_DeclareFunction(Test)
+#if 0
+// hex(num:number, digits?:number):map:[upper]
+Gurax_DeclareFunction(hex)
 {
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareBlock(BlkOccur::Once, BlkFlag::None);
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "num", VTYPE_number);
+	DeclareArg(env, "digits", VTYPE_number, OCCUR_ZeroOrOnce);
+	DeclareAttr(Gurax_Symbol(upper));
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Converts a number into a hexadecimal string.\n"
+		"Argument `digits` specifies a minimum columns of the converted result\n"
+		"and fills `0` in the lacking space.\n"
+		"\n"
+		"In default, it uses lower-case characters in its conversion,\n"
+		"while it uses upper-case ones when `:upper` attribute is specified.\n");
 }
 
-Gurax_ImplementFunction(Test)
+Gurax_ImplementFunction(hex)
 {
-	// Function body
-	Frame& frame = processor.GetFrameCur();
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
-	ArgFeeder args(*pArgument);
-	if (!args.FeedValue(frame, new Value_Number(1234)) ||
-		!args.FeedValue(frame, new Value_Number(5678)) ||
-		!args.FeedValue(frame, new Value_String("hoge"))) return Value::nil();
-	return processor.EvalExpr(*pExprOfBlock, *pArgument);
+	Signal &sig = env.GetSignal();
+	int digits = arg.Is_number(1)? arg.GetInt(1) : 0;
+	bool upperFlag = arg.IsSet(Gurax_Symbol(upper));
+	String str;
+	if (digits <= 0) {
+		str = Formatter::FormatValueList(sig, upperFlag? "%X" : "%x",
+						ValueList(arg.GetValue(0)));
+	} else {
+		str = Formatter::FormatValueList(sig, upperFlag? "%0*X" : "%0*x",
+						ValueList(Value(digits), arg.GetValue(0)));
+	}
+	if (sig.IsSignalled()) return Value::Nil;
+	return Value(str);
 }
+
+// int(value):map
+Gurax_DeclareFunctionAlias(int_, "int")
+{
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "value", VTYPE_any);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts a value into an integer number like below:\n"
+		"\n"
+		"- For a number value, it would be converted into an integer number.\n"
+		"- For a compex value, its absolute number would be converted into an integer number.\n"
+		"- For a string value, it would be parsed as an integer number.\n"
+		"  An error occurs if it has an invalid format.\n"
+		"- For other values, an error occurs.\n");
+}
+
+Gurax_ImplementFunction(int_)
+{
+	Signal &sig = env.GetSignal();
+	const Value &value = arg.GetValue(0);
+	Value result;
+	if (value.Is_number()) {
+		result.SetNumber(value.GetLong());
+	} else if (value.Is_complex()) {
+		result.SetNumber(static_cast<long>(std::abs(value.GetComplex())));
+	} else if (value.Is_string()) {
+		bool successFlag;
+		Number num = value.ToNumber(true, successFlag);
+		if (!successFlag) {
+			sig.SetError(ERR_ValueError, "failed to convert to a number");
+			return Value::Nil;
+		}
+		result.SetNumber(static_cast<long>(num));
+	} else if (value.IsValid()) {
+		SetError_InvalidValType(sig, value);
+	}
+	return result;
+}
+
+// tonumber(value):map:[strict,raise,zero,nil]
+Gurax_DeclareFunction(tonumber)
+{
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "value", VTYPE_any);
+	DeclareAttr(Gurax_Symbol(strict));
+	DeclareAttr(Gurax_Symbol(raise));
+	DeclareAttr(Gurax_Symbol(zero));
+	DeclareAttr(Gurax_Symbol(nil));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts a string value into a number by a lexical parsing.\n"
+		"If the value is not a string, it first tries to convert the value into a string.\n"
+		"\n"
+		"If the string starts with a sequence of characters that can be parsed as a number literal,\n"
+		"it's not a failure even when it contains other characters following them.\n"
+		"Specifying an attribute `:strict` doesn't allow such a case and fails the process.\n"
+		"\n"
+		"If it fails the conversion, it would return `nil` value.\n"
+		"Attributes described below are prepared to customize the behaviour in the case of a failure.\n"
+		"\n"
+		"- `:raise` .. raises an error\n"
+		"- `:zero` .. returns zero value\n"
+		"- `:nil` .. returns `nil` value (default)\n");
+}
+
+Gurax_ImplementFunction(tonumber)
+{
+	Signal &sig = env.GetSignal();
+	bool allowPartFlag = !arg.IsSet(Gurax_Symbol(strict));
+	bool successFlag;
+	Number num = arg.GetValue(0).ToNumber(allowPartFlag, successFlag);
+	if (successFlag) {
+		return Value(num);
+	} else if (arg.IsSet(Gurax_Symbol(raise))) {
+		sig.SetError(ERR_ValueError, "failed to convert to a number");
+		return Value::Nil;
+	} else if (arg.IsSet(Gurax_Symbol(zero))) {
+		return Value(0.);
+	} else { // arg.IsSet(Gurax_UserSymbol(nil)
+		return Value::Nil;
+	}
+}
+
+// tostring(value):map
+Gurax_DeclareFunction(tostring)
+{
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "value", VTYPE_any);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts a value into a string.");
+}
+
+Gurax_ImplementFunction(tostring)
+{
+	return Value(arg.GetValue(0).ToString(false));
+}
+
+// tosymbol(str:string):map
+Gurax_DeclareFunction(tosymbol)
+{
+	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
+	DeclareArg(env, "str", VTYPE_string);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts a string into a symbol.");
+}
+
+Gurax_ImplementFunction(tosymbol)
+{
+	return Value(Symbol::Add(arg.GetString(0)));
+}
+#endif
 
 //------------------------------------------------------------------------------
 // Assignment
 //------------------------------------------------------------------------------
 void Functions::AssignToBasement(Frame& frame)
 {
+	frame.Assign(Gurax_CreateFunction(Chr));
 	frame.Assign(Gurax_CreateFunction(dir));
 	frame.Assign(Gurax_CreateFunction(Format));
+	frame.Assign(Gurax_CreateFunction(Ord));
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));
 	frame.Assign(Gurax_CreateFunction(Println));
 	frame.Assign(Gurax_CreateFunction(Range));
 	frame.Assign(Gurax_CreateFunction(ReadLines));
-	frame.Assign(Gurax_CreateFunction(Test));
 }
 
 }

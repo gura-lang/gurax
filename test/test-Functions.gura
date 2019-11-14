@@ -1,0 +1,11 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Chr()') {
+	Tester(`Chr(0x20..0x7f).Join())
+}
+
+TestCase('Ord()') {
+	str = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+	str.Each {|ch| Printf('\'%s\' .. 0x%02x\n', ch, Ord(ch))}
+}
