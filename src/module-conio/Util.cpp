@@ -83,35 +83,34 @@ bool Clear(const Symbol* pSymbol)
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	::GetConsoleScreenBufferInfo(hConsole, &csbi);
-	//const Symbol* pSymbol = arg.Is_symbol(0)? arg.GetSymbol(0) : nullptr;
 	COORD coordStart = { 0, 0 };
 	COORD coordHome = { 0, 0 };
 	DWORD dwConSize = 0;
 	if (!pSymbol) {
 		dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
-	} else if (pSymbol == Gurax_Symbol(line_)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(line_))) {
 		int width = csbi.dwSize.X;
 		coordStart = csbi.dwCursorPosition;
 		coordStart.X = 0;
 		coordHome = csbi.dwCursorPosition;
 		dwConSize = width;
-	} else if (pSymbol == Gurax_Symbol(up)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(up))) {
 		int height = csbi.dwCursorPosition.Y + 1;
 		coordHome = csbi.dwCursorPosition;
 		dwConSize = csbi.dwSize.X * height;
-	} else if (pSymbol == Gurax_Symbol(down)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(down))) {
 		int height = csbi.dwSize.Y - csbi.dwCursorPosition.Y;
 		coordStart = csbi.dwCursorPosition;
 		coordStart.X = 0;
 		coordHome = csbi.dwCursorPosition;
 		dwConSize = csbi.dwSize.X * height;
-	} else if (pSymbol == Gurax_Symbol(left)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(left))) {
 		int width = csbi.dwCursorPosition.X + 1;
 		coordStart = csbi.dwCursorPosition;
 		coordStart.X = 0;
 		coordHome = csbi.dwCursorPosition;
 		dwConSize = width;
-	} else if (pSymbol == Gurax_Symbol(right)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(right))) {
 		int width = csbi.dwSize.X - csbi.dwCursorPosition.X;
 		coordStart = csbi.dwCursorPosition;
 		coordHome = csbi.dwCursorPosition;
@@ -250,16 +249,16 @@ bool Clear(const Symbol* pSymbol)
 	if (!pSymbol) {
 		::printf("\033[2J");
 		::printf("\033[H");
-	} else if (pSymbol == Gurax_Symbol(line_)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(line_))) {
 		::printf("\033[2K");
-	} else if (pSymbol == Gurax_Symbol(up)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(up))) {
 		::printf("\033[D");
 		::printf("\033[1J");
-	} else if (pSymbol == Gurax_Symbol(down)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(down))) {
 		::printf("\033[J");
-	} else if (pSymbol == Gurax_Symbol(left)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(left))) {
 		::printf("\033[1K");
-	} else if (pSymbol == Gurax_Symbol(right)) {
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(right))) {
 		::printf("\033[K");
 	} else {
 		Error::Issue(ErrorType::ValueError, "invalid symbol %s", pSymbol->GetName());
