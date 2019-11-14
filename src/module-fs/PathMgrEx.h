@@ -61,6 +61,7 @@ public:
 	virtual size_t Write(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp);
 	}
+	virtual void Flush() override { ::fflush(_fp); }
 };
 
 Gurax_EndModuleScope(fs)

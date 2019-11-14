@@ -101,6 +101,7 @@ public:
 	virtual void Close() = 0;
 	virtual size_t Read(void* buff, size_t len) = 0;
 	virtual size_t Write(const void* buff, size_t len) = 0;
+	virtual void Flush() = 0;
 protected:
 	virtual int DoGetChar() = 0;
 	virtual bool DoPutChar(char ch) = 0;

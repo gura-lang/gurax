@@ -21,6 +21,7 @@ public:
 	virtual bool DoPutChar(char ch) override { return true; }
 	virtual size_t Read(void* buff, size_t len) override { ::memset(buff, 0x00, len); return len; }
 	virtual size_t Write(const void* buff, size_t len) override { return len; }
+	virtual void Flush() override {}
 };
 
 //------------------------------------------------------------------------------
@@ -43,6 +44,7 @@ public:
 	virtual size_t Write(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp);
 	}
+	virtual void Flush() override { ::fflush(_fp); }
 };
 
 //------------------------------------------------------------------------------
@@ -67,6 +69,7 @@ public:
 	virtual bool DoPutChar(char ch) override;
 	virtual size_t Read(void* buff, size_t len) override;
 	virtual size_t Write(const void* buff, size_t len) override;
+	virtual void Flush() override {}
 };
 
 }

@@ -86,6 +86,25 @@ Gurax_ImplementMethod(Stream, Delcr)
 	return valueThis.Reference();
 }
 
+// Stream#Flush():reduce
+Gurax_DeclareMethod(Stream, Flush)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Flush the stream.");
+}
+
+Gurax_ImplementMethod(Stream, Flush)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Function body
+	stream.Flush();
+	return valueThis.Reference();
+}
+
 // Stream#Print(values*):void:map
 Gurax_DeclareMethod(Stream, Print)
 {
@@ -250,6 +269,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));
+	Assign(Gurax_CreateMethod(Stream, Flush));
 	Assign(Gurax_CreateMethod(Stream, Print));
 	Assign(Gurax_CreateMethod(Stream, Printf));
 	Assign(Gurax_CreateMethod(Stream, Println));
