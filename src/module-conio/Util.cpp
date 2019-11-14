@@ -182,7 +182,7 @@ bool CheckKey()
 	return ::_kbhit() != 0;
 }
 
-int WaitKey(Processor* pProcessor)
+Value* WaitKey(Processor* pProcessor)
 {
 	int chRtn = 0;
 	enum class Stat { None, Special, } stat = Stat::None;
@@ -193,45 +193,45 @@ int WaitKey(Processor* pProcessor)
 			if (ch == 0xe0) {
 				stat = Stat::Special;
 			} else if (ch == 0x0d) {
-				chRtn = Key::RETURN;
+				chRtn = K_RETURN;
 				break;
 			} else if (pProcessor && ch == 0x03) {
 				pProcessor->Terminate();
-				return 0;
+				return Value::nil();
 			} else {
 				chRtn = ch;
 				break;
 			}
 		} else if (stat == Stat::Special) {
 			if (ch == 0x52) {			// E0 52
-				chRtn = Key::INSERT;
+				chRtn = K_INSERT;
 				break;
 			} else if (ch == 0x53) {	// E0 53
-				chRtn = Key::DELETE;
+				chRtn = K_DELETE;
 				break;
 			} else if (ch == 0x49) {	// E0 49
-				chRtn = Key::PAGEUP;
+				chRtn = K_PAGEUP;
 				break;
 			} else if (ch == 0x51) {	// E0 51
-				chRtn = Key::PAGEDOWN;
+				chRtn = K_PAGEDOWN;
 				break;
 			} else if (ch == 0x47) {	// E0 47
-				chRtn = Key::HOME;
+				chRtn = K_HOME;
 				break;
 			} else if (ch == 0x4f) {	// E0 4F
-				chRtn = Key::END;
+				chRtn = K_END;
 				break;
 			} else if (ch == 0x48) {	// E0 48
-				chRtn = Key::UP;
+				chRtn = K_UP;
 				break;
 			} else if (ch == 0x50) {	// E0 50
-				chRtn = Key::DOWN;
+				chRtn = K_DOWN;
 				break;
 			} else if (ch == 0x4d) {	// E0 4D
-				chRtn = Key::RIGHT;
+				chRtn = K_RIGHT;
 				break;
 			} else if (ch == 0x4b) {	// E0 4B
-				chRtn = Key::LEFT;
+				chRtn = K_LEFT;
 				break;
 			} else {
 				chRtn = ch;
@@ -239,7 +239,7 @@ int WaitKey(Processor* pProcessor)
 			}
 		}
 	}
-	return chRtn;
+	return new Value_Number(chRtn);
 }
 
 #elif defined(GURAX_ON_LINUX) || defined(GURAX_ON_DARWIN)
@@ -344,7 +344,7 @@ bool CheckKey()
 	return ::select(1, &fds, NULL, NULL, &tv) > 0;
 }
 
-int WaitKey(Processor* pProcessor)
+Value* WaitKey(Processor* pProcessor)
 {
 	struct termios termios_org, termios_new;
 	::tcgetattr(STDIN_FILENO, &termios_org);
@@ -362,12 +362,12 @@ int WaitKey(Processor* pProcessor)
 			if (ch == 0x1b) {
 				stat = Stat::ESC;
 			} else if (ch == 0x7f) {
-				chRtn = Key::BACKSPACE;
+				chRtn = K_BACKSPACE;
 				break;
 			} else if (pProcessor && ch == 0x03) {
 				pProcessor->Terminate();
 				::tcsetattr(STDIN_FILENO, TCSANOW, &termios_org);
-				return 0;
+				return Value::nil();
 			} else {
 				chRtn = ch;
 				break;
@@ -383,34 +383,34 @@ int WaitKey(Processor* pProcessor)
 			}
 		} else if (stat == Stat::LBracket) {
 			if (ch == '1') {			// ESC [1
-				chRtn = Key::HOME;
+				chRtn = K_HOME;
 				stat = Stat::SkipChar;
 			} else if (ch == '2') {		// ESC [2
-				chRtn = Key::INSERT;
+				chRtn = K_INSERT;
 				stat = Stat::SkipChar;
 			} else if (ch == '3') {		// ESC [3
-				chRtn = Key::DELETE;
+				chRtn = K_DELETE;
 				stat = Stat::SkipChar;
 			} else if (ch == '4') {		// ESC [4
-				chRtn = Key::END;
+				chRtn = K_END;
 				stat = Stat::SkipChar;
 			} else if (ch == '5') {		// ESC [5
-				chRtn = Key::PAGEUP;
+				chRtn = K_PAGEUP;
 				stat = Stat::SkipChar;
 			} else if (ch == '6') {		// ESC [6
-				chRtn = Key::PAGEDOWN;
+				chRtn = K_PAGEDOWN;
 				stat = Stat::SkipChar;
 			} else if (ch == 'A') {		// ESC [A
-				chRtn = Key::UP;
+				chRtn = K_UP;
 				break;
 			} else if (ch == 'B') {		// ESC [B 
-				chRtn = Key::DOWN;
+				chRtn = K_DOWN;
 				break;
 			} else if (ch == 'C') {		// ESC [C
-				chRtn = Key::RIGHT;
+				chRtn = K_RIGHT;
 				break;
 			} else if (ch == 'D') {		// ESC [D
-				chRtn = Key::LEFT;
+				chRtn = K_LEFT;
 				break;
 			} else {
 				chRtn = ch;
@@ -418,10 +418,10 @@ int WaitKey(Processor* pProcessor)
 			}
 		} else if (stat == Stat::O) {
 			if (ch == 'F') {			// ESC OF
-				chRtn = Key::END;
+				chRtn = K_END;
 				break;
 			} else if (ch == 'H') {		// ESC OH
-				chRtn = Key::HOME;
+				chRtn = K_HOME;
 				break;
 			} else {
 				chRtn = ch;
@@ -432,7 +432,7 @@ int WaitKey(Processor* pProcessor)
 		}
 	}
 	::tcsetattr(STDIN_FILENO, TCSANOW, &termios_org);
-	return chRtn;
+	return new Value_Number(chRtn);
 }
 
 #endif

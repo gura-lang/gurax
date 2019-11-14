@@ -3,32 +3,13 @@
 //==============================================================================
 #include "stdafx.h"
 
+#define AssignValue_Number(name) Assign(#name, new Value_Number(name))
+
 Gurax_BeginModule(conio)
 
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// re.Test()
-Gurax_DeclareFunction(Test)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
-}
-
-Gurax_ImplementFunction(Test)
-{
-	// Arguments
-	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
-	// Function body
-	return new Value_String(String::Repeat(str, num));
-}
-
 // conio.Clear(region?:Symbol):void
 Gurax_DeclareFunction(Clear)
 {
@@ -76,9 +57,8 @@ Gurax_ImplementFunction(GetWinSize)
 	return Value_List::Create(new Value_Number(width), new Value_Number(height));
 }
 
-#if 0
-// conio.setcolor(fg:symbol:nil, bg?:symbol):map:void {block?}
-Gurax_DeclareFunction(setcolor)
+// conio.Setcolor(fg:Symbol:nil, bg?:Symbol):map:void {block?}
+Gurax_DeclareFunction(SetColor)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("fg", VTYPE_Symbol, ArgOccur::Once, ArgFlag::Nil);
@@ -117,18 +97,19 @@ Gurax_DeclareFunction(setcolor)
 		"and then gets back to what has been set when done.\n");
 }
 
-Gurax_ImplementFunction(setcolor)
+Gurax_ImplementFunction(SetColor)
 {
-	Signal &sig = env.GetSignal();
-	const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
-	if (sig.IsSignalled()) return Value::Nil;
-	SetColor(env, arg.Is_symbol(0)? arg.GetSymbol(0) : nullptr,
-			 arg.Is_symbol(1)? arg.GetSymbol(1) : nullptr, pExprBlock);
-	return Value::Nil;
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol_fg = args.IsValid()? args.PickSymbol() : nullptr;
+	const Symbol* pSymbol_bg = args.IsValid()? args.PickSymbol() : nullptr;
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	return SetColor(processor, pSymbol_fg, pSymbol_bg, pExprOfBlock);
 }
 
-// conio.moveto(x:number, y:number):map:void {block?}
-Gurax_DeclareFunction(moveto)
+// conio.MoveTo(x:Number, y:Number):map:void {block?}
+Gurax_DeclareFunction(MoveTo)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -143,19 +124,22 @@ Gurax_DeclareFunction(moveto)
 		"and then gets back to where it has been when done.\n");
 }
 
-Gurax_ImplementFunction(moveto)
+Gurax_ImplementFunction(MoveTo)
 {
-	const Expr_Block *pExprBlock = arg.GetBlockCooked(env);
-	if (env.IsSignalled()) return Value::Nil;
-	MoveTo(env, arg.GetInt(0), arg.GetInt(1), pExprBlock);
-	return Value::Nil;
+	// Arguments
+	ArgPicker args(argument);
+	int x = args.PickNumberNonNeg<int>();
+	int y = args.PickNumberNonNeg<int>();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	return MoveTo(processor, x, y, pExprOfBlock);
 }
 
-// conio.waitkey():[raise]
-Gurax_DeclareFunction(waitkey)
+// conio.WaitKey():[raise]
+Gurax_DeclareFunction(WaitKey)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareAttr(Gurax_Symbol(raise));
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Waits for a keyboard input and returns a character code number associated with the key.\n"
@@ -182,18 +166,19 @@ Gurax_DeclareFunction(waitkey)
 		"- `conio.K_DELETE`\n");
 }
 
-Gurax_ImplementFunction(waitkey)
+Gurax_ImplementFunction(WaitKey)
 {
-	int chRtn = WaitKey(env, arg.IsSet(Gurax_Symbol(raise)));
-	if (env.IsSignalled()) return Value::Nil;
-	return Value(chRtn);
+	// Arguments
+	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
+	// Function body
+	return WaitKey(raiseFlag? &processor : nullptr);
 }
 
-// conio.readkey():[raise]
-Gurax_DeclareFunction(readkey)
+// conio.ReadKey():[raise]
+Gurax_DeclareFunction(ReadKey)
 {
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_None);
-	DeclareAttr(Gurax_Symbol(raise));
+	Declare(VTYPE_Any, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads a keyboard input and returns a character code number associated with the key\n"
@@ -221,14 +206,14 @@ Gurax_DeclareFunction(readkey)
 		"- `conio.K_DELETE`\n");
 }
 
-Gurax_ImplementFunction(readkey)
+Gurax_ImplementFunction(ReadKey)
 {
-	if (!CheckKey()) return Value::Nil;
-	int chRtn = WaitKey(env, arg.IsSet(Gurax_Symbol(raise)));
-	if (env.IsSignalled()) return Value::Nil;
-	return Value(chRtn);
+	// Arguments
+	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
+	// Function body
+	if (!CheckKey()) return Value::nil();
+	return WaitKey(raiseFlag? &processor : nullptr);
 }
-#endif
 
 //------------------------------------------------------------------------------
 // Entries
@@ -238,11 +223,58 @@ Gurax_ModuleValidate()
 	return Version::CheckCoreVersion(GURAX_VERSION, nullptr);
 }
 
+
 Gurax_ModulePrepare()
 {
+	// Assignment of value
+	AssignValue_Number(K_CTRL_A);
+	AssignValue_Number(K_CTRL_B);
+	AssignValue_Number(K_CTRL_C);
+	AssignValue_Number(K_CTRL_D);
+	AssignValue_Number(K_CTRL_E);
+	AssignValue_Number(K_CTRL_F);
+	AssignValue_Number(K_CTRL_G);
+	AssignValue_Number(K_CTRL_H);
+	AssignValue_Number(K_CTRL_I);
+	AssignValue_Number(K_CTRL_J);
+	AssignValue_Number(K_CTRL_K);
+	AssignValue_Number(K_CTRL_L);
+	AssignValue_Number(K_CTRL_M);
+	AssignValue_Number(K_CTRL_N);
+	AssignValue_Number(K_CTRL_O);
+	AssignValue_Number(K_CTRL_P);
+	AssignValue_Number(K_CTRL_Q);
+	AssignValue_Number(K_CTRL_R);
+	AssignValue_Number(K_CTRL_S);
+	AssignValue_Number(K_CTRL_T);
+	AssignValue_Number(K_CTRL_U);
+	AssignValue_Number(K_CTRL_V);
+	AssignValue_Number(K_CTRL_W);
+	AssignValue_Number(K_CTRL_X);
+	AssignValue_Number(K_CTRL_Y);
+	AssignValue_Number(K_CTRL_Z);
+	AssignValue_Number(K_BACKSPACE);
+	AssignValue_Number(K_TAB);
+	AssignValue_Number(K_RETURN);
+	AssignValue_Number(K_ESCAPE);
+	AssignValue_Number(K_SPACE);
+	AssignValue_Number(K_UP);
+	AssignValue_Number(K_DOWN);
+	AssignValue_Number(K_RIGHT);
+	AssignValue_Number(K_LEFT);
+	AssignValue_Number(K_INSERT);
+	AssignValue_Number(K_HOME);
+	AssignValue_Number(K_END);
+	AssignValue_Number(K_PAGEUP);
+	AssignValue_Number(K_PAGEDOWN);
+	AssignValue_Number(K_DELETE);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Clear));
 	Assign(Gurax_CreateFunction(GetWinSize));
+	Assign(Gurax_CreateFunction(SetColor));
+	Assign(Gurax_CreateFunction(MoveTo));
+	Assign(Gurax_CreateFunction(WaitKey));
+	Assign(Gurax_CreateFunction(ReadKey));
 	return true;
 }
 
