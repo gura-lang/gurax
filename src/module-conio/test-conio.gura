@@ -5,6 +5,39 @@
 import(util.tester) {*}
 import(conio)
 
-TestCase('Basic test') {
-	Println(conio.Test('hello', 4))
+PushAnyKey() = {
+	[w, h] = conio.GetWinSize()
+	str = ' push any key '
+	conio.MoveTo((w - str.width) / 2, h / 2 - 3)
+	conio.SetColor(`black, `white) { Print(str) }
+	conio.WaitKey():raise
 }
+
+scope {
+	bg = `bright_white
+	conio.Clear()
+	conio.SetColor(`red, bg) {
+		Println('red')
+		conio.SetColor(`blue, bg) {
+			Println('blue')
+			conio.SetColor(`green, bg) {
+				Println('green')
+				conio.SetColor(`yellow, bg) {
+					Println('yellow')
+				}
+				Println('green again')
+				conio.SetColor(`bright_red, bg)
+				Println('bright_red')
+				conio.SetColor(`bright_blue, bg)
+				Println('bright_blue')
+				conio.SetColor(`bright_green, bg)
+				Println('bright_green')
+			}
+			Println('blue again')
+		}
+		Println('red again')
+	}
+	PushAnyKey()
+}
+
+conio.Clear()

@@ -28,17 +28,17 @@ public:
 		Assoc(Gurax_Symbol(magenta),		5);
 		Assoc(Gurax_Symbol(yellow),			6);
 		Assoc(Gurax_Symbol(white),			7);
-		Assoc(Gurax_Symbol(gray),			8);
-		Assoc(Gurax_Symbol(bright_blue),	9);
-		Assoc(Gurax_Symbol(bright_green),	10);
-		Assoc(Gurax_Symbol(bright_aqua),	11);
-		Assoc(Gurax_Symbol(bright_cyan),	11);
-		Assoc(Gurax_Symbol(bright_red),		12);
-		Assoc(Gurax_Symbol(bright_purple),	13);
-		Assoc(Gurax_Symbol(bright_magenta),	13);
-		Assoc(Gurax_Symbol(bright_yellow),	14);
-		Assoc(Gurax_Symbol(bright_white),	15);
-#elif defined(GURA_ON_LINUX) || defined(GURA_ON_DARWIN)
+		Assoc(Gurax_Symbol(gray),			8 + 0);
+		Assoc(Gurax_Symbol(bright_blue),	8 + 1);
+		Assoc(Gurax_Symbol(bright_green),	8 + 2);
+		Assoc(Gurax_Symbol(bright_aqua),	8 + 3);
+		Assoc(Gurax_Symbol(bright_cyan),	8 + 3);
+		Assoc(Gurax_Symbol(bright_red),		8 + 4);
+		Assoc(Gurax_Symbol(bright_purple),	8 + 5);
+		Assoc(Gurax_Symbol(bright_magenta),	8 + 5);
+		Assoc(Gurax_Symbol(bright_yellow),	8 + 6);
+		Assoc(Gurax_Symbol(bright_white),	8 + 7);
+#elif defined(GURAX_ON_LINUX) || defined(GURAX_ON_DARWIN)
 		Assoc(Gurax_Symbol(black),			0);
 		Assoc(Gurax_Symbol(red),			1);
 		Assoc(Gurax_Symbol(green),			2);
@@ -49,16 +49,16 @@ public:
 		Assoc(Gurax_Symbol(aqua),			6);
 		Assoc(Gurax_Symbol(cyan),			6);
 		Assoc(Gurax_Symbol(white),			7);
-		Assoc(Gurax_Symbol(gray),			8);
-		Assoc(Gurax_Symbol(bright_red),		9);
-		Assoc(Gurax_Symbol(bright_green),	10);
-		Assoc(Gurax_Symbol(bright_yellow),	11);
-		Assoc(Gurax_Symbol(bright_blue),	12);
-		Assoc(Gurax_Symbol(bright_purple),	13);
-		Assoc(Gurax_Symbol(bright_magenta),	13);
-		Assoc(Gurax_Symbol(bright_aqua),	14);
-		Assoc(Gurax_Symbol(bright_cyan),	14);
-		Assoc(Gurax_Symbol(bright_white),	15);
+		Assoc(Gurax_Symbol(gray),			8 + 0);
+		Assoc(Gurax_Symbol(bright_red),		8 + 1);
+		Assoc(Gurax_Symbol(bright_green),	8 + 2);
+		Assoc(Gurax_Symbol(bright_yellow),	8 + 3);
+		Assoc(Gurax_Symbol(bright_blue),	8 + 4);
+		Assoc(Gurax_Symbol(bright_purple),	8 + 5);
+		Assoc(Gurax_Symbol(bright_magenta),	8 + 5);
+		Assoc(Gurax_Symbol(bright_aqua),	8 + 6);
+		Assoc(Gurax_Symbol(bright_cyan),	8 + 6);
+		Assoc(Gurax_Symbol(bright_white),	8 + 7);
 #endif
 	}
 	static const SymbolAssoc& GetInstance() {
@@ -67,10 +67,10 @@ public:
 	}
 };
 
-bool SymbolToColorCode(const Symbol* pSymbol, int* pNum)
+bool SymbolToColorCode(const Symbol* pSymbol, int* pColorCode)
 {
-	*pNum = SymbolAssoc_ColorCode::GetInstance().ToAssociated(pSymbol);
-	if (*pNum < 0) {
+	*pColorCode = SymbolAssoc_ColorCode::GetInstance().ToAssociated(pSymbol);
+	if (*pColorCode < 0) {
 		Error::Issue(ErrorType::ValueError, "invalid symbol for color: %s", pSymbol->GetName());
 		return false;
 	}
@@ -146,12 +146,8 @@ Value* SetColor(Processor& processor, const Symbol* pSymbolFg, const Symbol* pSy
 	::GetConsoleScreenBufferInfo(hConsole, &csbi);
 	int fg = csbi.wAttributes & 0x000f;
 	int bg = (csbi.wAttributes & 0x00f0) >> 4;
-	if (pSymbolFg && !SymbolToColorCode(pSymbolFg, &fg)) {
-		return;
-	}
-	if (pSymbolBg && !SymbolToColorCode(pSymbolBg, &bg)) {
-		return;
-	}
+	if (pSymbolFg && !SymbolToColorCode(pSymbolFg, &fg)) return Value::nil();
+	if (pSymbolBg && !SymbolToColorCode(pSymbolBg, &bg)) return Value::nil();
 	::SetConsoleTextAttribute(hConsole, fg + (bg << 4));
 	if (pExprOfBlock) {
 		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
