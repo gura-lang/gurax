@@ -13,29 +13,53 @@ PushAnyKey() = {
 	conio.WaitKey():raise
 }
 
+/*
 scope {
-	bg = `bright_white
+	conio.Clear()
+	[w, h] = conio.GetWinSize()
+	txt = chr(0x30 + [0..9].cycle(w - 4)).join()
+	for (region in [`left, `right, `line]) {
+		conio.Clear()
+		Range(h) {|y|
+			conio.MoveTo(0, y) { Printf('%s%4d', txt, y) }
+		}
+		[x, y] = [int(w / 2), int(h / 2)]
+		conio.MoveTo(x, y)
+		Print('#')
+		conio.MoveTo(x, y)
+		PushAnyKey()
+		conio.MoveTo(x, y)
+		conio.Clear(region)
+		PushAnyKey()
+	}
+}
+*/
+
+scope {
+	[w, h] = conio.GetWinSize()
+	PrintFormatted(str:String) = Println(str.Center(w, '='))
+	bg = `white
 	conio.Clear()
 	conio.SetColor(`red, bg) {
-		Println('red')
+		PrintFormatted('red')
 		conio.SetColor(`blue, bg) {
-			Println('blue')
+			PrintFormatted('blue')
 			conio.SetColor(`green, bg) {
-				Println('green')
+				PrintFormatted('green')
 				conio.SetColor(`yellow, bg) {
-					Println('yellow')
+					PrintFormatted('yellow')
 				}
-				Println('green again')
+				PrintFormatted('green again')
 				conio.SetColor(`bright_red, bg)
-				Println('bright_red')
+				PrintFormatted('bright_red')
 				conio.SetColor(`bright_blue, bg)
-				Println('bright_blue')
+				PrintFormatted('bright_blue')
 				conio.SetColor(`bright_green, bg)
-				Println('bright_green')
+				PrintFormatted('bright_green')
 			}
-			Println('blue again')
+			PrintFormatted('blue again')
 		}
-		Println('red again')
+		PrintFormatted('red again')
 	}
 	PushAnyKey()
 }
