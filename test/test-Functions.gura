@@ -5,6 +5,28 @@ TestCase('Chr()') {
 	Tester(`Chr(0x20..0x7f).Join())
 }
 
+TestCase('Int()') {
+	Tester(`Int(0))
+	Tester(`Int(1))
+	Tester(`Int(-1))
+	Tester(`Format('%d', Int(12345678)))
+	Tester(`Format('%d', Int(-12345678)))
+	Tester(`Int(1.2345))
+	Tester(`Int(-1.2345))
+	Tester(`Int(12345.678))
+	Tester(`Int(-12345.678))
+	Tester(`Format('%d', Int(4294967295.1234)))
+	Tester(`Format('%d', Int(-4294967295.1234)))
+	Tester(`Int('0'))
+	Tester(`Int('1'))
+	Tester(`Int('-1'))
+	Tester(`Format('%d', Int('12345678')))
+	Tester(`Format('%d', Int('-12345678')))
+	Tester(`Int('-1.2345'))
+	Tester(`Int('12345.678'))
+	Tester(`Int('-12345.678'))
+}
+
 TestCase('Ord()') {
 	str = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
 	str.Each {|ch| Printf('\'%s\' .. 0x%02x\n', ch, Ord(ch))}

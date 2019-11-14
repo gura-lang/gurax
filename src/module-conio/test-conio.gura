@@ -5,35 +5,28 @@
 import(util.tester) {*}
 import(conio)
 
-PushAnyKey() = {
+PushAnyKey(str = ' push any key ') = {
 	[w, h] = conio.GetWinSize()
-	str = ' push any key '
 	conio.MoveTo((w - str.width) / 2, h / 2 - 3)
 	conio.SetColor(`black, `white) { Print(str) }
 	conio.WaitKey():raise
 }
 
-/*
 scope {
 	conio.Clear()
 	[w, h] = conio.GetWinSize()
-	txt = chr(0x30 + [0..9].cycle(w - 4)).join()
+	str = Chr(0x30 + [0..9].Cycle(w - 4)).Join()
 	for (region in [`left, `right, `line]) {
 		conio.Clear()
-		Range(h) {|y|
-			conio.MoveTo(0, y) { Printf('%s%4d', txt, y) }
-		}
-		[x, y] = [int(w / 2), int(h / 2)]
+		Range(h) {|y| conio.MoveTo(0, y) { Printf('%s%4d', str, y) }}
+		[x, y] = [Int(w / 2), Int(h / 2)]
 		conio.MoveTo(x, y)
 		Print('#')
 		conio.MoveTo(x, y)
-		PushAnyKey()
-		conio.MoveTo(x, y)
 		conio.Clear(region)
-		PushAnyKey()
+		PushAnyKey(('Clear ' + region.ToString()).Center(20))
 	}
 }
-*/
 
 scope {
 	[w, h] = conio.GetWinSize()

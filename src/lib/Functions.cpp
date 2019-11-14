@@ -140,6 +140,42 @@ Gurax_ImplementFunction(Format)
 	return new Value_String(str);
 }
 
+// Int(value):map
+Gurax_DeclareFunction(Int)
+{
+	Declare(VTYPE_Number, Flag::Map);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts a value into an integer number like below:\n"
+		"\n"
+		"- With a number value, it would be converted into an integer number.\n"
+		"- With a string value, it would be parsed as an integer number.\n"
+		"  An error occurs if it has an invalid format.\n"
+		"- With a value of other types, an error occurs.\n");
+}
+
+Gurax_ImplementFunction(Int)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Value& value = args.PickValue();
+	// Function body
+	if (value.IsType(VTYPE_Number)) {
+		return new Value_Number(Value_Number::GetNumber<Int64>(value));
+	} else if (value.IsType(VTYPE_String)) {
+		bool successFlag;
+		Double num = Value_String::GetStringSTL(value).ToNumber(&successFlag);
+		if (!successFlag) {
+			Error::Issue(ErrorType::ValueError, "failed to convert to a number");
+			return Value::nil();
+		}
+		return new Value_Number(static_cast<Int64>(num));
+	}
+	Error::Issue(ErrorType::TypeError, "Number or String must be specified");
+	return Value::nil();
+}
+
 // Ord(str:String):map
 Gurax_DeclareFunction(Ord)
 {
@@ -337,45 +373,6 @@ Gurax_ImplementFunction(hex)
 	return Value(str);
 }
 
-// int(value):map
-Gurax_DeclareFunctionAlias(int_, "int")
-{
-	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
-	DeclareArg(env, "value", VTYPE_any);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a value into an integer number like below:\n"
-		"\n"
-		"- For a number value, it would be converted into an integer number.\n"
-		"- For a compex value, its absolute number would be converted into an integer number.\n"
-		"- For a string value, it would be parsed as an integer number.\n"
-		"  An error occurs if it has an invalid format.\n"
-		"- For other values, an error occurs.\n");
-}
-
-Gurax_ImplementFunction(int_)
-{
-	Signal &sig = env.GetSignal();
-	const Value &value = arg.GetValue(0);
-	Value result;
-	if (value.Is_number()) {
-		result.SetNumber(value.GetLong());
-	} else if (value.Is_complex()) {
-		result.SetNumber(static_cast<long>(std::abs(value.GetComplex())));
-	} else if (value.Is_string()) {
-		bool successFlag;
-		Number num = value.ToNumber(true, successFlag);
-		if (!successFlag) {
-			sig.SetError(ERR_ValueError, "failed to convert to a number");
-			return Value::Nil;
-		}
-		result.SetNumber(static_cast<long>(num));
-	} else if (value.IsValid()) {
-		SetError_InvalidValType(sig, value);
-	}
-	return result;
-}
-
 // tonumber(value):map:[strict,raise,zero,nil]
 Gurax_DeclareFunction(tonumber)
 {
@@ -459,6 +456,7 @@ void Functions::AssignToBasement(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(Chr));
 	frame.Assign(Gurax_CreateFunction(dir));
 	frame.Assign(Gurax_CreateFunction(Format));
+	frame.Assign(Gurax_CreateFunction(Int));
 	frame.Assign(Gurax_CreateFunction(Ord));
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));
