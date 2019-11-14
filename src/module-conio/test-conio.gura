@@ -13,40 +13,6 @@ PushAnyKey(str = ' push any key ') = {
 }
 
 scope {
-	conio.Clear()
-	[w, h] = conio.GetWinSize()
-	conio.MoveTo(0, 0) {
-		Print('*' * w)
-	}
-	conio.MoveTo(0, 1 .. (h - 2)) {
-		Print('*', ' ' * (w - 2), '*')
-	}
-	conio.MoveTo(0, h - 1) {
-		Print('*' * w)
-	}
-	[x, y] = [Int(w / 2), Int(h / 2)]
-	[xDir, yDir] = [1, 1]
-	repeat(100) {
-		conio.MoveTo(x, y) { Print('#') }
-		sys.cout.Flush()
-		if (x + xDir == 0) {
-			xDir = 1
-		} elsif (x + xDir == w - 1) {
-			xDir = -1
-		}
-		if (y + yDir == 0) {
-			yDir = 1
-		} elsif (y + yDir == h - 1) {
-			yDir = -1
-		}
-		os.sleep(.05)
-		conio.MoveTo(x, y) { Print('.') }
-		x += xDir, y += yDir
-	}
-	PushAnyKey()
-}
-
-scope {
 	[w, h] = conio.GetWinSize()
 	PrintFormatted(str:String) = Println(str.Center(w, '='))
 	bg = `white
@@ -108,8 +74,40 @@ scope {
 	}
 	PushAnyKey()
 }
-/*
 
+scope {
+	conio.Clear()
+	[w, h] = conio.GetWinSize()
+	conio.MoveTo(0, 0) {
+		Print('*' * w)
+	}
+	conio.MoveTo(0, 1 .. (h - 2)) {
+		Print('*', ' ' * (w - 2), '*')
+	}
+	conio.MoveTo(0, h - 1) {
+		Print('*' * w)
+	}
+	[x, y] = [Int(w / 2), Int(h / 2)]
+	[xDir, yDir] = [1, 1]
+	repeat(300) {
+		conio.MoveTo(x, y) { Print('#') }
+		sys.cout.Flush()
+		if (x + xDir == 0) {
+			xDir = 1
+		} elsif (x + xDir == w - 1) {
+			xDir = -1
+		}
+		if (y + yDir == 0) {
+			yDir = 1
+		} elsif (y + yDir == h - 1) {
+			yDir = -1
+		}
+		os.Sleep(.01)
+		conio.MoveTo(x, y) { Print('.') }
+		x += xDir, y += yDir
+	}
+	PushAnyKey()
+}
 
 scope {
 	conio.Clear()
@@ -131,6 +129,5 @@ scope {
 	}
 	PushAnyKey()
 }
-*/
 
 conio.Clear()

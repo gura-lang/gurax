@@ -57,10 +57,10 @@ Gurax_ImplementFunction(GetWinSize)
 	return Value_List::Create(new Value_Number(width), new Value_Number(height));
 }
 
-// conio.Setcolor(fg:Symbol:nil, bg?:Symbol):map {block?}
+// conio.SetColor(fg:Symbol:nil, bg?:Symbol):map {block?}
 Gurax_DeclareFunction(SetColor)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("fg", VTYPE_Symbol, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("bg", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -111,7 +111,7 @@ Gurax_ImplementFunction(SetColor)
 // conio.MoveTo(x:Number, y:Number):map {block?}
 Gurax_DeclareFunction(MoveTo)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
