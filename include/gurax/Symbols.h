@@ -38,6 +38,8 @@ Gurax_DeclareSymbol(__format_f__);
 Gurax_DeclareSymbol(__format_g__);
 Gurax_DeclareSymbol(__format_s__);
 Gurax_DeclareSymbol(__format_c__);
+Gurax_DeclareSymbol(__file__);
+Gurax_DeclareSymbol(__line__);
 Gurax_DeclareSymbol(_anonymous_);
 Gurax_DeclareSymbol(a);
 Gurax_DeclareSymbol(A);

@@ -1,13 +1,13 @@
-#!/usr/bin/env gura
+#!/usr/bin/env gurax
 //=============================================================================
 // markdown module
 // The markdown module consists of the binary and script part, and this is
 // the script part that mainly provides rendering functions.
 //=============================================================================
-import(conio)
 import(re)
-import(markdown):binary:mixin_type {*}
+//import(markdown):binary:mixin_type {*}
 
+/*
 MakeAnchorNameDef(indices[]:number) = 'anchor-' + format('%d', indices).join('-')
 
 Renderer@html = class {
@@ -1332,3 +1332,4 @@ The argument `doc` is a `markdown.document` instance into which the document is 
 
 The argument `lang` is a symbol that specifies the language.
 '''}
+*/

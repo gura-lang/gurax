@@ -343,17 +343,23 @@ const DeclCallable* Expr_Identifier::LookupDeclCallable() const
 void Expr_Identifier::Compose(Composer& composer)
 {
 	const Symbol* pSymbol = GetSymbol();
-	Value* pValue = Basement::Inst.GetFrame().Lookup(pSymbol);
-	if (pValue && pValue->IsType(VTYPE_Function)) {
-		const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
-		if (func.IsTypeStatement()) {
-			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
-			pExprCaller->SetExprCar(new Expr_Identifier(pSymbol));
-			func.Compose(composer, *pExprCaller);
-			return;
+	if (pSymbol->IsIdentical(Gurax_Symbol(__file__))) {
+		composer.Add_Value(new Value_String(GetPathNameSrc()), this);
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(__line__))) {
+		composer.Add_Value(new Value_Number(GetLineNoTop()), this);
+	} else {
+		Value* pValue = Basement::Inst.GetFrame().Lookup(pSymbol);
+		if (pValue && pValue->IsType(VTYPE_Function)) {
+			const Function& func = dynamic_cast<Value_Function*>(pValue)->GetFunction();
+			if (func.IsTypeStatement()) {
+				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
+				pExprCaller->SetExprCar(new Expr_Identifier(pSymbol));
+				func.Compose(composer, *pExprCaller);
+				return;
+			}
 		}
+		composer.Add_Lookup(pSymbol, this);					// [Value]
 	}
-	composer.Add_Lookup(pSymbol, this);					// [Value]
 }
 
 void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)

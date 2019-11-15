@@ -36,6 +36,8 @@ Gurax_RealizeSymbol(__format_f__);
 Gurax_RealizeSymbol(__format_g__);
 Gurax_RealizeSymbol(__format_s__);
 Gurax_RealizeSymbol(__format_c__);
+Gurax_RealizeSymbol(__line__);
+Gurax_RealizeSymbol(__file__);
 Gurax_RealizeSymbol(_anonymous_);
 Gurax_RealizeSymbol(a);
 Gurax_RealizeSymbol(A);
