@@ -86,15 +86,19 @@ public:
 	~CommandLine();
 public:
 	CommandLine& AddOpt(Opt* pOpt);
+	CommandLine& OptBool(String keyLong) { return OptBool(std::move(keyLong), '\0'); }
 	CommandLine& OptBool(String keyLong, char keyShort) {
 		return AddOpt(new Opt(Type::Bool, std::move(keyLong), keyShort));
 	}
+	CommandLine& OptString(String keyLong) { return OptString(std::move(keyLong), '\0'); }
 	CommandLine& OptString(String keyLong, char keyShort) {
 		return AddOpt(new Opt(Type::String, std::move(keyLong), keyShort));
 	}
+	CommandLine& OptInt(String keyLong) { return OptInt(std::move(keyLong), '\0'); }
 	CommandLine& OptInt(String keyLong, char keyShort) {
 		return AddOpt(new Opt(Type::Int, std::move(keyLong), keyShort));
 	}
+	CommandLine& OptMultiString(String keyLong) { return OptMultiString(std::move(keyLong), '\0'); }
 	CommandLine& OptMultiString(String keyLong, char keyShort) {
 		return AddOpt(new Opt(Type::MultiString, std::move(keyLong), keyShort));
 	}

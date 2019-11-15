@@ -43,7 +43,7 @@ public:
 	~Basement() = default;
 public:
 	bool Initialize(int argc, char** argv);
-	const CommandLine& GetCommandLine() const { return _cmdLine; }
+	CommandLine& GetCommandLine() { return _cmdLine; }
 	bool GetCommandDoneFlag() const { return _commandDoneFlag; }
 	void PrepareVType();
 	void PrepareValue();

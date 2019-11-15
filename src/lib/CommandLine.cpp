@@ -186,7 +186,7 @@ String CommandLine::Opt::MakeKeyArg(bool longFlag) const
 	if (longFlag) {
 		str = "--";
 		str += GetKeyLong();
-	} else {
+	} else if (GetKeyShort()) {
 		str ="-";
 		str += GetKeyShort();
 	}

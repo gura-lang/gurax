@@ -22,9 +22,12 @@ bool Basement::Initialize(int argc, char** argv)
 		.OptMultiString	("import",			'i')
 		.OptMultiString	("command",			'c')
 		.OptMultiString	("module-path",		'I')
+		.OptBool		("help",			'h')
+		.OptBool		("version",			'v')
 		.OptBool		("debug",			'g')
 		.OptBool		("list",			'L')
 		.OptBool		("shared-script",	'S')
+		.OptBool		("naked")
 		.Parse(argc, argv)) {
 		Error::Issue(ErrorType::CommandError, "%s", _cmdLine.GetError());
 		return false;

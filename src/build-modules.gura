@@ -1,0 +1,182 @@
+#!/usr/bin/env gurax --naked
+import(argopt)
+
+ModuleInfo = struct {
+	moduleName:String, action:Symbol, platforms[]:Symbol
+}
+
+moduleInfos = @(ModuleInfo) {
+	['conio',			`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
+	['markdown',		`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
+	['re',				`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
+}
+
+PrintHelp(p:argopt.Parser) = sys.stderr.print(eR'''
+usage: ${path.FileName(sys.argv[0])} [options] command
+command:
+ clean          clean output files
+ install        install built files to the module directory
+ setup-guest    set up guest library packages
+ help           print this help
+options:
+ ${p.FormatHelp() + '\n'}
+''')
+
+/*
+if (sys.platform == `linux) {
+	platform = nil
+	if (path.exists('/etc/lsb-release')) {
+		platform = `ubuntu
+	} elsif (path.exists('/etc/system-release')) {
+		platform = `fedora
+	} elsif (path.exists(fileName = '/etc/redhat-release')) {
+		readlines(fileName):chop {|line|
+			if (line.startswith('CentOS')) {
+				platform = `centos
+				break
+			} elsif (line.startswith('Red Hat')) {
+				platform = `redhat
+				break
+			}
+		}
+	}
+} else {
+	platform = sys.platform
+}
+*/
+
+/*
+argopt.Parser {|p|
+	p.addFlag('verbose',	'v', 'verbose mode')
+	p.addFlag('debug',		'd', 'build module with debug information')
+	p.addFlag('rebuild',	'r', 'clean output files before building')
+	p.addParam('exclude',	'x', 'specify module to exclude', 'NAME', '')
+	p.addParam('filter',	'f', 'specify module name to build', 'NAME', '')
+	p.addParam('incdir',	'I', 'specify include directory', 'DIR')
+	p.addParam('libdir',	'L', 'specify library directory', 'DIR')
+	p.addParam('moddir',	'M', 'specify directory to which module is installed', 'DIR')
+	p.addParam('platform',	'p', 'specify platform symbol', 'NAME')
+	try {
+		[cfg, argv] = p.parse(sys.argv)
+	} catch {|e|
+		sys.stderr.println(e.text)
+		sys.exit(1)
+	}
+	command = if (argv.len() == 0) {
+		cond(cfg['moddir'], `build_install, `build)
+	} elsif (argv[0] == 'help') {
+		printHelp(p)
+		sys.exit(1)
+	} elsif (argv[0] == 'build-install') {
+		`build_install
+	} elsif (argv[0] == 'clean') {
+		`clean
+	} elsif (argv[0] == 'install') {
+		`install
+	} elsif (argv[0] == 'setup-guest') {
+		`setup_guest
+	} else {
+		sys.stderr.println('unknown command: ', argv[0])
+		sys.exit(1)
+	}
+	if (cfg['platform']) { platform = cfg['platform'].tosymbol() }
+}
+if (!(platform && platform in [`mswin, `ubuntu, `fedora, `darwin])) {
+	println('unsupported platform')
+	sys.exit(1)
+}
+getCommaSepList(str:string) = {
+	if (str.isempty()) {
+		[]
+	} else {
+		str.split(','):list
+	}
+}
+moduleNamesExcept = getCommaSepList(cfg['exclude'])
+moduleNamesFilter = getCommaSepList(cfg['filter'])
+dirNamePre = path.dirname(sys.argv[0])
+moduleNamesError = []
+debFilesDevel = []
+rpmFilesDevel = []
+moduleInfos.each {|moduleInfo|
+	moduleName = moduleInfo.moduleName
+	if (!moduleNamesFilter.isempty() && !(moduleName in moduleNamesFilter)) {
+		continue
+	}
+	actualFlag = (moduleInfo.action == `build && moduleInfo.platforms.contains(platform))
+	if (moduleName in moduleNamesExcept) {
+		printf('[%s] .. skipped\n', moduleName)
+		continue
+	} elsif (command == `setup_guest) {
+		// nothing to do
+	} else {
+		printf('[%s]\n', moduleName)
+	}
+	if (!dirNamePre.isempty()) {
+		pathName = path.join(dirNamePre, 'module-' + moduleName)
+	}
+	argvOrg = sys.argv
+	sys.argv = ['build.gura']
+	if (actualFlag) {
+		if (command == `build) {
+			// nothing to do
+		} elsif (command == `clean) {
+			sys.argv.append('clean')
+		} elsif (command == `install) {
+			sys.argv.append('install')
+		} elsif (command == `build_install) {
+			sys.argv.append('build-install')
+		} elsif (command == `setup_guest) {
+			sys.argv.append('nothing')
+		} else {
+			// nothing to do
+		}
+	} else {
+		if (command == `build) {
+			continue
+		} elsif (command == `clean) {
+			continue
+		} elsif (command == `install) {
+			sys.argv.append('install')
+		} elsif (command == `build_install) {
+			sys.argv.append('install')
+		} elsif (command == `setup_guest) {
+			continue
+		} else {
+			continue
+		}
+	}
+	if (cfg['verbose']) {
+		sys.argv.append('--verbose')
+	} else {
+		sys.argv.append('--quiet')
+	}
+	cfg['debug'] && sys.argv.append('--debug')
+	cfg['rebuild'] && sys.argv.append('--rebuild')
+	cfg['incdir'] && sys.argv.append('--incdir=' + cfg['incdir'])
+	cfg['libdir'] && sys.argv.append('--libdir=' + cfg['libdir'])
+	cfg['moddir'] && sys.argv.append('--moddir=' + cfg['moddir'])
+	sys.argv.append('--basedir=' + path.join(fs.getcwd(), 'module-' + moduleName))
+	fs.chdir(pathName) {
+		scope {
+			builder = expr('build.gura').eval()
+			builder.errorFlag && moduleNamesError.append(moduleName)
+			builder.debFilesDevel && debFilesDevel.append(builder.debFilesDevel)
+			builder.rpmFilesDevel && rpmFilesDevel.append(builder.rpmFilesDevel)
+		}
+		sys.argv = argvOrg
+	}
+}
+if (!moduleNamesError.isempty()) {
+	println()
+	println('**** error while building ', moduleNamesError)
+	sys.exit(1)
+}
+if (command == `setup_guest) {
+	if (platform in [`ubuntu, `debian]) {
+		os.exec('apt', 'install', '-y', set(debFilesDevel))
+	} elsif (platform in [`fedora, `centos, `redhat]) {
+		os.exec('yum', 'install', '-y', set(rpmFilesDevel))
+	}
+}
+*/

@@ -14,12 +14,35 @@ namespace Gurax {
 bool ReadLine(const char* prompt, String& strLine);
 void RunREPL();
 
+const char* g_strHelp =
+	"usage: gurax [option] [script-file] [arg] ...\n"
+	"available options:\n"
+	"-h               prints this help\n"
+	"-t               enters interactive mode after running script file if specified\n"
+	"-i module[,..]   imports module(s) before evaluating scripts\n"
+	"-I dir           specifies a directory to search for modules\n"
+	"-c cmd           executes a script from command line\n"
+	"-q               suppresses version banner at the beginning of interactive mode\n"
+	"-T template[,..] evaluates script code embedded in template\n"
+	"-C dir           changes directory before executing scripts\n"
+	"-d coding        sets character coding to describe script\n"
+	"-g               enables debug mode\n"
+	"-v               prints version string\n"
+	"-S               searches a script file stored in shared directory\n";
+
 //------------------------------------------------------------------------------
 // Main
 //------------------------------------------------------------------------------
 bool Main()
 {
 	const CommandLine& cmdLine = Basement::Inst.GetCommandLine();
+	if (cmdLine.GetBool("help")) {
+		Stream::COut->Printf("%s", g_strHelp);
+		return true;
+	} else if (cmdLine.GetBool("version")) {
+		Stream::COut->Printf("%s\n", Version::GetBanner(false));
+		return true;
+	}
 	if (cmdLine.argc < 2) {
 		if (!Basement::Inst.GetCommandDoneFlag()) RunREPL();
 		return true;
@@ -51,14 +74,14 @@ bool Main()
 //------------------------------------------------------------------------------
 void RunREPL()
 {
-	Stream& stream = *Stream::COut;
+	const CommandLine& cmdLine = Basement::Inst.GetCommandLine();
 	RefPtr<Parser> pParser(new Parser("*REPL*"));
 	Composer composer(true);
 	Processor& processor = Basement::Inst.GetProcessor();
 	Expr_Collector& exprRoot = pParser->GetExprRoot();
 	Expr* pExprLast = nullptr;
 	const PUnit* pPUnit = nullptr;
-	stream.Printf("%s\n", Version::GetBanner(false));
+	if (!cmdLine.GetBool("quiet")) Stream::COut->Printf("%s\n", Version::GetBanner(false));
 	for (;;) {
 		String strLine;
 		String prompt;
@@ -96,7 +119,7 @@ void RunREPL()
 			}
 			if (Error::IsIssued()) break;
 			RefPtr<Value> pValue(processor.PopValue());
-			if (pValue->IsValid()) stream.Printf("%s\n", pValue->ToString().c_str());
+			if (pValue->IsValid()) Stream::COut->Printf("%s\n", pValue->ToString().c_str());
 		}
 		if (Error::IsIssued()) {
 			Error::Print(*Stream::CErr);
@@ -141,6 +164,8 @@ bool ReadLine(const char* prompt, String& strLine)
 
 int main(int argc, char* argv[])
 {
+	Gurax::Basement::Inst.GetCommandLine()
+		.OptBool("extra");
 	if (Gurax::Initialize(argc, argv) && Gurax::Main()) return 0;
 	Gurax::Error::Print(*Gurax::Stream::CErr);
 	return 1;
