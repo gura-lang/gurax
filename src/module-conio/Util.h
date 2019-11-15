@@ -8,7 +8,7 @@
 Gurax_BeginModuleScope(conio)
 
 enum {
-	K_CTRL_A,
+	K_CTRL_A	= 0x01,
 	K_CTRL_B,
 	K_CTRL_C,
 	K_CTRL_D,
@@ -34,10 +34,10 @@ enum {
 	K_CTRL_X,
 	K_CTRL_Y,
 	K_CTRL_Z,
-	K_BACKSPACE,
-	K_TAB,
-	K_RETURN,
-	K_ESCAPE,
+	K_BACKSPACE	= 0x08,
+	K_TAB		= 0x09,
+	K_RETURN	= 0x0a,
+	K_ESCAPE	= 0x1b,
 	K_SPACE		= 0x20,
 	// special key code
 	K_UP		= 0x80,
