@@ -1,0 +1,134 @@
+#!/usr/bin/env gura
+//=============================================================================
+// markdown document module
+//=============================================================================
+import(markdown)
+
+text@en = Re'''
+# markdown Module
+
+## Overview
+
+The `markdown` module provides measures to parse a text formatted in markdown syntax.
+To utilize it, import the `markdown` module using `import` function.
+
+Below is an example to read a document written in Markdown format
+and then render its HTML text into a file.
+
+    import(markdown)
+    markdown.document('foo.md').render@html('foo.html')
+
+`markdown` module consists of the following two module files:
+
+- `markdown.gurd` .. a binary module file that provides parser procedures.
+- `markdown.gura` .. a script module file that renders parsed result in desired formats.
+
+
+## Notes
+
+- While Markdown format is disabled within tags,
+  a text embraced by tags with a name begining with '@' can accept Markdown in it.
+
+
+## Operator
+
+`markdown.document << function`
+
+
+## markdown.document Class
+
+### Overview
+
+The `markdown.document` class provides measures to parse a document written in Markdown format.
+
+You can parse documents written in both string and stream using the following methods:
+
+- `markdown.document#parse()` .. Parses document written in a string.
+- `markdown.document#read()` .. Parses document from a stream.
+
+You can get the parsed result by inspecting a property `markdown.document#root`
+and its children that are `markdown.item` instances.
+
+### Property
+
+The `markdown.document` instance has following properties:
+
+${markdown.makedoc@property(`en, markdown.document)}
+
+
+### Constructor
+
+${markdown.makedoc@function(`en
+markdown.document
+)}
+
+### Method
+
+The `markdown.document` class provides following methods:
+
+${markdown.makedoc@function(`en
+markdown.document.parse
+markdown.document.read
+markdown.document.render@console
+markdown.document.render@html
+markdown.document.render@toc
+)}
+
+## markdown.item Class
+
+### Overview
+
+The `markdown.item` class provides information about items that composes a Markdown document.
+
+Below is a table of item type:
+
+<table>
+
+<tr><th>Item Type</th><th>Explanation</th></tr>
+
+<tr><td><code>root</code></td><td>container</td></tr>
+<tr><td><code>h1</code></td><td>container</td></tr>
+<tr><td><code>h2</code></td><td>container</td></tr>
+<tr><td><code>h3</code></td><td>container</td></tr>
+<tr><td><code>h4</code></td><td>container</td></tr>
+<tr><td><code>h5</code></td><td>container</td></tr>
+<tr><td><code>h6</code></td><td>container</td></tr>
+<tr><td><code>p</code></td><td>container</td></tr>
+<tr><td><code>blockquote</code></td><td>container</td></tr>
+<tr><td><code>em</code></td><td>container</td></tr>
+<tr><td><code>strong</code></td><td>container</td></tr>
+<tr><td><code>codeblock</code></td><td>container</td></tr>
+<tr><td><code>ol</code></td><td>container</td></tr>
+<tr><td><code>ul</code></td><td>container</td></tr>
+<tr><td><code>li</code></td><td>container</td></tr>
+<tr><td><code>line</code></td><td>container</td></tr>
+<tr><td><code>a</code></td><td>container</td></tr>
+<tr><td><code>img</code></td><td>text</td></tr>
+<tr><td><code>text</code></td><td>text</td></tr>
+<tr><td><code>code</code></td><td>text</td></tr>
+<tr><td><code>entity</code></td><td>text</td></tr>
+<tr><td><code>tag</code></td><td>container/text</td></tr>
+<tr><td><code>hr</code></td><td>no-content</td></tr>
+<tr><td><code>br</code></td><td>no-content</td></tr>
+<tr><td><code>referee</code></td><td>no-content</td></tr>
+
+</table>
+
+
+### Property
+
+The `markdown.item` instance has following properties:
+
+${markdown.makedoc@property(`en, markdown.item)}
+
+
+### Method
+
+The `markdown.item` classs provides following methods;
+
+${markdown.makedoc@function(`en
+markdown.item.print
+)}
+'''
+
+markdown.document_server(locals(), %{`en => text@en})

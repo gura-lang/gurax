@@ -1,0 +1,86 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+import(markdown)
+
+TestCase@markdown(title:String, str:String):void = {
+	PrintTitle(title)
+	doc = markdown.Document()
+	doc << str
+	doc.root.Print()
+	//doc.refs:*print()
+}
+
+TestCase@markdown('Example 1', R'''
+	foo	baz		bim
+''')
+
+TestCase@markdown('Example 2', R'''
+  	foo	baz		bim
+''')
+
+TestCase@markdown('Example 3', R'''
+    a	a
+    ὐ	a
+''')
+
+TestCase@markdown('Example 4', R'''
+  - foo
+
+	bar
+''')
+
+TestCase@markdown('Example 5', R'''
+- foo
+
+		bar
+''')
+
+TestCase@markdown('Example 6', R'''
+>		foo
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+
+TestCase@markdown('Example', R'''
+''')
+

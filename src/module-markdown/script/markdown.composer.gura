@@ -1,0 +1,253 @@
+#!/usr/bin/env gura
+//----------------------------------------------------------------------------
+// markdown.composer.gura
+// A module to convert a markdown document into jekyll-style HTML, PDF and RTF.
+//----------------------------------------------------------------------------
+import(markdown)
+
+Renderer@jekyll = class(markdown.Renderer@html) {
+	tmpl@header:public = R'''
+	---
+	layout: ${layout}
+	lang: ${lang}
+	title: ${title}
+	prevpage: ${prevPage}
+	nextpage: ${nextPage}
+	---
+	{% raw %}
+	'''T
+	tmpl@footer:public = R'''
+	{% endraw %}
+	'''T
+	__init__(dirNameOut:string, layout:string, lang:string,
+			 title:string, author:string, date:string) = {|sys.stdout, true|
+		this.dirNameOut = dirNameOut
+		this.layout = layout
+		this.lang = lang
+		this.title = title
+		this.author = author
+		this.date = date
+		this.out = nil
+		this.enableAnchorFlags[0] = false	// suppress anchor for <h1>
+	}
+	RenderEx(doc:markdown.document) = {
+		this.nChapters = doc.countitem(`h1)
+		this.Render(doc)
+	}
+	OnRenderItemPre(item:item) = {
+		if (item.type == `h1) {
+			this.out && tmpl@footer.render(this.out)
+			idxChapter = this.indices[0] + 1
+			fileName = path.join(this.dirNameOut, 'chapter-%02d.md' % (idxChapter))
+			println('rendering ', path.filename(fileName))
+			this.out = open(fileName, 'w')
+			prevPage = nextPage = '""'
+			if (idxChapter == 1) {
+				prevPage = 'index.html'
+			} else {
+				prevPage = 'chapter-%02d.html#naviitem-selected' % (idxChapter - 1)
+			}
+			if (idxChapter + 1 <= this.nChapters) {
+				nextPage = 'chapter-%02d.html#naviitem-selected' % (idxChapter + 1)
+			}
+			layout = this.layout
+			lang = this.lang
+			title = this.title
+			tmpl@header.render(this.out)
+		}
+		true
+	}
+	OnRenderItemPost(item:item):void = {
+		if (item.type == `root) {
+			this.out && tmpl@footer.render(this.out)
+			this.out = nil
+		}
+	}
+}
+
+Renderer@rtf = class(markdown.Renderer@rtf) {
+	tmpl@coverPage = R'''
+	{\pard\ql\f0\sb900\sa360\li0\fi0\fs32 ${title}\par}
+	{\pard\ql\f0\sa180\li0\fi0\fs24 ${author}\par}
+	{\pard\ql\f0\sa900\li0\fi0\fs24 ${date}\par}
+	'''T
+	__init__(out:stream:w, captionIndex:boolean, title:string, author:string, date:string) = {|out, captionIndex|
+		this.title = title
+		this.author = author
+		this.date = date
+	}
+	RenderCoverPage() = {
+		title = this.title
+		author = this.author
+		date = this.date
+		tmpl@coverPage.render(this.out)
+	}
+}
+
+NaviItem = struct(level:number, indices[]:number, anchorName:string, text:string, itemList[] => [])
+
+printNaviItems(out:stream:w, itemList[]:NaviItem) = {
+	tmpl@naviItemTop = R'''
+	<span class="list-group-item border-0 py-2 font-weight-bold{% if page.url contains "/${fileNameHTML}" %} active{% endif %}">
+	{% if page.url contains "/${fileNameHTML}" %}
+	<a name="naviitem-selected"></a><a href="#">${item.indices[0]} ${item.text}</a>
+	{% else %}
+	<a href="${fileNameHTML + "#naviitem-selected"}">${item.indices[0]} ${item.text}</a>
+	{% endif %}
+	</span>
+	'''T
+	tmpl@naviItem = R'''
+	<span class="list-group-item border-0 py-1{% if page.url contains "/${fileNameHTML}" %} active{% endif %}">
+	<a href="${fileNameHTML + "#" + item.anchorName}">${item.indices.head(item.level + 1).join('.')} ${item.text}</a>
+	</span>
+	'''T
+	tmpl@naviGroupBegin = R'''
+	{% if page.url contains "/${fileNameHTML}" %}
+	<div class="list-group" id="naviitem-${item.anchorName}">
+	'''T
+	tmpl@naviGroupEnd = R'''
+	</div>
+	{% endif %}
+	'''T
+	itemList.each {|item|
+		fileNameHTML = 'chapter-%02d.html' % item.indices[0]
+		if (item.level == 0) {
+			tmpl@naviItemTop.render(out)
+		} else {
+			tmpl@naviItem.render(out)
+		}
+		if (!item.itemList.isempty() && item.level == 0) {
+			tmpl@naviGroupBegin.render(out)
+			printNaviItems(out, item.itemList)
+			tmpl@naviGroupEnd.render(out)
+		}
+	}
+}
+
+classref(`markdown.document).compose@html(baseName:string) = {
+	fileName = baseName + '.html'
+	this.render@html(fileName, true, true)
+	sys.stderr.println(fileName, ' was created.')
+}
+
+classref(`markdown.document).compose@tex(baseName:string, title:string => '', author:string => '', date:string => '') = {
+	fileName = baseName + '.tex'
+	this.render@tex(fileName, title, author, date)
+	sys.stderr.println(fileName, ' was created.')
+}
+
+classref(`markdown.document).compose@pdf(baseName:string, title:string => '', author:string => '', date:string => '') = {
+	this.compose@tex(baseName, title, author, date)
+	repeat (2) { os.exec('ptex2pdf', '-l', baseName) }
+}
+
+classref(`markdown.document).compose@jekyll(dirNameOut:string, layout:string, lang:string,
+			  title:string => '', author:string => '', date:string => '') = {
+	println('Output directory: ', dirNameOut)
+	!path.exists(dirNameOut) && fs.mkdir(dirNameOut):tree
+	this.compose@jekyll_index(dirNameOut, layout, lang, title, author, date)
+	this.compose@jekyll_navi(dirNameOut, title)
+	Renderer@jekyll(dirNameOut, layout, lang, title, author, date).RenderEx(doc)
+}
+
+classref(`markdown.document).compose@jekyll_index(dirNameOut:string, layout:string, lang:string,
+					title:string, author:string, date:string) = {
+	tmpl@content:public = R'''
+	---
+	layout: ${layout}
+	lang: ${lang}
+	title: ${title}
+	prevpage: ""
+	nextpage: chapter-01.html#naviitem-selected
+	---
+	<h1>${title}</h1>
+	<div>${author}</div>
+	<div>${date}</div>
+	'''T
+	fileName = path.join(dirNameOut, 'index.md')
+	println('rendering ', path.filename(fileName))
+	open(fileName, 'w') {|out|
+		tmpl@content.render(out)
+	}
+}
+
+classref(`markdown.document).compose@jekyll_navi(dirNameOut:string, title:string) = {
+	itemListRoot = []
+	itemStack = []
+	itemList = itemListRoot
+	this.render@toc {|level:number, indices[]:number, anchorName:string, text:string|
+		item = NaviItem(level, indices.clone(), anchorName, text)
+		if (!itemStack.isempty()) {
+			itemPrev = itemStack[-1]
+			if (level <= itemPrev.level) {
+				repeat (itemPrev.level - level + 1) {
+					try {itemStack.erase(-1) } catch {
+						println('**** error ****')
+						printf('%*s%s\n', itemStack:*level * 2, '', itemStack:*text)
+					}
+				}
+				itemList = if (itemStack.isempty()) { itemListRoot } else { itemStack[-1].itemList }
+			} else {
+				if (level > itemPrev.level + 1) {
+					println('**** error ****')
+					printf('%*s%s\n', itemStack:*level * 2, '', itemStack:*text)
+				}
+				itemList = itemPrev.itemList
+			}
+		}
+		itemList.add(item)
+		itemStack.add(item)
+	}
+	fileName = path.join(dirNameOut, 'navi.html')
+	println('rendering ', path.filename(fileName))
+	open(fileName, 'w') {|out|
+		out.println('<div classs="list-group">')
+		printNaviItems(out, itemListRoot)
+		out.println('</div>')
+	}
+}
+
+classref(`markdown.document).compose@rtf(baseName:string, captionIndex:boolean => true,
+										 title:string => '', author:string => '', date:string => '') = {
+	fileName = baseName + '.rtf'
+	Renderer@rtf(fileName, captionIndex, title, author, date).Render(this)
+	sys.stderr.println(fileName, ' was created.')
+}
+
+availableCommands:public = ['tex', 'pdf', 'jekyll', 'rtf']
+
+Composer = class {
+	__init__(baseName:string, dirNameOut@jekyll:string, layout@jekyll:string,
+			 lang:string, title:string, author:string, date:string) = {
+		this.baseName:public = baseName
+		this.dirNameOut@jekyll:public = dirNameOut@jekyll
+		this.layout@jekyll:public = layout@jekyll
+		this.lang:public = lang
+		this.title:public = title
+		this.author:public = author
+		this.date:public = date
+	}
+	compose(doc:markdown.document) = {
+		sys.argv[1..].each {|cmd|
+			if (cmd == 'tex') {
+				doc.compose@tex(this.baseName, this.title, this.author, this.date)
+			} elsif (cmd == 'pdf') {
+				doc.compose@pdf(this.baseName, this.title, this.author, this.date)
+			} elsif (cmd == 'jekyll') {
+				doc.compose@jekyll(this.dirNameOut@jekyll, this.layout@jekyll,
+							  this.lang, this.title, this.author, this.date)
+			} elsif (cmd == 'rtf') {
+				doc.compose@rtf(this.baseName, true, this.title, this.author, this.date)
+			} else {
+				sys.stderr.printf('unknown command: %s\n', cmd)
+			}
+		}
+	}
+}
+
+checkArgument() = {
+	if (sys.argv.len() < 2) {
+		sys.stderr.println('usage: gura build-doc.gura [tex|pdf|jekyll]')
+		sys.exit(1)
+	}
+}
