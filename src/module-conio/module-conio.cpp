@@ -40,6 +40,22 @@ Gurax_ImplementFunction(Clear)
 	return Value::nil();
 }
 
+// conio.Flush():void
+Gurax_DeclareFunction(Flush)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Flushes the pending request of drawing.\n");
+}
+
+Gurax_ImplementFunction(Flush)
+{
+	// Function body
+	Flush();
+	return Value::nil();
+}
+
 // conio.GetWinSize()
 Gurax_DeclareFunction(GetWinSize)
 {
@@ -55,6 +71,75 @@ Gurax_ImplementFunction(GetWinSize)
 	size_t width, height;
 	GetWinSize(&width, &height);
 	return Value_List::Create(new Value_Number(width), new Value_Number(height));
+}
+
+// conio.MoveTo(x:Number, y:Number):map {block?}
+Gurax_DeclareFunction(MoveTo)
+{
+	Declare(VTYPE_Any, Flag::Map);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Moves cursor to the specified position.\n"
+		"The most top-left position on the screen is represented as `0, 0`.\n"
+		"\n"
+		"If `block` is specified, the cursor is moved before evaluating the block,\n"
+		"and then gets back to where it has been when done.\n");
+}
+
+Gurax_ImplementFunction(MoveTo)
+{
+	// Arguments
+	ArgPicker args(argument);
+	int x = args.PickNumberNonNeg<int>();
+	int y = args.PickNumberNonNeg<int>();
+	if (Error::IsIssued()) return Value::nil();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	return MoveTo(processor, x, y, pExprOfBlock);
+}
+
+// conio.ReadKey():[raise]
+Gurax_DeclareFunction(ReadKey)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads a keyboard input and returns a character code number associated with the key\n"
+		"without blocking."
+		"\n"
+		"If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal\n"
+		"that causes the program done.\n"
+		"\n"
+		"Character code numbers of some of the special keys are defined as below:\n"
+		"\n"
+		"- `conio.K_BACKSPACE`\n"
+		"- `conio.K_TAB`\n"
+		"- `conio.K_RETURN`\n"
+		"- `conio.K_ESCAPE`\n"
+		"- `conio.K_SPACE`\n"
+		"- `conio.K_UP`\n"
+		"- `conio.K_DOWN`\n"
+		"- `conio.K_RIGHT`\n"
+		"- `conio.K_LEFT`\n"
+		"- `conio.K_INSERT`\n"
+		"- `conio.K_HOME`\n"
+		"- `conio.K_END`\n"
+		"- `conio.K_PAGEUP`\n"
+		"- `conio.K_PAGEDOWN`\n"
+		"- `conio.K_DELETE`\n");
+}
+
+Gurax_ImplementFunction(ReadKey)
+{
+	// Arguments
+	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
+	// Function body
+	if (!CheckKey()) return Value::nil();
+	return WaitKey(raiseFlag? &processor : nullptr);
 }
 
 // conio.SetColor(fg:Symbol:nil, bg?:Symbol):map {block?}
@@ -108,34 +193,6 @@ Gurax_ImplementFunction(SetColor)
 	return SetColor(processor, pSymbol_fg, pSymbol_bg, pExprOfBlock);
 }
 
-// conio.MoveTo(x:Number, y:Number):map {block?}
-Gurax_DeclareFunction(MoveTo)
-{
-	Declare(VTYPE_Any, Flag::Map);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Moves cursor to the specified position.\n"
-		"The most top-left position on the screen is represented as `0, 0`.\n"
-		"\n"
-		"If `block` is specified, the cursor is moved before evaluating the block,\n"
-		"and then gets back to where it has been when done.\n");
-}
-
-Gurax_ImplementFunction(MoveTo)
-{
-	// Arguments
-	ArgPicker args(argument);
-	int x = args.PickNumberNonNeg<int>();
-	int y = args.PickNumberNonNeg<int>();
-	if (Error::IsIssued()) return Value::nil();
-	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
-	// Function body
-	return MoveTo(processor, x, y, pExprOfBlock);
-}
-
 // conio.WaitKey():[raise]
 Gurax_DeclareFunction(WaitKey)
 {
@@ -175,46 +232,6 @@ Gurax_ImplementFunction(WaitKey)
 	return WaitKey(raiseFlag? &processor : nullptr);
 }
 
-// conio.ReadKey():[raise]
-Gurax_DeclareFunction(ReadKey)
-{
-	Declare(VTYPE_Any, Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads a keyboard input and returns a character code number associated with the key\n"
-		"without blocking."
-		"\n"
-		"If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal\n"
-		"that causes the program done.\n"
-		"\n"
-		"Character code numbers of some of the special keys are defined as below:\n"
-		"\n"
-		"- `conio.K_BACKSPACE`\n"
-		"- `conio.K_TAB`\n"
-		"- `conio.K_RETURN`\n"
-		"- `conio.K_ESCAPE`\n"
-		"- `conio.K_SPACE`\n"
-		"- `conio.K_UP`\n"
-		"- `conio.K_DOWN`\n"
-		"- `conio.K_RIGHT`\n"
-		"- `conio.K_LEFT`\n"
-		"- `conio.K_INSERT`\n"
-		"- `conio.K_HOME`\n"
-		"- `conio.K_END`\n"
-		"- `conio.K_PAGEUP`\n"
-		"- `conio.K_PAGEDOWN`\n"
-		"- `conio.K_DELETE`\n");
-}
-
-Gurax_ImplementFunction(ReadKey)
-{
-	// Arguments
-	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
-	// Function body
-	if (!CheckKey()) return Value::nil();
-	return WaitKey(raiseFlag? &processor : nullptr);
-}
 
 //------------------------------------------------------------------------------
 // Entries
@@ -271,11 +288,12 @@ Gurax_ModulePrepare()
 	AssignValue_Number(K_DELETE);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Clear));
+	Assign(Gurax_CreateFunction(Flush));
 	Assign(Gurax_CreateFunction(GetWinSize));
-	Assign(Gurax_CreateFunction(SetColor));
 	Assign(Gurax_CreateFunction(MoveTo));
-	Assign(Gurax_CreateFunction(WaitKey));
 	Assign(Gurax_CreateFunction(ReadKey));
+	Assign(Gurax_CreateFunction(SetColor));
+	Assign(Gurax_CreateFunction(WaitKey));
 	return true;
 }
 

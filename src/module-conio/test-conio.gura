@@ -13,6 +13,29 @@ PushAnyKey(str = ' push any key ') = {
 }
 
 scope {
+	conio.Clear()
+	[w, h] = conio.GetWinSize()
+	strFill = Chr(0x30 + [0..9].Cycle(w - 4)).Join()
+	for (region in [`left, `right, `line]) {
+		conio.Clear()
+		Range(h) {|y| conio.MoveTo(0, y) { Printf('%s%4d', strFill, y) }}
+		str = ('Clear ' + region.ToString()).Center(20)
+		[x, y] = [Int(w / 2), Int(h / 2)]
+		conio.MoveTo(x - str.width / 2, 0) {
+			conio.SetColor(`black, `white) { Print(str) }
+		}
+		conio.WaitKey():raise
+		repeat(h - 1) {|i|
+			conio.MoveTo(x, i + 1)
+			conio.Clear(region)
+			conio.Flush()
+			os.Sleep(.01)
+		}
+	}
+	PushAnyKey()
+}
+
+scope {
 	[w, h] = conio.GetWinSize()
 	PrintFormatted(str:String) = Println(str.Center(w, '='))
 	bg = `white
@@ -41,21 +64,6 @@ scope {
 	PushAnyKey()
 }
 
-scope {
-	conio.Clear()
-	[w, h] = conio.GetWinSize()
-	str = Chr(0x30 + [0..9].Cycle(w - 4)).Join()
-	for (region in [`left, `right, `line]) {
-		conio.Clear()
-		Range(h) {|y| conio.MoveTo(0, y) { Printf('%s%4d', str, y) }}
-		[x, y] = [Int(w / 2), Int(h / 2)]
-		conio.MoveTo(x, y)
-		Print('#')
-		conio.MoveTo(x, y)
-		conio.Clear(region)
-		PushAnyKey(('Clear ' + region.ToString()).Center(20))
-	}
-}
 
 scope {
 	conio.Clear()
@@ -91,7 +99,7 @@ scope {
 	[xDir, yDir] = [1, 1]
 	repeat(300) {
 		conio.MoveTo(x, y) { Print('#') }
-		sys.cout.Flush()
+		conio.Flush()
 		if (x + xDir == 0) {
 			xDir = 1
 		} elsif (x + xDir == w - 1) {

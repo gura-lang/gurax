@@ -52,6 +52,7 @@ enum {
 	K_DELETE,
 };
 
+void Flush();
 bool Clear(const Symbol* pSymbol);
 void GetWinSize(size_t* pWidth, size_t* pHeight);
 Value* SetColor(Processor& processor, const Symbol* pSymbolFg, const Symbol* pSymbolBg, const Expr_Block* pExprOfBlock);

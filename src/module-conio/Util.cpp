@@ -78,6 +78,10 @@ bool SymbolToColorCode(const Symbol* pSymbol, int* pColorCode)
 }
 
 #if defined(GURAX_ON_MSWIN)
+void Flush()
+{
+}
+
 bool Clear(const Symbol* pSymbol)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -238,6 +242,11 @@ Value* WaitKey(Processor* pProcessor)
 }
 
 #elif defined(GURAX_ON_LINUX) || defined(GURAX_ON_DARWIN)
+
+void Flush()
+{
+	::fflush(stdout);
+}
 
 bool Clear(const Symbol* pSymbol)
 {
