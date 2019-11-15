@@ -1042,7 +1042,6 @@ Gurax_DeclareMethod(String, ToSymbol)
 
 Gurax_ImplementMethod(String, ToSymbol)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
@@ -1050,8 +1049,7 @@ Gurax_ImplementMethod(String, ToSymbol)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_Symbol(Symbol::Add(str));
 }
 
 // String.Translator():void {block}

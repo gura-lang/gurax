@@ -360,6 +360,7 @@ str.Split(':', 10):list .. ['abc', 'def', 'ghi', 'jkl', 'mno']
 ======== String#ToBinary() ========
 ======== String#ToReader() ========
 ======== String#ToSymbol() ========
+'abcdefg'.ToSymbol() .. `abcdefg
 ======== String#ToTemplate() ========
 ======== String#Translator() ========
 ======== String#UnescapeHTML() ========

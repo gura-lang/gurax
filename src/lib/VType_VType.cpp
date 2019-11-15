@@ -6,6 +6,29 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// VType(value):map {block?}
+Gurax_DeclareFunction(VType)
+{
+	Declare(VTYPE_VType, Flag::Map);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `VType` instance that represents the type information of the given `value`.\n");
+}
+
+Gurax_ImplementFunction(VType)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Value& value = args.PickValue();
+	// Function body
+	return argument.ReturnValue(processor, new Value_VType(value.GetVType()));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // VType#__PropHandler__(symbol:Symbol):map {block?}
@@ -65,7 +88,7 @@ VType_VType VTYPE_VType("VType");
 void VType_VType::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(VType, __PropHandler__));
 	// Assignment of property

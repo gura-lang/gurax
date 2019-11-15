@@ -374,6 +374,7 @@ TestCase('String#ToReader()') {
 }
 
 TestCase('String#ToSymbol()') {
+	Tester(`'abcdefg'.ToSymbol())
 }
 
 TestCase('String#ToTemplate()') {
