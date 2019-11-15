@@ -11,7 +11,7 @@ moduleInfos = @(ModuleInfo) {
 	['re',				`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
 }
 
-PrintHelp(p:argopt.Parser) = sys.stderr.print(eR'''
+PrintHelp(p:argopt.Parser) = tR'''
 usage: ${path.FileName(sys.argv[0])} [options] command
 command:
  clean          clean output files
@@ -20,7 +20,7 @@ command:
  help           print this help
 options:
  ${p.FormatHelp() + '\n'}
-''')
+'''.Render(sys.cerr)
 
 /*
 if (sys.platform == `linux) {
@@ -45,28 +45,29 @@ if (sys.platform == `linux) {
 }
 */
 
-/*
 argopt.Parser {|p|
-	p.addFlag('verbose',	'v', 'verbose mode')
-	p.addFlag('debug',		'd', 'build module with debug information')
-	p.addFlag('rebuild',	'r', 'clean output files before building')
-	p.addParam('exclude',	'x', 'specify module to exclude', 'NAME', '')
-	p.addParam('filter',	'f', 'specify module name to build', 'NAME', '')
-	p.addParam('incdir',	'I', 'specify include directory', 'DIR')
-	p.addParam('libdir',	'L', 'specify library directory', 'DIR')
-	p.addParam('moddir',	'M', 'specify directory to which module is installed', 'DIR')
-	p.addParam('platform',	'p', 'specify platform symbol', 'NAME')
+	p.AddFlag('verbose',	'v', 'verbose mode')
+	p.AddFlag('debug',		'd', 'build module with debug information')
+	p.AddFlag('rebuild',	'r', 'clean output files before building')
+	p.AddParam('exclude',	'x', 'specify module to exclude', 'NAME')
+	p.AddParam('filter',	'f', 'specify module name to build', 'NAME')
+	p.AddParam('incdir',	'I', 'specify include directory', 'DIR')
+	p.AddParam('libdir',	'L', 'specify library directory', 'DIR')
+	p.AddParam('moddir',	'M', 'specify directory to which module is installed', 'DIR')
+	p.AddParam('platform',	'p', 'specify platform symbol', 'NAME')
 	try {
-		[cfg, argv] = p.parse(sys.argv)
+		[argv, cfg] = p.Parse(sys.argv)
 	} catch {|e|
-		sys.stderr.println(e.text)
-		sys.exit(1)
+		sys.cerr.Println(e.text)
+		sys.Exit(1)
 	}
-	command = if (argv.len() == 0) {
+	command = if (argv.len == 0) {
 		cond(cfg['moddir'], `build_install, `build)
 	} elsif (argv[0] == 'help') {
-		printHelp(p)
-		sys.exit(1)
+		PrintHelp(p)
+		sys.Exit(1)
+	} elsif (argv[0] == 'build') {
+		`build
 	} elsif (argv[0] == 'build-install') {
 		`build_install
 	} elsif (argv[0] == 'clean') {
@@ -76,11 +77,13 @@ argopt.Parser {|p|
 	} elsif (argv[0] == 'setup-guest') {
 		`setup_guest
 	} else {
-		sys.stderr.println('unknown command: ', argv[0])
-		sys.exit(1)
+		sys.cerr.Println('unknown command: ', argv[0])
+		sys.Exit(1)
 	}
-	if (cfg['platform']) { platform = cfg['platform'].tosymbol() }
+	//if (cfg['platform']) { platform = cfg['platform'].tosymbol() }
 }
+Println(command)
+/*
 if (!(platform && platform in [`mswin, `ubuntu, `fedora, `darwin])) {
 	println('unsupported platform')
 	sys.exit(1)
