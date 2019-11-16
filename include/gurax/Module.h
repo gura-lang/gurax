@@ -148,8 +148,8 @@ public:
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);
-	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol);
-	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol);
+	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag);
+	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag);
 	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);

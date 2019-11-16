@@ -765,23 +765,28 @@ Gurax_ImplementStatement(return_)
 	composer.Add_Return(&exprCaller);
 }
 
-// import(`name) {`block?}
+// import(`name):[binary,overwrite] {`block?}
 Gurax_DeclareStatement(import)
 {
 	Declare(VTYPE_Module, Flag::None);
 	DeclareArg("name", VTYPE_Quote, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(binary));
+	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	DeclareBlock(BlkOccur::ZeroOrOnce, BlkFlag::Quote);
 }
 
 Gurax_ImplementStatement(import)
 {
 	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	const Attribute& attr = exprCaller.GetAttr();
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprCdr));
 	if (!pDottedSymbol) {
 		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
 		return;
 	}
+	bool binaryFlag = attr.IsSet(Gurax_Symbol(binary));
 	bool mixInFlag = false;
+	bool overwriteFlag = attr.IsSet(Gurax_Symbol(overwrite));
 	std::unique_ptr<SymbolList> pSymbolList(new SymbolList());
 	if (exprCaller.HasExprOfBlock()) {
 		const Expr* pExpr = exprCaller.GetExprOfBlock()->GetExprElemFirst();
@@ -801,7 +806,8 @@ Gurax_ImplementStatement(import)
 		}
 		mixInFlag = pSymbolList->DoesContain(Gurax_SymbolMark(Mul));
 	}
-	composer.Add_Import(pDottedSymbol.release(), pSymbolList.release(), mixInFlag, &exprCaller);
+	composer.Add_Import(pDottedSymbol.release(), pSymbolList.release(),
+						binaryFlag, mixInFlag, overwriteFlag, &exprCaller);
 }
 
 // scope(frame?:Frame) {`block}

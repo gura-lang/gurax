@@ -34,18 +34,18 @@ bool Module::Prepare(const char* name, char separator)
 	return pDottedSymbol && Prepare(pDottedSymbol.release());
 }
 
-Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol)
+Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag)
 {
 	size_t nSymbolsAll = dottedSymbol.GetLength();
 	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
 		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(dottedSymbol, nSymbols));
-		RefPtr<Module> pModule(Import(processor, *pDottedSymbol));
+		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false));
 		if (!pModule) return nullptr;
 	}
-	return Import(processor, dottedSymbol);
+	return Import(processor, dottedSymbol, binaryFlag);
 }
 
-Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
+Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag)
 {
 	enum class Type { None, Script, Compressed, Binary } type = Type::None;
 	String fileName = dottedSymbol.ToString();
@@ -53,17 +53,19 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol)
 	for (const String& dirName : Basement::Inst.GetPathList()) {
 		String baseName = PathName(dirName).JoinAfter(fileName.c_str());
 		baseName = PathName(baseName).MakeAbsName();
-		pathName = baseName;
-		pathName += ".gura";
-		if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
-			type = Type::Script;
-			break;
-		}
-		pathName = baseName;
-		pathName += ".gurc";
-		if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
-			type = Type::Compressed;
-			break;
+		if (!binaryFlag) {
+			pathName = baseName;
+			pathName += ".gura";
+			if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
+				type = Type::Script;
+				break;
+			}
+			pathName = baseName;
+			pathName += ".gurc";
+			if (OAL::IsFileType(pathName.c_str(), OAL::FileType::Normal)) {
+				type = Type::Compressed;
+				break;
+			}
 		}
 		pathName = baseName;
 		pathName += ".gurd";
@@ -170,7 +172,7 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
 		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(GetDottedSymbol(), nSymbols));
 		if (frameCur.Lookup(*pDottedSymbol)) continue;
-		RefPtr<Module> pModule(Import(processor, *pDottedSymbol));
+		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false));
 		if (!pModule) return false;
 		if (!frameCur.Assign(pModule.release())) {
 			Error::Issue(ErrorType::ImportError,

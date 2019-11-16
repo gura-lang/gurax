@@ -94,14 +94,14 @@ bool Processor::DoExceptionHandling()
 	}
 }
 
-bool Processor::ImportModule(const char* moduleName)
+bool Processor::ImportModule(const char* moduleName, bool binaryFlag)
 {
 	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromString(moduleName));
 	if (!pDottedSymbol) {
 		Error::Issue(ErrorType::ImportError, "invalid module name");
 		return false;
 	}
-	RefPtr<Module> pModule(Module::ImportHierarchy(*this, *pDottedSymbol));
+	RefPtr<Module> pModule(Module::ImportHierarchy(*this, *pDottedSymbol, binaryFlag));
 	if (!pModule) return false;
 	if (!pModule->AssignToFrame(*this, nullptr, false)) return false;
 	return true;

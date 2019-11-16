@@ -5,7 +5,7 @@
 // the script part that mainly provides rendering functions.
 //=============================================================================
 import(re)
-//import(markdown):binary:mixin_type {*}
+import(markdown):binary {*}
 
 /*
 MakeAnchorNameDef(indices[]:number) = 'anchor-' + format('%d', indices).join('-')

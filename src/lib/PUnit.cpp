@@ -949,7 +949,7 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_Import<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Module> pModule(Module::ImportHierarchy(processor, GetDottedSymbol()));
+	RefPtr<Module> pModule(Module::ImportHierarchy(processor, GetDottedSymbol(), GetBinaryFlag()));
 	if (!pModule) {
 		processor.ErrorDone();
 		return;
@@ -972,15 +972,23 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Import<1, true>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Import<1, true>(
+				_pDottedSymbol.release(), _pSymbolList.release(),
+				_binaryFlag, _mixInFlag, _overwriteFlag, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Import<1, false>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_Import<1, false>(
+				_pDottedSymbol.release(), _pSymbolList.release(),
+				_binaryFlag, _mixInFlag, _overwriteFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Import<0, true>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+			_pPUnitCreated = new PUnit_Import<0, true>(
+				_pDottedSymbol.release(), _pSymbolList.release(),
+				_binaryFlag, _mixInFlag, _overwriteFlag);
 		} else {
-			_pPUnitCreated = new PUnit_Import<0, false>(_pDottedSymbol.release(), _pSymbolList.release(), _mixInFlag);
+			_pPUnitCreated = new PUnit_Import<0, false>(
+				_pDottedSymbol.release(), _pSymbolList.release(),
+				_binaryFlag, _mixInFlag, _overwriteFlag);
 		}
 	}
 	return _pPUnitCreated;

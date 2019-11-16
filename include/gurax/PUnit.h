@@ -931,18 +931,23 @@ public:
 private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	std::unique_ptr<SymbolList> _pSymbolList;
+	bool _binaryFlag;
 	bool _mixInFlag;
+	bool _overwriteFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag) :
-		_pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
-	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, Expr* pExpr) :
-		PUnit_Import(pDottedSymbol, pSymbolList, mixInFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool binaryFlag, bool mixInFlag, bool overwriteFlag) :
+		_pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList),
+		_binaryFlag(binaryFlag), _mixInFlag(mixInFlag), _overwriteFlag(overwriteFlag) {}
+	PUnit_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool binaryFlag, bool mixInFlag, bool overwriteFlag, Expr* pExpr) :
+		PUnit_Import(pDottedSymbol, pSymbolList, binaryFlag, mixInFlag, overwriteFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const DottedSymbol& GetDottedSymbol() const { return *_pDottedSymbol; }
 	const SymbolList* GetSymbolList() const { return _pSymbolList.get(); }
+	bool GetBinaryFlag() const { return _binaryFlag; }
 	bool GetMixInFlag() const { return _mixInFlag; }
+	bool GetOverwriteFlag() const { return _overwriteFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -961,10 +966,13 @@ public:
 private:
 	RefPtr<DottedSymbol> _pDottedSymbol;
 	std::unique_ptr<SymbolList> _pSymbolList;
+	bool _binaryFlag;
 	bool _mixInFlag;
+	bool _overwriteFlag;
 public:
-	PUnitFactory_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool mixInFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList), _mixInFlag(mixInFlag) {}
+	PUnitFactory_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList, bool binaryFlag, bool mixInFlag, bool overwriteFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pDottedSymbol(pDottedSymbol), _pSymbolList(pSymbolList),
+		_binaryFlag(binaryFlag), _mixInFlag(mixInFlag), _overwriteFlag(overwriteFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_Import<1, false>) : sizeof(PUnit_Import<0, false>);
 	}
