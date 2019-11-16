@@ -499,7 +499,7 @@ Gurax_ImplementOpBinary(Eq, Symbol, Expr)
 {
 	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
 	const Expr& exprR = Value_Expr::GetExpr(valueR);
-	return new Value_Bool(pSymbolL->IsIdentical(exprR));
+	return new Value_Bool(exprR.IsSymbol(pSymbolL));
 }
 
 // Expr == Symbol
@@ -507,7 +507,7 @@ Gurax_ImplementOpBinary(Eq, Expr, Symbol)
 {
 	const Expr& exprL = Value_Expr::GetExpr(valueL);
 	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
-	return new Value_Bool(pSymbolR->IsIdentical(exprL));
+	return new Value_Bool(exprL.IsSymbol(pSymbolR));
 }
 
 //------------------------------------------------------------------------------

@@ -173,6 +173,8 @@ public:
 public:
 	// Virtual functions
 	virtual bool IsEmpty() const { return false; }
+	virtual bool IsSymbol(const Symbol* pSymbol) const { return false; }
+	virtual bool IsPureSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
@@ -541,9 +543,12 @@ public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool HasAttr() const { return !GetAttr().IsEmpty(); }
-	bool IsPureSymbol() const { return GetAttr().IsEmpty(); }
 public:
 	// Virtual functions of Expr
+	virtual bool IsSymbol(const Symbol* pSymbol) const override { return _pSymbol->IsIdentical(pSymbol); }
+	virtual bool IsPureSymbol(const Symbol* pSymbol) const override {
+		return !HasAttr() && _pSymbol->IsIdentical(pSymbol);
+	}
 	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForClass(Composer& composer, bool publicFlag) override;

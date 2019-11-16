@@ -335,6 +335,15 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// StringSet
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE StringSet :
+		public std::unordered_set<String, String::Hash, String::EqualTo> {
+public:
+	static const StringSet Empty;
+};
+
+//------------------------------------------------------------------------------
 // StringReferable
 //------------------------------------------------------------------------------
 class StringReferable : public Referable {

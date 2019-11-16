@@ -595,7 +595,7 @@ bool Parser::ReduceThreeTokens()
 						return false;
 					}
 					const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExprElem);
-					if (!pExprIdentifier->IsPureSymbol()) {
+					if (pExprIdentifier->HasAttr()) {
 						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
 								   "optional attributes must be separated with comma");
 						return false;

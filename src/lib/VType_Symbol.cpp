@@ -35,7 +35,7 @@ Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 		const Expr& expr = dynamic_cast<const Value_Expr&>(value).GetExpr();
 		if (expr.IsType<Expr_Identifier>()) {
 			const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
-			if (exprEx.IsPureSymbol()) {
+			if (!exprEx.HasAttr()) {
 				return new Value_Symbol(exprEx.GetSymbol());
 			}
 		}

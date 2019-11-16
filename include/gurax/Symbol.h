@@ -158,7 +158,6 @@ public:
 public:
 	size_t CalcHash() const { return static_cast<size_t>(GetUniqId()); }
 	bool IsIdentical(const Symbol* pSymbol) const { return GetUniqId() == pSymbol->GetUniqId(); }
-	bool IsIdentical(const Expr& expr) const;
 	static bool IsIdentical(const Symbol* pSymbol1, const Symbol* pSymbol2) {
 		return pSymbol1 && pSymbol2 && pSymbol1->IsIdentical(pSymbol2);
 	}
@@ -180,7 +179,7 @@ public:
 // SymbolSet
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolSet :
-	public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
+		public std::unordered_set<const Symbol*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId> {
 public:
 	void Set(const Symbol* pSymbol) { insert(pSymbol); }
 	bool IsSet(const Symbol* pSymbol) const { return find(pSymbol) != end(); }
@@ -190,7 +189,7 @@ public:
 // SymbolPool
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE SymbolPool :
-	public std::unordered_set<const Symbol*, Symbol::Hash_Name, Symbol::EqualTo_Name> {
+		public std::unordered_set<const Symbol*, Symbol::Hash_Name, Symbol::EqualTo_Name> {
 private:
 	static SymbolPool* _pSymbolPool;
 public:

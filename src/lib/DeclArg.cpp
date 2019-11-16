@@ -90,7 +90,7 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	const Symbol* pSymbol = pExprIdentifier->GetSymbol();
 	if (!pAttrSrc) {
 		pAttrSrc = &pExprIdentifier->GetAttr();
-	} else if (!pExprIdentifier->IsPureSymbol()) {
+	} else if (pExprIdentifier->HasAttr()) {
 		Error::Issue(ErrorType::SyntaxError, "invalid attribute");
 		return nullptr;
 	}

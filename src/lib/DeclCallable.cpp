@@ -57,7 +57,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				}
 				const Expr_Identifier& exprIdentifier =
 					dynamic_cast<const Expr_Identifier&>(pExprEx->GetExprChild());
-				if (!exprIdentifier.IsPureSymbol()) {
+				if (exprIdentifier.HasAttr()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "dictionary argument cannot have attributes");
 					return false;
@@ -83,7 +83,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 				}
 				const Expr_Identifier& exprIdentifier =
 					dynamic_cast<const Expr_Identifier&>(pExprEx->GetExprChild());
-				if (!exprIdentifier.IsPureSymbol()) {
+				if (exprIdentifier.HasAttr()) {
 					Error::IssueWith(ErrorType::DeclarationError, *pExpr,
 									 "argument accessor cannot have attributes");
 					return false;

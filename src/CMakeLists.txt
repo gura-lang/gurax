@@ -1,6 +1,7 @@
 project(gurax)
 
-cmake_minimum_required(VERSION 2.8)
+# Handling of precompiled header is supported by 3.16 or newer.
+cmake_minimum_required(VERSION 3.16)
 
 set(GURAX_VERSION_MAJOR		0)
 set(GURAX_VERSION_MINOR		1)
