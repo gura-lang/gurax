@@ -162,4 +162,6 @@ set_target_properties(guraxcore PROPERTIES
 	BUILD_WITH_INSTALL_NAME_DIR	1
 	INSTALL_NAME_DIR			"@executable_path/../lib")
 
+target_precompile_headers(guraxcore PUBLIC stdafx.h)
+
 install(TARGETS guraxcore DESTINATION ${GURAX_RELDIR_LIBRARY})
