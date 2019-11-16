@@ -2,3 +2,7 @@
 /Release
 /gurax/Debug
 /gurax/Release
+/Makefile
+/gurax/Makefile
+/lib/Makefile
+/unittest/Makefile

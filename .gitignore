@@ -40,10 +40,9 @@
 # Temporary Files
 *~
 *.result.txt
-CMakeFiles
+CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
 
 # Directories
 gnuc/
