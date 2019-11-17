@@ -250,6 +250,8 @@ bool Document::FeedChar(char ch)
 		} else if (ch == '\t') {
 			_indentLevel += WIDTH_Tab;
 		} else if (_indentLevel >= GetIndentLevelForCodeBlock()) {
+			int indentLevelBase = GetIndentLevel();
+			_indentLevel = (_indentLevel - indentLevelBase) / INDENT_CodeBlock * INDENT_CodeBlock + indentLevelBase;
 			Gurax_PushbackEx(ch);
 			BeginCodeBlock(nullptr);
 			_stat = Stat::CodeBlock;
