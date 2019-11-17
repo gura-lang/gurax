@@ -34,20 +34,22 @@ bool Module::Prepare(const char* name, char separator)
 	return pDottedSymbol && Prepare(pDottedSymbol.release());
 }
 
-Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag)
+Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
+								bool binaryFlag, bool overwriteFlag)
 {
 	size_t nSymbolsAll = dottedSymbol.GetLength();
 	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
 		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(dottedSymbol, nSymbols));
-		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false));
+		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false, false));
 		if (!pModule) return nullptr;
 	}
-	return Import(processor, dottedSymbol, binaryFlag);
+	return Import(processor, dottedSymbol, binaryFlag, overwriteFlag);
 }
 
-Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag)
+Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
+					   bool binaryFlag, bool overwriteFlag)
 {
-	enum class Type { None, Script, Compressed, Binary } type = Type::None;
+	enum class Type { None, Script, Binary, Compressed } type = Type::None;
 	String fileName = dottedSymbol.ToString();
 	String pathName;
 	for (const String& dirName : Basement::Inst.GetPathList()) {
@@ -84,9 +86,9 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol, b
 		if (pModuleExist) return pModuleExist->Reference();
 	} while (0);
 	RefPtr<Module> pModule(
-		(type == Type::Script)? ImportScript(processor, dottedSymbol, pathName.c_str()) :
-		(type == Type::Compressed)? ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
-		(type == Type::Binary)? ImportBinary(processor, dottedSymbol, pathName.c_str()) :
+		(type == Type::Script)?		ImportScript(processor, dottedSymbol, pathName.c_str()) :
+		(type == Type::Binary)?		ImportBinary(processor, dottedSymbol, pathName.c_str()) :
+		(type == Type::Compressed)?	ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
 		nullptr);
 	if (!pModule) return nullptr;
 	_moduleMap.Assign(pModule.Reference());
@@ -145,13 +147,14 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	return pModule.release();
 }
 
-bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag) const
+bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList,
+						   bool mixInFlag, bool overwriteFlag) const
 {
 	Frame& frameCur = processor.GetFrameCur();
-	if (mixInFlag) return GetFrame().ExportTo(frameCur, false);
+	if (mixInFlag) return GetFrame().ExportTo(frameCur, overwriteFlag);
 	if (pSymbolList && !pSymbolList->empty()) {
 		for (const Symbol* pSymbol : *pSymbolList) {
-			if (frameCur.Lookup(pSymbol)) {
+			if (!overwriteFlag && frameCur.Lookup(pSymbol)) {
 				Error::Issue(ErrorType::ImportError,
 							 "the symbol '%s' is already assigned in the current frame",
 							 pSymbol->GetName());
@@ -172,7 +175,7 @@ bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, 
 	for (size_t nSymbols = 1; nSymbols < nSymbolsAll; nSymbols++) {
 		RefPtr<DottedSymbol> pDottedSymbol(new DottedSymbol(GetDottedSymbol(), nSymbols));
 		if (frameCur.Lookup(*pDottedSymbol)) continue;
-		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false));
+		RefPtr<Module> pModule(Import(processor, *pDottedSymbol, false, false));
 		if (!pModule) return false;
 		if (!frameCur.Assign(pModule.release())) {
 			Error::Issue(ErrorType::ImportError,

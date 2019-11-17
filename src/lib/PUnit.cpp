@@ -949,12 +949,13 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_Import<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Module> pModule(Module::ImportHierarchy(processor, GetDottedSymbol(), GetBinaryFlag()));
+	RefPtr<Module> pModule(Module::ImportHierarchy(
+							   processor, GetDottedSymbol(), GetBinaryFlag(), GetOverwriteFlag()));
 	if (!pModule) {
 		processor.ErrorDone();
 		return;
 	}
-	pModule->AssignToFrame(processor, GetSymbolList(), GetMixInFlag());
+	pModule->AssignToFrame(processor, GetSymbolList(), GetMixInFlag(), GetOverwriteFlag());
 	if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
 }

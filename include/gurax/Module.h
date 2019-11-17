@@ -102,7 +102,6 @@ public:
 	using ModuleTerminateT	= void (*)(Module& module);
 protected:
 	RefPtr<Frame_Module> _pFrame;
-	//RefPtr<DottedSymbol> _pDottedSymbol;
 	RefPtr<HelpHolder> _pHelpHolder;
 	RefPtr<PropHandlerMap> _pPropHandlerMap;
 	String _pathName;
@@ -148,12 +147,14 @@ public:
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);
-	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag);
-	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag);
+	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
+								   bool binaryFlag, bool overwriteFlag);
+	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol,
+						  bool binaryFlag, bool overwriteFlag);
 	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
-	bool AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag) const;
+	bool AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag, bool overwriteFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Module& module) const { return this == &module; }

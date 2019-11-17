@@ -15,7 +15,7 @@ else()
 	set(CMAKE_INSTALL_PREFIX /usr)
 endif()
 
-add_definitions("-Wall -std=c++14")
+add_definitions("-Wall -std=c++14 -O2")
 
 set(GURAX_RELDIR_BINARY		bin)
 set(GURAX_RELDIR_LIBRARY	lib)

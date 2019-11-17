@@ -7,9 +7,9 @@
 import(re)
 import(markdown):binary {*}
 
-/*
-MakeAnchorNameDef(indices[]:number) = 'anchor-' + format('%d', indices).join('-')
+MakeAnchorNameDef(indices[]:Number) = 'anchor-' + Format('%d', indices).join('-')
 
+/*
 Renderer@html = class {
 	__init__(out:stream:w, captionIndex:boolean) = {
 		this.out = out

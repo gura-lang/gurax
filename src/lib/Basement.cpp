@@ -136,14 +136,14 @@ bool Basement::ImportModule()
 	if (!Module_math::ImportBuiltIn(frame)) return false;
 	if (!Module_os::ImportBuiltIn(frame)) return false;
 	if (!Module_path::ImportBuiltIn(frame)) return false;
-	//if (!Module_re::ImportBuiltIn(frame)) return false;
 	if (!Module_sys::ImportBuiltIn(frame)) return false;
 	for (const String& str : _cmdLine.GetStringList("import")) {
 		bool binaryFlag = false;
+		bool overwriteFlag = false;
 		StringList moduleNames;
 		str.Split(moduleNames, ',');
 		for (const String& moduleName : moduleNames) {
-			if (!processor.ImportModule(moduleName.c_str(), binaryFlag)) return false;
+			if (!processor.ImportModule(moduleName.c_str(), binaryFlag, overwriteFlag)) return false;
 		}
 	}
 	return true;
