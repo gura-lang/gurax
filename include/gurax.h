@@ -120,17 +120,6 @@
 #include "gurax/VType_TimeDelta.h"
 #include "gurax/VType_Undefined.h"
 #include "gurax/VType_VType.h"
-#include "../src/module-codecs/module-codecs.h"
-#include "../src/module-codecs_basic/module-codecs_basic.h"
-#include "../src/module-codecs_chinese/module-codecs_chinese.h"
-#include "../src/module-codecs_iso8859/module-codecs_iso8859.h"
-#include "../src/module-codecs_japanese/module-codecs_japanese.h"
-#include "../src/module-fs/module-fs.h"
-#include "../src/module-math/module-math.h"
-#include "../src/module-os/module-os.h"
-#include "../src/module-path/module-path.h"
-#include "../src/module-sys/module-sys.h"
-
 #include "gurax/Imp_Iterator.h"
 
 namespace Gurax {
