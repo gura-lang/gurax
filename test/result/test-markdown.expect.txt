@@ -1,0 +1,2680 @@
+======== Property ========
+markdown.Document.__PropHandler__(`refs) .. <PropHandler:refs:Iterator:R>
+markdown.Document.__PropHandler__(`root) .. <PropHandler:root:markdown.Item:R>
+markdown.Item.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
+markdown.Item.__PropHandler__(`text) .. <PropHandler:text:String:nil:R>
+markdown.Item.__PropHandler__(`children) .. <PropHandler:children:Iterator:nil:R>
+markdown.Item.__PropHandler__(`url) .. <PropHandler:url:String:nil:R>
+markdown.Item.__PropHandler__(`title) .. <PropHandler:title:String:nil:R>
+markdown.Item.__PropHandler__(`attrs) .. <PropHandler:attrs:String:nil:R>
+markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
+======== header-1 ========
+<root>
+  <p>
+    <text>'No Header ===hoge'
+  <p>
+    <text>'No Header ---hoge'
+  <p>
+    <text>'-3 is less than zero'
+  <h1>
+    <text>'Header1'
+  <h2>
+    <text>'Header2'
+  <p>
+    <text>'-'
+  <p>
+    <text>'--'
+  <hr>
+  <ul>
+    <li>
+      <text>'item1'
+    <li>
+      <text>'item2 '
+      <em>
+        <text>'emphasis'
+  <ul>
+    <li>
+      <text>'item1'
+    <li>
+      <text>'item2 +100 yen'
+    <li>
+      <text>'item3 +100 yen'
+    <li>
+      <text>'item4'
+======== header-2 ========
+<root>
+  <h1>
+    <text>'Header1'
+  <h1>
+    <text>'Header1'
+  <h1>
+    <text>'Header1'
+  <h2>
+    <text>'Header2'
+  <h2>
+    <text>'Header2'
+  <h2>
+    <text>'Header2'
+  <h2>
+    <text>'Build for Windows'
+  <p>
+    <text>'Build for Windows'
+  <ul>
+    <li>
+      <text>'hoge'
+======== header-3 ========
+<root>
+  <h1>
+    <text>'header1'
+  <h2>
+    <text>'header2'
+  <h3>
+    <text>'header3'
+  <h4>
+    <text>'header4'
+  <h5>
+    <text>'header5'
+  <h6>
+    <text>'header6'
+  <h6>
+    <text>'header6'
+  <h1>
+    <text>'header1'
+  <h1>
+    <text>'header1'
+  <h1>
+    <text>'header1'
+  <h1>
+    <text>'header1'
+  <h1>
+    <text>'header1'
+  <h1>
+    <text>'header1'
+  <h1>
+    <text>'header1  #'
+  <p>
+    <text>'# not a header'
+  <p>
+    <text>'# not a header'
+  <p>
+    <text>'# not a header'
+======== list-1 ========
+<root>
+  <ol>
+    <li>
+      <text>'first'
+    <li>
+      <text>'second'
+    <li>
+      <text>'third'
+    <li>
+      <text>'fourth'
+    <li>
+      <text>'fifth'
+  <ol>
+    <li>
+      <text>'Check if Visual Studio 2010 has been installed. You can use Express version as well.'
+    <li>
+      <text>'Run a batch file '
+      <code>'gura\src\setup-gura-guest.bat'
+      <text>', which downloads necessary packages from Git repository (https://github.com/ypsitau/gura-guest.git) and build them. The batch file may occur an error that says it cannot find '
+      <code>'vcvarsall.bat'
+      <text>'. In such a case, you have to edit '
+      <code>'gura\gura-guest\setup.bat'
+      <text>' and modify '
+      <code>'VCVARSALL'
+      <text>' variable so that it points to a right directory of Visual Studio.'
+    <li>
+      <text>'Open '
+      <code>'gura\src\gura.sln'
+      <text>' with Visual Studio 2010, switch the configuration to Release and build it.'
+======== list-2 ========
+<root>
+  <ul>
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <p>
+        <text>'para2'
+      <p>
+        <text>'para3'
+    <li>
+      <text>'single para '
+      <strong>
+        <text>'strong'
+      <text>' hoge'
+    <li>
+      <text>'single para again '
+      <strong>
+        <text>'strong'
+      <text>' foo'
+  <ol>
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <p>
+        <text>'para2'
+      <p>
+        <text>'para3'
+    <li>
+      <text>'single para '
+      <strong>
+        <text>'strong'
+      <text>' hoge'
+    <li>
+      <text>'single para again '
+      <strong>
+        <text>'strong'
+      <text>' foo'
+  <ul>
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <codeblock>
+        <line>
+          <text>'#include <stdio.h>'
+        <line>
+          <text>'main()'
+        <line>
+          <text>'{'
+        <line>
+          <text>'}'
+      <p>
+        <text>'foo bar'
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <codeblock>
+        <line>
+          <text>'#include <stdio.h>'
+        <line>
+          <text>'main()'
+        <line>
+          <text>'{'
+        <line>
+          <text>'}'
+      <p>
+        <text>'foo bar'
+  <ol>
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <codeblock>
+        <line>
+          <text>'#include <stdio.h>'
+        <line>
+          <text>'main()'
+        <line>
+          <text>'{'
+        <line>
+          <text>'}'
+      <p>
+        <text>'foo bar'
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <codeblock>
+        <line>
+          <text>'#include <stdio.h>'
+        <line>
+          <text>'main()'
+        <line>
+          <text>'{'
+        <line>
+          <text>'}'
+    <li>
+      <p>
+        <text>'para1 hoge'
+      <codeblock>
+        <line>
+          <text>'#include <stdio.h>'
+        <line>
+          <text>'main()'
+        <line>
+          <text>'{'
+        <line>
+          <text>'}'
+    <li>
+      <p>
+        <text>'para1 hoge foo'
+      <codeblock>
+        <line>
+          <text>'#include <stdio.h>'
+        <line>
+          <text>'main()'
+        <line>
+          <text>'{'
+        <line>
+          <text>'}'
+      <p>
+        <text>'foo bar'
+  <p>
+    <text>'Here is an example of AppleScript:'
+  <codeblock>
+    <line>
+      <text>'tell application "Foo"'
+    <line>
+      <text>'    beep'
+    <line>
+      <text>'end tell'
+  <p>
+    <text>'entity test'
+  <codeblock>
+    <line>
+      <text>'<div class="footer">'
+    <line>
+      <text>'    &copy; 2004 Foo Corporation'
+    <line>
+      <text>'</div>'
+  <ul>
+    <li>
+      <text>'item-1 -300 +200'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+    <li>
+      <text>'item-4'
+  <ul>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <text>'hoge'
+  <ol>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <text>'hoge'
+  <ul>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <em>
+      <text>'Emphasis'
+  <ul>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <strong>
+      <text>'Strong'
+  <ul>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <text>'+Plus at beginning of line'
+  <ul>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <text>'-Hyphen at beginning of line'
+  <ul>
+    <li>
+      <text>'item-1'
+    <li>
+      <text>'item-2'
+    <li>
+      <text>'item-3'
+  <p>
+    <text>'3'
+  <p>
+    <text>'1415 at beginning of line'
+======== list-3 ========
+<root>
+  <ul>
+    <li>
+      <text>'item -hyphen +plus '
+      <em>
+        <text>'emphasis'
+    <li>
+      <text>'item -hyphen +plus '
+      <em>
+        <text>'emphasis'
+  <ul>
+    <li>
+      <p>
+        <text>'item'
+      <p>
+        <text>'-hyphen at beginning'
+      <p>
+        <text>'-hyphen at beginning'
+      <p>
+        <text>'+plus at beginning'
+      <p>
+        <em>
+          <text>'emphasis'
+        <text>' at beginning'
+    <li>
+      <p>
+        <text>'item'
+      <codeblock>
+        <line>
+          <text>'-hyphen at beginning in block'
+        <line>
+          <text>'+plus at beginning in block'
+        <line>
+          <text>'*star at beginning in block'
+    <li>
+      <text>'Abacus'
+      <ul>
+        <li>
+          <text>'answer'
+    <li>
+      <text>'Bubbles'
+      <ol>
+        <li>
+          <text>'bunk'
+        <li>
+          <text>'bupkis'
+          <ul>
+            <li>
+              <text>'BELITTLER'
+        <li>
+          <text>'burper'
+    <li>
+      <text>'Cunning'
+  <p>
+    <em>
+      <text>'strong'
+    <text>' in paragraph'
+  <p>
+    <text>'1986. What a great season.'
+======== decoration-1 ========
+<root>
+  <p>
+    <code>'code'
+    <em>
+      <text>'emphasis'
+    <strong>
+      <text>'strong'
+    <text>' text '
+    <code>'not terminated code'
+    <text>'text *not terminated emphasistext **not terminated strong'
+======== decoration-2 ========
+<root>
+  <p>
+    <code>'<code>'
+    <text>' spans are delimited by backticks.'
+  <p>
+    <text>'You can include literal backticks like '
+    <code>'`this`'
+    <text>'.'
+  <p>
+    <code>'`test'
+    <text>' hoge'
+  <p>
+    <code>'`this`'
+  <p>
+    <em>
+      <text>'strong'
+    <em>
+      <code>'strong code'
+    <em>
+      <text>'normal and '
+      <code>'code'
+      <text>' in composition'
+  <p>
+    <strong>
+      <em>
+        <text>'strong-em'
+      <text>' '
+    <strong>
+      <em>
+        <text>'strong-em'
+    <strong>
+      <text>'head'
+      <em>
+        <text>'strong-em'
+      <text>'tail'
+  <p>
+    <em>
+      <text>'emphasis in paragraph'
+  <ul>
+    <li>
+      <em>
+        <text>'emphasis in ul item'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+  <ol>
+    <li>
+      <em>
+        <text>'emphasis in ol item'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+  <p>
+    <em>
+      <text>'emphasis in paragraph'
+  <ul>
+    <li>
+      <em>
+        <text>'emphasis in ul item'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+  <ol>
+    <li>
+      <em>
+        <text>'emphasis in ol item'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+      <text>' '
+      <em>
+        <text>'emphasis again'
+  <p>
+    <strong>
+      <text>'strong in paragraph'
+  <ul>
+    <li>
+      <strong>
+        <text>'strong in ul item'
+      <text>' '
+      <strong>
+        <text>'strong again'
+      <text>' '
+      <strong>
+        <text>'strong again'
+  <ol>
+    <li>
+      <strong>
+        <text>'strong in ol item'
+      <text>' '
+      <strong>
+        <text>'strong again'
+      <text>' '
+      <strong>
+        <text>'strong again'
+  <p>
+    <strong>
+      <text>'strong in paragraph'
+  <ul>
+    <li>
+      <strong>
+        <text>'strong in ul item'
+      <text>' '
+      <strong>
+        <text>'strong again'
+      <text>' '
+      <strong>
+        <text>'strong again'
+  <ol>
+    <li>
+      <strong>
+        <text>'strong in ol item'
+      <text>' '
+      <strong>
+        <text>'strong again'
+      <text>' '
+      <strong>
+        <text>'strong again'
+  <h1>
+    <code>'code'
+    <text>' in header'
+  <h1>
+    <em>
+      <text>'emphasis'
+    <text>' in header'
+  <h1>
+    <em>
+      <text>'emphasis'
+    <text>' in header'
+  <h1>
+    <strong>
+      <text>'strong'
+    <text>' in header'
+  <h1>
+    <strong>
+      <text>'strong'
+    <text>' in header'
+  <h1>
+    <code>'code'
+    <text>' '
+    <em>
+      <text>'emphasis'
+    <text>' '
+    <em>
+      <text>'emphasis'
+    <text>' '
+    <strong>
+      <text>'strong'
+    <text>' '
+    <strong>
+      <text>'strong'
+  <h1>
+    <code>'code'
+    <text>' '
+    <em>
+      <text>'emphasis'
+    <text>' '
+    <em>
+      <text>'emphasis'
+    <text>' '
+    <strong>
+      <text>'strong'
+    <text>' '
+    <strong>
+      <text>'strong'
+  <h2>
+    <code>'code'
+    <text>' '
+    <em>
+      <text>'emphasis'
+    <text>' '
+    <em>
+      <text>'emphasis'
+    <text>' '
+    <strong>
+      <text>'strong'
+    <text>' '
+    <strong>
+      <text>'strong'
+  <p>
+    <em>
+      <text>'*star'
+    <strong>
+      <text>'*star'
+    <em>
+      <text>'A*star'
+    <strong>
+      <text>'A*star'
+    <text>' '
+    <em>
+      <text>'_ubar'
+    <text>' '
+    <strong>
+      <text>'_ubar'
+    <text>' '
+    <em>
+      <text>'A_ubar'
+    <text>' '
+    <strong>
+      <text>'A_ubar'
+======== decoration-em-star ========
+<root>
+  <p>
+    <em>
+      <text>'em'
+  <p>
+    <em>
+      <text>'em'
+    <text>' post'
+  <p>
+    <em>
+      <text>'em'
+    <text>'post post'
+  <p>
+    <em>
+      <text>'em_post'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em'
+    <text>' post'
+  <p>
+    <text>'pre'
+    <em>
+      <text>'em'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em'
+    <text>'post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em_post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em_post'
+    <text>' post'
+  <p>
+    <em>
+      <text>'em'
+    <text>':colon below'
+  <p>
+    <text>'colon ahead:'
+    <em>
+      <text>'em'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em'
+    <text>' post'
+======== decoration-strong-star ========
+<root>
+  <p>
+    <strong>
+      <text>'strong'
+  <p>
+    <strong>
+      <text>'strong'
+    <text>' post'
+  <p>
+    <strong>
+      <text>'strong'
+    <text>'post post'
+  <p>
+    <strong>
+      <text>'strong_post'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong'
+    <text>' post'
+  <p>
+    <text>'pre'
+    <strong>
+      <text>'strong'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong'
+    <text>'post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong_post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong_post'
+    <text>' post'
+  <p>
+    <strong>
+      <text>'strong'
+    <text>':colon below'
+  <p>
+    <text>'colon ahead:'
+    <strong>
+      <text>'strong'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong'
+    <text>' post'
+======== decoration-em-ubar ========
+<root>
+  <p>
+    <em>
+      <text>'em'
+  <p>
+    <em>
+      <text>'em'
+    <text>' post'
+  <p>
+    <text>'_not-em_post post'
+  <p>
+    <em>
+      <text>'em_post'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em'
+    <text>' post'
+  <p>
+    <text>'pre_not-em_ post'
+  <p>
+    <text>'pre _not-em_post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em_post'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em_post'
+    <text>' post'
+  <p>
+    <em>
+      <text>'em'
+    <text>':colon below'
+  <p>
+    <text>'colon ahead:'
+    <em>
+      <text>'em'
+  <p>
+    <text>'pre '
+    <em>
+      <text>'em'
+    <text>' post'
+======== decoration-strong-ubar ========
+<root>
+  <p>
+    <strong>
+      <text>'strong'
+  <p>
+    <strong>
+      <text>'strong'
+    <text>' post'
+  <p>
+    <text>'__not-strong__post post'
+  <p>
+    <strong>
+      <text>'strong__post'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong'
+    <text>' post'
+  <p>
+    <text>'pre_'
+    <em>
+      <text>'not-strong'
+    <text>'_ post'
+  <p>
+    <text>'pre __not-strong__post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong__post'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong__post'
+    <text>' post'
+  <p>
+    <strong>
+      <text>'strong'
+    <text>':colon below'
+  <p>
+    <text>'colon ahead:'
+    <strong>
+      <text>'strong'
+  <p>
+    <text>'pre '
+    <strong>
+      <text>'strong'
+    <text>' post'
+======== decoration-strike ========
+<root>
+  <p>
+    <strike>
+      <text>'strike'
+  <p>
+    <text>'pre '
+    <strike>
+      <text>'strike'
+  <p>
+    <strike>
+      <text>'strike'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <strike>
+      <text>'strike'
+    <text>' post'
+  <p>
+    <text>'pre'
+    <strike>
+      <text>'strike'
+  <p>
+    <strike>
+      <text>'strike'
+    <text>'post'
+  <p>
+    <text>'pre'
+    <strike>
+      <text>'strike'
+    <text>'post'
+  <p>
+    <text>'~not-strike'
+  <p>
+    <text>'~~not-strike'
+  <p>
+    <text>'~~not-strike~'
+  <p>
+    <text>'pre ~not-strike'
+  <p>
+    <text>'pre ~~not-strike'
+  <p>
+    <text>'pre ~~not-strike~'
+  <p>
+    <text>'~not-strike post'
+  <p>
+    <text>'~~not-strike post'
+  <p>
+    <text>'~~not-strike~ post'
+  <p>
+    <text>'pre ~not-strike post'
+  <p>
+    <text>'pre ~~not-strike post'
+  <p>
+    <text>'pre ~~not-strike~ post'
+  <p>
+    <text>'pre '
+    <strike>
+      <text>'strike'
+    <text>' post'
+======== link ========
+<root>
+  <p>
+    <a url='http://www.google.com/'>
+      <text>'http://www.google.com/'
+    <a url='https://www.google.com/'>
+      <text>'https://www.google.com/'
+    <a url='ftp://www.google.com/'>
+      <text>'ftp://www.google.com/'
+    <a url='abcde@bbb.ccc'>
+      <text>'abcde@bbb.ccc'
+    <text>'<abcde@bbb>'
+  <p>
+    <text>'Link: '
+    <a url='http://url.com/'>
+      <text>'example'
+    <text>' .. without title'
+  <p>
+    <text>'Link: '
+    <a url='http://url.com/' title='Title 'hoge''>
+      <text>'example'
+    <text>' .. with title (double quote)'
+  <p>
+    <text>'Link: '
+    <a url='http://url.com/' title='Title "hoge"'>
+      <text>'example'
+    <text>' .. with title (single quote)'
+  <p>
+    <text>'Link: '
+    <a url='http://url.com/' title='Title "hoge"'>
+      <text>'example'
+    <text>' .. with title (double quote)'
+  <p>
+    <text>'Link: '
+    <a url='http://url.com/' title='Title 'hoge''>
+      <text>'example'
+    <text>' .. with title (single quote)'
+  <p>
+    <text>'Image: '
+    <img url='/path/img.jpg'>'alt text'
+    <text>' .. without title'
+  <p>
+    <text>'Image: '
+    <img url='/path/img.jpg' title='Title 'hoge''>'alt text'
+    <text>' .. with title (double quote)'
+  <p>
+    <text>'Image: '
+    <img url='/path/img.jpg' title='Title "hoge"'>'alt text'
+    <text>' .. with title (single quote)'
+  <p>
+    <text>'['
+  <p>
+    <text>'ike this]() .. without url nor title'
+  <p>
+    <img url=''>'like this'
+    <text>' .. without url nor title'
+  <p>
+    <text>'Link: '
+    <a url='http://example.com/'>
+      <text>'this'
+    <text>' .. without title'
+  <p>
+    <text>'Link: '
+    <a url='http://example.com/' title='title'>
+      <text>'this'
+    <text>' .. with title'
+  <p>
+    <text>'Image: '
+    <img url='/path/img.jpg'>'alt text'
+    <text>' .. without title'
+  <p>
+    <text>'Image: '
+    <img url='/path/img.jpg' title='Title'>'alt text'
+    <text>' .. with title'
+  <p>
+    <text>'pre text post'
+  <p>
+    <text>'pre ['
+  <p>
+    <text>'ext](http://a.b.c/) post'
+  <p>
+    <text>'pre '
+    <a url='http://a.b.c/'>
+      <text>'text'
+    <text>' post'
+======== code block ========
+<root>
+  <p>
+    <text>'text'
+  <codeblock>
+    <line>
+      <text>'#include <stdio.h>'
+    <line>
+      <text>'int main()'
+    <line>
+      <text>'{'
+    <line>
+      <text>'    -3;'
+    <line>
+      <text>'    =a+2'
+    <line>
+      <text>'    return 0;'
+    <line>
+      <text>'    ======'
+    <line>
+      <text>'    hoge'
+    <line>
+      <text>'    for (int i = 0; i < 10; i++) {'
+    <line>
+      <text>'        printf("hello\n");'
+    <line>
+      <text>'    }'
+    <line>
+      <text>'    ------'
+    <line>
+      <text>'}'
+  <p>
+    <text>'fsafdsasa'
+  <codeblock>
+    <line>
+      <text>'1 is the first character in code block'
+    <line>
+      <text>'beginning of code block'
+    <line>
+      <text>'hoge hoge'
+  <p>
+    <text>'fadsfdsafdsa'
+  <codeblock>
+    <line>
+      <text>'    four spaces ahead'
+  <p>
+    <text>'paragraph'
+  <codeblock>
+    <line>
+      <text>'// just after paragraph with no space between'
+    <line>
+      <text>'#include <stdio.h>'
+    <line>
+      <text>'int main()'
+    <line>
+      <text>'{'
+    <line>
+      <text>'    -3;'
+    <line>
+      <text>'    =a+2'
+    <line>
+      <text>'    return 0;'
+    <line>
+      <text>'    ======'
+    <line>
+      <text>'    hoge'
+    <line>
+      <text>'    for (int i = 0; i < 10; i++) {'
+    <line>
+      <text>'        printf("hello\n");'
+    <line>
+      <text>'    }'
+    <line>
+      <text>'    ------'
+    <line>
+      <text>'}'
+  <p>
+    <text>'normal text'
+  <codeblock>
+    <line>
+      <text>'void sub1()'
+    <line>
+      <text>'{'
+    <line>
+      <text>'}'
+    <line>
+      <text>''
+    <line>
+      <text>'void sub2()'
+    <line>
+      <text>'{'
+    <line>
+      <text>'// 3 blank lines below'
+    <line>
+      <text>''
+    <line>
+      <text>''
+    <line>
+      <text>''
+    <line>
+      <text>'// 3 blank lines above'
+    <line>
+      <text>'}'
+  <ul>
+    <li>
+      <text>'item 1'
+    <li>
+      <text>'item 2'
+    <li>
+      <text>'item 3 '
+      <em>
+        <text>'strong'
+      <ul>
+        <li>
+          <text>'item 3-1 '
+          <em>
+            <text>'strong'
+        <li>
+          <text>'item 3-2 '
+          <em>
+            <text>'strong'
+          <text>' '
+          <code>'code'
+        <li>
+          <text>'item 3-3'
+          <ul>
+            <li>
+              <text>'item 3-3-1'
+            <li>
+              <text>'item 3-3-2'
+    <li>
+      <text>'item 4'
+      <ul>
+        <li>
+          <text>'item 4-1'
+        <li>
+          <text>'item 4-2'
+        <li>
+          <text>'item 4-3'
+  <p>
+    <text>'pre'
+  <codeblock>
+    <line>
+      <text>'four spaces ahead'
+    <line>
+      <text>'one tab ahead'
+    <line>
+      <text>'    eight spaces ahead'
+    <line>
+      <text>'    two tabs ahead'
+    <line>
+      <text>'        twelve spaces ahead'
+    <line>
+      <text>'        three tabs ahead'
+  <p>
+    <text>'post'
+======== code block in list ========
+<root>
+  <ul>
+    <li>
+      <p>
+        <text>'list item'
+      <codeblock>
+        <line>
+          <text>'block under list item'
+        <line>
+          <text>'2nd line'
+        <line>
+          <text>'3rd line'
+    <li>
+      <p>
+        <text>'list item'
+      <codeblock>
+        <line>
+          <text>'  block under list item (2 spaces ahead)'
+        <line>
+          <text>'   2nd line (3 spaces ahead)'
+        <line>
+          <text>'    3rd line (4 spaces ahead)'
+  <p>
+    <text>'paragraph'
+  <ul>
+    <li>
+      <p>
+        <text>'item-1'
+      <codeblock>
+        <line>
+          <text>'code line 1st'
+        <line>
+          <text>'code line 2nd'
+        <line>
+          <text>'code line 3rd'
+      <p>
+        <text>'item-1 para1'
+      <codeblock>
+        <line>
+          <text>'code line 1st'
+        <line>
+          <text>'code line 2nd'
+        <line>
+          <text>'code line 3rd'
+      <p>
+        <text>'item-1 para2'
+    <li>
+      <p>
+        <text>'item-2'
+      <codeblock>
+        <line>
+          <text>'+ code line 1st'
+        <line>
+          <text>'+ code line 2nd'
+        <line>
+          <text>'+ code line 3rd'
+      <ul>
+        <li>
+          <p>
+            <text>'item-2-1'
+          <codeblock>
+            <line>
+              <text>'+ code line 1st'
+            <line>
+              <text>'+ code line 2nd'
+            <line>
+              <text>'+ code line 3rd'
+          <p>
+            <text>'item-2-1 para1'
+          <codeblock>
+            <line>
+              <text>'code line 1st'
+            <line>
+              <text>'code line 2nd'
+            <line>
+              <text>'code line 3rd'
+          <p>
+            <text>'item-2-1 para2'
+          <ul>
+            <li>
+              <p>
+                <text>'item-2-1-1'
+              <codeblock>
+                <line>
+                  <text>'+ code line 1st'
+                <line>
+                  <text>'+ code line 2nd'
+                <line>
+                  <text>'+ code line 3rd'
+    <li>
+      <p>
+        <text>'item-1'
+      <codeblock>
+        <line>
+          <text>'code 1st line'
+        <line>
+          <text>'code 2nd line'
+        <line>
+          <text>''
+        <line>
+          <text>'code 3rd line after a blank line'
+        <line>
+          <text>'code 4th line'
+        <line>
+          <text>''
+        <line>
+          <text>''
+        <line>
+          <text>''
+        <line>
+          <text>''
+        <line>
+          <text>'code 5th line after 4 blank lines'
+    <li>
+      <text>'item-2'
+      <ul>
+        <li>
+          <p>
+            <text>'item-2-1'
+          <codeblock>
+            <line>
+              <text>'code 1st line'
+            <line>
+              <text>'code 2nd line'
+            <line>
+              <text>''
+            <line>
+              <text>'code 3rd line after a blank line'
+            <line>
+              <text>'code 4th line'
+            <line>
+              <text>''
+            <line>
+              <text>''
+            <line>
+              <text>''
+            <line>
+              <text>''
+            <line>
+              <text>'code 5th line after 4 blank lines'
+        <li>
+          <p>
+            <text>'item-2-2'
+          <codeblock>
+            <line>
+              <text>'code 1st line'
+            <line>
+              <text>'code 2nd line'
+            <line>
+              <text>''
+            <line>
+              <text>'code 3rd line after a blank line'
+            <line>
+              <text>'code 4th line'
+            <line>
+              <text>''
+            <line>
+              <text>''
+            <line>
+              <text>''
+            <line>
+              <text>''
+            <line>
+              <text>'code 5th line after 4 blank lines'
+    <li>
+      <p>
+        <text>'item-3'
+      <codeblock>
+        <line>
+          <text>'code 1st line'
+        <line>
+          <text>'code 2nd line'
+        <line>
+          <text>''
+        <line>
+          <text>'code 3rd line after a blank line'
+        <line>
+          <text>'code 4th line'
+        <line>
+          <text>''
+        <line>
+          <text>''
+        <line>
+          <text>''
+        <line>
+          <text>''
+        <line>
+          <text>'code 5th line after 4 blank lines'
+  <p>
+    <text>'paragrph'
+======== fenced code block ========
+<root>
+  <p>
+    <text>'pre'
+  <codeblock>
+    <line>
+      <text>'1st'
+    <line>
+      <text>'2nd'
+    <line>
+      <text>'3rd'
+  <p>
+    <text>'post'
+  <p>
+    <text>'pre'
+  <codeblock>
+    <line>
+      <text>'10.times {|i|'
+    <line>
+      <text>'    print("Hello #", i, "\n")'
+    <line>
+      <text>'}'
+  <p>
+    <text>'post'
+======== quotation ========
+<root>
+  <blockquote>
+    <p>
+      <text>'1st-1 1st-2 1st-3'
+    <blockquote>
+      <p>
+        <text>'2nd-1 2nd-2 2nd-3'
+    <p>
+      <text>'1st-4 1st-5'
+    <blockquote>
+      <p>
+        <text>'2nd-4 2nd-5'
+      <blockquote>
+        <p>
+          <text>'3rd-1 3rd-2'
+    <p>
+      <text>'1st-6'
+    <blockquote>
+      <blockquote>
+        <p>
+          <text>'3rd-3 3rd-4'
+        <blockquote>
+          <blockquote>
+            <blockquote>
+              <p>
+                <text>'6th-1 6th-2 6th-3'
+    <p>
+      <text>'1st-7'
+  <p>
+    <text>'normal'
+  <blockquote>
+    <p>
+      <text>'1st-1'
+    <p>
+      <text>'1st-2'
+    <p>
+      <text>'1st-3 continue continue-2'
+  <p>
+    <text>'normal'
+  <blockquote>
+    <p>
+      <text>'1st-1'
+    <p>
+      <text>'1st-2'
+    <p>
+      <text>'1st-3'
+  <p>
+    <text>'normal'
+  <blockquote>
+    <p>
+      <text>'1st-1'
+  <codeblock>
+    <line>
+      <text>'block after quote'
+    <line>
+      <text>'block after quote'
+  <blockquote>
+    <p>
+      <text>'1st-1'
+  <p>
+    <text>'normal paragraph'
+  <blockquote>
+    <p>
+      <text>'Email-style angle brackets are used for blockquotes.'
+    <blockquote>
+      <p>
+        <text>'And, they can be nested.'
+    <h4>
+      <text>'Headers in blockquotes'
+    <ul>
+      <li>
+        <text>'You can quote a list.'
+      <li>
+        <text>'Etc.'
+    <p>
+      <text>'paragraph in quote'
+    <ul>
+      <li>
+        <text>'list item-1'
+      <li>
+        <text>'list item-2'
+    <ol>
+      <li>
+        <text>'list item-1'
+      <li>
+        <text>'list item-2'
+    <p>
+      <text>'paragraph in quote'
+  <p>
+    <text>'normal paragraph'
+  <p>
+    <text>'paragraph'
+  <codeblock>
+    <line>
+      <text>'> hoge'
+    <line>
+      <text>'> foo'
+    <line>
+      <text>'> bar'
+  <p>
+    <text>'paragraph'
+  <codeblock>
+    <line>
+      <text>'+ hoge'
+    <line>
+      <text>'+ foo'
+    <line>
+      <text>'+ bar'
+  <p>
+    <text>'paragraph'
+  <codeblock>
+    <line>
+      <text>'= hoge'
+    <line>
+      <text>'= foo'
+    <line>
+      <text>'= bar'
+  <p>
+    <text>'paragraph'
+======== entity ========
+<root>
+  <p>
+    <text>'3 < 4 > 2'
+  <p>
+    <text>'out << hogehoge'
+  <p>
+    <entity>'copy'
+    <text>' '
+    <entity>'amp'
+    <text>' AT&T '
+    <entity>'gt'
+    <text>' '
+    <entity>'lt'
+  <p>
+    <entity>'copy'
+    <entity>'amp'
+    <text>'AT&T'
+    <entity>'gt'
+    <entity>'lt'
+  <p>
+    <entity>'amp'
+  <tag>'a'
+    <entity>'amp'
+======== HTML tag ========
+<root>
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column-1'
+      <tag>'th'
+        <text>'column-2'
+    <tag>'tr'
+      <tag>'td'
+        <text>'item-1-1'
+      <tag>'td'
+        <text>'item-1-2'
+    <tag>'tr'
+      <tag>'td'
+        <text>'item-2-1'
+      <tag>'td'
+        <text>'item-2-2'
+    <tag>'tr'
+      <tag>'td'
+        <text>'item-3-1'
+      <tag>'td'
+        <text>'item-3-2'
+    <tag>'tr'
+      <tag>'td'
+        <text>'item-4-1'
+      <tag>'td'
+        <text>'item-4-2'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'td'
+        <text>'`ignore code`'
+      <tag>'td'
+        <text>'*ignore emphasis*'
+      <tag>'td'
+        <text>'**ignore strong**'
+  <tag>'table'
+  <tag>'br'
+  <tag>'br'
+======== comment ========
+<root>
+  <p>
+    <text>'pre '
+    <comment>'<!-- comment -->'
+    <text>' post'
+  <p>
+    <text>'pre '
+    <comment>'<!-- comment -->'
+    <text>'post'
+  <p>
+    <comment>'<!-- <code>aaaaaa</code> -->'
+======== table ========
+<root>
+  <p>
+    <text>'normal'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+        <text>'data1-2'
+      <tag>'td'
+        <text>'data1-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data2-1'
+      <tag>'td'
+        <text>'data2-2'
+      <tag>'td'
+        <text>'data2-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data3-1'
+      <tag>'td'
+        <text>'data3-2'
+      <tag>'td'
+        <text>'data3-3'
+  <p>
+    <text>'alignment'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag attrs='style="text-align:right"'>'th'
+        <text>'column2'
+      <tag attrs='style="text-align:center"'>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'data1-2'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'data1-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data2-1'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'data2-2'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'data2-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data3-1'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'data3-2'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'data3-3'
+  <p>
+    <text>'ignore bar at top of the line'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+        <text>'data1-2'
+      <tag>'td'
+        <text>'data1-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data2-1'
+      <tag>'td'
+        <text>'data2-2'
+      <tag>'td'
+        <text>'data2-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data3-1'
+      <tag>'td'
+        <text>'data3-2'
+      <tag>'td'
+        <text>'data3-3'
+  <p>
+    <text>'ignore bar at bottom of the line'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+        <text>'data1-2'
+      <tag>'td'
+        <text>'data1-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data2-1'
+      <tag>'td'
+        <text>'data2-2'
+      <tag>'td'
+        <text>'data2-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data3-1'
+      <tag>'td'
+        <text>'data3-2'
+      <tag>'td'
+        <text>'data3-3'
+  <p>
+    <text>'ignore bar at both side of the line'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+        <text>'data1-2'
+      <tag>'td'
+        <text>'data1-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data2-1'
+      <tag>'td'
+        <text>'data2-2'
+      <tag>'td'
+        <text>'data2-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data3-1'
+      <tag>'td'
+        <text>'data3-2'
+      <tag>'td'
+        <text>'data3-3'
+  <p>
+    <text>'blank item'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+      <tag>'td'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+      <tag>'td'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+      <tag>'td'
+  <p>
+    <text>'blank items'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+      <tag>'td'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+        <text>'data2-2'
+      <tag>'td'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+      <tag>'td'
+        <text>'data3-3'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'column1'
+      <tag>'th'
+        <text>'column2'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+        <text>'data2-2'
+    <tag>'tr'
+      <tag>'td'
+      <tag>'td'
+      <tag>'td'
+        <text>'data3-3'
+  <p>
+    <text>'decorative items'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <em>
+          <text>'emphasized'
+      <tag>'th'
+        <strong>
+          <text>'strong'
+      <tag>'th'
+        <text>'column3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data1-1'
+      <tag>'td'
+        <code>'code'
+      <tag>'td'
+        <text>'data1-3'
+    <tag>'tr'
+      <tag>'td'
+        <text>'data2-1'
+      <tag>'td'
+        <code>'code | bar'
+      <tag>'td'
+        <text>'data2-3'
+    <tag>'tr'
+      <tag>'td'
+        <a url='http://a.b.c/'>
+          <text>'url'
+      <tag>'td'
+        <text>'data3-2'
+      <tag>'td'
+        <text>'data3-3'
+  <p>
+    <text>'Colons can be used to align columns.'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'Tables'
+      <tag attrs='style="text-align:center"'>'th'
+        <text>'Are'
+      <tag attrs='style="text-align:right"'>'th'
+        <text>'Cool'
+    <tag>'tr'
+      <tag>'td'
+        <text>'col 3 is'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'right-aligned'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'$1600'
+    <tag>'tr'
+      <tag>'td'
+        <text>'col 2 is'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'centered'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'$12'
+    <tag>'tr'
+      <tag>'td'
+        <text>'zebra stripes'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'are neat'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'$1'
+  <p>
+    <text>'The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'Markdown'
+      <tag>'th'
+        <text>'Less'
+      <tag>'th'
+        <text>'Pretty'
+    <tag>'tr'
+      <tag>'td'
+        <em>
+          <text>'Still'
+      <tag>'td'
+        <code>'renders'
+      <tag>'td'
+        <strong>
+          <text>'nicely'
+    <tag>'tr'
+      <tag>'td'
+        <text>'1'
+      <tag>'td'
+        <text>'2'
+      <tag>'td'
+        <text>'3'
+  <p>
+    <text>'GitHub Flavored Markdown sample'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'First Header'
+      <tag>'th'
+        <text>'Second Header'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Content Cell'
+      <tag>'td'
+        <text>'Content Cell'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Content Cell'
+      <tag>'td'
+        <text>'Content Cell'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'First Header'
+      <tag>'th'
+        <text>'Second Header'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Content Cell'
+      <tag>'td'
+        <text>'Content Cell'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Content Cell'
+      <tag>'td'
+        <text>'Content Cell'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'Name'
+      <tag>'th'
+        <text>'Description'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Help'
+      <tag>'td'
+        <text>'Display the help window.'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Close'
+      <tag>'td'
+        <text>'Closes a window'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'Name'
+      <tag>'th'
+        <text>'Description'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Help'
+      <tag>'td'
+        <strike>
+          <text>'Display the'
+        <text>' help window.'
+    <tag>'tr'
+      <tag>'td'
+        <text>'Close'
+      <tag>'td'
+        <em>
+          <text>'Closes'
+        <text>' a window'
+  <tag>'table'
+    <tag>'tr'
+      <tag>'th'
+        <text>'Left-Aligned'
+      <tag attrs='style="text-align:center"'>'th'
+        <text>'Center Aligned'
+      <tag attrs='style="text-align:right"'>'th'
+        <text>'Right Aligned'
+    <tag>'tr'
+      <tag>'td'
+        <text>'col 3 is'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'some wordy text'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'$1600'
+    <tag>'tr'
+      <tag>'td'
+        <text>'col 2 is'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'centered'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'$12'
+    <tag>'tr'
+      <tag>'td'
+        <text>'zebra stripes'
+      <tag attrs='style="text-align:center"'>'td'
+        <text>'are neat'
+      <tag attrs='style="text-align:right"'>'td'
+        <text>'$1'
+======== table under list item ========
+<root>
+  <ul>
+    <li>
+      <p>
+        <text>'item-1'
+      <tag>'table'
+        <tag>'tr'
+          <tag>'th'
+            <text>'column-1'
+          <tag>'th'
+            <text>'column-2'
+          <tag>'th'
+            <text>'column-3'
+        <tag>'tr'
+          <tag>'td'
+            <text>'data-1-1'
+          <tag>'td'
+            <text>'data-1-2'
+          <tag>'td'
+            <text>'data-1-3'
+        <tag>'tr'
+          <tag>'td'
+            <text>'data-2-1'
+          <tag>'td'
+            <text>'data-2-2'
+          <tag>'td'
+            <text>'data-2-3'
+        <tag>'tr'
+          <tag>'td'
+            <text>'data-3-1'
+          <tag>'td'
+            <text>'data-3-2'
+          <tag>'td'
+            <text>'data-3-3'
+    <li>
+      <p>
+        <text>'item-2'
+      <tag>'table'
+        <tag>'tr'
+          <tag>'th'
+            <text>'column-1'
+          <tag>'th'
+            <text>'column-2'
+          <tag>'th'
+            <text>'column-3'
+        <tag>'tr'
+          <tag>'td'
+            <text>'data-1-1'
+          <tag>'td'
+            <text>'data-1-2'
+          <tag>'td'
+            <text>'data-1-3'
+        <tag>'tr'
+          <tag>'td'
+            <text>'data-2-1'
+          <tag>'td'
+            <text>'data-2-2'
+          <tag>'td'
+            <text>'data-2-3'
+        <tag>'tr'
+          <tag>'td'
+            <text>'data-3-1'
+          <tag>'td'
+            <text>'data-3-2'
+          <tag>'td'
+            <text>'data-3-3'
+      <ul>
+        <li>
+          <p>
+            <text>'item-2-1'
+          <tag>'table'
+            <tag>'tr'
+              <tag>'th'
+                <text>'column-1'
+              <tag>'th'
+                <text>'column-2'
+              <tag>'th'
+                <text>'column-3'
+            <tag>'tr'
+              <tag>'td'
+                <text>'data-1-1'
+              <tag>'td'
+                <text>'data-1-2'
+              <tag>'td'
+                <text>'data-1-3'
+            <tag>'tr'
+              <tag>'td'
+                <text>'data-2-1'
+              <tag>'td'
+                <text>'data-2-2'
+              <tag>'td'
+                <text>'data-2-3'
+            <tag>'tr'
+              <tag>'td'
+                <text>'data-3-1'
+              <tag>'td'
+                <text>'data-3-2'
+              <tag>'td'
+                <text>'data-3-3'
+          <ul>
+            <li>
+              <p>
+                <text>'item-2-1-1'
+              <tag>'table'
+                <tag>'tr'
+                  <tag>'th'
+                    <text>'column-1'
+                  <tag>'th'
+                    <text>'column-2'
+                  <tag>'th'
+                    <text>'column-3'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'data-1-1'
+                  <tag>'td'
+                    <text>'data-1-2'
+                  <tag>'td'
+                    <text>'data-1-3'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'data-2-1'
+                  <tag>'td'
+                    <text>'data-2-2'
+                  <tag>'td'
+                    <text>'data-2-3'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'data-3-1'
+                  <tag>'td'
+                    <text>'data-3-2'
+                  <tag>'td'
+                    <text>'data-3-3'
+              <ul>
+                <li>
+                  <p>
+                    <text>'item-2-1-1-1'
+                  <tag>'table'
+                    <tag>'tr'
+                      <tag>'th'
+                        <text>'column-1'
+                      <tag>'th'
+                        <text>'column-2'
+                      <tag>'th'
+                        <text>'column-3'
+                    <tag>'tr'
+                      <tag>'td'
+                        <text>'data-1-1'
+                      <tag>'td'
+                        <text>'data-1-2'
+                      <tag>'td'
+                        <text>'data-1-3'
+                    <tag>'tr'
+                      <tag>'td'
+                        <text>'data-2-1'
+                      <tag>'td'
+                        <text>'data-2-2'
+                      <tag>'td'
+                        <text>'data-2-3'
+                    <tag>'tr'
+                      <tag>'td'
+                        <text>'data-3-1'
+                      <tag>'td'
+                        <text>'data-3-2'
+                      <tag>'td'
+                        <text>'data-3-3'
+            <li>
+              <text>'item-2-1-2'
+        <li>
+          <text>'item-2-2'
+        <li>
+          <text>'item-2-3'
+    <li>
+      <text>'item-3'
+    <li>
+      <text>'item-4'
+  <p>
+    <text>'para1 in root'
+  <ul>
+    <li>
+      <p>
+        <text>'item-1'
+      <tag>'table'
+        <tag>'tr'
+          <tag>'th'
+            <text>'col1'
+          <tag>'th'
+            <text>'col2'
+        <tag>'tr'
+          <tag>'td'
+            <text>'A'
+          <tag>'td'
+            <text>'B'
+    <li>
+      <p>
+        <text>'item-2'
+      <tag>'table'
+        <tag>'tr'
+          <tag>'th'
+            <text>'col1'
+          <tag>'th'
+            <text>'col2'
+        <tag>'tr'
+          <tag>'td'
+            <text>'A'
+          <tag>'td'
+            <text>'B'
+    <li>
+      <p>
+        <text>'item-3'
+      <tag>'table'
+        <tag>'tr'
+          <tag>'th'
+            <text>'col1'
+          <tag>'th'
+            <text>'col2'
+        <tag>'tr'
+          <tag>'td'
+            <text>'A'
+          <tag>'td'
+            <text>'B'
+    <li>
+      <p>
+        <text>'item-4'
+      <tag>'table'
+        <tag>'tr'
+          <tag>'th'
+            <text>'col1'
+          <tag>'th'
+            <text>'col2'
+        <tag>'tr'
+          <tag>'td'
+            <text>'A'
+          <tag>'td'
+            <text>'B'
+    <li>
+      <text>'item-5'
+      <ul>
+        <li>
+          <p>
+            <text>'item-5-1'
+          <tag>'table'
+            <tag>'tr'
+              <tag>'th'
+                <text>'col1'
+              <tag>'th'
+                <text>'col2'
+            <tag>'tr'
+              <tag>'td'
+                <text>'A'
+              <tag>'td'
+                <text>'B'
+        <li>
+          <p>
+            <text>'item-5-2'
+          <tag>'table'
+            <tag>'tr'
+              <tag>'th'
+                <text>'col1'
+              <tag>'th'
+                <text>'col2'
+            <tag>'tr'
+              <tag>'td'
+                <text>'A'
+              <tag>'td'
+                <text>'B'
+        <li>
+          <p>
+            <text>'item-5-3'
+          <tag>'table'
+            <tag>'tr'
+              <tag>'th'
+                <text>'col1'
+              <tag>'th'
+                <text>'col2'
+            <tag>'tr'
+              <tag>'td'
+                <text>'A'
+              <tag>'td'
+                <text>'B'
+        <li>
+          <p>
+            <text>'item-5-4'
+          <tag>'table'
+            <tag>'tr'
+              <tag>'th'
+                <text>'col1'
+              <tag>'th'
+                <text>'col2'
+            <tag>'tr'
+              <tag>'td'
+                <text>'A'
+              <tag>'td'
+                <text>'B'
+    <li>
+      <text>'item-6'
+      <ul>
+        <li>
+          <text>'item-6-1'
+          <ul>
+            <li>
+              <p>
+                <text>'item-6-1-1'
+              <tag>'table'
+                <tag>'tr'
+                  <tag>'th'
+                    <text>'col1'
+                  <tag>'th'
+                    <text>'col2'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'A'
+                  <tag>'td'
+                    <text>'B'
+            <li>
+              <p>
+                <text>'item-6-1-2'
+              <tag>'table'
+                <tag>'tr'
+                  <tag>'th'
+                    <text>'col1'
+                  <tag>'th'
+                    <text>'col2'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'A'
+                  <tag>'td'
+                    <text>'B'
+            <li>
+              <p>
+                <text>'item-6-1-3'
+              <tag>'table'
+                <tag>'tr'
+                  <tag>'th'
+                    <text>'col1'
+                  <tag>'th'
+                    <text>'col2'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'A'
+                  <tag>'td'
+                    <text>'B'
+            <li>
+              <p>
+                <text>'item-6-1-4'
+              <tag>'table'
+                <tag>'tr'
+                  <tag>'th'
+                    <text>'col1'
+                  <tag>'th'
+                    <text>'col2'
+                <tag>'tr'
+                  <tag>'td'
+                    <text>'A'
+                  <tag>'td'
+                    <text>'B'
+  <p>
+    <text>'para2 in root'
+  <ul>
+    <li>
+      <p>
+        <text>'item-1'
+      <p>
+        <text>'para1 in item-1'
+      <p>
+        <text>'para2 in item-1'
+      <ul>
+        <li>
+          <p>
+            <text>'item-1-1'
+          <p>
+            <text>'para1 in item-1-1'
+          <p>
+            <text>'para2 in item-1-1'
+          <tag>'table'
+            <tag>'tr'
+              <tag>'th'
+                <text>'aaaa'
+              <tag>'th'
+                <text>'bbbb'
+            <tag>'tr'
+              <tag>'td'
+                <text>'A'
+              <tag>'td'
+                <text>'B'
+  <p>
+    <text>'para3 in root'
+======== line break ========
+<root>
+  <p>
+    <text>'1st line'
+    <br>
+    <text>'2nd line'
+    <br>
+    <text>'3rd line three spaces'
+    <br>
+    <text>'4th line four spaces'
+    <br>
+    <text>'5th line '
+    <strong>
+      <text>'strong'
+    <br>
+    <text>'6th line'
+======== print referee items ========
+<root>
+  <p>
+    <text>'Link: '
+    <a url='http://example-1.com' refid='1'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-2.com' title='title-2' refid='2'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-3.com' title='title-3' refid='3'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-4.com' title='title-4' refid='4'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-5.com' title='title-5' refid='  5  '>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-6.com' title='title-6 "quoted"' refid='6'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-7.com' title='title-7 'quoted'' refid='7'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-8.com' title='title-8 (quoted)' refid='8'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-9.com' refid='9'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-ABCDEF.com' title='title-ABCDEF' refid='ABCDEF'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-ABCDEF.com' title='title-ABCDEF' refid='abcdef'>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'Link: '
+    <a url='http://example-sABCDEFs.com' title='title-sABCDEFs' refid='   ABCDEF  '>
+      <text>'example'
+    <text>' .. reference'
+  <p>
+    <text>'[NG]:http://example-NG.com "title-NG" .. should be normal text'
+  <p>
+    <text>'[NG]:http://example-NG.com "title-NG .. should be normal text'
+  <p>
+    <text>'[NG]:http://example-NG.com [title-NG .. should be normal text'
+  <codeblock>
+    <line>
+      <text>'[NG]:http://example-NG.com [title-NG] .. should be block'
+  <p>
+    <text>'An '
+    <a url='http://example.com/' title='Title' refid='id1'>
+      <text>'example'
+    <text>'. Then, anywhere else in the doc, define the link:'
+  <p>
+    <text>'Reference-style image: '
+    <img url='/url/to/img.jpg' title='Title' refid='id2'>'alt text'
+======== tag that accepts markdown ========
+<root>
+  <code>'code'
+  <text>' '
+  <em>
+    <text>'emphasized'
+  <text>' '
+  <strong>
+    <text>'strong'
+  <text>' '
+  <tag>'table'
+    <tag>'tr'
+      <tag>'td'
+        <text>'`code` *emphasized* **strong**'
+      <tag>'td'
+    <tag>'tr'
+      <tag>'td'
+        <code>'code'
+        <text>' '
+        <em>
+          <text>'emphasized'
+        <text>' '
+        <strong>
+          <text>'strong'
+      <tag>'td'
+======== gura.headerdown/gura.headerup ========
+<root>
+  <h1>
+    <text>'header1'
+  <h2>
+    <text>'header1 after headerdown'
+  <h1>
+    <text>'header1 after headerdown and headerup'
+  <h3>
+    <text>'header1 after 2 times of headerdown'
+  <h2>
+    <text>'header2'
+  <h3>
+    <text>'header2 after headerdown'
+  <h2>
+    <text>'header2 after headerdown and headerup'
+  <h4>
+    <text>'header2 after 2 times of headerdown'
+  <h3>
+    <text>'header3'
+  <h4>
+    <text>'header3 after headerdown'
+  <h3>
+    <text>'header3 after headerdown and headerup'
+  <h5>
+    <text>'header3 after 2 times of headerdown'
+  <h1>
+    <text>'header1'
+  <h2>
+    <text>'header1 after headerdown'
+  <h1>
+    <text>'header1 after headerdown and headerup'
+  <h3>
+    <text>'header1 after 2 times of headerdown'
+  <h2>
+    <text>'header2'
+  <h3>
+    <text>'header2 after headerdown'
+  <h2>
+    <text>'header2 after headerdown and headerup'
+  <h4>
+    <text>'header2 after 2 times of headerdown'
+======== markdown.document#countitem() / markdown.item#countdescendant() ========
+<root>
+  <h1>
+    <text>'Header1'
+  <h1>
+    <text>'Header1'
+  <h1>
+    <text>'Header1'
+  <h2>
+    <text>'Header2'
+  <h2>
+    <text>'Header2'
+  <h2>
+    <text>'Header2'
+  <h2>
+    <text>'Build for Windows'
+  <p>
+    <text>'Build for Windows'
+  <ul>
+    <li>
+      <text>'hoge'
+h1 document#countitem:3, item#countdescendant:3
+h2 document#countitem:4, item#countdescendant:4
+h3 document#countitem:0, item#countdescendant:0
+p document#countitem:1, item#countdescendant:1
+text document#countitem:9, item#countdescendant:9
+======== markdown in tag (1) ========
+<root>
+  <tag>'div'
+    <tag>'div'
+      <text>'line1'
+    <p>
+      <text>'code '
+      <code>'hello'
+    <p>
+      <text>'emphasis '
+      <em>
+        <text>'hello'
+    <p>
+      <text>'strong '
+      <strong>
+        <text>'hello'
+    <p>
+      <text>'line'
+  <p>
+    <text>'A '
+  <tag>'code'
+    <text>'B'
+  <p>
+    <text>'C'
+  <tag>'div'
+    <p>
+      <text>'List in tag.'
+    <ul>
+      <li>
+        <text>'item1'
+      <li>
+        <text>'item2'
+      <li>
+        <text>'item3'
+      <li>
+        <text>'item4'
+    <ol>
+      <li>
+        <text>'item1'
+      <li>
+        <text>'item2'
+      <li>
+        <text>'item3'
+      <li>
+        <text>'item4'
+    <p>
+      <text>'End'
+======== markdown in tag (2) ========
+<root>
+  <p>
+    <text>'line before - 1'
+  <p>
+    <text>'line before - 2'
+  <tag>'div'
+    <ul>
+      <li>
+        <text>'item-1'
+      <li>
+        <text>'item-2'
+      <li>
+        <text>'item-3'
+  <p>
+    <text>'line after - 1'
+  <p>
+    <text>'line after - 2'
+  <tag>'div'
+    <ul>
+      <li>
+        <text>'item-1'
+      <li>
+        <text>'item-2'
+      <li>
+        <text>'item-3'
+  <ul>
+    <li>
+      <text>'item-out-1'
+    <li>
+      <text>'item-out-2'
+  <tag>'div'
+    <ul>
+      <li>
+        <text>'item-1 '
+        <tag>'span'
+          <text>'hoge'
+      <li>
+        <text>'item-2 '
+        <tag>'span'
+      <li>
+        <text>'item-3'
+  <p>
+    <text>'line after - 3'
+  <p>
+    <text>'line after - 4'
+======== markdown in tag (3) ========
+<root>
+  <p>
+    <text>'line-before'
+  <tag>'div'
+    <p>
+      <text>'code here'
+    <codeblock>
+      <line>
+        <text>'code-line1'
+      <line>
+        <text>'code-line2'
+      <line>
+        <text>'code-line3'
+    <p>
+      <text>'code end'
+  <p>
+    <text>'line-after'
+======== markdown in tag (4) ========
+<root>
+  <p>
+    <text>'line-before'
+  <tag>'div'
+    <h1>
+      <text>'title1'
+    <h2>
+      <text>'title1-1'
+    <h2>
+      <text>'title1-2'
+    <h1>
+      <text>'title2'
+    <h1>
+      <text>'title3'
+  <p>
+    <text>'line-after'
+======== inline elements ========
+======== markdown's list items in tag ========
+<root>
+  <tag>'div'
+    <p>
+      <text>'text1'
+    <ul>
+      <li>
+        <text>'item-1'
+      <li>
+        <text>'item-2'
+      <li>
+        <text>'item-3'
+  <tag>'div'
+    <p>
+      <text>'text2'
+    <ul>
+      <li>
+        <text>'item-1'
+      <li>
+        <text>'item-2'
+      <li>
+        <text>'item-3'

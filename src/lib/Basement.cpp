@@ -124,34 +124,6 @@ void Basement::PrepareConsoleStream()
 	SetStreamCErr(Stream::CErr->Reference());
 }
 
-#if 0
-bool Basement::ImportModule()
-{
-	Frame& frame = GetFrame();
-	Processor& processor = GetProcessor();
-	if (!(Module_codecs::ImportBuiltIn(frame) &&
-		  Module_codecs_basic::ImportBuiltIn(frame) &&
-		  Module_codecs_chinese::ImportBuiltIn(frame) &&
-		  Module_codecs_iso8859::ImportBuiltIn(frame) &&
-		  Module_codecs_japanese::ImportBuiltIn(frame) &&
-		  Module_fs::ImportBuiltIn(frame) &&
-		  Module_math::ImportBuiltIn(frame) &&
-		  Module_os::ImportBuiltIn(frame) &&
-		  Module_path::ImportBuiltIn(frame) &&
-		  Module_sys::ImportBuiltIn(frame))) return false;
-	for (const String& str : _cmdLine.GetStringList("import")) {
-		bool binaryFlag = false;
-		bool overwriteFlag = false;
-		StringList moduleNames;
-		str.Split(moduleNames, ',');
-		for (const String& moduleName : moduleNames) {
-			if (!processor.ImportModule(moduleName.c_str(), binaryFlag, overwriteFlag)) return false;
-		}
-	}
-	return true;
-}
-#endif
-
 bool Basement::ExecCommand()
 {
 	Processor& processor = GetProcessor();
