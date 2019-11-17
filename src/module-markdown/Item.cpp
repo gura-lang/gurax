@@ -71,9 +71,7 @@ void Item::Print(Stream& stream, int indentLevel) const
 	}
 	stream.Print(">");
 	if (_pText) {
-		stream.Print("'");
-		stream.Print(_pText->c_str());
-		stream.Print("'");
+		stream.Print(_pText->MakeQuoted(true).c_str());
 	}
 	stream.Print("\n");
 	if (_pItemOwner) {

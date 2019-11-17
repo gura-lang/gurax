@@ -116,17 +116,17 @@ markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
       <text>'Check if Visual Studio 2010 has been installed. You can use Express version as well.'
     <li>
       <text>'Run a batch file '
-      <code>'gura\src\setup-gura-guest.bat'
+      <code>'gura\\src\\setup-gura-guest.bat'
       <text>', which downloads necessary packages from Git repository (https://github.com/ypsitau/gura-guest.git) and build them. The batch file may occur an error that says it cannot find '
       <code>'vcvarsall.bat'
       <text>'. In such a case, you have to edit '
-      <code>'gura\gura-guest\setup.bat'
+      <code>'gura\\gura-guest\\setup.bat'
       <text>' and modify '
       <code>'VCVARSALL'
       <text>' variable so that it points to a right directory of Visual Studio.'
     <li>
       <text>'Open '
-      <code>'gura\src\gura.sln'
+      <code>'gura\\src\\gura.sln'
       <text>' with Visual Studio 2010, switch the configuration to Release and build it.'
 ======== list-2 ========
 <root>
@@ -995,7 +995,7 @@ markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
     <line>
       <text>'    for (int i = 0; i < 10; i++) {'
     <line>
-      <text>'        printf("hello\n");'
+      <text>'        printf("hello\\n");'
     <line>
       <text>'    }'
     <line>
@@ -1040,7 +1040,7 @@ markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
     <line>
       <text>'    for (int i = 0; i < 10; i++) {'
     <line>
-      <text>'        printf("hello\n");'
+      <text>'        printf("hello\\n");'
     <line>
       <text>'    }'
     <line>
@@ -1337,7 +1337,7 @@ markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
     <line>
       <text>'10.times {|i|'
     <line>
-      <text>'    print("Hello #", i, "\n")'
+      <text>'    print("Hello #", i, "\\n")'
     <line>
       <text>'}'
   <p>
@@ -1828,7 +1828,7 @@ markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
       <tag attrs='style="text-align:right"'>'td'
         <text>'$1'
   <p>
-    <text>'The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.'
+    <text>"The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown."
   <tag>'table'
     <tag>'tr'
       <tag>'th'

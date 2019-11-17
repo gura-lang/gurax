@@ -10,11 +10,6 @@ TestCase@markdown(title:String, str:String):void = {
 	//doc.refs:*print()
 }
 
-TestCase@markdown('Example 2', R'''
-  	foo	baz		bim
-''')
-sys.Exit()
-
 TestCase@markdown('Example 1', R'''
 	foo	baz		bim
 ''')
