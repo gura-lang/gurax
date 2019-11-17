@@ -28,6 +28,7 @@ public:
 	bool CheckPosition(Int pos, Int posRaw) const;
 	bool CheckPosition(Int pos) const { return CheckPosition(pos, pos); }
 	bool FixPosition(Int* pPos) const;
+	bool Contains(const Value& value) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const ValueList& valueList) const { return this == &valueList; }

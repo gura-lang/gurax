@@ -80,14 +80,13 @@ argopt.Parser {|p|
 		sys.cerr.Println('unknown command: ', argv[0])
 		sys.Exit(1)
 	}
-	//if (cfg['platform']) { platform = cfg['platform'].tosymbol() }
+	if (cfg['platform']) { platform = cfg['platform'].ToSymbol() }
 }
-Println(command)
-/*
 if (!(platform && platform in [`mswin, `ubuntu, `fedora, `darwin])) {
-	println('unsupported platform')
-	sys.exit(1)
+	Println('unsupported platform')
+	sys.Exit(1)
 }
+/*
 getCommaSepList(str:string) = {
 	if (str.isempty()) {
 		[]

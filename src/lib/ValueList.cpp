@@ -73,6 +73,14 @@ bool ValueList::FixPosition(Int* pPos) const
 	return CheckPosition(*pPos, posRaw);
 }
 
+bool ValueList::Contains(const Value& value) const
+{
+	for (const Value* pValue : *this) {
+		if (pValue->IsEqualTo(&value)) return true;
+	}
+	return false;
+}
+
 String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;

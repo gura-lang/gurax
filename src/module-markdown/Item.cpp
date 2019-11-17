@@ -111,7 +111,6 @@ Item* ItemList::FindByRefId(const char* refId) const
 	return nullptr;
 }
 
-
 void ItemList::Print(Stream& stream, int indentLevel) const
 {
 	for (const Item* pItem : *this) pItem->Print(stream, indentLevel);

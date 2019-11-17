@@ -1381,6 +1381,13 @@ Gurax_ImplementPropertyGetter(List, vtypeOfElem)
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
+// Any in List
+Gurax_ImplementOpBinary(Contains, Any, List)
+{
+	const ValueOwner& values = Value_List::GetValueTypedOwner(valueR).GetValueOwner();
+	return new Value_Bool(values.Contains(valueL));
+}
+
 // List |+| List
 Gurax_ImplementOpBinary(Concat, List, List)
 {
