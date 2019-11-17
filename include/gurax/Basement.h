@@ -50,7 +50,6 @@ public:
 	void PreparePathList();
 	void PrepareFunction();
 	void PrepareConsoleStream();
-	bool ImportModule();
 	bool ExecCommand();
 	void AppendPathList(const String& str);
 	void AppendPathList(const StringList& strs);

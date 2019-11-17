@@ -34,6 +34,36 @@ bool Module::Prepare(const char* name, char separator)
 	return pDottedSymbol && Prepare(pDottedSymbol.release());
 }
 
+bool Module::ImportAllBuiltIns(Processor& processor)
+{
+	Frame& frame = processor.GetFrameCur();
+	return
+		Module_codecs::ImportBuiltIn(frame) &&
+		Module_codecs_basic::ImportBuiltIn(frame) &&
+		Module_codecs_chinese::ImportBuiltIn(frame) &&
+		Module_codecs_iso8859::ImportBuiltIn(frame) &&
+		Module_codecs_japanese::ImportBuiltIn(frame) &&
+		Module_fs::ImportBuiltIn(frame) &&
+		Module_math::ImportBuiltIn(frame) &&
+		Module_os::ImportBuiltIn(frame) &&
+		Module_path::ImportBuiltIn(frame) &&
+		Module_sys::ImportBuiltIn(frame);
+}
+
+bool Module::ImportByStringList(Processor& processor, const StringList& strs)
+{
+	bool binaryFlag = false;
+	bool overwriteFlag = false;
+	for (const String& str : strs) {
+		StringList moduleNames;
+		str.Split(moduleNames, ',');
+		for (const String& moduleName : moduleNames) {
+			if (!processor.ImportModule(moduleName.c_str(), binaryFlag, overwriteFlag)) return false;
+		}
+	}
+	return true;
+}
+
 Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
 								bool binaryFlag, bool overwriteFlag)
 {

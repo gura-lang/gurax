@@ -147,6 +147,8 @@ public:
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);
+	static bool ImportAllBuiltIns(Processor& processor);
+	static bool ImportByStringList(Processor& processor, const StringList& strs);
 	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
 								   bool binaryFlag, bool overwriteFlag);
 	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol,

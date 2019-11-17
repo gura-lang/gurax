@@ -38,7 +38,8 @@ bool Basement::Initialize(int argc, char** argv)
 	PreparePathList();
 	PrepareFunction();
 	PrepareConsoleStream();
-	ImportModule();
+	if (!Module::ImportAllBuiltIns(GetProcessor())) return false;
+	if (!Module::ImportByStringList(GetProcessor(), _cmdLine.GetStringList("import"))) return false;
 	return ExecCommand();
 }
 
@@ -123,20 +124,21 @@ void Basement::PrepareConsoleStream()
 	SetStreamCErr(Stream::CErr->Reference());
 }
 
+#if 0
 bool Basement::ImportModule()
 {
 	Frame& frame = GetFrame();
 	Processor& processor = GetProcessor();
-	if (!Module_codecs::ImportBuiltIn(frame)) return false;
-	if (!Module_codecs_basic::ImportBuiltIn(frame)) return false;
-	if (!Module_codecs_chinese::ImportBuiltIn(frame)) return false;
-	if (!Module_codecs_iso8859::ImportBuiltIn(frame)) return false;
-	if (!Module_codecs_japanese::ImportBuiltIn(frame)) return false;
-	if (!Module_fs::ImportBuiltIn(frame)) return false;
-	if (!Module_math::ImportBuiltIn(frame)) return false;
-	if (!Module_os::ImportBuiltIn(frame)) return false;
-	if (!Module_path::ImportBuiltIn(frame)) return false;
-	if (!Module_sys::ImportBuiltIn(frame)) return false;
+	if (!(Module_codecs::ImportBuiltIn(frame) &&
+		  Module_codecs_basic::ImportBuiltIn(frame) &&
+		  Module_codecs_chinese::ImportBuiltIn(frame) &&
+		  Module_codecs_iso8859::ImportBuiltIn(frame) &&
+		  Module_codecs_japanese::ImportBuiltIn(frame) &&
+		  Module_fs::ImportBuiltIn(frame) &&
+		  Module_math::ImportBuiltIn(frame) &&
+		  Module_os::ImportBuiltIn(frame) &&
+		  Module_path::ImportBuiltIn(frame) &&
+		  Module_sys::ImportBuiltIn(frame))) return false;
 	for (const String& str : _cmdLine.GetStringList("import")) {
 		bool binaryFlag = false;
 		bool overwriteFlag = false;
@@ -148,6 +150,7 @@ bool Basement::ImportModule()
 	}
 	return true;
 }
+#endif
 
 bool Basement::ExecCommand()
 {
