@@ -466,12 +466,12 @@ Gurax_ImplementMethod(List, Contains)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
 	const Value& value = args.PickValue();
 	// Function body
-	return new Value_Bool(pIteratorThis->Contains(value));
+	return new Value_Bool(valueTypedOwner.GetValueOwner().Contains(value));
 }
 
 // List#Count(criteria?)
@@ -1493,6 +1493,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(List, len));
 	Assign(Gurax_CreateProperty(List, vtypeOfElem));
 	// Assignment of operator
+	Gurax_AssignOpBinary(Contains, Any, List);
 	Gurax_AssignOpBinary(Concat, List, List);
 	Gurax_AssignOpBinary(Concat, Any, List);
 	Gurax_AssignOpBinary(Concat, List, Any);

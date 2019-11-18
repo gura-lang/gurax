@@ -21,20 +21,18 @@ command:
 options:
  ${p.FormatHelp() + '\n'}
 '''.Render(sys.cerr)
-
-/*
 if (sys.platform == `linux) {
 	platform = nil
-	if (path.exists('/etc/lsb-release')) {
+	if (fs.Exists('/etc/lsb-release')) {
 		platform = `ubuntu
-	} elsif (path.exists('/etc/system-release')) {
+	} elsif (fs.Exists('/etc/system-release')) {
 		platform = `fedora
-	} elsif (path.exists(fileName = '/etc/redhat-release')) {
-		readlines(fileName):chop {|line|
-			if (line.startswith('CentOS')) {
+	} elsif (fs.Exists(fileName = '/etc/redhat-release')) {
+		ReadLines(fileName):chop {|line|
+			if (line.StartsWith('CentOS')) {
 				platform = `centos
 				break
-			} elsif (line.startswith('Red Hat')) {
+			} elsif (line.StartsWith('Red Hat')) {
 				platform = `redhat
 				break
 			}
@@ -43,8 +41,6 @@ if (sys.platform == `linux) {
 } else {
 	platform = sys.platform
 }
-*/
-
 argopt.Parser {|p|
 	p.AddFlag('verbose',	'v', 'verbose mode')
 	p.AddFlag('debug',		'd', 'build module with debug information')
@@ -82,41 +78,32 @@ argopt.Parser {|p|
 	}
 	if (cfg['platform']) { platform = cfg['platform'].ToSymbol() }
 }
-if (!(platform && platform in [`mswin, `ubuntu, `fedora, `darwin])) {
+if (!(platform && (platform in [`mswin, `ubuntu, `fedora, `darwin]))) {
 	Println('unsupported platform')
 	sys.Exit(1)
 }
-/*
-getCommaSepList(str:string) = {
-	if (str.isempty()) {
-		[]
-	} else {
-		str.split(','):list
-	}
-}
-moduleNamesExcept = getCommaSepList(cfg['exclude'])
-moduleNamesFilter = getCommaSepList(cfg['filter'])
-dirNamePre = path.dirname(sys.argv[0])
+moduleNamesExcept = cfg['exclude'].Split(','):list
+moduleNamesFilter = cfg['filter'].Split(','):list
+dirNamePre = path.DirName(sys.argv[0])
 moduleNamesError = []
 debFilesDevel = []
 rpmFilesDevel = []
-moduleInfos.each {|moduleInfo|
+moduleInfos.Each {|moduleInfo|
 	moduleName = moduleInfo.moduleName
-	if (!moduleNamesFilter.isempty() && !(moduleName in moduleNamesFilter)) {
-		continue
-	}
-	actualFlag = (moduleInfo.action == `build && moduleInfo.platforms.contains(platform))
+	!moduleNamesFilter.IsEempty() && !(moduleName in moduleNamesFilter) && continue
+	actualFlag = moduleInfo.action == `build && (platform in moduleInfo.platforms)
 	if (moduleName in moduleNamesExcept) {
-		printf('[%s] .. skipped\n', moduleName)
+		Printf('[%s] .. skipped\n', moduleName)
 		continue
 	} elsif (command == `setup_guest) {
 		// nothing to do
 	} else {
-		printf('[%s]\n', moduleName)
+		Printf('[%s]\n', moduleName)
 	}
-	if (!dirNamePre.isempty()) {
-		pathName = path.join(dirNamePre, 'module-' + moduleName)
+	if (!dirNamePre.IsEmpty()) {
+		pathName = path.Join(dirNamePre, 'module-' + moduleName)
 	}
+/*
 	argvOrg = sys.argv
 	sys.argv = ['build.gura']
 	if (actualFlag) {
@@ -168,17 +155,17 @@ moduleInfos.each {|moduleInfo|
 		}
 		sys.argv = argvOrg
 	}
+*/
 }
-if (!moduleNamesError.isempty()) {
-	println()
-	println('**** error while building ', moduleNamesError)
-	sys.exit(1)
+if (!moduleNamesError.IsEmpty()) {
+	Println()
+	Println('**** error while building ', moduleNamesError)
+	sys.Exit(1)
 }
 if (command == `setup_guest) {
 	if (platform in [`ubuntu, `debian]) {
-		os.exec('apt', 'install', '-y', set(debFilesDevel))
+		os.Exec('apt', 'install', '-y', set(debFilesDevel))
 	} elsif (platform in [`fedora, `centos, `redhat]) {
-		os.exec('yum', 'install', '-y', set(rpmFilesDevel))
+		os.Exec('yum', 'install', '-y', set(rpmFilesDevel))
 	}
 }
-*/

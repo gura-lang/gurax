@@ -201,6 +201,10 @@ tbl = [0 .. 99].Shuffle(rnd) .. [44, 48, 66, 70, 71, 14, 89, 28, 0, 96, 80, 99, 
 ['A', 'B', 'C', 'D', 'E'].Combination(5):list .. 1 : [['A', 'B', 'C', 'D', 'E']]
 ['A', 'B', 'C', 'D', 'E'].Combination(6):list .. range over
 ======== List#Contains() ========
+[1, 2, 3, 4, 5].Contains(1) .. true
+[1, 2, 3, 4, 5].Contains(6) .. false
+[`apple, `grape, `banana].Contains(`apple) .. true
+[`apple, `grape, `banana].Contains(`kiwi) .. false
 ======== List#Count() ========
 ======== List#Cycle() ========
 [].Cycle(10) .. empty list can not be specified
@@ -685,6 +689,11 @@ words100.Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'reading'
 ======== List#Until() ========
 ======== List#Var() ========
 ======== List#While() ========
+======== Any in List ========
+1 in [1, 2, 3, 4, 5] .. true
+6 in [1, 2, 3, 4, 5] .. false
+(`apple) in [`apple, `grape, `banana] .. true
+(`kiwi) in [`apple, `grape, `banana] .. false
 ======== List |+| List ========
 [] |+| [] .. []
 [1] |+| [] .. [1]
