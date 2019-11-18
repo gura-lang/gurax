@@ -6,9 +6,19 @@ ModuleInfo = struct {
 }
 
 moduleInfos = @(ModuleInfo) {
+	{'codecs',			`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_basic',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_chinese',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_iso8859',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_japanese',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'conio',			`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'fs',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'markdown',		`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'math',			`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'os',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'path',			`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'re',				`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'sys',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 }
 
 PrintHelp(p:argopt.Parser) = tR'''
