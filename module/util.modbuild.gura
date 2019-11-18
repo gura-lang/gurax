@@ -111,14 +111,17 @@ Builder = class {
 			p.AddParam('basedir', 'b', 'base directory')
 			p.Parse(sys.argv)
 		}
-		if (argv.IsEmpty()) {
+		command = cond(argv.IsEmpty(), 'build', argv[0])
+		if (command == 'build') {
 			this.Command_build()
-		} elsif (argv[0] == 'rebuild') {
+		} elsif (command == 'rebuild') {
 			this.rebuildFlag = true
 			this.Command_build()
-		} elsif (argv[0] == 'clean') {
+		} elsif (command == 'clean') {
 			this.Command_clean()
-		} elsif (argv[0] == 'install') {
+		} elsif (command == 'install') {
+			this.Command_install()
+		} elsif (command == 'build-install') {
 			this.Command_install()
 		} else {
 			sys.cerr.Printf('unknown command: %s\n', argv[0])
