@@ -6,9 +6,9 @@ ModuleInfo = struct {
 }
 
 moduleInfos = @(ModuleInfo) {
-	['conio',			`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
-	['markdown',		`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
-	['re',				`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]]
+	{'conio',			`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'markdown',		`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'re',				`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 }
 
 PrintHelp(p:argopt.Parser) = tR'''
@@ -82,16 +82,16 @@ if (!(platform && (platform in [`mswin, `ubuntu, `fedora, `darwin]))) {
 	Printf('unsupported platform: %s\n', platform)
 	sys.Exit(1)
 }
-moduleNamesExcept = cfg.Get('exclude', '').Split(','):list
-moduleNamesFilter = cfg.Get('filter', '').Split(','):list
+moduleNamesExcept = (cfg['exclude'] || '').Split(','):list
+moduleNamesFilter = (cfg['filter'] || '').Split(','):list
 dirNamePre = path.DirName(sys.argv[0])
 moduleNamesError = []
 debFilesDevel = []
 rpmFilesDevel = []
 moduleInfos.Each {|moduleInfo|
 	moduleName = moduleInfo.moduleName
-	!moduleNamesFilter.IsEempty() && !(moduleName in moduleNamesFilter) && continue
-	actualFlag = moduleInfo.action == `build && (platform in moduleInfo.platforms)
+	!moduleNamesFilter.IsEmpty() && !(moduleName in moduleNamesFilter) && continue
+	actualFlag = (moduleInfo.action == `build) && (platform in moduleInfo.platforms)
 	if (moduleName in moduleNamesExcept) {
 		Printf('[%s] .. skipped\n', moduleName)
 		continue
@@ -103,7 +103,6 @@ moduleInfos.Each {|moduleInfo|
 	if (!dirNamePre.IsEmpty()) {
 		pathName = path.Join(dirNamePre, 'module-' + moduleName)
 	}
-/*
 	argvOrg = sys.argv
 	sys.argv = ['build.gura']
 	if (actualFlag) {
@@ -135,6 +134,7 @@ moduleInfos.Each {|moduleInfo|
 			continue
 		}
 	}
+/*
 	if (cfg['verbose']) {
 		sys.argv.append('--verbose')
 	} else {

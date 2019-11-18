@@ -100,3 +100,12 @@ TestCase('Operators && and ||') {
 	Tester(`('hello' || true))
 	Tester(`(true || 'hello'))
 }
+
+TestCase('Comparison with nil') {
+	Tester(`(nil == nil))
+	Tester(`(nil == 0))
+	Tester(`(0 == nil))
+	Tester(`(nil != nil))
+	Tester(`(nil != 0))
+	Tester(`(0 != nil))
+}

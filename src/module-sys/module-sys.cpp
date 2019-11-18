@@ -35,7 +35,7 @@ Gurax_ImplementFunction(Exit)
 // Implementation of property
 //------------------------------------------------------------------------------
 // sys.argv
-Gurax_DeclareModuleProperty_R(argv)
+Gurax_DeclareModuleProperty_RW(argv)
 {
 	Declare(VTYPE_List, Flag::None);
 	AddHelp(
@@ -46,6 +46,11 @@ Gurax_DeclareModuleProperty_R(argv)
 Gurax_ImplementModulePropertyGetter(argv)
 {
 	return g_pValue_argv->Reference();
+}
+
+Gurax_ImplementModulePropertySetter(argv)
+{
+	g_pValue_argv.reset(value.Reference());
 }
 
 // sys.cin

@@ -240,3 +240,10 @@ true && 'hello' .. hello
 false || 'hello' .. hello
 'hello' || true .. hello
 true || 'hello' .. true
+======== Comparison with nil ========
+nil == nil .. true
+nil == 0 .. false
+0 == nil .. false
+nil != nil .. false
+nil != 0 .. true
+0 != nil .. true
