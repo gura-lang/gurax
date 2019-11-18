@@ -16,13 +16,14 @@ class ModuleEx : public Module { \
 public: \
 	using Module::Module; \
 	virtual bool DoPrepare() override; \
+public: \
+	static Module* CreateAndPrepare(Frame* pFrameOuter) { \
+		RefPtr<Module> pModule(new ModuleEx(pFrameOuter)); \
+		return pModule->Prepare(#name, '_')? pModule.release() : nullptr; \
+	} \
 }; \
-inline Module* Create(Frame* pFrameOuter) { \
-	RefPtr<Module> pModule(new ModuleEx(pFrameOuter));  \
-	return pModule->Prepare(#name, '_')? pModule.release() : nullptr; \
-} \
 inline bool ImportBuiltIn(Frame& frame) { \
-	RefPtr<Module> pModule(Create(frame.Reference())); \
+	RefPtr<Module> pModule(ModuleEx::CreateAndPrepare(frame.Reference())); \
 	if (!pModule) return false; \
 	frame.Assign(pModule.release()); \
 	return true; \
@@ -48,7 +49,7 @@ bool GuraxEntry_ModuleValidate() \
 extern "C" GURAX_DLLEXPORT \
 Gurax::Module* GuraxEntry_ModuleCreate(Gurax::Frame* pFrameOuter) \
 { \
-	return Gurax::Module_##name::Create(pFrameOuter); \
+	return Gurax::Module_##name::ModuleEx::CreateAndPrepare(pFrameOuter);	\
 } \
 extern "C" GURAX_DLLEXPORT \
 void GuraxEntry_ModuleTerminate(Gurax::Module& module) \
@@ -57,7 +58,9 @@ void GuraxEntry_ModuleTerminate(Gurax::Module& module) \
 } \
 }}
 #else // GURAX_MODULE_INTEGRATED
-#define Gurax_EndModule(name) }}
+#define Gurax_EndModule(name) \
+ModuleBuiltInFactoryTmpl<ModuleEx> moduleBuiltInFactory; \
+}}
 #endif
 
 #define Gurax_ModuleValidate() \
@@ -72,6 +75,7 @@ void Terminate(Module& module)
 namespace Gurax {
 
 class ModuleMap;
+class ModuleBuiltInFactory;
 
 //------------------------------------------------------------------------------
 // ModuleMap
@@ -168,7 +172,37 @@ public:
 	virtual bool DoPrepare() { return true; };
 };
 
+//------------------------------------------------------------------------------
+// ModuleBuiltInFactoryList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ModuleBuiltInFactoryList : public std::vector<const ModuleBuiltInFactory*> {
+};
 
+//------------------------------------------------------------------------------
+// ModuleBuiltInFactory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ModuleBuiltInFactory {
+public:
+	static ModuleBuiltInFactoryList list;
+public:
+	ModuleBuiltInFactory() { list.push_back(this); }
+	bool Import(Frame& frame) {
+		RefPtr<Module> pModule(DoCreate(frame.Reference()));
+		if (!pModule) return false;
+		frame.Assign(pModule.release());
+		return true;
+	}
+	virtual Module* DoCreate(Frame* pFrame) const = 0;
+};
+
+//------------------------------------------------------------------------------
+// ModuleBuiltInFactoryTmpl
+//------------------------------------------------------------------------------
+template<typename T_Module>
+class ModuleBuiltInFactoryTmpl : public ModuleBuiltInFactory {
+public:
+	virtual Module* DoCreate(Frame* pFrame) const override { return T_Module::CreateAndPrepare(pFrame); }
+};
 
 }
 
