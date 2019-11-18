@@ -57,15 +57,8 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetSymbol()->CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetSymbol()->IsEqualTo(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
-	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetSymbol()->IsLessThan_UniqId(Value_Symbol::GetSymbol(*pValue)) :
-			GetVType().IsLessThan(pValue->GetVType());
-	}
+	virtual bool IsEqualTo(const Value* pValue) const override;
+	virtual bool IsLessThan(const Value* pValue) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override {
 		return String("`").append(_pSymbol->GetName());
 	}

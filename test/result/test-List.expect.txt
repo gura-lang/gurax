@@ -205,6 +205,8 @@ tbl = [0 .. 99].Shuffle(rnd) .. [44, 48, 66, 70, 71, 14, 89, 28, 0, 96, 80, 99, 
 [1, 2, 3, 4, 5].Contains(6) .. false
 [`apple, `grape, `banana].Contains(`apple) .. true
 [`apple, `grape, `banana].Contains(`kiwi) .. false
+[`apple, `grape, `banana].Contains('apple'.ToSymbol()) .. true
+[`apple, `grape, `banana].Contains('kiwi'.ToSymbol()) .. false
 ======== List#Count() ========
 ======== List#Cycle() ========
 [].Cycle(10) .. empty list can not be specified
@@ -694,6 +696,8 @@ words100.Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'reading'
 6 in [1, 2, 3, 4, 5] .. false
 (`apple) in [`apple, `grape, `banana] .. true
 (`kiwi) in [`apple, `grape, `banana] .. false
+'apple'.ToSymbol() in [`apple, `grape, `banana] .. true
+'kiwi'.ToSymbol() in [`apple, `grape, `banana] .. false
 ======== List |+| List ========
 [] |+| [] .. []
 [1] |+| [] .. [1]

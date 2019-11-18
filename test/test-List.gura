@@ -246,6 +246,8 @@ TestCase('List#Contains()') {
 	Tester(`([1, 2, 3, 4, 5].Contains(6)))
 	Tester(`([`apple, `grape, `banana].Contains(`apple)))
 	Tester(`([`apple, `grape, `banana].Contains(`kiwi)))
+	Tester(`([`apple, `grape, `banana].Contains('apple'.ToSymbol())))
+	Tester(`([`apple, `grape, `banana].Contains('kiwi'.ToSymbol())))
 }
 
 TestCase('List#Count()') {
@@ -658,6 +660,8 @@ TestCase('Any in List') {
 	Tester(`(6 in [1, 2, 3, 4, 5]))
 	Tester(`(`apple in [`apple, `grape, `banana]))
 	Tester(`(`kiwi in [`apple, `grape, `banana]))
+	Tester(`('apple'.ToSymbol() in [`apple, `grape, `banana]))
+	Tester(`('kiwi'.ToSymbol() in [`apple, `grape, `banana]))
 }
 
 TestCase('List |+| List') {

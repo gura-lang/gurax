@@ -48,4 +48,21 @@ Value* VType_Symbol::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 //------------------------------------------------------------------------------
 VType& Value_Symbol::vtype = VTYPE_Symbol;
 
+bool Value_Symbol::IsEqualTo(const Value* pValue) const
+{
+	if (IsSameType(pValue)) {
+		return GetSymbol()->IsEqualTo(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
+	} else if (pValue->IsType(VTYPE_Expr)) {
+		return dynamic_cast<const Value_Expr*>(pValue)->GetExpr().IsPureSymbol(GetSymbol());
+	}
+	return false;
+}
+
+bool Value_Symbol::IsLessThan(const Value* pValue) const
+{
+	return IsSameType(pValue)?
+		GetSymbol()->IsLessThan_UniqId(Value_Symbol::GetSymbol(*pValue)) :
+		GetVType().IsLessThan(pValue->GetVType());
+}
+
 }

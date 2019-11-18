@@ -559,6 +559,23 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Expr::vtype = VTYPE_Expr;
 
+bool Value_Expr::IsEqualTo(const Value* pValue) const
+{
+	if (IsSameType(pValue)) {
+		return GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
+	} else if (pValue->IsType(VTYPE_Symbol)) {
+		return GetExpr().IsPureSymbol(dynamic_cast<const Value_Symbol*>(pValue)->GetSymbol());
+	}
+	return false;
+}
+
+bool Value_Expr::IsLessThan(const Value* pValue) const
+{
+	return IsSameType(pValue)?
+		GetExpr().IsLessThan(dynamic_cast<const Value_Expr*>(pValue)->GetExpr()) :
+		GetVType().IsLessThan(pValue->GetVType());
+}
+
 String Value_Expr::ToStringDigest(const StringStyle& ss) const
 {
 	String str;

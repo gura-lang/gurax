@@ -59,15 +59,8 @@ public:
 	virtual size_t DoCalcHash() const override {
 		return GetExpr().CalcHash();
 	}
-	virtual bool IsEqualTo(const Value* pValue) const override {
-		return IsSameType(pValue) &&
-			GetExpr().IsEqualTo(dynamic_cast<const Value_Expr*>(pValue)->GetExpr());
-	}
-	virtual bool IsLessThan(const Value* pValue) const override {
-		return IsSameType(pValue)?
-			GetExpr().IsLessThan(dynamic_cast<const Value_Expr*>(pValue)->GetExpr()) :
-			GetVType().IsLessThan(pValue->GetVType());
-	}
+	virtual bool IsEqualTo(const Value* pValue) const override;
+	virtual bool IsLessThan(const Value* pValue) const override;
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 };

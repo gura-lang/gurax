@@ -79,11 +79,11 @@ argopt.Parser {|p|
 	if (cfg['platform']) { platform = cfg['platform'].ToSymbol() }
 }
 if (!(platform && (platform in [`mswin, `ubuntu, `fedora, `darwin]))) {
-	Println('unsupported platform')
+	Printf('unsupported platform: %s\n', platform)
 	sys.Exit(1)
 }
-moduleNamesExcept = cfg['exclude'].Split(','):list
-moduleNamesFilter = cfg['filter'].Split(','):list
+moduleNamesExcept = cfg.Get('exclude', '').Split(','):list
+moduleNamesFilter = cfg.Get('filter', '').Split(','):list
 dirNamePre = path.DirName(sys.argv[0])
 moduleNamesError = []
 debFilesDevel = []
