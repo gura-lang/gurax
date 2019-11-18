@@ -48,7 +48,7 @@ argopt.Parser {|p|
 	p.AddParam('filter',	'f', 'specify module name to build', 'NAME')
 	p.AddParam('incdir',	'I', 'specify include directory', 'DIR')
 	p.AddParam('libdir',	'L', 'specify library directory', 'DIR')
-	p.AddParam('moddir',	'M', 'specify directory to which module is installed', 'DIR')
+	p.AddParam('moddir',	'M', 'specify directory to which module files are installed', 'DIR')
 	p.AddParam('platform',	'p', 'specify platform symbol', 'NAME')
 	try {
 		[argv, cfg] = p.Parse(sys.argv)
@@ -56,8 +56,8 @@ argopt.Parser {|p|
 		sys.cerr.Println(e.text)
 		sys.Exit(1)
 	}
-	command = cond(argv.IsEmpty(), cond(cfg['moddir'], 'build-install', 'build'), argv[0])
-	if (command == 'help') {
+	commands = cond(argv.IsEmpty(), cond(cfg['moddir'], ['build', 'install'], ['build']), argv)
+	if (commands.Contains('help')) {
 		PrintHelp(p)
 		sys.Exit(1)
 	}
@@ -76,12 +76,11 @@ rpmFilesDevel = []
 moduleInfos.Each {|moduleInfo|
 	moduleName = moduleInfo.moduleName
 	!moduleNamesFilter.IsEmpty() && !(moduleName in moduleNamesFilter) && continue
-	actualFlag = ((moduleInfo.action == `build) && (platform in moduleInfo.platforms)) || \
-		(command in ['install', 'build-install'])
+	actualFlag = (moduleInfo.action == `build) && (platform in moduleInfo.platforms)
 	if (moduleName in moduleNamesExcept) {
 		Printf('[%s] .. skipped\n', moduleName)
 		continue
-	} elsif (command == 'setup-guest') {
+	} elsif (commands.Contains('setup-guest')) {
 		// nothing to do
 	} else {
 		Printf('[%s]\n', moduleName)
@@ -92,7 +91,7 @@ moduleInfos.Each {|moduleInfo|
 	argvOrg = sys.argv
 	sys.argv = ['build.gura']
 	!actualFlag && continue
-	sys.argv.Append(command)
+	sys.argv.Append(commands)
 	if (cfg['verbose']) {
 		sys.argv.Append('--verbose')
 	} else {
@@ -118,7 +117,7 @@ if (!moduleNamesError.IsEmpty()) {
 	Println('**** error while building ', moduleNamesError)
 	sys.Exit(1)
 }
-if (command == 'setup_guest') {
+if (commands.Contains('setup-guest')) {
 	if (platform in [`ubuntu, `debian]) {
 		os.Exec('apt', 'install', '-y', set(debFilesDevel))
 	} elsif (platform in [`fedora, `centos, `redhat]) {

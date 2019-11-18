@@ -49,8 +49,7 @@ Builder = class {
 	}
 	Exec(pathName:String, args*:String) = {
 		this.opt.Get('verbose') && Printf('%s %s\n', pathName, args.Join(' '))
-		rtn = (os.Exec(pathName, args*) == 0)
-		rtn
+		os.Exec(pathName, args*) == 0
 	}
 	PreCompile() = {
 		(!this.pathNameHdr || !this.ShouldProcess(this.pathNamePch, this.pathNameHdr)) && return(true)
@@ -58,7 +57,6 @@ Builder = class {
 		this.Exec(this.compiler, this.cflagsBase*, this.cflagsPreCompile*, this.cflags*,
 				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
 				  '-o' + this.pathNamePch, this.pathNameHdr)
-		
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
@@ -68,32 +66,38 @@ Builder = class {
 				  '-o' + pathNameObj, '-c', pathNameSrc)
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
-		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return
-		if (this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
-					  '-L' + sys.dirLib, ('-L' + this.dirNamesLib)*,
-					  '-o' + pathNameGurd, pathNamesObj*,
-					  ('-l' + this.libsBase)*, ('-l' + this.libs)*)) {
-			Printf('-- generated: %s\n', pathNameGurd)
-		}
+		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return(true)
+		!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
+				   '-L' + sys.dirLib, ('-L' + this.dirNamesLib)*,
+				   '-o' + pathNameGurd, pathNamesObj*,
+				   ('-l' + this.libsBase)*, ('-l' + this.libs)*) && return(false)
+		Printf('-- generated: %s\n', pathNameGurd)
+		true
 	}
 	Command_build() = {
 		!this.PreCompile() && return
 		for (pathNameObj in this.pathNamesObj, pathNameSrc in this.pathNamesSrc) {
-			!this.Compile(pathNameObj, pathNameSrc) && return
+			!this.Compile(pathNameObj, pathNameSrc) && return(false)
 		}
 		this.Link(this.pathNameGurd, this.pathNamesObj*)
+	}
+	Command_rebuild() = {
+		this.rebuildFlag = true
+		this.Command_build()
 	}
 	Command_clean() = {
 		fs.Remove(this.pathNameGurd)
 		fs.Remove(this.pathNamesObj)
 		this.pathNamePch && fs.Remove(this.pathNamePch)
 		Printf('-- cleaned\n')
+		true
 	}
 	Command_install() = {
 		for (pathName in (this.pathNameGurd |+| this.pathNamesScript)) {
 			Printf('-- installing: %s\n', pathName)
 			fs.Copy(pathName, path.Join(sys.dirModule, 'site')):overwrite
 		}
+		true
 	}
 	Run() = {
 		if (!this.pathNameHdr) {
@@ -106,26 +110,28 @@ Builder = class {
 		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
 		[argv, this.opt] = argopt.Parser {|p|
-			p.AddFlag('verbose', 'v', 'verbose mode')
-			p.AddFlag('quiet', 'q', 'quiet mode')
-			p.AddParam('basedir', 'b', 'base directory')
+			p.AddFlag('verbose',	'v', 'verbose mode')
+			p.AddFlag('quiet',		'q', 'quiet mode')
+			p.AddParam('incdir',	'I', 'specify include directory', 'DIR')
+			p.AddParam('libdir',	'L', 'specify library directory', 'DIR')
+			p.AddParam('moddir',	'M', 'specify directory to which module files are installed', 'DIR')
+			p.AddParam('basedir',	'B', 'specify base directory', 'DIR')
 			p.Parse(sys.argv)
 		}
-		command = cond(argv.IsEmpty(), 'build', argv[0])
-		if (command == 'build') {
-			this.Command_build()
-		} elsif (command == 'rebuild') {
-			this.rebuildFlag = true
-			this.Command_build()
-		} elsif (command == 'clean') {
-			this.Command_clean()
-		} elsif (command == 'install') {
-			this.Command_install()
-		} elsif (command == 'build-install') {
-			this.Command_install()
-		} else {
-			sys.cerr.Printf('unknown command: %s\n', argv[0])
-			sys.Exit(1)
+		if (argv.IsEmpty()) { argv.append('build') }
+		argv.Each {|command|
+			if (command == 'build') {
+				!this.Command_build() && break
+			} elsif (command == 'rebuild') {
+				!this.Command_rebuild() && break
+			} elsif (command == 'clean') {
+				!this.Command_clean() && break
+			} elsif (command == 'install') {
+				!this.Command_install() && break
+			} else {
+				sys.cerr.Printf('unknown command: %s\n', argv[0])
+				sys.Exit(1)
+			}
 		}
 		this
 	}
