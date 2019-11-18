@@ -2,16 +2,6 @@
 // Module.cpp
 //==============================================================================
 #include "stdafx.h"
-#include "../module-codecs/stdafx.h"
-#include "../module-codecs_basic/stdafx.h"
-#include "../module-codecs_chinese/stdafx.h"
-#include "../module-codecs_iso8859/stdafx.h"
-#include "../module-codecs_japanese/stdafx.h"
-#include "../module-fs/stdafx.h"
-#include "../module-math/stdafx.h"
-#include "../module-os/stdafx.h"
-#include "../module-path/stdafx.h"
-#include "../module-sys/stdafx.h"
 
 namespace Gurax {
 
@@ -47,17 +37,10 @@ bool Module::Prepare(const char* name, char separator)
 bool Module::ImportAllBuiltIns(Processor& processor)
 {
 	Frame& frame = processor.GetFrameCur();
-	return
-		Module_codecs::ImportBuiltIn(frame) &&
-		Module_codecs_basic::ImportBuiltIn(frame) &&
-		Module_codecs_chinese::ImportBuiltIn(frame) &&
-		Module_codecs_iso8859::ImportBuiltIn(frame) &&
-		Module_codecs_japanese::ImportBuiltIn(frame) &&
-		Module_fs::ImportBuiltIn(frame) &&
-		Module_math::ImportBuiltIn(frame) &&
-		Module_os::ImportBuiltIn(frame) &&
-		Module_path::ImportBuiltIn(frame) &&
-		Module_sys::ImportBuiltIn(frame);
+	for (const ModuleBuiltInFactory* pFactory : ModuleBuiltInFactory::list) {
+		if (!pFactory->Import(frame)) return false;
+	}
+	return true;
 }
 
 bool Module::ImportByStringList(Processor& processor, const StringList& strs)

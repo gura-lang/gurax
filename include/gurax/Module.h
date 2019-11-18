@@ -21,13 +21,7 @@ public: \
 		RefPtr<Module> pModule(new ModuleEx(pFrameOuter)); \
 		return pModule->Prepare(#name, '_')? pModule.release() : nullptr; \
 	} \
-}; \
-inline bool ImportBuiltIn(Frame& frame) { \
-	RefPtr<Module> pModule(ModuleEx::CreateAndPrepare(frame.Reference())); \
-	if (!pModule) return false; \
-	frame.Assign(pModule.release()); \
-	return true; \
-}
+};
 
 #define Gurax_EndModuleHeader(name) }}
 
@@ -186,7 +180,7 @@ public:
 	static ModuleBuiltInFactoryList list;
 public:
 	ModuleBuiltInFactory() { list.push_back(this); }
-	bool Import(Frame& frame) {
+	bool Import(Frame& frame) const {
 		RefPtr<Module> pModule(DoCreate(frame.Reference()));
 		if (!pModule) return false;
 		frame.Assign(pModule.release());
