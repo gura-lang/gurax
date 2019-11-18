@@ -53,7 +53,7 @@ void GuraxEntry_ModuleTerminate(Gurax::Module& module) \
 }}
 #else // GURAX_MODULE_INTEGRATED
 #define Gurax_EndModule(name) \
-ModuleBuiltInFactoryTmpl<ModuleEx> moduleBuiltInFactory; \
+ModuleBuiltInFactoryTmpl<ModuleEx> moduleBuiltInFactory(#name);	\
 }}
 #endif
 
@@ -122,7 +122,7 @@ protected:
 public:
 	void SetDottedSymbol(DottedSymbol* pDottedSymbol) { _pFrame->SetDottedSymbol(pDottedSymbol); }
 	const DottedSymbol& GetDottedSymbol() const { return _pFrame->GetDottedSymbol(); }
-	void SetPathName(const char* pathName) { _pathName = pathName; }
+	void SetPathName(String pathName) { _pathName = pathName; }
 	const char* GetPathName() const { return _pathName.c_str(); }
 	void AddHelp(const Symbol* pLangCode, String doc) {
 		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
@@ -145,6 +145,7 @@ public:
 public:
 	bool Prepare(DottedSymbol* pDottedSymbol);
 	bool Prepare(const char* name, char separator);
+	static String MakePathNameForBuiltIn(const char* name);
 	static bool ImportAllBuiltIns(Processor& processor);
 	static bool ImportByStringList(Processor& processor, const StringList& strs);
 	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
@@ -154,6 +155,7 @@ public:
 	static Module* ImportScript(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
+	void AssignToMap() { _moduleMap.Assign(Reference()); }
 	bool AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag, bool overwriteFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -170,6 +172,8 @@ public:
 // ModuleBuiltInFactoryList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ModuleBuiltInFactoryList : public std::vector<const ModuleBuiltInFactory*> {
+public:
+	ModuleBuiltInFactoryList& SortByName();
 };
 
 //------------------------------------------------------------------------------
@@ -177,15 +181,19 @@ class GURAX_DLLDECLARE ModuleBuiltInFactoryList : public std::vector<const Modul
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE ModuleBuiltInFactory {
 public:
-	static ModuleBuiltInFactoryList list;
+	struct LessThan_Name {
+		bool operator()(const ModuleBuiltInFactory* pFactory1, const ModuleBuiltInFactory* pFactory2) const {
+			return String::IsLessThan(pFactory1->GetName(), pFactory2->GetName());
+		}
+	};
 public:
-	ModuleBuiltInFactory() { list.push_back(this); }
-	bool Import(Frame& frame) const {
-		RefPtr<Module> pModule(DoCreate(frame.Reference()));
-		if (!pModule) return false;
-		frame.Assign(pModule.release());
-		return true;
-	}
+	static ModuleBuiltInFactoryList list;
+private:
+	String _name;
+public:
+	ModuleBuiltInFactory(String name) : _name(name) { list.push_back(this); }
+	const char* GetName() const { return _name.c_str(); }
+	bool Import(Frame& frame) const;
 	virtual Module* DoCreate(Frame* pFrame) const = 0;
 };
 
@@ -195,6 +203,7 @@ public:
 template<typename T_Module>
 class ModuleBuiltInFactoryTmpl : public ModuleBuiltInFactory {
 public:
+	ModuleBuiltInFactoryTmpl(String name) : ModuleBuiltInFactory(std::move(name)) {}
 	virtual Module* DoCreate(Frame* pFrame) const override { return T_Module::CreateAndPrepare(pFrame); }
 };
 

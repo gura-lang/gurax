@@ -81,11 +81,11 @@ bool DottedSymbol::AppendFromExpr(const Expr& expr)
 	return true;
 }
 
-String DottedSymbol::ToString(const StringStyle& ss) const
+String DottedSymbol::ToString(char separator, const StringStyle& ss) const
 {
 	String str;
 	for (const Symbol* pSymbol : _symbolList) {
-		if (!str.empty()) str += '.';
+		if (!str.empty()) str += separator;
 		str += pSymbol->ToString();
 	}
 	return str;

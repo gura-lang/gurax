@@ -34,9 +34,17 @@ bool Module::Prepare(const char* name, char separator)
 	return pDottedSymbol && Prepare(pDottedSymbol.release());
 }
 
+String Module::MakePathNameForBuiltIn(const char* name)
+{
+	String pathName = "*builtin*/";
+	pathName += name;
+	return pathName;
+}
+
 bool Module::ImportAllBuiltIns(Processor& processor)
 {
 	Frame& frame = processor.GetFrameCur();
+	ModuleBuiltInFactory::list.SortByName();
 	for (const ModuleBuiltInFactory* pFactory : ModuleBuiltInFactory::list) {
 		if (!pFactory->Import(frame)) return false;
 	}
@@ -114,7 +122,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
 		(type == Type::Compressed)?	ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
 		nullptr);
 	if (!pModule) return nullptr;
-	_moduleMap.Assign(pModule.Reference());
+	pModule->AssignToMap();
 	return pModule.release();
 }
 
@@ -243,10 +251,25 @@ void ModuleMap::Assign(Module* pModule)
 //------------------------------------------------------------------------------
 // ModuleBuiltInFactoryList
 //------------------------------------------------------------------------------
+ModuleBuiltInFactoryList& ModuleBuiltInFactoryList::SortByName()
+{
+	std::sort(begin(), end(), ModuleBuiltInFactory::LessThan_Name());
+	return *this;
+}
 
 //------------------------------------------------------------------------------
 // ModuleBuiltInFactory
 //------------------------------------------------------------------------------
 ModuleBuiltInFactoryList ModuleBuiltInFactory::list;
+
+bool ModuleBuiltInFactory::Import(Frame& frame) const
+{
+	RefPtr<Module> pModule(DoCreate(frame.Reference()));
+	if (!pModule) return false;
+	pModule->SetPathName(Module::MakePathNameForBuiltIn(_name.c_str()));
+	pModule->AssignToMap();
+	frame.Assign(pModule.release());
+	return true;
+}
 
 }
