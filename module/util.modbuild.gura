@@ -22,6 +22,7 @@ Builder = class {
 	libs = []
 	opt = %{}
 	rebuildFlag = false
+	errorFlag = false
 	dirNameOut = ''
 	compiler = ''
 	linker = ''
@@ -106,6 +107,8 @@ Builder = class {
 		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
 		[argv, this.opt] = argopt.Parser {|p|
 			p.AddFlag('verbose', 'v', 'verbose mode')
+			p.AddFlag('quiet', 'q', 'quiet mode')
+			p.AddParam('basedir', 'b', 'base directory')
 			p.Parse(sys.argv)
 		}
 		if (argv.IsEmpty()) {
@@ -121,5 +124,6 @@ Builder = class {
 			sys.cerr.Printf('unknown command: %s\n', argv[0])
 			sys.Exit(1)
 		}
+		this
 	}
 }

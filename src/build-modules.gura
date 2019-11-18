@@ -109,13 +109,13 @@ moduleInfos.Each {|moduleInfo|
 		if (command == `build) {
 			// nothing to do
 		} elsif (command == `clean) {
-			sys.argv.append('clean')
+			sys.argv.Append('clean')
 		} elsif (command == `install) {
-			sys.argv.append('install')
+			sys.argv.Append('install')
 		} elsif (command == `build_install) {
-			sys.argv.append('build-install')
+			sys.argv.Append('build-install')
 		} elsif (command == `setup_guest) {
-			sys.argv.append('nothing')
+			sys.argv.Append('nothing')
 		} else {
 			// nothing to do
 		}
@@ -125,37 +125,35 @@ moduleInfos.Each {|moduleInfo|
 		} elsif (command == `clean) {
 			continue
 		} elsif (command == `install) {
-			sys.argv.append('install')
+			sys.argv.Append('install')
 		} elsif (command == `build_install) {
-			sys.argv.append('install')
+			sys.argv.Append('install')
 		} elsif (command == `setup_guest) {
 			continue
 		} else {
 			continue
 		}
 	}
-/*
 	if (cfg['verbose']) {
-		sys.argv.append('--verbose')
+		sys.argv.Append('--verbose')
 	} else {
-		sys.argv.append('--quiet')
+		sys.argv.Append('--quiet')
 	}
-	cfg['debug'] && sys.argv.append('--debug')
-	cfg['rebuild'] && sys.argv.append('--rebuild')
-	cfg['incdir'] && sys.argv.append('--incdir=' + cfg['incdir'])
-	cfg['libdir'] && sys.argv.append('--libdir=' + cfg['libdir'])
-	cfg['moddir'] && sys.argv.append('--moddir=' + cfg['moddir'])
-	sys.argv.append('--basedir=' + path.join(fs.getcwd(), 'module-' + moduleName))
-	fs.chdir(pathName) {
+	cfg['debug'] && sys.argv.Append('--debug')
+	cfg['rebuild'] && sys.argv.Append('--rebuild')
+	cfg['incdir'] && sys.argv.Append('--incdir=' + cfg['incdir'])
+	cfg['libdir'] && sys.argv.Append('--libdir=' + cfg['libdir'])
+	cfg['moddir'] && sys.argv.Append('--moddir=' + cfg['moddir'])
+	sys.argv.Append('--basedir=' + path.Join(fs.GetCurDir(), 'module-' + moduleName))
+	fs.ChangeDir(pathName) {
 		scope {
-			builder = expr('build.gura').eval()
-			builder.errorFlag && moduleNamesError.append(moduleName)
-			builder.debFilesDevel && debFilesDevel.append(builder.debFilesDevel)
-			builder.rpmFilesDevel && rpmFilesDevel.append(builder.rpmFilesDevel)
+			builder = Expr('build.gura').Eval()
+			builder.errorFlag && moduleNamesError.Append(moduleName)
+			//builder.debFilesDevel && debFilesDevel.Append(builder.debFilesDevel)
+			//builder.rpmFilesDevel && rpmFilesDevel.Append(builder.rpmFilesDevel)
 		}
 		sys.argv = argvOrg
 	}
-*/
 }
 if (!moduleNamesError.IsEmpty()) {
 	Println()
