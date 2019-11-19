@@ -168,6 +168,10 @@ TestCase('List#Insert()') {
 	Tester(`tbl.Insert(-1, 3))
 	Tester(`tbl.Insert(20, 3))
 	Tester(`tbl.Insert(-20, 3))
+	tbl = []
+	Tester(`tbl.Insert(0, 3))
+	tbl = [99, 99, 99, 99, 99]
+	Tester(`tbl.Insert(5, 3))
 }
 
 TestCase('List#IsEmpty()') {
