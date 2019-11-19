@@ -1101,9 +1101,20 @@ void Expr_Caller::ComposeForAssignment(
 						 "operator can not be applied in function assigment");
 		return;
 	}
+	//**********
 	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, false));
 	if (!pFunction) return;
-	composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
+	if (GetExprCar().IsType<Expr_Member>()) {
+		Expr_Member& exprCarEx = dynamic_cast<Expr_Member&>(GetExprCar());
+		if (exprCarEx.GetMemberMode() != MemberMode::Normal) {
+			Error::IssueWith(ErrorType::SyntaxError, *this, "invalid method assignment");
+			return;
+		}
+		exprCarEx.GetExprTarget().ComposeOrNil(composer);				// [Target]
+		composer.Add_AssignMethod(pFunction.release(), false, this);	// [Value]
+	} else {
+		composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
+	}
 }
 
 void Expr_Caller::ComposeForAssignmentInClass(
@@ -1114,9 +1125,11 @@ void Expr_Caller::ComposeForAssignmentInClass(
 						 "operator can not be applied in function assigment");
 		return;
 	}
+	//**********
 	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, true));
 	if (!pFunction) return;
 	composer.Add_AssignMethodInClass(pFunction.release(), this);
+	//composer.Add_AssignMethod(pFunction.release(), true, this);	// [VType]
 	composer.FlushDiscard();										// [VType]
 }
 
@@ -1129,6 +1142,7 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 		pSymbol = exprCarEx.GetSymbol();
 	} else if (GetExprCar().IsType<Expr_Member>()) {
 		const Expr_Member& exprCarEx = dynamic_cast<const Expr_Member&>(GetExprCar());
+		type = Function::Type::Method;
 		pSymbol = exprCarEx.GetSymbol();
 	} else {
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
