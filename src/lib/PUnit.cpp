@@ -345,15 +345,17 @@ PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_AssignMethod
-// Stack View: [Target] -> [Function] (continue)
-//                      -> []         (discard)
+// Stack View: keepTargetFlag = false: [Target] -> [Function]        (continue)
+//                                              -> []                (discard)
+//             keepTargetFlag = true:  [Target] -> [Target Function] (continue)
+//                                              -> [Target]          (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, bool keepTargetFlag>
+void PUnit_AssignMethod<nExprSrc, discardValueFlag, keepTargetFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	Frame& frame = processor.GetFrameCur();
-	RefPtr<Value> pValueTarget(processor.PopValue());
+	RefPtr<Value> pValueTarget(keepTargetFlag? processor.PeekValue(0).Reference() : processor.PopValue());
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
 	if (!pValueTarget->DoAssignMethod(pFunction.Reference())) {
@@ -364,8 +366,8 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_AssignMethod<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, bool keepTargetFlag>
+String PUnit_AssignMethod<nExprSrc, discardValueFlag, keepTargetFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("AssignMethod(%s,cont=%s)",
@@ -379,15 +381,31 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignMethod<1, true>(_pFunction.release(), _pExprSrc.Reference());
+			if (_keepTargetFlag) {
+				_pPUnitCreated = new PUnit_AssignMethod<1, true, true>(_pFunction.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_AssignMethod<1, true, false>(_pFunction.release(), _pExprSrc.Reference());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_AssignMethod<1, false>(_pFunction.release(), _pExprSrc.Reference());
+			if (_keepTargetFlag) {
+				_pPUnitCreated = new PUnit_AssignMethod<1, false, true>(_pFunction.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_AssignMethod<1, false, false>(_pFunction.release(), _pExprSrc.Reference());
+			}
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignMethod<0, true>(_pFunction.release());
+			if (_keepTargetFlag) {
+				_pPUnitCreated = new PUnit_AssignMethod<0, true, true>(_pFunction.release());
+			} else {
+				_pPUnitCreated = new PUnit_AssignMethod<0, true, false>(_pFunction.release());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_AssignMethod<0, false>(_pFunction.release());
+			if (_keepTargetFlag) {
+				_pPUnitCreated = new PUnit_AssignMethod<0, false, true>(_pFunction.release());
+			} else {
+				_pPUnitCreated = new PUnit_AssignMethod<0, false, false>(_pFunction.release());
+			}
 		}
 	}
 	return _pPUnitCreated;

@@ -404,7 +404,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_AssignMethod
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, bool keepTargetFlag>
 class GURAX_DLLDECLARE PUnit_AssignMethod : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -435,11 +435,12 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_AssignMethod");
 private:
 	RefPtr<Function> _pFunction;
+	bool _keepTargetFlag;
 public:
-	PUnitFactory_AssignMethod(Function* pFunction, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pFunction(pFunction) {}
+	PUnitFactory_AssignMethod(Function* pFunction, bool keepTargetFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pFunction(pFunction), _keepTargetFlag(keepTargetFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_AssignMethod<1, false>) : sizeof(PUnit_AssignMethod<0, false>);
+		return _pExprSrc? sizeof(PUnit_AssignMethod<1, false, false>) : sizeof(PUnit_AssignMethod<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

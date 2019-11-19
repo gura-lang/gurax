@@ -23,7 +23,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_AssignToDeclArg_);
 	using PUnit_AssignFunction_ = PUnit_AssignFunction<0, false>;
 	PrintSizeOf(PUnit_AssignFunction_);
-	using PUnit_AssignMethod_ = PUnit_AssignMethodInClass<0, false>;
+	using PUnit_AssignMethod_ = PUnit_AssignMethod<0, false, false>;
 	PrintSizeOf(PUnit_AssignMethod_);
 	using PUnit_AssignPropHandler_ = PUnit_AssignPropHandler<0, false, false>;
 	PrintSizeOf(PUnit_AssignPropHandler_);

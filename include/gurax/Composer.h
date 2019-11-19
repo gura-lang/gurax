@@ -107,8 +107,8 @@ public:
 	void Add_AssignFunction(Function* pFunction, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_AssignFunction(pFunction, Expr::Reference(pExprSrc)));
 	}
-	void Add_AssignMethod(Function* pFunction, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_AssignMethod(pFunction, Expr::Reference(pExprSrc)));
+	void Add_AssignMethod(Function* pFunction, bool keepTargetFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_AssignMethod(pFunction, keepTargetFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_AssignMethodInClass(Function* pFunction, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_AssignMethodInClass(pFunction, Expr::Reference(pExprSrc)));
