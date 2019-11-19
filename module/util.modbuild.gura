@@ -5,10 +5,10 @@
 import(argopt)
 
 //------------------------------------------------------------------------------
-// Help message
+// PrintHelp
 //------------------------------------------------------------------------------
-tmplHelp = tR'''
-Usage: build.gura [options..] [commands..]
+PrintHelp(p:argopt.Parser) = tR'''
+Usage: build.gura [options] [commands]
 Commands:
   build    build the module
   rebuild  rebuld the module
@@ -16,7 +16,7 @@ Commands:
   install  install the module and other files 
 Options:
   ${p.FormatHelp() + '\n'}
-'''
+'''.Render(sys.cerr)
 
 //------------------------------------------------------------------------------
 // Builder
@@ -126,9 +126,14 @@ Builder = class {
 			p.AddParam('libdir',	'L', 'library directory', 'DIR')
 			p.AddParam('moddir',	'M', 'directory to which module files are installed', 'DIR')
 			p.AddParam('basedir',	'B', 'base directory for output', 'DIR')
-			[argv, opt] = p.Parse(sys.argv)
+			try {
+				[argv, opt] = p.Parse(sys.argv)
+			} catch {|e|
+				sys.cerr.Println(e.text)
+				sys.Exit(1)
+			}
 			if (opt['help']) {
-				tmplHelp.Render(sys.cerr)
+				PrintHelp(p)
 				sys.Exit(1)
 			}
 			[argv, opt]

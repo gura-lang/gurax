@@ -1,6 +1,9 @@
 #!/usr/bin/env gurax --naked
 import(argopt)
 
+//------------------------------------------------------------------------------
+// ModuleInfo
+//------------------------------------------------------------------------------
 ModuleInfo = struct {
 	moduleName:String, action:Symbol, platforms[]:Symbol
 }
@@ -21,116 +24,132 @@ moduleInfos = @(ModuleInfo) {
 	{'sys',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 }
 
+//------------------------------------------------------------------------------
+// PrintHelp
+//------------------------------------------------------------------------------
 PrintHelp(p:argopt.Parser) = tR'''
-usage: ${path.FileName(sys.argv[0])} [options] command
-command:
- clean          clean output files
- install        install built files to the module directory
- setup-guest    set up guest library packages
- help           print this help
-options:
- ${p.FormatHelp() + '\n'}
+usage: ${path.FileName(sys.argv[0])} [options] commands
+Commands:
+  build    build the module
+  rebuild  rebuld the module
+  clean    clean all the generated files
+  install  install the module and other files 
+Options:
+  ${p.FormatHelp() + '\n'}
 '''.Render(sys.cerr)
-if (sys.platform == `linux) {
-	platform = nil
-	if (fs.Exists('/etc/lsb-release')) {
-		platform = `ubuntu
-	} elsif (fs.Exists('/etc/system-release')) {
-		platform = `fedora
-	} elsif (fs.Exists(fileName = '/etc/redhat-release')) {
-		ReadLines(fileName):chop {|line|
-			if (line.StartsWith('CentOS')) {
-				platform = `centos
-				break
-			} elsif (line.StartsWith('Red Hat')) {
-				platform = `redhat
-				break
+
+//------------------------------------------------------------------------------
+// main
+//------------------------------------------------------------------------------
+main() = {
+	if (sys.platform == `linux) {
+		platform = nil
+		if (fs.Exists('/etc/lsb-release')) {
+			platform = `ubuntu
+		} elsif (fs.Exists('/etc/system-release')) {
+			platform = `fedora
+		} elsif (fs.Exists(fileName = '/etc/redhat-release')) {
+			ReadLines(fileName):chop {|line|
+				if (line.StartsWith('CentOS')) {
+					platform = `centos
+					break
+				} elsif (line.StartsWith('Red Hat')) {
+					platform = `redhat
+					break
+				}
 			}
 		}
-	}
-} else {
-	platform = sys.platform
-}
-argopt.Parser {|p|
-	p.AddFlag('verbose',	'v', 'verbose mode')
-	p.AddFlag('debug',		'd', 'build module with debug information')
-	p.AddParam('exclude',	'x', 'specify module to exclude', 'NAME')
-	p.AddParam('filter',	'f', 'specify module name to build', 'NAME')
-	p.AddParam('incdir',	'I', 'specify include directory', 'DIR')
-	p.AddParam('libdir',	'L', 'specify library directory', 'DIR')
-	p.AddParam('moddir',	'M', 'specify directory to which module files are installed', 'DIR')
-	p.AddParam('platform',	'p', 'specify platform symbol', 'NAME')
-	try {
-		[argv, cfg] = p.Parse(sys.argv)
-	} catch {|e|
-		sys.cerr.Println(e.text)
-		sys.Exit(1)
-	}
-	commands = cond(argv.IsEmpty(), cond(cfg['moddir'], ['build', 'install'], ['build']), argv)
-	if (commands.Contains('help')) {
-		PrintHelp(p)
-		sys.Exit(1)
-	}
-	if (cfg['platform']) { platform = cfg['platform'].ToSymbol() }
-}
-if (!(platform && (platform in [`mswin, `ubuntu, `fedora, `darwin]))) {
-	Printf('unsupported platform: %s\n', platform)
-	sys.Exit(1)
-}
-moduleNamesExcept = (cfg['exclude'] || '').Split(','):list
-moduleNamesFilter = (cfg['filter'] || '').Split(','):list
-dirNamePre = path.DirName(sys.argv[0])
-moduleNamesError = []
-debFilesDevel = []
-rpmFilesDevel = []
-moduleInfos.Each {|moduleInfo|
-	moduleName = moduleInfo.moduleName
-	!moduleNamesFilter.IsEmpty() && !(moduleName in moduleNamesFilter) && continue
-	actualFlag = (moduleInfo.action == `build) && (platform in moduleInfo.platforms)
-	if (moduleName in moduleNamesExcept) {
-		Printf('[%s] .. skipped\n', moduleName)
-		continue
-	} elsif (commands.Contains('setup-guest')) {
-		// nothing to do
 	} else {
-		Printf('[%s]\n', moduleName)
+		platform = sys.platform
 	}
-	if (!dirNamePre.IsEmpty()) {
-		pathName = path.Join(dirNamePre, 'module-' + moduleName)
-	}
-	argvOrg = sys.argv
-	sys.argv = ['build.gura']
-	!actualFlag && continue
-	sys.argv.Append(commands)
-	if (cfg['verbose']) {
-		sys.argv.Append('--verbose')
-	} else {
-		sys.argv.Append('--quiet')
-	}
-	cfg['debug'] && sys.argv.Append('--debug')
-	cfg['incdir'] && sys.argv.Append('--incdir=' + cfg['incdir'])
-	cfg['libdir'] && sys.argv.Append('--libdir=' + cfg['libdir'])
-	cfg['moddir'] && sys.argv.Append('--moddir=' + cfg['moddir'])
-	sys.argv.Append('--basedir=' + path.Join(fs.GetCurDir(), 'module-' + moduleName))
-	fs.ChangeDir(pathName) {
-		scope {
-			builder = Expr(sys.argv[0]).Eval()
-			builder.errorFlag && moduleNamesError.Append(moduleName)
-			//builder.debFilesDevel && debFilesDevel.Append(builder.debFilesDevel)
-			//builder.rpmFilesDevel && rpmFilesDevel.Append(builder.rpmFilesDevel)
+	argopt.Parser {|p|
+		p.AddFlag('verbose',	'v', 'verbose mode')
+		p.AddFlag('debug',		'd', 'build module with debug information')
+		p.AddFlag('help',		'h', 'print help')
+		p.AddParam('exclude',	'x', 'specify module to exclude', 'NAME')
+		p.AddParam('filter',	'f', 'specify module name to build', 'NAME')
+		p.AddParam('incdir',	'I', 'specify include directory', 'DIR')
+		p.AddParam('libdir',	'L', 'specify library directory', 'DIR')
+		p.AddParam('moddir',	'M', 'specify directory to which module files are installed', 'DIR')
+		p.AddParam('platform',	'p', 'specify platform symbol', 'NAME')
+		try {
+			[argv, opt] = p.Parse(sys.argv)
+		} catch {|e|
+			sys.cerr.Println(e.text)
+			sys.Exit(1)
 		}
-		sys.argv = argvOrg
+		if (opt['help']) {
+			PrintHelp(p)
+			sys.Exit(1)
+		}
+		commands = cond(argv.IsEmpty(), cond(opt['moddir'], ['build', 'install'], ['build']), argv)
+		if (commands.Contains('help')) {
+			PrintHelp(p)
+			sys.Exit(1)
+		}
+		if (opt['platform']) { platform = opt['platform'].ToSymbol() }
+	}
+	if (!(platform && (platform in [`mswin, `ubuntu, `fedora, `darwin]))) {
+		Printf('unsupported platform: %s\n', platform)
+		sys.Exit(1)
+	}
+	moduleNamesExcept = (opt['exclude'] || '').Split(','):list
+	moduleNamesFilter = (opt['filter'] || '').Split(','):list
+	dirNamePre = path.DirName(sys.argv[0])
+	moduleNamesError = []
+	debFilesDevel = []
+	rpmFilesDevel = []
+	moduleInfos.Each {|moduleInfo|
+		moduleName = moduleInfo.moduleName
+		!moduleNamesFilter.IsEmpty() && !(moduleName in moduleNamesFilter) && continue
+		actualFlag = (moduleInfo.action == `build) && (platform in moduleInfo.platforms)
+		if (moduleName in moduleNamesExcept) {
+			Printf('[%s] .. skipped\n', moduleName)
+			continue
+		} elsif (commands.Contains('setup-guest')) {
+			// nothing to do
+		} else {
+			Printf('[%s]\n', moduleName)
+		}
+		if (!dirNamePre.IsEmpty()) {
+			pathName = path.Join(dirNamePre, 'module-' + moduleName)
+		}
+		argvOrg = sys.argv
+		sys.argv = ['build.gura']
+		!actualFlag && continue
+		sys.argv.Append(commands)
+		if (opt['verbose']) {
+			sys.argv.Append('--verbose')
+		} else {
+			sys.argv.Append('--quiet')
+		}
+		opt['debug'] && sys.argv.Append('--debug')
+		opt['incdir'] && sys.argv.Append('--incdir=' + opt['incdir'])
+		opt['libdir'] && sys.argv.Append('--libdir=' + opt['libdir'])
+		opt['moddir'] && sys.argv.Append('--moddir=' + opt['moddir'])
+		sys.argv.Append('--basedir=' + path.Join(fs.GetCurDir(), 'module-' + moduleName))
+		fs.ChangeDir(pathName) {
+			scope {
+				builder = Expr(sys.argv[0]).Eval()
+				builder.errorFlag && moduleNamesError.Append(moduleName)
+				//builder.debFilesDevel && debFilesDevel.Append(builder.debFilesDevel)
+				//builder.rpmFilesDevel && rpmFilesDevel.Append(builder.rpmFilesDevel)
+			}
+			sys.argv = argvOrg
+		}
+	}
+	if (!moduleNamesError.IsEmpty()) {
+		Println()
+		Println('**** error while building ', moduleNamesError)
+		sys.Exit(1)
+	}
+	if (commands.Contains('setup-guest')) {
+		if (platform in [`ubuntu, `debian]) {
+			os.Exec('apt', 'install', '-y', set(debFilesDevel))
+		} elsif (platform in [`fedora, `centos, `redhat]) {
+			os.Exec('yum', 'install', '-y', set(rpmFilesDevel))
+		}
 	}
 }
-if (!moduleNamesError.IsEmpty()) {
-	Println()
-	Println('**** error while building ', moduleNamesError)
-	sys.Exit(1)
-}
-if (commands.Contains('setup-guest')) {
-	if (platform in [`ubuntu, `debian]) {
-		os.Exec('apt', 'install', '-y', set(debFilesDevel))
-	} elsif (platform in [`fedora, `centos, `redhat]) {
-		os.Exec('yum', 'install', '-y', set(rpmFilesDevel))
-	}
-}
+
+main()
