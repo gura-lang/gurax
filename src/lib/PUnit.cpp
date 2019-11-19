@@ -352,13 +352,12 @@ template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	Frame& frame = processor.GetFrameCur();
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	RefPtr<Function> pFunction(GetFunction().Reference());
-	pFunction->SetFrameOuter(processor.GetFrameCur());
+	pFunction->SetFrameOuter(frame);
 	if (!vtypeCustom.AssignMethod(pFunction.Reference())) return;
-	if (!discardValueFlag) {
-		processor.PushValue(new Value_Function(pFunction.release()));
-	}
+	if (!discardValueFlag) processor.PushValue(new Value_Function(pFunction.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

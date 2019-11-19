@@ -1073,7 +1073,6 @@ void Expr_Caller::Compose(Composer& composer)
 	} else {
 		composer.Add_Argument(GetAttr().Reference(), nullptr, false, this);	// [Argument]
 	}
-	//Expr::ComposeForArgSlot(composer, GetExprCdrFirst());					// [Argument]
 	GetExprLinkCdr().ComposeForArgSlot(composer);							// [Argument]
 	if (Error::IsIssued()) return;
 	composer.Add_Call(this);												// [Result]
@@ -1123,11 +1122,18 @@ void Expr_Caller::ComposeForAssignmentInClass(
 
 Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag)
 {
-	if (!GetExprCar().IsType<Expr_Identifier>()) {
+	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;
+	const Symbol* pSymbol = nullptr;
+	if (GetExprCar().IsType<Expr_Identifier>()) {
+		const Expr_Identifier& exprCarEx = dynamic_cast<const Expr_Identifier&>(GetExprCar());
+		pSymbol = exprCarEx.GetSymbol();
+	} else if (GetExprCar().IsType<Expr_Member>()) {
+		const Expr_Member& exprCarEx = dynamic_cast<const Expr_Member&>(GetExprCar());
+		pSymbol = exprCarEx.GetSymbol();
+	} else {
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
-	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprCar()).GetSymbol();
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
 	exprAssigned.SetPUnitFirst(composer.PeekPUnitCont());
@@ -1145,9 +1151,7 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 		exprDefaultArg.SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;
-	return new FunctionCustom(type, pSymbol,
-							  GetDeclCallable().Reference(), exprAssigned.Reference());
+	return new FunctionCustom(type, pSymbol, GetDeclCallable().Reference(), exprAssigned.Reference());
 }
 
 // This method is used by Template.
