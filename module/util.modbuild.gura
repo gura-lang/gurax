@@ -5,6 +5,20 @@
 import(argopt)
 
 //------------------------------------------------------------------------------
+// Help message
+//------------------------------------------------------------------------------
+tmplHelp = tR'''
+Usage: build.gura [options..] [commands..]
+Commands:
+  build    build the module
+  rebuild  rebuld the module
+  clean    clean all the generated files
+  install  install the module and other files 
+Options:
+  ${p.FormatHelp() + '\n'}
+'''
+
+//------------------------------------------------------------------------------
 // Builder
 //------------------------------------------------------------------------------
 Builder = class {
@@ -17,12 +31,16 @@ Builder = class {
 	pathNamesObj = []
 	dirNamesInc = []
 	dirNamesLib = []
+	dirNameSysInc = sys.dirInclude
+	dirNameSysLib = sys.dirLib
+	dirNameSysModule = sys.dirModule
 	cflags = []
 	ldflags = []
 	libs = []
 	opt = %{}
 	rebuildFlag = false
 	errorFlag = false
+	nameOut = ''
 	dirNameOut = ''
 	compiler = ''
 	linker = ''
@@ -34,7 +52,7 @@ Builder = class {
 	__init__(targetName:String) = {
 		this.targetName = targetName
 		if (sys.platform == `darwin) {
-			this.dirNameOut = 'gnuc'
+			this.nameOut = 'gnuc'
 			this.compiler = 'clang'
 			this.linker = 'clang'
 			this.cflagsBase = ['-fPIC', '-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED']
@@ -55,20 +73,20 @@ Builder = class {
 		(!this.pathNameHdr || !this.ShouldProcess(this.pathNamePch, this.pathNameHdr)) && return(true)
 		Printf('-- compiling: %s\n', this.pathNameHdr)
 		this.Exec(this.compiler, this.cflagsBase*, this.cflagsPreCompile*, this.cflags*,
-				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
+				  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 				  '-o' + this.pathNamePch, this.pathNameHdr)
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
 		Printf('-- compiling: %s\n', pathNameSrc)
 		this.Exec(this.compiler, this.cflagsBase*, this.cflagsCompile*, this.cflags*,
-				  ('-I' + sys.dirInclude), ('-I' + this.dirNamesInc)*,
+				  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 				  '-o' + pathNameObj, '-c', pathNameSrc)
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
 		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return(true)
 		!this.Exec(this.linker, this.ldflagsBase*, this.ldflags*,
-				   '-L' + sys.dirLib, ('-L' + this.dirNamesLib)*,
+				   '-L' + this.dirNameSysLib, ('-L' + this.dirNamesLib)*,
 				   '-o' + pathNameGurd, pathNamesObj*,
 				   ('-l' + this.libsBase)*, ('-l' + this.libs)*) && return(false)
 		Printf('-- generated: %s\n', pathNameGurd)
@@ -95,11 +113,32 @@ Builder = class {
 	Command_install() = {
 		for (pathName in (this.pathNameGurd |+| this.pathNamesScript)) {
 			Printf('-- installing: %s\n', pathName)
-			fs.Copy(pathName, path.Join(sys.dirModule, 'site')):overwrite
+			fs.Copy(pathName, path.Join(this.dirNameSysModule, 'site')):overwrite
 		}
 		true
 	}
 	Run() = {
+		[argv, this.opt] = argopt.Parser {|p|
+			p.AddFlag('help',		'h', 'print this help')
+			p.AddFlag('verbose',	'v', 'verbose mode')
+			p.AddFlag('quiet',		'q', 'quiet mode')
+			p.AddParam('incdir',	'I', 'include directory', 'DIR')
+			p.AddParam('libdir',	'L', 'library directory', 'DIR')
+			p.AddParam('moddir',	'M', 'directory to which module files are installed', 'DIR')
+			p.AddParam('basedir',	'B', 'base directory for output', 'DIR')
+			[argv, opt] = p.Parse(sys.argv)
+			if (opt['help']) {
+				tmplHelp.Render(sys.cerr)
+				sys.Exit(1)
+			}
+			[argv, opt]
+		}
+		if (dirName = this.opt['incdir']) { this.dirNameSysInc = dirName }
+		if (dirName = this.opt['libdir']) { this.dirNameSysLib = dirName }
+		if (dirName = this.opt['moddir']) { this.dirNameSysModule = dirName }
+		this.dirNameOut = cond(dirName = this.opt['basedir'],
+							   path.Join(dirName, this.nameOut), this.nameOut)
+		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut):tree
 		if (!this.pathNameHdr) {
 			// nothing to do
 		} elsif (sys.platform == `darwin) {
@@ -108,18 +147,7 @@ Builder = class {
 		}
 		this.pathNameGurd = path.Join(this.dirNameOut, this.targetName + '.gurd')
 		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
-		!fs.Exists(this.dirNameOut) && fs.CreateDir(this.dirNameOut)
-		[argv, this.opt] = argopt.Parser {|p|
-			p.AddFlag('verbose',	'v', 'verbose mode')
-			p.AddFlag('quiet',		'q', 'quiet mode')
-			p.AddParam('incdir',	'I', 'specify include directory', 'DIR')
-			p.AddParam('libdir',	'L', 'specify library directory', 'DIR')
-			p.AddParam('moddir',	'M', 'specify directory to which module files are installed', 'DIR')
-			p.AddParam('basedir',	'B', 'specify base directory', 'DIR')
-			p.Parse(sys.argv)
-		}
-		
-		if (argv.IsEmpty()) { argv.append('build') }
+		if (argv.IsEmpty()) { argv.Append('build') }
 		argv.Each {|command|
 			if (command == 'build') {
 				!this.Command_build() && break
