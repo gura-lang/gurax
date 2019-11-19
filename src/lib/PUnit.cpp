@@ -344,9 +344,59 @@ PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_AssignMethod
+// Stack View: [Target] -> [Function] (continue)
+//                      -> []         (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Value> pValueTarget(processor.PopValue());
+	RefPtr<Function> pFunction(GetFunction().Reference());
+	pFunction->SetFrameOuter(frame);
+	if (!pValueTarget->DoAssignMethod(pFunction.Reference())) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(new Value_Function(pFunction.release()));
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag>
+String PUnit_AssignMethod<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("AssignMethod(%s,cont=%s)",
+			   GetFunction().ToString(StringStyle().Cram()).c_str(),
+			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_AssignMethod<1, true>(_pFunction.release(), _pExprSrc.Reference());
+		} else {
+			_pPUnitCreated = new PUnit_AssignMethod<1, false>(_pFunction.release(), _pExprSrc.Reference());
+		}
+	} else {
+		if (discardValueFlag) {
+			_pPUnitCreated = new PUnit_AssignMethod<0, true>(_pFunction.release());
+		} else {
+			_pPUnitCreated = new PUnit_AssignMethod<0, false>(_pFunction.release());
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_AssignMethodInClass
 // Stack View: [VType] -> [VType Function] (continue)
-//                     -> [VType]         (discard)
+//                     -> [VType]          (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_AssignMethodInClass<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
@@ -356,7 +406,10 @@ void PUnit_AssignMethodInClass<nExprSrc, discardValueFlag>::Exec(Processor& proc
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
-	if (!vtypeCustom.AssignMethod(pFunction.Reference())) return;
+	if (!vtypeCustom.AssignMethod(pFunction.Reference())) {
+		processor.ErrorDone();
+		return;
+	}
 	if (!discardValueFlag) processor.PushValue(new Value_Function(pFunction.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
 }

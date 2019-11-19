@@ -122,6 +122,13 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 	return false;
 }
 
+bool Value::DoAssignMethod(RefPtr<Function> pMethod)
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s doesn't accept method assignment", GetVType().MakeFullName().c_str());
+	return false;
+}
+
 Iterator* Value::DoGenIterator() const
 {
 	Error::Issue(ErrorType::IteratorError,

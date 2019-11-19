@@ -79,8 +79,8 @@ public:
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }
 	bool IsEqualTo(const VType& vtype) const { return IsIdentical(vtype); }
 	bool IsLessThan(const VType& vtype) const { return this < &vtype; }
-	Frame& GetFrame() { return *_pFrame; }
-	const Frame& GetFrame() const { return *_pFrame; }
+	Frame_VType& GetFrame() { return *_pFrame; }
+	const Frame_VType& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	PropHandlerMap& GetPropHandlerMapOfClass() { return *_pPropHandlerMapOfClass; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }
