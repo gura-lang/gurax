@@ -4,24 +4,22 @@ import(argopt)
 //------------------------------------------------------------------------------
 // ModuleInfo
 //------------------------------------------------------------------------------
-ModuleInfo = struct {
-	moduleName:String, action:Symbol, platforms[]:Symbol
-}
+ModuleInfo = struct { moduleName:String, action:Symbol, platforms[]:Symbol }
 
 moduleInfos = @(ModuleInfo) {
-	{'codecs',			`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'codecs_basic',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'codecs_chinese',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'codecs_iso8859',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'codecs_japanese',	`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'conio',			`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'fs',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'markdown',		`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'math',			`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'os',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'path',			`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'re',				`build,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'sys',				`skip,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_basic',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_chinese',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_iso8859',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'codecs_japanese',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'conio',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'fs',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'markdown',		`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'math',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'os',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'path',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'re',				`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'sys',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 }
 
 //------------------------------------------------------------------------------
@@ -82,11 +80,8 @@ main() = {
 			PrintHelp(p)
 			sys.Exit(1)
 		}
-		commands = cond(argv.IsEmpty(), cond(opt['moddir'], ['build', 'install'], ['build']), argv)
-		if (commands.Contains('help')) {
-			PrintHelp(p)
-			sys.Exit(1)
-		}
+		//commands = cond(argv.IsEmpty(), cond(opt['moddir'], ['build', 'install'], ['build']), argv)
+		commands = cond(argv.IsEmpty(), ['build', 'install'], argv)
 		if (opt['platform']) { platform = opt['platform'].ToSymbol() }
 	}
 	if (!(platform && (platform in [`mswin, `ubuntu, `fedora, `darwin]))) {
