@@ -118,6 +118,7 @@ Builder = class {
 			p.AddParam('basedir',	'B', 'specify base directory', 'DIR')
 			p.Parse(sys.argv)
 		}
+		
 		if (argv.IsEmpty()) { argv.append('build') }
 		argv.Each {|command|
 			if (command == 'build') {
