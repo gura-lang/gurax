@@ -153,6 +153,7 @@ public:
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	void SetFrameOuter(Frame& frameOuter) { _pwFrameOuter.reset(frameOuter.GetWeakPtr()); }
 	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
+	bool HasFrameOuter() const { return !!_pwFrameOuter; }
 	void SetVTypeOfOwner(VType& vtypeOfOwner) { _pVTypeOfOwner = &vtypeOfOwner; }
 	const VType* GetVTypeOfOwner() const { return _pVTypeOfOwner; }
 	void Declare(const VType& vtypeResult, Flags flags) {
