@@ -637,9 +637,9 @@ void Expr_Assign::ComposeForArgSlot(Composer& composer)
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	composer.Add_BeginArgSlotNamed(
 		pSymbol, GetExprRight().Reference(), this);					// [Argument ArgSlot]
-	GetExprRight().ComposeOrNil(composer);								// [Argument ArgSlot Assigned]
+	GetExprRight().ComposeOrNil(composer);							// [Argument ArgSlot Assigned]
 	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlotNamed(this);									// [Argument]
+	composer.Add_EndArgSlotNamed(this);								// [Argument]
 	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
 	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
 }
@@ -1116,7 +1116,7 @@ void Expr_Caller::ComposeForAssignmentInClass(
 	}
 	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, true));
 	if (!pFunction) return;
-	composer.Add_AssignMethod(pFunction.release(), this);
+	composer.Add_AssignMethodInClass(pFunction.release(), this);
 	composer.FlushDiscard();										// [VType]
 }
 

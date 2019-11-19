@@ -402,10 +402,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AssignMethod
+// PUnit_AssignMethodInClass
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_AssignMethod : public PUnit {
+class GURAX_DLLDECLARE PUnit_AssignMethodInClass : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -414,8 +414,8 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_AssignMethod(Function* pFunction) : _pFunction(pFunction) {}
-	PUnit_AssignMethod(Function* pFunction, Expr* pExpr) : PUnit_AssignMethod(pFunction) { _ppExprSrc[0] = pExpr; }
+	PUnit_AssignMethodInClass(Function* pFunction) : _pFunction(pFunction) {}
+	PUnit_AssignMethodInClass(Function* pFunction, Expr* pExpr) : PUnit_AssignMethodInClass(pFunction) { _ppExprSrc[0] = pExpr; }
 public:
 	const Function& GetFunction() const { return *_pFunction; }
 public:
@@ -430,16 +430,16 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_AssignMethod : public PUnitFactory {
+class PUnitFactory_AssignMethodInClass : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_AssignMethod");
+	Gurax_MemoryPoolAllocator("PUnitFactory_AssignMethodInClass");
 private:
 	RefPtr<Function> _pFunction;
 public:
-	PUnitFactory_AssignMethod(Function* pFunction, Expr* pExprSrc) :
+	PUnitFactory_AssignMethodInClass(Function* pFunction, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pFunction(pFunction) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_AssignMethod<1, false>) : sizeof(PUnit_AssignMethod<0, false>);
+		return _pExprSrc? sizeof(PUnit_AssignMethodInClass<1, false>) : sizeof(PUnit_AssignMethodInClass<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

@@ -344,12 +344,12 @@ PUnit* PUnitFactory_AssignFunction::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_AssignMethod
+// PUnit_AssignMethodInClass
 // Stack View: [VType] -> [VType Function] (continue)
 //                     -> [VType]         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_AssignMethodInClass<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	Frame& frame = processor.GetFrameCur();
@@ -362,29 +362,29 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag>::Exec(Processor& processor) 
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_AssignMethod<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_AssignMethodInClass<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("AssignMethod(%s,cont=%s)",
+	str.Printf("AssignMethodInClass(%s,cont=%s)",
 			   GetFunction().ToString(StringStyle().Cram()).c_str(),
 			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
+PUnit* PUnitFactory_AssignMethodInClass::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignMethod<1, true>(_pFunction.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignMethodInClass<1, true>(_pFunction.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_AssignMethod<1, false>(_pFunction.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_AssignMethodInClass<1, false>(_pFunction.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_AssignMethod<0, true>(_pFunction.release());
+			_pPUnitCreated = new PUnit_AssignMethodInClass<0, true>(_pFunction.release());
 		} else {
-			_pPUnitCreated = new PUnit_AssignMethod<0, false>(_pFunction.release());
+			_pPUnitCreated = new PUnit_AssignMethodInClass<0, false>(_pFunction.release());
 		}
 	}
 	return _pPUnitCreated;
