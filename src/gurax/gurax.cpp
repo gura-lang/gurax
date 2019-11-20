@@ -33,9 +33,11 @@ const char* g_strHelp =
 //------------------------------------------------------------------------------
 // Main
 //------------------------------------------------------------------------------
-bool Main()
+bool Main(int argc, char* argv[])
 {
-	const CommandLine& cmdLine = Basement::Inst.GetCommandLine();
+	CommandLine& cmdLine = Basement::Inst.GetCommandLine();
+	cmdLine.OptBool("extra");
+	Initialize(argc, argv);
 	if (cmdLine.GetBool("help")) {
 		Stream::COut->Printf("%s", g_strHelp);
 		return true;
@@ -164,9 +166,7 @@ bool ReadLine(const char* prompt, String& strLine)
 
 int main(int argc, char* argv[])
 {
-	Gurax::Basement::Inst.GetCommandLine()
-		.OptBool("extra");
-	if (Gurax::Initialize(argc, argv) && Gurax::Main()) return 0;
+	if (Gurax::Main(argc, argv)) return 0;
 	Gurax::Error::Print(*Gurax::Stream::CErr);
 	return 1;
 }
