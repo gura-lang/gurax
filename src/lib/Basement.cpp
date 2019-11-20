@@ -18,17 +18,13 @@ Basement::Basement() :
 
 bool Basement::Initialize(int argc, char** argv)
 {
-	if (!_cmdLine
+	_cmdLine
 		.OptMultiString	("import",			'i')
 		.OptMultiString	("command",			'c')
 		.OptMultiString	("module-path",		'I')
-		.OptBool		("help",			'h')
-		.OptBool		("version",			'v')
 		.OptBool		("debug",			'g')
-		.OptBool		("list",			'L')
-		.OptBool		("shared-script",	'S')
-		.OptBool		("naked")
-		.Parse(argc, argv)) {
+		.OptBool		("naked");
+	if (!_cmdLine.Parse(argc, argv)) {
 		Error::Issue(ErrorType::CommandError, "%s", _cmdLine.GetError());
 		return false;
 	}

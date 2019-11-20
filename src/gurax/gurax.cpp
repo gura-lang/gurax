@@ -36,8 +36,13 @@ const char* g_strHelp =
 bool Main(int argc, char* argv[])
 {
 	CommandLine& cmdLine = Basement::Inst.GetCommandLine();
-	cmdLine.OptBool("extra");
-	Initialize(argc, argv);
+	cmdLine
+		.OptBool("help",			'h')
+		.OptBool("list",			'L')
+		.OptBool("quiet",			'q')
+		.OptBool("shared-script",	'S')
+		.OptBool("version",			'v');
+	if (!Initialize(argc, argv)) return false;
 	if (cmdLine.GetBool("help")) {
 		Stream::COut->Printf("%s", g_strHelp);
 		return true;
