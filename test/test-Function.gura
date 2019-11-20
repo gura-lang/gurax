@@ -73,6 +73,8 @@ TestCase('Property') {
 	Tester(`func.name)
 	Tester(`func.type)
 	Tester(`String.Find.type)
+	A = class {f():static = {}}
+	Tester(`A.f.type)
 }
 
 TestCase('return') {

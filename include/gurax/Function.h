@@ -141,6 +141,7 @@ public:
 	static Function* CreateDynamicFunction(
 		const Symbol* pSymbol, const ValueList& valuesExpr, const Expr_Block& exprOfBlock);
 public:
+	void SetType(Type type) { _type = type; }
 	bool IsTypeStatement() const { return _type == Type::Statement; }
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeMethod() const { return _type == Type::Method; }

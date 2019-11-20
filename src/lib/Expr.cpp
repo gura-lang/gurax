@@ -1101,9 +1101,11 @@ void Expr_Caller::ComposeForAssignment(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, false));
-	if (!pFunction) return;
 	if (GetExprCar().IsType<Expr_Member>()) {
+		RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
+		if (!pFunction) return;
+		pFunction->SetType(GetAttr().IsSet(Gurax_Symbol(static_))?
+						   Function::Type::ClassMethod : Function::Type::Method);
 		Expr_Member& exprCarEx = dynamic_cast<Expr_Member&>(GetExprCar());
 		if (exprCarEx.GetMemberMode() != MemberMode::Normal) {
 			Error::IssueWith(ErrorType::SyntaxError, *this, "invalid method assignment");
@@ -1112,6 +1114,9 @@ void Expr_Caller::ComposeForAssignment(
 		exprCarEx.GetExprTarget().ComposeOrNil(composer);				// [Target]
 		composer.Add_AssignMethod(pFunction.release(), false, this);	// [Value]
 	} else {
+		RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
+		if (!pFunction) return;
+		pFunction->SetType(Function::Type::Function);
 		composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
 	}
 }
@@ -1124,22 +1129,22 @@ void Expr_Caller::ComposeForAssignmentInClass(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, true));
+	RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
 	if (!pFunction) return;
+	pFunction->SetType(GetAttr().IsSet(Gurax_Symbol(static_))?
+					   Function::Type::ClassMethod : Function::Type::Method);
 	composer.Add_AssignMethod(pFunction.release(), true, this);			// [VType]
 	composer.FlushDiscard();											// [VType]
 }
 
-Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag)
+Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 {
-	Function::Type type = withinClassFlag? Function::Type::Method : Function::Type::Function;
 	const Symbol* pSymbol = nullptr;
 	if (GetExprCar().IsType<Expr_Identifier>()) {
 		const Expr_Identifier& exprCarEx = dynamic_cast<const Expr_Identifier&>(GetExprCar());
 		pSymbol = exprCarEx.GetSymbol();
 	} else if (GetExprCar().IsType<Expr_Member>()) {
 		const Expr_Member& exprCarEx = dynamic_cast<const Expr_Member&>(GetExprCar());
-		type = Function::Type::Method;
 		pSymbol = exprCarEx.GetSymbol();
 	} else {
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
@@ -1162,7 +1167,8 @@ Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bo
 		exprDefaultArg.SetPUnitFirst(pPUnitDefaultArg);
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-	return new FunctionCustom(type, pSymbol, GetDeclCallable().Reference(), exprAssigned.Reference());
+	return new FunctionCustom(Function::Type::Function, pSymbol,
+							  GetDeclCallable().Reference(), exprAssigned.Reference());
 }
 
 // This method is used by Template.
