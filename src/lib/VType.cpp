@@ -136,6 +136,12 @@ Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	return nullptr;
 }
 
+bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
+{
+	GetFrame().Assign(pFunction->GetSymbol(), new Value_Function(pFunction.release()));
+	return true;
+}
+
 //------------------------------------------------------------------------------
 // VTypeMap
 //------------------------------------------------------------------------------

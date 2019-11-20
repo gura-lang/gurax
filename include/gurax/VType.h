@@ -115,6 +115,7 @@ public:
 	virtual bool IsListOrIterator() const { return false; }
 	virtual void DoPrepare(Frame& frameOuter) {};
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const;
+	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 };
 
 //------------------------------------------------------------------------------

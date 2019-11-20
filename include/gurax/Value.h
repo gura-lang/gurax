@@ -212,7 +212,7 @@ public:
 	virtual void DoIndexSet(const Index& index, Value* pValue);
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);
-	virtual bool DoAssignMethod(RefPtr<Function> pMethod);
+	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction);
 	virtual Iterator* DoGenIterator() const;
 public:
 	// Virtual functions for Formatter

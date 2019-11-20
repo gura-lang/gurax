@@ -85,7 +85,7 @@ public:
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;
-	virtual bool DoAssignMethod(RefPtr<Function> pMethod) override;
+	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction) override;
 };
 
 }

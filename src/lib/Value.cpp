@@ -122,7 +122,7 @@ bool Value::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribu
 	return false;
 }
 
-bool Value::DoAssignMethod(RefPtr<Function> pMethod)
+bool Value::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s doesn't accept method assignment", GetVType().MakeFullName().c_str());

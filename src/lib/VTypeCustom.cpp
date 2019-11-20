@@ -25,6 +25,7 @@ void VTypeCustom::Inherit()
 	}
 }
 
+#if 0
 bool VTypeCustom::AssignMethod(Function* pFunction)
 {
 	const Symbol* pSymbol = pFunction->GetSymbol();
@@ -56,6 +57,7 @@ bool VTypeCustom::AssignMethod(Function* pFunction)
 	}
 	return true;
 }
+#endif
 
 bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropHandler::Flags flags, RefPtr<Value> pValueInit)
@@ -125,6 +127,38 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 Value* VTypeCustom::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	return value.Reference();
+}
+
+bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
+{
+	const Symbol* pSymbol = pFunction->GetSymbol();
+	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
+		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
+		RefPtr<Function> pConstructor;
+		if (GetVTypeInh()->IsCustom()) {
+			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
+			pConstructor.reset(new ConstructorClass(
+								   *this, pFunction->GetDeclCallable().Reference(),
+								   pFunction->GetExprBody().Reference(),
+								   pVTypeInh->GetConstructor().Reference()));
+		} else {
+			pConstructor.reset(new ConstructorClass(
+								   *this, pFunction->GetDeclCallable().Reference(),
+								   pFunction->GetExprBody().Reference(), nullptr));
+		}
+		RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
+		pConstructor->SetFrameOuter(*pFrameOuter);
+		SetConstructor(pConstructor.release());
+		return true;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
+		if (!pFunction->GetDeclCallable().IsNaked()) {
+			Error::Issue(ErrorType::SyntaxError, "destructors can't have any arguments");
+			return false;
+		}
+		SetDestructor(pFunction.release());
+		return true;
+	}
+	return VType::DoAssignCustomMethod(pFunction.release());
 }
 
 void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)

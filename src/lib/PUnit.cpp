@@ -358,7 +358,7 @@ void PUnit_AssignMethod<nExprSrc, discardValueFlag, keepTargetFlag>::Exec(Proces
 	RefPtr<Value> pValueTarget(keepTargetFlag? processor.PeekValue(0).Reference() : processor.PopValue());
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
-	if (!pValueTarget->DoAssignMethod(pFunction.Reference())) {
+	if (!pValueTarget->DoAssignCustomMethod(pFunction.Reference())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -424,7 +424,7 @@ void PUnit_AssignMethodInClass<nExprSrc, discardValueFlag>::Exec(Processor& proc
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	RefPtr<Function> pFunction(GetFunction().Reference());
 	pFunction->SetFrameOuter(frame);
-	if (!vtypeCustom.AssignMethod(pFunction.Reference())) {
+	if (!vtypeCustom.DoAssignCustomMethod(pFunction.Reference())) {
 		processor.ErrorDone();
 		return;
 	}

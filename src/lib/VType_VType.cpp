@@ -170,10 +170,9 @@ bool Value_VType::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const A
 	return pPropHandler->SetValue(*this, *pValue, attr);
 }
 
-bool Value_VType::DoAssignMethod(RefPtr<Function> pMethod)
+bool Value_VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
-	GetVTypeThis().GetFrame().Assign(pMethod->GetSymbol(), new Value_Function(pMethod.release()));
-	return true;
+	return GetVTypeThis().DoAssignCustomMethod(pFunction.release());
 }
 
 }
