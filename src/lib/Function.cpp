@@ -44,6 +44,12 @@ Function* Function::CreateDynamicFunction(
 
 String Function::MakeFullName() const
 {
+	if (GetVTypeOfOwner()) {
+		String str = GetVTypeOfOwner()->MakeFullName();
+		str += IsTypeMethod()? "#" : ".";
+		str += GetName();
+		return str;
+	}
 	RefPtr<Frame> pFrame(LockFrameOuter());
 	return Frame::MakeFullName(pFrame.get(), GetName());
 }
