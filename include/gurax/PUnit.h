@@ -446,49 +446,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_AssignMethodInClass
-//------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_AssignMethodInClass : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	RefPtr<Function> _pFunction;
-	Expr* _ppExprSrc[nExprSrc];
-public:
-	// Constructor
-	PUnit_AssignMethodInClass(Function* pFunction) : _pFunction(pFunction) {}
-	PUnit_AssignMethodInClass(Function* pFunction, Expr* pExpr) : PUnit_AssignMethodInClass(pFunction) { _ppExprSrc[0] = pExpr; }
-public:
-	const Function& GetFunction() const { return *_pFunction; }
-public:
-	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
-	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
-	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
-private:
-	const PUnit* _GetPUnitCont() const { return this + 1; }
-};
-
-class PUnitFactory_AssignMethodInClass : public PUnitFactory {
-public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_AssignMethodInClass");
-private:
-	RefPtr<Function> _pFunction;
-public:
-	PUnitFactory_AssignMethodInClass(Function* pFunction, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pFunction(pFunction) {}
-	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_AssignMethodInClass<1, false>) : sizeof(PUnit_AssignMethodInClass<0, false>);
-	}
-	virtual PUnit* Create(bool discardValueFlag) override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_AssignPropHandler
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool initByNilFlag>

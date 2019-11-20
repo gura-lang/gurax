@@ -1101,7 +1101,6 @@ void Expr_Caller::ComposeForAssignment(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	//**********
 	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, false));
 	if (!pFunction) return;
 	if (GetExprCar().IsType<Expr_Member>()) {
@@ -1125,12 +1124,10 @@ void Expr_Caller::ComposeForAssignmentInClass(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	//**********
 	RefPtr<Function> pFunction(CreateFunction(composer, exprAssigned, true));
 	if (!pFunction) return;
-	composer.Add_AssignMethodInClass(pFunction.release(), this);
-	//composer.Add_AssignMethod(pFunction.release(), true, this);	// [VType]
-	composer.FlushDiscard();										// [VType]
+	composer.Add_AssignMethod(pFunction.release(), true, this);			// [VType]
+	composer.FlushDiscard();											// [VType]
 }
 
 Function* Expr_Caller::CreateFunction(Composer& composer, Expr& exprAssigned, bool withinClassFlag)
