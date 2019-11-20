@@ -92,7 +92,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Function);
 public:
-	enum class Type { Statement, Function, Method, ClassMethod };
+	using Type = DeclCallable::Type;
 	using Flags = DeclCallable::Flags;
 	using Flag = DeclCallable::Flag;
 	using ArgOccur = DeclArg::Occur;

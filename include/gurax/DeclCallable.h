@@ -21,6 +21,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclCallable);
 public:
+	enum class Type { Statement, Function, Method, ClassMethod };
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None				= 0;
