@@ -5,6 +5,16 @@ TestCase('Chr()') {
 	Tester(`Chr(0x20..0x7f).Join())
 }
 
+TestCase('Dim()') {
+	Tester(`Dim(3))
+	Tester(`Dim(3) {|i| i})
+	Tester(`Dim(3, 4))
+	Tester(`Dim(3, 4) {|i, j| Format('%d %d', i, j)})
+	Tester(`Dim(2, 3, 4) {|i, j, k| Format('%d %d %d', i, j, k) })
+	Tester(`Dim(2, 2, 2, 2) {|i, j, k, l| Format('%d %d %d %d', i, j, k, l) })
+	Tester(`Dim(2, 3, 4, 2) {|i, j, k, l| Format('%d %d %d %d', i, j, k, l) })
+}
+
 TestCase('Int()') {
 	Tester(`Int(0))
 	Tester(`Int(1))

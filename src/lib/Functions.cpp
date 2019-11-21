@@ -30,8 +30,8 @@ Gurax_ImplementFunction(Chr)
 	return new Value_String(str);
 }
 
-// dim(n+:Number) {block?}
-Gurax_DeclareFunction(dim)
+// Dim(n+:Number) {block?}
+Gurax_DeclareFunction(Dim)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
@@ -43,12 +43,12 @@ Gurax_DeclareFunction(dim)
 		"\n"
 		"Below is an example to create a one-dimentional list:\n"
 		"\n"
-		"    x = dim(3)\n"
+		"    x = Dim(3)\n"
 		"    // x is [nil, nil, nil]\n"
 		"\n"
 		"Below is an example to create a two-dimentional list:\n"
 		"\n"
-		"    x = dim(3, 2)\n"
+		"    x = Dim(3, 2)\n"
 		"    // x is [[nil, nil], [nil, nil], [nil, nil]]\n"
 		"\n"
 		"The optional `block` should return values for each element\n"
@@ -57,13 +57,13 @@ Gurax_DeclareFunction(dim)
 		"\n"
 		"Below is an example to create a one-dimentional list containing a string:\n"
 		"\n"
-		"    x = dim(3) {'Hi'}\n"
+		"    x = Dim(3) {'Hi'}\n"
 		"    // x is ['Hi', 'Hi', 'Hi']\n"
 		"\n"
 		"Below is an example to create a two-dimentional list that consists of strings\n"
 		"showing indices.\n"
 		"\n"
-		"    x = dim(3, 2) {|i, j| format('%d-%d', i, j) }\n"
+		"    x = Dim(3, 2) {|i, j| format('%d-%d', i, j) }\n"
 		"    // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]\n");
 }
 
@@ -101,7 +101,7 @@ ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int
 	}
 }
 
-Gurax_ImplementFunction(dim)
+Gurax_ImplementFunction(Dim)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -543,7 +543,7 @@ Gurax_ImplementFunction(tosymbol)
 void Functions::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Chr));
-	frame.Assign(Gurax_CreateFunction(dim));
+	frame.Assign(Gurax_CreateFunction(Dim));
 	frame.Assign(Gurax_CreateFunction(dir));
 	frame.Assign(Gurax_CreateFunction(Format));
 	frame.Assign(Gurax_CreateFunction(Int));
