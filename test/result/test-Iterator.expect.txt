@@ -72,10 +72,10 @@
 ======== Iterator#Contains() ========
 ======== Iterator#Count() ========
 ======== Iterator#Cycle() ========
-[].Each().Cycle(10) .. empty list can not be specified
-['A'].Each().Cycle(10):list .. ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
-['A', 'B'].Each().Cycle(10):list .. ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
-['A', 'B', 'C', 'D', 'E'].Each().Cycle(10):list .. ['A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E']
+[].Each().Cycle(20) .. empty list can not be specified
+['A'].Each().Cycle(20):list .. ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+['A', 'B'].Each().Cycle(20):list .. ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
+['A', 'B', 'C', 'D', 'E'].Each().Cycle(20):list .. ['A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E', 'A', 'B', 'C', 'D', 'E']
 ======== Iterator#Each() ========
 Each { .. }
 ----
@@ -310,6 +310,13 @@ x.Each().Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11
 ['A', 'B', 'C', 'D', 'E'].Each().Permutation(3):list .. 60 : [['A', 'B', 'C'], ['A', 'B', 'D'], ['A', 'B', 'E'], ['A', 'C', 'B'], ['A', 'C', 'D'], ['A', 'C', 'E'], ['A', 'D', 'B'], ['A', 'D', 'C'], ['A', 'D', 'E'], ['A', 'E', 'B'], ['A', 'E', 'C'], ['A', 'E', 'D'], ['B', 'A', 'C'], ['B', 'A', 'D'], ['B', 'A', 'E'], ['B', 'C', 'A'], ['B', 'C', 'D'], ['B', 'C', 'E'], ['B', 'D', 'A'], ['B', 'D', 'C'], ['B', 'D', 'E'], ['B', 'E', 'A'], ['B', 'E', 'C'], ['B', 'E', 'D'], ['C', 'A', 'B'], ['C', 'A', 'D'], ['C', 'A', 'E'], ['C', 'B', 'A'], ['C', 'B', 'D'], ['C', 'B', 'E'], ['C', 'D', 'A'], ['C', 'D', 'B'], ['C', 'D', 'E'], ['C', 'E', 'A'], ['C', 'E', 'B'], ['C', 'E', 'D'], ['D', 'A', 'B'], ['D', 'A', 'C'], ['D', 'A', 'E'], ['D', 'B', 'A'], ['D', 'B', 'C'], ['D', 'B', 'E'], ['D', 'C', 'A'], ['D', 'C', 'B'], ['D', 'C', 'E'], ['D', 'E', 'A'], ['D', 'E', 'B'], ['D', 'E', 'C'], ['E', 'A', 'B'], ['E', 'A', 'C'], ['E', 'A', 'D'], ['E', 'B', 'A'], ['E', 'B', 'C'], ['E', 'B', 'D'], ['E', 'C', 'A'], ['E', 'C', 'B'], ['E', 'C', 'D'], ['E', 'D', 'A'], ['E', 'D', 'B'], ['E', 'D', 'C']]
 ['A', 'B', 'C', 'D', 'E'].Each().Permutation(6):list .. range over
 ======== Iterator#PingPong() ========
+[].Each().PingPong(20) .. empty list can not be specified
+['A'].Each().PingPong(20):list .. ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+['A', 'B'].Each().PingPong(20):list .. ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']
+['A', 'B', 'C', 'D', 'E'].Each().PingPong(20):list .. ['A', 'B', 'C', 'D', 'E', 'D', 'C', 'B', 'A', 'B', 'C', 'D', 'E', 'D', 'C', 'B', 'A', 'B', 'C', 'D']
+['A', 'B', 'C', 'D', 'E'].Each().PingPong(20):sticky:list .. ['A', 'B', 'C', 'D', 'E', 'E', 'D', 'C', 'B', 'A', 'A', 'B', 'C', 'D', 'E', 'E', 'D', 'C', 'B', 'A']
+['A', 'B', 'C', 'D', 'E'].Each().PingPong(20):sticky@top:list .. ['A', 'B', 'C', 'D', 'E', 'D', 'C', 'B', 'A', 'A', 'B', 'C', 'D', 'E', 'D', 'C', 'B', 'A', 'A', 'B']
+['A', 'B', 'C', 'D', 'E'].Each().PingPong(20):sticky@btm:list .. ['A', 'B', 'C', 'D', 'E', 'E', 'D', 'C', 'B', 'A', 'B', 'C', 'D', 'E', 'E', 'D', 'C', 'B', 'A', 'B']
 ======== Iterator#Print() ========
 ======== Iterator#Printf() ========
 ======== Iterator#Println() ========

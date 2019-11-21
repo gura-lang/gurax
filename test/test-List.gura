@@ -258,10 +258,10 @@ TestCase('List#Count()') {
 }
 
 TestCase('List#Cycle()') {
-	Tester(`[].Cycle(10))
-	Tester(`['A'].Cycle(10):list)
-	Tester(`['A', 'B'].Cycle(10):list)
-	Tester(`['A', 'B', 'C', 'D', 'E'].Cycle(10):list)
+	Tester(`[].Cycle(20))
+	Tester(`['A'].Cycle(20):list)
+	Tester(`['A', 'B'].Cycle(20):list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].Cycle(20):list)
 }
 
 TestCase('List#Each()') {
@@ -553,6 +553,13 @@ TestCase('List#Permutation()') {
 }
 
 TestCase('List#PingPong()') {
+	Tester(`[].PingPong(20))
+	Tester(`['A'].PingPong(20):list)
+	Tester(`['A', 'B'].PingPong(20):list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].PingPong(20):list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].PingPong(20):sticky:list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].PingPong(20):sticky@top:list)
+	Tester(`['A', 'B', 'C', 'D', 'E'].PingPong(20):sticky@btm:list)
 }
 
 TestCase('List#Print()') {
