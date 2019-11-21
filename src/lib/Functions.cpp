@@ -30,6 +30,95 @@ Gurax_ImplementFunction(Chr)
 	return new Value_String(str);
 }
 
+// dim(n+:Number) {block?}
+Gurax_DeclareFunction(dim)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a list that contains `n` values of `nil`.\n"
+		"If you pass multiple numbers for `n`, it would create a nested list.\n"
+		"\n"
+		"Below is an example to create a one-dimentional list:\n"
+		"\n"
+		"    x = dim(3)\n"
+		"    // x is [nil, nil, nil]\n"
+		"\n"
+		"Below is an example to create a two-dimentional list:\n"
+		"\n"
+		"    x = dim(3, 2)\n"
+		"    // x is [[nil, nil], [nil, nil], [nil, nil]]\n"
+		"\n"
+		"The optional `block` should return values for each element\n"
+		"and takes block parameters: `|i0:number, i1:number, ..|`\n"
+		"where the arguments `i0` and `i1` take indices of the loops.\n"
+		"\n"
+		"Below is an example to create a one-dimentional list containing a string:\n"
+		"\n"
+		"    x = dim(3) {'Hi'}\n"
+		"    // x is ['Hi', 'Hi', 'Hi']\n"
+		"\n"
+		"Below is an example to create a two-dimentional list that consists of strings\n"
+		"showing indices.\n"
+		"\n"
+		"    x = dim(3, 2) {|i, j| format('%d-%d', i, j) }\n"
+		"    // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]\n");
+}
+
+ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::iterator pCnt,
+				   NumList<Int>& idxList, NumList<Int>::iterator pIdx,
+				   const Expr_Block* pExprOfBlock, Argument* pArgSub)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (pCnt + 1 != cntList.end()) {
+		for (*pIdx = 0; *pIdx < *pCnt; (*pIdx)++) {
+			RefPtr<ValueTypedOwner> pValueTypedOwnerSub(
+				DimSub(processor, cntList, pCnt + 1, idxList, pIdx + 1, pExprOfBlock, pArgSub));
+			if (!pValueTypedOwnerSub) return nullptr;
+			pValueOwner->push_back(new Value_List(pValueTypedOwnerSub.release()));
+		}
+		return new ValueTypedOwner(VTYPE_List, pValueOwner.release());
+	} else if (pExprOfBlock) {
+		Frame& frame = processor.GetFrameCur();
+		for (*pIdx = 0; *pIdx < *pCnt; (*pIdx)++) {
+			pArgSub->ResetAllValues();
+			ArgFeeder args(*pArgSub);
+			for (Int idx : idxList) {
+				if (!args.FeedValue(frame, new Value_Number(idx))) return nullptr;
+			}
+			RefPtr<Value> pValue(processor.EvalExpr(*pExprOfBlock, *pArgSub));
+			if (Error::IsIssued()) return nullptr;
+			pValueOwner->push_back(pValue.release());
+		}
+		return new ValueTypedOwner(pValueOwner.release());
+	} else {
+		for (*pIdx = 0; *pIdx < *pCnt; (*pIdx)++) {
+			pValueOwner->push_back(Value::nil());
+		}
+		return new ValueTypedOwner(VTYPE_Nil, pValueOwner.release());
+	}
+}
+
+Gurax_ImplementFunction(dim)
+{
+	// Arguments
+	ArgPicker args(argument);
+	NumList<Int> cntList = Value_Number::GetNumListPos<int>(args.PickList());
+	if (Error::IsIssued()) return Value::nil();
+	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
+	// Function body
+	NumList<Int> idxList(cntList.size(), 0);
+	auto pCnt = cntList.begin();
+	auto pIdx = idxList.begin();
+	RefPtr<Argument> pArgSub(pExprOfBlock? Argument::CreateForBlockCall(*pExprOfBlock) : nullptr);
+	RefPtr<ValueTypedOwner> pValueTypedOwner(
+		DimSub(processor, cntList, pCnt, idxList, pIdx, pExprOfBlock, pArgSub.get()));
+	if (!pValueTypedOwner) return Value::nil();
+	return new Value_List(pValueTypedOwner.release());
+}
+
 // dir(value)
 Gurax_DeclareFunction(dir)
 {
@@ -454,6 +543,7 @@ Gurax_ImplementFunction(tosymbol)
 void Functions::AssignToBasement(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Chr));
+	frame.Assign(Gurax_CreateFunction(dim));
 	frame.Assign(Gurax_CreateFunction(dir));
 	frame.Assign(Gurax_CreateFunction(Format));
 	frame.Assign(Gurax_CreateFunction(Int));
