@@ -344,8 +344,7 @@ Value* VType_Iterator::Method_Cycle(
 	}
 	// Arguments
 	ArgPicker args(argument);
-	bool validFlag_n = false;
-	Int n = (validFlag_n = args.IsValid())? args.PickNumberPos<Int>() : -1;
+	Int n = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Cycle(valueTypedOwner.GetValueOwnerReference(), n));
@@ -831,14 +830,28 @@ Gurax_ImplementMethod(Iterator, PingPong)
 Value* VType_Iterator::Method_PingPong(
 	Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner)
 {
-#if 0
+	if (valueTypedOwner.IsEmpty()) {
+		Error::Issue(ErrorType::RangeError, "empty list can not be specified");
+		return Value::nil();
+	}
 	// Arguments
 	ArgPicker args(argument);
+	Int n = args.IsValid()? args.PickNumberNonNeg<Int>() : -1;
 	if (Error::IsIssued()) return Value::nil();
+	bool stickyFlag = argument.IsSet(Gurax_Symbol(sticky));
+	bool stickyFlagTop = stickyFlag || argument.IsSet(Gurax_Symbol(sticky_at_top));
+	bool stickyFlagBtm = stickyFlag || argument.IsSet(Gurax_Symbol(sticky_at_btm));
 	// Function body
+	RefPtr<Iterator> pIterator;
+	if (valueTypedOwner.GetSize() >= 2) {
+		pIterator.reset(new Iterator_PingPong(valueTypedOwner.GetValueOwnerReference(), n,
+											  stickyFlagTop, stickyFlagBtm));
+	} else if (n < 0) {
+		pIterator.reset(new Iterator_Const(valueTypedOwner.GetValueOwner().front()->Reference()));
+	} else {
+		pIterator.reset(new Iterator_ConstN(valueTypedOwner.GetValueOwner().front()->Reference(), n));
+	}
 	return argument.ReturnIterator(processor, pIterator.release());
-#endif
-	return Value::nil();
 }
 
 // Iterator#Print(stream?:Stream:w):void

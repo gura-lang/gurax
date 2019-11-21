@@ -539,27 +539,31 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Pingpong
+// Iterator_PingPong
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Pingpong : public Iterator {
+class GURAX_DLLDECLARE Iterator_PingPong : public Iterator {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_Pingpong");
+	Gurax_MemoryPoolAllocator("Iterator_PingPong");
 public:
 	ValueOwner& GetValueOwner() { return *_pValueOwner; }
 	const ValueOwner& GetValueOwner() const { return *_pValueOwner; }
 private:
 	RefPtr<ValueOwner> _pValueOwner;
-	size_t _cnt;
+	Int _cnt;
 	bool _stickyFlagTop, _stickyFlagBtm;
 	size_t _idx;
+	bool _forwardFlag;
 public:
-	Iterator_Pingpong(ValueOwner* pValueOwner, size_t cnt, bool stickyFlagTop, bool stickyFlagBtm) :
-		_pValueOwner(pValueOwner), _cnt(cnt), _stickyFlagTop(stickyFlagTop), _stickyFlagBtm(stickyFlagBtm), _idx(0) {}
+	Iterator_PingPong(ValueOwner* pValueOwner, Int cnt, bool stickyFlagTop, bool stickyFlagBtm) :
+		_pValueOwner(pValueOwner), _cnt(cnt), _stickyFlagTop(stickyFlagTop), _stickyFlagBtm(stickyFlagBtm),
+		_idx(0), _forwardFlag(true) {}
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
-	virtual size_t GetLength() const override { return GetValueOwner().size(); }
+	virtual Flags GetFlags() const override {
+		return (_cnt < 0)? (Flag::Infinite | Flag::LenUndetermined) : (Flag::Finite | Flag::LenDetermined);
+	}
+	virtual size_t GetLength() const override { return (_cnt < 0)? -1 : _cnt; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

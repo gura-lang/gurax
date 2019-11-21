@@ -475,19 +475,35 @@ String Iterator_Offset::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Pingpong
+// Iterator_PingPong
 //------------------------------------------------------------------------------
-Value* Iterator_Pingpong::DoNextValue()
+Value* Iterator_PingPong::DoNextValue()
 {
 	const ValueOwner& valueOwner = GetValueOwner();
-	if (_idx >= valueOwner.size()) return nullptr;
-	return valueOwner[_idx++]->Reference();
+	if (_cnt >= 0 && _idxCur >= _cnt) return nullptr;
+	RefPtr<Value> pValue(valueOwner[_idx]->Reference());
+	if (_forwardFlag) {
+		if (_idx + 1 == valueOwner.size()) {
+			if (!_stickyFlagBtm) _idx--;
+			_forwardFlag = false;
+		} else {
+			_idx++;
+		}
+	} else {
+		if (_idx == 0) {
+			if (!_stickyFlagTop) _idx++;
+			_forwardFlag = true;
+		} else {
+			_idx--;
+		}
+	}
+	return pValue.release();
 }
 
-String Iterator_Pingpong::ToString(const StringStyle& ss) const
+String Iterator_PingPong::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("Pingpong:n=%zu", GetValueOwner().size());
+	str.Printf("PingPong:n=%zu", GetValueOwner().size());
 	return str;
 }
 
