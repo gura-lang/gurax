@@ -214,3 +214,8 @@ Base(1, 2, 3).Format() .. 1, 2, 3, EXT
 Derive1(11, 22, 33).Format() .. 11, 22, 33, EXT
 Derive2(22, 33).Format() .. 11, 22, 33, EXT
 Derive3(111).Format() .. 111, 222, 333, EXT
+======== Post-definition of method ========
+String.Test .. String#Test()
+'Hello'.Test() .. Hello:5
+A.Test .. A#Test()
+a.Test() .. first second third
