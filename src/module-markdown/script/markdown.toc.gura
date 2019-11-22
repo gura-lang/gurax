@@ -1,0 +1,109 @@
+#!/usr/bin/env gurax
+//=============================================================================
+// markdown toc renderer
+//=============================================================================
+import(markdown) {*}
+
+Renderer@toc = class {
+	__init__(handler:function) = {
+		this.handler = handler
+		this.text = nil
+		this.indices = dim(6) {0}
+	}
+	Render(doc:Document):void = {
+		this.RenderItem(doc.root)
+	}
+	RenderItem(item:Item):map:void = {
+		if (item.type == `root) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `h1) {
+			this.indices[0] += 1
+			this.indices[1..5] = 0
+			this.text = ''
+			this.RenderItem(item.children)
+			this.handler(0, this.indices, this.MakeAnchorName([this.indices[0]]), this.text)
+			this.text = nil
+		} elsif (item.type == `h2) {
+			this.indices[1] += 1
+			this.indices[2..5] = 0
+			this.text = ''
+			this.RenderItem(item.children)
+			this.handler(1, this.indices, this.MakeAnchorName(this.indices[0..1]), this.text)
+			this.text = nil
+		} elsif (item.type == `h3) {
+			this.indices[2] += 1
+			this.indices[3..5] = 0
+			this.text = ''
+			this.RenderItem(item.children)
+			this.handler(2, this.indices, this.MakeAnchorName(this.indices[0..2]), this.text)
+			this.text = nil
+		} elsif (item.type == `h4) {
+			this.indices[3] += 1
+			this.indices[4..5] = 0
+			this.text = ''
+			this.RenderItem(item.children)
+			this.handler(3, this.indices, this.MakeAnchorName(this.indices[0..3]), this.text)
+			this.text = nil
+		} elsif (item.type == `h5) {
+			this.indices[4] += 1
+			this.indices[5] = 0
+			this.text = ''
+			this.RenderItem(item.children)
+			this.handler(4, this.indices, this.MakeAnchorName(this.indices[0..4]), this.text)
+			this.text = nil
+		} elsif (item.type == `h6) {
+			this.indices[5] += 1
+			this.text = ''
+			this.RenderItem(item.children)
+			this.handler(5, this.indices, this.MakeAnchorName(this.indices[0..5]), this.text)
+			this.text = nil
+		} elsif (item.type == `p) {
+			// nothing to do
+		} elsif (item.type == `blockquote) {
+			// nothing to do
+		} elsif (item.type == `em) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `strong) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `strike) {
+			//this.RenderItem(item.children)
+		} elsif (item.type == `codeblock) {
+			// nothing to do
+		} elsif (item.type == `ol) {
+			// nothing to do
+		} elsif (item.type == `ul) {
+			// nothing to do
+		} elsif (item.type == `li) {
+			// nothing to do
+		} elsif (item.type == `line) {
+			// nothing to do
+		} elsif (item.type == `a) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `img) {
+			// nothing to do
+		} elsif (item.type == `text) {
+			if (this.text) {
+				this.text += item.text
+			}
+		} elsif (item.type == `comment) {
+			// nothing to do
+		} elsif (item.type == `code) {
+			if (this.text) {
+				this.text += item.text
+			}
+		} elsif (item.type == `entity) {
+			// nothing to do
+		} elsif (item.type == `tag) {
+			// nothing to do
+		} elsif (item.type == `hr) {
+			// nothing to do
+		} elsif (item.type == `br) {
+			// nothing to do
+		}
+	}
+	MakeAnchorName(indices[]:number) = MakeAnchorNameDef(indices)
+}
+
+Document.render@toc() {block} = {
+	Renderer@toc(block).Render(this)
+}

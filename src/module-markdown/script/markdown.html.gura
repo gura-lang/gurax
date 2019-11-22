@@ -19,7 +19,6 @@ Renderer = class {
 		this.RenderItem(doc.root)
 	}
 	RenderItem(item:Item):map:void = {
-		Println(item.type)
 		!this.OnRenderItemPre(item) && return
 		if (item.type == `root) {
 			this.RenderItem(item.children)
@@ -220,7 +219,7 @@ Renderer = class {
 
 Document.Render@html(
 		out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
-	easyFormatFlag && tR'''
+	easyFormatFlag && R'''
 	<html>
 	<head>
 	<!-- Required meta tags -->

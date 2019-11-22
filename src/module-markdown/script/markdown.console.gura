@@ -1,0 +1,255 @@
+#!/usr/bin/env gurax
+//=============================================================================
+// markdown Console renderer
+//=============================================================================
+import(markdown) {*}
+
+TableCol = struct(text:string, align:symbol)
+TableRow = struct(headerFlag:Bool, cols[]:TableCol)
+
+JoinText(item:Item):map = {
+	if (item.children) {
+		JoinText(item.children).join()
+	} else {
+		item.text
+	}
+}
+
+Renderer@console = class {
+	__init__(colorFlag:Bool = true) = {
+		[this.wdScreen, this.htScreen] = conio.getwinsize()
+		if (this.wdScreen == 0) {
+			this.wdScreen = 80
+		}
+		this.wdScreen -= 1
+		if (this.htScreen == 0) {
+			this.htScreen = 25
+		}
+		this.indexStack = []
+		if (colorFlag) {
+			this.setcolor = conio.setcolor
+		} else {
+			this.setcolor(color:color) {block} = block()
+		}
+	}
+	Render(doc:Document):void = {
+		this.firstFlag = true
+		this.RenderItem(doc.root)
+	}
+	RenderItem(item:Item):map:void = {
+		if (item.type == `root) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `h1) {
+			this.PrintlnConditional()
+			this.setcolor(`green) {
+				this.RenderItem(item.children)
+			}
+			Println()
+		} elsif (item.type == `h2) {
+			this.PrintlnConditional()
+			this.setcolor(`green) {
+				this.RenderItem(item.children)
+			}
+			Println()
+		} elsif (item.type == `h3) {
+			this.PrintlnConditional()
+			this.setcolor(`green) {
+				this.RenderItem(item.children)
+			}
+			Println()
+		} elsif (item.type == `h4) {
+			this.PrintlnConditional()
+			this.setcolor(`green) {
+				this.RenderItem(item.children)
+			}
+			Println()
+		} elsif (item.type == `h5) {
+			this.PrintlnConditional()
+			this.setcolor(`green) {
+				this.RenderItem(item.children)
+			}
+			Println()
+		} elsif (item.type == `h6) {
+			this.PrintlnConditional()
+			this.setcolor(`green) {
+				this.RenderItem(item.children)
+			}
+			Println()
+		} elsif (item.type == `p) {
+			this.PrintlnConditional()
+			this.RenderItem(item.children)
+			Println()
+		} elsif (item.type == `blockquote) {
+			this.PrintlnConditional()
+			this.RenderItem(item.children)
+			Println()
+		} elsif (item.type == `em) {
+			this.setcolor(`red) {
+				this.RenderItem(item.children)
+			}
+		} elsif (item.type == `strong) {
+			this.setcolor(`red) {
+				this.RenderItem(item.children)
+			}
+		} elsif (item.type == `strike) {
+			this.setcolor(`gray) {
+				this.RenderItem(item.children)
+			}
+		} elsif (item.type == `codeblock) {
+			this.PrintlnConditional()
+			this.setcolor(`blue) {
+				this.RenderItem(item.children)
+			}
+		} elsif (item.type == `ol) {
+			this.PrintlnConditional()
+			this.indexStack.add(0)
+			this.RenderItem(item.children)
+			this.indexStack.erase(-1)
+		} elsif (item.type == `ul) {
+			this.PrintlnConditional()
+			this.indexStack.add(nil)
+			this.RenderItem(item.children)
+			this.indexStack.erase(-1)
+		} elsif (item.type == `li) {
+			(this.indexStack.len() > 0) && Print('  ' * (this.indexStack.len() - 1))
+			index = this.indexStack[-1]
+			if (index) {
+				Printf('%d. ', index + 1)
+				this.indexStack[-1] += 1
+			} else {
+				Print('- ')
+			}
+			this.RenderItem(item.children)
+			Println()
+		} elsif (item.type == `line) {
+			Print('|   ')
+			this.RenderItem(item.children)
+			Println()
+		} elsif (item.type == `a) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `img) {
+			Print('[', item.text, ']')
+		} elsif (item.type == `text) {
+			Print(item.text)
+		} elsif (item.type == `comment) {
+			Print(item.text)
+		} elsif (item.type == `code) {
+			this.setcolor(`blue) {
+				Print(item.text)
+			}
+		} elsif (item.type == `entity) {
+			this.setcolor(`black, `white) {
+				Print(item.text.escapehtml())
+			}
+		} elsif (item.type == `tag) {
+			text = item.text.lower()
+			if (text == 'table') {
+				this.RenderTable(item)
+			} elsif (text == 'gura.funcentry') {
+				fmt = if (m = item.attrs.match(r'format="([^\"]+)"')) {m[1]} else {''}
+				Println(fmt)
+				Println('-' * fmt.len())
+				item.children && this.RenderItem(item.children)
+			} else {
+				item.children && this.RenderItem(item.children)
+			}
+		} elsif (item.type == `hr) {
+			Println('--------')
+		} elsif (item.type == `br) {
+			Println()
+		}
+	}
+	PrintlnConditional() = {
+		if (this.firstFlag) {
+			this.firstFlag = false
+		} else {
+			Println()
+		}
+	}
+	RenderTable(item:Item) = {
+		rows = item.children.each():xlist {|item|
+			(item.type != `tag || item.text.lower() != 'tr') && continue
+			headerFlag = false
+			cols = item.children.each():xlist {|item|
+				(item.type != `tag) && continue
+				tagName = item.text.lower()
+				if (tagName == 'th') {
+					headerFlag = true
+				} elsif (tagName == 'td') {
+					// nothing to do
+				} else {
+					continue
+				}
+				TableCol(JoinText(item), item.align)
+			}
+			TableRow(headerFlag, cols)
+		}
+		nCols = rows:*cols:*len().max()
+		rows::cols = rows:*cols::align(nCols, TableCol('', `left)):list
+		widths = repeat(nCols):list {|iCol|
+			rows:*cols:*get(iCol):*text:*len().max()
+		}
+		wdAvailable = this.wdScreen + 1 - nCols // subtract width for vertical bar
+		wdThreshold = int(wdAvailable / nCols)
+		wdSum = widths.sum()
+		if (wdSum > wdAvailable) {
+			widthsShort = widths.filter(widths < wdThreshold)
+			widthsShortSum = widthsShort.sum() || 0
+			widthsLongSum = wdSum - widthsShortSum
+			wdRest = wdAvailable - widthsShortSum
+			if (wdRest < 0) {
+				widthsWk = int(widths * wdAvailable / wdSum)
+			} else {
+				widthsWk = widths.each():list {|width|
+					if (width < wdThreshold) {
+						width
+					} else {
+						width * wdRest / widthsLongSum
+					}
+				}
+			}
+			if ((widthsWk > 0).and()) {
+				widths = widthsWk
+			}
+		}
+		separator = ('-' * widths).join('+')
+		rows.each {|row|
+			textsFolded = row.cols:*text.each():list {|text, i|
+				text.split('\n'):*foldw(widths[i]).flatten().each()
+			}
+			while ((texts = textsFolded:*next()).or()) {
+				//Println(format('%-*s', widths, texts || '').join('|'))
+				Println(this.MakeAlign(texts || '', widths, row.cols:*align).join('|'))
+			}
+			row.headerFlag && Println(separator)
+		}
+	}
+	MakeAlign(str:string, width:number, align:symbol):map:static = {
+		if (align == `left) {
+			str.align(width):left
+		} elsif (align == `center) {
+			str.align(width):center
+		} elsif (align == `right) {
+			str.align(width):right
+		} else {	
+			str.align(width):left
+		}
+	}
+}
+
+Document.render@console(colorFlag:Bool = true) = {
+	Renderer@console(colorFlag).Render(this)
+} %% { `en,
+R'''
+Renders the content of markdown document to the console.
+
+In default, it uses colors to highlight items.
+Specify the argument `colorFlag` with `false` to disable the coloring process.
+'''
+}
+
+/*
+help.presenter('markdown') {|help:help|
+	Document(help.doc.reader()).render@console()
+}
+*/

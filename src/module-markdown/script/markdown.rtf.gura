@@ -1,0 +1,278 @@
+#!/usr/bin/env gurax
+//=============================================================================
+// markdown RTF renderer
+//=============================================================================
+import(markdown) {*}
+
+Renderer@rtf = class {
+	header = R'''
+	{\rtf1\ansi\ansicpg932
+	{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fscript\fcharset0 Menlo-Regular;}
+	{\colortbl;\red255\green255\blue255;\red207\green207\blue207;\red172\green172\blue172;\red191\green191\blue191;}
+	\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh13240\viewkind5
+	'''
+	footer = R'''
+	}
+	'''
+	__init__(out:stream:w, captionIndex:Bool) = {
+		this.out = out
+		this.captionIndex = captionIndex
+		this.indentLeft = 0
+		this.listLevel = 0
+		this.indentPerList = 360
+		this.indentPerQuote = 360
+		this.indices = dim(6) {0}
+	}
+	Render(doc:Document):void = {
+		this.RenderItem(doc.root)
+	}
+	RenderItem(item:Item):map:void = {
+		if (item.type == `root) {
+			this.out.Print(header)
+			this.RenderCoverPage()
+			this.RenderItem(item.children)
+			this.out.Print(footer)
+		} elsif (item.type == `h1) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\sb360\li%d\fi0\b\fs36 ', this.indentLeft)
+			if (this.captionIndex) {
+				this.indices[0] += 1
+				this.indices[1..5] = 0
+				this.out.Printf('%d ', this.indices[0])
+			}
+			this.RenderItem(item.children)
+			this.out.Println(r'\par}')
+		} elsif (item.type == `h2) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\sb180\li%d\fi0\b\fs32 ', this.indentLeft)
+			if (this.captionIndex) {
+				this.indices[1] += 1
+				this.indices[2..5] = 0
+				this.out.Printf('%d.%d ', this.indices[0..1]*)
+			}
+			this.RenderItem(item.children)
+			this.out.Println(r'\par}')
+		} elsif (item.type == `h3) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs28 ', this.indentLeft)
+			if (this.captionIndex) {
+				this.indices[2] += 1
+				this.indices[3..5] = 0
+				this.out.Printf('%d.%d.%d ', this.indices[0..2]*)
+			}
+			this.RenderItem(item.children)
+			this.out.Println(r'\par}')
+		} elsif (item.type == `h4) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs24 ', this.indentLeft)
+			if (this.captionIndex) {
+				this.indices[3] += 1
+				this.indices[4..5] = 0
+				this.out.Printf('%d.%d.%d.%d ', this.indices[0..3]*)
+			}
+			this.RenderItem(item.children)
+			this.out.Println(r'\par}')
+		} elsif (item.type == `h5) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs20 ', this.indentLeft)
+			if (this.captionIndex) {
+				this.indices[4] += 1
+				this.indices[5] = 0
+				this.out.Printf('%d.%d.%d.%d.%d ', this.indices[0..4]*)
+			}
+			this.RenderItem(item.children)
+			this.out.Println(r'\par}')
+		} elsif (item.type == `h6) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs20 ', this.indentLeft)
+			if (this.captionIndex) {
+				this.indices[5] += 1
+				this.out.Printf('%d.%d.%d.%d.%d.%d ', this.indices[0..5]*)
+			}
+			this.RenderItem(item.children)
+			this.out.Println(r'\par}')
+		} elsif (item.type == `p) {
+			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\fs20 ', this.indentLeft)
+			this.RenderItem(item.children)
+			this.out.Println()
+			this.out.Println(r'\par}')
+		} elsif (item.type == `blockquote) {
+			this.indentLeft += this.indentPerQuote
+			this.RenderItem(item.children)
+			this.out.Println()
+			this.indentLeft -= this.indentPerQuote
+		} elsif (item.type == `em) {
+			this.out.Print(r'{\i ')
+			this.RenderItem(item.children)
+			this.out.Print(r'}')
+		} elsif (item.type == `strong) {
+			this.out.Print(r'{\b ')
+			this.RenderItem(item.children)
+			this.out.Print(r'}')
+		} elsif (item.type == `strike) {
+			this.out.Print(r'{\strike ')
+			this.RenderItem(item.children)
+			this.out.Print(r'}')
+		} elsif (item.type == `codeblock) {
+			this.out.Print(R'''
+			{\pard\itap1\trowd \taflags1 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+			\clvertalc \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt150\clpadb150\clpadl150\clpadr150 \gaph\cellx8640
+			\f1\fs20
+			''')
+			item.children.each {|itemChild, i|
+				(i > 0) && this.out.Println(r'\line')
+				this.RenderItem(itemChild.children)
+			}
+			this.out.Println(r'\cell \lastrow\row\par}')
+		} elsif (item.type == `ol) {
+			this.RenderListItem(item)
+		} elsif (item.type == `ul) {
+			this.RenderListItem(item)
+		} elsif (item.type == `li) {
+			// nothing to do here
+		} elsif (item.type == `line) {
+			this.RenderItem(item.children)
+			this.out.Println(r'\line')
+		} elsif (item.type == `a) {
+			this.out.Println(r'{\field{\*\fldinst{HYPERLINK "%s"}}{\fldrslt{\ul' % this.EscapeText(item.url))
+			this.RenderItem(item.children)
+			this.out.Println(r'}}}')
+		} elsif (item.type == `img) {
+			//this.out.Print('<img')
+			//item.url && this.out.Print(' src="', item.url.encodeuri(), '"')
+			//item.text && this.out.Print(' alt="', item.text.escapehtml(), '"')
+			//item.title && this.out.Print(' title="', item.title.escapehtml(), '"')
+			//this.out.Print('>')
+		} elsif (item.type == `text) {
+			this.out.Print(this.EscapeText(item.text))
+		} elsif (item.type == `comment) {
+			this.out.Print(item.text)
+		} elsif (item.type == `code) {
+			this.out.Print(r'{\f1\fs20 ')
+			this.out.Print(this.EscapeText(item.text))
+			this.out.Print(r'}')
+		} elsif (item.type == `entity) {
+			this.out.Printf(r'\u%d?', 169)
+		} elsif (item.type == `tag) {
+			if (item.text == 'gura.funcentry') {
+				fmt = if (m = item.attrs.match(r'format="([^\"]+)"')) {m[1]} else {''}
+				this.out.Printf(r'{\pard\ql\f1\sa180\li%d\fi0\b\fs20 ', this.indentLeft)
+				this.out.Print(this.EscapeText(fmt.unescapehtml()))
+				this.out.Println(r'\par}')
+				if (item.children) {
+					this.indentLeft += this.indentPerQuote
+					this.RenderItem(item.children)
+					this.out.Println()
+					this.indentLeft -= this.indentPerQuote
+				}
+			} elsif (item.text == 'gura.propentry') {
+				
+			} elsif (item.text == 'table') {
+				this.RenderTable(item)
+			} elsif (item.text == 'code') {
+				this.out.Print(r'{\f1\fs20 ')
+				item.children && this.RenderItem(item.children)
+				this.out.Print(r'}')
+			} elsif (item.text == 'em') {
+				this.out.Print(r'{\i ')
+				item.children && this.RenderItem(item.children)
+				this.out.Print(r'}')
+			} elsif (item.text == 'strong') {
+				this.out.Print(r'{\b ')
+				item.children && this.RenderItem(item.children)
+				this.out.Print(r'}')
+			} else {
+				item.children && this.RenderItem(item.children)
+			}
+		} elsif (item.type == `hr) {
+			this.out.Printf(r'{\pard\qc\f0\sa180\li%d\fi0\emdash\emdash\emdash\emdash\emdash\par}' '\n',
+							this.indentLeft)
+		} elsif (item.type == `br) {
+			this.out.Println(r'\line')
+		}
+	}
+	EscapeText(text:string):static = {
+		text.replace('\\', '\\\\').replace('{', r'\{').replace('}', r'\}')
+	}
+	RenderListItem(item:Item) = {
+		parRenderFlag = false
+		this.listLevel += 1
+		item.children.each {|itemChild, i|
+			(i > 0 && !parRenderFlag) && this.out.Println(r'\par}')
+			if (item.type == `ul) {
+				this.out.Print(r'{\pard\ql\f0\sa0\li%d\fi-360\fs20 \bullet \tx360\tab ' % \
+							[this.indentLeft + this.indentPerList * this.listLevel + 100])
+			} else { // item.type == `ol
+				this.out.Print(r'{\pard\ql\f0\sa0\li%d\fi-360\fs20 %d. \tx360\tab ' % \
+							[this.indentLeft + this.indentPerList * this.listLevel + 100, i + 1])
+			}
+			parRenderFlag = false
+			itemChild.children.each {|itemDescend, i|
+				if (itemDescend.type == `ol || itemDescend.type == `ul) {
+					this.out.Println(r'\sa180\par}')
+					parRenderFlag = true
+				}
+				this.RenderItem(itemDescend)
+			}
+			
+		}
+		!parRenderFlag && this.out.Println(r'\sa180\par}')
+		this.listLevel -= 1
+	}
+	RenderTable(item:Item) = {
+		rows = item.children.each():xlist {|item|
+			(item.type != `tag || item.text.lower() != 'tr') && continue
+			headerFlag = false
+			item.children.each():xlist {|item|
+				(item.type != `tag) && continue
+				tagName = item.text.lower()
+				if (tagName == 'th') {
+					headerFlag = true
+				} elsif (tagName == 'td') {
+					// nothing to do
+				} else {
+					continue
+				}
+				item
+			}
+		}
+		alignChars = %{`left = 'L', `right = 'R', `center = 'C'}
+		aligns = rows[0]::align
+		alignSpecifier = [
+			alignChars.get(aligns.head(aligns.len() - 1), 'L')
+			alignChars.get(aligns.last(), 'J')
+		].join('|')
+		this.out.Println()
+		this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\fs20 ', this.indentLeft)
+		rows.each {|cols, iRow|
+			headerFlag = false
+			wdCols = dim(cols.len()) {2000}
+			this.out.Println(r'\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil')
+			x = 0
+			wdCols.each {|wdCol|
+				this.out.Printf(r'\clvertalc \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadl100 \clpadr100 \gaph\cellx%d' '\n', x)
+				//this.out.Printf(r'\clvertalc \clshdrawnil \clwWidth%d\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadl100 \clpadr100 \gaph\cellx%d' '\n', wdCol, x)
+				x += wdCol
+			}
+			cols.each {|item, iCol|
+				if (iCol > 0) { this.out.Println() }
+				this.out.Print(R'''
+				\pard\intbl\itap1
+				\cf0 ''')
+				if (item.text.lower() == 'th') {
+					this.RenderItem(item)
+					headerFlag = true
+				} else {
+					this.RenderItem(item)
+				}
+				this.out.Print(r'\cell')
+			}
+			if (iRow < rows.len() - 1) {
+				this.out.Println(r' \row')
+			} else {
+				this.out.Println(r' \lastrow\row')
+			}
+		}
+		this.out.Println(r'\par}')
+	}
+	RenderCoverPage() = {}
+}
+
+Document.render@rtf(out?:stream:w, captionIndex:Bool = false) = {
+	out = out || sys.stdout
+	Renderer@rtf(out, captionIndex).Render(this)
+}

@@ -1,0 +1,318 @@
+#!/usr/bin/env gurax
+//=============================================================================
+// markdown TeX renderer
+//=============================================================================
+import(markdown) {*}
+
+Renderer@tex = class {
+	tmpl@header = tR'''
+	\documentclass{report}
+	${if (!_this.title.isempty())}
+	\title{${_this.title}}
+	${end}
+	${if (!_this.author.isempty())}
+	\author{${_this.author}}
+	${end}
+	${if (!_this.date.isempty())}
+	\date{${_this.date}}
+	${end}
+	\usepackage{fancyvrb}
+	\usepackage{tabulary}
+	\usepackage[dvipdfmx,setpagesize=false]{hyperref}
+	\usepackage{listings}
+	\usepackage{enumitem}
+	\lstset{
+	basicstyle=\small\ttfamily,
+	columns=flexible,
+	breaklines=true
+	}
+	\setlength{\textwidth}{145mm}
+	\setlength{\oddsidemargin}{35mm}
+	\addtolength{\oddsidemargin}{-1in}
+	\setlength{\parindent}{0mm}
+	\setlength{\parskip}{2mm}
+	\setlength{\textheight}{244mm}
+	\setlength{\headheight}{0mm}
+	\setlength{\headsep}{25mm}
+	\setlength{\footskip}{15mm}
+	\addtolength{\topmargin}{-1in}
+	\begin{document}
+	${if (!_this.title.isempty())}
+	\maketitle
+	\tableofcontents
+	${end}
+	'''
+	tmpl@footer = tR'''
+	\end{document}
+	'''
+	__init__(out:stream:w, title:string, author:string, date:string) = {
+		this.out = out
+		this.title = title
+		this.author = author
+		this.date = date
+		this.escapeTextFlag = true
+		this.indentLeft = 0
+		this.insideTableFlag = false
+		this.idxItem = 0
+		this.listType = nil
+	}
+	Render(doc:Document):void = {
+		this.RenderItem(doc.root)
+	}
+	RenderItem(item:Item):map:void = {
+		!this.OnRenderItemPre(item) && return
+		if (item.type == `root) {
+			_this = this
+			tmpl@header.render(this.out)
+			this.RenderItem(item.children)
+			tmpl@footer.render(this.out)
+		} elsif (item.type == `h1) {
+			this.out.Print(r'\chapter{')
+			this.RenderItem(item.children)
+			this.out.Println(r'}')
+		} elsif (item.type == `h2) {
+			this.out.Print(r'\section{')
+			this.RenderItem(item.children)
+			this.out.Println(r'}')
+		} elsif (item.type == `h3) {
+			this.out.Print(r'\subsection{')
+			this.RenderItem(item.children)
+			this.out.Println(r'}')
+		} elsif (item.type == `h4) {
+			this.out.Print(r'\subsubsection{')
+			this.RenderItem(item.children)
+			this.out.Println(r'}')
+		} elsif (item.type == `h5) {
+			this.out.Print(r'\paragraph{')
+			this.RenderItem(item.children)
+			this.out.Println(r'}')
+		} elsif (item.type == `h6) {
+			this.out.Print(r'\paragraph{')
+			this.RenderItem(item.children)
+			this.out.Println(r'}')
+		} elsif (item.type == `p) {
+			this.RenderItem(item.children)
+			this.out.Println()
+			this.out.Println()
+		} elsif (item.type == `blockquote) {
+			this.out.Println(r'\begin{quotation}')
+			this.RenderItem(item.children)
+			this.out.Println(r'\end{quotation}')
+		} elsif (item.type == `em) {
+			this.out.Print(r'{\it ')
+			this.RenderItem(item.children)
+			this.out.Print(r'}')
+		} elsif (item.type == `strong) {
+			this.out.Print(r'{\bf ')
+			this.RenderItem(item.children)
+			this.out.Print(r'}')
+		} elsif (item.type == `strike) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `codeblock) {
+			this.out.Printf(
+					r'\begin{lstlisting}[frame=single,aboveskip=\bigskipamount,' \
+					r'xleftmargin=%dpt,xrightmargin=4pt]' '\n', this.indentLeft + 4)
+			this.escapeTextFlag = false
+			this.RenderItem(item.children)
+			this.escapeTextFlag = true
+			this.out.Println(r'\end{lstlisting}')
+		} elsif (item.type == `ol) {
+			if (this.insideTableFlag) {
+				this.idxItem = 0
+				this.listType = `ol
+				this.RenderItem(item.children)
+				this.out.Println()
+			} else {
+				this.out.Println(r'\begin{enumerate}[itemsep=0pt]')
+				this.RenderItem(item.children)
+				this.out.Println(r'\end{enumerate}')
+			}
+		} elsif (item.type == `ul) {
+			if (this.insideTableFlag) {
+				this.idxItem = 0
+				this.listType = `ul
+				this.RenderItem(item.children)
+				this.out.Println()
+			} else {
+				this.out.Println(r'\begin{itemize}[itemsep=0pt]')
+				this.RenderItem(item.children)
+				this.out.Println(r'\end{itemize}')
+			}
+		} elsif (item.type == `li) {
+			if (this.insideTableFlag) {
+				(this.idxItem > 0) && this.out.Println(r'\newline')
+				this.idxItem += 1
+				if (this.listType == `ol) {
+					this.out.Printf(r'%d. ', this.idxItem)
+				} else {
+					this.out.Print(r'$\bullet$ ')
+				}
+				this.RenderItem(item.children)
+				this.out.Println()
+			} else {
+				this.out.Print(r'\item ')
+				this.RenderItem(item.children)
+				this.out.Println()
+			}
+		} elsif (item.type == `line) {
+			this.RenderItem(item.children)
+			this.out.Println()
+		} elsif (item.type == `a) {
+			this.RenderItem(item.children)
+		} elsif (item.type == `img) {
+			
+		} elsif (item.type == `text) {
+			if (this.escapeTextFlag) {
+				this.out.Print(this.EscapeText(item.text))
+			} else {
+				this.out.Print(item.text)
+			}
+		} elsif (item.type == `comment) {
+			// nothing to do
+		} elsif (item.type == `code) {
+			this.out.Print(r'{\tt ')
+			this.out.Print(this.EscapeText(item.text))
+			this.out.Print(r'}')
+		} elsif (item.type == `entity) {
+			if (item.text == 'hellip') {
+				this.out.Print(r'\textellipsis ')
+			}
+			//this.out.Print(r'\u%d?', 169)
+		} elsif (item.type == `tag) {
+			tagName = item.text.lower()
+			if (item.text == 'gura.funcentry') {
+				fmt = if (m = item.attrs.match(r'format="([^\"]+)"')) {m[1]} else {''}
+				this.out.Println(r'\begin{lstlisting}[aboveskip=\bigskipamount,belowskip=0pt]')
+				this.out.Println(fmt.unescapehtml())
+				this.out.Println(r'\end{lstlisting}')
+				if (item.children) {
+					this.out.Println(r'{\setlength{\leftskip}{16pt}')
+					this.indentLeft += 16
+					this.RenderItem(item.children)
+					this.indentLeft -= 16
+					this.out.Println(r'\par}')
+					this.out.Println()
+				}
+			} elsif (item.text == 'gura.propentry') {
+				fmt = if (m = item.attrs.match(r'format="([^\"]+)"')) {m[1]} else {''}
+				typeName = if (m = item.attrs.match(r'type="([^\"]+)"')) {m[1]} else {''}
+				accessMode = if (m = item.attrs.match(r'access="([^\"]+)"')) {m[1]} else {''}
+				this.out.Println(r'\bigskip')
+				this.out.Printf(r'{\small\tt %s} \ldots {\small{\tt %s} [%s]}' '\n\n',
+								this.EscapeText(fmt.unescapehtml()),
+								this.EscapeText(typeName.unescapehtml()),
+								this.EscapeText(accessMode.unescapehtml()))
+				if (item.children) {
+					this.out.Println(r'{\setlength{\leftskip}{16pt}')
+					this.indentLeft += 16
+					this.RenderItem(item.children)
+					this.indentLeft -= 16
+					this.out.Println(r'\par}')
+					this.out.Println()
+				}
+			} elsif (tagName == 'table') {
+				this.insideTableFlag = true
+				this.RenderTable(item)
+				this.insideTableFlag = false
+			} elsif (tagName == 'code') {
+				this.out.Print(r'{\tt ')
+				item.children && this.RenderItem(item.children)
+				this.out.Print(r'}')
+			} elsif (tagName == 'em') {
+				this.out.Print(r'{\it ')
+				item.children && this.RenderItem(item.children)
+				this.out.Print(r'}')
+			} elsif (tagName == 'strong') {
+				this.out.Print(r'{\bf ')
+				item.children && this.RenderItem(item.children)
+				this.out.Print(r'}')
+			} else {
+				item.children && this.RenderItem(item.children)
+			}
+		} elsif (item.type == `hr) {
+			
+		} elsif (item.type == `br) {
+			this.out.Println(r'\newline')
+		}
+		this.OnRenderItemPost(item)
+	}
+	replaceTbl = [
+		'\\', r'$\backslash$',
+		'#', r'\#',
+		'$', r'\$',
+		'%', r'\%',
+		'&', r'\&',
+		'_', r'\_',
+		'{', r'\{',
+		'}', r'\}',
+		'^', r'$\wedge$',
+		'*', r'$\ast$'
+	]
+	EscapeText(text:string):static = text.replaces(replaceTbl)
+	RenderTable(item:Item) = {
+		rows = item.children.each():xlist {|item|
+			(item.type != `tag || item.text.lower() != 'tr') && continue
+			headerFlag = false
+			item.children.each():xlist {|item|
+				(item.type != `tag) && continue
+				tagName = item.text.lower()
+				if (tagName == 'th') {
+					headerFlag = true
+				} elsif (tagName == 'td') {
+					// nothing to do
+				} else {
+					continue
+				}
+				item
+			}
+		}
+		alignChars = %{`left = 'L', `right = 'R', `center = 'C'}
+		aligns = rows[0]::align
+		alignSpecifier = [
+			alignChars.get(aligns.head(aligns.len() - 1), 'L')
+			alignChars.get(aligns.last(), 'J')
+		].join('|')
+		this.out.Println()
+		this.out.Printf(R'''
+		\medskip
+		\begin{center}
+		\begin{tabulary}{\textwidth}{|%s|} \hline
+		''', alignSpecifier)
+		rows.each {|cols, iRow|
+			headerFlag = false
+			cols.each {|item, iCol|
+				(iCol > 0) && this.out.Print(' & ')
+				if (item.text.lower() == 'th') {
+					this.out.Print(r'\textbf{')
+					this.RenderItem(item)
+					this.out.Print(r'}')
+					headerFlag = true
+				} else {
+					this.RenderItem(item)
+				}
+			}
+			if (headerFlag || iRow == rows.len() - 1) {
+				this.out.Println(r' \\ \hline')
+			} else {
+				this.out.Println(r' \\')
+			}
+		}
+		this.out.Print(R'''
+		\end{tabulary}
+		\end{center}
+		\medskip
+		''')
+	}
+	OnRenderItemPre(item:Item) = true
+	OnRenderItemPost(item:Item):void = nil
+}
+
+Document.render@tex(out:stream:w, title:string = '', author:string = '', date:string = '') = {
+	Renderer@tex(out, title, author, date).Render(this)
+}
+/*
+%% { `en,
+R'''
+'''
+}
+*/
