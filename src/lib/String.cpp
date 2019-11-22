@@ -413,6 +413,159 @@ String String::MakeQuoted(const char* str, bool surroundFlag)
 	return strRtn;
 }
 
+String String::EncodeURI(const char* str)
+{
+	String strRtn;
+	for (const char* p = str; *p != '\0'; p++) {
+		char ch = *p;
+		if (String::IsURIC(ch)) {
+			strRtn += ch;
+		} else {
+			char buff[8];
+			::sprintf(buff, "%%%02X", static_cast<UChar>(ch));
+			strRtn += buff;
+		}
+	}
+	return strRtn;
+}
+
+String String::DecodeURI(const char* str)
+{
+	String strRtn;
+	enum class Stat { Normal, Percent, } stat = Stat::Normal;
+	int nNibbles = 0;
+	UChar data = 0x00;
+	for (const char *p = str; *p != '\0'; p++) {
+		char ch = *p;
+		if (stat == Stat::Normal) {
+			if (ch == '%') {
+				nNibbles = 0;
+				data = 0x00;
+				stat = Stat::Percent;
+			} else {
+				strRtn += ch;
+			}
+		} else if (stat == Stat::Percent) {
+			if ('0' <= ch && ch <= '9') {
+				data = (data << 4) + (ch - '0');
+			} else if ('A' <= ch && ch <= 'F') {
+				data = (data << 4) + (ch - 'A' + 10);
+			} else if ('a' <= ch && ch <= 'f') {
+				data = (data << 4) + (ch - 'a' + 10);
+			}
+			nNibbles++;
+			if (nNibbles == 2) {
+				strRtn += static_cast<char>(data);
+				stat = Stat::Normal;
+			}
+		}
+	}
+	return strRtn;
+}
+
+#if 0
+String EncodeURI(const char *str)
+{
+	String rtn;
+	EncodeURI(rtn, str);
+	return rtn;
+}
+
+void EncodeURI(String &strDst, const char *str, size_t len)
+{
+	for (const char *p = str; len > 0; p++, len--) {
+		char ch = *p;
+		if (IsURIC(ch)) {
+			strDst += ch;
+		} else {
+			char buff[8];
+			::sprintf(buff, "%%%02X", static_cast<UChar>(ch));
+			strDst += buff;
+		}
+	}
+}
+
+String EncodeURI(const char *str, size_t len)
+{
+	String rtn;
+	EncodeURI(rtn, str, len);
+	return rtn;
+}
+
+String DecodeURI(const char *str)
+{
+	String rtn;
+	DecodeURI(rtn, str);
+	return rtn;
+}
+
+void EscapeHTML(String &strDst, const char *str, bool quoteFlag)
+{
+	for (const char *p = str; *p != '\0'; p++) {
+		char ch = *p;
+		if (ch == '&') {
+			strDst += "&amp;";
+		} else if (ch == '>') {
+			strDst += "&gt;";
+		} else if (ch == '<') {
+			strDst += "&lt;";
+		} else if (quoteFlag && ch == '"') {
+			strDst += "&quot;";
+		} else {
+			strDst += ch;
+		}
+	}
+}
+
+String EscapeHTML(const char *str, bool quoteFlag)
+{
+	String rtn;
+	EscapeHTML(rtn, str, quoteFlag);
+	return rtn;
+}
+
+void UnescapeHTML(String &strDst, const char *str)
+{
+	enum {
+		STAT_Normal, STAT_Escape,
+	} stat = STAT_Normal;
+	String field;
+	for (const char *p = str; *p != '\0'; p++) {
+		char ch = *p;
+		if (stat == STAT_Normal) {
+			if (ch == '&') {
+				field.clear();
+				stat = STAT_Escape;
+			} else {
+				strDst += ch;
+			}
+		} else if (stat == STAT_Escape) {
+			if (ch == ';') {
+				if (field == "amp") {
+					strDst += '&';
+				} else if (field == "gt") {
+					strDst += '>';
+				} else if (field == "lt") {
+					strDst += '<';
+				} else if (field == "quot") {
+					strDst += '"';
+				}
+				stat = STAT_Normal;
+			} else {
+				field += ch;
+			}
+		}
+	}
+}
+
+String UnescapeHTML(const char *str)
+{
+	String rtn;
+	UnescapeHTML(rtn, str);
+	return rtn;
+}
+#endif
+
 Double String::ToNumber(const char* str, bool* pSuccessFlag)
 {
 	Double num;

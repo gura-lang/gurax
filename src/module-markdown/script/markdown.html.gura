@@ -19,8 +19,8 @@ Renderer = class {
 		this.RenderItem(doc.root)
 	}
 	RenderItem(item:Item):map:void = {
+		Println(item.type)
 		!this.OnRenderItemPre(item) && return
-		Println(item.children)
 		if (item.type == `root) {
 			this.RenderItem(item.children)
 		} elsif (item.type == `h1) {

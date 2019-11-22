@@ -166,6 +166,16 @@ public:
 	static String MakeQuoted(const char* str, bool surroundFlag);
 	String MakeQuoted(bool surroundFlag) const { return MakeQuoted(c_str(), surroundFlag); }
 public:
+	static String EncodeURI(const char* str);
+	String EncodeURI() const { return EncodeURI(c_str()); }
+	static String DecodeURI(const char* str);
+	String DecodeURI() const { return DecodeURI(c_str()); }
+public:
+	static String EscapeHTML(const char* str, bool quoteFlag);
+	String EscapeHTML(bool quoteFlag) const { return EscapeHTML(c_str(), quoteFlag); }
+	static String UnescapeHTML(const char* str);
+	String UnescapeHTML(bool quoteFlag) const { return UnescapeHTML(c_str()); }
+public:
 	static Double ToNumber(const char* str, bool* pSuccessFlag = nullptr);
 	Double ToNumber(bool* pSuccessFlag = nullptr) const { return ToNumber(c_str(), pSuccessFlag); }
 public:
