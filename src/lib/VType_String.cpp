@@ -341,7 +341,7 @@ Gurax_ImplementMethod(String, Find)
 // String#Fold(len:Number, step?:Number):String:[neat] {block?}
 Gurax_DeclareMethod(String, Fold)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(neat));
@@ -371,7 +371,7 @@ Gurax_ImplementMethod(String, Fold)
 // String#Foldw(width:Number):String:[padding] {block?}
 Gurax_DeclareMethod(String, Foldw)
 {
-	Declare(VTYPE_String, Flag::Map);
+	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(padding));
 	DeclareBlock(BlkOccur::ZeroOrOnce);

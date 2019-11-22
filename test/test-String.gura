@@ -39,6 +39,7 @@ TestCase('String#Chop()') {
 }
 
 TestCase('String#DecodeURI()') {
+	//Println(Chr(0x20..0x7e).Join().Fold(16):*EncodeURI():*DecodeURI())
 }
 
 TestCase('String#Each()') {
@@ -82,6 +83,7 @@ TestCase('String#Encode()') {
 }
 
 TestCase('String#EncodeURI()') {
+	//Println(Chr((1, 1..0xff)).Join().Fold(16):*EncodeURI())
 }
 
 TestCase('String#StartsWith(), String#EndsWith()') {
