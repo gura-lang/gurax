@@ -220,7 +220,7 @@ Renderer = class {
 
 Document.Render@html(
 		out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
-	easyFormatFlag && out.Print(R'''
+	easyFormatFlag && tR'''
 	<html>
 	<head>
 	<!-- Required meta tags -->
@@ -237,12 +237,12 @@ Document.Render@html(
 	<title></title>
 	</head>
 	<body class="p-5">
-	''')
+	'''.Render(out)
 	Renderer(out, captionIndex).Render(this)
-	easyFormatFlag && out.Print(R'''
+	easyFormatFlag && R'''
 	</body>
 	</html>
-	''')
+	'''.Render(out)
 }
 /*
 %% { `en,

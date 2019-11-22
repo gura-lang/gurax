@@ -45,6 +45,26 @@ Gurax_ImplementFunction(Template)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Template#Eval()
+Gurax_DeclareMethod(Template, Eval)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Evaluates the template and returns the rendered string.\n");
+}
+
+Gurax_ImplementMethod(Template, Eval)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Template& tmpl = valueThis.GetTemplate();
+	// Function body
+	String strDst;
+	if (!tmpl.Render(processor, strDst)) return Value::nil();
+	return new Value_String(strDst);
+}
+
 // Template#Parse(str:String):reduce:[lasteol,noindent]
 Gurax_DeclareMethod(Template, Parse)
 {
@@ -111,16 +131,16 @@ Gurax_ImplementMethod(Template, Read)
 	return valueThis.Reference();
 }
 
-// Template#Render(dst?:Stream:w)
+// Template#Render(dst?:Stream:w):void
 Gurax_DeclareMethod(Template, Render)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dst", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Renders stored content to the specified stream.\n"
 		"\n"
-		"If the stream is omitted, the function returns the rendered result as a string.\n");
+		"If the argument is omitted, it would be rendered to the standard output.\n");
 }
 
 Gurax_ImplementMethod(Template, Render)
@@ -130,16 +150,15 @@ Gurax_ImplementMethod(Template, Render)
 	Template& tmpl = valueThis.GetTemplate();
 	// Arguments
 	ArgPicker args(argument);
-	Stream* pStreamDst = args.IsValid()? &args.Pick<Value_Stream>().GetStream() : nullptr;
+	Stream& streamDst = args.IsValid()?
+		args.Pick<Value_Stream>().GetStream() : Basement::Inst.GetStreamCOut();
 	// Function body
-	if (pStreamDst) {
-		tmpl.Render(processor, *pStreamDst);
-		return Value::nil();
-	} else {
-		String strDst;
-		if (!tmpl.Render(processor, strDst)) return Value::nil();
-		return new Value_String(strDst);
-	}
+	tmpl.Render(processor, streamDst);
+	return Value::nil();
+#if 0
+	String strDst;
+	if (!tmpl.Render(processor, strDst)) return Value::nil();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -582,6 +601,7 @@ void VType_Template::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Template));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Template, Eval));
 	Assign(Gurax_CreateMethod(Template, Parse));
 	Assign(Gurax_CreateMethod(Template, Read));
 	Assign(Gurax_CreateMethod(Template, Render));

@@ -3,7 +3,7 @@ import(util.tester) {*}
 
 TestCase('Basic test') {
 	test(str:String) = {
-		Printf('\'%s\' -> \'%s\'\n', str, str.Template().Render())
+		Printf('\'%s\' -> \'%s\'\n', str, str.Template().Eval())
 		Println()
 	}
 	test('')
@@ -199,7 +199,7 @@ TestCase('Repeat and if-else sequence') {
 /*
 //-----------------------------------------------------------------------------
 TestCase() {
-	Println(t'漢字のテスト ${"スクリプト文字列"}'.Render())
+	Println(t'漢字のテスト ${"スクリプト文字列"}'.Eval())
 }
 */
 //-----------------------------------------------------------------------------
@@ -207,7 +207,7 @@ TestCase('Template script that handles template internally') {
 	tmpl = tR'''
 	${if (company) {tR"""
 	Company: ${company}
-	""".Render()} else {R"""
+	""".Eval()} else {R"""
 	(not defined)
 	"""}}
 	[Products]
@@ -288,33 +288,33 @@ TestCase('Auto indentation') {
 //-----------------------------------------------------------------------------
 TestCase('Error in template') {
 	try {
-		t'abcdefg${not_defined}hijklmn'.Render()
+		t'abcdefg${not_defined}hijklmn'.Eval()
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
 }
 //-----------------------------------------------------------------------------
 TestCase('Format() in tempate script') {
-	Tester(`t'hello ${Format("%d", 0..10).Join(",")}'.Render())
+	Tester(`t'hello ${Format("%d", 0..10).Join(",")}'.Eval())
 }
 //-----------------------------------------------------------------------------
 TestCase('Variable reference') {
 	var = 'HOGE'
-	Tester(`t'hello ${var} world'.Render())
-	Tester(`t'hello ${var * 2} world'.Render())
-	Tester(`t'''hello '${Format('%8s', var)}' world'''.Render())
+	Tester(`t'hello ${var} world'.Eval())
+	Tester(`t'hello ${var * 2} world'.Eval())
+	Tester(`t'''hello '${Format('%8s', var)}' world'''.Eval())
 	var = 3.14
-	Tester(`t'hello ${var} world'.Render())
+	Tester(`t'hello ${var} world'.Eval())
 }
 //-----------------------------------------------------------------------------
 TestCase('nil, number, string, and list') {
-	Tester(`t'${nil}'.Render())
-	Tester(`t'${-}'.Render())
-	Tester(`t'${3}'.Render())
-	Tester(`t'${"hello"}'.Render())
-	Tester(`t'${["first", "second", "third"]}'.Render())
+	Tester(`t'${nil}'.Eval())
+	Tester(`t'${-}'.Eval())
+	Tester(`t'${3}'.Eval())
+	Tester(`t'${"hello"}'.Eval())
+	Tester(`t'${["first", "second", "third"]}'.Eval())
 	try {
-		t'${Color.red}'.Render()
+		t'${Color.red}'.Eval()
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}

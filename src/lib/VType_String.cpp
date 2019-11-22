@@ -616,8 +616,8 @@ Gurax_ImplementMethod(String, Mid)
 	return new Value_String(str.Mid(pos, len));
 }
 
-// String#Print(stream?:Stream:w):void
-Gurax_DeclareMethod(String, Print)
+// String#Render(stream?:Stream:w):void
+Gurax_DeclareMethod(String, Render)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
@@ -625,46 +625,20 @@ Gurax_DeclareMethod(String, Print)
 		Gurax_Symbol(en),
 		"Prints out the string to the specified `stream`.\n"
 		"\n"
-		"If the argument is omitted, it would print to the standard output.\n");
+		"If the argument is omitted, it would be rendered to the standard output.\n");
 }
 
-Gurax_ImplementMethod(String, Print)
+Gurax_ImplementMethod(String, Render)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	Stream& streamDst = args.IsValid()?
+		args.Pick<Value_Stream>().GetStream() : Basement::Inst.GetStreamCOut();
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
-}
-
-// String#Println(stream?:Stream:w):void
-Gurax_DeclareMethod(String, Println)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints out the string and a line-break to the specified `stream`.\n"
-		"\n"
-		"If the argument is omitted, it would print to the standard output.\n");
-}
-
-Gurax_ImplementMethod(String, Println)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
-	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
+	const char* str = valueThis.GetString();
+	streamDst.Print(str);
 	return Value::nil();
 }
 
@@ -1324,8 +1298,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, LJust));
 	Assign(Gurax_CreateMethod(String, Lower));
 	Assign(Gurax_CreateMethod(String, Mid));
-	Assign(Gurax_CreateMethod(String, Print));
-	Assign(Gurax_CreateMethod(String, Println));
+	Assign(Gurax_CreateMethod(String, Render));
 	Assign(Gurax_CreateMethod(String, Replace));
 	Assign(Gurax_CreateMethod(String, ReplaceM));
 	Assign(Gurax_CreateMethod(String, Right));

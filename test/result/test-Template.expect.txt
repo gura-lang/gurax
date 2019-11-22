@@ -418,18 +418,18 @@ not line top:  single string
 ======== Error in template ========
 expected error occurs: symbol 'not_defined' is not found
 ======== Format() in tempate script ========
-t'hello ${Format("%d", 0..10).Join(",")}'.Render() .. hello 0,1,2,3,4,5,6,7,8,9,10
+t'hello ${Format("%d", 0..10).Join(",")}'.Eval() .. hello 0,1,2,3,4,5,6,7,8,9,10
 ======== Variable reference ========
-t'hello ${var} world'.Render() .. hello HOGE world
-t'hello ${var * 2} world'.Render() .. hello HOGEHOGE world
-t"hello '${Format('%8s', var)}' world".Render() .. hello '    HOGE' world
-t'hello ${var} world'.Render() .. hello 3.14 world
+t'hello ${var} world'.Eval() .. hello HOGE world
+t'hello ${var * 2} world'.Eval() .. hello HOGEHOGE world
+t"hello '${Format('%8s', var)}' world".Eval() .. hello '    HOGE' world
+t'hello ${var} world'.Eval() .. hello 3.14 world
 ======== nil, number, string, and list ========
-t'${nil}'.Render() .. 
-t'${-}'.Render() .. 
-t'${3}'.Render() .. 3
-t'${"hello"}'.Render() .. hello
-t'${["first", "second", "third"]}'.Render() .. firstsecondthird
+t'${nil}'.Eval() .. 
+t'${-}'.Eval() .. 
+t'${3}'.Eval() .. 3
+t'${"hello"}'.Eval() .. hello
+t'${["first", "second", "third"]}'.Eval() .. firstsecondthird
 expected error occurs: template script must return nil, string or number
 ======== Loop and branch sequence ========
 10
