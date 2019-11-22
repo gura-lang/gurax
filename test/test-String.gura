@@ -39,7 +39,7 @@ TestCase('String#Chop()') {
 }
 
 TestCase('String#DecodeURI()') {
-	//Println(Chr(0x20..0x7e).Join().Fold(16):*EncodeURI():*DecodeURI())
+	Println(Chr(0x20..0x7e).Join().Fold(16):*EncodeURI():*DecodeURI())
 }
 
 TestCase('String#Each()') {

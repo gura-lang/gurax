@@ -39,6 +39,12 @@ entertaining
 entertaining
 ======== String#Chop() ========
 ======== String#DecodeURI() ========
+ !"#$%&'()*+,-./
+0123456789:;<=>?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}~
 ======== String#Each() ========
 [''.Each()*] .. []
 ['a'.Each()*] .. ['a']
@@ -123,6 +129,12 @@ str.Find('あいうえ') .. 0
 str.Find('おかきく') .. 4
 str.Find('おかきき') .. <Nil>
 ======== String#Fold() ========
+str.Fold(6):list .. ['ABCDEF', 'GHIJKL', 'MNOPQR', 'STUVWX', 'YZ']
+str.Fold(6, 3):list .. ['ABCDEF', 'DEFGHI', 'GHIJKL', 'JKLMNO', 'MNOPQR', 'PQRSTU', 'STUVWX', 'VWXYZ', 'YZ']
+str.Fold(3, 6):list .. ['ABC', 'GHI', 'MNO', 'STU', 'YZ']
+str.Fold(6):list:neat .. ['ABCDEF', 'GHIJKL', 'MNOPQR', 'STUVWX']
+str.Fold(6, 3):list:neat .. ['ABCDEF', 'DEFGHI', 'GHIJKL', 'JKLMNO', 'MNOPQR', 'PQRSTU', 'STUVWX']
+str.Fold(3, 6):list:neat .. ['ABC', 'GHI', 'MNO', 'STU']
 ======== String#Foldw() ========
 ======== String#Format() ========
 ======== String#IsAlnum() ========
