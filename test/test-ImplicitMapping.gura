@@ -46,3 +46,8 @@ TestCase(':void attribute') {
 	Println(f)
 	f(1..10)
 }
+
+TestCase('Type cast while mapping') {
+	Tester(`Ord([1]))
+	Tester(`Chr(['a']))
+}

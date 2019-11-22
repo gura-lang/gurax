@@ -38,3 +38,6 @@ f(n:Number):map:void
 8
 9
 10
+======== Type cast while mapping ========
+Ord([1]) .. [49]
+Chr(['a']) .. failed to cast from String to Number
