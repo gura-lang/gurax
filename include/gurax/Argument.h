@@ -94,7 +94,7 @@ public:
 	const ArgSlot* FindArgSlot(const Symbol* pSymbol) const {
 		return const_cast<Argument*>(this)->FindArgSlot(pSymbol);
 	}
-	bool ReadyToPickValue();
+	bool ReadyToPickValue(Frame& frame);
 	void AssignToFrame(Frame& frame) const;
 	bool Compensate(Processor& processor);
 	void DoCall(Processor& processor);

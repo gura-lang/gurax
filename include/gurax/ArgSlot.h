@@ -51,7 +51,7 @@ public:
 	ArgSlot* GetNext() { return _pArgSlotNext.get(); }
 	const ArgSlot* GetNext() const { return _pArgSlotNext.get(); }
 	const ArgSlot* Advance() const { return const_cast<ArgSlot*>(this)->Advance(); }
-	bool ReadyToPickValue() const { return _pValue->ReadyToPickValue(); }
+	bool ReadyToPickValue(Frame& frame) const { return _pValue->ReadyToPickValue(frame, *_pDeclArg); }
 	Value* PickValue() const { return _pValue->PickValue(); }
 	void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {
 		_pValue->UpdateIteratorInfo(flags, len);
@@ -127,7 +127,7 @@ protected:
 	const Symbol* _pSymbol;
 public:
 	ArgSlot_Dict(Value_Dict* pValueOfDict, const Symbol* pSymbol) :
-		ArgSlot(DeclArg::Empty->Reference(), pValueOfDict), _pSymbol(pSymbol) {}
+		ArgSlot(DeclArg::Undefined->Reference(), pValueOfDict), _pSymbol(pSymbol) {}
 protected:
 	Value_Dict& GetValue() { return dynamic_cast<Value_Dict&>(*_pValue); }
 	const Value_Dict& GetValue() const { return dynamic_cast<const Value_Dict&>(*_pValue); }

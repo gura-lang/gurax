@@ -65,11 +65,12 @@ void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
 void Function::DoCall(Processor& processor, Argument& argument) const
 {
 	auto MapToList = [this](Processor& processor, Argument& argument) {
+		Frame& frame = processor.GetFrameCur();
 		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
-		while (argument.ReadyToPickValue()) {
+		while (argument.ReadyToPickValue(frame)) {
 			RefPtr<Value> pValueRtn(DoEval(processor, argument));
 			if (Error::IsIssued()) {
 				processor.ErrorDone();
@@ -81,15 +82,20 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 				valueTypedOwner.Add(pValueRtn.release());
 			}
 		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
+		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	};
 	auto MapToXList = [this](Processor& processor, Argument& argument) {
+		Frame& frame = processor.GetFrameCur();
 		const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 		RefPtr<Value_List> pValueRtn(new Value_List());
 		ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 		bool flatFlag = argument.IsSet(DeclCallable::Flag::Flat);
-		while (argument.ReadyToPickValue()) {
+		while (argument.ReadyToPickValue(frame)) {
 			RefPtr<Value> pValueRtn(DoEval(processor, argument));
 			if (Error::IsIssued()) {
 				processor.ErrorDone();
@@ -100,6 +106,10 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			} else if (pValueRtn->IsValid()) {
 				valueTypedOwner.Add(pValueRtn.release());
 			}
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
@@ -118,24 +128,37 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		processor.PushValue(new Value_Iterator(pIterator.release()));
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	};
+	Frame& frame = processor.GetFrameCur();
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	if (argument.IsMapNone()) {
 		DoExec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
-		while (argument.ReadyToPickValue()) {
+		while (argument.ReadyToPickValue(frame)) {
 			Value::Delete(DoEval(processor, argument));
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
 		}
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultVoid()) {
-		while (argument.ReadyToPickValue()) {
+		while (argument.ReadyToPickValue(frame)) {
 			Value::Delete(DoEval(processor, argument));
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
 		}
 		processor.PushValue(Value::nil());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 	} else if (GetDeclCallable().IsResultReduce()) {
 		RefPtr<Value> pValueRtn(Value::nil());
-		while (argument.ReadyToPickValue()) {
+		while (argument.ReadyToPickValue(frame)) {
 			pValueRtn.reset(DoEval(processor, argument));
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
 		}
 		processor.PushValue(pValueRtn.release());
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());

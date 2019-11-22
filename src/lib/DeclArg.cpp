@@ -8,7 +8,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DeclArg
 //------------------------------------------------------------------------------
-DeclArg* DeclArg::Empty;
+DeclArg* DeclArg::Undefined;
+DeclArg* DeclArg::Any;
 
 DeclArg::DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,
 				 const Occur& occur, Flags flags, Expr* pExprDefault) :
@@ -28,7 +29,8 @@ DeclArg::DeclArg(const Symbol* pSymbol, const VType& vtype,
 
 void DeclArg::Bootup()
 {
-	Empty = new DeclArg(Symbol::Empty, VTYPE_Undefined, Occur::Once, Flag::None, nullptr);
+	Undefined = new DeclArg(Symbol::Empty, VTYPE_Undefined, Occur::Once, Flag::None, nullptr);
+	Any = new DeclArg(Symbol::Empty, VTYPE_Any, Occur::Once, Flag::None, nullptr);
 }
 
 DeclArg* DeclArg::CreateFromExpr(const Expr& expr)

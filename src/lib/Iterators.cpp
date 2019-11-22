@@ -68,7 +68,8 @@ Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, const Oper
 
 Value* Iterator_UnaryOpImpMap::DoNextValue()
 {
-	if (!GetValue().ReadyToPickValue()) return nullptr;
+	Frame& frame = GetProcessor().GetFrameCur();
+	if (!GetValue().ReadyToPickValue(frame, *DeclArg::Any)) return nullptr;
 	RefPtr<Value> pValueEach(GetValue().PickValue());
 	const VType& vtype = pValueEach->GetVType();
 	if (!vtype.IsIdentical(*_pVTypePrev)) {
@@ -102,7 +103,9 @@ Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, const Op
 
 Value* Iterator_BinaryOpImpMap::DoNextValue()
 {
-	if (!GetValueL().ReadyToPickValue() || !GetValueR().ReadyToPickValue()) return nullptr;
+	Frame& frame = GetProcessor().GetFrameCur();
+	if (!GetValueL().ReadyToPickValue(frame, *DeclArg::Any) ||
+		!GetValueR().ReadyToPickValue(frame, *DeclArg::Any)) return nullptr;
 	RefPtr<Value> pValueEachL(GetValueL().PickValue());
 	RefPtr<Value> pValueEachR(GetValueR().PickValue());
 	const VType& vtypeL = pValueEachL->GetVType();
@@ -141,15 +144,16 @@ Iterator_FunctionImpMap<skipNilFlag>::Iterator_FunctionImpMap(
 template<bool skipNilFlag>
 Value* Iterator_FunctionImpMap<skipNilFlag>::DoNextValue()
 {
+	Frame& frame = GetProcessor().GetFrameCur();
 	if (skipNilFlag) {
 		for (;;) {
-			if (!GetArgument().ReadyToPickValue()) break;
+			if (!GetArgument().ReadyToPickValue(frame)) break;
 			RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
 			if (pValueRtn->IsValid()) return pValueRtn.release();
 		}
 		return nullptr;
 	} else {
-		if (!GetArgument().ReadyToPickValue()) return nullptr;
+		if (!GetArgument().ReadyToPickValue(frame)) return nullptr;
 		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
 		if (Error::IsIssued()) return nullptr;
 		return pValueRtn.release();

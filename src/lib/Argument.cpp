@@ -84,10 +84,10 @@ void Argument::DoCall(Processor& processor)
 	GetValueCar().DoCall(processor, *this);
 }
 
-bool Argument::ReadyToPickValue()
+bool Argument::ReadyToPickValue(Frame& frame)
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
-		if (!pArgSlot->ReadyToPickValue()) return false;
+		if (!pArgSlot->ReadyToPickValue(frame)) return false;
 	}
 	return true;
 }

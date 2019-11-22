@@ -34,12 +34,12 @@ String Value_ArgMapper_Multiple::ToStringDetail(const StringStyle& ss) const
 	return GetValueOwner().ToString(ss);
 }
 
-bool Value_ArgMapper_Multiple::ReadyToPickValue()
+bool Value_ArgMapper_Multiple::ReadyToPickValue(Frame& frame, DeclArg& declArg)
 {
 	ValueTypedOwner& valueTypedOwner = _pValuePicked->GetValueTypedOwner();
 	valueTypedOwner.Clear();
 	for (Value* pValue : GetValueOwner()) {
-		if (!pValue->ReadyToPickValue()) return false;
+		if (!pValue->ReadyToPickValue(frame, declArg)) return false;
 		valueTypedOwner.Add(pValue->PickValue());
 	}
 	return true;

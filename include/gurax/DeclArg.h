@@ -97,7 +97,8 @@ private:
 	Flags _flags;
 	RefPtr<Expr> _pExprDefault;	// this may be nullptr
 public:
-	static DeclArg* Empty;
+	static DeclArg* Undefined;
+	static DeclArg* Any;
 public:
 	// Constructor
 	DeclArg(const Symbol* pSymbol, DottedSymbol* pDottedSymbol,

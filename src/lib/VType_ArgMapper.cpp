@@ -41,6 +41,14 @@ Iterator* Value_ArgMapper::DoGenIterator() const
 	return GetIterator().Reference();
 }
 
+bool Value_ArgMapper::ReadyToPickValue(Frame& frame, DeclArg& declArg)
+{
+	RefPtr<Value> pValue(GetIterator().NextValue());
+	if (!pValue) return false;
+	_pValue.reset(declArg.Cast(frame, *pValue));
+	return !!_pValue;
+}
+
 void Value_ArgMapper::UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const
 {
 	flags &= GetIterator().GetFlags();

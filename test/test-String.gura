@@ -83,7 +83,7 @@ TestCase('String#Encode()') {
 }
 
 TestCase('String#EncodeURI()') {
-	//Println(Chr((1, 1..0xff)).Join().Fold(16):*EncodeURI())
+	Println(Chr([1, (1..0xff)*]).Join().Fold(16):*EncodeURI())
 }
 
 TestCase('String#StartsWith(), String#EndsWith()') {
