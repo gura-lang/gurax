@@ -40,3 +40,9 @@ TestCase(':flat attribute') {
 	Tester(`f(x):flat)
 	Tester(`f(x):xlist:flat)
 }
+
+TestCase(':void attribute') {
+	f(n:Number):void:map = Println(n)
+	Println(f)
+	f(1..10)
+}

@@ -108,6 +108,7 @@ bool DeclCallable::Prepare(const ExprLink& exprLinkCdr, const Attribute& attr, c
 		if (!DeclArg::CheckFlagConfliction(pDeclArg->GetFlags())) return false;
 		GetDeclArgOwner().push_back(pDeclArg.release());
 	}
+	if (attr.IsSet(Gurax_Symbol(void_))) SetVTypeResult(VTYPE_Nil);
 	for (const Symbol* pSymbol : attr.GetSymbols()) {
 		Flags flag = SymbolToFlag(pSymbol);
 		_flags |= flag;
