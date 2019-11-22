@@ -19,9 +19,11 @@ Renderer = class {
 		this.RenderItem(doc.root)
 	}
 	RenderItem(item:Item):map:void = {
-		!this.OnRenderItemPre(item) && return
+		//!this.OnRenderItemPre(item) && return
+		Println(item.children)
 		if (item.type == `root) {
-			this.RenderItem(item.children)
+			//this.RenderItem(item.children)
+			item.children.Each {|itemSub| this.RenderItem(itemSub)}
 		} elsif (item.type == `h1) {
 			this.out.Print('<h1>')
 			if (this.captionIndex) {
@@ -142,27 +144,27 @@ Renderer = class {
 			this.out.Print('\n')
 		} elsif (item.type == `a) {
 			this.out.Print('<a')
-			item.url && this.out.Print(' href="', item.url.encodeuri(), '"')
-			item.title && this.out.Print(' title="', item.title.escapehtml(), '"')
+			item.url && this.out.Print(' href="', item.url.EncodeURI(), '"')
+			item.title && this.out.Print(' title="', item.title.EscapeHTML(), '"')
 			this.out.Print('>')
 			this.RenderItem(item.children)
 			this.out.Print('</a>')
 		} elsif (item.type == `img) {
 			this.out.Print('<img')
-			item.url && this.out.Print(' src="', item.url.encodeuri(), '"')
-			item.text && this.out.Print(' alt="', item.text.escapehtml(), '"')
-			item.title && this.out.Print(' title="', item.title.escapehtml(), '"')
+			item.url && this.out.Print(' src="', item.url.EncodeURI(), '"')
+			item.text && this.out.Print(' alt="', item.text.EscapeHTML(), '"')
+			item.title && this.out.Print(' title="', item.title.EscapeHTML(), '"')
 			this.out.Print('>')
 		} elsif (item.type == `text) {
-			this.out.Print(item.text.escapehtml())
+			this.out.Print(item.text.EscapeHTML())
 		} elsif (item.type == `comment) {
 			this.out.Print(item.text)
 		} elsif (item.type == `code) {
 			this.out.Print('<code class="highlighter-rouge">')
-			this.out.Print(item.text.escapehtml())
+			this.out.Print(item.text.EscapeHTML())
 			this.out.Print('</code>')
 		} elsif (item.type == `entity) {
-			this.out.Print('&', item.text.escapehtml(), ';')
+			this.out.Print('&', item.text.EscapeHTML(), ';')
 		} elsif (item.type == `tag) {
 			if (item.text == 'gura.funcentry') {
 				fmt = if (m = item.attrs.match('format="([^\"]+)"')) {m[1]} else {''}
@@ -212,7 +214,7 @@ Renderer = class {
 		}
 		this.OnRenderItemPost(item)
 	}
-	MakeAnchorName(indices[]:number) = MakeAnchorNameDef(indices)
+	MakeAnchorName(indices[]:Number) = MakeAnchorNameDef(indices)
 	OnRenderItemPre(item:Item) = true
 	OnRenderItemPost(item:Item):void = nil
 }
