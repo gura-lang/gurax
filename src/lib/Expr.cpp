@@ -454,36 +454,36 @@ const Expr::TypeInfo Expr_UnaryOp::typeInfo("UnaryOp");
 void Expr_UnaryOp::Compose(Composer& composer)
 {
 	if (GetOperator()->GetRawFlag()) {
-		GetOperator()->ComposeUnary(composer, *this);				// [Result]
+		GetOperator()->ComposeUnary(composer, *this);					// [Result]
 	} else {
-		GetExprChild().ComposeOrNil(composer);						// [Any]
-		composer.Add_UnaryOp(GetOperator(), this);					// [Result]
+		GetExprChild().ComposeOrNil(composer);							// [Any]
+		composer.Add_UnaryOp(GetOperator(), this);						// [Result]
 	}
 }
 
 void Expr_UnaryOp::ComposeForList(Composer& composer)
 {
 	if (!GetOperator()->IsType(OpType::PostMul)) {
-		Expr_Unary::ComposeForList(composer);						// [List]
+		Expr_Unary::ComposeForList(composer);							// [List]
 		return;
 	}
-	GetExprChild().ComposeOrNil(composer);							// [List Any]
-	composer.Add_ListElem(0, false, true, this);					// [List]
+	GetExprChild().ComposeOrNil(composer);								// [List Any]
+	composer.Add_ListElem(0, false, true, this);						// [List]
 }
 
 void Expr_UnaryOp::ComposeForArgSlot(Composer& composer)
 {
-	if (!GetOperator()->IsType(OpType::PostMul)) {
+	if (GetOperator()->IsType(OpType::PostMul)) {
+		PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
+		composer.Add_BeginArgSlot(this);								// [Argument]
+		GetExprChild().ComposeOrNil(composer);							// [Argument Any]
+		pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
+		composer.Add_EndArgSlotExpand(this);							// [Argument]
+		pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
+		SetPUnitFirst(pPUnitOfArgSlot);
+	} else {
 		Expr_Unary::ComposeForArgSlot(composer);
-		return;
 	}
-	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
-	composer.Add_BeginArgSlot(this);								// [Argument]
-	GetExprChild().ComposeOrNil(composer);							// [Argument Any]
-	pPUnitOfArgSlot->SetPUnitSentinel(composer.PeekPUnitCont());
-	composer.Add_EndArgSlotExpand(this);							// [Argument]
-	pPUnitOfArgSlot->SetPUnitBranchDest(composer.PeekPUnitCont());
-	SetPUnitFirst(pPUnitOfArgSlot);
 }
 
 String Expr_UnaryOp::ToString(const StringStyle& ss) const
@@ -545,14 +545,14 @@ void Expr_BinaryOp::Compose(Composer& composer)
 
 void Expr_BinaryOp::ComposeForList(Composer& composer)
 {
-	if (!GetOperator()->IsType(OpType::Seq)) {
-		Expr_Binary::ComposeForList(composer);						// [List]
-		return;
+	if (GetOperator()->IsType(OpType::Seq)) {
+		GetExprLeft().ComposeOrNil(composer);							// [List Left]
+		GetExprRight().ComposeOrNil(composer);							// [List Left Right]
+		composer.Add_BinaryOp(GetOperator(), this);						// [List Result]
+		composer.Add_ListElem(0, false, true, this);					// [List]
+	} else {
+		Expr_Binary::ComposeForList(composer);							// [List]
 	}
-	GetExprLeft().ComposeOrNil(composer);							// [List Left]
-	GetExprRight().ComposeOrNil(composer);							// [List Left Right]
-	composer.Add_BinaryOp(GetOperator(), this);						// [List Result]
-	composer.Add_ListElem(0, false, true, this);					// [List]
 }
 
 String Expr_BinaryOp::ToString(const StringStyle& ss) const
@@ -1101,8 +1101,16 @@ void Expr_Caller::ComposeForAssignment(
 						 "operator can not be applied in function assigment");
 		return;
 	}
+	Expr* pExprAssigned = &exprAssigned;
+	if (exprAssigned.IsType<Expr_BinaryOp>()) {
+		Expr_BinaryOp& exprEx = dynamic_cast<Expr_BinaryOp&>(exprAssigned);
+		if (exprEx.GetOperator()->IsType(OpType::ModMod)) {
+			pExprAssigned = &exprEx.GetExprLeft();
+			// implementation of document declaration here
+		}
+	}
 	if (GetExprCar().IsType<Expr_Member>()) {
-		RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
+		RefPtr<Function> pFunction(GenerateFunction(composer, *pExprAssigned));
 		if (!pFunction) return;
 		pFunction->SetType(GetAttr().IsSet(Gurax_Symbol(static_))?
 						   Function::Type::ClassMethod : Function::Type::Method);
@@ -1114,7 +1122,7 @@ void Expr_Caller::ComposeForAssignment(
 		exprCarEx.GetExprTarget().ComposeOrNil(composer);				// [Target]
 		composer.Add_AssignMethod(pFunction.release(), false, this);	// [Value]
 	} else {
-		RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
+		RefPtr<Function> pFunction(GenerateFunction(composer, *pExprAssigned));
 		if (!pFunction) return;
 		pFunction->SetType(Function::Type::Function);
 		composer.Add_AssignFunction(pFunction.release(), this);			// [Value]

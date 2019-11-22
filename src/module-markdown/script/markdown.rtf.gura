@@ -23,14 +23,14 @@ Renderer@rtf = class {
 		this.indentPerQuote = 360
 		this.indices = dim(6) {0}
 	}
-	Render(doc:Document):void = {
-		this.RenderItem(doc.root)
+	FeedDocument(doc:Document):void = {
+		this.FeedItem(doc.root)
 	}
-	RenderItem(item:Item):map:void = {
+	FeedItem(item:Item):map:void = {
 		if (item.type == `root) {
 			this.out.Print(header)
 			this.RenderCoverPage()
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print(footer)
 		} elsif (item.type == `h1) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\sb360\li%d\fi0\b\fs36 ', this.indentLeft)
@@ -39,7 +39,7 @@ Renderer@rtf = class {
 				this.indices[1..5] = 0
 				this.out.Printf('%d ', this.indices[0])
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\par}')
 		} elsif (item.type == `h2) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\sb180\li%d\fi0\b\fs32 ', this.indentLeft)
@@ -48,7 +48,7 @@ Renderer@rtf = class {
 				this.indices[2..5] = 0
 				this.out.Printf('%d.%d ', this.indices[0..1]*)
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\par}')
 		} elsif (item.type == `h3) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs28 ', this.indentLeft)
@@ -57,7 +57,7 @@ Renderer@rtf = class {
 				this.indices[3..5] = 0
 				this.out.Printf('%d.%d.%d ', this.indices[0..2]*)
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\par}')
 		} elsif (item.type == `h4) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs24 ', this.indentLeft)
@@ -66,7 +66,7 @@ Renderer@rtf = class {
 				this.indices[4..5] = 0
 				this.out.Printf('%d.%d.%d.%d ', this.indices[0..3]*)
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\par}')
 		} elsif (item.type == `h5) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs20 ', this.indentLeft)
@@ -75,7 +75,7 @@ Renderer@rtf = class {
 				this.indices[5] = 0
 				this.out.Printf('%d.%d.%d.%d.%d ', this.indices[0..4]*)
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\par}')
 		} elsif (item.type == `h6) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\b\fs20 ', this.indentLeft)
@@ -83,29 +83,29 @@ Renderer@rtf = class {
 				this.indices[5] += 1
 				this.out.Printf('%d.%d.%d.%d.%d.%d ', this.indices[0..5]*)
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\par}')
 		} elsif (item.type == `p) {
 			this.out.Printf(r'{\pard\ql\f0\sa180\li%d\fi0\fs20 ', this.indentLeft)
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println()
 			this.out.Println(r'\par}')
 		} elsif (item.type == `blockquote) {
 			this.indentLeft += this.indentPerQuote
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println()
 			this.indentLeft -= this.indentPerQuote
 		} elsif (item.type == `em) {
 			this.out.Print(r'{\i ')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print(r'}')
 		} elsif (item.type == `strong) {
 			this.out.Print(r'{\b ')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print(r'}')
 		} elsif (item.type == `strike) {
 			this.out.Print(r'{\strike ')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print(r'}')
 		} elsif (item.type == `codeblock) {
 			this.out.Print(R'''
@@ -115,7 +115,7 @@ Renderer@rtf = class {
 			''')
 			item.children.each {|itemChild, i|
 				(i > 0) && this.out.Println(r'\line')
-				this.RenderItem(itemChild.children)
+				this.FeedItem(itemChild.children)
 			}
 			this.out.Println(r'\cell \lastrow\row\par}')
 		} elsif (item.type == `ol) {
@@ -125,11 +125,11 @@ Renderer@rtf = class {
 		} elsif (item.type == `li) {
 			// nothing to do here
 		} elsif (item.type == `line) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'\line')
 		} elsif (item.type == `a) {
 			this.out.Println(r'{\field{\*\fldinst{HYPERLINK "%s"}}{\fldrslt{\ul' % this.EscapeText(item.url))
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println(r'}}}')
 		} elsif (item.type == `img) {
 			//this.out.Print('<img')
@@ -155,7 +155,7 @@ Renderer@rtf = class {
 				this.out.Println(r'\par}')
 				if (item.children) {
 					this.indentLeft += this.indentPerQuote
-					this.RenderItem(item.children)
+					this.FeedItem(item.children)
 					this.out.Println()
 					this.indentLeft -= this.indentPerQuote
 				}
@@ -165,18 +165,18 @@ Renderer@rtf = class {
 				this.RenderTable(item)
 			} elsif (item.text == 'code') {
 				this.out.Print(r'{\f1\fs20 ')
-				item.children && this.RenderItem(item.children)
+				item.children && this.FeedItem(item.children)
 				this.out.Print(r'}')
 			} elsif (item.text == 'em') {
 				this.out.Print(r'{\i ')
-				item.children && this.RenderItem(item.children)
+				item.children && this.FeedItem(item.children)
 				this.out.Print(r'}')
 			} elsif (item.text == 'strong') {
 				this.out.Print(r'{\b ')
-				item.children && this.RenderItem(item.children)
+				item.children && this.FeedItem(item.children)
 				this.out.Print(r'}')
 			} else {
-				item.children && this.RenderItem(item.children)
+				item.children && this.FeedItem(item.children)
 			}
 		} elsif (item.type == `hr) {
 			this.out.Printf(r'{\pard\qc\f0\sa180\li%d\fi0\emdash\emdash\emdash\emdash\emdash\par}' '\n',
@@ -206,7 +206,7 @@ Renderer@rtf = class {
 					this.out.Println(r'\sa180\par}')
 					parRenderFlag = true
 				}
-				this.RenderItem(itemDescend)
+				this.FeedItem(itemDescend)
 			}
 			
 		}
@@ -254,10 +254,10 @@ Renderer@rtf = class {
 				\pard\intbl\itap1
 				\cf0 ''')
 				if (item.text.lower() == 'th') {
-					this.RenderItem(item)
+					this.FeedItem(item)
 					headerFlag = true
 				} else {
-					this.RenderItem(item)
+					this.FeedItem(item)
 				}
 				this.out.Print(r'\cell')
 			}
@@ -274,5 +274,5 @@ Renderer@rtf = class {
 
 Document.render@rtf(out?:stream:w, captionIndex:Bool = false) = {
 	out = out || sys.stdout
-	Renderer@rtf(out, captionIndex).Render(this)
+	Renderer@rtf(out, captionIndex).FeedDocument(this)
 }

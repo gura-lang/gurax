@@ -32,83 +32,83 @@ Renderer@console = class {
 			this.setcolor(color:color) {block} = block()
 		}
 	}
-	Render(doc:Document):void = {
+	FeedDocument(doc:Document):void = {
 		this.firstFlag = true
-		this.RenderItem(doc.root)
+		this.FeedItem(doc.root)
 	}
-	RenderItem(item:Item):map:void = {
+	FeedItem(item:Item):map:void = {
 		if (item.type == `root) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
 			this.PrintlnConditional()
 			this.setcolor(`green) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h2) {
 			this.PrintlnConditional()
 			this.setcolor(`green) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h3) {
 			this.PrintlnConditional()
 			this.setcolor(`green) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h4) {
 			this.PrintlnConditional()
 			this.setcolor(`green) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h5) {
 			this.PrintlnConditional()
 			this.setcolor(`green) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h6) {
 			this.PrintlnConditional()
 			this.setcolor(`green) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `p) {
 			this.PrintlnConditional()
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			Println()
 		} elsif (item.type == `blockquote) {
 			this.PrintlnConditional()
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			Println()
 		} elsif (item.type == `em) {
 			this.setcolor(`red) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `strong) {
 			this.setcolor(`red) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `strike) {
 			this.setcolor(`gray) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `codeblock) {
 			this.PrintlnConditional()
 			this.setcolor(`blue) {
-				this.RenderItem(item.children)
+				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `ol) {
 			this.PrintlnConditional()
 			this.indexStack.add(0)
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.indexStack.erase(-1)
 		} elsif (item.type == `ul) {
 			this.PrintlnConditional()
 			this.indexStack.add(nil)
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.indexStack.erase(-1)
 		} elsif (item.type == `li) {
 			(this.indexStack.len() > 0) && Print('  ' * (this.indexStack.len() - 1))
@@ -119,14 +119,14 @@ Renderer@console = class {
 			} else {
 				Print('- ')
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			Println()
 		} elsif (item.type == `line) {
 			Print('|   ')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			Println()
 		} elsif (item.type == `a) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `img) {
 			Print('[', item.text, ']')
 		} elsif (item.type == `text) {
@@ -149,9 +149,9 @@ Renderer@console = class {
 				fmt = if (m = item.attrs.match(r'format="([^\"]+)"')) {m[1]} else {''}
 				Println(fmt)
 				Println('-' * fmt.len())
-				item.children && this.RenderItem(item.children)
+				item.children && this.FeedItem(item.children)
 			} else {
-				item.children && this.RenderItem(item.children)
+				item.children && this.FeedItem(item.children)
 			}
 		} elsif (item.type == `hr) {
 			Println('--------')
@@ -238,7 +238,7 @@ Renderer@console = class {
 }
 
 Document.render@console(colorFlag:Bool = true) = {
-	Renderer@console(colorFlag).Render(this)
+	Renderer@console(colorFlag).FeedDocument(this)
 } %% { `en,
 R'''
 Renders the content of markdown document to the console.

@@ -10,51 +10,51 @@ Renderer@toc = class {
 		this.text = nil
 		this.indices = dim(6) {0}
 	}
-	Render(doc:Document):void = {
-		this.RenderItem(doc.root)
+	FeedDocument(doc:Document):void = {
+		this.FeedItem(doc.root)
 	}
-	RenderItem(item:Item):map:void = {
+	FeedItem(item:Item):map:void = {
 		if (item.type == `root) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
 			this.indices[0] += 1
 			this.indices[1..5] = 0
 			this.text = ''
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.handler(0, this.indices, this.MakeAnchorName([this.indices[0]]), this.text)
 			this.text = nil
 		} elsif (item.type == `h2) {
 			this.indices[1] += 1
 			this.indices[2..5] = 0
 			this.text = ''
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.handler(1, this.indices, this.MakeAnchorName(this.indices[0..1]), this.text)
 			this.text = nil
 		} elsif (item.type == `h3) {
 			this.indices[2] += 1
 			this.indices[3..5] = 0
 			this.text = ''
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.handler(2, this.indices, this.MakeAnchorName(this.indices[0..2]), this.text)
 			this.text = nil
 		} elsif (item.type == `h4) {
 			this.indices[3] += 1
 			this.indices[4..5] = 0
 			this.text = ''
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.handler(3, this.indices, this.MakeAnchorName(this.indices[0..3]), this.text)
 			this.text = nil
 		} elsif (item.type == `h5) {
 			this.indices[4] += 1
 			this.indices[5] = 0
 			this.text = ''
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.handler(4, this.indices, this.MakeAnchorName(this.indices[0..4]), this.text)
 			this.text = nil
 		} elsif (item.type == `h6) {
 			this.indices[5] += 1
 			this.text = ''
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.handler(5, this.indices, this.MakeAnchorName(this.indices[0..5]), this.text)
 			this.text = nil
 		} elsif (item.type == `p) {
@@ -62,11 +62,11 @@ Renderer@toc = class {
 		} elsif (item.type == `blockquote) {
 			// nothing to do
 		} elsif (item.type == `em) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `strong) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `strike) {
-			//this.RenderItem(item.children)
+			//this.FeedItem(item.children)
 		} elsif (item.type == `codeblock) {
 			// nothing to do
 		} elsif (item.type == `ol) {
@@ -78,7 +78,7 @@ Renderer@toc = class {
 		} elsif (item.type == `line) {
 			// nothing to do
 		} elsif (item.type == `a) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `img) {
 			// nothing to do
 		} elsif (item.type == `text) {
@@ -105,5 +105,5 @@ Renderer@toc = class {
 }
 
 Document.render@toc() {block} = {
-	Renderer@toc(block).Render(this)
+	Renderer@toc(block).FeedDocument(this)
 }

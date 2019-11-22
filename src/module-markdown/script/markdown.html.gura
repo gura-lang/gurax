@@ -15,13 +15,13 @@ Renderer = class {
 		this.enableAnchorFlags = Dim(6) {true}
 		this.captionIndex = captionIndex
 	}
-	Render(doc:Document):void = {
-		this.RenderItem(doc.root)
+	FeedDocument(doc:Document):void = {
+		this.FeedItem(doc.root)
 	}
-	RenderItem(item:Item):map:void = {
-		!this.OnRenderItemPre(item) && return
+	FeedItem(item:Item):map:void = {
+		!this.OnFeedItemPre(item) && return
 		if (item.type == `root) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
 			this.out.Print('<h1>')
 			if (this.captionIndex) {
@@ -33,7 +33,7 @@ Renderer = class {
 			if (this.enableAnchorFlags[0]) {
 				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName([this.indices[0]]))
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</h1>\n')
 		} elsif (item.type == `h2) {
 			this.out.Print('<h2>')
@@ -46,7 +46,7 @@ Renderer = class {
 			if (this.enableAnchorFlags[1]) {
 				this.out.printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..1]))
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</h2>\n')
 		} elsif (item.type == `h3) {
 			this.out.Print('<h3>')
@@ -59,7 +59,7 @@ Renderer = class {
 			if (this.enableAnchorFlags[2]) {
 				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..2]))
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</h3>\n')
 		} elsif (item.type == `h4) {
 			this.out.Print('<h4>')
@@ -72,7 +72,7 @@ Renderer = class {
 			if (this.enableAnchorFlags[3]) {
 				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..3]))
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</h4>\n')
 		} elsif (item.type == `h5) {
 			this.out.Print('<h5>')
@@ -85,7 +85,7 @@ Renderer = class {
 			if (this.enableAnchorFlags[4]) {
 				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..4]))
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</h5>\n')
 		} elsif (item.type == `h6) {
 			this.out.Print('<h6>')
@@ -97,55 +97,55 @@ Renderer = class {
 			if (this.enableAnchorFlags[5]) {
 				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..5]))
 			}
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</h6>\n')
 		} elsif (item.type == `p) {
 			this.out.Print('<p>\n')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println()
 			this.out.Print('</p>\n')
 		} elsif (item.type == `blockquote) {
 			this.out.Print('<blockquote>\n')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Println()
 			this.out.Print('</blockquote>\n')
 		} elsif (item.type == `em) {
 			this.out.Print('<em>')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</em>')
 		} elsif (item.type == `strong) {
 			this.out.Print('<strong>')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</strong>')
 		} elsif (item.type == `strike) {
 			this.out.Print('<del>')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</del>')
 		} elsif (item.type == `codeblock) {
 			this.out.Print('<pre class="highlight"><code>')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</code></pre>\n')
 		} elsif (item.type == `ol) {
 			this.out.Print('<ol>\n')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</ol>\n')
 		} elsif (item.type == `ul) {
 			this.out.Print('<ul>\n')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</ul>\n')
 		} elsif (item.type == `li) {
 			this.out.Print('<li>')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</li>\n')
 		} elsif (item.type == `line) {
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('\n')
 		} elsif (item.type == `a) {
 			this.out.Print('<a')
 			item.url && this.out.Print(' href="', item.url.EncodeURI(), '"')
 			item.title && this.out.Print(' title="', item.title.EscapeHTML(), '"')
 			this.out.Print('>')
-			this.RenderItem(item.children)
+			this.FeedItem(item.children)
 			this.out.Print('</a>')
 		} elsif (item.type == `img) {
 			this.out.Print('<img')
@@ -169,7 +169,7 @@ Renderer = class {
 				this.out.Printf('<div class="mb-2"><code>%s</code></div>\n', fmt)
 				if (item.children) {
 					this.out.Println('<div class="mb-2 ml-4">')
-					this.RenderItem(item.children)
+					this.FeedItem(item.children)
 					this.out.Println()
 					this.out.Println('</div>')
 				}
@@ -181,7 +181,7 @@ Renderer = class {
 								fmt, typeName, accessMode)
 				if (item.children) {
 					this.out.Println('<div class="mb-2 ml-4">')
-					this.RenderItem(item.children)
+					this.FeedItem(item.children)
 					this.out.Println()
 					this.out.Println('</div>')
 				}
@@ -196,7 +196,7 @@ Renderer = class {
 				if (item.children) {
 					this.out.Print('>')
 					!inlineFlag && this.out.Println()
-					item.children && this.RenderItem(item.children)
+					item.children && this.FeedItem(item.children)
 					this.out.Print('</')
 					this.out.Print(item.text)
 					this.out.Print('>')
@@ -210,15 +210,14 @@ Renderer = class {
 		} elsif (item.type == `br) {
 			this.out.Print('<br />\n')
 		}
-		this.OnRenderItemPost(item)
+		this.OnFeedItemPost(item)
 	}
 	MakeAnchorName(indices[]:Number) = MakeAnchorNameDef(indices)
-	OnRenderItemPre(item:Item) = true
-	OnRenderItemPost(item:Item):void = nil
+	OnFeedItemPre(item:Item) = true
+	OnFeedItemPost(item:Item):void = nil
 }
 
-Document.Render@html(
-		out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
+Document.Render@html(out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
 	easyFormatFlag && R'''
 	<html>
 	<head>
@@ -237,15 +236,12 @@ Document.Render@html(
 	</head>
 	<body class="p-5">
 	'''.Render(out)
-	Renderer(out, captionIndex).Render(this)
+	Renderer(out, captionIndex).FeedDocument(this)
 	easyFormatFlag && R'''
 	</body>
 	</html>
 	'''.Render(out)
-}
-/*
-%% { `en,
-R'''
+} %% { `en, R'''
 Renders the content of markdown document in HTML format.
 
 The result will be put out to the stream speicified by the argument `out`.
@@ -256,4 +252,3 @@ Specifying `true` to `easyFormatFlag` argument means it will generate an HTML wi
 The argument `captionIndex` indicates whether caption indices are added to headers. The default is `false`.
 '''
 }
-*/
