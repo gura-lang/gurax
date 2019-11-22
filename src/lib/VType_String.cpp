@@ -356,16 +356,18 @@ Gurax_DeclareMethod(String, Fold)
 
 Gurax_ImplementMethod(String, Fold)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
+	size_t lenPerFold = args.PickNumberPos<size_t>();
+	size_t lenStep = args.IsValid()? args.PickNumberPos<size_t>() : lenPerFold;
+	bool neatFlag = argument.IsSet(Gurax_Symbol(neat));
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const StringReferable& str = valueThis.GetStringReferable();
+	return argument.ReturnIterator(
+		processor, new VType_String::Iterator_Fold(str.Reference(), lenPerFold, lenStep, neatFlag));
 }
 
 // String#Foldw(width:Number):String:[padding] {block?}
@@ -1421,6 +1423,91 @@ String VType_String::Iterator_EachLine::ToString(const StringStyle& ss) const
 {
 	return "String#EachLine";
 }
+
+//-----------------------------------------------------------------------------
+// VType_String::Iterator_Fold
+//-----------------------------------------------------------------------------
+Value* VType_String::Iterator_Fold::DoNextValue()
+{
+	if (!*_pCurrent) return nullptr;
+	size_t lenForward = 0;
+	const char* pNext;
+	const char* pTail;
+	if (_lenStep <= _lenPerFold) {
+		size_t lenForwardSub = 0;
+		pNext = String::Forward(_pCurrent, _lenStep, &lenForward);
+		pTail = String::Forward(pNext, _lenPerFold - _lenStep, &lenForwardSub);
+		lenForward += lenForwardSub;
+	} else {
+		pTail = String::Forward(_pCurrent, _lenPerFold, &lenForward);
+		pNext = String::Forward(pTail, _lenStep - _lenPerFold);
+	}
+	if (_neatFlag && lenForward < _lenPerFold) return nullptr;
+	RefPtr<Value> pValue(new Value_String(String(_pCurrent, pTail)));
+	_pCurrent = pNext;
+	return pValue.release();
+}
+
+String VType_String::Iterator_Fold::ToString(const StringStyle& ss) const
+{
+	return String("String#Fold");
+}
+
+#if 0
+//-----------------------------------------------------------------------------
+// Class_string::IteratorFoldw
+//-----------------------------------------------------------------------------
+Class_string::IteratorFoldw::IteratorFoldw(const String &str,
+							size_t widthPerFold, bool paddingFlag) :
+	Iterator(Finite), _str(str), _widthPerFold(widthPerFold), _paddingFlag(paddingFlag)
+{
+	_pCur = _str.begin();
+}
+
+Class_string::IteratorFoldw::~IteratorFoldw()
+{
+}
+
+Iterator *Class_string::IteratorFoldw::GetSource()
+{
+	return nullptr;
+}
+
+bool Class_string::IteratorFoldw::DoNext(Environment &env, Value &value)
+{
+	UInt32 codeUTF32 = 0;
+	size_t width = 0; 
+	if (_pCur == _str.end()) return false;
+	String::const_iterator pHead = _pCur;
+	while (_pCur != _str.end()) {
+		String::const_iterator pNext = NextUTF32(_str, _pCur, codeUTF32);
+		Codec::WidthProp widthProp = Codec::GetWidthProp(codeUTF32);
+		width += (widthProp == Codec::WIDTHPROP_A ||
+				  widthProp == Codec::WIDTHPROP_W ||
+				  widthProp == Codec::WIDTHPROP_F)? 2 : 1;
+		if (width > _widthPerFold) {
+			String str(pHead, _pCur);
+			if (_paddingFlag) str += ' ';
+			value = Value(str);
+			if (pHead == _pCur) _pCur = pNext;
+			return true;
+		}
+		_pCur = pNext;
+		if (width == _widthPerFold) break;
+	}
+	value = Value(String(pHead, _pCur));
+	return true;
+}
+
+String Class_string::IteratorFoldw::ToString() const
+{
+	return String("string#foldw");
+}
+
+void Class_string::IteratorFoldw::GatherFollower(Environment::Frame *pFrame, EnvironmentSet &envSet)
+{
+}
+#endif
 
 //------------------------------------------------------------------------------
 // Value_String

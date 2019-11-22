@@ -158,6 +158,13 @@ TestCase('String#Find()') {
 }
 
 TestCase('String#Fold()') {
+	str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	Tester(`str.Fold(6):list)
+	Tester(`str.Fold(6, 3):list)
+	Tester(`str.Fold(3, 6):list)
+	Tester(`str.Fold(6):list:neat)
+	Tester(`str.Fold(6, 3):list:neat)
+	Tester(`str.Fold(3, 6):list:neat)
 }
 
 TestCase('String#Foldw()') {

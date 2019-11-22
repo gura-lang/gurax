@@ -74,6 +74,28 @@ public:
 		virtual Value* DoNextValue() override;
 		virtual String ToString(const StringStyle& ss) const override;
 	};
+	class GURAX_DLLDECLARE Iterator_Fold : public Iterator {
+	private:
+		RefPtr<StringReferable> _pStr;
+		const char* _pCurrent;
+		size_t _lenPerFold;
+		size_t _lenStep;
+		bool _neatFlag;
+	public:
+		Iterator_Fold(StringReferable* pStr, size_t lenPerFold, size_t lenStep, bool neatFlag) :
+			_pStr(pStr), _pCurrent(GetString()),
+			_lenPerFold(lenPerFold), _lenStep(lenStep), _neatFlag(neatFlag) {}
+	public:
+		const char* GetString() const { return _pStr->GetString(); }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenUndetermined;
+		}
+		virtual size_t GetLength() const override { return -1; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
