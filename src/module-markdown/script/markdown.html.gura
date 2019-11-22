@@ -2,9 +2,13 @@
 //=============================================================================
 // markdown HTML renderer
 //=============================================================================
-import(markdown)
+import(markdown) {*}
 
-Renderer@html = class {
+Renderer = class {
+	out:Stream
+	indices[]:Number
+	enableAnchorFlags[]:Bool
+	captionIndex:Bool
 	__init__(out:Stream:w, captionIndex:Bool) = {
 		this.out = out
 		this.indices = Dim(6) {0}
@@ -213,8 +217,8 @@ Renderer@html = class {
 	OnRenderItemPost(item:Item):void = nil
 }
 
-markdown.Document.render@html(
-		out:stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
+Document.Render@html(
+		out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool = false) = {
 	easyFormatFlag && out.Print(R'''
 	<html>
 	<head>
@@ -233,12 +237,14 @@ markdown.Document.render@html(
 	</head>
 	<body class="p-5">
 	''')
-	Renderer@html(out, captionIndex).Render(this)
+	Renderer(out, captionIndex).Render(this)
 	easyFormatFlag && out.Print(R'''
 	</body>
 	</html>
 	''')
-} %% { `en,
+}
+/*
+%% { `en,
 R'''
 Renders the content of markdown document in HTML format.
 
@@ -250,3 +256,4 @@ Specifying `true` to `easyFormatFlag` argument means it will generate an HTML wi
 The argument `captionIndex` indicates whether caption indices are added to headers. The default is `false`.
 '''
 }
+*/
