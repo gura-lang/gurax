@@ -22,8 +22,9 @@ Renderer = class {
 		//!this.OnRenderItemPre(item) && return
 		Println(item.children)
 		if (item.type == `root) {
-			//this.RenderItem(item.children)
-			item.children.Each {|itemSub| this.RenderItem(itemSub)}
+			this.RenderItem(item.children)
+			//nil
+			//item.children.Each {|itemSub| this.RenderItem(itemSub)}
 		} elsif (item.type == `h1) {
 			this.out.Print('<h1>')
 			if (this.captionIndex) {
