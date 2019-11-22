@@ -95,11 +95,10 @@ Gurax_ImplementMethod(String, Chop)
 	return Value::nil();
 }
 
-// String#DecodeURI():String {block?}
+// String#DecodeURI():String
 Gurax_DeclareMethod(String, DecodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string in which percent-encoded characters are decoded.");
@@ -107,16 +106,11 @@ Gurax_DeclareMethod(String, DecodeURI)
 
 Gurax_ImplementMethod(String, DecodeURI)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.DecodeURI());
 }
 
 // String#Each():Iterator:[utf8,utf32] {block?}
@@ -197,11 +191,10 @@ Gurax_ImplementMethod(String, Encode)
 	return Value::nil();
 }
 
-// String#EncodeURI():String {block?}
+// String#EncodeURI():String
 Gurax_DeclareMethod(String, EncodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Returns a string in which non-URIC characters are percent-encoded.\n");
@@ -209,16 +202,11 @@ Gurax_DeclareMethod(String, EncodeURI)
 
 Gurax_ImplementMethod(String, EncodeURI)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.EncodeURI());
 }
 
 // String#EndsWith(sub:String, posEnd?:Number):map:[rest,icase]
@@ -290,12 +278,11 @@ Gurax_ImplementMethod(String, Escape)
 	return new Value_String(str.MakeQuoted(surroundFlag));
 }
 
-// String#EscapeHTML():String:[quote] {block?}
+// String#EscapeHTML():String:[quote]
 Gurax_DeclareMethod(String, EscapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(quote));
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Converts some characters into HTML entity symbols.\n"
@@ -305,7 +292,13 @@ Gurax_DeclareMethod(String, EscapeHTML)
 
 Gurax_ImplementMethod(String, EscapeHTML)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	bool quoteFlag = argument.IsSet(Gurax_Symbol(quote));
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	return new Value_String(str.EscapeHTML(quoteFlag));
 }
 
 // String#Find(sub:String, pos?:Number):map:[icase,rev]
@@ -1082,11 +1075,10 @@ Gurax_ImplementClassMethod(String, Translator)
 	return Value::nil();
 }
 
-// String#UnescapeHTML():String {block?}
+// String#UnescapeHTML():String
 Gurax_DeclareMethod(String, UnescapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Converts escape sequences into readable characters.");
@@ -1094,16 +1086,11 @@ Gurax_DeclareMethod(String, UnescapeHTML)
 
 Gurax_ImplementMethod(String, UnescapeHTML)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	return new Value_String(str.UnescapeHTML());
 }
 
 // String#Upper():String
