@@ -1154,6 +1154,10 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 	composer.Add_Jump(this);
 	exprAssigned.SetPUnitFirst(composer.PeekPUnitCont());
 	exprAssigned.ComposeOrNil(composer);
+	if (GetAttr().IsSet(Gurax_Symbol(void_))) {
+		composer.Add_DiscardValue(this);
+		composer.Add_Value(Value::nil());
+	}
 	composer.Add_Return(this);
 	for (Expr* pExprParam = GetExprCdrFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
 		Expr_Binary* pExprParamEx = nullptr;

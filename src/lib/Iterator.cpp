@@ -229,12 +229,6 @@ bool Iterator::MustBeFinite() const
 	return false;
 }
 
-Iterator* Iterator::Clone2() const
-{
-	//*********************
-	return Reference();
-}
-
 String Iterator::ToString(const StringStyle& ss) const
 {
 	String str;
