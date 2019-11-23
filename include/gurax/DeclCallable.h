@@ -129,7 +129,7 @@ public:
 	static bool CheckFlagConfliction(Flags flags);
 	const Symbol* GetSymbolOfDict() const { return _pSymbolOfDict; }
 	const Symbol* GetSymbolOfAccessor() const { return _pSymbolOfAccessor; }
-	bool IsDeclaredSymbol(const Symbol* pSymbol) {
+	bool IsDeclaredSymbol(const Symbol* pSymbol) const {
 		return GetDeclArgOwner().FindBySymbol(pSymbol) ||
 			GetSymbolOfDict()->IsIdentical(pSymbol) || GetSymbolOfAccessor()->IsIdentical(pSymbol);
 	}

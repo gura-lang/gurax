@@ -175,6 +175,7 @@ public:
 	virtual bool IsEmpty() const { return false; }
 	virtual bool IsSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsPureSymbol(const Symbol* pSymbol) const { return false; }
+	virtual bool IsCollector() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
 	virtual bool Traverse(Visitor& visitor) = 0;
@@ -400,6 +401,7 @@ public:
 	void AddExprElem(Expr* pExprElem);
 public:
 	// Virtual functions of Expr
+	virtual bool IsCollector() const override { return true; }
 	virtual bool Traverse(Visitor& visitor) override {
 		if (!visitor.Visit(this)) return false;
 		if (!_pExprLinkElem->Traverse(visitor)) return false;
