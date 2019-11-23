@@ -189,7 +189,7 @@ func.type .. `function
 String.Find.type .. `method
 A.f.type .. `classMethod
 ======== return ========
-f() .. <Nil>
+f() .. return(value?:Any)
 g() .. 3
 ======== Recursion ========
 20! = 2432902008176640000
