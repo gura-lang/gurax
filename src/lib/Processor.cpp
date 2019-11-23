@@ -103,7 +103,7 @@ bool Processor::ImportModule(const char* moduleName, bool binaryFlag, bool overw
 	}
 	RefPtr<Module> pModule(Module::ImportHierarchy(*this, *pDottedSymbol, binaryFlag, overwriteFlag));
 	if (!pModule) return false;
-	if (!pModule->AssignToFrame(*this, nullptr, false, overwriteFlag)) return false;
+	if (!pModule->AssignToFrame(*this, nullptr, overwriteFlag)) return false;
 	return true;
 }
 

@@ -975,7 +975,17 @@ void PUnit_Import<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	}
-	pModule->AssignToFrame(processor, GetSymbolList(), GetMixInFlag(), GetOverwriteFlag());
+	if (GetMixInFlag()) {
+		if (!pModule->GetFrame().ExportTo(processor.GetFrameCur(), GetOverwriteFlag())) {
+			processor.ErrorDone();
+			return;
+		}
+	} else if (GetSymbolForModuleFlag()) {
+		if (!pModule->AssignToFrame(processor, GetSymbolList(), GetOverwriteFlag())) {
+			processor.ErrorDone();
+			return;
+		}
+	}
 	if (!discardValueFlag) processor.PushValue(new Value_Module(pModule.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -995,21 +1005,21 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_Import<1, true>(
 				_pDottedSymbol.release(), _pSymbolList.release(),
-				_binaryFlag, _mixInFlag, _overwriteFlag, _pExprSrc.Reference());
+				_binaryFlag, _mixInFlag, _overwriteFlag, _symbolForModuleFlag, _pExprSrc.Reference());
 		} else {
 			_pPUnitCreated = new PUnit_Import<1, false>(
 				_pDottedSymbol.release(), _pSymbolList.release(),
-				_binaryFlag, _mixInFlag, _overwriteFlag, _pExprSrc.Reference());
+				_binaryFlag, _mixInFlag, _overwriteFlag, _symbolForModuleFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_Import<0, true>(
 				_pDottedSymbol.release(), _pSymbolList.release(),
-				_binaryFlag, _mixInFlag, _overwriteFlag);
+				_binaryFlag, _mixInFlag, _overwriteFlag, _symbolForModuleFlag);
 		} else {
 			_pPUnitCreated = new PUnit_Import<0, false>(
 				_pDottedSymbol.release(), _pSymbolList.release(),
-				_binaryFlag, _mixInFlag, _overwriteFlag);
+				_binaryFlag, _mixInFlag, _overwriteFlag, _symbolForModuleFlag);
 		}
 	}
 	return _pPUnitCreated;

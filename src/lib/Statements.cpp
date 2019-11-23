@@ -777,9 +777,17 @@ Gurax_DeclareStatement(import)
 
 Gurax_ImplementStatement(import)
 {
-	Expr* pExprCdr = exprCaller.GetExprCdrFirst();
+	Expr* pExprArg = exprCaller.GetExprCdrFirst();
 	const Attribute& attr = exprCaller.GetAttr();
-	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprCdr));
+	bool symbolForModuleFlag = true;
+	if (pExprArg->IsType<Expr_UnaryOp>()) {
+		Expr_UnaryOp* pExprEx = dynamic_cast<Expr_UnaryOp*>(pExprArg);
+		if (pExprEx->GetOperator()->IsType(OpType::Neg)) {
+			pExprArg = &pExprEx->GetExprChild();
+			symbolForModuleFlag = false;
+		}
+	}
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromExpr(*pExprArg));
 	if (!pDottedSymbol) {
 		Error::Issue(ErrorType::SyntaxError, "invalid format of dotted-symbol");
 		return;
@@ -807,7 +815,7 @@ Gurax_ImplementStatement(import)
 		mixInFlag = pSymbolList->DoesContain(Gurax_SymbolMark(Mul));
 	}
 	composer.Add_Import(pDottedSymbol.release(), pSymbolList.release(),
-						binaryFlag, mixInFlag, overwriteFlag, &exprCaller);
+						binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag, &exprCaller);
 }
 
 // scope(frame?:Frame) {`block}

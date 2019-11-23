@@ -148,9 +148,10 @@ public:
 		SetFactory(new PUnitFactory_BinaryOp(pOperator, Expr::Reference(pExprSrc)));
 	}
 	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList,
-					bool binaryFlag, bool mixInFlag, bool overwriteFlag, const Expr* pExprSrc = nullptr) {
+					bool binaryFlag, bool mixInFlag, bool overwriteFlag, bool symbolForModuleFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Import(pDottedSymbol, pSymbolList,
-										   binaryFlag, mixInFlag, overwriteFlag, Expr::Reference(pExprSrc)));
+										   binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag,
+										   Expr::Reference(pExprSrc)));
 	}
 	void Add_CreateVType(bool inheritFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_CreateVType(inheritFlag, Expr::Reference(pExprSrc)));

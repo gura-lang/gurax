@@ -178,11 +178,9 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	return pModule.release();
 }
 
-bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList,
-						   bool mixInFlag, bool overwriteFlag) const
+bool Module::AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool overwriteFlag) const
 {
 	Frame& frameCur = processor.GetFrameCur();
-	if (mixInFlag) return GetFrame().ExportTo(frameCur, overwriteFlag);
 	if (pSymbolList && !pSymbolList->empty()) {
 		for (const Symbol* pSymbol : *pSymbolList) {
 			if (!overwriteFlag && frameCur.Lookup(pSymbol)) {

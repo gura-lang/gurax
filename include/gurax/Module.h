@@ -156,7 +156,7 @@ public:
 	static Module* ImportCompressed(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	static Module* ImportBinary(Processor& processor, const DottedSymbol& dottedSymbol, const char* pathName);
 	void AssignToMap() { _moduleMap.Assign(Reference()); }
-	bool AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool mixInFlag, bool overwriteFlag) const;
+	bool AssignToFrame(Processor& processor, const SymbolList* pSymbolList, bool overwriteFlag) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Module& module) const { return this == &module; }
