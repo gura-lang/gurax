@@ -299,6 +299,9 @@ bool Parser::ReduceTwoTokens()
 		} else if (pToken1->IsType(TokenType::Add)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '+' Expr\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Pos));
+		} else if (pToken1->IsType(TokenType::Question)) {
+			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '?' Expr\n"));
+			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Question));
 		} else if (pToken1->IsType(TokenType::Quote)) {
 			DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '`' Expr\n"));
 			pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Quote));
