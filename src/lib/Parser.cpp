@@ -173,16 +173,16 @@ bool Parser::ReduceOneToken()
 		pExprGen.reset(
 			new Expr_Value(new Value_Number(num), pToken->GetSegmentReferable().Reference()));
 	} else if (pToken->IsType(TokenType::String)) {
-		DBGPARSER(::printf("Reduce: Expr(Value) -> String\n"));
-		pExprGen.reset(new Expr_Value(new Value_String(pToken->GetSegmentReferable().Reference())));
+		DBGPARSER(::printf("Reduce: Expr(String) -> String\n"));
+		pExprGen.reset(new Expr_String(pToken->GetSegmentReferable().Reference()));
 	} else if (pToken->IsType(TokenType::Binary)) {
 		DBGPARSER(::printf("Reduce: Expr(Value) -> Binary\n"));
 		pExprGen.reset(new Expr_Value(new Value_Binary(pToken->GetBinaryReferable().Reference())));
 	} else if (pToken->IsType(TokenType::Template)) {
-		DBGPARSER(::printf("Reduce: Expr -> Template\n"));
+		DBGPARSER(::printf("Reduce: Expr(Template) -> Template\n"));
 		pExprGen.reset(new Expr_Template(pToken->GetSegmentReferable().Reference(), false));
 	} else if (pToken->IsType(TokenType::TmplEmbedded)) {
-		DBGPARSER(::printf("Reduce: Expr -> TmplEmbedded\n"));
+		DBGPARSER(::printf("Reduce: Expr(Template) -> TmplEmbedded\n"));
 		pExprGen.reset(new Expr_Template(pToken->GetSegmentReferable().Reference(), true));
 	} else if (pToken->IsType(TokenType::Symbol)) {
 		DBGPARSER(::printf("Reduce: Expr(Identifer) -> Symbol\n"));

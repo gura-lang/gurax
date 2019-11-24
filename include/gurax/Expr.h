@@ -56,6 +56,7 @@ inline const Symbol* MemberModeToSymbol(MemberMode memberMode)
 // [class hierarchy under Expr]
 // Expr <-+- Expr_Node <------+- Expr_Value
 //        |                   +- Expr_Identifier
+//        |                   +- Expr_String
 //        |                   +- Expr_Suffixed
 //        |                   `- Expr_Member
 //        +- Expr_Unary <------- Expr_UnaryOp
@@ -565,6 +566,28 @@ public:
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 	virtual bool IsEqualTo(const Expr& expr) const override;
+};
+
+//------------------------------------------------------------------------------
+// Expr_String : Expr_Node
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Expr_String : public Expr_Node {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Expr_String);
+public:
+	static const TypeInfo typeInfo;
+protected:
+	RefPtr<StringReferable> _pStrSegment;
+public:
+	Expr_String(StringReferable* pStrSegment) : Expr_Node(typeInfo), _pStrSegment(pStrSegment) {}
+	const StringReferable& GetSegmentReferable() const { return *_pStrSegment; }
+	const char* GetSegment() const { return _pStrSegment->GetString(); }
+	const String& GetSegmentSTL() const { return _pStrSegment->GetStringSTL(); }
+public:
+	// Virtual functions of Expr
+	virtual void Compose(Composer& composer) override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 //------------------------------------------------------------------------------

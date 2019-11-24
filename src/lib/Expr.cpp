@@ -427,6 +427,23 @@ bool Expr_Identifier::IsEqualTo(const Expr& expr) const
 }
 
 //------------------------------------------------------------------------------
+// Expr_String : Expr_Node
+//------------------------------------------------------------------------------
+const Expr::TypeInfo Expr_String::typeInfo("String");
+
+void Expr_String::Compose(Composer& composer)
+{
+	composer.Add_Value(new Value_String(GetSegmentReferable().Reference()), this);	// [Value]
+}
+
+String Expr_String::ToString(const StringStyle& ss) const
+{
+	String str = GetSegmentSTL();
+	if (!ss.IsAsValue()) str = str.MakeQuoted(true);
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Expr_Suffixed : Expr_Node
 //------------------------------------------------------------------------------
 const Expr::TypeInfo Expr_Suffixed::typeInfo("Suffixed");
