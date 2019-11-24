@@ -1104,16 +1104,8 @@ void Expr_Caller::ComposeForAssignment(
 						 "operator can not be applied in function assigment");
 		return;
 	}
-	Expr* pExprAssigned = &exprAssigned;
-	if (exprAssigned.IsType<Expr_BinaryOp>()) {
-		Expr_BinaryOp& exprEx = dynamic_cast<Expr_BinaryOp&>(exprAssigned);
-		if (exprEx.GetOperator()->IsType(OpType::ModMod)) {
-			pExprAssigned = &exprEx.GetExprLeft();
-			// implementation of document declaration here
-		}
-	}
 	if (GetExprCar().IsType<Expr_Member>()) {
-		RefPtr<Function> pFunction(GenerateFunction(composer, *pExprAssigned));
+		RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
 		if (!pFunction) return;
 		pFunction->SetType(GetAttr().IsSet(Gurax_Symbol(static_))?
 						   Function::Type::ClassMethod : Function::Type::Method);
@@ -1125,7 +1117,7 @@ void Expr_Caller::ComposeForAssignment(
 		exprCarEx.GetExprTarget().ComposeOrNil(composer);				// [Target]
 		composer.Add_AssignMethod(pFunction.release(), false, this);	// [Value]
 	} else {
-		RefPtr<Function> pFunction(GenerateFunction(composer, *pExprAssigned));
+		RefPtr<Function> pFunction(GenerateFunction(composer, exprAssigned));
 		if (!pFunction) return;
 		pFunction->SetType(Function::Type::Function);
 		composer.Add_AssignFunction(pFunction.release(), this);			// [Value]
@@ -1161,10 +1153,20 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
+	Expr* pExprBody = &exprAssigned;
+#if 0
+	for (Expr* pExpr = &exprAssigned; pExpr->IsBinaryOp(OpType::ModMod); ) {
+		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
+		if (pExprEx->GetExprLeft().IsType<Expr_String>()) {
+		} else {
+		}
+		pExpr = &pExprEx->GetExprRight();
+	}
+#endif
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
-	exprAssigned.SetPUnitFirst(composer.PeekPUnitCont());
-	exprAssigned.ComposeOrNil(composer);
+	pExprBody->SetPUnitFirst(composer.PeekPUnitCont());
+	pExprBody->ComposeOrNil(composer);
 	if (GetAttr().IsSet(Gurax_Symbol(void_))) {
 		composer.Add_DiscardValue(this);
 		composer.Add_Value(Value::nil());
@@ -1183,7 +1185,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	return new FunctionCustom(Function::Type::Function, pSymbol,
-							  GetDeclCallable().Reference(), exprAssigned.Reference());
+							  GetDeclCallable().Reference(), pExprBody->Reference());
 }
 
 // This method is used by Template.

@@ -176,6 +176,8 @@ public:
 	virtual bool IsSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsPureSymbol(const Symbol* pSymbol) const { return false; }
 	virtual bool IsCollector() const { return false; }
+	virtual bool IsUnaryOp(OpType opType) const { return false; }
+	virtual bool IsBinaryOp(OpType opType) const { return false; }
 	virtual bool IsShortCircuitOperator() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
@@ -609,6 +611,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
+	virtual bool IsUnaryOp(OpType opType) const override { return GetOperator()->IsType(opType); }
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeForList(Composer& composer) override;
 	virtual void ComposeForArgSlot(Composer& composer) override;
@@ -632,6 +635,7 @@ public:
 	const Operator* GetOperator() const { return _pOperator; }
 public:
 	// Virtual functions of Expr
+	virtual bool IsBinaryOp(OpType opType) const override { return GetOperator()->IsType(opType); }
 	virtual bool IsShortCircuitOperator() const override {
 		return GetOperator()->IsType(OpType::AndAnd) || GetOperator()->IsType(OpType::OrOr);
 	}
