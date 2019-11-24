@@ -241,7 +241,7 @@ Document.Render@html(out:Stream:w, easyFormatFlag:Bool = true, captionIndex:Bool
 	</body>
 	</html>
 	'''.Render(out)
-} %% { `en, R'''
+} %% R'''
 Renders the content of markdown document in HTML format.
 
 The result will be put out to the stream speicified by the argument `out`.
@@ -250,5 +250,4 @@ If the argument is omitted, it will be put out to the standard output.
 Specifying `true` to `easyFormatFlag` argument means it will generate an HTML with header tags. The default is `true`.
 
 The argument `captionIndex` indicates whether caption indices are added to headers. The default is `false`.
-'''
-}
+'''en

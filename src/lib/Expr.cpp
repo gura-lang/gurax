@@ -1181,11 +1181,10 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 		exprs.push_back(pExpr);
 	} while (0);
 	Expr* pExprBody = nullptr;
-	RefPtr<HelpHolder> pHelpHolder;
+	RefPtr<HelpHolder> pHelpHolder(new HelpHolder());
 	if (exprs.size() == 1) {
 		pExprBody = exprs.front();
 	} else {
-		pHelpHolder.reset();
 		for (Expr* pExpr : exprs) {
 			if (pExpr->IsType<Expr_String>()) {
 				Expr_String& exprEx = dynamic_cast<Expr_String&>(*pExpr);

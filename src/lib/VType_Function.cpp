@@ -131,6 +131,17 @@ Gurax_ImplementPropertyGetter(Function, type)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// ?Function
+Gurax_ImplementOpUnary(Question, Function)
+{
+	const Function& func = Value_Function::GetFunction(value);
+	func.GetHelpHolder();
+	return Value::nil();
+}
+
+//------------------------------------------------------------------------------
 // VType_Function
 //------------------------------------------------------------------------------
 VType_Function VTYPE_Function("Function");
