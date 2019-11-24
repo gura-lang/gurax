@@ -1172,12 +1172,25 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 	}
 	Expr* pExprBody = &exprAssigned;
 #if 0
+	Expr* pExprBody = nullptr;
 	for (Expr* pExpr = &exprAssigned; pExpr->IsBinaryOp(OpType::ModMod); ) {
 		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-		if (pExprEx->GetExprLeft().IsType<Expr_String>()) {
+		Expr& exprLeft = pExprEx->GetExprLeft();
+		if (exprLeft.IsType<Expr_String>()) {
+			
+		} else if (exprLeft.IsSuffixed(SuffixMgr::Target::String)) {
+			
+		} else if (pExprBody) {
+			Error::IssueWith(ErrorType::SyntaxError, *this, "duplicated function body");
+			return nullptr;
 		} else {
+			pExprBody = &exprLeft;
 		}
 		pExpr = &pExprEx->GetExprRight();
+	}
+	if (!pExprBody) {
+		Error::IssueWith(ErrorType::SyntaxError, *this, "no function body");
+		return nullptr;
 	}
 #endif
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();

@@ -179,6 +179,7 @@ public:
 	virtual bool IsCollector() const { return false; }
 	virtual bool IsUnaryOp(OpType opType) const { return false; }
 	virtual bool IsBinaryOp(OpType opType) const { return false; }
+	virtual bool IsSuffixed(SuffixMgr::Target target) const { return false; }
 	virtual bool IsShortCircuitOperator() const { return false; }
 	virtual bool IsDeclArgWithDefault(Expr_Binary** ppExpr) const { return false; }
 	virtual const DeclCallable* LookupDeclCallable() const { return nullptr; } // used by Template
@@ -613,6 +614,7 @@ public:
 	SuffixMgr::Target GetTarget() const { return _target; }
 public:
 	// Virtual functions of Expr
+	virtual bool IsSuffixed(SuffixMgr::Target target) const override { return _target == target; }
 	virtual void Compose(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
