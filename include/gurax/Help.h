@@ -46,8 +46,14 @@ protected:
 	// Destructor
 	virtual ~HelpHolder() = default;
 public:
-	void AddHelp(const Symbol* pLangCode, String doc);
-	void AddHelp(const Symbol* pLangCode, String formatName, String doc);
+	void AddHelp(const Symbol* pLangCode, StringReferable* pDoc);
+	void AddHelp(const Symbol* pLangCode, String formatName, StringReferable* pDoc);
+	void AddHelp(const Symbol* pLangCode, const char* doc) {
+		AddHelp(pLangCode, new StringReferable(doc));
+	}
+	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
+		AddHelp(pLangCode, formatName, new StringReferable(doc));
+	}
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }
 };
 
@@ -62,14 +68,14 @@ private:
 	RefPtr<HelpHolder::WeakPtr> _pwHelpHolder;
 	const Symbol* _pLangCode;
 	String _formatName;
-	String _doc;
+	RefPtr<StringReferable> _pDoc;
 public:
 	// Constructor
-	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, String doc) :
-		_pwHelpHolder(pwHelpHolder), _pLangCode(pLangCode), _doc(std::move(doc)) {}
-	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, String formatName, String doc) :
+	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, StringReferable* pDoc) :
+		_pwHelpHolder(pwHelpHolder), _pLangCode(pLangCode), _pDoc(pDoc) {}
+	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, String formatName, StringReferable* pDoc) :
 		_pwHelpHolder(pwHelpHolder), _pLangCode(pLangCode),
-		_formatName(std::move(formatName)), _doc(std::move(doc)) {}
+		_formatName(std::move(formatName)), _pDoc(pDoc) {}
 	// Copy constructor/operator
 	Help(const Help& src) = delete;
 	Help& operator=(const Help& src) = delete;
@@ -82,7 +88,7 @@ protected:
 public:
 	const Symbol* GetLangCode() const { return _pLangCode; }
 	const char* GetFormatName() const { return _formatName.c_str(); }
-	const char* GetDoc() const { return _doc.c_str(); }
+	const char* GetDoc() const { return _pDoc->GetString(); }
 };
 
 

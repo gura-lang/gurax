@@ -15,7 +15,8 @@ protected:
 	RefPtr<Expr> _pExprBody;
 	const PUnit* _pPUnitBody;
 public:
-	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, Expr* pExprBody);
+	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable,
+				   Expr* pExprBody, HelpHolder* pHelpHolder = nullptr);
 public:
 	// Virtual functions of Function
 	virtual const Expr& GetExprBody() const override { return *_pExprBody; }

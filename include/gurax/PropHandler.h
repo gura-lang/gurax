@@ -199,11 +199,11 @@ public:
 	void SetSeqId(SeqId seqId) { _seqId = seqId; }
 	SeqId GetSeqId() const { return _seqId; }
 	void Declare(const VType& vtype, UInt32 flags) { _pVType = &vtype, _flags |= flags; }
-	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
+	void AddHelp(const Symbol* pLangCode, const char* doc) {
+		_pHelpHolder->AddHelp(pLangCode, doc);
 	}
-	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), doc);
 	}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVType() const { return *_pVType; }

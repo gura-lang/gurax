@@ -1170,29 +1170,41 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
-	Expr* pExprBody = &exprAssigned;
-#if 0
-	Expr* pExprBody = nullptr;
-	for (Expr* pExpr = &exprAssigned; pExpr->IsBinaryOp(OpType::ModMod); ) {
-		Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-		Expr& exprLeft = pExprEx->GetExprLeft();
-		if (exprLeft.IsType<Expr_String>()) {
-			
-		} else if (exprLeft.IsSuffixed(SuffixMgr::Target::String)) {
-			
-		} else if (pExprBody) {
-			Error::IssueWith(ErrorType::SyntaxError, *this, "duplicated function body");
-			return nullptr;
-		} else {
-			pExprBody = &exprLeft;
+	ExprList exprs;
+	do {
+		Expr* pExpr = &exprAssigned;
+		while (pExpr->IsBinaryOp(OpType::ModMod)) {
+			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
+			exprs.push_back(&pExprEx->GetExprLeft());
+			pExpr = &pExprEx->GetExprRight();
 		}
-		pExpr = &pExprEx->GetExprRight();
+		exprs.push_back(pExpr);
+	} while (0);
+	Expr* pExprBody = nullptr;
+	RefPtr<HelpHolder> pHelpHolder;
+	if (exprs.size() == 1) {
+		pExprBody = exprs.front();
+	} else {
+		pHelpHolder.reset();
+		for (Expr* pExpr : exprs) {
+			if (pExpr->IsType<Expr_String>()) {
+				Expr_String& exprEx = dynamic_cast<Expr_String&>(*pExpr);
+				pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
+			} else if (pExpr->IsSuffixed(SuffixMgr::Target::String)) {
+				Expr_Suffixed& exprEx = dynamic_cast<Expr_Suffixed&>(*pExpr);
+				pHelpHolder->AddHelp(exprEx.GetSymbolSuffix(), exprEx.GetSegmentReferable().Reference());
+			} else if (pExprBody) {
+				Error::IssueWith(ErrorType::SyntaxError, *this, "duplicated function body");
+				return nullptr;
+			} else {
+				pExprBody = pExpr;
+			}
+		}
 	}
 	if (!pExprBody) {
 		Error::IssueWith(ErrorType::SyntaxError, *this, "no function body");
 		return nullptr;
 	}
-#endif
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(this);
 	pExprBody->SetPUnitFirst(composer.PeekPUnitCont());
@@ -1215,7 +1227,7 @@ Function* Expr_Caller::GenerateFunction(Composer& composer, Expr& exprAssigned)
 	}
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	return new FunctionCustom(Function::Type::Function, pSymbol,
-							  GetDeclCallable().Reference(), pExprBody->Reference());
+							  GetDeclCallable().Reference(), pExprBody->Reference(), pHelpHolder.release());
 }
 
 // This method is used by Template.

@@ -69,11 +69,11 @@ public:
 	Frame* LockFrameOuter() const { return _pwFrameOuter? _pwFrameOuter->Lock() : nullptr; }
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
-	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
+	void AddHelp(const Symbol* pLangCode, const char* doc) {
+		_pHelpHolder->AddHelp(pLangCode, doc);
 	}
-	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), doc);
 	}
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }

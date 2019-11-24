@@ -124,11 +124,11 @@ public:
 	const DottedSymbol& GetDottedSymbol() const { return _pFrame->GetDottedSymbol(); }
 	void SetPathName(String pathName) { _pathName = pathName; }
 	const char* GetPathName() const { return _pathName.c_str(); }
-	void AddHelp(const Symbol* pLangCode, String doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(doc));
+	void AddHelp(const Symbol* pLangCode, const char *doc) {
+		_pHelpHolder->AddHelp(pLangCode, doc);
 	}
-	void AddHelp(const Symbol* pLangCode, String formatName, String doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), std::move(doc));
+	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
+		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), doc);
 	}
 	Frame_Module& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }

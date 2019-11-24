@@ -8,8 +8,10 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // FunctionCustom
 //------------------------------------------------------------------------------
-FunctionCustom::FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, Expr* pExprBody) :
-	Function(type, pSymbol, pDeclCallable), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
+FunctionCustom::FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable,
+							   Expr* pExprBody, HelpHolder* pHelpHolder) :
+	Function(type, pSymbol, pDeclCallable, pHelpHolder),
+	_pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
 {
 	if (_pPUnitBody && _pPUnitBody->IsBeginSequence()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
