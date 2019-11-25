@@ -31,8 +31,8 @@ Gurax_ImplementFunction(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType#__PropHandler__(symbol:Symbol):map {block?}
-Gurax_DeclareMethod(VType, __PropHandler__)
+// VType#__prop__(symbol:Symbol):map {block?}
+Gurax_DeclareMethod(VType, __prop__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -42,7 +42,7 @@ Gurax_DeclareMethod(VType, __PropHandler__)
 		"");
 }
 
-Gurax_ImplementMethod(VType, __PropHandler__)
+Gurax_ImplementMethod(VType, __prop__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -90,7 +90,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __PropHandler__));
+	Assign(Gurax_CreateMethod(VType, __prop__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __props__));
 }

@@ -2,11 +2,11 @@
 import(util.tester) {*}
 
 TestCase('Property') {
-	Tester(`Complex.__PropHandler__(`abs))
-	Tester(`Complex.__PropHandler__(`arg))
-	Tester(`Complex.__PropHandler__(`imag))
-	Tester(`Complex.__PropHandler__(`norm))
-	Tester(`Complex.__PropHandler__(`real))
+	Tester(`Complex.__prop__(`abs))
+	Tester(`Complex.__prop__(`arg))
+	Tester(`Complex.__prop__(`imag))
+	Tester(`Complex.__prop__(`norm))
+	Tester(`Complex.__prop__(`real))
 }
 
 TestCase('Property Access') {

@@ -3,10 +3,10 @@
 % {{'key0', 'value0'}, {'key1', 'value1'}, {'key2', 'value2'}, {'key3', 'value3'}, {'key4', 'value4'}, {'key5', 'value5'}, {'key6', 'value6'}, {'key7', 'value7'}, {'key8', 'value8'}, {'key9', 'value9'}} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
 % {'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'} .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'}
 ======== Property ========
-Dict.__PropHandler__(`items) .. <PropHandler:items:List:R>
-Dict.__PropHandler__(`len) .. <PropHandler:len:Number:R>
-Dict.__PropHandler__(`keys) .. <PropHandler:keys:List:R>
-Dict.__PropHandler__(`values) .. <PropHandler:values:List:R>
+Dict.__prop__(`items) .. <PropHandler:items:List:R>
+Dict.__prop__(`len) .. <PropHandler:len:Number:R>
+Dict.__prop__(`keys) .. <PropHandler:keys:List:R>
+Dict.__prop__(`values) .. <PropHandler:values:List:R>
 ======== Indexer ========
 d['key0'] .. value0
 d['key4'] .. value4

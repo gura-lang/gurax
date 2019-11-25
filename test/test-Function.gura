@@ -20,9 +20,9 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	Tester(`Function.__PropHandler__(`expr))
-	Tester(`Function.__PropHandler__(`name))
-	Tester(`Function.__PropHandler__(`type))
+	Tester(`Function.__prop__(`expr))
+	Tester(`Function.__prop__(`name))
+	Tester(`Function.__prop__(`type))
 }
 
 TestCase('Default Value (1)') {

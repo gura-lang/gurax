@@ -1,7 +1,7 @@
 ======== Property ========
-Error.__PropHandler__(`errorType) .. <PropHandler:errorType:Number:R>
-Error.__PropHandler__(`expr) .. <PropHandler:expr:Expr:R>
-Error.__PropHandler__(`fileName) .. <PropHandler:fileName:String:R>
-Error.__PropHandler__(`lineNo) .. <PropHandler:lineNo:Number:R>
-Error.__PropHandler__(`lineNoBtm) .. <PropHandler:lineNoBtm:Number:R>
-Error.__PropHandler__(`text) .. <PropHandler:text:String:R>
+Error.__prop__(`errorType) .. <PropHandler:errorType:Number:R>
+Error.__prop__(`expr) .. <PropHandler:expr:Expr:R>
+Error.__prop__(`fileName) .. <PropHandler:fileName:String:R>
+Error.__prop__(`lineNo) .. <PropHandler:lineNo:Number:R>
+Error.__prop__(`lineNoBtm) .. <PropHandler:lineNoBtm:Number:R>
+Error.__prop__(`text) .. <PropHandler:text:String:R>

@@ -1,19 +1,19 @@
 ======== Property ========
-DateTime.__PropHandler__(`year) .. <PropHandler:year:Number:R:W>
-DateTime.__PropHandler__(`month) .. <PropHandler:month:Number:R:W>
-DateTime.__PropHandler__(`day) .. <PropHandler:day:Number:R:W>
-DateTime.__PropHandler__(`hour) .. <PropHandler:hour:Number:R:W>
-DateTime.__PropHandler__(`min) .. <PropHandler:min:Number:R:W>
-DateTime.__PropHandler__(`sec) .. <PropHandler:sec:Number:R:W>
-DateTime.__PropHandler__(`msec) .. <PropHandler:msec:Number:R:W>
-DateTime.__PropHandler__(`usec) .. <PropHandler:usec:Number:R:W>
-DateTime.__PropHandler__(`minsOff) .. <PropHandler:minsOff:Number:nil:R:W>
-DateTime.__PropHandler__(`wday) .. <PropHandler:wday:Number:R>
-DateTime.__PropHandler__(`week) .. <PropHandler:week:Symbol:R>
-DateTime.__PropHandler__(`weekShort) .. <PropHandler:weekShort:Symbol:R>
-DateTime.__PropHandler__(`yday) .. <PropHandler:yday:Number:R>
-DateTime.__PropHandler__(`utc) .. <PropHandler:utc:DateTime:R>
-DateTime.__PropHandler__(`unixTime) .. <PropHandler:unixTime:DateTime:R>
+DateTime.__prop__(`year) .. <PropHandler:year:Number:R:W>
+DateTime.__prop__(`month) .. <PropHandler:month:Number:R:W>
+DateTime.__prop__(`day) .. <PropHandler:day:Number:R:W>
+DateTime.__prop__(`hour) .. <PropHandler:hour:Number:R:W>
+DateTime.__prop__(`min) .. <PropHandler:min:Number:R:W>
+DateTime.__prop__(`sec) .. <PropHandler:sec:Number:R:W>
+DateTime.__prop__(`msec) .. <PropHandler:msec:Number:R:W>
+DateTime.__prop__(`usec) .. <PropHandler:usec:Number:R:W>
+DateTime.__prop__(`minsOff) .. <PropHandler:minsOff:Number:nil:R:W>
+DateTime.__prop__(`wday) .. <PropHandler:wday:Number:R>
+DateTime.__prop__(`week) .. <PropHandler:week:Symbol:R>
+DateTime.__prop__(`weekShort) .. <PropHandler:weekShort:Symbol:R>
+DateTime.__prop__(`yday) .. <PropHandler:yday:Number:R>
+DateTime.__prop__(`utc) .. <PropHandler:utc:DateTime:R>
+DateTime.__prop__(`unixTime) .. <PropHandler:unixTime:DateTime:R>
 ======== Constructor ========
 DateTime() .. 1970-01-01 00:00:00.000
 DateTime(2019) .. 2019-01-01 00:00:00.000

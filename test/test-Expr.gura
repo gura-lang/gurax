@@ -38,7 +38,7 @@ TestCase('PUnit') {
 }
 
 TestCase('Property') {
-	Tester(`Expr.__PropHandler__(`children))
+	Tester(`Expr.__prop__(`children))
 }
 
 TestCase('Assignment') {

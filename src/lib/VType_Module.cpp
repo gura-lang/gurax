@@ -10,8 +10,8 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 #if 0
 // ********************
-// Module#__PropHandler__(symbol:Symbol):map {block?}
-Gurax_DeclareMethod(Module, __PropHandler__)
+// Module#__prop__(symbol:Symbol):map {block?}
+Gurax_DeclareMethod(Module, __prop__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
@@ -21,7 +21,7 @@ Gurax_DeclareMethod(Module, __PropHandler__)
 		"");
 }
 
-Gurax_ImplementMethod(Module, __PropHandler__)
+Gurax_ImplementMethod(Module, __prop__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -48,7 +48,7 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Module, __PropHandler__));
+	//Assign(Gurax_CreateMethod(Module, __prop__));
 }
 
 //------------------------------------------------------------------------------

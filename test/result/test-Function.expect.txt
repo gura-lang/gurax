@@ -150,9 +150,9 @@ f(a = 1, b = 2, c = 3, d = 4, e = 5)
   ##16 EndArgSlotNamed()
   ##17 Call(cont=##18)
 ======== Property ========
-Function.__PropHandler__(`expr) .. <PropHandler:expr:Expr:R>
-Function.__PropHandler__(`name) .. <PropHandler:name:String:R>
-Function.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
+Function.__prop__(`expr) .. <PropHandler:expr:Expr:R>
+Function.__prop__(`name) .. <PropHandler:name:String:R>
+Function.__prop__(`type) .. <PropHandler:type:Symbol:R>
 ======== Default Value (1) ========
 f .. f(a = 'A', b = 'B', c = 'C', d = 'D', e = 'E')
 f() .. a=A, b=B, c=C, d=D, e=E

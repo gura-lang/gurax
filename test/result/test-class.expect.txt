@@ -12,66 +12,66 @@ A2(3, 4) .. <A2>
 destructor
 ======== Property Declaration ========
 --------
-A.__PropHandler__(`a1) .. <PropHandler:a1:Any:nil:R:W>
-A.__PropHandler__(`a2) .. <PropHandler:a2:Number:nil:R:W>
-A.__PropHandler__(`a3) .. <PropHandler:a3:String:nil:R:W>
-A.__PropHandler__(`a4) .. <PropHandler:a4:Number:R:W>
-A.__PropHandler__(`a5) .. <PropHandler:a5:String:R:W>
-A.__PropHandler__(`a6) .. <PropHandler:a6:Number:R:W>
-A.__PropHandler__(`a7) .. <PropHandler:a7:String:R:W>
-A.__PropHandler__(`a8) .. <PropHandler:a8:Number:nil:R:W>
-A.__PropHandler__(`a9) .. <PropHandler:a9:String:nil:R:W>
+A.__prop__(`a1) .. <PropHandler:a1:Any:nil:R:W>
+A.__prop__(`a2) .. <PropHandler:a2:Number:nil:R:W>
+A.__prop__(`a3) .. <PropHandler:a3:String:nil:R:W>
+A.__prop__(`a4) .. <PropHandler:a4:Number:R:W>
+A.__prop__(`a5) .. <PropHandler:a5:String:R:W>
+A.__prop__(`a6) .. <PropHandler:a6:Number:R:W>
+A.__prop__(`a7) .. <PropHandler:a7:String:R:W>
+A.__prop__(`a8) .. <PropHandler:a8:Number:nil:R:W>
+A.__prop__(`a9) .. <PropHandler:a9:String:nil:R:W>
 --------
-A.__PropHandler__(`b1) .. <PropHandler:b1[]:Any:nil:R:W>
-A.__PropHandler__(`b2) .. <PropHandler:b2[]:Number:nil:R:W>
-A.__PropHandler__(`b3) .. <PropHandler:b3[]:String:nil:R:W>
-A.__PropHandler__(`b4) .. <PropHandler:b4[]:Number:R:W>
-A.__PropHandler__(`b5) .. <PropHandler:b5[]:String:R:W>
-A.__PropHandler__(`b6) .. <PropHandler:b6[]:Any:R:W>
-A.__PropHandler__(`b7) .. <PropHandler:b7[]:Any:R:W>
-A.__PropHandler__(`b8) .. <PropHandler:b8[]:Number:R:W>
-A.__PropHandler__(`b9) .. <PropHandler:b9[]:String:R:W>
-A.__PropHandler__(`b10) .. <PropHandler:b10[]:Number:nil:R:W>
+A.__prop__(`b1) .. <PropHandler:b1[]:Any:nil:R:W>
+A.__prop__(`b2) .. <PropHandler:b2[]:Number:nil:R:W>
+A.__prop__(`b3) .. <PropHandler:b3[]:String:nil:R:W>
+A.__prop__(`b4) .. <PropHandler:b4[]:Number:R:W>
+A.__prop__(`b5) .. <PropHandler:b5[]:String:R:W>
+A.__prop__(`b6) .. <PropHandler:b6[]:Any:R:W>
+A.__prop__(`b7) .. <PropHandler:b7[]:Any:R:W>
+A.__prop__(`b8) .. <PropHandler:b8[]:Number:R:W>
+A.__prop__(`b9) .. <PropHandler:b9[]:String:R:W>
+A.__prop__(`b10) .. <PropHandler:b10[]:Number:nil:R:W>
 --------
-A.__PropHandler__(`c1) .. <PropHandler:c1:Any:nil:public:R:W>
-A.__PropHandler__(`c2) .. <PropHandler:c2:Number:nil:public:R:W>
-A.__PropHandler__(`c3) .. <PropHandler:c3:String:nil:public:R:W>
-A.__PropHandler__(`c4) .. <PropHandler:c4:Number:public:R:W>
-A.__PropHandler__(`c5) .. <PropHandler:c5:String:public:R:W>
-A.__PropHandler__(`c6) .. <PropHandler:c6:Number:nil:public:R:W>
-A.__PropHandler__(`c7) .. <PropHandler:c7:String:nil:public:R:W>
+A.__prop__(`c1) .. <PropHandler:c1:Any:nil:public:R:W>
+A.__prop__(`c2) .. <PropHandler:c2:Number:nil:public:R:W>
+A.__prop__(`c3) .. <PropHandler:c3:String:nil:public:R:W>
+A.__prop__(`c4) .. <PropHandler:c4:Number:public:R:W>
+A.__prop__(`c5) .. <PropHandler:c5:String:public:R:W>
+A.__prop__(`c6) .. <PropHandler:c6:Number:nil:public:R:W>
+A.__prop__(`c7) .. <PropHandler:c7:String:nil:public:R:W>
 --------
-A.__PropHandler__(`d1) .. <PropHandler:d1[]:Any:nil:public:R:W>
-A.__PropHandler__(`d2) .. <PropHandler:d2[]:Number:nil:public:R:W>
-A.__PropHandler__(`d3) .. <PropHandler:d3[]:String:nil:public:R:W>
-A.__PropHandler__(`d4) .. <PropHandler:d4[]:Number:public:R:W>
-A.__PropHandler__(`d5) .. <PropHandler:d5[]:String:public:R:W>
-A.__PropHandler__(`d6) .. <PropHandler:d6[]:Any:public:R:W>
-A.__PropHandler__(`d7) .. <PropHandler:d7[]:Any:R:W>
-A.__PropHandler__(`d8) .. <PropHandler:d8[]:Number:public:R:W>
-A.__PropHandler__(`d9) .. <PropHandler:d9[]:String:public:R:W>
-A.__PropHandler__(`d10) .. <PropHandler:d10[]:Number:nil:public:R:W>
-A.__PropHandler__(`d11) .. <PropHandler:d11[]:String:nil:public:R:W>
+A.__prop__(`d1) .. <PropHandler:d1[]:Any:nil:public:R:W>
+A.__prop__(`d2) .. <PropHandler:d2[]:Number:nil:public:R:W>
+A.__prop__(`d3) .. <PropHandler:d3[]:String:nil:public:R:W>
+A.__prop__(`d4) .. <PropHandler:d4[]:Number:public:R:W>
+A.__prop__(`d5) .. <PropHandler:d5[]:String:public:R:W>
+A.__prop__(`d6) .. <PropHandler:d6[]:Any:public:R:W>
+A.__prop__(`d7) .. <PropHandler:d7[]:Any:R:W>
+A.__prop__(`d8) .. <PropHandler:d8[]:Number:public:R:W>
+A.__prop__(`d9) .. <PropHandler:d9[]:String:public:R:W>
+A.__prop__(`d10) .. <PropHandler:d10[]:Number:nil:public:R:W>
+A.__prop__(`d11) .. <PropHandler:d11[]:String:nil:public:R:W>
 --------
-A.__PropHandler__(`e1) .. <PropHandler:e1:Any:nil:public:R:W>
-A.__PropHandler__(`e2) .. <PropHandler:e2:Number:nil:public:R:W>
-A.__PropHandler__(`e3) .. <PropHandler:e3:String:nil:public:R:W>
-A.__PropHandler__(`e4) .. <PropHandler:e4:Number:public:R:W>
-A.__PropHandler__(`e5) .. <PropHandler:e5:String:public:R:W>
-A.__PropHandler__(`e6) .. <PropHandler:e6:Number:nil:public:R:W>
-A.__PropHandler__(`e7) .. <PropHandler:e7:String:nil:public:R:W>
+A.__prop__(`e1) .. <PropHandler:e1:Any:nil:public:R:W>
+A.__prop__(`e2) .. <PropHandler:e2:Number:nil:public:R:W>
+A.__prop__(`e3) .. <PropHandler:e3:String:nil:public:R:W>
+A.__prop__(`e4) .. <PropHandler:e4:Number:public:R:W>
+A.__prop__(`e5) .. <PropHandler:e5:String:public:R:W>
+A.__prop__(`e6) .. <PropHandler:e6:Number:nil:public:R:W>
+A.__prop__(`e7) .. <PropHandler:e7:String:nil:public:R:W>
 --------
-A.__PropHandler__(`f1) .. <PropHandler:f1[]:Any:nil:public:R:W>
-A.__PropHandler__(`f2) .. <PropHandler:f2[]:Number:nil:public:R:W>
-A.__PropHandler__(`f3) .. <PropHandler:f3[]:String:nil:public:R:W>
-A.__PropHandler__(`f4) .. <PropHandler:f4[]:Number:public:R:W>
-A.__PropHandler__(`f5) .. <PropHandler:f5[]:String:public:R:W>
-A.__PropHandler__(`f6) .. <PropHandler:f6[]:Any:public:R:W>
-A.__PropHandler__(`f7) .. <PropHandler:f7[]:Any:public:R:W>
-A.__PropHandler__(`f8) .. <PropHandler:f8[]:Number:public:R:W>
-A.__PropHandler__(`f9) .. <PropHandler:f9[]:String:public:R:W>
-A.__PropHandler__(`f10) .. <PropHandler:f10[]:Number:nil:public:R:W>
-A.__PropHandler__(`f11) .. <PropHandler:f11[]:String:nil:public:R:W>
+A.__prop__(`f1) .. <PropHandler:f1[]:Any:nil:public:R:W>
+A.__prop__(`f2) .. <PropHandler:f2[]:Number:nil:public:R:W>
+A.__prop__(`f3) .. <PropHandler:f3[]:String:nil:public:R:W>
+A.__prop__(`f4) .. <PropHandler:f4[]:Number:public:R:W>
+A.__prop__(`f5) .. <PropHandler:f5[]:String:public:R:W>
+A.__prop__(`f6) .. <PropHandler:f6[]:Any:public:R:W>
+A.__prop__(`f7) .. <PropHandler:f7[]:Any:public:R:W>
+A.__prop__(`f8) .. <PropHandler:f8[]:Number:public:R:W>
+A.__prop__(`f9) .. <PropHandler:f9[]:String:public:R:W>
+A.__prop__(`f10) .. <PropHandler:f10[]:Number:nil:public:R:W>
+A.__prop__(`f11) .. <PropHandler:f11[]:String:nil:public:R:W>
 ======== Property Access ========
 a.a1 .. <Nil>
 a.n1 .. 3
@@ -111,15 +111,15 @@ a.s4 = 3 .. 3
 a.s4 = 'world' .. world
 a.s4 = nil .. <Nil>
 ======== Constant Property ========
-A.__PropHandler__(`a1) .. <PropHandler:a1:Any:nil:public:R>
-A.__PropHandler__(`n1) .. <PropHandler:n1:Number:public:R>
-A.__PropHandler__(`n2) .. <PropHandler:n2:Number:nil:public:R>
-A.__PropHandler__(`n3) .. <PropHandler:n3:Number:nil:public:R>
-A.__PropHandler__(`n4) .. <PropHandler:n4:Number:public:R>
-A.__PropHandler__(`s1) .. <PropHandler:s1:String:public:R>
-A.__PropHandler__(`s2) .. <PropHandler:s2:String:nil:public:R>
-A.__PropHandler__(`s3) .. <PropHandler:s3:String:nil:public:R>
-A.__PropHandler__(`s4) .. <PropHandler:s4:String:public:R>
+A.__prop__(`a1) .. <PropHandler:a1:Any:nil:public:R>
+A.__prop__(`n1) .. <PropHandler:n1:Number:public:R>
+A.__prop__(`n2) .. <PropHandler:n2:Number:nil:public:R>
+A.__prop__(`n3) .. <PropHandler:n3:Number:nil:public:R>
+A.__prop__(`n4) .. <PropHandler:n4:Number:public:R>
+A.__prop__(`s1) .. <PropHandler:s1:String:public:R>
+A.__prop__(`s2) .. <PropHandler:s2:String:nil:public:R>
+A.__prop__(`s3) .. <PropHandler:s3:String:nil:public:R>
+A.__prop__(`s4) .. <PropHandler:s4:String:public:R>
 a.a1 .. <Nil>
 a.n1 .. 3
 a.n2 .. 3
@@ -139,8 +139,8 @@ a.s2 = 'xxxx' .. property 's2' is not writable
 a.s3 = 'xxxx' .. property 's3' is not writable
 a.s4 = 'xxxx' .. property 's4' is not writable
 ======== Class Property ========
-A.__PropHandler__(`p) .. <PropHandler:p:String:static:R:W>
-B.__PropHandler__(`p) .. <PropHandler:p:String:static:R:W>
+A.__prop__(`p) .. <PropHandler:p:String:static:R:W>
+B.__prop__(`p) .. <PropHandler:p:String:static:R:W>
 A.p .. hello
 a1.p .. hello
 a2.p .. hello
@@ -184,12 +184,12 @@ A = class {a[]:Number = ['h']} .. failed to cast from String to Number
 Taro is 10 years old.
 Hanako is 12 years old.
 ======== Inheritance ========
-A.__PropHandler__(`p1) .. <PropHandler:p1:String:R:W>
-A.__PropHandler__(`p2) .. <PropHandler:p2:String:R:W>
-A.__PropHandler__(`p3) .. <PropHandler:p3:String:R:W>
-B.__PropHandler__(`p1) .. <PropHandler:p1:String:R:W>
-B.__PropHandler__(`p2) .. <PropHandler:p2:String:R:W>
-B.__PropHandler__(`p3) .. <PropHandler:p3:String:R:W>
+A.__prop__(`p1) .. <PropHandler:p1:String:R:W>
+A.__prop__(`p2) .. <PropHandler:p2:String:R:W>
+A.__prop__(`p3) .. <PropHandler:p3:String:R:W>
+B.__prop__(`p1) .. <PropHandler:p1:String:R:W>
+B.__prop__(`p2) .. <PropHandler:p2:String:R:W>
+B.__prop__(`p3) .. <PropHandler:p3:String:R:W>
 a.p1 .. A#p1
 a.p2 .. A#p2
 a.p3 .. A#p3

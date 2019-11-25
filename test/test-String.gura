@@ -20,8 +20,8 @@ words100 = [
 ]
 
 TestCase('Property') {
-	Tester(`String.__PropHandler__(`len))
-	Tester(`String.__PropHandler__(`width))
+	Tester(`String.__prop__(`len))
+	Tester(`String.__prop__(`width))
 }
 
 TestCase('String#Capitalize()') {

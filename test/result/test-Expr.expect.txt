@@ -34,7 +34,7 @@ f(`(a + b))
   ##1 Value(<Number:3>)
   ##2 PropSet(`bar)
 ======== Property ========
-Expr.__PropHandler__(`children) .. <PropHandler:children:Iterator:R>
+Expr.__prop__(`children) .. <PropHandler:children:Iterator:R>
 ======== Assignment ========
 {[x] = [], [x]} .. insufficient number of values
 {[x] = [1], [x]} .. [1]
