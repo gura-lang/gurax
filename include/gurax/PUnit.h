@@ -240,6 +240,7 @@ public:
 	PUnit_Suffixed(StringReferable* pStr, SuffixMgr::Target target, const Symbol* pSymbolSuffix, Expr* pExpr) :
 		PUnit_Suffixed(pStr, target, pSymbolSuffix) { _ppExprSrc[0] = pExpr; }
 public:
+	const StringReferable& GetStringReferable() const { return *_pStr; }
 	const char* GetString() const { return _pStr->GetString(); }
 	const String& GetStringSTL() const { return _pStr->GetStringSTL(); }
 	SuffixMgr::Target GetTarget() const { return _target; }

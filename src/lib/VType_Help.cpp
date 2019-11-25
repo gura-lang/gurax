@@ -73,6 +73,28 @@ Gurax_ImplementPropertyGetter(Help, propSkeleton)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// ?Any
+Gurax_ImplementOpUnary(Question, Any)
+{
+	return Value::nil();
+}
+
+// Any %% String
+Gurax_ImplementOpBinary(ModMod, Any, String)
+{
+	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
+	if (!pHelpHolder) {
+		Error::Issue(ErrorType::ValueError,
+				 "can't assign help to value type '%s'", valueL.GetVType().MakeFullName().c_str());
+		return Value::nil();
+	}
+	pHelpHolder->AddHelp(Gurax_Symbol(en), Value_String::GetString(valueR));
+	return valueL.Reference();
+}
+
+//------------------------------------------------------------------------------
 // VType_Help
 //------------------------------------------------------------------------------
 VType_Help VTYPE_Help("Help");
@@ -85,6 +107,9 @@ void VType_Help::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Help, MethodSkeleton));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Help, propSkeleton));
+	// Assignment of operator
+	Gurax_AssignOpUnary(Question, Any);
+	Gurax_AssignOpBinary(ModMod, Any, String);
 }
 
 //------------------------------------------------------------------------------

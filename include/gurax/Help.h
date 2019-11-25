@@ -48,6 +48,7 @@ protected:
 	// Destructor
 	virtual ~HelpHolder() = default;
 public:
+	void AddHelp(Help* pHelp);
 	void AddHelp(const Symbol* pLangCode, StringReferable* pDoc);
 	void AddHelp(const Symbol* pLangCode, const char* doc) {
 		AddHelp(pLangCode, new StringReferable(doc));
@@ -69,8 +70,8 @@ private:
 	RefPtr<StringReferable> _pDoc;
 public:
 	// Constructor
-	Help(HelpHolder::WeakPtr *pwHelpHolder, const Symbol* pLangCode, StringReferable* pDoc) :
-		_pwHelpHolder(pwHelpHolder), _pLangCode(pLangCode), _pDoc(pDoc) {}
+	Help(const Symbol* pLangCode, StringReferable* pDoc) :
+		_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(pDoc) {}
 	// Copy constructor/operator
 	Help(const Help& src) = delete;
 	Help& operator=(const Help& src) = delete;
@@ -81,6 +82,7 @@ protected:
 	// Destructor
 	virtual ~Help() = default;
 public:
+	void SetHelpHolder(HelpHolder::WeakPtr* pwHelpHolder) { _pwHelpHolder = pwHelpHolder; }
 	const Symbol* GetLangCode() const { return _pLangCode; }
 	const char* GetDoc() const { return _pDoc->GetString(); }
 public:

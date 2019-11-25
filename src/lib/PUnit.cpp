@@ -166,12 +166,16 @@ void PUnit_Suffixed<nExprSrc, discardValueFlag>::Exec(Processor& processor) cons
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	const SuffixMgr* pSuffixMgr = Basement::Inst.LookupSuffixMgr(GetTarget(), GetSymbolSuffix());
-	if (!pSuffixMgr) {
+	RefPtr<Value> pValueResult;
+	if (pSuffixMgr) {
+		pValueResult.reset(pSuffixMgr->Eval(processor, GetString()));
+	} else if (::strlen(GetSymbolSuffix()->GetName()) == 2) {
+		pValueResult.reset(new Value_Help(new Help(GetSymbolSuffix(), GetStringReferable().Reference())));
+	} else {
 		Error::Issue(ErrorType::SuffixError, "suffix '%s' can not be handled", GetSymbolSuffix()->GetName());
 		processor.ErrorDone();
 		return;
 	}
-	RefPtr<Value> pValueResult(pSuffixMgr->Eval(processor, GetString()));
 	if (!discardValueFlag) processor.PushValue(pValueResult.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }

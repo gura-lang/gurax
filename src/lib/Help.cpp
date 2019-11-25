@@ -38,18 +38,23 @@ void HelpOwner::Clear()
 //------------------------------------------------------------------------------
 // HelpHolder
 //------------------------------------------------------------------------------
-void HelpHolder::AddHelp(const Symbol* pLangCode, StringReferable* pDoc)
+void HelpHolder::AddHelp(Help* pHelp)
 {
-	RefPtr<Help> pHelpNew(new Help(GetWeakPtr(), pLangCode, pDoc));
-	for (auto ppHelp = _helpOwner.begin(); ppHelp != _helpOwner.end(); ppHelp++) {
-		Help* pHelp = *ppHelp;
-		if (pHelp->GetLangCode()->IsIdentical(pLangCode)) {
-			Help::Delete(pHelp);
-			*ppHelp = pHelpNew.release();
+	pHelp->SetHelpHolder(GetWeakPtr());
+	for (auto ppHelpIter = _helpOwner.begin(); ppHelpIter != _helpOwner.end(); ppHelpIter++) {
+		Help* pHelpIter = *ppHelpIter;
+		if (pHelpIter->GetLangCode()->IsIdentical(pHelp->GetLangCode())) {
+			Help::Delete(pHelpIter);
+			*ppHelpIter = pHelp;
 			return;
  		}
 	}
-	_helpOwner.push_back(pHelpNew.release());
+	_helpOwner.push_back(pHelp);
+}
+
+void HelpHolder::AddHelp(const Symbol* pLangCode, StringReferable* pDoc)
+{
+	AddHelp(new Help(pLangCode, pDoc));
 }
 
 }
