@@ -97,6 +97,7 @@
 #include "gurax/VType_Expr.h"
 #include "gurax/VType_Frame.h"
 #include "gurax/VType_Function.h"
+#include "gurax/VType_Help.h"
 #include "gurax/VType_Image.h"
 #include "gurax/VType_Index.h"
 #include "gurax/VType_Iterator.h"

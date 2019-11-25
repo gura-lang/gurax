@@ -89,8 +89,13 @@ public:
 	const Symbol* GetLangCode() const { return _pLangCode; }
 	const char* GetFormatName() const { return _formatName.c_str(); }
 	const char* GetDoc() const { return _pDoc->GetString(); }
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Help& help) const { return this == &help; }
+	virtual bool IsEqualTo(const Help& help) const { return IsIdentical(help); }
+	bool IsLessThan(const Help& help) const { return this < &help; }
+	virtual String ToString(const StringStyle& ss) const;
 };
-
 
 }
 
