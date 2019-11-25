@@ -132,6 +132,19 @@ Gurax_ImplementOpBinary(ModMod, Any, String)
 	return valueL.Reference();
 }
 
+// Any %% Help
+Gurax_ImplementOpBinary(ModMod, Any, Help)
+{
+	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
+	if (!pHelpHolder) {
+		Error::Issue(ErrorType::ValueError,
+				 "can't assign help to value type '%s'", valueL.GetVType().MakeFullName().c_str());
+		return Value::nil();
+	}
+	pHelpHolder->AddHelp(Value_Help::GetHelp(valueR).Clone());
+	return valueL.Reference();
+}
+
 //------------------------------------------------------------------------------
 // VType_Help
 //------------------------------------------------------------------------------
@@ -149,6 +162,7 @@ void VType_Help::DoPrepare(Frame& frameOuter)
 	// Assignment of operator
 	Gurax_AssignOpUnary(Question, Any);
 	Gurax_AssignOpBinary(ModMod, Any, String);
+	Gurax_AssignOpBinary(ModMod, Any, Help);
 }
 
 //------------------------------------------------------------------------------

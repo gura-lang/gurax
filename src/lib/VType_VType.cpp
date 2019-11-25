@@ -128,6 +128,8 @@ const DeclCallable* Value_VType::GetDeclCallableWithError()
 
 void Value_VType::PresentHelp(const Symbol* pLangCode) const
 {
+	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
+	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
 }
 
 const DeclCallable* Value_VType::GetDeclCallable()

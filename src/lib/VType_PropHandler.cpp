@@ -58,6 +58,8 @@ String Value_PropHandler::ToStringDetail(const StringStyle& ss) const
 
 void Value_PropHandler::PresentHelp(const Symbol* pLangCode) const
 {
+	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
+	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
 }
 
 //------------------------------------------------------------------------------

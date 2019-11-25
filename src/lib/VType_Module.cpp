@@ -73,6 +73,8 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 
 void Value_Module::PresentHelp(const Symbol* pLangCode) const
 {
+	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
+	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
 }
 
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
