@@ -14,6 +14,8 @@ class Help;
 // HelpList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE HelpList : public std::vector<Help*> {
+public:
+	const Help* Lookup(const Symbol* pLangCode) const;
 };
 
 //------------------------------------------------------------------------------
@@ -50,6 +52,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) {
 		AddHelp(pLangCode, new StringReferable(doc));
 	}
+	const Help* Lookup(const Symbol* pLangCode) const { return _helpOwner.Lookup(pLangCode); }
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }
 };
 

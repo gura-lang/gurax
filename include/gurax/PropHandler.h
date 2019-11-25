@@ -199,9 +199,9 @@ public:
 	void SetSeqId(SeqId seqId) { _seqId = seqId; }
 	SeqId GetSeqId() const { return _seqId; }
 	void Declare(const VType& vtype, UInt32 flags) { _pVType = &vtype, _flags |= flags; }
-	void AddHelp(const Symbol* pLangCode, const char* doc) {
-		_pHelpHolder->AddHelp(pLangCode, doc);
-	}
+	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
+	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
+	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }

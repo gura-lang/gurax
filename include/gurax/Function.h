@@ -188,10 +188,9 @@ public:
 	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Gurax_Symbol(block), occur, flags);
 	}
+	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
-	void AddHelp(const Symbol* pLangCode, const char* doc) {
-		_pHelpHolder->AddHelp(pLangCode, doc);
-	}
+	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void LinkHelp(VType& vtype, const Symbol* pSymbol);
 	void DoEvalVoid(Processor& processor, Argument& argument) const {
 		Value::Delete(DoEval(processor, argument));

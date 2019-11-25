@@ -75,10 +75,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
-	virtual bool AddHelp(const Symbol* pLangCode, const char* doc) override {
-		GetVTypeThis().AddHelp(pLangCode, doc);
-		return true;
-	}
+	virtual HelpHolder* GetHelpHolder() const override { return &_pVTypeThis->GetHelpHolder(); }
 	virtual bool IsVType() const override { return true; }
 	virtual bool CanBeCallableMember() const override { return !GetVTypeThis().GetConstructor().IsEmpty(); }
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {

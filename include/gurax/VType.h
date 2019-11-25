@@ -61,6 +61,7 @@ public:
 public:
 	UniqId GetUniqId() const { return _uniqId; }
 	void Declare(VType& vtypeInh, Flags flags, Function* pConstructor = nullptr);
+	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	VType* GetVTypeInh() const { return _pVTypeInh; }
 	const Symbol* GetSymbol() const { return _pSymbol; }

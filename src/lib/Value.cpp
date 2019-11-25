@@ -59,13 +59,6 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Printf(":%p", this);
 }
 
-bool Value::AddHelp(const Symbol* pLangCode, const char* doc)
-{
-	Error::Issue(ErrorType::ValueError,
-				 "value type '%s' can not hold helps", GetVType().MakeFullName().c_str());
-	return false;
-}
-
 const DeclCallable* Value::GetDeclCallableWithError()
 {
 	const DeclCallable* pDeclCallable = GetDeclCallable();
