@@ -183,7 +183,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const { return String::Empty; }
 public:
 	// Virtual functions for runtime process
-	virtual bool AddHelp(const Symbol* pLangCode, String formatName, const char* doc);
+	virtual bool AddHelp(const Symbol* pLangCode, const char* doc);
 	virtual const Value& GetValueKey() const { return *this; }
 	virtual const Value& GetValue() const { return *this; }
 	virtual bool IsValid() const { return true; }

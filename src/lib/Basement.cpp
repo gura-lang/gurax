@@ -65,6 +65,7 @@ void Basement::PrepareVType()
 	VTYPE_Expr.Prepare(frame);
 	VTYPE_Frame.Prepare(frame);
 	VTYPE_Function.Prepare(frame);
+	VTYPE_Help.Prepare(frame);
 	VTYPE_Iterator.Prepare(frame);
 	VTYPE_KeyValuePair.Prepare(frame);
 	VTYPE_VType.Prepare(frame);

@@ -192,9 +192,6 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) {
 		_pHelpHolder->AddHelp(pLangCode, doc);
 	}
-	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), doc);
-	}
 	void LinkHelp(VType& vtype, const Symbol* pSymbol);
 	void DoEvalVoid(Processor& processor, Argument& argument) const {
 		Value::Delete(DoEval(processor, argument));

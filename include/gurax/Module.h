@@ -127,9 +127,6 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char *doc) {
 		_pHelpHolder->AddHelp(pLangCode, doc);
 	}
-	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), doc);
-	}
 	Frame_Module& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }

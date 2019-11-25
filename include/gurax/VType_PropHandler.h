@@ -75,8 +75,8 @@ public:
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
-	virtual bool AddHelp(const Symbol* pLangCode, String formatName, const char* doc) override {
-		GetPropHandler().AddHelp(pLangCode, formatName, doc);
+	virtual bool AddHelp(const Symbol* pLangCode, const char* doc) override {
+		GetPropHandler().AddHelp(pLangCode, doc);
 		return true;
 	}
 };

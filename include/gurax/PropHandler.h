@@ -202,9 +202,6 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) {
 		_pHelpHolder->AddHelp(pLangCode, doc);
 	}
-	void AddHelp(const Symbol* pLangCode, String formatName, const char* doc) {
-		_pHelpHolder->AddHelp(pLangCode, std::move(formatName), doc);
-	}
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }
