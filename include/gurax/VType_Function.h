@@ -75,6 +75,10 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
+	virtual bool AddHelp(const Symbol* pLangCode, String formatName, const char* doc) override {
+		GetFunction().AddHelp(pLangCode, formatName, doc);
+		return true;
+	}
 	virtual bool CanBeCallableMember() const override { return true; }
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
