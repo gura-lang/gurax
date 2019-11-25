@@ -53,6 +53,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) {
 		AddHelp(pLangCode, new StringReferable(doc));
 	}
+	const Help* GetDefault() const { return _helpOwner.empty()? nullptr : _helpOwner.front(); }
 	const Help* Lookup(const Symbol* pLangCode) const { return _helpOwner.Lookup(pLangCode); }
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }
 };
@@ -73,7 +74,8 @@ public:
 	Help(const Symbol* pLangCode, StringReferable* pDoc) :
 		_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(pDoc) {}
 	// Copy constructor/operator
-	Help(const Help& src) = delete;
+	Help(const Help& src) :
+		_pwHelpHolder(src._pwHelpHolder.Reference()), _pLangCode(src._pLangCode), _pDoc(src._pDoc.Reference()) {}
 	Help& operator=(const Help& src) = delete;
 	// Move constructor/operator
 	Help(Help&& src) = delete;
@@ -85,6 +87,9 @@ public:
 	void SetHelpHolder(HelpHolder::WeakPtr* pwHelpHolder) { _pwHelpHolder = pwHelpHolder; }
 	const Symbol* GetLangCode() const { return _pLangCode; }
 	const char* GetDoc() const { return _pDoc->GetString(); }
+	const String& GetDocSTL() const { return _pDoc->GetStringSTL(); }
+	const StringReferable& GetDocReferable() const { return *_pDoc; }
+	Help* Clone() const { return new Help(*this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Help& help) const { return this == &help; }

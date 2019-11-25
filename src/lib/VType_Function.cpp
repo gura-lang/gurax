@@ -176,6 +176,13 @@ String Value_Function::ToStringDetail(const StringStyle& ss) const
 	return GetFunction().ToString(ss);
 }
 
+void Value_Function::PresentHelp(const Symbol* pLangCode) const
+{
+	Stream::COut->Println(ToString().c_str());
+	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
+	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
+}
+
 const DeclCallable* Value_Function::GetDeclCallable()
 {
 	return &GetFunction().GetDeclCallable();

@@ -11,7 +11,7 @@ namespace Gurax {
 String Help::ToString(const StringStyle& ss) const
 {
 	String str;
-	str += "Help";
+	str.Printf("Help:%s", GetLangCode()->GetName());
 	return str;
 }
 
@@ -20,6 +20,7 @@ String Help::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 const Help* HelpList::Lookup(const Symbol* pLangCode) const
 {
+	if (!pLangCode) return empty()? nullptr : front();
 	for (const Help* pHelp : *this) {
 		if (pHelp->GetLangCode()->IsIdentical(pLangCode)) return pHelp;
 	}

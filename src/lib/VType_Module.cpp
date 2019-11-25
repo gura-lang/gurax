@@ -71,6 +71,10 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
+void Value_Module::PresentHelp(const Symbol* pLangCode) const
+{
+}
+
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropHandler* pPropHandler = GetModule().LookupPropHandler(pSymbol);

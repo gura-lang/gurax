@@ -76,6 +76,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const override { return &_pPropHandler->GetHelpHolder(); }
+	virtual void PresentHelp(const Symbol* pLangCode) const override;
 };
 
 //------------------------------------------------------------------------------

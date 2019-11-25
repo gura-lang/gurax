@@ -126,6 +126,10 @@ const DeclCallable* Value_VType::GetDeclCallableWithError()
 	return nullptr;
 }
 
+void Value_VType::PresentHelp(const Symbol* pLangCode) const
+{
+}
+
 const DeclCallable* Value_VType::GetDeclCallable()
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();

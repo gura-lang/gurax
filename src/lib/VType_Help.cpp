@@ -8,10 +8,12 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Help() {block?}
+// Help(value, lang?:Symbol) {block?}
 Gurax_DeclareFunction(Help)
 {
 	Declare(VTYPE_Help, Flag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("lang", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -21,11 +23,31 @@ Gurax_DeclareFunction(Help)
 Gurax_ImplementFunction(Help)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const Value& value = args.PickValue();
+	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
-	//RefPtr<Help> pHelp(new Help());
-	//return argument.ReturnValue(processor, new Value_Help(pHelp.release()));
-	return Value::nil();
+	HelpHolder* pHelpHolder = value.GetHelpHolder();
+	if (!pHelpHolder) {
+		Error::Issue(ErrorType::ValueError,
+					 "value type '%s' doesn't have help", value.GetVType().MakeFullName().c_str());
+		return Value::nil();
+	}
+	const Help* pHelp = nullptr;
+	if (pLangCode) {
+		pHelp = pHelpHolder->Lookup(pLangCode);
+		if (!pHelp) {
+			Error::Issue(ErrorType::ValueError, "no help in language `%s", pLangCode->GetName());
+			return Value::nil();
+		}
+	} else {
+		pHelp = pHelpHolder->GetDefault();
+		if (!pHelp) {
+			Error::Issue(ErrorType::ValueError, "no help");
+			return Value::nil();
+		}
+	}
+	return argument.ReturnValue(processor, new Value_Help(pHelp->Clone()));
 }
 
 //-----------------------------------------------------------------------------
@@ -57,19 +79,34 @@ Gurax_ImplementMethod(Help, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Help#propSkeleton
-Gurax_DeclareProperty_R(Help, propSkeleton)
+// Help#doc
+Gurax_DeclareProperty_R(Help, doc)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Document text of the help.");
 }
 
-Gurax_ImplementPropertyGetter(Help, propSkeleton)
+Gurax_ImplementPropertyGetter(Help, doc)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetHelp().GetDocReferable().Reference());
+}
+
+// Help#lang
+Gurax_DeclareProperty_R(Help, lang)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Language code of the help.");
+}
+
+Gurax_ImplementPropertyGetter(Help, lang)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetHelp().GetLangCode());
 }
 
 //------------------------------------------------------------------------------
@@ -78,6 +115,7 @@ Gurax_ImplementPropertyGetter(Help, propSkeleton)
 // ?Any
 Gurax_ImplementOpUnary(Question, Any)
 {
+	value.PresentHelp(Gurax_Symbol(en));
 	return Value::nil();
 }
 
@@ -106,7 +144,8 @@ void VType_Help::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Help, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Help, propSkeleton));
+	Assign(Gurax_CreateProperty(Help, doc));
+	Assign(Gurax_CreateProperty(Help, lang));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Question, Any);
 	Gurax_AssignOpBinary(ModMod, Any, String);

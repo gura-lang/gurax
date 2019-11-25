@@ -56,6 +56,10 @@ String Value_PropHandler::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
+void Value_PropHandler::PresentHelp(const Symbol* pLangCode) const
+{
+}
+
 //------------------------------------------------------------------------------
 // Iterator_PropHandler
 //------------------------------------------------------------------------------
