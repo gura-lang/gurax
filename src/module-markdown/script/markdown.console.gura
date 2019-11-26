@@ -15,9 +15,9 @@ JoinText(item:Item):map = {
 	}
 }
 
-Renderer@console = class {
+Renderer = class {
 	__init__(colorFlag:Bool = true) = {
-		[this.wdScreen, this.htScreen] = conio.getwinsize()
+		[this.wdScreen, this.htScreen] = conio.GetWinSize()
 		if (this.wdScreen == 0) {
 			this.wdScreen = 80
 		}
@@ -27,9 +27,9 @@ Renderer@console = class {
 		}
 		this.indexStack = []
 		if (colorFlag) {
-			this.setcolor = conio.setcolor
+			this.SetColor = conio.SetColor
 		} else {
-			this.setcolor(color:color) {block} = block()
+			this.SetColor(color:color) {block} = block()
 		}
 	}
 	FeedDocument(doc:Document):void = {
@@ -41,37 +41,37 @@ Renderer@console = class {
 			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
 			this.PrintlnConditional()
-			this.setcolor(`green) {
+			this.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h2) {
 			this.PrintlnConditional()
-			this.setcolor(`green) {
+			this.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h3) {
 			this.PrintlnConditional()
-			this.setcolor(`green) {
+			this.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h4) {
 			this.PrintlnConditional()
-			this.setcolor(`green) {
+			this.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h5) {
 			this.PrintlnConditional()
-			this.setcolor(`green) {
+			this.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h6) {
 			this.PrintlnConditional()
-			this.setcolor(`green) {
+			this.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
@@ -84,20 +84,20 @@ Renderer@console = class {
 			this.FeedItem(item.children)
 			Println()
 		} elsif (item.type == `em) {
-			this.setcolor(`red) {
+			this.SetColor(`red) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `strong) {
-			this.setcolor(`red) {
+			this.SetColor(`red) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `strike) {
-			this.setcolor(`gray) {
+			this.SetColor(`gray) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `codeblock) {
 			this.PrintlnConditional()
-			this.setcolor(`blue) {
+			this.SetColor(`blue) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `ol) {
@@ -134,11 +134,11 @@ Renderer@console = class {
 		} elsif (item.type == `comment) {
 			Print(item.text)
 		} elsif (item.type == `code) {
-			this.setcolor(`blue) {
+			this.SetColor(`blue) {
 				Print(item.text)
 			}
 		} elsif (item.type == `entity) {
-			this.setcolor(`black, `white) {
+			this.SetColor(`black, `white) {
 				Print(item.text.escapehtml())
 			}
 		} elsif (item.type == `tag) {
@@ -167,12 +167,12 @@ Renderer@console = class {
 		}
 	}
 	RenderTable(item:Item) = {
-		rows = item.children.each():xlist {|item|
-			(item.type != `tag || item.text.lower() != 'tr') && continue
+		rows = item.children.Each():xlist {|item|
+			(item.type != `tag || item.text.Lower() != 'tr') && continue
 			headerFlag = false
-			cols = item.children.each():xlist {|item|
+			cols = item.children.Each():xlist {|item|
 				(item.type != `tag) && continue
-				tagName = item.text.lower()
+				tagName = item.text.Lower()
 				if (tagName == 'th') {
 					headerFlag = true
 				} elsif (tagName == 'td') {
@@ -184,23 +184,23 @@ Renderer@console = class {
 			}
 			TableRow(headerFlag, cols)
 		}
-		nCols = rows:*cols:*len().max()
-		rows::cols = rows:*cols::align(nCols, TableCol('', `left)):list
+		nCols = rows:*cols:*len.Max()
+		rows::cols = rows:*cols::Align(nCols, TableCol('', `left)):list
 		widths = repeat(nCols):list {|iCol|
-			rows:*cols:*get(iCol):*text:*len().max()
+			rows:*cols:*Get(iCol):*text:*len.Max()
 		}
 		wdAvailable = this.wdScreen + 1 - nCols // subtract width for vertical bar
 		wdThreshold = int(wdAvailable / nCols)
-		wdSum = widths.sum()
+		wdSum = widths.Sum()
 		if (wdSum > wdAvailable) {
-			widthsShort = widths.filter(widths < wdThreshold)
-			widthsShortSum = widthsShort.sum() || 0
+			widthsShort = widths.Filter(widths < wdThreshold)
+			widthsShortSum = widthsShort.Sum() || 0
 			widthsLongSum = wdSum - widthsShortSum
 			wdRest = wdAvailable - widthsShortSum
 			if (wdRest < 0) {
 				widthsWk = int(widths * wdAvailable / wdSum)
 			} else {
-				widthsWk = widths.each():list {|width|
+				widthsWk = widths.Each():list {|width|
 					if (width < wdThreshold) {
 						width
 					} else {
@@ -215,38 +215,36 @@ Renderer@console = class {
 		separator = ('-' * widths).join('+')
 		rows.each {|row|
 			textsFolded = row.cols:*text.each():list {|text, i|
-				text.split('\n'):*foldw(widths[i]).flatten().each()
+				text.Split('\n'):*Foldw(widths[i]).Flatten().Each()
 			}
-			while ((texts = textsFolded:*next()).or()) {
+			while ((texts = textsFolded:*Next()).Or()) {
 				//Println(format('%-*s', widths, texts || '').join('|'))
-				Println(this.MakeAlign(texts || '', widths, row.cols:*align).join('|'))
+				Println(this.MakeAlign(texts || '', widths, row.cols:*align).Join('|'))
 			}
 			row.headerFlag && Println(separator)
 		}
 	}
-	MakeAlign(str:string, width:number, align:symbol):map:static = {
+	MakeAlign(str:String, width:Number, align:Symbol):map:static = {
 		if (align == `left) {
-			str.align(width):left
+			str.Align(width):left
 		} elsif (align == `center) {
-			str.align(width):center
+			str.Align(width):center
 		} elsif (align == `right) {
-			str.align(width):right
+			str.Align(width):right
 		} else {	
-			str.align(width):left
+			str.Align(width):left
 		}
 	}
 }
 
-Document.render@console(colorFlag:Bool = true) = {
-	Renderer@console(colorFlag).FeedDocument(this)
-} %% { `en,
-R'''
+Document.Render@console(colorFlag:Bool = true) = {
+	Renderer(colorFlag).FeedDocument(this)
+} %% R'''
 Renders the content of markdown document to the console.
 
 In default, it uses colors to highlight items.
 Specify the argument `colorFlag` with `false` to disable the coloring process.
 '''
-}
 
 /*
 help.presenter('markdown') {|help:help|
