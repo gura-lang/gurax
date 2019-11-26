@@ -77,7 +77,7 @@ public:
 public:
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const override { return &_pModule->GetHelpHolder(); }
-	virtual void PresentHelp(const Symbol* pLangCode) const override;
+	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
 		GetModule().GatherMemberSymbol(symbolList);
 	}

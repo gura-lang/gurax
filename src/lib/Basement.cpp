@@ -146,4 +146,14 @@ void Basement::AppendPathList(const StringList& strs)
 	for (const String& str : strs) AppendPathList(str);
 }
 
+void Basement::Present(Processor& processor, RefPtr<Value> pValue)
+{
+	if (!_pFuncPresenter) return;
+	Frame& frame = processor.GetFrameCur();
+	RefPtr<Argument> pArg(new Argument(*_pFuncPresenter));
+	ArgFeeder arg(*pArg);
+	arg.FeedValue(frame, pValue.release());
+	_pFuncPresenter->DoEvalVoid(processor, *pArg);
+}
+
 }

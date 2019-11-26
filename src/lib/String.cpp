@@ -560,6 +560,18 @@ size_t String::CalcHash(const char* str, size_t len)
 	return hash;
 }
 
+bool String::EndsWith(const char* str, char ch)
+{
+	size_t len = ::strlen(str);
+	return (len > 0) && *(str + len - 1) == ch;
+}
+
+bool String::EndsWith(char ch) const
+{
+	size_t len = size();
+	return (len > 0) && *(c_str() + len - 1) == ch;
+}
+
 size_t String::Length(const char* str)
 {
 	size_t len = 0;

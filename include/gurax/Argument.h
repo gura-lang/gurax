@@ -75,6 +75,7 @@ public:
 	const Value& GetValueThis() const { return *_pValueThis; }
 	bool HasExprOfBlock() const { return _pExprOfBlock.get() != nullptr; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
+	Function* CreateBlockFunction(const Symbol* pSymbol) const;
 	bool HasValueOfDict() const { return _pValueOfDict.get() != nullptr; }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }

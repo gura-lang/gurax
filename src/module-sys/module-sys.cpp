@@ -31,6 +31,26 @@ Gurax_ImplementFunction(Exit)
 	return Value::nil();
 }
 
+// sys.Presenter():void {block}
+Gurax_DeclareFunction(Presenter)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareBlock(BlkOccur::Once);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Registers a function for help presentation.");
+}
+
+Gurax_ImplementFunction(Presenter)
+{
+	// Argument
+	RefPtr<Function> pFuncPresenter(argument.CreateBlockFunction(Gurax_Symbol(block)));
+	pFuncPresenter->SetFrameOuter(processor.GetFrameCur());
+	// Function body
+	Basement::Inst.SetFuncPresenter(pFuncPresenter.release());
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
@@ -344,6 +364,7 @@ Gurax_ModulePrepare()
 	} while (0);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Exit));
+	Assign(Gurax_CreateFunction(Presenter));
 	// Assignment of property
 	Assign(Gurax_CreateModuleProperty(argv));
 	Assign(Gurax_CreateModuleProperty(cin));

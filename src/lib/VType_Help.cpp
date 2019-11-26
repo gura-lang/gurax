@@ -115,7 +115,7 @@ Gurax_ImplementPropertyGetter(Help, lang)
 // ?Any
 Gurax_ImplementOpUnary(Question, Any)
 {
-	value.PresentHelp(Gurax_Symbol(en));
+	value.PresentHelp(processor, Gurax_Symbol(en));
 	return Value::nil();
 }
 

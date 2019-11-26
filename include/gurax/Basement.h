@@ -8,6 +8,7 @@
 #include "Value.h"
 #include "SuffixMgr.h"
 #include "PathMgr.h"
+#include "Function.h"
 
 namespace Gurax {
 
@@ -28,6 +29,7 @@ private:
 	StringList _pathList;
 	RefPtr<Processor> _pProcessor;
 	CommandLine _cmdLine;
+	RefPtr<Function> _pFuncPresenter;
 public:
 	static Basement Inst;
 public:
@@ -79,6 +81,15 @@ public:
 	StringList& GetPathList() { return _pathList; }
 	const StringList& GetPathList() const { return _pathList; }
 	Processor& GetProcessor() { return *_pProcessor; }
+public:
+	void SetFuncPresenter(Function* pFuncPresenter) { _pFuncPresenter.reset(pFuncPresenter); }
+	void Present(Processor& processor, RefPtr<Value> pValue);
+	void Present(Processor& processor, const char* str) {
+		Present(processor, new Value_String(str));
+	}
+	void Present(Processor& processor, StringReferable* pStr) {
+		Present(processor, new Value_String(pStr));
+	}
 };
 
 }

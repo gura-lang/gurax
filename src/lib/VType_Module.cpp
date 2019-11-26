@@ -71,10 +71,10 @@ String Value_Module::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
-void Value_Module::PresentHelp(const Symbol* pLangCode) const
+void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
 	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
-	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
+	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 }
 
 Value* Value_Module::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)

@@ -59,7 +59,7 @@ void Value::_ToStringDigest(String& str, const StringStyle& ss) const
 	if (ss.IsAddressInfo() && !IsUndefined() && !IsNil()) str.Printf(":%p", this);
 }
 
-void Value::PresentHelp(const Symbol* pLangCode) const
+void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
 	Stream::COut->Println("no help");
 }

@@ -38,6 +38,11 @@ Argument::Argument(const Function& function, DeclCallable::Flags flags) :
 {
 }
 
+Function* Argument::CreateBlockFunction(const Symbol* pSymbol) const
+{
+	return _pExprOfBlock? Function::CreateBlockFunction(pSymbol, *_pExprOfBlock) : nullptr;
+}
+
 void Argument::ResetAllValues()
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {

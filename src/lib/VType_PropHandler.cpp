@@ -56,10 +56,10 @@ String Value_PropHandler::ToStringDetail(const StringStyle& ss) const
 	return ToStringDigest(ss);
 }
 
-void Value_PropHandler::PresentHelp(const Symbol* pLangCode) const
+void Value_PropHandler::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
 	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
-	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
+	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 }
 
 //------------------------------------------------------------------------------

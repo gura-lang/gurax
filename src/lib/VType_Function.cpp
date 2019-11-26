@@ -176,11 +176,16 @@ String Value_Function::ToStringDetail(const StringStyle& ss) const
 	return GetFunction().ToString(ss);
 }
 
-void Value_Function::PresentHelp(const Symbol* pLangCode) const
+void Value_Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
-	Stream::COut->Println(ToString().c_str());
+	String str = ToString();
 	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
-	if (pHelp) Stream::COut->Print(pHelp->GetDoc());
+	if (pHelp) {
+		str += "\n---\n";
+		str += pHelp->GetDoc();
+		if (!str.EndsWith('\n')) str += '\n';
+	}
+	Basement::Inst.Present(processor, str.c_str());
 }
 
 const DeclCallable* Value_Function::GetDeclCallable()

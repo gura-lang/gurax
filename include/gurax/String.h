@@ -221,6 +221,8 @@ public:
 		return StartsWith<T_CharCmp>(begin(), end(), sub);
 	}
 public:
+	static bool EndsWith(const char* str, char ch);
+	bool EndsWith(char ch) const;
 	template<typename T_CharCmp>
 	static const char* EndsWith(const char* str, const char* sub);
 	template<typename T_CharCmp>

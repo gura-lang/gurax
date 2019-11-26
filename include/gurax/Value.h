@@ -184,7 +184,7 @@ public:
 public:
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const { return nullptr; }
-	virtual void PresentHelp(const Symbol* pLangCode) const;
+	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 	virtual const Value& GetValueKey() const { return *this; }
 	virtual const Value& GetValue() const { return *this; }
 	virtual bool IsValid() const { return true; }
