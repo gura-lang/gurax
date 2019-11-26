@@ -510,6 +510,30 @@ Gurax_ImplementOpBinary(Eq, Expr, Symbol)
 	return new Value_Bool(exprL.IsSymbol(pSymbolR));
 }
 
+// Expr != Expr
+Gurax_ImplementOpBinary(Ne, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(!exprL.IsEqualTo(exprR));
+}
+
+// Symbol != Expr
+Gurax_ImplementOpBinary(Ne, Symbol, Expr)
+{
+	const Symbol* pSymbolL = Value_Symbol::GetSymbol(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(!exprR.IsSymbol(pSymbolL));
+}
+
+// Expr != Symbol
+Gurax_ImplementOpBinary(Ne, Expr, Symbol)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Symbol* pSymbolR = Value_Symbol::GetSymbol(valueR);
+	return new Value_Bool(!exprL.IsSymbol(pSymbolR));
+}
+
 //------------------------------------------------------------------------------
 // VType_Expr
 //------------------------------------------------------------------------------
@@ -552,6 +576,9 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Eq, Expr, Expr);
 	Gurax_AssignOpBinary(Eq, Symbol, Expr);
 	Gurax_AssignOpBinary(Eq, Expr, Symbol);
+	Gurax_AssignOpBinary(Ne, Expr, Expr);
+	Gurax_AssignOpBinary(Ne, Symbol, Expr);
+	Gurax_AssignOpBinary(Ne, Expr, Symbol);
 }
 
 //------------------------------------------------------------------------------

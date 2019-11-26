@@ -995,12 +995,15 @@ void Expr_Indexer::ComposeForAssignment(
 		pExpr->ComposeOrNil(composer);							// [Index(Car) Cdr]
 		composer.Add_FeedIndex(pExpr);							// [Index(Car)]
 	}
+	exprAssigned.ComposeOrNil(composer);						// [Index(Car) Elems]
 	if (pOperator) {
-		
+		//************************
+		Error::IssueWith(ErrorType::SyntaxError, *this,
+						 "operator can not be applied in lister assigment");
+		return;
 	} else {
-		exprAssigned.ComposeOrNil(composer);					// [Index(Car) Elems]
+		composer.Add_IndexSet(false, this);						// [Elems]
 	}
-	composer.Add_IndexSet(false, this);							// [Elems]
 }
 
 void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
