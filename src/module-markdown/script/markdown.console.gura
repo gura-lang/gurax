@@ -3,9 +3,10 @@
 // markdown Console renderer
 //=============================================================================
 import(markdown) {*}
+import(conio)
 
-TableCol = struct(text:string, align:symbol)
-TableRow = struct(headerFlag:Bool, cols[]:TableCol)
+TableCol = struct { text:String, align:Symbol }
+TableRow = struct { headerFlag:Bool, cols[]:TableCol }
 
 JoinText(item:Item):map = {
 	if (item.children) {
@@ -16,6 +17,10 @@ JoinText(item:Item):map = {
 }
 
 Renderer = class {
+	firstFlag:Bool
+	wdScreen:Number
+	htScreen:Number
+	indexStack[]:Number
 	__init__(colorFlag:Bool = true) = {
 		[this.wdScreen, this.htScreen] = conio.GetWinSize()
 		if (this.wdScreen == 0) {
@@ -26,11 +31,6 @@ Renderer = class {
 			this.htScreen = 25
 		}
 		this.indexStack = []
-		if (colorFlag) {
-			this.SetColor = conio.SetColor
-		} else {
-			this.SetColor(color:color) {block} = block()
-		}
 	}
 	FeedDocument(doc:Document):void = {
 		this.firstFlag = true
@@ -41,37 +41,37 @@ Renderer = class {
 			this.FeedItem(item.children)
 		} elsif (item.type == `h1) {
 			this.PrintlnConditional()
-			this.SetColor(`green) {
+			conio.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h2) {
 			this.PrintlnConditional()
-			this.SetColor(`green) {
+			conio.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h3) {
 			this.PrintlnConditional()
-			this.SetColor(`green) {
+			conio.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h4) {
 			this.PrintlnConditional()
-			this.SetColor(`green) {
+			conio.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h5) {
 			this.PrintlnConditional()
-			this.SetColor(`green) {
+			conio.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
 		} elsif (item.type == `h6) {
 			this.PrintlnConditional()
-			this.SetColor(`green) {
+			conio.SetColor(`green) {
 				this.FeedItem(item.children)
 			}
 			Println()
@@ -84,34 +84,34 @@ Renderer = class {
 			this.FeedItem(item.children)
 			Println()
 		} elsif (item.type == `em) {
-			this.SetColor(`red) {
+			conio.SetColor(`red) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `strong) {
-			this.SetColor(`red) {
+			conio.SetColor(`red) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `strike) {
-			this.SetColor(`gray) {
+			conio.SetColor(`gray) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `codeblock) {
 			this.PrintlnConditional()
-			this.SetColor(`blue) {
+			conio.SetColor(`blue) {
 				this.FeedItem(item.children)
 			}
 		} elsif (item.type == `ol) {
 			this.PrintlnConditional()
-			this.indexStack.add(0)
+			this.indexStack.Add(0)
 			this.FeedItem(item.children)
-			this.indexStack.erase(-1)
+			this.indexStack.Erase(-1)
 		} elsif (item.type == `ul) {
 			this.PrintlnConditional()
-			this.indexStack.add(nil)
+			this.indexStack.Add(nil)
 			this.FeedItem(item.children)
-			this.indexStack.erase(-1)
+			this.indexStack.Erase(-1)
 		} elsif (item.type == `li) {
-			(this.indexStack.len() > 0) && Print('  ' * (this.indexStack.len() - 1))
+			(this.indexStack.len > 0) && Print('  ' * (this.indexStack.len - 1))
 			index = this.indexStack[-1]
 			if (index) {
 				Printf('%d. ', index + 1)
@@ -134,11 +134,11 @@ Renderer = class {
 		} elsif (item.type == `comment) {
 			Print(item.text)
 		} elsif (item.type == `code) {
-			this.SetColor(`blue) {
+			conio.SetColor(`blue) {
 				Print(item.text)
 			}
 		} elsif (item.type == `entity) {
-			this.SetColor(`black, `white) {
+			conio.SetColor(`black, `white) {
 				Print(item.text.escapehtml())
 			}
 		} elsif (item.type == `tag) {
@@ -148,7 +148,7 @@ Renderer = class {
 			} elsif (text == 'gura.funcentry') {
 				fmt = if (m = item.attrs.match(r'format="([^\"]+)"')) {m[1]} else {''}
 				Println(fmt)
-				Println('-' * fmt.len())
+				Println('-' * fmt.len)
 				item.children && this.FeedItem(item.children)
 			} else {
 				item.children && this.FeedItem(item.children)
