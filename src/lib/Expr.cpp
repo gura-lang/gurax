@@ -972,7 +972,6 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 	if (pOperator) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in lister assigment");
-		
 		return;
 	}
 	GetExprCar().ComposeOrNil(composer);						// [Elems Car]
