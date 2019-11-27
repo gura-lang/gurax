@@ -1600,6 +1600,79 @@ PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_IndexOpApply
+// Stack View: valueFirst=false: [Index(Car) Elems] -> [Elems] (continue)
+//                                                  -> []      (discard)
+//             valueFirst=true:  [Elems Index(Car)] -> [Elems] (continue)
+//                                                  -> []      (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+void PUnit_IndexOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueElems;
+	RefPtr<Value_Index> pValueIndex;
+	if (valueFirstFlag) {
+		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
+		pValueElems.reset(processor.PopValue());
+	} else {
+		pValueElems.reset(processor.PopValue());
+		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
+	}
+	Index& index = pValueIndex->GetIndex();
+	RefPtr<Value> pValueRtn(index.IndexOpApply(*pValueElems, processor, *_pOperator));
+	if (Error::IsIssued()) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(pValueRtn.release());
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+String PUnit_IndexOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "IndexOpApply()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_IndexOpApply::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexOpApply<1, true, true>(_pOperator, _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_IndexOpApply<1, true, false>(_pOperator, _pExprSrc.Reference());
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexOpApply<1, false, true>(_pOperator, _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_IndexOpApply<1, false, false>(_pOperator, _pExprSrc.Reference());
+			}
+		}
+	} else {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexOpApply<0, true, true>(_pOperator);
+			} else {
+				_pPUnitCreated = new PUnit_IndexOpApply<0, true, false>(_pOperator);
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexOpApply<0, false, true>(_pOperator);
+			} else {
+				_pPUnitCreated = new PUnit_IndexOpApply<0, false, false>(_pOperator);
+			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_PropGet
 // Stack View: [Target] -> [Target Prop] (continue)
 //                      -> [Target]      (discard)
