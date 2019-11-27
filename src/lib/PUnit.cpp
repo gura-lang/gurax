@@ -1533,20 +1533,19 @@ PUnit* PUnitFactory_IndexGet::Create(bool discardValueFlag)
 //             valueFirst=true:  [Elems Index(Car)] -> [Elems] (continue)
 //                                                  -> []      (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_IndexSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+void PUnit_IndexSet<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueElems;
 	RefPtr<Value_Index> pValueIndex;
-	if (_valueFirstFlag) {
+	if (valueFirstFlag) {
 		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
 		pValueElems.reset(processor.PopValue());
 	} else {
 		pValueElems.reset(processor.PopValue());
 		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
 	}
-
 	Index& index = pValueIndex->GetIndex();
 	index.IndexSet(pValueElems->Reference());
 	if (Error::IsIssued()) {
@@ -1557,8 +1556,8 @@ void PUnit_IndexSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) cons
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_IndexSet<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+String PUnit_IndexSet<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str += "IndexSet()";
@@ -1570,15 +1569,31 @@ PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_IndexSet<1, true>(_valueFirstFlag, _pExprSrc.Reference());
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexSet<1, true, true>(_pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_IndexSet<1, true, false>(_pExprSrc.Reference());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_IndexSet<1, false>(_valueFirstFlag, _pExprSrc.Reference());
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexSet<1, false, true>(_pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_IndexSet<1, false, false>(_pExprSrc.Reference());
+			}
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_IndexSet<0, true>(_valueFirstFlag);
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexSet<0, true, true>();
+			} else {
+				_pPUnitCreated = new PUnit_IndexSet<0, true, false>();
+			}
 		} else {
-			_pPUnitCreated = new PUnit_IndexSet<0, false>(_valueFirstFlag);
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_IndexSet<0, false, true>();
+			} else {
+				_pPUnitCreated = new PUnit_IndexSet<0, false, false>();
+			}
 		}
 	}
 	return _pPUnitCreated;

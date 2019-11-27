@@ -1325,7 +1325,7 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	explicit PUnit_IndexGet() {}
+	PUnit_IndexGet() {}
 	explicit PUnit_IndexGet(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
@@ -1353,19 +1353,17 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_IndexSet
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
 class GURAX_DLLDECLARE PUnit_IndexSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	bool _valueFirstFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	explicit PUnit_IndexSet(bool valueFirstFlag) : _valueFirstFlag(valueFirstFlag) {}
-	explicit PUnit_IndexSet(bool valueFirstFlag, Expr* pExpr) :
-		PUnit_IndexSet(valueFirstFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_IndexSet() {}
+	explicit PUnit_IndexSet(Expr* pExpr) { _ppExprSrc[0] = pExpr; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1387,7 +1385,7 @@ public:
 	PUnitFactory_IndexSet(bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_IndexSet<1, false>) : sizeof(PUnit_IndexSet<0, false>);
+		return _pExprSrc? sizeof(PUnit_IndexSet<1, false, false>) : sizeof(PUnit_IndexSet<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
