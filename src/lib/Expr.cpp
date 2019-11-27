@@ -271,7 +271,6 @@ void Expr_Member::Compose(Composer& composer)
 		break;
 	}
 	default: {
-		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
 		break;
 	}
 	}
@@ -284,23 +283,53 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 						 "operator can not be applied in lister assigment");
 		return;
 	}
-	GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
-	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), true, this);	// [Assigned]
-	composer.FlushDiscard();
+	switch (GetMemberMode()) {
+	case MemberMode::Normal: case MemberMode::MapAlong: {
+		GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
+		composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), true, this);	// [Assigned]
+		composer.FlushDiscard();
+		break;
+	}
+	case MemberMode::MapToList: {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		break;
+	}
+	case MemberMode::MapToIter: {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
 {
 	GetExprTarget().ComposeOrNil(composer);									// [Target]
-	if (pOperator) {
-		composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
-		exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
-		composer.Add_BinaryOp(pOperator, this);								// [Target Assigned]
-	} else {
-		exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
+	switch (GetMemberMode()) {
+	case MemberMode::Normal: case MemberMode::MapAlong: {
+		if (pOperator) {
+			composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
+			exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
+			composer.Add_BinaryOp(pOperator, this);								// [Target Assigned]
+		} else {
+			exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
+		}
+		composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), false, this);	// [Assigned]
+		break;
 	}
-	composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), false, this);	// [Assigned]
+	case MemberMode::MapToList: {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		break;
+	}
+	case MemberMode::MapToIter: {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 String Expr_Member::ToString(const StringStyle& ss) const
