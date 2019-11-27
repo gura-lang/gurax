@@ -1639,13 +1639,25 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 		const Value* pValueIndex = valuesIndex.front();
 		GetValueTypedOwner().IndexSet(pValueIndex, pValue);
 	} else {
-		
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
 	}
 }
 
-Value* Value_List::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+Value* Value_List::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
 {
-	return Value::nil();
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.size() == 1) {
+		const Value* pValueIndex = valuesIndex.front();
+		Value* pValueL = nullptr;
+		if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValueL)) return Value::nil();
+		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
+		if (pValueRtn->IsUndefined()) return Value::nil();
+		GetValueTypedOwner().IndexSet(pValueIndex, pValueRtn.Reference());
+		return pValueRtn.release();
+	} else {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		return Value::nil();
+	}
 }
 
 Iterator* Value_List::DoGenIterator() const

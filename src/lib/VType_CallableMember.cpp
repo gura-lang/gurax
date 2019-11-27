@@ -57,9 +57,9 @@ void Value_CallableMember::DoIndexSet(const Index& index, Value* pValue)
 	GetValueProp().DoIndexSet(index, pValue);
 }		
 
-Value* Value_CallableMember::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+Value* Value_CallableMember::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
 {
-	return GetValueProp().DoIndexOpApply(index, value, op);
+	return GetValueProp().DoIndexOpApply(index, value, processor, op);
 }
 
 Value* Value_CallableMember::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)

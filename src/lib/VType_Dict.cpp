@@ -418,13 +418,28 @@ void Value_Dict::DoIndexSet(const Index& index, Value* pValue)
 		const Value* pValueIndex = valuesIndex.front();
 		GetValueDict().Assign(pValueIndex->Reference(), pValue->Reference());
 	} else {
-		
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
 	}
 }
 
-Value* Value_Dict::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+Value* Value_Dict::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
 {
-	return Value::nil();
+	const ValueList& valuesIndex = index.GetValueOwner();
+	if (valuesIndex.size() == 1) {
+		const Value* pValueIndex = valuesIndex.front();
+		const Value* pValueL = GetValueDict().Lookup(*pValueIndex);
+		if (!pValueL) {
+			ValueDict::IssueError_KeyNotFound(*pValueIndex);
+			return Value::nil();
+		}
+		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
+		if (pValueRtn->IsUndefined()) return Value::nil();
+		GetValueDict().Assign(pValueIndex->Reference(), pValueRtn.Reference());
+		return pValueRtn.release();
+	} else {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		return Value::nil();
+	}
 }
 
 }

@@ -41,6 +41,7 @@ public:
 	static const ErrorType SuffixError;
 	static const ErrorType SyntaxError;
 	static const ErrorType TypeError;
+	static const ErrorType UnimplementedError;
 	static const ErrorType ValueError;
 public:
 	ErrorType(const String& name, const String& dispName) : _name(name), _dispName(dispName) {}

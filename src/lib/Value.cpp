@@ -91,7 +91,7 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
-Value* Value::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+Value* Value::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());

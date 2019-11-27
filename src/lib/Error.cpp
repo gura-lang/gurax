@@ -8,29 +8,30 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ErrorType
 //------------------------------------------------------------------------------
-const ErrorType ErrorType::ArgumentError	("ArgumentError",		"argument error");
-const ErrorType ErrorType::CastError		("CastError",			"cast error");
-const ErrorType ErrorType::CodecError		("CodecError",			"codec error");
-const ErrorType ErrorType::CommandError		("CommandError",		"command error");
-const ErrorType ErrorType::ContextError		("ContextError",		"context error");
-const ErrorType ErrorType::DeclarationError	("DeclarationError",	"declaration error");
-const ErrorType ErrorType::DividedByZero	("DividedByZero",		"divided by zero");
-const ErrorType ErrorType::FormatError		("FormatError",			"format error");
-const ErrorType ErrorType::GuestError		("GuestError",			"guest error");
-const ErrorType ErrorType::ImportError		("ImportError",			"import error");
-const ErrorType ErrorType::IndexError		("IndexError",			"index error");
-const ErrorType ErrorType::InvalidOperation	("InvalidOperation",	"invalid operation");
-const ErrorType ErrorType::IOError			("IOError",				"I/O error");
-const ErrorType ErrorType::IteratorError	("IteratorError",		"iterator error");
-const ErrorType ErrorType::KeyError			("KeyError",			"key error");
-const ErrorType ErrorType::PathError		("PathError",			"path error");
-const ErrorType ErrorType::PropertyError	("PropertyError",		"property error");
-const ErrorType ErrorType::RangeError		("RangeError",			"range error");
-const ErrorType ErrorType::StreamError		("StreamError",			"stream error");
-const ErrorType ErrorType::SuffixError		("SuffixError",			"suffix error");
-const ErrorType ErrorType::SyntaxError		("SyntaxError",			"syntax error");
-const ErrorType ErrorType::TypeError		("TypeError",			"type error");
-const ErrorType ErrorType::ValueError		("ValueError",			"value error");
+const ErrorType ErrorType::ArgumentError		("ArgumentError",		"argument error");
+const ErrorType ErrorType::CastError			("CastError",			"cast error");
+const ErrorType ErrorType::CodecError			("CodecError",			"codec error");
+const ErrorType ErrorType::CommandError			("CommandError",		"command error");
+const ErrorType ErrorType::ContextError			("ContextError",		"context error");
+const ErrorType ErrorType::DeclarationError		("DeclarationError",	"declaration error");
+const ErrorType ErrorType::DividedByZero		("DividedByZero",		"divided by zero");
+const ErrorType ErrorType::FormatError			("FormatError",			"format error");
+const ErrorType ErrorType::GuestError			("GuestError",			"guest error");
+const ErrorType ErrorType::ImportError			("ImportError",			"import error");
+const ErrorType ErrorType::IndexError			("IndexError",			"index error");
+const ErrorType ErrorType::InvalidOperation		("InvalidOperation",	"invalid operation");
+const ErrorType ErrorType::IOError				("IOError",				"I/O error");
+const ErrorType ErrorType::IteratorError		("IteratorError",		"iterator error");
+const ErrorType ErrorType::KeyError				("KeyError",			"key error");
+const ErrorType ErrorType::PathError			("PathError",			"path error");
+const ErrorType ErrorType::PropertyError		("PropertyError",		"property error");
+const ErrorType ErrorType::RangeError			("RangeError",			"range error");
+const ErrorType ErrorType::StreamError			("StreamError",			"stream error");
+const ErrorType ErrorType::SuffixError			("SuffixError",			"suffix error");
+const ErrorType ErrorType::SyntaxError			("SyntaxError",			"syntax error");
+const ErrorType ErrorType::TypeError			("TypeError",			"type error");
+const ErrorType ErrorType::UnimplementedError	("UnimplementedError",	"unimplemented error");
+const ErrorType ErrorType::ValueError			("ValueError",			"value error");
 
 //------------------------------------------------------------------------------
 // Error

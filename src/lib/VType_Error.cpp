@@ -164,6 +164,7 @@ ImplementErrorTypeProperty(StreamError)
 ImplementErrorTypeProperty(SuffixError)
 ImplementErrorTypeProperty(SyntaxError)
 ImplementErrorTypeProperty(TypeError)
+ImplementErrorTypeProperty(UnimplementedError)
 ImplementErrorTypeProperty(ValueError)
 
 //------------------------------------------------------------------------------
