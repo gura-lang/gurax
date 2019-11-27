@@ -64,7 +64,7 @@ TestCase('Initializer') {
 	Tester(`@(g) {3, 1, {4}, 1, 5, {9}, 2, 6})
 }
 
-TestCase('Get') {
+TestCase('IndexGet') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl)
 	Tester(`tbl[0])
@@ -74,6 +74,26 @@ TestCase('Get') {
 	Tester(`tbl[11])
 	Tester(`tbl[0, 1]);
 	Tester(`tbl[0, 1, 4, 10]);
+}
+
+TestCase('IndexSet') {
+	tbl = [0..10]
+	Tester(`tbl)
+	Tester(`(tbl[0] = 99))
+	Tester(`(tbl[10] = 99))
+	Tester(`(tbl[-1] = 99))
+	Tester(`(tbl[11] = 99))
+	Tester(`tbl)
+}
+
+TestCase('IndexOpApply') {
+	tbl = [0..10]
+	Tester(`tbl)
+	Tester(`(tbl[0] += 99))
+	Tester(`(tbl[10] += 99))
+	Tester(`(tbl[-1] += 99))
+	Tester(`(tbl[11] += 99))
+	Tester(`tbl)
 }
 
 TestCase('Expansion') {

@@ -1601,10 +1601,10 @@ PUnit* PUnitFactory_IndexSet::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_IndexOpApply
-// Stack View: valueFirst=false: [Index(Car) Elems] -> [Elems] (continue)
-//                                                  -> []      (discard)
-//             valueFirst=true:  [Elems Index(Car)] -> [Elems] (continue)
-//                                                  -> []      (discard)
+// Stack View: valueFirst=false: [Index(Car) Elems] -> [Rtn] (continue)
+//                                                  -> []    (discard)
+//             valueFirst=true:  [Elems Index(Car)] -> [Rtn] (continue)
+//                                                  -> []    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
 void PUnit_IndexOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const

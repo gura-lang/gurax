@@ -969,11 +969,6 @@ void Expr_Indexer::Compose(Composer& composer)
 
 void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
 {
-	if (pOperator) {
-		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in lister assigment");
-		return;
-	}
 	GetExprCar().ComposeOrNil(composer);						// [Elems Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
 	composer.Add_Index(GetAttr().Reference(), nExprs, this);	// [Elems Index(Car)]
@@ -981,7 +976,13 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 		pExpr->ComposeOrNil(composer);							// [Elems Index(Car) Cdr]
 		composer.Add_FeedIndex(pExpr);							// [Elems Index(Car)]
 	}
-	composer.Add_IndexSet(true, this);							// [Elems]
+	if (pOperator) {
+		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		return;
+		//composer.Add_IndexOpApply(pOperator, true, this);		// [Rtn]
+	} else {
+		composer.Add_IndexSet(true, this);						// [Elems]
+	}
 	composer.FlushDiscard();
 }
 
@@ -997,10 +998,7 @@ void Expr_Indexer::ComposeForAssignment(
 	}
 	exprAssigned.ComposeOrNil(composer);						// [Index(Car) Elems]
 	if (pOperator) {
-		//************************
-		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in lister assigment");
-		return;
+		composer.Add_IndexOpApply(pOperator, false, this);		// [Rtn]
 	} else {
 		composer.Add_IndexSet(false, this);						// [Elems]
 	}

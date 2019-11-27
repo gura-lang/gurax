@@ -7,11 +7,22 @@ Dict.__prop__(`items) .. <PropHandler:items:List:R>
 Dict.__prop__(`len) .. <PropHandler:len:Number:R>
 Dict.__prop__(`keys) .. <PropHandler:keys:List:R>
 Dict.__prop__(`values) .. <PropHandler:values:List:R>
-======== Indexer ========
+======== IndexGet ========
 d['key0'] .. value0
 d['key4'] .. value4
 d['key9'] .. value9
 d['key10'] .. the dictionary doesn't have a key ''key10''
+======== IndexSet ========
+d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2'}
+d['key3'] = 'value3' .. value3
+d .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3'}
+======== IndexOpApply ========
+d .. %{'key0' => 0, 'key1' => 1, 'key2' => 2}
+d['key0'] += 99 .. 99
+d['key1'] += 99 .. 100
+d['key2'] += 99 .. 101
+d['key3'] += 99 .. the dictionary doesn't have a key ''key3''
+d .. %{'key0' => 99, 'key1' => 100, 'key2' => 101}
 ======== Dict#Append() ========
 d.Append(d2) .. %{'key0' => 'value0-mod', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5-mod', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9', 'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE'}
 d.Append(d2):timid .. %{'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4', 'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9', 'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE'}

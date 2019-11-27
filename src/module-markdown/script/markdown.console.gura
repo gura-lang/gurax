@@ -115,8 +115,7 @@ Renderer = class {
 			index = this.indexStack[-1]
 			if (index) {
 				Printf('%d. ', index + 1)
-				//this.indexStack[-1] += 1
-				this.indexStack[-1] = index + 1
+				this.indexStack[-1] += 1
 			} else {
 				Print('- ')
 			}
@@ -186,12 +185,12 @@ Renderer = class {
 			TableRow(headerFlag, cols)
 		}
 		nCols = rows:*cols:*len.Max()
-		rows::cols = rows:*cols::Align(nCols, TableCol('', `left)):list
+		//rows::cols = rows:*cols::Align(nCols, TableCol('', `left)):list
 		widths = repeat(nCols):list {|iCol|
 			rows:*cols:*Get(iCol):*text:*len.Max()
 		}
 		wdAvailable = this.wdScreen + 1 - nCols // subtract width for vertical bar
-		wdThreshold = int(wdAvailable / nCols)
+		wdThreshold = Int(wdAvailable / nCols)
 		wdSum = widths.Sum()
 		if (wdSum > wdAvailable) {
 			widthsShort = widths.Filter(widths < wdThreshold)
@@ -214,8 +213,8 @@ Renderer = class {
 			}
 		}
 		separator = ('-' * widths).Join('+')
-		rows.each {|row|
-			textsFolded = row.cols:*text.each():list {|text, i|
+		rows.Each {|row|
+			textsFolded = row.cols:*text.Each():list {|text, i|
 				text.Split('\n'):*Foldw(widths[i]).Flatten().Each()
 			}
 			while ((texts = textsFolded:*Next()).Or()) {

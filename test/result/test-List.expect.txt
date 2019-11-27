@@ -72,7 +72,7 @@ List.__prop__(`vtypeOfElem) .. <PropHandler:vtypeOfElem:VType:R>
 @(f) {{1, 2, 3}} .. lacking value for argument 'd'
 @(f) {{1, 2, 3, 4, 5, 6, 7, 8}} .. too many arguments
 @(g) {3, 1, {4}, 1, 5, {9}, 2, 6} .. [9, 1, 16, 1, 25, 81, 4, 36]
-======== Get ========
+======== IndexGet ========
 tbl .. ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 tbl[0] .. zero
 tbl[1] .. one
@@ -81,6 +81,20 @@ tbl[10] .. ten
 tbl[11] .. specified position 11 exceeds the list's size of 11
 tbl[0, 1] .. ['zero', 'one']
 tbl[0, 1, 4, 10] .. ['zero', 'one', 'four', 'ten']
+======== IndexSet ========
+tbl .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tbl[0] = 99 .. 99
+tbl[10] = 99 .. 99
+tbl[-1] = 99 .. 99
+tbl[11] = 99 .. specified position 11 exceeds the list's size of 11
+tbl .. [99, 1, 2, 3, 4, 5, 6, 7, 8, 9, 99]
+======== IndexOpApply ========
+tbl .. [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tbl[0] += 99 .. 99
+tbl[10] += 99 .. 109
+tbl[-1] += 99 .. 208
+tbl[11] += 99 .. specified position 11 exceeds the list's size of 11
+tbl .. [99, 1, 2, 3, 4, 5, 6, 7, 8, 9, 208]
 ======== Expansion ========
 [1, 2, 3, [4, [5, 6, 7]], 8, 9, 10] .. [1, 2, 3, [4, [5, 6, 7]], 8, 9, 10]
 [1, 2, 3, [4, [5, 6, 7]*]*, 8, 9, 10] .. [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

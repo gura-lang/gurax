@@ -20,7 +20,7 @@ TestCase('Property') {
 	Tester(`Dict.__prop__(`values))
 }
 
-TestCase('Indexer') {
+TestCase('IndexGet') {
 	d = %{
 		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3', 'key4' => 'value4',
 		'key5' => 'value5', 'key6' => 'value6', 'key7' => 'value7', 'key8' => 'value8', 'key9' => 'value9'
@@ -29,6 +29,27 @@ TestCase('Indexer') {
 	Tester(`d['key4'])
 	Tester(`d['key9'])
 	Tester(`d['key10'])
+}
+
+TestCase('IndexSet') {
+	d = %{
+		'key0' => 'value0', 'key1' => 'value1', 'key2' => 'value2'
+	}
+	Tester(`d)
+	Tester(`(d['key3'] = 'value3'))
+	Tester(`d)
+}
+
+TestCase('IndexOpApply') {
+	d = %{
+		'key0' => 0, 'key1' => 1, 'key2' => 2
+	}
+	Tester(`d)
+	Tester(`(d['key0'] += 99))
+	Tester(`(d['key1'] += 99))
+	Tester(`(d['key2'] += 99))
+	Tester(`(d['key3'] += 99))
+	Tester(`d)
 }
 
 TestCase('Dict#Append()') {

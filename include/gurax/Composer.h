@@ -183,6 +183,9 @@ public:
 	void Add_IndexSet(bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_IndexSet(valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
+	void Add_IndexOpApply(const Operator* pOperator, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_IndexOpApply(pOperator, valueFirstFlag, Expr::Reference(pExprSrc)));
+	}
 	void Add_PropGet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_PropGet(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
