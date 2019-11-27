@@ -1654,13 +1654,13 @@ PUnit* PUnitFactory_PropGet::Create(bool discardValueFlag)
 //             valueFirst=true:  [Assigned Target] -> [Assigned] (continue)
 //                                                 -> []         (discard)
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_PropSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+void PUnit_PropSet<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueProp;
 	RefPtr<Value> pValueTarget;
-	if (_valueFirstFlag) {
+	if (valueFirstFlag) {
 		pValueTarget.reset(processor.PopValue());
 		pValueProp.reset(processor.PopValue());
 	} else {
@@ -1675,8 +1675,8 @@ void PUnit_PropSet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_PropSet<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+String PUnit_PropSet<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("PropSet(`%s)", GetSymbol()->GetName());
@@ -1689,15 +1689,31 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropSet<1, true>(_pSymbol, _pAttr.release(), _valueFirstFlag, _pExprSrc.Reference());
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropSet<1, true, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_PropSet<1, true, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_PropSet<1, false>(_pSymbol, _pAttr.release(), _valueFirstFlag, _pExprSrc.Reference());
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropSet<1, false, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_PropSet<1, false, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			}
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropSet<0, true>(_pSymbol, _pAttr.release(), _valueFirstFlag);
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropSet<0, true, true>(_pSymbol, _pAttr.release());
+			} else {
+				_pPUnitCreated = new PUnit_PropSet<0, true, false>(_pSymbol, _pAttr.release());
+			}
 		} else {
-			_pPUnitCreated = new PUnit_PropSet<0, false>(_pSymbol, _pAttr.release(), _valueFirstFlag);
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropSet<0, false, true>(_pSymbol, _pAttr.release());
+			} else {
+				_pPUnitCreated = new PUnit_PropSet<0, false, false>(_pSymbol, _pAttr.release());
+			}
 		}
 	}
 	return _pPUnitCreated;

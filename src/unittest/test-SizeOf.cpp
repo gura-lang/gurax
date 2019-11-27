@@ -65,7 +65,7 @@ Gurax_TesterEntry(SizeOf)
 	PrintSizeOf(PUnit_IndexSet_);
 	using PUnit_PropGet_ = PUnit_PropGet<0, false>;
 	PrintSizeOf(PUnit_PropGet_);
-	using PUnit_PropSet_ = PUnit_PropSet<0, false>;
+	using PUnit_PropSet_ = PUnit_PropSet<0, false, false>;
 	PrintSizeOf(PUnit_PropSet_);
 	using PUnit_Member_Normal_ = PUnit_Member_Normal<0, false>;
 	PrintSizeOf(PUnit_Member_Normal_);

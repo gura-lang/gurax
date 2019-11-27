@@ -1440,7 +1440,7 @@ public:
 //------------------------------------------------------------------------------
 // PUnit_PropSet
 //------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
 class GURAX_DLLDECLARE PUnit_PropSet : public PUnit {
 public:
 	// Uses MemoryPool allocator
@@ -1448,14 +1448,12 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	bool _valueFirstFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag) :
-		_pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExpr) :
-		PUnit_PropSet(pSymbol, pAttr, valueFirstFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_PropSet(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1482,7 +1480,7 @@ public:
 	PUnitFactory_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_PropSet<1, false>) : sizeof(PUnit_PropSet<0, false>);
+		return _pExprSrc? sizeof(PUnit_PropSet<1, false, false>) : sizeof(PUnit_PropSet<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
