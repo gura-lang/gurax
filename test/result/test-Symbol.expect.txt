@@ -2,3 +2,7 @@
 <VType:Expr(stream:Stream):map{block?}>
 (`a) == (`a) .. true
 x == (`a) .. true
+======== Operator != ========
+<VType:Expr(stream:Stream):map{block?}>
+(`a) != (`a) .. false
+x != (`a) .. false

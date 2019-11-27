@@ -1643,6 +1643,10 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 	}
 }
 
+void Value_List::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+{
+}
+
 Iterator* Value_List::DoGenIterator() const
 {
 	return GetValueTypedOwner().GenerateIterator();

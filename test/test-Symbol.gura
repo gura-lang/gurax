@@ -7,3 +7,10 @@ TestCase('Operator ==') {
 	Tester(`(`a == `a))
 	Tester(`(x == `a))
 }
+
+TestCase('Operator !=') {
+	x = `a
+	Println(x.vtype)
+	Tester(`(`a != `a))
+	Tester(`(x != `a))
+}

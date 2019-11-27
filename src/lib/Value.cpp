@@ -91,6 +91,12 @@ void Value::DoIndexSet(const Index& index, Value* pValue)
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
 }
 
+void Value::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+{
+	Error::Issue(ErrorType::ValueError,
+				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());
+}
+
 Value* Value::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropHandler* pPropHandler = GetVType().LookupPropHandler(pSymbol);
