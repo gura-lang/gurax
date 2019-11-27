@@ -39,8 +39,8 @@ public:
 	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
 	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
 	void IndexSet(Value* pValue) { GetValueCar().DoIndexSet(*this, pValue); }
-	void IndexOpApply(const Value& value, const Operator& op) {
-		GetValueCar().DoIndexOpApply(*this, value, op);
+	Value* IndexOpApply(const Value& value, const Operator& op) {
+		return GetValueCar().DoIndexOpApply(*this, value, op);
 	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -1643,8 +1643,9 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 	}
 }
 
-void Value_List::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+Value* Value_List::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
 {
+	return Value::nil();
 }
 
 Iterator* Value_List::DoGenIterator() const

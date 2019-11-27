@@ -422,8 +422,9 @@ void Value_Dict::DoIndexSet(const Index& index, Value* pValue)
 	}
 }
 
-void Value_Dict::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
+Value* Value_Dict::DoIndexOpApply(const Index& index, const Value& value, const Operator& op)
 {
+	return Value::nil();
 }
 
 }
