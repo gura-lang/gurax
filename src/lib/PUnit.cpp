@@ -1745,6 +1745,78 @@ PUnit* PUnitFactory_MemberSet_Normal::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
+// PUnit_MemberSet_Map
+// Stack View: valueFirst=false: [Target Assigned] -> [Assigned] (continue)
+//                                                 -> []         (discard)
+//             valueFirst=true:  [Assigned Target] -> [Assigned] (continue)
+//                                                 -> []         (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+void PUnit_MemberSet_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueAssigned;
+	RefPtr<Value> pValueTarget;
+	if (valueFirstFlag) {
+		pValueTarget.reset(processor.PopValue());
+		pValueAssigned.reset(processor.PopValue());
+	} else {
+		pValueAssigned.reset(processor.PopValue());
+		pValueTarget.reset(processor.PopValue());
+	}
+	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+String PUnit_MemberSet_Map<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("MemberSet_Map(`%s)", GetSymbol()->GetName());
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_MemberSet_Map::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, true, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, true, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, false, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, false, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			}
+		}
+	} else {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, true, true>(_pSymbol, _pAttr.release());
+			} else {
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, true, false>(_pSymbol, _pAttr.release());
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, false, true>(_pSymbol, _pAttr.release());
+			} else {
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, false, false>(_pSymbol, _pAttr.release());
+			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
 // PUnit_MemberOpApply_Normal
 // Stack View: valueFirst=false: [Target Applied] -> [Assigned] (continue)
 //                                                -> []         (discard)
@@ -1816,6 +1888,84 @@ PUnit* PUnitFactory_MemberOpApply_Normal::Create(bool discardValueFlag)
 				_pPUnitCreated = new PUnit_MemberOpApply_Normal<0, false, true>(_pSymbol, _pAttr.release(), _pOp);
 			} else {
 				_pPUnitCreated = new PUnit_MemberOpApply_Normal<0, false, false>(_pSymbol, _pAttr.release(), _pOp);
+			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_MemberOpApply_Map
+// Stack View: valueFirst=false: [Target Applied] -> [Assigned] (continue)
+//                                                -> []         (discard)
+//             valueFirst=true:  [Applied Target] -> [Assigned] (continue)
+//                                                -> []         (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+void PUnit_MemberOpApply_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueApplied;
+	RefPtr<Value> pValueTarget;
+	if (valueFirstFlag) {
+		pValueTarget.reset(processor.PopValue());
+		pValueApplied.reset(processor.PopValue());
+	} else {
+		pValueApplied.reset(processor.PopValue());
+		pValueTarget.reset(processor.PopValue());
+	}
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	if (!pValueProp) {
+		processor.ErrorDone();
+		return;
+	}
+	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
+	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+String PUnit_MemberOpApply_Map<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("MemberOpApply_Map(`%s)", GetSymbol()->GetName());
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_MemberOpApply_Map::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, true, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, true, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, false, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, false, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+			}
+		}
+	} else {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, true, true>(_pSymbol, _pAttr.release(), _pOp);
+			} else {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, true, false>(_pSymbol, _pAttr.release(), _pOp);
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, false, true>(_pSymbol, _pAttr.release(), _pOp);
+			} else {
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, false, false>(_pSymbol, _pAttr.release(), _pOp);
 			}
 		}
 	}

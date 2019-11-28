@@ -189,8 +189,14 @@ public:
 	void Add_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_MemberSet_Normal(pSymbol, pAttr, valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
+	void Add_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_MemberSet_Map(pSymbol, pAttr, valueFirstFlag, Expr::Reference(pExprSrc)));
+	}
 	void Add_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_MemberOpApply_Normal(pSymbol, pAttr, pOp, valueFirstFlag, Expr::Reference(pExprSrc)));
+	}
+	void Add_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_MemberOpApply_Map(pSymbol, pAttr, pOp, valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_MemberGet_Normal(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_MemberGet_Normal(pSymbol, pAttr, Expr::Reference(pExprSrc)));

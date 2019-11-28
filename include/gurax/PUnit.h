@@ -1484,6 +1484,54 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_MemberSet_Map
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+class GURAX_DLLDECLARE PUnit_MemberSet_Map : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_MemberSet_Map(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_MemberSet_Map : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberSet_Map");
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	bool _valueFirstFlag;
+public:
+	PUnitFactory_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_MemberSet_Map<1, false, false>) : sizeof(PUnit_MemberSet_Map<0, false, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_MemberOpApply_Normal
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
@@ -1531,6 +1579,58 @@ public:
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_MemberOpApply_Normal<1, false, false>) : sizeof(PUnit_MemberOpApply_Normal<0, false, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_MemberOpApply_Map
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+class GURAX_DLLDECLARE PUnit_MemberOpApply_Map : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	const Operator* _pOp;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp) {}
+	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, Expr* pExpr) :
+		PUnit_MemberOpApply_Map(pSymbol, pAttr, pOp) { _ppExprSrc[0] = pExpr; }
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+	const Operator& GetOperator() const { return *_pOp; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_MemberOpApply_Map : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberOpApply_Map");
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	const Operator* _pOp;
+	bool _valueFirstFlag;
+public:
+	PUnitFactory_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_MemberOpApply_Map<1, false, false>) : sizeof(PUnit_MemberOpApply_Map<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
