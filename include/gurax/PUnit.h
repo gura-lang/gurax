@@ -1531,6 +1531,58 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_PropOpApply
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+class GURAX_DLLDECLARE PUnit_PropOpApply : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	const Operator* _pOperator;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOperator) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _pOperator(pOperator) {}
+	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOperator, Expr* pExpr) :
+		PUnit_PropOpApply(pSymbol, pAttr, pOperator) { _ppExprSrc[0] = pExpr; }
+public:
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+	const Operator& GetOperator() const { return *_pOperator; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_PropOpApply : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_PropOpApply");
+private:
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+	const Operator* _pOperator;
+	bool _valueFirstFlag;
+public:
+	PUnitFactory_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOperator, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOperator(pOperator), _valueFirstFlag(valueFirstFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc? sizeof(PUnit_PropOpApply<1, false, false>) : sizeof(PUnit_PropOpApply<0, false, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_Member_Normal
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>

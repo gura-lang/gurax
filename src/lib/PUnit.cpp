@@ -1684,7 +1684,6 @@ void PUnit_PropGet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 	Value& valueTarget = processor.PeekValue(0);
 	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
-		//Error::Issue(ErrorType::PropertyError, "no property named '%s'", GetSymbol()->GetName());
 		processor.ErrorDone();
 		return;
 	}
@@ -1731,20 +1730,20 @@ template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
 void PUnit_PropSet<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Value> pValueProp;
+	RefPtr<Value> pValueAssigned;
 	RefPtr<Value> pValueTarget;
 	if (valueFirstFlag) {
 		pValueTarget.reset(processor.PopValue());
-		pValueProp.reset(processor.PopValue());
+		pValueAssigned.reset(processor.PopValue());
 	} else {
-		pValueProp.reset(processor.PopValue());
+		pValueAssigned.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	if (!pValueTarget->DoPropSet(GetSymbol(), pValueProp->Reference(), GetAttr())) {
+	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
-	if (!discardValueFlag) processor.PushValue(pValueProp.release());
+	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -1786,6 +1785,84 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 				_pPUnitCreated = new PUnit_PropSet<0, false, true>(_pSymbol, _pAttr.release());
 			} else {
 				_pPUnitCreated = new PUnit_PropSet<0, false, false>(_pSymbol, _pAttr.release());
+			}
+		}
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_PropOpApply
+// Stack View: valueFirst=false: [Target Applied] -> [Assigned] (continue)
+//                                                -> []         (discard)
+//             valueFirst=true:  [Applied Target] -> [Assigned] (continue)
+//                                                -> []         (discard)
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+void PUnit_PropOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
+{
+	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
+	RefPtr<Value> pValueApplied;
+	RefPtr<Value> pValueTarget;
+	if (valueFirstFlag) {
+		pValueTarget.reset(processor.PopValue());
+		pValueApplied.reset(processor.PopValue());
+	} else {
+		pValueApplied.reset(processor.PopValue());
+		pValueTarget.reset(processor.PopValue());
+	}
+	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	if (!pValueProp) {
+		processor.ErrorDone();
+		return;
+	}
+	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
+	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+		processor.ErrorDone();
+		return;
+	}
+	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
+	processor.SetPUnitNext(_GetPUnitCont());
+}
+
+template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
+String PUnit_PropOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str.Printf("PropOpApply(`%s)", GetSymbol()->GetName());
+	str += GetAttr().ToString(ss);
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_PropOpApply::Create(bool discardValueFlag)
+{
+	if (_pExprSrc) {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropOpApply<1, true, true>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_PropOpApply<1, true, false>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropOpApply<1, false, true>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+			} else {
+				_pPUnitCreated = new PUnit_PropOpApply<1, false, false>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+			}
+		}
+	} else {
+		if (discardValueFlag) {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropOpApply<0, true, true>(_pSymbol, _pAttr.release(), _pOperator);
+			} else {
+				_pPUnitCreated = new PUnit_PropOpApply<0, true, false>(_pSymbol, _pAttr.release(), _pOperator);
+			}
+		} else {
+			if (_valueFirstFlag) {
+				_pPUnitCreated = new PUnit_PropOpApply<0, false, true>(_pSymbol, _pAttr.release(), _pOperator);
+			} else {
+				_pPUnitCreated = new PUnit_PropOpApply<0, false, false>(_pSymbol, _pAttr.release(), _pOperator);
 			}
 		}
 	}
