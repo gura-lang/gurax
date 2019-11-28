@@ -288,18 +288,14 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 		return;
 	}
 	switch (GetMemberMode()) {
-	case MemberMode::Normal: case MemberMode::MapAlong: {
+	case MemberMode::Normal: {
 		GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
 		composer.Add_MemberSet_Normal(GetSymbol(), GetAttr().Reference(),
 									  true, this);								// [Assigned]
 		composer.FlushDiscard();
 		break;
 	}
-	case MemberMode::MapToList: {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
-		break;
-	}
-	case MemberMode::MapToIter: {
+	case MemberMode::MapAlong: case MemberMode::MapToList: case MemberMode::MapToIter: {
 		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
 		break;
 	}
@@ -325,7 +321,14 @@ void Expr_Member::ComposeForAssignment(
 		break;
 	}
 	case MemberMode::MapAlong: case MemberMode::MapToList: case MemberMode::MapToIter: {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
+		if (pOp) {
+			composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
+								 false, this);									// [Assigned]
+		} else {
+			composer.Add_MemberSet_Map(GetSymbol(), GetAttr().Reference(),
+								 false, this);									// [Assigned]
+		}
 		break;
 	}
 	default:
