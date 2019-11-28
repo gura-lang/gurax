@@ -1,6 +1,21 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Member assignment') {
+	A = struct {
+		p1:String, p2:Number, p3:String
+		Format() = Format('p1=%s p2=%d p3=%s', this.p1, this.p2, this.p3)
+	}
+	a = A('v1', 3, 'v3')
+	Println(a.Format())
+	a.p1 = 'v1-mod'
+	Println(a.Format())
+	a.p2 = 33
+	Println(a.Format())
+	a.p2 += 11
+	Println(a.Format())
+}
+sys.Exit()
 TestCase('Object#ToString()') {
 	Tester(`math.e.ToString())
 	Tester(`true.ToString())

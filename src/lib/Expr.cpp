@@ -306,24 +306,20 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 void Expr_Member::ComposeForAssignment(
 	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
-	GetExprTarget().ComposeOrNil(composer);									// [Target]
+	GetExprTarget().ComposeOrNil(composer);										// [Target]
 	switch (GetMemberMode()) {
-	case MemberMode::Normal: case MemberMode::MapAlong: {
+	case MemberMode::Normal: {
+		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
-			composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
-			exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
-			composer.Add_BinaryOp(pOp, this);								// [Target Assigned]
+			composer.Add_PropOpApply(GetSymbol(), GetAttr().Reference(), pOp,
+								 false, this);									// [Assigned]
 		} else {
-			exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
+			composer.Add_PropSet(GetSymbol(), GetAttr().Reference(),
+								 false, this);									// [Assigned]
 		}
-		composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), false, this);	// [Assigned]
 		break;
 	}
-	case MemberMode::MapToList: {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
-		break;
-	}
-	case MemberMode::MapToIter: {
+	case MemberMode::MapAlong: case MemberMode::MapToList: case MemberMode::MapToIter: {
 		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
 		break;
 	}

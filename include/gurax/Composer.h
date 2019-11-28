@@ -192,6 +192,9 @@ public:
 	void Add_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_PropSet(pSymbol, pAttr, valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
+	void Add_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_PropOpApply(pSymbol, pAttr, pOp, valueFirstFlag, Expr::Reference(pExprSrc)));
+	}
 	void Add_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_Member_Normal(pSymbol, pAttr, Expr::Reference(pExprSrc)));
 	}
