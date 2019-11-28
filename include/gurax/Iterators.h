@@ -75,14 +75,14 @@ public:
 class GURAX_DLLDECLARE Iterator_UnaryOpImpMap : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	const OpEntry* _pOpEntry;
 	RefPtr<Value> _pValue;
 	const VType* _pVTypePrev;
 	Flags _flags;
 	size_t _len;
 public:
-	Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValue);
+	Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOp, Value* pValue);
 protected:
 	// Destructor
 	virtual ~Iterator_UnaryOpImpMap() = default;
@@ -103,7 +103,7 @@ public:
 class GURAX_DLLDECLARE Iterator_BinaryOpImpMap : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	const OpEntry* _pOpEntry;
 	RefPtr<Value> _pValueL;
 	RefPtr<Value> _pValueR;
@@ -112,7 +112,7 @@ private:
 	Flags _flags;
 	size_t _len;
 public:
-	Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValueL, Value* pValueR);
+	Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOp, Value* pValueL, Value* pValueR);
 protected:
 	// Destructor
 	virtual ~Iterator_BinaryOpImpMap() = default;

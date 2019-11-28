@@ -141,11 +141,11 @@ public:
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_ForEach(offset, pDeclArgOwner, pPUnitBranchDest, Expr::Reference(pExprSrc)));
 	}
-	void Add_UnaryOp(const Operator* pOperator, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_UnaryOp(pOperator, Expr::Reference(pExprSrc)));
+	void Add_UnaryOp(const Operator* pOp, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_UnaryOp(pOp, Expr::Reference(pExprSrc)));
 	}
-	void Add_BinaryOp(const Operator* pOperator, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_BinaryOp(pOperator, Expr::Reference(pExprSrc)));
+	void Add_BinaryOp(const Operator* pOp, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_BinaryOp(pOp, Expr::Reference(pExprSrc)));
 	}
 	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList,
 					bool binaryFlag, bool mixInFlag, bool overwriteFlag, bool symbolForModuleFlag, const Expr* pExprSrc = nullptr) {
@@ -183,8 +183,8 @@ public:
 	void Add_IndexSet(bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_IndexSet(valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
-	void Add_IndexOpApply(const Operator* pOperator, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_IndexOpApply(pOperator, valueFirstFlag, Expr::Reference(pExprSrc)));
+	void Add_IndexOpApply(const Operator* pOp, bool valueFirstFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_IndexOpApply(pOp, valueFirstFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_PropGet(const Symbol* pSymbol, Attribute* pAttr, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_PropGet(pSymbol, pAttr, Expr::Reference(pExprSrc)));

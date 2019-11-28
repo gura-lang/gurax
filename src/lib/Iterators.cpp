@@ -56,8 +56,8 @@ String Iterator_Counter::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_UnaryOpImpMap
 //------------------------------------------------------------------------------
-Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOperator, Value* pValue) :
-	_pProcessor(pProcessor), _pOperator(pOperator), _pOpEntry(&OpEntry::Empty), _pValue(pValue),
+Iterator_UnaryOpImpMap::Iterator_UnaryOpImpMap(Processor* pProcessor, const Operator* pOp, Value* pValue) :
+	_pProcessor(pProcessor), _pOp(pOp), _pOpEntry(&OpEntry::Empty), _pValue(pValue),
 	_pVTypePrev(&VTYPE_Undefined), _flags(Flag::None), _len(0)
 {
 	_flags = Flag::Finite | Flag::LenDetermined;
@@ -73,7 +73,7 @@ Value* Iterator_UnaryOpImpMap::DoNextValue()
 	RefPtr<Value> pValueEach(GetValue().PickValue());
 	const VType& vtype = pValueEach->GetVType();
 	if (!vtype.IsIdentical(*_pVTypePrev)) {
-		if (!(_pOpEntry = _pOperator->FindMatchedEntry(vtype))) return nullptr;
+		if (!(_pOpEntry = _pOp->FindMatchedEntry(vtype))) return nullptr;
 	}
 	return _pOpEntry->EvalUnary(GetProcessor(), *pValueEach);
 }
@@ -88,9 +88,9 @@ String Iterator_UnaryOpImpMap::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_BinaryOpImpMap
 //------------------------------------------------------------------------------
-Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOperator,
+Iterator_BinaryOpImpMap::Iterator_BinaryOpImpMap(Processor* pProcessor, const Operator* pOp,
 												 Value* pValueL, Value* pValueR) :
-	_pProcessor(pProcessor), _pOperator(pOperator), _pOpEntry(&OpEntry::Empty),
+	_pProcessor(pProcessor), _pOp(pOp), _pOpEntry(&OpEntry::Empty),
 	_pValueL(pValueL), _pValueR(pValueR), _pVTypePrevL(&VTYPE_Undefined), _pVTypePrevR(&VTYPE_Undefined),
 	_flags(Flag::None), _len(0)
 {
@@ -111,7 +111,7 @@ Value* Iterator_BinaryOpImpMap::DoNextValue()
 	const VType& vtypeL = pValueEachL->GetVType();
 	const VType& vtypeR = pValueEachR->GetVType();
 	if (!vtypeL.IsIdentical(*_pVTypePrevL) || !vtypeR.IsIdentical(*_pVTypePrevR)) {
-		if (!(_pOpEntry = _pOperator->FindMatchedEntry(vtypeL, vtypeR))) return nullptr;
+		if (!(_pOpEntry = _pOp->FindMatchedEntry(vtypeL, vtypeR))) return nullptr;
 	}
 	return _pOpEntry->EvalBinary(GetProcessor(), *pValueEachL, *pValueEachR);
 }

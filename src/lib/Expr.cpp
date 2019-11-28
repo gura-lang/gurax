@@ -84,19 +84,19 @@ void Expr::ComposeForList(Composer& composer)
 	composer.Add_ListElem(0, false, false, this);					// [List]
 }
 
-void Expr::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+void Expr::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 void Expr::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
 
 void Expr::ComposeForAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
 }
@@ -276,9 +276,9 @@ void Expr_Member::Compose(Composer& composer)
 	}
 }
 
-void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
 {
-	if (pOperator) {
+	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in lister assigment");
 		return;
@@ -304,15 +304,15 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 }
 
 void Expr_Member::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	GetExprTarget().ComposeOrNil(composer);									// [Target]
 	switch (GetMemberMode()) {
 	case MemberMode::Normal: case MemberMode::MapAlong: {
-		if (pOperator) {
+		if (pOp) {
 			composer.Add_PropGet(GetSymbol(), GetAttr().Reference(), this);		// [Target Prop]
 			exprAssigned.ComposeOrNil(composer);								// [Target Prop Right]
-			composer.Add_BinaryOp(pOperator, this);								// [Target Assigned]
+			composer.Add_BinaryOp(pOp, this);								// [Target Assigned]
 		} else {
 			exprAssigned.ComposeOrNil(composer);								// [Target Assigned]
 		}
@@ -394,9 +394,9 @@ void Expr_Identifier::Compose(Composer& composer)
 	}
 }
 
-void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
 {
-	if (pOperator) {
+	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in lister assigment");
 		return;
@@ -406,12 +406,12 @@ void Expr_Identifier::ComposeForValueAssignment(Composer& composer, const Operat
 }
 
 void Expr_Identifier::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
-	if (pOperator) {
+	if (pOp) {
 		composer.Add_Lookup(GetSymbol(), this);				// [Any]
 		exprAssigned.ComposeOrNil(composer);				// [Any Right]
-		composer.Add_BinaryOp(pOperator, this);				// [Assigned]
+		composer.Add_BinaryOp(pOp, this);				// [Assigned]
 	} else {
 		exprAssigned.ComposeOrNil(composer);				// [Assigned]
 	}
@@ -426,9 +426,9 @@ void Expr_Identifier::ComposeForClass(Composer& composer, bool publicFlag)
 }
 	
 void Expr_Identifier::ComposeForAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
-	if (pOperator) {
+	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in property assigment");
 		return;
@@ -936,13 +936,13 @@ void Expr_Lister::Compose(Composer& composer)
 }
 
 void Expr_Lister::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	exprAssigned.ComposeOrNil(composer);						// [Assigned]
 	composer.Add_GenIterator_ForLister(this);					// [Assigned Iterator]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 		composer.Add_EvalIterator(0, true);						// [Assigned Iterator Value]
-		pExpr->ComposeForValueAssignment(composer, pOperator);	// [Assigned Iterator]
+		pExpr->ComposeForValueAssignment(composer, pOp);	// [Assigned Iterator]
 		if (Error::IsIssued()) return;
 	}
 	composer.Add_DiscardValue(this);							// [Assigned]
@@ -996,7 +996,7 @@ void Expr_Indexer::Compose(Composer& composer)
 	composer.Add_IndexGet(this);								// [Elems]
 }
 
-void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOperator)
+void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);						// [Elems Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
@@ -1005,10 +1005,10 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 		pExpr->ComposeOrNil(composer);							// [Elems Index(Car) Cdr]
 		composer.Add_FeedIndex(pExpr);							// [Elems Index(Car)]
 	}
-	if (pOperator) {
+	if (pOp) {
 		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
 		return;
-		//composer.Add_IndexOpApply(pOperator, true, this);		// [Rtn]
+		//composer.Add_IndexOpApply(pOp, true, this);		// [Rtn]
 	} else {
 		composer.Add_IndexSet(true, this);						// [Elems]
 	}
@@ -1016,7 +1016,7 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 }
 
 void Expr_Indexer::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
 	GetExprCar().ComposeOrNil(composer);						// [Car]
 	size_t nExprs = GetExprLinkCdr().CountSequence();
@@ -1026,8 +1026,8 @@ void Expr_Indexer::ComposeForAssignment(
 		composer.Add_FeedIndex(pExpr);							// [Index(Car)]
 	}
 	exprAssigned.ComposeOrNil(composer);						// [Index(Car) Elems]
-	if (pOperator) {
-		composer.Add_IndexOpApply(pOperator, false, this);		// [Rtn]
+	if (pOp) {
+		composer.Add_IndexOpApply(pOp, false, this);		// [Rtn]
 	} else {
 		composer.Add_IndexSet(false, this);						// [Elems]
 	}
@@ -1047,9 +1047,9 @@ void Expr_Indexer::ComposeForClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Indexer::ComposeForAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
-	if (pOperator) {
+	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in property assigment");
 		return;
@@ -1143,9 +1143,9 @@ void Expr_Caller::ComposeForClass(Composer& composer, bool publicFlag)
 }
 
 void Expr_Caller::ComposeForAssignment(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp)
 {
-	if (pOperator) {
+	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in function assigment");
 		return;
@@ -1171,9 +1171,9 @@ void Expr_Caller::ComposeForAssignment(
 }
 
 void Expr_Caller::ComposeForAssignmentInClass(
-	Composer& composer, Expr& exprAssigned, const Operator* pOperator, bool publicFlag)
+	Composer& composer, Expr& exprAssigned, const Operator* pOp, bool publicFlag)
 {
-	if (pOperator) {
+	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
 						 "operator can not be applied in function assigment");
 		return;

@@ -903,15 +903,15 @@ PUnit* PUnitFactory_UnaryOp::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_UnaryOp<1, true>(_pOperator, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_UnaryOp<1, true>(_pOp, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_UnaryOp<1, false>(_pOperator, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_UnaryOp<1, false>(_pOp, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_UnaryOp<0, true>(_pOperator);
+			_pPUnitCreated = new PUnit_UnaryOp<0, true>(_pOp);
 		} else {
-			_pPUnitCreated = new PUnit_UnaryOp<0, false>(_pOperator);
+			_pPUnitCreated = new PUnit_UnaryOp<0, false>(_pOp);
 		}
 	}
 	return _pPUnitCreated;
@@ -950,15 +950,15 @@ PUnit* PUnitFactory_BinaryOp::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_BinaryOp<1, true>(_pOperator, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_BinaryOp<1, true>(_pOp, _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_BinaryOp<1, false>(_pOperator, _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_BinaryOp<1, false>(_pOp, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_BinaryOp<0, true>(_pOperator);
+			_pPUnitCreated = new PUnit_BinaryOp<0, true>(_pOp);
 		} else {
-			_pPUnitCreated = new PUnit_BinaryOp<0, false>(_pOperator);
+			_pPUnitCreated = new PUnit_BinaryOp<0, false>(_pOp);
 		}
 	}
 	return _pPUnitCreated;
@@ -1620,7 +1620,7 @@ void PUnit_IndexOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Proces
 		pValueIndex.reset(dynamic_cast<Value_Index*>(processor.PopValue()));
 	}
 	Index& index = pValueIndex->GetIndex();
-	RefPtr<Value> pValueRtn(index.IndexOpApply(*pValueElems, processor, *_pOperator));
+	RefPtr<Value> pValueRtn(index.IndexOpApply(*pValueElems, processor, *_pOp));
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
@@ -1643,29 +1643,29 @@ PUnit* PUnitFactory_IndexOpApply::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_IndexOpApply<1, true, true>(_pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_IndexOpApply<1, true, true>(_pOp, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_IndexOpApply<1, true, false>(_pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_IndexOpApply<1, true, false>(_pOp, _pExprSrc.Reference());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_IndexOpApply<1, false, true>(_pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_IndexOpApply<1, false, true>(_pOp, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_IndexOpApply<1, false, false>(_pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_IndexOpApply<1, false, false>(_pOp, _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_IndexOpApply<0, true, true>(_pOperator);
+				_pPUnitCreated = new PUnit_IndexOpApply<0, true, true>(_pOp);
 			} else {
-				_pPUnitCreated = new PUnit_IndexOpApply<0, true, false>(_pOperator);
+				_pPUnitCreated = new PUnit_IndexOpApply<0, true, false>(_pOp);
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_IndexOpApply<0, false, true>(_pOperator);
+				_pPUnitCreated = new PUnit_IndexOpApply<0, false, true>(_pOp);
 			} else {
-				_pPUnitCreated = new PUnit_IndexOpApply<0, false, false>(_pOperator);
+				_pPUnitCreated = new PUnit_IndexOpApply<0, false, false>(_pOp);
 			}
 		}
 	}
@@ -1840,29 +1840,29 @@ PUnit* PUnitFactory_PropOpApply::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<1, true, true>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_PropOpApply<1, true, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<1, true, false>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_PropOpApply<1, true, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<1, false, true>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_PropOpApply<1, false, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<1, false, false>(_pSymbol, _pAttr.release(), _pOperator, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_PropOpApply<1, false, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<0, true, true>(_pSymbol, _pAttr.release(), _pOperator);
+				_pPUnitCreated = new PUnit_PropOpApply<0, true, true>(_pSymbol, _pAttr.release(), _pOp);
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<0, true, false>(_pSymbol, _pAttr.release(), _pOperator);
+				_pPUnitCreated = new PUnit_PropOpApply<0, true, false>(_pSymbol, _pAttr.release(), _pOp);
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<0, false, true>(_pSymbol, _pAttr.release(), _pOperator);
+				_pPUnitCreated = new PUnit_PropOpApply<0, false, true>(_pSymbol, _pAttr.release(), _pOp);
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<0, false, false>(_pSymbol, _pAttr.release(), _pOperator);
+				_pPUnitCreated = new PUnit_PropOpApply<0, false, false>(_pSymbol, _pAttr.release(), _pOp);
 			}
 		}
 	}

@@ -845,14 +845,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_UnaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
-	PUnit_UnaryOp(const Operator* pOperator, Expr* pExpr) : PUnit_UnaryOp(pOperator) { _ppExprSrc[0] = pExpr; }
+	PUnit_UnaryOp(const Operator* pOp) : _pOp(pOp) {}
+	PUnit_UnaryOp(const Operator* pOp, Expr* pExpr) : PUnit_UnaryOp(pOp) { _ppExprSrc[0] = pExpr; }
 public:
-	const Operator* GetOperator() const { return _pOperator; }
+	const Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -869,10 +869,10 @@ class PUnitFactory_UnaryOp : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_UnaryOp");
 private:
-	const Operator* _pOperator;
+	const Operator* _pOp;
 public:
-	PUnitFactory_UnaryOp(const Operator* pOperator, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pOperator(pOperator) {}
+	PUnitFactory_UnaryOp(const Operator* pOp, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pOp(pOp) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_UnaryOp<1, false>) : sizeof(PUnit_UnaryOp<0, false>);
 	}
@@ -888,14 +888,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_BinaryOp(const Operator* pOperator) : _pOperator(pOperator) {}
-	PUnit_BinaryOp(const Operator* pOperator, Expr* pExpr) : PUnit_BinaryOp(pOperator) { _ppExprSrc[0] = pExpr; }
+	PUnit_BinaryOp(const Operator* pOp) : _pOp(pOp) {}
+	PUnit_BinaryOp(const Operator* pOp, Expr* pExpr) : PUnit_BinaryOp(pOp) { _ppExprSrc[0] = pExpr; }
 public:
-	const Operator* GetOperator() const { return _pOperator; }
+	const Operator* GetOperator() const { return _pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -912,10 +912,10 @@ class PUnitFactory_BinaryOp : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_BinaryOp");
 private:
-	const Operator* _pOperator;
+	const Operator* _pOp;
 public:
-	PUnitFactory_BinaryOp(const Operator* pOperator, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pOperator(pOperator) {}
+	PUnitFactory_BinaryOp(const Operator* pOp, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pOp(pOp) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_BinaryOp<1, false>) : sizeof(PUnit_BinaryOp<0, false>);
 	}
@@ -1400,14 +1400,14 @@ public:
 	Gurax_MemoryPoolAllocator_PUnit();
 private:
 	Expr* _ppExprSrc[nExprSrc];
-	const Operator* _pOperator;
+	const Operator* _pOp;
 public:
 	// Constructor
-	PUnit_IndexOpApply(const Operator* pOperator) : _pOperator(pOperator) {}
-	explicit PUnit_IndexOpApply(const Operator* pOperator, Expr* pExpr) :
-		PUnit_IndexOpApply(pOperator) { _ppExprSrc[0] = pExpr; }
+	PUnit_IndexOpApply(const Operator* pOp) : _pOp(pOp) {}
+	explicit PUnit_IndexOpApply(const Operator* pOp, Expr* pExpr) :
+		PUnit_IndexOpApply(pOp) { _ppExprSrc[0] = pExpr; }
 public:
-	const Operator& GetOperator() { return *_pOperator; }
+	const Operator& GetOperator() { return *_pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1424,11 +1424,11 @@ class PUnitFactory_IndexOpApply : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_IndexOpApply");
 private:
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_IndexOpApply(const Operator* pOperator, bool valueFirstFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pOperator(pOperator), _valueFirstFlag(valueFirstFlag) {}
+	PUnitFactory_IndexOpApply(const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_IndexOpApply<1, false, false>) : sizeof(PUnit_IndexOpApply<0, false, false>);
 	}
@@ -1541,18 +1541,18 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOperator) :
-		_pSymbol(pSymbol), _pAttr(pAttr), _pOperator(pOperator) {}
-	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOperator, Expr* pExpr) :
-		PUnit_PropOpApply(pSymbol, pAttr, pOperator) { _ppExprSrc[0] = pExpr; }
+	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp) {}
+	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, Expr* pExpr) :
+		PUnit_PropOpApply(pSymbol, pAttr, pOp) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
-	const Operator& GetOperator() const { return *_pOperator; }
+	const Operator& GetOperator() const { return *_pOp; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1571,11 +1571,11 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
-	const Operator* _pOperator;
+	const Operator* _pOp;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOperator, bool valueFirstFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOperator(pOperator), _valueFirstFlag(valueFirstFlag) {}
+	PUnitFactory_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_PropOpApply<1, false, false>) : sizeof(PUnit_PropOpApply<0, false, false>);
 	}

@@ -50,22 +50,22 @@ DeclArg* DeclArg::CreateFromExpr(const Expr& expr)
 	}
 	if (pExpr->IsType<Expr_UnaryOp>()) {
 		const Expr_UnaryOp* pExprEx = dynamic_cast<const Expr_UnaryOp*>(pExpr);
-		const Operator* pOperator = pExprEx->GetOperator();
+		const Operator* pOp = pExprEx->GetOperator();
 		pExpr = &pExprEx->GetExprChild();
-		if (pOperator->IsType(OpType::Quote)) {
+		if (pOp->IsType(OpType::Quote)) {
 			// `x
 			pVType = &VTYPE_Quote;
-		} else if (pOperator->IsType(OpType::PostMod)) {
+		} else if (pOp->IsType(OpType::PostMod)) {
 			// x% ... nothing to do here
-		} else if (pOperator->IsType(OpType::PostModMod)) {
+		} else if (pOp->IsType(OpType::PostModMod)) {
 			// x%% ... nothing to do here
-		} else if (pOperator->IsType(OpType::PostMul)) {
+		} else if (pOp->IsType(OpType::PostMul)) {
 			// x*
 			pOccur = &Occur::ZeroOrMore;
-		} else if (pOperator->IsType(OpType::PostPos)) {
+		} else if (pOp->IsType(OpType::PostPos)) {
 			// x+
 			pOccur = &Occur::OnceOrMore;
-		} else if (pOperator->IsType(OpType::PostQuestion)) {
+		} else if (pOp->IsType(OpType::PostQuestion)) {
 			// x?
 			pOccur = &Occur::ZeroOrOnce;
 		} else {
