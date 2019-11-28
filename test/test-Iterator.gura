@@ -38,6 +38,9 @@ TestCase('Iterator#After()') {
 }
 
 TestCase('Iterator#Align()') {
+	Tester(`(0..5).Align(10):list)
+	Tester(`(0..5).Align(3):list)
+	Tester(`(0..5).Align(10, 0):list)
 }
 
 TestCase('Iterator#And()') {

@@ -427,6 +427,29 @@ String Iterator_Cycle::ToString(const StringStyle& ss) const
 	return str;
 }
 
+//-----------------------------------------------------------------------------
+// Iterator_Align
+//-----------------------------------------------------------------------------
+Value* Iterator_Align::DoNextValue()
+{
+	if (_cnt == 0) return nullptr;
+	_cnt--;
+	if (_stuffFlag) return _pValueStuff.Reference();
+	RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+	if (pValueElem) return pValueElem.release();
+	_stuffFlag = true;
+	return _pValueStuff.Reference();
+}
+
+String Iterator_Align::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Align(";
+	rtn += GetIteratorSrc().ToString(ss);
+	rtn += ")";
+	return rtn;
+}
+
 //------------------------------------------------------------------------------
 // Iterator_Head
 //------------------------------------------------------------------------------

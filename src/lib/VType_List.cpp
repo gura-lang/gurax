@@ -351,15 +351,11 @@ Gurax_DeclareMethod(List, Align)
 
 Gurax_ImplementMethod(List, Align)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Align(processor, argument, *pIteratorSrc);
 }
 
 // List#And()

@@ -480,6 +480,31 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//-----------------------------------------------------------------------------
+// Iterator_Align
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Align : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	size_t _cnt;
+	RefPtr<Value> _pValueStuff;
+	bool _stuffFlag;
+public:
+	Iterator_Align(Iterator* pIteratorSrc, size_t cnt, Value* pValueStuff) :
+		_pIteratorSrc(pIteratorSrc), _cnt(cnt), _pValueStuff(pValueStuff), _stuffFlag(false) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return _cnt; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 //------------------------------------------------------------------------------
 // Iterator_Head
 //------------------------------------------------------------------------------

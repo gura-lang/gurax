@@ -87,29 +87,39 @@ Gurax_ImplementMethod(Iterator, After)
 	return Value::nil();
 }
 
-// Iterator#Align(n:Number, value?):map {block?}
+// Iterator#Align(n:Number, valueStuff?):map {block?}
 Gurax_DeclareMethod(Iterator, Align)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("valueStuff", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Creates an iterator that extracts specified number of elements from the source iterable.\n"
+		"If the source iterable has fewer elements, the rest will be filled with the value of argument `valueStuff`"
+		"or `nil` when the argument is omitted.\n");
 }
 
 Gurax_ImplementMethod(Iterator, Align)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	return VType_Iterator::Method_Align(processor, argument, iteratorSrc);
+}
+
+Value* VType_Iterator::Method_Align(Processor& processor, Argument& argument, Iterator& iteratorSrc)
+{
 	// Arguments
 	ArgPicker args(argument);
+	size_t n = args.PickNumberPos<size_t>();
+	RefPtr<Value> pValueStuff(args.IsValid()? args.PickValue().Reference() : Value::nil());
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_Align(iteratorSrc.Reference(), n, pValueStuff.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#And()

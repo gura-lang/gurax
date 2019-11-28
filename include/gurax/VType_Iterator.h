@@ -18,6 +18,8 @@ public:
 	virtual void DoPrepare(Frame& frameOuter) override;
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 public:
+	static Value* Method_Align(
+		Processor& processor, Argument& argument, Iterator& iteratorSrc);
 	static Value* Method_ArgMax(Argument& argument, Iterator& iteratorThis);
 	static Value* Method_ArgMin(Argument& argument, Iterator& iteratorThis);
 	static Value* Method_Combination(

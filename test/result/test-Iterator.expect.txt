@@ -34,6 +34,9 @@
 10
 ======== Iterator#After() ========
 ======== Iterator#Align() ========
+0 .. 5.Align(10):list .. [0, 1, 2, 3, 4, 5, <Nil>, <Nil>, <Nil>, <Nil>]
+0 .. 5.Align(3):list .. [0, 1, 2]
+0 .. 5.Align(10, 0):list .. [0, 1, 2, 3, 4, 5, 0, 0, 0, 0]
 ======== Iterator#And() ========
 [].Each().And() .. <Nil>
 [false].Each().And() .. false
