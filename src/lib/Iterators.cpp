@@ -614,6 +614,81 @@ String Iterator_Fold::ToString(const StringStyle& ss) const
 	return str;
 }
 
+#if 0
+//------------------------------------------------------------------------------
+// Iterator_Flatten
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Flatten : public Iterator {
+public:
+	enum Mode {
+		MODE_DepthFirstSearch,
+		MODE_BreadthFirstSearch,
+	};
+private:
+	IteratorDeque _iterDeque;
+	Iterator *_pIteratorCur;
+	Mode _mode;
+public:
+	Iterator_Flatten(Iterator *pIterator, Mode mode);
+	~Iterator_Flatten();
+	virtual Value* DoNextValue() overridde;
+	virtual String ToString(const StingStyle& ss) const overridde;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Flatten
+//------------------------------------------------------------------------------
+Iterator_Flatten::Iterator_Flatten(Iterator* pIterator, Mode mode) : _mode(mode)
+{
+	_iterDeque.push_back(pIterator);
+	_pIteratorCur = pIterator;
+}
+
+Iterator_Flatten::~Iterator_Flatten()
+{
+	for (Iterator* pIterator : _iterDeque) Iterator::Delete(pIterator);
+}
+
+Value* Iterator_Flatten::DoNextValue()
+{
+#if 0
+	while (_pIteratorCur != nullptr) {
+		if (_pIteratorCur->Next(env, value)) {
+			if (!value.IsListOrIterator()) return true;
+			Iterator *pIterator = value.CreateIterator(sig);
+			if (pIterator == nullptr) return false;
+			if (pIterator->IsInfinite()) {
+				SetError_InfiniteNotAllowed(sig);
+				return false;
+			}
+			_iterDeque.push_back(pIterator);
+			if (_mode == MODE_DepthFirstSearch) {
+				_pIteratorCur = pIterator;
+			}
+		} else {
+			Iterator::Delete(_pIteratorCur);
+			if (_mode == MODE_DepthFirstSearch) {
+				_iterDeque.pop_back();
+				_pIteratorCur = _iterDeque.empty()? nullptr : _iterDeque.back();
+			} else { // _mode == MODE_BreadthFirstSearch
+				_iterDeque.pop_front();
+				_pIteratorCur = _iterDeque.empty()? nullptr : _iterDeque.front();
+			}
+		}
+	}
+	return false;
+#endif
+	return nullptr;
+}
+
+String Iterator_Flatten::ToString(const StringStyle& ss) const
+{
+	String rtn;
+	rtn += "Flatten";
+	return rtn;
+}
+#endif
+
 //------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
