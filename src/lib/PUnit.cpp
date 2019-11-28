@@ -1764,9 +1764,51 @@ void PUnit_MemberSet_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Proce
 		pValueAssigned.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+	if (!pIteratorTarget) {
+		Error::Issue(ErrorType::IteratorError, "the target not is not iterable");
 		processor.ErrorDone();
 		return;
+	}
+	if (GetMapAssignedFlag() && pValueAssigned->IsIterable()) {
+		RefPtr<Iterator> pIteratorAssigned(pValueAssigned->DoGenIterator());
+		if (pIteratorTarget->IsInfinite() && pIteratorAssigned->IsInfinite()) {
+			Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
+			processor.ErrorDone();
+			return;
+		}
+		for (;;) {
+			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
+			if (!pValueTargetEach) break;
+			RefPtr<Value> pValueAssignedEach(pIteratorAssigned->NextValue());
+			if (!pValueAssignedEach) break;
+			if (!pValueTargetEach->DoPropSet(GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
+				processor.ErrorDone();
+				return;
+			}
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
+		}
+	} else {
+		if (pIteratorTarget->IsInfinite()) {
+			Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
+			processor.ErrorDone();
+			return;
+		}
+		for (;;) {
+			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
+			if (!pValueTargetEach) break;
+			if (!pValueTargetEach->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+				processor.ErrorDone();
+				return;
+			}
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
+		}
 	}
 	if (!discardValueFlag) processor.PushValue(pValueAssigned.release());
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -1787,29 +1829,29 @@ PUnit* PUnitFactory_MemberSet_Map::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberSet_Map<1, true, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, true, true>(_pSymbol, _pAttr.release(), _mapAssignedFlag, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_MemberSet_Map<1, true, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, true, false>(_pSymbol, _pAttr.release(), _mapAssignedFlag, _pExprSrc.Reference());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberSet_Map<1, false, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, false, true>(_pSymbol, _pAttr.release(), _mapAssignedFlag, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_MemberSet_Map<1, false, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Map<1, false, false>(_pSymbol, _pAttr.release(), _mapAssignedFlag, _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberSet_Map<0, true, true>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, true, true>(_pSymbol, _pAttr.release(), _mapAssignedFlag);
 			} else {
-				_pPUnitCreated = new PUnit_MemberSet_Map<0, true, false>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, true, false>(_pSymbol, _pAttr.release(), _mapAssignedFlag);
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberSet_Map<0, false, true>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, false, true>(_pSymbol, _pAttr.release(), _mapAssignedFlag);
 			} else {
-				_pPUnitCreated = new PUnit_MemberSet_Map<0, false, false>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Map<0, false, false>(_pSymbol, _pAttr.release(), _mapAssignedFlag);
 			}
 		}
 	}
@@ -1943,29 +1985,29 @@ PUnit* PUnitFactory_MemberOpApply_Map::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, true, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, true, true>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, true, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, true, false>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag, _pExprSrc.Reference());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, false, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, false, true>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, false, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<1, false, false>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag, _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, true, true>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, true, true>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag);
 			} else {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, true, false>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, true, false>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag);
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, false, true>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, false, true>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag);
 			} else {
-				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, false, false>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Map<0, false, false>(_pSymbol, _pAttr.release(), _pOp, _mapAssignedFlag);
 			}
 		}
 	}
@@ -2083,15 +2125,19 @@ void PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& proc
 		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		for (;;) {
-			RefPtr<Value> pValueTargetElem(pIteratorTarget->NextValue());
-			if (!pValueTargetElem) break;
-			Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
+			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
+			if (!pValueTargetEach) break;
+			Value* pValueProp = pValueTargetEach->DoPropGet(GetSymbol(), GetAttr(), true);
 			if (!pValueProp) {
 				processor.ErrorDone();
 				return;
 			} else {
-				pValueOwner->push_back(pValueProp->AsMember(*pValueTargetElem));
+				pValueOwner->push_back(pValueProp->AsMember(*pValueTargetEach));
 			}
+		}
+		if (Error::IsIssued()) {
+			processor.ErrorDone();
+			return;
 		}
 		processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
 	} else {

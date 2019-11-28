@@ -1449,7 +1449,8 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr) :
+		_pSymbol(pSymbol), _pAttr(pAttr) {}
 	PUnit_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
 		PUnit_MemberSet_Normal(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
@@ -1494,15 +1495,18 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	bool _mapAssignedFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_MemberSet_Map(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool mapAssignedFlag) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _mapAssignedFlag(mapAssignedFlag) {}
+	PUnit_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool mapAssignedFlag, Expr* pExpr) :
+		PUnit_MemberSet_Map(pSymbol, pAttr, mapAssignedFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
+	bool GetMapAssignedFlag() const { return _mapAssignedFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1521,10 +1525,11 @@ public:
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
+	bool _mapAssignedFlag;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
+	PUnitFactory_MemberSet_Map(const Symbol* pSymbol, Attribute* pAttr, bool mapAssignedFlag, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _mapAssignedFlag(mapAssignedFlag), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_MemberSet_Map<1, false, false>) : sizeof(PUnit_MemberSet_Map<0, false, false>);
 	}
@@ -1595,17 +1600,19 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 	const Operator* _pOp;
+	bool _mapAssignedFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp) :
-		_pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp) {}
-	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, Expr* pExpr) :
-		PUnit_MemberOpApply_Map(pSymbol, pAttr, pOp) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag) :
+		_pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _mapAssignedFlag(mapAssignedFlag) {}
+	PUnit_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag, Expr* pExpr) :
+		PUnit_MemberOpApply_Map(pSymbol, pAttr, pOp, mapAssignedFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	const Operator& GetOperator() const { return *_pOp; }
+	bool GetMapAssignedFlag() const { return _mapAssignedFlag; }
 public:
 	// Virtual functions of PUnit
 	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
@@ -1625,10 +1632,11 @@ private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 	const Operator* _pOp;
+	bool _mapAssignedFlag;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
+	PUnitFactory_MemberOpApply_Map(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool mapAssignedFlag, bool valueFirstFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _mapAssignedFlag(mapAssignedFlag), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc? sizeof(PUnit_MemberOpApply_Map<1, false, false>) : sizeof(PUnit_MemberOpApply_Map<0, false, false>);
 	}

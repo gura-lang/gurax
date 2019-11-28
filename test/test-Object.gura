@@ -16,6 +16,23 @@ TestCase('Member assignment') {
 	Println(a.Format())
 }
 
+TestCase('Member mapping assignment') {
+	X = struct {
+		a = 0, b = 0, c = 0, d = 0
+		Format() = Format('[a=%d,b=%d,c=%d,d=%d]', this.a, this.b, this.c, this.d)
+	}
+	x = Dim(10) {X()}
+	Println(x:*Format().Join(','))
+	x::a = 2
+	Println(x:*Format().Join(','))
+	x:&b = 0..
+	Println(x:*Format().Join(','))
+	x:&c = 7..9
+	Println(x:*Format().Join(','))
+	x.Offset(6):&d = 1..
+	Println(x:*Format().Join(','))
+}
+
 TestCase('Object#ToString()') {
 	Tester(`math.e.ToString())
 	Tester(`true.ToString())

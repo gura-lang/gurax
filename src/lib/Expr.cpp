@@ -320,14 +320,29 @@ void Expr_Member::ComposeForAssignment(
 		}
 		break;
 	}
-	case MemberMode::MapAlong: case MemberMode::MapToList: case MemberMode::MapToIter: {
+	case MemberMode::MapAlong: {
+		bool mapAssignedFlag = true;
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
-			composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
-								 false, this);									// [Assigned]
+			Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+			//composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
+			//					 mapAssignedFlag, false, this);					// [Assigned]
 		} else {
 			composer.Add_MemberSet_Map(GetSymbol(), GetAttr().Reference(),
-								 false, this);									// [Assigned]
+									   mapAssignedFlag, false, this);			// [Assigned]
+		}
+		break;
+	}
+	case MemberMode::MapToList: case MemberMode::MapToIter: {
+		bool mapAssignedFlag = false;
+		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
+		if (pOp) {
+			Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+			//composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
+			//					 mapAssignedFlag, false, this);					// [Assigned]
+		} else {
+			composer.Add_MemberSet_Map(GetSymbol(), GetAttr().Reference(),
+									   mapAssignedFlag, false, this);			// [Assigned]
 		}
 		break;
 	}

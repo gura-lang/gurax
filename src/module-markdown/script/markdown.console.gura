@@ -185,7 +185,7 @@ Renderer = class {
 			TableRow(headerFlag, cols)
 		}
 		nCols = rows:*cols:*len.Max()
-		//rows::cols = rows:*cols::Align(nCols, TableCol('', `left)):list
+		rows:&cols = rows:*cols::Align(nCols, TableCol('', `left)):list
 		widths = repeat(nCols):list {|iCol|
 			rows:*cols:*Get(iCol):*text:*len.Max()
 		}
