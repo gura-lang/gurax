@@ -1,3 +1,8 @@
+======== Member assignment ========
+p1=v1 p2=3 p3=v3
+p1=v1-mod p2=3 p3=v3
+p1=v1-mod p2=33 p3=v3
+p1=v1-mod p2=44 p3=v3
 ======== Object#ToString() ========
 math.e.ToString() .. 2.71828
 true.ToString() .. true

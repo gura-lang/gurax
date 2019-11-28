@@ -1673,53 +1673,6 @@ PUnit* PUnitFactory_IndexOpApply::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PropGet
-// Stack View: [Target] -> [Target Prop] (continue)
-//                      -> [Target]      (discard)
-//------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-void PUnit_PropGet<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
-{
-	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	Value& valueTarget = processor.PeekValue(0);
-	Value* pValueProp = valueTarget.DoPropGet(GetSymbol(), GetAttr(), true);
-	if (!pValueProp) {
-		processor.ErrorDone();
-		return;
-	}
-	if (!discardValueFlag) processor.PushValue(pValueProp->Reference());
-	processor.SetPUnitNext(_GetPUnitCont());
-}
-
-template<int nExprSrc, bool discardValueFlag>
-String PUnit_PropGet<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
-{
-	String str;
-	str.Printf("PropGet(`%s)", GetSymbol()->GetName());
-	str += GetAttr().ToString(ss);
-	AppendInfoToString(str, ss);
-	return str;
-}
-
-PUnit* PUnitFactory_PropGet::Create(bool discardValueFlag)
-{
-	if (_pExprSrc) {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropGet<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
-		} else {
-			_pPUnitCreated = new PUnit_PropGet<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
-		}
-	} else {
-		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_PropGet<0, true>(_pSymbol, _pAttr.release());
-		} else {
-			_pPUnitCreated = new PUnit_PropGet<0, false>(_pSymbol, _pAttr.release());
-		}
-	}
-	return _pPUnitCreated;
-}
-
-//------------------------------------------------------------------------------
 // PUnit_PropSet
 // Stack View: valueFirst=false: [Target Assigned] -> [Assigned] (continue)
 //                                                 -> []         (discard)

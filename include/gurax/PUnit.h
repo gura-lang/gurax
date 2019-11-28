@@ -1436,53 +1436,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PropGet
-//------------------------------------------------------------------------------
-template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_PropGet : public PUnit {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator_PUnit();
-private:
-	const Symbol* _pSymbol;
-	RefPtr<Attribute> _pAttr;
-	Expr* _ppExprSrc[nExprSrc];
-public:
-	// Constructor
-	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_PropGet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_PropGet(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
-public:
-	const Symbol* GetSymbol() const { return _pSymbol; }
-	const Attribute& GetAttr() const { return *_pAttr; }
-public:
-	// Virtual functions of PUnit
-	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
-	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
-	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
-	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
-	virtual void Exec(Processor& processor) const override;
-	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
-private:
-	const PUnit* _GetPUnitCont() const { return this + 1; }
-};
-
-class PUnitFactory_PropGet : public PUnitFactory {
-public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_PropGet");
-private:
-	const Symbol* _pSymbol;
-	RefPtr<Attribute> _pAttr;
-public:
-	PUnitFactory_PropGet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
-	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_PropGet<1, false>) : sizeof(PUnit_PropGet<0, false>);
-	}
-	virtual PUnit* Create(bool discardValueFlag) override;
-};
-
-//------------------------------------------------------------------------------
 // PUnit_PropSet
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>

@@ -15,7 +15,7 @@ TestCase('Member assignment') {
 	a.p2 += 11
 	Println(a.Format())
 }
-sys.Exit()
+
 TestCase('Object#ToString()') {
 	Tester(`math.e.ToString())
 	Tester(`true.ToString())
