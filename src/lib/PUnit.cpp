@@ -1673,14 +1673,14 @@ PUnit* PUnitFactory_IndexOpApply::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PropSet
+// PUnit_MemberSet_Normal
 // Stack View: valueFirst=false: [Target Assigned] -> [Assigned] (continue)
 //                                                 -> []         (discard)
 //             valueFirst=true:  [Assigned Target] -> [Assigned] (continue)
 //                                                 -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
-void PUnit_PropSet<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
+void PUnit_MemberSet_Normal<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueAssigned;
@@ -1701,43 +1701,43 @@ void PUnit_PropSet<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& 
 }
 
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
-String PUnit_PropSet<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_MemberSet_Normal<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("PropSet(`%s)", GetSymbol()->GetName());
+	str.Printf("MemberSet_Normal(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
+PUnit* PUnitFactory_MemberSet_Normal::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropSet<1, true, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<1, true, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_PropSet<1, true, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<1, true, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropSet<1, false, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<1, false, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_PropSet<1, false, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<1, false, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropSet<0, true, true>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<0, true, true>(_pSymbol, _pAttr.release());
 			} else {
-				_pPUnitCreated = new PUnit_PropSet<0, true, false>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<0, true, false>(_pSymbol, _pAttr.release());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropSet<0, false, true>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<0, false, true>(_pSymbol, _pAttr.release());
 			} else {
-				_pPUnitCreated = new PUnit_PropSet<0, false, false>(_pSymbol, _pAttr.release());
+				_pPUnitCreated = new PUnit_MemberSet_Normal<0, false, false>(_pSymbol, _pAttr.release());
 			}
 		}
 	}
@@ -1745,14 +1745,14 @@ PUnit* PUnitFactory_PropSet::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_PropOpApply
+// PUnit_MemberOpApply_Normal
 // Stack View: valueFirst=false: [Target Applied] -> [Assigned] (continue)
 //                                                -> []         (discard)
 //             valueFirst=true:  [Applied Target] -> [Assigned] (continue)
 //                                                -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
-void PUnit_PropOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
+void PUnit_MemberOpApply_Normal<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueApplied;
@@ -1779,43 +1779,43 @@ void PUnit_PropOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Process
 }
 
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
-String PUnit_PropOpApply<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_MemberOpApply_Normal<nExprSrc, discardValueFlag, valueFirstFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("PropOpApply(`%s)", GetSymbol()->GetName());
+	str.Printf("MemberOpApply_Normal(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_PropOpApply::Create(bool discardValueFlag)
+PUnit* PUnitFactory_MemberOpApply_Normal::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<1, true, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<1, true, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<1, true, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<1, true, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<1, false, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<1, false, true>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<1, false, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<1, false, false>(_pSymbol, _pAttr.release(), _pOp, _pExprSrc.Reference());
 			}
 		}
 	} else {
 		if (discardValueFlag) {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<0, true, true>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<0, true, true>(_pSymbol, _pAttr.release(), _pOp);
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<0, true, false>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<0, true, false>(_pSymbol, _pAttr.release(), _pOp);
 			}
 		} else {
 			if (_valueFirstFlag) {
-				_pPUnitCreated = new PUnit_PropOpApply<0, false, true>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<0, false, true>(_pSymbol, _pAttr.release(), _pOp);
 			} else {
-				_pPUnitCreated = new PUnit_PropOpApply<0, false, false>(_pSymbol, _pAttr.release(), _pOp);
+				_pPUnitCreated = new PUnit_MemberOpApply_Normal<0, false, false>(_pSymbol, _pAttr.release(), _pOp);
 			}
 		}
 	}
@@ -1823,13 +1823,13 @@ PUnit* PUnitFactory_PropOpApply::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Member_Normal
+// PUnit_MemberGet_Normal
 // Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
 //                      -> [Prop]                (continue, not callable)
 //                      -> []                    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_MemberGet_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
@@ -1843,7 +1843,7 @@ void PUnit_Member_Normal<nExprSrc, discardValueFlag>::Exec(Processor& processor)
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_Member_Normal<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_MemberGet_Normal<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
 	str.Printf("Member_Normal(`%s)", GetSymbol()->GetName());
@@ -1852,32 +1852,32 @@ String PUnit_Member_Normal<nExprSrc, discardValueFlag>::ToString(const StringSty
 	return str;
 }
 
-PUnit* PUnitFactory_Member_Normal::Create(bool discardValueFlag)
+PUnit* PUnitFactory_MemberGet_Normal::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_Normal<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_Normal<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Member_Normal<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_Normal<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_Normal<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_Normal<0, true>(_pSymbol, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_Member_Normal<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_Normal<0, false>(_pSymbol, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Member_MapAlong
+// PUnit_MemberGet_MapAlong
 // Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
 //                      -> [Prop]                (continue, not callable)
 //                      -> []                    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_MemberGet_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
@@ -1891,41 +1891,41 @@ void PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& processo
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_Member_MapAlong<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_MemberGet_MapAlong<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Member_MapAlong(`%s)", GetSymbol()->GetName());
+	str.Printf("MemberGet_MapAlong(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Member_MapAlong::Create(bool discardValueFlag)
+PUnit* PUnitFactory_MemberGet_MapAlong::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_MapAlong<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_MapAlong<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Member_MapAlong<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_MapAlong<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_MapAlong<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_MapAlong<0, true>(_pSymbol, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_Member_MapAlong<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_MapAlong<0, false>(_pSymbol, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Member_MapToList
+// PUnit_MemberGet_MapToList
 // Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
 //                      -> [Prop]                (continue, not callable)
 //                      -> []                    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
@@ -1957,41 +1957,41 @@ void PUnit_Member_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& process
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_Member_MapToList<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Member_MapToList(`%s)", GetSymbol()->GetName());
+	str.Printf("MemberGet_MapToList(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Member_MapToList::Create(bool discardValueFlag)
+PUnit* PUnitFactory_MemberGet_MapToList::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_MapToList<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_MapToList<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Member_MapToList<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_MapToList<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_MapToList<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_MapToList<0, true>(_pSymbol, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_Member_MapToList<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_MapToList<0, false>(_pSymbol, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_Member_MapToIter
+// PUnit_MemberGet_MapToIter
 // Stack View: [Target] -> [Member(Target+Prop)] (continue, callable)
 //                      -> [Prop]                (continue, not callable)
 //                      -> []                    (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
+void PUnit_MemberGet_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
@@ -2014,28 +2014,28 @@ void PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& process
 }
 
 template<int nExprSrc, bool discardValueFlag>
-String PUnit_Member_MapToIter<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_MemberGet_MapToIter<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Printf("Member_MapToIter(`%s)", GetSymbol()->GetName());
+	str.Printf("MemberGet_MapToIter(`%s)", GetSymbol()->GetName());
 	str += GetAttr().ToString(ss);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_Member_MapToIter::Create(bool discardValueFlag)
+PUnit* PUnitFactory_MemberGet_MapToIter::Create(bool discardValueFlag)
 {
 	if (_pExprSrc) {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_MapToIter<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_MapToIter<1, true>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_Member_MapToIter<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_MemberGet_MapToIter<1, false>(_pSymbol, _pAttr.release(), _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
-			_pPUnitCreated = new PUnit_Member_MapToIter<0, true>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_MapToIter<0, true>(_pSymbol, _pAttr.release());
 		} else {
-			_pPUnitCreated = new PUnit_Member_MapToIter<0, false>(_pSymbol, _pAttr.release());
+			_pPUnitCreated = new PUnit_MemberGet_MapToIter<0, false>(_pSymbol, _pAttr.release());
 		}
 	}
 	return _pPUnitCreated;

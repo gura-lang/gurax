@@ -1436,10 +1436,10 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PropSet
+// PUnit_MemberSet_Normal
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
-class GURAX_DLLDECLARE PUnit_PropSet : public PUnit {
+class GURAX_DLLDECLARE PUnit_MemberSet_Normal : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -1449,9 +1449,9 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_PropSet(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_PropSet(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr) : _pSymbol(pSymbol), _pAttr(pAttr) {}
+	PUnit_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_MemberSet_Normal(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1467,27 +1467,27 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_PropSet : public PUnitFactory {
+class PUnitFactory_MemberSet_Normal : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_PropSet");
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberSet_Normal");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_PropSet(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExprSrc) :
+	PUnitFactory_MemberSet_Normal(const Symbol* pSymbol, Attribute* pAttr, bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_PropSet<1, false, false>) : sizeof(PUnit_PropSet<0, false, false>);
+		return _pExprSrc? sizeof(PUnit_MemberSet_Normal<1, false, false>) : sizeof(PUnit_MemberSet_Normal<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_PropOpApply
+// PUnit_MemberOpApply_Normal
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag, bool valueFirstFlag>
-class GURAX_DLLDECLARE PUnit_PropOpApply : public PUnit {
+class GURAX_DLLDECLARE PUnit_MemberOpApply_Normal : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -1498,10 +1498,10 @@ private:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp) :
+	PUnit_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp) :
 		_pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp) {}
-	PUnit_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, Expr* pExpr) :
-		PUnit_PropOpApply(pSymbol, pAttr, pOp) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, Expr* pExpr) :
+		PUnit_MemberOpApply_Normal(pSymbol, pAttr, pOp) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1518,28 +1518,28 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_PropOpApply : public PUnitFactory {
+class PUnitFactory_MemberOpApply_Normal : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_PropOpApply");
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberOpApply_Normal");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 	const Operator* _pOp;
 	bool _valueFirstFlag;
 public:
-	PUnitFactory_PropOpApply(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
+	PUnitFactory_MemberOpApply_Normal(const Symbol* pSymbol, Attribute* pAttr, const Operator* pOp, bool valueFirstFlag, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr), _pOp(pOp), _valueFirstFlag(valueFirstFlag) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_PropOpApply<1, false, false>) : sizeof(PUnit_PropOpApply<0, false, false>);
+		return _pExprSrc? sizeof(PUnit_MemberOpApply_Normal<1, false, false>) : sizeof(PUnit_MemberOpApply_Normal<0, false, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Member_Normal
+// PUnit_MemberGet_Normal
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Member_Normal : public PUnit {
+class GURAX_DLLDECLARE PUnit_MemberGet_Normal : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -1549,10 +1549,10 @@ protected:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member_Normal(const Symbol* pSymbol, Attribute* pAttr) :
+	PUnit_MemberGet_Normal(const Symbol* pSymbol, Attribute* pAttr) :
 		_pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_Member_Normal(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberGet_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_MemberGet_Normal(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1568,26 +1568,26 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Member_Normal : public PUnitFactory {
+class PUnitFactory_MemberGet_Normal : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Member_Normal");
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_Normal");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_Member_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
+	PUnitFactory_MemberGet_Normal(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_Member_Normal<1, false>) : sizeof(PUnit_Member_Normal<0, false>);
+		return _pExprSrc? sizeof(PUnit_MemberGet_Normal<1, false>) : sizeof(PUnit_MemberGet_Normal<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Member_MapAlong
+// PUnit_MemberGet_MapAlong
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Member_MapAlong : public PUnit {
+class GURAX_DLLDECLARE PUnit_MemberGet_MapAlong : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -1597,10 +1597,10 @@ protected:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member_MapAlong(const Symbol* pSymbol, Attribute* pAttr) :
+	PUnit_MemberGet_MapAlong(const Symbol* pSymbol, Attribute* pAttr) :
 		_pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_Member_MapAlong(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_Member_MapAlong(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberGet_MapAlong(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_MemberGet_MapAlong(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1616,26 +1616,26 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Member_MapAlong : public PUnitFactory {
+class PUnitFactory_MemberGet_MapAlong : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Member_MapAlong");
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_MapAlong");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_Member_MapAlong(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
+	PUnitFactory_MemberGet_MapAlong(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_Member_MapAlong<1, false>) : sizeof(PUnit_Member_MapAlong<0, false>);
+		return _pExprSrc? sizeof(PUnit_MemberGet_MapAlong<1, false>) : sizeof(PUnit_MemberGet_MapAlong<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Member_MapToList
+// PUnit_MemberGet_MapToList
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Member_MapToList : public PUnit {
+class GURAX_DLLDECLARE PUnit_MemberGet_MapToList : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -1645,10 +1645,10 @@ protected:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member_MapToList(const Symbol* pSymbol, Attribute* pAttr) :
+	PUnit_MemberGet_MapToList(const Symbol* pSymbol, Attribute* pAttr) :
 		_pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_Member_MapToList(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_Member_MapToList(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberGet_MapToList(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_MemberGet_MapToList(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1664,26 +1664,26 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Member_MapToList : public PUnitFactory {
+class PUnitFactory_MemberGet_MapToList : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Member_MapToList");
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_MapToList");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_Member_MapToList(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
+	PUnitFactory_MemberGet_MapToList(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_Member_MapToList<1, false>) : sizeof(PUnit_Member_MapToList<0, false>);
+		return _pExprSrc? sizeof(PUnit_MemberGet_MapToList<1, false>) : sizeof(PUnit_MemberGet_MapToList<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };
 
 //------------------------------------------------------------------------------
-// PUnit_Member_MapToIter
+// PUnit_MemberGet_MapToIter
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
-class GURAX_DLLDECLARE PUnit_Member_MapToIter : public PUnit {
+class GURAX_DLLDECLARE PUnit_MemberGet_MapToIter : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
@@ -1693,10 +1693,10 @@ protected:
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_Member_MapToIter(const Symbol* pSymbol, Attribute* pAttr) :
+	PUnit_MemberGet_MapToIter(const Symbol* pSymbol, Attribute* pAttr) :
 		_pSymbol(pSymbol), _pAttr(pAttr) {}
-	PUnit_Member_MapToIter(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
-		PUnit_Member_MapToIter(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
+	PUnit_MemberGet_MapToIter(const Symbol* pSymbol, Attribute* pAttr, Expr* pExpr) :
+		PUnit_MemberGet_MapToIter(pSymbol, pAttr) { _ppExprSrc[0] = pExpr; }
 public:
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -1712,17 +1712,17 @@ private:
 	const PUnit* _GetPUnitCont() const { return this + 1; }
 };
 
-class PUnitFactory_Member_MapToIter : public PUnitFactory {
+class PUnitFactory_MemberGet_MapToIter : public PUnitFactory {
 public:
-	Gurax_MemoryPoolAllocator("PUnitFactory_Member_MapToIter");
+	Gurax_MemoryPoolAllocator("PUnitFactory_MemberGet_MapToIter");
 private:
 	const Symbol* _pSymbol;
 	RefPtr<Attribute> _pAttr;
 public:
-	PUnitFactory_Member_MapToIter(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
+	PUnitFactory_MemberGet_MapToIter(const Symbol* pSymbol, Attribute* pAttr, Expr* pExprSrc) :
 		PUnitFactory(pExprSrc), _pSymbol(pSymbol), _pAttr(pAttr) {}
 	virtual size_t GetPUnitSize() const override {
-		return _pExprSrc? sizeof(PUnit_Member_MapToIter<1, false>) : sizeof(PUnit_Member_MapToIter<0, false>);
+		return _pExprSrc? sizeof(PUnit_MemberGet_MapToIter<1, false>) : sizeof(PUnit_MemberGet_MapToIter<0, false>);
 	}
 	virtual PUnit* Create(bool discardValueFlag) override;
 };

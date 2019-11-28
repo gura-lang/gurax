@@ -32,7 +32,7 @@ f(`(a + b))
 `{foo.bar = 3}
   ##0 Lookup(`foo)
   ##1 Value(<Number:3>)
-  ##2 PropSet(`bar)
+  ##2 MemberSet_Normal(`bar)
 ======== Property ========
 Expr.__prop__(`children) .. <PropHandler:children:Iterator:R>
 ======== Assignment ========

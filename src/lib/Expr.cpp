@@ -255,19 +255,23 @@ void Expr_Member::Compose(Composer& composer)
 	GetExprTarget().ComposeOrNil(composer);										// [Target]
 	switch (GetMemberMode()) {
 	case MemberMode::Normal: {
-		composer.Add_Member_Normal(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		composer.Add_MemberGet_Normal(GetSymbol(),
+									  GetAttr().Reference(), this);				// [Member] or [Prop]
 		break;
 	}
 	case MemberMode::MapAlong: {
-		composer.Add_Member_MapAlong(GetSymbol(), GetAttr().Reference(), this);	// [Member] or [Prop]
+		composer.Add_MemberGet_MapAlong(GetSymbol(),
+										GetAttr().Reference(), this);			// [Member] or [Prop]
 		break;
 	}
 	case MemberMode::MapToList: {
-		composer.Add_Member_MapToList(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
+		composer.Add_MemberGet_MapToList(GetSymbol(),
+										 GetAttr().Reference(), this);			// [Member] or [Prop]
 		break;
 	}
 	case MemberMode::MapToIter: {
-		composer.Add_Member_MapToIter(GetSymbol(), GetAttr().Reference(), this);// [Member] or [Prop]
+		composer.Add_MemberGet_MapToIter(GetSymbol(),
+										 GetAttr().Reference(), this);			// [Member] or [Prop]
 		break;
 	}
 	default: {
@@ -286,7 +290,8 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 	switch (GetMemberMode()) {
 	case MemberMode::Normal: case MemberMode::MapAlong: {
 		GetExprTarget().ComposeOrNil(composer);									// [Assigned Target]
-		composer.Add_PropSet(GetSymbol(), GetAttr().Reference(), true, this);	// [Assigned]
+		composer.Add_MemberSet_Normal(GetSymbol(), GetAttr().Reference(),
+									  true, this);								// [Assigned]
 		composer.FlushDiscard();
 		break;
 	}
@@ -311,10 +316,10 @@ void Expr_Member::ComposeForAssignment(
 	case MemberMode::Normal: {
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
-			composer.Add_PropOpApply(GetSymbol(), GetAttr().Reference(), pOp,
+			composer.Add_MemberOpApply_Normal(GetSymbol(), GetAttr().Reference(), pOp,
 								 false, this);									// [Assigned]
 		} else {
-			composer.Add_PropSet(GetSymbol(), GetAttr().Reference(),
+			composer.Add_MemberSet_Normal(GetSymbol(), GetAttr().Reference(),
 								 false, this);									// [Assigned]
 		}
 		break;
