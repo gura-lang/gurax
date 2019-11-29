@@ -217,7 +217,7 @@ Renderer = class {
 			textsFolded = row.cols:*text.Each():list {|text, i|
 				text.Split('\n'):*Foldw(widths[i]).Flatten().Each()
 			}
-			while ((texts = textsFolded:*Next()).Or()) {
+			while ((texts = textsFolded:*NextValue()).Or()) {
 				//Println(format('%-*s', widths, texts || '').Join('|'))
 				Println(this.MakeAlign(texts || '', widths, row.cols:*align).Join('|'))
 			}
@@ -226,13 +226,13 @@ Renderer = class {
 	}
 	MakeAlign(str:String, width:Number, align:Symbol):map:static = {
 		if (align == `left) {
-			str.Align(width):left
+			str.LJust(width)
 		} elsif (align == `center) {
-			str.Align(width):center
+			str.Center(width)
 		} elsif (align == `right) {
-			str.Align(width):right
+			str.RJust(width)
 		} else {	
-			str.Align(width):left
+			str.LJust(width)
 		}
 	}
 }

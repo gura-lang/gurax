@@ -8,6 +8,54 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// String#Align(width:Number, align:Symbol, padding?:String):String:map
+Gurax_DeclareMethod(String, Align)
+{
+	Declare(VTYPE_String, Flag::Map);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("align", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Align the string to the position specified by a symbol given to the argument `align`\n"
+		"and returns the result.\n"
+		"The symbol involves: ` ``left` for left, ` ``center` for center and ` ``right` for right alignment."
+		"\n"
+		"If the string width is narrower than the specified `width`, nothing would be done.\n"
+		"\n"
+		"It uses a string specified by the argument `padding` to fill lacking spaces.\n"
+		"If omitted, a white space is used for padding.\n"
+		"\n"
+		"This method takes into account the character width based on the specification\n"
+		"of East Asian Width. A kanji-character occupies two characters in width.\n");
+}
+
+Gurax_ImplementMethod(String, Align)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Int width = args.PickNumberNonNeg<Int>();
+	const Symbol* pSymbol = args.PickSymbol();
+	const char* padding = args.IsValid()? args.PickString() : " ";
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	String strRtn;
+	if (pSymbol->IsIdentical(Gurax_Symbol(left))) {
+		strRtn = str.LJust(width, padding);
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(center))) {
+		strRtn = str.Center(width, padding);
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(right))) {
+		strRtn = str.RJust(width, padding);
+	} else {
+		Error::Issue(ErrorType::ValueError, "the argument align takes `left, `center or `right");
+		return Value::nil();
+	}
+	return new Value_String(strRtn);
+}
+
 // String#Capitalize():String {block?}
 Gurax_DeclareMethod(String, Capitalize)
 {
@@ -1274,6 +1322,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(String, Align));
 	Assign(Gurax_CreateMethod(String, Capitalize));
 	Assign(Gurax_CreateMethod(String, Center));
 	Assign(Gurax_CreateMethod(String, Chop));

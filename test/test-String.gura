@@ -24,6 +24,15 @@ TestCase('Property') {
 	Tester(`String.__prop__(`width))
 }
 
+TestCase('String#Align()') {
+	Printf('%s\n', words10::Align(10, `center))
+	Printf('%s\n', words10::Align(10, `center, '.'))
+	Printf('%s\n', words10::Align(10, `left))
+	Printf('%s\n', words10::Align(10, `left, '.'))
+	Printf('%s\n', words10::Align(10, `right))
+	Printf('%s\n', words10::Align(10, `right, '.'))
+}
+
 TestCase('String#Capitalize()') {
 	Printf('%s -> %s\n', words10, words10::Capitalize())
 	words = ['aaaaaa', 'zzzzzz', 'AAAAAA', 'ZZZZZZ']

@@ -629,12 +629,13 @@ String String::Center(const char* str, size_t width, const char* padding)
 {
 	size_t widthBody = Width(str);
 	if (width <= widthBody) return String(str);
+	char chPadding = *padding? *padding : ' ';
 	String strRtn;
 	size_t widthRight = (width - widthBody) / 2;
 	size_t widthLeft = width - widthBody - widthRight;
-	while (widthLeft-- > 0) strRtn += padding;
+	while (widthLeft-- > 0) strRtn += chPadding;
 	strRtn += str;
-	while (widthRight-- > 0) strRtn += padding;
+	while (widthRight-- > 0) strRtn += chPadding;
 	return strRtn;
 }
 
@@ -642,10 +643,11 @@ String String::LJust(const char* str, size_t width, const char* padding)
 {
 	size_t widthBody = Width(str);
 	if (width <= widthBody) return String(str);
+	char chPadding = *padding? *padding : ' ';
 	String strRtn;
 	size_t widthRight = width - widthBody;
 	strRtn += str;
-	while (widthRight-- > 0) strRtn += padding;
+	while (widthRight-- > 0) strRtn += chPadding;
 	return strRtn;
 }
 
@@ -653,9 +655,10 @@ String String::RJust(const char* str, size_t width, const char* padding)
 {
 	size_t widthBody = Width(str);
 	if (width <= widthBody) return String(str);
+	char chPadding = *padding? *padding : ' ';
 	String strRtn;
 	size_t widthLeft = width - widthBody;
-	while (widthLeft-- > 0) strRtn += padding;
+	while (widthLeft-- > 0) strRtn += chPadding;
 	strRtn += str;
 	return strRtn;
 }
