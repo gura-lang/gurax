@@ -168,6 +168,31 @@ TestCase('String#Fold()') {
 }
 
 TestCase('String#Foldw()') {
+	str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	Tester(`str.Foldw(1):list)
+	Tester(`str.Foldw(2):list)
+	Tester(`str.Foldw(3):list)
+	Tester(`str.Foldw(6):list)
+	Tester(`str.Foldw(7):list)
+	Tester(`str.Foldw(1, '*'):list)
+	Tester(`str.Foldw(2, '*'):list)
+	Tester(`str.Foldw(3, '*'):list)
+	Tester(`str.Foldw(6, '*'):list)
+	Tester(`str.Foldw(7, '*'):list)
+	str = 'あいうえおかきくけこさしすせそたちつてと'
+	Tester(`str.Foldw(1):list)
+	Tester(`str.Foldw(2):list)
+	Tester(`str.Foldw(3):list)
+	Tester(`str.Foldw(6):list)
+	Tester(`str.Foldw(7):list)
+	Tester(`str.Foldw(1, '*'):list)
+	Tester(`str.Foldw(2, '*'):list)
+	Tester(`str.Foldw(3, '*'):list)
+	Tester(`str.Foldw(6, '*'):list)
+	Tester(`str.Foldw(7, '*'):list)
+	str = '西暦2014年'
+	Tester(`str.Foldw(3):list)
+	Tester(`str.Foldw(3, '*'):list)
 }
 
 TestCase('String#Format()') {

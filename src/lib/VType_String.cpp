@@ -1448,7 +1448,14 @@ Value* VType_String::Iterator_Foldw::DoNextValue()
 			return new Value_String(str);
 		}
 		_pCurrent = pNext;
-		if (width == _widthPerFold) break;
+		if (width == _widthPerFold) {
+			return new Value_String(String(pHead, _pCurrent));
+		}
+	}
+	if (_chPadding && width < _widthPerFold) {
+		String str(pHead, _pCurrent);
+		for (size_t i = _widthPerFold - width; i > 0; i--) str += _chPadding;
+		return new Value_String(str);
 	}
 	return new Value_String(String(pHead, _pCurrent));
 }
