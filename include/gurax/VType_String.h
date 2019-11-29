@@ -83,8 +83,29 @@ public:
 		bool _neatFlag;
 	public:
 		Iterator_Fold(StringReferable* pStr, size_t lenPerFold, size_t lenStep, bool neatFlag) :
-			_pStr(pStr), _pCurrent(GetString()),
+			_pStr(pStr), _pCurrent(pStr->GetString()),
 			_lenPerFold(lenPerFold), _lenStep(lenStep), _neatFlag(neatFlag) {}
+	public:
+		const char* GetString() const { return _pStr->GetString(); }
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return Flag::Finite | Flag::LenUndetermined;
+		}
+		virtual size_t GetLength() const override { return -1; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	class GURAX_DLLDECLARE Iterator_Foldw : public Iterator {
+	private:
+		RefPtr<StringReferable> _pStr;
+		const char* _pCurrent;
+		size_t _widthPerFold;
+		char _chPadding;
+	public:
+		Iterator_Foldw(StringReferable* pStr, size_t widthPerFold, char chPadding) :
+			_pStr(pStr), _pCurrent(pStr->GetString()),
+			_widthPerFold(widthPerFold), _chPadding(chPadding) {}
 	public:
 		const char* GetString() const { return _pStr->GetString(); }
 	public:

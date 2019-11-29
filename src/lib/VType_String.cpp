@@ -370,12 +370,12 @@ Gurax_ImplementMethod(String, Fold)
 		processor, new VType_String::Iterator_Fold(str.Reference(), lenPerFold, lenStep, neatFlag));
 }
 
-// String#Foldw(width:Number):String:[padding] {block?}
+// String#Foldw(width:Number, padding?:String):String {block?}
 Gurax_DeclareMethod(String, Foldw)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(padding));
+	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en), 
@@ -387,16 +387,16 @@ Gurax_DeclareMethod(String, Foldw)
 
 Gurax_ImplementMethod(String, Foldw)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
+	size_t widthPerFold = args.PickNumberPos<size_t>();
+	const char* padding = args.IsValid()? args.PickString() : nullptr;
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	const StringReferable& str = valueThis.GetStringReferable();
+	return argument.ReturnIterator(
+		processor, new VType_String::Iterator_Foldw(str.Reference(), widthPerFold, padding? *padding : '\0'));
 }
 
 // String#Format(values*):String:map
@@ -1426,48 +1426,37 @@ String VType_String::Iterator_Fold::ToString(const StringStyle& ss) const
 	return String("String#Fold");
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 // VType_String::Iterator_Foldw
 //-----------------------------------------------------------------------------
-VType_String::Iterator_Foldw::Iterator_Foldw(const String &str,
-							size_t widthPerFold, bool paddingFlag) :
-	Iterator(Finite), _str(str), _widthPerFold(widthPerFold), _paddingFlag(paddingFlag)
-{
-	_pCur = _str.begin();
-}
-
 Value* VType_String::Iterator_Foldw::DoNextValue()
 {
-	UInt32 codeUTF32 = 0;
 	size_t width = 0; 
-	if (_pCur == _str.end()) return false;
-	String::const_iterator pHead = _pCur;
-	while (_pCur != _str.end()) {
-		String::const_iterator pNext = NextUTF32(_str, _pCur, codeUTF32);
+	if (!*_pCurrent) return nullptr;
+	const char* pHead = _pCurrent;
+	while (*_pCurrent) {
+		const char* pNext = _pCurrent;
+		UInt32 codeUTF32 = String::NextUTF32(&pNext);
 		Codec::WidthProp widthProp = Codec::GetWidthProp(codeUTF32);
-		width += (widthProp == Codec::WIDTHPROP_A ||
-				  widthProp == Codec::WIDTHPROP_W ||
-				  widthProp == Codec::WIDTHPROP_F)? 2 : 1;
+		width += (widthProp == Codec::WidthProp::A ||
+				  widthProp == Codec::WidthProp::W ||
+				  widthProp == Codec::WidthProp::F)? 2 : 1;
 		if (width > _widthPerFold) {
-			String str(pHead, _pCur);
-			if (_paddingFlag) str += ' ';
-			value = Value(str);
-			if (pHead == _pCur) _pCur = pNext;
-			return true;
+			String str(pHead, _pCurrent);
+			if (_chPadding) str += _chPadding;
+			if (pHead == _pCurrent) _pCurrent = pNext;
+			return new Value_String(str);
 		}
-		_pCur = pNext;
+		_pCurrent = pNext;
 		if (width == _widthPerFold) break;
 	}
-	value = Value(String(pHead, _pCur));
-	return true;
+	return new Value_String(String(pHead, _pCurrent));
 }
 
-String VType_String::Iterator_Foldw::ToString() const
+String VType_String::Iterator_Foldw::ToString(const StringStyle& ss) const
 {
 	return String("String#Foldw");
 }
-#endif
 
 //------------------------------------------------------------------------------
 // Value_String
