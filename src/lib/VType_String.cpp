@@ -1428,16 +1428,16 @@ String VType_String::Iterator_Fold::ToString(const StringStyle& ss) const
 
 #if 0
 //-----------------------------------------------------------------------------
-// Class_string::IteratorFoldw
+// VType_String::Iterator_Foldw
 //-----------------------------------------------------------------------------
-Class_string::IteratorFoldw::IteratorFoldw(const String &str,
+VType_String::Iterator_Foldw::Iterator_Foldw(const String &str,
 							size_t widthPerFold, bool paddingFlag) :
 	Iterator(Finite), _str(str), _widthPerFold(widthPerFold), _paddingFlag(paddingFlag)
 {
 	_pCur = _str.begin();
 }
 
-bool Class_string::IteratorFoldw::DoNext(Environment &env, Value &value)
+Value* VType_String::Iterator_Foldw::DoNextValue()
 {
 	UInt32 codeUTF32 = 0;
 	size_t width = 0; 
@@ -1463,9 +1463,9 @@ bool Class_string::IteratorFoldw::DoNext(Environment &env, Value &value)
 	return true;
 }
 
-String Class_string::IteratorFoldw::ToString() const
+String VType_String::Iterator_Foldw::ToString() const
 {
-	return String("string#foldw");
+	return String("String#Foldw");
 }
 #endif
 
