@@ -614,70 +614,37 @@ String Iterator_Fold::ToString(const StringStyle& ss) const
 	return str;
 }
 
-#if 0
 //------------------------------------------------------------------------------
 // Iterator_Flatten
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Flatten : public Iterator {
-public:
-	enum Mode {
-		MODE_DepthFirstSearch,
-		MODE_BreadthFirstSearch,
-	};
-private:
-	IteratorDeque _iterDeque;
-	Iterator *_pIteratorCur;
-	Mode _mode;
-public:
-	Iterator_Flatten(Iterator *pIterator, Mode mode);
-	~Iterator_Flatten();
-	virtual Value* DoNextValue() overridde;
-	virtual String ToString(const StingStyle& ss) const overridde;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_Flatten
-//------------------------------------------------------------------------------
-Iterator_Flatten::Iterator_Flatten(Iterator* pIterator, Mode mode) : _mode(mode)
+Iterator_Flatten::Iterator_Flatten(Iterator* pIterator, SearchMode searchMode) :
+	_pIteratorCur(pIterator->Reference()), _searchMode(searchMode)
 {
-	_iterDeque.push_back(pIterator);
-	_pIteratorCur = pIterator;
-}
-
-Iterator_Flatten::~Iterator_Flatten()
-{
-	for (Iterator* pIterator : _iterDeque) Iterator::Delete(pIterator);
+	_iteratorDeque.push_back(pIterator);
 }
 
 Value* Iterator_Flatten::DoNextValue()
 {
-#if 0
-	while (_pIteratorCur != nullptr) {
-		if (_pIteratorCur->Next(env, value)) {
-			if (!value.IsListOrIterator()) return true;
-			Iterator *pIterator = value.CreateIterator(sig);
-			if (pIterator == nullptr) return false;
-			if (pIterator->IsInfinite()) {
-				SetError_InfiniteNotAllowed(sig);
-				return false;
-			}
-			_iterDeque.push_back(pIterator);
-			if (_mode == MODE_DepthFirstSearch) {
-				_pIteratorCur = pIterator;
-			}
-		} else {
-			Iterator::Delete(_pIteratorCur);
-			if (_mode == MODE_DepthFirstSearch) {
-				_iterDeque.pop_back();
-				_pIteratorCur = _iterDeque.empty()? nullptr : _iterDeque.back();
-			} else { // _mode == MODE_BreadthFirstSearch
-				_iterDeque.pop_front();
-				_pIteratorCur = _iterDeque.empty()? nullptr : _iterDeque.front();
-			}
+	for (;;) {
+		RefPtr<Value> pValue(GetIteratorCur().DoNextValue());
+		if (pValue) {
+			if (!pValue->IsIterable()) return pValue.release();
+			RefPtr<Iterator> pIterator(pValue->DoGenIterator());
+			if (!pIterator || !pIterator->MustBeFinite()) break;
+			_iteratorDeque.push_back(pIterator.Reference());
+			if (_searchMode == SearchMode::DepthFirst) _pIteratorCur.reset(pIterator.release());
+		} else if (_searchMode == SearchMode::DepthFirst) {
+			Iterator::Delete(_iteratorDeque.back());
+			_iteratorDeque.pop_back();
+			if (_iteratorDeque.empty()) break;
+			_pIteratorCur.reset(_iteratorDeque.back()->Reference());
+		} else { // _searchMode == SearchMode::BreadthFirst
+			Iterator::Delete(_iteratorDeque.front());
+			_iteratorDeque.pop_front();
+			if (_iteratorDeque.empty()) break;
+			_pIteratorCur.reset(_iteratorDeque.front()->Reference());
 		}
 	}
-	return false;
-#endif
 	return nullptr;
 }
 
@@ -687,7 +654,6 @@ String Iterator_Flatten::ToString(const StringStyle& ss) const
 	rtn += "Flatten";
 	return rtn;
 }
-#endif
 
 //------------------------------------------------------------------------------
 // Iterator_Permutation

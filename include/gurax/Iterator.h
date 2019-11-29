@@ -111,6 +111,21 @@ public:
 	void Clear();
 };
 
+//------------------------------------------------------------------------------
+// IteratorDeque
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE IteratorDeque : public std::deque<Iterator*> {
+};
+
+//------------------------------------------------------------------------------
+// IteratorDequeOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE IteratorDequeOwner : public IteratorDeque {
+public:
+	~IteratorDequeOwner() { Clear(); }
+	void Clear();
+};
+
 }
 
 #endif

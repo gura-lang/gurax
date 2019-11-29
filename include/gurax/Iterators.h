@@ -622,6 +622,23 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Flatten
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Flatten : public Iterator {
+public:
+private:
+	IteratorDequeOwner _iteratorDeque;
+	RefPtr<Iterator> _pIteratorCur;
+	SearchMode _searchMode;
+public:
+	Iterator_Flatten(Iterator* pIterator, SearchMode searchMode);
+public:
+	Iterator& GetIteratorCur() { return *_pIteratorCur; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Permutation : public Iterator {

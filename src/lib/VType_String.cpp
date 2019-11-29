@@ -1437,15 +1437,6 @@ Class_string::IteratorFoldw::IteratorFoldw(const String &str,
 	_pCur = _str.begin();
 }
 
-Class_string::IteratorFoldw::~IteratorFoldw()
-{
-}
-
-Iterator *Class_string::IteratorFoldw::GetSource()
-{
-	return nullptr;
-}
-
 bool Class_string::IteratorFoldw::DoNext(Environment &env, Value &value)
 {
 	UInt32 codeUTF32 = 0;
@@ -1475,10 +1466,6 @@ bool Class_string::IteratorFoldw::DoNext(Environment &env, Value &value)
 String Class_string::IteratorFoldw::ToString() const
 {
 	return String("string#foldw");
-}
-
-void Class_string::IteratorFoldw::GatherFollower(Environment::Frame *pFrame, EnvironmentSet &envSet)
-{
 }
 #endif
 

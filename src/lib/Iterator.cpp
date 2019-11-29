@@ -248,4 +248,13 @@ void IteratorOwner::Clear()
 	clear();
 }
 
+//------------------------------------------------------------------------------
+// IteratorDequeOwner
+//------------------------------------------------------------------------------
+void IteratorDequeOwner::Clear()
+{
+	for (Iterator* pIterator : *this) Iterator::Delete(pIterator);
+	clear();
+}
+
 }
