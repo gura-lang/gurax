@@ -26,6 +26,8 @@ public:
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
 	static Value* Method_Cycle(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
+	static Value* Method_Flatten(
+		Processor& processor, Argument& argument, Iterator& iteratorSrc);
 	static Value* Method_Fold(
 		Processor& processor, Argument& argument, Iterator& iteratorSrc);
 	static Value* Method_Permutation(

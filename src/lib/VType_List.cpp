@@ -583,15 +583,11 @@ Gurax_DeclareMethod(List, Flatten)
 
 Gurax_ImplementMethod(List, Flatten)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Flatten(processor, argument, *pIteratorSrc);
 }
 
 // List#Fold(size:number, advance?:number):map:[iteritem,neat] {block?}

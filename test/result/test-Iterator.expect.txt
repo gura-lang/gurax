@@ -224,6 +224,10 @@ tbl.Each().Each():xlist {continue(nil)} .. []
 ======== Iterator#Filter() ========
 ======== Iterator#Find() ========
 ======== Iterator#Flatten() ========
+<Iterator:Each:begin=0:end=3>
+x.Flatten().Join(', ') .. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+x.Flatten():bfs.Join(', ') .. 
+x.Flatten():list .. infinite iterator is unacceptable
 ======== Iterator#Fold() ========
 x.Each().Fold(1).Join(', ') .. [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19]
 x.Each().Fold(5).Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14], [15, 16, 17, 18, 19]

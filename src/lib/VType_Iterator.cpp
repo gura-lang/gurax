@@ -451,15 +451,24 @@ Gurax_DeclareMethod(Iterator, Flatten)
 
 Gurax_ImplementMethod(Iterator, Flatten)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	if (!iteratorSrc.MustBeFinite()) return Value::nil();
+	return VType_Iterator::Method_Flatten(processor, argument, iteratorSrc);
+}
+
+Value* VType_Iterator::Method_Flatten(Processor& processor, Argument& argument, Iterator& iteratorSrc)
+{
+	// Arguments
+	SearchMode searchMode =
+		argument.IsSet(Gurax_Symbol(dfs))? SearchMode::DepthFirst :
+		argument.IsSet(Gurax_Symbol(bfs))? SearchMode::BreadthFirst :
+		SearchMode::DepthFirst;
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Flatten(iteratorSrc.Reference(), searchMode));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Fold(size:number, advance?:number):map:[iteritem,neat] {block?}

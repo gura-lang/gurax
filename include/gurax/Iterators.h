@@ -634,6 +634,12 @@ public:
 	Iterator_Flatten(Iterator* pIterator, SearchMode searchMode);
 public:
 	Iterator& GetIteratorCur() { return *_pIteratorCur; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
