@@ -218,23 +218,12 @@ Renderer = class {
 				text.Split('\n'):*Foldw(widths[i]).Flatten().Each()
 			}
 			while ((texts = textsFolded:*NextValue()).Or()) {
-				//Println(format('%-*s', widths, texts || '').Join('|'))
 				Println(this.MakeAlign(texts || '', widths, row.cols:*align).Join('|'))
 			}
 			row.headerFlag && Println(separator)
 		}
 	}
-	MakeAlign(str:String, width:Number, align:Symbol):map:static = {
-		if (align == `left) {
-			str.LJust(width)
-		} elsif (align == `center) {
-			str.Center(width)
-		} elsif (align == `right) {
-			str.RJust(width)
-		} else {	
-			str.LJust(width)
-		}
-	}
+	MakeAlign(str:String, width:Number, align:Symbol):map:static = str.Align(width, align)
 }
 
 Document.Render@console(colorFlag:Bool = true) = {
