@@ -2073,12 +2073,20 @@ void PUnit_MemberGet_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& proce
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
-	if (!pValueProp) {
-		processor.ErrorDone();
-		return;
+	if (pValueTarget->IsIterable()) {
+		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+		RefPtr<Iterator> pIterator(new Iterator_Member_MapAlong(
+									   processor.Reference(), pIteratorTarget.release(),
+									   GetSymbol(), GetAttr().Reference()));
+		processor.PushValue(new Value_Iterator(pIterator.release()));
+	} else {
+		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+		if (!pValueProp) {
+			processor.ErrorDone();
+			return;
+		}
+		if (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
 	}
-	if (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
@@ -2145,9 +2153,8 @@ void PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& proc
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
-		} else if (!discardValueFlag) {
-			processor.PushValue(pValueProp->AsMember(*pValueTarget));
 		}
+		if (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }
@@ -2202,9 +2209,8 @@ void PUnit_MemberGet_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& proc
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
-		} else if (!discardValueFlag) {
-			processor.PushValue(pValueProp->AsMember(*pValueTarget));
 		}
+		if (!discardValueFlag) processor.PushValue(pValueProp->AsMember(*pValueTarget));
 	}
 	processor.SetPUnitNext(_GetPUnitCont());
 }

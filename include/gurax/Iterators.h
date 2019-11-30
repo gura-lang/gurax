@@ -182,6 +182,36 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Member_MapAlong
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Member_MapAlong : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Iterator> _pIteratorTarget;
+	const Symbol* _pSymbol;
+	RefPtr<Attribute> _pAttr;
+public:
+	Iterator_Member_MapAlong(Processor* pProcessor, Iterator* pIteratorTarget, const Symbol* pSymbol, Attribute* pAttr) :
+		_pProcessor(pProcessor), _pIteratorTarget(pIteratorTarget), _pSymbol(pSymbol), _pAttr(pAttr) {}
+protected:
+	// Destructor
+	virtual ~Iterator_Member_MapAlong() = default;
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	const Processor& GetProcessor() const { return *_pProcessor; }
+	const Iterator& GetIteratorTarget() const { return *_pIteratorTarget; }
+	Iterator& GetIteratorTarget() { return *_pIteratorTarget; }
+	const Symbol* GetSymbol() const { return _pSymbol; }
+	const Attribute& GetAttr() const { return *_pAttr; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIteratorTarget().GetFlags(); }
+	virtual size_t GetLength() const override { return GetIteratorTarget().GetLength(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Member_MapToIter
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Member_MapToIter : public Iterator {
