@@ -2078,7 +2078,8 @@ void PUnit_MemberGet_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& proce
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapAlong(
 									   processor.Reference(), pIteratorTarget.release(),
 									   GetSymbol(), GetAttr().Reference()));
-		processor.PushValue(new Value_Iterator(pIterator.release()));
+		//processor.PushValue(new Value_Iterator(pIterator.release()));
+		processor.PushValue(new Value_ArgMapper(pIterator.release()));
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {

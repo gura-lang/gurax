@@ -45,6 +45,17 @@ bool Value_ArgMapper_Multiple::ReadyToPickValue(Frame& frame, DeclArg& declArg)
 	return true;
 }
 
+bool Value_ArgMapper_Multiple::ReadyToPickValueWithoutCast()
+{
+	ValueTypedOwner& valueTypedOwner = _pValuePicked->GetValueTypedOwner();
+	valueTypedOwner.Clear();
+	for (Value* pValue : GetValueOwner()) {
+		if (!pValue->ReadyToPickValueWithoutCast()) return false;
+		valueTypedOwner.Add(pValue->PickValue());
+	}
+	return true;
+}
+
 void Value_ArgMapper_Multiple::UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const
 {
 	for (Value* pValue : GetValueOwner()) {

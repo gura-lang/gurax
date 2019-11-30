@@ -49,6 +49,12 @@ bool Value_ArgMapper::ReadyToPickValue(Frame& frame, DeclArg& declArg)
 	return !!_pValue;
 }
 
+bool Value_ArgMapper::ReadyToPickValueWithoutCast()
+{
+	_pValue.reset(GetIterator().NextValue());
+	return !!_pValue;
+}
+
 void Value_ArgMapper::UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const
 {
 	flags &= GetIterator().GetFlags();

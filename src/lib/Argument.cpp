@@ -94,7 +94,7 @@ bool Argument::ReadyToPickValue(Frame& frame)
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (!pArgSlot->ReadyToPickValue(frame)) return false;
 	}
-	return true;
+	return _pValueThis->ReadyToPickValueWithoutCast();
 }
 
 void Argument::AssignToFrame(Frame& frame) const
@@ -104,8 +104,7 @@ void Argument::AssignToFrame(Frame& frame) const
 	}
 	if (GetValueThis().IsValid()) {
 		// assign to symbol "this"
-		//frame.AssignFromArgument(Gurax_Symbol(this_), GetValueThis().Reference());
-		AssignThisToFrame(frame, GetValueThis().Reference());
+		AssignThisToFrame(frame, _pValueThis->PickValue());
 	} while (0);
 	do {
 		// assign to symbol declared as dict%

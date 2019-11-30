@@ -28,8 +28,9 @@ TestCase('Map to Iterator') {
 	Tester(`[words10:*Left(2)*])
 }
 
+/*
 TestCase('Map along') {
 	Tester(`words10)
 	Tester(`words10:&Left(0..):list)
 }
-
+*/
