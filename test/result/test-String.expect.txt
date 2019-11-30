@@ -1,6 +1,67 @@
 ======== Property ========
 String.__prop__(`len) .. <PropHandler:len:Number:R>
 String.__prop__(`width) .. <PropHandler:width:Number:R>
+======== String#Align() ========
+  bubble  
+ tasteful 
+   yell   
+  unarmed 
+   vest   
+  private 
+ cowardly 
+  happen  
+  demonic 
+entertaining
+..bubble..
+.tasteful.
+...yell...
+..unarmed.
+...vest...
+..private.
+.cowardly.
+..happen..
+..demonic.
+entertaining
+bubble    
+tasteful  
+yell      
+unarmed   
+vest      
+private   
+cowardly  
+happen    
+demonic   
+entertaining
+bubble....
+tasteful..
+yell......
+unarmed...
+vest......
+private...
+cowardly..
+happen....
+demonic...
+entertaining
+    bubble
+  tasteful
+      yell
+   unarmed
+      vest
+   private
+  cowardly
+    happen
+   demonic
+entertaining
+....bubble
+..tasteful
+......yell
+...unarmed
+......vest
+...private
+..cowardly
+....happen
+...demonic
+entertaining
 ======== String#Capitalize() ========
 bubble -> Bubble
 tasteful -> Tasteful
