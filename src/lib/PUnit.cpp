@@ -2078,8 +2078,7 @@ void PUnit_MemberGet_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& proce
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapAlong(
 									   processor.Reference(), pIteratorTarget.release(),
 									   GetSymbol(), GetAttr().Reference()));
-		//processor.PushValue(new Value_Iterator(pIterator.release()));
-		processor.PushValue(new Value_ArgMapper(pIterator.release()));
+		if (!discardValueFlag) processor.PushValue(new Value_ArgMapper(pIterator.release()));
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
@@ -2148,7 +2147,9 @@ void PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& proc
 			processor.ErrorDone();
 			return;
 		}
-		processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
+		if (!discardValueFlag) {
+			processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
+		}
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
@@ -2204,7 +2205,7 @@ void PUnit_MemberGet_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& proc
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapToIter(
 									   processor.Reference(), pIteratorTarget.release(),
 									   GetSymbol(), GetAttr().Reference()));
-		processor.PushValue(new Value_Iterator(pIterator.release()));
+		if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	} else {
 		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
