@@ -1,30 +1,35 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+empty = []
+words10 = [
+	'bubble', 'tasteful', 'yell', 'unarmed', 'vest', 'private', 'cowardly', 'happen', 'demonic', 'entertaining'
+]
+
 TestCase('Map to List') {
-	a = ['abcd', 'efg', 'hijklm']
-	Tester(`a)
-	Tester(`a::len)
-	Tester(`a::Upper())
-	Tester(`a::Left(2))
-	a = []
-	Tester(`a)
-	Tester(`a::len)
-	Tester(`a::Upper())
-	Tester(`a::Left(2))
+	Tester(`empty)
+	Tester(`empty::len)
+	Tester(`empty::Upper())
+	Tester(`empty::Left(2))
+	Tester(`words10)
+	Tester(`words10::len)
+	Tester(`words10::Upper())
+	Tester(`words10::Left(2))
 }
 
 TestCase('Map to Iterator') {
-	a = ['abcd', 'efg', 'hijklm']
-	Tester(`a)
-	Tester(`a:*len)
-	Tester(`[a:*len*])
-	//Tester(`a::Upper())
-	//Tester(`a::Left(2))
-	a = []
-	Tester(`a)
-	Tester(`a:*len)
-	Tester(`[a:*len*])
-	//Tester(`a::Upper())
-	//Tester(`a::Left(2))
+	Tester(`empty)
+	Tester(`[empty:*len*])
+	Tester(`[empty:*Upper()*])
+	Tester(`[empty:*Left(2)*])
+	Tester(`words10)
+	Tester(`[words10:*len*])
+	Tester(`[words10:*Upper()*])
+	Tester(`[words10:*Left(2)*])
 }
+
+TestCase('Map along') {
+	Tester(`words10)
+	Tester(`words10:&Left(0..):list)
+}
+

@@ -217,7 +217,7 @@ Renderer = class {
 			textsFolded = row.cols:*text.Each():list {|text, i|
 				text.Split('\n'):*Foldw(widths[i]).Flatten().Each()
 			}
-			while ((texts = textsFolded:*NextValue()).Or()) {
+			while ((texts = textsFolded::NextValue()).Or()) {|i|
 				Println(this.MakeAlign(texts || '', widths, row.cols:*align).Join('|'))
 			}
 			row.headerFlag && Println(separator)
