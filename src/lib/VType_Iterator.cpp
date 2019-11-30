@@ -1520,7 +1520,7 @@ void Value_Iterator::UpdateMapMode(Argument& argument) const
 const DeclCallable* Value_Iterator::GetDeclCallable()
 {
 	RefPtr<Value> pValueElem(GetIterator().PeekValue());
-	return pValueElem? pValueElem->GetDeclCallable() : nullptr;
+	return pValueElem? pValueElem->GetDeclCallable() : DeclCallable::Wildcard.get();
 }
 
 void Value_Iterator::DoCall(Processor& processor, Argument& argument)
