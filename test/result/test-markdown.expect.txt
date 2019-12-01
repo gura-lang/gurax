@@ -1,13 +1,13 @@
 ======== Property ========
-markdown.Document.__PropHandler__(`refs) .. <PropHandler:refs:Iterator:R>
-markdown.Document.__PropHandler__(`root) .. <PropHandler:root:markdown.Item:R>
-markdown.Item.__PropHandler__(`type) .. <PropHandler:type:Symbol:R>
-markdown.Item.__PropHandler__(`text) .. <PropHandler:text:String:nil:R>
-markdown.Item.__PropHandler__(`children) .. <PropHandler:children:Iterator:nil:R>
-markdown.Item.__PropHandler__(`url) .. <PropHandler:url:String:nil:R>
-markdown.Item.__PropHandler__(`title) .. <PropHandler:title:String:nil:R>
-markdown.Item.__PropHandler__(`attrs) .. <PropHandler:attrs:String:nil:R>
-markdown.Item.__PropHandler__(`align) .. <PropHandler:align:Symbol:R>
+markdown.Document.__prop__(`refs) .. <PropHandler:refs:Iterator:R>
+markdown.Document.__prop__(`root) .. <PropHandler:root:markdown.Item:R>
+markdown.Item.__prop__(`type) .. <PropHandler:type:Symbol:R>
+markdown.Item.__prop__(`text) .. <PropHandler:text:String:nil:R>
+markdown.Item.__prop__(`children) .. <PropHandler:children:Iterator:nil:R>
+markdown.Item.__prop__(`url) .. <PropHandler:url:String:nil:R>
+markdown.Item.__prop__(`title) .. <PropHandler:title:String:nil:R>
+markdown.Item.__prop__(`attrs) .. <PropHandler:attrs:String:nil:R>
+markdown.Item.__prop__(`align) .. <PropHandler:align:Symbol:R>
 ======== header-1 ========
 <root>
   <p>

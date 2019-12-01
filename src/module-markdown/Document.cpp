@@ -178,7 +178,12 @@ bool Document::ParseCharSeq(CharSeq& charSeq)
 				}
 				_alignList.push_back(align);
 			}
-			FlushItem(Item::Type::Paragraph, false, false);
+			if (_stat == Stat::ListItemNL && !String::IsWhite(textPrefetch.front())) {
+				EndListItem();
+				_itemStack.ClearListItem();
+			} else {
+				FlushItem(Item::Type::Paragraph, false, false);
+			}
 			BeginTable();
 			Stat statPrev = _stat;
 			_stat = Stat::LineTop;
