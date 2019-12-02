@@ -76,7 +76,7 @@ public:
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 public:
 	virtual Value* DoIndexGet(const Index& index) const override;
-	virtual void DoIndexSet(const Index& index, Value* pValue) override;
+	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
 	virtual Value* DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op) override;
 };
 

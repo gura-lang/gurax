@@ -1624,14 +1624,23 @@ Value* Value_List::DoIndexGet(const Index& index) const
 	}
 }
 
-void Value_List::DoIndexSet(const Index& index, Value* pValue)
+void Value_List::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
 		const Value& valueIndex = *valuesIndex.front();
-		GetValueTypedOwner().IndexSet(valueIndex, pValue);
+		GetValueTypedOwner().IndexSet(valueIndex, pValue.release());
+	} else if (pValue->IsIterable()) {
+		RefPtr<Iterator> pIteratorSrc(pValue->DoGenIterator());
+		for (const Value* pValueIndexEach : valuesIndex) {
+			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
+			if (!pValueIndexEach) break;
+			if (!GetValueTypedOwner().IndexSet(*pValueIndexEach, pValueEach.release())) return;
+		}
 	} else {
-		Error::Issue_UnimplementedOperation();
+		for (const Value* pValueIndex : valuesIndex) {
+			if (!GetValueTypedOwner().IndexSet(*pValueIndex, pValue->Reference())) return;
+		}
 	}
 }
 

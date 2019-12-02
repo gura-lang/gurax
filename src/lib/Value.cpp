@@ -85,7 +85,7 @@ Value* Value::DoIndexGet(const Index& index) const
 	return Value::undefined();
 }
 
-void Value::DoIndexSet(const Index& index, Value* pValue)
+void Value::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::ValueError,
 				 "value type %s can not be accessed by indexing", GetVType().MakeFullName().c_str());

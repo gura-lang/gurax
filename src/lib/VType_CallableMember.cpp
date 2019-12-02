@@ -52,9 +52,9 @@ Value* Value_CallableMember::DoIndexGet(const Index& index) const
 	return GetValueProp().DoIndexGet(index);
 }
 
-void Value_CallableMember::DoIndexSet(const Index& index, Value* pValue)
+void Value_CallableMember::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
-	GetValueProp().DoIndexSet(index, pValue);
+	GetValueProp().DoIndexSet(index, pValue.release());
 }		
 
 Value* Value_CallableMember::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)

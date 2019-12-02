@@ -411,12 +411,12 @@ Value* Value_Dict::DoIndexGet(const Index& index) const
 	}
 }
 
-void Value_Dict::DoIndexSet(const Index& index, Value* pValue)
+void Value_Dict::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
 		const Value* pValueIndex = valuesIndex.front();
-		GetValueDict().Assign(pValueIndex->Reference(), pValue->Reference());
+		GetValueDict().Assign(pValueIndex->Reference(), pValue.release());
 	} else {
 		Error::Issue_UnimplementedOperation();
 	}

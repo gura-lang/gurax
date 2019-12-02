@@ -57,6 +57,48 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 			return true;
 		}
 		valueOwner.IssueError_IndexOutOfRange(valueIndexEx.ToString().c_str());
+	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
+		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
+		if (pValue->IsIterable()) {
+			RefPtr<Iterator> pIteratorSrc(pValue->DoGenIterator());
+			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
+				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
+				if (!pValueIndexEach) break;
+				if (!IndexSet(*pValueIndexEach, pValueEach.release())) return false;
+			}
+		} else {
+			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
+				if (!IndexSet(*pValueIndexEach, pValue->Reference())) return false;
+			}
+		}
+		return true;
+	} else if (valueIndex.IsInstanceOf(VTYPE_Iterator)) {
+		const Value_Iterator& valueIndexEx = dynamic_cast<const Value_Iterator&>(valueIndex);
+		Iterator& iteratorIndex = valueIndexEx.GetIterator();
+		if (pValue->IsIterable()) {
+			RefPtr<Iterator> pIteratorSrc(pValue->DoGenIterator());
+			if (iteratorIndex.IsInfinite() && pIteratorSrc->IsInfinite()) {
+				Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
+				return false;
+			}
+			for (;;) {
+				RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
+				if (!pValueIndexEach) break;
+				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
+				if (!pValueIndexEach) break;
+				if (!IndexSet(*pValueIndexEach, pValueEach.release())) return false;
+			}
+		} else {
+			if (iteratorIndex.IsInfinite()) {
+				Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
+				return false;
+			}
+			for (;;) {
+				RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
+				if (!pValueIndexEach) break;
+				if (!IndexSet(*pValueIndexEach, pValue->Reference())) return false;
+			}
+		}
 	} else {
 		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
 	}
@@ -78,6 +120,29 @@ bool ValueTypedOwner::IndexGet(const Value& valueIndex, Value** ppValue) const
 		int pos = static_cast<int>(valueIndexEx.GetBool());
 		if (!valueOwner.FixPosition(&pos)) return false;
 		*ppValue = valueOwner.Get(pos)->Reference();
+		return true;
+	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
+		Value* pValue = nullptr;
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
+		for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
+			if (!IndexGet(*pValueIndexEach, &pValue)) return false;
+			pValueOwner->push_back(pValue->Reference());
+		}
+		*ppValue = new Value_List(pValueOwner.release());
+		return true;
+	} else if (valueIndex.IsInstanceOf(VTYPE_Iterator)) {
+		Value* pValue = nullptr;
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		const Value_Iterator& valueIndexEx = dynamic_cast<const Value_Iterator&>(valueIndex);
+		Iterator& iteratorIndex = valueIndexEx.GetIterator();
+		for (;;) {
+			RefPtr<Value> pValueIndexEach(iteratorIndex.NextValue());
+			if (!pValueIndexEach) break;
+			if (!IndexGet(*pValueIndexEach, &pValue)) return false;
+			pValueOwner->push_back(pValue->Reference());
+		}
+		*ppValue = new Value_List(pValueOwner.release());
 		return true;
 	} else {
 		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");

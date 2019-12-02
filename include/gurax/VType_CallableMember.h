@@ -62,7 +62,7 @@ public:
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual Value* DoIndexGet(const Index& index) const override;
-	virtual void DoIndexSet(const Index& index, Value* pValue) override;
+	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
 	virtual Value* DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op) override;
 	virtual Value* DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) override;
 	virtual bool DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr) override;

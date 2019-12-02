@@ -96,6 +96,35 @@ TestCase('IndexOpApply') {
 	Tester(`tbl)
 }
 
+TestCase('IndexSet multiple') {
+	x = Dim(32)
+	x[0] = 3
+	Tester(`x)
+	x[1..8] = 6
+	Tester(`x)
+	x[9..20] = 3..
+	Tester(`x)
+	x[[21..25]] = 7
+	Tester(`x)
+	x[[26..31]] = 3..
+	Tester(`x)
+}
+
+TestCase('IndexGet multiple') {
+	x = Chr(Ord('A')..Ord('Z')):list
+	Tester(`x)
+	Tester(`x[0])
+	Tester(`x[13])
+	Tester(`x[25])
+	Tester(`x[0..25])
+	Tester(`x[0..])
+	Tester(`x[13..])
+	Tester(`x[[0, 1, 2, 3]])
+	Tester(`x[0, 1, 2, 3, 22, 23, 24, 25])
+	Tester(`x[0..3, 22..25])
+	Tester(`x[[0, 1, 2, 3], [22, 23, 24, 25]])
+}
+
 TestCase('Expansion') {
 	Tester(`[1, 2, 3, [4, [5, 6, 7]], 8, 9, 10])
 	Tester(`[1, 2, 3, [4, [5, 6, 7]*]*, 8, 9, 10])
