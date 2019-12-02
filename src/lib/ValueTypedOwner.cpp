@@ -36,27 +36,27 @@ Value* ValueTypedOwner::Get(Int pos) const
 	return valueOwner.Get(pos);
 }
 
-bool ValueTypedOwner::IndexSet(const Value* pValueIndex, Value* pValue)
+bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	UpdateVTypeOfElems(*pValue);
-	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
-		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
-		Int pos = pValueIndexEx->GetNumber<Int>();
+	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+		Int pos = valueIndexEx.GetNumber<Int>();
 		if (pos < 0) pos += valueOwner.size();
 		if (0 <= pos && static_cast<size_t>(pos) < valueOwner.size()) {
 			valueOwner.Set(pos, pValue);
 			return true;
 		}
 		valueOwner.IssueError_IndexOutOfRange(pos);
-	} else if (pValueIndex->IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool* pValueIndexEx = dynamic_cast<const Value_Bool*>(pValueIndex);
-		int pos = static_cast<int>(pValueIndexEx->GetBool());
+	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+		int pos = static_cast<int>(valueIndexEx.GetBool());
 		if (static_cast<size_t>(pos) < valueOwner.size()) {
 			valueOwner.Set(pos, pValue);
 			return true;
 		}
-		valueOwner.IssueError_IndexOutOfRange(pValueIndexEx->ToString().c_str());
+		valueOwner.IssueError_IndexOutOfRange(valueIndexEx.ToString().c_str());
 	} else {
 		Error::Issue(ErrorType::IndexError, "number or bool value is expected for list indexing");
 	}
@@ -64,18 +64,18 @@ bool ValueTypedOwner::IndexSet(const Value* pValueIndex, Value* pValue)
 	return false;
 }
 
-bool ValueTypedOwner::IndexGet(const Value* pValueIndex, Value** ppValue) const
+bool ValueTypedOwner::IndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const ValueOwner& valueOwner = GetValueOwner();
-	if (pValueIndex->IsInstanceOf(VTYPE_Number)) {
-		const Value_Number* pValueIndexEx = dynamic_cast<const Value_Number*>(pValueIndex);
-		Int pos = pValueIndexEx->GetNumber<Int>();
+	if (valueIndex.IsInstanceOf(VTYPE_Number)) {
+		const Value_Number& valueIndexEx = dynamic_cast<const Value_Number&>(valueIndex);
+		Int pos = valueIndexEx.GetNumber<Int>();
 		if (!valueOwner.FixPosition(&pos)) return false;
 		*ppValue = valueOwner.Get(pos)->Reference();
 		return true;
-	} else if (pValueIndex->IsInstanceOf(VTYPE_Bool)) {
-		const Value_Bool* pValueIndexEx = dynamic_cast<const Value_Bool*>(pValueIndex);
-		int pos = static_cast<int>(pValueIndexEx->GetBool());
+	} else if (valueIndex.IsInstanceOf(VTYPE_Bool)) {
+		const Value_Bool& valueIndexEx = dynamic_cast<const Value_Bool&>(valueIndex);
+		int pos = static_cast<int>(valueIndexEx.GetBool());
 		if (!valueOwner.FixPosition(&pos)) return false;
 		*ppValue = valueOwner.Get(pos)->Reference();
 		return true;

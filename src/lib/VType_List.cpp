@@ -1608,16 +1608,16 @@ Value* Value_List::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
+		const Value& valueIndex = *valuesIndex.front();
 		Value* pValue = nullptr;
-		if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return Value::nil();
+		if (!GetValueTypedOwner().IndexGet(valueIndex, &pValue)) return Value::nil();
 		return pValue;
 	} else {
 		RefPtr<ValueOwner> pValuesRtn(new ValueOwner());
 		pValuesRtn->reserve(valuesIndex.size());
 		for (const Value* pValueIndex : valuesIndex) {
 			Value* pValue = nullptr;
-			if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValue)) return Value::nil();
+			if (!GetValueTypedOwner().IndexGet(*pValueIndex, &pValue)) return Value::nil();
 			pValuesRtn->push_back(pValue);
 		}
 		return new Value_List(pValuesRtn.release());
@@ -1628,8 +1628,8 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
-		GetValueTypedOwner().IndexSet(pValueIndex, pValue);
+		const Value& valueIndex = *valuesIndex.front();
+		GetValueTypedOwner().IndexSet(valueIndex, pValue);
 	} else {
 		Error::Issue_UnimplementedOperation();
 	}
@@ -1639,12 +1639,12 @@ Value* Value_List::DoIndexOpApply(const Index& index, const Value& value, Proces
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
-		const Value* pValueIndex = valuesIndex.front();
+		const Value& valueIndex = *valuesIndex.front();
 		Value* pValueL = nullptr;
-		if (!GetValueTypedOwner().IndexGet(pValueIndex, &pValueL)) return Value::nil();
+		if (!GetValueTypedOwner().IndexGet(valueIndex, &pValueL)) return Value::nil();
 		RefPtr<Value> pValueRtn(op.EvalBinary(processor, *pValueL, value));
 		if (pValueRtn->IsUndefined()) return Value::nil();
-		GetValueTypedOwner().IndexSet(pValueIndex, pValueRtn.Reference());
+		GetValueTypedOwner().IndexSet(valueIndex, pValueRtn.Reference());
 		return pValueRtn.release();
 	} else {
 		Error::Issue_UnimplementedOperation();
