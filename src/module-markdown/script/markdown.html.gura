@@ -44,7 +44,7 @@ Renderer = class {
 								this.indices[0..1]*)
 			}
 			if (this.enableAnchorFlags[1]) {
-				this.out.printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..1]))
+				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices.Head(2)))
 			}
 			this.FeedItem(item.children)
 			this.out.Print('</h2>\n')
@@ -57,7 +57,7 @@ Renderer = class {
 								this.indices[0..2]*)
 			}
 			if (this.enableAnchorFlags[2]) {
-				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..2]))
+				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices.Head(3)))
 			}
 			this.FeedItem(item.children)
 			this.out.Print('</h3>\n')
@@ -70,7 +70,7 @@ Renderer = class {
 								this.indices[0..3]*)
 			}
 			if (this.enableAnchorFlags[3]) {
-				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..3]))
+				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices.Head(4)))
 			}
 			this.FeedItem(item.children)
 			this.out.Print('</h4>\n')
@@ -83,7 +83,7 @@ Renderer = class {
 								this.indices[0..4]*)
 			}
 			if (this.enableAnchorFlags[4]) {
-				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..4]))
+				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices.Head(5)))
 			}
 			this.FeedItem(item.children)
 			this.out.Print('</h5>\n')
@@ -95,7 +95,7 @@ Renderer = class {
 								this.indices[0..5]*)
 			}
 			if (this.enableAnchorFlags[5]) {
-				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices[0..5]))
+				this.out.Printf('<a name="%s"></a>', this.MakeAnchorName(this.indices.Head(6)))
 			}
 			this.FeedItem(item.children)
 			this.out.Print('</h6>\n')
@@ -186,7 +186,7 @@ Renderer = class {
 					this.out.Println('</div>')
 				}
 			} else {
-				inlineFlag = isinlinetag(item.text)
+				inlineFlag = IsInlineTag(item.text)
 				this.out.Print('<')
 				this.out.Print(item.text)
 				if (item.text == 'table') {
