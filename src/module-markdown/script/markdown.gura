@@ -6,14 +6,12 @@
 //=============================================================================
 import(re)
 import(markdown):binary {*}
+import(markdown.html)
+import(markdown.console)
 
 MakeAnchorNameDef(indices[]:Number) = 'anchor-' + Format('%d', indices).Join('-')
 
 /*
-help.renderer('markdown', 'markdown') {|help:help, stream:stream, header_offset:number|
-	stream.Print(help.doc)
-}
-
 _funcentry(lang:symbol, func:function, fmt:string):map = {
 	str = format('<@gura.funcentry format="%s"', fmt.escapehtml())
 	if (help = help@function(func, lang)) {

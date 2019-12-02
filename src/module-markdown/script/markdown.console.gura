@@ -2,7 +2,7 @@
 //=============================================================================
 // markdown Console renderer
 //=============================================================================
-import(markdown) {*}
+import(markdown):binary {*}
 import(conio)
 
 TableCol = struct { text:String, align:Symbol }

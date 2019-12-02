@@ -53,6 +53,12 @@ Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail)
 	return pValue;
 }
 
+Value* Frame::LookupLocal(const Symbol* pSymbol)
+{
+	const Frame* pFrameSrc = nullptr;
+	return DoLookupLocal(pSymbol, &pFrameSrc);
+}
+
 void Frame::Assign(const Symbol* pSymbol, Value* pValue)
 {
 	Frame* pFrame = nullptr;
@@ -169,6 +175,14 @@ Value* Frame_ValueMap::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc)
 	return pValue;
 }
 
+Value* Frame_ValueMap::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+{
+	// Lookup a frame in which DoAssign() assigns values.
+	Value* pValue = _pValueMap->Lookup(pSymbol);
+	if (pValue) *ppFrameSrc = this;
+	return pValue;
+}
+
 bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 {
 	if (overwriteFlag) {
@@ -181,7 +195,7 @@ bool Frame_ValueMap::ExportTo(Frame& frameDst, bool overwriteFlag) const
 		for (auto pair : *_pValueMap) {
 			const Symbol* pSymbol = pair.first;
 			const Value* pValue = pair.second;
-			if (frameDst.Lookup(pSymbol)) {
+			if (frameDst.LookupLocal(pSymbol)) {
 				Error::Issue(ErrorType::ValueError,
 							 "can't overwrite the symbol: %s", pSymbol->GetName());
 				return false;
@@ -230,6 +244,12 @@ Value* Frame_Basement::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc)
 	return _pFrameOuter->DoLookup(pSymbol, ppFrameSrc);
 }
 
+Value* Frame_Basement::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+{
+	// Lookup a frame in which DoAssign() assigns values.
+	return nullptr;
+}
+
 void Frame_Basement::GatherSymbol(SymbolList& symbolList) const
 {
 	_pFrameOuter->GatherSymbol(symbolList);
@@ -259,6 +279,12 @@ Value* Frame_VType::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) co
 	Value* pValue = _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 	if (pValue) return pValue;
 	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
+}
+
+Value* Frame_VType::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+{
+	// Lookup a frame in which DoAssign() assigns values.
+	return _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 }
 
 void Frame_VType::GatherSymbol(SymbolList& symbolList) const
@@ -297,6 +323,12 @@ Value* Frame_Module::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) c
 	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
 }
 
+Value* Frame_Module::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+{
+	// Lookup a frame in which DoAssign() assigns values.
+	return _pFrameLocal? _pFrameLocal->DoLookup(pSymbol, ppFrameSrc) : nullptr;
+}
+
 void Frame_Module::GatherSymbol(SymbolList& symbolList) const
 {
 	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
@@ -332,6 +364,12 @@ Value* Frame_Scope::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) co
 	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
 }
 
+Value* Frame_Scope::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+{
+	// Lookup a frame in which DoAssign() assigns values.
+	return _pFrameLocal? _pFrameLocal->DoLookup(pSymbol, ppFrameSrc) : nullptr;
+}
+
 void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
 {
 	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
@@ -363,6 +401,12 @@ Value* Frame_Block::DoLookup(const Symbol* pSymbol, const Frame** ppFrameSrc) co
 	Value* pValue = _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 	if (pValue) return pValue;
 	return _pFrameOuter? _pFrameOuter->DoLookup(pSymbol, ppFrameSrc) : nullptr;
+}
+
+Value* Frame_Block::DoLookupLocal(const Symbol* pSymbol, const Frame** ppFrameSrc) const
+{
+	// Lookup a frame in which DoAssign() assigns values.
+	return _pFrameLocal->DoLookup(pSymbol, ppFrameSrc);
 }
 
 void Frame_Block::GatherSymbol(SymbolList& symbolList) const

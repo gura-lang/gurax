@@ -122,7 +122,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
 		(type == Type::Compressed)?	ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
 		nullptr);
 	if (!pModule) return nullptr;
-	pModule->AssignToMap();
+	//pModule->AssignToMap();
 	return pModule.release();
 }
 
@@ -138,6 +138,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	if (Error::IsIssued()) return nullptr;
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
 	pModule->SetPathName(pathName);
+	pModule->AssignToMap();
 	processor.PushFrame(pModule->GetFrame().Reference());
 	Value::Delete(processor.ProcessPUnit(composer.GetPUnitFirst()));
 	processor.PopFrame();
@@ -175,6 +176,7 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	RefPtr<Module> pModule(ModuleCreate(processor.GetFrameCur().Reference()));
 	if (!pModule) return nullptr;
 	pModule->SetPathName(pathName);
+	pModule->AssignToMap();
 	return pModule.release();
 }
 
