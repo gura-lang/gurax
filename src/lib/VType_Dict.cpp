@@ -418,7 +418,7 @@ void Value_Dict::DoIndexSet(const Index& index, Value* pValue)
 		const Value* pValueIndex = valuesIndex.front();
 		GetValueDict().Assign(pValueIndex->Reference(), pValue->Reference());
 	} else {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		Error::Issue_UnimplementedOperation();
 	}
 }
 
@@ -437,7 +437,7 @@ Value* Value_Dict::DoIndexOpApply(const Index& index, const Value& value, Proces
 		GetValueDict().Assign(pValueIndex->Reference(), pValueRtn.Reference());
 		return pValueRtn.release();
 	} else {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		Error::Issue_UnimplementedOperation();
 		return Value::nil();
 	}
 }

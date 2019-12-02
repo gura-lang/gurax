@@ -156,6 +156,10 @@ public:
 	}
 	static void Print(Stream& stream);
 public:
+	static void Issue_UnimplementedOperation();
+	static void Issue_UnimplementedFunction();
+	static void Issue_UnimplementedMethod();
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Error& error) const { return this == &error; }
 	bool IsEqualTo(const Error& error) const {

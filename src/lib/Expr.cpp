@@ -296,7 +296,7 @@ void Expr_Member::ComposeForValueAssignment(Composer& composer, const Operator* 
 		break;
 	}
 	case MemberMode::MapAlong: case MemberMode::MapToList: case MemberMode::MapToIter: {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		Error::Issue_UnimplementedOperation();
 		break;
 	}
 	default:
@@ -324,7 +324,7 @@ void Expr_Member::ComposeForAssignment(
 		bool mapAssignedFlag = true;
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
-			Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+			Error::Issue_UnimplementedOperation();
 			//composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
 			//					 mapAssignedFlag, false, this);					// [Assigned]
 		} else {
@@ -337,7 +337,7 @@ void Expr_Member::ComposeForAssignment(
 		bool mapAssignedFlag = false;
 		exprAssigned.ComposeOrNil(composer);									// [Target Assigned]
 		if (pOp) {
-			Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+			Error::Issue_UnimplementedOperation();
 			//composer.Add_MemberOpApply_Map(GetSymbol(), GetAttr().Reference(), pOp,
 			//					 mapAssignedFlag, false, this);					// [Assigned]
 		} else {
@@ -1025,7 +1025,7 @@ void Expr_Indexer::ComposeForValueAssignment(Composer& composer, const Operator*
 		composer.Add_FeedIndex(pExpr);							// [Elems Index(Car)]
 	}
 	if (pOp) {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		Error::Issue_UnimplementedOperation();
 		return;
 		//composer.Add_IndexOpApply(pOp, true, this);		// [Rtn]
 	} else {

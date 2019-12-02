@@ -1631,7 +1631,7 @@ void Value_List::DoIndexSet(const Index& index, Value* pValue)
 		const Value* pValueIndex = valuesIndex.front();
 		GetValueTypedOwner().IndexSet(pValueIndex, pValue);
 	} else {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		Error::Issue_UnimplementedOperation();
 	}
 }
 
@@ -1647,7 +1647,7 @@ Value* Value_List::DoIndexOpApply(const Index& index, const Value& value, Proces
 		GetValueTypedOwner().IndexSet(pValueIndex, pValueRtn.Reference());
 		return pValueRtn.release();
 	} else {
-		Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+		Error::Issue_UnimplementedOperation();
 		return Value::nil();
 	}
 }

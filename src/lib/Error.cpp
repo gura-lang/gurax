@@ -105,6 +105,21 @@ void Error::Print(Stream& stream)
 	}
 }
 
+void Error::Issue_UnimplementedOperation()
+{
+	Error::Issue(ErrorType::UnimplementedError, "unimplemented operation");
+}
+
+void Error::Issue_UnimplementedFunction()
+{
+	Error::Issue(ErrorType::UnimplementedError, "unimplemented function");
+}
+
+void Error::Issue_UnimplementedMethod()
+{
+	Error::Issue(ErrorType::UnimplementedError, "unimplemented method");
+}
+
 //------------------------------------------------------------------------------
 // ErrorList
 //------------------------------------------------------------------------------
