@@ -675,6 +675,69 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_SinceWithFunc
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_SinceWithFunc : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Function> _pFunction;
+	RefPtr<Iterator> _pIteratorSrc;
+	RefPtr<Argument> _pArgument;
+	size_t _idx;
+	bool _includeFirstFlag;
+	bool _contFlag;
+	bool _triggeredFlag;
+public:
+	Iterator_SinceWithFunc(Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag);
+protected:
+	// Destructor
+	virtual ~Iterator_SinceWithFunc() = default;
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Function& GetFunction() { return *_pFunction; }
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+	Argument& GetArgument() { return *_pArgument; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_SinceWithIter
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_SinceWithIter : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorCriteria;
+	RefPtr<Iterator> _pIteratorSrc;
+	bool _includeFirstFlag;
+	bool _contFlag;
+	bool _triggeredFlag;
+public:
+	Iterator_SinceWithIter(Iterator* pIteratorCriteria, Iterator* pIteratorSrc, bool includeFirstFlag);
+protected:
+	// Destructor
+	virtual ~Iterator_SinceWithIter() = default;
+public:
+	Iterator& GetIteratorCriteria() { return *_pIteratorCriteria; }
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Permutation : public Iterator {

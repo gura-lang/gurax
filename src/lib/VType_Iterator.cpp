@@ -5,80 +5,6 @@
 
 namespace Gurax {
 
-//------------------------------------------------------------------------------
-// Iterator_SinceWithFunc
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_SinceWithFunc : public Iterator {
-private:
-	RefPtr<Processor> _pProcessor;
-	RefPtr<Function> _pFunction;
-	RefPtr<Iterator> _pIteratorSrc;
-	RefPtr<Argument> _pArgument;
-	size_t _idx;
-	bool _includeFirstFlag;
-	bool _contFlag;
-	bool _triggeredFlag;
-public:
-	Iterator_SinceWithFunc(Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag);
-protected:
-	// Destructor
-	virtual ~Iterator_SinceWithFunc() = default;
-public:
-	Processor& GetProcessor() { return *_pProcessor; }
-	Function& GetFunction() { return *_pFunction; }
-	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
-	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
-	Argument& GetArgument() { return *_pArgument; }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenDetermined;
-	}
-	virtual size_t GetLength() const override { return -1; }
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-Iterator_SinceWithFunc::Iterator_SinceWithFunc(Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag) :
-	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
-	_pArgument(new Argument(*pFunction)), _idx(0),
-	_includeFirstFlag(includeFirstFlag), _contFlag(true), _triggeredFlag(false)
-{
-}
-
-Value* Iterator_SinceWithFunc::DoNextValue()
-{
-	RefPtr<Frame> pFrame(GetFunction().LockFrameOuter());
-	if (!pFrame) return nullptr;
-	while (_contFlag) {
-		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
-		if (!pValue) {
-			_contFlag = false;
-			break;
-		}
-		if (_triggeredFlag) return pValue.release();
-		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
-		}
-		_idx++;
-		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
-		if (pValueRtn->GetBool()) {
-			_triggeredFlag = true;
-			if (_includeFirstFlag) return pValue.release();
-		}
-	}	
-	return nullptr;
-}
-
-String Iterator_SinceWithFunc::ToString(const StringStyle& ss) const
-{
-	String str;
-	str.Printf("SinceWithFunc");
-	return str;
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method specific to Iterator
 //-----------------------------------------------------------------------------
@@ -1197,15 +1123,33 @@ Gurax_DeclareMethod(Iterator, Since)
 
 Gurax_ImplementMethod(Iterator, Since)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	return VType_Iterator::Method_Since(processor, argument, iteratorSrc);
+}
+
+Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument, Iterator& iteratorSrc)
+{
 	// Arguments
 	ArgPicker args(argument);
+	RefPtr<Value> pValue(args.PickValue().Reference());
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator;
+	if (pValue->IsType(VTYPE_Function)) {
+		pIterator.reset(
+			new Iterator_SinceWithFunc(
+				processor.Reference(), Value_Function::GetFunction(*pValue).Reference(),
+				iteratorSrc.Reference(), true));
+	} else if (pValue->IsIterable()) {
+		pIterator.reset(
+			new Iterator_SinceWithIter(pValue->DoGenIterator(), iteratorSrc.Reference(), true));
+	} else {
+		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
+		return Value::nil();
+	}
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Skip(n:Number):map {block?}

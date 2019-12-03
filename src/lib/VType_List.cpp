@@ -1114,15 +1114,11 @@ Gurax_DeclareMethod(List, Since)
 
 Gurax_ImplementMethod(List, Since)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc);
 }
 
 // List#Skip(n:Number):map {block?}

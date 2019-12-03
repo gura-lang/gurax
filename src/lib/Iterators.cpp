@@ -674,6 +674,88 @@ String Iterator_Flatten::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_SinceWithFunc
+//------------------------------------------------------------------------------
+Iterator_SinceWithFunc::Iterator_SinceWithFunc(Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag) :
+	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
+	_pArgument(new Argument(*pFunction)), _idx(0),
+	_includeFirstFlag(includeFirstFlag), _contFlag(true), _triggeredFlag(false)
+{
+}
+
+Value* Iterator_SinceWithFunc::DoNextValue()
+{
+	RefPtr<Frame> pFrame(GetFunction().LockFrameOuter());
+	if (!pFrame) return nullptr;
+	while (_contFlag) {
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) {
+			_contFlag = false;
+			break;
+		}
+		if (_triggeredFlag) return pValue.release();
+		if (GetArgument().HasArgSlot()) {
+			ArgFeeder args(GetArgument());
+			if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+		}
+		_idx++;
+		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+		if (pValueRtn->GetBool()) {
+			_triggeredFlag = true;
+			if (_includeFirstFlag) return pValue.release();
+		}
+	}	
+	return nullptr;
+}
+
+String Iterator_SinceWithFunc::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("SinceWithFunc");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_SinceWithIter
+//------------------------------------------------------------------------------
+Iterator_SinceWithIter::Iterator_SinceWithIter(
+	Iterator* pIteratorCriteria, Iterator* pIteratorSrc, bool includeFirstFlag) :
+	_pIteratorCriteria(pIteratorCriteria), _pIteratorSrc(pIteratorSrc),
+	_includeFirstFlag(includeFirstFlag), _contFlag(true), _triggeredFlag(false)
+{
+}
+
+Value* Iterator_SinceWithIter::DoNextValue()
+{
+	while (_contFlag) {
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) {
+			_contFlag = false;
+			break;
+		}
+		RefPtr<Value> pValueCriteria(GetIteratorCriteria().NextValue());
+		if (!pValueCriteria) {
+			_contFlag = false;
+			break;
+		}
+		if (_triggeredFlag) return pValue.release();
+		if (pValueCriteria->GetBool()) {
+			_triggeredFlag = true;
+			if (_includeFirstFlag) return pValue.release();
+		}
+	}	
+	return nullptr;
+}
+
+String Iterator_SinceWithIter::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("SinceWithIter");
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 Value* Iterator_Permutation::DoNextValue()
