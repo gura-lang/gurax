@@ -81,6 +81,32 @@ bool ValueList::Contains(const Value& value) const
 	return false;
 }
 
+size_t ValueList::Count(const Value& value) const
+{
+	size_t cnt = 0;
+	for (const Value* pValue : *this) {
+		if (pValue->IsEqualTo(&value)) cnt++;
+	}
+	return cnt;
+}
+
+size_t ValueList::CountTrue() const
+{
+	size_t cnt = 0;
+	for (const Value* pValue : *this) {
+		if (pValue->GetBool()) cnt++;
+	}
+	return cnt;
+}
+
+size_t ValueList::CountIf(Processor& processor, const Function& function) const
+{
+	size_t cnt = 0;
+	for (const Value* pValue : *this) {
+	}
+	return cnt;
+}
+
 String ValueList::ToString(const StringStyle& ss) const
 {
 	String str;

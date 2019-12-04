@@ -294,17 +294,40 @@ Gurax_ImplementMethod(Iterator, Contains)
 	return new Value_Bool(iteratorThis.Contains(value));
 }
 
-// Iterator#Count(criteria?)
+// Iterator#Count(value?)
 Gurax_DeclareMethod(Iterator, Count)
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("criteria", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
 Gurax_ImplementMethod(Iterator, Count)
+{
+#if 0
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
+	// Arguments
+	ArgPicker args(argument);
+	// Function body
+#endif
+	return Value::nil();
+}
+
+// Iterator#CountIf(criteria)
+Gurax_DeclareMethod(Iterator, CountIf)
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Iterator, CountIf)
 {
 #if 0
 	// Target
@@ -1503,6 +1526,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Combination));
 	Assign(Gurax_CreateMethod(Iterator, Contains));
 	Assign(Gurax_CreateMethod(Iterator, Count));
+	Assign(Gurax_CreateMethod(Iterator, CountIf));
 	Assign(Gurax_CreateMethod(Iterator, Cycle));
 	Assign(Gurax_CreateMethod(Iterator, Each));
 	Assign(Gurax_CreateMethod(Iterator, Filter));

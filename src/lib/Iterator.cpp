@@ -31,6 +31,38 @@ bool Iterator::Contains(const Value& value)
 	return false;
 }
 
+size_t Iterator::Count(const Value& value)
+{
+	size_t cnt = 0;
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		if (pValueElem->IsEqualTo(&value)) cnt++;
+	}
+	return cnt;
+}
+
+size_t Iterator::CountTrue()
+{
+	size_t cnt = 0;
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		if (pValueElem->GetBool()) cnt++;
+	}
+	return cnt;
+}
+
+size_t Iterator::CountIf(Processor& processor, const Function& function)
+{
+	size_t cnt = 0;
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+	}
+	return cnt;
+}
+
 Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags)
 {
 	RefPtr<Value> pValueRtn(Value::nil());
