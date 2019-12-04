@@ -1210,7 +1210,10 @@ void PUnit_ListElem<nExprSrc, discardValueFlag, xlistFlag, expandFlag>::Exec(Pro
 	ValueTypedOwner& valueTypedOwner = Value_List::GetValueTypedOwner(processor.PeekValue(GetOffset()));
 	if (expandFlag && pValueElem->IsIterator()) {
 		Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
-		if (!iterator.MustBeFinite()) return;
+		if (!iterator.MustBeFinite()) {
+			processor.ErrorDone();
+			return;
+		}
 		if (xlistFlag) {
 			valueTypedOwner.AddX(iterator);
 		} else {

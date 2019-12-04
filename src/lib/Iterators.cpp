@@ -836,6 +836,79 @@ String Iterator_UntilWithIter::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_WhileWithFunc
+//------------------------------------------------------------------------------
+Iterator_WhileWithFunc::Iterator_WhileWithFunc(
+	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc) :
+	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
+	_pArgument(new Argument(*pFunction)), _idx(0), _doneFlag(false)
+{
+}
+
+Value* Iterator_WhileWithFunc::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Frame> pFrame(GetFunction().LockFrameOuter());
+	if (!pFrame) return nullptr;
+	RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+	if (!pValue) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	if (GetArgument().HasArgSlot()) {
+		ArgFeeder args(GetArgument());
+		if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
+		if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+	}
+	_idx++;
+	RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+	if (pValueRtn->GetBool()) return pValue.release();
+	_doneFlag = true;
+	return nullptr;
+}
+
+String Iterator_WhileWithFunc::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("WhileWithFunc");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_WhileWithIter
+//------------------------------------------------------------------------------
+Iterator_WhileWithIter::Iterator_WhileWithIter(
+	Iterator* pIteratorCriteria, Iterator* pIteratorSrc) :
+	_pIteratorCriteria(pIteratorCriteria), _pIteratorSrc(pIteratorSrc), _doneFlag(false)
+{
+}
+
+Value* Iterator_WhileWithIter::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+	if (!pValue) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	RefPtr<Value> pValueCriteria(GetIteratorCriteria().NextValue());
+	if (!pValueCriteria) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	if (pValueCriteria->GetBool()) return pValue.release();
+	_doneFlag = true;
+	return nullptr;
+}
+
+String Iterator_WhileWithIter::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("WhileWithIter");
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 Value* Iterator_Permutation::DoNextValue()

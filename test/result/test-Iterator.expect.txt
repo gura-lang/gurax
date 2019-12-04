@@ -33,6 +33,10 @@
 9
 10
 ======== Iterator#After() ========
+x.Each().After(& {$i < 0}):list .. [4, 4, 4, 0]
+x.Each().After(x < 0):list .. [4, 4, 4, 0]
+x.Each().After(& {$i < 0}).Offset(1):list .. [4, 4, 0]
+x.Each().After(x < 0).Offset(1):list .. [4, 4, 0]
 ======== Iterator#Align() ========
 0 .. 5.Align(10):list .. [0, 1, 2, 3, 4, 5, <Nil>, <Nil>, <Nil>, <Nil>]
 0 .. 5.Align(3):list .. [0, 1, 2]
@@ -64,6 +68,10 @@
 (1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMin():last_index .. 28
 (1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7).ArgMin():indices .. [7, 10, 28]
 ======== Iterator#Before() ========
+x.Each().Before(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3]
+x.Each().Before(x < 0):list .. [4, 3, 6, 1, 2, 3]
+x.Each().Before(& {$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3]
+x.Each().Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 ======== Iterator#Combination() ========
 ----
 ['A', 'B', 'C', 'D', 'E'].Each().Combination(3):list .. 10 : [['A', 'B', 'C'], ['A', 'B', 'D'], ['A', 'B', 'E'], ['A', 'C', 'D'], ['A', 'C', 'E'], ['A', 'D', 'E'], ['B', 'C', 'D'], ['B', 'C', 'E'], ['B', 'D', 'E'], ['C', 'D', 'E']]
@@ -336,6 +344,11 @@ x.Each().Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11
 ======== Iterator#RoundOff() ========
 ======== Iterator#RunLength() ========
 ======== Iterator#Since() ========
+x.Each().Since(& {$i < 0}):list .. [-1, 4, 4, 4, 0]
+x.Each().Since(x < 0):list .. [-1, 4, 4, 4, 0]
+x.Each().Since(& {$i < 0}).Offset(1):list .. [4, 4, 4, 0]
+x.Each().Since(x < 0).Offset(1):list .. [4, 4, 4, 0]
+x.Each().Since(& {$i < 0}).Offset(1).While(& {$i >= 0}):list .. [3, 1, 2, 3, 4]
 ======== Iterator#Skip() ========
 ======== Iterator#SkipNil() ========
 ======== Iterator#Sort() ========
@@ -567,5 +580,17 @@ words100.Each().Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'r
 0 .. 4.Tail(5):list .. [0, 1, 2, 3, 4]
 0 .. 4.Tail(6):list .. [0, 1, 2, 3, 4]
 ======== Iterator#Until() ========
+x.Each().Until(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3, -1]
+x.Each().Until(x < 0):list .. [4, 3, 6, 1, 2, 3, -1]
+x.Each().Until(& {$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3, -1]
+x.Each().Until(x < 0).Offset(1):list .. [3, 6, 1, 2, 3, -1]
+x.IsInfinite() .. true
+x.Until(x == 100).IsInfinite() .. false
+x.Until(& {$i == 100}).IsInfinite() .. false
 ======== Iterator#Var() ========
 ======== Iterator#While() ========
+x.Each().While(& {$i >= 0}):list .. [4, 3, 6, 1, 2, 3]
+x.Each().While(x >= 0):list .. [4, 3, 6, 1, 2, 3]
+x.IsInfinite() .. true
+x.While(x < 100).IsInfinite() .. false
+x.While(& {$i < 100}).IsInfinite() .. false

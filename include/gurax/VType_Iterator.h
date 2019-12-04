@@ -42,6 +42,7 @@ public:
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
 	static Value* Method_Until(Processor& processor, Argument& argument,
 							   Iterator& iteratorSrc, bool includeLastFlag);
+	static Value* Method_While(Processor& processor, Argument& argument, Iterator& iteratorSrc);
 };
 
 extern VType_Iterator VTYPE_Iterator;

@@ -198,6 +198,10 @@ x.Shift():raise .. the list is empty
 ======== List#Shuffle() ========
 tbl = [0 .. 99].Shuffle(rnd) .. [44, 48, 66, 70, 71, 14, 89, 28, 0, 96, 80, 99, 24, 4, 79, 54, 62, 98, 55, 8, 97, 93, 31, 43, 21, 72, 90, 76, 57, 1, 49, 45, 13, 65, 11, 19, 12, 69, 37, 30, 92, 64, 77, 15, 94, 73, 10, 47, 29, 85, 18, 6, 40, 3, 38, 59, 20, 34, 51, 60, 61, 9, 22, 81, 91, 33, 46, 5, 36, 67, 26, 82, 27, 23, 78, 53, 50, 2, 75, 83, 88, 95, 56, 86, 35, 52, 7, 39, 68, 58, 41, 25, 42, 74, 84, 63, 32, 16, 17, 87]
 ======== List#After() ========
+x.After(& {$i < 0}):list .. [4, 4, 4, 0]
+x.After(x < 0):list .. [4, 4, 4, 0]
+x.After(& {$i < 0}).Offset(1):list .. [4, 4, 0]
+x.After(x < 0).Offset(1):list .. [4, 4, 0]
 ======== List#Align() ========
 [0 .. 5].Align(10):list .. [0, 1, 2, 3, 4, 5, <Nil>, <Nil>, <Nil>, <Nil>]
 [0 .. 5].Align(3):list .. [0, 1, 2]
@@ -229,6 +233,10 @@ tbl = [0 .. 99].Shuffle(rnd) .. [44, 48, 66, 70, 71, 14, 89, 28, 0, 96, 80, 99, 
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin():last_index .. 28
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].ArgMin():indices .. [7, 10, 28]
 ======== List#Before() ========
+x.Before(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3]
+x.Before(x < 0):list .. [4, 3, 6, 1, 2, 3]
+x.Before(& {$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3]
+x.Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 ======== List#Combination() ========
 ----
 ['A', 'B', 'C', 'D', 'E'].Combination(3):list .. 10 : [['A', 'B', 'C'], ['A', 'B', 'D'], ['A', 'B', 'E'], ['A', 'C', 'D'], ['A', 'C', 'E'], ['A', 'D', 'E'], ['B', 'C', 'D'], ['B', 'C', 'E'], ['B', 'D', 'E'], ['C', 'D', 'E']]
@@ -506,6 +514,11 @@ x.Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 1
 ======== List#RoundOff() ========
 ======== List#RunLength() ========
 ======== List#Since() ========
+x.Since(& {$i < 0}):list .. [-1, 4, 4, 4, 0]
+x.Since(x < 0):list .. [-1, 4, 4, 4, 0]
+x.Since(& {$i < 0}).Offset(1):list .. [4, 4, 4, 0]
+x.Since(x < 0).Offset(1):list .. [4, 4, 4, 0]
+x.Since(& {$i < 0}).Offset(1).While(& {$i >= 0}):list .. [3, 1, 2, 3, 4]
 ======== List#Skip() ========
 ======== List#SkipNil() ========
 ======== List#Sort() ========
@@ -737,8 +750,20 @@ words100.Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'reading'
 [0 .. 4].Tail(5):list .. [0, 1, 2, 3, 4]
 [0 .. 4].Tail(6):list .. [0, 1, 2, 3, 4]
 ======== List#Until() ========
+x.Until(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3, -1]
+x.Until(x < 0):list .. [4, 3, 6, 1, 2, 3, -1]
+x.Until(& {$i < 0}).Offset(1):list .. [3, 6, 1, 2, 3, -1]
+x.Until(x < 0).Offset(1):list .. [3, 6, 1, 2, 3, -1]
+x.IsInfinite() .. true
+x.Until(x == 100).IsInfinite() .. false
+x.Until(& {$i == 100}).IsInfinite() .. false
 ======== List#Var() ========
 ======== List#While() ========
+x.While(& {$i >= 0}):list .. [4, 3, 6, 1, 2, 3]
+x.While(x >= 0):list .. [4, 3, 6, 1, 2, 3]
+x.IsInfinite() .. true
+x.While(x < 100).IsInfinite() .. false
+x.While(& {$i < 100}).IsInfinite() .. false
 ======== Any in List ========
 1 in [1, 2, 3, 4, 5] .. true
 6 in [1, 2, 3, 4, 5] .. false

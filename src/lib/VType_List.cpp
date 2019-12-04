@@ -1276,15 +1276,11 @@ Gurax_DeclareMethod(List, While)
 
 Gurax_ImplementMethod(List, While)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_While(processor, argument, *pIteratorSrc);
 }
 
 //------------------------------------------------------------------------------

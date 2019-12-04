@@ -247,6 +247,11 @@ TestCase('List#Shuffle()') {
 }
 
 TestCase('List#After()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.After(&{$i < 0}):list)
+	Tester(`x.After(x < 0):list)
+	Tester(`x.After(&{$i < 0}).Offset(1):list)
+	Tester(`x.After(x < 0).Offset(1):list)
 }
 
 TestCase('List#Align()') {
@@ -288,6 +293,11 @@ TestCase('List#ArgMin()') {
 }
 
 TestCase('List#Before()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Before(&{$i < 0}):list)
+	Tester(`x.Before(x < 0):list)
+	Tester(`x.Before(&{$i < 0}).Offset(1):list)
+	Tester(`x.Before(x < 0).Offset(1):list)
 }
 
 TestCase('List#Combination()') {
@@ -652,6 +662,13 @@ TestCase('List#RunLength()') {
 }
 
 TestCase('List#Since()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Since(&{$i < 0}):list)
+	Tester(`x.Since(x < 0):list)
+	Tester(`x.Since(&{$i < 0}).Offset(1):list)
+	Tester(`x.Since(x < 0).Offset(1):list)
+	x = [1, 2, 3, -1, 3, 1, 2, 3, 4, -1, 2, 1, 2]
+	Tester(`x.Since(&{$i < 0}).Offset(1).While(&{$i >= 0}):list)
 }
 
 TestCase('List#Skip()') {
@@ -716,12 +733,28 @@ TestCase('List#Tail()') {
 }
 
 TestCase('List#Until()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Until(&{$i < 0}):list)
+	Tester(`x.Until(x < 0):list)
+	Tester(`x.Until(&{$i < 0}).Offset(1):list)
+	Tester(`x.Until(x < 0).Offset(1):list)
+	x = 0..
+	Tester(`x.IsInfinite())
+	Tester(`x.Until(x == 100).IsInfinite())
+	Tester(`x.Until(&{$i == 100}).IsInfinite())
 }
 
 TestCase('List#Var()') {
 }
 
 TestCase('List#While()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.While(&{$i >= 0}):list)
+	Tester(`x.While(x >= 0):list)
+	x = 0..
+	Tester(`x.IsInfinite())
+	Tester(`x.While(x < 100).IsInfinite())
+	Tester(`x.While(&{$i < 100}).IsInfinite())
 }
 
 TestCase('Any in List') {

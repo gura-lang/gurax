@@ -35,6 +35,11 @@ TestCase('Iterator#NextValue()') {
 }
 
 TestCase('Iterator#After()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Each().After(&{$i < 0}):list)
+	Tester(`x.Each().After(x < 0):list)
+	Tester(`x.Each().After(&{$i < 0}).Offset(1):list)
+	Tester(`x.Each().After(x < 0).Offset(1):list)
 }
 
 TestCase('Iterator#Align()') {
@@ -76,6 +81,11 @@ TestCase('Iterator#ArgMin()') {
 }
 
 TestCase('Iterator#Before()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Each().Before(&{$i < 0}):list)
+	Tester(`x.Each().Before(x < 0):list)
+	Tester(`x.Each().Before(&{$i < 0}).Offset(1):list)
+	Tester(`x.Each().Before(x < 0).Offset(1):list)
 }
 
 TestCase('Iterator#Combination()') {
@@ -435,6 +445,13 @@ TestCase('Iterator#RunLength()') {
 }
 
 TestCase('Iterator#Since()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Each().Since(&{$i < 0}):list)
+	Tester(`x.Each().Since(x < 0):list)
+	Tester(`x.Each().Since(&{$i < 0}).Offset(1):list)
+	Tester(`x.Each().Since(x < 0).Offset(1):list)
+	x = [1, 2, 3, -1, 3, 1, 2, 3, 4, -1, 2, 1, 2]
+	Tester(`x.Each().Since(&{$i < 0}).Offset(1).While(&{$i >= 0}):list)
 }
 
 TestCase('Iterator#Skip()') {
@@ -499,10 +516,26 @@ TestCase('Iterator#Tail()') {
 }
 
 TestCase('Iterator#Until()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Each().Until(&{$i < 0}):list)
+	Tester(`x.Each().Until(x < 0):list)
+	Tester(`x.Each().Until(&{$i < 0}).Offset(1):list)
+	Tester(`x.Each().Until(x < 0).Offset(1):list)
+	x = 0..
+	Tester(`x.IsInfinite())
+	Tester(`x.Until(x == 100).IsInfinite())
+	Tester(`x.Until(&{$i == 100}).IsInfinite())
 }
 
 TestCase('Iterator#Var()') {
 }
 
 TestCase('Iterator#While()') {
+	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
+	Tester(`x.Each().While(&{$i >= 0}):list)
+	Tester(`x.Each().While(x >= 0):list)
+	x = 0..
+	Tester(`x.IsInfinite())
+	Tester(`x.While(x < 100).IsInfinite())
+	Tester(`x.While(&{$i < 100}).IsInfinite())
 }
