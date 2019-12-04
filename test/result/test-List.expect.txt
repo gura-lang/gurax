@@ -401,6 +401,13 @@ tbl.Each():xlist {continue(nil)} .. []
 [tbl.Each():xiter {continue}*] .. []
 [tbl.Each():xiter {continue(nil)}*] .. []
 ======== List#Filter() ========
+x .. [52, 23, 62, 75, 46, 10, 86, 80, 19, 34]
+x.Filter(& {($i % 2) == 0}):list .. [52, 62, 46, 10, 86, 80, 34]
+x.Filter((x % 2) == 0):list .. [52, 62, 46, 10, 86, 80, 34]
+names .. ['Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David']
+BURKE
+DAVID
+FRANK
 ======== List#Find() ========
 ======== List#Flatten() ========
 [[1, 2, 3, [4, [5, 6], 7], 8], [9, 10, 11], 12]

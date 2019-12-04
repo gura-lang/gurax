@@ -81,6 +81,13 @@ x.Each().Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 ['A', 'B', 'C', 'D', 'E'].Each().Combination(5):list .. 1 : [['A', 'B', 'C', 'D', 'E']]
 ['A', 'B', 'C', 'D', 'E'].Each().Combination(6):list .. range over
 ======== Iterator#Contains() ========
+[1, 2, 3, 4, 5].Each().Contains(1) .. true
+[1, 2, 3, 4, 5].Each().Contains(6) .. false
+[`apple, `grape, `banana].Each().Contains(`apple) .. true
+[`apple, `grape, `banana].Each().Contains(`kiwi) .. false
+[`apple, `grape, `banana].Each().Contains('apple'.ToSymbol()) .. true
+[`apple, `grape, `banana].Each().Contains('kiwi'.ToSymbol()) .. false
+1...Contains(0) .. infinite iterator is unacceptable
 ======== Iterator#Count() ========
 ======== Iterator#Cycle() ========
 [].Each().Cycle(20) .. empty list can not be specified
@@ -230,6 +237,13 @@ tbl.Each().Each():xlist {continue(nil)} .. []
 [tbl.Each().Each():xiter {continue}*] .. []
 [tbl.Each().Each():xiter {continue(nil)}*] .. []
 ======== Iterator#Filter() ========
+x .. [52, 23, 62, 75, 46, 10, 86, 80, 19, 34]
+x.Each().Filter(& {($i % 2) == 0}):list .. [52, 62, 46, 10, 86, 80, 34]
+x.Each().Filter((x % 2) == 0):list .. [52, 62, 46, 10, 86, 80, 34]
+names .. ['Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David']
+BURKE
+DAVID
+FRANK
 ======== Iterator#Find() ========
 ======== Iterator#Flatten() ========
 <Iterator:Each:begin=0:end=3>
