@@ -394,15 +394,33 @@ Gurax_DeclareMethod(Iterator, Filter)
 
 Gurax_ImplementMethod(Iterator, Filter)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	return VType_Iterator::Method_Filter(processor, argument, iteratorSrc);
+}
+
+Value* VType_Iterator::Method_Filter(Processor& processor, Argument& argument, Iterator& iteratorSrc)
+{
 	// Arguments
 	ArgPicker args(argument);
+	RefPtr<Value> pValue(args.PickValue().Reference());
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator;
+	if (pValue->IsType(VTYPE_Function)) {
+		pIterator.reset(
+			new Iterator_FilterWithFunc(
+				processor.Reference(), Value_Function::GetFunction(*pValue).Reference(),
+				iteratorSrc.Reference()));
+	} else if (pValue->IsIterable()) {
+		pIterator.reset(
+			new Iterator_FilterWithIter(pValue->DoGenIterator(), iteratorSrc.Reference()));
+	} else {
+		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
+		return Value::nil();
+	}
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Find(criteria?):[index]

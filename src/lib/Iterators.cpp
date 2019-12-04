@@ -909,6 +909,81 @@ String Iterator_WhileWithIter::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_FilterWithFunc
+//------------------------------------------------------------------------------
+Iterator_FilterWithFunc::Iterator_FilterWithFunc(
+	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc) :
+	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
+	_pArgument(new Argument(*pFunction)), _idx(0), _doneFlag(false)
+{
+}
+
+Value* Iterator_FilterWithFunc::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Frame> pFrame(GetFunction().LockFrameOuter());
+	if (!pFrame) return nullptr;
+	for (;;) {
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) {
+			_doneFlag = true;
+			return nullptr;
+		}
+		if (GetArgument().HasArgSlot()) {
+			ArgFeeder args(GetArgument());
+			if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+		}
+		_idx++;
+		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+		if (pValueRtn->GetBool()) return pValue.release();
+	}
+	return nullptr;
+}
+
+String Iterator_FilterWithFunc::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("FilterWithFunc");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_FilterWithIter
+//------------------------------------------------------------------------------
+Iterator_FilterWithIter::Iterator_FilterWithIter(
+	Iterator* pIteratorCriteria, Iterator* pIteratorSrc) :
+	_pIteratorCriteria(pIteratorCriteria), _pIteratorSrc(pIteratorSrc), _doneFlag(false)
+{
+}
+
+Value* Iterator_FilterWithIter::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	for (;;) {
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) {
+			_doneFlag = true;
+			return nullptr;
+		}
+		RefPtr<Value> pValueCriteria(GetIteratorCriteria().NextValue());
+		if (!pValueCriteria) {
+			_doneFlag = true;
+			return nullptr;
+		}
+		if (pValueCriteria->GetBool()) return pValue.release();
+	}
+	return nullptr;
+}
+
+String Iterator_FilterWithIter::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("FilterWithIter");
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 Value* Iterator_Permutation::DoNextValue()

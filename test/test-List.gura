@@ -492,6 +492,16 @@ TestCase('List#Each():iter') {
 }
 
 TestCase('List#Filter()') {
+	x = [52, 23, 62, 75, 46, 10, 86, 80, 19, 34]
+	Tester(`x)
+	Tester(`x.Filter(&{$i % 2 == 0}):list)
+	Tester(`x.Filter(x % 2 == 0):list)
+	// http://msdn.microsoft.com/ja-jp/library/bb308959.aspx
+	names = [
+		'Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David'
+	]
+	Tester(`names)
+	Println(names.Filter(&{$s.len == 5}).Sort():*Upper())
 }
 
 TestCase('List#Find()') {

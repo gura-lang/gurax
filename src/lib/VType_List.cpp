@@ -530,15 +530,11 @@ Gurax_DeclareMethod(List, Filter)
 
 Gurax_ImplementMethod(List, Filter)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Filter(processor, argument, *pIteratorSrc);
 }
 
 // List#Find(criteria?):[index]
