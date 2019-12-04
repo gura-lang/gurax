@@ -290,6 +290,7 @@ Gurax_ImplementMethod(Iterator, Contains)
 	ArgPicker args(argument);
 	const Value& value = args.PickValue();
 	// Function body
+	if (!iteratorThis.MustBeFinite()) return Value::nil();
 	return new Value_Bool(iteratorThis.Contains(value));
 }
 

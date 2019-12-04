@@ -96,6 +96,13 @@ TestCase('Iterator#Combination()') {
 }
 
 TestCase('Iterator#Contains()') {
+	Tester(`([1, 2, 3, 4, 5].Each().Contains(1)))
+	Tester(`([1, 2, 3, 4, 5].Each().Contains(6)))
+	Tester(`([`apple, `grape, `banana].Each().Contains(`apple)))
+	Tester(`([`apple, `grape, `banana].Each().Contains(`kiwi)))
+	Tester(`([`apple, `grape, `banana].Each().Contains('apple'.ToSymbol())))
+	Tester(`([`apple, `grape, `banana].Each().Contains('kiwi'.ToSymbol())))
+	Tester(`(1..).Contains(0))
 }
 
 TestCase('Iterator#Count()') {
