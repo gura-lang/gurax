@@ -76,15 +76,11 @@ Gurax_DeclareMethod(Iterator, After)
 
 Gurax_ImplementMethod(Iterator, After)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Since(processor, argument, iteratorSrc, false);
 }
 
 // Iterator#Align(n:Number, valueStuff?):map {block?}
@@ -229,15 +225,11 @@ Gurax_DeclareMethod(Iterator, Before)
 
 Gurax_ImplementMethod(Iterator, Before)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Until(processor, argument, iteratorSrc, false);
 }
 
 // Iterator#Combination(n:Number) {block?}
@@ -1127,10 +1119,11 @@ Gurax_ImplementMethod(Iterator, Since)
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-	return VType_Iterator::Method_Since(processor, argument, iteratorSrc);
+	return VType_Iterator::Method_Since(processor, argument, iteratorSrc, true);
 }
 
-Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument, Iterator& iteratorSrc)
+Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument,
+									Iterator& iteratorSrc, bool includeFirstFlag)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -1141,10 +1134,10 @@ Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument, It
 		pIterator.reset(
 			new Iterator_SinceWithFunc(
 				processor.Reference(), Value_Function::GetFunction(*pValue).Reference(),
-				iteratorSrc.Reference(), true));
+				iteratorSrc.Reference(), includeFirstFlag));
 	} else if (pValue->IsIterable()) {
 		pIterator.reset(
-			new Iterator_SinceWithIter(pValue->DoGenIterator(), iteratorSrc.Reference(), true));
+			new Iterator_SinceWithIter(pValue->DoGenIterator(), iteratorSrc.Reference(), includeFirstFlag));
 	} else {
 		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
 		return Value::nil();
@@ -1373,15 +1366,34 @@ Gurax_DeclareMethod(Iterator, Until)
 
 Gurax_ImplementMethod(Iterator, Until)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	return VType_Iterator::Method_Until(processor, argument, iteratorSrc, true);
+}
+
+Value* VType_Iterator::Method_Until(Processor& processor, Argument& argument,
+									Iterator& iteratorSrc, bool includeLastFlag)
+{
 	// Arguments
 	ArgPicker args(argument);
+	RefPtr<Value> pValue(args.PickValue().Reference());
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator;
+	if (pValue->IsType(VTYPE_Function)) {
+		pIterator.reset(
+			new Iterator_UntilWithFunc(
+				processor.Reference(), Value_Function::GetFunction(*pValue).Reference(),
+				iteratorSrc.Reference(), includeLastFlag));
+	} else if (pValue->IsIterable()) {
+		pIterator.reset(
+			new Iterator_UntilWithIter(pValue->DoGenIterator(), iteratorSrc.Reference(), includeLastFlag));
+	} else {
+		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
+		return Value::nil();
+	}
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Var():[p]

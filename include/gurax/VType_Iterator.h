@@ -36,9 +36,12 @@ public:
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
 	static Value* Method_Reverse(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
-	static Value* Method_Since(Processor& processor, Argument& argument, Iterator& iteratorSrc);
+	static Value* Method_Since(Processor& processor, Argument& argument,
+							   Iterator& iteratorSrc, bool includeFirstFlag);
 	static Value* Method_Sort(
 		Processor& processor, Argument& argument, const ValueTypedOwner& valueTypedOwner);
+	static Value* Method_Until(Processor& processor, Argument& argument,
+							   Iterator& iteratorSrc, bool includeLastFlag);
 };
 
 extern VType_Iterator VTYPE_Iterator;

@@ -701,7 +701,7 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenDetermined;
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenUndetermined;
 	}
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
@@ -730,7 +730,68 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenDetermined;
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_UntilWithFunc
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_UntilWithFunc : public Iterator {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Function> _pFunction;
+	RefPtr<Iterator> _pIteratorSrc;
+	RefPtr<Argument> _pArgument;
+	size_t _idx;
+	bool _includeLastFlag;
+	bool _doneFlag;
+public:
+	Iterator_UntilWithFunc(Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeLastFlag);
+protected:
+	// Destructor
+	virtual ~Iterator_UntilWithFunc() = default;
+public:
+	Processor& GetProcessor() { return *_pProcessor; }
+	Function& GetFunction() { return *_pFunction; }
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+	Argument& GetArgument() { return *_pArgument; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_UntilWithIter
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_UntilWithIter : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorCriteria;
+	RefPtr<Iterator> _pIteratorSrc;
+	bool _includeLastFlag;
+	bool _doneFlag;
+public:
+	Iterator_UntilWithIter(Iterator* pIteratorCriteria, Iterator* pIteratorSrc, bool includeLastFlag);
+protected:
+	// Destructor
+	virtual ~Iterator_UntilWithIter() = default;
+public:
+	Iterator& GetIteratorCriteria() { return *_pIteratorCriteria; }
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenUndetermined;
 	}
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;

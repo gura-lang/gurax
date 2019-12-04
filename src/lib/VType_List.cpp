@@ -328,15 +328,11 @@ Gurax_DeclareMethod(List, After)
 
 Gurax_ImplementMethod(List, After)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc, false);
 }
 
 // List#Align(n:Number, value?):map {block?}
@@ -421,15 +417,11 @@ Gurax_DeclareMethod(List, Before)
 
 Gurax_ImplementMethod(List, Before)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Until(processor, argument, *pIteratorSrc, false);
 }
 
 // List#Combination(n:Number) {block?}
@@ -1118,7 +1110,7 @@ Gurax_ImplementMethod(List, Since)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc);
+	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc, true);
 }
 
 // List#Skip(n:Number):map {block?}
@@ -1249,15 +1241,11 @@ Gurax_DeclareMethod(List, Until)
 
 Gurax_ImplementMethod(List, Until)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Until(processor, argument, *pIteratorSrc, true);
 }
 
 // List#Var():[p]

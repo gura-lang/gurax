@@ -676,7 +676,8 @@ String Iterator_Flatten::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_SinceWithFunc
 //------------------------------------------------------------------------------
-Iterator_SinceWithFunc::Iterator_SinceWithFunc(Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag) :
+Iterator_SinceWithFunc::Iterator_SinceWithFunc(
+	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
 	_pArgument(new Argument(*pFunction)), _idx(0),
 	_includeFirstFlag(includeFirstFlag), _contFlag(true), _triggeredFlag(false)
@@ -752,6 +753,85 @@ String Iterator_SinceWithIter::ToString(const StringStyle& ss) const
 {
 	String str;
 	str.Printf("SinceWithIter");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_UntilWithFunc
+//------------------------------------------------------------------------------
+Iterator_UntilWithFunc::Iterator_UntilWithFunc(
+	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeLastFlag) :
+	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
+	_pArgument(new Argument(*pFunction)), _idx(0),
+	_includeLastFlag(includeLastFlag), _doneFlag(false)
+{
+}
+
+Value* Iterator_UntilWithFunc::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Frame> pFrame(GetFunction().LockFrameOuter());
+	if (!pFrame) return nullptr;
+	RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+	if (!pValue) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	if (GetArgument().HasArgSlot()) {
+		ArgFeeder args(GetArgument());
+		if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
+		if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+	}
+	_idx++;
+	RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+	if (pValueRtn->GetBool()) {
+		_doneFlag = true;
+		return _includeLastFlag? pValue.release() : nullptr;
+	}
+	return pValue.release();
+}
+
+String Iterator_UntilWithFunc::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("UntilWithFunc");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_UntilWithIter
+//------------------------------------------------------------------------------
+Iterator_UntilWithIter::Iterator_UntilWithIter(
+	Iterator* pIteratorCriteria, Iterator* pIteratorSrc, bool includeLastFlag) :
+	_pIteratorCriteria(pIteratorCriteria), _pIteratorSrc(pIteratorSrc),
+	_includeLastFlag(includeLastFlag), _doneFlag(false)
+{
+}
+
+Value* Iterator_UntilWithIter::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+	if (!pValue) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	RefPtr<Value> pValueCriteria(GetIteratorCriteria().NextValue());
+	if (!pValueCriteria) {
+		_doneFlag = true;
+		return nullptr;
+	}
+	if (pValueCriteria->GetBool()) {
+		_doneFlag = true;
+		return _includeLastFlag? pValue.release() : nullptr;
+	}
+	return pValue.release();
+}
+
+String Iterator_UntilWithIter::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Printf("UntilWithIter");
 	return str;
 }
 
