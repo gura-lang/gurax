@@ -136,9 +136,6 @@ public:
 public:
 	Value* ProcessPUnit(const PUnit* pPUnit);
 public:
-	bool ImportModule(const char* moduleName, bool binaryFlag, bool overwriteFlag);
-	bool EvalCommand(const char* cmd);
-public:
 	void Print() const;
 protected:
 	virtual void RunLoop(const PUnit* pPUnit) = 0;

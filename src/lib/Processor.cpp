@@ -73,30 +73,6 @@ bool Processor::DoExceptionHandling()
 	}
 }
 
-bool Processor::ImportModule(const char* moduleName, bool binaryFlag, bool overwriteFlag)
-{
-	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromString(moduleName));
-	if (!pDottedSymbol) {
-		Error::Issue(ErrorType::ImportError, "invalid module name");
-		return false;
-	}
-	RefPtr<Module> pModule(Module::ImportHierarchy(*this, *pDottedSymbol, binaryFlag, overwriteFlag));
-	if (!pModule) return false;
-	if (!pModule->AssignToFrame(*this, nullptr, overwriteFlag)) return false;
-	return true;
-}
-
-bool Processor::EvalCommand(const char *cmd)
-{
-	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseString(cmd));
-	if (!pExprOfRoot) return false;
-	Composer composer;
-	pExprOfRoot->Compose(composer);
-	if (Error::IsIssued()) return false;
-	Value::Delete(pExprOfRoot->Eval(*this));
-	return !Error::IsIssued();
-}
-
 void Processor::Print() const
 {
 	Stream& stream = *Stream::COut;

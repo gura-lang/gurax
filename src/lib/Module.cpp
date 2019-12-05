@@ -51,17 +51,30 @@ bool Module::ImportAllBuiltIns(Processor& processor)
 	return true;
 }
 
-bool Module::ImportByStringList(Processor& processor, const StringList& strs)
+bool Module::ImportByNameList(Processor& processor, const StringList& strs)
 {
-	bool binaryFlag = false;
-	bool overwriteFlag = false;
 	for (const String& str : strs) {
 		StringList moduleNames;
 		str.Split(moduleNames, ',');
 		for (const String& moduleName : moduleNames) {
-			if (!processor.ImportModule(moduleName.c_str(), binaryFlag, overwriteFlag)) return false;
+			if (!ImportByName(processor, moduleName.c_str())) return false;
 		}
 	}
+	return true;
+}
+
+bool Module::ImportByName(Processor& processor, const char* moduleName)
+{
+	bool binaryFlag = false;
+	bool overwriteFlag = false;
+	RefPtr<DottedSymbol> pDottedSymbol(DottedSymbol::CreateFromString(moduleName));
+	if (!pDottedSymbol) {
+		Error::Issue(ErrorType::ImportError, "invalid module name");
+		return false;
+	}
+	RefPtr<Module> pModule(Module::ImportHierarchy(processor, *pDottedSymbol, binaryFlag, overwriteFlag));
+	if (!pModule) return false;
+	if (!pModule->AssignToFrame(processor, nullptr, overwriteFlag)) return false;
 	return true;
 }
 

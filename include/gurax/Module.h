@@ -144,7 +144,8 @@ public:
 	bool Prepare(const char* name, char separator);
 	static String MakePathNameForBuiltIn(const char* name);
 	static bool ImportAllBuiltIns(Processor& processor);
-	static bool ImportByStringList(Processor& processor, const StringList& strs);
+	static bool ImportByNameList(Processor& processor, const StringList& strs);
+	static bool ImportByName(Processor& processor, const char* moduleName);
 	static Module* ImportHierarchy(Processor& processor, const DottedSymbol& dottedSymbol,
 								   bool binaryFlag, bool overwriteFlag);
 	static Module* Import(Processor& processor, const DottedSymbol& dottedSymbol,

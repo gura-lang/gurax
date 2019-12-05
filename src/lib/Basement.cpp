@@ -35,8 +35,12 @@ bool Basement::Initialize(int argc, char** argv)
 	PrepareFunction();
 	PrepareConsoleStream();
 	if (!Module::ImportAllBuiltIns(GetProcessor())) return false;
-	if (!Module::ImportByStringList(GetProcessor(), _cmdLine.GetStringList("import"))) return false;
-	return ExecCommand();
+	if (!Module::ImportByNameList(GetProcessor(), _cmdLine.GetStringList("import"))) return false;
+	for (const String& cmd : _cmdLine.GetStringList("command")) {
+		if (!ExecCommand(GetProcessor(), cmd.c_str())) return false;
+		_commandDoneFlag = true;
+	}
+	return true;
 }
 
 void Basement::PrepareVType()
@@ -121,16 +125,6 @@ void Basement::PrepareConsoleStream()
 	SetStreamCErr(Stream::CErr->Reference());
 }
 
-bool Basement::ExecCommand()
-{
-	Processor& processor = GetProcessor();
-	for (const String& cmd : _cmdLine.GetStringList("command")) {
-		if (!processor.EvalCommand(cmd.c_str())) return false;
-		_commandDoneFlag = true;
-	}
-	return true;
-}
-
 void Basement::AppendPathList(const String& str)
 {
 	StringList dirNames;
@@ -148,15 +142,18 @@ void Basement::AppendPathList(const StringList& strs)
 
 void Basement::Present(Processor& processor, RefPtr<Value> pValue)
 {
-	if (!_pFuncPresenter) return;
-	Value::Delete(_pFuncPresenter->EvalEasy(processor, pValue.release()));
-#if 0
-	Frame& frame = processor.GetFrameCur();
-	RefPtr<Argument> pArg(new Argument(*_pFuncPresenter));
-	ArgFeeder arg(*pArg);
-	arg.FeedValue(frame, pValue.release());
-	_pFuncPresenter->EvalVoid(processor, *pArg);
-#endif
+	if (_pFuncPresenter) Value::Delete(_pFuncPresenter->EvalEasy(processor, pValue.release()));
+}
+
+bool Basement::ExecCommand(Processor& processor, const char* cmd)
+{
+	RefPtr<Expr_Collector> pExprOfRoot(Parser::ParseString(cmd));
+	if (!pExprOfRoot) return false;
+	Composer composer;
+	pExprOfRoot->Compose(composer);
+	if (Error::IsIssued()) return false;
+	Value::Delete(pExprOfRoot->Eval(processor));
+	return !Error::IsIssued();
 }
 
 }

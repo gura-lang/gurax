@@ -52,7 +52,6 @@ public:
 	void PreparePathList();
 	void PrepareFunction();
 	void PrepareConsoleStream();
-	bool ExecCommand();
 	void AppendPathList(const String& str);
 	void AppendPathList(const StringList& strs);
 	Frame& GetFrame() { return *_pFrame; }
@@ -90,6 +89,8 @@ public:
 	void Present(Processor& processor, StringReferable* pStr) {
 		Present(processor, new Value_String(pStr));
 	}
+public:
+	static bool ExecCommand(Processor& processor, const char* cmd);
 };
 
 }
