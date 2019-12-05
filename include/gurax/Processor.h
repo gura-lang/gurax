@@ -135,7 +135,6 @@ public:
 	static bool IsEventContinue(Event event) { return event == Event::Continue; }
 public:
 	Value* ProcessPUnit(const PUnit* pPUnit);
-	Value* ProcessExpr(const Expr& expr) { return ProcessPUnit(expr.GetPUnitFirst()); }
 public:
 	bool ImportModule(const char* moduleName, bool binaryFlag, bool overwriteFlag);
 	bool EvalCommand(const char* cmd);

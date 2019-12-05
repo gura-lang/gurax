@@ -103,9 +103,8 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 					}
 				}
 				idx++;
-				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
-				Event event = processor.GetEvent();
-				processor.ClearEvent();
+				Event event;
+				RefPtr<Value> pValue(exprOfBlock.Eval(processor, event));
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.
 				if (Processor::IsEventBreak(event)) {
@@ -133,10 +132,10 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 					}
 				}
 				idx++;
-				pValueRtn.reset(processor.ProcessExpr(exprOfBlock));
+				Event event;
+				pValueRtn.reset(exprOfBlock.Eval(processor, event));
 				if (Error::IsIssued()) break;
-				contFlag = !processor.IsEventBreak();
-				processor.ClearEvent();
+				contFlag = !Processor::IsEventBreak(event);
 			} while (contFlag);
 			if (pValueRtn->IsUndefined()) pValueRtn.reset(Value::nil());
 		}

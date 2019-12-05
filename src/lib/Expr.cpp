@@ -66,7 +66,7 @@ SymbolList Expr::GatherArgSymbols() const
 Value* Expr::Eval(Processor& processor) const
 {
 	if (!GetPUnitFirst()) return Value::nil();
-	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	processor.ClearEvent();
 	return pValue.release();
 }
@@ -74,7 +74,7 @@ Value* Expr::Eval(Processor& processor) const
 Value* Expr::Eval(Processor& processor, Event& event) const
 {
 	if (!GetPUnitFirst()) return Value::nil();
-	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	event = processor.GetEvent();
 	processor.ClearEvent();
 	return pValue.release();
@@ -85,7 +85,7 @@ Value* Expr::Eval(Processor& processor, Argument& argument) const
 	if (!GetPUnitFirst()) return Value::nil();
 	if (!argument.Compensate(processor)) return Value::nil();
 	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
-	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	processor.PopFrame();
 	processor.ClearEvent();
 	return pValue.release();
@@ -96,7 +96,7 @@ Value* Expr::Eval(Processor& processor, Argument& argument, Event& event) const
 	if (!GetPUnitFirst()) return Value::nil();
 	if (!argument.Compensate(processor)) return Value::nil();
 	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
-	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
 	event = processor.GetEvent();
 	processor.PopFrame();
 	processor.ClearEvent();

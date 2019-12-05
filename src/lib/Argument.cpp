@@ -57,7 +57,7 @@ bool Argument::Compensate(Processor& processor)
 		if (pArgSlot->HasValidValue()) {
 			// nothing to do
 		} else if (const Expr* pExprDefault = pArgSlot->GetDeclArg().GetExprDefault()) {
-			RefPtr<Value> pValue(processor.ProcessExpr(*pExprDefault));
+			RefPtr<Value> pValue(processor.ProcessPUnit(pExprDefault->GetPUnitFirst()));
 			if (Error::IsIssued()) return false;
 			pArgSlot->FeedValue(*this, processor.GetFrameCur(), pValue.release());
 		} else {

@@ -68,12 +68,11 @@ bool Main(int argc, char* argv[])
 	if (Error::IsIssued()) return false;
 	if (cmdLine.GetBool("list")) {
 		composer.PrintPUnit();
-	} else {
-		Processor& processor = Basement::Inst.GetProcessor();
-		RefPtr<Value> pValue(processor.ProcessExpr(*pExprRoot));
-		if (Error::IsIssued()) return false;
+		return true;
 	}
-	return true;
+	Processor& processor = Basement::Inst.GetProcessor();
+	RefPtr<Value> pValue(pExprRoot->Eval(processor));
+	return !Error::IsIssued();
 }
 
 //------------------------------------------------------------------------------

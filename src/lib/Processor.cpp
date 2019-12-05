@@ -93,7 +93,7 @@ bool Processor::EvalCommand(const char *cmd)
 	Composer composer;
 	pExprOfRoot->Compose(composer);
 	if (Error::IsIssued()) return false;
-	RefPtr<Value> pValue(ProcessExpr(*pExprOfRoot));
+	Value::Delete(pExprOfRoot->Eval(*this));
 	return !Error::IsIssued();
 }
 
