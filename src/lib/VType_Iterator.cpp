@@ -278,7 +278,7 @@ Gurax_DeclareMethod(Iterator, Contains)
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns `true` if the iterable contains an element that equals to the given argument `value`.");
 }
 
 Gurax_ImplementMethod(Iterator, Contains)
@@ -301,7 +301,7 @@ Gurax_DeclareMethod(Iterator, Count)
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns the number of elements in the iterable that equals to the given argument `value`.");
 }
 
 Gurax_ImplementMethod(Iterator, Count)
@@ -318,27 +318,30 @@ Gurax_ImplementMethod(Iterator, Count)
 	return new Value_Number(cnt);
 }
 
-// Iterator#CountIf(criteria)
+// Iterator#CountIf(criteria:Function)
 Gurax_DeclareMethod(Iterator, CountIf)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("criteria", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns the number of elements in the iterable that passes the specified criteria function.\n"
+		"The function `criteria` takes a single argument and returns a `Bool` value\n"
+		"after determininig if the given value passes its criteria.\n");
 }
 
 Gurax_ImplementMethod(Iterator, CountIf)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
+	const Function& criteria = args.Pick<Value_Function>().GetFunction();
 	// Function body
-#endif
-	return Value::nil();
+	size_t cnt = iteratorThis.CountIf(processor, criteria);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
 }
 
 // Iterator#CountTrue()
@@ -347,7 +350,7 @@ Gurax_DeclareMethod(Iterator, CountTrue)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns the number of elements in the iterable that are recognized as `true`.");
 }
 
 Gurax_ImplementMethod(Iterator, CountTrue)

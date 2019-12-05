@@ -484,25 +484,26 @@ Gurax_ImplementMethod(List, Count)
 	return new Value_Number(cnt);
 }
 
-// List#CountIf(criteria)
+// List#CountIf(criteria:Function)
 Gurax_DeclareMethod(List, CountIf)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("criteria", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
 Gurax_ImplementMethod(List, CountIf)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	const Function& criteria = args.Pick<Value_Function>().GetFunction();
 	// Function body
-#endif
-	return Value::nil();
+	size_t cnt = valueTypedOwner.GetValueOwner().CountIf(processor, criteria);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
 }
 
 // List#CountTrue()
