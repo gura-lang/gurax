@@ -107,7 +107,7 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 	for (const Value* pValue : *this) {
 		ArgFeeder args(*pArgument);
 		args.FeedValue(frame, pValue->Reference());
-		RefPtr<Value> pValueRtn(function.DoEval(processor, *pArgument));
+		RefPtr<Value> pValueRtn(function.Eval(processor, *pArgument));
 		if (pValueRtn->GetBool()) cnt++;
 	}
 	return cnt;

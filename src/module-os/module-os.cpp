@@ -32,9 +32,8 @@ Gurax_ImplementFunction(Clock)
 {
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	if (!pExprOfBlock) return new Value_Number(OAL::GetTickTime());
-	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
 	Double timeBegin = OAL::GetTickTime();
-	RefPtr<Value> pValueRtn(processor.EvalExpr(*pExprOfBlock, *pArgument));
+	RefPtr<Value> pValueRtn(pExprOfBlock->Eval(processor));
 	Double timeEnd = OAL::GetTickTime();
 	return new Value_Number(timeEnd - timeBegin);
 }
@@ -92,8 +91,7 @@ Gurax_ImplementFunction(Redirect)
 	g_pStreamCErr = args.IsValid()? &Value_Stream::GetStream(args.PickValue()) : Stream::Dumb.get();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
-	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*pExprOfBlock));
-	RefPtr<Value> pValueRtn(processor.EvalExpr(*pExprOfBlock, *pArgument));
+	RefPtr<Value> pValueRtn(pExprOfBlock->Eval(processor));
 	g_pStreamCIn = pStreamCIn;
 	g_pStreamCOut = pStreamCOut;
 	g_pStreamCErr = pStreamCErr;

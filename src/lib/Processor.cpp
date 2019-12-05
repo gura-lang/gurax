@@ -33,27 +33,6 @@ Frame& Processor::PushFrameForFunction(const Function& function, bool dynamicSco
 		PushFrame(new Frame_Scope(function.LockFrameOuter()));
 }
 
-Value* Processor::EvalExpr(const Expr& expr, Event* pEvent)
-{
-	if (!expr.GetPUnitFirst()) return Value::nil();
-	RefPtr<Value> pValue(ProcessExpr(expr));
-	if (pEvent) *pEvent = GetEvent();
-	ClearEvent();
-	return pValue.release();
-}
-
-Value* Processor::EvalExpr(const Expr& expr, Argument& argument, Event* pEvent)
-{
-	if (!argument.Compensate(*this)) return Value::nil();
-	argument.AssignToFrame(PushFrame<Frame_Block>());
-	if (!expr.GetPUnitFirst()) return Value::nil();
-	RefPtr<Value> pValue(ProcessExpr(expr));
-	if (pEvent) *pEvent = GetEvent();
-	ClearEvent();
-	PopFrame();
-	return pValue.release();
-}
-
 Value* Processor::ProcessPUnit(const PUnit* pPUnit)
 {
 	if (!pPUnit) return Value::nil();

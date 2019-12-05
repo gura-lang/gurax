@@ -149,11 +149,14 @@ void Basement::AppendPathList(const StringList& strs)
 void Basement::Present(Processor& processor, RefPtr<Value> pValue)
 {
 	if (!_pFuncPresenter) return;
+	Value::Delete(_pFuncPresenter->EvalEasy(processor, pValue.release()));
+#if 0
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Argument> pArg(new Argument(*_pFuncPresenter));
 	ArgFeeder arg(*pArg);
 	arg.FeedValue(frame, pValue.release());
-	_pFuncPresenter->DoEvalVoid(processor, *pArg);
+	_pFuncPresenter->EvalVoid(processor, *pArg);
+#endif
 }
 
 }

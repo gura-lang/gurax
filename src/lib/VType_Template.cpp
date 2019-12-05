@@ -229,7 +229,7 @@ Gurax_ImplementMethod(Template, block)
 	if (!pValue || !pValue->IsType(VTYPE_Expr)) return Value::nil();
 	const Expr& expr = Value_Expr::GetExpr(*pValue);
 	processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), valueThis.Reference());
-	processor.EvalExpr(expr);
+	Value::Delete(expr.Eval(processor));
 	processor.PopFrame();
 	return Value::nil();
 }
@@ -275,7 +275,7 @@ Gurax_ImplementMethod(Template, call)
 		if (!args.FeedValues(frame, values)) return Value::nil();
 	} while (0);
 	tmpl.ClearLastChar();
-	function.DoEvalVoid(processor, *pArgument);
+	Value::Delete(function.Eval(processor, *pArgument));
 	return (tmpl.GetLastChar() == '\n')? Value::nil() : new Value_String(String::Empty);
 }
 
@@ -438,7 +438,7 @@ Gurax_ImplementMethod(Template, super)
 	if (!pValue || !pValue->IsType(VTYPE_Expr)) return Value::nil();
 	const Expr& expr = Value_Expr::GetExpr(*pValue);
 	processor.PushFrame<Frame_Block>().Assign(Gurax_Symbol(this_), valueThis.Reference());
-	processor.EvalExpr(expr);
+	Value::Delete(expr.Eval(processor));
 	processor.PopFrame();
 	return Value::nil();
 }

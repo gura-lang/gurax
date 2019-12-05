@@ -63,7 +63,7 @@ size_t Iterator::CountIf(Processor& processor, const Function& function)
 		if (!pValueElem) break;
 		ArgFeeder args(*pArgument);
 		args.FeedValue(frame, pValueElem.release());
-		RefPtr<Value> pValueRtn(function.DoEval(processor, *pArgument));
+		RefPtr<Value> pValueRtn(function.Eval(processor, *pArgument));
 		if (pValueRtn->GetBool()) cnt++;
 	}
 	return cnt;

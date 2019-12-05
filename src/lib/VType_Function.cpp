@@ -200,7 +200,7 @@ void Value_Function::DoCall(Processor& processor, Argument& argument)
 
 Value* Value_Function::DoEval(Processor& processor, Argument& argument) const
 {
-	return GetFunction().DoEval(processor, argument);
+	return GetFunction().Eval(processor, argument);
 }
 
 }

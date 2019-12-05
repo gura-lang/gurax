@@ -36,8 +36,7 @@ Gurax_ImplementFunction(ChangeDir)
 			Error::Issue(ErrorType::IOError, errMsg);
 			return Value::nil();
 		}
-		RefPtr<Argument> pArgumentSub(Argument::CreateForBlockCall(*pExprOfBlock));
-		RefPtr<Value> pValue(processor.EvalExpr(*pExprOfBlock, *pArgumentSub));
+		RefPtr<Value> pValue(pExprOfBlock->Eval(processor));
 		if (!OAL::ChangeDir(dirNameOrg.c_str())) {
 			Error::Issue(ErrorType::IOError, errMsg);
 			return Value::nil();

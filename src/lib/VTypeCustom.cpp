@@ -202,7 +202,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 			processor.PushValue(new Value_Argument(pArgument.Reference()));
 			Value::Delete(processor.ProcessPUnit(exprBodyEx.GetPUnitSubFirst()));
 		}
-		_pConstructorInh->DoEvalVoid(processor, *pArgument);
+		Value::Delete(_pConstructorInh->Eval(processor, *pArgument));
 	}
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
 	processor.PopFrame();
@@ -264,7 +264,7 @@ ValueCustom::~ValueCustom()
 	const Function& funcDestructor = GetVType().GetDestructor();
 	if (!funcDestructor.IsEmpty()) {
 		RefPtr<Argument> pArgument(new Argument(funcDestructor));
-		funcDestructor.DoEval(GetProcessor(), *pArgument);
+		Value::Delete(funcDestructor.Eval(GetProcessor(), *pArgument));
 	}
 }
 

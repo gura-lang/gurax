@@ -88,7 +88,7 @@ ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int
 			for (Int idx : idxList) {
 				if (!args.FeedValue(frame, new Value_Number(idx))) return nullptr;
 			}
-			RefPtr<Value> pValue(processor.EvalExpr(*pExprOfBlock, *pArgSub));
+			RefPtr<Value> pValue(pExprOfBlock->Eval(processor, *pArgSub));
 			if (Error::IsIssued()) return nullptr;
 			pValueOwner->push_back(pValue.release());
 		}

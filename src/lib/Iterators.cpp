@@ -148,13 +148,13 @@ Value* Iterator_FunctionImpMap<skipNilFlag>::DoNextValue()
 	if (skipNilFlag) {
 		for (;;) {
 			if (!GetArgument().ReadyToPickValue(frame)) break;
-			RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+			RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 			if (pValueRtn->IsValid()) return pValueRtn.release();
 		}
 		return nullptr;
 	} else {
 		if (!GetArgument().ReadyToPickValue(frame)) return nullptr;
-		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 		if (Error::IsIssued()) return nullptr;
 		return pValueRtn.release();
 	}
@@ -265,7 +265,7 @@ Value* Iterator_for::DoNextValue()
 		}
 		_idx++;
 		Processor::Event event;
-		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
 			_contFlag = false;
@@ -300,7 +300,7 @@ Value* Iterator_while::DoNextValue()
 		}
 		_idx++;
 		Processor::Event event;
-		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
 			_contFlag = false;
@@ -334,7 +334,7 @@ Value* Iterator_repeat::DoNextValue()
 		}
 		_idx++;
 		Event event;
-		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
 			_contFlag = false;
@@ -370,7 +370,7 @@ Value* Iterator_DoEach::DoNextValue()
 		_idx++;
 		Event event;
 		GetProcessor().PushFrame(GetFrame().Reference());
-		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
+		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
 		GetProcessor().PopFrame();
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
@@ -701,7 +701,7 @@ Value* Iterator_SinceWithFunc::DoNextValue()
 			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
-		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 		if (pValueRtn->GetBool()) {
 			_triggeredFlag = true;
 			if (_includeFirstFlag) return pValue.release();
@@ -783,7 +783,7 @@ Value* Iterator_UntilWithFunc::DoNextValue()
 		if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
 	}
 	_idx++;
-	RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+	RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 	if (pValueRtn->GetBool()) {
 		_doneFlag = true;
 		return _includeLastFlag? pValue.release() : nullptr;
@@ -861,7 +861,7 @@ Value* Iterator_WhileWithFunc::DoNextValue()
 		if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
 	}
 	_idx++;
-	RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+	RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 	if (pValueRtn->GetBool()) return pValue.release();
 	_doneFlag = true;
 	return nullptr;
@@ -935,7 +935,7 @@ Value* Iterator_FilterWithFunc::DoNextValue()
 			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
-		RefPtr<Value> pValueRtn(GetFunction().DoEval(GetProcessor(), GetArgument()));
+		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
 		if (pValueRtn->GetBool()) return pValue.release();
 	}
 	return nullptr;
