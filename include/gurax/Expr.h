@@ -158,18 +158,10 @@ public:
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
-	bool Prepare() {
-		Visitor_Prepare visitor;
-		return Traverse(visitor);
-	}
-	SymbolList GatherArgSymbols() const {
-		SymbolList symbolList;
-		Visitor_GatherArgSymbols visitor(symbolList);
-		const_cast<Expr*>(this)->Traverse(visitor);
-		return symbolList;
-	}
+	bool Prepare();
+	SymbolList GatherArgSymbols() const;
+	Value* DoEval(Processor& processor, Argument& argument) const;
 	static size_t CountSequence(const Expr* pExpr);
-	//static void ComposeForArgSlot(Composer& composer, Expr* pExpr);
 	void ComposeSequence(Composer& composer, Expr* pExpr) const;
 public:
 	// Virtual functions

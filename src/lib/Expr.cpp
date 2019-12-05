@@ -49,6 +49,25 @@ String Expr::MakeIndent(const StringStyle& ss) const
 	return str;
 }
 
+bool Expr::Prepare()
+{
+	Visitor_Prepare visitor;
+	return Traverse(visitor);
+}
+
+SymbolList Expr::GatherArgSymbols() const
+{
+	SymbolList symbolList;
+	Visitor_GatherArgSymbols visitor(symbolList);
+	const_cast<Expr*>(this)->Traverse(visitor);
+	return symbolList;
+}
+
+Value* Expr::DoEval(Processor& processor, Argument& argument) const
+{
+	return nullptr;
+}
+
 size_t Expr::CountSequence(const Expr* pExpr)
 {
 	size_t nExprs = 0;
