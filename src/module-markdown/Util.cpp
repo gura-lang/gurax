@@ -5,6 +5,8 @@
 
 Gurax_BeginModuleScope(markdown)
 
+StringSet g_inlineTagNames;
+
 //------------------------------------------------------------------------------
 // Realization of symbol
 //------------------------------------------------------------------------------
@@ -21,12 +23,53 @@ Gurax_RealizeSymbol(align);
 //------------------------------------------------------------------------------
 // utilities
 //------------------------------------------------------------------------------
+void InitInlineTagNames()
+{
+	const char* inlineTagNames[] = {
+		"a",
+		"abbr",
+		"acronym",
+		"b",
+		"bdo",
+		"big",
+		"br",
+		"button",
+		"cite",
+		"code",
+		"dfn",
+		"em",
+		"i",
+		"img",
+		"input",
+		"kbd",
+		"label",
+		"map",
+		"object",
+		"q",
+		"samp",
+		"script",
+		"select",
+		"small",
+		"span",
+		"strong",
+		"sub",
+		"sup",
+		"textarea",
+		"time",
+		"tt",
+		"var",
+	};
+	// initialize constant table
+	for (int i = 0; i < ArraySizeOf(inlineTagNames); i++) {
+		g_inlineTagNames.insert(inlineTagNames[i]);
+	}
+}
+
 bool IsInlineTagName(const char* tagName)
 {
 	if (tagName == nullptr) return false;
-	//String tagNameLower = Lower(tagName);
-	//return g_inlineTagNames.find(tagNameLower) != g_inlineTagNames.end();
-	return false;
+	String tagNameLower = String::Lower(tagName);
+	return g_inlineTagNames.find(tagNameLower) != g_inlineTagNames.end();
 }
 
 Gurax_EndModuleScope(markdown)

@@ -5,8 +5,6 @@
 
 Gurax_BeginModule(markdown)
 
-//StringSet g_inlineTagNames;
-
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
@@ -39,6 +37,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Initialization
+	InitInlineTagNames();
 	// Assignment of VType
 	Assign(VTYPE_Document);
 	Assign(VTYPE_Item);

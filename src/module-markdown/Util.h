@@ -51,6 +51,7 @@ public:
 //------------------------------------------------------------------------------
 // Utilities
 //------------------------------------------------------------------------------
+void InitInlineTagNames();
 bool IsInlineTagName(const char* tagName);
 inline bool IsTagNameFirst(char ch) { return String::IsAlpha(ch); }
 inline bool IsTagNameFollower(char ch) { return String::IsAlpha(ch) || String::IsDigit(ch) || ch == '.'; }
