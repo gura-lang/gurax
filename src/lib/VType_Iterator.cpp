@@ -294,11 +294,11 @@ Gurax_ImplementMethod(Iterator, Contains)
 	return new Value_Bool(iteratorThis.Contains(value));
 }
 
-// Iterator#Count(value?)
+// Iterator#Count(value)
 Gurax_DeclareMethod(Iterator, Count)
 {
-	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -306,21 +306,22 @@ Gurax_DeclareMethod(Iterator, Count)
 
 Gurax_ImplementMethod(Iterator, Count)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
+	const Value& value = args.PickValue();
 	// Function body
-#endif
-	return Value::nil();
+	size_t cnt = iteratorThis.Count(value);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
 }
 
 // Iterator#CountIf(criteria)
 Gurax_DeclareMethod(Iterator, CountIf)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -338,6 +339,26 @@ Gurax_ImplementMethod(Iterator, CountIf)
 	// Function body
 #endif
 	return Value::nil();
+}
+
+// Iterator#CountTrue()
+Gurax_DeclareMethod(Iterator, CountTrue)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Iterator, CountTrue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
+	// Function body
+	size_t cnt = iteratorThis.CountTrue();
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
 }
 
 // Iterator#Cycle(n?:Number) {block?}

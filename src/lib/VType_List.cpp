@@ -462,31 +462,32 @@ Gurax_ImplementMethod(List, Contains)
 	return new Value_Bool(valueTypedOwner.GetValueOwner().Contains(value));
 }
 
-// List#Count(value?)
+// List#Count(value)
 Gurax_DeclareMethod(List, Count)
 {
-	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
 
 Gurax_ImplementMethod(List, Count)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Arguments
 	ArgPicker args(argument);
+	const Value& value = args.PickValue();
 	// Function body
-#endif
-	return Value::nil();
+	size_t cnt = valueTypedOwner.GetValueOwner().Count(value);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
 }
 
 // List#CountIf(criteria)
 Gurax_DeclareMethod(List, CountIf)
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("criteria", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	LinkHelp(VTYPE_Iterator, GetSymbol());
 }
@@ -502,6 +503,26 @@ Gurax_ImplementMethod(List, CountIf)
 	// Function body
 #endif
 	return Value::nil();
+}
+
+// List#CountTrue()
+Gurax_DeclareMethod(List, CountTrue)
+{
+	Declare(VTYPE_Number, Flag::None);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
+}
+
+Gurax_ImplementMethod(List, CountTrue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	// Arguments
+	ArgPicker args(argument);
+	// Function body
+	size_t cnt = valueTypedOwner.GetValueOwner().CountTrue();
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
 }
 
 // List#Cycle(n?:Number) {block?}
@@ -1437,6 +1458,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Contains));
 	Assign(Gurax_CreateMethod(List, Count));
 	Assign(Gurax_CreateMethod(List, CountIf));
+	Assign(Gurax_CreateMethod(List, CountTrue));
 	Assign(Gurax_CreateMethod(List, Cycle));
 	Assign(Gurax_CreateMethod(List, Each));
 	Assign(Gurax_CreateMethod(List, Filter));
