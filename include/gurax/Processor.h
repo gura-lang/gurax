@@ -15,7 +15,6 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Processor);
 public:
-	enum class Event { None, Break, Continue };
 	class ExceptionInfo {
 	private:
 		size_t _sizePUnitStack;

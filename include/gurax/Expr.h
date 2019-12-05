@@ -160,7 +160,10 @@ public:
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 	bool Prepare();
 	SymbolList GatherArgSymbols() const;
-	Value* DoEval(Processor& processor, Argument& argument) const;
+	Value* Eval(Processor& processor) const;
+	Value* Eval(Processor& processor, Event& event) const;
+	Value* Eval(Processor& processor, Argument& argument) const;
+	Value* Eval(Processor& processor, Argument& argument, Event& event) const;
 	static size_t CountSequence(const Expr* pExpr);
 	void ComposeSequence(Composer& composer, Expr* pExpr) const;
 public:
@@ -740,9 +743,9 @@ public:
 	bool IsDelegation() const {
 		return !HasExprElem() && _pExprLinkParam && _pExprLinkParam->HasSingle();
 	}
-	Value* DoEval(Processor& processor) const;
-	Value* DoEval(Processor& processor, RefPtr<Value> pValueArg) const;
-	Value* DoEval(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
+	//Value* DoEval(Processor& processor) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
 public:
 	// Virtual functions of Expr
 	virtual bool Traverse(Visitor& visitor) override {

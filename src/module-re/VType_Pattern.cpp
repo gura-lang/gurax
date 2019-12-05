@@ -126,7 +126,7 @@ Gurax_ImplementMethod(Pattern, Sub)
 	RefPtr<Value> pValueRtn(new Value_String(strRtn));
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	return pExprOfBlock?
-		pExprOfBlock->DoEval(processor, pValueRtn.release(), new Value_Number(nReplaced)) :
+		pExprOfBlock->EvalEasy(processor, pValueRtn.release(), new Value_Number(nReplaced)) :
 		pValueRtn.release();
 }
 

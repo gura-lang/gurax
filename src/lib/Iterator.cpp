@@ -55,10 +55,16 @@ size_t Iterator::CountTrue()
 
 size_t Iterator::CountIf(Processor& processor, const Function& function)
 {
+	Frame& frame = processor.GetFrameCur();
 	size_t cnt = 0;
+	RefPtr<Argument> pArgument(new Argument(function));
 	for (;;) {
 		RefPtr<Value> pValueElem(NextValue());
 		if (!pValueElem) break;
+		ArgFeeder args(*pArgument);
+		args.FeedValue(frame, pValueElem.release());
+		RefPtr<Value> pValueRtn(function.DoEval(processor, *pArgument));
+		if (pValueRtn->GetBool()) cnt++;
 	}
 	return cnt;
 }
@@ -98,7 +104,7 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				}
 				idx++;
 				RefPtr<Value> pValue(processor.ProcessExpr(exprOfBlock));
-				Processor::Event event = processor.GetEvent();
+				Event event = processor.GetEvent();
 				processor.ClearEvent();
 				if (Error::IsIssued()) break;
 				// Statements of return and break possibly return undefined value.

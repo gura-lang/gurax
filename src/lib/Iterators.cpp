@@ -333,7 +333,7 @@ Value* Iterator_repeat::DoNextValue()
 			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
-		Processor::Event event;
+		Event event;
 		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
@@ -368,7 +368,7 @@ Value* Iterator_DoEach::DoNextValue()
 			if (args.IsValid() && !args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
-		Processor::Event event;
+		Event event;
 		GetProcessor().PushFrame(GetFrame().Reference());
 		RefPtr<Value> pValueRtn(GetProcessor().EvalExpr(GetExprOfBlock(), GetArgument(), &event));
 		GetProcessor().PopFrame();

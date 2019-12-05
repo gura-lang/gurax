@@ -100,7 +100,7 @@ public:
 	bool Compensate(Processor& processor);
 	void DoCall(Processor& processor);
 	Value* ReturnValue(Processor& processor, RefPtr<Value> pValueRtn) {
-		return _pExprOfBlock? _pExprOfBlock->DoEval(processor, pValueRtn.release()) : pValueRtn.release();
+		return _pExprOfBlock? _pExprOfBlock->EvalEasy(processor, pValueRtn.release()) : pValueRtn.release();
 	}
 	Value* ReturnIterator(Processor& processor, RefPtr<Iterator> pIterator);
 	static void AssignThisToFrame(Frame& frame, Value* pValueThis) {

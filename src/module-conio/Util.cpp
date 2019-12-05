@@ -154,7 +154,7 @@ Value* SetColor(Processor& processor, const Symbol* pSymbolFg, const Symbol* pSy
 	if (pSymbolBg && !SymbolToColorCode(pSymbolBg, &bg)) return Value::nil();
 	::SetConsoleTextAttribute(hConsole, fg + (bg << 4));
 	if (pExprOfBlock) {
-		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
+		RefPtr<Value> pValue(pExprOfBlock->Eval(processor));
 		if (Error::IsIssued()) return Value::nil();
 		::SetConsoleTextAttribute(hConsole, csbi.wAttributes);
 		return pValue.release();
@@ -170,7 +170,7 @@ Value* MoveTo(Processor& processor, int x, int y, const Expr_Block* pExprOfBlock
 	COORD pos = { x, y };
 	::SetConsoleCursorPosition(hConsole, pos);
 	if (pExprOfBlock) {
-		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
+		RefPtr<Value> pValue(pExprOfBlock->Eval(processor));
 		if (Error::IsIssued()) return Value::nil();
 		::SetConsoleCursorPosition(hConsole, csbi.dwCursorPosition);
 		return pValue.release();
@@ -314,7 +314,7 @@ Value* SetColor(Processor& processor, const Symbol* pSymbolFg, const Symbol* pSy
 	}
 	if (pExprOfBlock) {
 		g_attrStack.push_back(str);
-		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
+		RefPtr<Value> pValue(pExprOfBlock->Eval(processor));
 		if (Error::IsIssued()) return Value::nil();
 		if (!g_attrStack.empty()) g_attrStack.pop_back();
 		if (g_attrStack.empty()) {
@@ -334,7 +334,7 @@ Value* MoveTo(Processor& processor, int x, int y, const Expr_Block* pExprOfBlock
 	if (pExprOfBlock) {
 		::printf("\033[s");
 		::printf("\033[%d;%dH", y + 1, x + 1);
-		RefPtr<Value> pValue(pExprOfBlock->DoEval(processor));
+		RefPtr<Value> pValue(pExprOfBlock->Eval(processor));
 		if (Error::IsIssued()) return Value::nil();
 		::printf("\033[u");
 		return pValue.release();

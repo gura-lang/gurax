@@ -101,8 +101,14 @@ size_t ValueList::CountTrue() const
 
 size_t ValueList::CountIf(Processor& processor, const Function& function) const
 {
+	Frame& frame = processor.GetFrameCur();
 	size_t cnt = 0;
+	RefPtr<Argument> pArgument(new Argument(function));
 	for (const Value* pValue : *this) {
+		ArgFeeder args(*pArgument);
+		args.FeedValue(frame, pValue->Reference());
+		RefPtr<Value> pValueRtn(function.DoEval(processor, *pArgument));
+		if (pValueRtn->GetBool()) cnt++;
 	}
 	return cnt;
 }

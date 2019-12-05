@@ -63,9 +63,44 @@ SymbolList Expr::GatherArgSymbols() const
 	return symbolList;
 }
 
-Value* Expr::DoEval(Processor& processor, Argument& argument) const
+Value* Expr::Eval(Processor& processor) const
 {
-	return nullptr;
+	if (!GetPUnitFirst()) return Value::nil();
+	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	processor.ClearEvent();
+	return pValue.release();
+}
+
+Value* Expr::Eval(Processor& processor, Event& event) const
+{
+	if (!GetPUnitFirst()) return Value::nil();
+	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	event = processor.GetEvent();
+	processor.ClearEvent();
+	return pValue.release();
+}
+
+Value* Expr::Eval(Processor& processor, Argument& argument) const
+{
+	if (!GetPUnitFirst()) return Value::nil();
+	if (!argument.Compensate(processor)) return Value::nil();
+	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
+	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	processor.ClearEvent();
+	processor.PopFrame();
+	return pValue.release();
+}
+
+Value* Expr::Eval(Processor& processor, Argument& argument, Event& event) const
+{
+	if (!GetPUnitFirst()) return Value::nil();
+	if (!argument.Compensate(processor)) return Value::nil();
+	argument.AssignToFrame(processor.PushFrame<Frame_Block>());
+	RefPtr<Value> pValue(processor.ProcessExpr(*this));
+	event = processor.GetEvent();
+	processor.ClearEvent();
+	processor.PopFrame();
+	return pValue.release();
 }
 
 size_t Expr::CountSequence(const Expr* pExpr)
@@ -825,30 +860,34 @@ bool Expr_Block::HasCallerAsParent() const
 	return pExprParent && pExprParent->IsType<Expr_Caller>();
 }
 
+#if 0
 Value* Expr_Block::DoEval(Processor& processor) const
 {
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
 	ArgFeeder args(*pArgument);
 	return processor.EvalExpr(*this, *pArgument);
 }
+#endif
 
-Value* Expr_Block::DoEval(Processor& processor, RefPtr<Value> pValueArg) const
+Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
 	ArgFeeder args(*pArgument);
 	if (!args.FeedValue(frame, pValueArg.release())) return Value::nil();
-	return processor.EvalExpr(*this, *pArgument);
+	//return processor.EvalExpr(*this, *pArgument);
+	return Eval(processor, *pArgument);
 }
 
-Value* Expr_Block::DoEval(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const
+Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const
 {
 	Frame& frame = processor.GetFrameCur();
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
 	ArgFeeder args(*pArgument);
 	if (!args.FeedValue(frame, pValueArg1.release())) return Value::nil();
 	if (!args.FeedValue(frame, pValueArg2.release())) return Value::nil();
-	return processor.EvalExpr(*this, *pArgument);
+	//return processor.EvalExpr(*this, *pArgument);
+	return Eval(processor, *pArgument);
 }
 
 String Expr_Block::ToString(const StringStyle& ss) const
