@@ -675,7 +675,7 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::Exec(Processor& processor) co
 		GetTemplate().Print(GetStringIndent());
 		PrintScriptResult(dynamic_cast<Value_String&>(*pValue).GetString());
 	} else if (pValue->IsType(VTYPE_List) || pValue->IsType(VTYPE_Iterator)) {
-		RefPtr<Iterator> pIterator(pValue->DoGenIterator());
+		RefPtr<Iterator> pIterator(pValue->GenIterator());
 		bool firstFlag = true;
 		for (;;) {
 			RefPtr<Value> pValue(pIterator->NextValue());

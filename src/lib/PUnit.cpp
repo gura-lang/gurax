@@ -544,7 +544,7 @@ void PUnit_GenIterator<nExprSrc, discardValueFlag>::Exec(Processor& processor) c
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValue(processor.PopValue());
-	RefPtr<Iterator> pIterator(pValue->DoGenIterator());
+	RefPtr<Iterator> pIterator(pValue->GenIterator());
 	if (!pIterator) {
 		processor.ErrorDone();
 		return;
@@ -676,7 +676,7 @@ void PUnit_GenIterator_ForLister<nExprSrc, discardValueFlag>::Exec(Processor& pr
 	Value& value(processor.PeekValue(0));
 	RefPtr<Iterator> pIterator;
 	if (value.IsIterable()) {
-		pIterator.reset(value.DoGenIterator());
+		pIterator.reset(value.GenIterator());
 	} else {
 		pIterator.reset(new Iterator_Const(value.Reference()));
 	}
@@ -1695,7 +1695,7 @@ void PUnit_MemberSet_Normal<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Pr
 		pValueAssigned.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -1767,14 +1767,14 @@ void PUnit_MemberSet_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Proce
 		pValueAssigned.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+	RefPtr<Iterator> pIteratorTarget(pValueTarget->GenIterator());
 	if (!pIteratorTarget) {
 		Error::Issue(ErrorType::IteratorError, "the target not is not iterable");
 		processor.ErrorDone();
 		return;
 	}
 	if (GetMapAssignedFlag() && pValueAssigned->IsIterable()) {
-		RefPtr<Iterator> pIteratorAssigned(pValueAssigned->DoGenIterator());
+		RefPtr<Iterator> pIteratorAssigned(pValueAssigned->GenIterator());
 		if (pIteratorTarget->IsInfinite() && pIteratorAssigned->IsInfinite()) {
 			Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
 			processor.ErrorDone();
@@ -1785,7 +1785,7 @@ void PUnit_MemberSet_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Proce
 			if (!pValueTargetEach) break;
 			RefPtr<Value> pValueAssignedEach(pIteratorAssigned->NextValue());
 			if (!pValueAssignedEach) break;
-			if (!pValueTargetEach->DoPropSet(GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
+			if (!pValueTargetEach->PropSet(GetSymbol(), pValueAssignedEach->Reference(), GetAttr())) {
 				processor.ErrorDone();
 				return;
 			}
@@ -1803,7 +1803,7 @@ void PUnit_MemberSet_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(Proce
 		for (;;) {
 			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
 			if (!pValueTargetEach) break;
-			if (!pValueTargetEach->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+			if (!pValueTargetEach->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 				processor.ErrorDone();
 				return;
 			}
@@ -1881,13 +1881,13 @@ void PUnit_MemberOpApply_Normal<nExprSrc, discardValueFlag, valueFirstFlag>::Exe
 		pValueApplied.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
 		processor.ErrorDone();
 		return;
 	}
 	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
-	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -1959,13 +1959,13 @@ void PUnit_MemberOpApply_Map<nExprSrc, discardValueFlag, valueFirstFlag>::Exec(P
 		pValueApplied.reset(processor.PopValue());
 		pValueTarget.reset(processor.PopValue());
 	}
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
 		processor.ErrorDone();
 		return;
 	}
 	RefPtr<Value> pValueAssigned(GetOperator().EvalBinary(processor, *pValueProp, *pValueApplied));
-	if (!pValueTarget->DoPropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
+	if (!pValueTarget->PropSet(GetSymbol(), pValueAssigned->Reference(), GetAttr())) {
 		processor.ErrorDone();
 		return;
 	}
@@ -2028,7 +2028,7 @@ void PUnit_MemberGet_Normal<nExprSrc, discardValueFlag>::Exec(Processor& process
 {
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
-	Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+	Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 	if (!pValueProp) {
 		processor.ErrorDone();
 		return;
@@ -2077,13 +2077,13 @@ void PUnit_MemberGet_MapAlong<nExprSrc, discardValueFlag>::Exec(Processor& proce
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
-		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+		RefPtr<Iterator> pIteratorTarget(pValueTarget->GenIterator());
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapAlong(
 									   processor.Reference(), pIteratorTarget.release(),
 									   GetSymbol(), GetAttr().Reference()));
 		if (!discardValueFlag) processor.PushValue(new Value_ArgMapper(pIterator.release()));
 	} else {
-		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+		Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
@@ -2133,12 +2133,12 @@ void PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& proc
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
-		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+		RefPtr<Iterator> pIteratorTarget(pValueTarget->GenIterator());
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		for (;;) {
 			RefPtr<Value> pValueTargetEach(pIteratorTarget->NextValue());
 			if (!pValueTargetEach) break;
-			Value* pValueProp = pValueTargetEach->DoPropGet(GetSymbol(), GetAttr(), true);
+			Value* pValueProp = pValueTargetEach->PropGet(GetSymbol(), GetAttr(), true);
 			if (!pValueProp) {
 				processor.ErrorDone();
 				return;
@@ -2154,7 +2154,7 @@ void PUnit_MemberGet_MapToList<nExprSrc, discardValueFlag>::Exec(Processor& proc
 			processor.PushValue(new Value_List(new ValueTypedOwner(pValueOwner.release())));
 		}
 	} else {
-		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+		Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;
@@ -2204,13 +2204,13 @@ void PUnit_MemberGet_MapToIter<nExprSrc, discardValueFlag>::Exec(Processor& proc
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Value> pValueTarget(processor.PopValue());
 	if (pValueTarget->IsIterable()) {
-		RefPtr<Iterator> pIteratorTarget(pValueTarget->DoGenIterator());
+		RefPtr<Iterator> pIteratorTarget(pValueTarget->GenIterator());
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapToIter(
 									   processor.Reference(), pIteratorTarget.release(),
 									   GetSymbol(), GetAttr().Reference()));
 		if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	} else {
-		Value* pValueProp = pValueTarget->DoPropGet(GetSymbol(), GetAttr(), true);
+		Value* pValueProp = pValueTarget->PropGet(GetSymbol(), GetAttr(), true);
 		if (!pValueProp) {
 			processor.ErrorDone();
 			return;

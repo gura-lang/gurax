@@ -60,7 +60,7 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 	} else if (valueIndex.IsInstanceOf(VTYPE_List)) {
 		const Value_List& valueIndexEx = dynamic_cast<const Value_List&>(valueIndex);
 		if (pValue->IsIterable()) {
-			RefPtr<Iterator> pIteratorSrc(pValue->DoGenIterator());
+			RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
 			for (const Value* pValueIndexEach : valueIndexEx.GetValueOwner()) {
 				RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 				if (!pValueIndexEach) break;
@@ -76,7 +76,7 @@ bool ValueTypedOwner::IndexSet(const Value& valueIndex, Value* pValue)
 		const Value_Iterator& valueIndexEx = dynamic_cast<const Value_Iterator&>(valueIndex);
 		Iterator& iteratorIndex = valueIndexEx.GetIterator();
 		if (pValue->IsIterable()) {
-			RefPtr<Iterator> pIteratorSrc(pValue->DoGenIterator());
+			RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
 			if (iteratorIndex.IsInfinite() && pIteratorSrc->IsInfinite()) {
 				Error::Issue(ErrorType::IteratorError, "infinite iterator is unacceptable");
 				return false;

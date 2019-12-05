@@ -556,7 +556,7 @@ Gurax_ImplementMethod(List, Each)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	RefPtr<Iterator> pIterator(valueThis.DoGenIterator());
+	RefPtr<Iterator> pIterator(valueThis.GenIterator());
 	if (!argument.HasExprOfBlock()) return new Value_Iterator(pIterator.release());
 	return pIterator->Each(processor, *argument.GetExprOfBlock(), argument.GetFlags());
 }
@@ -1597,7 +1597,7 @@ const DeclCallable* Value_List::GetDeclCallable()
 void Value_List::DoCall(Processor& processor, Argument& argument)
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
-	RefPtr<Value> pValueRtn(DoEval(processor, argument));
+	RefPtr<Value> pValueRtn(Eval(processor, argument));
 	if (Error::IsIssued()) return;
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
 		processor.PushValue(pValueRtn.release());
@@ -1616,7 +1616,7 @@ Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 						 "member mapping cannot be applied to a list that contains different type of values");
 			return Value::nil();
 		}
-		RefPtr<Value> pValueRtn(pValueElem->DoEval(processor, argument));
+		RefPtr<Value> pValueRtn(pValueElem->Eval(processor, argument));
 		if (Error::IsIssued()) return Value::nil();
 		if (!pValueOwner) pValueOwner.reset(new ValueOwner());
 		pValueOwner->push_back(pValueRtn.release());
@@ -1651,7 +1651,7 @@ void Value_List::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 		const Value& valueIndex = *valuesIndex.front();
 		GetValueTypedOwner().IndexSet(valueIndex, pValue.release());
 	} else if (pValue->IsIterable()) {
-		RefPtr<Iterator> pIteratorSrc(pValue->DoGenIterator());
+		RefPtr<Iterator> pIteratorSrc(pValue->GenIterator());
 		for (const Value* pValueIndexEach : valuesIndex) {
 			RefPtr<Value> pValueEach(pIteratorSrc->NextValue());
 			if (!pValueIndexEach) break;

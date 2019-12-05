@@ -86,7 +86,7 @@ void Argument::DoCall(Processor& processor)
 			return;
 		}
 	}
-	GetValueCar().DoCall(processor, *this);
+	GetValueCar().Call(processor, *this);
 }
 
 bool Argument::ReadyToPickValue(Frame& frame)

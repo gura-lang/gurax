@@ -29,7 +29,7 @@ void ArgSlot_Single::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> p
 {
 	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
 		pValue->UpdateMapMode(argument);
-		_pValue.reset(new Value_ArgMapper(pValue->DoGenIterator()));
+		_pValue.reset(new Value_ArgMapper(pValue->GenIterator()));
 	} else {
 		pValue.reset(GetDeclArg().Cast(frame, *pValue));
 		if (Error::IsIssued()) return;
@@ -62,7 +62,7 @@ void ArgSlot_Multiple::FeedValue(Argument& argument, Frame& frame, RefPtr<Value>
 			SetValue(new Value_ArgMapper_Multiple(GetValue().GetValueTypedOwner().Reference()));
 		}
 		pValue->UpdateMapMode(argument);
-		GetValue().GetValueTypedOwner().Add(new Value_ArgMapper(pValue->DoGenIterator()));
+		GetValue().GetValueTypedOwner().Add(new Value_ArgMapper(pValue->GenIterator()));
 	} else {
 		pValue.reset(GetDeclArg().Cast(frame, *pValue));
 		if (Error::IsIssued()) return;

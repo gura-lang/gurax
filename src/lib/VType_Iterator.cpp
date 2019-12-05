@@ -460,7 +460,7 @@ Value* VType_Iterator::Method_Filter(Processor& processor, Argument& argument, I
 				iteratorSrc.Reference()));
 	} else if (pValue->IsIterable()) {
 		pIterator.reset(
-			new Iterator_FilterWithIter(pValue->DoGenIterator(), iteratorSrc.Reference()));
+			new Iterator_FilterWithIter(pValue->GenIterator(), iteratorSrc.Reference()));
 	} else {
 		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
 		return Value::nil();
@@ -1200,7 +1200,7 @@ Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument,
 				iteratorSrc.Reference(), includeFirstFlag));
 	} else if (pValue->IsIterable()) {
 		pIterator.reset(
-			new Iterator_SinceWithIter(pValue->DoGenIterator(), iteratorSrc.Reference(), includeFirstFlag));
+			new Iterator_SinceWithIter(pValue->GenIterator(), iteratorSrc.Reference(), includeFirstFlag));
 	} else {
 		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
 		return Value::nil();
@@ -1451,7 +1451,7 @@ Value* VType_Iterator::Method_Until(Processor& processor, Argument& argument,
 				iteratorSrc.Reference(), includeLastFlag));
 	} else if (pValue->IsIterable()) {
 		pIterator.reset(
-			new Iterator_UntilWithIter(pValue->DoGenIterator(), iteratorSrc.Reference(), includeLastFlag));
+			new Iterator_UntilWithIter(pValue->GenIterator(), iteratorSrc.Reference(), includeLastFlag));
 	} else {
 		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
 		return Value::nil();
@@ -1512,7 +1512,7 @@ Value* VType_Iterator::Method_While(Processor& processor, Argument& argument, It
 				iteratorSrc.Reference()));
 	} else if (pValue->IsIterable()) {
 		pIterator.reset(
-			new Iterator_WhileWithIter(pValue->DoGenIterator(), iteratorSrc.Reference()));
+			new Iterator_WhileWithIter(pValue->GenIterator(), iteratorSrc.Reference()));
 	} else {
 		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
 		return Value::nil();
@@ -1643,11 +1643,11 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 			for (;;) {
 				RefPtr<Value> pValue(GetIterator().NextValue());
 				if (!pValue) break;
-				pValue->DoEval(processor, argument);
+				pValue->Eval(processor, argument);
 			}
 		}
 	} else {
-		RefPtr<Value> pValueRtn(DoEval(processor, argument));
+		RefPtr<Value> pValueRtn(Eval(processor, argument));
 		if (Error::IsIssued()) return;
 		processor.PushValue(pValueRtn.release());
 	}

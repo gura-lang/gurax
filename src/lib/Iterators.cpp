@@ -196,7 +196,7 @@ Value* Iterator_Member_MapAlong::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
-	Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
+	Value* pValueProp = pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true);
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
@@ -214,7 +214,7 @@ Value* Iterator_Member_MapToIter::DoNextValue()
 {
 	RefPtr<Value> pValueTargetElem(GetIteratorTarget().NextValue());
 	if (!pValueTargetElem) return nullptr;
-	Value* pValueProp = pValueTargetElem->DoPropGet(GetSymbol(), GetAttr(), true);
+	Value* pValueProp = pValueTargetElem->PropGet(GetSymbol(), GetAttr(), true);
 	return pValueProp? pValueProp->AsMember(*pValueTargetElem) : nullptr;
 }
 
@@ -237,7 +237,7 @@ Value* Iterator_IteratorEvaluator::DoNextValue()
 					 "member mapping cannot be applied to an iterator that returns different type of values");
 		return nullptr;
 	}
-	RefPtr<Value> pValueRtn(pValueElem->DoEval(GetProcessor(), GetArgument()));
+	RefPtr<Value> pValueRtn(pValueElem->Eval(GetProcessor(), GetArgument()));
 	if (Error::IsIssued()) return nullptr;
 	return pValueRtn.release();
 }
@@ -647,7 +647,7 @@ Value* Iterator_Flatten::DoNextValue()
 		RefPtr<Value> pValue(GetIteratorCur().DoNextValue());
 		if (pValue) {
 			if (!pValue->IsIterable()) return pValue.release();
-			RefPtr<Iterator> pIterator(pValue->DoGenIterator());
+			RefPtr<Iterator> pIterator(pValue->GenIterator());
 			if (!pIterator || !pIterator->MustBeFinite()) break;
 			_iteratorDeque.push_back(pIterator.Reference());
 			if (_searchMode == SearchMode::DepthFirst) _pIteratorCur.reset(pIterator.release());

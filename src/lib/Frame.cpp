@@ -48,7 +48,7 @@ Value* Frame::Lookup(const DottedSymbol& dottedSymbol, size_t nTail)
 	Value* pValue = Lookup(pSymbol);
 	while (pValue && ppSymbol + nTail != symbolList.end()) {
 		const Symbol* pSymbol = *ppSymbol++;
-		pValue = pValue->DoPropGet(pSymbol, *Attribute::Empty, false);
+		pValue = pValue->PropGet(pSymbol, *Attribute::Empty, false);
 	}
 	return pValue;
 }
@@ -72,7 +72,7 @@ bool Frame::Assign(const DottedSymbol& dottedSymbol, Value* pValue)
 	if (dottedSymbol.IsDotted()) {
 		Value* pValueTarget = Lookup(dottedSymbol, 1);
 		if (!pValueTarget) return false;
-		return pValueTarget->DoPropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
+		return pValueTarget->PropSet(dottedSymbol.GetSymbolLast(), pValue, *Attribute::Empty);
 	} else {
 		Assign(dottedSymbol.GetSymbolLast(), pValue);
 		return true;

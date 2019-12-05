@@ -131,7 +131,7 @@ Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 			RefPtr<Iterator> pIterator(
 				new Iterator_UnaryOpImpMap(
 					processor.Reference(), this,
-					new Value_ArgMapper(value.DoGenIterator())));
+					new Value_ArgMapper(value.GenIterator())));
 			RefPtr<Value_List> pValueRtn(new Value_List());
 			ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 			for (;;) {
@@ -145,7 +145,7 @@ Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 			RefPtr<Iterator> pIterator(
 				new Iterator_UnaryOpImpMap(
 					processor.Reference(), this,
-					new Value_ArgMapper(value.DoGenIterator())));
+					new Value_ArgMapper(value.GenIterator())));
 			return new Value_Iterator(pIterator.release());
 		}
 	}
@@ -160,15 +160,15 @@ Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Val
 			RefPtr<Iterator> pIterator(
 				new Iterator_BinaryOpImpMap(
 					processor.Reference(), this,
-					valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
-					valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
+					valueL.IsIterable()? new Value_ArgMapper(valueL.GenIterator()) : valueL.Reference(),
+					valueR.IsIterable()? new Value_ArgMapper(valueR.GenIterator()) : valueR.Reference()));
 			return new Value_Iterator(pIterator.release());
 		} else if (valueL.IsList() || valueR.IsList()) {
 			RefPtr<Iterator> pIterator(
 				new Iterator_BinaryOpImpMap(
 					processor.Reference(), this,
-					valueL.IsIterable()? new Value_ArgMapper(valueL.DoGenIterator()) : valueL.Reference(),
-					valueR.IsIterable()? new Value_ArgMapper(valueR.DoGenIterator()) : valueR.Reference()));
+					valueL.IsIterable()? new Value_ArgMapper(valueL.GenIterator()) : valueL.Reference(),
+					valueR.IsIterable()? new Value_ArgMapper(valueR.GenIterator()) : valueR.Reference()));
 			RefPtr<Value_List> pValueRtn(new Value_List());
 			ValueTypedOwner& valueTypedOwner = pValueRtn->GetValueTypedOwner();
 			for (;;) {

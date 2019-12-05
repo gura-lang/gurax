@@ -141,7 +141,7 @@ const DeclCallable* Value_VType::GetDeclCallable()
 void Value_VType::DoCall(Processor& processor, Argument& argument)
 {
 	const Function& constructor = GetVTypeThis().GetConstructor();
-	constructor.DoCall(processor, argument);
+	constructor.Call(processor, argument);
 }
 
 Value* Value_VType::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)

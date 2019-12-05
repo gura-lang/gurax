@@ -195,7 +195,7 @@ const DeclCallable* Value_Function::GetDeclCallable()
 
 void Value_Function::DoCall(Processor& processor, Argument& argument)
 {
-	GetFunction().DoCall(processor, argument);
+	GetFunction().Call(processor, argument);
 }
 
 Value* Value_Function::DoEval(Processor& processor, Argument& argument) const

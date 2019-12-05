@@ -38,38 +38,38 @@ const DeclCallable* Value_CallableMember::GetDeclCallable()
 void Value_CallableMember::DoCall(Processor& processor, Argument& argument)
 {
 	argument.SetValueThis(GetValueThis().Reference());
-	GetValueProp().DoCall(processor, argument);
+	GetValueProp().Call(processor, argument);
 }
 
 Value* Value_CallableMember::DoEval(Processor& processor, Argument& argument) const
 {
 	argument.SetValueThis(GetValueThis().Reference());
-	return GetValueProp().DoEval(processor, argument);
+	return GetValueProp().Eval(processor, argument);
 }
 
 Value* Value_CallableMember::DoIndexGet(const Index& index) const
 {
-	return GetValueProp().DoIndexGet(index);
+	return GetValueProp().IndexGet(index);
 }
 
 void Value_CallableMember::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 {
-	GetValueProp().DoIndexSet(index, pValue.release());
+	GetValueProp().IndexSet(index, pValue.release());
 }		
 
 Value* Value_CallableMember::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
 {
-	return GetValueProp().DoIndexOpApply(index, value, processor, op);
+	return GetValueProp().IndexOpApply(index, value, processor, op);
 }
 
 Value* Value_CallableMember::DoPropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	return GetValueProp().DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	return GetValueProp().PropGet(pSymbol, attr, notFoundErrorFlag);
 }
 
 bool Value_CallableMember::DoPropSet(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	return GetValueProp().DoPropSet(pSymbol, pValue.release(), attr);
+	return GetValueProp().PropSet(pSymbol, pValue.release(), attr);
 }
 
 }
