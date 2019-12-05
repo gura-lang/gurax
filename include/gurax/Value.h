@@ -174,6 +174,22 @@ public:
 	static Value* Zero(size_t nRefs)			{ return _pValue_Zero->Reference(nRefs); }
 	static Value* EmptyStr(size_t nRefs)		{ return _pValue_EmptyStr->Reference(nRefs); }
 public:
+	void Call(Processor& processor, Argument& argument) { DoCall(processor, argument); }
+	Value* Eval(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
+	Value* IndexGet(const Index& index) const { return DoIndexGet(index); }
+	void IndexSet(const Index& index, Value* pValue) { return DoIndexSet(index, pValue); }
+	Value* IndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op) {
+		return DoIndexOpApply(index, value, processor, op);
+	}
+	Value* PropGet(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {
+		return DoPropGet(pSymbol, attr, notFoundErrorFlag);
+	}
+	bool PropSet(const Symbol* pSymbol, Value* pValue, const Attribute& attr) {
+		return DoPropSet(pSymbol, pValue, attr);
+	}
+	bool AssignCustomMethod(Function* pFunction) { return DoAssignCustomMethod(pFunction); }
+	Iterator* GenIterator() const { return DoGenIterator(); }
+public:
 	// Virtual functions
 	virtual Value* Clone() const = 0;
 	virtual size_t DoCalcHash() const = 0;
