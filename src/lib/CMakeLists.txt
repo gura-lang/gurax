@@ -37,6 +37,7 @@ add_library(guraxcore SHARED
 	Attribute.cpp
 	Basement.cpp
 	Binary.cpp
+	Codec-WidthInfo.cpp
 	Codec.cpp
 	Color.cpp
 	CommandLine.cpp
@@ -92,7 +93,6 @@ add_library(guraxcore SHARED
 	TimeDelta.cpp
 	Token.cpp
 	Tokenizer.cpp
-	Unicode-EastAsianWidth.cpp
 	Value.cpp
 	ValueDeque.cpp
 	ValueDict.cpp
