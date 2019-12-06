@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(re)
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // re.Pattern(pattern:String):map:[icase,multiline] {block?}
-Gurax_DeclareFunction(Pattern)
+Gurax_DeclareConstructor(Pattern)
 {
 	Declare(VTYPE_Pattern, Flag::Map);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -26,7 +26,7 @@ Gurax_DeclareFunction(Pattern)
 		"- `:multiline` .. Matches \"`.`\" with a line break.\n");
 }
 
-Gurax_ImplementFunction(Pattern)
+Gurax_ImplementConstructor(Pattern)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -202,7 +202,7 @@ VType_Pattern VTYPE_Pattern("Pattern");
 void VType_Pattern::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Pattern));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pattern));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Pattern, Match));
 	Assign(Gurax_CreateMethod(Pattern, Sub));

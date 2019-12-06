@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(markdown)
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // markdown.Item() {block?}
-Gurax_DeclareFunction(Item)
+Gurax_DeclareConstructor(Item)
 {
 	Declare(VTYPE_Item, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -18,7 +18,7 @@ Gurax_DeclareFunction(Item)
 		"Creates a `Item` instance.");
 }
 
-Gurax_ImplementFunction(Item)
+Gurax_ImplementConstructor(Item)
 {
 	// Arguments
 	//ArgPicker args(argument);
@@ -203,7 +203,7 @@ VType_Item VTYPE_Item("Item");
 void VType_Item::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Item));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Item));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Item, CountDescendant));
 	Assign(Gurax_CreateMethod(Item, Print));

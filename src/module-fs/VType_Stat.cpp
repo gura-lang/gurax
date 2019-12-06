@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(fs)
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // fs.Stat(pathName:String):map {block?}
-Gurax_DeclareFunction(Stat)
+Gurax_DeclareConstructor(Stat)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -19,7 +19,7 @@ Gurax_DeclareFunction(Stat)
 		"Creates a `fs.Stat` instance from the specified path name.\n");
 }
 
-Gurax_ImplementFunction(Stat)
+Gurax_ImplementConstructor(Stat)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -281,7 +281,7 @@ VType_Stat VTYPE_Stat("Stat");
 void VType_Stat::DoPrepare(Frame& frameOuter)
 {
 	// VType settings
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Stat));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stat));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Stat, pathName));
 	Assign(Gurax_CreateProperty(Stat, dirName));

@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(markdown)
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // markdown.Document(stream?:Stream:r) {block?}
-Gurax_DeclareFunction(Document)
+Gurax_DeclareConstructor(Document)
 {
 	Declare(VTYPE_Document, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
@@ -21,7 +21,7 @@ Gurax_DeclareFunction(Document)
 		"with the result of parsing the stream.\n");
 }
 
-Gurax_ImplementFunction(Document)
+Gurax_ImplementConstructor(Document)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -163,7 +163,7 @@ VType_Document VTYPE_Document("Document");
 void VType_Document::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Document));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Document));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Document, CountItem));
 	Assign(Gurax_CreateMethod(Document, Parse));

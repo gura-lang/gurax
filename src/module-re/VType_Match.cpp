@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(re)
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // re.Match(pattern:Pattern, str:String):map {block?}
-Gurax_DeclareFunction(Match)
+Gurax_DeclareConstructor(Match)
 {
 	Declare(VTYPE_Pattern, Flag::Map);
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
@@ -20,7 +20,7 @@ Gurax_DeclareFunction(Match)
 		"Executes a pattern matching and returns `re.Match` instance as its result.\n");
 }
 
-Gurax_ImplementFunction(Match)
+Gurax_ImplementConstructor(Match)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -152,7 +152,7 @@ VType_Match VTYPE_Match("Match");
 void VType_Match::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Match));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Match));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Match, Group));
 	Assign(Gurax_CreateMethod(Match, Groups));
