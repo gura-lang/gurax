@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-Gurax_DeclareFunction(Binary)
+Gurax_DeclareConstructor(Binary)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
@@ -17,7 +17,7 @@ Gurax_DeclareFunction(Binary)
 		"Creates a `Binary` instance.");
 }
 
-Gurax_ImplementFunction(Binary)
+Gurax_ImplementConstructor(Binary)
 {
 	// Function body
 	RefPtr<BinaryReferable> pBinary(new BinaryReferable());
@@ -85,7 +85,7 @@ VType_Binary VTYPE_Binary("Binary");
 void VType_Binary::DoPrepare(Frame& frameOuter)
 {
 	// Declaretion of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Binary));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Binary, bytes));
 	Assign(Gurax_CreateProperty(Binary, reader));

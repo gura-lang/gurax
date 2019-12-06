@@ -44,6 +44,23 @@ Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 #define Gurax_CreateFunction(name) (new Function_##name())
 #define Gurax_CreateFunctionAlias(name, strName) (new Function_##name(strName))
 
+// Declaration/implementation/creation of Constructor
+#define Gurax_DeclareConstructorAlias(name, strName) \
+class Constructor_##name : public Function { \
+public: \
+	Constructor_##name(const char* name_ = strName); \
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
+}; \
+Constructor_##name::Constructor_##name(const char* name_) : Function(Function::Type::Constructor, name_) \
+
+#define Gurax_DeclareConstructor(name) Gurax_DeclareConstructorAlias(name, #name)
+
+#define Gurax_ImplementConstructor(name) \
+Value* Constructor_##name::DoEval(Processor& processor, Argument& argument) const
+
+#define Gurax_CreateConstructor(name) (new Constructor_##name())
+#define Gurax_CreateConstructorAlias(name, strName) (new Constructor_##name(strName))
+
 // Declaration/implementation/creation of Method
 #define Gurax_DeclareMethodAlias(nameVType, name, strName)	\
 class Method_##nameVType##_##name : public Function { \

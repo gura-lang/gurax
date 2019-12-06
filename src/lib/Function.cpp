@@ -64,15 +64,13 @@ void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
 
 void Function::Exec(Processor& processor, Argument& argument) const
 {
-	//::printf("%s\n", argument.GetValueThis().ToString().c_str());
-	//if (!argument.GetValueThis().CanEvalAsMethod(*this)) return;
+	if (!argument.GetValueThis().CanEvalAsMethod(*this)) return;
 	DoExec(processor, argument);
 }
 
 Value* Function::Eval(Processor& processor, Argument& argument) const
 {
-	//::printf("%s\n", argument.GetValueThis().ToString().c_str());
-	//if (!argument.GetValueThis().CanEvalAsMethod(*this)) Value::nil();
+	if (!argument.GetValueThis().CanEvalAsMethod(*this)) Value::nil();
 	return DoEval(processor, argument);
 }
 
