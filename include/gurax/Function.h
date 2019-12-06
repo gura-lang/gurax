@@ -144,6 +144,7 @@ public:
 	void SetType(Type type) { _type = type; }
 	bool IsTypeStatement() const { return _type == Type::Statement; }
 	bool IsTypeFunction() const { return _type == Type::Function; }
+	bool IsTypeConstructor() const { return _type == Type::Constructor; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
 	bool IsTypeClassMethod() const { return _type == Type::ClassMethod; }
 	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }

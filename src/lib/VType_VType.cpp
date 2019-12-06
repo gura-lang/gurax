@@ -119,7 +119,7 @@ String Value_VType::ToStringDetail(const StringStyle& ss) const
 
 bool Value_VType::CanEvalAsMethod(const Function& function) const
 {
-	if (function.IsTypeClassMethod()) {
+	if (function.IsTypeClassMethod() || function.IsTypeConstructor()) {
 		return true;
 	} else if (function.IsTypeMethod()) {
 		Error::Issue(ErrorType::ValueError, "the function must be evaluated with an instance");

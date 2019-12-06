@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of method
 //------------------------------------------------------------------------------
 // Any#ToString()
-Gurax_DeclareMethod(Any, ToString)
+Gurax_DeclareClassMethod(Any, ToString)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
@@ -17,7 +17,7 @@ Gurax_DeclareMethod(Any, ToString)
 		"Converts the object to a string.\n");
 }
 
-Gurax_ImplementMethod(Any, ToString)
+Gurax_ImplementClassMethod(Any, ToString)
 {
 	// Function body
 	return new Value_String("Any");

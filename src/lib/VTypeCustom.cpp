@@ -173,7 +173,7 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
 												Expr* pExprBody, Function* pConstructorInh) :
-	Function(Type::Function, Symbol::Empty, pDeclCallable),
+	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst()),
 	_pConstructorInh(pConstructorInh)
 {
@@ -224,7 +224,7 @@ String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorStruct::ConstructorStruct(
 	VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropHandlerOwner* pPropHandlerOwner) :
-	Function(Type::Function, Symbol::Empty, pDeclCallable),
+	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pPropHandlerOwner(pPropHandlerOwner)
 {
 }

@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of method
 //------------------------------------------------------------------------------
 // Undefined#ToString()
-Gurax_DeclareMethod(Undefined, ToString)
+Gurax_DeclareClassMethod(Undefined, ToString)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
@@ -17,7 +17,7 @@ Gurax_DeclareMethod(Undefined, ToString)
 		"Converts the object to a string.\n");
 }
 
-Gurax_ImplementMethod(Undefined, ToString)
+Gurax_ImplementClassMethod(Undefined, ToString)
 {
 	// Function body
 	return new Value_String("Undefined");

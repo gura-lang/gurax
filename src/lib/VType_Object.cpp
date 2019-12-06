@@ -50,7 +50,7 @@ Gurax_ImplementMethod(Object, IsInstanceOf)
 }
 
 // Object#ToString()
-Gurax_DeclareMethod(Object, ToString)
+Gurax_DeclareClassMethod(Object, ToString)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
@@ -58,7 +58,7 @@ Gurax_DeclareMethod(Object, ToString)
 		"Converts the object to a string.\n");
 }
 
-Gurax_ImplementMethod(Object, ToString)
+Gurax_ImplementClassMethod(Object, ToString)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
