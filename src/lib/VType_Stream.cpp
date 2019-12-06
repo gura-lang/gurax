@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Stream(pathName:String, mode?:String, codec?:Codec) {block?}
-Gurax_DeclareFunction(Stream)
+Gurax_DeclareConstructor(Stream)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -21,7 +21,7 @@ Gurax_DeclareFunction(Stream)
 		"Creates a `Stream` instance.");
 }
 
-Gurax_ImplementFunction(Stream)
+Gurax_ImplementConstructor(Stream)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -263,9 +263,9 @@ VType_Stream VTYPE_Stream("Stream");
 void VType_Stream::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Stream));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stream));
 	// Assignment of function
-	frameOuter.Assign(Gurax_CreateFunctionAlias(Stream, "Open"));
+	frameOuter.Assign(Gurax_CreateConstructorAlias(Stream, "Open"));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stream, Addcr));
 	Assign(Gurax_CreateMethod(Stream, Delcr));

@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // DateTime(year?:Number, month?:Number, day?:Number,
 //          hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map {block?}
-Gurax_DeclareFunction(DateTime)
+Gurax_DeclareConstructor(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("year", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -28,7 +28,7 @@ Gurax_DeclareFunction(DateTime)
 		"Creates a `DateTime` instance.");
 }
 
-Gurax_ImplementFunction(DateTime)
+Gurax_ImplementConstructor(DateTime)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -446,7 +446,7 @@ VType_DateTime VTYPE_DateTime("DateTime");
 void VType_DateTime::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(DateTime));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DateTime));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DateTime, year));
 	Assign(Gurax_CreateProperty(DateTime, month));

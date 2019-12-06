@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Expr(stream:Stream):map
-Gurax_DeclareFunction(Expr)
+Gurax_DeclareConstructor(Expr)
 {
 	Declare(VTYPE_Expr, Flag::Map);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
@@ -19,7 +19,7 @@ Gurax_DeclareFunction(Expr)
 		"Creates an `Expr` instance by pasring the given stream.");
 }
 
-Gurax_ImplementFunction(Expr)
+Gurax_ImplementConstructor(Expr)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -540,7 +540,7 @@ VType_Expr VTYPE_Expr("Expr");
 void VType_Expr::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Expr));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Expr));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Expr, EachPUnit));
 	Assign(Gurax_CreateMethod(Expr, Eval));

@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Directory(pathName:string) {block?}
-Gurax_DeclareFunction(Directory)
+Gurax_DeclareConstructor(Directory)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -18,7 +18,7 @@ Gurax_DeclareFunction(Directory)
 		"Creates a `Stream` instance.");
 }
 
-Gurax_ImplementFunction(Directory)
+Gurax_ImplementConstructor(Directory)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -38,7 +38,7 @@ VType_Directory VTYPE_Directory("Directory");
 void VType_Directory::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Directory));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Directory));
 }
 
 Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) const

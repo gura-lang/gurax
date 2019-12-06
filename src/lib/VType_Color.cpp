@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Color(r?:Number, g?:Number, b?:Number, a?:Number) {block?}
-Gurax_DeclareFunction(Color)
+Gurax_DeclareConstructor(Color)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("r", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -22,7 +22,7 @@ Gurax_DeclareFunction(Color)
 		"Creates a `Color` instance.");
 }
 
-Gurax_ImplementFunction(Color)
+Gurax_ImplementConstructor(Color)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -154,7 +154,7 @@ VType_Color VTYPE_Color("Color");
 void VType_Color::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Color));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Color));
 	// Assignment of class value
 	Assign("zero", new Value_Color(Color::zero));
 	Assign("black", new Value_Color(Color::black));

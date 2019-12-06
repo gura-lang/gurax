@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Codec(encoding:name):map {block?}
-Gurax_DeclareFunction(Codec)
+Gurax_DeclareConstructor(Codec)
 {
 	Declare(VTYPE_Codec, Flag::Map);
 	DeclareArg("encoding", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -19,7 +19,7 @@ Gurax_DeclareFunction(Codec)
 		"Searches a `Codec` instance that has been registered with the specified encoding name.");
 }
 
-Gurax_ImplementFunction(Codec)
+Gurax_ImplementConstructor(Codec)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -44,7 +44,7 @@ VType_Codec VTYPE_Codec("Codec");
 void VType_Codec::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Codec));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Codec));
 }
 
 Value* VType_Codec::DoCastFrom(const Value& value, DeclArg::Flags flags) const

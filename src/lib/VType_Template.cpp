@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Template(src?:Stream:r):map:[lasteol,noindent] {block}
-Gurax_DeclareFunction(Template)
+Gurax_DeclareConstructor(Template)
 {
 	Declare(VTYPE_Template, Flag::Map);
 	DeclareArg("src", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -27,7 +27,7 @@ Gurax_DeclareFunction(Template)
 		"- `:noindent`\n");
 }
 
-Gurax_ImplementFunction(Template)
+Gurax_ImplementConstructor(Template)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -599,7 +599,7 @@ VType_Template VTYPE_Template("Template");
 void VType_Template::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Template));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Template));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Template, Eval));
 	Assign(Gurax_CreateMethod(Template, Parse));

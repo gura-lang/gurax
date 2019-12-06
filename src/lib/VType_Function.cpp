@@ -39,7 +39,7 @@ Gurax_ImplementFunction(_function_)
 }
 
 // Function(`exprs*) {block}
-Gurax_DeclareFunction(Function)
+Gurax_DeclareConstructor(Function)
 {
 	Declare(VTYPE_Random, Flag::None);
 	DeclareArg("argDecls", VTYPE_Quote, ArgOccur::ZeroOrMore, ArgFlag::None);
@@ -49,26 +49,13 @@ Gurax_DeclareFunction(Function)
 		"");
 }
 
-Gurax_ImplementFunction(Function)
+Gurax_ImplementConstructor(Function)
 {
 	// Arguments
 	ArgPicker args(argument);
 	const ValueList& valuesExpr = args.PickList();
 	const Expr_Block* pExprOfBlock = argument.GetExprOfBlock();
 	// Function body
-#if 0
-	RefPtr<ExprLink> pExprLink(new ExprLink());
-	for (const Value* pValue : valuesExpr) {
-		pExprLink->AddExpr(Value_Expr::GetExpr(*pValue).Reference());
-	}
-	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
-	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return Value::nil();
-	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(
-			Type::Function, Symbol::Empty, pDeclCallable.release(), pExprOfBlock->Reference()));
-	pFunction->Declare(VTYPE_Any, Flag::None);
-	pFunction->SetFrameOuter(processor.GetFrameCur());
-#endif
 	RefPtr<Function> pFunction(Function::CreateDynamicFunction(Symbol::Empty, valuesExpr, *pExprOfBlock));
 	if (!pFunction) return Value::nil();
 	pFunction->SetFrameOuter(processor.GetFrameCur());
@@ -149,7 +136,7 @@ VType_Function VTYPE_Function("Function");
 void VType_Function::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Function));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Function));
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateFunction(_function_));
 	// Assignment of property

@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // TimeDelta(days?:Number, hours?:Number, mins?:Number, secs?:Number, msecs?:Number, usecs?:Number):map {block?}
-Gurax_DeclareFunction(TimeDelta)
+Gurax_DeclareConstructor(TimeDelta)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("days", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -25,7 +25,7 @@ Gurax_DeclareFunction(TimeDelta)
 		"There's no limit on the range of each value.\n");
 }
 
-Gurax_ImplementFunction(TimeDelta)
+Gurax_ImplementConstructor(TimeDelta)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -359,7 +359,7 @@ VType_TimeDelta VTYPE_TimeDelta("TimeDelta");
 void VType_TimeDelta::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(TimeDelta));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(TimeDelta));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(TimeDelta, days));
 	Assign(Gurax_CreateProperty(TimeDelta, hours));

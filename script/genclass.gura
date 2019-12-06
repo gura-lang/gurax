@@ -207,7 +207,7 @@ ${end}
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // ${dotClassName}() {block?}
-Gurax_DeclareFunction(${className})
+Gurax_DeclareConstructor(${className})
 {
 	Declare(VTYPE_${className}, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -216,7 +216,7 @@ Gurax_DeclareFunction(${className})
 		"Creates a `${className}` instance.");
 }
 
-Gurax_ImplementFunction(${className})
+Gurax_ImplementConstructor(${className})
 {
 	// Arguments
 	//ArgPicker args(argument);
@@ -277,7 +277,7 @@ VType_${className} VTYPE_${className}("${className}");
 void VType_${className}::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(${className}));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(${className}));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(${className}, MethodSkeleton));
 	// Assignment of property

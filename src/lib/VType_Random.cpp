@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Random(seed?:Number):map {block?}
-Gurax_DeclareFunction(Random)
+Gurax_DeclareConstructor(Random)
 {
 	Declare(VTYPE_Random, Flag::Map);
 	DeclareArg("seed", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -21,7 +21,7 @@ Gurax_DeclareFunction(Random)
 		"to a random generator globally shared in the interpreter's environment.\n");
 }
 
-Gurax_ImplementFunction(Random)
+Gurax_ImplementConstructor(Random)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -124,7 +124,7 @@ VType_Random VTYPE_Random("Random");
 void VType_Random::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Random));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Random));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Random, Normal));
 	Assign(Gurax_CreateMethod(Random, Rand));

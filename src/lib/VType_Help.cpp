@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Help(value, lang?:Symbol) {block?}
-Gurax_DeclareFunction(Help)
+Gurax_DeclareConstructor(Help)
 {
 	Declare(VTYPE_Help, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
@@ -20,7 +20,7 @@ Gurax_DeclareFunction(Help)
 		"Creates a `Help` instance.");
 }
 
-Gurax_ImplementFunction(Help)
+Gurax_ImplementConstructor(Help)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -153,7 +153,7 @@ VType_Help VTYPE_Help("Help");
 void VType_Help::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Help));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Help));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Help, MethodSkeleton));
 	// Assignment of property

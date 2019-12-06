@@ -9,7 +9,7 @@ namespace Gurax {
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Complex(real:Number, imag?:Number):map {block?}
-Gurax_DeclareFunction(Complex)
+Gurax_DeclareConstructor(Complex)
 {
 	Declare(VTYPE_Complex, Flag::Map);
 	DeclareArg("real", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -20,7 +20,7 @@ Gurax_DeclareFunction(Complex)
 		"Creates a `Complex` instance.");
 }
 
-Gurax_ImplementFunction(Complex)
+Gurax_ImplementConstructor(Complex)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -302,7 +302,7 @@ VType_Complex VTYPE_Complex("Complex");
 void VType_Complex::DoPrepare(Frame& frameOuter)
 {
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Complex));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Complex));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Complex, abs));
 	Assign(Gurax_CreateProperty(Complex, arg));
