@@ -92,7 +92,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		while (argument.ReadyToPickValue(frame)) {
 			RefPtr<Value> pValueRtn(Eval(processor, argument));
 			if (Error::IsIssued()) {
-				processor.ErrorDone();
+				//processor.ErrorDone();
 				return;
 			}
 			if (flatFlag && pValueRtn->IsType(VTYPE_List)) {
@@ -102,7 +102,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			}
 		}
 		if (Error::IsIssued()) {
-			processor.ErrorDone();
+			//processor.ErrorDone();
 			return;
 		}
 		processor.PushValue(pValueRtn.release());
@@ -117,7 +117,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 		while (argument.ReadyToPickValue(frame)) {
 			RefPtr<Value> pValueRtn(Eval(processor, argument));
 			if (Error::IsIssued()) {
-				processor.ErrorDone();
+				//processor.ErrorDone();
 				return;
 			}
 			if (flatFlag && pValueRtn->IsType(VTYPE_List)) {
@@ -127,7 +127,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			}
 		}
 		if (Error::IsIssued()) {
-			processor.ErrorDone();
+			//processor.ErrorDone();
 			return;
 		}
 		processor.PushValue(pValueRtn.release());
@@ -156,7 +156,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			Value::Delete(Eval(processor, argument));
 		}
 		if (Error::IsIssued()) {
-			processor.ErrorDone();
+			//processor.ErrorDone();
 			return;
 		}
 		processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
@@ -165,7 +165,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			Value::Delete(Eval(processor, argument));
 		}
 		if (Error::IsIssued()) {
-			processor.ErrorDone();
+			//processor.ErrorDone();
 			return;
 		}
 		processor.PushValue(Value::nil());
@@ -176,7 +176,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 			pValueRtn.reset(Eval(processor, argument));
 		}
 		if (Error::IsIssued()) {
-			processor.ErrorDone();
+			//processor.ErrorDone();
 			return;
 		}
 		processor.PushValue(pValueRtn.release());

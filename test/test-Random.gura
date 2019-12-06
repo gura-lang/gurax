@@ -6,25 +6,25 @@ TestCase('Constructor') {
 	Tester(`Random(0x12345678))
 }
 
-TestCase('Random#Range()') {
+TestCase('Random#Rand()') {
 	r = Random(0)
-	Tester(`repeat (20):list {r.Range(10)})
-	Tester(`repeat (20):list {r.Range(100)})
+	Tester(`Dim(20) {r.Rand(10)})
+	Tester(`Dim(20) {r.Rand(100)})
 }
 
 TestCase('Random#Uniform()') {
 	r = Random(0)
-	Tester(`repeat (20):list {r.Uniform()})
+	Tester(`Dim(20) {r.Uniform()})
 }
 
 TestCase('Random#Normal()') {
 	r = Random(0)
-	Tester(`repeat (20):list {r.Normal()})
+	Tester(`Dim(20) {r.Normal()})
 }
 
 TestCase('Random#Reset()') {
 	r = Random(1234)
-	Tester(`repeat (20):list {r.Range(10)})
+	Tester(`Dim(20) {r.Rand(10)})
 	r.Reset()
-	Tester(`repeat (20):list {r.Range(10)})
+	Tester(`Dim(20) {r.Rand(10)})
 }

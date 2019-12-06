@@ -59,8 +59,8 @@ Gurax_ImplementMethod(Random, Normal)
 	return new Value_Number(valueThis.GetRandom().Normal<Double>(mean, stddev));
 }
 
-// Random#Range(range:Number)
-Gurax_DeclareMethod(Random, Range)
+// Random#Rand(range:Number)
+Gurax_DeclareMethod(Random, Rand)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -69,7 +69,7 @@ Gurax_DeclareMethod(Random, Range)
 		"Randomly generates an integer number in the range of `[0, range)`");
 }
 
-Gurax_ImplementMethod(Random, Range)
+Gurax_ImplementMethod(Random, Rand)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -127,7 +127,7 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(Random));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Random, Normal));
-	Assign(Gurax_CreateMethod(Random, Range));
+	Assign(Gurax_CreateMethod(Random, Rand));
 	Assign(Gurax_CreateMethod(Random, Reset));
 	Assign(Gurax_CreateMethod(Random, Uniform));
 }
