@@ -2279,7 +2279,7 @@ void PUnit_Argument<nExprSrc, discardValueFlag, keepCarFlag>::Exec(Processor& pr
 	}
 	RefPtr<Argument> pArgument(
 		new Argument(pValueCar.release(), pDeclCallable->Reference(),
-					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::nil(),
+					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
 					 Expr_Block::Reference(GetExprOfBlock())));
 	if (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -2377,7 +2377,7 @@ void PUnit_ArgumentDelegation<nExprSrc, discardValueFlag>::Exec(Processor& proce
 	}
 	RefPtr<Argument> pArgument(
 		new Argument(pValueCar.release(), pDeclCallable->Reference(),
-					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::nil(),
+					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
 					 pExprOfBlock.release()));
 	if (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
 	processor.SetPUnitNext(_GetPUnitCont());

@@ -52,6 +52,7 @@ public:
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override { return ToStringDigest(ss); }
 	// Virtual functions for runtime process
+	//virtual bool CanEvalAsMethod(const Function& function) const override { return true; }
 	virtual bool IsValid() const override { return false; }
 	virtual bool IsNil() const override { return true; }
 	virtual bool GetBool() const override { return false; }

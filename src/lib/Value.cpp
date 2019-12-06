@@ -64,6 +64,13 @@ void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 	Stream::COut->Println("no help");
 }
 
+bool Value::CanEvalAsMethod(const Function& function) const
+{
+	if (function.IsTypeMethod() || function.IsTypeClassMethod()) return true;
+	Error::Issue(ErrorType::ValueError, "the function can not be evaluated as a method");
+	return false;
+}
+
 const DeclCallable* Value::GetDeclCallableWithError()
 {
 	const DeclCallable* pDeclCallable = GetDeclCallable();

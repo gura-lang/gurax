@@ -32,7 +32,7 @@ Gurax_ImplementFunction(VType)
 // Implementation of method
 //------------------------------------------------------------------------------
 // VType#__prop__(symbol:Symbol):map {block?}
-Gurax_DeclareMethod(VType, __prop__)
+Gurax_DeclareClassMethod(VType, __prop__)
 {
 	Declare(VTYPE_PropHandler, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
@@ -42,7 +42,7 @@ Gurax_DeclareMethod(VType, __prop__)
 		"");
 }
 
-Gurax_ImplementMethod(VType, __prop__)
+Gurax_ImplementClassMethod(VType, __prop__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -115,6 +115,18 @@ String Value_VType::ToStringDigest(const StringStyle& ss) const
 String Value_VType::ToStringDetail(const StringStyle& ss) const
 {
 	return ToStringDigest(ss);
+}
+
+bool Value_VType::CanEvalAsMethod(const Function& function) const
+{
+	if (function.IsTypeClassMethod()) {
+		return true;
+	} else if (function.IsTypeMethod()) {
+		Error::Issue(ErrorType::ValueError, "the function must be evaluated with an instance");
+	} else {
+		Error::Issue(ErrorType::ValueError, "the function can not be evaluated as a method");
+	}
+	return false;
 }
 
 const DeclCallable* Value_VType::GetDeclCallableWithError()

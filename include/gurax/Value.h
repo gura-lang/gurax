@@ -220,6 +220,7 @@ public:
 	virtual void UpdateIteratorInfo(Iterator::Flags& flags, size_t& len) const {}
 	virtual bool GetBool() const { return true; }
 	virtual bool CanBeCallableMember() const { return false; }
+	virtual bool CanEvalAsMethod(const Function& function) const;
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const {
 		GetVType().GatherMemberSymbol(symbolList);
 	}

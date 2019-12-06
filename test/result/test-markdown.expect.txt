@@ -2549,8 +2549,7 @@ text document#countitem:9, item#countdescendant:9
     <text>'A '
   <tag>'code'
     <text>'B'
-  <p>
-    <text>'C'
+  <text>' C'
   <tag>'div'
     <p>
       <text>'List in tag.'
