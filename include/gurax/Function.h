@@ -192,11 +192,11 @@ public:
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void LinkHelp(VType& vtype, const Symbol* pSymbol);
-	Value* Eval(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
-	void Call(Processor& processor, Argument& argument) const { DoCall(processor, argument); }
+	void Exec(Processor& processor, Argument& argument) const;
+	Value* Eval(Processor& processor, Argument& argument) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
-	void DoCall(Processor& processor, Argument& argument) const;
+	void Call(Processor& processor, Argument& argument) const;
 	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

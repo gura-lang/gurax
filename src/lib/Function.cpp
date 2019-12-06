@@ -62,6 +62,16 @@ void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
 	}
 }
 
+void Function::Exec(Processor& processor, Argument& argument) const
+{
+	DoExec(processor, argument);
+}
+
+Value* Function::Eval(Processor& processor, Argument& argument) const
+{
+	return DoEval(processor, argument);
+}
+
 Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const
 {
 	Frame& frame = processor.GetFrameCur();
@@ -81,7 +91,7 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 	return Eval(processor, *pArg);
 }
 
-void Function::DoCall(Processor& processor, Argument& argument) const
+void Function::Call(Processor& processor, Argument& argument) const
 {
 	auto MapToList = [this](Processor& processor, Argument& argument) {
 		Frame& frame = processor.GetFrameCur();
@@ -150,7 +160,7 @@ void Function::DoCall(Processor& processor, Argument& argument) const
 	Frame& frame = processor.GetFrameCur();
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
 	if (argument.IsMapNone()) {
-		DoExec(processor, argument);
+		Exec(processor, argument);
 	} else if (pPUnitOfCaller->GetDiscardValueFlag()) {
 		while (argument.ReadyToPickValue(frame)) {
 			Value::Delete(Eval(processor, argument));
@@ -219,7 +229,7 @@ void Function::Compose(Composer& composer, Expr_Caller& exprCaller) const
 void Function::DoExec(Processor& processor, Argument& argument) const
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitNext();
-	RefPtr<Value> pValue(Eval(processor, argument));
+	RefPtr<Value> pValue(DoEval(processor, argument));
 	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValue->Reference());
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
