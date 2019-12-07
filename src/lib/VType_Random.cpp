@@ -26,7 +26,8 @@ Gurax_ImplementConstructor(Random)
 	// Arguments
 	ArgPicker args(argument);
 	bool validFlag_seed = false;
-	Int32 seed = (validFlag_seed = args.IsValid())? args.PickNumber<Int32>() : 0;
+	Int32 seed = (validFlag_seed = args.IsValid())?
+		args.PickNumber<Int32>() : static_cast<Int32>(std::random_device()());
 	// Function body
 	RefPtr<Random> pRandom(validFlag_seed? new Random(seed) : Random::Global().Reference());
 	return argument.ReturnValue(processor, new Value_Random(pRandom.release()));
@@ -48,7 +49,7 @@ Gurax_ImplementClassMethod(Random, Float)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	Random& random = valueThis.IsType(VTYPE_Random)?
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
 	// Function body
 	return new Value_Number(random.GenFloat<Double>());
@@ -61,14 +62,14 @@ Gurax_DeclareClassMethod(Random, Int)
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Randomly generates an integer number in the range of `[0, range)`");
+		"Randomly generates an integer number within the range of `[0, range)`");
 }
 
 Gurax_ImplementClassMethod(Random, Int)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	Random& random = valueThis.IsType(VTYPE_Random)?
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
 	// Arguments
 	ArgPicker args(argument);
@@ -87,14 +88,14 @@ Gurax_DeclareClassMethod(Random, Normal)
 	AddHelp(
 		Gurax_Symbol(en),
 		"Randomly generates a real number based on uniform distribution with specified mean and standard deviation values.\n"
-		"The default value of `mean` is `0` and `stddev` is `1`.");
+		"In default, the value of `mean` is `0` and `stddev` is `1`.");
 }
 
 Gurax_ImplementClassMethod(Random, Normal)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	Random& random = valueThis.IsType(VTYPE_Random)?
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
 	// Arguments
 	ArgPicker args(argument);
@@ -117,34 +118,10 @@ Gurax_ImplementClassMethod(Random, Reset)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
-	Random& random = valueThis.IsType(VTYPE_Random)?
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
 	// Function body
 	random.Reset();
-	return Value::nil();
-}
-
-// Random.SetSeed(seed:Number):void
-Gurax_DeclareClassMethod(Random, SetSeed)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("seed", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Set the seed of the random generator.");
-}
-
-Gurax_ImplementClassMethod(Random, SetSeed)
-{
-	// Target
-	Value& valueThis = argument.GetValueThis();
-	Random& random = valueThis.IsType(VTYPE_Random)?
-		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
-	// Arguments
-	ArgPicker args(argument);
-	UInt32 seed = args.PickNumber<UInt32>();
-	// Function body
-	random.SetSeed(seed);
 	return Value::nil();
 }
 
@@ -152,18 +129,26 @@ Gurax_ImplementClassMethod(Random, SetSeed)
 // Implementation of properties
 //-----------------------------------------------------------------------------
 // Random#seed
-Gurax_DeclareProperty_R(Random, seed)
+Gurax_DeclareClassProperty_RW(Random, seed)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Value of the red element.");
+		"Seed value of the random instance.");
 }
 
-Gurax_ImplementPropertyGetter(Random, seed)
+Gurax_ImplementClassPropertyGetter(Random, seed)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(valueThis.GetRandom().GetSeed());
+	Random& random = valueTarget.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueTarget).GetRandom() : Random::Global();
+	return new Value_Number(random.GetSeed());
+}
+
+Gurax_ImplementClassPropertySetter(Random, seed)
+{
+	Random& random = valueTarget.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueTarget).GetRandom() : Random::Global();
+	random.SetSeed(Value_Number::GetNumber<UInt32>(value));
 }
 
 //------------------------------------------------------------------------------
@@ -180,7 +165,6 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Random, Int));
 	Assign(Gurax_CreateMethod(Random, Normal));
 	Assign(Gurax_CreateMethod(Random, Reset));
-	Assign(Gurax_CreateMethod(Random, SetSeed));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Random, seed));
 }

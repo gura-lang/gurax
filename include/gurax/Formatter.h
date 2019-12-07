@@ -80,7 +80,7 @@ public:
 		virtual bool IsEnd() override { return false; }
 		virtual Value* FetchInt() override {
 			Int num = va_arg(_ap, Int);
-			return new Value_Number(num);
+			return new Value_Number(static_cast<Int>(num));
 		}
 		virtual Value* FetchSizeT() override {
 			size_t num = va_arg(_ap, size_t);
