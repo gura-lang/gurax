@@ -17,7 +17,7 @@ public:
 };
 
 Function_Unary::Function_Unary(const Operator* pOperator) :
-	Function(Function::Type::Statement, pOperator->GetSymbol()), _pOperator(pOperator)
+	Function(Function::Type::Statement, pOperator->GetSymbol(), Flag::None), _pOperator(pOperator)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
@@ -42,7 +42,7 @@ public:
 };
 
 Function_Binary::Function_Binary(const Operator* pOperator) :
-	Function(Function::Type::Statement, pOperator->GetSymbol()), _pOperator(pOperator)
+	Function(Function::Type::Statement, pOperator->GetSymbol(), Flag::None), _pOperator(pOperator)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("valueL", VTYPE_Any, ArgOccur::Once, ArgFlag::None);

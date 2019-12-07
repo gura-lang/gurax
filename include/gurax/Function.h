@@ -18,7 +18,7 @@ public: \
 	Statement_##name(const char* name_ = strName); \
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override; \
 }; \
-Statement_##name::Statement_##name(const char* name_) : Function(Function::Type::Statement, name_) \
+Statement_##name::Statement_##name(const char* name_) : Function(Type::Statement, name_, Flag::None) \
 
 #define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
 
@@ -34,7 +34,7 @@ public: \
 	Function_##name(const char* name_ = strName); \
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
 }; \
-Function_##name::Function_##name(const char* name_) : Function(Function::Type::Function, name_) \
+Function_##name::Function_##name(const char* name_) : Function(Type::Function, name_, Flag::None) \
 
 #define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
 
@@ -51,7 +51,7 @@ public: \
 	Constructor_##name(const char* name_ = strName); \
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
 }; \
-Constructor_##name::Constructor_##name(const char* name_) : Function(Function::Type::Constructor, name_) \
+Constructor_##name::Constructor_##name(const char* name_) : Function(Type::Constructor, name_, Flag::None) \
 
 #define Gurax_DeclareConstructor(name) Gurax_DeclareConstructorAlias(name, #name)
 
@@ -71,7 +71,7 @@ public: \
 		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
 	} \
 }; \
-Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Function::Type::Method, name_) \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::None) \
 
 #define Gurax_DeclareMethod(nameVType, name) Gurax_DeclareMethodAlias(nameVType, name, #name)
 
@@ -90,7 +90,7 @@ public: \
 		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
 	} \
 }; \
-Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Function::Type::ClassMethod, name_) \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::ClassMethod, name_, Flag::OfClass) \
 
 #define Gurax_DeclareClassMethod(nameVType, name) Gurax_DeclareClassMethodAlias(nameVType, name, #name)
 
@@ -132,14 +132,14 @@ public:
 	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable, HelpHolder* pHelpHolder) :
 		_type(type), _pSymbol(pSymbol), _pDeclCallable(pDeclCallable), _pHelpHolder(pHelpHolder),
 		_pVTypeOfOwner(nullptr) {}
-	Function(Type type) :
-		Function(type, Symbol::Empty, new DeclCallable(), new HelpHolder()) {}
-	Function(Type type, const Symbol* pSymbol) :
-		Function(type, pSymbol, new DeclCallable(), new HelpHolder()) {}
+	Function(Type type, DeclCallable::Flags flags) :
+		Function(type, Symbol::Empty, new DeclCallable(flags), new HelpHolder()) {}
+	Function(Type type, const Symbol* pSymbol, DeclCallable::Flags flags) :
+		Function(type, pSymbol, new DeclCallable(flags), new HelpHolder()) {}
 	Function(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable) :
 		Function(type, pSymbol, pDeclCallable, new HelpHolder()) {}
-	Function(Type type, const char* name) :
-		Function(type, Symbol::Add(name)) {}		
+	Function(Type type, const char* name, DeclCallable::Flags flags) :
+		Function(type, Symbol::Add(name), flags) {}		
 	Function(Type type, const char* name, DeclCallable* pDeclCallable) :
 		Function(type, Symbol::Add(name), pDeclCallable) {}
 	Function(Type type, const char* name, DeclCallable* pDeclCallable, HelpHolder* pHelpHolder) :

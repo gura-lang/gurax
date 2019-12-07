@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class Function_Empty : public Function {
 public:
-	Function_Empty() : Function(Type::Function) {}
+	Function_Empty() : Function(Type::Function, Flag::None) {}
 public:
 	virtual bool IsEmpty() const override { return true; }
 };

@@ -27,8 +27,8 @@ void DeclCallable::Bootup()
 	Wildcard->SetFlags(Flag::AnyAttr);
 }
 
-DeclCallable::DeclCallable() :
-	_pVTypeResult(&VTYPE_Any), _flags(0), _pAttr(new Attribute()), _pDeclArgOwner(new DeclArgOwner()),
+DeclCallable::DeclCallable(Flags flags) :
+	_pVTypeResult(&VTYPE_Any), _flags(flags), _pAttr(new Attribute()), _pDeclArgOwner(new DeclArgOwner()),
 	_pSymbolOfDict(Symbol::Empty), _pSymbolOfAccessor(Symbol::Empty)
 {
 }

@@ -36,8 +36,7 @@ Function* Function::CreateDynamicFunction(
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return nullptr;
 	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(
-			Type::Function, pSymbol, pDeclCallable.release(), exprOfBlock.Reference()));
+		new FunctionCustom(Type::Function, pSymbol, pDeclCallable.release(), exprOfBlock.Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::None);
 	return pFunction.release();
 }
