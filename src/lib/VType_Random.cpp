@@ -55,6 +55,31 @@ Gurax_ImplementClassMethod(Random, Float)
 	return new Value_Number(random.GenFloat<Double>());
 }
 
+// Random.FloatM(cnt?:Number)
+Gurax_DeclareClassMethod(Random, FloatM)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Randomly generates a real number in the range of `[0, 1)`");
+}
+
+Gurax_ImplementClassMethod(Random, FloatM)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
+	// Arguments
+	ArgPicker args(argument);
+	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_Float(random.Reference(), cnt));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Random.Int(range:Number)
 Gurax_DeclareClassMethod(Random, Int)
 {
@@ -77,6 +102,33 @@ Gurax_ImplementClassMethod(Random, Int)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	return new Value_Number(random.GenInt<Int>(range));
+}
+
+// Random.IntM(range:Number, cnt?:Number)
+Gurax_DeclareClassMethod(Random, IntM)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Randomly generates an integer number within the range of `[0, range)`");
+}
+
+Gurax_ImplementClassMethod(Random, IntM)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
+	// Arguments
+	ArgPicker args(argument);
+	Int range = args.PickNumberNonNeg<Int>();
+	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_Int(random.Reference(), cnt, range));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Random.Normal(mean?:Number, stddev?:Number)
@@ -103,6 +155,36 @@ Gurax_ImplementClassMethod(Random, Normal)
 	Double stddev = args.IsValid()? args.PickNumber<Double>() : 1.;
 	// Function body
 	return new Value_Number(random.GenNormal<Double>(mean, stddev));
+}
+
+// Random.NormalM(mean?:Number, stddev?:Number, cnt?:Number)
+Gurax_DeclareClassMethod(Random, NormalM)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("stddev", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Randomly generates a real number based on uniform distribution with specified mean and standard deviation values.\n"
+		"In default, the value of `mean` is `0` and `stddev` is `1`.");
+}
+
+Gurax_ImplementClassMethod(Random, NormalM)
+{
+	// Target
+	Value& valueThis = argument.GetValueThis();
+	Random& random = valueThis.IsInstanceOf(VTYPE_Random)?
+		dynamic_cast<Value_Random&>(valueThis).GetRandom() : Random::Global();
+	// Arguments
+	ArgPicker args(argument);
+	Double mean = args.IsValid()? args.PickNumber<Double>() : 0.;
+	Double stddev = args.IsValid()? args.PickNumber<Double>() : 1.;
+	size_t cnt = args.IsValid()? args.PickNumberNonNeg<size_t>() : -1;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Iterator> pIterator(new VType_Random::Iterator_Normal(random.Reference(), cnt, mean, stddev));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Random.Reset():void
@@ -162,8 +244,11 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Random));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Random, Float));
+	Assign(Gurax_CreateMethod(Random, FloatM));
 	Assign(Gurax_CreateMethod(Random, Int));
+	Assign(Gurax_CreateMethod(Random, IntM));
 	Assign(Gurax_CreateMethod(Random, Normal));
+	Assign(Gurax_CreateMethod(Random, NormalM));
 	Assign(Gurax_CreateMethod(Random, Reset));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Random, seed));
@@ -185,6 +270,60 @@ String Value_Random::ToStringDigest(const StringStyle& ss) const
 String Value_Random::ToStringDetail(const StringStyle& ss) const
 {
 	return ToStringDigest(ss);
+}
+
+//------------------------------------------------------------------------------
+// VType_Random::Iterator_Float
+//------------------------------------------------------------------------------
+Value* VType_Random::Iterator_Float::DoNextValue()
+{
+	if (_cnt != -1) {
+		if (_idx >= _cnt) return nullptr;
+		_idx++;
+	}
+	return new Value_Number(_pRandom->GenFloat());
+}
+
+String VType_Random::Iterator_Float::ToString(const StringStyle& ss) const
+{
+	String str = "Random.Float";
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// VType_Random::Iterator_Int
+//------------------------------------------------------------------------------
+Value* VType_Random::Iterator_Int::DoNextValue()
+{
+	if (_cnt != -1) {
+		if (_idx >= _cnt) return nullptr;
+		_idx++;
+	}
+	return new Value_Number(_pRandom->GenInt<Int>(_range));
+}
+
+String VType_Random::Iterator_Int::ToString(const StringStyle& ss) const
+{
+	String str = "Random.Int";
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// VType_Random::Iterator_Normal
+//------------------------------------------------------------------------------
+Value* VType_Random::Iterator_Normal::DoNextValue()
+{
+	if (_cnt != -1) {
+		if (_idx >= _cnt) return nullptr;
+		_idx++;
+	}
+	return new Value_Number(_pRandom->GenNormal<Double>(_mean, _stddev));
+}
+
+String VType_Random::Iterator_Normal::ToString(const StringStyle& ss) const
+{
+	String str = "Random.Normal";
+	return str;
 }
 
 }

@@ -13,6 +13,61 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_Random : public VType {
 public:
+	class GURAX_DLLDECLARE Iterator_Float : public Iterator {
+	private:
+		RefPtr<Random> _pRandom;
+		size_t _cnt;
+		size_t _idx;
+	public:
+		Iterator_Float(Random* pRandom, size_t cnt) :
+			_pRandom(pRandom), _cnt(cnt), _idx(0) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return (_cnt == -1)? (Flag::Infinite | Flag::LenUndetermined) : (Flag::Finite | Flag::LenDetermined);
+		}
+		virtual size_t GetLength() const override { return _cnt; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	class GURAX_DLLDECLARE Iterator_Int : public Iterator {
+	private:
+		RefPtr<Random> _pRandom;
+		size_t _cnt;
+		size_t _idx;
+		Int _range;
+	public:
+		Iterator_Int(Random* pRandom, size_t cnt, Int range) :
+			_pRandom(pRandom), _cnt(cnt), _idx(0), _range(range) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return (_cnt == -1)? (Flag::Infinite | Flag::LenUndetermined) : (Flag::Finite | Flag::LenDetermined);
+		}
+		virtual size_t GetLength() const override { return _cnt; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+	class GURAX_DLLDECLARE Iterator_Normal : public Iterator {
+	private:
+		RefPtr<Random> _pRandom;
+		size_t _cnt;
+		size_t _idx;
+		Double _mean;
+		Double _stddev;
+	public:
+		Iterator_Normal(Random* pRandom, size_t cnt, Double mean, Double stddev) :
+			_pRandom(pRandom), _cnt(cnt), _idx(0), _mean(mean), _stddev(stddev) {}
+	public:
+		// Virtual functions of Iterator
+		virtual Flags GetFlags() const override {
+			return (_cnt == -1)? (Flag::Infinite | Flag::LenUndetermined) : (Flag::Finite | Flag::LenDetermined);
+		}
+		virtual size_t GetLength() const override { return _cnt; }
+		virtual Value* DoNextValue() override;
+		virtual String ToString(const StringStyle& ss) const override;
+	};
+public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
