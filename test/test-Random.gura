@@ -6,25 +6,32 @@ TestCase('Constructor') {
 	Tester(`Random(0x12345678))
 }
 
-TestCase('Random#Rand()') {
+TestCase('Random#Int()') {
 	r = Random(0)
-	Tester(`Dim(20) {r.Rand(10)})
-	Tester(`Dim(20) {r.Rand(100)})
+	Random.Seed(0)
+	Tester(`Dim(20) {r.Int(10)})
+	Tester(`Dim(20) {Random.Int(10)})
+	Tester(`Dim(20) {r.Int(100)})
+	Tester(`Dim(20) {Random.Int(100)})
 }
 
-TestCase('Random#Uniform()') {
+TestCase('Random#Float()') {
 	r = Random(0)
-	Tester(`Dim(20) {r.Uniform()})
+	Random.Seed(0)
+	Tester(`Dim(20) {r.Float()})
+	Tester(`Dim(20) {Random.Float()})
 }
 
 TestCase('Random#Normal()') {
 	r = Random(0)
+	Random.Seed(0)
 	Tester(`Dim(20) {r.Normal()})
+	Tester(`Dim(20) {Random.Normal()})
 }
 
 TestCase('Random#Reset()') {
 	r = Random(1234)
-	Tester(`Dim(20) {r.Rand(10)})
+	Tester(`Dim(20) {r.Int(10)})
 	r.Reset()
-	Tester(`Dim(20) {r.Rand(10)})
+	Tester(`Dim(20) {r.Int(10)})
 }

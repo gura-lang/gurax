@@ -40,9 +40,9 @@ Gurax_TesterEntry(MemoryPool)
 	}
 	std::cout << g_chunkTest.ToString() << std::endl;
 	for (int j = 0; j < 10000; ++j) {
-		int n = Random::Global().Range(30) + 1;
+		int n = Random::Global().GenInt(30) + 1;
 		for (int i = 0; i < n; ++i) {
-			size_t idx = Random::Global().Range(aList.size());
+			size_t idx = Random::Global().GenInt(aList.size());
 			aList.Delete(idx);
 		}
 		std::cout << g_chunkTest.ToString() << std::endl;
