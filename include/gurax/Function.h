@@ -90,7 +90,7 @@ public: \
 		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
 	} \
 }; \
-Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::ClassMethod, name_, Flag::OfClass) \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::OfClass) \
 
 #define Gurax_DeclareClassMethod(nameVType, name) Gurax_DeclareClassMethodAlias(nameVType, name, #name)
 
@@ -163,7 +163,6 @@ public:
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeConstructor() const { return _type == Type::Constructor; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
-	bool IsTypeClassMethod() const { return _type == Type::ClassMethod; }
 	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
@@ -175,10 +174,7 @@ public:
 	bool HasFrameOuter() const { return !!_pwFrameOuter; }
 	void SetVTypeOfOwner(VType& vtypeOfOwner) { _pVTypeOfOwner = &vtypeOfOwner; }
 	const VType* GetVTypeOfOwner() const { return _pVTypeOfOwner; }
-	void Declare(const VType& vtypeResult, Flags flags) {
-		GetDeclCallable().SetVTypeResult(vtypeResult);
-		GetDeclCallable().SetFlags(flags);
-	}
+	void Declare(const VType& vtypeResult, Flags flags) { GetDeclCallable().Declare(vtypeResult, flags); }
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
@@ -206,6 +202,8 @@ public:
 	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
 		DeclareBlock(Gurax_Symbol(block), occur, flags);
 	}
+	Flags GetFlags() const { return GetDeclCallable().GetFlags(); }
+	bool IsSet(Flags flags) const { return GetDeclCallable().IsSet(flags); }
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }

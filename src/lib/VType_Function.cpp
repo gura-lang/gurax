@@ -103,7 +103,7 @@ Gurax_DeclareProperty_R(Function, type)
 	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"The type of the function. One of `` `statement``, `` `function``, `` `method`` and `` `classMethod``.");
+		"The type of the function. One of `` `statement``, `` `function`` and `` `method``.");
 }
 
 Gurax_ImplementPropertyGetter(Function, type)
@@ -113,8 +113,7 @@ Gurax_ImplementPropertyGetter(Function, type)
 	return new Value_Symbol(
 		func.IsTypeStatement()? Gurax_Symbol(statement) :
 		func.IsTypeFunction()? Gurax_Symbol(function) :
-		func.IsTypeMethod()? Gurax_Symbol(method) :
-		func.IsTypeClassMethod()? Gurax_Symbol(classMethod) : Symbol::Empty);
+		func.IsTypeMethod()? Gurax_Symbol(method) : Symbol::Empty);
 }
 
 //------------------------------------------------------------------------------

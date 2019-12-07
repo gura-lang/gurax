@@ -859,7 +859,7 @@ public:
 	const Expr_Caller* GetExprTrailer() const { return _pExprTrailer.get(); }
 	Expr_Caller& GetExprTrailerLast();
 	const Expr* GetTrailerSymbols(SymbolList& symbols) const;
-	Function* GenerateFunction(Composer& composer, Expr& exprAssigned);
+	Function* GenerateFunction(Composer& composer, DeclCallable::Type type, Expr& exprAssigned);
 public:
 	// Virtual functions of Expr
 	virtual const DeclCallable* LookupDeclCallable() const override; // used by Template

@@ -240,7 +240,6 @@ String Function::ToString(const StringStyle& ss) const
 	String str;
 	str += MakeFullName();
 	str += GetDeclCallable().ToString(ss);
-	if (IsTypeClassMethod()) str += ":static";
 	return str;
 }
 

@@ -66,7 +66,7 @@ void Value::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 
 bool Value::CanEvalAsMethod(const Function& function) const
 {
-	if (function.IsTypeMethod() || function.IsTypeClassMethod() || function.IsTypeConstructor()) return true;
+	if (function.IsTypeMethod() || function.IsTypeConstructor()) return true;
 	Error::Issue(ErrorType::ValueError, "the function can not be evaluated as a method");
 	return false;
 }

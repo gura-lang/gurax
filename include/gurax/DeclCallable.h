@@ -21,7 +21,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(DeclCallable);
 public:
-	enum class Type { Statement, Function, Constructor, Method, ClassMethod };
+	enum class Type { Statement, Function, Constructor, Method };
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None				= 0;
@@ -54,7 +54,7 @@ public:
 		SymbolAssoc_Flag() {
 			Assoc(Gurax_Symbol(map),			Flag::Map);
 			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
-			//Assoc(Gurax_Symbol(static_),		Flag::OfClass);
+			Assoc(Gurax_Symbol(static_),		Flag::OfClass);
 			Assoc(Gurax_Symbol(closure),		Flag::Closure);
 			Assoc(Gurax_Symbol(cut_extra_args),	Flag::CutExtraArgs);
 			Assoc(Gurax_Symbol(dynamic_scope),	Flag::DynamicScope);
@@ -122,6 +122,7 @@ public:
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
+	void Declare(const VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool HasAttr() const { return GetFlags() != 0 || !GetAttr().IsEmpty(); }
