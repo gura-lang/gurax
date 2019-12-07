@@ -187,7 +187,7 @@ f(a = 1, c = 3) .. a=1, b=<Nil>, c=3
 func.name .. func
 func.type .. `function
 String.Find.type .. `method
-A.f.type .. `classMethod
+A.f.type .. `method
 ======== return ========
 f() .. return(value?:Any)
 g() .. 3

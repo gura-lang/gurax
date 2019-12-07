@@ -1219,8 +1219,6 @@ void Expr_Caller::ComposeForAssignment(
 	if (GetExprCar().IsType<Expr_Member>()) {
 		RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned));
 		if (!pFunction) return;
-		//pFunction->SetType(GetAttr().IsSet(Gurax_Symbol(static_))?
-		//				   Function::Type::ClassMethod : Function::Type::Method);
 		Expr_Member& exprCarEx = dynamic_cast<Expr_Member&>(GetExprCar());
 		if (exprCarEx.GetMemberMode() != MemberMode::Normal) {
 			Error::IssueWith(ErrorType::SyntaxError, *this, "invalid method assignment");
@@ -1246,8 +1244,6 @@ void Expr_Caller::ComposeForAssignmentInClass(
 	}
 	RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned));
 	if (!pFunction) return;
-	//pFunction->SetType(GetAttr().IsSet(Gurax_Symbol(static_))?
-	//				   Function::Type::ClassMethod : Function::Type::Method);
 	composer.Add_AssignMethod(pFunction.release(), true, this);			// [VType]
 	composer.FlushDiscard();											// [VType]
 }

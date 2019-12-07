@@ -26,6 +26,22 @@ PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* n
 
 #define Gurax_DeclareProperty_R(nameVType, name) Gurax_DeclarePropertyAlias_R(nameVType, name, #name)
 
+#define Gurax_DeclareClassPropertyAlias_R(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::OfClass, Flag::Readable)
+
+#define Gurax_DeclareClassProperty_R(nameVType, name) Gurax_DeclareClassPropertyAlias_R(nameVType, name, #name)
+
 #define Gurax_DeclarePropertyAlias_RW(nameVType, name, strName)	\
 class PropHandler_##nameVType##_##name : public PropHandler { \
 public: \
@@ -41,6 +57,22 @@ PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* n
 	PropHandler(name_, Flag::Readable | Flag::Writable)
 
 #define Gurax_DeclareProperty_RW(nameVType, name) Gurax_DeclarePropertyAlias_RW(nameVType, name, #name)
+
+#define Gurax_DeclareClassPropertyAlias_RW(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+	PropHandler(name_, Flag::OfClass | Flag::Readable | Flag::Writable)
+
+#define Gurax_DeclareClassProperty_RW(nameVType, name) Gurax_DeclareClassPropertyAlias_RW(nameVType, name, #name)
 
 #define Gurax_ImplementPropertyGetter(nameVType, name) \
 Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
@@ -198,7 +230,7 @@ protected:
 public:
 	void SetSeqId(SeqId seqId) { _seqId = seqId; }
 	SeqId GetSeqId() const { return _seqId; }
-	void Declare(const VType& vtype, UInt32 flags) { _pVType = &vtype, _flags |= flags; }
+	void Declare(const VType& vtype, Flags flags) { _pVType = &vtype, _flags |= flags; }
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
