@@ -8,7 +8,7 @@ TestCase('Constructor') {
 
 TestCase('Random#Int()') {
 	r = Random(0)
-	Random.Seed(0)
+	Random.SetSeed(0)
 	Tester(`Dim(20) {r.Int(10)})
 	Tester(`Dim(20) {Random.Int(10)})
 	Tester(`Dim(20) {r.Int(100)})
@@ -17,14 +17,14 @@ TestCase('Random#Int()') {
 
 TestCase('Random#Float()') {
 	r = Random(0)
-	Random.Seed(0)
+	Random.SetSeed(0)
 	Tester(`Dim(20) {r.Float()})
 	Tester(`Dim(20) {Random.Float()})
 }
 
 TestCase('Random#Normal()') {
 	r = Random(0)
-	Random.Seed(0)
+	Random.SetSeed(0)
 	Tester(`Dim(20) {r.Normal()})
 	Tester(`Dim(20) {Random.Normal()})
 }
