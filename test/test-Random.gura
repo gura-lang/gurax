@@ -11,8 +11,18 @@ TestCase('Random#Int()') {
 	Random.seed = 0
 	Tester(`Dim(20) {r.Int(10)})
 	Tester(`Dim(20) {Random.Int(10)})
+	r.Reset()
+	Random.Reset()
+	Tester(`r.IntM(10, 20):list)
+	Tester(`Random.IntM(10, 20):list)
+	r.Reset()
+	Random.Reset()
 	Tester(`Dim(20) {r.Int(100)})
 	Tester(`Dim(20) {Random.Int(100)})
+	r.Reset()
+	Random.Reset()
+	Tester(`r.IntM(100, 20):list)
+	Tester(`Random.IntM(100, 20):list)
 }
 
 TestCase('Random#Float()') {
@@ -20,6 +30,10 @@ TestCase('Random#Float()') {
 	Random.seed = 0
 	Tester(`Dim(20) {r.Float()})
 	Tester(`Dim(20) {Random.Float()})
+	r.Reset()
+	Random.Reset()
+	Tester(`r.FloatM(20):list)
+	Tester(`Random.FloatM(20):list)
 }
 
 TestCase('Random#Normal()') {
@@ -27,6 +41,10 @@ TestCase('Random#Normal()') {
 	Random.seed = 0
 	Tester(`Dim(20) {r.Normal()})
 	Tester(`Dim(20) {Random.Normal()})
+	r.Reset()
+	Random.Reset()
+	Tester(`r.NormalM(cnt = 20):list)
+	Tester(`Random.NormalM(cnt = 20):list)
 }
 
 TestCase('Random#Reset()') {

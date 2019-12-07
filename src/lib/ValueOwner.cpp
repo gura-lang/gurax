@@ -51,6 +51,7 @@ ValueOwner* ValueOwner::CloneDeep() const
 
 ValueOwner* ValueOwner::CreateFromIterator(Iterator& iterator, bool skipNilFlag)
 {
+	if (!iterator.MustBeFinite()) return nullptr;
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (skipNilFlag) {
 		for (;;) {
