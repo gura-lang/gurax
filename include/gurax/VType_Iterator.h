@@ -111,6 +111,7 @@ public:
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
+	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual Iterator* DoGenIterator() const override;
 };
 
