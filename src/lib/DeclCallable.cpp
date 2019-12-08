@@ -257,8 +257,11 @@ String DeclCallable::FlagsToString(Flags flags)
 	String str;
 	for (Flags flag = 1; flags; flag <<= 1, flags >>= 1) {
 		if (flags & 1) {
-			str += ':';
-			str += FlagToSymbol(flag)->GetName();
+			const char* name = FlagToSymbol(flag)->GetName();
+			if (*name) {
+				str += ':';
+				str += name;
+			}
 		}
 	}
 	return str;

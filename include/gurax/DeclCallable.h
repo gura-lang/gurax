@@ -124,6 +124,7 @@ public:
 	const VType& GetVTypeResult() const { return *_pVTypeResult; }
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
+	void OrFlags(Flags flags) { _flags |= flags; }
 	void Declare(const VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }

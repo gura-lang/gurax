@@ -45,10 +45,9 @@ String Function::MakeFullName() const
 {
 	if (GetVTypeOfOwner()) {
 		String str = GetVTypeOfOwner()->MakeFullName();
-		//Flags flags = GetFlags() & (Flag::OfClass | Flag::OfInstance);
-		//str += (flags == Flag::OfInstance)? "#" :
-		//	(flags == (Flag::OfClass | Flag::OfInstance))? "##" : ".";
-		str += (!IsTypeMethod() || IsSet(Flag::OfClass))?  "." : "#";
+		Flags flags = GetFlags() & (Flag::OfClass | Flag::OfInstance);
+		str += (flags == Flag::OfInstance)? "#" :
+			(flags == (Flag::OfClass | Flag::OfInstance))? "##" : ".";
 		str += GetName();
 		return str;
 	}

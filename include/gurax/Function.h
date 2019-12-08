@@ -174,6 +174,7 @@ public:
 	bool HasFrameOuter() const { return !!_pwFrameOuter; }
 	void SetVTypeOfOwner(VType& vtypeOfOwner) { _pVTypeOfOwner = &vtypeOfOwner; }
 	const VType* GetVTypeOfOwner() const { return _pVTypeOfOwner; }
+	void OrFlags(Flags flags) { GetDeclCallable().OrFlags(flags); }
 	void Declare(const VType& vtypeResult, Flags flags) { GetDeclCallable().Declare(vtypeResult, flags); }
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
