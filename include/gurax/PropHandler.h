@@ -22,25 +22,9 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable)
+	PropHandler(name_, Flag::OfInstance | Flag::Readable)
 
 #define Gurax_DeclareProperty_R(nameVType, name) Gurax_DeclarePropertyAlias_R(nameVType, name, #name)
-
-#define Gurax_DeclareClassPropertyAlias_R(nameVType, name, strName)	\
-class PropHandler_##nameVType##_##name : public PropHandler { \
-public: \
-	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
-		return dynamic_cast<Value_##nameVType&>(valueTarget); \
-	} \
-protected: \
-	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
-}; \
-PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::OfClass, Flag::Readable)
-
-#define Gurax_DeclareClassProperty_R(nameVType, name) Gurax_DeclareClassPropertyAlias_R(nameVType, name, #name)
 
 #define Gurax_DeclarePropertyAlias_RW(nameVType, name, strName)	\
 class PropHandler_##nameVType##_##name : public PropHandler { \
@@ -54,25 +38,9 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable | Flag::Writable)
+	PropHandler(name_, Flag::OfInstance | Flag::Readable | Flag::Writable)
 
 #define Gurax_DeclareProperty_RW(nameVType, name) Gurax_DeclarePropertyAlias_RW(nameVType, name, #name)
-
-#define Gurax_DeclareClassPropertyAlias_RW(nameVType, name, strName)	\
-class PropHandler_##nameVType##_##name : public PropHandler { \
-public: \
-	PropHandler_##nameVType##_##name(const char* name_ = strName); \
-	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
-		return dynamic_cast<Value_##nameVType&>(valueTarget); \
-	} \
-protected: \
-	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
-	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
-}; \
-PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::OfClass | Flag::Readable | Flag::Writable)
-
-#define Gurax_DeclareClassProperty_RW(nameVType, name) Gurax_DeclareClassPropertyAlias_RW(nameVType, name, #name)
 
 #define Gurax_ImplementPropertyGetter(nameVType, name) \
 Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
@@ -97,7 +65,7 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable | Flag::OfClass)
+PropHandler(name_, Flag::OfClass | Flag::Readable)
 
 #define Gurax_DeclareClassProperty_R(nameVType, name) Gurax_DeclareClassPropertyAlias_R(nameVType, name, #name)
 
@@ -113,7 +81,7 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable | Flag::Writable | Flag::OfClass)
+	PropHandler(name_, Flag::OfClass | Flag::Readable | Flag::Writable)
 
 #define Gurax_DeclareClassProperty_RW(nameVType, name) Gurax_DeclareClassPropertyAlias_RW(nameVType, name, #name)
 
@@ -137,7 +105,7 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
 }; \
 PropHandler_##name::PropHandler_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable)
+	PropHandler(name_, Flag::OfInstance | Flag::Readable)
 
 #define Gurax_DeclareModuleProperty_R(name) Gurax_DeclareModulePropertyAlias_R(name, #name)
 
@@ -150,7 +118,7 @@ protected: \
 	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
 }; \
 PropHandler_##name::PropHandler_##name(const char* name_) : \
-	PropHandler(name_, Flag::Readable | Flag::Writable)
+	PropHandler(name_, Flag::OfInstance | Flag::Readable | Flag::Writable)
 
 #define Gurax_DeclareModuleProperty_RW(name) Gurax_DeclareModulePropertyAlias_RW(name, #name)
 

@@ -28,26 +28,27 @@ public:
 		static const Flags Map				= 1 << 0;	// :map .. must be here
 		static const Flags NoMap			= 1 << 1;	// :nomap .. must be here
 		static const Flags OfClass			= 1 << 2;	// :static
-		static const Flags Closure			= 1 << 3;	// :closure
-		static const Flags CutExtraArgs		= 1 << 4;	// :cut_extra_args
-		static const Flags DynamicScope		= 1 << 5;	// :dynamic_scope
-		static const Flags EndMarker		= 1 << 6;	// :end_marker
-		static const Flags Flat				= 1 << 7;	// :flat
-		static const Flags Fork				= 1 << 8;	// :fork
-		static const Flags Finalizer		= 1 << 9;	// :finalizer
-		static const Flags Leader			= 1 << 10;	// :leader
-		static const Flags Trailer			= 1 << 11;	// :trailer
-		static const Flags SymbolFunc		= 1 << 12;	// :symbol_func
-		static const Flags NoNamed			= 1 << 13;	// :nonamed
-		static const Flags Public			= 1 << 14;	// :public
-		static const Flags Private			= 1 << 15;	// :private
-		static const Flags Privileged		= 1 << 16;	// :privileged
-		static const Flags Reduce			= 1 << 17;	// :reduce
-		static const Flags List				= 1 << 18;	// :list
-		static const Flags XList			= 1 << 19;	// :xlist
-		static const Flags Iter				= 1 << 20;	// :iter
-		static const Flags XIter			= 1 << 21;	// :xiter
-		static const Flags AnyAttr			= 1 << 22;	// :any_attr
+		static const Flags OfInstance		= 1 << 3;	// :instance
+		static const Flags Closure			= 1 << 4;	// :closure
+		static const Flags CutExtraArgs		= 1 << 5;	// :cut_extra_args
+		static const Flags DynamicScope		= 1 << 6;	// :dynamic_scope
+		static const Flags EndMarker		= 1 << 7;	// :end_marker
+		static const Flags Flat				= 1 << 8;	// :flat
+		static const Flags Fork				= 1 << 9;	// :fork
+		static const Flags Finalizer		= 1 << 10;	// :finalizer
+		static const Flags Leader			= 1 << 11;	// :leader
+		static const Flags Trailer			= 1 << 12;	// :trailer
+		static const Flags SymbolFunc		= 1 << 13;	// :symbol_func
+		static const Flags NoNamed			= 1 << 14;	// :nonamed
+		static const Flags Public			= 1 << 15;	// :public
+		static const Flags Private			= 1 << 16;	// :private
+		static const Flags Privileged		= 1 << 17;	// :privileged
+		static const Flags Reduce			= 1 << 18;	// :reduce
+		static const Flags List				= 1 << 19;	// :list
+		static const Flags XList			= 1 << 20;	// :xlist
+		static const Flags Iter				= 1 << 21;	// :iter
+		static const Flags XIter			= 1 << 22;	// :xiter
+		static const Flags AnyAttr			= 1 << 23;	// :any_attr
 	};
 	class SymbolAssoc_Flag : public SymbolAssoc<Flags, Flag::None> {
 	public:
@@ -55,6 +56,7 @@ public:
 			Assoc(Gurax_Symbol(map),			Flag::Map);
 			Assoc(Gurax_Symbol(nomap),			Flag::NoMap);
 			Assoc(Gurax_Symbol(static_),		Flag::OfClass);
+			//Assoc(Gurax_Symbol(instance),		Flag::OfInstance);
 			Assoc(Gurax_Symbol(closure),		Flag::Closure);
 			Assoc(Gurax_Symbol(cut_extra_args),	Flag::CutExtraArgs);
 			Assoc(Gurax_Symbol(dynamic_scope),	Flag::DynamicScope);

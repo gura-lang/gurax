@@ -1110,12 +1110,9 @@ void PUnit_CompleteStruct<nExprSrc, discardValueFlag>::Exec(Processor& processor
 	pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce);
 	for (PropHandler* pPropHandler : *pPropHandlerOwner) {
 		PropHandler::Flags flags = pPropHandler->GetFlags();
-		//const DeclArg::Occur& occur = (flags & PropHandler::Flag::Nil)?
-		//	DeclArg::Occur::ZeroOrOnce : DeclArg::Occur::Once;
-		//const DeclArg::Occur& occur = DeclArg::Occur::Once;
 		const DeclArg::Occur& occur = DeclArg::Occur::ZeroOrOnce;
-		flags &= ~(PropHandler::Flag::Nil | PropHandler::Flag::OfClass | PropHandler::Flag::Public |
-				   PropHandler::Flag::Readable | PropHandler::Flag::Writable);
+		flags &= ~(PropHandler::Flag::Nil | PropHandler::Flag::OfClass | PropHandler::Flag::OfInstance |
+				   PropHandler::Flag::Public | PropHandler::Flag::Readable | PropHandler::Flag::Writable);
 		pDeclCallable->GetDeclArgOwner().push_back(
 			new DeclArg(pPropHandler->GetSymbol(), pPropHandler->GetVType(), occur, flags, nullptr));
 	}

@@ -21,19 +21,20 @@ public:
 public:
 	using Flags = UInt32;
 	struct Flag {
-		static const Flags None		= 0;
-		static const Flags ListVar	= 1 << 0;	// :listvar
-		static const Flags Nil		= 1 << 1;	// :nil
-		static const Flags StreamR	= 1 << 2;	// :r
-		static const Flags StreamW	= 1 << 3;	// :w
-		static const Flags Map		= 1 << 4;	// :map
-		static const Flags NoMap	= 1 << 5;	// :nomap
-		static const Flags NoCast	= 1 << 6;	// :nocast
-		static const Flags OfClass	= 1 << 7;	// :static
-		static const Flags Public	= 1 << 8;	// :public
-		static const Flags Private	= 1 << 9;	// :private
-		static const Flags Readable	= 1 << 10;	// :readable
-		static const Flags Writable	= 1 << 11;	// :writable
+		static const Flags None			= 0;
+		static const Flags ListVar		= 1 << 0;	// :listvar
+		static const Flags Nil			= 1 << 1;	// :nil
+		static const Flags StreamR		= 1 << 2;	// :r
+		static const Flags StreamW		= 1 << 3;	// :w
+		static const Flags Map			= 1 << 4;	// :map
+		static const Flags NoMap		= 1 << 5;	// :nomap
+		static const Flags NoCast		= 1 << 6;	// :nocast
+		static const Flags OfClass		= 1 << 7;	// :static
+		static const Flags OfInstance	= 1 << 8;	// :instance
+		static const Flags Public		= 1 << 9;	// :public
+		static const Flags Private		= 1 << 10;	// :private
+		static const Flags Readable		= 1 << 11;	// :readable
+		static const Flags Writable		= 1 << 12;	// :writable
 	};
 	class Occur {
 	private:
@@ -78,6 +79,7 @@ public:
 			Assoc(Gurax_Symbol(nomap),		Flag::NoMap);
 			Assoc(Gurax_Symbol(nocast),		Flag::NoCast);
 			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
+			//Assoc(Gurax_Symbol(instance),	Flag::OfInstance);
 			Assoc(Gurax_Symbol(public_),	Flag::Public);
 			Assoc(Gurax_Symbol(private_),	Flag::Private);
 			Assoc(Gurax_Symbol(R),			Flag::Readable);

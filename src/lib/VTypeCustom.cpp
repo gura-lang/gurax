@@ -25,40 +25,6 @@ void VTypeCustom::Inherit()
 	}
 }
 
-#if 0
-bool VTypeCustom::AssignMethod(Function* pFunction)
-{
-	const Symbol* pSymbol = pFunction->GetSymbol();
-	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
-		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
-		RefPtr<Function> pConstructor;
-		if (GetVTypeInh()->IsCustom()) {
-			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			pConstructor.reset(new ConstructorClass(
-								   *this, pFunction->GetDeclCallable().Reference(),
-								   pFunction->GetExprBody().Reference(),
-								   pVTypeInh->GetConstructor().Reference()));
-		} else {
-			pConstructor.reset(new ConstructorClass(
-								   *this, pFunction->GetDeclCallable().Reference(),
-								   pFunction->GetExprBody().Reference(), nullptr));
-		}
-		RefPtr<Frame> pFrameOuter(pFunction->LockFrameOuter());
-		pConstructor->SetFrameOuter(*pFrameOuter);
-		SetConstructor(pConstructor.release());
-	} else if (pSymbol->IsIdentical(Gurax_Symbol(__del__))) {
-		if (!pFunction->GetDeclCallable().IsNaked()) {
-			Error::Issue(ErrorType::SyntaxError, "destructors can't have any arguments");
-			return false;
-		}
-		SetDestructor(pFunction);
-	} else {
-		GetFrame().Assign(pSymbol, new Value_Function(pFunction));
-	}
-	return true;
-}
-#endif
-
 bool VTypeCustom::AssignPropHandler(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropHandler::Flags flags, RefPtr<Value> pValueInit)
 {

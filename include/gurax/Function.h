@@ -71,7 +71,7 @@ public: \
 		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
 	} \
 }; \
-Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::None) \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::OfInstance)
 
 #define Gurax_DeclareMethod(nameVType, name) Gurax_DeclareMethodAlias(nameVType, name, #name)
 
@@ -90,7 +90,7 @@ public: \
 		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
 	} \
 }; \
-Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::OfClass) \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::OfClass)
 
 #define Gurax_DeclareClassMethod(nameVType, name) Gurax_DeclareClassMethodAlias(nameVType, name, #name)
 
