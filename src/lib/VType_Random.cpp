@@ -36,8 +36,8 @@ Gurax_ImplementConstructor(Random)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Random.Float()
-Gurax_DeclareClassMethod(Random, Float)
+// Random##Float()
+Gurax_DeclareHybridMethod(Random, Float)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -45,7 +45,7 @@ Gurax_DeclareClassMethod(Random, Float)
 		"Randomly generates a real number in the range of `[0, 1)`");
 }
 
-Gurax_ImplementClassMethod(Random, Float)
+Gurax_ImplementHybridMethod(Random, Float)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -55,8 +55,8 @@ Gurax_ImplementClassMethod(Random, Float)
 	return new Value_Number(random.GenFloat<Double>());
 }
 
-// Random.FloatM(cnt?:Number)
-Gurax_DeclareClassMethod(Random, FloatM)
+// Random##FloatM(cnt?:Number)
+Gurax_DeclareHybridMethod(Random, FloatM)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -65,7 +65,7 @@ Gurax_DeclareClassMethod(Random, FloatM)
 		"Randomly generates a real number in the range of `[0, 1)`");
 }
 
-Gurax_ImplementClassMethod(Random, FloatM)
+Gurax_ImplementHybridMethod(Random, FloatM)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -80,8 +80,8 @@ Gurax_ImplementClassMethod(Random, FloatM)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Random.Int(range:Number)
-Gurax_DeclareClassMethod(Random, Int)
+// Random##Int(range:Number)
+Gurax_DeclareHybridMethod(Random, Int)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -90,7 +90,7 @@ Gurax_DeclareClassMethod(Random, Int)
 		"Randomly generates an integer number within the range of `[0, range)`");
 }
 
-Gurax_ImplementClassMethod(Random, Int)
+Gurax_ImplementHybridMethod(Random, Int)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -104,8 +104,8 @@ Gurax_ImplementClassMethod(Random, Int)
 	return new Value_Number(random.GenInt<Int>(range));
 }
 
-// Random.IntM(range:Number, cnt?:Number)
-Gurax_DeclareClassMethod(Random, IntM)
+// Random##IntM(range:Number, cnt?:Number)
+Gurax_DeclareHybridMethod(Random, IntM)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -115,7 +115,7 @@ Gurax_DeclareClassMethod(Random, IntM)
 		"Randomly generates an integer number within the range of `[0, range)`");
 }
 
-Gurax_ImplementClassMethod(Random, IntM)
+Gurax_ImplementHybridMethod(Random, IntM)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -131,8 +131,8 @@ Gurax_ImplementClassMethod(Random, IntM)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Random.Normal(mean?:Number, stddev?:Number)
-Gurax_DeclareClassMethod(Random, Normal)
+// Random##Normal(mean?:Number, stddev?:Number)
+Gurax_DeclareHybridMethod(Random, Normal)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -143,7 +143,7 @@ Gurax_DeclareClassMethod(Random, Normal)
 		"In default, the value of `mean` is `0` and `stddev` is `1`.");
 }
 
-Gurax_ImplementClassMethod(Random, Normal)
+Gurax_ImplementHybridMethod(Random, Normal)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -157,8 +157,8 @@ Gurax_ImplementClassMethod(Random, Normal)
 	return new Value_Number(random.GenNormal<Double>(mean, stddev));
 }
 
-// Random.NormalM(mean?:Number, stddev?:Number, cnt?:Number)
-Gurax_DeclareClassMethod(Random, NormalM)
+// Random##NormalM(mean?:Number, stddev?:Number, cnt?:Number)
+Gurax_DeclareHybridMethod(Random, NormalM)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -170,7 +170,7 @@ Gurax_DeclareClassMethod(Random, NormalM)
 		"In default, the value of `mean` is `0` and `stddev` is `1`.");
 }
 
-Gurax_ImplementClassMethod(Random, NormalM)
+Gurax_ImplementHybridMethod(Random, NormalM)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -187,8 +187,8 @@ Gurax_ImplementClassMethod(Random, NormalM)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Random.Reset():void
-Gurax_DeclareClassMethod(Random, Reset)
+// Random##Reset():void
+Gurax_DeclareHybridMethod(Random, Reset)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -196,7 +196,7 @@ Gurax_DeclareClassMethod(Random, Reset)
 		"Reset the seed of the random generator.");
 }
 
-Gurax_ImplementClassMethod(Random, Reset)
+Gurax_ImplementHybridMethod(Random, Reset)
 {
 	// Target
 	Value& valueThis = argument.GetValueThis();
@@ -210,8 +210,8 @@ Gurax_ImplementClassMethod(Random, Reset)
 //-----------------------------------------------------------------------------
 // Implementation of properties
 //-----------------------------------------------------------------------------
-// Random#seed
-Gurax_DeclareClassProperty_RW(Random, seed)
+// Random##seed
+Gurax_DeclareHybridProperty_RW(Random, seed)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -219,14 +219,14 @@ Gurax_DeclareClassProperty_RW(Random, seed)
 		"Seed value of the random instance.");
 }
 
-Gurax_ImplementClassPropertyGetter(Random, seed)
+Gurax_ImplementHybridPropertyGetter(Random, seed)
 {
 	Random& random = valueTarget.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueTarget).GetRandom() : Random::Global();
 	return new Value_Number(random.GetSeed());
 }
 
-Gurax_ImplementClassPropertySetter(Random, seed)
+Gurax_ImplementHybridPropertySetter(Random, seed)
 {
 	Random& random = valueTarget.IsInstanceOf(VTYPE_Random)?
 		dynamic_cast<Value_Random&>(valueTarget).GetRandom() : Random::Global();

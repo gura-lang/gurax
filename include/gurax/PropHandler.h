@@ -94,6 +94,49 @@ void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Valu
 #define Gurax_CreateClassProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
 
 //------------------------------------------------------------------------------
+// Macros to declare PropHandler for hybrid
+//------------------------------------------------------------------------------
+#define Gurax_DeclareHybridPropertyAlias_R(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override {} \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+PropHandler(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable)
+
+#define Gurax_DeclareHybridProperty_R(nameVType, name) Gurax_DeclareHybridPropertyAlias_R(nameVType, name, #name)
+
+#define Gurax_DeclareHybridPropertyAlias_RW(nameVType, name, strName)	\
+class PropHandler_##nameVType##_##name : public PropHandler { \
+public: \
+	PropHandler_##nameVType##_##name(const char* name_ = strName); \
+	static Value_##nameVType& GetValueThis(Value& valueTarget) { \
+		return dynamic_cast<Value_##nameVType&>(valueTarget); \
+	} \
+protected: \
+	virtual Value* DoGetValue(Value& valueTarget, const Attribute& attr) const override; \
+	virtual void DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const override; \
+}; \
+PropHandler_##nameVType##_##name::PropHandler_##nameVType##_##name(const char* name_) : \
+PropHandler(name_, Flag::OfClass | Flag::OfInstance | Flag::Readable | Flag::Writable)
+
+#define Gurax_DeclareHybridProperty_RW(nameVType, name) Gurax_DeclareHybridPropertyAlias_RW(nameVType, name, #name)
+
+#define Gurax_ImplementHybridPropertyGetter(nameVType, name) \
+Value* PropHandler_##nameVType##_##name::DoGetValue(Value& valueTarget, const Attribute& attr) const
+
+#define Gurax_ImplementHybridPropertySetter(nameVType, name) \
+void PropHandler_##nameVType##_##name::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
+
+#define Gurax_CreateHybridProperty(nameVType, name) (new PropHandler_##nameVType##_##name())
+
+//------------------------------------------------------------------------------
 // Macros to declare PropHandler for module
 //------------------------------------------------------------------------------
 #define Gurax_DeclareModulePropertyAlias_R(name, strName)	\

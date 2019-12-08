@@ -99,6 +99,25 @@ Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argum
 
 #define Gurax_CreateClassMethod(nameVType, name) (new Method_##nameVType##_##name())
 
+// Declaration/implementation/creation of Hybrid Method
+#define Gurax_DeclareHybridMethodAlias(nameVType, name, strName)	\
+class Method_##nameVType##_##name : public Function { \
+public: \
+	Method_##nameVType##_##name(const char* name_ = strName); \
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
+	static Value_##nameVType& GetValueThis(Argument& argument) { \
+		return dynamic_cast<Value_##nameVType&>(argument.GetValueThis()); \
+	} \
+}; \
+Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Function(Type::Method, name_, Flag::OfClass | Flag::OfInstance)
+
+#define Gurax_DeclareHybridMethod(nameVType, name) Gurax_DeclareHybridMethodAlias(nameVType, name, #name)
+
+#define Gurax_ImplementHybridMethod(nameVType, name) \
+Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
+
+#define Gurax_CreateHybridMethod(nameVType, name) (new Method_##nameVType##_##name())
+
 namespace Gurax {
 
 //------------------------------------------------------------------------------
