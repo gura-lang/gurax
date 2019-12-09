@@ -15,5 +15,5 @@ b.dirNamesInc = []
 b.dirNamesLib = []
 b.cflags = []
 b.ldflags = []
-b.libs = []
+b.libs = ['z', 'bz2']
 b.Run()
