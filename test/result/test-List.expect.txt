@@ -253,6 +253,13 @@ x.Before(x < 0).Offset(1):list .. [3, 6, 1, 2, 3]
 [`apple, `grape, `banana].Contains('apple'.ToSymbol()) .. true
 [`apple, `grape, `banana].Contains('kiwi'.ToSymbol()) .. false
 ======== List#Count() ========
+[6, 2, 6, 3, 5, 2, 0, 2, 9, 3, 3, 0, 7, 3, 7, 0, 4, 0, 5, 6].Count(3) .. 4
+======== List#CountFalse() ========
+[6, 2, false, 3, 5, 2, false, 2, 9, 0, 3, false, 7, 0, 7, false, 4, false, 5, 6].CountFalse() .. 5
+======== List#CountIf() ========
+[6, 2, 6, 3, 5, 2, 0, 2, 9, 3, 3, 0, 7, 3, 7, 0, 4, 0, 5, 6].CountIf(& {$x > 5}) .. 6
+======== List#CountTrue() ========
+[6, 2, false, 3, 5, 2, false, 2, 9, 0, 3, false, 7, 0, 7, false, 4, false, 5, 6].CountTrue() .. 15
 ======== List#Cycle() ========
 [].Cycle(20) .. empty list can not be specified
 ['A'].Cycle(20):list .. ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']

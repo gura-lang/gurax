@@ -42,6 +42,17 @@ size_t Iterator::Count(const Value& value)
 	return cnt;
 }
 
+size_t Iterator::CountFalse()
+{
+	size_t cnt = 0;
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		if (!pValueElem->GetBool()) cnt++;
+	}
+	return cnt;
+}
+
 size_t Iterator::CountTrue()
 {
 	size_t cnt = 0;

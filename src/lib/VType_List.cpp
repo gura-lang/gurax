@@ -484,6 +484,26 @@ Gurax_ImplementMethod(List, Count)
 	return new Value_Number(cnt);
 }
 
+// List#CountFalse()
+Gurax_DeclareMethod(List, CountFalse)
+{
+	Declare(VTYPE_Number, Flag::None);
+	LinkHelp(VTYPE_Iterator, GetSymbol());
+}
+
+Gurax_ImplementMethod(List, CountFalse)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	// Arguments
+	ArgPicker args(argument);
+	// Function body
+	size_t cnt = valueTypedOwner.GetValueOwner().CountFalse();
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
+}
+
 // List#CountIf(criteria:Function)
 Gurax_DeclareMethod(List, CountIf)
 {
@@ -1458,6 +1478,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Combination));
 	Assign(Gurax_CreateMethod(List, Contains));
 	Assign(Gurax_CreateMethod(List, Count));
+	Assign(Gurax_CreateMethod(List, CountFalse));
 	Assign(Gurax_CreateMethod(List, CountIf));
 	Assign(Gurax_CreateMethod(List, CountTrue));
 	Assign(Gurax_CreateMethod(List, Cycle));

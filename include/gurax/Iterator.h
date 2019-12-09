@@ -66,6 +66,7 @@ public:
 	Value* And();
 	bool Contains(const Value& value);
 	size_t Count(const Value& value);
+	size_t CountFalse();
 	size_t CountTrue();
 	size_t CountIf(Processor& processor, const Function& function);
 	Value* Each(Processor& processor, const Expr_Block& exprOfBlock, DeclCallable::Flags flags);

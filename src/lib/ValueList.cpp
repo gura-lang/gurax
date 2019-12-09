@@ -90,6 +90,15 @@ size_t ValueList::Count(const Value& value) const
 	return cnt;
 }
 
+size_t ValueList::CountFalse() const
+{
+	size_t cnt = 0;
+	for (const Value* pValue : *this) {
+		if (!pValue->GetBool()) cnt++;
+	}
+	return cnt;
+}
+
 size_t ValueList::CountTrue() const
 {
 	size_t cnt = 0;

@@ -30,6 +30,7 @@ public:
 	bool FixPosition(Int* pPos) const;
 	bool Contains(const Value& value) const;
 	size_t Count(const Value& value) const;
+	size_t CountFalse() const;
 	size_t CountTrue() const;
 	size_t CountIf(Processor& processor, const Function& function) const;
 public:

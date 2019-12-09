@@ -318,6 +318,26 @@ Gurax_ImplementMethod(Iterator, Count)
 	return new Value_Number(cnt);
 }
 
+// Iterator#CountFalse()
+Gurax_DeclareMethod(Iterator, CountFalse)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns the number of elements in the iterable that are recognized as `false`.");
+}
+
+Gurax_ImplementMethod(Iterator, CountFalse)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorThis = valueThis.GetIterator();
+	// Function body
+	size_t cnt = iteratorThis.CountFalse();
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Number(cnt);
+}
+
 // Iterator#CountIf(criteria:Function)
 Gurax_DeclareMethod(Iterator, CountIf)
 {
@@ -1550,7 +1570,9 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Combination));
 	Assign(Gurax_CreateMethod(Iterator, Contains));
 	Assign(Gurax_CreateMethod(Iterator, Count));
+	Assign(Gurax_CreateMethod(Iterator, CountFalse));
 	Assign(Gurax_CreateMethod(Iterator, CountIf));
+	Assign(Gurax_CreateMethod(Iterator, CountTrue));
 	Assign(Gurax_CreateMethod(Iterator, Cycle));
 	Assign(Gurax_CreateMethod(Iterator, Each));
 	Assign(Gurax_CreateMethod(Iterator, Filter));
