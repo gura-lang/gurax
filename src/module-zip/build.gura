@@ -1,0 +1,19 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
+import(util.modbuild) {Builder}
+
+b = Builder('zip')
+b.pathNamesSrc = [
+	'module-zip.cpp', 'Util.cpp'
+	'Reader.cpp', 'Stat.cpp', 'Writer.cpp'
+	'VType_Reader.cpp', 'VType_Stat.cpp', 'VType_Writer.cpp'
+]
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cflags = []
+b.ldflags = []
+b.libs = []
+b.Run()
