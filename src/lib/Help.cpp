@@ -8,6 +8,27 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
+Help::Help(const Symbol* pLangCode, StringReferable* pDoc) :
+	_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(pDoc), _pTmplDoc(nullptr)
+{
+}
+
+Help::Help(const Symbol* pLangCode, Template* pTmplDoc) :
+	_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(nullptr), _pTmplDoc(pTmplDoc)
+{
+}
+
+Help::Help(const Help& src) :
+	_pwHelpHolder(src._pwHelpHolder.Reference()), _pLangCode(src._pLangCode),
+	_pDoc(src._pDoc.Reference()), _pTmplDoc(Template::Reference(src._pTmplDoc))
+{
+}
+
+Help::~Help()
+{
+	Template::Delete(_pTmplDoc);
+}
+
 String Help::ToString(const StringStyle& ss) const
 {
 	String str;

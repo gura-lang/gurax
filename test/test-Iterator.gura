@@ -108,6 +108,12 @@ TestCase('Iterator#Contains()') {
 TestCase('Iterator#Count()') {
 }
 
+TestCase('Iterator#CountIf()') {
+}
+
+TestCase('Iterator#CountTrue()') {
+}
+
 TestCase('Iterator#Cycle()') {
 	Tester(`[].Each().Cycle(20))
 	Tester(`['A'].Each().Cycle(20):list)

@@ -9,6 +9,7 @@
 namespace Gurax {
 
 class Help;
+class Template;
 
 //------------------------------------------------------------------------------
 // HelpList
@@ -69,20 +70,20 @@ private:
 	RefPtr<HelpHolder::WeakPtr> _pwHelpHolder;
 	const Symbol* _pLangCode;
 	RefPtr<StringReferable> _pDoc;
+	Template* _pTmplDoc;
 public:
 	// Constructor
-	Help(const Symbol* pLangCode, StringReferable* pDoc) :
-		_pwHelpHolder(nullptr), _pLangCode(pLangCode), _pDoc(pDoc) {}
+	Help(const Symbol* pLangCode, StringReferable* pDoc);
+	Help(const Symbol* pLangCode, Template* pTmplDoc);
 	// Copy constructor/operator
-	Help(const Help& src) :
-		_pwHelpHolder(src._pwHelpHolder.Reference()), _pLangCode(src._pLangCode), _pDoc(src._pDoc.Reference()) {}
+	Help(const Help& src);
 	Help& operator=(const Help& src) = delete;
 	// Move constructor/operator
 	Help(Help&& src) = delete;
 	Help& operator=(Help&& src) noexcept = delete;
 protected:
 	// Destructor
-	virtual ~Help() = default;
+	virtual ~Help();
 public:
 	void SetHelpHolder(HelpHolder::WeakPtr* pwHelpHolder) { _pwHelpHolder = pwHelpHolder; }
 	const Symbol* GetLangCode() const { return _pLangCode; }

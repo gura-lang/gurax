@@ -319,6 +319,12 @@ TestCase('List#Contains()') {
 TestCase('List#Count()') {
 }
 
+TestCase('List#CountIf()') {
+}
+
+TestCase('List#CountTrue()') {
+}
+
 TestCase('List#Cycle()') {
 	Tester(`[].Cycle(20))
 	Tester(`['A'].Cycle(20):list)
