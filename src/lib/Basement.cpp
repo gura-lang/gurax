@@ -29,15 +29,20 @@ bool Basement::Initialize(int argc, char** argv)
 		return false;
 	}
 	_pProcessor.reset(Processor::Create(_cmdLine.GetBool("debug")));
+	Processor& processor = *_pProcessor;
 	PrepareVType();
 	PrepareValue();
 	PreparePathList();
 	PrepareFunction();
 	PrepareConsoleStream();
-	if (!Module::ImportAllBuiltIns(GetProcessor())) return false;
-	if (!Module::ImportByNameList(GetProcessor(), _cmdLine.GetStringList("import"))) return false;
+	if (!Module::ImportAllBuiltIns(processor)) return false;
+	if (!_cmdLine.GetBool("naked")) {
+		if (!Module::ImportByName(processor, "markdown")) return false;
+		//if (!Module::ImportByName(processor, "zip")) return false;
+	}
+	if (!Module::ImportByNameList(processor, _cmdLine.GetStringList("import"))) return false;
 	for (const String& cmd : _cmdLine.GetStringList("command")) {
-		if (!ExecCommand(GetProcessor(), cmd.c_str())) return false;
+		if (!ExecCommand(processor, cmd.c_str())) return false;
 		_commandDoneFlag = true;
 	}
 	return true;
