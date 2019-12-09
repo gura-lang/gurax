@@ -237,6 +237,18 @@ void Function::DoExec(Processor& processor, Argument& argument) const
 	processor.SetPUnitNext(pPUnitOfCaller->GetPUnitCont());
 }
 
+void Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const
+{
+	String str = ToString();
+	const Help* pHelp = GetHelpHolder().Lookup(pLangCode);
+	if (pHelp) {
+		str += "\n---\n";
+		str += pHelp->GetDoc();
+		if (!str.EndsWith('\n')) str += '\n';
+	}
+	Basement::Inst.Present(processor, str.c_str());
+}
+
 String Function::ToString(const StringStyle& ss) const
 {
 	String str;

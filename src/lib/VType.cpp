@@ -33,6 +33,14 @@ void VType::GatherMemberSymbol(SymbolList& symbolList) const
 	GetPropHandlerMapOfClass().GatherSymbol(symbolList);
 }
 
+void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
+{
+	const Help* pHelp = GetHelpHolder().Lookup(pLangCode);
+	if (pHelp) {
+		Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
+	}
+}
+
 void VType::Prepare(Frame& frameOuter)
 {
 	frameOuter.Assign(*this);

@@ -95,6 +95,7 @@ public:
 		 GetPropHandlerMapOfClass() : GetPropHandlerMap()).Assign(pPropHandler);
 	}
 	void GatherMemberSymbol(SymbolList& symbolList) const;
+	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
 	void Prepare(Frame& frameOuter);
 public:

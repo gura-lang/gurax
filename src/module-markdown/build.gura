@@ -10,7 +10,15 @@ b.pathNamesSrc = [
 	'Document.cpp', 'Item.cpp'
 	'VType_Document.cpp', 'VType_Item.cpp'
 ]
-b.pathNamesScript = []
+b.pathNamesScript = [
+	'script/markdown.composer.gura'
+	'script/markdown.console.gura'
+	'script/markdown.gura'
+	'script/markdown.html.gura'
+	'script/markdown.rtf.gura'
+	'script/markdown.tex.gura'
+	'script/markdown.toc.gura'
+]
 b.dirNamesInc = []
 b.dirNamesLib = []
 b.cflags = []

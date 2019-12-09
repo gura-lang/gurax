@@ -140,8 +140,8 @@ const DeclCallable* Value_VType::GetDeclCallableWithError()
 
 void Value_VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
-	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
-	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
+	const Function& constructor = GetVTypeThis().GetConstructor();
+	if (!constructor.IsEmpty()) constructor.PresentHelp(processor, pLangCode);
 }
 
 const DeclCallable* Value_VType::GetDeclCallable()

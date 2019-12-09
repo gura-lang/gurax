@@ -18,6 +18,9 @@ Gurax_DeclareConstructor(Color)
 	DeclareArg("a", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
+		Gurax_Symbol(ja),
+		"`Color` インスタンスを生成する。");
+	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Color` instance.");
 }

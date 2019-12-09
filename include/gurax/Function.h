@@ -234,6 +234,7 @@ public:
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
 	void Call(Processor& processor, Argument& argument) const;
 	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
+	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Function& function) const { return this == &function; }
