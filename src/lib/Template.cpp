@@ -107,40 +107,6 @@ bool Template::Render(Processor& processor, Stream& streamDst)
 	return !Error::IsIssued();
 }
 
-#if 0
-bool Template::Render(Environment &env, SimpleStream *pStreamDst)
-{
-	Template *pTemplateTop = nullptr;
-	for (Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		if (!pTemplate->Prepare(env)) return false;
-		pTemplate->SetStreamDst(pStreamDst);
-		pTemplateTop = pTemplate;
-	}
-	if (pTemplateTop->GetFuncForBody() == nullptr) return true;
-	AutoPtr<Argument> pArg(new Argument(pTemplateTop->GetFuncForBody()));
-	pArg->SetValueThis(Value(new Object_template(env, Reference())));
-	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pTemplateTop->GetFuncForBody()->Eval(*pEnvBlock, *pArg);
-	for (Template *pTemplate = this; pTemplate != nullptr;
-							pTemplate = pTemplate->GetTemplateSuper()) {
-		pTemplate->SetStreamDst(nullptr);
-	}
-	return !env.IsSignalled();
-}
-
-bool Template::Prepare(Environment &env)
-{
-	AutoPtr<Environment> pEnvBlock(env.Derive(ENVTYPE_local));
-	pEnvBlock->AssignValue(Gurax_Symbol(this_),
-				Value(new Object_template(env, Reference())), EXTRA_Public);
-	_pValueExMap->clear();
-	_pExprOwnerForInit->Exec(*pEnvBlock);
-	return !env.IsSignalled();
-}
-
-#endif
-
 bool Template::Render(Processor& processor, String& strDst)
 {
 	RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
@@ -393,27 +359,6 @@ bool Template::Parser::Flush()
 	CreateTmplString();
 	return true;
 }
-
-#if 0
-bool Template::Parser::Finish()
-{
-	return Flush() && PrepareAndCompose(_tmpl.GetExprForInit()) && PrepareAndCompose(_tmpl.GetExprForBody());
-}
-#endif
-
-#if 0
-bool Template::Parser::PrepareAndCompose(Expr& expr)
-{
-	expr.Prepare();
-	if (Error::IsIssued()) return false;
-	Composer composer;
-	expr.SetPUnitFirst(composer.PeekPUnitCont());
-	expr.ComposeOrNil(composer);
-	composer.Add_Return(&expr);
-	composer.Add_Terminate();
-	return !Error::IsIssued();
-}
-#endif
 
 void Template::Parser::CreateTmplString()
 {
@@ -748,80 +693,6 @@ void PUnit_TmplScript<nExprSrc, discardValueFlag>::PrintScriptResult(const char*
 	}
 	GetTemplate().Print(GetStringPost());
 }
-
-#if 0
-Value Expr_TmplScript::DoExec(Environment &env) const
-{
-	if (value.IsInvalid()) return Value::Nil;
-	String strLast;
-	if (value.Is_string()) {
-		_pTemplate->Print(env, _strIndent.c_str());
-		strLast = value.GetStringSTL();
-	} else if (value.Is_list() || value.Is_iterator()) {
-		AutoPtr<Iterator> pIterator(value.CreateIterator(env));
-		if (env.IsSignalled()) return Value::Nil;
-		bool firstFlag = true;
-		Value valueElem;
-		while (pIterator->Next(env, valueElem)) {
-			if (firstFlag) {
-				firstFlag = false;
-				_pTemplate->Print(env, _strIndent.c_str());
-			}
-			foreach_const (String, p, strLast) {
-				char ch = *p;
-				if (ch == '\n') {
-					_pTemplate->PutChar(env, ch);
-					if (_autoIndentFlag && valueElem.IsValid()) {
-						_pTemplate->Print(env, _strIndent.c_str());
-					}
-				} else {
-					_pTemplate->PutChar(env, ch);
-				}
-			}
-			if (valueElem.Is_string()) {
-				strLast = valueElem.GetStringSTL();
-			} else if (valueElem.IsInvalid()) {
-				strLast.clear();
-			} else if (valueElem.Is_number()) {
-				strLast = valueElem.ToString();
-				if (env.IsSignalled()) return Value::Nil;
-			} else {
-				env.SetError(ERR_TypeError,
-							 "an iterable returned by a template script must contain "
-							 "elements of nil, string or number");
-				env.GetSignal().AddExprCause(this);
-				return Value::Nil;
-			}
-		}
-		if (firstFlag) return Value::Nil;
-	} else if (value.Is_number()) {
-		_pTemplate->Print(env, _strIndent.c_str());
-		strLast = value.ToString();
-		if (env.IsSignalled()) return Value::Nil;
-	} else {
-		env.SetError(ERR_TypeError,
-			"template script must return nil, string or number");
-		env.GetSignal().AddExprCause(this);
-		return Value::Nil;
-	}
-	PrintScriptResult(strLast, GetStringIdent(), GetAutoIndentFlag(), GetAppendLastEOLFlag());
-	foreach_const (String, p, strLast) {
-		char ch = *p;
-		if (ch != '\n') {
-			_pTemplate->PutChar(env, ch);
-		} else if (p + 1 != strLast.end()) {
-			_pTemplate->PutChar(env, ch);
-			if (_autoIndentFlag) {
-				_pTemplate->Print(env, _strIndent.c_str());
-			}
-		} else if (_appendLastEOLFlag) {
-			_pTemplate->PutChar(env, ch);
-		}
-	}
-	_pTemplate->Print(env, _strPost.c_str());
-	return Value::Nil;
-}
-#endif
 
 template<int nExprSrc, bool discardValueFlag>
 String PUnit_TmplScript<nExprSrc, discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const

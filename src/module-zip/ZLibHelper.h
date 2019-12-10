@@ -15,13 +15,13 @@ class GZHeader {
 public:
 	struct Fields {
 		enum { Size = 10 };
-		unsigned char Identification1;
-		unsigned char Identification2;
-		unsigned char CompressionMethod;
-		unsigned char Flags;
-		Gura_PackedUInt32_LE(ModificationTime);
-		unsigned char ExtraFlags;
-		unsigned char OperatingSystem;
+		UInt8 Identification1;
+		UInt8 Identification2;
+		UInt8 CompressionMethod;
+		UInt8 Flags;
+		Gurax_PackedUInt32_LE(ModificationTime);
+		UInt8 ExtraFlags;
+		UInt8 OperatingSystem;
 		inline bool GetFTEXT() const { return (Flags & (1 << 0))? true : false; }
 		inline bool GetFHCRC() const { return (Flags & (1 << 1))? true : false; }
 		inline bool GetFEXTRA() const { return (Flags & (1 << 2))? true : false; }
@@ -54,13 +54,13 @@ public:
 		}
 		if (_fields.GetFEXTRA()) {
 			struct {
-				Gura_PackedUInt16_LE(ExtraLength);
+				Gurax_PackedUInt16_LE(ExtraLength);
 			} fields;
 			if (stream.Read(sig, &fields, 2) < 2) {
 				SetError_InvalidFormat(sig);
 				return false;
 			}
-			unsigned short ExtraLength = Gura_UnpackUInt16(fields.ExtraLength);
+			unsigned short ExtraLength = Gurax_UnpackUInt16(fields.ExtraLength);
 			if (!stream.Seek(sig, ExtraLength, Stream::SeekCur)) {
 				SetError_InvalidFormat(sig);
 				return false;
@@ -103,9 +103,9 @@ public:
 		}
 		if (_fields.GetFEXTRA()) {
 			struct {
-				Gura_PackedUInt16_LE(ExtraLength);
+				Gurax_PackedUInt16_LE(ExtraLength);
 			} fields;
-			Gura_PackUInt16(fields.ExtraLength, static_cast<unsigned short>(_extra.size()));
+			Gurax_PackUInt16(fields.ExtraLength, static_cast<unsigned short>(_extra.size()));
 			if (stream.Write(sig, &fields, 2) < 2) {
 				SetError_InvalidFormat(sig);
 				return false;
@@ -128,9 +128,9 @@ public:
 		if (_fields.GetFHCRC()) {
 			unsigned short crc16 = 0x0000;
 			struct {
-				Gura_PackedUInt16_LE(CRC16);
+				Gurax_PackedUInt16_LE(CRC16);
 			} fields;
-			Gura_PackUInt16(fields.CRC16, crc16);
+			Gurax_PackUInt16(fields.CRC16, crc16);
 			if (stream.Write(sig, &fields, 2) < 2) {
 				SetError_InvalidFormat(sig);
 				return false;
@@ -142,7 +142,7 @@ public:
 	inline const char *GetFileName() const { return _fileName.c_str(); }
 	inline const char *GetComment() const { return _comment.c_str(); }
 	inline void SetModificationTime(unsigned long time) {
-		Gura_PackUInt32(_fields.ModificationTime, time);
+		Gurax_PackUInt32(_fields.ModificationTime, time);
 	}
 	inline void SetExtra(const Binary &extra) {
 		_extra = extra;
@@ -174,8 +174,8 @@ private:
 	size_t _bytesOut;
 	size_t _offsetOut;
 	z_stream _zstrm;
-	unsigned char *_buffOut;
-	unsigned char *_buffIn;
+	UInt8 *_buffOut;
+	UInt8 *_buffIn;
 	bool _doneFlag;
 public:
 	Stream_Inflater(Environment &env, Stream *pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
@@ -199,8 +199,8 @@ public:
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
-		_buffOut = reinterpret_cast<unsigned char *>(_pMemory->GetPointer(0));
-		_buffIn = reinterpret_cast<unsigned char *>(_pMemory->GetPointer(_bytesBuff));
+		_buffOut = reinterpret_cast<UInt8 *>(_pMemory->GetPointer(0));
+		_buffIn = reinterpret_cast<UInt8 *>(_pMemory->GetPointer(_bytesBuff));
 		return true;
 	}
 	virtual const char *GetName() const {
@@ -302,8 +302,8 @@ private:
 	size_t _bytesBuff;
 	size_t _offsetOut;
 	z_stream _zstrm;
-	unsigned char *_buffOut;
-	unsigned char *_buffIn;
+	UInt8 *_buffOut;
+	UInt8 *_buffIn;
 public:
 	Stream_Deflater(Environment &env, Stream *pStream, size_t bytesBuff = 32768) :
 			Stream(env, ATTR_Writable), _pStream(pStream),
@@ -325,8 +325,8 @@ public:
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
-		_buffOut = reinterpret_cast<unsigned char *>(_pMemory->GetPointer(0));
-		_buffIn = reinterpret_cast<unsigned char *>(_pMemory->GetPointer(_bytesBuff));
+		_buffOut = reinterpret_cast<UInt8 *>(_pMemory->GetPointer(0));
+		_buffIn = reinterpret_cast<UInt8 *>(_pMemory->GetPointer(_bytesBuff));
 		_zstrm.next_out = _buffOut;
 		_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 		return true;
