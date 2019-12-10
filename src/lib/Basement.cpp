@@ -37,7 +37,7 @@ bool Basement::Initialize(int argc, char** argv)
 	PrepareConsoleStream();
 	if (!Module::ImportAllBuiltIns(processor)) return false;
 	if (!_cmdLine.GetBool("naked")) {
-		if (!Module::ImportByName(processor, "markdown")) return false;
+		//if (!Module::ImportByName(processor, "markdown")) return false;
 		//if (!Module::ImportByName(processor, "zip")) return false;
 	}
 	if (!Module::ImportByNameList(processor, _cmdLine.GetStringList("import"))) return false;
