@@ -1,20 +1,21 @@
-#ifndef __GURA_ZLIBHELPER_H__
-#define __GURA_ZLIBHELPER_H__
-
-#include <gura.h>
+//==============================================================================
+// ZLibHeader.h
+//==============================================================================
+#ifndef GURAX_ZLIBHELPER_H
+#define GURAX_ZLIBHELPER_H
+#include <gurax.h>
 #include <zlib.h>
 
-namespace Gura {
+namespace Gurax {
 namespace ZLib {
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // GZHeader
 // see RFC 1952 (GZIP file format specification version 4.3) for specification
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class GZHeader {
 public:
 	struct Fields {
-		enum { Size = 10 };
 		UInt8 Identification1;
 		UInt8 Identification2;
 		UInt8 CompressionMethod;
@@ -22,11 +23,12 @@ public:
 		Gurax_PackedUInt32_LE(ModificationTime);
 		UInt8 ExtraFlags;
 		UInt8 OperatingSystem;
-		inline bool GetFTEXT() const { return (Flags & (1 << 0))? true : false; }
-		inline bool GetFHCRC() const { return (Flags & (1 << 1))? true : false; }
-		inline bool GetFEXTRA() const { return (Flags & (1 << 2))? true : false; }
-		inline bool GetFNAME() const { return (Flags & (1 << 3))? true : false; }
-		inline bool GetFCOMMENT() const { return (Flags & (1 << 4))? true : false; }
+		enum { Size = 10 };
+		bool GetFTEXT() const { return (Flags & (1 << 0))? true : false; }
+		bool GetFHCRC() const { return (Flags & (1 << 1))? true : false; }
+		bool GetFEXTRA() const { return (Flags & (1 << 2))? true : false; }
+		bool GetFNAME() const { return (Flags & (1 << 3))? true : false; }
+		bool GetFCOMMENT() const { return (Flags & (1 << 4))? true : false; }
 	};
 private:
 	Fields _fields;
@@ -43,7 +45,7 @@ public:
 		_fields.ExtraFlags			= 0x00;
 		_fields.OperatingSystem		= 0x00;
 	}
-	bool Read(Signal &sig, Stream &stream) {
+	bool Read(Stream &stream) {
 		if (stream.Read(sig, &_fields, Fields::Size) < Fields::Size) {
 			SetError_InvalidFormat(sig);
 			return false;
@@ -96,7 +98,7 @@ public:
 		}
 		return true;
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Stream &stream) {
 		if (stream.Write(sig, &_fields, Fields::Size) < Fields::Size) {
 			SetError_InvalidFormat(sig);
 			return false;
@@ -138,37 +140,37 @@ public:
 		}
 		return true;
 	}
-	inline Fields &GetFields() { return _fields; }
-	inline const char *GetFileName() const { return _fileName.c_str(); }
-	inline const char *GetComment() const { return _comment.c_str(); }
-	inline void SetModificationTime(unsigned long time) {
+	Fields &GetFields() { return _fields; }
+	const char *GetFileName() const { return _fileName.c_str(); }
+	const char *GetComment() const { return _comment.c_str(); }
+	void SetModificationTime(unsigned long time) {
 		Gurax_PackUInt32(_fields.ModificationTime, time);
 	}
-	inline void SetExtra(const Binary &extra) {
+	void SetExtra(const Binary &extra) {
 		_extra = extra;
 		_fields.Flags |= (1 << 2);
 	}
-	inline void SetFileName(const char *fileName) {
+	void SetFileName(const char *fileName) {
 		_fileName = fileName;
 		_fields.Flags |= (1 << 3);
 	}
-	inline void SetComment(const char *comment) {
+	void SetComment(const char *comment) {
 		_comment = comment;
 		_fields.Flags |= (1 << 4);
 	}
 private:
-	inline void SetError_InvalidFormat(Signal &sig) {
+	void SetError_InvalidFormat() {
 		sig.SetError(ERR_FormatError, "invalid gzip format");
 	}
 };
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Stream_Inflater
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class Stream_Inflater : public Stream {
 private:
-	AutoPtr<Stream> _pStream;
-	AutoPtr<Memory> _pMemory;
+	RefPtr<Stream> _pStream;
+	RefPtr<Memory> _pMemory;
 	size_t _bytesSrc;
 	size_t _bytesBuff;
 	size_t _bytesOut;
@@ -178,8 +180,8 @@ private:
 	UInt8 *_buffIn;
 	bool _doneFlag;
 public:
-	Stream_Inflater(Environment &env, Stream *pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
-			Stream(env, ATTR_Readable), _pStream(pStream), _bytesSrc(bytesSrc),
+	Stream_Inflater(Stream *pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
+			Stream(Flag::Readable), _pStream(pStream), _bytesSrc(bytesSrc),
 			_bytesBuff(bytesBuff), _bytesOut(0),
 			_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
 		CopyCodec(pStream);
@@ -187,7 +189,7 @@ public:
 	~Stream_Inflater() {
 		::inflateEnd(&_zstrm);
 	}
-	bool Initialize(Signal &sig, int windowBits = 15) {
+	bool Initialize(int windowBits = 15) {
 		::memset(&_zstrm, 0x00, sizeof(_zstrm));
 		_zstrm.zalloc = Z_NULL;
 		_zstrm.zfree = Z_NULL;
@@ -209,10 +211,10 @@ public:
 	virtual const char *GetIdentifier() const {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual size_t DoWrite(Signal &sig, const void *buff, size_t len) {
+	virtual size_t DoWrite(const void *buff, size_t len) {
 		return 0;
 	}
-	virtual size_t DoRead(Signal &sig, void *buff, size_t bytes) {
+	virtual size_t DoRead(void *buff, size_t bytes) {
 		size_t bytesRead = 0;
 		char *buffp = reinterpret_cast<char *>(buff);
 		bool continueFlag = true;
@@ -225,7 +227,7 @@ public:
 					if (_zstrm.avail_in == 0) {
 						size_t bytesRead = _pStream->Read(sig,
 										_buffIn, ChooseMin(_bytesBuff, _bytesSrc));
-						if (sig.IsSignalled()) {
+						if (Error::IsIssued()) {
 							::inflateEnd(&_zstrm);
 							return 0;
 						}
@@ -267,7 +269,7 @@ public:
 		}
 		return bytesRead;
 	}
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode) {
+	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode) {
 		if (seekMode == SeekSet) {
 			if (static_cast<size_t>(offset) >= offsetPrev) {
 				size_t bytesToRead = static_cast<size_t>(offset) - offsetPrev;
@@ -284,36 +286,36 @@ public:
 		sig.SetError(ERR_SystemError, "backward seeking is not supported");
 		return false;
 	}
-	virtual bool DoFlush(Signal &sig) {
+	virtual bool DoFlush() {
 		return false;
 	}
-	virtual bool DoClose(Signal &sig) {
+	virtual bool DoClose() {
 		return true;
 	}
 };
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Stream_Deflater
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class Stream_Deflater : public Stream {
 private:
-	AutoPtr<Stream> _pStream;
-	AutoPtr<Memory> _pMemory;
+	RefPtr<Stream> _pStream;
+	RefPtr<Memory> _pMemory;
 	size_t _bytesBuff;
 	size_t _offsetOut;
 	z_stream _zstrm;
 	UInt8 *_buffOut;
 	UInt8 *_buffIn;
 public:
-	Stream_Deflater(Environment &env, Stream *pStream, size_t bytesBuff = 32768) :
-			Stream(env, ATTR_Writable), _pStream(pStream),
+	Stream_Deflater(Stream *pStream, size_t bytesBuff = 32768) :
+			Stream(Flag::Writable), _pStream(pStream),
 			_bytesBuff(bytesBuff), _offsetOut(0), _buffOut(nullptr), _buffIn(nullptr) {
 		CopyCodec(pStream);
 	}
 	~Stream_Deflater() {
 		DoClose(_sig);
 	}
-	bool Initialize(Signal &sig, int level, int windowBits, int memLevel, int strategy) {
+	bool Initialize(int level, int windowBits, int memLevel, int strategy) {
 		::memset(&_zstrm, 0x00, sizeof(_zstrm));
 		_zstrm.zalloc = Z_NULL;
 		_zstrm.zfree = Z_NULL;
@@ -337,14 +339,14 @@ public:
 	virtual const char *GetIdentifier() const {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual size_t DoWrite(Signal &sig, const void *buff, size_t len) {
+	virtual size_t DoWrite(const void *buff, size_t len) {
 		if (_pStream.IsNull()) return 0;
 		_zstrm.next_in = reinterpret_cast<Bytef *>(const_cast<void *>(buff));
 		_zstrm.avail_in = static_cast<uInt>(len);
 		while (_zstrm.avail_in > 0) {
 			if (_zstrm.avail_out == 0) {
 				_pStream->Write(sig, _buffOut, _bytesBuff);
-				if (sig.IsSignalled()) return 0;
+				if (Error::IsIssued()) return 0;
 				_zstrm.next_out = _buffOut;
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 			}
@@ -356,15 +358,15 @@ public:
 		}
 		return len;
 	}
-	virtual bool DoFlush(Signal &sig) {
+	virtual bool DoFlush() {
 		return DoClose(sig);
 	}
-	virtual bool DoClose(Signal &sig) {
+	virtual bool DoClose() {
 		if (_pStream.IsNull()) return true;
 		for (;;) {
 			if (_zstrm.avail_out == 0) {
 				_pStream->Write(sig, _buffOut, _bytesBuff);
-				if (sig.IsSignalled()) return 0;
+				if (Error::IsIssued()) return 0;
 				_zstrm.next_out = _buffOut;
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 			}
@@ -381,15 +383,15 @@ public:
 			_pStream->Write(sig, _buffOut, bytesOut);
 		}
 		::deflateEnd(&_zstrm);
-		if (sig.IsSignalled()) return false;
+		if (Error::IsIssued()) return false;
 		bool rtn = _pStream->Flush(sig);
 		_pStream.reset(nullptr);
 		return rtn;
 	}
-	virtual size_t DoRead(Signal &sig, void *buff, size_t bytes) {
+	virtual size_t DoRead(void *buff, size_t bytes) {
 		return 0;
 	}
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode) {
+	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode) {
 		return false;
 	}
 };

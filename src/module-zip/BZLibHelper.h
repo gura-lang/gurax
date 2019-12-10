@@ -1,64 +1,66 @@
-#ifndef __GURA_BZLIBHELPER_H__
-#define __GURA_BZLIBHELPER_H__
-
-#include <gura.h>
+//==============================================================================
+// BZLibHeader.h
+//==============================================================================
+#ifndef GURAX_BZLIBHELPER_H
+#define GURAX_BZLIBHELPER_H
+#include <gurax.h>
 #include <bzlib.h>
 
-namespace Gura {
+namespace Gurax {
 namespace BZLib {
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Stream_Decompressor
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class Stream_Decompressor : public Stream {
 private:
-	AutoPtr<Stream> _pStream;
-	AutoPtr<Memory> _pMemory;
+	RefPtr<Stream> _pStream;
+	RefPtr<Memory> _pMemory;
 	size_t _bytesSrc;
 	size_t _bytesBuff;
 	size_t _bytesOut;
 	size_t _offsetOut;
 	bz_stream _bzstrm;
-	char *_buffOut;
-	char *_buffIn;
+	char* _buffOut;
+	char* _buffIn;
 	bool _doneFlag;
 public:
-	Stream_Decompressor(Environment &env, Stream *pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
-			Stream(env, ATTR_Readable), _pStream(pStream), _bytesSrc(bytesSrc),
-			_bytesBuff(bytesBuff), _bytesOut(0),
-			_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
-		CopyCodec(pStream);
+	Stream_Decompressor(Stream* pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
+		Stream(Flag::Readable), _pStream(pStream), _bytesSrc(bytesSrc), _bytesBuff(bytesBuff), _bytesOut(0),
+		_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
+		SetCodec(pStream->GetCodec().Duplicate());
 	}
 	~Stream_Decompressor() {
 		::BZ2_bzDecompressEnd(&_bzstrm);
 	}
-	bool Initialize(Signal &sig, int verbosity, int small) {
+	bool Initialize(int verbosity, int small) {
 		::memset(&_bzstrm, 0x00, sizeof(_bzstrm));
 		_bzstrm.bzalloc = nullptr;
 		_bzstrm.bzfree = nullptr;
 		_bzstrm.opaque = nullptr;
 		_bzstrm.avail_in = 0;
 		if (::BZ2_bzDecompressInit(&_bzstrm, verbosity, small) != BZ_OK) {
-			sig.SetError(ERR_IOError, "bzlib error");
+			Error::Issue(ErrorType::IOError, "bzlib error");
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
-		_buffOut = reinterpret_cast<char *>(_pMemory->GetPointer(0));
-		_buffIn = reinterpret_cast<char *>(_pMemory->GetPointer(_bytesBuff));
+		_buffOut = reinterpret_cast<char*>(_pMemory->GetPointer());
+		_buffIn = reinterpret_cast<char*>(_pMemory->GetPointer(_bytesBuff));
 		return true;
 	}
-	virtual const char *GetName() const {
+	virtual const char* GetName() const override {
 		return (_pStream.IsNull())? "(invalid)" : _pStream->GetName();
 	}
-	virtual const char *GetIdentifier() const {
+	virtual const char* GetIdentifier() const override {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual size_t DoWrite(Signal &sig, const void *buff, size_t len) {
+	virtual void Close() override {}
+	virtual size_t Write(const void* buff, size_t len) override {
 		return 0;
 	}
-	virtual size_t DoRead(Signal &sig, void *buff, size_t bytes) {
+	virtual size_t Read(void* buff, size_t bytes) override {
 		size_t bytesRead = 0;
-		char *buffp = reinterpret_cast<char *>(buff);
+		char* buffp = reinterpret_cast<char*>(buff);
 		bool continueFlag = true;
 		for (size_t bytesRest = bytes; bytesRest > 0 && continueFlag; ) {
 			if (_offsetOut >= _bytesOut) {
@@ -67,14 +69,13 @@ public:
 				if (_doneFlag) break;
 				while (_bytesOut == 0) {
 					if (_bzstrm.avail_in == 0) {
-						size_t bytesRead = _pStream->Read(sig,
-										_buffIn, ChooseMin(_bytesBuff, _bytesSrc));
-						if (sig.IsSignalled()) {
+						size_t bytesRead = _pStream->Read(_buffIn, std::min(_bytesBuff, _bytesSrc));
+						if (Error::IsIssued()) {
 							::BZ2_bzDecompressEnd(&_bzstrm);
 							return 0;
 						}
 						if (bytesRead == 0) {
-							sig.SetError(ERR_IOError, "unexpected end of bzip stream");
+							Error::Issue(ErrorType::IOError, "unexpected end of bzip stream");
 							return 0;
 						}
 						if (_bytesSrc != InvalidSize) {
@@ -94,7 +95,7 @@ public:
 						continueFlag = false;
 						break;
 					} else {
-						sig.SetError(ERR_IOError, "bzlib error");
+						Error::Issue(ErrorType::IOError, "bzlib error");
 						::BZ2_bzDecompressEnd(&_bzstrm);
 						return 0;
 					}
@@ -111,126 +112,119 @@ public:
 		}
 		return bytesRead;
 	}
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode) {
+	virtual bool Seek(long offset, size_t offsetPrev, SeekMode seekMode) override {
 		if (seekMode == SeekSet) {
 			if (static_cast<size_t>(offset) >= offsetPrev) {
 				size_t bytesToRead = static_cast<size_t>(offset) - offsetPrev;
 				if (bytesToRead == 0) return true;
-				return DoRead(sig, nullptr, bytesToRead) == static_cast<size_t>(bytesToRead);
+				return DoRead(nullptr, bytesToRead) == static_cast<size_t>(bytesToRead);
 			}
 		} else if (seekMode == SeekCur) {
 			if (offset == 0) {
 				return true;
 			} else if (offset > 0) {
-				return DoRead(sig, nullptr, offset) == static_cast<size_t>(offset);
+				return DoRead(nullptr, offset) == static_cast<size_t>(offset);
 			}
 		}
-		sig.SetError(ERR_SystemError, "backward seeking is not supported");
+		Error::Issue(ErrorType::UnimplementedError, "backward seeking is not supported");
 		return false;
 	}
-	virtual bool DoFlush(Signal &sig) {
-		return false;
-	}
-	virtual bool DoClose(Signal &sig) {
-		return true;
-	}
+	virtual void Flush() override {}
 };
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Stream_Compressor
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 class Stream_Compressor : public Stream {
 private:
-	AutoPtr<Stream> _pStream;
-	AutoPtr<Memory> _pMemory;
+	RefPtr<Stream> _pStream;
+	RefPtr<Memory> _pMemory;
 	size_t _bytesBuff;
 	size_t _offsetOut;
 	bz_stream _bzstrm;
-	char *_buffOut;
-	char *_buffIn;
+	char* _buffOut;
+	char* _buffIn;
 public:
-	Stream_Compressor(Environment &env, Stream *pStream, size_t bytesBuff = 32768) :
-			Stream(env, ATTR_Writable), _pStream(pStream),
+	Stream_Compressor(Stream* pStream, size_t bytesBuff = 32768) :
+			Stream(Flag::Writable), _pStream(pStream),
 			_bytesBuff(bytesBuff), _offsetOut(0), _buffOut(nullptr), _buffIn(nullptr) {
-		CopyCodec(pStream);
+		SetCodec(pStream->GetCodec().Duplicate());
 	}
 	~Stream_Compressor() {
-		DoClose(_sig);
+		Close();
 	}
-	bool Initialize(Signal &sig, int blockSize100k, int verbosity, int workFactor) {
+	bool Initialize(int blockSize100k, int verbosity, int workFactor) {
 		::memset(&_bzstrm, 0x00, sizeof(_bzstrm));
 		_bzstrm.bzalloc = nullptr;
 		_bzstrm.bzfree = nullptr;
 		_bzstrm.opaque = nullptr;
 		if (::BZ2_bzCompressInit(&_bzstrm, blockSize100k, verbosity, workFactor) != BZ_OK) {
-			sig.SetError(ERR_IOError, "bzlib error");
+			Error::Issue(ErrorType::IOError, "bzlib error");
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
-		_buffOut = reinterpret_cast<char *>(_pMemory->GetPointer(0));
-		_buffIn = reinterpret_cast<char *>(_pMemory->GetPointer(_bytesBuff));
+		_buffOut = reinterpret_cast<char*>(_pMemory->GetPointer());
+		_buffIn = reinterpret_cast<char*>(_pMemory->GetPointer(_bytesBuff));
 		_bzstrm.next_out = _buffOut;
 		_bzstrm.avail_out = static_cast<unsigned int>(_bytesBuff);
 		return true;
 	}
-	virtual const char *GetName() const {
+	virtual const char* GetName() const override {
 		return (_pStream.IsNull())? "(invalid)" : _pStream->GetName();
 	}
-	virtual const char *GetIdentifier() const {
+	virtual const char* GetIdentifier() const override {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual size_t DoWrite(Signal &sig, const void *buff, size_t len) {
+	virtual size_t Write(const void* buff, size_t len) override {
 		if (_pStream.IsNull()) return 0;
-		_bzstrm.next_in = reinterpret_cast<char *>(const_cast<void *>(buff));
+		_bzstrm.next_in = reinterpret_cast<char*>(const_cast<void*>(buff));
 		_bzstrm.avail_in = static_cast<unsigned int>(len);
 		while (_bzstrm.avail_in > 0) {
 			if (_bzstrm.avail_out == 0) {
-				_pStream->Write(sig, _buffOut, _bytesBuff);
-				if (sig.IsSignalled()) return 0;
+				_pStream->Write(_buffOut, _bytesBuff);
+				if (Error::IsIssued()) return 0;
 				_bzstrm.next_out = _buffOut;
 				_bzstrm.avail_out = static_cast<unsigned int>(_bytesBuff);
 			}
 			int rtn = ::BZ2_bzCompress(&_bzstrm, BZ_RUN);
 			if (rtn != BZ_RUN_OK) {
-				sig.SetError(ERR_IOError, "bzlib error");
+				Error::Issue(ErrorType::IOError, "bzlib error");
 				return 0;
 			}
 		}
 		return len;
 	}
-	virtual bool DoFlush(Signal &sig) {
-		return DoClose(sig);
-	}
-	virtual bool DoClose(Signal &sig) {
+	virtual bool Flush() override { Close(); }
+	virtual bool Close() override {
 		if (_pStream.IsNull()) return true;
 		for (;;) {
 			if (_bzstrm.avail_out == 0) {
-				_pStream->Write(sig, _buffOut, _bytesBuff);
-				if (sig.IsSignalled()) return 0;
+				_pStream->Write(_buffOut, _bytesBuff);
+				if (Error::IsIssued()) return 0;
 				_bzstrm.next_out = _buffOut;
 				_bzstrm.avail_out = static_cast<unsigned int>(_bytesBuff);
 			}
 			int rtn = ::BZ2_bzCompress(&_bzstrm, BZ_FINISH);
 			if (rtn == BZ_STREAM_END) break;
 			if (rtn != BZ_FINISH_OK) {
-				sig.SetError(ERR_IOError, "bzlib error");
+				Error::Issue(ErrorType::IOError, "bzlib error");
 				return false;
 			}
 		}
 		size_t bytesOut = _bytesBuff - _bzstrm.avail_out;
 		if (bytesOut > 0) {
-			_pStream->Write(sig, _buffOut, bytesOut);
+			_pStream->Write(_buffOut, bytesOut);
 		}
 		::BZ2_bzCompressEnd(&_bzstrm);
-		if (sig.IsSignalled()) return false;
-		bool rtn = _pStream->Flush(sig);
+		if (Error::IsIssued()) return false;
+		bool rtn = _pStream->Flush();
 		_pStream.reset(nullptr);
 		return rtn;
 	}
-	virtual size_t DoRead(Signal &sig, void *buff, size_t bytes) {
+	virtual size_t Read(void* buff, size_t bytes) override {
 		return 0;
 	}
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode) {
+	virtual bool Seek(long offset, size_t offsetPrev, SeekMode seekMode) override {
 		return false;
 	}
 };
