@@ -79,4 +79,23 @@ void HelpHolder::AddHelp(const Symbol* pLangCode, StringReferable* pDoc)
 	AddHelp(new Help(pLangCode, pDoc));
 }
 
+void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
+{
+	RefPtr<Template> pTmpl(new Template());
+	bool autoIndentFlag = true;
+	bool appendLastEOLFlag = true;
+	// Function body
+	if (pTmpl->ParseString_(doc, autoIndentFlag, appendLastEOLFlag) && pTmpl->PrepareAndCompose()) {
+		AddHelp(new Help(pLangCode, pTmpl.release()));
+		return;
+	}
+	String str;
+	for (Error* pError : Error::GetErrorOwner()) {
+		str += pError->MakeMessage();
+		str += "\n";
+	}
+	Error::Clear();
+	AddHelp(pLangCode, str.c_str());
+}
+
 }

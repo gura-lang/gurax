@@ -54,6 +54,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) {
 		AddHelp(pLangCode, new StringReferable(doc));
 	}
+	void AddHelpTmpl(const Symbol* pLangCode, const char* doc);
 	const Help* GetDefault() const { return _helpOwner.empty()? nullptr : _helpOwner.front(); }
 	const Help* Lookup(const Symbol* pLangCode) const { return _helpOwner.Lookup(pLangCode); }
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }

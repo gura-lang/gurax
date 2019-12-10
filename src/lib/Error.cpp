@@ -100,7 +100,7 @@ void Error::Clear()
 
 void Error::Print(Stream& stream)
 {
-	for (Error* pError : *_pErrorOwnerGlobal) {
+	for (Error* pError : GetErrorOwner()) {
 		stream.Printf("%s\n", pError->MakeMessage().c_str());
 	}
 }

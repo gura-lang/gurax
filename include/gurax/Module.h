@@ -127,6 +127,7 @@ public:
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char *doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
+	void AddHelpTmpl(const Symbol* pLangCode, const char *doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	Frame_Module& GetFrame() const { return *_pFrame; }
 	PropHandlerMap& GetPropHandlerMap() { return *_pPropHandlerMap; }
 	const PropHandlerMap& GetPropHandlerMap() const { return *_pPropHandlerMap; }

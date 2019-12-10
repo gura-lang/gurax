@@ -245,6 +245,7 @@ public:
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
+	void AddHelpTmpl(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }
