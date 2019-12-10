@@ -6,6 +6,25 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Codec(encoding:name):map {block?}
@@ -43,6 +62,8 @@ VType_Codec VTYPE_Codec("Codec");
 
 void VType_Codec::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Codec));
 }

@@ -7,12 +7,33 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // VType_StringPtr
 //------------------------------------------------------------------------------
 VType_StringPtr VTYPE_StringPtr("StringPtr");
 
 void VType_StringPtr::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 }

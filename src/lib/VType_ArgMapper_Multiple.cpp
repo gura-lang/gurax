@@ -6,12 +6,33 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // VType_ArgMapper_Multiple
 //------------------------------------------------------------------------------
 VType_ArgMapper_Multiple VTYPE_ArgMapper_Multiple("ArgMapper_Multiple");
 
 void VType_ArgMapper_Multiple::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_List, Flag::Immutable);
 }

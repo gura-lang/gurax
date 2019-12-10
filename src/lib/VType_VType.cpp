@@ -6,6 +6,25 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // VType(value):map {block?}
@@ -87,6 +106,8 @@ VType_VType VTYPE_VType("VType");
 
 void VType_VType::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method

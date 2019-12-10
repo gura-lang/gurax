@@ -6,6 +6,25 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // Random(seed?:Number):map {block?}
@@ -240,6 +259,8 @@ VType_Random VTYPE_Random("Random");
 
 void VType_Random::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Random));
 	// Assignment of method

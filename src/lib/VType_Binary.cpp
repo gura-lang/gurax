@@ -6,6 +6,25 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
 Gurax_DeclareConstructor(Binary)
@@ -84,6 +103,8 @@ VType_Binary VTYPE_Binary("Binary");
 
 void VType_Binary::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of property

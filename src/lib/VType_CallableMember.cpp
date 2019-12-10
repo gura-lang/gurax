@@ -6,12 +6,33 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // VType_CallableMember
 //------------------------------------------------------------------------------
 VType_CallableMember VTYPE_CallableMember("CallableMember");
 
 void VType_CallableMember::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 }
