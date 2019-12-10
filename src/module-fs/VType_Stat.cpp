@@ -6,6 +6,25 @@
 Gurax_BeginModuleScope(fs)
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // fs.Stat(pathName:String):map {block?}
@@ -280,6 +299,8 @@ VType_Stat VTYPE_Stat("Stat");
 
 void VType_Stat::DoPrepare(Frame& frameOuter)
 {
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// VType settings
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stat));
 	// Assignment of property
