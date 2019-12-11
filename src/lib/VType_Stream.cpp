@@ -346,8 +346,13 @@ Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 		return new Value_Stream(pStream.release());
 	} else if (value.IsType(VTYPE_Binary)) {
 		const BinaryReferable& binary = Value_Binary::GetBinaryReferable(value);
-		size_t offset = (flags & DeclArg::Flag::StreamW)? binary.GetBinary().size() : 0;
-		return new Value_Stream(new Stream_Binary(binary.Reference(), offset));
+		size_t offset = 0;
+		Stream::Flags flagsStream = Stream::Flag::Readable;
+		if (flags & DeclArg::Flag::StreamW) {
+			offset = binary.GetBinary().size();
+			flagsStream = Stream::Flag::Writable;
+		}
+		return new Value_Stream(new Stream_Binary(flagsStream, binary.Reference(), offset));
 	}
 	return nullptr;
 }

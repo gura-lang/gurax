@@ -109,7 +109,7 @@ bool Template::Render(Processor& processor, Stream& streamDst)
 
 bool Template::Render(Processor& processor, String& strDst)
 {
-	RefPtr<Stream_Binary> pStreamDst(new Stream_Binary());
+	RefPtr<Stream_Binary> pStreamDst(new Stream_Binary(Stream::Flag::Writable));
 	if (!Render(processor, *pStreamDst)) return false;
 	strDst = pStreamDst->GetBuff().ConvertToString();
 	return true;

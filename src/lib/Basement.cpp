@@ -84,6 +84,7 @@ void Basement::PrepareVType()
 	VTYPE_Number.Prepare(frame);
 	VTYPE_PathMgr.Prepare(frame);
 	VTYPE_Palette.Prepare(frame);
+	VTYPE_Pointer.Prepare(frame);
 	VTYPE_PropHandler.Prepare(frame);
 	VTYPE_PUnit.Prepare(frame);
 	VTYPE_Quote.Prepare(frame);

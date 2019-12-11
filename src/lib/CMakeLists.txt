@@ -75,6 +75,7 @@ add_library(guraxcore SHARED
 	Parser.cpp
 	PathMgr.cpp
 	PathName.cpp
+	Pointer.cpp
 	Processor.cpp
 	PropHandler.cpp
 	PropHandlerCustom.cpp
@@ -137,6 +138,7 @@ add_library(guraxcore SHARED
 	VType_Object.cpp
 	VType_Palette.cpp
 	VType_PathMgr.cpp
+	VType_Pointer.cpp
 	VType_PropHandler.cpp
 	VType_PUnit.cpp
 	VType_Quote.cpp

@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(Binary, reader)
 	auto& valueThis = GetValueThis(valueTarget);
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
 	size_t offset = 0;
-	return new Value_Stream(new Stream_Binary(binary.Reference(), offset));
+	return new Value_Stream(new Stream_Binary(Stream::Flag::Readable, binary.Reference(), offset));
 }
 
 // Binary#writer
@@ -93,7 +93,7 @@ Gurax_ImplementPropertyGetter(Binary, writer)
 	auto& valueThis = GetValueThis(valueTarget);
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
 	size_t offset = binary.GetBinary().size();
-	return new Value_Stream(new Stream_Binary(binary.Reference(), offset));
+	return new Value_Stream(new Stream_Binary(Stream::Flag::Writable, binary.Reference(), offset));
 }
 
 //------------------------------------------------------------------------------
