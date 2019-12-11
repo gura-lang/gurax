@@ -147,7 +147,7 @@ template<> inline Int8 Packer::Extract<Int8, false>(const UInt8* pByte)
 	return static_cast<Int8>(Extract<UInt8, false>(pByte));
 }
 
-template<> UInt16 Packer::Extract<UInt16, true>(const UInt8* pByte)
+template<> inline UInt16 Packer::Extract<UInt16, true>(const UInt8* pByte)
 {
 	UInt16 num = 0;
 	pByte += sizeof(UInt16) - 1;
@@ -156,7 +156,7 @@ template<> UInt16 Packer::Extract<UInt16, true>(const UInt8* pByte)
 	return num;
 }
 
-template<> UInt16 Packer::Extract<UInt16, false>(const UInt8* pByte)
+template<> inline UInt16 Packer::Extract<UInt16, false>(const UInt8* pByte)
 {
 	UInt16 num = 0;
 	num = num        + *pByte; pByte++;
@@ -164,17 +164,17 @@ template<> UInt16 Packer::Extract<UInt16, false>(const UInt8* pByte)
 	return num;
 }
 
-template<> Int16 Packer::Extract<Int16, true>(const UInt8* pByte)
+template<> inline Int16 Packer::Extract<Int16, true>(const UInt8* pByte)
 {
 	return static_cast<Int16>(Extract<UInt16, true>(pByte));
 }
 
-template<> Int16 Packer::Extract<Int16, false>(const UInt8* pByte)
+template<> inline Int16 Packer::Extract<Int16, false>(const UInt8* pByte)
 {
 	return static_cast<Int16>(Extract<UInt16, false>(pByte));
 }
 
-template<> UInt32 Packer::Extract<UInt32, true>(const UInt8* pByte)
+template<> inline UInt32 Packer::Extract<UInt32, true>(const UInt8* pByte)
 {
 	UInt32 num = 0;
 	pByte += sizeof(UInt32) - 1;
@@ -185,7 +185,7 @@ template<> UInt32 Packer::Extract<UInt32, true>(const UInt8* pByte)
 	return num;
 }
 
-template<> UInt32 Packer::Extract<UInt32, false>(const UInt8* pByte)
+template<> inline UInt32 Packer::Extract<UInt32, false>(const UInt8* pByte)
 {
 	UInt32 num = 0;
 	num = num        + *pByte; pByte++;
@@ -195,17 +195,17 @@ template<> UInt32 Packer::Extract<UInt32, false>(const UInt8* pByte)
 	return num;
 }
 
-template<> Int32 Packer::Extract<Int32, true>(const UInt8* pByte)
+template<> inline Int32 Packer::Extract<Int32, true>(const UInt8* pByte)
 {
 	return static_cast<Int32>(Extract<UInt32, true>(pByte));
 }
 
-template<> Int32 Packer::Extract<Int32, false>(const UInt8* pByte)
+template<> inline Int32 Packer::Extract<Int32, false>(const UInt8* pByte)
 {
 	return static_cast<Int32>(Extract<UInt32, false>(pByte));
 }
 
-template<> UInt64 Packer::Extract<UInt64, true>(const UInt8* pByte)
+template<> inline UInt64 Packer::Extract<UInt64, true>(const UInt8* pByte)
 {
 	UInt64 num = 0;
 	pByte += sizeof(UInt64) - 1;
@@ -220,7 +220,7 @@ template<> UInt64 Packer::Extract<UInt64, true>(const UInt8* pByte)
 	return num;
 }
 
-template<> UInt64 Packer::Extract<UInt64, false>(const UInt8* pByte)
+template<> inline UInt64 Packer::Extract<UInt64, false>(const UInt8* pByte)
 {
 	UInt64 num = 0;
 	num = num        + *pByte; pByte++;
@@ -234,12 +234,12 @@ template<> UInt64 Packer::Extract<UInt64, false>(const UInt8* pByte)
 	return num;
 }
 
-template<> Int64 Packer::Extract<Int64, true>(const UInt8* pByte)
+template<> inline Int64 Packer::Extract<Int64, true>(const UInt8* pByte)
 {
 	return static_cast<Int64>(Extract<UInt64, true>(pByte));
 }
 
-template<> Int64 Packer::Extract<Int64, false>(const UInt8* pByte)
+template<> inline Int64 Packer::Extract<Int64, false>(const UInt8* pByte)
 {
 	return static_cast<Int64>(Extract<UInt64, false>(pByte));
 }
