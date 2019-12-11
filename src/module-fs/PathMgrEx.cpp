@@ -127,6 +127,11 @@ Value* DirectoryEx::DoGetStatValue()
 //------------------------------------------------------------------------------
 // StreamEx
 //------------------------------------------------------------------------------
+size_t StreamEx::DoGetSize()
+{
+	return 0;
+}
+
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 {
 	if (!_fp) return true;

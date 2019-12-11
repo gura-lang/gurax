@@ -245,11 +245,9 @@ bool Stream::Seek(long offsetRel, SeekMode seekMode)
 		}
 		offset += offsetRel;
 	}
-	if (DoSeek(offset, _offset)) {
-		_offset = offset;
-		return true;
-	}
-	return false;
+	if (!DoSeek(offset, _offset)) return false;
+	_offset = offset;
+	return true;
 }
 
 bool Stream::DoSeek(size_t offset, size_t offsetPrev)

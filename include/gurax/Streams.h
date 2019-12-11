@@ -13,15 +13,16 @@ namespace Gurax {
 class Stream_Dumb : public Stream {
 public:
 	Stream_Dumb() : Stream(Flag::Readable | Flag::Writable) {}
+public:
 	virtual bool IsDumb() const override { return true; }
 	virtual const char* GetName() const override { return "dumb"; };
 	virtual const char* GetIdentifier() const override { return "dumb"; }
-	virtual void Close() override {}
+	virtual void DoClose() override {}
 	virtual int DoGetChar() override { return 0; }
 	virtual bool DoPutChar(char ch) override { return true; }
-	virtual size_t Read(void* buff, size_t len) override { ::memset(buff, 0x00, len); return len; }
-	virtual size_t Write(const void* buff, size_t len) override { return len; }
-	virtual void Flush() override {}
+	virtual size_t DoRead(void* buff, size_t len) override { ::memset(buff, 0x00, len); return len; }
+	virtual size_t DoWrite(const void* buff, size_t len) override { return len; }
+	virtual void DoFlush() override {}
 };
 
 //------------------------------------------------------------------------------
@@ -33,18 +34,19 @@ private:
 	String _name;
 public:
 	Stream_Console(Flags flags, FILE* fp, String name) : Stream(flags),  _fp(fp), _name(name) {}
+public:
 	virtual const char* GetName() const override { return _name.c_str(); };
 	virtual const char* GetIdentifier() const override { return _name.c_str(); }
-	virtual void Close() override { ::fclose(_fp); }
+	virtual void DoClose() override { ::fclose(_fp); }
 	virtual int DoGetChar() override { return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
-	virtual size_t Read(void* buff, size_t len) override {
+	virtual size_t DoRead(void* buff, size_t len) override {
 		return ::fread(buff, 1, len, _fp);
 	}
-	virtual size_t Write(const void* buff, size_t len) override {
+	virtual size_t DoWrite(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp);
 	}
-	virtual void Flush() override { ::fflush(_fp); }
+	virtual void DoFlush() override { ::fflush(_fp); }
 };
 
 //------------------------------------------------------------------------------
@@ -63,12 +65,13 @@ public:
 	virtual bool IsDumb() const override { return false; }
 	virtual const char* GetName() const override { return "binary"; };
 	virtual const char* GetIdentifier() const override { return "binary"; }
-	virtual void Close() override {}
+	virtual size_t DoGetSize() override;
+	virtual void DoClose() override {}
 	virtual int DoGetChar() override;
 	virtual bool DoPutChar(char ch) override;
-	virtual size_t Read(void* buff, size_t len) override;
-	virtual size_t Write(const void* buff, size_t len) override;
-	virtual void Flush() override {}
+	virtual size_t DoRead(void* buff, size_t len) override;
+	virtual size_t DoWrite(const void* buff, size_t len) override;
+	virtual void DoFlush() override {}
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 

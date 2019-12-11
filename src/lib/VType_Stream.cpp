@@ -259,6 +259,40 @@ Gurax_ImplementMethod(Stream, ReadLines)
 	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
+// Stream#Seek(offset:Number, whence?:Symbol):reduce
+Gurax_DeclareMethod(Stream, Seek)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("whence", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Seeks the current file position to the offset specified by the argument `offset`.\n"
+		"\n"
+		"The argument `whence` specifies the meaning of `offset` value as follows:\n"
+		"\n"
+		"- ``set` ... `offset` is an absolute offset from the begining of the stream.\n"
+		"- ``cur` ... `offset` is a relative offset from the current position.\n"
+		"\n"
+		"This method returns the target stream instance itself.\n");
+}
+
+Gurax_ImplementMethod(Stream, Seek)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	long offset = args.PickNumber<long>();
+	const Symbol *pSymbol = args.IsValid()? args.PickSymbol() : Gurax_Symbol(set);
+	Stream::SeekMode whence = pSymbol->IsIdentical(Gurax_Symbol(cur))?
+		Stream::SeekMode::Cur : Stream::SeekMode::Set;
+	// Function body
+	if (!stream.Seek(offset, whence)) return Value::nil();
+	return valueThis.Reference();
+}
+
 // Stream#Write(ptr:Pointer, bytes?:Number)
 Gurax_DeclareMethod(Stream, Write)
 {
@@ -297,6 +331,7 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Read));
 	Assign(Gurax_CreateMethod(Stream, ReadLine));
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
+	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
 }
 

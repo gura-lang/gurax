@@ -98,17 +98,23 @@ public:
 	Iterator* ReadLines(bool includeEOLFlag);
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
+public:
+	size_t GetSize() { return DoGetSize(); }
+	void Close() { DoClose(); }
+	size_t Read(void* buff, size_t len) { return DoRead(buff, len); }
+	size_t Write(const void* buff, size_t len) { return DoWrite(buff, len); }
+	void Flush() { DoFlush(); }
 	bool Seek(long offsetRel, SeekMode seekMode);
 public:
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
-	virtual void Close() = 0;
-	virtual size_t Read(void* buff, size_t len) = 0;
-	virtual size_t Write(const void* buff, size_t len) = 0;
-	virtual void Flush() = 0;
-	virtual bool DoSeek(size_t offset, size_t offsetPrev);
 	virtual size_t DoGetSize() { return 0; }
+	virtual void DoClose() = 0;
+	virtual size_t DoRead(void* buff, size_t len) = 0;
+	virtual size_t DoWrite(const void* buff, size_t len) = 0;
+	virtual void DoFlush() = 0;
+	virtual bool DoSeek(size_t offset, size_t offsetPrev);
 protected:
 	virtual int DoGetChar() = 0;
 	virtual bool DoPutChar(char ch) = 0;

@@ -24,6 +24,12 @@ Stream_Binary::Stream_Binary() : Stream_Binary(new BinaryReferable(), 0)
 	buffTgt.reserve(1024);
 }
 
+size_t Stream_Binary::DoGetSize()
+{
+	Binary& buffTgt = _pBuff->GetBinary();
+	return buffTgt.size();
+}
+
 int Stream_Binary::DoGetChar()
 {
 	Binary& buffTgt = _pBuff->GetBinary();
@@ -44,7 +50,7 @@ bool Stream_Binary::DoPutChar(char ch)
 	return true;
 }
 
-size_t Stream_Binary::Read(void* buff, size_t len)
+size_t Stream_Binary::DoRead(void* buff, size_t len)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset > buffTgt.size()) {
@@ -56,7 +62,7 @@ size_t Stream_Binary::Read(void* buff, size_t len)
 	return lenRead;
 }
 
-size_t Stream_Binary::Write(const void* buff, size_t len)
+size_t Stream_Binary::DoWrite(const void* buff, size_t len)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset < buffTgt.size()) {

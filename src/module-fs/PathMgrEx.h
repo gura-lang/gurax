@@ -50,18 +50,20 @@ private:
 public:
 	StreamEx(Flags flags, FILE* fp, String pathName) : Stream(flags), _fp(fp), _pathName(pathName) {}
 	virtual ~StreamEx() { ::fclose(_fp); }
+public:
 	virtual const char* GetName() const override { return _pathName.c_str(); };
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
-	virtual void Close() override { ::fclose(_fp); }
+	virtual size_t DoGetSize() override;
+	virtual void DoClose() override { ::fclose(_fp); }
 	virtual int DoGetChar() override { return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
-	virtual size_t Read(void* buff, size_t len) override {
+	virtual size_t DoRead(void* buff, size_t len) override {
 		return ::fread(buff, 1, len, _fp);
 	}
-	virtual size_t Write(const void* buff, size_t len) override {
+	virtual size_t DoWrite(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp);
 	}
-	virtual void Flush() override { ::fflush(_fp); }
+	virtual void DoFlush() override { ::fflush(_fp); }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
