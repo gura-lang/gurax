@@ -33,10 +33,11 @@ public:
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None			= 0;
-		static const Flags Infinite		= (1 << 0);
-		static const Flags BwdSeekable	= (1 << 1);
-		static const Flags Readable		= (1 << 2);
-		static const Flags Writable		= (1 << 3);
+		static const Flags Readable		= (1 << 0);
+		static const Flags Writable		= (1 << 1);
+		static const Flags BwdSeekable	= (1 << 2);
+		static const Flags FwdSeekable	= (1 << 3);
+		static const Flags Infinite		= (1 << 4);
 	};
 	using OpenFlags = UInt32;
 	struct OpenFlag {
@@ -52,12 +53,13 @@ public:
 	static RefPtr<Stream> CErr;
 protected:
 	Flags _flags;
+	size_t _offset;
 	RefPtr<Codec> _pCodec;
 public:
 	static void Bootup();
 public:
 	// Constructor
-	Stream(Flags flags);
+	Stream(Flags flags, size_t offset = 0);
 	// Copy constructor/operator
 	Stream(const Stream& src) = delete;
 	Stream& operator=(const Stream& src) = delete;
@@ -70,6 +72,7 @@ protected:
 public:
 	static Stream* Open(const char* pathName, OpenFlags openFlags);
 	Flags GetFlags() const { return _flags; }
+	size_t GetOffset() const { return _offset; }
 	bool IsInfinite() const { return _flags & Flag::Infinite; }
 	bool IsBwdSeekable() const { return _flags & Flag::BwdSeekable; }
 	bool IsReadable() const { return _flags & Flag::Readable; }
@@ -95,6 +98,8 @@ public:
 	Iterator* ReadLines(bool includeEOLFlag);
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
+	bool Seek(long offsetRel, SeekMode seekMode);
+public:
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
@@ -102,6 +107,8 @@ public:
 	virtual size_t Read(void* buff, size_t len) = 0;
 	virtual size_t Write(const void* buff, size_t len) = 0;
 	virtual void Flush() = 0;
+	virtual bool DoSeek(size_t offset, size_t offsetPrev);
+	virtual size_t DoGetSize() { return 0; }
 protected:
 	virtual int DoGetChar() = 0;
 	virtual bool DoPutChar(char ch) = 0;

@@ -53,7 +53,6 @@ public:
 class Stream_Binary : public Stream {
 private:
 	RefPtr<BinaryReferable> _pBuff;
-	size_t _offset;
 public:
 	Stream_Binary(BinaryReferable* pBuff, size_t offset);
 	Stream_Binary();
@@ -70,6 +69,7 @@ public:
 	virtual size_t Read(void* buff, size_t len) override;
 	virtual size_t Write(const void* buff, size_t len) override;
 	virtual void Flush() override {}
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
 }

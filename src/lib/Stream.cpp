@@ -13,7 +13,8 @@ RefPtr<Stream> Stream::CIn;
 RefPtr<Stream> Stream::COut;
 RefPtr<Stream> Stream::CErr;
 
-Stream::Stream(Flags flags) : _flags(flags), _pCodec(CodecFactory::Dumb->CreateCodec(true, false))
+Stream::Stream(Flags flags, size_t offset) :
+	_flags(flags), _offset(offset), _pCodec(CodecFactory::Dumb->CreateCodec(true, false))
 {
 }
 
@@ -229,6 +230,32 @@ void Stream::Dump(const void* buff, size_t bytes, const StringStyle& stringStyle
 		strLine += strASCII;
 		Println(strLine.c_str());
 	}
+}
+
+bool Stream::Seek(long offsetRel, SeekMode seekMode)
+{
+	size_t offset;
+	if (seekMode == SeekMode::Set) {
+		offset = static_cast<size_t>(offsetRel);
+	} else {
+		offset = (seekMode == SeekMode::Cur)? _offset : DoGetSize();
+		if (offsetRel < 0 && offset < static_cast<size_t>(-offsetRel)) {
+			Error::Issue(ErrorType::RangeError, "seeking point is out of range");
+			return false;
+		}
+		offset += offsetRel;
+	}
+	if (DoSeek(offset, _offset)) {
+		_offset = offset;
+		return true;
+	}
+	return false;
+}
+
+bool Stream::DoSeek(size_t offset, size_t offsetPrev)
+{
+	Error::Issue(ErrorType::IOError, "seeking is not supported");
+	return false;
 }
 
 String Stream::ToString(const StringStyle& ss) const

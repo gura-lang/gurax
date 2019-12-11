@@ -127,5 +127,14 @@ Value* DirectoryEx::DoGetStatValue()
 //------------------------------------------------------------------------------
 // StreamEx
 //------------------------------------------------------------------------------
+bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
+{
+	if (!_fp) return true;
+	if (::fseek(_fp, static_cast<long>(offset), SEEK_SET) != 0) {
+		Error::Issue(ErrorType::IOError, "seek error");
+		return false;
+	}
+	return true;
+}
 
 Gurax_EndModuleScope(fs)

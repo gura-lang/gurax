@@ -13,7 +13,8 @@ namespace Gurax {
 // Stream_Binary
 //------------------------------------------------------------------------------
 Stream_Binary::Stream_Binary(BinaryReferable* pBuff, size_t offset) :
-	Stream(Flag::Readable | Flag::Writable), _pBuff(pBuff), _offset(offset)
+	Stream(Flag::Readable | Flag::Writable | Flag::BwdSeekable | Flag::FwdSeekable, offset),
+	_pBuff(pBuff)
 {
 }
 
@@ -46,6 +47,10 @@ bool Stream_Binary::DoPutChar(char ch)
 size_t Stream_Binary::Read(void* buff, size_t len)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
+	if (_offset > buffTgt.size()) {
+		Error::Issue(ErrorType::RangeError, "the offset is out of range");
+		return 0;
+	}
 	size_t lenRead = buffTgt.copy(reinterpret_cast<UInt8*>(buff), len, _offset);
 	_offset += lenRead;
 	return lenRead;
@@ -55,15 +60,22 @@ size_t Stream_Binary::Write(const void* buff, size_t len)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset < buffTgt.size()) {
-		
-	} else {
 		size_t bytesGap = buffTgt.size() - _offset;
+		buffTgt.replace(_offset, bytesGap, reinterpret_cast<const UInt8*>(buff), len);
+		_offset += len;
+	} else {
+		size_t bytesGap = _offset - buffTgt.size();
 		if (bytesGap > 0) buffTgt.assign(bytesGap, '\0');
 		buffTgt.append(reinterpret_cast<const UInt8*>(buff), len);
-		//buffTgt.insert(Binary::npos, reinterpret_cast<const UInt8*>(buff), len);
 		_offset = buffTgt.size();
 	}
 	return len;
+}
+
+bool Stream_Binary::DoSeek(size_t offset, size_t offsetPrev)
+{
+	// nothing to do here
+	return true;
 }
 
 }

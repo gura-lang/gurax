@@ -62,6 +62,7 @@ public:
 		return ::fwrite(buff, 1, len, _fp);
 	}
 	virtual void Flush() override { ::fflush(_fp); }
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
 Gurax_EndModuleScope(fs)
