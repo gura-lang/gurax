@@ -3,7 +3,7 @@
 //==============================================================================
 #ifndef GURAX_POINTER_H
 #define GURAX_POINTER_H
-#include "Referable.h"
+#include "Packer.h"
 
 namespace Gurax {
 
