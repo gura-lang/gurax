@@ -524,7 +524,6 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 's') {
 			const UInt8* pByte = ExtractPrepare(nRepeat);
 			if (pByte) {
@@ -535,26 +534,23 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			} else {
 				break;
 			}
-
 			String str;
 			str.reserve(nRepeat);
 			char chConv;
 			for (int nUnpacked = 0; nUnpacked < nRepeat; nUnpacked++, pByte++) {
-				Codec::Result result = pCodec->GetDecoder()->FeedChar(*pByte, chConv);
-				if (result == Codec::RESULT_Error) {
-					sig.SetError(ERR_CodecError,
-						"decoding error. specify a proper coding name by {coding}");
-					return false;
-				} else if (result == Codec::RESULT_Complete) {
+				Codec::Result result = pCodec->GetDecoder().FeedChar(*pByte, chConv);
+				if (result == Codec::Result::Error) {
+					Error::Issue(ErrorType::CodecError, "decoding error. specify a proper coding name by {coding}");
+					return Value::nil();
+				} else if (result == Codec::Result::Complete) {
 					str.push_back(chConv);
-					while (pCodec->GetDecoder()->FollowChar(chConv)) str.push_back(chConv);
+					while (pCodec->GetDecoder().FollowChar(chConv)) str.push_back(chConv);
 				}
 			}
 			// flush unprocessed characters
-			if (pCodec->GetDecoder()->Flush(chConv)) while (pCodec->GetDecoder()->FollowChar(chConv)) ;
-			pObjList->Add(Value(str));
+			//if (pCodec->GetDecoder().Flush(chConv)) while (pCodec->GetDecoder().FollowChar(chConv)) ;
+			pValueOwner->Add(new Value_String(str));
 			nRepeat = 1;
-#endif
 		} else if (ch == 'p') {
 			Error::Issue(ErrorType::UnimplementedError, "sorry, not implemented yet");
 			return Value::nil();
