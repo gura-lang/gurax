@@ -12,16 +12,28 @@ bool IsBigEndian() { return false; }
 //------------------------------------------------------------------------------
 bool Packer::Pack(const char* format, const ValueList& valListArg)
 {
-	auto CheckString = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) {
+	auto CheckString = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) -> const char* {
 		if (ppValueArg == valListArg.end()) {
 			Error::Issue(ErrorType::ValueError, "not enough argument");
-			return false;
+			return nullptr;
 		}
 		if (!(*ppValueArg)->IsType(VTYPE_String)) {
-			Error::Issue(ErrorType::ValueError, "must be a string");
-			return false;
+			Error::Issue(ErrorType::ValueError, "must be a String");
+			return nullptr;
 		}
-		return true;
+		return Value_String::GetString(**ppValueArg);
+	};
+	auto CheckNumberRanged = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg,
+								Double numMin, Double numMax) -> Double {
+		if (ppValueArg == valListArg.end()) {
+			Error::Issue(ErrorType::ValueError, "not enough argument");
+			return 0;
+		}
+		if (!(*ppValueArg)->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::ValueError, "must be a Number");
+			return 0;
+		}
+		return Value_Number::GetNumberRanged<Double>(**ppValueArg, numMin, numMax);
 	};
 #if 1
 	enum class Stat { Format, Repeat, Encoding } stat = Stat::Format;
@@ -88,98 +100,100 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'c') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckString(valListArg, ppValueArg)) return false;
-				Store<Int8, false>(Value_String::GetString(**ppValueArg)[0]);
+				const char* str = CheckString(valListArg, ppValueArg);
+				if (!str) return false;
+				Store<Int8, false>(str[0]);
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 'b') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, *ppValueArg, -128, 127)) return false;
-				Store<Int8>((*ppValueArg)->GetInt8(), false);
+				Int8 num = static_cast<Int8>(CheckNumberRanged(valListArg, ppValueArg, -128, 127));
+				if (Error::IsIssued()) return false;
+				Store<Int8, false>(num);
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 'B') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, 0, 255)) return false;
+				if (!CheckNumber(valListArg, ppValueArg, 0, 255)) return false;
 				Store<UInt8>((*ppValueArg)->GetUInt8(), false);
 			}
 			nRepeat = 1;
 		} else if (ch == 'h') {
 			if (!StorePrepare(sizeof(Short) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, -32768, 32767)) return false;
-				Store<Short>((*ppValueArg)->GetShort(), bigEndianFlag);
+				if (!CheckNumber(valListArg, ppValueArg, -32768, 32767)) return false;
+				Store<Int16>((*ppValueArg)->GetShort(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'H') {
 			if (!StorePrepare(sizeof(UInt16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, 0, 65535)) return false;
+				if (!CheckNumber(valListArg, ppValueArg, 0, 65535)) return false;
 				Store<UInt16>((*ppValueArg)->GetUInt16(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'i') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
+				if (!CheckNumber(valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
 				Store<Int32>((*ppValueArg)->GetInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'I') {
 			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, 0, 4294967295.)) return false;
+				if (!CheckNumber(valListArg, ppValueArg, 0, 4294967295.)) return false;
 				Store<UInt32>((*ppValueArg)->GetUInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'l') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
+				if (!CheckNumber(valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
 				Store<Int32>((*ppValueArg)->GetInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'L') {
 			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg, 0, 4294967295.)) return false;
+				if (!CheckNumber(valListArg, ppValueArg, 0, 4294967295.)) return false;
 				Store<UInt32>((*ppValueArg)->GetUInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'q') {
 			if (!StorePrepare(sizeof(Int64) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				if (!CheckNumber(valListArg, ppValueArg)) return false;
 				Store<Int64>((*ppValueArg)->GetInt64(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'Q') {
 			if (!StorePrepare(sizeof(UInt64) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				if (!CheckNumber(valListArg, ppValueArg)) return false;
 				Store<UInt64>((*ppValueArg)->GetUInt64(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'f') {
 			if (!StorePrepare(sizeof(Float) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				if (!CheckNumber(valListArg, ppValueArg)) return false;
 				Store<Float>((*ppValueArg)->GetFloat(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'd') {
 			if (!StorePrepare(sizeof(Double) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				if (!CheckNumber(valListArg, ppValueArg)) return false;
 				Store<Double>((*ppValueArg)->GetDouble(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 's') {
 			if (!StorePrepare(nRepeat)) return false;
-			if (!CheckString(env, valListArg, ppValueArg)) return false;
+			if (!CheckString(valListArg, ppValueArg)) return false;
 			const char* p = (*ppValueArg)->GetString();
 			int nPacked = 0;
 			char chConv;
