@@ -167,6 +167,26 @@ template<> inline void Packer::Store<Int64, false>(Int64 num)
 	Store<UInt64, false>(static_cast<UInt64>(num));
 }
 
+template<> inline void Packer::Store<Float, true>(Float num)
+{
+	Store<UInt32, true>(*reinterpret_cast<UInt32*>(&num));
+}
+
+template<> inline void Packer::Store<Float, false>(Float num)
+{
+	Store<UInt32, false>(*reinterpret_cast<UInt32*>(&num));
+}
+
+template<> inline void Packer::Store<Double, true>(Double num)
+{
+	Store<UInt64, true>(*reinterpret_cast<UInt64*>(&num));
+}
+
+template<> inline void Packer::Store<Double, false>(Double num)
+{
+	Store<UInt64, false>(*reinterpret_cast<UInt64*>(&num));
+}
+
 template<> inline UInt8 Packer::Extract<UInt8, true>(const UInt8* pByte)
 {
 	return *pByte;
@@ -282,6 +302,30 @@ template<> inline Int64 Packer::Extract<Int64, true>(const UInt8* pByte)
 template<> inline Int64 Packer::Extract<Int64, false>(const UInt8* pByte)
 {
 	return static_cast<Int64>(Extract<UInt64, false>(pByte));
+}
+
+template<> inline Float Packer::Extract<Float, true>(const UInt8* pByte)
+{
+	UInt32 num = Extract<UInt32, true>(pByte);
+	return *reinterpret_cast<Float*>(&num);
+}
+
+template<> inline Float Packer::Extract<Float, false>(const UInt8* pByte)
+{
+	UInt32 num = Extract<UInt32, false>(pByte);
+	return *reinterpret_cast<Float*>(&num);
+}
+
+template<> inline Double Packer::Extract<Double, true>(const UInt8* pByte)
+{
+	UInt64 num = Extract<UInt64, true>(pByte);
+	return *reinterpret_cast<Double*>(&num);
+}
+
+template<> inline Double Packer::Extract<Double, false>(const UInt8* pByte)
+{
+	UInt64 num = Extract<UInt64, false>(pByte);
+	return *reinterpret_cast<Double*>(&num);
 }
 
 }

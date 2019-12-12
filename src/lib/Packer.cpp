@@ -12,7 +12,7 @@ bool IsBigEndian() { return false; }
 //------------------------------------------------------------------------------
 bool Packer::Pack(const char* format, const ValueList& valListArg)
 {
-	auto CheckString = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) -> const char* {
+	auto GetString = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) -> const char* {
 		if (ppValueArg == valListArg.end()) {
 			Error::Issue(ErrorType::ValueError, "not enough argument");
 			return nullptr;
@@ -23,7 +23,18 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		}
 		return Value_String::GetString(**ppValueArg);
 	};
-	auto CheckNumberRanged = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg,
+	auto GetNumber = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) -> Double {
+		if (ppValueArg == valListArg.end()) {
+			Error::Issue(ErrorType::ValueError, "not enough argument");
+			return 0;
+		}
+		if (!(*ppValueArg)->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::ValueError, "must be a Number");
+			return 0;
+		}
+		return Value_Number::GetNumber<Double>(**ppValueArg);
+	};
+	auto GetNumberRanged = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg,
 								Double numMin, Double numMax) -> Double {
 		if (ppValueArg == valListArg.end()) {
 			Error::Issue(ErrorType::ValueError, "not enough argument");
@@ -100,7 +111,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'c') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				const char* str = CheckString(valListArg, ppValueArg);
+				const char* str = GetString(valListArg, ppValueArg);
 				if (!str) return false;
 				Store<Int8, false>(str[0]);
 			}
@@ -108,7 +119,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'b') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int8 num = static_cast<Int8>(CheckNumberRanged(valListArg, ppValueArg, -128, 127));
+				Int8 num = static_cast<Int8>(GetNumberRanged(valListArg, ppValueArg, -128, 127));
 				if (Error::IsIssued()) return false;
 				Store<Int8, false>(num);
 			}
@@ -116,7 +127,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'B') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				UInt8 num = static_cast<UInt8>(CheckNumberRanged(valListArg, ppValueArg, 0, 255));
+				UInt8 num = static_cast<UInt8>(GetNumberRanged(valListArg, ppValueArg, 0, 255));
 				if (Error::IsIssued()) return false;
 				Store<UInt8, false>(num);
 			}
@@ -124,7 +135,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'h') {
 			if (!StorePrepare(sizeof(Int16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int16 num = static_cast<Int16>(CheckNumberRanged(valListArg, ppValueArg, -32768, 32767));
+				Int16 num = static_cast<Int16>(GetNumberRanged(valListArg, ppValueArg, -32768, 32767));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Int16, true>(num); } else { Store<Int16, false>(num); }
 			}
@@ -132,71 +143,79 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'H') {
 			if (!StorePrepare(sizeof(UInt16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int16 num = static_cast<UInt16>(CheckNumberRanged(valListArg, ppValueArg, 0, 65535));
+				UInt16 num = static_cast<UInt16>(GetNumberRanged(valListArg, ppValueArg, 0, 65535));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<UInt16, true>(num); } else { Store<UInt16, false>(num); }
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 'i') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
-				Store<Int32>((*ppValueArg)->GetInt32(), bigEndianFlag);
+				Int32 num = static_cast<Int32>(GetNumberRanged(valListArg, ppValueArg, -2147483648., 2147483647.));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<Int32, true>(num); } else { Store<Int32, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'I') {
 			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, 0, 4294967295.)) return false;
-				Store<UInt32>((*ppValueArg)->GetUInt32(), bigEndianFlag);
+				UInt32 num = static_cast<UInt32>(GetNumberRanged(valListArg, ppValueArg, 0, 4294967295.));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<UInt32, true>(num); } else { Store<UInt32, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'l') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
-				Store<Int32>((*ppValueArg)->GetInt32(), bigEndianFlag);
+				Int32 num = static_cast<Int32>(GetNumberRanged(valListArg, ppValueArg, -2147483648., 2147483647.));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<Int32, true>(num); } else { Store<Int32, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'L') {
 			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, 0, 4294967295.)) return false;
-				Store<UInt32>((*ppValueArg)->GetUInt32(), bigEndianFlag);
+				UInt32 num = static_cast<UInt32>(GetNumberRanged(valListArg, ppValueArg, 0, 4294967295.));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<UInt32, true>(num); } else { Store<UInt32, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'q') {
 			if (!StorePrepare(sizeof(Int64) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg)) return false;
-				Store<Int64>((*ppValueArg)->GetInt64(), bigEndianFlag);
+				Int64 num = static_cast<Int64>(GetNumber(valListArg, ppValueArg));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<Int64, true>(num); } else { Store<Int64, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'Q') {
 			if (!StorePrepare(sizeof(UInt64) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg)) return false;
-				Store<UInt64>((*ppValueArg)->GetUInt64(), bigEndianFlag);
+				UInt64 num = static_cast<UInt64>(GetNumber(valListArg, ppValueArg));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<UInt64, true>(num); } else { Store<UInt64, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'f') {
 			if (!StorePrepare(sizeof(Float) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg)) return false;
-				Store<Float>((*ppValueArg)->GetFloat(), bigEndianFlag);
+				Float num = static_cast<Float>(GetNumber(valListArg, ppValueArg));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<Float, true>(num); } else { Store<Float, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'd') {
 			if (!StorePrepare(sizeof(Double) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg)) return false;
-				Store<Double>((*ppValueArg)->GetDouble(), bigEndianFlag);
+				Double num = GetNumber(valListArg, ppValueArg);
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<Double, true>(num); } else { Store<Double, false>(num); }
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 's') {
 			if (!StorePrepare(nRepeat)) return false;
-			if (!CheckString(valListArg, ppValueArg)) return false;
+			if (!GetString(valListArg, ppValueArg)) return false;
 			const char* p = (*ppValueArg)->GetString();
 			int nPacked = 0;
 			char chConv;
