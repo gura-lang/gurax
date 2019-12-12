@@ -464,7 +464,6 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 'q') {
 			const UInt8* pByte = ExtractPrepare(sizeof(Int64) * nRepeat);
 			if (pByte) {
@@ -475,9 +474,9 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			} else {
 				break;
 			}
-
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int64)) {
-				pObjList->Add(Value(Extract<Int64>(pByte, bigEndianFlag)));
+				Int64 num = bigEndianFlag? Extract<Int64, true>(pByte) : Extract<Int64, false>(pByte);
+				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
 		} else if (ch == 'Q') {
@@ -490,9 +489,9 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			} else {
 				break;
 			}
-
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt64)) {
-				pObjList->Add(Value(Extract<UInt64>(pByte, bigEndianFlag)));
+				UInt64 num = bigEndianFlag? Extract<UInt64, true>(pByte) : Extract<UInt64, false>(pByte);
+				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
 		} else if (ch == 'f') {
@@ -505,9 +504,9 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			} else {
 				break;
 			}
-
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Float)) {
-				pObjList->Add(Value(Extract<Float>(pByte, bigEndianFlag)));
+				Float num = bigEndianFlag? Extract<Float, true>(pByte) : Extract<Float, false>(pByte);
+				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
 		} else if (ch == 'd') {
@@ -520,11 +519,12 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			} else {
 				break;
 			}
-
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Double)) {
-				pObjList->Add(Value(Extract<Double>(pByte, bigEndianFlag)));
+				Float num = bigEndianFlag? Extract<Double, true>(pByte) : Extract<Double, false>(pByte);
+				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 's') {
 			const UInt8* pByte = ExtractPrepare(nRepeat);
 			if (pByte) {
