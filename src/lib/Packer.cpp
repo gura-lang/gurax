@@ -118,7 +118,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'b') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int8 num = static_cast<Int8>(GetNumberRanged(valListArg, ppValueArg, -128, 127));
+				auto num = static_cast<Int8>(GetNumberRanged(valListArg, ppValueArg, -128, 127));
 				if (Error::IsIssued()) return false;
 				Store<Int8, false>(num);
 			}
@@ -126,7 +126,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'B') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				UInt8 num = static_cast<UInt8>(GetNumberRanged(valListArg, ppValueArg, 0, 255));
+				auto num = static_cast<UInt8>(GetNumberRanged(valListArg, ppValueArg, 0, 255));
 				if (Error::IsIssued()) return false;
 				Store<UInt8, false>(num);
 			}
@@ -134,7 +134,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'h') {
 			if (!StorePrepare(sizeof(Int16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int16 num = static_cast<Int16>(GetNumberRanged(valListArg, ppValueArg, -32768, 32767));
+				auto num = static_cast<Int16>(GetNumberRanged(valListArg, ppValueArg, -32768, 32767));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Int16, true>(num); } else { Store<Int16, false>(num); }
 			}
@@ -142,7 +142,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'H') {
 			if (!StorePrepare(sizeof(UInt16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				UInt16 num = static_cast<UInt16>(GetNumberRanged(valListArg, ppValueArg, 0, 65535));
+				auto num = static_cast<UInt16>(GetNumberRanged(valListArg, ppValueArg, 0, 65535));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<UInt16, true>(num); } else { Store<UInt16, false>(num); }
 			}
@@ -150,7 +150,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'i') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int32 num = static_cast<Int32>(GetNumberRanged(valListArg, ppValueArg, -2147483648., 2147483647.));
+				auto num = static_cast<Int32>(GetNumberRanged(valListArg, ppValueArg, -2147483648., 2147483647.));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Int32, true>(num); } else { Store<Int32, false>(num); }
 			}
@@ -158,7 +158,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'I') {
 			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				UInt32 num = static_cast<UInt32>(GetNumberRanged(valListArg, ppValueArg, 0, 4294967295.));
+				auto num = static_cast<UInt32>(GetNumberRanged(valListArg, ppValueArg, 0, 4294967295.));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<UInt32, true>(num); } else { Store<UInt32, false>(num); }
 			}
@@ -166,7 +166,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'l') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int32 num = static_cast<Int32>(GetNumberRanged(valListArg, ppValueArg, -2147483648., 2147483647.));
+				auto num = static_cast<Int32>(GetNumberRanged(valListArg, ppValueArg, -2147483648., 2147483647.));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Int32, true>(num); } else { Store<Int32, false>(num); }
 			}
@@ -174,7 +174,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'L') {
 			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				UInt32 num = static_cast<UInt32>(GetNumberRanged(valListArg, ppValueArg, 0, 4294967295.));
+				auto num = static_cast<UInt32>(GetNumberRanged(valListArg, ppValueArg, 0, 4294967295.));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<UInt32, true>(num); } else { Store<UInt32, false>(num); }
 			}
@@ -182,7 +182,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'q') {
 			if (!StorePrepare(sizeof(Int64) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Int64 num = static_cast<Int64>(GetNumber(valListArg, ppValueArg));
+				auto num = static_cast<Int64>(GetNumber(valListArg, ppValueArg));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Int64, true>(num); } else { Store<Int64, false>(num); }
 			}
@@ -190,7 +190,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'Q') {
 			if (!StorePrepare(sizeof(UInt64) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				UInt64 num = static_cast<UInt64>(GetNumber(valListArg, ppValueArg));
+				auto num = static_cast<UInt64>(GetNumber(valListArg, ppValueArg));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<UInt64, true>(num); } else { Store<UInt64, false>(num); }
 			}
@@ -198,7 +198,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'f') {
 			if (!StorePrepare(sizeof(Float) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Float num = static_cast<Float>(GetNumber(valListArg, ppValueArg));
+				auto num = static_cast<Float>(GetNumber(valListArg, ppValueArg));
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Float, true>(num); } else { Store<Float, false>(num); }
 			}
@@ -206,7 +206,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == 'd') {
 			if (!StorePrepare(sizeof(Double) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				Double num = GetNumber(valListArg, ppValueArg);
+				auto num = GetNumber(valListArg, ppValueArg);
 				if (Error::IsIssued()) return false;
 				if (bigEndianFlag) { Store<Double, true>(num); } else { Store<Double, false>(num); }
 			}
@@ -255,6 +255,9 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 
 Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exceedErrorFlag)
 {
+	auto IssueError_ExceedRange = []() {
+		Error::Issue(ErrorType::RangeError, "exceeds the range");
+	};
 	enum class Stat { Format, Repeat, Encoding } stat = Stat::Format;
 	auto ppValueArg = valListArg.begin();
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
@@ -288,19 +291,18 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			nRepeat = 0;
 			eatNextFlag = false;
 			stat = Stat::Repeat;
-#if 0
 		} else if (ch == '*') {
-			if (pValueArg == valListArg.end()) {
-				sig.SetError(ERR_ValueError, "not enough arguments");
-				return false;
+			if (ppValueArg == valListArg.end()) {
+				Error::Issue(ErrorType::ValueError, "not enough arguments");
+				return Value::nil();
 			}
-			if (!(*ppValueArg)->Is_number()) {
-				sig.SetError(ERR_ValueError,
-								"repeat specifier requires a number value");
-				return false;
+			if (!(*ppValueArg)->IsType(VTYPE_Number)) {
+				Error::Issue(ErrorType::ValueError, "repeat specifier requires a number value");
+				return Value::nil();
 			}
-			nRepeat = (*ppValueArg)->GetInt();
-			pValueArg++;
+			nRepeat = Value_Number::GetNumberNonNeg<int>(**ppValueArg);
+			if (Error::IsIssued()) return Value::nil();
+			ppValueArg++;
 		} else if (ch == '{') {
 			encoding.clear();
 			stat = Stat::Encoding;
@@ -315,106 +317,225 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 		} else if (ch == '!') {
 			bigEndianFlag = true;
 		} else if (ch == 'x') {
-			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
 			nRepeat = 1;
 		} else if (ch == 'c') {
-			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
 			char str[2];
 			str[1] = '\0';
 			for (int i = 0; i < nRepeat; i++, pByte++) {
-				str[0] = Extract<Int8>(pByte, false);
-				pObjList->Add(Value(str));
+				str[0] = Extract<Int8, false>(pByte);
+				pValueOwner->Add(new Value_String(str));
 			}
 			nRepeat = 1;
 		} else if (ch == 'b') {
-			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
 			for (int i = 0; i < nRepeat; i++, pByte++) {
-				pObjList->Add(Value(Extract<Int8>(pByte, false)));
+				auto num = Extract<Int8, false>(pByte);
+				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
 		} else if (ch == 'B') {
-			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
 			for (int i = 0; i < nRepeat; i++, pByte++) {
-				pObjList->Add(Value(Extract<UInt8>(pByte, false)));
+				auto num = Extract<UInt8, false>(pByte);
+				pValueOwner->Add(new Value_Number(num));
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 'h') {
-			const UInt8* pByte = ExtractPrepare(sizeof(Int16) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(Int16) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Short)) {
 				pObjList->Add(Value(Extract<Int16>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'H') {
-			const UInt8* pByte = ExtractPrepare(sizeof(UInt16) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt16) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt16)) {
 				pObjList->Add(Value(Extract<UInt16>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'i') {
-			const UInt8* pByte = ExtractPrepare(sizeof(Int32) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(Int32) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int32)) {
 				pObjList->Add(Value(Extract<Int32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'I') {
-			const UInt8* pByte = ExtractPrepare(sizeof(UInt32) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt32) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt32)) {
 				pObjList->Add(Value(Extract<UInt32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'l') {
-			const UInt8* pByte = ExtractPrepare(sizeof(Int32) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(Int32) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int32)) {
 				pObjList->Add(Value(Extract<Int32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'L') {
-			const UInt8* pByte = ExtractPrepare(sizeof(UInt32) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt32) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt32)) {
 				pObjList->Add(Value(Extract<UInt32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'q') {
-			const UInt8* pByte = ExtractPrepare(sizeof(Int64) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(Int64) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int64)) {
 				pObjList->Add(Value(Extract<Int64>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'Q') {
-			const UInt8* pByte = ExtractPrepare(sizeof(UInt64) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt64) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt64)) {
 				pObjList->Add(Value(Extract<UInt64>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'f') {
-			const UInt8* pByte = ExtractPrepare(sizeof(Float) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(Float) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Float)) {
 				pObjList->Add(Value(Extract<Float>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'd') {
-			const UInt8* pByte = ExtractPrepare(sizeof(Double) * nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(sizeof(Double) * nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Double)) {
 				pObjList->Add(Value(Extract<Double>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 's') {
-			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
-			if (pByte == nullptr) return Value::Nil;
+			const UInt8* pByte = ExtractPrepare(nRepeat);
+			if (pByte) {
+				// nothing to do
+			} else if (exceedErrorFlag) {
+				IssueError_ExceedRange();
+				return Value::nil();
+			} else {
+				break;
+			}
+
 			String str;
 			str.reserve(nRepeat);
 			char chConv;
