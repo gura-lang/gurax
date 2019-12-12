@@ -255,24 +255,18 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 
 Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exceedErrorFlag)
 {
-#if 0
-	enum {
-		Stat::Format,
-		Stat::Repeat,
-		Stat::Encoding,
-	} stat = Stat::Format;
-	ValueList::const_iterator pValueArg = valListArg.begin();
-	Value result;
-	Object_list* pObjList = result.InitAsList(env);
+	enum class Stat { Format, Repeat, Encoding } stat = Stat::Format;
+	auto ppValueArg = valListArg.begin();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	bool bigEndianFlag = IsBigEndian();
 	int nRepeat = 1;
 	String encoding;
-	AutoPtr<Codec> pCodec(Codec::CreateCodecNone(false, false));
-	for (const char* p = format; *p != '\0'; ) {
+	RefPtr<Codec> pCodec(Codec::CreateDumb(false, false));
+	for (const char* p = format; *p; ) {
 		char ch = *p;
 		bool eatNextFlag = true;
 		if (stat == Stat::Repeat) {
-			if (IsDigit(ch)) {
+			if (String::IsDigit(ch)) {
 				nRepeat = nRepeat * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
@@ -281,19 +275,20 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 		} else if (stat == Stat::Encoding) {
 			if (ch == '}') {
 				if (encoding.empty()) {
-					pCodec.reset(Codec::CreateCodecNone(false, false));
+					pCodec.reset(Codec::CreateDumb(false, false));
 				} else {
-					pCodec.reset(Codec::CreateCodec(encoding.c_str(), false, false));
-					if (sig.IsSignalled()) return Value::Nil;
+					pCodec.reset(Codec::Create(encoding.c_str(), false, false));
+					if (!pCodec) return Value::nil();
 				}
 				stat = Stat::Format;
 			} else {
 				encoding.push_back(ch);
 			}
-		} else if (IsDigit(ch)) {
+		} else if (String::IsDigit(ch)) {
 			nRepeat = 0;
 			eatNextFlag = false;
 			stat = Stat::Repeat;
+#if 0
 		} else if (ch == '*') {
 			if (pValueArg == valListArg.end()) {
 				sig.SetError(ERR_ValueError, "not enough arguments");
@@ -438,23 +433,22 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			if (pCodec->GetDecoder()->Flush(chConv)) while (pCodec->GetDecoder()->FollowChar(chConv)) ;
 			pObjList->Add(Value(str));
 			nRepeat = 1;
+#endif
 		} else if (ch == 'p') {
-			sig.SetError(ERR_NotImplementedError, "sorry, not implemented yet");
-			return Value::Nil;
+			Error::Issue(ErrorType::UnimplementedError, "sorry, not implemented yet");
+			return Value::nil();
 		} else if (ch == 'P') {
-			sig.SetError(ERR_NotImplementedError, "sorry, not implemented yet");
-			return Value::Nil;
-		} else if (IsWhite(ch)) {
+			Error::Issue(ErrorType::UnimplementedError, "sorry, not implemented yet");
+			return Value::nil();
+		} else if (String::IsWhite(ch)) {
 			// just ignore white characters
 		} else {
-			sig.SetError(ERR_ValueError, "invalid character in format");
-			return Value::Nil;
+			Error::Issue(ErrorType::FormatError, "invalid character in format");
+			return Value::nil();
 		}
 		if (eatNextFlag) p++;
 	}
-	return result;
-#endif
-	return Value::nil();
+	return new Value_List(pValueOwner.release());
 }
 
 bool Packer::PutBuffer(const void* buff, size_t bytes)
