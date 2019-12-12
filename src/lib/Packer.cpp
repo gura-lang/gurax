@@ -121,21 +121,23 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 				Store<UInt8, false>(num);
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 'h') {
-			if (!StorePrepare(sizeof(Short) * nRepeat)) return false;
+			if (!StorePrepare(sizeof(Int16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, -32768, 32767)) return false;
-				Store<Int16>((*ppValueArg)->GetShort(), bigEndianFlag);
+				Int16 num = static_cast<Int16>(CheckNumberRanged(valListArg, ppValueArg, -32768, 32767));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<Int16, true>(num); } else { Store<Int16, false>(num); }
 			}
 			nRepeat = 1;
 		} else if (ch == 'H') {
 			if (!StorePrepare(sizeof(UInt16) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, 0, 65535)) return false;
-				Store<UInt16>((*ppValueArg)->GetUInt16(), bigEndianFlag);
+				Int16 num = static_cast<UInt16>(CheckNumberRanged(valListArg, ppValueArg, 0, 65535));
+				if (Error::IsIssued()) return false;
+				if (bigEndianFlag) { Store<UInt16, true>(num); } else { Store<UInt16, false>(num); }
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 'i') {
 			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
