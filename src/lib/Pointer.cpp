@@ -2,6 +2,7 @@
 // Pointer.cpp
 //==============================================================================
 #include "stdafx.h"
+#include <gurax/Pointer.h>
 
 namespace Gurax {
 
