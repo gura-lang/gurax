@@ -85,6 +85,16 @@ template<> inline void Packer::Store<UInt16, false>(UInt16 num)
 	StoreBuffer(buff, sizeof(UInt16));
 }
 
+template<> inline void Packer::Store<Int16, true>(Int16 num)
+{
+	Store<UInt16, true>(static_cast<UInt16>(num));
+}
+
+template<> inline void Packer::Store<Int16, false>(Int16 num)
+{
+	Store<UInt16, false>(static_cast<UInt16>(num));
+}
+
 template<> inline void Packer::Store<UInt32, true>(UInt32 num)
 {
 	UInt8 buff[sizeof(UInt32)];
@@ -105,6 +115,16 @@ template<> inline void Packer::Store<UInt32, false>(UInt32 num)
 	*pByte++ = static_cast<UInt8>(num); num >>= 8;
 	*pByte   = static_cast<UInt8>(num);
 	StoreBuffer(buff, sizeof(UInt32));
+}
+
+template<> inline void Packer::Store<Int32, true>(Int32 num)
+{
+	Store<UInt32, true>(static_cast<UInt32>(num));
+}
+
+template<> inline void Packer::Store<Int32, false>(Int32 num)
+{
+	Store<UInt32, false>(static_cast<UInt32>(num));
 }
 
 template<> inline void Packer::Store<UInt64, true>(UInt64 num)
@@ -135,6 +155,16 @@ template<> inline void Packer::Store<UInt64, false>(UInt64 num)
 	*pByte++ = static_cast<UInt8>(num); num >>= 8;
 	*pByte   = static_cast<UInt8>(num);
 	StoreBuffer(buff, sizeof(UInt64));
+}
+
+template<> inline void Packer::Store<Int64, true>(Int64 num)
+{
+	Store<UInt64, true>(static_cast<UInt64>(num));
+}
+
+template<> inline void Packer::Store<Int64, false>(Int64 num)
+{
+	Store<UInt64, false>(static_cast<UInt64>(num));
 }
 
 template<> inline UInt8 Packer::Extract<UInt8, true>(const UInt8* pByte)

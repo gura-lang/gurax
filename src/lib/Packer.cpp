@@ -113,14 +113,15 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 				Store<Int8, false>(num);
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 'B') {
 			if (!StorePrepare(nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
-				if (!CheckNumber(valListArg, ppValueArg, 0, 255)) return false;
-				Store<UInt8>((*ppValueArg)->GetUInt8(), false);
+				UInt8 num = static_cast<UInt8>(CheckNumberRanged(valListArg, ppValueArg, 0, 255));
+				if (Error::IsIssued()) return false;
+				Store<UInt8, false>(num);
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 'h') {
 			if (!StorePrepare(sizeof(Short) * nRepeat)) return false;
 			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
