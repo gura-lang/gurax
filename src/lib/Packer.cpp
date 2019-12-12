@@ -211,32 +211,31 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 				if (bigEndianFlag) { Store<Double, true>(num); } else { Store<Double, false>(num); }
 			}
 			nRepeat = 1;
-#if 0
 		} else if (ch == 's') {
 			if (!StorePrepare(nRepeat)) return false;
-			if (!GetString(valListArg, ppValueArg)) return false;
-			const char* p = (*ppValueArg)->GetString();
+			const char* str = GetString(valListArg, ppValueArg);
+			if (!str) return false;
 			int nPacked = 0;
 			char chConv;
-			for ( ; nPacked < nRepeat && *p != '\0'; p++) {
-				Codec::Result result = pCodec->GetEncoder()->FeedChar(*p, chConv);
-				if (result == Codec::RESULT_Error) {
-					sig.SetError(ERR_CodecError,
+			for (const char* p = str; nPacked < nRepeat && *p; p++) {
+				Codec::Result result = pCodec->GetEncoder().FeedChar(*p, chConv);
+				if (result == Codec::Result::Error) {
+					Error::Issue(ErrorType::CodecError,
 						"encoding error. specify a proper coding name by {coding}");
 					return false;
-				} else if (result == Codec::RESULT_Complete) {
-					Store<UInt8>(chConv, false), nPacked++;
-					while (pCodec->GetEncoder()->FollowChar(chConv) && nPacked < nRepeat) {
-						Store<UInt8>(chConv, false), nPacked++;
+				} else if (result == Codec::Result::Complete) {
+					Store<UInt8, false>(chConv);
+					nPacked++;
+					for ( ; pCodec->GetEncoder().FollowChar(chConv) && nPacked < nRepeat; nPacked++) {
+						Store<UInt8, false>(chConv);
 					}
 				}
 			}
 			for ( ; nPacked < nRepeat; nPacked++) {
-				Store<UInt8>('\0', false);
+				Store<UInt8, false>('\0');
 			}
 			ppValueArg++;
 			nRepeat = 1;
-#endif
 		} else if (ch == 'p') {
 			Error::Issue(ErrorType::UnimplementedError, "sorry, not implemented yet");
 			return false;
