@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Pointer
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Pointer : public Referable {
+class GURAX_DLLDECLARE Pointer : public Packer {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Pointer);

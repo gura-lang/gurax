@@ -43,8 +43,9 @@ Gurax_ImplementConstructor(Pointer)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Pointer> pPointer(new Pointer(0));
-	return argument.ReturnValue(processor, new Value_Pointer(pPointer.release()));
+	//RefPtr<Pointer> pPointer(new Pointer(0));
+	//return argument.ReturnValue(processor, new Value_Pointer(pPointer.release()));
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
