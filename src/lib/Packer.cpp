@@ -46,7 +46,6 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		}
 		return Value_Number::GetNumberRanged<Double>(**ppValueArg, numMin, numMax);
 	};
-#if 1
 	enum class Stat { Format, Repeat, Encoding } stat = Stat::Format;
 	auto ppValueArg = valListArg.begin();
 	bool bigEndianFlag = IsBigEndian();
@@ -237,22 +236,21 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 			}
 			ppValueArg++;
 			nRepeat = 1;
+#endif
 		} else if (ch == 'p') {
-			sig.SetError(ERR_ValueError, "sorry, not implemented yet");
+			Error::Issue(ErrorType::UnimplementedError, "sorry, not implemented yet");
 			return false;
 		} else if (ch == 'P') {
-			sig.SetError(ERR_ValueError, "sorry, not implemented yet");
+			Error::Issue(ErrorType::UnimplementedError, "sorry, not implemented yet");
 			return false;
-		} else if (IsWhite(ch)) {
+		} else if (String::IsWhite(ch)) {
 			// just ignore white characters
 		} else {
-			sig.SetError(ERR_ValueError, "invalid character in format");
+			Error::Issue(ErrorType::FormatError, "invalid character in format");
 			return false;
-#endif
 		}
 		if (eatNextFlag) p++;
 	}
-#endif
 	return true;
 }
 
