@@ -57,6 +57,16 @@ template<> inline void Packer::Store<UInt8, false>(UInt8 num)
 	StoreBuffer(&num, sizeof(UInt8));
 }
 
+template<> inline void Packer::Store<Int8, true>(Int8 num)
+{
+	Store<UInt8, true>(static_cast<UInt8>(num));
+}
+
+template<> inline void Packer::Store<Int8, false>(Int8 num)
+{
+	Store<UInt8, false>(static_cast<UInt8>(num));
+}
+
 template<> inline void Packer::Store<UInt16, true>(UInt16 num)
 {
 	UInt8 buff[sizeof(UInt16)];

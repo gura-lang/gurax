@@ -5,63 +5,72 @@
 
 namespace Gurax {
 
+bool IsBigEndian() { return false; }
+
 //------------------------------------------------------------------------------
 // Packer
 //------------------------------------------------------------------------------
 bool Packer::Pack(const char* format, const ValueList& valListArg)
 {
-#if 0
-	enum {
-		STAT_Format,
-		STAT_Repeat,
-		STAT_Encoding,
-	} stat = STAT_Format;
-	ValueList::const_iterator pValueArg = valListArg.begin();
+	auto CheckString = [](const ValueList& valListArg, ValueList::const_iterator ppValueArg) {
+		if (ppValueArg == valListArg.end()) {
+			Error::Issue(ErrorType::ValueError, "not enough argument");
+			return false;
+		}
+		if (!(*ppValueArg)->IsType(VTYPE_String)) {
+			Error::Issue(ErrorType::ValueError, "must be a string");
+			return false;
+		}
+		return true;
+	};
+#if 1
+	enum class Stat { Format, Repeat, Encoding } stat = Stat::Format;
+	auto ppValueArg = valListArg.begin();
 	bool bigEndianFlag = IsBigEndian();
 	int nRepeat = 1;
 	String encoding;
-	AutoPtr<Codec> pCodec(Codec::CreateCodecNone(false, false));
-	for (const char *p = format; *p != '\0'; ) {
+	RefPtr<Codec> pCodec(Codec::CreateDumb(false, false));
+	for (const char* p = format; *p; ) {
 		char ch = *p;
 		bool eatNextFlag = true;
-		if (stat == STAT_Repeat) {
-			if (IsDigit(ch)) {
+		if (stat == Stat::Repeat) {
+			if (String::IsDigit(ch)) {
 				nRepeat = nRepeat * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
-				stat = STAT_Format;
+				stat = Stat::Format;
 			}
-		} else if (stat == STAT_Encoding) {
+		} else if (stat == Stat::Encoding) {
 			if (ch == '}') {
 				if (encoding.empty()) {
-					pCodec.reset(Codec::CreateCodecNone(false, false));
+					pCodec.reset(Codec::CreateDumb(false, false));
 				} else {
-					pCodec.reset(Codec::CreateCodec(sig, encoding.c_str(), false, false));
-					if (sig.IsSignalled()) return false;
+					pCodec.reset(Codec::Create(encoding.c_str(), false, false));
+					if (!pCodec) return false;
 				}
-				stat = STAT_Format;
+				stat = Stat::Format;
 			} else {
 				encoding.push_back(ch);
 			}
-		} else if (IsDigit(ch)) {
+		} else if (String::IsDigit(ch)) {
 			nRepeat = 0;
 			eatNextFlag = false;
-			stat = STAT_Repeat;
+			stat = Stat::Repeat;
 		} else if (ch == '*') {
-			if (pValueArg == valListArg.end()) {
-				sig.SetError(ERR_ValueError, "not enough arguments");
+			if (ppValueArg == valListArg.end()) {
+				Error::Issue(ErrorType::ValueError, "not enough arguments");
 				return false;
 			}
-			if (!pValueArg->Is_number()) {
-				sig.SetError(ERR_ValueError,
-								"repeat specifier requires a number value");
+			if (!(*ppValueArg)->IsType(VTYPE_Number)) {
+				Error::Issue(ErrorType::ValueError, "repeat specifier requires a number value");
 				return false;
 			}
-			nRepeat = pValueArg->GetInt();
-			pValueArg++;
+			nRepeat = Value_Number::GetNumberNonNeg<int>(**ppValueArg);
+			if (Error::IsIssued()) return false;
+			ppValueArg++;
 		} else if (ch == '{') {
 			encoding.clear();
-			stat = STAT_Encoding;
+			stat = Stat::Encoding;
 		} else if (ch == '@') {
 			bigEndianFlag = IsBigEndian();
 		} else if (ch == '=') {
@@ -73,104 +82,105 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else if (ch == '!') {
 			bigEndianFlag = true;
 		} else if (ch == 'x') {
-			if (!StorePrepare(sig, nRepeat)) return false;
+			if (!StorePrepare(nRepeat)) return false;
 			StoreBuffer(nullptr, nRepeat);
 			nRepeat = 1;
 		} else if (ch == 'c') {
-			if (!StorePrepare(sig, nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckString(env, valListArg, pValueArg)) return false;
-				Store<Int8>(pValueArg->GetString()[0], false);
+			if (!StorePrepare(nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckString(valListArg, ppValueArg)) return false;
+				Store<Int8, false>(Value_String::GetString(**ppValueArg)[0]);
 			}
 			nRepeat = 1;
+#if 0
 		} else if (ch == 'b') {
-			if (!StorePrepare(sig, nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, -128, 127)) return false;
-				Store<Int8>(pValueArg->GetInt8(), false);
+			if (!StorePrepare(nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, *ppValueArg, -128, 127)) return false;
+				Store<Int8>((*ppValueArg)->GetInt8(), false);
 			}
 			nRepeat = 1;
 		} else if (ch == 'B') {
-			if (!StorePrepare(sig, nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, 0, 255)) return false;
-				Store<UInt8>(pValueArg->GetUInt8(), false);
+			if (!StorePrepare(nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, 0, 255)) return false;
+				Store<UInt8>((*ppValueArg)->GetUInt8(), false);
 			}
 			nRepeat = 1;
 		} else if (ch == 'h') {
-			if (!StorePrepare(sig, sizeof(Short) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, -32768, 32767)) return false;
-				Store<Short>(pValueArg->GetShort(), bigEndianFlag);
+			if (!StorePrepare(sizeof(Short) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, -32768, 32767)) return false;
+				Store<Short>((*ppValueArg)->GetShort(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'H') {
-			if (!StorePrepare(sig, sizeof(UInt16) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, 0, 65535)) return false;
-				Store<UInt16>(pValueArg->GetUInt16(), bigEndianFlag);
+			if (!StorePrepare(sizeof(UInt16) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, 0, 65535)) return false;
+				Store<UInt16>((*ppValueArg)->GetUInt16(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'i') {
-			if (!StorePrepare(sig, sizeof(Int32) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, -2147483648., 2147483647.)) return false;
-				Store<Int32>(pValueArg->GetInt32(), bigEndianFlag);
+			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
+				Store<Int32>((*ppValueArg)->GetInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'I') {
-			if (!StorePrepare(sig, sizeof(UInt32) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, 0, 4294967295.)) return false;
-				Store<UInt32>(pValueArg->GetUInt32(), bigEndianFlag);
+			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, 0, 4294967295.)) return false;
+				Store<UInt32>((*ppValueArg)->GetUInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'l') {
-			if (!StorePrepare(sig, sizeof(Int32) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, -2147483648., 2147483647.)) return false;
-				Store<Int32>(pValueArg->GetInt32(), bigEndianFlag);
+			if (!StorePrepare(sizeof(Int32) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, -2147483648., 2147483647.)) return false;
+				Store<Int32>((*ppValueArg)->GetInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'L') {
-			if (!StorePrepare(sig, sizeof(UInt32) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg, 0, 4294967295.)) return false;
-				Store<UInt32>(pValueArg->GetUInt32(), bigEndianFlag);
+			if (!StorePrepare(sizeof(UInt32) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg, 0, 4294967295.)) return false;
+				Store<UInt32>((*ppValueArg)->GetUInt32(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'q') {
-			if (!StorePrepare(sig, sizeof(Int64) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg)) return false;
-				Store<Int64>(pValueArg->GetInt64(), bigEndianFlag);
+			if (!StorePrepare(sizeof(Int64) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				Store<Int64>((*ppValueArg)->GetInt64(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'Q') {
-			if (!StorePrepare(sig, sizeof(UInt64) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg)) return false;
-				Store<UInt64>(pValueArg->GetUInt64(), bigEndianFlag);
+			if (!StorePrepare(sizeof(UInt64) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				Store<UInt64>((*ppValueArg)->GetUInt64(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'f') {
-			if (!StorePrepare(sig, sizeof(Float) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg)) return false;
-				Store<Float>(pValueArg->GetFloat(), bigEndianFlag);
+			if (!StorePrepare(sizeof(Float) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				Store<Float>((*ppValueArg)->GetFloat(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 'd') {
-			if (!StorePrepare(sig, sizeof(Double) * nRepeat)) return false;
-			for (int i = 0; i < nRepeat; i++, pValueArg++) {
-				if (!CheckNumber(env, valListArg, pValueArg)) return false;
-				Store<Double>(pValueArg->GetDouble(), bigEndianFlag);
+			if (!StorePrepare(sizeof(Double) * nRepeat)) return false;
+			for (int i = 0; i < nRepeat; i++, ppValueArg++) {
+				if (!CheckNumber(env, valListArg, ppValueArg)) return false;
+				Store<Double>((*ppValueArg)->GetDouble(), bigEndianFlag);
 			}
 			nRepeat = 1;
 		} else if (ch == 's') {
-			if (!StorePrepare(sig, nRepeat)) return false;
-			if (!CheckString(env, valListArg, pValueArg)) return false;
-			const char *p = pValueArg->GetString();
+			if (!StorePrepare(nRepeat)) return false;
+			if (!CheckString(env, valListArg, ppValueArg)) return false;
+			const char* p = (*ppValueArg)->GetString();
 			int nPacked = 0;
 			char chConv;
 			for ( ; nPacked < nRepeat && *p != '\0'; p++) {
@@ -189,7 +199,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 			for ( ; nPacked < nRepeat; nPacked++) {
 				Store<UInt8>('\0', false);
 			}
-			pValueArg++;
+			ppValueArg++;
 			nRepeat = 1;
 		} else if (ch == 'p') {
 			sig.SetError(ERR_ValueError, "sorry, not implemented yet");
@@ -202,6 +212,7 @@ bool Packer::Pack(const char* format, const ValueList& valListArg)
 		} else {
 			sig.SetError(ERR_ValueError, "invalid character in format");
 			return false;
+#endif
 		}
 		if (eatNextFlag) p++;
 	}
@@ -213,58 +224,58 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 {
 #if 0
 	enum {
-		STAT_Format,
-		STAT_Repeat,
-		STAT_Encoding,
-	} stat = STAT_Format;
+		Stat::Format,
+		Stat::Repeat,
+		Stat::Encoding,
+	} stat = Stat::Format;
 	ValueList::const_iterator pValueArg = valListArg.begin();
 	Value result;
-	Object_list *pObjList = result.InitAsList(env);
+	Object_list* pObjList = result.InitAsList(env);
 	bool bigEndianFlag = IsBigEndian();
 	int nRepeat = 1;
 	String encoding;
 	AutoPtr<Codec> pCodec(Codec::CreateCodecNone(false, false));
-	for (const char *p = format; *p != '\0'; ) {
+	for (const char* p = format; *p != '\0'; ) {
 		char ch = *p;
 		bool eatNextFlag = true;
-		if (stat == STAT_Repeat) {
+		if (stat == Stat::Repeat) {
 			if (IsDigit(ch)) {
 				nRepeat = nRepeat * 10 + (ch - '0');
 			} else {
 				eatNextFlag = false;
-				stat = STAT_Format;
+				stat = Stat::Format;
 			}
-		} else if (stat == STAT_Encoding) {
+		} else if (stat == Stat::Encoding) {
 			if (ch == '}') {
 				if (encoding.empty()) {
 					pCodec.reset(Codec::CreateCodecNone(false, false));
 				} else {
-					pCodec.reset(Codec::CreateCodec(sig, encoding.c_str(), false, false));
+					pCodec.reset(Codec::CreateCodec(encoding.c_str(), false, false));
 					if (sig.IsSignalled()) return Value::Nil;
 				}
-				stat = STAT_Format;
+				stat = Stat::Format;
 			} else {
 				encoding.push_back(ch);
 			}
 		} else if (IsDigit(ch)) {
 			nRepeat = 0;
 			eatNextFlag = false;
-			stat = STAT_Repeat;
+			stat = Stat::Repeat;
 		} else if (ch == '*') {
 			if (pValueArg == valListArg.end()) {
 				sig.SetError(ERR_ValueError, "not enough arguments");
 				return false;
 			}
-			if (!pValueArg->Is_number()) {
+			if (!(*ppValueArg)->Is_number()) {
 				sig.SetError(ERR_ValueError,
 								"repeat specifier requires a number value");
 				return false;
 			}
-			nRepeat = pValueArg->GetInt();
+			nRepeat = (*ppValueArg)->GetInt();
 			pValueArg++;
 		} else if (ch == '{') {
 			encoding.clear();
-			stat = STAT_Encoding;
+			stat = Stat::Encoding;
 		} else if (ch == '@') {
 			bigEndianFlag = IsBigEndian();
 		} else if (ch == '=') {
@@ -276,11 +287,11 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 		} else if (ch == '!') {
 			bigEndianFlag = true;
 		} else if (ch == 'x') {
-			const UInt8 *pByte = ExtractPrepare(sig, nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			nRepeat = 1;
 		} else if (ch == 'c') {
-			const UInt8 *pByte = ExtractPrepare(sig, nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			char str[2];
 			str[1] = '\0';
@@ -290,91 +301,91 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 			}
 			nRepeat = 1;
 		} else if (ch == 'b') {
-			const UInt8 *pByte = ExtractPrepare(sig, nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte++) {
 				pObjList->Add(Value(Extract<Int8>(pByte, false)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'B') {
-			const UInt8 *pByte = ExtractPrepare(sig, nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte++) {
 				pObjList->Add(Value(Extract<UInt8>(pByte, false)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'h') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(Int16) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(Int16) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Short)) {
 				pObjList->Add(Value(Extract<Int16>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'H') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(UInt16) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt16) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt16)) {
 				pObjList->Add(Value(Extract<UInt16>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'i') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(Int32) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(Int32) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int32)) {
 				pObjList->Add(Value(Extract<Int32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'I') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(UInt32) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt32) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt32)) {
 				pObjList->Add(Value(Extract<UInt32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'l') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(Int32) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(Int32) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int32)) {
 				pObjList->Add(Value(Extract<Int32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'L') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(UInt32) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt32) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt32)) {
 				pObjList->Add(Value(Extract<UInt32>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'q') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(Int64) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(Int64) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Int64)) {
 				pObjList->Add(Value(Extract<Int64>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'Q') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(UInt64) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(UInt64) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(UInt64)) {
 				pObjList->Add(Value(Extract<UInt64>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'f') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(Float) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(Float) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Float)) {
 				pObjList->Add(Value(Extract<Float>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 'd') {
-			const UInt8 *pByte = ExtractPrepare(sig, sizeof(Double) * nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(sizeof(Double) * nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			for (int i = 0; i < nRepeat; i++, pByte += sizeof(Double)) {
 				pObjList->Add(Value(Extract<Double>(pByte, bigEndianFlag)));
 			}
 			nRepeat = 1;
 		} else if (ch == 's') {
-			const UInt8 *pByte = ExtractPrepare(sig, nRepeat, exceedErrorFlag);
+			const UInt8* pByte = ExtractPrepare(nRepeat, exceedErrorFlag);
 			if (pByte == nullptr) return Value::Nil;
 			String str;
 			str.reserve(nRepeat);

@@ -127,6 +127,9 @@ public:
 	void SetAddcrFlag(bool addcrFlag) { GetEncoder().SetAddcrFlag(addcrFlag); }
 	Codec* Duplicate() const;
 	static Codec* Create(const char* encoding, bool delcrFlag, bool addcrFlag);
+	static Codec* CreateDumb(bool delcrFlag, bool addcrFlag) {
+		return CodecFactory::Dumb->CreateCodec(delcrFlag, addcrFlag);
+	}
 	static void Bootup();
 	static UInt16 DBCSToUTF16(const CodeRow codeRows[], int nCodeRows, UInt16 codeDBCS);
 	static UInt16 UTF16ToDBCS(const CodeRow codeRows[], int nCodeRows, UInt16 codeUTF16, Map** ppMap);
