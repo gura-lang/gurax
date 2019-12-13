@@ -62,6 +62,22 @@ Gurax_ImplementPropertyGetter(Binary, bytes)
 	return new Value_Number(binary.GetBinary().size());
 }
 
+// Binary#p
+Gurax_DeclareProperty_R(Binary, p)
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a `pointer` instance that accesses the binary.\n"
+		"This result is equivalent to that of calling the method `binary#pointer()`");
+}
+
+Gurax_ImplementPropertyGetter(Binary, p)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Pointer(new Pointer_Binary(0, valueThis.Reference()));
+}
+
 // Binary#reader
 Gurax_DeclareProperty_R(Binary, reader)
 {
@@ -109,6 +125,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Binary, bytes));
+	Assign(Gurax_CreateProperty(Binary, p));
 	Assign(Gurax_CreateProperty(Binary, reader));
 	Assign(Gurax_CreateProperty(Binary, writer));
 }
