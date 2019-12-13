@@ -28,7 +28,6 @@ public:
 protected:
 	~Pointer() = default;
 public:
-#if 0
 	void SetOffset(size_t offset) { _offset = offset; }
 	size_t GetOffset() const { return _offset; }
 	size_t GetSize() const {
@@ -36,14 +35,13 @@ public:
 		return (_offset < bytesEntire)? bytesEntire - _offset : 0;
 	}
 	bool Advance(int distance);
-#endif
 	bool PackStay(const char* format, const ValueList& valListArg);
 	Value* UnpackStay(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
 	template<typename T, bool bigEndianFlag> bool PutStay(T num);
 	template<typename T, bool bigEndianFlag> bool GetStay(T* pNum);
 public:
 	virtual Pointer* Clone() const = 0;
-	//virtual Value& GetTarget() const = 0;
+	virtual const Value& GetTarget() const = 0;
 	virtual const UInt8* GetPointerC() const = 0;
 	virtual UInt8* GetWritablePointerC() const = 0;
 	virtual size_t GetEntireSize() const = 0;
