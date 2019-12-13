@@ -2,7 +2,6 @@
 // VType_Pointer.cpp
 //==============================================================================
 #include "stdafx.h"
-#include <gurax/VType_Pointer.h>
 
 namespace Gurax {
 

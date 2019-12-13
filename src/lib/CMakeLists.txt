@@ -77,6 +77,7 @@ add_library(guraxcore SHARED
 	PathMgr.cpp
 	PathName.cpp
 	Pointer.cpp
+	Pointers.cpp
 	Processor.cpp
 	PropHandler.cpp
 	PropHandlerCustom.cpp
