@@ -32,7 +32,7 @@ public:
 	virtual const Value& GetTarget() const override { return *_pValue; }
 	virtual const UInt8* GetPointerC() const override;
 	virtual UInt8* GetWritablePointerC() const override;
-	virtual size_t GetEntireSize() const override;
+	virtual size_t GetSizeEntire() const override;
 	virtual bool IsWritable() const override;
 };
 

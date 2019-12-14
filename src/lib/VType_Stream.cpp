@@ -293,10 +293,11 @@ Gurax_ImplementMethod(Stream, Seek)
 	return valueThis.Reference();
 }
 
-// Stream#Write(ptr:Pointer, bytes?:Number)
+// Stream#Write(ptr:Pointer, bytes?:Number):reduce
 Gurax_DeclareMethod(Stream, Write)
 {
-	Declare(VTYPE_Binary, Flag::None);
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -305,7 +306,24 @@ Gurax_DeclareMethod(Stream, Write)
 
 Gurax_ImplementMethod(Stream, Write)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	const Pointer& ptr = args.Pick<Value_Pointer>().GetPointer();
+	size_t bytes = ptr.GetSizeAvailable();
+	if (args.IsValid()) {
+		bytes = args.PickNumberNonNeg<size_t>();
+		if (bytes > ptr.GetSizeAvailable()) {
+			Error::Issue(ErrorType::RangeError, "exceeds the memory size pointed by the pointer");
+			return Value::nil();
+		}
+	}
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	stream.Write(ptr.GetPointerC(), bytes);
+	return valueThis.Reference();
 }
 
 //------------------------------------------------------------------------------

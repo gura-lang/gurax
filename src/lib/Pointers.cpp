@@ -18,11 +18,7 @@ Pointer_Binary::Pointer_Binary(const Pointer_Binary& src) : Pointer_Binary(src._
 
 bool Pointer_Binary::StorePrepare(size_t bytes)
 {
-	//if (!GetBinary().IsWritable()) {
-	//	Error::Issue(ErrorType::ValueError, "not a writable binary");
-	//	return false;
-	//}
-	return true;
+	return GetBinary().CheckWritable();
 }
 
 void Pointer_Binary::StoreBuffer(const void* buff, size_t bytes)
@@ -32,14 +28,12 @@ void Pointer_Binary::StoreBuffer(const void* buff, size_t bytes)
 		Binary& binary = GetBinary();
 		const UInt8* buffp = reinterpret_cast<const UInt8*>(buff);
 		if (_offset < binary.size()) {
-			size_t bytesToCopy = std::min(binary.size() - _offset, bytes);
-			std::copy(buffp, buffp + bytesToCopy, binary.begin() + _offset);
-			buffp += bytesToCopy;
-			bytes -= bytesToCopy;
-		} else if (_offset > binary.size()) {
-			binary.append(_offset - binary.size(), '\0');
+			size_t bytesRest = binary.size() - _offset;
+			binary.replace(_offset, std::min(bytesRest, bytes), buffp, bytes);
+		} else {
+			if (_offset > binary.size()) binary.append(_offset - binary.size(), '\0');
+			binary.append(buffp, buffp + bytes);
 		}
-		binary.append(buffp, buffp + bytes);
 	}
 	_offset = offsetNext;
 }
@@ -65,7 +59,7 @@ UInt8* Pointer_Binary::GetWritablePointerC() const
 	return nullptr;
 }
 
-size_t Pointer_Binary::GetEntireSize() const
+size_t Pointer_Binary::GetSizeEntire() const
 {
 	return GetBinary().size();
 }

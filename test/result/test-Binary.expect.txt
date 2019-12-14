@@ -1,1 +1,15 @@
 ======== Property ========
+Binary.__prop__(`bytes) .. <PropHandler:bytes:Number:R>
+Binary.__prop__(`p) .. <PropHandler:p:Pointer:R>
+Binary.__prop__(`reader) .. no property named 'reader'
+Binary.__prop__(`writable) .. <PropHandler:writable:Bool:R>
+Binary.__prop__(`writer) .. no property named 'writer'
+======== Constructor ========
+b'' .. b''
+Binary() .. b''
+======== Binary#writable ========
+b''.writable .. false
+Binary().writable .. true
+======== Binary#Writer() ========
+b''.Writer() .. the binary is not writable
+Binary().Writer() .. <Stream:binary:w:delcr>

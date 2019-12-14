@@ -76,19 +76,19 @@ Gurax_ImplementMethod(Pointer, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Pointer#propSkeleton
-Gurax_DeclareProperty_R(Pointer, propSkeleton)
+// Pointer#offset
+Gurax_DeclareProperty_R(Pointer, offset)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"the offset of the pointer.");
 }
 
-Gurax_ImplementPropertyGetter(Pointer, propSkeleton)
+Gurax_ImplementPropertyGetter(Pointer, offset)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetPointer().GetOffset());
 }
 
 //------------------------------------------------------------------------------
@@ -105,7 +105,15 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Pointer, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Pointer, propSkeleton));
+	Assign(Gurax_CreateProperty(Pointer, offset));
+}
+
+Value* VType_Pointer::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Binary)) {
+		return new Value_Pointer(new Pointer_Binary(0, dynamic_cast<Value_Binary*>(value.Reference())));
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------
