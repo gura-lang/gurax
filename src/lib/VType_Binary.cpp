@@ -44,6 +44,48 @@ Gurax_ImplementConstructor(Binary)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// Binary#Reader() {block?}
+Gurax_DeclareMethod(Binary, Reader)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Stream` instance that reads data from the `Binary`.");
+}
+
+Gurax_ImplementMethod(Binary, Reader)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const BinaryReferable& binary = valueThis.GetBinaryReferable();
+	// Function body
+	size_t offset = 0;
+	return new Value_Stream(new Stream_Binary(Stream::Flag::Readable, binary.Reference(), offset));
+}
+
+// Binary#Writer() {block?}
+Gurax_DeclareMethod(Binary, Writer)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Stream` instance that writes data into the `Binary`.");
+}
+
+Gurax_ImplementMethod(Binary, Writer)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const BinaryReferable& binary = valueThis.GetBinaryReferable();
+	// Function body
+	if (!binary.GetBinary().CheckWritable()) return Value::nil();
+	size_t offset = binary.GetBinary().size();
+	return new Value_Stream(new Stream_Binary(Stream::Flag::Writable, binary.Reference(), offset));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Binary#bytes
@@ -78,23 +120,6 @@ Gurax_ImplementPropertyGetter(Binary, p)
 	return new Value_Pointer(new Pointer_Binary(0, valueThis.Reference()));
 }
 
-// Binary#reader
-Gurax_DeclareProperty_R(Binary, reader)
-{
-	Declare(VTYPE_Stream, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `Stream` instance that reads data from the `Binary`.");
-}
-
-Gurax_ImplementPropertyGetter(Binary, reader)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const BinaryReferable& binary = valueThis.GetBinaryReferable();
-	size_t offset = 0;
-	return new Value_Stream(new Stream_Binary(Stream::Flag::Readable, binary.Reference(), offset));
-}
-
 // Binary#writable
 Gurax_DeclareProperty_R(Binary, writable)
 {
@@ -110,24 +135,6 @@ Gurax_ImplementPropertyGetter(Binary, writable)
 	return new Value_Bool(valueThis.GetBinary().IsWritable());
 }
 
-// Binary#writer
-Gurax_DeclareProperty_R(Binary, writer)
-{
-	Declare(VTYPE_Stream, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `Stream` instance that writes data into the `Binary`.");
-}
-
-Gurax_ImplementPropertyGetter(Binary, writer)
-{
-	auto& valueThis = GetValueThis(valueTarget);
-	const BinaryReferable& binary = valueThis.GetBinaryReferable();
-	if (!binary.GetBinary().CheckWritable()) return Value::nil();
-	size_t offset = binary.GetBinary().size();
-	return new Value_Stream(new Stream_Binary(Stream::Flag::Writable, binary.Reference(), offset));
-}
-
 //------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
@@ -139,12 +146,13 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Binary, Reader));
+	Assign(Gurax_CreateMethod(Binary, Writer));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Binary, bytes));
 	Assign(Gurax_CreateProperty(Binary, p));
-	Assign(Gurax_CreateProperty(Binary, reader));
 	Assign(Gurax_CreateProperty(Binary, writable));
-	Assign(Gurax_CreateProperty(Binary, writer));
 }
 
 //------------------------------------------------------------------------------
