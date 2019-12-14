@@ -20,6 +20,6 @@ TestCase('Binary#writable') {
 }
 
 TestCase('Binary#Writer()') {
-	//Tester(`b''.writer)
-	//b = Binary()
+	Tester(`b''.Writer())
+	Tester(`Binary().Writer())
 }
