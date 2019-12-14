@@ -18,7 +18,7 @@ Stream_Binary::Stream_Binary(Flags flags, BinaryReferable* pBuff, size_t offset)
 {
 }
 
-Stream_Binary::Stream_Binary(Flags flags) : Stream_Binary(flags, new BinaryReferable(), 0)
+Stream_Binary::Stream_Binary(Flags flags) : Stream_Binary(flags, new BinaryReferable(true), 0)
 {
 	Binary& buffTgt = _pBuff->GetBinary();
 	buffTgt.reserve(1024);

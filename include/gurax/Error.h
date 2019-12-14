@@ -19,6 +19,7 @@ private:
 	String _name;
 	String _dispName;
 public:
+	static const ErrorType AccessError;
 	static const ErrorType ArgumentError;
 	static const ErrorType CastError;
 	static const ErrorType CodecError;

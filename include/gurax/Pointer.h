@@ -39,6 +39,7 @@ public:
 	Value* UnpackStay(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
 	template<typename T, bool bigEndianFlag> bool PutStay(T num);
 	template<typename T, bool bigEndianFlag> bool GetStay(T* pNum);
+	bool CheckWritable() const;
 public:
 	virtual Pointer* Clone() const = 0;
 	virtual const Value& GetTarget() const = 0;

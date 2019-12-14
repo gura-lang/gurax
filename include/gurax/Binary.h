@@ -37,17 +37,33 @@ public:
 	};
 public:
 	static const Binary Empty;
+private:
+	bool _writableFlag;
 public:
-	Binary(const char* src) : basic_string(reinterpret_cast<const UInt8*>(src)) {}
-	Binary(const char* src, size_t len) : basic_string(reinterpret_cast<const UInt8*>(src), len) {}
-	Binary(const String& src) : Binary(src.data(), src.size()) {}
-	// Inherits constructors
-	using std::basic_string<UInt8>::basic_string;
+	// Constructor
+	Binary(bool writableFlag) : _writableFlag(writableFlag) {}
+	Binary(bool writableFlag, const char* src) :
+		basic_string(reinterpret_cast<const UInt8*>(src)), _writableFlag(writableFlag) {}
+	Binary(bool writableFlag, const char* src, size_t len) :
+		basic_string(reinterpret_cast<const UInt8*>(src), len), _writableFlag(writableFlag) {}
+	Binary(bool writableFlag, const String& src) :
+		Binary(writableFlag, src.data(), src.size()) {}
+	// Copy constructor/operator
+	Binary(const Binary& src) : basic_string(src), _writableFlag(src._writableFlag) {}
+	Binary& operator=(Binary& src) noexcept = delete;
+	// Move constructor/operator
+	Binary(Binary&& src) : basic_string(src), _writableFlag(src._writableFlag) {}
+	Binary& operator=(Binary&& src) noexcept = delete;
+	// Destructor
+	~Binary() = default;
 public:
 	static void Bootup();
 public:
+	void SetWritableFlag(bool writableFlag) { _writableFlag = writableFlag; }
+	bool IsWritable() const { return _writableFlag; }
 	String ConvertToString() { return String(reinterpret_cast<const char*>(data()), size()); }
 	String MakeQuoted(bool surroundFlag = false) const;
+	bool CheckWritable() const;
 public:
 	size_t CalcHash() const { return CalcHash(data(), size()); }
 	static size_t CalcHash(const UInt8* binary, size_t len);
@@ -82,7 +98,7 @@ private:
 	Binary _binary;
 public:
 	// Constructor
-	BinaryReferable() {}
+	BinaryReferable(bool writableFlag) : _binary(writableFlag) {}
 	explicit BinaryReferable(Binary binary) : _binary(std::move(binary)) {}
 	// Copy constructor/operator
 	BinaryReferable(const BinaryReferable& src) = delete;

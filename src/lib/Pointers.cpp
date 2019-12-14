@@ -72,8 +72,7 @@ size_t Pointer_Binary::GetEntireSize() const
 
 bool Pointer_Binary::IsWritable() const
 {
-	//return _pObjBinary->IsWritable();
-	return true;
+	return GetBinary().IsWritable();
 }
 
 }

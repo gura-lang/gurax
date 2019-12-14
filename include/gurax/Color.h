@@ -42,6 +42,7 @@ public:
 	// Move constructor/operator
 	Color(Color&& src) = delete;
 	Color& operator=(Color&& src) noexcept = delete;
+	// Destructor
 	~Color() = default;
 public:
 	static void Bootup();

@@ -34,11 +34,11 @@ public:
 public:
 	// Constructor
 	explicit Value_Binary(VType& vtype = VTYPE_Binary) :
-		Value_Binary(new BinaryReferable(), vtype) {}
+		Value_Binary(new BinaryReferable(true), vtype) {}
 	explicit Value_Binary(BinaryReferable* pBinary, VType& vtype = VTYPE_Binary) :
 		Value_Object(vtype), _pBinary(pBinary) {}
-	explicit Value_Binary(Binary str, VType& vtype = VTYPE_Binary) :
-		Value_Binary(new BinaryReferable(std::move(str)), vtype) {}
+	explicit Value_Binary(Binary binary, VType& vtype = VTYPE_Binary) :
+		Value_Binary(new BinaryReferable(std::move(binary)), vtype) {}
 	// Copy constructor/operator
 	Value_Binary(const Value_Binary& src) = delete;
 	Value_Binary& operator=(const Value_Binary& src) = delete;
@@ -81,9 +81,8 @@ public:
 			GetBinary().IsLessThan(dynamic_cast<const Value_Binary*>(pValue)->GetBinary()) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return String("b").append(_pBinary->GetBinary().MakeQuoted(true));
-	}
+	virtual String ToStringDigest(const StringStyle& ss) const override;
+	virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 }

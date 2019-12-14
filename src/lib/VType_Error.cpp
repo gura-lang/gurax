@@ -161,6 +161,7 @@ Gurax_ImplementPropertyGetter(Error, text)
 //------------------------------------------------------------------------------
 // Implementation of class property
 //------------------------------------------------------------------------------
+ImplementErrorTypeProperty(AccessError)
 ImplementErrorTypeProperty(ArgumentError)
 ImplementErrorTypeProperty(CastError)
 ImplementErrorTypeProperty(CodecError)
@@ -207,6 +208,7 @@ void VType_Error::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Error, lineNoBtm));
 	Assign(Gurax_CreateProperty(Error, text));
 	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(Error, AccessError));
 	Assign(Gurax_CreateClassProperty(Error, ArgumentError));
 	Assign(Gurax_CreateClassProperty(Error, CastError));
 	Assign(Gurax_CreateClassProperty(Error, CodecError));

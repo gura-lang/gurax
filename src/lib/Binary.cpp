@@ -39,6 +39,13 @@ String Binary::MakeQuoted(bool surroundFlag) const
 	return strRtn;
 }
 
+bool Binary::CheckWritable() const
+{
+	if (IsWritable()) return true;
+	Error::Issue(ErrorType::AccessError, "the binary is not writable");
+	return false;
+}
+
 //------------------------------------------------------------------------------
 // BinaryList
 //------------------------------------------------------------------------------

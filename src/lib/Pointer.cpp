@@ -38,6 +38,13 @@ Value* Pointer::UnpackStay(const char* format, const ValueList& valListArg, bool
 	return pValue.release();
 }
 
+bool Pointer::CheckWritable() const
+{
+	if (IsWritable()) return true;
+	Error::Issue(ErrorType::AccessError, "the pointer is not writable");
+	return false;
+}
+
 String Pointer::ToString(const StringStyle& ss) const
 {
 	return "Pointer";

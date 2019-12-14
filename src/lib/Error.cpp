@@ -8,6 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ErrorType
 //------------------------------------------------------------------------------
+const ErrorType ErrorType::AccessError			("AccessError",			"access error");
 const ErrorType ErrorType::ArgumentError		("ArgumentError",		"argument error");
 const ErrorType ErrorType::CastError			("CastError",			"cast error");
 const ErrorType ErrorType::CodecError			("CodecError",			"codec error");
