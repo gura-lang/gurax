@@ -50,27 +50,28 @@ Gurax_ImplementConstructor(Pointer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Pointer#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Pointer, MethodSkeleton)
+// Pointer#Pack(format:String, args*):reduce
+Gurax_DeclareMethod(Pointer, Pack)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Pointer, Flag::Reduce);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Stores the given data into memory pointed by the pointer.\n");
 }
 
-Gurax_ImplementMethod(Pointer, MethodSkeleton)
+Gurax_ImplementMethod(Pointer, Pack)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* format = args.PickString();
+	const ValueList& valListArg = args.PickList();
 	// Function body
-	return new Value_Number(num1 + num2);
+	//valueThis.GetPointer().Pack(format, valListArg);
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -103,7 +104,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pointer));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Pointer, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Pointer, Pack));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Pointer, offset));
 }
