@@ -18,9 +18,9 @@ protected:
 	size_t _offset;
 public:
 	// Constructor
-	Pointer(size_t offset) {}
+	Pointer(size_t offset) : _offset(offset) {}
 	// Copy constructor/operator
-	Pointer(const Pointer& src) {}
+	Pointer(const Pointer& src) : _offset(src._offset) {}
 	Pointer& operator=(const Pointer& src) = delete;
 	// Move constructor/operator
 	Pointer(Pointer&& src) = delete;
@@ -38,7 +38,7 @@ public:
 	bool PackStay(const char* format, const ValueList& valListArg);
 	Value* UnpackStay(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
 	template<typename T, bool bigEndianFlag> bool PutStay(T num);
-	template<typename T, bool bigEndianFlag> bool GetStay(T* pNum);
+	template<typename T, bool bigEndianFlag> bool GetStay(T* pNum, bool exceedErrorFlag);
 	bool CheckWritable() const;
 public:
 	virtual Pointer* Clone() const = 0;
@@ -63,10 +63,10 @@ template<typename T, bool bigEndianFlag> bool Pointer::PutStay(T num)
 	return rtn;
 }
 
-template<typename T, bool bigEndianFlag> bool Pointer::GetStay(T* pNum)
+template<typename T, bool bigEndianFlag> bool Pointer::GetStay(T* pNum, bool exceedErrorFlag)
 {
 	size_t offset = _offset;
-	bool rtn = Get<T>(pNum);
+	bool rtn = Get<T, bigEndianFlag>(pNum, exceedErrorFlag);
 	_offset = offset;
 	return rtn;
 }

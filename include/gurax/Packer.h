@@ -35,7 +35,7 @@ private:
 template<typename T, bool bigEndianFlag> bool Packer::Put(T num)
 {
 	if (!StorePrepare(sizeof(T))) return false;
-	Store<T, bigEndianFlag>(num, bigEndianFlag);
+	Store<T, bigEndianFlag>(num);
 	return true;
 }
 
@@ -210,8 +210,7 @@ template<> inline Int8 Packer::Extract<Int8, false>(const UInt8* pByte)
 template<> inline UInt16 Packer::Extract<UInt16, true>(const UInt8* pByte)
 {
 	UInt16 num = 0;
-	pByte += sizeof(UInt16) - 1;
-	num = num        + *pByte; pByte--;
+	num = num        + *pByte; pByte++;
 	num = (num << 8) + *pByte;
 	return num;
 }
@@ -219,7 +218,8 @@ template<> inline UInt16 Packer::Extract<UInt16, true>(const UInt8* pByte)
 template<> inline UInt16 Packer::Extract<UInt16, false>(const UInt8* pByte)
 {
 	UInt16 num = 0;
-	num = num        + *pByte; pByte++;
+	pByte += sizeof(UInt16) - 1;
+	num = num        + *pByte; pByte--;
 	num = (num << 8) + *pByte;
 	return num;
 }
@@ -237,10 +237,9 @@ template<> inline Int16 Packer::Extract<Int16, false>(const UInt8* pByte)
 template<> inline UInt32 Packer::Extract<UInt32, true>(const UInt8* pByte)
 {
 	UInt32 num = 0;
-	pByte += sizeof(UInt32) - 1;
-	num = num        + *pByte; pByte--;
-	num = (num << 8) + *pByte; pByte--;
-	num = (num << 8) + *pByte; pByte--;
+	num = num        + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
 	num = (num << 8) + *pByte;
 	return num;
 }
@@ -248,9 +247,10 @@ template<> inline UInt32 Packer::Extract<UInt32, true>(const UInt8* pByte)
 template<> inline UInt32 Packer::Extract<UInt32, false>(const UInt8* pByte)
 {
 	UInt32 num = 0;
-	num = num        + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
+	pByte += sizeof(UInt32) - 1;
+	num = num        + *pByte; pByte--;
+	num = (num << 8) + *pByte; pByte--;
+	num = (num << 8) + *pByte; pByte--;
 	num = (num << 8) + *pByte;
 	return num;
 }
@@ -268,6 +268,20 @@ template<> inline Int32 Packer::Extract<Int32, false>(const UInt8* pByte)
 template<> inline UInt64 Packer::Extract<UInt64, true>(const UInt8* pByte)
 {
 	UInt64 num = 0;
+	num = num        + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte; pByte++;
+	num = (num << 8) + *pByte;
+	return num;
+}
+
+template<> inline UInt64 Packer::Extract<UInt64, false>(const UInt8* pByte)
+{
+	UInt64 num = 0;
 	pByte += sizeof(UInt64) - 1;
 	num = num        + *pByte; pByte--;
 	num = (num << 8) + *pByte; pByte--;
@@ -276,20 +290,6 @@ template<> inline UInt64 Packer::Extract<UInt64, true>(const UInt8* pByte)
 	num = (num << 8) + *pByte; pByte--;
 	num = (num << 8) + *pByte; pByte--;
 	num = (num << 8) + *pByte; pByte--;
-	num = (num << 8) + *pByte;
-	return num;
-}
-
-template<> inline UInt64 Packer::Extract<UInt64, false>(const UInt8* pByte)
-{
-	UInt64 num = 0;
-	num = num        + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
-	num = (num << 8) + *pByte; pByte++;
 	num = (num << 8) + *pByte;
 	return num;
 }

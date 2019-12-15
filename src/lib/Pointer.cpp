@@ -47,7 +47,9 @@ bool Pointer::CheckWritable() const
 
 String Pointer::ToString(const StringStyle& ss) const
 {
-	return "Pointer";
+	String str;
+	str.Printf("Pointer:offset=%d", GetOffset());
+	return str;
 }
 
 }
