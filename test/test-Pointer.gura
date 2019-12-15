@@ -1,0 +1,40 @@
+#!/usr/bin/env gurax
+import(util.tester) {*}
+
+TestCase('Property') {
+	Tester(`Pointer.__prop__(`bytesAvail))
+	Tester(`Pointer.__prop__(`bytesEntire))
+	Tester(`Pointer.__prop__(`offset))
+	Tester(`Pointer.__prop__(`int8))
+	Tester(`Pointer.__prop__(`int16))
+	Tester(`Pointer.__prop__(`int32))
+	Tester(`Pointer.__prop__(`int64))
+	Tester(`Pointer.__prop__(`uint8))
+	Tester(`Pointer.__prop__(`uint16))
+	Tester(`Pointer.__prop__(`uint32))
+	Tester(`Pointer.__prop__(`uint64))
+	Tester(`Pointer.__prop__(`float))
+	Tester(`Pointer.__prop__(`double))
+}
+
+TestCase('Pointer#Pack()') {
+	
+}
+
+TestCase('Pointer#Unpack()') {
+}
+
+TestCase('Operators') {
+	b = b'abcdefghijklmnopqrstuvwxyz'
+	p1 = b.p + 10
+	p2 = b.p + 23
+	Tester(`p1)
+	Tester(`p2)
+	Tester(`(p1 + 7))
+	Tester(`(7 + p1))
+	Tester(`(p1 - 7))
+	Tester(`(p1 - 10))
+	Tester(`(p1 - 11))
+	Tester(`(p1 - p2))
+	Tester(`(p2 - p1))
+}

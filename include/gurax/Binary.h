@@ -64,6 +64,7 @@ public:
 	String ConvertToString() { return String(reinterpret_cast<const char*>(data()), size()); }
 	String MakeQuoted(bool surroundFlag = false) const;
 	bool CheckWritable() const;
+	void Dump(Stream& stream, const StringStyle& ss = StringStyle::Empty) const;
 public:
 	size_t CalcHash() const { return CalcHash(data(), size()); }
 	static size_t CalcHash(const UInt8* binary, size_t len);

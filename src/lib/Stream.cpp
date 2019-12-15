@@ -200,7 +200,7 @@ Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
 	return openFlags;
 }
 
-void Stream::Dump(const void* buff, size_t bytes, const StringStyle& stringStyle)
+void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
 {
 	const int nCols = 16;
 	int iCol = 0;
@@ -210,7 +210,7 @@ void Stream::Dump(const void* buff, size_t bytes, const StringStyle& stringStyle
 	for (size_t i = 0; i < bytes; ++i, ++p) {
 		UInt8 data = *p;
 		if (iCol > 0) strLine += ' ';
-		::sprintf(str, stringStyle.IsUpperCase()? "%02X" : "%02x", data);
+		::sprintf(str, ss.IsUpperCase()? "%02X" : "%02x", data);
 		strLine += str;
 		strASCII += (0x20 <= data && data < 0x7f)? data : '.';
 		iCol++;

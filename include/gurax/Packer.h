@@ -42,7 +42,10 @@ template<typename T, bool bigEndianFlag> bool Packer::Put(T num)
 template<typename T, bool bigEndianFlag> bool Packer::Get(T* pNum, bool exceedErrorFlag)
 {
 	const UInt8* pByte = ExtractPrepare(sizeof(T));
-	if (!pByte) return false;
+	if (!pByte) {
+		if (exceedErrorFlag) Error::Issue(ErrorType::RangeError, "exceeds the range");
+		return false;
+	}
 	*pNum = Extract<T, bigEndianFlag>(pByte);
 	return true;
 }

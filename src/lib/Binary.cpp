@@ -31,7 +31,7 @@ String Binary::MakeQuoted(bool surroundFlag) const
 			strRtn += ch;
 		} else {
 			char tmp[16];
-			::sprintf(tmp, "\\x%02x", ch);
+			::sprintf(tmp, "\\x%02x", static_cast<UInt8>(ch));
 			strRtn += tmp;
 		}
 	}
@@ -44,6 +44,11 @@ bool Binary::CheckWritable() const
 	if (IsWritable()) return true;
 	Error::Issue(ErrorType::AccessError, "the binary is not writable");
 	return false;
+}
+
+void Binary::Dump(Stream& stream, const StringStyle& ss) const
+{
+	stream.Dump(data(), size(), ss);
 }
 
 //------------------------------------------------------------------------------

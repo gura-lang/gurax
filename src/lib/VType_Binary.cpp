@@ -46,6 +46,43 @@ Gurax_ImplementConstructor(Binary)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Binary#Dump(stream?:Stream:w):void:[upper]
+Gurax_DeclareMethod(Binary, Dump)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
+	DeclareAttrOpt(Gurax_Symbol(upper));
+	AddHelp(
+		Gurax_Symbol(en),
+		"Prints a hexadecimal dump from the content of the `binary` to the standard output.\n"
+		"If the argument `stream` is specified, the result would be output to the stream.\n"
+		"\n"
+		"In default, hexadecimal digit are printed with lower-case characters.\n"
+		"Specifying an attribute `:upper` would output them with upper-case characters instead.\n"
+		"\n"
+		"Example:\n"
+		"    >>> b'A quick brown fox jumps over the lazy dog.'.dump():upper\n"
+		"    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo\n"
+		"    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the\n"
+		"    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.\n");
+}
+
+Gurax_ImplementMethod(Binary, Dump)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	const BinaryReferable& binary = valueThis.GetBinaryReferable();
+	// Argument
+	ArgPicker args(argument);
+	Stream& stream = args.IsValid()? args.PickStream() : Basement::Inst.GetStreamCOut();
+	bool upperFlag = argument.IsSet(Gurax_Symbol(upper));
+	// Function body
+	StringStyle ss;
+	if (upperFlag) ss.UpperCase();
+	binary.GetBinary().Dump(stream, ss);
+	return Value::nil();
+}
+
 // Binary#Reader() {block?}
 Gurax_DeclareMethod(Binary, Reader)
 {
@@ -147,6 +184,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Binary, Dump));
 	Assign(Gurax_CreateMethod(Binary, Reader));
 	Assign(Gurax_CreateMethod(Binary, Writer));
 	// Assignment of property
