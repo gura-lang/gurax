@@ -68,7 +68,9 @@ public:
 	}
 public:
 	// Virtual functions of Value
-	virtual Value* Clone() const override { return Reference(); }
+	virtual Value* Clone() const override {
+		return new Value_Binary(new BinaryReferable(Binary(true, GetBinary())));
+	}
 	virtual size_t DoCalcHash() const override {
 		return GetBinary().CalcHash();
 	}

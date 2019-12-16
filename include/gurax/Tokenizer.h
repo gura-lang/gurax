@@ -59,7 +59,8 @@ private:
 	};
 	enum class StringType {
 		String,
-		Binary,					// prefixed by 'b' or 'B'
+		Binary,					// prefixed by 'b'
+		BinaryWritable,			// prefixed by 'B'
 		Template,				// prefixed by 'T'
 		TmplEmbedded,			// prefixed by 'e'
 	};

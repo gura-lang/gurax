@@ -58,6 +58,7 @@ public:
 	virtual bool IsLessThan(const Value* pValue) const override { return this < pValue; }
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual bool CanBeCallableMember() const override { return true; }
+	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;

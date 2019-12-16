@@ -51,6 +51,11 @@ String Value_CallableMember::ToStringDetail(const StringStyle& ss) const
 	return str;
 }
 
+void Value_CallableMember::PresentHelp(Processor& processor, const Symbol* pLangCode) const
+{
+	GetValueProp().PresentHelp(processor, pLangCode);
+}
+
 const DeclCallable* Value_CallableMember::GetDeclCallable()
 {
 	return GetValueProp().GetDeclCallable();

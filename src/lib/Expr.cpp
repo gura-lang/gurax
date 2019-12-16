@@ -423,7 +423,7 @@ const Expr::TypeInfo Expr_Value::typeInfo("Value");
 
 void Expr_Value::Compose(Composer& composer)
 {
-	composer.Add_Value(GetValue()->Clone(), this);	// [Value]
+	composer.Add_Value(GetValue()->Reference(), this);	// [Value]
 }
 
 String Expr_Value::ToString(const StringStyle& ss) const

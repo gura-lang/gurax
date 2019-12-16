@@ -11,6 +11,9 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
+- `b'...' .. read-only binary literal`
+- `B'...' .. writable binary literal`
+
 # Predefined Variable
 
 # Property
@@ -54,14 +57,14 @@ Gurax_DeclareMethod(Binary, Dump)
 	DeclareAttrOpt(Gurax_Symbol(upper));
 	AddHelp(
 		Gurax_Symbol(en),
-		"Prints a hexadecimal dump from the content of the `binary` to the standard output.\n"
+		"Prints a hexadecimal dump from the content of the `Binary` to the standard output.\n"
 		"If the argument `stream` is specified, the result would be output to the stream.\n"
 		"\n"
 		"In default, hexadecimal digit are printed with lower-case characters.\n"
 		"Specifying an attribute `:upper` would output them with upper-case characters instead.\n"
 		"\n"
 		"Example:\n"
-		"    >>> b'A quick brown fox jumps over the lazy dog.'.dump():upper\n"
+		"    >>> b'A quick brown fox jumps over the lazy dog.'.Dump():upper\n"
 		"    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo\n"
 		"    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the\n"
 		"    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.\n");
@@ -99,13 +102,15 @@ Gurax_ImplementMethod(Binary, Reader)
 	const BinaryReferable& binary = valueThis.GetBinaryReferable();
 	// Function body
 	size_t offset = 0;
-	return new Value_Stream(new Stream_Binary(Stream::Flag::Readable, binary.Reference(), offset));
+	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(Stream::Flag::Readable, binary.Reference(), offset)));
+	return argument.ReturnValue(processor, pValue.release());
 }
 
 // Binary#Writer() {block?}
 Gurax_DeclareMethod(Binary, Writer)
 {
 	Declare(VTYPE_Stream, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Stream` instance that writes data into the `Binary`.");
@@ -119,7 +124,8 @@ Gurax_ImplementMethod(Binary, Writer)
 	// Function body
 	if (!binary.GetBinary().CheckWritable()) return Value::nil();
 	size_t offset = binary.GetBinary().size();
-	return new Value_Stream(new Stream_Binary(Stream::Flag::Writable, binary.Reference(), offset));
+	RefPtr<Value> pValue(new Value_Stream(new Stream_Binary(Stream::Flag::Writable, binary.Reference(), offset)));
+	return argument.ReturnValue(processor, pValue.release());
 }
 
 //------------------------------------------------------------------------------
