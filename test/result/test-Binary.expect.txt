@@ -5,12 +5,18 @@ Binary.__prop__(`reader) .. no property named 'reader'
 Binary.__prop__(`writable) .. <PropHandler:writable:Bool:R>
 Binary.__prop__(`writer) .. no property named 'writer'
 ======== Constructor ========
-b'' .. b''
+b'abcdefg' .. b'abcdefg'
+B'abcdefg' .. B'abcdefg'
 Binary() .. B''
 ======== Binary#writable ========
 b'abcdefg'.writable .. false
 B'abcdefg'.writable .. true
 Binary().writable .. true
 ======== Binary#Writer() ========
-b''.Writer() .. the binary is not writable
+b'abcdefg'.Writer() .. the binary is not writable
+B'abcdefg'.Writer() .. <Stream:binary:w:delcr>
 Binary().Writer() .. <Stream:binary:w:delcr>
+61 62 63 64 65 66 67                             abcdefg
+61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e        abcdefghijklmn
+61 62 63 64 45 46 47 48 69 6a 6b 6c 6d 6e        abcdEFGHijklmn
+61 62 63 64 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50  abcdEFGHIJKLMNOP

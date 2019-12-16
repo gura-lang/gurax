@@ -67,7 +67,7 @@ size_t Stream_Binary::DoWrite(const void* buff, size_t len)
 	Binary& buffTgt = _pBuff->GetBinary();
 	if (_offset < buffTgt.size()) {
 		size_t bytesGap = buffTgt.size() - _offset;
-		buffTgt.replace(_offset, bytesGap, reinterpret_cast<const UInt8*>(buff), len);
+		buffTgt.replace(_offset, std::min(bytesGap, len), reinterpret_cast<const UInt8*>(buff), len);
 		_offset += len;
 	} else {
 		size_t bytesGap = _offset - buffTgt.size();

@@ -1,13 +1,13 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-b = Binary()
-b.Writer {|s|
-	s.Write(b'abcdefg')
-	b.Dump()
+/*
+TestCase('Binary#Reader()') {
+	Tester(`b'abcdefg'.Writer())
+	Tester(`B'abcdefg'.Writer())
+	Tester(`Binary().Writer())
 }
-sys.Exit()
-
+*/
 TestCase('Property') {
 	Tester(`Binary.__prop__(`bytes))
 	Tester(`Binary.__prop__(`p))
@@ -32,4 +32,16 @@ TestCase('Binary#Writer()') {
 	Tester(`b'abcdefg'.Writer())
 	Tester(`B'abcdefg'.Writer())
 	Tester(`Binary().Writer())
+	buff = Binary()
+	buff.Writer {|out|
+		out.Write(b'abcdefg')
+		buff.Dump()
+		out.Write(b'hijklmn')
+		buff.Dump()
+		out.Seek(4)
+		out.Write(b'EFGH')
+		buff.Dump()
+		out.Write(b'IJKLMNOP')
+		buff.Dump()
+	}
 }
