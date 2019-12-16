@@ -35,6 +35,10 @@ TestCase('Binary#Reader()') {
 		Println(stream.Read(8))
 		stream.Seek(4)
 		stream.Read(8).Dump()
+		stream.Seek(0)
+		while (buff = stream.Read(12)) {
+			buff.Dump()
+		}
 	}
 }
 
@@ -49,6 +53,18 @@ TestCase('Binary#Writer()') {
 		stream.Write(b'hijklmn')
 		buff.Dump()
 		stream.Seek(4)
+		stream.Write(b'EFGH')
+		buff.Dump()
+		stream.Write(b'IJKLMNOP')
+		buff.Dump()
+	}
+	buff = B'0123456789'
+	buff.Writer {|stream|
+		stream.Write(b'abcdefg')
+		buff.Dump()
+		stream.Write(b'hijklmn')
+		buff.Dump()
+		stream.Seek(14)
 		stream.Write(b'EFGH')
 		buff.Dump()
 		stream.Write(b'IJKLMNOP')

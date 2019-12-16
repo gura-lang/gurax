@@ -32,14 +32,19 @@ Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr)
 {
 	bool stayFlag = attr.IsSet(Gurax_Symbol(stay));
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
+	bool exceedErrorFlag = false;
 	Pointer& pointer = valueTarget.GetPointer();
 	T_Num num;
 	if (stayFlag) {
-		if (!(bigEndianFlag? pointer.GetStay<T_Num, true>(&num, true) : pointer.GetStay<T_Num, false>(&num, true))) {
+		if (!(bigEndianFlag?
+			  pointer.GetStay<T_Num, true>(&num, exceedErrorFlag) :
+			  pointer.GetStay<T_Num, false>(&num, exceedErrorFlag))) {
 			return Value::nil();
 		}
 	} else {
-		if (!(bigEndianFlag? pointer.Get<T_Num, true>(&num, true) : pointer.Get<T_Num, false>(&num, true))) {
+		if (!(bigEndianFlag?
+			  pointer.Get<T_Num, true>(&num, exceedErrorFlag) :
+			  pointer.Get<T_Num, false>(&num, exceedErrorFlag))) {
 			return Value::nil();
 		}
 	}
@@ -116,13 +121,13 @@ Gurax_ImplementMethod(Pointer, Pack)
 	return valueThis.Reference();
 }
 
-// Pointer#Unpack(format:String):[nil,stay]
+// Pointer#Unpack(format:String):[raise,stay]
 Gurax_DeclareMethod(Pointer, Unpack)
 {
 	Declare(VTYPE_Pointer, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	DeclareAttrOpt(Gurax_Symbol(nil));
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -138,7 +143,7 @@ Gurax_ImplementMethod(Pointer, Unpack)
 	const char* format = args.PickString();
 	const ValueList& valListArg = args.PickList();
 	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
-	bool exceedErrorFlag = !argument.IsSet(Gurax_Symbol(nil));
+	bool exceedErrorFlag = argument.IsSet(Gurax_Symbol(raise));
 	// Function body
 	return stayFlag?
 		valueThis.GetPointer().UnpackStay(format, valListArg, exceedErrorFlag) :

@@ -86,6 +86,30 @@ Gurax_ImplementMethod(Binary, Dump)
 	return Value::nil();
 }
 
+// Binary#Pointer(offset?:Number) {block?}
+Gurax_DeclareMethod(Binary, Pointer)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("offset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Pointer` instance that points memory in the `Binary`.");
+}
+
+Gurax_ImplementMethod(Binary, Pointer)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Argument
+	ArgPicker args(argument);
+	size_t offset = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Value> pValue(new Value_Pointer(new Pointer_Binary(offset, valueThis.Reference())));
+	return argument.ReturnValue(processor, pValue.release());
+}
+
 // Binary#Reader() {block?}
 Gurax_DeclareMethod(Binary, Reader)
 {
@@ -192,6 +216,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Binary));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Binary, Dump));
+	Assign(Gurax_CreateMethod(Binary, Pointer));
 	Assign(Gurax_CreateMethod(Binary, Reader));
 	Assign(Gurax_CreateMethod(Binary, Writer));
 	// Assignment of property

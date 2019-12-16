@@ -565,7 +565,7 @@ Value* Packer::Unpack(const char* format, const ValueList& valListArg, bool exce
 		}
 		if (eatNextFlag) p++;
 	}
-	return new Value_List(pValueOwner.release());
+	return pValueOwner->empty()? Value::nil() : new Value_List(pValueOwner.release());
 }
 
 bool Packer::PutBuffer(const void* buff, size_t bytes)
