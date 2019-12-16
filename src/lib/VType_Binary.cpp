@@ -90,6 +90,7 @@ Gurax_ImplementMethod(Binary, Dump)
 Gurax_DeclareMethod(Binary, Reader)
 {
 	Declare(VTYPE_Stream, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Stream` instance that reads data from the `Binary`.");

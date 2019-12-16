@@ -172,6 +172,27 @@ Iterator* Stream::ReadLines(bool includeEOLFlag)
 	return new Iterator_ReadLines(Reference(), includeEOLFlag);
 }
 
+Binary Stream::Read(size_t len)
+{
+	Binary buff(true, len, '\0');
+	Read(&buff[0], len);
+	return buff;
+}
+
+Binary Stream::ReadAll()
+{
+	const int bytesWork = 16384;
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesWork));
+	UInt8 *buffWork = reinterpret_cast<UInt8 *>(pMemory->GetPointer());
+	Binary buff(true);
+	size_t bytesRead = Read(buffWork, bytesWork);
+	if (bytesRead == 0) return buff;
+	do {
+		buff.append(buffWork, bytesWork);
+	} while ((bytesRead = Read(buffWork, bytesWork)) > 0);
+	return buff;
+}
+
 Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
 {
 	const char* p = mode;

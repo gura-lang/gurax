@@ -2,16 +2,18 @@
 import(util.tester) {*}
 
 
+/*
 TestCase('Binary#Reader()') {
 	Tester(`b'abcdefg'.Writer())
 	Tester(`B'abcdefg'.Writer())
 	Tester(`Binary().Writer())
 	buff = b'abcdefghijklmnopqrstuvwxyz'
 	buff.Reader {|stream|
-		stream.Reader(8).Dump()
+		stream.Read(8).Dump()
 	}
 }
 sys.Exit()
+*/
 
 TestCase('Property') {
 	Tester(`Binary.__prop__(`bytes))

@@ -49,6 +49,7 @@ public:
 	Binary(bool writableFlag, const String& src) :
 		Binary(writableFlag, src.data(), src.size()) {}
 	Binary(bool writableFlag, const Binary& src) : basic_string(src), _writableFlag(writableFlag) {}
+	Binary(bool writableFlag, size_t len, UInt8 c) : basic_string(len, c), _writableFlag(writableFlag) {}
 	// Copy constructor/operator
 	Binary(const Binary& src) : basic_string(src), _writableFlag(src._writableFlag) {}
 	Binary& operator=(Binary& src) noexcept = delete;

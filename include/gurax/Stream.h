@@ -96,6 +96,8 @@ public:
 	Stream& PrintFmt(const char* format, const ValueList& valueList);
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
+	Binary Read(size_t len);
+	Binary ReadAll();
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 public:
