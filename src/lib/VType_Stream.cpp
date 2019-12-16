@@ -298,7 +298,7 @@ Gurax_DeclareMethod(Stream, Write)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Writes data pointed by the specified `Pointer` instance to the `Stream`.");

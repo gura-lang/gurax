@@ -1,6 +1,13 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+b = Binary()
+b.Writer {|s|
+	s.Write(b'abcdefg')
+	b.Dump()
+}
+sys.Exit()
+
 TestCase('Property') {
 	Tester(`Binary.__prop__(`bytes))
 	Tester(`Binary.__prop__(`p))
@@ -10,7 +17,8 @@ TestCase('Property') {
 }
 
 TestCase('Constructor') {
-	Tester(`b'')
+	Tester(`b'abcdefg')
+	Tester(`B'abcdefg')
 	Tester(`Binary())
 }
 
@@ -21,6 +29,7 @@ TestCase('Binary#writable') {
 }
 
 TestCase('Binary#Writer()') {
-	Tester(`b''.Writer())
+	Tester(`b'abcdefg'.Writer())
+	Tester(`B'abcdefg'.Writer())
 	Tester(`Binary().Writer())
 }
