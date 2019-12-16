@@ -188,7 +188,7 @@ Binary Stream::ReadAll()
 	size_t bytesRead = Read(buffWork, bytesWork);
 	if (bytesRead == 0) return buff;
 	do {
-		buff.append(buffWork, bytesWork);
+		buff.append(buffWork, bytesRead);
 	} while ((bytesRead = Read(buffWork, bytesWork)) > 0);
 	return buff;
 }

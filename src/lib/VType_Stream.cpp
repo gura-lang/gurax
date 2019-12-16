@@ -202,7 +202,7 @@ Gurax_ImplementMethod(Stream, Println)
 Gurax_DeclareMethod(Stream, Read)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Reads data from the `Stream` and returns it as a `Binary` instance.");
@@ -210,7 +210,28 @@ Gurax_DeclareMethod(Stream, Read)
 
 Gurax_ImplementMethod(Stream, Read)
 {
-	return Value::nil();
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	bool validFlag_bytes = false;
+	ArgPicker args(argument);
+	size_t bytes = (validFlag_bytes = args.IsValid())? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Value> _pValue;
+	if (validFlag_bytes) {
+		_pValue.reset(new Value_Binary(stream.Read(bytes)));
+		if (Error::IsIssued()) return Value::nil();
+	} else if (stream.IsInfinite()) {
+		Error::Issue(ErrorType::StreamError,
+					 "can't read data from inifinite stream without specifying the length");
+		return Value::nil();
+	} else {
+		_pValue.reset(new Value_Binary(stream.ReadAll()));
+		if (Error::IsIssued()) return Value::nil();
+	}
+	return _pValue.release();
 }
 
 // Stream#ReadLine():[chop] {block?}
@@ -312,17 +333,19 @@ Gurax_ImplementMethod(Stream, Write)
 	// Arguments
 	ArgPicker args(argument);
 	const Pointer& ptr = args.Pick<Value_Pointer>().GetPointer();
-	size_t bytes = ptr.GetSizeAvailable();
-	if (args.IsValid()) {
-		bytes = args.PickNumberNonNeg<size_t>();
-		if (bytes > ptr.GetSizeAvailable()) {
-			Error::Issue(ErrorType::RangeError, "exceeds the memory size pointed by the pointer");
-			return Value::nil();
-		}
-	}
+	bool validFlag_bytes = false;
+	size_t bytes = (validFlag_bytes = args.IsValid())? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	stream.Write(ptr.GetPointerC(), bytes);
+	size_t bytesAvail = ptr.GetSizeAvailable();
+	if (!validFlag_bytes) {
+		stream.Write(ptr.GetPointerC(), bytesAvail);
+	} else if (bytes <= bytesAvail) {
+		stream.Write(ptr.GetPointerC(), bytes);
+	} else {
+		Error::Issue(ErrorType::RangeError, "exceeds the memory size pointed by the pointer");
+		return Value::nil();
+	}
 	return valueThis.Reference();
 }
 
