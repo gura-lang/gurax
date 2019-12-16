@@ -221,15 +221,17 @@ Gurax_ImplementMethod(Stream, Read)
 	// Function body
 	RefPtr<Value> _pValue;
 	if (validFlag_bytes) {
-		_pValue.reset(new Value_Binary(stream.Read(bytes)));
-		if (Error::IsIssued()) return Value::nil();
+		Binary buff(stream.Read(bytes));
+		if (buff.empty() || Error::IsIssued()) return Value::nil();
+		_pValue.reset(new Value_Binary(buff));
 	} else if (stream.IsInfinite()) {
 		Error::Issue(ErrorType::StreamError,
 					 "can't read data from inifinite stream without specifying the length");
 		return Value::nil();
 	} else {
-		_pValue.reset(new Value_Binary(stream.ReadAll()));
-		if (Error::IsIssued()) return Value::nil();
+		Binary buff(stream.ReadAll());
+		if (buff.empty() || Error::IsIssued()) return Value::nil();
+		_pValue.reset(new Value_Binary(buff));
 	}
 	return _pValue.release();
 }

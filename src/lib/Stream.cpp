@@ -175,7 +175,8 @@ Iterator* Stream::ReadLines(bool includeEOLFlag)
 Binary Stream::Read(size_t len)
 {
 	Binary buff(true, len, '\0');
-	Read(&buff[0], len);
+	size_t lenRead = Read(&buff[0], len);
+	buff.resize(lenRead);
 	return buff;
 }
 

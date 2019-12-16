@@ -2,19 +2,6 @@
 import(util.tester) {*}
 
 
-/*
-TestCase('Binary#Reader()') {
-	Tester(`b'abcdefg'.Writer())
-	Tester(`B'abcdefg'.Writer())
-	Tester(`Binary().Writer())
-	buff = b'abcdefghijklmnopqrstuvwxyz'
-	buff.Reader {|stream|
-		stream.Read(8).Dump()
-	}
-}
-sys.Exit()
-*/
-
 TestCase('Property') {
 	Tester(`Binary.__prop__(`bytes))
 	Tester(`Binary.__prop__(`p))
@@ -33,6 +20,22 @@ TestCase('Binary#writable') {
 	Tester(`b'abcdefg'.writable)
 	Tester(`B'abcdefg'.writable)
 	Tester(`Binary().writable)
+}
+
+TestCase('Binary#Reader()') {
+	Tester(`b'abcdefg'.Reader())
+	Tester(`B'abcdefg'.Reader())
+	Tester(`Binary().Reader())
+	buff = b'abcdefghijklmnopqrstuvwxyz'
+	buff.Reader {|stream|
+		stream.Read(8).Dump()
+		stream.Read(8).Dump()
+		stream.Read(8).Dump()
+		stream.Read(8).Dump()
+		Println(stream.Read(8))
+		stream.Seek(4)
+		stream.Read(8).Dump()
+	}
 }
 
 TestCase('Binary#Writer()') {

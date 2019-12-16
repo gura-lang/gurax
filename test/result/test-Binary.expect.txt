@@ -12,6 +12,16 @@ Binary() .. B''
 b'abcdefg'.writable .. false
 B'abcdefg'.writable .. true
 Binary().writable .. true
+======== Binary#Reader() ========
+b'abcdefg'.Reader() .. <Stream:binary:r:delcr>
+B'abcdefg'.Reader() .. <Stream:binary:r:delcr>
+Binary().Reader() .. <Stream:binary:r:delcr>
+61 62 63 64 65 66 67 68                          abcdefgh
+69 6a 6b 6c 6d 6e 6f 70                          ijklmnop
+71 72 73 74 75 76 77 78                          qrstuvwx
+79 7a                                            yz
+<Nil>
+65 66 67 68 69 6a 6b 6c                          efghijkl
 ======== Binary#Writer() ========
 b'abcdefg'.Writer() .. the binary is not writable
 B'abcdefg'.Writer() .. <Stream:binary:w:delcr>
