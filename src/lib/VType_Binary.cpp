@@ -216,8 +216,9 @@ String Value_Binary::ToStringDigest(const StringStyle& ss) const
 
 String Value_Binary::ToStringDetail(const StringStyle& ss) const
 {
-	String str = "b";
-	str += _pBinary->GetBinary().MakeQuoted(true);
+	const Binary& binary = _pBinary->GetBinary();
+	String str = binary.IsWritable()? "B" : "b";
+	str += binary.MakeQuoted(true);
 	return str;
 }
 

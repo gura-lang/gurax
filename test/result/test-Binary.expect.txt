@@ -6,9 +6,10 @@ Binary.__prop__(`writable) .. <PropHandler:writable:Bool:R>
 Binary.__prop__(`writer) .. no property named 'writer'
 ======== Constructor ========
 b'' .. b''
-Binary() .. b''
+Binary() .. B''
 ======== Binary#writable ========
-b''.writable .. false
+b'abcdefg'.writable .. false
+B'abcdefg'.writable .. true
 Binary().writable .. true
 ======== Binary#Writer() ========
 b''.Writer() .. the binary is not writable

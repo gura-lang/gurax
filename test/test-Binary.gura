@@ -15,7 +15,8 @@ TestCase('Constructor') {
 }
 
 TestCase('Binary#writable') {
-	Tester(`b''.writable)
+	Tester(`b'abcdefg'.writable)
+	Tester(`B'abcdefg'.writable)
 	Tester(`Binary().writable)
 }
 
