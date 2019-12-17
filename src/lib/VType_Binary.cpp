@@ -204,6 +204,18 @@ Gurax_ImplementPropertyGetter(Binary, writable)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Binary + Binary
+Gurax_ImplementOpBinary(Add, Binary, Binary)
+{
+	Binary binaryL = Value_Binary::GetBinary(valueL);
+	const Binary& binaryR = Value_Binary::GetBinary(valueR);
+	binaryL += binaryR;
+	return new Value_Binary(binaryL);
+}
+
+//------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
 VType_Binary VTYPE_Binary("Binary");
@@ -223,6 +235,8 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Binary, bytes));
 	Assign(Gurax_CreateProperty(Binary, p));
 	Assign(Gurax_CreateProperty(Binary, writable));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Add, Binary, Binary);
 }
 
 //------------------------------------------------------------------------------

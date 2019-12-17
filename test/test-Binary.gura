@@ -1,7 +1,6 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
-
 TestCase('Property') {
 	Tester(`Binary.__prop__(`bytes))
 	Tester(`Binary.__prop__(`p))
@@ -16,17 +15,54 @@ TestCase('Constructor') {
 	Tester(`Binary())
 }
 
+TestCase('Binary#p') {
+	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f'
+	Tester(`buff.p)
+	p = buff.p
+	Tester(`while (num = p.uint8):list { Format('%02x', num) })
+	p = buff.p
+	Tester(`while (num = p.uint16):list { Format('%04x', num) })
+	p = buff.p
+	Tester(`while (num = p.uint32):list { Format('%08x', num) })
+	//p = buff.p
+	//Tester(`while (num = p.uint64):list { Format('%016x', num) })
+	buff = B'', p = buff.p
+	Range(8) {|n| p.uint8 = n + (n << 4)}
+	buff.Dump()
+	buff = B'', p = buff.p
+	Range(8) {|n| p.uint16 = n + (n << 4) + (n << 8) + (n << 12)}
+	buff.Dump()
+	buff = B'', p = buff.p
+	Range(8) {|n| p.uint32 = n + (n << 4) + (n << 8) + (n << 12) + (n << 16) + (n << 20) + (n << 24) + (n << 28)}
+	buff.Dump()
+}
+
 TestCase('Binary#writable') {
 	Tester(`b'abcdefg'.writable)
 	Tester(`B'abcdefg'.writable)
 	Tester(`Binary().writable)
 }
 
+TestCase('Binary#Pointer()') {
+	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f'
+	Tester(`buff.Pointer())
+	Tester(`buff.Pointer(6))
+	p = buff.Pointer(6)
+	Tester(`while (num = p.uint8):list { Format('%02x', num) })
+	p = buff.Pointer(6)
+	Tester(`while (num = p.uint16):list { Format('%04x', num) })
+	p = buff.Pointer(6)
+	Tester(`while (num = p.uint32):list { Format('%08x', num) })
+	//p = buff.Pointer(6)
+	//Tester(`while (num = p.uint64):list { Format('%016x', num) })
+}
+
 TestCase('Binary#Reader()') {
 	Tester(`b'abcdefg'.Reader())
 	Tester(`B'abcdefg'.Reader())
 	Tester(`Binary().Reader())
-	buff = b'abcdefghijklmnopqrstuvwxyz'
+	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f' + \
+		b'\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c'
 	buff.Reader {|stream|
 		stream.Read(8).Dump()
 		stream.Read(8).Dump()
@@ -48,26 +84,26 @@ TestCase('Binary#Writer()') {
 	Tester(`Binary().Writer())
 	buff = Binary()
 	buff.Writer {|stream|
-		stream.Write(b'abcdefg')
+		stream.Write(b'\x00\x01\x02\x03\x04\x05\x06')
 		buff.Dump()
-		stream.Write(b'hijklmn')
+		stream.Write(b'\x07\x08\x09\x0a\x0b\x0c\x0d')
 		buff.Dump()
 		stream.Seek(4)
-		stream.Write(b'EFGH')
+		stream.Write(b'\xf4\xf5\xf6\xf7')
 		buff.Dump()
-		stream.Write(b'IJKLMNOP')
+		stream.Write(b'\xf8\xf9\xfa\xfb')
 		buff.Dump()
 	}
 	buff = B'0123456789'
 	buff.Writer {|stream|
-		stream.Write(b'abcdefg')
+		stream.Write(b'\x00\x01\x02\x03\x04\x05\x06')
 		buff.Dump()
-		stream.Write(b'hijklmn')
+		stream.Write(b'\x07\x08\x09\x0a\x0b\x0c\x0d')
 		buff.Dump()
 		stream.Seek(14)
-		stream.Write(b'EFGH')
+		stream.Write(b'\xf4\xf5\xf6\xf7')
 		buff.Dump()
-		stream.Write(b'IJKLMNOP')
+		stream.Write(b'\xf8\xf9\xfa\xfb')
 		buff.Dump()
 	}
 }

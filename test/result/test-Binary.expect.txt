@@ -8,36 +8,51 @@ Binary.__prop__(`writer) .. no property named 'writer'
 b'abcdefg' .. b'abcdefg'
 B'abcdefg' .. B'abcdefg'
 Binary() .. B''
+======== Binary#p ========
+buff.p .. <Pointer:offset=0>
+while (num = p.uint8):list {Format('%02x', num)} .. ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '0a', '0b', '0c', '0d', '0e', '0f']
+while (num = p.uint16):list {Format('%04x', num)} .. ['0100', '0302', '0504', '0706', '0908', '0b0a', '0d0c', '0f0e']
+while (num = p.uint32):list {Format('%08x', num)} .. ['03020100', '07060504', '0b0a0908', '0f0e0d0c']
+00 11 22 33 44 55 66 77                          .."3DUfw
+00 00 11 11 22 22 33 33 44 44 55 55 66 66 77 77  ....""33DDUUffww
+00 00 00 00 11 11 11 11 22 22 22 22 33 33 33 33  ........""""3333
+44 44 44 44 55 55 55 55 66 66 66 66 77 77 77 77  DDDDUUUUffffwwww
 ======== Binary#writable ========
 b'abcdefg'.writable .. false
 B'abcdefg'.writable .. true
 Binary().writable .. true
+======== Binary#Pointer() ========
+buff.Pointer() .. <Pointer:offset=0>
+buff.Pointer(6) .. <Pointer:offset=6>
+while (num = p.uint8):list {Format('%02x', num)} .. ['06', '07', '08', '09', '0a', '0b', '0c', '0d', '0e', '0f']
+while (num = p.uint16):list {Format('%04x', num)} .. ['0706', '0908', '0b0a', '0d0c', '0f0e']
+while (num = p.uint32):list {Format('%08x', num)} .. ['09080706', '0d0c0b0a']
 ======== Binary#Reader() ========
 b'abcdefg'.Reader() .. <Stream:binary:r:delcr>
 B'abcdefg'.Reader() .. <Stream:binary:r:delcr>
 Binary().Reader() .. <Stream:binary:r:delcr>
-61 62 63 64 65 66 67 68                          abcdefgh
-69 6a 6b 6c 6d 6e 6f 70                          ijklmnop
-71 72 73 74 75 76 77 78                          qrstuvwx
-79 7a                                            yz
+00 01 02 03 04 05 06 07                          ........
+08 09 0a 0b 0c 0d 0e 0f                          ........
+10 11 12 13 14 15 16 17                          ........
+18 19 1a 1b 1c                                   .....
 <Nil>
-65 66 67 68 69 6a 6b 6c                          efghijkl
-61 62 63 64 65 66 67 68 69 6a 6b 6c              abcdefghijkl
-6d 6e 6f 70 71 72 73 74 75 76 77 78              mnopqrstuvwx
-79 7a                                            yz
+04 05 06 07 08 09 0a 0b                          ........
+00 01 02 03 04 05 06 07 08 09 0a 0b              ............
+0c 0d 0e 0f 10 11 12 13 14 15 16 17              ............
+18 19 1a 1b 1c                                   .....
 ======== Binary#Writer() ========
 b'abcdefg'.Writer() .. the binary is not writable
 B'abcdefg'.Writer() .. <Stream:binary:w:delcr>
 Binary().Writer() .. <Stream:binary:w:delcr>
-61 62 63 64 65 66 67                             abcdefg
-61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e        abcdefghijklmn
-61 62 63 64 45 46 47 48 69 6a 6b 6c 6d 6e        abcdEFGHijklmn
-61 62 63 64 45 46 47 48 49 4a 4b 4c 4d 4e 4f 50  abcdEFGHIJKLMNOP
-30 31 32 33 34 35 36 37 38 39 61 62 63 64 65 66  0123456789abcdef
-67                                               g
-30 31 32 33 34 35 36 37 38 39 61 62 63 64 65 66  0123456789abcdef
-67 68 69 6a 6b 6c 6d 6e                          ghijklmn
-30 31 32 33 34 35 36 37 38 39 61 62 63 64 45 46  0123456789abcdEF
-47 48 69 6a 6b 6c 6d 6e                          GHijklmn
-30 31 32 33 34 35 36 37 38 39 61 62 63 64 45 46  0123456789abcdEF
-47 48 49 4a 4b 4c 4d 4e 4f 50                    GHIJKLMNOP
+00 01 02 03 04 05 06                             .......
+00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d        ..............
+00 01 02 03 f4 f5 f6 f7 08 09 0a 0b 0c 0d        ..............
+00 01 02 03 f4 f5 f6 f7 f8 f9 fa fb 0c 0d        ..............
+30 31 32 33 34 35 36 37 38 39 00 01 02 03 04 05  0123456789......
+06                                               .
+30 31 32 33 34 35 36 37 38 39 00 01 02 03 04 05  0123456789......
+06 07 08 09 0a 0b 0c 0d                          ........
+30 31 32 33 34 35 36 37 38 39 00 01 02 03 f4 f5  0123456789......
+f6 f7 08 09 0a 0b 0c 0d                          ........
+30 31 32 33 34 35 36 37 38 39 00 01 02 03 f4 f5  0123456789......
+f6 f7 f8 f9 fa fb 0c 0d                          ........
