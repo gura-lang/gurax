@@ -18,10 +18,53 @@ TestCase('Property') {
 }
 
 TestCase('Pointer#Pack()') {
-	
+	scope {
+		buff = B''
+		buff.p.Pack('bb', -0x80, 0x7f)
+		Tester(`buff.p.Pack('b', -0x81))
+		Tester(`buff.p.Pack('b', 0x80))
+		buff.Dump()
+	}
+	scope {
+		buff = B''
+		buff.p.Pack('BB', 0x00, 0xff)
+		Tester(`buff.p.Pack('B', -1))
+		Tester(`buff.p.Pack('B', 0x100))
+		buff.Dump()
+	}
+	scope {
+		buff = B''
+		buff.p.Pack('hh', -0x8000, 0x7fff)
+		Tester(`buff.p.Pack('h', -0x8001))
+		Tester(`buff.p.Pack('h', 0x8000))
+		buff.Dump()
+	}
+	scope {
+		buff = B''
+		buff.p.Pack('HH', 0, 0xffff)
+		Tester(`buff.p.Pack('H', -1))
+		Tester(`buff.p.Pack('H', 0x10000))
+		buff.Dump()
+	}
+	scope {
+		buff = B''
+		buff.p.Pack('ii', -0x80000000, 0x7fffffff)
+		Tester(`buff.p.Pack('i', -0x80000001))
+		Tester(`buff.p.Pack('i', 0x80000000))
+		buff.Dump()
+	}
+	scope {
+		buff = B''
+		buff.p.Pack('II', 0x00000000, 0xffffffff)
+		Tester(`buff.p.Pack('I', -1))
+		Tester(`buff.p.Pack('I', 0x100000000))
+		buff.Dump()
+	}
 }
 
 TestCase('Pointer#Unpack()') {
+	Tester(`Format('%02x', b'\x80\x7f'.p.Unpack('bb')))
+	Tester(`Format('%02x', b'\x00\xff'.p.Unpack('BB')))
 }
 
 TestCase('Operators') {
