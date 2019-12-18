@@ -12,7 +12,7 @@ Basement Basement::Inst;
 
 Basement::Basement() :
 	_commandDoneFlag(false), _pFrame(new Frame_Basement()), _pSuffixMgrMap(new SuffixMgrMap()),
-	_ps1(">>> "), _ps2("... ")
+	_ps1(">>> "), _ps2("... "), _formatForNum("%g")
 {
 }
 

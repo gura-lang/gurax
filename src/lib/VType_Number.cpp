@@ -439,14 +439,16 @@ String Value_Number::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
-	str.Printf(":%g>", GetNumber<Double>());
+	str += ":";
+	str += ToStringDetail(ss);
+	str += ">";
 	return str;
 }
 
 String Value_Number::ToStringDetail(const StringStyle& ss) const
 {
 	String str;
-	str.Printf("%g", GetNumber<Double>());
+	str.Printf(Basement::Inst.GetFormatForNum(), GetNumber<Double>());
 	return str;
 }
 

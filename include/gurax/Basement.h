@@ -26,6 +26,7 @@ private:
 	PathMgrOwner _pathMgrOwner;
 	String _ps1;
 	String _ps2;
+	String _formatForNum;
 	StringList _pathList;
 	RefPtr<Processor> _pProcessor;
 	CommandLine _cmdLine;
@@ -77,6 +78,8 @@ public:
 	const char* GetPS2() const { return _ps2.c_str(); }
 	void SetPS1(const char* ps1) { _ps1 = ps1; }
 	void SetPS2(const char* ps2) { _ps2 = ps2; }
+	const char* GetFormatForNum() const { return _formatForNum.c_str(); }
+	void SetFormatForNum(const char* formatForNum) { _formatForNum = formatForNum; }
 	StringList& GetPathList() { return _pathList; }
 	const StringList& GetPathList() const { return _pathList; }
 	Processor& GetProcessor() { return *_pProcessor; }
