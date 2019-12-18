@@ -3,6 +3,7 @@
 //==============================================================================
 #ifndef GURAX_IMP_NUMBER_H
 #define GURAX_IMP_NUMBER_H
+#include "Basement.h"
 #include "Number.h"
 
 namespace Gurax {
