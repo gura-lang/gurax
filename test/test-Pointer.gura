@@ -18,6 +18,7 @@ TestCase('Property') {
 }
 
 TestCase('Pointer#Pack()/Unpack()') {
+	sys.formatForNum = '%.0f'
 	scope {
 		Println('---')
 		buff = B''
@@ -74,6 +75,7 @@ TestCase('Pointer#Pack()/Unpack()') {
 		Tester(`buff.p.Pack('fff', 0, 1., .1))
 		buff.Dump()
 	}
+	sys.formatForNum = '%g'
 }
 
 TestCase('Pointer#Unpack()') {

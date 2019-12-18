@@ -22,6 +22,8 @@ public:
 public:
 	static const T_Num Max;
 	static const T_Num Min;
+public:
+	static String ToString(T_Num num);
 };
 
 //------------------------------------------------------------------------------

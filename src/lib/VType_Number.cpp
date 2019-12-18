@@ -447,9 +447,7 @@ String Value_Number::ToStringDigest(const StringStyle& ss) const
 
 String Value_Number::ToStringDetail(const StringStyle& ss) const
 {
-	String str;
-	str.Printf(Basement::Inst.GetFormatForNum(), GetNumber<Double>());
-	return str;
+	return Number<Double>::ToString(GetNumber<Double>());
 }
 
 bool Value_Number::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
