@@ -713,24 +713,22 @@ PUnit* PUnitFactory_GenIterator_ForLister::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_GenIterator_for
-// Stack View: [] -> [Iterator] (continue)
-//                -> []         (discard)
+// Stack View: [Iterator1 .. IteratorN] -> [Iterator] (continue)
+//                                      -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_for<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
 #if 0
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Iterator> pIterator;
-	if (GetFiniteFlag()) {
+	RefPtr<IteratorOwner> pIteratorOwner(new IteratorOwner());
+	for (size_t i = 0; i < _nIterators; i++) {
 		RefPtr<Value> pValue(processor.PopValue());
-		size_t cnt = Value_Number::GetNumber<size_t>(*pValue);
-		pIterator.reset(new Iterator_for(
-							processor.Reference(), GetExprOfBlock().Reference(), true, GetSkipNilFlag(), cnt));
-	} else {
-		pIterator.reset(new Iterator_for(
-							processor.Reference(), GetExprOfBlock().Reference(), false, GetSkipNilFlag()));
+		pIteratorOwner->push_back(Value_Iterator::GetIterator(*pValue).Reference());
 	}
+	RefPtr<Iterator> pIterator.reset(
+		new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),
+						 pIteratorOwner.release(), GetSkipNilFlag()));
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 #endif
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -750,18 +748,18 @@ PUnit* PUnitFactory_GenIterator_for::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_GenIterator_for<1, true>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
 		} else {
 			_pPUnitCreated = new PUnit_GenIterator_for<1, false>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_GenIterator_for<0, true>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag);
 		} else {
 			_pPUnitCreated = new PUnit_GenIterator_for<0, false>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
+				_pExprOfBlock.Reference(), _pDeclArgOwner.Reference(), _skipNilFlag);
 		}
 	}
 	return _pPUnitCreated;

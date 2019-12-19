@@ -130,8 +130,8 @@ public:
 	void Add_GenIterator_ForLister(const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_GenIterator_ForLister(Expr::Reference(pExprSrc)));
 	}
-	void Add_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, const Expr* pExprSrc = nullptr) {
-		SetFactory(new PUnitFactory_GenIterator_for(pExprOfBlock, finiteFlag, skipNilFlag, Expr::Reference(pExprSrc)));
+	void Add_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, const Expr* pExprSrc = nullptr) {
+		SetFactory(new PUnitFactory_GenIterator_for(pExprOfBlock, pDeclArgOwner, skipNilFlag, Expr::Reference(pExprSrc)));
 	}
 	void Add_GenIterator_while(Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag, const Expr* pExprSrc = nullptr) {
 		SetFactory(new PUnitFactory_GenIterator_while(pExprCriteria, pExprOfBlock, skipNilFlag, Expr::Reference(pExprSrc)));

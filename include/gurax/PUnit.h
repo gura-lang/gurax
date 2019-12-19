@@ -697,18 +697,18 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
 	RefPtr<Expr_Block> _pExprOfBlock;
-	bool _finiteFlag;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	bool _skipNilFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
-		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
-	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExpr) :
-		PUnit_GenIterator_for(pExprOfBlock, finiteFlag, skipNilFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag) :
+		_pExprOfBlock(pExprOfBlock), _pDeclArgOwner(pDeclArgOwner), _skipNilFlag(skipNilFlag) {}
+	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, Expr* pExpr) :
+		PUnit_GenIterator_for(pExprOfBlock, pDeclArgOwner, skipNilFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
-	bool GetFiniteFlag() const { return _finiteFlag; }
+	const DeclArgOwner GetDeclArgOwner() const { return *_pDeclArgOwner; }
 	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of PUnit
@@ -727,11 +727,11 @@ public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_for");
 private:
 	RefPtr<Expr_Block> _pExprOfBlock;
-	bool _finiteFlag;
+	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	bool _skipNilFlag;
 public:
-	PUnitFactory_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	PUnitFactory_GenIterator_for(Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, bool skipNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _pDeclArgOwner(pDeclArgOwner), _skipNilFlag(skipNilFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc?
 			sizeof(PUnit_GenIterator_for<1, false>) :
