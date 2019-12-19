@@ -775,14 +775,11 @@ PUnit* PUnitFactory_GenIterator_for::Create(bool discardValueFlag)
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_while<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
-#if 1
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
-	RefPtr<Iterator> pIterator;
-	pIterator.reset(new Iterator_while(
-						processor.Reference(), GetExprCriteria().Reference(),
-						GetExprOfBlock().Reference(), GetSkipNilFlag()));
+	RefPtr<Iterator> pIterator(new Iterator_while(
+								   processor.Reference(), GetExprCriteria().Reference(),
+								   GetExprOfBlock().Reference(), GetSkipNilFlag()));
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
-#endif
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 
