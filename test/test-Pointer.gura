@@ -17,74 +17,112 @@ TestCase('Property') {
 	Tester(`Pointer.__prop__(`double))
 }
 
-TestCase('Pointer#Pack()/Unpack()') {
+TestCase('Basic test of pack/unpack') {
 	sys.formatForNum = '%.0f'
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('bb', -0x80, 0x7f))
-		Tester(`buff.p.Pack('b', -0x81))
-		Tester(`buff.p.Pack('b', 0x80))
-		buff.Dump()
-		Tester(`Format('%d', buff.p.Unpack('bb')))
+	f(strPre:String) = {
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'bbbb', 0, -0x80, 0x7f, 0x12))
+			Tester(`buff.p.Pack(strPre + 'b', -0x81))
+			Tester(`buff.p.Pack(strPre + 'b', 0x80))
+			buff.Dump()
+			Tester(`Format('%d', buff.p.Unpack(strPre + 'bbbb')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'BBB', 0x00, 0xff, 0x12))
+			Tester(`buff.p.Pack(strPre + 'B', -1))
+			Tester(`buff.p.Pack(strPre + 'B', 0x100))
+			buff.Dump()
+			Tester(`Format('%d', buff.p.Unpack(strPre + 'BBB')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'hhhh', 0, -0x8000, 0x7fff, 0x1234))
+			Tester(`buff.p.Pack(strPre + 'h', -0x8001))
+			Tester(`buff.p.Pack(strPre + 'h', 0x8000))
+			buff.Dump()
+			Tester(`Format('%d', buff.p.Unpack(strPre + 'hhhh')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'HHHH', 0, 0x8000, 0xffff, 0x1234))
+			Tester(`buff.p.Pack(strPre + 'H', -1))
+			Tester(`buff.p.Pack(strPre + 'H', 0x10000))
+			buff.Dump()
+			Tester(`Format('%d', buff.p.Unpack(strPre + 'HHHH')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'iiii', 0, -0x80000000, 0x7fffffff, 0x12345678))
+			Tester(`buff.p.Pack(strPre + 'i', -0x80000001))
+			Tester(`buff.p.Pack(strPre + 'i', 0x80000000))
+			buff.Dump()
+			Tester(`Format('%d', buff.p.Unpack(strPre + 'iiii')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'III', 0x00000000, 0xffffffff, 0x12345678))
+			Tester(`buff.p.Pack(strPre + 'I', -1))
+			Tester(`buff.p.Pack(strPre + 'I', 0x100000000))
+			buff.Dump()
+			Tester(`Format('%d', buff.p.Unpack(strPre + 'III')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'fff', 0, 1., .5))
+			buff.Dump()
+			Tester(`Format('%f', buff.p.Unpack(strPre + 'fff')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + 'ddd', 0, 1., .5))
+			buff.Dump()
+			Tester(`Format('%f', buff.p.Unpack(strPre + 'ddd')))
+		}
+		scope {
+			Println('---')
+			buff = B''
+			Tester(`buff.p.Pack(strPre + '20s', 'Hello World'))
+			buff.Dump()
+			Tester(`Format('%s', buff.p.Unpack(strPre + '20s')))
+		}
 	}
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('BB', 0x00, 0xff))
-		Tester(`buff.p.Pack('B', -1))
-		Tester(`buff.p.Pack('B', 0x100))
-		buff.Dump()
-		Tester(`Format('%d', buff.p.Unpack('BB')))
-	}
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('hh', -0x8000, 0x7fff))
-		Tester(`buff.p.Pack('h', -0x8001))
-		Tester(`buff.p.Pack('h', 0x8000))
-		buff.Dump()
-	}
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('HH', 0, 0xffff))
-		Tester(`buff.p.Pack('H', -1))
-		Tester(`buff.p.Pack('H', 0x10000))
-		buff.Dump()
-	}
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('ii', -0x80000000, 0x7fffffff))
-		Tester(`buff.p.Pack('i', -0x80000001))
-		Tester(`buff.p.Pack('i', 0x80000000))
-		buff.Dump()
-	}
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('II', 0x00000000, 0xffffffff))
-		Tester(`buff.p.Pack('I', -1))
-		Tester(`buff.p.Pack('I', 0x100000000))
-		buff.Dump()
-	}
-	scope {
-		Println('---')
-		buff = B''
-		Tester(`buff.p.Pack('fff', 0, 1., .1))
-		buff.Dump()
-	}
+	f('')
+	f('>')
+	f('<')
 	sys.formatForNum = '%g'
 }
 
+TestCase('Pointer#Pack()') {
+}
+
 TestCase('Pointer#Unpack()') {
+	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e'
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('B')):list {Format('%02x', tbl[0])}).Join(',')})
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('H')):list {Format('%04x', tbl[0])}).Join(',')})
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('I')):list {Format('%08x', tbl[0])}).Join(',')})
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('>B')):list {Format('%02x', tbl[0])}).Join(',')})
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('>H')):list {Format('%04x', tbl[0])}).Join(',')})
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('>I')):list {Format('%08x', tbl[0])}).Join(',')})
+	buff = b'abcdefghijklmnopqrstuvwxyz'
+	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('4s')):list {tbl[0]}).Join(',')})
 }
 
 TestCase('Operators') {
-	b = b'abcdefghijklmnopqrstuvwxyz'
-	p1 = b.p + 10
-	p2 = b.p + 23
+	buff1 = b'abcdefghijklmnopqrstuvwxyz'
+	buff2 = b'abcdefghijklmnopqrstuvwxyz'
+	p1 = buff1.p + 10
+	p2 = buff1.p + 23
+	p3 = buff2.p + 23
 	Tester(`p1)
 	Tester(`p2)
 	Tester(`(p1 + 7))
@@ -94,4 +132,5 @@ TestCase('Operators') {
 	Tester(`(p1 - 11))
 	Tester(`(p1 - p2))
 	Tester(`(p2 - p1))
+	Tester(`(p3 - p1))
 }
