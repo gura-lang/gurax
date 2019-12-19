@@ -294,9 +294,7 @@ public:
 	IteratorOwner& GetIteratorOwner() { return *_pIteratorOwner; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return Flag::Infinite | Flag::LenUndetermined;
-	}
+	virtual Flags GetFlags() const override { return Flag::Infinite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -309,33 +307,31 @@ class GURAX_DLLDECLARE Iterator_while : public Iterator {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Frame> _pFrame;
+	RefPtr<Expr> _pExprCriteria;
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<Argument> _pArgument;
 	bool _finiteFlag;
 	bool _skipNilFlag;
-	size_t _cnt;
 	size_t _idx;
 	bool _contFlag;
 public:
-	Iterator_while(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, size_t cnt = -1) :
+	Iterator_while(Processor* pProcessor, Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
-		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _cnt(cnt), _idx(0), _contFlag(true) {}
+		_pExprCriteria(pExprCriteria), _pExprOfBlock(pExprOfBlock),
+		_pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
+		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }
+	const Expr& GetExprCriteria() { return *_pExprCriteria; }
 	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
 	Argument& GetArgument() { return *_pArgument; }
 	bool GetFiniteFlag() const { return _finiteFlag; }
 	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override {
-		return GetFiniteFlag()?
-			(Flag::Finite | Flag::LenDetermined) :
-			(Flag::Infinite | Flag::LenUndetermined);
-	}
-	virtual size_t GetLength() const override { return _cnt; }
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

@@ -264,7 +264,7 @@ Value* Iterator_for::DoNextValue()
 			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
-		Processor::Event event;
+		Event event;
 		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
@@ -291,15 +291,18 @@ String Iterator_for::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_while::DoNextValue()
 {
-#if 0
 	while (_contFlag) {
-		if (GetFiniteFlag() && _idx >= _cnt) break;
+		Event event;
+		RefPtr<Value> pValueCriteria(GetExprCriteria().Eval(GetProcessor()));
+		if (Processor::IsEventBreak(event) || !pValueCriteria->GetBool()) {
+			_contFlag = false;
+			break;
+		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
 			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
-		Processor::Event event;
 		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
 		if (Error::IsIssued()) break;
 		if (Processor::IsEventBreak(event)) {
@@ -312,7 +315,6 @@ Value* Iterator_while::DoNextValue()
 			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
 		}
 	}
-#endif
 	return nullptr;
 }
 
