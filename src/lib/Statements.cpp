@@ -461,7 +461,8 @@ Gurax_ImplementStatement(while_)
 		composer.ComposeAsSequence(exprOfBlock);
 		composer.Add_EndSequence(&exprOfBlock);
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-
+		composer.Add_GenIterator_while(
+			exprCriteria.Reference(), exprOfBlock.Reference(), xiterFlag, &exprCaller);	// [Iterator]
 	} else {	
 		const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));

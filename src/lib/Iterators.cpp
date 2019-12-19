@@ -291,6 +291,8 @@ String Iterator_for::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_while::DoNextValue()
 {
+	RefPtr<Value> pValueResult;
+	GetProcessor().PushFrame(GetFrame().Reference());
 	while (_contFlag) {
 		Event event;
 		RefPtr<Value> pValueCriteria(GetExprCriteria().Eval(GetProcessor(), event));
@@ -300,7 +302,7 @@ Value* Iterator_while::DoNextValue()
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) break;
 		}
 		_idx++;
 		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
@@ -310,12 +312,17 @@ Value* Iterator_while::DoNextValue()
 			if (pValueRtn->IsUndefined()) break;
 		}
 		if (GetSkipNilFlag()) {
-			if (pValueRtn->IsValid()) return pValueRtn.release();
+			if (pValueRtn->IsValid()) {
+				pValueResult.reset(pValueRtn.release());
+				break;
+			}
 		} else {
-			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
+			pValueResult.reset(pValueRtn->IsValid()? pValueRtn.release() : Value::nil());
+			break;
 		}
 	}
-	return nullptr;
+	GetProcessor().PopFrame();
+	return pValueResult.release();
 }
 
 String Iterator_while::ToString(const StringStyle& ss) const
