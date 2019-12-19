@@ -748,19 +748,19 @@ class GURAX_DLLDECLARE PUnit_GenIterator_while : public PUnit {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator_PUnit();
+	RefPtr<Expr> _pExprCriteria;
 	RefPtr<Expr_Block> _pExprOfBlock;
-	bool _finiteFlag;
 	bool _skipNilFlag;
 	Expr* _ppExprSrc[nExprSrc];
 public:
 	// Constructor
-	PUnit_GenIterator_while(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
-		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
-	PUnit_GenIterator_while(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExpr) :
-		PUnit_GenIterator_while(pExprOfBlock, finiteFlag, skipNilFlag) { _ppExprSrc[0] = pExpr; }
+	PUnit_GenIterator_while(Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag) :
+		_pExprCriteria(pExprCriteria), _pExprOfBlock(pExprOfBlock), _skipNilFlag(skipNilFlag) {}
+	PUnit_GenIterator_while(Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag, Expr* pExpr) :
+		PUnit_GenIterator_while(pExprCriteria, pExprOfBlock, skipNilFlag) { _ppExprSrc[0] = pExpr; }
 public:
+	const Expr& GetExprCriteria() const { return *_pExprCriteria; }
 	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
-	bool GetFiniteFlag() const { return _finiteFlag; }
 	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of PUnit
@@ -778,12 +778,13 @@ class PUnitFactory_GenIterator_while : public PUnitFactory {
 public:
 	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_while");
 private:
+	RefPtr<Expr> _pExprCriteria;
 	RefPtr<Expr_Block> _pExprOfBlock;
-	bool _finiteFlag;
 	bool _skipNilFlag;
 public:
-	PUnitFactory_GenIterator_while(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExprSrc) :
-		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	PUnitFactory_GenIterator_while(Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pExprCriteria(pExprCriteria), _pExprOfBlock(pExprOfBlock),
+		_skipNilFlag(skipNilFlag) {}
 	virtual size_t GetPUnitSize() const override {
 		return _pExprSrc?
 			sizeof(PUnit_GenIterator_while<1, false>) :

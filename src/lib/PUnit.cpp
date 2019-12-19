@@ -775,18 +775,12 @@ PUnit* PUnitFactory_GenIterator_for::Create(bool discardValueFlag)
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_while<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
-#if 0
+#if 1
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<Iterator> pIterator;
-	if (GetFiniteFlag()) {
-		RefPtr<Value> pValue(processor.PopValue());
-		size_t cnt = Value_Number::GetNumber<size_t>(*pValue);
-		pIterator.reset(new Iterator_while(
-							processor.Reference(), GetExprOfBlock().Reference(), true, GetSkipNilFlag(), cnt));
-	} else {
-		pIterator.reset(new Iterator_while(
-							processor.Reference(), GetExprOfBlock().Reference(), false, GetSkipNilFlag()));
-	}
+	pIterator.reset(new Iterator_while(
+						processor.Reference(), GetExprCriteria().Reference(),
+						GetExprOfBlock().Reference(), GetSkipNilFlag()));
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 #endif
 	processor.SetPUnitNext(_GetPUnitCont());
@@ -806,18 +800,18 @@ PUnit* PUnitFactory_GenIterator_while::Create(bool discardValueFlag)
 	if (_pExprSrc) {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_GenIterator_while<1, true>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
+				_pExprCriteria.Reference(), _pExprOfBlock.Reference(), _skipNilFlag, _pExprSrc.Reference());
 		} else {
 			_pPUnitCreated = new PUnit_GenIterator_while<1, false>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag, _pExprSrc.Reference());
+				_pExprCriteria.Reference(), _pExprOfBlock.Reference(), _skipNilFlag, _pExprSrc.Reference());
 		}
 	} else {
 		if (discardValueFlag) {
 			_pPUnitCreated = new PUnit_GenIterator_while<0, true>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
+				_pExprCriteria.Reference(), _pExprOfBlock.Reference(), _skipNilFlag);
 		} else {
 			_pPUnitCreated = new PUnit_GenIterator_while<0, false>(
-				_pExprOfBlock.Reference(), _finiteFlag, _skipNilFlag);
+				_pExprCriteria.Reference(), _pExprOfBlock.Reference(), _skipNilFlag);
 		}
 	}
 	return _pPUnitCreated;
@@ -825,8 +819,10 @@ PUnit* PUnitFactory_GenIterator_while::Create(bool discardValueFlag)
 
 //------------------------------------------------------------------------------
 // PUnit_GenIterator_repeat
-// Stack View: [] -> [Iterator] (continue)
-//                -> []         (discard)
+// Stack View: finiteFlag = false: []       -> [Iterator] (continue)
+//                                          -> []         (discard)
+//             finiteFlag = true:  [Number] -> [Iterator] (continue)
+//                                          -> []         (discard)
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_repeat<nExprSrc, discardValueFlag>::Exec(Processor& processor) const

@@ -310,23 +310,21 @@ private:
 	RefPtr<Expr> _pExprCriteria;
 	RefPtr<Expr_Block> _pExprOfBlock;
 	RefPtr<Argument> _pArgument;
-	bool _finiteFlag;
 	bool _skipNilFlag;
 	size_t _idx;
 	bool _contFlag;
 public:
-	Iterator_while(Processor* pProcessor, Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
+	Iterator_while(Processor* pProcessor, Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprCriteria(pExprCriteria), _pExprOfBlock(pExprOfBlock),
 		_pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
+		_skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }
 	const Expr& GetExprCriteria() { return *_pExprCriteria; }
 	const Expr_Block& GetExprOfBlock() { return *_pExprOfBlock; }
 	Argument& GetArgument() { return *_pArgument; }
-	bool GetFiniteFlag() const { return _finiteFlag; }
 	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of Iterator
