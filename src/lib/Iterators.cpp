@@ -293,7 +293,7 @@ Value* Iterator_while::DoNextValue()
 {
 	while (_contFlag) {
 		Event event;
-		RefPtr<Value> pValueCriteria(GetExprCriteria().Eval(GetProcessor()));
+		RefPtr<Value> pValueCriteria(GetExprCriteria().Eval(GetProcessor(), event));
 		if (Processor::IsEventBreak(event) || !pValueCriteria->GetBool()) {
 			_contFlag = false;
 			break;

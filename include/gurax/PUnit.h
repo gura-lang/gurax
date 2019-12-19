@@ -689,6 +689,110 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// PUnit_GenIterator_for
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_GenIterator_for : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+	RefPtr<Expr_Block> _pExprOfBlock;
+	bool _finiteFlag;
+	bool _skipNilFlag;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
+		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	PUnit_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExpr) :
+		PUnit_GenIterator_for(pExprOfBlock, finiteFlag, skipNilFlag) { _ppExprSrc[0] = pExpr; }
+public:
+	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
+	bool GetFiniteFlag() const { return _finiteFlag; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_GenIterator_for : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_for");
+private:
+	RefPtr<Expr_Block> _pExprOfBlock;
+	bool _finiteFlag;
+	bool _skipNilFlag;
+public:
+	PUnitFactory_GenIterator_for(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc?
+			sizeof(PUnit_GenIterator_for<1, false>) :
+			sizeof(PUnit_GenIterator_for<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
+// PUnit_GenIterator_while
+//------------------------------------------------------------------------------
+template<int nExprSrc, bool discardValueFlag>
+class GURAX_DLLDECLARE PUnit_GenIterator_while : public PUnit {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator_PUnit();
+	RefPtr<Expr_Block> _pExprOfBlock;
+	bool _finiteFlag;
+	bool _skipNilFlag;
+	Expr* _ppExprSrc[nExprSrc];
+public:
+	// Constructor
+	PUnit_GenIterator_while(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag) :
+		_pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	PUnit_GenIterator_while(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExpr) :
+		PUnit_GenIterator_while(pExprOfBlock, finiteFlag, skipNilFlag) { _ppExprSrc[0] = pExpr; }
+public:
+	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
+	bool GetFiniteFlag() const { return _finiteFlag; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
+public:
+	// Virtual functions of PUnit
+	virtual bool GetDiscardValueFlag() const override { return discardValueFlag; }
+	virtual const PUnit* GetPUnitCont() const override { return _GetPUnitCont(); }
+	virtual const PUnit* GetPUnitNext() const override { return this + 1; }
+	virtual const PUnit* GetPUnitAdjacent() const override { return this + 1; }
+	virtual void Exec(Processor& processor) const override;
+	virtual String ToString(const StringStyle& ss, int seqIdOffset) const override;
+private:
+	const PUnit* _GetPUnitCont() const { return this + 1; }
+};
+
+class PUnitFactory_GenIterator_while : public PUnitFactory {
+public:
+	Gurax_MemoryPoolAllocator("PUnitFactory_GenIterator_while");
+private:
+	RefPtr<Expr_Block> _pExprOfBlock;
+	bool _finiteFlag;
+	bool _skipNilFlag;
+public:
+	PUnitFactory_GenIterator_while(Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, Expr* pExprSrc) :
+		PUnitFactory(pExprSrc), _pExprOfBlock(pExprOfBlock), _finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag) {}
+	virtual size_t GetPUnitSize() const override {
+		return _pExprSrc?
+			sizeof(PUnit_GenIterator_while<1, false>) :
+			sizeof(PUnit_GenIterator_while<0, false>);
+	}
+	virtual PUnit* Create(bool discardValueFlag) override;
+};
+
+//------------------------------------------------------------------------------
 // PUnit_GenIterator_repeat
 //------------------------------------------------------------------------------
 template<int nExprSrc, bool discardValueFlag>
