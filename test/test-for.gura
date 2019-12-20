@@ -26,6 +26,36 @@ TestCase('PUnit') {
 	PrintPUnitWithLabel(exprs)
 }
 
+TestCase('Statement') {
+	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
+	Tester(`tbl)
+	Tester(`{x = [], for (n in []) { x.Add(n) }, x})
+	Tester(`{x = [], for (n in tbl) { x.Add(n) }, x})
+	Tester(`{x = [], for (n in tbl) {|i| x.Add(n + i)}, x})
+	Tester(`{x = [], for (n in tbl) { if (n % 2 == 0) { continue }; x.Add(n) }, x})
+	Tester(`{x = [], for (n in tbl) { (n % 2 == 0) && continue; x.Add(n) }, x})
+	Tester(`{x = [], rtn = for (n in tbl) { if (n > 8) { break }; x.Add(n) }, [rtn, x]})
+	Tester(`{x = [], rtn = for (n in tbl) { (n > 8) && break; x.Add(n) }, [rtn, x]})
+	Tester(`{x = [], rtn = for (n in tbl) { if (n > 8) { break('end') }; x.Add(n) }, [rtn, x]})
+	Tester(`{x = [], rtn = for (n in tbl) { (n > 8) && break('end'); x.Add(n) }, [rtn, x]})
+	Tester(`{x = [], rtn = for (n in tbl) { if (n > 8) { break(nil) }; x.Add(n) }, [rtn, x]})
+	Tester(`{x = [], rtn = for (n in tbl) { (n > 8) && break(nil); x.Add(n) }, [rtn, x]})
+	Tester(`{x = [], for (n in [3, 1, 4, 1, 5]) {|i| x.Add(Format('%d-%d', i, n))}, x})
+	Tester(`{x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]) {|i| x.Add(Format('%d-%d-%d', i, n1, n2))}, x})
+	Tester(`{x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]) {|i|
+		x.Add(Format('%d-%d-%d', i, n1, n2))
+	}, x})
+	Tester(`{x = [], for (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]) {|i|
+		x.Add(Format('%d-%d-%d', i, n1, n2))
+	}, x})
+	Tester(`{x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]) {|i|
+		x.Add(Format('%d-%d-%d', i, n1, n2))
+	}, x})
+	Tester(`{x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]) {|i|
+		x.Add(Format('%d-%d-%d', i, n1, n2))
+	}, x})
+}
+
 TestCase('Create list') {
 	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 	Tester(`tbl)
