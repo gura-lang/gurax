@@ -54,6 +54,10 @@ TestCase('Statement') {
 	Tester(`{x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]) {|i|
 		x.Add(Format('%d-%d-%d', i, n1, n2))
 	}, x})
+	Tester(`i)
+	Tester(`n1)
+	Tester(`n2)
+	Tester(`n3)
 }
 
 TestCase('Create list') {
@@ -96,6 +100,10 @@ TestCase('Create list') {
 	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):list {|i|
 		Format('%d-%d-%d', i, n1, n2)
 	}))
+	Tester(`i)
+	Tester(`n1)
+	Tester(`n2)
+	Tester(`n3)
 }
 
 TestCase('Create iterator') {
@@ -138,4 +146,8 @@ TestCase('Create iterator') {
 	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):iter {|i|
 		Format('%d-%d-%d', i, n1, n2)
 	}[]))
+	Tester(`i)
+	Tester(`n1)
+	Tester(`n2)
+	Tester(`n3)
 }

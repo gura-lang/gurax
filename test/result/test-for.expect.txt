@@ -287,6 +287,10 @@ tbl .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 {x = [], for (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]) {|i| x.Add(Format('%d-%d-%d', i, n1, n2))}, x} .. ['0-3-1', '1-1-4', '2-4-1']
 {x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]) {|i| x.Add(Format('%d-%d-%d', i, n1, n2))}, x} .. ['0-3-1', '1-1-4', '2-4-1']
 {x = [], for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]) {|i| x.Add(Format('%d-%d-%d', i, n1, n2))}, x} .. ['0-3-1', '1-1-4', '2-4-1']
+i .. symbol 'i' is not found
+n1 .. symbol 'n1' is not found
+n2 .. symbol 'n2' is not found
+n3 .. symbol 'n3' is not found
 ======== Create list ========
 tbl .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 for (n in []):list {n} .. []
@@ -318,6 +322,10 @@ for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):list {
 for (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):list {|i| Format('%d-%d-%d', i, n1, n2)} .. ['0-3-1', '1-1-4', '2-4-1']
 for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]):list {|i| Format('%d-%d-%d', i, n1, n2)} .. ['0-3-1', '1-1-4', '2-4-1']
 for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):list {|i| Format('%d-%d-%d', i, n1, n2)} .. ['0-3-1', '1-1-4', '2-4-1']
+i .. symbol 'i' is not found
+n1 .. symbol 'n1' is not found
+n2 .. symbol 'n2' is not found
+n3 .. symbol 'n3' is not found
 ======== Create iterator ========
 tbl .. [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 for (n in []):iter {n}[] .. []
@@ -349,3 +357,7 @@ for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):iter {
 for (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):iter {|i| Format('%d-%d-%d', i, n1, n2)}[] .. ['0-3-1', '1-1-4', '2-4-1']
 for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]):iter {|i| Format('%d-%d-%d', i, n1, n2)}[] .. ['0-3-1', '1-1-4', '2-4-1']
 for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):iter {|i| Format('%d-%d-%d', i, n1, n2)}[] .. ['0-3-1', '1-1-4', '2-4-1']
+i .. symbol 'i' is not found
+n1 .. symbol 'n1' is not found
+n2 .. symbol 'n2' is not found
+n3 .. symbol 'n3' is not found
