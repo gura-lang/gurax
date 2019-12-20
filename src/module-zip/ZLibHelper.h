@@ -205,16 +205,16 @@ public:
 		_buffIn = reinterpret_cast<UInt8*>(_pMemory->GetPointer(_bytesBuff));
 		return true;
 	}
-	virtual const char* GetName() const {
+	virtual const char* GetName() const override {
 		return (_pStream.IsNull())? "(invalid)" : _pStream->GetName();
 	}
-	virtual const char* GetIdentifier() const {
+	virtual const char* GetIdentifier() const override {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual size_t DoWrite(const void* buff, size_t len) {
+	virtual size_t DoWrite(const void* buff, size_t len) override {
 		return 0;
 	}
-	virtual size_t DoRead(void* buff, size_t bytes) {
+	virtual size_t DoRead(void* buff, size_t bytes) override {
 		size_t bytesRead = 0;
 		char* buffp = reinterpret_cast<char*>(buff);
 		bool continueFlag = true;
@@ -268,27 +268,19 @@ public:
 		}
 		return bytesRead;
 	}
-	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode) {
-		if (seekMode == SeekSet) {
-			if (static_cast<size_t>(offset) >= offsetPrev) {
-				size_t bytesToRead = static_cast<size_t>(offset) - offsetPrev;
-				if (bytesToRead == 0) return true;
-				return DoRead(nullptr, bytesToRead) == static_cast<size_t>(bytesToRead);
-			}
-		} else if (seekMode == SeekCur) {
-			if (offset == 0) {
-				return true;
-			} else if (offset > 0) {
-				return DoRead(nullptr, offset) == static_cast<size_t>(offset);
-			}
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override {
+		if (offset >= offsetPrev) {
+			size_t bytesToRead = offset - offsetPrev;
+			if (bytesToRead == 0) return true;
+			return DoRead(nullptr, bytesToRead) == bytesToRead;
 		}
 		Error::Issue(ErrorType::UnimplementedError, "backward seeking is not supported");
 		return false;
 	}
-	virtual bool DoFlush() {
+	virtual void DoFlush() override {
 		return false;
 	}
-	virtual bool DoClose() {
+	virtual void DoClose() override {
 		return true;
 	}
 };
@@ -332,13 +324,13 @@ public:
 		_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 		return true;
 	}
-	virtual const char* GetName() const {
+	virtual const char* GetName() const override {
 		return (_pStream.IsNull())? "(invalid)" : _pStream->GetName();
 	}
-	virtual const char* GetIdentifier() const {
+	virtual const char* GetIdentifier() const override {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual size_t DoWrite(const void* buff, size_t len) {
+	virtual size_t DoWrite(const void* buff, size_t len) override {
 		if (_pStream.IsNull()) return 0;
 		_zstrm.next_in = reinterpret_cast<Bytef*>(const_cast<void *>(buff));
 		_zstrm.avail_in = static_cast<uInt>(len);
@@ -357,10 +349,10 @@ public:
 		}
 		return len;
 	}
-	virtual bool DoFlush() {
+	virtual void DoFlush() override {
 		return DoClose();
 	}
-	virtual bool DoClose() {
+	virtual void DoClose() override {
 		if (_pStream.IsNull()) return true;
 		for (;;) {
 			if (_zstrm.avail_out == 0) {
@@ -387,10 +379,10 @@ public:
 		_pStream.reset(nullptr);
 		return rtn;
 	}
-	virtual size_t DoRead(void* buff, size_t bytes) {
+	virtual size_t DoRead(void* buff, size_t bytes) override {
 		return 0;
 	}
-	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode) {
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override {
 		return false;
 	}
 };
