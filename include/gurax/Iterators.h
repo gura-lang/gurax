@@ -278,13 +278,16 @@ private:
 	RefPtr<Argument> _pArgument;
 	RefPtr<DeclArgOwner> _pDeclArgOwner;
 	RefPtr<IteratorOwner> _pIteratorOwner;
+	bool _skipNilFlag;
 	size_t _idx;
 	bool _contFlag;
 public:
-	Iterator_for(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner, IteratorOwner* pIteratorOwner) :
-		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
+	Iterator_for(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner,
+				 IteratorOwner* pIteratorOwner, bool skipNilFlag) :
+		_pProcessor(pProcessor), _pFrame(pProcessor->CreateFrame<Frame_Scope>()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
-		_pDeclArgOwner(pDeclArgOwner), _pIteratorOwner(pIteratorOwner), _idx(0), _contFlag(true) {}
+		_pDeclArgOwner(pDeclArgOwner), _pIteratorOwner(pIteratorOwner),
+		_skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
 	Frame& GetFrame() { return *_pFrame; }
@@ -292,9 +295,10 @@ public:
 	Argument& GetArgument() { return *_pArgument; }
 	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
 	IteratorOwner& GetIteratorOwner() { return *_pIteratorOwner; }
+	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Infinite | Flag::LenUndetermined; }
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
@@ -386,8 +390,8 @@ private:
 	size_t _idx;
 	bool _contFlag;
 public:
-	Iterator_DoEach(Processor* pProcessor, Frame* pFrame, Expr_Block* pExprOfBlock, Iterator* pIteratorSrc, bool skipNilFlag) :
-		_pProcessor(pProcessor), _pFrame(pFrame),
+	Iterator_DoEach(Processor* pProcessor, Expr_Block* pExprOfBlock, Iterator* pIteratorSrc, bool skipNilFlag) :
+		_pProcessor(pProcessor), _pFrame(pProcessor->CreateFrame<Frame_Scope>()),
 		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
 		_pIteratorSrc(pIteratorSrc), _skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:

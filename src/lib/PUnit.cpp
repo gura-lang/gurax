@@ -719,18 +719,16 @@ PUnit* PUnitFactory_GenIterator_ForLister::Create(bool discardValueFlag)
 template<int nExprSrc, bool discardValueFlag>
 void PUnit_GenIterator_for<nExprSrc, discardValueFlag>::Exec(Processor& processor) const
 {
-#if 0
 	if (nExprSrc > 0) processor.SetExprCur(_ppExprSrc[0]);
 	RefPtr<IteratorOwner> pIteratorOwner(new IteratorOwner());
-	for (size_t i = 0; i < _nIterators; i++) {
+	for (size_t i = 0; i < GetDeclArgOwner().size(); i++) {
 		RefPtr<Value> pValue(processor.PopValue());
 		pIteratorOwner->push_back(Value_Iterator::GetIterator(*pValue).Reference());
 	}
-	RefPtr<Iterator> pIterator.reset(
+	RefPtr<Iterator> pIterator(
 		new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),
-						 pIteratorOwner.release(), GetSkipNilFlag()));
+						 GetDeclArgOwner().Reference(), pIteratorOwner.release(), GetSkipNilFlag()));
 	if (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
-#endif
 	processor.SetPUnitNext(_GetPUnitCont());
 }
 

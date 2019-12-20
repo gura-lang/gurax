@@ -17,6 +17,12 @@ static const char* g_docHelp_en = u8R"**(
 
 # Operator
 
+iterator[] .. converts the iterator into a list.
+
+Example:
+
+  `(1..3)[]` .. generates `[1, 2, 3]`
+
 # Cast Operation
 
 # Constructor

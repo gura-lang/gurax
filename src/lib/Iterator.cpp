@@ -89,28 +89,25 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 		return Value::nil();
 	}
 	bool skipNilFlag = false;
-	if ((flags & DeclCallable::Flag::Iter) || (skipNilFlag = flags & DeclCallable::Flag::XIter)) {
+	if ((flags & DeclCallable::Flag::Iter) || (skipNilFlag = (flags & DeclCallable::Flag::XIter))) {
 		RefPtr<Iterator> pIterator(new Iterator_DoEach(
-									   processor.Reference(), processor.CreateFrame<Frame_Scope>(),
-									   exprOfBlock.Reference(), Reference(), skipNilFlag));
+									   processor.Reference(), exprOfBlock.Reference(), Reference(), skipNilFlag));
 		pValueRtn.reset(new Value_Iterator(pIterator.release()));
 	} else {
 		size_t nArgs = declArgOwner.size();
 		bool contFlag = true;
 		size_t idx = 0;
 		Frame& frame = processor.PushFrame<Frame_Block>();
-		if ((flags & DeclCallable::Flag::List) || (skipNilFlag = flags & DeclCallable::Flag::XList)) {
+		if ((flags & DeclCallable::Flag::List) || (skipNilFlag = (flags & DeclCallable::Flag::XList))) {
 			RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 			do {
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
 				if (nArgs > 0) {
-					frame.AssignWithCast(*declArgOwner[0], *pValueElem);
-					if (Error::IsIssued()) break;
+					if (!frame.AssignWithCast(*declArgOwner[0], *pValueElem)) break;
 					if (nArgs > 1) {
 						RefPtr<Value> pValueIdx(new Value_Number(idx));
-						frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
-						if (Error::IsIssued()) break;
+						if (!frame.AssignWithCast(*declArgOwner[1], *pValueIdx)) break;
 					}
 				}
 				idx++;
@@ -134,12 +131,10 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 				RefPtr<Value> pValueElem(NextValue());
 				if (!pValueElem) break;
 				if (nArgs > 0) {
-					frame.AssignWithCast(*declArgOwner[0], *pValueElem);
-					if (Error::IsIssued()) break;
+					if (!frame.AssignWithCast(*declArgOwner[0], *pValueElem)) break;
 					if (nArgs > 1) {
 						RefPtr<Value> pValueIdx(new Value_Number(idx));
-						frame.AssignWithCast(*declArgOwner[1], *pValueIdx);
-						if (Error::IsIssued()) break;
+						if (!frame.AssignWithCast(*declArgOwner[1], *pValueIdx)) break;
 					}
 				}
 				idx++;

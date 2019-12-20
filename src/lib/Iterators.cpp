@@ -254,14 +254,31 @@ String Iterator_IteratorEvaluator::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_for::DoNextValue()
 {
-#if 0
+	RefPtr<Value> pValueResult;
+	GetProcessor().PushFrame(GetFrame().Reference());
 	while (_contFlag) {
-		
-
-		if (GetFiniteFlag() && _idx >= _cnt) break;
+		auto ppDeclArg = GetDeclArgOwner().begin();
+		auto ppIterator = GetIteratorOwner().rbegin();
+		for ( ; ppDeclArg != GetDeclArgOwner().end() && ppIterator != GetIteratorOwner().rend();
+			  ppDeclArg++, ppIterator++) {
+			DeclArg& declArg = **ppDeclArg;
+			Iterator& iterator = **ppIterator;
+			RefPtr<Value> pValue(iterator.NextValue());
+			if (!pValue) {
+				_contFlag = false;
+				goto done;
+			}
+			if (!GetFrame().AssignWithCast(declArg, *pValue)) {
+				_contFlag = false;
+				goto done;
+			}
+		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) {
+				_contFlag = false;
+				break;
+			}
 		}
 		_idx++;
 		Event event;
@@ -272,13 +289,18 @@ Value* Iterator_for::DoNextValue()
 			if (pValueRtn->IsUndefined()) break;
 		}
 		if (GetSkipNilFlag()) {
-			if (pValueRtn->IsValid()) return pValueRtn.release();
+			if (pValueRtn->IsValid()) {
+				pValueResult.reset(pValueRtn.release());
+				break;
+			}
 		} else {
-			return pValueRtn->IsValid()? pValueRtn.release() : Value::nil();
+			pValueResult.reset(pValueRtn->IsValid()? pValueRtn.release() : Value::nil());
+			break;
 		}
 	}
-#endif
-	return nullptr;
+done:
+	GetProcessor().PopFrame();
+	return pValueResult.release();
 }
 
 String Iterator_for::ToString(const StringStyle& ss) const
@@ -302,7 +324,10 @@ Value* Iterator_while::DoNextValue()
 		}
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) break;
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) {
+				_contFlag = false;
+				break;
+			}
 		}
 		_idx++;
 		RefPtr<Value> pValueRtn(GetExprOfBlock().Eval(GetProcessor(), GetArgument(), event));
@@ -339,7 +364,10 @@ Value* Iterator_repeat::DoNextValue()
 		if (GetFiniteFlag() && _idx >= _cnt) break;
 		if (GetArgument().HasArgSlot()) {
 			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) {
+				_contFlag = false;
+				break;
+			}
 		}
 		_idx++;
 		Event event;

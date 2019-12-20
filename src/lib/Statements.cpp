@@ -356,8 +356,8 @@ Gurax_ImplementStatement(for_)
 		composer.ComposeAsSequence(*exprCaller.GetExprOfBlock());
 		composer.Add_EndSequence(exprCaller.GetExprOfBlock());
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
-		//composer.Add_GenIterator_for(
-		//	exprCaller.GetExprOfBlock()->Reference(), pDeclArgOwner.release(), xiterFlag, &exprCaller);	// [Iterator]
+		composer.Add_GenIterator_for(
+			exprCaller.GetExprOfBlock()->Reference(), pDeclArgOwner.release(), xiterFlag, &exprCaller);	// [Iterator]
 	} else {	
 		const DeclArgOwner& declArgsOfBlock = exprCaller.GetExprOfBlock()->GetDeclCallable().GetDeclArgOwner();
 		bool listFlag = exprCaller.GetAttr().IsSet(Gurax_Symbol(list));

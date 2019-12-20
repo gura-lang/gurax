@@ -708,7 +708,7 @@ public:
 		PUnit_GenIterator_for(pExprOfBlock, pDeclArgOwner, skipNilFlag) { _ppExprSrc[0] = pExpr; }
 public:
 	const Expr_Block& GetExprOfBlock() const { return *_pExprOfBlock; }
-	const DeclArgOwner GetDeclArgOwner() const { return *_pDeclArgOwner; }
+	const DeclArgOwner& GetDeclArgOwner() const { return *_pDeclArgOwner; }
 	bool GetSkipNilFlag() const { return _skipNilFlag; }
 public:
 	// Virtual functions of PUnit

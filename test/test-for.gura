@@ -29,6 +29,7 @@ TestCase('PUnit') {
 TestCase('Create list') {
 	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
 	Tester(`tbl)
+	Tester(`(for (n in []):list { n }))
 	Tester(`(for (n in tbl):list { n }))
 	Tester(`(for (n in tbl):list {|i| n + i}))
 	Tester(`(for (n in tbl):list { if (n % 2 == 0) { continue }; n }))
@@ -51,27 +52,60 @@ TestCase('Create list') {
 	Tester(`(for (n in tbl):xlist { (n > 8) && break('end') ; n }))
 	Tester(`(for (n in tbl):xlist { if (n > 8) { break(nil) }; n }))
 	Tester(`(for (n in tbl):xlist { (n > 8) && break(nil) ; n }))
-	/*
-	for (n in []) {
-	Printf('%d\n', n)
-	}
-	for (n in [3, 1, 4, 1, 5]) {
-	Printf('%d\n', n)
-	}
-	for (n in [3, 1, 4, 1, 5]) {|i|
-	Printf('#%d %d\n', i, n)
-	}
-	for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]) {|i|
-	Printf('#%d %d %d\n', i, n1, n2)
-	}
-	for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]) {|i|
-	Printf('#%d %d %d %d\n', i, n1, n2, n3)
-	}
-	for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1]) {|i|
-	Printf('#%d %d %d\n', i, n1, n2)
-	}
-	for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]) {|i|
-	Printf('#%d %d %d %d\n', i, n1, n2, n3)
-	}
-	*/
+	Tester(`(for (n in [3, 1, 4, 1, 5]):list {|i| Format('%d-%d', i, n)}))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]):list {|i| Format('%d-%d-%d', i, n1, n2)}))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):list {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}))
+	Tester(`(for (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):list {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]):list {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):list {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}))
+}
+
+TestCase('Create iterator') {
+	tbl = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8]
+	Tester(`tbl)
+	Tester(`(for (n in []):iter { n }[]))
+	Tester(`(for (n in tbl):iter { n }[]))
+	Tester(`(for (n in tbl):iter {|i| n + i}[]))
+	Tester(`(for (n in tbl):iter { if (n % 2 == 0) { continue }; n }[]))
+	Tester(`(for (n in tbl):iter { (n % 2 == 0) && continue; n }[]))
+	Tester(`(for (n in tbl):iter { if (n % 2 == 0) { continue }; n }[]))
+	Tester(`(for (n in tbl):iter { (n % 2 == 0) && continue; n }[]))
+	Tester(`(for (n in tbl):xiter { if (n % 2 == 0) { continue }; n }[]))
+	Tester(`(for (n in tbl):xiter { (n % 2 == 0) && continue; n }[]))
+	Tester(`(for (n in tbl):iter { if (n % 2 == 0) { continue('x') }; n }[]))
+	Tester(`(for (n in tbl):iter { (n % 2 == 0) && continue('x'); n }[]))
+	Tester(`(for (n in tbl):iter { if (n > 8) { break }; n }[]))
+	Tester(`(for (n in tbl):iter { (n > 8) && break; n }[]))
+	Tester(`(for (n in tbl):iter { if (n > 8) { break('end') }; n }[]))
+	Tester(`(for (n in tbl):iter { (n > 8) && break('end'); n }[]))
+	Tester(`(for (n in tbl):iter { if (n > 8) { break(nil) }; n }[]))
+	Tester(`(for (n in tbl):iter { (n > 8) && break(nil); n }[]))
+	Tester(`(for (n in tbl):xiter { if (n > 8) { break }; n }[]))
+	Tester(`(for (n in tbl):xiter { (n > 8) && break ; n }[]))
+	Tester(`(for (n in tbl):xiter { if (n > 8) { break('end') }; n }[]))
+	Tester(`(for (n in tbl):xiter { (n > 8) && break('end') ; n }[]))
+	Tester(`(for (n in tbl):xiter { if (n > 8) { break(nil) }; n }[]))
+	Tester(`(for (n in tbl):xiter { (n > 8) && break(nil) ; n }[]))
+	Tester(`(for (n in [3, 1, 4, 1, 5]):iter {|i| Format('%d-%d', i, n)}[]))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2]):iter {|i| Format('%d-%d-%d', i, n1, n2)}[]))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):iter {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}[]))
+	Tester(`(for (n1 in [3, 1, 4], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3, 2, 0]):iter {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}[]))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1], n3 in [1, 7, 3, 2, 0]):iter {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}[]))
+	Tester(`(for (n1 in [3, 1, 4, 1, 5], n2 in [1, 4, 1, 4, 2], n3 in [1, 7, 3]):iter {|i|
+		Format('%d-%d-%d', i, n1, n2)
+	}[]))
 }
