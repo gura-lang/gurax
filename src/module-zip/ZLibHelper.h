@@ -24,11 +24,11 @@ public:
 		UInt8 ExtraFlags;
 		UInt8 OperatingSystem;
 		enum { Size = 10 };
-		bool GetFTEXT() const    { return (Flags & (1 << 0))? true : false; }
-		bool GetFHCRC() const    { return (Flags & (1 << 1))? true : false; }
-		bool GetFEXTRA() const   { return (Flags & (1 << 2))? true : false; }
-		bool GetFNAME() const    { return (Flags & (1 << 3))? true : false; }
-		bool GetFCOMMENT() const { return (Flags & (1 << 4))? true : false; }
+		bool GetFTEXT() const    { return (Flags & (1 << 0)) != 0; }
+		bool GetFHCRC() const    { return (Flags & (1 << 1)) != 0; }
+		bool GetFEXTRA() const   { return (Flags & (1 << 2)) != 0; }
+		bool GetFNAME() const    { return (Flags & (1 << 3)) != 0; }
+		bool GetFCOMMENT() const { return (Flags & (1 << 4)) != 0; }
 	};
 private:
 	Fields _fields;
