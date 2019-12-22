@@ -10,6 +10,20 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 const Binary Binary::Empty("");
 
+Binary& Binary::operator=(const Binary& src) noexcept
+{
+	basic_string::operator=(src);
+	_writableFlag = src._writableFlag;
+	return *this;
+}
+
+Binary& Binary::operator=(Binary&& src) noexcept
+{
+	basic_string::operator=(src);
+	_writableFlag = src._writableFlag;
+	return *this;
+}
+
 void Binary::Bootup()
 {
 }

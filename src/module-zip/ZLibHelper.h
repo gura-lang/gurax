@@ -36,7 +36,7 @@ private:
 	String _fileName;
 	String _comment;
 public:
-	GZHeader() {
+	GZHeader() : _extra(true) {
 		::memset(&_fields, 0x00, Fields::Size);
 		_fields.Identification1		= 0x1f;
 		_fields.Identification2		= 0x8b;
@@ -63,7 +63,7 @@ public:
 				return false;
 			}
 			unsigned short ExtraLength = Gurax_UnpackUInt16(fields.ExtraLength);
-			if (!stream.Seek(ExtraLength, Stream::SeekCur)) {
+			if (!stream.Seek(ExtraLength, Stream::SeekMode::Cur)) {
 				SetError_InvalidFormat();
 				return false;
 			}
@@ -91,7 +91,7 @@ public:
 			}
 		}
 		if (_fields.GetFHCRC()) {
-			if (!stream.Seek(2, Stream::SeekCur)) {
+			if (!stream.Seek(2, Stream::SeekMode::Cur)) {
 				SetError_InvalidFormat();
 				return false;
 			}
@@ -184,7 +184,7 @@ public:
 			Stream(Flag::Readable), _pStream(pStream), _bytesSrc(bytesSrc),
 			_bytesBuff(bytesBuff), _bytesOut(0),
 			_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
-		CopyCodec(pStream);
+		_pCodec.reset(pStream->GetCodec().Duplicate());
 	}
 	~Stream_Inflater() {
 		::inflateEnd(&_zstrm);
@@ -206,10 +206,10 @@ public:
 		return true;
 	}
 	virtual const char* GetName() const override {
-		return (_pStream.IsNull())? "(invalid)" : _pStream->GetName();
+		return _pStream? _pStream->GetName() : "(invalid)";
 	}
 	virtual const char* GetIdentifier() const override {
-		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
+		return _pStream? _pStream->GetIdentifier() : nullptr;
 	}
 	virtual size_t DoWrite(const void* buff, size_t len) override {
 		return 0;
@@ -234,7 +234,7 @@ public:
 							Error::Issue(ErrorType::IOError, "unexpected end of gzip stream");
 							return 0;
 						}
-						if (_bytesSrc != InvalidSize) {
+						if (_bytesSrc != -1) {
 							_bytesSrc -= bytesRead;
 						}
 						_zstrm.avail_in = static_cast<uInt>(bytesRead);
@@ -278,10 +278,8 @@ public:
 		return false;
 	}
 	virtual void DoFlush() override {
-		return false;
 	}
 	virtual void DoClose() override {
-		return true;
 	}
 };
 
@@ -293,15 +291,14 @@ private:
 	RefPtr<Stream> _pStream;
 	RefPtr<Memory> _pMemory;
 	size_t _bytesBuff;
-	size_t _offsetOut;
 	z_stream _zstrm;
 	UInt8* _buffOut;
 	UInt8* _buffIn;
 public:
 	Stream_Deflater(Stream* pStream, size_t bytesBuff = 32768) :
 			Stream(Flag::Writable), _pStream(pStream),
-			_bytesBuff(bytesBuff), _offsetOut(0), _buffOut(nullptr), _buffIn(nullptr) {
-		CopyCodec(pStream);
+			_bytesBuff(bytesBuff), _buffOut(nullptr), _buffIn(nullptr) {
+		_pCodec.reset(pStream->GetCodec().Duplicate());
 	}
 	~Stream_Deflater() {
 		DoClose();
@@ -325,13 +322,13 @@ public:
 		return true;
 	}
 	virtual const char* GetName() const override {
-		return (_pStream.IsNull())? "(invalid)" : _pStream->GetName();
+		return _pStream? _pStream->GetName() : "(invalid)";
 	}
 	virtual const char* GetIdentifier() const override {
-		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
+		return _pStream? _pStream->GetIdentifier() : nullptr;
 	}
 	virtual size_t DoWrite(const void* buff, size_t len) override {
-		if (_pStream.IsNull()) return 0;
+		if (!_pStream) return 0;
 		_zstrm.next_in = reinterpret_cast<Bytef*>(const_cast<void *>(buff));
 		_zstrm.avail_in = static_cast<uInt>(len);
 		while (_zstrm.avail_in > 0) {
@@ -350,14 +347,11 @@ public:
 		return len;
 	}
 	virtual void DoFlush() override {
-		return DoClose();
-	}
-	virtual void DoClose() override {
-		if (_pStream.IsNull()) return true;
+		if (!_pStream) return;
 		for (;;) {
 			if (_zstrm.avail_out == 0) {
 				_pStream->Write(_buffOut, _bytesBuff);
-				if (Error::IsIssued()) return 0;
+				if (Error::IsIssued()) return;
 				_zstrm.next_out = _buffOut;
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 			}
@@ -366,7 +360,7 @@ public:
 			if (rtn != Z_OK) {
 				Error::Issue(ErrorType::IOError, "%s",
 						(_zstrm.msg == nullptr)? "zlib error" : _zstrm.msg);
-				return false;
+				return;
 			}
 		}
 		size_t bytesOut = _bytesBuff - _zstrm.avail_out;
@@ -374,10 +368,13 @@ public:
 			_pStream->Write(_buffOut, bytesOut);
 		}
 		::deflateEnd(&_zstrm);
-		if (Error::IsIssued()) return false;
-		bool rtn = _pStream->Flush();
+		if (Error::IsIssued()) return;
+		_pStream->Flush();
+	}
+	virtual void DoClose() override {
+		if (!_pStream) return;
+		DoFlush();
 		_pStream.reset(nullptr);
-		return rtn;
 	}
 	virtual size_t DoRead(void* buff, size_t bytes) override {
 		return 0;

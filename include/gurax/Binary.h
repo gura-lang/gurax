@@ -52,10 +52,10 @@ public:
 	Binary(bool writableFlag, size_t len, UInt8 c) : basic_string(len, c), _writableFlag(writableFlag) {}
 	// Copy constructor/operator
 	Binary(const Binary& src) : basic_string(src), _writableFlag(src._writableFlag) {}
-	Binary& operator=(Binary& src) noexcept = delete;
+	Binary& operator=(const Binary& src) noexcept;
 	// Move constructor/operator
 	Binary(Binary&& src) : basic_string(src), _writableFlag(src._writableFlag) {}
-	Binary& operator=(Binary&& src) noexcept = delete;
+	Binary& operator=(Binary&& src) noexcept;
 	// Destructor
 	~Binary() = default;
 public:
