@@ -148,15 +148,15 @@ public:
 	}
 	void SetExtra(const Binary& extra) {
 		_extra = extra;
-		_fields.Flags |= (1 << 2);
+		_fields.Flags |= (1 << 2);	// FEXTRA
 	}
 	void SetFileName(const char* fileName) {
 		_fileName = fileName;
-		_fields.Flags |= (1 << 3);
+		_fields.Flags |= (1 << 3);	// FNAME
 	}
 	void SetComment(const char* comment) {
 		_comment = comment;
-		_fields.Flags |= (1 << 4);
+		_fields.Flags |= (1 << 4);	// FCOMMENT
 	}
 private:
 	void SetError_InvalidFormat() {
