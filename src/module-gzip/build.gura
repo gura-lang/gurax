@@ -1,0 +1,15 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
+import(util.modbuild) {Builder}
+
+b = Builder('gzip')
+b.pathNamesSrc = ['module-gzip.cpp', 'Util.cpp']
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cflags = []
+b.ldflags = []
+b.libs = ['z']
+b.Run()

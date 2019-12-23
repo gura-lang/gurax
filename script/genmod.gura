@@ -80,7 +80,7 @@ Gurax_BeginModule(${ubarModuleName})
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// re.Test()
+// ${dotModuleName}.Test()
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Number, Flag::None);

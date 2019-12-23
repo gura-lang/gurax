@@ -277,10 +277,10 @@ public:
 		Error::Issue(ErrorType::UnimplementedError, "backward seeking is not supported");
 		return false;
 	}
-	virtual void DoFlush() override {
-	}
-	virtual void DoClose() override {
-	}
+	virtual void DoFlush() override {}
+	virtual void DoClose() override {}
+	virtual int DoGetChar() override { return -1; }
+	virtual bool DoPutChar(char ch) override { return false; }
 };
 
 //------------------------------------------------------------------------------
@@ -376,12 +376,10 @@ public:
 		DoFlush();
 		_pStream.reset(nullptr);
 	}
-	virtual size_t DoRead(void* buff, size_t bytes) override {
-		return 0;
-	}
-	virtual bool DoSeek(size_t offset, size_t offsetPrev) override {
-		return false;
-	}
+	virtual size_t DoRead(void* buff, size_t bytes) override { return 0; }
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override { return false; }
+	virtual int DoGetChar() override { return -1; }
+	virtual bool DoPutChar(char ch) override { return false; }
 };
 
 }
