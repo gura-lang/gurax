@@ -196,8 +196,7 @@ public:
 		_zstrm.opaque = Z_NULL;
 		_zstrm.avail_in = 0;
 		if (::inflateInit2(&_zstrm, windowBits) != Z_OK) {
-			Error::Issue(ErrorType::IOError, "%s",
-						 (_zstrm.msg == nullptr)? "zlib error" : _zstrm.msg);
+			Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg : "zlib error");
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
@@ -250,8 +249,7 @@ public:
 						_doneFlag = true;
 						continueFlag = false;
 					} else {
-						Error::Issue(ErrorType::IOError, "%s",
-							(_zstrm.msg == nullptr)? "zlib error" : _zstrm.msg);
+						Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg :  "zlib error");
 						::inflateEnd(&_zstrm);
 						return 0;
 					}
@@ -259,7 +257,7 @@ public:
 			}
 			size_t bytesToCopy = _bytesOut - _offsetOut;
 			if (bytesToCopy > bytesRest) bytesToCopy = bytesRest;
-			if (buffp != nullptr) {
+			if (buffp) {
 				::memcpy(buffp + bytesRead, _buffOut + _offsetOut, bytesToCopy);
 			}
 			_offsetOut += bytesToCopy;
@@ -308,8 +306,7 @@ public:
 		_zstrm.opaque = Z_NULL;
 		if (::deflateInit2(&_zstrm, level,
 							Z_DEFLATED, windowBits, memLevel, strategy) != Z_OK) {
-			Error::Issue(ErrorType::IOError, "%s",
-						(_zstrm.msg == nullptr)? "zlib error" : _zstrm.msg);
+			Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg : "zlib error");
 			return false;
 		}
 		_pMemory.reset(new MemoryHeap(_bytesBuff * 2));
@@ -337,8 +334,7 @@ public:
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 			}
 			if (::deflate(&_zstrm, Z_NO_FLUSH) != Z_OK) {
-				Error::Issue(ErrorType::IOError, "%s",
-						(_zstrm.msg == nullptr)? "zlib error" : _zstrm.msg);
+				Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg : "zlib error");
 				return 0;
 			}
 		}
@@ -356,8 +352,7 @@ public:
 			int rtn = ::deflate(&_zstrm, Z_FINISH);
 			if (rtn == Z_STREAM_END) break;
 			if (rtn != Z_OK) {
-				Error::Issue(ErrorType::IOError, "%s",
-						(_zstrm.msg == nullptr)? "zlib error" : _zstrm.msg);
+				Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg : "zlib error");
 				return;
 			}
 		}

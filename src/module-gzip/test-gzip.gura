@@ -6,8 +6,13 @@ import(util.tester) {*}
 import(gzip)
 
 TestCase('Basic test') {
+	/*
 	gzip.Reader('test.gz') {|s|
-		//Println(s.Read())
 		Print(s.ReadLines())
+	}
+	*/
+	gzip.Writer('test2.gz') {|s|
+		s.Print(ReadLines('ZLibHelper.h'))
+		s.Flush()
 	}
 }
