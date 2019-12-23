@@ -118,8 +118,8 @@ public:
 	virtual void DoFlush() = 0;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev);
 protected:
-	virtual int DoGetChar() = 0;
-	virtual bool DoPutChar(char ch) = 0;
+	virtual int DoGetChar();
+	virtual bool DoPutChar(char ch);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stream& stream) const { return this == &stream; }

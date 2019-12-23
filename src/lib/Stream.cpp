@@ -278,12 +278,24 @@ bool Stream::DoSeek(size_t offset, size_t offsetPrev)
 	return false;
 }
 
+int Stream::DoGetChar()
+{
+	UInt8 ch;
+	return (DoRead(&ch, sizeof(ch)) > 0)? static_cast<int>(ch) : -1;
+}
+
+bool Stream::DoPutChar(char ch)
+{
+	return DoWrite(&ch, sizeof(ch)) > 0;
+}
+
 String Stream::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += GetName();
 	if (GetFlags() & Flag::Readable) str += ":r";
 	if (GetFlags() & Flag::Writable) str += ":w";
+	str.Printf(":encoding=%s", GetCodec().GetEncoding());
 	if (GetCodec().GetAddcrFlag()) str += ":addcr";
 	if (GetCodec().GetDelcrFlag()) str += ":delcr";
 	return str;
