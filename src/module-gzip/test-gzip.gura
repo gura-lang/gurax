@@ -6,5 +6,7 @@ import(util.tester) {*}
 import(gzip)
 
 TestCase('Basic test') {
-	Println(gzip.Test('hello', 4))
+	gzip.Reader('test.gz') {|s|
+		Println(s.Read())
+	}
 }
