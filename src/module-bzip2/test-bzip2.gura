@@ -6,5 +6,14 @@ import(util.tester) {*}
 import(bzip2)
 
 TestCase('Basic test') {
-	Println(bzip2.Test('hello', 4))
+	/*
+	bzip2.Reader('test.bz2') {|s|
+		Print(s.ReadLines())
+	}
+	*/
+	bzip2.Writer('test2.bz2') {|s|
+		s.Print(ReadLines('BZLibHelper.h'))
+		//s.Write(b'fjsdkfjladksjfkjadslkfjksadjfldjsfkjadsfljdaskfjdas')
+		//s.Flush()
+	}
 }
