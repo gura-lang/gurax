@@ -6,6 +6,10 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(bzip2)
+
+Value_Stream* GenerateReader(Stream* pStreamSrc);
+Value_Stream* GenerateWriter(Stream* pStreamDst, int blockSize100k);
+
 Gurax_EndModuleScope(bzip2)
 
 #endif
