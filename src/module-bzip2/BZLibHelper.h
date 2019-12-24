@@ -10,9 +10,9 @@ namespace Gurax {
 namespace BZLib {
 
 //------------------------------------------------------------------------------
-// Stream_Decompressor
+// Stream_Reader
 //------------------------------------------------------------------------------
-class Stream_Decompressor : public Stream {
+class Stream_Reader : public Stream {
 private:
 	RefPtr<Stream> _pStream;
 	RefPtr<Memory> _pMemory;
@@ -25,12 +25,12 @@ private:
 	char* _buffIn;
 	bool _doneFlag;
 public:
-	Stream_Decompressor(Stream* pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
+	Stream_Reader(Stream* pStream, size_t bytesSrc, size_t bytesBuff = 32768) :
 		Stream(Flag::Readable), _pStream(pStream), _bytesSrc(bytesSrc), _bytesBuff(bytesBuff), _bytesOut(0),
 		_offsetOut(0), _buffOut(nullptr), _buffIn(nullptr), _doneFlag(false) {
 		SetCodec(pStream->GetCodec().Duplicate());
 	}
-	~Stream_Decompressor() {
+	~Stream_Reader() {
 		::BZ2_bzDecompressEnd(&_bzstrm);
 	}
 	bool Initialize(int verbosity, int small) {
@@ -123,9 +123,9 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Stream_Compressor
+// Stream_Writer
 //------------------------------------------------------------------------------
-class Stream_Compressor : public Stream {
+class Stream_Writer : public Stream {
 private:
 	RefPtr<Stream> _pStream;
 	RefPtr<Memory> _pMemory;
@@ -134,12 +134,12 @@ private:
 	char* _buffOut;
 	char* _buffIn;
 public:
-	Stream_Compressor(Stream* pStream, size_t bytesBuff = 32768) :
+	Stream_Writer(Stream* pStream, size_t bytesBuff = 32768) :
 			Stream(Flag::Writable), _pStream(pStream),
 			_bytesBuff(bytesBuff), _buffOut(nullptr), _buffIn(nullptr) {
 		SetCodec(pStream->GetCodec().Duplicate());
 	}
-	~Stream_Compressor() { Close(); }
+	~Stream_Writer() { Close(); }
 	bool Initialize(int blockSize100k, int verbosity, int workFactor) {
 		::memset(&_bzstrm, 0x00, sizeof(_bzstrm));
 		_bzstrm.bzalloc = nullptr;
