@@ -337,9 +337,7 @@ public:
 		}
 		return len;
 	}
-	virtual bool DoFlush() override {
-		return true;
-	}
+	virtual bool DoFlush() override { return true; }
 	virtual bool DoClose() override {
 		if (!_pStreamDst) return true;
 		for (;;) {
@@ -362,7 +360,6 @@ public:
 		}
 		::deflateEnd(&_zstrm);
 		if (Error::IsIssued()) return false;
-		_pStreamDst->Flush();
 		_pStreamDst.reset(nullptr);
 		return true;
 	}
