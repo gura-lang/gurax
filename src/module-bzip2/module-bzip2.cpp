@@ -39,7 +39,11 @@ Gurax_DeclareFunction(Writer)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Stream` instance that compresses data into a bzip2-encoded data stream.");
+		"Creates a `Stream` instance that compresses data into a bzip2-encoded data stream.\n"
+		"The argument `blockSize100k` takes a number between 1 and 9\n"
+		"that specifies the block size to be used for compression.\n"
+		"The actual block size is 100000 times of this value.\n"
+		"Nine gives the best compression but takes most memory.\n");
 }
 
 Gurax_ImplementFunction(Writer)
