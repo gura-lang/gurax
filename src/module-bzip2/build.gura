@@ -1,0 +1,15 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// build.gura
+//==============================================================================
+import(util.modbuild) {Builder}
+
+b = Builder('bzip2')
+b.pathNamesSrc = ['module-bzip2.cpp', 'Util.cpp']
+b.pathNamesScript = []
+b.dirNamesInc = []
+b.dirNamesLib = []
+b.cflags = []
+b.ldflags = []
+b.libs = []
+b.Run()
