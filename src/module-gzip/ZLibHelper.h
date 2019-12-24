@@ -275,8 +275,8 @@ public:
 		Error::Issue(ErrorType::UnimplementedError, "backward seeking is not supported");
 		return false;
 	}
-	virtual void DoFlush() override {}
-	virtual void DoClose() override {}
+	virtual bool DoFlush() override { return true; }
+	virtual bool DoClose() override { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -324,7 +324,7 @@ public:
 	}
 	virtual size_t DoWrite(const void* buff, size_t len) override {
 		if (!_pStream) return 0;
-		_zstrm.next_in = reinterpret_cast<Bytef*>(const_cast<void *>(buff));
+		_zstrm.next_in = reinterpret_cast<Bytef*>(const_cast<void*>(buff));
 		_zstrm.avail_in = static_cast<uInt>(len);
 		while (_zstrm.avail_in > 0) {
 			if (_zstrm.avail_out == 0) {
@@ -340,12 +340,13 @@ public:
 		}
 		return len;
 	}
-	virtual void DoFlush() override {
-		if (!_pStream) return;
+	virtual bool DoFlush() override { return true; }
+	virtual bool DoClose() override {
+		if (!_pStream) return true;
 		for (;;) {
 			if (_zstrm.avail_out == 0) {
 				_pStream->Write(_buffOut, _bytesBuff);
-				if (Error::IsIssued()) return;
+				if (Error::IsIssued()) return false;
 				_zstrm.next_out = _buffOut;
 				_zstrm.avail_out = static_cast<uInt>(_bytesBuff);
 			}
@@ -353,7 +354,7 @@ public:
 			if (rtn == Z_STREAM_END) break;
 			if (rtn != Z_OK) {
 				Error::Issue(ErrorType::IOError, "%s", _zstrm.msg? _zstrm.msg : "zlib error");
-				return;
+				return false;
 			}
 		}
 		size_t bytesOut = _bytesBuff - _zstrm.avail_out;
@@ -361,13 +362,10 @@ public:
 			_pStream->Write(_buffOut, bytesOut);
 		}
 		::deflateEnd(&_zstrm);
-		if (Error::IsIssued()) return;
-		_pStream->Flush();
-	}
-	virtual void DoClose() override {
-		if (!_pStream) return;
-		DoFlush();
+		if (Error::IsIssued()) return false;
+		_pStream->Close();
 		_pStream.reset(nullptr);
+		return true;
 	}
 	virtual size_t DoRead(void* buff, size_t bytes) override { return 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override { return false; }

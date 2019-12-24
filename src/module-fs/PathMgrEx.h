@@ -54,7 +54,7 @@ public:
 	virtual const char* GetName() const override { return _pathName.c_str(); };
 	virtual const char* GetIdentifier() const override { return _pathName.c_str(); }
 	virtual size_t DoGetSize() override;
-	virtual void DoClose() override { ::fclose(_fp); }
+	virtual bool DoClose() override { return ::fclose(_fp) == 0; }
 	virtual int DoGetChar() override { return ::fgetc(_fp); }
 	virtual bool DoPutChar(char ch) override { ::fputc(ch, _fp); return true; }
 	virtual size_t DoRead(void* buff, size_t len) override {
@@ -63,7 +63,7 @@ public:
 	virtual size_t DoWrite(const void* buff, size_t len) override {
 		return ::fwrite(buff, 1, len, _fp);
 	}
-	virtual void DoFlush() override { ::fflush(_fp); }
+	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 

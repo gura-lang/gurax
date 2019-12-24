@@ -13,6 +13,7 @@ TestCase('Basic test') {
 	*/
 	gzip.Writer('test2.gz') {|s|
 		s.Print(ReadLines('ZLibHelper.h'))
-		s.Flush()
+		//s.Write(b'fjsdkfjladksjfkjadslkfjksadjfldjsfkjadsfljdaskfjdas')
+		//s.Flush()
 	}
 }

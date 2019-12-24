@@ -54,7 +54,7 @@ public:
 	virtual const char* GetIdentifier() const override {
 		return (_pStream.IsNull())? nullptr : _pStream->GetIdentifier();
 	}
-	virtual void Close() override {}
+	virtual bool DoClose() override { return true; }
 	virtual size_t Write(const void* buff, size_t len) override {
 		return 0;
 	}
@@ -129,7 +129,7 @@ public:
 		Error::Issue(ErrorType::UnimplementedError, "backward seeking is not supported");
 		return false;
 	}
-	virtual void Flush() override {}
+	virtual bool Flush() override { return true; }
 };
 
 //------------------------------------------------------------------------------
@@ -194,7 +194,7 @@ public:
 		}
 		return len;
 	}
-	virtual bool Flush() override { Close(); }
+	virtual bool Flush() override { return true; }
 	virtual bool Close() override {
 		if (_pStream.IsNull()) return true;
 		for (;;) {
