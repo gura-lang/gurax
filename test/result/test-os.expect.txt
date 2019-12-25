@@ -1,8 +1,8 @@
 ======== Property ========
 ======== Streams ========
-os.cin .. <Stream:CIn:r:delcr>
-os.cout .. <Stream:COut:w:delcr>
-os.cerr .. <Stream:CErr:w:delcr>
+os.cin .. <Stream:CIn:r:encoding=dumb:delcr>
+os.cout .. <Stream:COut:w:encoding=dumb:delcr>
+os.cerr .. <Stream:CErr:w:encoding=dumb:delcr>
 print message on os.cout
 ======== os.Redirect() ========
 os.cin .. <Nil>

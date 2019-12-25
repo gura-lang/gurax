@@ -42,20 +42,12 @@ Value* PointerGetTmpl(Value_Pointer& valueTarget, const Attribute& attr)
 	bool exceedErrorFlag = false;
 	Pointer& pointer = valueTarget.GetPointer();
 	T_Num num;
-	if (stayFlag) {
-		if (!(bigEndianFlag?
-			  pointer.GetStay<T_Num, true>(&num, exceedErrorFlag) :
-			  pointer.GetStay<T_Num, false>(&num, exceedErrorFlag))) {
-			return Value::nil();
-		}
-	} else {
-		if (!(bigEndianFlag?
-			  pointer.Get<T_Num, true>(&num, exceedErrorFlag) :
-			  pointer.Get<T_Num, false>(&num, exceedErrorFlag))) {
-			return Value::nil();
-		}
-	}
-	return new Value_Number(num);
+	size_t offset = pointer.GetOffset();
+	bool rtn = bigEndianFlag?
+		pointer.Get<T_Num, true>(&num, exceedErrorFlag) :
+		pointer.Get<T_Num, false>(&num, exceedErrorFlag);
+	if (stayFlag) pointer.SetOffset(offset);
+	return rtn? new Value_Number(num) : Value::nil();
 }
 
 template<typename T_Num>
@@ -65,11 +57,9 @@ void PointerPutTmpl(Value_Pointer& valueTarget, const Attribute& attr, const Val
 	bool bigEndianFlag = attr.IsSet(Gurax_Symbol(be));
 	Pointer& pointer = valueTarget.GetPointer();
 	T_Num num = Value_Number::GetNumber<T_Num>(value);
-	if (stayFlag) {
-		if (bigEndianFlag) { pointer.PutStay<T_Num, true>(num); } else { pointer.PutStay<T_Num, false>(num); }
-	} else {
-		if (bigEndianFlag) { pointer.Put<T_Num, true>(num); } else { pointer.Put<T_Num, false>(num); }
-	}
+	size_t offset = pointer.GetOffset();
+	if (bigEndianFlag) { pointer.Put<T_Num, true>(num); } else { pointer.Put<T_Num, false>(num); }
+	if (stayFlag) pointer.SetOffset(offset);
 }
 
 //------------------------------------------------------------------------------
@@ -182,20 +172,20 @@ Gurax_ImplementMethod(Pointer, Pack)
 	const ValueList& valListArg = args.PickList();
 	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
 	// Function body
-	if (stayFlag) {
-		valueThis.GetPointer().PackStay(format, valListArg);
-	} else {
-		valueThis.GetPointer().Pack(format, valListArg);
-	}
+	Pointer& pointer = valueThis.GetPointer();
+	size_t offset = pointer.GetOffset();
+	pointer.Pack(format, valListArg);
+	if (stayFlag) pointer.SetOffset(offset);
 	return valueThis.Reference();
 }
 
-// Pointer#Put(elemType:Symbol, args*):reduce:[stay]
+// Pointer#Put(elemType:Symbol, args*):reduce:[be,stay]
 Gurax_DeclareMethod(Pointer, Put)
 {
 	Declare(VTYPE_Pointer, Flag::Reduce);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
 	AddHelp(
 		Gurax_Symbol(en),
@@ -214,13 +204,13 @@ Gurax_ImplementMethod(Pointer, Put)
 		return Value::nil();
 	}
 	const ValueList& valListArg = args.PickList();
+	bool bigEndianFlag = argument.IsSet(Gurax_Symbol(be));
 	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
 	// Function body
-	if (stayFlag) {
-		valueThis.GetPointer().PutValuesStay(elemType, valListArg);
-	} else {
-		valueThis.GetPointer().PutValues(elemType, valListArg);
-	}
+	Pointer& pointer = valueThis.GetPointer();
+	size_t offset = pointer.GetOffset();
+	pointer.PutValues(elemType, bigEndianFlag, valListArg);
+	if (stayFlag) pointer.SetOffset(offset);
 	return valueThis.Reference();
 }
 
@@ -306,9 +296,11 @@ Gurax_ImplementMethod(Pointer, Unpack)
 	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
 	bool exceedErrorFlag = argument.IsSet(Gurax_Symbol(raise));
 	// Function body
-	return stayFlag?
-		valueThis.GetPointer().UnpackStay(format, valListArg, exceedErrorFlag) :
-		valueThis.GetPointer().Unpack(format, valListArg, exceedErrorFlag);
+	Pointer& pointer = valueThis.GetPointer();
+	size_t offset = pointer.GetOffset();
+	RefPtr<Value> pValue(pointer.Unpack(format, valListArg, exceedErrorFlag));
+	if (stayFlag) pointer.SetOffset(offset);
+	return pValue.release();
 }
 
 //-----------------------------------------------------------------------------

@@ -16,7 +16,7 @@ public:
 	Gurax_DeclareReferable(Pointer);
 public:
 	enum class ElemType {
-		None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double, String,
+		None, Int8, UInt8, Int16, UInt16, Int32, UInt32, Int64, UInt64, Float, Double,
 	};
 	class SymbolAssoc_ElemType : public SymbolAssoc<ElemType, ElemType::None> {
 	public:
@@ -31,7 +31,6 @@ public:
 			Assoc(Gurax_Symbol(uint64),			ElemType::UInt64);
 			Assoc(Gurax_Symbol(float_),			ElemType::Float);
 			Assoc(Gurax_Symbol(double_),		ElemType::Double);
-			Assoc(Gurax_Symbol(string),			ElemType::String);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
@@ -59,14 +58,9 @@ public:
 		return (_offset < bytesEntire)? bytesEntire - _offset : 0;
 	}
 	bool Advance(int distance);
-	bool PackStay(const char* format, const ValueList& valListArg);
-	Value* UnpackStay(const char* format, const ValueList& valListArg, bool exceedErrorFlag);
-	bool PutValue(ElemType elemType, const Value& value);
-	bool PutValues(ElemType elemType, const ValueList& valList);
-	bool PutValueStay(ElemType elemType, const Value& value);
-	bool PutValuesStay(ElemType elemType, const ValueList& valList);
-	template<typename T, bool bigEndianFlag> bool PutStay(T num);
-	template<typename T, bool bigEndianFlag> bool GetStay(T* pNum, bool exceedErrorFlag);
+	bool PutValue(ElemType elemType, bool bigEndianFlag, const Value& value);
+	bool PutValues(ElemType elemType, bool bigEndianFlag, const ValueList& valList);
+	bool PutValues(ElemType elemType, bool bigEndianFlag, Iterator& iterator);
 	bool CheckWritable() const;
 public:
 	virtual Pointer* Clone() const = 0;
@@ -89,22 +83,6 @@ public:
 		return SymbolAssoc_ElemType::GetInstance().ToSymbol(elemType);
 	}
 };
-
-template<typename T, bool bigEndianFlag> bool Pointer::PutStay(T num)
-{
-	size_t offset = _offset;
-	bool rtn = Put<T, bigEndianFlag>(num);
-	_offset = offset;
-	return rtn;
-}
-
-template<typename T, bool bigEndianFlag> bool Pointer::GetStay(T* pNum, bool exceedErrorFlag)
-{
-	size_t offset = _offset;
-	bool rtn = Get<T, bigEndianFlag>(pNum, exceedErrorFlag);
-	_offset = offset;
-	return rtn;
-}
 
 }
 

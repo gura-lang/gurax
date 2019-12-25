@@ -105,6 +105,35 @@ TestCase('Basic test of pack/unpack') {
 TestCase('Pointer#Pack()') {
 }
 
+TestCase('Pointer#Put()') {
+	for (elemType in [`int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64, `float, `double]) {
+		Println('--------')
+		Printf('%s:\n', elemType)
+		Println('1 element')
+		(buff = B'').p.Put(elemType, 0x00), buff.Dump()
+		Println('2 elements')
+		(buff = B'').p.Put(elemType, 0x00, 0x11), buff.Dump()
+		Println('6 elements')
+		(buff = B'').p.Put(elemType, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55), buff.Dump()
+		Println('0 element in list')
+		(buff = B'').p.Put(elemType, []), buff.Dump()
+		Println('1 element in list')
+		(buff = B'').p.Put(elemType, [0x00]), buff.Dump()
+		Println('2 elements in list')
+		(buff = B'').p.Put(elemType, [0x00, 0x11]), buff.Dump()
+		Println('6 elements in list')
+		(buff = B'').p.Put(elemType, [0x00, 0x11, 0x22, 0x33, 0x44, 0x55]), buff.Dump()
+		Println('0 element in iterator')
+		(buff = B'').p.Put(elemType, ()), buff.Dump()
+		Println('1 element in iterator')
+		(buff = B'').p.Put(elemType, (0x00,)), buff.Dump()
+		Println('2 elements in iterator')
+		(buff = B'').p.Put(elemType, (0x00, 0x11)), buff.Dump()
+		Println('6 elements in iterator')
+		(buff = B'').p.Put(elemType, (0x00, 0x11, 0x22, 0x33, 0x44, 0x55)), buff.Dump()
+	}
+}
+
 TestCase('Pointer#Unpack()') {
 	buff = b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e'
 	Tester(`buff.Pointer {|p| (while (tbl = p.Unpack('B')):list {Format('%02x', tbl[0])}).Join(',')})
