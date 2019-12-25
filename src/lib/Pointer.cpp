@@ -38,6 +38,33 @@ Value* Pointer::UnpackStay(const char* format, const ValueList& valListArg, bool
 	return pValue.release();
 }
 
+bool Pointer::PutValue(ElemType elemType, const Value& value)
+{
+	
+	return false;
+}
+
+bool Pointer::PutValues(ElemType elemType, const ValueList& valList)
+{
+	for (const Value* pValue : valList) {
+		if (!PutValue(elemType, *pValue)) return false;
+	}
+	return false;
+}
+
+bool Pointer::PutValueStay(ElemType elemType, const Value& value)
+{
+	return false;
+}
+
+bool Pointer::PutValuesStay(ElemType elemType, const ValueList& valList)
+{
+	for (const Value* pValue : valList) {
+		if (!PutValueStay(elemType, *pValue)) return false;
+	}
+	return false;
+}
+
 bool Pointer::CheckWritable() const
 {
 	if (IsWritable()) return true;

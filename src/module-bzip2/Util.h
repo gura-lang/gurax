@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_BZIP2_UTIL_H
 #define GURAX_MODULE_BZIP2_UTIL_H
 #include <gurax.h>
+#include <gurax/helper/BZLibHelper.h>
 
 Gurax_BeginModuleScope(bzip2)
 

@@ -15,6 +15,13 @@ static const char* g_docHelp_en = u8R"**(
 
 # Property
 
+- `p.int8 = 10` .. Writes data into the pointed memory and increments the address by 1 byte.
+- `p.int32 = 10` .. Writes data into the pointed memory and increments the address by 4 byte.
+- `x = p.int8` ..  Reads data from the pointed memory and increments the address by 1 byte.
+- `x = p.int16` ..  Reads data from the pointed memory and increments the address by 2 byte.
+
+- `p.int8:stay = 10` .. Writes data into the pointed memory and keeps the address intact.
+
 # Operator
 
 # Cast Operation
@@ -179,6 +186,40 @@ Gurax_ImplementMethod(Pointer, Pack)
 		valueThis.GetPointer().PackStay(format, valListArg);
 	} else {
 		valueThis.GetPointer().Pack(format, valListArg);
+	}
+	return valueThis.Reference();
+}
+
+// Pointer#Put(elemType:Symbol, args*):reduce:[stay]
+Gurax_DeclareMethod(Pointer, Put)
+{
+	Declare(VTYPE_Pointer, Flag::Reduce);
+	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(stay));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Pointer, Put)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Pointer::ElemType elemType = Pointer::SymbolToElemType(args.PickSymbol());
+	if (elemType == Pointer::ElemType::None) {
+		Error::Issue(ErrorType::ValueError, "invalid symbol for elemType");
+		return Value::nil();
+	}
+	const ValueList& valListArg = args.PickList();
+	bool stayFlag = argument.IsSet(Gurax_Symbol(stay));
+	// Function body
+	if (stayFlag) {
+		valueThis.GetPointer().PutValuesStay(elemType, valListArg);
+	} else {
+		valueThis.GetPointer().PutValues(elemType, valListArg);
 	}
 	return valueThis.Reference();
 }
@@ -582,6 +623,7 @@ void VType_Pointer::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Pointer));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Pointer, Pack));
+	Assign(Gurax_CreateMethod(Pointer, Put));
 	Assign(Gurax_CreateMethod(Pointer, Unpack));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Pointer, bytesAvail));

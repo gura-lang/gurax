@@ -5,15 +5,18 @@
 import(util.tester) {*}
 import(bzip2)
 
+str = Chr(0x20..0x7e).Cycle(2048).Join()
+
 TestCase('Basic test') {
+	
 	/*
-	bzip2.Reader('test.bz2') {|s|
+	bzip2.Reader('test2.bz2') {|s|
 		Print(s.ReadLines())
 	}
 	*/
-	bzip2.Writer('test2.bz2') {|s|
+	/*
+	bzip2.Writer('test1.bz2') {|s|
 		s.Print(ReadLines('BZLibHelper.h'))
-		//s.Write(b'fjsdkfjladksjfkjadslkfjksadjfldjsfkjadsfljdaskfjdas')
-		//s.Flush()
 	}
+	*/
 }
