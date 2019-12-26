@@ -39,6 +39,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Assignment of VType
+	Assign(VTYPE_Accumulator);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	return true;

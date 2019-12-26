@@ -5,7 +5,10 @@
 import(util.modbuild) {Builder}
 
 b = Builder('hash')
-b.pathNamesSrc = ['module-hash.cpp', 'Util.cpp', 'md5/md5.c', 'sha1/sha1.c']
+b.pathNamesSrc = [
+	'module-hash.cpp', 'Util.cpp', 'md5/md5.c', 'sha1/sha1.c'
+	'Accumulator.cpp', 'VType_Accumulator.cpp'
+]
 b.pathNamesScript = []
 b.dirNamesInc = ['md5', 'sha1']
 b.dirNamesLib = []
