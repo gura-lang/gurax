@@ -22,7 +22,7 @@ extern VType_Accumulator VTYPE_Accumulator;
 //------------------------------------------------------------------------------
 // Value_Accumulator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Accumulator : public Value_Object {
+class GURAX_DLLDECLARE Value_Accumulator : public Value_Stream {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Accumulator);
@@ -36,10 +36,9 @@ public:
 	// Constructor
 	Value_Accumulator() = delete;
 	explicit Value_Accumulator(Accumulator* pAccumulator, VType& vtype = VTYPE_Accumulator) :
-		Value_Object(vtype), _pAccumulator(pAccumulator) {}
+		Value_Stream(pAccumulator, vtype) {}
 	// Copy constructor/operator
-	Value_Accumulator(const Value_Accumulator& src) :
-		Value_Object(src), _pAccumulator(src._pAccumulator->Reference()) {}
+	Value_Accumulator(const Value_Accumulator& src) : Value_Stream(src) {}
 	Value_Accumulator& operator=(const Value_Accumulator& src) = delete;
 	// Move constructor/operator
 	Value_Accumulator(Value_Accumulator&& src) = delete;
@@ -48,8 +47,8 @@ protected:
 	// Destructor
 	~Value_Accumulator() = default;
 public:
-	Accumulator& GetAccumulator() { return dynamic_cast<Accumulator&>(*_pAccumulator); }
-	const Accumulator& GetAccumulator() const { return dynamic_cast<const Accumulator&>(*_pAccumulator); }
+	Accumulator& GetAccumulator() { return dynamic_cast<Accumulator&>(GetStream()); }
+	const Accumulator& GetAccumulator() const { return dynamic_cast<const Accumulator&>(GetStream()); }
 public:
 	static Accumulator& GetAccumulator(Value& value) {
 		return dynamic_cast<Value_Accumulator&>(value).GetAccumulator();
