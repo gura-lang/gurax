@@ -34,6 +34,7 @@ Builder = class {
 	dirNameSysInc = sys.dirInclude
 	dirNameSysLib = sys.dirLib
 	dirNameSysModule = sys.dirModule
+	cflags = []
 	cxxflags = []
 	ldflags = []
 	libs = []
@@ -44,8 +45,10 @@ Builder = class {
 	dirNameOut = ''
 	compiler = ''
 	linker = ''
+	cflagsBase = []
 	cxxflagsBase = []
 	ldflagsBase = []
+	cflagsCompile = []
 	cxxflagsCompile = []
 	cxxflagsPreCompile = []
 	libsBase = []
@@ -55,6 +58,7 @@ Builder = class {
 			this.nameOut = 'gnuc'
 			this.compiler = 'clang'
 			this.linker = 'clang'
+			this.cflagsBase = ['-fPIC', '-Wall', '-DGURAX_MODULE_SEPARATED']
 			this.cxxflagsBase = ['-fPIC', '-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED']
 			this.ldflagsBase = ['-fPIC', '-shared', '-install_name', this.targetName + '.gurd']
 			this.cxxflagsPreCompile = ['-x', 'c++-header']
@@ -79,9 +83,15 @@ Builder = class {
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
 		Printf('-- compiling: %s\n', pathNameSrc)
-		this.Exec(this.compiler, this.cxxflagsBase*, this.cxxflagsCompile*, this.cxxflags*,
-				  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
-				  '-o' + pathNameObj, '-c', pathNameSrc)
+		if (pathNameSrc.EndsWith('.c'):icase) {
+			this.Exec(this.compiler, this.cflagsBase*, this.cflagsCompile*, this.cflags*,
+					  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
+					  '-o' + pathNameObj, '-c', pathNameSrc)
+		} else {
+			this.Exec(this.compiler, this.cxxflagsBase*, this.cxxflagsCompile*, this.cxxflags*,
+					  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
+					  '-o' + pathNameObj, '-c', pathNameSrc)
+		}
 	}
 	Link(pathNameGurd:String, pathNamesObj+:String) = {
 		!this.ShouldProcess(pathNameGurd, pathNamesObj*) && return(true)
