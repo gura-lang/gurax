@@ -16,7 +16,7 @@ b.pathNamesSrc = ['module-${ubarModuleName}.cpp', 'Util.cpp']
 b.pathNamesScript = []
 b.dirNamesInc = []
 b.dirNamesLib = []
-b.cflags = []
+b.cxxflags = []
 b.ldflags = []
 b.libs = []
 b.Run()

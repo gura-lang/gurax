@@ -19,7 +19,7 @@ if (sys.platform == `mswin) {
 	b.dirNamesInc = [baseDir]
 	b.dirNamesLib = [baseDir]
 	b.libs = ['onig_s.lib']
-	b.cflags = ['-DONIG_EXTERN=extern']
+	b.cxxflags = ['-DONIG_EXTERN=extern']
 } elsif (sys.platform == `linux) {
 	b.libs = ['onig']
 	b.debFiles = ['libonig']

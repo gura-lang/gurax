@@ -13,7 +13,7 @@ b.pathNamesSrc = [
 b.pathNamesScript = []
 b.dirNamesInc = []
 b.dirNamesLib = []
-b.cflags = []
+b.cxxflags = []
 b.ldflags = []
 b.libs = ['z', 'bz2']
 b.Run()

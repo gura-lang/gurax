@@ -9,7 +9,7 @@ b.pathNamesSrc = ['module-bzip2.cpp', 'Util.cpp']
 b.pathNamesScript = []
 b.dirNamesInc = []
 b.dirNamesLib = []
-b.cflags = []
+b.cxxflags = []
 b.ldflags = []
 b.libs = ['bz2']
 b.Run()

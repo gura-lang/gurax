@@ -34,7 +34,7 @@ Builder = class {
 	dirNameSysInc = sys.dirInclude
 	dirNameSysLib = sys.dirLib
 	dirNameSysModule = sys.dirModule
-	cflags = []
+	cxxflags = []
 	ldflags = []
 	libs = []
 	opt = %{}
@@ -44,10 +44,10 @@ Builder = class {
 	dirNameOut = ''
 	compiler = ''
 	linker = ''
-	cflagsBase = []
+	cxxflagsBase = []
 	ldflagsBase = []
-	cflagsCompile = []
-	cflagsPreCompile = []
+	cxxflagsCompile = []
+	cxxflagsPreCompile = []
 	libsBase = []
 	__init__(targetName:String) = {
 		this.targetName = targetName
@@ -55,9 +55,9 @@ Builder = class {
 			this.nameOut = 'gnuc'
 			this.compiler = 'clang'
 			this.linker = 'clang'
-			this.cflagsBase = ['-fPIC', '-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED']
+			this.cxxflagsBase = ['-fPIC', '-Wall', '-std=c++14', '-DGURAX_MODULE_SEPARATED']
 			this.ldflagsBase = ['-fPIC', '-shared', '-install_name', this.targetName + '.gurd']
-			this.cflagsPreCompile = ['-x', 'c++-header']
+			this.cxxflagsPreCompile = ['-x', 'c++-header']
 			this.libsBase = ['stdc++', 'guraxcore']
 		}
 	}
@@ -72,14 +72,14 @@ Builder = class {
 	PreCompile() = {
 		(!this.pathNameHdr || !this.ShouldProcess(this.pathNamePch, this.pathNameHdr)) && return(true)
 		Printf('-- compiling: %s\n', this.pathNameHdr)
-		this.Exec(this.compiler, this.cflagsBase*, this.cflagsPreCompile*, this.cflags*,
+		this.Exec(this.compiler, this.cxxflagsBase*, this.cxxflagsPreCompile*, this.cxxflags*,
 				  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 				  '-o' + this.pathNamePch, this.pathNameHdr)
 	}
 	Compile(pathNameObj:String, pathNameSrc:String) = {
 		!this.ShouldProcess(pathNameObj, pathNameSrc) && return(true)
 		Printf('-- compiling: %s\n', pathNameSrc)
-		this.Exec(this.compiler, this.cflagsBase*, this.cflagsCompile*, this.cflags*,
+		this.Exec(this.compiler, this.cxxflagsBase*, this.cxxflagsCompile*, this.cxxflags*,
 				  ('-I' + this.dirNameSysInc), ('-I' + this.dirNamesInc)*,
 				  '-o' + pathNameObj, '-c', pathNameSrc)
 	}
@@ -148,7 +148,7 @@ Builder = class {
 			// nothing to do
 		} elsif (sys.platform == `darwin) {
 			this.pathNamePch = path.Join(this.dirNameOut, path.FileName(this.pathNameHdr) + '.gch')
-			this.cflagsCompile.Add('-include-pch', this.pathNamePch)
+			this.cxxflagsCompile.Add('-include-pch', this.pathNamePch)
 		}
 		this.pathNameGurd = path.Join(this.dirNameOut, this.targetName + '.gurd')
 		this.pathNamesObj = path.Join(this.dirNameOut, path.BaseName(this.pathNamesSrc)::Replace('/', '_') + '.o')
