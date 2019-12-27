@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// hash.Accumulator() {block?}
-Gurax_DeclareConstructor(Accumulator)
-{
-	Declare(VTYPE_Accumulator, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Accumulator` instance.");
-}
-
-Gurax_ImplementConstructor(Accumulator)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Accumulator> pAccumulator(new Accumulator_MD5());
-	return argument.ReturnValue(processor, new Value_Accumulator(pAccumulator.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_Accumulator::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Stream, Flag::Immutable, Gurax_CreateConstructor(Accumulator));
+	Declare(VTYPE_Stream, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Accumulator, MethodSkeleton));
 	// Assignment of property

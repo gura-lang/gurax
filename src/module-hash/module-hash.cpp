@@ -29,6 +29,25 @@ Gurax_ImplementFunction(Test)
 	return new Value_String(String::Repeat(str, num));
 }
 
+// hash.MD5() {block?}
+Gurax_DeclareFunction(MD5)
+{
+	Declare(VTYPE_Accumulator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Accumulator` instance.");
+}
+
+Gurax_ImplementFunction(MD5)
+{
+	// Arguments
+	//ArgPicker args(argument);
+	// Function body
+	RefPtr<Accumulator> pAccumulator(new Accumulator_MD5());
+	return argument.ReturnValue(processor, new Value_Accumulator(pAccumulator.release()));
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -43,6 +62,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Accumulator);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(MD5));
 	return true;
 }
 
