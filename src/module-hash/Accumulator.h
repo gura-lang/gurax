@@ -49,6 +49,40 @@ public:
 	virtual const Binary& GetDigest();
 };
 
+//-----------------------------------------------------------------------------
+// Accumulator_SHA1
+//-----------------------------------------------------------------------------
+class Accumulator_SHA1 : public Accumulator {
+private:
+	sha1_context _ctx;
+public:
+	Accumulator_SHA1();
+public:
+	virtual const char *GetName() const;
+	virtual size_t DoWrite(const void* buff, size_t len);
+public:
+	virtual void Initialize();
+	virtual void Finish();
+	virtual const Binary& GetDigest();
+};
+
+//-----------------------------------------------------------------------------
+// Accumulator_CRC32
+//-----------------------------------------------------------------------------
+class Accumulator_CRC32 : public Accumulator {
+private:
+	CRC32 _crc32;
+public:
+	Accumulator_CRC32();
+public:
+	virtual const char *GetName() const;
+	virtual size_t DoWrite(const void* buff, size_t len);
+public:
+	virtual void Initialize();
+	virtual void Finish();
+	virtual const Binary& GetDigest();
+};
+
 Gurax_EndModuleScope(hash)
 
 #endif

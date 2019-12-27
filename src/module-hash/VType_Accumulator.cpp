@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// hash.Accumulator#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Accumulator, MethodSkeleton)
+// hash.Accumulator#Initialize()
+Gurax_DeclareMethod(Accumulator, Initialize)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -38,7 +38,7 @@ Gurax_DeclareMethod(Accumulator, MethodSkeleton)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Accumulator, MethodSkeleton)
+Gurax_ImplementMethod(Accumulator, Initialize)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -47,6 +47,22 @@ Gurax_ImplementMethod(Accumulator, MethodSkeleton)
 	Double num1 = args.PickNumber<Double>();
 	Double num2 = args.PickNumber<Double>();
 	// Function body
+	return new Value_Number(num1 + num2);
+}
+
+// hash.Accumulator#Update()
+Gurax_DeclareMethod(Accumulator, Update)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Accumulator, Update)
+{
 	return new Value_Number(num1 + num2);
 }
 
@@ -110,7 +126,8 @@ void VType_Accumulator::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Stream, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Accumulator, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Accumulator, Initialize));
+	Assign(Gurax_CreateMethod(Accumulator, Update));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Accumulator, digest));
 	Assign(Gurax_CreateProperty(Accumulator, digestHex));
