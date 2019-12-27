@@ -53,8 +53,8 @@ Gurax_ImplementMethod(Accumulator, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// hash.Accumulator#propSkeleton
-Gurax_DeclareProperty_R(Accumulator, propSkeleton)
+// hash.Accumulator#digest
+Gurax_DeclareProperty_R(Accumulator, digest)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -62,7 +62,37 @@ Gurax_DeclareProperty_R(Accumulator, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Accumulator, propSkeleton)
+Gurax_ImplementPropertyGetter(Accumulator, digest)
+{
+	//auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(3);
+}
+
+// hash.Accumulator#digestHex
+Gurax_DeclareProperty_R(Accumulator, digestHex)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Accumulator, digestHex)
+{
+	//auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(3);
+}
+
+// hash.Accumulator#number
+Gurax_DeclareProperty_R(Accumulator, number)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Accumulator, number)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
@@ -82,7 +112,9 @@ void VType_Accumulator::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Accumulator, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Accumulator, propSkeleton));
+	Assign(Gurax_CreateProperty(Accumulator, digest));
+	Assign(Gurax_CreateProperty(Accumulator, digestHex));
+	Assign(Gurax_CreateProperty(Accumulator, number));
 }
 
 //------------------------------------------------------------------------------
