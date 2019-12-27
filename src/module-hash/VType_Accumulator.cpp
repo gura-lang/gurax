@@ -42,7 +42,7 @@ Gurax_ImplementConstructor(Accumulator)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Accumulator> pAccumulator(new Accumulator());
+	RefPtr<Accumulator> pAccumulator(new Accumulator_MD5());
 	return argument.ReturnValue(processor, new Value_Accumulator(pAccumulator.release()));
 }
 
