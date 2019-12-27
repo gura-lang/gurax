@@ -57,7 +57,7 @@ Accumulator_SHA1::Accumulator_SHA1()
 	::sha1_starts(&_ctx);
 }
 
-void Accumulator_SHA1::Init()
+void Accumulator_SHA1::Initialize()
 {
 	_digest.clear();
 	::sha1_starts(&_ctx);
@@ -96,7 +96,7 @@ Accumulator_CRC32::Accumulator_CRC32()
 	_digest.clear();
 }
 
-void Accumulator_CRC32::Init()
+void Accumulator_CRC32::Initialize()
 {
 	_digest.clear();
 	_crc32.Initialize();
@@ -121,20 +121,22 @@ void Accumulator_CRC32::Finish()
 	digest[1] = static_cast<UInt8>(result >> 16);
 	digest[2] = static_cast<UInt8>(result >> 8);
 	digest[3] = static_cast<UInt8>(result >> 0);
-	_value = Value(result);
+	//_value = Value(result);
 	_digest = Binary(digest, sizeof(digest));
 }
 
-const Binary &Accumulator_CRC32::GetDigest()
+const Binary& Accumulator_CRC32::GetDigest()
 {
 	if (_digest.empty()) Finish();
 	return _digest;
 }
 
-const Value &Accumulator_CRC32::GetValue()
+#if 0
+const Value& Accumulator_CRC32::GetValue()
 {
 	if (_digest.empty()) Finish();
 	return _value;
 }
+#endif
 
 Gurax_EndModuleScope(hash)

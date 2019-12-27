@@ -4,7 +4,10 @@
 #ifndef GURAX_MODULE_HASH_ACCUMULATOR_H
 #define GURAX_MODULE_HASH_ACCUMULATOR_H
 #include <gurax.h>
+extern "C" {
 #include "md5.h"
+#include "sha1.h"
+}
 
 Gurax_BeginModuleScope(hash)
 

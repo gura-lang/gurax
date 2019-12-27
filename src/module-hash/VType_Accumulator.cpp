@@ -63,7 +63,7 @@ Gurax_DeclareMethod(Accumulator, Update)
 
 Gurax_ImplementMethod(Accumulator, Update)
 {
-	return new Value_Number(num1 + num2);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
