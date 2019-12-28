@@ -110,8 +110,8 @@ Gurax_DeclareProperty_R(Accumulator, number)
 
 Gurax_ImplementPropertyGetter(Accumulator, number)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return valueThis.GetAccumulator().GetValue();
 }
 
 //------------------------------------------------------------------------------

@@ -32,7 +32,7 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Finish() = 0;
 	virtual const Binary& GetDigest() = 0;
-	//virtual const Value& GetValue();
+	virtual Value* GetValue() { return Value::nil(); }
 };
 
 //-----------------------------------------------------------------------------
@@ -84,6 +84,7 @@ public:
 	virtual void Initialize();
 	virtual void Finish();
 	virtual const Binary& GetDigest();
+	virtual Value* GetValue();
 };
 
 Gurax_EndModuleScope(hash)

@@ -121,8 +121,7 @@ void Accumulator_CRC32::Finish()
 	digest[1] = static_cast<UInt8>(result >> 16);
 	digest[2] = static_cast<UInt8>(result >> 8);
 	digest[3] = static_cast<UInt8>(result >> 0);
-	//_value = Value(result);
-	_digest = Binary(digest, sizeof(digest));
+	_digest = Binary(true, digest, sizeof(digest));
 }
 
 const Binary& Accumulator_CRC32::GetDigest()
@@ -131,12 +130,10 @@ const Binary& Accumulator_CRC32::GetDigest()
 	return _digest;
 }
 
-#if 0
-const Value& Accumulator_CRC32::GetValue()
+Value* Accumulator_CRC32::GetValue()
 {
 	if (_digest.empty()) Finish();
-	return _value;
+	return new Value_Number(_crc32.GetResult());
 }
-#endif
 
 Gurax_EndModuleScope(hash)

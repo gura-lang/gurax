@@ -44,6 +44,8 @@ public:
 	Binary(bool writableFlag) : _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, const char* src) :
 		basic_string(reinterpret_cast<const UInt8*>(src)), _writableFlag(writableFlag) {}
+	Binary(bool writableFlag, const UInt8* src, size_t len) :
+		basic_string(src, len), _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, const char* src, size_t len) :
 		basic_string(reinterpret_cast<const UInt8*>(src), len), _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, const String& src) :
