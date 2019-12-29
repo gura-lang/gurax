@@ -41,6 +41,20 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 	return pDirectory->OpenStream(openFlags);
 }
 
+bool Stream::CheckReadable() const
+{
+	if (IsReadable()) return true;
+	Error::Issue(ErrorType::StreamError, "the steram must be readable");
+	return false;
+}
+
+bool Stream::CheckWritable() const
+{
+	if (IsWritable()) return true;
+	Error::Issue(ErrorType::StreamError, "the steram must be writable");
+	return false;
+}
+
 char Stream::GetChar()
 {
 	Codec::Decoder& decoder = GetCodec().GetDecoder();
@@ -270,6 +284,19 @@ bool Stream::Seek(long offsetRel, SeekMode seekMode)
 	if (!DoSeek(offset, _offset)) return false;
 	_offset = offset;
 	return true;
+}
+
+bool Stream::ReadToStream(Stream& streamDst, size_t bytesUnit)
+{
+	if (!CheckReadable() || !streamDst.CheckWritable()) return false;
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesUnit));
+	char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
+	for (;;) {
+		size_t bytesRead = Read(buff, bytesUnit);
+		if (bytesRead == 0) break;
+		if (streamDst.Write(buff, bytesRead) < bytesRead) break;
+	}
+	return !Error::IsIssued();
 }
 
 bool Stream::DoSeek(size_t offset, size_t offsetPrev)

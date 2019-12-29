@@ -77,6 +77,8 @@ public:
 	bool IsBwdSeekable() const { return _flags & Flag::BwdSeekable; }
 	bool IsReadable() const { return _flags & Flag::Readable; }
 	bool IsWritable() const { return _flags & Flag::Writable; }
+	bool CheckReadable() const;
+	bool CheckWritable() const;
 	void SetCodec(Codec* pCodec) { _pCodec.reset(pCodec); }
 	Codec& GetCodec() const { return *_pCodec; }
 	virtual char GetChar() override;
@@ -107,6 +109,10 @@ public:
 	size_t Write(const void* buff, size_t len) { return DoWrite(buff, len); }
 	bool Flush() { return DoFlush(); }
 	bool Seek(long offsetRel, SeekMode seekMode);
+	bool ReadToStream(Stream& streamDst, size_t bytesUnit);
+	bool WriteFromStream(Stream& streamSrc, size_t bytesUnit) {
+		return streamSrc.ReadToStream(*this, bytesUnit);
+	}
 public:
 	virtual bool IsDumb() const { return false; }
 	virtual const char* GetName() const = 0;
