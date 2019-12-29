@@ -109,8 +109,8 @@ public:
 	size_t Write(const void* buff, size_t len) { return DoWrite(buff, len); }
 	bool Flush() { return DoFlush(); }
 	bool Seek(long offsetRel, SeekMode seekMode);
-	bool ReadToStream(Stream& streamDst, size_t bytesUnit);
-	bool WriteFromStream(Stream& streamSrc, size_t bytesUnit) {
+	bool ReadToStream(Stream& streamDst, size_t bytesUnit = 65536);
+	bool WriteFromStream(Stream& streamSrc, size_t bytesUnit = 65536) {
 		return streamSrc.ReadToStream(*this, bytesUnit);
 	}
 public:
