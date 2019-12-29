@@ -29,44 +29,12 @@ public:
 	virtual size_t DoWrite(const void* buff, size_t len) override { return len; }
 	virtual bool DoFlush() override { return true; }
 public:
+	const Binary& GetDigest();
+	String GetDigestHex();
+public:
 	virtual void Initialize() = 0;
 	virtual void Finish() = 0;
-	virtual const Binary& GetDigest() = 0;
 	virtual Value* GetValue() { return Value::nil(); }
-};
-
-//-----------------------------------------------------------------------------
-// Accumulator_MD5
-//-----------------------------------------------------------------------------
-class Accumulator_MD5 : public Accumulator {
-private:
-	md5_state_t _state;
-public:
-	Accumulator_MD5();
-public:
-	virtual const char *GetName() const;
-	virtual size_t DoWrite(const void* buff, size_t len);
-public:
-	virtual void Initialize();
-	virtual void Finish();
-	virtual const Binary& GetDigest();
-};
-
-//-----------------------------------------------------------------------------
-// Accumulator_SHA1
-//-----------------------------------------------------------------------------
-class Accumulator_SHA1 : public Accumulator {
-private:
-	sha1_context _ctx;
-public:
-	Accumulator_SHA1();
-public:
-	virtual const char *GetName() const;
-	virtual size_t DoWrite(const void* buff, size_t len);
-public:
-	virtual void Initialize();
-	virtual void Finish();
-	virtual const Binary& GetDigest();
 };
 
 //-----------------------------------------------------------------------------
@@ -83,8 +51,39 @@ public:
 public:
 	virtual void Initialize();
 	virtual void Finish();
-	virtual const Binary& GetDigest();
 	virtual Value* GetValue();
+};
+
+//-----------------------------------------------------------------------------
+// Accumulator_MD5
+//-----------------------------------------------------------------------------
+class Accumulator_MD5 : public Accumulator {
+private:
+	md5_state_t _state;
+public:
+	Accumulator_MD5();
+public:
+	virtual const char *GetName() const;
+	virtual size_t DoWrite(const void* buff, size_t len);
+public:
+	virtual void Initialize();
+	virtual void Finish();
+};
+
+//-----------------------------------------------------------------------------
+// Accumulator_SHA1
+//-----------------------------------------------------------------------------
+class Accumulator_SHA1 : public Accumulator {
+private:
+	sha1_context _ctx;
+public:
+	Accumulator_SHA1();
+public:
+	virtual const char *GetName() const;
+	virtual size_t DoWrite(const void* buff, size_t len);
+public:
+	virtual void Initialize();
+	virtual void Finish();
 };
 
 Gurax_EndModuleScope(hash)

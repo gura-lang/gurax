@@ -8,6 +8,18 @@ Gurax_BeginModuleScope(hash)
 //------------------------------------------------------------------------------
 // Accumulator
 //------------------------------------------------------------------------------
+const Binary& Accumulator::GetDigest()
+{
+	if (_digest.empty()) Finish();
+	return _digest;
+}
+
+String Accumulator::GetDigestHex()
+{
+	String str;
+	for (UInt8 ch : GetDigest()) str.Printf("%02x", ch);
+	return str;
+}
 
 //------------------------------------------------------------------------------
 // Accumulator_MD5
@@ -40,12 +52,6 @@ void Accumulator_MD5::Finish()
 	md5_byte_t digest[16];
 	::md5_finish(&_state, digest);
 	_digest = Binary(reinterpret_cast<UInt8*>(digest), sizeof(digest));
-}
-
-const Binary& Accumulator_MD5::GetDigest()
-{
-	if (_digest.empty()) Finish();
-	return _digest;
 }
 
 //-----------------------------------------------------------------------------
@@ -82,12 +88,6 @@ void Accumulator_SHA1::Finish()
 	_digest = Binary(reinterpret_cast<UInt8*>(digest), sizeof(digest));
 }
 
-const Binary& Accumulator_SHA1::GetDigest()
-{
-	if (_digest.empty()) Finish();
-	return _digest;
-}
-
 //-----------------------------------------------------------------------------
 // Accumulator_CRC32 implementation
 //-----------------------------------------------------------------------------
@@ -122,12 +122,6 @@ void Accumulator_CRC32::Finish()
 	digest[2] = static_cast<UInt8>(result >> 8);
 	digest[3] = static_cast<UInt8>(result >> 0);
 	_digest = Binary(true, digest, sizeof(digest));
-}
-
-const Binary& Accumulator_CRC32::GetDigest()
-{
-	if (_digest.empty()) Finish();
-	return _digest;
 }
 
 Value* Accumulator_CRC32::GetValue()

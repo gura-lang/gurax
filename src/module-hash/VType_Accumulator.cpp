@@ -27,43 +27,22 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// hash.Accumulator#Initialize()
+// hash.Accumulator#Initialize():Accumulator:reduce
 Gurax_DeclareMethod(Accumulator, Initialize)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Accumulator, Flag::Reduce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Initialize the state of the hash accumulator.\n");
 }
 
 Gurax_ImplementMethod(Accumulator, Initialize)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
-}
-
-// hash.Accumulator#Update()
-Gurax_DeclareMethod(Accumulator, Update)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Accumulator, Update)
-{
-	return Value::nil();
+	valueThis.GetAccumulator().Initialize();
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -80,8 +59,9 @@ Gurax_DeclareProperty_R(Accumulator, digest)
 
 Gurax_ImplementPropertyGetter(Accumulator, digest)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const Binary& digest = valueThis.GetAccumulator().GetDigest();
+	return new Value_Binary(digest);
 }
 
 // hash.Accumulator#digestHex
@@ -95,8 +75,8 @@ Gurax_DeclareProperty_R(Accumulator, digestHex)
 
 Gurax_ImplementPropertyGetter(Accumulator, digestHex)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetAccumulator().GetDigestHex());
 }
 
 // hash.Accumulator#number
@@ -127,7 +107,6 @@ void VType_Accumulator::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Stream, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Accumulator, Initialize));
-	Assign(Gurax_CreateMethod(Accumulator, Update));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Accumulator, digest));
 	Assign(Gurax_CreateProperty(Accumulator, digestHex));
