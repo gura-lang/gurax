@@ -14,7 +14,7 @@ moduleInfos = @(ModuleInfo) {
 	{'codecs_japanese',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'conio',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'fs',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
-	{'hash',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'hash',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'markdown',		`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'math',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'os',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
