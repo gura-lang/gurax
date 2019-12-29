@@ -282,6 +282,34 @@ Gurax_ImplementMethod(Stream, ReadLines)
 	return argument.ReturnIterator(processor, stream.ReadLines(includeEOLFlag));
 }
 
+// Stream#ReadToStream(streamDst:Stream:w):Stream:reduce
+Gurax_DeclareMethod(Stream, ReadToStream)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads data from the target `Stream` instance and writes it into `streamDst`.");
+}
+
+Gurax_ImplementMethod(Stream, ReadToStream)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamDst = args.PickStream();
+	// Function body
+	if (stream.IsInfinite()) {
+		Error::Issue(ErrorType::StreamError,
+					 "can't read data from inifinite stream without specifying the length");
+		return Value::nil();
+	}
+	if (!stream.ReadToStream(streamDst)) return Value::nil();
+	return valueThis.Reference();
+}
+
 // Stream#Seek(offset:Number, whence?:Symbol):reduce
 Gurax_DeclareMethod(Stream, Seek)
 {
@@ -351,6 +379,34 @@ Gurax_ImplementMethod(Stream, Write)
 	return valueThis.Reference();
 }
 
+// Stream#WriteFromStream(streamSrc:Stream):Stream:reduce
+Gurax_DeclareMethod(Stream, WriteFromStream)
+{
+	Declare(VTYPE_Stream, Flag::Reduce);
+	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Reads data from the `streamSrc` and writes it into the target `Stream` instance.");
+}
+
+Gurax_ImplementMethod(Stream, WriteFromStream)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Stream& stream = valueThis.GetStream();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& streamSrc = args.PickStream();
+	// Function body
+	if (stream.IsInfinite()) {
+		Error::Issue(ErrorType::StreamError,
+					 "can't read data from inifinite stream without specifying the length");
+		return Value::nil();
+	}
+	if (!stream.WriteFromStream(streamSrc)) return Value::nil();
+	return valueThis.Reference();
+}
+
 //------------------------------------------------------------------------------
 // VType_Stream
 //------------------------------------------------------------------------------
@@ -374,8 +430,10 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Read));
 	Assign(Gurax_CreateMethod(Stream, ReadLine));
 	Assign(Gurax_CreateMethod(Stream, ReadLines));
+	Assign(Gurax_CreateMethod(Stream, ReadToStream));
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
+	Assign(Gurax_CreateMethod(Stream, WriteFromStream));
 }
 
 Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const
