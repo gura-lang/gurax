@@ -76,7 +76,8 @@ Gurax_DeclareProperty_R(Accumulator, digestHex)
 Gurax_ImplementPropertyGetter(Accumulator, digestHex)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(valueThis.GetAccumulator().GetDigestHex());
+	bool upperFlag = attr.IsSet(Gurax_Symbol(upper));
+	return new Value_String(valueThis.GetAccumulator().GetDigestHex(upperFlag));
 }
 
 // hash.Accumulator#number

@@ -30,7 +30,7 @@ public:
 	virtual bool DoFlush() override { return true; }
 public:
 	const Binary& GetDigest();
-	String GetDigestHex();
+	String GetDigestHex(bool upperFlag);
 public:
 	virtual void Initialize() = 0;
 	virtual void Finish() = 0;
