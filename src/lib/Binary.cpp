@@ -28,6 +28,15 @@ void Binary::Bootup()
 {
 }
 
+Binary Binary::Repeat(const Binary& binary, bool writableFlag, size_t n)
+{
+	Binary binaryRtn(writableFlag);
+	binaryRtn.reserve(binary.size() * n);
+	for (size_t i = 0; i < n; i++) binaryRtn += binary;
+	return binaryRtn;
+}
+
+
 size_t Binary::CalcHash(const UInt8* binary, size_t len)
 {
 	size_t hash = 0;

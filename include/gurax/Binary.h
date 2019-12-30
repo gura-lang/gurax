@@ -70,6 +70,9 @@ public:
 	bool CheckWritable() const;
 	void Dump(Stream& stream, const StringStyle& ss = StringStyle::Empty) const;
 public:
+	Binary Repeat(bool writableFlag, size_t n) const { return Repeat(*this, writableFlag, n); }
+	static Binary Repeat(const Binary& binary, bool writableFlag, size_t n);
+public:
 	size_t CalcHash() const { return CalcHash(data(), size()); }
 	static size_t CalcHash(const UInt8* binary, size_t len);
 	bool IsEqualTo(const Binary& binary) const {

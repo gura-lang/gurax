@@ -460,7 +460,7 @@ TestCase('String#last') {
 	Tester(`'あいうえお'.last):quote
 }
 
-TestCase('Operators') {
+TestCase('Operator') {
 	Tester(`('abcdefg' + 'hijklmn'))
 	Tester(`('abcdefg' * 3))
 	Tester(`('abcdefg' == 'abcdefg'))

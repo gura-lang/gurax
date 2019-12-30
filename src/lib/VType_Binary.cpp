@@ -215,6 +215,15 @@ Gurax_ImplementOpBinary(Add, Binary, Binary)
 	return new Value_Binary(binaryL);
 }
 
+// Binary * Number
+Gurax_ImplementOpBinary(Mul, Binary, Number)
+{
+	const Binary& binaryL = Value_Binary::GetBinary(valueL);
+	size_t numR = Value_Number::GetNumberNonNeg<size_t>(valueR);
+	if (Error::IsIssued()) return Value::nil();
+	return new Value_Binary(binaryL.Repeat(true, numR));
+}
+
 //------------------------------------------------------------------------------
 // VType_Binary
 //------------------------------------------------------------------------------
@@ -237,6 +246,7 @@ void VType_Binary::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Binary, writable));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, Binary, Binary);
+	Gurax_AssignOpBinary(Mul, Binary, Number);
 }
 
 //------------------------------------------------------------------------------

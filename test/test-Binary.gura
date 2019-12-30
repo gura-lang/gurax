@@ -107,3 +107,10 @@ TestCase('Binary#Writer()') {
 		buff.Dump()
 	}
 }
+
+TestCase('Operator') {
+	Tester(`(b'abcdefg' + b'hijklmn'))
+	Tester(`(b'abc\x00defg' + b'hij\x00klmn'))
+	Tester(`(b'abcdefg' * 3))
+	Tester(`(b'abc\x00defg' * 3))
+}
