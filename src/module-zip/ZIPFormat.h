@@ -1,52 +1,58 @@
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // ZIPFormat.h
 // specification: http://www.pkware.com/documents/casestudies/APPNOTE.TXT
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 #ifndef GURAX_MODULE_ZIPFORMAT_H
 #define GURAX_MODULE_ZIPFORMAT_H
 #include <gurax.h>
 #include <gurax/helper/ZLibHelper.h>
 #include <gurax/helper/BZLibHelper.h>
 
-Gurax_BeginModuleHeader(zip)
+Gurax_BeginModuleScope(zip)
 
 class CentralFileHeader;
 
-//-----------------------------------------------------------------------------
-// structures
-//-----------------------------------------------------------------------------
-enum {
-	METHOD_Invalid		= 0xffff,
-	METHOD_Store		= 0,	// The file is stored (no compression)
-	METHOD_Shrink		= 1,	// The file is Shrunk
-	METHOD_Factor1		= 2,	// The file is Reduced with compression factor 1
-	METHOD_Factor2		= 3,	// The file is Reduced with compression factor 2
-	METHOD_Factor3		= 4,	// The file is Reduced with compression factor 3
-	METHOD_Factor4		= 5,	// The file is Reduced with compression factor 4
-	METHOD_Implode		= 6,	// The file is Imploded
-	METHOD_Deflate		= 8,	// The file is Deflated
-	METHOD_Deflate64	= 9,	// Enhanced Deflating using Deflate64(tm)
-	METHOD_PKWARE		= 10,	// PKWARE Data Compression Library Imploding (old IBM TERSE)
-	METHOD_BZIP2		= 12,	// File is compressed using BZIP2 algorithm
-	METHOD_LZMA			= 14,	// LZMA (EFS)
-	METHOD_TERSA		= 18,	// File is compressed using IBM TERSE (new)
-	METHOD_LZ77			= 19,	// IBM LZ77 z Architecture (PFS)
-	METHOD_WavPack		= 97,	// WavPack compressed data
-	METHOD_PPMd			= 99,	// PPMd version I, Rev 1
+//------------------------------------------------------------------------------
+// Method
+//------------------------------------------------------------------------------
+struct Method {
+	static const UInt16 Invalid		= 0xffff;
+	static const UInt16 Store		= 0;	// The file is stored (no compression)
+	static const UInt16 Shrink		= 1;	// The file is Shrunk
+	static const UInt16 Factor1		= 2;	// The file is Reduced with compression factor 1
+	static const UInt16 Factor2		= 3;	// The file is Reduced with compression factor 2
+	static const UInt16 Factor3		= 4;	// The file is Reduced with compression factor 3
+	static const UInt16 Factor4		= 5;	// The file is Reduced with compression factor 4
+	static const UInt16 Implode		= 6;	// The file is Imploded
+	static const UInt16 Deflate		= 8;	// The file is Deflated
+	static const UInt16 Deflate64	= 9;	// Enhanced Deflating using Deflate64(tm)
+	static const UInt16 PKWARE		= 10;	// PKWARE Data Compression Library Imploding (old IBM TERSE)
+	static const UInt16 BZIP2		= 12;	// File is compressed using BZIP2 algorithm
+	static const UInt16 LZMA		= 14;	// LZMA (EFS)
+	static const UInt16 TERSA		= 18;	// File is compressed using IBM TERSE (new)
+	static const UInt16 LZ77		= 19;	// IBM LZ77 z Architecture (PFS)
+	static const UInt16 WavPack		= 97;	// WavPack compressed data
+	static const UInt16 PPMd		= 99;	// PPMd version I, Rev 1
 };
 
-enum {
-	DOSATTR_ReadOnly		= (1 << 0),
-	DOSATTR_Hidden			= (1 << 1),
-	DOSATTR_System			= (1 << 2),
-	DOSATTR_VolumeLabel		= (1 << 3),
-	DOSATTR_Subdirectory	= (1 << 4),
-	DOSATTR_Archive			= (1 << 5),
-	DOSATTR_Device			= (1 << 6),
-	DOSATTR_Unused			= (1 << 7),
+//------------------------------------------------------------------------------
+// DOSATTR
+//------------------------------------------------------------------------------
+struct DOSATTR {
+	static const UInt16 ReadOnly		= (1 << 0);
+	static const UInt16 Hidden			= (1 << 1);
+	static const UInt16 System			= (1 << 2);
+	static const UInt16 VolumeLabel		= (1 << 3);
+	static const UInt16 Subdirectory	= (1 << 4);
+	static const UInt16 Archive			= (1 << 5);
+	static const UInt16 Device			= (1 << 6);
+	static const UInt16 Unused			= (1 << 7);
 };
 
+#if 0
+//------------------------------------------------------------------------------
 // A. Local file header
+//------------------------------------------------------------------------------
 class LocalFileHeader {
 public:
 	enum { Signature = 0x04034b50 };
@@ -70,10 +76,10 @@ private:
 	Binary _fileName;
 	Binary _extraField;
 public:
-	inline LocalFileHeader() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline Fields &GetFields() { return _fields; }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	LocalFileHeader() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	Fields &GetFields() { return _fields; }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		if (!ReadStream(sig, stream, &_fields, 30 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _fileName,
 						Gurax_UnpackUInt16(_fields.FileNameLength))) return false;
@@ -82,7 +88,7 @@ public:
 		return true;
 	}
 	bool SkipOver(Signal &sig, Stream &stream);
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
 		Gurax_PackUInt16(_fields.FileNameLength, _extraField.size());
 		if (!WriteStream(sig, stream, &_fields, 30)) return false;
@@ -90,29 +96,29 @@ public:
 		if (!WriteStream(sig, stream, _extraField)) return false;
 		return true;
 	}
-	inline bool SkipFileData(Signal &sig, Stream &stream) {
+	bool SkipFileData(Signal &sig, Stream &stream) {
 		return SkipStream(sig, stream, Gurax_UnpackUInt32(_fields.CompressedSize));
 	}
-	inline void SetFileName(const char *fileName) { _fileName = fileName; }
-	inline const char *GetFileName() const { return _fileName.c_str(); }
-	inline bool IsEncrypted() const {
+	void SetFileName(const char *fileName) { _fileName = fileName; }
+	const char *GetFileName() const { return _fileName.c_str(); }
+	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
-	inline bool IsExistDataDescriptor() const {
+	bool IsExistDataDescriptor() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 3)) != 0;
 	}
-	inline bool IsStrongEncrypted() const {
+	bool IsStrongEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 6)) != 0;
 	}
-	inline bool IsUtf8() const {
+	bool IsUtf8() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 11)) != 0;
 	}
-	inline DateTime GetLastModDateTime() const {
+	DateTime GetLastModDateTime() const {
 		UInt16 dosTime = Gurax_UnpackUInt16(_fields.LastModFileTime);
 		UInt16 dosDate = Gurax_UnpackUInt16(_fields.LastModFileDate);
 		return MakeDateTimeFromDos(dosDate, dosTime);
 	}
-	inline void Print() const {
+	void Print() const {
 		::printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
 		::printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
 		::printf("GeneralPurposeBitFlag  %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
@@ -127,9 +133,13 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
 // B. File data
+//------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
 // C. Data descriptor
+//------------------------------------------------------------------------------
 class DataDescriptor {
 public:
 	struct Fields {
@@ -140,20 +150,24 @@ public:
 private:
 	Fields _fields;
 public:
-	inline DataDescriptor() {}
-	inline Fields &GetFields() { return _fields; }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	DataDescriptor() {}
+	Fields &GetFields() { return _fields; }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		return ReadStream(sig, stream, &_fields, 12);
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		return WriteStream(sig, stream, &_fields, 12);
 	}
 };
 
+//------------------------------------------------------------------------------
 // D. Archive decryption header
+//------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
 // E. Archive extra data record
+//------------------------------------------------------------------------------
 class ArchiveExtraDataRecord {
 public:
 	enum { Signature = 0x08064b50 };
@@ -166,16 +180,16 @@ private:
 	Fields _fields;
 	Binary _extraField;
 public:
-	inline ArchiveExtraDataRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline Fields &GetFields() { return _fields; }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	ArchiveExtraDataRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	Fields &GetFields() { return _fields; }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		if (!ReadStream(sig, stream, &_fields, 8 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _extraField,
 						Gurax_UnpackUInt32(_fields.ExtraFieldLength))) return false;
 		return true;
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		Gurax_PackUInt32(_fields.ExtraFieldLength, _extraField.size());
 		if (!WriteStream(sig, stream, &_fields, 8)) return false;
 		if (!WriteStream(sig, stream, _extraField)) return false;
@@ -183,7 +197,9 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
 // F. Central directory structure
+//------------------------------------------------------------------------------
 class CentralFileHeader {
 public:
 	enum { Signature = 0x02014b50 };
@@ -215,13 +231,13 @@ private:
 	Binary _extraField;
 	Binary _fileComment;
 public:
-	inline CentralFileHeader() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline CentralFileHeader(const CentralFileHeader &hdr) :
+	CentralFileHeader() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	CentralFileHeader(const CentralFileHeader &hdr) :
 		_fields(hdr._fields), _fileName(hdr._fileName),
 		_extraField(hdr._extraField), _fileComment(hdr._fileComment) {}
-	inline Fields &GetFields() { return _fields; }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	Fields &GetFields() { return _fields; }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		if (!ReadStream(sig, stream, &_fields, 46 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _fileName,
 						Gurax_UnpackUInt16(_fields.FileNameLength))) return false;
@@ -231,7 +247,7 @@ public:
 						Gurax_UnpackUInt16(_fields.FileCommentLength))) return false;
 		return true;
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
 		Gurax_PackUInt16(_fields.ExtraFieldLength, _extraField.size());
 		Gurax_PackUInt16(_fields.FileCommentLength, _fileComment.size());
@@ -241,7 +257,7 @@ public:
 		if (!WriteStream(sig, stream, _fileComment)) return false;
 		return true;
 	}
-	inline bool WriteAsLocalFileHeader(Signal &sig, Stream &stream) {
+	bool WriteAsLocalFileHeader(Signal &sig, Stream &stream) {
 		LocalFileHeader hdr;
 		LocalFileHeader::Fields &fields = hdr.GetFields();
 		Gurax_PackUInt16(fields.VersionNeededToExtract,
@@ -269,45 +285,45 @@ public:
 		if (!WriteStream(sig, stream, _extraField)) return false;
 		return true;
 	}
-	inline void SetFileName(const char *fileName) { _fileName = fileName; }
-	inline const char *GetFileName() const { return _fileName.c_str(); }
-	inline const char *GetFileComment() const { return _fileComment.c_str(); }
-	inline bool IsEncrypted() const {
+	void SetFileName(const char *fileName) { _fileName = fileName; }
+	const char *GetFileName() const { return _fileName.c_str(); }
+	const char *GetFileComment() const { return _fileComment.c_str(); }
+	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
-	inline bool IsExistDataDescriptor() const {
+	bool IsExistDataDescriptor() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 3)) != 0;
 	}
-	inline bool IsStrongEncrypted() const {
+	bool IsStrongEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 6)) != 0;
 	}
-	inline bool IsUtf8() const {
+	bool IsUtf8() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 11)) != 0;
 	}
-	inline UInt32 GetRelativeOffsetOfLocalHeader() const {
+	UInt32 GetRelativeOffsetOfLocalHeader() const {
 		return Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader);
 	}
-	inline UInt16 GetCompressionMethod() const {
+	UInt16 GetCompressionMethod() const {
 		return Gurax_UnpackUInt16(_fields.CompressionMethod);
 	}
-	inline DateTime GetLastModDateTime() const {
+	DateTime GetLastModDateTime() const {
 		UInt16 dosTime = Gurax_UnpackUInt16(_fields.LastModFileTime);
 		UInt16 dosDate = Gurax_UnpackUInt16(_fields.LastModFileDate);
 		return MakeDateTimeFromDos(dosDate, dosTime);
 	}
-	inline UInt32 GetCrc32() const {
+	UInt32 GetCrc32() const {
 		return Gurax_UnpackUInt32(_fields.Crc32);
 	}
-	inline UInt32 GetCompressedSize() const {
+	UInt32 GetCompressedSize() const {
 		return Gurax_UnpackUInt32(_fields.CompressedSize);
 	}
-	inline UInt32 GetUncompressedSize() const {
+	UInt32 GetUncompressedSize() const {
 		return Gurax_UnpackUInt32(_fields.UncompressedSize);
 	}
-	inline UInt32 GetExternalFileAttributes() const {
+	UInt32 GetExternalFileAttributes() const {
 		return Gurax_UnpackUInt32(_fields.ExternalFileAttributes);
 	}
-	inline void Print() const {
+	void Print() const {
 		::printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
 		::printf("VersionMadeBy          %04x\n", Gurax_UnpackUInt16(_fields.VersionMadeBy));
 		::printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
@@ -340,15 +356,15 @@ private:
 	Fields _fields;
 	Binary _data;
 public:
-	inline DigitalSignature() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	DigitalSignature() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		if (!ReadStream(sig, stream, &_fields, 8 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _data,
 						Gurax_UnpackUInt16(_fields.SizeOfData))) return false;
 		return true;
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		Gurax_PackUInt16(_fields.SizeOfData, _data.size());
 		if (!WriteStream(sig, stream, &_fields, 8)) return false;
 		if (!WriteStream(sig, stream, _data)) return false;
@@ -356,7 +372,9 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
 // G. Zip64 end of central directory record
+//------------------------------------------------------------------------------
 class Zip64EndOfCentralDirectory {
 public:
 	enum { Signature = 0x06064b50 };
@@ -376,19 +394,21 @@ public:
 private:
 	Fields _fields;
 public:
-	inline Zip64EndOfCentralDirectory() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	Zip64EndOfCentralDirectory() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		if (!ReadStream(sig, stream, &_fields, 56 - 4, 4)) return false;
 		return true;
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		if (!WriteStream(sig, stream, &_fields, 56)) return false;
 		return true;
 	}
 };
 
+//------------------------------------------------------------------------------
 // H. Zip64 end of central directory locator
+//------------------------------------------------------------------------------
 class Zip64EndOfCentralDirectoryLocator {
 public:
 	enum { Signature = 0x07064b50 };
@@ -401,17 +421,19 @@ public:
 private:
 	Fields _fields;
 public:
-	inline Zip64EndOfCentralDirectoryLocator() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	Zip64EndOfCentralDirectoryLocator() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		return ReadStream(sig, stream, &_fields, 20 - 4, 4);
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		return WriteStream(sig, stream, &_fields, 20);
 	}
 };
 
+//------------------------------------------------------------------------------
 // I. End of central directory record
+//------------------------------------------------------------------------------
 class EndOfCentralDirectoryRecord {
 public:
 	enum { Signature = 0x06054b50 };
@@ -431,16 +453,16 @@ private:
 	Fields _fields;
 	Binary _zipFileComment;
 public:
-	inline EndOfCentralDirectoryRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	inline Fields &GetFields() { return _fields; }
-	inline const Fields &GetFields() const { return _fields; }
-	inline bool Read(Signal &sig, Stream &stream) {
+	EndOfCentralDirectoryRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
+	Fields &GetFields() { return _fields; }
+	const Fields &GetFields() const { return _fields; }
+	bool Read(Signal &sig, Stream &stream) {
 		if (!ReadStream(sig, stream, &_fields, 22 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _zipFileComment,
 						Gurax_UnpackUInt16(_fields.ZIPFileCommentLength))) return false;
 		return true;
 	}
-	inline bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal &sig, Stream &stream) {
 		Gurax_PackUInt16(_fields.ZIPFileCommentLength, _zipFileComment.size());
 		if (!WriteStream(sig, stream, &_fields, 22)) return false;
 		if (!WriteStream(sig, stream, _zipFileComment)) return false;
@@ -708,14 +730,14 @@ private:
 public:
 	Gurax_DeclareObjectAccessor(stat)
 public:
-	inline Object_stat(const CentralFileHeader &hdr) :
+	Object_stat(const CentralFileHeader &hdr) :
 						Object(Gurax_UserClass(stat)), _hdr(hdr) {}
-	inline Object_stat(const Object_stat &obj) :
+	Object_stat(const Object_stat &obj) :
 						Object(obj), _hdr(obj._hdr) {}
 	virtual ~Object_stat();
 	virtual Object *Clone() const;
 	virtual String ToString(bool exprFlag);
-	const inline CentralFileHeader &GetCentralFileHeader() const { return _hdr; }
+	const CentralFileHeader &GetCentralFileHeader() const { return _hdr; }
 };
 
 //-----------------------------------------------------------------------------
@@ -731,11 +753,11 @@ public:
 	Gurax_DeclareObjectAccessor(reader)
 public:
 	Object_reader(Signal &sig, Stream *pStreamSrc);
-	inline CentralFileHeaderList &GetHeaderList() { return _hdrList; }
+	CentralFileHeaderList &GetHeaderList() { return _hdrList; }
 	virtual ~Object_reader();
 	virtual Object *Clone() const;
 	virtual String ToString(bool exprFlag);
-	inline Stream *GetStreamSrc() { return _pStreamSrc.get(); }
+	Stream *GetStreamSrc() { return _pStreamSrc.get(); }
 	bool ReadDirectory(Environment &env);
 };
 
@@ -754,15 +776,15 @@ public:
 	Gurax_DeclareObjectAccessor(writer)
 public:
 	Object_writer(Signal &sig, Stream *pStreamDst, UInt16 compressionMethod);
-	inline CentralFileHeaderList &GetHeaderList() { return _hdrList; }
+	CentralFileHeaderList &GetHeaderList() { return _hdrList; }
 	virtual ~Object_writer();
 	virtual Object *Clone() const;
 	virtual String ToString(bool exprFlag);
-	inline Stream *GetStreamDst() { return _pStreamDst.get(); }
+	Stream *GetStreamDst() { return _pStreamDst.get(); }
 	bool Add(Environment &env, Stream &streamSrc,
 					const char *fileName, UInt16 compressionMethod);
 	bool Finish();
-	inline UInt16 GetCompressionMethod() const { return _compressionMethod; }
+	UInt16 GetCompressionMethod() const { return _compressionMethod; }
 };
 
 //-----------------------------------------------------------------------------
@@ -773,7 +795,7 @@ private:
 	AutoPtr<Object_reader> _pObjZipR;
 	CentralFileHeaderList::iterator _ppHdr;
 public:
-	inline Iterator_Entry(Object_reader *pObjZipR);
+	Iterator_Entry(Object_reader *pObjZipR);
 	virtual ~Iterator_Entry();
 	virtual Iterator *GetSource();
 	virtual bool DoNext(Environment &env, Value &value);
@@ -797,7 +819,7 @@ public:
 	virtual Directory *DoNext(Environment &env);
 	virtual Stream *DoOpenStream(Environment &env, UInt32 attr);
 	virtual Object *DoGetStatObj(Signal &sig);
-	inline Record_ZIP &GetRecord() { return *_pRecord; }
+	Record_ZIP &GetRecord() { return *_pRecord; }
 };
 
 //-----------------------------------------------------------------------------
@@ -823,8 +845,8 @@ public:
 	virtual ~Record_ZIP();
 	virtual DirBuilder::Record *DoGenerateChild(const char *name, bool containerFlag);
 	virtual Directory *DoGenerateDirectory(Directory *pParent, Directory::Type type);
-	inline void SetCentralFileHeader(CentralFileHeader *pHdr) { _pHdr = pHdr; }
-	inline const CentralFileHeader *GetCentralFileHeader() const { return _pHdr; }
+	void SetCentralFileHeader(CentralFileHeader *pHdr) { _pHdr = pHdr; }
+	const CentralFileHeader *GetCentralFileHeader() const { return _pHdr; }
 };
 
 //-----------------------------------------------------------------------------
@@ -913,7 +935,8 @@ public:
 	virtual size_t DoRead(Signal &sig, void *buff, size_t len);
 	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode);
 };
+#endif
 
-Gurax_EndModuleHeader(zip)
+Gurax_EndModuleScope(zip)
 
 #endif
