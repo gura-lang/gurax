@@ -6,15 +6,14 @@ import(util.tester) {*}
 import(gzip)
 import(hash)
 
+buffSrc = B''
+buffSrc.p.Put(`uint8, (0..255).Cycle(4096))
 TestCase('Basic test') {
-	/*
-	gzip.Reader('test.gz') {|s|
-		Print(s.ReadLines())
-	}
-	*/
-	gzip.Writer('test2.gz') {|s|
-		s.Print(ReadLines('Util.cpp'))
-		//s.Write(b'fjsdkfjladksjfkjadslkfjksadjfldjsfkjadsfljdaskfjdas')
-		//s.Flush()
-	}
+	buffCompressed = B''
+	gzip.Writer(buffCompressed).Write(buffSrc)
+	Printf('Compressed: %s\n', hash.MD5(buffCompressed).digestHex)
+	buffCompressed.Dump()
+	buffUncompressed = gzip.Reader(buffCompressed).Read()
+	Println('Uncompressed')
+	buffUncompressed.Dump()
 }

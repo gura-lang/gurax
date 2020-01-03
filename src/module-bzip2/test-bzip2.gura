@@ -4,23 +4,16 @@
 //==============================================================================
 import(util.tester) {*}
 import(bzip2)
+import(hash)
 
-src = B''
-src.p.Put(`uint8, (0..255).Cycle(4096))
-
+buffSrc = B''
+buffSrc.p.Put(`uint8, (0..255).Cycle(4096))
 TestCase('Basic test') {
-	buff = B''
-	bzip2.Writer(buff).Write(src)
-	buff.Dump()
-	bzip2.Reader(buff).Read().Dump()
-	/*
-	bzip2.Reader('test2.bz2') {|s|
-		Print(s.ReadLines())
-	}
-	*/
-	/*
-	bzip2.Writer('test1.bz2') {|s|
-		s.Print(ReadLines('BZLibHelper.h'))
-	}
-	*/
+	buffCompressed = B''
+	bzip2.Writer(buffCompressed).Write(buffSrc)
+	Printf('Compressed: %s\n', hash.MD5(buffCompressed).digestHex)
+	buffCompressed.Dump()
+	buffUncompressed = bzip2.Reader(buffCompressed).Read()
+	Println('Uncompressed')
+	buffUncompressed.Dump()
 }
