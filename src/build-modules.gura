@@ -7,6 +7,7 @@ import(argopt)
 ModuleInfo = struct { moduleName:String, action:Symbol, platforms[]:Symbol }
 
 moduleInfos = @(ModuleInfo) {
+	{'bzip2',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'codecs',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'codecs_basic',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'codecs_chinese',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
@@ -14,6 +15,7 @@ moduleInfos = @(ModuleInfo) {
 	{'codecs_japanese',	`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'conio',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'fs',				`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
+	{'gzip',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'hash',			`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'markdown',		`build,		[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
 	{'math',			`builtin,	[`mswin,	`darwin,	`ubuntu,	`fedora,	`centos,	`redhat	]}
