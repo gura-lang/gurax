@@ -26,7 +26,7 @@ public:
 	void Assign(Value* pValueKey, Value* pValue);
 	bool Store(const ValueDict& valDict, StoreMode storeMode);
 	bool Store(const Value& valueKey, const Value& value, StoreMode storeMode);
-	const Value* Lookup(const Value& valueKey) const {
+	Value* Lookup(const Value& valueKey) const {
 		auto pPair = find(const_cast<Value*>(&valueKey));
 		return (pPair == end())? nullptr : pPair->second;
 	}

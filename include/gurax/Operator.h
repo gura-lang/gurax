@@ -11,9 +11,9 @@
 #define Gurax_ImplementOpUnary(opType, typeName) \
 class OpEntry_##opType##_##typeName : public OpEntry { \
 public: \
-	virtual Value* EvalUnary(Processor& processor, const Value& value) const; \
+	virtual Value* EvalUnary(Processor& processor, Value& value) const; \
 }; \
-Value* OpEntry_##opType##_##typeName::EvalUnary(Processor& processor, const Value& value) const
+Value* OpEntry_##opType##_##typeName::EvalUnary(Processor& processor, Value& value) const
 
 #define Gurax_AssignOpUnary(opType, typeName) \
 Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeName())
@@ -24,9 +24,9 @@ Operator::opType->AssignEntry(VTYPE_##typeName, new OpEntry_##opType##_##typeNam
 #define Gurax_ImplementOpBinary(opType, typeNameL, typeNameR) \
 class OpEntry_##opType##_##typeNameL##_##typeNameR : public OpEntry { \
 public: \
-	virtual Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const; \
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const; \
 }; \
-Value* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
+Value* OpEntry_##opType##_##typeNameL##_##typeNameR::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
 
 #define Gurax_AssignOpBinary(opType, typeNameL, typeNameR) \
 Operator::opType->AssignEntry(VTYPE_##typeNameL, VTYPE_##typeNameR, new OpEntry_##opType##_##typeNameL##_##typeNameR())
@@ -153,8 +153,8 @@ public:
 	// Destructor
 	virtual ~OpEntry() = default;
 public:
-	virtual Value* EvalUnary(Processor& processor, const Value& value) const;
-	virtual Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
+	virtual Value* EvalUnary(Processor& processor, Value& value) const;
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const;
 };
 
 //------------------------------------------------------------------------------
@@ -331,8 +331,8 @@ public:
 	const OpEntry* FindMatchedEntry(const VType& vtype) const;
 	const OpEntry* FindMatchedEntry(const VType& vtypeL, const VType& vtypeR) const;
 public:
-	Value* EvalUnary(Processor& processor, const Value& value) const;
-	Value* EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const;
+	Value* EvalUnary(Processor& processor, Value& value) const;
+	Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const;
 	String ToString(const VType& vtype) const;
 	String ToString(const VType& vtypeL, const VType& vtypeR) const;
 	virtual void ComposeUnary(Composer& composer, Expr_Unary& expr) const {}

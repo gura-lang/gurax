@@ -17,6 +17,10 @@ static const char* g_docHelp_en = u8R"**(
 
 # Operator
 
+- `Stream << Binary`
+- `Stream << Pointer`
+- `Stream << Stream`
+
 # Cast Operation
 
 # Constructor
@@ -369,9 +373,9 @@ Gurax_ImplementMethod(Stream, Write)
 	// Function body
 	size_t bytesAvail = ptr.GetSizeAvailable();
 	if (!validFlag_bytes) {
-		stream.Write(ptr.GetPointerC(), bytesAvail);
+		if (stream.Write(ptr.GetPointerC(), bytesAvail) < bytesAvail) return Value::nil();
 	} else if (bytes <= bytesAvail) {
-		stream.Write(ptr.GetPointerC(), bytes);
+		if (stream.Write(ptr.GetPointerC(), bytes) < bytes) return Value::nil();
 	} else {
 		Error::Issue(ErrorType::RangeError, "exceeds the memory size pointed by the pointer");
 		return Value::nil();
@@ -408,6 +412,47 @@ Gurax_ImplementMethod(Stream, WriteFromStream)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// Stream << Binary
+Gurax_ImplementOpBinary(Shl, Stream, Binary)
+{
+	Stream& stream = Value_Stream::GetStream(valueL);
+	Binary& binary = Value_Binary::GetBinary(valueR);
+	size_t bytes = binary.size();
+	if (stream.Write(binary.data(), bytes) < bytes) return Value::nil();
+	return valueL.Reference();
+}
+
+// Stream << Pointer
+Gurax_ImplementOpBinary(Shl, Stream, Pointer)
+{
+	Stream& stream = Value_Stream::GetStream(valueL);
+	Pointer& ptr = Value_Pointer::GetPointer(valueR);
+	size_t bytesAvail = ptr.GetSizeAvailable();
+	if (stream.Write(ptr.GetPointerC(), bytesAvail) < bytesAvail) return Value::nil();
+	return valueL.Reference();
+}
+
+// Stream << Stream
+Gurax_ImplementOpBinary(Shl, Stream, Stream)
+{
+	Stream& stream = Value_Stream::GetStream(valueL);
+	Stream& streamSrc = Value_Stream::GetStream(valueR);
+	if (!stream.WriteFromStream(streamSrc)) return Value::nil();
+	return valueL.Reference();
+}
+
+// Stream << String
+Gurax_ImplementOpBinary(Shl, Stream, String)
+{
+	Stream& stream = Value_Stream::GetStream(valueL);
+	const char* str = Value_String::GetString(valueR);
+	stream.Print(str);
+	return valueL.Reference();
+}
+
+//------------------------------------------------------------------------------
 // VType_Stream
 //------------------------------------------------------------------------------
 VType_Stream VTYPE_Stream("Stream");
@@ -434,6 +479,11 @@ void VType_Stream::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Stream, Seek));
 	Assign(Gurax_CreateMethod(Stream, Write));
 	Assign(Gurax_CreateMethod(Stream, WriteFromStream));
+	// Assignment of operator
+	Gurax_AssignOpBinary(Shl, Stream, Binary);
+	Gurax_AssignOpBinary(Shl, Stream, Pointer);
+	Gurax_AssignOpBinary(Shl, Stream, Stream);
+	Gurax_AssignOpBinary(Shl, Stream, String);
 }
 
 Value* VType_Stream::DoCastFrom(const Value& value, DeclArg::Flags flags) const

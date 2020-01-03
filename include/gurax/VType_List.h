@@ -102,7 +102,7 @@ public:
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
-	virtual Value* DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op) override;
+	virtual Value* DoIndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op) override;
 	virtual Iterator* DoGenIterator() const override;
 };
 

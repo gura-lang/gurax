@@ -39,7 +39,7 @@ public:
 	void FeedValue(Value* pValue) { GetValueOwner().push_back(pValue); }
 	Value* IndexGet() const { return GetValueCar().DoIndexGet(*this); }
 	void IndexSet(Value* pValue) { GetValueCar().DoIndexSet(*this, pValue); }
-	Value* IndexOpApply(const Value& value, Processor& processor, const Operator& op) {
+	Value* IndexOpApply(Value& value, Processor& processor, const Operator& op) {
 		return GetValueCar().DoIndexOpApply(*this, value, processor, op);
 	}
 public:

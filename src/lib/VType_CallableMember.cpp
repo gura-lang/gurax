@@ -83,7 +83,7 @@ void Value_CallableMember::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 	GetValueProp().IndexSet(index, pValue.release());
 }		
 
-Value* Value_CallableMember::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
+Value* Value_CallableMember::DoIndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op)
 {
 	return GetValueProp().IndexOpApply(index, value, processor, op);
 }

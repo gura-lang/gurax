@@ -1,6 +1,27 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+TestCase('Stream#Addcr()') {
+}
+
+TestCase('Stream#Delcr()') {
+}
+
+TestCase('Stream#Flush()') {
+}
+
+TestCase('Stream#Print()') {
+}
+
+TestCase('Stream#Printf()') {
+}
+
+TestCase('Stream#Println()') {
+}
+
+TestCase('Stream#Read()') {
+}
+
 TestCase('Stream#ReadLine()') {
 	Open('test-Stream/sample.txt') {|f|
 		while (line = f.ReadLine()) {
@@ -15,6 +36,58 @@ TestCase('Stream#ReadLines()') {
 	Open('test-Stream/sample.txt').ReadLines() {|line|
 		Print(line)
 	}
+}
+
+TestCase('Stream#ReadToStream()') {
+}
+
+TestCase('Stream#Seek()') {
+}
+
+TestCase('Stream#Write()') {
+}
+
+TestCase('Stream#WriteFromStream()') {
+}
+
+TestCase('Stream << Binary') {
+	buff = B''
+	buff.Writer {|out|
+		buffSrc = B''
+		buffSrc.p.Put(`uint8, 0..255)
+		out << buffSrc
+	}
+	buff.Dump()
+}
+
+TestCase('Stream << Pointer') {
+	buff = B''
+	buff.Writer {|out|
+		buffSrc = B''
+		buffSrc.p.Put(`uint8, 0..255)
+		out << buffSrc.p
+		out << buffSrc.p + 128
+	}
+	buff.Dump()
+}
+
+TestCase('Stream << Stream') {
+	buff = B''
+	buff.Writer {|out|
+		buffSrc = B''
+		buffSrc.p.Put(`uint8, 0..255)
+		out << buffSrc.Reader()
+	}
+	buff.Dump()
+}
+
+TestCase('Stream << String') {
+	buff = B''
+	buff.Writer {|out|
+		strSrc = Chr(0x20..0x7f).Join()
+		out << strSrc
+	}
+	buff.Dump()
 }
 
 TestCase('ReadLines()') {

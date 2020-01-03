@@ -124,7 +124,7 @@ const OpEntry* Operator::FindMatchedEntry(const VType& vtypeL, const VType& vtyp
 	return nullptr;
 }
 
-Value* Operator::EvalUnary(Processor& processor, const Value& value) const
+Value* Operator::EvalUnary(Processor& processor, Value& value) const
 {
 	if (GetMapFlag()) {
 		if (value.IsList()) {
@@ -153,7 +153,7 @@ Value* Operator::EvalUnary(Processor& processor, const Value& value) const
 	return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 }
 
-Value* Operator::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
+Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
 {
 	if (GetMapFlag()) {
 		if (valueL.IsIterator() || valueR.IsIterator()) {
@@ -253,12 +253,12 @@ void Operator_OrOr::ComposeBinary(Composer& composer, Expr_Binary& expr) const
 //------------------------------------------------------------------------------
 const OpEntry OpEntry::Empty;
 
-Value* OpEntry::EvalUnary(Processor& processor, const Value& value) const
+Value* OpEntry::EvalUnary(Processor& processor, Value& value) const
 {
 	return Value::undefined();
 }
 
-Value* OpEntry::EvalBinary(Processor& processor, const Value& valueL, const Value& valueR) const
+Value* OpEntry::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
 {
 	return Value::undefined();
 }

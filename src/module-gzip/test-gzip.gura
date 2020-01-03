@@ -4,6 +4,7 @@
 //==============================================================================
 import(util.tester) {*}
 import(gzip)
+import(hash)
 
 TestCase('Basic test') {
 	/*
@@ -12,7 +13,7 @@ TestCase('Basic test') {
 	}
 	*/
 	gzip.Writer('test2.gz') {|s|
-		s.Print(ReadLines('ZLibHelper.h'))
+		s.Print(ReadLines('Util.cpp'))
 		//s.Write(b'fjsdkfjladksjfkjadslkfjksadjfldjsfkjadsfljdaskfjdas')
 		//s.Flush()
 	}

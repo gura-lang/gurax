@@ -443,12 +443,12 @@ void Value_Dict::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 	}
 }
 
-Value* Value_Dict::DoIndexOpApply(const Index& index, const Value& value, Processor& processor, const Operator& op)
+Value* Value_Dict::DoIndexOpApply(const Index& index, Value& value, Processor& processor, const Operator& op)
 {
 	const ValueList& valuesIndex = index.GetValueOwner();
 	if (valuesIndex.size() == 1) {
 		const Value* pValueIndex = valuesIndex.front();
-		const Value* pValueL = GetValueDict().Lookup(*pValueIndex);
+		Value* pValueL = GetValueDict().Lookup(*pValueIndex);
 		if (!pValueL) {
 			ValueDict::IssueError_KeyNotFound(*pValueIndex);
 			return Value::nil();

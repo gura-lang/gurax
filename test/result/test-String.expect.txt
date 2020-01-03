@@ -495,7 +495,7 @@ str.width .. 20
 'abcdefg'.last .. 'g'
 'あ'.last .. 'あ'
 'あいうえお'.last .. 'お'
-======== Operators ========
+======== Operator ========
 'abcdefg' + 'hijklmn' .. abcdefghijklmn
 'abcdefg' * 3 .. abcdefgabcdefgabcdefg
 'abcdefg' == 'abcdefg' .. true
