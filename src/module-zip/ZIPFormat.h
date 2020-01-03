@@ -49,13 +49,12 @@ struct DOSATTR {
 	static const UInt16 Unused			= (1 << 7);
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // A. Local file header
 //------------------------------------------------------------------------------
 class LocalFileHeader {
 public:
-	enum { Signature = 0x04034b50 };
+	static const UInt32 Signature = 0x04034b50;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt16_LE(VersionNeededToExtract);
@@ -77,30 +76,30 @@ private:
 	Binary _extraField;
 public:
 	LocalFileHeader() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	Fields &GetFields() { return _fields; }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
-		if (!ReadStream(sig, stream, &_fields, 30 - 4, 4)) return false;
-		if (!ReadStream(sig, stream, _fileName,
+	Fields& GetFields() { return _fields; }
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Stream& stream) {
+		if (!ReadStream(stream, &_fields, 30 - 4, 4)) return false;
+		if (!ReadStream(stream, _fileName,
 						Gurax_UnpackUInt16(_fields.FileNameLength))) return false;
-		if (!ReadStream(sig, stream, _extraField,
+		if (!ReadStream(stream, _extraField,
 						Gurax_UnpackUInt16(_fields.ExtraFieldLength))) return false;
 		return true;
 	}
-	bool SkipOver(Signal &sig, Stream &stream);
-	bool Write(Signal &sig, Stream &stream) {
+	bool SkipOver(Stream& stream);
+	bool Write(Stream& stream) {
 		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
 		Gurax_PackUInt16(_fields.FileNameLength, _extraField.size());
-		if (!WriteStream(sig, stream, &_fields, 30)) return false;
-		if (!WriteStream(sig, stream, _fileName)) return false;
-		if (!WriteStream(sig, stream, _extraField)) return false;
+		if (!WriteStream(stream, &_fields, 30)) return false;
+		if (!WriteStream(stream, _fileName)) return false;
+		if (!WriteStream(stream, _extraField)) return false;
 		return true;
 	}
-	bool SkipFileData(Signal &sig, Stream &stream) {
-		return SkipStream(sig, stream, Gurax_UnpackUInt32(_fields.CompressedSize));
+	bool SkipFileData(Stream& stream) {
+		return SkipStream(stream, Gurax_UnpackUInt32(_fields.CompressedSize));
 	}
-	void SetFileName(const char *fileName) { _fileName = fileName; }
-	const char *GetFileName() const { return _fileName.c_str(); }
+	void SetFileName(const char* fileName) { _fileName = fileName; }
+	const char* GetFileName() const { return _fileName.c_str(); }
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
@@ -133,6 +132,7 @@ public:
 	}
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // B. File data
 //------------------------------------------------------------------------------
@@ -151,12 +151,12 @@ private:
 	Fields _fields;
 public:
 	DataDescriptor() {}
-	Fields &GetFields() { return _fields; }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	Fields& GetFields() { return _fields; }
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		return ReadStream(sig, stream, &_fields, 12);
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		return WriteStream(sig, stream, &_fields, 12);
 	}
 };
@@ -181,15 +181,15 @@ private:
 	Binary _extraField;
 public:
 	ArchiveExtraDataRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	Fields &GetFields() { return _fields; }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	Fields& GetFields() { return _fields; }
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		if (!ReadStream(sig, stream, &_fields, 8 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _extraField,
 						Gurax_UnpackUInt32(_fields.ExtraFieldLength))) return false;
 		return true;
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		Gurax_PackUInt32(_fields.ExtraFieldLength, _extraField.size());
 		if (!WriteStream(sig, stream, &_fields, 8)) return false;
 		if (!WriteStream(sig, stream, _extraField)) return false;
@@ -232,12 +232,12 @@ private:
 	Binary _fileComment;
 public:
 	CentralFileHeader() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	CentralFileHeader(const CentralFileHeader &hdr) :
+	CentralFileHeader(const CentralFileHeader& hdr) :
 		_fields(hdr._fields), _fileName(hdr._fileName),
 		_extraField(hdr._extraField), _fileComment(hdr._fileComment) {}
-	Fields &GetFields() { return _fields; }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	Fields& GetFields() { return _fields; }
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		if (!ReadStream(sig, stream, &_fields, 46 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _fileName,
 						Gurax_UnpackUInt16(_fields.FileNameLength))) return false;
@@ -247,7 +247,7 @@ public:
 						Gurax_UnpackUInt16(_fields.FileCommentLength))) return false;
 		return true;
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
 		Gurax_PackUInt16(_fields.ExtraFieldLength, _extraField.size());
 		Gurax_PackUInt16(_fields.FileCommentLength, _fileComment.size());
@@ -257,9 +257,9 @@ public:
 		if (!WriteStream(sig, stream, _fileComment)) return false;
 		return true;
 	}
-	bool WriteAsLocalFileHeader(Signal &sig, Stream &stream) {
+	bool WriteAsLocalFileHeader(Signal& sig, Stream& stream) {
 		LocalFileHeader hdr;
-		LocalFileHeader::Fields &fields = hdr.GetFields();
+		LocalFileHeader::Fields& fields = hdr.GetFields();
 		Gurax_PackUInt16(fields.VersionNeededToExtract,
 						Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
 		Gurax_PackUInt16(fields.GeneralPurposeBitFlag,
@@ -285,9 +285,9 @@ public:
 		if (!WriteStream(sig, stream, _extraField)) return false;
 		return true;
 	}
-	void SetFileName(const char *fileName) { _fileName = fileName; }
-	const char *GetFileName() const { return _fileName.c_str(); }
-	const char *GetFileComment() const { return _fileComment.c_str(); }
+	void SetFileName(const char* fileName) { _fileName = fileName; }
+	const char* GetFileName() const { return _fileName.c_str(); }
+	const char* GetFileComment() const { return _fileComment.c_str(); }
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
@@ -357,14 +357,14 @@ private:
 	Binary _data;
 public:
 	DigitalSignature() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		if (!ReadStream(sig, stream, &_fields, 8 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _data,
 						Gurax_UnpackUInt16(_fields.SizeOfData))) return false;
 		return true;
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		Gurax_PackUInt16(_fields.SizeOfData, _data.size());
 		if (!WriteStream(sig, stream, &_fields, 8)) return false;
 		if (!WriteStream(sig, stream, _data)) return false;
@@ -395,12 +395,12 @@ private:
 	Fields _fields;
 public:
 	Zip64EndOfCentralDirectory() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		if (!ReadStream(sig, stream, &_fields, 56 - 4, 4)) return false;
 		return true;
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		if (!WriteStream(sig, stream, &_fields, 56)) return false;
 		return true;
 	}
@@ -422,11 +422,11 @@ private:
 	Fields _fields;
 public:
 	Zip64EndOfCentralDirectoryLocator() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		return ReadStream(sig, stream, &_fields, 20 - 4, 4);
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		return WriteStream(sig, stream, &_fields, 20);
 	}
 };
@@ -454,15 +454,15 @@ private:
 	Binary _zipFileComment;
 public:
 	EndOfCentralDirectoryRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
-	Fields &GetFields() { return _fields; }
-	const Fields &GetFields() const { return _fields; }
-	bool Read(Signal &sig, Stream &stream) {
+	Fields& GetFields() { return _fields; }
+	const Fields& GetFields() const { return _fields; }
+	bool Read(Signal& sig, Stream& stream) {
 		if (!ReadStream(sig, stream, &_fields, 22 - 4, 4)) return false;
 		if (!ReadStream(sig, stream, _zipFileComment,
 						Gurax_UnpackUInt16(_fields.ZIPFileCommentLength))) return false;
 		return true;
 	}
-	bool Write(Signal &sig, Stream &stream) {
+	bool Write(Signal& sig, Stream& stream) {
 		Gurax_PackUInt16(_fields.ZIPFileCommentLength, _zipFileComment.size());
 		if (!WriteStream(sig, stream, &_fields, 22)) return false;
 		if (!WriteStream(sig, stream, _zipFileComment)) return false;
@@ -717,7 +717,7 @@ public:
 	};
 };
 
-typedef std::vector<CentralFileHeader *> CentralFileHeaderList;
+typedef std::vector<CentralFileHeader*> CentralFileHeaderList;
 
 //-----------------------------------------------------------------------------
 // Object_stat declaration
@@ -730,14 +730,14 @@ private:
 public:
 	Gurax_DeclareObjectAccessor(stat)
 public:
-	Object_stat(const CentralFileHeader &hdr) :
+	Object_stat(const CentralFileHeader& hdr) :
 						Object(Gurax_UserClass(stat)), _hdr(hdr) {}
-	Object_stat(const Object_stat &obj) :
+	Object_stat(const Object_stat& obj) :
 						Object(obj), _hdr(obj._hdr) {}
 	virtual ~Object_stat();
-	virtual Object *Clone() const;
+	virtual Object* Clone() const;
 	virtual String ToString(bool exprFlag);
-	const CentralFileHeader &GetCentralFileHeader() const { return _hdr; }
+	const CentralFileHeader& GetCentralFileHeader() const { return _hdr; }
 };
 
 //-----------------------------------------------------------------------------
@@ -752,13 +752,13 @@ private:
 public:
 	Gurax_DeclareObjectAccessor(reader)
 public:
-	Object_reader(Signal &sig, Stream *pStreamSrc);
-	CentralFileHeaderList &GetHeaderList() { return _hdrList; }
+	Object_reader(Signal& sig, Stream* pStreamSrc);
+	CentralFileHeaderList& GetHeaderList() { return _hdrList; }
 	virtual ~Object_reader();
-	virtual Object *Clone() const;
+	virtual Object* Clone() const;
 	virtual String ToString(bool exprFlag);
-	Stream *GetStreamSrc() { return _pStreamSrc.get(); }
-	bool ReadDirectory(Environment &env);
+	Stream* GetStreamSrc() { return _pStreamSrc.get(); }
+	bool ReadDirectory(Environment& env);
 };
 
 //-----------------------------------------------------------------------------
@@ -768,21 +768,21 @@ Gurax_DeclareUserClass(writer);
 
 class Object_writer : public Object {
 private:
-	Signal &_sig;
+	Signal& _sig;
 	AutoPtr<Stream> _pStreamDst;
 	UInt16 _compressionMethod;
 	CentralFileHeaderList _hdrList;
 public:
 	Gurax_DeclareObjectAccessor(writer)
 public:
-	Object_writer(Signal &sig, Stream *pStreamDst, UInt16 compressionMethod);
-	CentralFileHeaderList &GetHeaderList() { return _hdrList; }
+	Object_writer(Signal& sig, Stream* pStreamDst, UInt16 compressionMethod);
+	CentralFileHeaderList& GetHeaderList() { return _hdrList; }
 	virtual ~Object_writer();
-	virtual Object *Clone() const;
+	virtual Object* Clone() const;
 	virtual String ToString(bool exprFlag);
-	Stream *GetStreamDst() { return _pStreamDst.get(); }
-	bool Add(Environment &env, Stream &streamSrc,
-					const char *fileName, UInt16 compressionMethod);
+	Stream* GetStreamDst() { return _pStreamDst.get(); }
+	bool Add(Environment& env, Stream& streamSrc,
+					const char* fileName, UInt16 compressionMethod);
 	bool Finish();
 	UInt16 GetCompressionMethod() const { return _compressionMethod; }
 };
@@ -795,12 +795,12 @@ private:
 	AutoPtr<Object_reader> _pObjZipR;
 	CentralFileHeaderList::iterator _ppHdr;
 public:
-	Iterator_Entry(Object_reader *pObjZipR);
+	Iterator_Entry(Object_reader* pObjZipR);
 	virtual ~Iterator_Entry();
-	virtual Iterator *GetSource();
-	virtual bool DoNext(Environment &env, Value &value);
+	virtual Iterator* GetSource();
+	virtual bool DoNext(Environment& env, Value& value);
 	virtual String ToString() const;
-	virtual void GatherFollower(Environment::Frame *pFrame, EnvironmentSet &envSet);
+	virtual void GatherFollower(Environment::Frame* pFrame, EnvironmentSet& envSet);
 };
 
 //-----------------------------------------------------------------------------
@@ -811,15 +811,15 @@ class Record_ZIP;
 class Directory_ZIP : public Directory {
 private:
 	AutoPtr<DirBuilder::Structure> _pStructure;
-	Record_ZIP *_pRecord;
+	Record_ZIP* _pRecord;
 public:
-	Directory_ZIP(Directory *pParent, const char *name,
-		Type type, DirBuilder::Structure *pStructure, Record_ZIP *pRecord);
+	Directory_ZIP(Directory* pParent, const char* name,
+		Type type, DirBuilder::Structure* pStructure, Record_ZIP* pRecord);
 	virtual ~Directory_ZIP();
-	virtual Directory *DoNext(Environment &env);
-	virtual Stream *DoOpenStream(Environment &env, UInt32 attr);
-	virtual Object *DoGetStatObj(Signal &sig);
-	Record_ZIP &GetRecord() { return *_pRecord; }
+	virtual Directory* DoNext(Environment& env);
+	virtual Stream* DoOpenStream(Environment& env, UInt32 attr);
+	virtual Object* DoGetStatObj(Signal& sig);
+	Record_ZIP& GetRecord() { return *_pRecord; }
 };
 
 //-----------------------------------------------------------------------------
@@ -827,10 +827,10 @@ public:
 //-----------------------------------------------------------------------------
 class PathMgr_ZIP : public PathMgr {
 public:
-	virtual bool IsResponsible(Environment &env,
-					const Directory *pParent, const char *pathName);
-	virtual Directory *DoOpenDirectory(Environment &env,
-		Directory *pParent, const char **pPathName, NotFoundMode notFoundMode);
+	virtual bool IsResponsible(Environment& env,
+					const Directory* pParent, const char* pathName);
+	virtual Directory* DoOpenDirectory(Environment& env,
+		Directory* pParent, const char** pPathName, NotFoundMode notFoundMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -838,15 +838,15 @@ public:
 //-----------------------------------------------------------------------------
 class Record_ZIP : public DirBuilder::Record {
 private:
-	CentralFileHeader *_pHdr;
+	CentralFileHeader* _pHdr;
 public:
-	Record_ZIP(DirBuilder::Structure *pStructure, Record_ZIP *pParent,
-									const char *name, bool containerFlag);
+	Record_ZIP(DirBuilder::Structure* pStructure, Record_ZIP* pParent,
+									const char* name, bool containerFlag);
 	virtual ~Record_ZIP();
-	virtual DirBuilder::Record *DoGenerateChild(const char *name, bool containerFlag);
-	virtual Directory *DoGenerateDirectory(Directory *pParent, Directory::Type type);
-	void SetCentralFileHeader(CentralFileHeader *pHdr) { _pHdr = pHdr; }
-	const CentralFileHeader *GetCentralFileHeader() const { return _pHdr; }
+	virtual DirBuilder::Record* DoGenerateChild(const char* name, bool containerFlag);
+	virtual Directory* DoGenerateDirectory(Directory* pParent, Directory::Type type);
+	void SetCentralFileHeader(CentralFileHeader* pHdr) { _pHdr = pHdr; }
+	const CentralFileHeader* GetCentralFileHeader() const { return _pHdr; }
 };
 
 //-----------------------------------------------------------------------------
@@ -863,19 +863,19 @@ protected:
 	bool _seekedFlag;
 	CRC32 _crc32;
 public:
-	Stream_reader(Environment &env, Stream *pStreamSrc, const CentralFileHeader &hdr);
+	Stream_reader(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader();
-	virtual bool Initialize(Environment &env) = 0;
-	virtual const char *GetName() const;
-	virtual const char *GetIdentifier() const;
-	virtual bool GetAttribute(Attribute &attr);
-	virtual bool SetAttribute(const Attribute &attr);
-	virtual size_t DoWrite(Signal &sig, const void *buff, size_t len);
-	virtual bool DoFlush(Signal &sig);
-	virtual bool DoClose(Signal &sig);
+	virtual bool Initialize(Environment& env) = 0;
+	virtual const char* GetName() const;
+	virtual const char* GetIdentifier() const;
+	virtual bool GetAttribute(Attribute& attr);
+	virtual bool SetAttribute(const Attribute& attr);
+	virtual size_t DoWrite(Signal& sig, const void* buff, size_t len);
+	virtual bool DoFlush(Signal& sig);
+	virtual bool DoClose(Signal& sig);
 	virtual size_t DoGetSize();
-	virtual Object *DoGetStatObj(Signal &sig);
-	size_t CheckCRC32(Signal &sig, const void *buff, size_t bytesRead);
+	virtual Object* DoGetStatObj(Signal& sig);
+	size_t CheckCRC32(Signal& sig, const void* buff, size_t bytesRead);
 };
 
 //-----------------------------------------------------------------------------
@@ -886,11 +886,11 @@ class Stream_reader_Store : public Stream_reader {
 private:
 	size_t _offsetTop;
 public:
-	Stream_reader_Store(Environment &env, Stream *pStreamSrc, const CentralFileHeader &hdr);
+	Stream_reader_Store(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_Store();
-	virtual bool Initialize(Environment &env);
-	virtual size_t DoRead(Signal &sig, void *buff, size_t bytes);
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize(Environment& env);
+	virtual size_t DoRead(Signal& sig, void* buff, size_t bytes);
+	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -901,11 +901,11 @@ class Stream_reader_Deflate : public Stream_reader {
 private:
 	AutoPtr<ZLib::Stream_Inflater> _pStreamInflater;
 public:
-	Stream_reader_Deflate(Environment &env, Stream *pStreamSrc, const CentralFileHeader &hdr);
+	Stream_reader_Deflate(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_Deflate();
-	virtual bool Initialize(Environment &env);
-	virtual size_t DoRead(Signal &sig, void *buff, size_t len);
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize(Environment& env);
+	virtual size_t DoRead(Signal& sig, void* buff, size_t len);
+	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -916,11 +916,11 @@ class Stream_reader_BZIP2 : public Stream_reader {
 private:
 	AutoPtr<BZLib::Stream_Decompressor> _pStreamDecompressor;
 public:
-	Stream_reader_BZIP2(Environment &env, Stream *pStreamSrc, const CentralFileHeader &hdr);
+	Stream_reader_BZIP2(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_BZIP2();
-	virtual bool Initialize(Environment &env);
-	virtual size_t DoRead(Signal &sig, void *buff, size_t len);
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize(Environment& env);
+	virtual size_t DoRead(Signal& sig, void* buff, size_t len);
+	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -929,11 +929,11 @@ public:
 //-----------------------------------------------------------------------------
 class Stream_reader_Deflate64 : public Stream_reader {
 public:
-	Stream_reader_Deflate64(Environment &env, Stream *pStreamSrc, const CentralFileHeader &hdr);
+	Stream_reader_Deflate64(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_Deflate64();
-	virtual bool Initialize(Environment &env);
-	virtual size_t DoRead(Signal &sig, void *buff, size_t len);
-	virtual bool DoSeek(Signal &sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize(Environment& env);
+	virtual size_t DoRead(Signal& sig, void* buff, size_t len);
+	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
 };
 #endif
 

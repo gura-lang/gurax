@@ -41,7 +41,7 @@ private:
 	bool _writableFlag;
 public:
 	// Constructor
-	Binary(bool writableFlag) : _writableFlag(writableFlag) {}
+	Binary(bool writableFlag = true) : _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, const char* src) :
 		basic_string(reinterpret_cast<const UInt8*>(src)), _writableFlag(writableFlag) {}
 	Binary(bool writableFlag, const UInt8* src, size_t len) :
