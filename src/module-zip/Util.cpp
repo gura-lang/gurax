@@ -39,44 +39,38 @@ UInt16 SymbolToMethod(const Symbol* pSymbol)
 
 UInt16 GetDosTime(const DateTime& dt)
 {
-#if 0
-	return (static_cast<UInt16>(dt.GetHour()) << 11) |
-			(static_cast<UInt16>(dt.GetMin()) << 5) |
-			(static_cast<UInt16>(dt.GetSec() / 2) << 0);
-#endif
-	return 0;
+	return
+		(static_cast<UInt16>(dt.GetHour()) << 11) |
+		(static_cast<UInt16>(dt.GetMin()) << 5) |
+		(static_cast<UInt16>(dt.GetSec() / 2) << 0);
 }
 
 UInt16 GetDosDate(const DateTime& dt)
 {
-#if 0
-	return (static_cast<UInt16>(dt.GetYear() - 1980) << 9) |
-			(static_cast<UInt16>(dt.GetMonth()) << 5) |
-			(static_cast<UInt16>(dt.GetDay()) << 0);
-#endif
-	return 0;
+	return
+		(static_cast<UInt16>(dt.GetYear() - 1980) << 9) |
+		(static_cast<UInt16>(dt.GetMonth()) << 5) |
+		(static_cast<UInt16>(dt.GetDay()) << 0);
 }
 
 DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime)
 {
-#if 0
-	short year = static_cast<short>((dosDate >> 9) + 1980);
-	char month = static_cast<char>((dosDate >> 5) & 0xf);
-	char day = static_cast<char>((dosDate >> 0) & 0x1f);
-	long sec = static_cast<long>((dosTime >> 11) * 3600 +
-				((dosTime >> 5) & 0x3f) * 60 + ((dosTime >> 0) & 0x1f) * 2);
-	return DateTime(year, month, day, sec, 0);
-#endif
-	return nullptr;
+	Int16 year = static_cast<Int16>((dosDate >> 9) + 1980);
+	Int8 month = static_cast<Int8>((dosDate >> 5) & 0xf);
+	Int8 day = static_cast<Int8>((dosDate >> 0) & 0x1f);
+	Int32 secPacked = static_cast<Int32>(
+		(dosTime >> 11) * 3600 + ((dosTime >> 5) & 0x3f) * 60 + ((dosTime >> 0) & 0x1f) * 2);
+	Int32 usecPacked = 0;
+	return new DateTime(year, month, day, secPacked, usecPacked);
 }
 
 bool IsMatchedName(const char* name1, const char* name2)
 {
-#if 0
-	const char* p1 = name1,* p2 = name2;
+	const char* p1 = name1;
+	const char* p2 = name2;
 	for ( ; ; p1++, p2++) {
 		char ch1 = *p1, ch2 = *p2;
-		if (IsFileSeparator(ch1) && IsFileSeparator(ch2)) {
+		if (PathName::IsSep(ch1) && PathName::IsSep(ch2)) {
 			// nothing to do
 		} else if (ch1 != ch2) {
 			return false;
@@ -84,7 +78,6 @@ bool IsMatchedName(const char* name1, const char* name2)
 			break;
 		}
 	}
-#endif
 	return true;
 }
 
