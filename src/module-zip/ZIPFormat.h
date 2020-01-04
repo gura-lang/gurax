@@ -7,10 +7,9 @@
 #include <gurax.h>
 #include <gurax/helper/ZLibHelper.h>
 #include <gurax/helper/BZLibHelper.h>
+#include "Util.h"
 
 Gurax_BeginModuleScope(zip)
-
-class CentralFileHeader;
 
 //------------------------------------------------------------------------------
 // Method
@@ -99,7 +98,7 @@ public:
 		return SkipStream(stream, Gurax_UnpackUInt32(_fields.CompressedSize));
 	}
 	void SetFileName(const char* fileName) { _fileName = fileName; }
-	const char* GetFileName() const { return _fileName.c_str(); }
+	const char* GetFileName() const { return reinterpret_cast<const char*>(_fileName.c_str()); }
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
@@ -112,7 +111,7 @@ public:
 	bool IsUtf8() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 11)) != 0;
 	}
-	DateTime GetLastModDateTime() const {
+	DateTime* MakeLastModDateTime() const {
 		UInt16 dosTime = Gurax_UnpackUInt16(_fields.LastModFileTime);
 		UInt16 dosDate = Gurax_UnpackUInt16(_fields.LastModFileDate);
 		return MakeDateTimeFromDos(dosDate, dosTime);
@@ -306,7 +305,7 @@ public:
 	UInt16 GetCompressionMethod() const {
 		return Gurax_UnpackUInt16(_fields.CompressionMethod);
 	}
-	DateTime GetLastModDateTime() const {
+	DateTime* MakeLastModDateTime() const {
 		UInt16 dosTime = Gurax_UnpackUInt16(_fields.LastModFileTime);
 		UInt16 dosDate = Gurax_UnpackUInt16(_fields.LastModFileDate);
 		return MakeDateTimeFromDos(dosDate, dosTime);
