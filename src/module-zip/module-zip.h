@@ -11,7 +11,9 @@
 
 Gurax_BeginModuleHeader(zip)
 
-#if 0
+//------------------------------------------------------------------------------
+// Symbol
+//------------------------------------------------------------------------------
 Gurax_DeclareSymbol(filename);
 Gurax_DeclareSymbol(comment);
 Gurax_DeclareSymbol(compression_method);
@@ -37,7 +39,6 @@ Gurax_DeclareSymbol(tersa);
 Gurax_DeclareSymbol(lz77);
 Gurax_DeclareSymbol(wavpack);
 Gurax_DeclareSymbol(ppmd);
-#endif
 
 Gurax_EndModuleHeader(zip)
 

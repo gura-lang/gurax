@@ -6,46 +6,35 @@
 
 Gurax_BeginModuleScope(zip)
 
-UInt16 SymbolToCompressionMethod(const Symbol* pSymbol)
-{
-#if 0
-	if (pSymbol->IsIdentical(Gura_UserSymbol(store))) {
-		return METHOD_Store;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(shrink))) {
-		return METHOD_Shrink;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(factor1))) {
-		return METHOD_Factor1;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(factor2))) {
-		return METHOD_Factor2;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(factor3))) {
-		return METHOD_Factor3;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(factor4))) {
-		return METHOD_Factor4;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(implode))) {
-		return METHOD_Implode;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(deflate))) {
-		return METHOD_Deflate;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(deflate64))) {
-		return METHOD_Deflate64;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(pkware))) {
-		return METHOD_PKWARE;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(bzip2))) {
-		return METHOD_BZIP2;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(lzma))) {
-		return METHOD_LZMA;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(tersa))) {
-		return METHOD_TERSA;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(lz77))) {
-		return METHOD_LZ77;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(wavpack))) {
-		return METHOD_WavPack;
-	} else if (pSymbol->IsIdentical(Gura_UserSymbol(ppmd))) {
-		return METHOD_PPMd;
-	} else {
-		return METHOD_Invalid;
+class SymbolAssoc_Method : public SymbolAssoc<UInt16, Method::Invalid> {
+public:
+	SymbolAssoc_Method() {
+		Assoc(Gurax_Symbol(store),		Method::Store);
+		Assoc(Gurax_Symbol(shrink),		Method::Shrink);
+		Assoc(Gurax_Symbol(factor1),	Method::Factor1);
+		Assoc(Gurax_Symbol(factor2),	Method::Factor2);
+		Assoc(Gurax_Symbol(factor3),	Method::Factor3);
+		Assoc(Gurax_Symbol(factor4),	Method::Factor4);
+		Assoc(Gurax_Symbol(implode),	Method::Implode);
+		Assoc(Gurax_Symbol(deflate),	Method::Deflate);
+		Assoc(Gurax_Symbol(deflate64),	Method::Deflate64);
+		Assoc(Gurax_Symbol(pkware),		Method::PKWARE);
+		Assoc(Gurax_Symbol(bzip2),		Method::BZIP2);
+		Assoc(Gurax_Symbol(lzma),		Method::LZMA);
+		Assoc(Gurax_Symbol(tersa),		Method::TERSA);
+		Assoc(Gurax_Symbol(lz77),		Method::LZ77);
+		Assoc(Gurax_Symbol(wavpack),	Method::WavPack);
+		Assoc(Gurax_Symbol(ppmd),		Method::PPMd);
 	}
-#endif
-	return 0;
+	static const SymbolAssoc& GetInstance() {
+		static SymbolAssoc* pSymbolAssoc = nullptr;
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Method());
+	}
+};
+
+UInt16 SymbolToMethod(const Symbol* pSymbol)
+{
+	return SymbolAssoc_Method::GetInstance().ToAssociated(pSymbol);
 }
 
 UInt16 GetDosTime(const DateTime& dt)
