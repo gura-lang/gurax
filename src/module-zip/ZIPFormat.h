@@ -131,7 +131,6 @@ public:
 	}
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // B. File data
 //------------------------------------------------------------------------------
@@ -152,14 +151,15 @@ public:
 	DataDescriptor() {}
 	Fields& GetFields() { return _fields; }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		return ReadStream(sig, stream, &_fields, 12);
+	bool Read(Stream& stream) {
+		return ReadStream(stream, &_fields, 12);
 	}
-	bool Write(Signal& sig, Stream& stream) {
-		return WriteStream(sig, stream, &_fields, 12);
+	bool Write(Stream& stream) {
+		return WriteStream(stream, &_fields, 12);
 	}
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // D. Archive decryption header
 //------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ public:
 //------------------------------------------------------------------------------
 class ArchiveExtraDataRecord {
 public:
-	enum { Signature = 0x08064b50 };
+	static const UInt32 Signature = 0x08064b50;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt32_LE(ExtraFieldLength);
@@ -182,16 +182,16 @@ public:
 	ArchiveExtraDataRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	Fields& GetFields() { return _fields; }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		if (!ReadStream(sig, stream, &_fields, 8 - 4, 4)) return false;
-		if (!ReadStream(sig, stream, _extraField,
+	bool Read(Stream& stream) {
+		if (!ReadStream(stream, &_fields, 8 - 4, 4)) return false;
+		if (!ReadStream(stream, _extraField,
 						Gurax_UnpackUInt32(_fields.ExtraFieldLength))) return false;
 		return true;
 	}
-	bool Write(Signal& sig, Stream& stream) {
+	bool Write(Stream& stream) {
 		Gurax_PackUInt32(_fields.ExtraFieldLength, _extraField.size());
-		if (!WriteStream(sig, stream, &_fields, 8)) return false;
-		if (!WriteStream(sig, stream, _extraField)) return false;
+		if (!WriteStream(stream, &_fields, 8)) return false;
+		if (!WriteStream(stream, _extraField)) return false;
 		return true;
 	}
 };
@@ -201,7 +201,7 @@ public:
 //------------------------------------------------------------------------------
 class CentralFileHeader {
 public:
-	enum { Signature = 0x02014b50 };
+	static const UInt32 Signature = 0x02014b50;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt16_LE(VersionMadeBy);				// only in CentralFileHeader
@@ -236,27 +236,27 @@ public:
 		_extraField(hdr._extraField), _fileComment(hdr._fileComment) {}
 	Fields& GetFields() { return _fields; }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		if (!ReadStream(sig, stream, &_fields, 46 - 4, 4)) return false;
-		if (!ReadStream(sig, stream, _fileName,
+	bool Read(Stream& stream) {
+		if (!ReadStream(stream, &_fields, 46 - 4, 4)) return false;
+		if (!ReadStream(stream, _fileName,
 						Gurax_UnpackUInt16(_fields.FileNameLength))) return false;
-		if (!ReadStream(sig, stream, _extraField,
+		if (!ReadStream(stream, _extraField,
 						Gurax_UnpackUInt16(_fields.ExtraFieldLength))) return false;
-		if (!ReadStream(sig, stream, _fileComment,
+		if (!ReadStream(stream, _fileComment,
 						Gurax_UnpackUInt16(_fields.FileCommentLength))) return false;
 		return true;
 	}
-	bool Write(Signal& sig, Stream& stream) {
+	bool Write(Stream& stream) {
 		Gurax_PackUInt16(_fields.FileNameLength, _fileName.size());
 		Gurax_PackUInt16(_fields.ExtraFieldLength, _extraField.size());
 		Gurax_PackUInt16(_fields.FileCommentLength, _fileComment.size());
-		if (!WriteStream(sig, stream, &_fields, 46)) return false;
-		if (!WriteStream(sig, stream, _fileName)) return false;
-		if (!WriteStream(sig, stream, _extraField)) return false;
-		if (!WriteStream(sig, stream, _fileComment)) return false;
+		if (!WriteStream(stream, &_fields, 46)) return false;
+		if (!WriteStream(stream, _fileName)) return false;
+		if (!WriteStream(stream, _extraField)) return false;
+		if (!WriteStream(stream, _fileComment)) return false;
 		return true;
 	}
-	bool WriteAsLocalFileHeader(Signal& sig, Stream& stream) {
+	bool WriteAsLocalFileHeader(Stream& stream) {
 		LocalFileHeader hdr;
 		LocalFileHeader::Fields& fields = hdr.GetFields();
 		Gurax_PackUInt16(fields.VersionNeededToExtract,
@@ -279,9 +279,9 @@ public:
 		Gurax_PackUInt16(fields.FileNameLength, fileNameLength);
 		UInt16 extraFieldLength = static_cast<UInt16>(_extraField.size());
 		Gurax_PackUInt16(fields.ExtraFieldLength, extraFieldLength);
-		if (!WriteStream(sig, stream, &fields, 30)) return false;
-		if (!WriteStream(sig, stream, _fileName)) return false;
-		if (!WriteStream(sig, stream, _extraField)) return false;
+		if (!WriteStream(stream, &fields, 30)) return false;
+		if (!WriteStream(stream, _fileName)) return false;
+		if (!WriteStream(stream, _extraField)) return false;
 		return true;
 	}
 	void SetFileName(const char* fileName) { _fileName = fileName; }
@@ -345,7 +345,7 @@ public:
 
 class DigitalSignature {
 public:
-	enum { Signature = 0x05054b50 };
+	static const UInt32 Signature = 0x05054b50;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt16_LE(SizeOfData);
@@ -357,16 +357,16 @@ private:
 public:
 	DigitalSignature() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		if (!ReadStream(sig, stream, &_fields, 8 - 4, 4)) return false;
-		if (!ReadStream(sig, stream, _data,
+	bool Read(Stream& stream) {
+		if (!ReadStream(stream, &_fields, 8 - 4, 4)) return false;
+		if (!ReadStream(stream, _data,
 						Gurax_UnpackUInt16(_fields.SizeOfData))) return false;
 		return true;
 	}
-	bool Write(Signal& sig, Stream& stream) {
+	bool Write(Stream& stream) {
 		Gurax_PackUInt16(_fields.SizeOfData, _data.size());
-		if (!WriteStream(sig, stream, &_fields, 8)) return false;
-		if (!WriteStream(sig, stream, _data)) return false;
+		if (!WriteStream(stream, &_fields, 8)) return false;
+		if (!WriteStream(stream, _data)) return false;
 		return true;
 	}
 };
@@ -376,7 +376,7 @@ public:
 //------------------------------------------------------------------------------
 class Zip64EndOfCentralDirectory {
 public:
-	enum { Signature = 0x06064b50 };
+	static const UInt32 Signature = 0x06064b50;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt64_LE(SizeOfZip64EndOfCentralDirectoryRecord);
@@ -395,12 +395,12 @@ private:
 public:
 	Zip64EndOfCentralDirectory() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		if (!ReadStream(sig, stream, &_fields, 56 - 4, 4)) return false;
+	bool Read(Stream& stream) {
+		if (!ReadStream(stream, &_fields, 56 - 4, 4)) return false;
 		return true;
 	}
-	bool Write(Signal& sig, Stream& stream) {
-		if (!WriteStream(sig, stream, &_fields, 56)) return false;
+	bool Write(Stream& stream) {
+		if (!WriteStream(stream, &_fields, 56)) return false;
 		return true;
 	}
 };
@@ -410,7 +410,7 @@ public:
 //------------------------------------------------------------------------------
 class Zip64EndOfCentralDirectoryLocator {
 public:
-	enum { Signature = 0x07064b50 };
+	static const UInt32 Signature = 0x07064b50;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt32_LE(NumberOfTheDiskWithTheStartOfTheZip64EndOfCentralDirectory);
@@ -422,11 +422,11 @@ private:
 public:
 	Zip64EndOfCentralDirectoryLocator() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		return ReadStream(sig, stream, &_fields, 20 - 4, 4);
+	bool Read(Stream& stream) {
+		return ReadStream(stream, &_fields, 20 - 4, 4);
 	}
-	bool Write(Signal& sig, Stream& stream) {
-		return WriteStream(sig, stream, &_fields, 20);
+	bool Write(Stream& stream) {
+		return WriteStream(stream, &_fields, 20);
 	}
 };
 
@@ -435,8 +435,9 @@ public:
 //------------------------------------------------------------------------------
 class EndOfCentralDirectoryRecord {
 public:
-	enum { Signature = 0x06054b50 };
-	enum { MinSize = 22, MaxSize = 22 + 65536 };
+	static const UInt32 Signature = 0x06054b50;
+	static const int MinSize = 22;
+	static const Int MaxSize = 22 + 65536;
 	struct Fields {
 		Gurax_PackedUInt32_LE(Signature);
 		Gurax_PackedUInt16_LE(NumberOfThisDisk);
@@ -455,16 +456,16 @@ public:
 	EndOfCentralDirectoryRecord() { Gurax_PackUInt32(_fields.Signature, Signature); }
 	Fields& GetFields() { return _fields; }
 	const Fields& GetFields() const { return _fields; }
-	bool Read(Signal& sig, Stream& stream) {
-		if (!ReadStream(sig, stream, &_fields, 22 - 4, 4)) return false;
-		if (!ReadStream(sig, stream, _zipFileComment,
+	bool Read(Stream& stream) {
+		if (!ReadStream(stream, &_fields, 22 - 4, 4)) return false;
+		if (!ReadStream(stream, _zipFileComment,
 						Gurax_UnpackUInt16(_fields.ZIPFileCommentLength))) return false;
 		return true;
 	}
-	bool Write(Signal& sig, Stream& stream) {
+	bool Write(Stream& stream) {
 		Gurax_PackUInt16(_fields.ZIPFileCommentLength, _zipFileComment.size());
-		if (!WriteStream(sig, stream, &_fields, 22)) return false;
-		if (!WriteStream(sig, stream, _zipFileComment)) return false;
+		if (!WriteStream(stream, &_fields, 22)) return false;
+		if (!WriteStream(stream, _zipFileComment)) return false;
 		return true;
 	}
 	void Print() const {
@@ -482,7 +483,7 @@ public:
 // Zip64 Extended Information Extra Field (0x0001)
 class Extra_ZIP64 {
 public:
-	enum { Tag = 0x0001 };
+	static const UInt16 Tag = 0x0001;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(Size);
@@ -496,7 +497,7 @@ public:
 // OS/2 Extra Field (0x0009)
 class Extra_OS2 {
 public:
-	enum { Tag = 0x0009 };
+	static const UInt16 Tag = 0x0009;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -510,7 +511,7 @@ public:
 // NTFS Extra Field (0x000a)
 class Extra_NTFS {
 public:
-	enum { Tag = 0x000a };
+	static const UInt16 Tag = 0x000a;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -521,7 +522,7 @@ public:
 // OpenVMS Extra Field (0x000c)
 class Extra_VMS {
 public:
-	enum { Tag = 0x000c };
+	static const UInt16 Tag = 0x000c;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -533,7 +534,7 @@ public:
 // UNIX Extra Field (0x000d)
 class Extra_UNIX {
 public:
-	enum { Tag = 0x000d };
+	static const UInt16 Tag = 0x000d;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -548,7 +549,7 @@ public:
 // PATCH Descriptor Extra Field (0x000f)
 class Extra_Patch {
 public:
-	enum { Tag = 0x000f };
+	static const UInt16 Tag = 0x000f;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -564,7 +565,7 @@ public:
 // PKCS#7 Store for X.509 Certificates (0x0014)
 class Extra_Store {
 public:
-	enum { Tag = 0x0014 };
+	static const UInt16 Tag = 0x0014;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -575,7 +576,7 @@ public:
 // X.509 Certificate ID and Signature for individual file (0x0015)
 class Extra_CID {
 public:
-	enum { Tag = 0x0015 };
+	static const UInt16 Tag = 0x0015;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -586,7 +587,7 @@ public:
 // X.509 Certificate ID and Signature for central directory (0x0016)
 class Extra_CDID {
 public:
-	enum { Tag = 0x0016 };
+	static const UInt16 Tag = 0x0016;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -597,7 +598,7 @@ public:
 // Record Management Controls (0x0018)
 class Extra_RecCTL {
 public:
-	enum { Tag = 0x0018 };
+	static const UInt16 Tag = 0x0018;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(CSize);
@@ -608,7 +609,7 @@ public:
 // PKCS#7 Encryption Recipient Certificate List (0x0019)
 class Extra_CStore {
 public:
-	enum { Tag = 0x0019 };
+	static const UInt16 Tag = 0x0019;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -619,7 +620,7 @@ public:
 // MVS Extra Field (0x0065)
 class Extra_MVS {
 public:
-	enum { Tag = 0x0065 };
+	static const UInt16 Tag = 0x0065;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -631,7 +632,7 @@ public:
 // OS/400 Extra Field (0x0065)
 class Extra_OS400 {
 public:
-	enum { Tag = 0x0065 };
+	static const UInt16 Tag = 0x0065;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(Size);
@@ -643,7 +644,7 @@ public:
 // ZipIt Macintosh Extra Field (long) (0x2605)
 class Extra_Mac2 {
 public:
-	enum { Tag = 0x2605 };
+	static const UInt16 Tag = 0x2605;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -656,7 +657,7 @@ public:
 // ZipIt Macintosh Extra Field (short, for files) (0x2705)
 class Extra_Mac2b {
 public:
-	enum { Tag = 0x2705 };
+	static const UInt16 Tag = 0x2705;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -668,7 +669,7 @@ public:
 // ZipIt Macintosh Extra Field (short, for directories) (0x2805)
 class Extra_Mac2c {
 public:
-	enum { Tag = 0x2805 };
+	static const UInt16 Tag = 0x2805;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -680,7 +681,7 @@ public:
 // Info-ZIP Unicode Comment Extra Field (0x6375)
 class Extra_UCom {
 public:
-	enum { Tag = 0x6375 };
+	static const UInt16 Tag = 0x6375;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -693,7 +694,7 @@ public:
 // Info-ZIP Unicode Path Extra Field (0x7075)
 class Extra_UPath {
 public:
-	enum { Tag = 0x7075 };
+	static const UInt16 Tag = 0x7075;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -706,7 +707,7 @@ public:
 // Microsoft Open Packaging Growth Hint (0xa220)
 class Extra_MSOpen {
 public:
-	enum { Tag = 0xa220 };
+	static const UInt16 Tag = 0xa220;
 	struct Fields {
 		Gurax_PackedUInt16_LE(Tag);
 		Gurax_PackedUInt16_LE(TSize);
@@ -751,13 +752,13 @@ private:
 public:
 	Gurax_DeclareObjectAccessor(reader)
 public:
-	Object_reader(Signal& sig, Stream* pStreamSrc);
+	Object_reader(Stream* pStreamSrc);
 	CentralFileHeaderList& GetHeaderList() { return _hdrList; }
 	virtual ~Object_reader();
 	virtual Object* Clone() const;
 	virtual String ToString(bool exprFlag);
 	Stream* GetStreamSrc() { return _pStreamSrc.get(); }
-	bool ReadDirectory(Environment& env);
+	bool ReadDirectory();
 };
 
 //-----------------------------------------------------------------------------
@@ -767,20 +768,19 @@ Gurax_DeclareUserClass(writer);
 
 class Object_writer : public Object {
 private:
-	Signal& _sig;
 	AutoPtr<Stream> _pStreamDst;
 	UInt16 _compressionMethod;
 	CentralFileHeaderList _hdrList;
 public:
 	Gurax_DeclareObjectAccessor(writer)
 public:
-	Object_writer(Signal& sig, Stream* pStreamDst, UInt16 compressionMethod);
+	Object_writer(Stream* pStreamDst, UInt16 compressionMethod);
 	CentralFileHeaderList& GetHeaderList() { return _hdrList; }
 	virtual ~Object_writer();
 	virtual Object* Clone() const;
 	virtual String ToString(bool exprFlag);
 	Stream* GetStreamDst() { return _pStreamDst.get(); }
-	bool Add(Environment& env, Stream& streamSrc,
+	bool Add(Stream& streamSrc,
 					const char* fileName, UInt16 compressionMethod);
 	bool Finish();
 	UInt16 GetCompressionMethod() const { return _compressionMethod; }
@@ -797,9 +797,8 @@ public:
 	Iterator_Entry(Object_reader* pObjZipR);
 	virtual ~Iterator_Entry();
 	virtual Iterator* GetSource();
-	virtual bool DoNext(Environment& env, Value& value);
+	virtual bool DoNext(Value& value);
 	virtual String ToString() const;
-	virtual void GatherFollower(Environment::Frame* pFrame, EnvironmentSet& envSet);
 };
 
 //-----------------------------------------------------------------------------
@@ -815,9 +814,9 @@ public:
 	Directory_ZIP(Directory* pParent, const char* name,
 		Type type, DirBuilder::Structure* pStructure, Record_ZIP* pRecord);
 	virtual ~Directory_ZIP();
-	virtual Directory* DoNext(Environment& env);
-	virtual Stream* DoOpenStream(Environment& env, UInt32 attr);
-	virtual Object* DoGetStatObj(Signal& sig);
+	virtual Directory* DoNext();
+	virtual Stream* DoOpenStream(UInt32 attr);
+	virtual Object* DoGetStatObj();
 	Record_ZIP& GetRecord() { return *_pRecord; }
 };
 
@@ -826,9 +825,8 @@ public:
 //-----------------------------------------------------------------------------
 class PathMgr_ZIP : public PathMgr {
 public:
-	virtual bool IsResponsible(Environment& env,
-					const Directory* pParent, const char* pathName);
-	virtual Directory* DoOpenDirectory(Environment& env,
+	virtual bool IsResponsible(const Directory* pParent, const char* pathName);
+	virtual Directory* DoOpenDirectory(
 		Directory* pParent, const char** pPathName, NotFoundMode notFoundMode);
 };
 
@@ -862,19 +860,19 @@ protected:
 	bool _seekedFlag;
 	CRC32 _crc32;
 public:
-	Stream_reader(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_reader(Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader();
-	virtual bool Initialize(Environment& env) = 0;
+	virtual bool Initialize() = 0;
 	virtual const char* GetName() const;
 	virtual const char* GetIdentifier() const;
 	virtual bool GetAttribute(Attribute& attr);
 	virtual bool SetAttribute(const Attribute& attr);
-	virtual size_t DoWrite(Signal& sig, const void* buff, size_t len);
-	virtual bool DoFlush(Signal& sig);
-	virtual bool DoClose(Signal& sig);
+	virtual size_t DoWrite(const void* buff, size_t len);
+	virtual bool DoFlush();
+	virtual bool DoClose();
 	virtual size_t DoGetSize();
-	virtual Object* DoGetStatObj(Signal& sig);
-	size_t CheckCRC32(Signal& sig, const void* buff, size_t bytesRead);
+	virtual Object* DoGetStatObj();
+	size_t CheckCRC32(const void* buff, size_t bytesRead);
 };
 
 //-----------------------------------------------------------------------------
@@ -885,11 +883,11 @@ class Stream_reader_Store : public Stream_reader {
 private:
 	size_t _offsetTop;
 public:
-	Stream_reader_Store(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_reader_Store(Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_Store();
-	virtual bool Initialize(Environment& env);
-	virtual size_t DoRead(Signal& sig, void* buff, size_t bytes);
-	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize();
+	virtual size_t DoRead(void* buff, size_t bytes);
+	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -900,11 +898,11 @@ class Stream_reader_Deflate : public Stream_reader {
 private:
 	AutoPtr<ZLib::Stream_Inflater> _pStreamInflater;
 public:
-	Stream_reader_Deflate(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_reader_Deflate(Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_Deflate();
-	virtual bool Initialize(Environment& env);
-	virtual size_t DoRead(Signal& sig, void* buff, size_t len);
-	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize();
+	virtual size_t DoRead(void* buff, size_t len);
+	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -915,11 +913,11 @@ class Stream_reader_BZIP2 : public Stream_reader {
 private:
 	AutoPtr<BZLib::Stream_Decompressor> _pStreamDecompressor;
 public:
-	Stream_reader_BZIP2(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_reader_BZIP2(Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_BZIP2();
-	virtual bool Initialize(Environment& env);
-	virtual size_t DoRead(Signal& sig, void* buff, size_t len);
-	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize();
+	virtual size_t DoRead(void* buff, size_t len);
+	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode);
 };
 
 //-----------------------------------------------------------------------------
@@ -928,11 +926,11 @@ public:
 //-----------------------------------------------------------------------------
 class Stream_reader_Deflate64 : public Stream_reader {
 public:
-	Stream_reader_Deflate64(Environment& env, Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_reader_Deflate64(Stream* pStreamSrc, const CentralFileHeader& hdr);
 	virtual ~Stream_reader_Deflate64();
-	virtual bool Initialize(Environment& env);
-	virtual size_t DoRead(Signal& sig, void* buff, size_t len);
-	virtual bool DoSeek(Signal& sig, long offset, size_t offsetPrev, SeekMode seekMode);
+	virtual bool Initialize();
+	virtual size_t DoRead(void* buff, size_t len);
+	virtual bool DoSeek(long offset, size_t offsetPrev, SeekMode seekMode);
 };
 #endif
 
