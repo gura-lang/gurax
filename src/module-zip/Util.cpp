@@ -81,10 +81,10 @@ bool IsMatchedName(const char* name1, const char* name2)
 	return true;
 }
 
-UInt32 SeekCentralDirectory(Stream* pStream)
+UInt32 SeekCentralDirectory(Stream& stream)
 {
 #if 0
-	size_t bytesZIPFile = pStream->GetSize();
+	size_t bytesZIPFile = stream.GetSize();
 	if (bytesZIPFile == InvalidSize) {
 		sig.SetError(ERR_IOError, "can't seek end of file");
 		return 0;
@@ -100,14 +100,14 @@ UInt32 SeekCentralDirectory(Stream* pStream)
 	} else {
 		long offsetStart = static_cast<long>(bytesZIPFile -
 									EndOfCentralDirectoryRecord::MaxSize);
-		if (!pStream->Seek(offsetStart, Stream::SeekSet)) {
+		if (!stream.Seek(offsetStart, Stream::SeekSet)) {
 			return 0;
 		}
 		bytesBuff = EndOfCentralDirectoryRecord::MaxSize;
 	}
 	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
 	char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
-	pStream->Read(buff, bytesBuff);
+	stream.Read(buff, bytesBuff);
 	if (Error::IsIssued()) return 0;
 	char* buffAnchor = nullptr;
 	for (size_t i = 0; i <= bytesBuff - EndOfCentralDirectoryRecord::MinSize; i++) {
