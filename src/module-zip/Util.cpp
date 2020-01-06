@@ -83,13 +83,12 @@ bool IsMatchedName(const char* name1, const char* name2)
 
 UInt32 SeekCentralDirectory(Stream& streamSrc)
 {
-#if 0
 	size_t bytesZIPFile = streamSrc.GetSize();
 	if (bytesZIPFile == -1) {
 		Error::Issue(ErrorType::IOError, "can't seek end of file");
 		return 0;
 	}
-	UInt32 offsetCentralDirectory = 0;
+	//UInt32 offsetCentralDirectory = 0;
 	if (bytesZIPFile < EndOfCentralDirectoryRecord::MinSize) {
 		Error::Issue(ErrorType::FormatError, "can't find central directory record");
 		return 0;
@@ -100,12 +99,12 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 	} else {
 		long offsetStart = static_cast<long>(bytesZIPFile -
 									EndOfCentralDirectoryRecord::MaxSize);
-		if (!streamSrc.Seek(offsetStart, Stream::SeekSet)) {
+		if (!streamSrc.Seek(offsetStart, Stream::SeekMode::Set)) {
 			return 0;
 		}
 		bytesBuff = EndOfCentralDirectoryRecord::MaxSize;
 	}
-	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
 	char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
 	streamSrc.Read(buff, bytesBuff);
 	if (Error::IsIssued()) return 0;
@@ -116,15 +115,13 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 		}
 	}
 	if (buffAnchor == nullptr) {
-		sig.SetError(ERR_FormatError, "can't find central directory record");
+		Error::Issue(ErrorType::FormatError, "can't find central directory record");
 		return 0;
 	}
 	EndOfCentralDirectoryRecord record;
 	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
 	return Gurax_UnpackUInt32(record.GetFields().
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
-#endif
-	return 0;
 }
 
 Directory* CreateDirectory(Stream& streamSrc,
