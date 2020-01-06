@@ -71,6 +71,7 @@ protected:
 	virtual ~Stream() = default;
 public:
 	static Stream* Open(const char* pathName, OpenFlags openFlags);
+	static Stream* CreatePrefetch(Stream* pStreamSrc, size_t bytesUnit = 65536);
 	Flags GetFlags() const { return _flags; }
 	size_t GetOffset() const { return _offset; }
 	bool IsInfinite() const { return _flags & Flag::Infinite; }
@@ -99,6 +100,7 @@ public:
 	bool ReadLine(String& str, bool includeEOLFlag);
 	Iterator* ReadLines(bool includeEOLFlag);
 	Binary Read(size_t len);
+	Stream& ReadAll(Binary& buff);
 	Binary ReadAll();
 	static OpenFlags ModeToOpenFlags(const char* mode);
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);

@@ -41,6 +41,13 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 	return pDirectory->OpenStream(openFlags);
 }
 
+Stream* Stream::CreatePrefetch(Stream* pStreamSrc, size_t bytesUnit)
+{
+	RefPtr<Stream_Prefetch> pStreamPrefetch(new Stream_Prefetch(pStreamSrc, bytesUnit));
+	if (!pStreamPrefetch->Prefetch()) return nullptr;
+	return pStreamPrefetch.release();
+}
+
 bool Stream::CheckReadable() const
 {
 	if (IsReadable()) return true;
@@ -194,17 +201,22 @@ Binary Stream::Read(size_t len)
 	return buff;
 }
 
+Stream& Stream::ReadAll(Binary& buff)
+{
+	const int bytesWork = 65536;
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesWork));
+	UInt8* buffWork = reinterpret_cast<UInt8*>(pMemory->GetPointer());
+	size_t bytesRead;
+	while ((bytesRead = Read(buffWork, bytesWork)) > 0) {
+		buff.append(buffWork, bytesRead);
+	}
+	return *this;
+}
+
 Binary Stream::ReadAll()
 {
-	const int bytesWork = 16384;
-	RefPtr<Memory> pMemory(new MemoryHeap(bytesWork));
-	UInt8 *buffWork = reinterpret_cast<UInt8 *>(pMemory->GetPointer());
-	Binary buff(true);
-	size_t bytesRead = Read(buffWork, bytesWork);
-	if (bytesRead == 0) return buff;
-	do {
-		buff.append(buffWork, bytesRead);
-	} while ((bytesRead = Read(buffWork, bytesWork)) > 0);
+	Binary buff;
+	ReadAll(buff);
 	return buff;
 }
 
