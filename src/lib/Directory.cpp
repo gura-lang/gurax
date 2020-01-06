@@ -5,6 +5,105 @@
 
 namespace Gurax {
 
+class Record;
+
+//------------------------------------------------------------------------------
+// RecordList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE RecordList : public std::vector<Record *> {
+public:
+	Record* Find(const char* name) const;
+};
+
+//------------------------------------------------------------------------------
+// RecordOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE RecordOwner : public RecordList {
+public:
+	~RecordOwner() { Clear(); }
+	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// Record
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Record : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Record);
+protected:
+	RefPtr<WeakPtr> _pwRecordParent;
+	std::unique_ptr<RecordOwner> _pRecordChildren;
+	RecordOwner::iterator _ppRecordChild;
+	String _name;
+public:
+	Record(Record& recordParent, String name, bool containerFlag) :
+		_pwRecordParent(recordParent.GetWeakPtr()),
+		_pRecordChildren(containerFlag? new RecordOwner() : nullptr), _name(std::move(name)) {}
+	virtual ~Record() = default;
+public:
+	const char* GetName() const { return _name.c_str(); }
+	bool IsRoot() const { return !_pwRecordParent; }
+	bool IsContainer() const { return !!_pRecordChildren; }
+	void AddChild(Record* pRecord) {
+		if (_pRecordChildren) _pRecordChildren->push_back(pRecord);
+	}
+	void InitIterator() {
+		if (_pRecordChildren) _ppRecordChild = _pRecordChildren->begin();
+	}
+	Directory* Next(Directory *pParent) {
+		if (!_pRecordChildren || _ppRecordChild == _pRecordChildren->end()) return nullptr;
+		Record *pRecord = *_ppRecordChild++;
+		return pRecord->GenerateDirectory(pParent, false);
+	}
+	Record* GenerateChild(const char* name, bool containerFlag) {
+		return DoGenerateChild(name, containerFlag);
+	}
+	Directory* GenerateDirectory(Directory* pParent, bool boundaryFlag) {
+		if (IsContainer()) InitIterator();
+		Directory::Type type =
+			boundaryFlag? Directory::Type::BoundaryContainer :
+			IsContainer()? Directory::Type::Container : Directory::Type::Item;
+		return DoGenerateDirectory(pParent, type);
+	}
+	virtual Record *DoGenerateChild(const char *name, bool containerFlag) = 0;
+	virtual Directory *DoGenerateDirectory(Directory *pParent, Directory::Type type) = 0;
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const Record& record) const { return this == &record; }
+	bool IsEqualTo(const Record& record) const { return IsIdentical(record); }
+	bool IsLessThan(const Record& record) const { return this < &record; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// Directory::Record
+//------------------------------------------------------------------------------
+String Record::ToString(const StringStyle& ss) const
+{
+	return "";
+}
+
+//------------------------------------------------------------------------------
+// Directory::RecordList
+//------------------------------------------------------------------------------
+Record* RecordList::Find(const char* name) const
+{
+	for (Record* pRecord : *this) {
+		if (::strcmp(pRecord->GetName(), name) == 0) return pRecord;
+	}
+	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// Directory::RecordOwner
+//------------------------------------------------------------------------------
+void RecordOwner::Clear()
+{
+	for (Record* pRecord : *this) Record::Delete(pRecord);
+	clear();
+}
+
 //------------------------------------------------------------------------------
 // Directory
 //------------------------------------------------------------------------------
