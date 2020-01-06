@@ -71,7 +71,6 @@ protected:
 	virtual ~Stream() = default;
 public:
 	static Stream* Open(const char* pathName, OpenFlags openFlags);
-	static Stream* CreatePrefetch(Stream* pStreamSrc, size_t bytesUnit = 65536);
 	Flags GetFlags() const { return _flags; }
 	size_t GetOffset() const { return _offset; }
 	bool IsInfinite() const { return _flags & Flag::Infinite; }

@@ -8,31 +8,6 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
-// Stream_Prefetch
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Stream_Prefetch : public Stream {
-private:
-	RefPtr<Stream> _pStreamSrc;
-	size_t _offset;
-	size_t _bytesAll;
-	size_t _bytesUnit;
-	MemoryOwner _memoryOwner;
-public:
-	Stream_Prefetch(Stream* pStreamSrc, size_t bytesUnit);
-public:
-	virtual const char* GetName() const override { return _pStreamSrc->GetName(); };
-	virtual const char* GetIdentifier() const override { return _pStreamSrc->GetIdentifier(); }
-	virtual size_t DoGetSize() override { return _bytesAll; }
-	virtual bool DoClose() override { return true; }
-	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual size_t DoWrite(const void* buff, size_t len) override { return 0; }
-	virtual bool DoFlush() override { return false; }
-	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
-public:
-	bool Prefetch();
-};
-
-//------------------------------------------------------------------------------
 // Stream_Dumb
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Stream_Dumb : public Stream {
@@ -81,7 +56,7 @@ class GURAX_DLLDECLARE Stream_Binary : public Stream {
 private:
 	RefPtr<BinaryReferable> _pBuff;
 public:
-	Stream_Binary(Flags flags, BinaryReferable* pBuff, size_t offset);
+	Stream_Binary(Flags flags, BinaryReferable* pBuff, size_t offset = 0);
 	Stream_Binary(Flags flags);
 public:
 	Binary& GetBuff() { return _pBuff->GetBinary(); }

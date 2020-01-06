@@ -41,13 +41,6 @@ Stream* Stream::Open(const char* pathName, OpenFlags openFlags)
 	return pDirectory->OpenStream(openFlags);
 }
 
-Stream* Stream::CreatePrefetch(Stream* pStreamSrc, size_t bytesUnit)
-{
-	RefPtr<Stream_Prefetch> pStreamPrefetch(new Stream_Prefetch(pStreamSrc, bytesUnit));
-	if (!pStreamPrefetch->Prefetch()) return nullptr;
-	return pStreamPrefetch.release();
-}
-
 bool Stream::CheckReadable() const
 {
 	if (IsReadable()) return true;

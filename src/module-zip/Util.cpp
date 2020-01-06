@@ -81,17 +81,17 @@ bool IsMatchedName(const char* name1, const char* name2)
 	return true;
 }
 
-UInt32 SeekCentralDirectory(Stream& stream)
+UInt32 SeekCentralDirectory(Stream& streamSrc)
 {
 #if 0
-	size_t bytesZIPFile = stream.GetSize();
-	if (bytesZIPFile == InvalidSize) {
-		sig.SetError(ERR_IOError, "can't seek end of file");
+	size_t bytesZIPFile = streamSrc.GetSize();
+	if (bytesZIPFile == -1) {
+		Error::Issue(ErrorType::IOError, "can't seek end of file");
 		return 0;
 	}
 	UInt32 offsetCentralDirectory = 0;
 	if (bytesZIPFile < EndOfCentralDirectoryRecord::MinSize) {
-		sig.SetError(ERR_FormatError, "can't find central directory record");
+		Error::Issue(ErrorType::FormatError, "can't find central directory record");
 		return 0;
 	}
 	size_t bytesBuff = 0;
@@ -100,14 +100,14 @@ UInt32 SeekCentralDirectory(Stream& stream)
 	} else {
 		long offsetStart = static_cast<long>(bytesZIPFile -
 									EndOfCentralDirectoryRecord::MaxSize);
-		if (!stream.Seek(offsetStart, Stream::SeekSet)) {
+		if (!streamSrc.Seek(offsetStart, Stream::SeekSet)) {
 			return 0;
 		}
 		bytesBuff = EndOfCentralDirectoryRecord::MaxSize;
 	}
 	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
 	char* buff = reinterpret_cast<char*>(pMemory->GetPointer());
-	stream.Read(buff, bytesBuff);
+	streamSrc.Read(buff, bytesBuff);
 	if (Error::IsIssued()) return 0;
 	char* buffAnchor = nullptr;
 	for (size_t i = 0; i <= bytesBuff - EndOfCentralDirectoryRecord::MinSize; i++) {
@@ -121,21 +121,23 @@ UInt32 SeekCentralDirectory(Stream& stream)
 	}
 	EndOfCentralDirectoryRecord record;
 	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
-	return Gura_UnpackUInt32(record.GetFields().
+	return Gurax_UnpackUInt32(record.GetFields().
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 #endif
 	return 0;
 }
 
-Directory* CreateDirectory(Stream* pStreamSrc,
+Directory* CreateDirectory(Stream& streamSrc,
 						   Directory* pParent, const char** pPathName, Directory::Type typeWouldBe)
 {
-#if 0
+	RefPtr<Stream> pStreamSrc(streamSrc.Reference());
 	if (!pStreamSrc->IsBwdSeekable()) {
-		Stream* pStreamPrefetch = Stream::Prefetch(env, pStreamSrc, true);
+		RefPtr<BinaryReferable> pBuff(new BinaryReferable(true));
+		pStreamSrc->ReadAll(pBuff->GetBinary());
 		if (Error::IsIssued()) return nullptr;
-		pStreamSrc = pStreamPrefetch;
+		pStreamSrc.reset(new Stream_Binary(pBuff.release()));
 	}
+#if 0
 	AutoPtr<DirBuilder::Structure> pStructure(new DirBuilder::Structure());
 	pStructure->SetRoot(new Record_ZIP(pStructure.get(), nullptr, "", true));
 	UInt32 offsetCentralDirectory = SeekCentralDirectory(pStreamSrc);
@@ -185,7 +187,7 @@ Directory* CreateDirectory(Stream* pStreamSrc,
 	return nullptr;
 }
 
-Stream* CreateStream(Stream* pStreamSrc, const CentralFileHeader* pHdr)
+Stream* CreateStream(Stream& stream, const CentralFileHeader* pHdr)
 {
 #if 0
 	AutoPtr<Stream_reader> pStream;
