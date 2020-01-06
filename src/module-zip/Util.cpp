@@ -209,39 +209,39 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
 	//size_t bytesUncompressed = pHdr->GetUncompressedSize();
 	//size_t bytesCompressed = pHdr->GetCompressedSize();
 	//UInt32 crc32Expected = pHdr->GetCrc32();
-	if (compressionMethod == METHOD_Store) {
+	if (compressionMethod == Method::Store) {
 		pStream.reset(new Stream_reader_Store(env, streamSrc.Reference(), *pHdr));
-	} else if (compressionMethod == METHOD_Shrink) {
+	} else if (compressionMethod == Method::Shrink) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Factor1) {
+	} else if (compressionMethod == Method::Factor1) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Factor2) {
+	} else if (compressionMethod == Method::Factor2) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Factor3) {
+	} else if (compressionMethod == Method::Factor3) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Factor4) {
+	} else if (compressionMethod == Method::Factor4) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Implode) {
+	} else if (compressionMethod == Method::Implode) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Factor1) {
+	} else if (compressionMethod == Method::Factor1) {
 		// unsupported
-	} else if (compressionMethod == METHOD_Deflate) {
+	} else if (compressionMethod == Method::Deflate) {
 		pStream.reset(new Stream_reader_Deflate(env, streamSrc.Reference(), *pHdr));
-	} else if (compressionMethod == METHOD_Deflate64) {
+	} else if (compressionMethod == Method::Deflate64) {
 		pStream.reset(new Stream_reader_Deflate64(env, streamSrc.Reference(), *pHdr));
-	} else if (compressionMethod == METHOD_PKWARE) {
+	} else if (compressionMethod == Method::PKWARE) {
 		// unsupported
-	} else if (compressionMethod == METHOD_BZIP2) {
+	} else if (compressionMethod == Method::BZIP2) {
 		pStream.reset(new Stream_reader_BZIP2(env, streamSrc.Reference(), *pHdr));
-	} else if (compressionMethod == METHOD_LZMA) {
+	} else if (compressionMethod == Method::LZMA) {
 		// unsupported
-	} else if (compressionMethod == METHOD_TERSA) {
+	} else if (compressionMethod == Method::TERSA) {
 		// unsupported
-	} else if (compressionMethod == METHOD_LZ77) {
+	} else if (compressionMethod == Method::LZ77) {
 		// unsupported
-	} else if (compressionMethod == METHOD_WavPack) {
+	} else if (compressionMethod == Method::WavPack) {
 		// unsupported
-	} else if (compressionMethod == METHOD_PPMd) {
+	} else if (compressionMethod == Method::PPMd) {
 		// unsupported
 	}
 	if (pStream.IsNull()) {

@@ -159,7 +159,6 @@ public:
 	}
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // D. Archive decryption header
 //------------------------------------------------------------------------------
@@ -285,8 +284,8 @@ public:
 		return true;
 	}
 	void SetFileName(const char* fileName) { _fileName = fileName; }
-	const char* GetFileName() const { return _fileName.c_str(); }
-	const char* GetFileComment() const { return _fileComment.c_str(); }
+	const char* GetFileName() const { return reinterpret_cast<const char*>(_fileName.c_str()); }
+	const char* GetFileComment() const { return reinterpret_cast<const char*>(_fileComment.c_str()); }
 	bool IsEncrypted() const {
 		return (Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag) & (1 << 0)) != 0;
 	}
@@ -480,6 +479,7 @@ public:
 	}
 };
 
+#if 0
 // Zip64 Extended Information Extra Field (0x0001)
 class Extra_ZIP64 {
 public:
