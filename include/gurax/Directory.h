@@ -41,7 +41,7 @@ public:
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
-	const char *GetName() const { return _name.c_str(); }
+	const char* GetName() const { return _name.c_str(); }
 	Directory* GetDirectoryParent() const { return _pDirectoryParent.get(); }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
@@ -50,7 +50,7 @@ public:
 		return _type == Type::Container || _type == Type::BoundaryContainer || _type == Type::RootContainer;
 	}
 	bool IsBoundaryContainer() const { return _type == Type::BoundaryContainer; }
-	bool IsRootContainer() const { return _type == Type::BoundaryContainer; }
+	bool IsRootContainer() const { return _type == Type::RootContainer; }
 	bool DoesMatch(const char* pattern, bool caseFlag) const {
 		return PathName(GetName()).SetCaseFlag(caseFlag).DoesMatch(pattern);
 	}
