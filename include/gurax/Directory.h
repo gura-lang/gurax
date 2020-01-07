@@ -74,6 +74,8 @@ public:
 class GURAX_DLLDECLARE DirectoryList : public std::vector<Directory*> {
 public:
 	using std::vector<Directory*>::vector;
+public:
+	Directory* FindByName(const char* name) const;
 };
 
 //------------------------------------------------------------------------------
