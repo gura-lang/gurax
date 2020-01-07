@@ -56,17 +56,20 @@ bool Stream_reader_Store::DoSeek(size_t offset, size_t offsetPrev)
 //-----------------------------------------------------------------------------
 bool Stream_reader_Deflate::Initialize()
 {
-	return false;
+	_pStreamReader.reset(new ZLib::Stream_Reader(_pStreamSrc->Reference(), _bytesCompressed));
+	return _pStreamReader->Initialize(-MAX_WBITS);
 }
 	
 size_t Stream_reader_Deflate::DoRead(void* buff, size_t bytes)
 {
-	return 0;
+	size_t bytesRead = _pStreamReader->Read(buff, bytes);
+	return CheckCRC32(buff, bytesRead);
 }
 
 bool Stream_reader_Deflate::DoSeek(size_t offset, size_t offsetPrev)
 {
-	return false;
+	_seekedFlag = true;
+	return _pStreamReader->Seek(offset, SeekMode::Set);
 }
 
 //-----------------------------------------------------------------------------
@@ -75,17 +78,21 @@ bool Stream_reader_Deflate::DoSeek(size_t offset, size_t offsetPrev)
 //-----------------------------------------------------------------------------
 bool Stream_reader_BZIP2::Initialize()
 {
-	return false;
+	_pStreamReader.reset(new BZLib::Stream_Reader(_pStreamSrc->Reference(), _bytesCompressed));
+	int verbosity = 0, small = 0;
+	return _pStreamReader->Initialize(verbosity, small);
 }
 	
 size_t Stream_reader_BZIP2::DoRead(void* buff, size_t bytes)
 {
-	return 0;
+	size_t bytesRead = _pStreamReader->Read(buff, bytes);
+	return CheckCRC32(buff, bytesRead);
 }
 
 bool Stream_reader_BZIP2::DoSeek(size_t offset, size_t offsetPrev)
 {
-	return false;
+	_seekedFlag = true;
+	return _pStreamReader->Seek(offset, SeekMode::Set);
 }
 
 //-----------------------------------------------------------------------------
@@ -94,6 +101,7 @@ bool Stream_reader_BZIP2::DoSeek(size_t offset, size_t offsetPrev)
 //-----------------------------------------------------------------------------
 bool Stream_reader_Deflate64::Initialize()
 {
+	Error::Issue(ErrorType::UnimplementedError, "this compression method is not implemented yet");
 	return false;
 }
 	
