@@ -39,6 +39,7 @@ public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
 	Directory* NextChild() { return DoNextChild(); }
+	Directory* FindChild(const char* name) { return DoFindChild(name); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
 	const char* GetName() const { return _name.c_str(); }
@@ -58,6 +59,7 @@ public:
 	int CountDepth() const;
 protected:
 	virtual Directory* DoNextChild() = 0;
+	virtual Directory* DoFindChild(const char* name) = 0;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
 	virtual Value* DoGetStatValue();
 public:

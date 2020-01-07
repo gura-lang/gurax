@@ -36,6 +36,7 @@ protected:
 	~DirectoryEx();
 protected:
 	virtual Directory* DoNextChild() override;
+	virtual Directory* DoFindChild(const char* name) override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoGetStatValue() override;
 };

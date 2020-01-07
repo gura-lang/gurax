@@ -87,6 +87,11 @@ Directory* DirectoryEx::DoNextChild()
 	return new DirectoryEx(Reference(), OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr);
 }
 
+Directory* DirectoryEx::DoFindChild(const char* name)
+{
+	return nullptr;
+}
+
 #endif
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
