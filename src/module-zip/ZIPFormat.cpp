@@ -19,7 +19,13 @@ Stream_reader::Stream_reader(Stream* pStreamSrc, const CentralFileHeader& hdr) :
 
 size_t Stream_reader::CheckCRC32(const void* buff, size_t bytesRead)
 {
-	return 0;
+	if (_seekedFlag) return bytesRead;
+	_crc32.Update(buff, bytesRead);
+	if (bytesRead == 0 && _crc32Expected != _crc32.GetResult()) {
+		Error::Issue(ErrorType::FormatError, "CRC error");
+		return 0;
+	}
+	return bytesRead;
 }
 
 //-----------------------------------------------------------------------------
@@ -33,12 +39,15 @@ bool Stream_reader_Store::Initialize()
 	
 size_t Stream_reader_Store::DoRead(void* buff, size_t bytes)
 {
-	return 0;
+	size_t bytesRest = _bytesUncompressed - (_pStreamSrc->GetOffset() - _offsetTop);
+	if (bytes > bytesRest) bytes = bytesRest;
+	size_t bytesRead = _pStreamSrc->Read(buff, bytes);
+	return CheckCRC32(buff, bytesRead);
 }
 
 bool Stream_reader_Store::DoSeek(size_t offset, size_t offsetPrev)
 {
-	return false;
+	return _pStreamSrc->Seek(_offsetTop + offset, SeekMode::Set);
 }
 
 //-----------------------------------------------------------------------------
