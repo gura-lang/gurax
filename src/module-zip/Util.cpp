@@ -188,16 +188,15 @@ Directory* CreateDirectory(Stream& streamSrc,
 
 Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
 {
-#if 0
-	AutoPtr<Stream_reader> pStream;
+	RefPtr<Stream_reader> pStream;
 	long offset = static_cast<long>(pHdr->GetRelativeOffsetOfLocalHeader());
-	streamSrc.Seek(offset, Stream::SeekSet);
+	streamSrc.Seek(offset, Stream::SeekMode::Set);
 	if (Error::IsIssued()) return nullptr;
 	do {
 		UInt32 signature;
 		if (!ReadStream(streamSrc, &signature)) return nullptr;
 		if (signature != LocalFileHeader::Signature) {
-			sig.SetError(ERR_FormatError, "invalid ZIP format");
+			Error::Issue(ErrorType::FormatError, "invalid ZIP format");
 			return nullptr;
 		}
 		LocalFileHeader hdr;
@@ -209,7 +208,7 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
 	//size_t bytesCompressed = pHdr->GetCompressedSize();
 	//UInt32 crc32Expected = pHdr->GetCrc32();
 	if (compressionMethod == Method::Store) {
-		pStream.reset(new Stream_reader_Store(env, streamSrc.Reference(), *pHdr));
+		pStream.reset(new Stream_reader_Store(streamSrc.Reference(), *pHdr));
 	} else if (compressionMethod == Method::Shrink) {
 		// unsupported
 	} else if (compressionMethod == Method::Factor1) {
@@ -225,13 +224,13 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
 	} else if (compressionMethod == Method::Factor1) {
 		// unsupported
 	} else if (compressionMethod == Method::Deflate) {
-		pStream.reset(new Stream_reader_Deflate(env, streamSrc.Reference(), *pHdr));
+		pStream.reset(new Stream_reader_Deflate(streamSrc.Reference(), *pHdr));
 	} else if (compressionMethod == Method::Deflate64) {
-		pStream.reset(new Stream_reader_Deflate64(env, streamSrc.Reference(), *pHdr));
+		pStream.reset(new Stream_reader_Deflate64(streamSrc.Reference(), *pHdr));
 	} else if (compressionMethod == Method::PKWARE) {
 		// unsupported
 	} else if (compressionMethod == Method::BZIP2) {
-		pStream.reset(new Stream_reader_BZIP2(env, streamSrc.Reference(), *pHdr));
+		pStream.reset(new Stream_reader_BZIP2(streamSrc.Reference(), *pHdr));
 	} else if (compressionMethod == Method::LZMA) {
 		// unsupported
 	} else if (compressionMethod == Method::TERSA) {
@@ -243,15 +242,12 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
 	} else if (compressionMethod == Method::PPMd) {
 		// unsupported
 	}
-	if (pStream.IsNull()) {
-		sig.SetError(ERR_FormatError,
-				"unsupported compression method %d", compressionMethod);
+	if (!pStream) {
+		Error::Issue(ErrorType::FormatError, "unsupported compression method %d", compressionMethod);
 		return nullptr;
 	}
-	if (!pStream->Initialize(env)) return nullptr;
+	if (!pStream->Initialize()) return nullptr;
 	return pStream.release();
-#endif
-	return nullptr;
 }
 
 bool SkipStream(Stream& stream, size_t bytes)
@@ -308,17 +304,13 @@ bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 
 bool WriteStream(Stream& stream, void* buff, size_t bytes)
 {
-#if 0
 	stream.Write(buff, bytes);
-#endif
 	return !Error::IsIssued();
 }
 
 bool WriteStream(Stream& stream, Binary& binary)
 {
-#if 0
 	stream.Write(binary.data(), binary.size());
-#endif
 	return !Error::IsIssued();
 }
 

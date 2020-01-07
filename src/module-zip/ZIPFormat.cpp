@@ -32,6 +32,11 @@ size_t Stream_reader::CheckCRC32(const void* buff, size_t bytesRead)
 // Stream_reader_Store
 // Compression method #0: stored (no compression)
 //-----------------------------------------------------------------------------
+Stream_reader_Store::Stream_reader_Store(Stream* pStreamSrc, const CentralFileHeader& hdr) :
+	Stream_reader(pStreamSrc, hdr)
+{
+}
+
 bool Stream_reader_Store::Initialize()
 {
 	return false;
@@ -54,6 +59,11 @@ bool Stream_reader_Store::DoSeek(size_t offset, size_t offsetPrev)
 // Stream_reader_Deflate
 // Compression method #8: Deflated
 //-----------------------------------------------------------------------------
+Stream_reader_Deflate::Stream_reader_Deflate(Stream* pStreamSrc, const CentralFileHeader& hdr) :
+	Stream_reader(pStreamSrc, hdr)
+{
+}
+
 bool Stream_reader_Deflate::Initialize()
 {
 	_pStreamReader.reset(new ZLib::Stream_Reader(_pStreamSrc->Reference(), _bytesCompressed));
@@ -76,6 +86,11 @@ bool Stream_reader_Deflate::DoSeek(size_t offset, size_t offsetPrev)
 // Stream_reader_BZIP2
 // Compression method #12: BZIP2
 //-----------------------------------------------------------------------------
+Stream_reader_BZIP2::Stream_reader_BZIP2(Stream* pStreamSrc, const CentralFileHeader& hdr) :
+	Stream_reader(pStreamSrc, hdr)
+{
+}
+
 bool Stream_reader_BZIP2::Initialize()
 {
 	_pStreamReader.reset(new BZLib::Stream_Reader(_pStreamSrc->Reference(), _bytesCompressed));
@@ -99,6 +114,11 @@ bool Stream_reader_BZIP2::DoSeek(size_t offset, size_t offsetPrev)
 // Stream_reader_Deflate64
 // Compression method #9: Enhanced Deflating using Deflate64(tm)
 //-----------------------------------------------------------------------------
+Stream_reader_Deflate64::Stream_reader_Deflate64(Stream* pStreamSrc, const CentralFileHeader& hdr) :
+	Stream_reader(pStreamSrc, hdr)
+{
+}
+
 bool Stream_reader_Deflate64::Initialize()
 {
 	Error::Issue(ErrorType::UnimplementedError, "this compression method is not implemented yet");
