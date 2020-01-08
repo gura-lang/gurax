@@ -238,17 +238,18 @@ bool PathName::DoesMatchPatternSub(const char* pattern, const char* pathName)
 		if (*pattern == '!') {
 			pattern++;
 			for ( ; *pattern != ']' && *pattern != '\0'; pattern++) {
-				if (charCmp(*pathName, *pattern) == 0) return false;
+				if (charCmp(*pathName, *pattern) == 0 || (IsSep(*pathName) && IsSep(*pattern))) return false;
 			}
 		} else {
 			for ( ; *pattern != ']' && *pattern != '\0'; pattern++) {
-				if (charCmp(*pathName, *pattern) != 0) return false;
+				if (!(charCmp(*pathName, *pattern) == 0 || (IsSep(*pathName) && IsSep(*pattern)))) return false;
 			}
 		}
 		if (*pattern == ']') pattern++;
 		return DoesMatchPatternSub<T_CharCmp>(pattern, pathName + 1);
 	} else {
-		return charCmp(*pattern, *pathName) == 0 && DoesMatchPatternSub<T_CharCmp>(pattern + 1, pathName + 1);
+		return (charCmp(*pathName, *pattern) == 0 || (IsSep(*pathName) && IsSep(*pattern))) &&
+			DoesMatchPatternSub<T_CharCmp>(pattern + 1, pathName + 1);
 	}
 }
 

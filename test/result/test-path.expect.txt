@@ -330,16 +330,16 @@ path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/',
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/', '.boke']
 ======== path.Join() ========
-======== path.Match() ========
-path.Match('a*', 'abcdefg') .. true
-path.Match('a*efg', 'abcdefg') .. true
-path.Match('a*ef', 'abcdefg') .. false
-path.Match('a?cdefg', 'abcdefg') .. true
-path.Match('a????fg', 'abcdefg') .. true
-path.Match('a????f?', 'abcdefg') .. true
-path.Match('a???f?', 'abcdefg') .. false
-path.Match('A*', 'abcdefg'):case .. false
-path.Match('A*', 'abcdefg'):icase .. true
+======== path.MatchPattern() ========
+path.MatchPattern('a*', 'abcdefg') .. true
+path.MatchPattern('a*efg', 'abcdefg') .. true
+path.MatchPattern('a*ef', 'abcdefg') .. false
+path.MatchPattern('a?cdefg', 'abcdefg') .. true
+path.MatchPattern('a????fg', 'abcdefg') .. true
+path.MatchPattern('a????f?', 'abcdefg') .. true
+path.MatchPattern('a???f?', 'abcdefg') .. false
+path.MatchPattern('A*', 'abcdefg'):case .. false
+path.MatchPattern('A*', 'abcdefg'):icase .. true
 ======== path.Regulate() ========
 ''                              -> ''
 'a'                             -> 'a'

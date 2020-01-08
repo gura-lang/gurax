@@ -315,8 +315,8 @@ Gurax_ImplementFunction(Join)
 	return new Value_String(str);
 }
 
-// path.Match(pattern:String, pathName:String):map:[case,icase]
-Gurax_DeclareFunction(Match)
+// path.MatchPattern(pattern:String, pathName:String):map:[case,icase]
+Gurax_DeclareFunction(MatchPattern)
 {
 	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -331,7 +331,7 @@ Gurax_DeclareFunction(Match)
 		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
 }
 
-Gurax_ImplementFunction(Match)
+Gurax_ImplementFunction(MatchPattern)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -547,7 +547,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Glob));
 	Assign(Gurax_CreateFunction(HeadName));
 	Assign(Gurax_CreateFunction(Join));
-	Assign(Gurax_CreateFunction(Match));
+	Assign(Gurax_CreateFunction(MatchPattern));
 	Assign(Gurax_CreateFunction(Regulate));
 	Assign(Gurax_CreateFunction(Split));
 	Assign(Gurax_CreateFunction(SplitBottom));
