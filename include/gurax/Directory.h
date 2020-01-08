@@ -86,8 +86,12 @@ public:
 //------------------------------------------------------------------------------
 // DirectoryOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirectoryOwner : public DirectoryList {
+class GURAX_DLLDECLARE DirectoryOwner : public DirectoryList, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(DirectoryOwner);
+public:
+	DirectoryOwner() {}
 	~DirectoryOwner() { Clear(); }
 	void Clear();
 };
@@ -101,10 +105,32 @@ class GURAX_DLLDECLARE DirectoryDeque : public std::deque<Directory*> {
 //-----------------------------------------------------------------------------
 // DirectoryDequeOwner
 //-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE DirectoryDequeOwner : public DirectoryDeque {
+class GURAX_DLLDECLARE DirectoryDequeOwner : public DirectoryDeque, public Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(DirectoryDequeOwner);
+public:
+	DirectoryDequeOwner() {}
 	~DirectoryDequeOwner() { Clear(); }
 	void Clear();
+};
+
+//------------------------------------------------------------------------------
+// Directory_Container
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Directory_Container : public Directory {
+public:
+	RefPtr<DirectoryOwner> _pDirectoryOwner;
+	size_t _idx;
+public:
+	Directory_Container(Directory* pDirectoryParent, String pathName,
+						Type type, char sep, bool caseFlag, DirectoryOwner* pDirectoryOwner) :
+		Directory(pDirectoryParent, pathName, type, sep, caseFlag),
+		_pDirectoryOwner(pDirectoryOwner), _idx(0) {}
+protected:
+	virtual Directory* DoNextChild() override;
+	virtual Directory* DoFindChild(const char* name) override;
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 };
 
 //------------------------------------------------------------------------------

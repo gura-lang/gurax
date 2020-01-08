@@ -100,6 +100,25 @@ void DirectoryDequeOwner::Clear()
 	clear();
 }
 
+//------------------------------------------------------------------------------
+// Directory_Container
+//------------------------------------------------------------------------------
+Directory* Directory_Container::DoNextChild()
+{
+	if (_idx >= _pDirectoryOwner->size()) return nullptr;
+	return (*_pDirectoryOwner)[_idx]->Reference();
+}
+
+Directory* Directory_Container::DoFindChild(const char* name)
+{
+	return nullptr;
+}
+
+Stream* Directory_Container::DoOpenStream(Stream::OpenFlags openFlags)
+{
+	return nullptr;
+}
+
 //-----------------------------------------------------------------------------
 // Iterator_DirectoryWalk
 //-----------------------------------------------------------------------------
