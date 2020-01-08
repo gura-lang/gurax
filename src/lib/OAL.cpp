@@ -520,7 +520,7 @@ bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
 		}
 		fileName = FromNativeString(findData.cFileName);
 		if (fileName != "." && fileName != ".." &&
-			(!pattern || PathName(fileName).DoesMatch(pattern))) break;
+			(!pattern || PathName(fileName).DoesMatchPattern(pattern))) break;
 	}
 	if (_joinPathNameFlag) {
 		pathName = JoinPathName(_dirName.c_str(), fileName.c_str());
@@ -965,7 +965,7 @@ bool OAL::DirLister::Next(const char* pattern, String& pathName, bool* pDirFlag)
 		if (!direntp) return false;
 		fileName = FromNativeString(direntp->d_name);
 		if (fileName != "." && fileName != ".." &&
-			(!pattern || PathName(fileName).DoesMatch(pattern))) break;
+			(!pattern || PathName(fileName).DoesMatchPattern(pattern))) break;
 	}
 	if (_joinPathNameFlag) {
 		pathName = PathName(_dirName).JoinAfter(fileName.c_str());

@@ -340,7 +340,7 @@ Gurax_ImplementFunction(Match)
 	// Function body
 	if (argument.IsSet(Gurax_Symbol(case_))) pathName.SetCaseFlag(true);
 	if (argument.IsSet(Gurax_Symbol(icase))) pathName.SetCaseFlag(false);
-	return new Value_Bool(pathName.DoesMatch(pattern));
+	return new Value_Bool(pathName.DoesMatchPattern(pattern));
 }
 
 // path.Regulate(pathName:String):map:[uri]

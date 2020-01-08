@@ -19,14 +19,14 @@ public:
 	enum class Type { None, Item, Container, BoundaryContainer, RootContainer, };
 protected:
 	RefPtr<Directory> _pDirectoryParent;
-	String _name;
+	String _pathName;
 	Type _type;
 	char _sep;
 	bool _caseFlag;
 public:
 	// Constructor
-	Directory(Directory* pDirectoryParent, String name, Type type, char sep, bool caseFlag) :
-		_pDirectoryParent(pDirectoryParent), _name(name), _type(type), _sep(sep), _caseFlag(caseFlag) {}
+	Directory(Directory* pDirectoryParent, String pathName, Type type, char sep, bool caseFlag) :
+		_pDirectoryParent(pDirectoryParent), _pathName(pathName), _type(type), _sep(sep), _caseFlag(caseFlag) {}
 	// Copy constructor/operator
 	Directory(const Directory& src) = delete;
 	Directory& operator=(const Directory& src) = delete;
@@ -39,10 +39,10 @@ public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
 	Directory* NextChild() { return DoNextChild(); }
-	Directory* FindChild(const char* name) { return DoFindChild(name); }
+	Directory* FindChild(const char* pathName) { return DoFindChild(pathName); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
-	const char* GetName() const { return _name.c_str(); }
+	const char* GetPathName() const { return _pathName.c_str(); }
 	Directory* GetDirectoryParent() const { return _pDirectoryParent.get(); }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
@@ -52,10 +52,13 @@ public:
 	}
 	bool IsBoundaryContainer() const { return _type == Type::BoundaryContainer; }
 	bool IsRootContainer() const { return _type == Type::RootContainer; }
-	bool DoesMatch(const char* pattern, bool caseFlag) const {
-		return PathName(GetName()).SetCaseFlag(caseFlag).DoesMatch(pattern);
+	bool DoesMatch(const char* pathName) const {
+		return PathName(GetPathName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pathName);
 	}
-	String MakePathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
+	bool DoesMatchPattern(const char* pattern) const {
+		return PathName(GetPathName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern);
+	}
+	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
 protected:
 	virtual Directory* DoNextChild() = 0;

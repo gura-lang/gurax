@@ -68,7 +68,7 @@ DirectoryEx::~DirectoryEx()
 Directory* DirectoryEx::DoNextChild()
 {
 	if (!_pDir) {
-		String pathName(MakePathName(false));
+		String pathName(MakeFullPathName(false));
 		String pathNameEnc = OAL::ToNativeString(pathName.c_str());
 		_pDir = opendir(pathNameEnc.empty()? "." : pathNameEnc.c_str());
 		if (!_pDir) return nullptr;
@@ -89,6 +89,22 @@ Directory* DirectoryEx::DoNextChild()
 
 Directory* DirectoryEx::DoFindChild(const char* name)
 {
+	// **** not tested yet ****
+	String pathName(MakeFullPathName(false));
+	String pathNameEnc = OAL::ToNativeString(pathName.c_str());
+	DIR* pDir = opendir(pathNameEnc.empty()? "." : pathNameEnc.c_str());
+	if (!pDir) return nullptr;
+	for (;;) {
+		struct dirent* pEnt = readdir(pDir);
+		if (!pEnt) break;
+		String nameFound = OAL::FromNativeString(pEnt->d_name);
+		if (::strcmp(nameFound.c_str(), name) == 0) {
+			closedir(pDir);
+			Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
+			return new DirectoryEx(Reference(), nameFound.c_str(), type, nullptr);
+		}
+	}
+	closedir(pDir);
 	return nullptr;
 }
 
@@ -106,7 +122,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Append))? "a+b" :
 		(openFlags == (Stream::OpenFlag::Read | Stream::OpenFlag::Write | Stream::OpenFlag::Append))? "w+b" :
 		"rb";
-	String pathName = MakePathName(false);
+	String pathName = MakeFullPathName(false);
 	FILE* fp = ::fopen(pathName.c_str(), mode);
 	if (!fp) {
 		Error::Issue(ErrorType::IOError, "failed to open a file '%s'", pathName.c_str());
@@ -120,7 +136,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 Value* DirectoryEx::DoGetStatValue()
 {
 	if (!_pStat) {
-		_pStat.reset(Stat::Create(MakePathName(false).c_str()));
+		_pStat.reset(Stat::Create(MakeFullPathName(false).c_str()));
 		if (!_pStat) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");
 			return Value::nil();

@@ -161,7 +161,7 @@ void Test_DoesMatch()
 	};
 	for (size_t i = 0; i < ArraySizeOf(infoTbl); ++i) {
 		const Info& info = infoTbl[i];
-		bool rtn = PathName(info.pathName).SetCaseFlag(info.caseFlag).DoesMatch(info.pattern);
+		bool rtn = PathName(info.pathName).SetCaseFlag(info.caseFlag).DoesMatchPattern(info.pattern);
 		::printf("%-16s %-16s %s .. %s\n", info.pathName, info.pattern,
 				 info.caseFlag? "(case)" : "(icase)", rtn? "OK" : "NG");
 	}

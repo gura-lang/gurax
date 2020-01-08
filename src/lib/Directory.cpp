@@ -13,13 +13,13 @@ Directory* Directory::Open(const char* pathName, Type typeWouldBe)
 	return PathMgr::OpenDirectory(pathName, typeWouldBe);
 }
 
-String Directory::MakePathName(bool addSepFlag, const char* pathNameTrail) const
+String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) const
 {
-	String pathName(_name);
+	String pathName(_pathName);
 	for (Directory* pDirectory = GetDirectoryParent(); pDirectory; pDirectory = pDirectory->GetDirectoryParent()) {
 		// a "boundary container" directory may have an empty name
-		if (*pDirectory->GetName() != '\0' || pDirectory->IsRootContainer()) {
-			String str(pDirectory->GetName());
+		if (*pDirectory->GetPathName() != '\0' || pDirectory->IsRootContainer()) {
+			String str(pDirectory->GetPathName());
 			size_t len = str.size();
 			if (len == 0 || !PathName::IsSep(str[len - 1])) {
 				str += pDirectory->GetSep();
@@ -37,7 +37,7 @@ String Directory::MakePathName(bool addSepFlag, const char* pathNameTrail) const
 			char ch = PathName::IsSep(*p)? GetSep() : *p;
 			pathName += ch;
 		}
-	} else if (addSepFlag && IsContainer() && !_name.empty()) {
+	} else if (addSepFlag && IsContainer() && !_pathName.empty()) {
 		size_t len = pathName.size();
 		if (len > 0 && !PathName::IsSep(pathName[len - 1])) {
 			pathName += GetSep();
@@ -73,7 +73,7 @@ String Directory::ToString(const StringStyle& ss) const
 Directory* DirectoryList::FindByName(const char* name) const
 {
 	for (Directory* pDirectory : *this) {
-		if (::strcmp(pDirectory->GetName(), name) == 0) return pDirectory;
+		if (::strcmp(pDirectory->GetPathName(), name) == 0) return pDirectory;
 	}
 	return nullptr;
 }
@@ -138,7 +138,7 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 		if ((pDirectoryChild->IsContainer() && _dirFlag) || (!pDirectoryChild->IsContainer() && _fileFlag)) {
 			bool matchFlag = false;
 			for (const String& pattern : _patterns) {
-				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(pattern.c_str())) {
+				if (PathName(pDirectoryChild->GetPathName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern.c_str())) {
 					matchFlag = true;
 					break;
 				}
@@ -147,7 +147,7 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 				if (_statFlag) {
 					pValueRtn.reset(pDirectoryChild->GetStatValue());
 				} else {
-					pValueRtn.reset(new Value_String(pDirectoryChild->MakePathName(_addSepFlag)));
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
 				}
 				break;
 			}
@@ -229,7 +229,7 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 			_depthDeque.pop_front();
 		}
 		if (!pDirectoryChild) return nullptr;
-		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatch(_patternSegs[_depth].c_str())) {
+		if (PathName(pDirectoryChild->GetPathName()).SetCaseFlag(_caseFlag).DoesMatchPattern(_patternSegs[_depth].c_str())) {
 			if (_depth + 1 < _patternSegs.size()) {
 				if (pDirectoryChild->IsContainer()) {
 					_directoryDeque.push_back(pDirectoryChild->Reference());
@@ -240,7 +240,7 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 				if (_statFlag) {
 					pValueRtn.reset(pDirectoryChild->GetStatValue());
 				} else {
-					pValueRtn.reset(new Value_String(pDirectoryChild->MakePathName(_addSepFlag)));
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
 				}
 				break;
 			}

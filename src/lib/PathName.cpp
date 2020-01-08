@@ -197,16 +197,42 @@ bool PathName::HasSeparator() const
 }
 
 template<typename T_CharCmp>
-bool PathName::DoesMatchSub(const char* pattern, const char* pathName)
+bool PathName::DoesMatchSub(const char* pathName1, const char* pathName2)
+{
+	T_CharCmp charCmp;
+	const char* p1 = pathName1;
+	const char* p2 = pathName2;
+	for ( ; ; p1++, p2++) {
+		char ch1 = *p1, ch2 = *p2;
+		if (IsSep(ch1) && IsSep(ch2)) {
+			// nothing to do
+		} else if (charCmp(ch1, ch2) != 0) {
+			return false;
+		} else if (ch1) {
+			break;
+		}
+	}
+	return true;
+}
+
+bool PathName::DoesMatch(const char* pathName) const
+{
+	return GetCaseFlag()?
+		DoesMatchSub<CharCase>(pathName, _pathName) :
+		DoesMatchSub<CharICase>(pathName, _pathName);
+}
+
+template<typename T_CharCmp>
+bool PathName::DoesMatchPatternSub(const char* pattern, const char* pathName)
 {
 	T_CharCmp charCmp;
 	if (*pattern == '\0') {
 		return *pathName == '\0';
 	} else if (*pattern == '*') {
-		return DoesMatchSub<T_CharCmp>(pattern + 1, pathName) ||
-			(*pathName != '\0' && DoesMatchSub<T_CharCmp>(pattern, pathName + 1));
+		return DoesMatchPatternSub<T_CharCmp>(pattern + 1, pathName) ||
+			(*pathName != '\0' && DoesMatchPatternSub<T_CharCmp>(pattern, pathName + 1));
 	} else if (*pattern == '?') {
-		return *pathName != '\0' && DoesMatchSub<T_CharCmp>(pattern + 1, pathName + 1);
+		return *pathName != '\0' && DoesMatchPatternSub<T_CharCmp>(pattern + 1, pathName + 1);
 	} else if (*pattern == '[') {
 		pattern++;
 		if (*pattern == '!') {
@@ -220,23 +246,23 @@ bool PathName::DoesMatchSub(const char* pattern, const char* pathName)
 			}
 		}
 		if (*pattern == ']') pattern++;
-		return DoesMatchSub<T_CharCmp>(pattern, pathName + 1);
+		return DoesMatchPatternSub<T_CharCmp>(pattern, pathName + 1);
 	} else {
-		return charCmp(*pattern, *pathName) == 0 && DoesMatchSub<T_CharCmp>(pattern + 1, pathName + 1);
+		return charCmp(*pattern, *pathName) == 0 && DoesMatchPatternSub<T_CharCmp>(pattern + 1, pathName + 1);
 	}
 }
 
-bool PathName::DoesMatch(const char* pattern) const
+bool PathName::DoesMatchPattern(const char* pattern) const
 {
 	if (*pattern == '!') {
 		pattern++;
 		return GetCaseFlag()?
-			!DoesMatchSub<CharCase>(pattern, _pathName) :
-			!DoesMatchSub<CharICase>(pattern, _pathName);
+			!DoesMatchPatternSub<CharCase>(pattern, _pathName) :
+			!DoesMatchPatternSub<CharICase>(pattern, _pathName);
 	}
 	return GetCaseFlag()?
-		DoesMatchSub<CharCase>(pattern, _pathName) :
-		DoesMatchSub<CharICase>(pattern, _pathName);
+		DoesMatchPatternSub<CharCase>(pattern, _pathName) :
+		DoesMatchPatternSub<CharICase>(pattern, _pathName);
 }
 
 String PathName::MakeAbsName() const

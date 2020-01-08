@@ -90,8 +90,11 @@ public:
 	const char* SeekExtName() const;
 	const char* SeekTerminator() const { return _pathName + ::strlen(_pathName); }
 	template<typename T_CharCmp>
-	static bool DoesMatchSub(const char* pattern, const char* pathName);
-	bool DoesMatch(const char* pattern) const;
+	static bool DoesMatchSub(const char* pathName1, const char* pathName2);
+	bool DoesMatch(const char* pathName) const;
+	template<typename T_CharCmp>
+	static bool DoesMatchPatternSub(const char* pattern, const char* pathName);
+	bool DoesMatchPattern(const char* pattern) const;
 	String MakeAbsName() const;
 	bool IsAbsName() const;
 public:

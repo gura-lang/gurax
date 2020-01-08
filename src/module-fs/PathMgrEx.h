@@ -28,7 +28,7 @@ protected:
 #if defined(GURAX_ON_MSWIN)
 	HANDLE _hFind;
 #else
-	DIR *_pDir;
+	DIR* _pDir;
 #endif
 public:
 	DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat);
