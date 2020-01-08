@@ -16,7 +16,8 @@ Directory* Directory::Open(const char* pathName, Type typeWouldBe)
 String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) const
 {
 	String pathName(_pathName);
-	for (Directory* pDirectory = GetDirectoryParent(); pDirectory; pDirectory = pDirectory->GetDirectoryParent()) {
+	RefPtr<Directory> pDirectory(LockDirectoryParent());
+	for ( ; pDirectory; pDirectory.reset(pDirectory->LockDirectoryParent())) {
 		// a "boundary container" directory may have an empty name
 		if (*pDirectory->GetPathName() != '\0' || pDirectory->IsRootContainer()) {
 			String str(pDirectory->GetPathName());
@@ -49,8 +50,8 @@ String Directory::MakeFullPathName(bool addSepFlag, const char* pathNameTrail) c
 int Directory::CountDepth() const
 {
 	int cnt = 0;
-	for (const Directory* pDirectory = GetDirectoryParent(); pDirectory;
-		 pDirectory = pDirectory->GetDirectoryParent()) {
+	RefPtr<Directory> pDirectory(LockDirectoryParent());
+	for ( ; pDirectory; pDirectory.reset(pDirectory->LockDirectoryParent())) {
 		cnt++;
 	}
 	return cnt;

@@ -18,7 +18,7 @@ public:
 public:
 	enum class Type { None, Item, Container, BoundaryContainer, RootContainer, };
 protected:
-	RefPtr<Directory> _pDirectoryParent;
+	RefPtr<WeakPtr> _pwDirectoryParent;
 	String _pathName;
 	Type _type;
 	char _sep;
@@ -26,7 +26,8 @@ protected:
 public:
 	// Constructor
 	Directory(Directory* pDirectoryParent, String pathName, Type type, char sep, bool caseFlag) :
-		_pDirectoryParent(pDirectoryParent), _pathName(pathName), _type(type), _sep(sep), _caseFlag(caseFlag) {}
+		_pwDirectoryParent(pDirectoryParent? pDirectoryParent->GetWeakPtr() : nullptr), _pathName(pathName),
+		_type(type), _sep(sep), _caseFlag(caseFlag) {}
 	// Copy constructor/operator
 	Directory(const Directory& src) = delete;
 	Directory& operator=(const Directory& src) = delete;
@@ -43,7 +44,7 @@ public:
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
 	const char* GetPathName() const { return _pathName.c_str(); }
-	Directory* GetDirectoryParent() const { return _pDirectoryParent.get(); }
+	Directory* LockDirectoryParent() const { return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr; }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
 	bool IsItem() const { return _type == Type::Item; }
@@ -127,6 +128,11 @@ public:
 						Type type, char sep, bool caseFlag, DirectoryOwner* pDirectoryOwner) :
 		Directory(pDirectoryParent, pathName, type, sep, caseFlag),
 		_pDirectoryOwner(pDirectoryOwner), _idx(0) {}
+	Directory_Container(Directory* pDirectoryParent, String pathName,
+						Type type, char sep, bool caseFlag) :
+		Directory_Container(pDirectoryParent, pathName, type, sep, caseFlag, new DirectoryOwner()) {}
+public:
+	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
 protected:
 	virtual Directory* DoNextChild() override;
 	virtual Directory* DoFindChild(const char* name) override;

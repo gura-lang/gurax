@@ -6,6 +6,42 @@
 
 Gurax_BeginModuleScope(zip)
 
+//-----------------------------------------------------------------------------
+// Directory_File
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Directory_File : public Directory {
+private:
+	std::unique_ptr<CentralFileHeader> _pHdr;
+public:
+	Directory_File(Directory* pDirectoryParent, CentralFileHeader* pHdr) :
+		Directory(pDirectoryParent, pHdr->GetFileName(), Directory::Type::Item,
+				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
+	virtual Directory* DoNextChild() override;
+	virtual Directory* DoFindChild(const char* name) override;
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
+	virtual Value* DoGetStatValue() override;
+};
+
+Directory* Directory_File::DoNextChild()
+{
+	return nullptr;
+}
+
+Directory* Directory_File::DoFindChild(const char* name)
+{
+	return nullptr;
+}
+
+Stream* Directory_File::DoOpenStream(Stream::OpenFlags openFlags)
+{
+	return nullptr;
+}
+
+Value* Directory_File::DoGetStatValue()
+{
+	return nullptr;
+}
+
 class SymbolAssoc_Method : public SymbolAssoc<UInt16, Method::Invalid> {
 public:
 	SymbolAssoc_Method() {
@@ -124,8 +160,8 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
-Directory* CreateDirectory(Stream& streamSrc,
-						   Directory* pParent, const char** pPathName, Directory::Type typeWouldBe)
+Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
+						   const char** pPathName, Directory::Type typeWouldBe)
 {
 #if 0
 	RefPtr<Stream> pStreamSrc(streamSrc.Reference());
@@ -136,9 +172,9 @@ Directory* CreateDirectory(Stream& streamSrc,
 		pStreamSrc.reset(new Stream_Binary(Stream::Flag::Readable, pBuff.release()));
 	}
 #endif
-#if 1
-	//AutoPtr<DirBuilder::Structure> pStructure(new DirBuilder::Structure());
-	//pStructure->SetRoot(new Record_ZIP(pStructure.get(), nullptr, "", true));
+	RefPtr<Directory_Container> pDirectory(
+		new Directory_Container(pDirectoryParent, "", Directory::Type::Container,
+								PathName::SepPlatform, PathName::CaseFlagPlatform));
 	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
 	if (Error::IsIssued()) return nullptr;
 	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return nullptr;
@@ -153,14 +189,9 @@ Directory* CreateDirectory(Stream& streamSrc,
 			ArchiveExtraDataRecord record;
 			if (!record.Read(streamSrc)) return nullptr;
 		} else if (signature == CentralFileHeader::Signature) {
-			CentralFileHeader* pHdr = new CentralFileHeader();
-			if (!pHdr->Read(streamSrc)) {
-				delete pHdr;
-				return nullptr;
-			}
-			//Record_ZIP* pRecord = dynamic_cast<Record_ZIP*>(
-			//						pStructure->AddRecord(pHdr->GetFileName()));
-			//pRecord->SetCentralFileHeader(pHdr);
+			std::unique_ptr<CentralFileHeader> pHdr(new CentralFileHeader());
+			if (!pHdr->Read(streamSrc)) return nullptr;
+			pDirectory->GetDirectoryOwner().push_back(new Directory_File(pDirectoryParent, pHdr.release()));
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
 			if (!signature.Read(streamSrc)) return nullptr;
@@ -180,10 +211,7 @@ Directory* CreateDirectory(Stream& streamSrc,
 		}
 	}
 	if (Error::IsIssued()) return nullptr;
-	//pStreamSrc->Close();
-	//return pStructure->GenerateDirectory(pParent, pPathName, notFoundMode);
-#endif
-	return nullptr;
+	return pDirectory.release();
 }
 
 Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
