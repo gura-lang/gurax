@@ -315,6 +315,34 @@ Gurax_ImplementFunction(Join)
 	return new Value_String(str);
 }
 
+// path.Match(pathName1:String, pathName2:String):map:[case,icase]
+Gurax_DeclareFunction(Match)
+{
+	Declare(VTYPE_Any, Flag::Map);
+	DeclareArg("pathName1", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathName2", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(case_));
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns true if the both path names are determined as equal each other.\n"
+		"\n"
+		"Though the default sensitiveness of character cases depends on the current platform,\n"
+		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
+}
+
+Gurax_ImplementFunction(Match)
+{
+	// Arguments
+	ArgPicker args(argument);
+	PathName pathName1(args.PickString());
+	const char* pathName2 = args.PickString();
+	// Function body
+	if (argument.IsSet(Gurax_Symbol(case_))) pathName1.SetCaseFlag(true);
+	if (argument.IsSet(Gurax_Symbol(icase))) pathName1.SetCaseFlag(false);
+	return new Value_Bool(pathName1.DoesMatch(pathName2));
+}
+
 // path.MatchPattern(pattern:String, pathName:String):map:[case,icase]
 Gurax_DeclareFunction(MatchPattern)
 {
@@ -547,6 +575,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(Glob));
 	Assign(Gurax_CreateFunction(HeadName));
 	Assign(Gurax_CreateFunction(Join));
+	Assign(Gurax_CreateFunction(Match));
 	Assign(Gurax_CreateFunction(MatchPattern));
 	Assign(Gurax_CreateFunction(Regulate));
 	Assign(Gurax_CreateFunction(Split));

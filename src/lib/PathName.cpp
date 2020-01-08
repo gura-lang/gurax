@@ -208,7 +208,7 @@ bool PathName::DoesMatchSub(const char* pathName1, const char* pathName2)
 			// nothing to do
 		} else if (charCmp(ch1, ch2) != 0) {
 			return false;
-		} else if (ch1) {
+		} else if (!ch1) {
 			break;
 		}
 	}

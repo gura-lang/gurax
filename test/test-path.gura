@@ -73,6 +73,15 @@ TestCase('path.HeadName() and path.BottomName() and path.SplitBottom()') {
 TestCase('path.Join()') {
 }
 
+TestCase('path.Match()') {
+	Tester(`path.Match('aaaa', 'aaaa'))
+	Tester(`path.Match('aaaa', 'Aaaa'):case)
+	Tester(`path.Match('aaaa', 'Aaaa'):icase)
+	Tester(`path.Match('aaaa/bbbb/cccc', 'aaaa/bbbb/cccc'))
+	Tester(`path.Match('aaaa/bbbb/cccc', 'aaaa\\bbbb\\cccc'))
+	Tester(`path.Match('aaaa/bbbb/cccc', 'aaaa/xbbbb/cccc'))
+}
+
 TestCase('path.MatchPattern()') {
 	Tester(`path.MatchPattern('a*', 'abcdefg'))
 	Tester(`path.MatchPattern('a*efg', 'abcdefg'))
@@ -83,6 +92,10 @@ TestCase('path.MatchPattern()') {
 	Tester(`path.MatchPattern('a???f?', 'abcdefg'))
 	Tester(`path.MatchPattern('A*', 'abcdefg'):case)
 	Tester(`path.MatchPattern('A*', 'abcdefg'):icase)
+	Tester(`path.MatchPattern('a*/b*/c*', 'a/b/c'))
+	Tester(`path.MatchPattern('a*/b*/c*', 'aaaa/bbbb/cccc'))
+	Tester(`path.MatchPattern('a*/b*/c*', 'aaaa/xbbbb/cccc'))
+	Tester(`path.MatchPattern('a*/b*/c*', 'aaaa\\bbbb\\cccc'))
 }
 
 TestCase('path.Regulate()') {

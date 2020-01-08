@@ -330,6 +330,13 @@ path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc/',
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc.tt/boke.txt') .. ['C:/hoge/aaaa/bbbb/ccc.tt/', 'boke.txt']
 path.SplitBottom('C:/hoge/aaaa/bbbb/ccc/.boke') .. ['C:/hoge/aaaa/bbbb/ccc/', '.boke']
 ======== path.Join() ========
+======== path.Match() ========
+path.Match('aaaa', 'aaaa') .. true
+path.Match('aaaa', 'Aaaa'):case .. false
+path.Match('aaaa', 'Aaaa'):icase .. true
+path.Match('aaaa/bbbb/cccc', 'aaaa/bbbb/cccc') .. true
+path.Match('aaaa/bbbb/cccc', 'aaaa\\bbbb\\cccc') .. true
+path.Match('aaaa/bbbb/cccc', 'aaaa/xbbbb/cccc') .. false
 ======== path.MatchPattern() ========
 path.MatchPattern('a*', 'abcdefg') .. true
 path.MatchPattern('a*efg', 'abcdefg') .. true
@@ -340,6 +347,10 @@ path.MatchPattern('a????f?', 'abcdefg') .. true
 path.MatchPattern('a???f?', 'abcdefg') .. false
 path.MatchPattern('A*', 'abcdefg'):case .. false
 path.MatchPattern('A*', 'abcdefg'):icase .. true
+path.MatchPattern('a*/b*/c*', 'a/b/c') .. true
+path.MatchPattern('a*/b*/c*', 'aaaa/bbbb/cccc') .. true
+path.MatchPattern('a*/b*/c*', 'aaaa/xbbbb/cccc') .. false
+path.MatchPattern('a*/b*/c*', 'aaaa\\bbbb\\cccc') .. true
 ======== path.Regulate() ========
 ''                              -> ''
 'a'                             -> 'a'
