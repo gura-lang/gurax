@@ -135,4 +135,27 @@ bool Stream_reader_Deflate64::DoSeek(size_t offset, size_t offsetPrev)
 	return false;
 }
 
+//-----------------------------------------------------------------------------
+// Directory_ZIPFile
+//-----------------------------------------------------------------------------
+Directory* Directory_ZIPFile::DoNextChild()
+{
+	return nullptr;
+}
+
+Directory* Directory_ZIPFile::DoFindChild(const char* name)
+{
+	return nullptr;
+}
+
+Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
+{
+	return nullptr;
+}
+
+Value* Directory_ZIPFile::DoGetStatValue()
+{
+	return nullptr;
+}
+
 Gurax_EndModuleScope(zip)

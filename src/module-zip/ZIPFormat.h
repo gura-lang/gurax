@@ -34,6 +34,32 @@ struct Method {
 	static const UInt16 PPMd		= 99;	// PPMd version I, Rev 1
 };
 
+class SymbolAssoc_Method : public SymbolAssoc<UInt16, Method::Invalid> {
+public:
+	SymbolAssoc_Method() {
+		Assoc(Gurax_Symbol(store),		Method::Store);
+		Assoc(Gurax_Symbol(shrink),		Method::Shrink);
+		Assoc(Gurax_Symbol(factor1),	Method::Factor1);
+		Assoc(Gurax_Symbol(factor2),	Method::Factor2);
+		Assoc(Gurax_Symbol(factor3),	Method::Factor3);
+		Assoc(Gurax_Symbol(factor4),	Method::Factor4);
+		Assoc(Gurax_Symbol(implode),	Method::Implode);
+		Assoc(Gurax_Symbol(deflate),	Method::Deflate);
+		Assoc(Gurax_Symbol(deflate64),	Method::Deflate64);
+		Assoc(Gurax_Symbol(pkware),		Method::PKWARE);
+		Assoc(Gurax_Symbol(bzip2),		Method::BZIP2);
+		Assoc(Gurax_Symbol(lzma),		Method::LZMA);
+		Assoc(Gurax_Symbol(tersa),		Method::TERSA);
+		Assoc(Gurax_Symbol(lz77),		Method::LZ77);
+		Assoc(Gurax_Symbol(wavpack),	Method::WavPack);
+		Assoc(Gurax_Symbol(ppmd),		Method::PPMd);
+	}
+	static const SymbolAssoc& GetInstance() {
+		static SymbolAssoc* pSymbolAssoc = nullptr;
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Method());
+	}
+};
+
 //------------------------------------------------------------------------------
 // DOSATTR
 //------------------------------------------------------------------------------
@@ -479,6 +505,22 @@ public:
 	}
 };
 
+//-----------------------------------------------------------------------------
+// Directory_ZIPFile
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
+private:
+	std::unique_ptr<CentralFileHeader> _pHdr;
+public:
+	Directory_ZIPFile(Directory* pDirectoryParent, CentralFileHeader* pHdr) :
+		Directory(pDirectoryParent, pHdr->GetFileName(), Directory::Type::Item,
+				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
+	virtual Directory* DoNextChild() override;
+	virtual Directory* DoFindChild(const char* name) override;
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
+	virtual Value* DoGetStatValue() override;
+};
+
 #if 0
 // Zip64 Extended Information Extra Field (0x0001)
 class Extra_ZIP64 {
@@ -799,25 +841,6 @@ public:
 	virtual Iterator* GetSource();
 	virtual bool DoNext(Value& value);
 	virtual String ToString() const;
-};
-
-//-----------------------------------------------------------------------------
-// Directory_ZIP
-//-----------------------------------------------------------------------------
-class Record_ZIP;
-
-class Directory_ZIP : public Directory {
-private:
-	AutoPtr<DirBuilder::Structure> _pStructure;
-	Record_ZIP* _pRecord;
-public:
-	Directory_ZIP(Directory* pParent, const char* name,
-		Type type, DirBuilder::Structure* pStructure, Record_ZIP* pRecord);
-	virtual ~Directory_ZIP();
-	virtual Directory* DoNext();
-	virtual Stream* DoOpenStream(UInt32 attr);
-	virtual Object* DoGetStatObj();
-	Record_ZIP& GetRecord() { return *_pRecord; }
 };
 
 //-----------------------------------------------------------------------------

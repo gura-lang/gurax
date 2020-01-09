@@ -37,6 +37,28 @@ Gurax_RealizeSymbol(ppmd);
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+// zip.Open() {block?}
+Gurax_DeclareFunction(Open)
+{
+	Declare(VTYPE_Directory, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns a `Directory` instance that browses the contents in a ZIP stream.");
+}
+
+Gurax_ImplementFunction(Open)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	// Function body
+	RefPtr<Directory> pDirectory(ReadCentralDirectory(stream, nullptr, nullptr, Directory::Type::None));
+	if (!pDirectory) return Value::nil();
+	return new Value_Directory(pDirectory.release());
+}
+
 // re.Test()
 Gurax_DeclareFunction(Test)
 {
@@ -73,6 +95,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Stat);
 	Assign(VTYPE_Writer);
 	// Assignment of function
+	Assign(Gurax_CreateFunction(Open));
 	Assign(Gurax_CreateFunction(Test));
 	return true;
 }

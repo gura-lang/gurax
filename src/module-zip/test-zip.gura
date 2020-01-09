@@ -6,5 +6,5 @@ import(util.tester) {*}
 import(zip)
 
 TestCase('Basic test') {
-	Println(zip.Test('hello', 4))
+	zip.Open('test.zip')
 }

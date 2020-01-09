@@ -6,68 +6,6 @@
 
 Gurax_BeginModuleScope(zip)
 
-//-----------------------------------------------------------------------------
-// Directory_File
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_File : public Directory {
-private:
-	std::unique_ptr<CentralFileHeader> _pHdr;
-public:
-	Directory_File(Directory* pDirectoryParent, CentralFileHeader* pHdr) :
-		Directory(pDirectoryParent, pHdr->GetFileName(), Directory::Type::Item,
-				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
-	virtual Directory* DoNextChild() override;
-	virtual Directory* DoFindChild(const char* name) override;
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoGetStatValue() override;
-};
-
-Directory* Directory_File::DoNextChild()
-{
-	return nullptr;
-}
-
-Directory* Directory_File::DoFindChild(const char* name)
-{
-	return nullptr;
-}
-
-Stream* Directory_File::DoOpenStream(Stream::OpenFlags openFlags)
-{
-	return nullptr;
-}
-
-Value* Directory_File::DoGetStatValue()
-{
-	return nullptr;
-}
-
-class SymbolAssoc_Method : public SymbolAssoc<UInt16, Method::Invalid> {
-public:
-	SymbolAssoc_Method() {
-		Assoc(Gurax_Symbol(store),		Method::Store);
-		Assoc(Gurax_Symbol(shrink),		Method::Shrink);
-		Assoc(Gurax_Symbol(factor1),	Method::Factor1);
-		Assoc(Gurax_Symbol(factor2),	Method::Factor2);
-		Assoc(Gurax_Symbol(factor3),	Method::Factor3);
-		Assoc(Gurax_Symbol(factor4),	Method::Factor4);
-		Assoc(Gurax_Symbol(implode),	Method::Implode);
-		Assoc(Gurax_Symbol(deflate),	Method::Deflate);
-		Assoc(Gurax_Symbol(deflate64),	Method::Deflate64);
-		Assoc(Gurax_Symbol(pkware),		Method::PKWARE);
-		Assoc(Gurax_Symbol(bzip2),		Method::BZIP2);
-		Assoc(Gurax_Symbol(lzma),		Method::LZMA);
-		Assoc(Gurax_Symbol(tersa),		Method::TERSA);
-		Assoc(Gurax_Symbol(lz77),		Method::LZ77);
-		Assoc(Gurax_Symbol(wavpack),	Method::WavPack);
-		Assoc(Gurax_Symbol(ppmd),		Method::PPMd);
-	}
-	static const SymbolAssoc& GetInstance() {
-		static SymbolAssoc* pSymbolAssoc = nullptr;
-		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Method());
-	}
-};
-
 UInt16 SymbolToMethod(const Symbol* pSymbol)
 {
 	return SymbolAssoc_Method::GetInstance().ToAssociated(pSymbol);
@@ -100,21 +38,57 @@ DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime)
 	return new DateTime(year, month, day, secPacked, usecPacked);
 }
 
-bool IsMatchedName(const char* name1, const char* name2)
+Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pDirectoryParent,
+								const char** pPathName, Directory::Type typeWouldBe)
 {
-	const char* p1 = name1;
-	const char* p2 = name2;
-	for ( ; ; p1++, p2++) {
-		char ch1 = *p1, ch2 = *p2;
-		if (PathName::IsSep(ch1) && PathName::IsSep(ch2)) {
-			// nothing to do
-		} else if (ch1 != ch2) {
-			return false;
-		} else if (ch1 == '\0') {
+	RefPtr<Stream> pStreamSrc(streamSrc.Reference());
+	if (!pStreamSrc->IsBwdSeekable()) {
+		RefPtr<BinaryReferable> pBuff(new BinaryReferable(true));
+		pStreamSrc->ReadAll(pBuff->GetBinary());
+		if (Error::IsIssued()) return nullptr;
+		pStreamSrc.reset(new Stream_Binary(Stream::Flag::Readable, pBuff.release()));
+	}
+	RefPtr<Directory_Container> pDirectory(
+		new Directory_Container(pDirectoryParent, "", Directory::Type::BoundaryContainer,
+								PathName::SepPlatform, PathName::CaseFlagPlatform));
+	UInt32 offsetCentralDirectory = SeekCentralDirectory(*pStreamSrc);
+	if (Error::IsIssued()) return nullptr;
+	if (!pStreamSrc->Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return nullptr;
+	UInt32 signature;
+	while (ReadStream(*pStreamSrc, &signature)) {
+		//::printf("%08x\n", signature);
+		if (signature == LocalFileHeader::Signature) {
+			LocalFileHeader hdr;
+			if (!hdr.Read(*pStreamSrc)) return nullptr;
+			if (!hdr.SkipFileData(*pStreamSrc)) return nullptr;
+		} else if (signature == ArchiveExtraDataRecord::Signature) {
+			ArchiveExtraDataRecord record;
+			if (!record.Read(*pStreamSrc)) return nullptr;
+		} else if (signature == CentralFileHeader::Signature) {
+			std::unique_ptr<CentralFileHeader> pHdr(new CentralFileHeader());
+			if (!pHdr->Read(*pStreamSrc)) return nullptr;
+			pHdr->Print();
+			::printf("%s\n", pHdr->GetFileName());
+			pDirectory->GetDirectoryOwner().push_back(new Directory_ZIPFile(pDirectory.get(), pHdr.release()));
+		} else if (signature == DigitalSignature::Signature) {
+			DigitalSignature signature;
+			if (!signature.Read(*pStreamSrc)) return nullptr;
+		} else if (signature == Zip64EndOfCentralDirectory::Signature) {
+			Zip64EndOfCentralDirectory dir;
+			if (!dir.Read(*pStreamSrc)) return nullptr;
+		} else if (signature == Zip64EndOfCentralDirectoryLocator::Signature) {
+			Zip64EndOfCentralDirectoryLocator loc;
+			if (!loc.Read(*pStreamSrc)) return nullptr;
+		} else if (signature == EndOfCentralDirectoryRecord::Signature) {
+			EndOfCentralDirectoryRecord record;
+			if (!record.Read(*pStreamSrc)) return nullptr;
 			break;
+		} else {
+			Error::Issue(ErrorType::FormatError, "unknown signature %08x", signature);
+			return nullptr;
 		}
 	}
-	return true;
+	return Error::IsIssued()? nullptr : pDirectory.release();
 }
 
 UInt32 SeekCentralDirectory(Stream& streamSrc)
@@ -124,7 +98,6 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 		Error::Issue(ErrorType::IOError, "can't seek end of file");
 		return 0;
 	}
-	//UInt32 offsetCentralDirectory = 0;
 	if (bytesZIPFile < EndOfCentralDirectoryRecord::MinSize) {
 		Error::Issue(ErrorType::FormatError, "can't find central directory record");
 		return 0;
@@ -133,8 +106,7 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 	if (bytesZIPFile <= EndOfCentralDirectoryRecord::MaxSize) {
 		bytesBuff = bytesZIPFile;
 	} else {
-		long offsetStart = static_cast<long>(bytesZIPFile -
-									EndOfCentralDirectoryRecord::MaxSize);
+		long offsetStart = static_cast<long>(bytesZIPFile - EndOfCentralDirectoryRecord::MaxSize);
 		if (!streamSrc.Seek(offsetStart, Stream::SeekMode::Set)) {
 			return 0;
 		}
@@ -150,7 +122,7 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 			buffAnchor = buff + i;
 		}
 	}
-	if (buffAnchor == nullptr) {
+	if (!buffAnchor) {
 		Error::Issue(ErrorType::FormatError, "can't find central directory record");
 		return 0;
 	}
@@ -158,60 +130,6 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
 	return Gurax_UnpackUInt32(record.GetFields().
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
-}
-
-Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
-						   const char** pPathName, Directory::Type typeWouldBe)
-{
-#if 0
-	RefPtr<Stream> pStreamSrc(streamSrc.Reference());
-	if (!pStreamSrc->IsBwdSeekable()) {
-		RefPtr<BinaryReferable> pBuff(new BinaryReferable(true));
-		pStreamSrc->ReadAll(pBuff->GetBinary());
-		if (Error::IsIssued()) return nullptr;
-		pStreamSrc.reset(new Stream_Binary(Stream::Flag::Readable, pBuff.release()));
-	}
-#endif
-	RefPtr<Directory_Container> pDirectory(
-		new Directory_Container(pDirectoryParent, "", Directory::Type::Container,
-								PathName::SepPlatform, PathName::CaseFlagPlatform));
-	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
-	if (Error::IsIssued()) return nullptr;
-	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return nullptr;
-	UInt32 signature;
-	while (ReadStream(streamSrc, &signature)) {
-		//::printf("%08x\n", signature);
-		if (signature == LocalFileHeader::Signature) {
-			LocalFileHeader hdr;
-			if (!hdr.Read(streamSrc)) return nullptr;
-			if (!hdr.SkipFileData(streamSrc)) return nullptr;
-		} else if (signature == ArchiveExtraDataRecord::Signature) {
-			ArchiveExtraDataRecord record;
-			if (!record.Read(streamSrc)) return nullptr;
-		} else if (signature == CentralFileHeader::Signature) {
-			std::unique_ptr<CentralFileHeader> pHdr(new CentralFileHeader());
-			if (!pHdr->Read(streamSrc)) return nullptr;
-			pDirectory->GetDirectoryOwner().push_back(new Directory_File(pDirectoryParent, pHdr.release()));
-		} else if (signature == DigitalSignature::Signature) {
-			DigitalSignature signature;
-			if (!signature.Read(streamSrc)) return nullptr;
-		} else if (signature == Zip64EndOfCentralDirectory::Signature) {
-			Zip64EndOfCentralDirectory dir;
-			if (!dir.Read(streamSrc)) return nullptr;
-		} else if (signature == Zip64EndOfCentralDirectoryLocator::Signature) {
-			Zip64EndOfCentralDirectoryLocator loc;
-			if (!loc.Read(streamSrc)) return nullptr;
-		} else if (signature == EndOfCentralDirectoryRecord::Signature) {
-			EndOfCentralDirectoryRecord record;
-			if (!record.Read(streamSrc)) return nullptr;
-			break;
-		} else {
-			Error::Issue(ErrorType::FormatError, "unknown signature %08x", signature);
-			return nullptr;
-		}
-	}
-	if (Error::IsIssued()) return nullptr;
-	return pDirectory.release();
 }
 
 Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
@@ -280,41 +198,33 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr)
 
 bool SkipStream(Stream& stream, size_t bytes)
 {
-#if 0
-	return stream.Seek(static_cast<long>(bytes), Stream::SeekCur);
-#endif
-	return false;
+	return stream.Seek(static_cast<long>(bytes), Stream::SeekMode::Cur);
 }
 
 bool ReadStream(Stream& stream, void* buff, size_t bytes, size_t offset)
 {
-#if 0
 	if (bytes == 0) return true;
 	size_t bytesRead = stream.Read(reinterpret_cast<char*>(buff) + offset, bytes);
 	if (Error::IsIssued()) return false;
 	if (bytesRead < bytes) {
-		sig.SetError(ERR_FormatError, "invalid ZIP format");
+		Error::Issue(ErrorType::FormatError, "invalid ZIP format");
 		return false;
 	}
-#endif
 	return true;
 }
 
 bool ReadStream(Stream& stream, UInt32* pSignature)
 {
-#if 0
 	struct {
-		Gura_PackedUInt32_LE(Signature);
+		Gurax_PackedUInt32_LE(Signature);
 	} buff;
 	if (!ReadStream(stream, &buff, 4)) return false;
-	*pSignature = Gura_UnpackUInt32(buff.Signature);
-#endif
+	*pSignature = Gurax_UnpackUInt32(buff.Signature);
 	return true;
 }
 
 bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 {
-#if 0
 	if (bytes == 0) {
 		binary = Binary();
 		return true;
@@ -324,9 +234,8 @@ bool ReadStream(Stream& stream, Binary& binary, size_t bytes)
 		delete[] buff;
 		return false;
 	}
-	binary = Binary(buff, bytes);
+	binary = Binary(true, buff, bytes);
 	delete[] buff;
-#endif
 	return true;
 }
 

@@ -13,10 +13,10 @@ UInt16 SymbolToCompressionMethod(const Symbol* pSymbol);
 UInt16 GetDosTime(const DateTime& dt);
 UInt16 GetDosDate(const DateTime& dt);
 DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime);
-bool IsMatchedName(const char* name1, const char* name2);
 
+Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pParent,
+								const char** pPathName, Directory::Type typeWouldBe);
 UInt32 SeekCentralDirectory(Stream& streamSrc);
-Directory* CreateDirectory(Stream& streamSrc, Directory* pParent, const char** pPathName, Directory::Type typeWouldBe);
 Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr);
 
 bool SkipStream(Stream& stream, size_t bytes);
