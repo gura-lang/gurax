@@ -19,14 +19,14 @@ public:
 	enum class Type { None, Item, Container, BoundaryContainer, RootContainer, };
 protected:
 	RefPtr<WeakPtr> _pwDirectoryParent;
-	String _pathName;
+	String _name;
 	Type _type;
 	char _sep;
 	bool _caseFlag;
 public:
 	// Constructor
-	Directory(Directory* pDirectoryParent, String pathName, Type type, char sep, bool caseFlag) :
-		_pwDirectoryParent(pDirectoryParent? pDirectoryParent->GetWeakPtr() : nullptr), _pathName(pathName),
+	Directory(Directory* pDirectoryParent, String name, Type type, char sep, bool caseFlag) :
+		_pwDirectoryParent(pDirectoryParent? pDirectoryParent->GetWeakPtr() : nullptr), _name(name),
 		_type(type), _sep(sep), _caseFlag(caseFlag) {}
 	// Copy constructor/operator
 	Directory(const Directory& src) = delete;
@@ -40,10 +40,10 @@ public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
 	Directory* NextChild() { return DoNextChild(); }
-	Directory* FindChild(const char* pathName) { return DoFindChild(pathName); }
+	Directory* FindChild(const char* name) { return DoFindChild(name); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
-	const char* GetPathName() const { return _pathName.c_str(); }
+	const char* GetName() const { return _name.c_str(); }
 	Directory* LockDirectoryParent() const { return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr; }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
@@ -53,11 +53,11 @@ public:
 	}
 	bool IsBoundaryContainer() const { return _type == Type::BoundaryContainer; }
 	bool IsRootContainer() const { return _type == Type::RootContainer; }
-	bool DoesMatch(const char* pathName) const {
-		return PathName(GetPathName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pathName);
+	bool DoesMatch(const char* name) const {
+		return PathName(GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(name);
 	}
 	bool DoesMatchPattern(const char* pattern) const {
-		return PathName(GetPathName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern);
+		return PathName(GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern);
 	}
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
@@ -124,13 +124,13 @@ public:
 	RefPtr<DirectoryOwner> _pDirectoryOwner;
 	size_t _idx;
 public:
-	Directory_Container(Directory* pDirectoryParent, String pathName,
+	Directory_Container(Directory* pDirectoryParent, String name,
 						Type type, char sep, bool caseFlag, DirectoryOwner* pDirectoryOwner) :
-		Directory(pDirectoryParent, pathName, type, sep, caseFlag),
+		Directory(pDirectoryParent, name, type, sep, caseFlag),
 		_pDirectoryOwner(pDirectoryOwner), _idx(0) {}
-	Directory_Container(Directory* pDirectoryParent, String pathName,
+	Directory_Container(Directory* pDirectoryParent, String name,
 						Type type, char sep, bool caseFlag) :
-		Directory_Container(pDirectoryParent, pathName, type, sep, caseFlag, new DirectoryOwner()) {}
+		Directory_Container(pDirectoryParent, name, type, sep, caseFlag, new DirectoryOwner()) {}
 public:
 	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
 protected:
