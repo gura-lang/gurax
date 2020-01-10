@@ -116,28 +116,34 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 			field += ch;
 			continue;
 		}
+		DirectoryOwner& directoryOwner = pDirectoryParent->GetDirectoryOwner();
 		if (field.empty()) {
 			Error::Issue(ErrorType::PathError, "invalid path name");
 			return false;
 		} else if (ch == '\0') {
-			Directory* pDirectory = pDirectoryParent->GetDirectoryOwner().FindByName(field.c_str());
+			Directory* pDirectory = directoryOwner.FindByName(field.c_str());
 			if (pDirectory) {
 				Error::Issue(ErrorType::PathError, "duplicated path name");
 				return false;
 			}
-			pDirectoryParent->GetDirectoryOwner().push_back(pDirectoryChild.release());
+			directoryOwner.push_back(pDirectoryChild.release());
 			break;
 		}
-		Directory* pDirectory = pDirectoryParent->GetDirectoryOwner().FindByName(field.c_str());
+		Directory* pDirectory = directoryOwner.FindByName(field.c_str());
 		if (!pDirectory) {
-			Error::Issue(ErrorType::PathError, "unfound path name");
-			return false;
+			auto pDirectoryNew = new Directory_CustomContainer(
+					pDirectoryParent, field.c_str(), Type::Container,
+					pDirectoryParent->GetSep(), pDirectoryParent->IsCaseSensitive());
+			directoryOwner.push_back(pDirectory);
+			field.clear();
+			pDirectoryParent = pDirectoryNew;
 		} else if (!pDirectory->IsCustomContainer()) {
 			Error::Issue(ErrorType::PathError, "invalid path name");
 			return false;
+		} else {
+			field.clear();
+			pDirectoryParent = dynamic_cast<Directory_CustomContainer*>(pDirectory);
 		}
-		field.clear();
-		pDirectoryParent = dynamic_cast<Directory_CustomContainer*>(pDirectory);
 	}
 	return true;
 }
