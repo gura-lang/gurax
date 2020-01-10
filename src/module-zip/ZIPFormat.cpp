@@ -143,11 +143,6 @@ Directory* Directory_ZIPFile::DoNextChild()
 	return nullptr;
 }
 
-Directory* Directory_ZIPFile::DoFindChild(const char* name)
-{
-	return nullptr;
-}
-
 Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 {
 	return nullptr;

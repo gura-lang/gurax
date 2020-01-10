@@ -69,7 +69,7 @@ Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 			if (!pHdr->Read(*pStreamSrc)) return nullptr;
 			pHdr->Print();
 			::printf("%s\n", pHdr->GetFileName());
-			pDirectory->AddChildInTree(new Directory_ZIPFile(pDirectory.get(), pHdr.release()));
+			//pDirectory->AddChildInTree(pHdr->GetFileName(), new Directory_ZIPFile(pDirectory.get(), pHdr.release()));
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
 			if (!signature.Read(*pStreamSrc)) return nullptr;

@@ -516,7 +516,6 @@ public:
 		Directory(pDirectoryParent, pHdr->GetFileName(), Directory::Type::Item,
 				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
 	virtual Directory* DoNextChild() override;
-	virtual Directory* DoFindChild(const char* name) override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoGetStatValue() override;
 };
