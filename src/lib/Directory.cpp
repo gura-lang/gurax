@@ -126,6 +126,8 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 				Error::Issue(ErrorType::PathError, "duplicated path name");
 				return false;
 			}
+			pDirectoryChild->SetDirectoryParent(*pDirectoryParent);
+			pDirectoryChild->SetName(field);
 			directoryOwner.push_back(pDirectoryChild.release());
 			break;
 		}
