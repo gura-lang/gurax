@@ -48,8 +48,8 @@ Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 		if (Error::IsIssued()) return nullptr;
 		pStreamSrc.reset(new Stream_Binary(Stream::Flag::Readable, pBuff.release()));
 	}
-	RefPtr<Directory_Container> pDirectory(
-		new Directory_Container(pDirectoryParent, "", Directory::Type::BoundaryContainer,
+	RefPtr<Directory_CustomContainer> pDirectory(
+		new Directory_CustomContainer(pDirectoryParent, "", Directory::Type::BoundaryContainer,
 								PathName::SepPlatform, PathName::CaseFlagPlatform));
 	UInt32 offsetCentralDirectory = SeekCentralDirectory(*pStreamSrc);
 	if (Error::IsIssued()) return nullptr;

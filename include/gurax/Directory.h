@@ -25,6 +25,9 @@ protected:
 	bool _caseFlag;
 public:
 	// Constructor
+	Directory(Type type, char sep, bool caseFlag) : _type(type), _sep(sep), _caseFlag(caseFlag) {}
+	Directory(String name, Type type, char sep, bool caseFlag) :
+		_name(name), _type(type), _sep(sep), _caseFlag(caseFlag) {}
 	Directory(Directory* pDirectoryParent, String name, Type type, char sep, bool caseFlag) :
 		_pwDirectoryParent(pDirectoryParent? pDirectoryParent->GetWeakPtr() : nullptr), _name(name),
 		_type(type), _sep(sep), _caseFlag(caseFlag) {}
@@ -39,8 +42,11 @@ protected:
 public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
+	void SetDirectoryParent(Directory& directoryParent) {
+		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());
+	}
+	void SetName(String name) { _name = name; }
 	Directory* NextChild() { return DoNextChild(); }
-	Directory* FindChild(const char* name) { return DoFindChild(name); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* GetStatValue() { return DoGetStatValue(); }
 	const char* GetName() const { return _name.c_str(); }
@@ -62,8 +68,8 @@ public:
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
 protected:
+	virtual bool IsCustomContainer() { return false; }
 	virtual Directory* DoNextChild() = 0;
-	virtual Directory* DoFindChild(const char* name) = 0;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
 	virtual Value* DoGetStatValue();
 public:
@@ -117,25 +123,23 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Directory_Container
+// Directory_CustomContainer
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_Container : public Directory {
+class GURAX_DLLDECLARE Directory_CustomContainer : public Directory {
 public:
 	RefPtr<DirectoryOwner> _pDirectoryOwner;
 	size_t _idx;
 public:
-	Directory_Container(Directory* pDirectoryParent, String name,
-						Type type, char sep, bool caseFlag, DirectoryOwner* pDirectoryOwner) :
+	Directory_CustomContainer(Directory* pDirectoryParent, String name,
+							  Type type, char sep, bool caseFlag) :
 		Directory(pDirectoryParent, name, type, sep, caseFlag),
-		_pDirectoryOwner(pDirectoryOwner), _idx(0) {}
-	Directory_Container(Directory* pDirectoryParent, String name,
-						Type type, char sep, bool caseFlag) :
-		Directory_Container(pDirectoryParent, name, type, sep, caseFlag, new DirectoryOwner()) {}
+		_pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
 public:
 	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
+	bool AddChildInTree(const char* pathName, Directory* pDirectoryChild);
 protected:
+	virtual bool IsCustomContainer() override { return true; }
 	virtual Directory* DoNextChild() override;
-	virtual Directory* DoFindChild(const char* name) override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 };
 

@@ -102,49 +102,49 @@ void DirectoryDequeOwner::Clear()
 }
 
 //------------------------------------------------------------------------------
-// Directory_Container
+// Directory_CustomContainer
 //------------------------------------------------------------------------------
-#if 0
-void Directory_Container::AddChild(const char* pathName, Directory* pDirectoryChild)
+bool Directory_CustomContainer::AddChildInTree(const char* pathName, Directory* pDirectoryChild)
 {
+#if 0
 	const char* p = pathName;
 	if (PathName::IsSep(*p)) p++;
 	String field;
 	Record* pRecord = nullptr;
-	Record* pRecordParent = GetRoot();
+	Directory_CustomContainer* pDirectoryParent = this;
 	for ( ; ; p++) {
 		char ch = *p;
-		if (!IsFileSeparator(ch) && ch != '\0') {
+		if (!PathName::IsSep(ch) && ch != '\0') {
 			field += ch;
 			continue;
 		}
-		if (!field.empty()) {
-			pRecord = pRecordParent->Find(field.c_str());
-			if (pRecord == nullptr) {
-				bool containerFlag = IsFileSeparator(ch);
-				pRecord = pRecordParent->GenerateChild(
-										field.c_str(), containerFlag);
-			}
+		if (field.empty()) {
+			// nothing to do
+		} else if (ch == '\0') {
+			
+		} else {
+			Directory* pDirectory = pDirectoryParent->GetDirectoryOwner().FindByName(field.c_str());
+			//if (pRecord == nullptr) {
+			//	bool containerFlag = IsFileSeparator(ch);
+			//	pRecord = pRecordParent->GenerateChild(
+			//							field.c_str(), containerFlag);
+			//}
 			field.clear();
-			pRecordParent = pRecord;
+			pDirectoryParent = pDirectory;
 		}
 		if (ch == '\0') break;
 	}
-}
 #endif
+	return true;
+}
 
-Directory* Directory_Container::DoNextChild()
+Directory* Directory_CustomContainer::DoNextChild()
 {
 	if (_idx >= _pDirectoryOwner->size()) return nullptr;
 	return (*_pDirectoryOwner)[_idx]->Reference();
 }
 
-Directory* Directory_Container::DoFindChild(const char* name)
-{
-	return nullptr;
-}
-
-Stream* Directory_Container::DoOpenStream(Stream::OpenFlags openFlags)
+Stream* Directory_CustomContainer::DoOpenStream(Stream::OpenFlags openFlags)
 {
 	return nullptr;
 }

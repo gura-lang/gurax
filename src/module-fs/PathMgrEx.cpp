@@ -36,6 +36,7 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 // DirectoryEx
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
+
 DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat) :
 	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
 	_pStat(pStat), _hFind(INVALID_HANDLE_VALUE)
@@ -85,27 +86,6 @@ Directory* DirectoryEx::DoNextChild()
 	}
 	Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
 	return new DirectoryEx(Reference(), OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr);
-}
-
-Directory* DirectoryEx::DoFindChild(const char* name)
-{
-	// **** not tested yet ****
-	String pathName(MakeFullPathName(false));
-	String pathNameEnc = OAL::ToNativeString(pathName.c_str());
-	DIR* pDir = opendir(pathNameEnc.empty()? "." : pathNameEnc.c_str());
-	if (!pDir) return nullptr;
-	for (;;) {
-		struct dirent* pEnt = readdir(pDir);
-		if (!pEnt) break;
-		String nameFound = OAL::FromNativeString(pEnt->d_name);
-		if (::strcmp(nameFound.c_str(), name) == 0) {
-			closedir(pDir);
-			Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
-			return new DirectoryEx(Reference(), nameFound.c_str(), type, nullptr);
-		}
-	}
-	closedir(pDir);
-	return nullptr;
 }
 
 #endif
