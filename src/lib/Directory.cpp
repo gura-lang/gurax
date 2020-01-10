@@ -104,13 +104,11 @@ void DirectoryDequeOwner::Clear()
 //------------------------------------------------------------------------------
 // Directory_CustomContainer
 //------------------------------------------------------------------------------
-bool Directory_CustomContainer::AddChildInTree(const char* pathName, Directory* pDirectoryChild)
+bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild)
 {
-#if 0
 	const char* p = pathName;
 	if (PathName::IsSep(*p)) p++;
 	String field;
-	Record* pRecord = nullptr;
 	Directory_CustomContainer* pDirectoryParent = this;
 	for ( ; ; p++) {
 		char ch = *p;
@@ -119,22 +117,28 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, Directory* 
 			continue;
 		}
 		if (field.empty()) {
-			// nothing to do
+			Error::Issue(ErrorType::PathError, "invalid path name");
+			return false;
 		} else if (ch == '\0') {
-			
-		} else {
 			Directory* pDirectory = pDirectoryParent->GetDirectoryOwner().FindByName(field.c_str());
-			//if (pRecord == nullptr) {
-			//	bool containerFlag = IsFileSeparator(ch);
-			//	pRecord = pRecordParent->GenerateChild(
-			//							field.c_str(), containerFlag);
-			//}
-			field.clear();
-			pDirectoryParent = pDirectory;
+			if (pDirectory) {
+				Error::Issue(ErrorType::PathError, "duplicated path name");
+				return false;
+			}
+			pDirectoryParent->GetDirectoryOwner().push_back(pDirectoryChild.release());
+			break;
 		}
-		if (ch == '\0') break;
+		Directory* pDirectory = pDirectoryParent->GetDirectoryOwner().FindByName(field.c_str());
+		if (!pDirectory) {
+			Error::Issue(ErrorType::PathError, "unfound path name");
+			return false;
+		} else if (!pDirectory->IsCustomContainer()) {
+			Error::Issue(ErrorType::PathError, "invalid path name");
+			return false;
+		}
+		field.clear();
+		pDirectoryParent = dynamic_cast<Directory_CustomContainer*>(pDirectory);
 	}
-#endif
 	return true;
 }
 

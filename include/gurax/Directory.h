@@ -67,8 +67,8 @@ public:
 	}
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
-protected:
 	virtual bool IsCustomContainer() { return false; }
+protected:
 	virtual Directory* DoNextChild() = 0;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
 	virtual Value* DoGetStatValue();
@@ -136,9 +136,9 @@ public:
 		_pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
 public:
 	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
-	bool AddChildInTree(const char* pathName, Directory* pDirectoryChild);
-protected:
+	bool AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild);
 	virtual bool IsCustomContainer() override { return true; }
+protected:
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 };
