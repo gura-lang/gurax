@@ -120,7 +120,7 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 		if (field.empty()) {
 			Error::Issue(ErrorType::PathError, "invalid path name");
 			return false;
-		} else if (ch == '\0') {
+		} else if (ch == '\0' || *(p + 1) == '\0') {
 			Directory* pDirectory = directoryOwner.FindByName(field.c_str());
 			if (pDirectory) {
 				Error::Issue(ErrorType::PathError, "duplicated path name");

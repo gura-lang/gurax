@@ -223,6 +223,8 @@ public:
 public:
 	static bool EndsWith(const char* str, char ch);
 	bool EndsWith(char ch) const;
+	static bool EndsWithPathSep(const char* str);
+	bool EndsWithPathSep() const;
 	template<typename T_CharCmp>
 	static const char* EndsWith(const char* str, const char* sub);
 	template<typename T_CharCmp>

@@ -153,4 +153,17 @@ Value* Directory_ZIPFile::DoGetStatValue()
 	return nullptr;
 }
 
+//-----------------------------------------------------------------------------
+// Directory_ZIPFolder
+//-----------------------------------------------------------------------------
+Stream* Directory_ZIPFolder::DoOpenStream(Stream::OpenFlags openFlags)
+{
+	return nullptr;
+}
+
+Value* Directory_ZIPFolder::DoGetStatValue()
+{
+	return nullptr;
+}
+
 Gurax_EndModuleScope(zip)

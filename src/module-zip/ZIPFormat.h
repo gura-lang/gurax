@@ -512,10 +512,24 @@ class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
 private:
 	std::unique_ptr<CentralFileHeader> _pHdr;
 public:
-	Directory_ZIPFile(Directory* pDirectoryParent, CentralFileHeader* pHdr) :
-		Directory(pDirectoryParent, pHdr->GetFileName(), Directory::Type::Item,
+	Directory_ZIPFile(CentralFileHeader* pHdr) :
+		Directory(Directory::Type::Item,
 				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
 	virtual Directory* DoNextChild() override;
+	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
+	virtual Value* DoGetStatValue() override;
+};
+
+//-----------------------------------------------------------------------------
+// Directory_ZIPFolder
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Directory_ZIPFolder : public Directory_CustomContainer {
+private:
+	std::unique_ptr<CentralFileHeader> _pHdr;
+public:
+	Directory_ZIPFolder(CentralFileHeader* pHdr) :
+		Directory_CustomContainer(Directory::Type::Container,
+								  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoGetStatValue() override;
 };

@@ -130,6 +130,10 @@ public:
 	RefPtr<DirectoryOwner> _pDirectoryOwner;
 	size_t _idx;
 public:
+	Directory_CustomContainer(Type type, char sep, bool caseFlag) :
+		Directory(type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
+	Directory_CustomContainer(String name, Type type, char sep, bool caseFlag) :
+		Directory(name, type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
 	Directory_CustomContainer(Directory* pDirectoryParent, String name,
 							  Type type, char sep, bool caseFlag) :
 		Directory(pDirectoryParent, name, type, sep, caseFlag),

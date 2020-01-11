@@ -67,9 +67,14 @@ Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 		} else if (signature == CentralFileHeader::Signature) {
 			std::unique_ptr<CentralFileHeader> pHdr(new CentralFileHeader());
 			if (!pHdr->Read(*pStreamSrc)) return nullptr;
-			pHdr->Print();
-			::printf("%s\n", pHdr->GetFileName());
-			//pDirectory->AddChildInTree(pHdr->GetFileName(), new Directory_ZIPFile(pDirectory.get(), pHdr.release()));
+			//pHdr->Print();
+			//::printf("%s\n", pHdr->GetFileName());
+			const char* pathName = pHdr->GetFileName();
+			if (String::EndsWithPathSep(pathName)) {
+				pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pHdr.release()));
+			} else {
+				pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pHdr.release()));
+			}
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
 			if (!signature.Read(*pStreamSrc)) return nullptr;
