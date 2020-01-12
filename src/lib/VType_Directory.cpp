@@ -78,4 +78,18 @@ Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) con
 //------------------------------------------------------------------------------
 VType& Value_Directory::vtype = VTYPE_Directory;
 
+String Value_Directory::ToStringDigest(const StringStyle& ss) const
+{
+	String str;
+	str += "<directory:";
+	str += GetDirectory().ToString(ss);
+	str += ">";
+	return str;
+}
+
+String Value_Directory::ToStringDetail(const StringStyle& ss) const
+{
+	return ToStringDigest(ss);
+}
+
 }

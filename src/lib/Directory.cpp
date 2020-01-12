@@ -174,7 +174,7 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 Directory* Directory_CustomContainer::DoNextChild()
 {
 	if (_idx >= _pDirectoryOwner->size()) return nullptr;
-	return (*_pDirectoryOwner)[_idx]->Reference();
+	return (*_pDirectoryOwner)[_idx++]->Reference();
 }
 
 Stream* Directory_CustomContainer::DoOpenStream(Stream::OpenFlags openFlags)
