@@ -67,8 +67,6 @@ void Basement::PrepareVType()
 	VTYPE_DateTime.Prepare(frame);
 	VTYPE_Dict.Prepare(frame);
 	VTYPE_Directory.Prepare(frame);
-	VTYPE_DirRecord.Prepare(frame);
-	VTYPE_DirStructure.Prepare(frame);
 	VTYPE_Error.Prepare(frame);
 	VTYPE_ErrorType.Prepare(frame);
 	VTYPE_Expr.Prepare(frame);

@@ -49,8 +49,6 @@ add_library(guraxcore SHARED
 	DeclBlock.cpp
 	DeclCallable.cpp
 	Directory.cpp
-	DirRecord.cpp
-	DirStructure.cpp
 	DottedSymbol.cpp
 	Error.cpp
 	Expr.cpp
@@ -121,8 +119,6 @@ add_library(guraxcore SHARED
 	VType_DateTime.cpp
 	VType_Dict.cpp
 	VType_Directory.cpp
-	VType_DirRecord.cpp
-	VType_DirStructure.cpp
 	VType_Error.cpp
 	VType_ErrorType.cpp
 	VType_Expr.cpp
