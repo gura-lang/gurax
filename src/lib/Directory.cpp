@@ -187,8 +187,7 @@ Stream* Directory_CustomContainer::DoOpenStream(Stream::OpenFlags openFlags)
 //-----------------------------------------------------------------------------
 Iterator_DirectoryWalk::Iterator_DirectoryWalk(
 	Directory* pDirectory, int depthMax, const StringList& patterns,
-	bool addSepFlag, bool statFlag,
-	bool caseFlag, bool fileFlag, bool dirFlag) :
+	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
 	_pDirectoryCur(pDirectory), _depthMax(depthMax), _patterns(patterns),
 	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
 	_fileFlag(fileFlag), _dirFlag(dirFlag)
