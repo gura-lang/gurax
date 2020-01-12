@@ -88,6 +88,8 @@ public:
 	using std::vector<Directory*>::vector;
 public:
 	Directory* FindByName(const char* name) const;
+	iterator FindIteratorByName(const char* name);
+	const_iterator FindIteratorByName(const char* name) const;
 };
 
 //------------------------------------------------------------------------------
@@ -140,6 +142,7 @@ public:
 		_pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
 public:
 	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
+	void SetDirectoryOwner(DirectoryOwner* pDirectoryOwner) { _pDirectoryOwner.reset(pDirectoryOwner); }
 	bool AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild);
 	virtual bool IsCustomContainer() override { return true; }
 protected:

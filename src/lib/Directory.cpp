@@ -79,6 +79,22 @@ Directory* DirectoryList::FindByName(const char* name) const
 	return nullptr;
 }
 
+DirectoryList::iterator DirectoryList::FindIteratorByName(const char* name)
+{
+	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
+		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
+	}
+	return end();
+}
+
+DirectoryList::const_iterator DirectoryList::FindIteratorByName(const char* name) const
+{
+	for (auto ppDirectory = begin(); ppDirectory != end(); ppDirectory++) {
+		if (::strcmp((*ppDirectory)->GetName(), name) == 0) return ppDirectory;
+	}
+	return end();
+}
+
 //------------------------------------------------------------------------------
 // DirectoryOwner
 //------------------------------------------------------------------------------
@@ -121,14 +137,19 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 			Error::Issue(ErrorType::PathError, "invalid path name");
 			return false;
 		} else if (ch == '\0' || *(p + 1) == '\0') {
-			Directory* pDirectory = directoryOwner.FindByName(field.c_str());
-			if (pDirectory) {
-				Error::Issue(ErrorType::PathError, "duplicated path name");
-				return false;
-			}
 			pDirectoryChild->SetDirectoryParent(*pDirectoryParent);
 			pDirectoryChild->SetName(field);
-			directoryOwner.push_back(pDirectoryChild.release());
+			auto ppDirectoryFound = directoryOwner.FindIteratorByName(field.c_str());
+			if (ppDirectoryFound == directoryOwner.end()) {
+				directoryOwner.push_back(pDirectoryChild.release());
+			} else {
+				if (pDirectoryChild->IsCustomContainer() && (*ppDirectoryFound)->IsCustomContainer()) {
+					dynamic_cast<Directory_CustomContainer&>(*pDirectoryChild).SetDirectoryOwner(
+						dynamic_cast<Directory_CustomContainer*>(*ppDirectoryFound)->GetDirectoryOwner().Reference());
+				}
+				Directory::Delete(*ppDirectoryFound);
+				*ppDirectoryFound = pDirectoryChild.release();
+			}
 			break;
 		}
 		Directory* pDirectory = directoryOwner.FindByName(field.c_str());
