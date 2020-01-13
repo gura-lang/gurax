@@ -7,5 +7,5 @@ import(zip)
 
 TestCase('Basic test') {
 	d = zip.Open('test.zip')
-	Println(path.Walk(d))
+	Println(path.Walk(d):stat)
 }
