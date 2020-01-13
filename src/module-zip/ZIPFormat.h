@@ -12,6 +12,26 @@
 Gurax_BeginModuleScope(zip)
 
 //------------------------------------------------------------------------------
+// Symbol
+//------------------------------------------------------------------------------
+Gurax_DeclareSymbol(store);
+Gurax_DeclareSymbol(shrink);
+Gurax_DeclareSymbol(factor1);
+Gurax_DeclareSymbol(factor2);
+Gurax_DeclareSymbol(factor3);
+Gurax_DeclareSymbol(factor4);
+Gurax_DeclareSymbol(implode);
+Gurax_DeclareSymbol(deflate);
+Gurax_DeclareSymbol(deflate64);
+Gurax_DeclareSymbol(pkware);
+Gurax_DeclareSymbol(bzip2);
+Gurax_DeclareSymbol(lzma);
+Gurax_DeclareSymbol(tersa);
+Gurax_DeclareSymbol(lz77);
+Gurax_DeclareSymbol(wavpack);
+Gurax_DeclareSymbol(ppmd);
+
+//------------------------------------------------------------------------------
 // Method
 //------------------------------------------------------------------------------
 struct Method {
@@ -224,7 +244,10 @@ public:
 //------------------------------------------------------------------------------
 // F. Central directory structure
 //------------------------------------------------------------------------------
-class CentralFileHeader {
+class CentralFileHeader : public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(CentralFileHeader);
 public:
 	static const UInt32 Signature = 0x02014b50;
 	struct Fields {
@@ -365,6 +388,14 @@ public:
 		::printf("InternalFileAttributes %04x\n", Gurax_UnpackUInt16(_fields.InternalFileAttributes));
 		::printf("ExternalFileAttributes %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
 		::printf("RelativeOffsetOfLocalHeader %08x\n", Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader));
+	}
+public:
+	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
+	bool IsIdentical(const CentralFileHeader& other) const { return this == &other; }
+	bool IsEqualTo(const CentralFileHeader& other) const { return IsIdentical(other); }
+	bool IsLessThan(const CentralFileHeader& other) const { return this < &other; }
+	String ToString(const StringStyle& ss = StringStyle::Empty) const {
+		return "CentralFileHeader";
 	}
 };
 
@@ -510,7 +541,7 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
 private:
-	std::unique_ptr<CentralFileHeader> _pHdr;
+	RefPtr<CentralFileHeader> _pHdr;
 public:
 	Directory_ZIPFile(CentralFileHeader* pHdr) :
 		Directory(Directory::Type::Item,
@@ -525,7 +556,7 @@ public:
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE Directory_ZIPFolder : public Directory_CustomContainer {
 private:
-	std::unique_ptr<CentralFileHeader> _pHdr;
+	RefPtr<CentralFileHeader> _pHdr;
 public:
 	Directory_ZIPFolder(CentralFileHeader* pHdr) :
 		Directory_CustomContainer(Directory::Type::Container,
@@ -772,33 +803,16 @@ public:
 	};
 };
 
-typedef std::vector<CentralFileHeader*> CentralFileHeaderList;
-
 //-----------------------------------------------------------------------------
-// Object_stat
+// CentralFileHeaderList
 //-----------------------------------------------------------------------------
-Gurax_DeclareUserClass(stat);
-
-class Object_stat : public Object {
-private:
-	CentralFileHeader _hdr;
-public:
-	Gurax_DeclareObjectAccessor(stat)
-public:
-	Object_stat(const CentralFileHeader& hdr) :
-						Object(Gurax_UserClass(stat)), _hdr(hdr) {}
-	Object_stat(const Object_stat& obj) :
-						Object(obj), _hdr(obj._hdr) {}
-	virtual ~Object_stat();
-	virtual Object* Clone() const;
-	virtual String ToString(bool exprFlag);
-	const CentralFileHeader& GetCentralFileHeader() const { return _hdr; }
+class CentralFileHeaderList : public std::vector<CentralFileHeader*> {
 };
 
 //-----------------------------------------------------------------------------
-// Object_reader
+// Object_Reader
 //-----------------------------------------------------------------------------
-Gurax_DeclareUserClass(reader);
+Gurax_DeclareUserClass(Reader);
 
 class Object_reader : public Object {
 private:
@@ -866,30 +880,15 @@ public:
 		Directory* pParent, const char** pPathName, NotFoundMode notFoundMode);
 };
 
-//-----------------------------------------------------------------------------
-// Record_ZIP
-//-----------------------------------------------------------------------------
-class Record_ZIP : public DirBuilder::Record {
-private:
-	CentralFileHeader* _pHdr;
-public:
-	Record_ZIP(DirBuilder::Structure* pStructure, Record_ZIP* pParent,
-									const char* name, bool containerFlag);
-	virtual ~Record_ZIP();
-	virtual DirBuilder::Record* DoGenerateChild(const char* name, bool containerFlag);
-	virtual Directory* DoGenerateDirectory(Directory* pParent, Directory::Type type);
-	void SetCentralFileHeader(CentralFileHeader* pHdr) { _pHdr = pHdr; }
-	const CentralFileHeader* GetCentralFileHeader() const { return _pHdr; }
-};
 #endif
 
 //-----------------------------------------------------------------------------
-// Stream_reader
+// Stream_Reader
 //-----------------------------------------------------------------------------
-class Stream_reader : public Stream {
+class Stream_Reader : public Stream {
 protected:
 	RefPtr<Stream> _pStreamSrc;
-	CentralFileHeader _hdr;
+	RefPtr<CentralFileHeader> _pHdr;
 	String _name;
 	size_t _bytesUncompressed;
 	size_t _bytesCompressed;
@@ -897,7 +896,7 @@ protected:
 	bool _seekedFlag;
 	CRC32 _crc32;
 public:
-	Stream_reader(Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_Reader(Stream* pStreamSrc, CentralFileHeader* pHdr);
 public:
 	size_t CheckCRC32(const void* buff, size_t bytesRead);
 public:
@@ -911,54 +910,54 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Stream_reader_Store
+// Stream_Reader_Store
 // Compression method #0: stored (no compression)
 //-----------------------------------------------------------------------------
-class Stream_reader_Store : public Stream_reader {
+class Stream_Reader_Store : public Stream_Reader {
 private:
 	size_t _offsetTop;
 public:
-	Stream_reader_Store(Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_Reader_Store(Stream* pStreamSrc, CentralFileHeader* pHdr);
 	virtual bool Initialize() override;
 	virtual size_t DoRead(void* buff, size_t bytes) override;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
 //-----------------------------------------------------------------------------
-// Stream_reader_Deflate
+// Stream_Reader_Deflate
 // Compression method #8: Deflated
 //-----------------------------------------------------------------------------
-class Stream_reader_Deflate : public Stream_reader {
+class Stream_Reader_Deflate : public Stream_Reader {
 private:
 	RefPtr<ZLib::Stream_Reader> _pStreamReader;
 public:
-	Stream_reader_Deflate(Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_Reader_Deflate(Stream* pStreamSrc, CentralFileHeader* pHdr);
 	virtual bool Initialize() override;
 	virtual size_t DoRead(void* buff, size_t len) override;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
 //-----------------------------------------------------------------------------
-// Stream_reader_BZIP2
+// Stream_Reader_BZIP2
 // Compression method #12: BZIP2
 //-----------------------------------------------------------------------------
-class Stream_reader_BZIP2 : public Stream_reader {
+class Stream_Reader_BZIP2 : public Stream_Reader {
 private:
 	RefPtr<BZLib::Stream_Reader> _pStreamReader;
 public:
-	Stream_reader_BZIP2(Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_Reader_BZIP2(Stream* pStreamSrc, CentralFileHeader* pHdr);
 	virtual bool Initialize() override;
 	virtual size_t DoRead(void* buff, size_t len) override;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
 //-----------------------------------------------------------------------------
-// Stream_reader_Deflate64
+// Stream_Reader_Deflate64
 // Compression method #9: Enhanced Deflating using Deflate64(tm)
 //-----------------------------------------------------------------------------
-class Stream_reader_Deflate64 : public Stream_reader {
+class Stream_Reader_Deflate64 : public Stream_Reader {
 public:
-	Stream_reader_Deflate64(Stream* pStreamSrc, const CentralFileHeader& hdr);
+	Stream_Reader_Deflate64(Stream* pStreamSrc, CentralFileHeader* pHdr);
 	virtual bool Initialize() override;
 	virtual size_t DoRead(void* buff, size_t len) override;
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;

@@ -3,7 +3,7 @@
 //==============================================================================
 #include "stdafx.h"
 
-Gurax_BeginModuleScope(zip)
+namespace Gurax {
 
 //------------------------------------------------------------------------------
 // Help
@@ -27,8 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-#if 0
-// zip.Stat() {block?}
+// Stat() {block?}
 Gurax_DeclareConstructor(Stat)
 {
 	Declare(VTYPE_Stat, Flag::None);
@@ -46,12 +45,11 @@ Gurax_ImplementConstructor(Stat)
 	RefPtr<Stat> pStat(new Stat());
 	return argument.ReturnValue(processor, new Value_Stat(pStat.release()));
 }
-#endif
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Stat#MethodSkeleton(num1:Number, num2:Number)
+// Stat#MethodSkeleton(num1:Number, num2:Number)
 Gurax_DeclareMethod(Stat, MethodSkeleton)
 {
 	Declare(VTYPE_List, Flag::None);
@@ -77,7 +75,7 @@ Gurax_ImplementMethod(Stat, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// zip.Stat#propSkeleton
+// Stat#propSkeleton
 Gurax_DeclareProperty_R(Stat, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -102,7 +100,7 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable); //, Gurax_CreateConstructor(Stat));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stat));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Stat, MethodSkeleton));
 	// Assignment of property
@@ -114,4 +112,4 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Stat::vtype = VTYPE_Stat;
 
-Gurax_EndModuleScope(zip)
+}

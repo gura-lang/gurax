@@ -7,7 +7,7 @@ import(util.modbuild) {Builder}
 b = Builder('zip')
 b.pathNamesSrc = [
 	'module-zip.cpp', 'Util.cpp', 'ZIPFormat.cpp'
-	'Reader.cpp', 'Stat.cpp', 'Writer.cpp'
+	'Reader.cpp', 'Writer.cpp'
 	'VType_Reader.cpp', 'VType_Stat.cpp', 'VType_Writer.cpp'
 ]
 b.pathNamesScript = []
