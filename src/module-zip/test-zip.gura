@@ -8,5 +8,5 @@ import(zip)
 TestCase('Basic test') {
 	d = zip.Open('test.zip')
 	stats = path.Walk(d):stat
-	Printf('%-32s %d\n', stats:*fileName, stats:*size)
+	Printf('%-32s %6d %6d\n', stats:*fileName, stats:*size, stats:*sizeCompressed)
 }
