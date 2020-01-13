@@ -170,7 +170,7 @@ Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* Directory_ZIPFile::DoGetStatValue()
 {
-	return nullptr; //new Value_Stat();
+	return new Value_Stat(_pHdr->Reference());
 }
 
 //-----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ Stream* Directory_ZIPFolder::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* Directory_ZIPFolder::DoGetStatValue()
 {
-	return nullptr;
+	return new Value_Stat(_pHdr->Reference());
 }
 
 Gurax_EndModuleScope(zip)
