@@ -115,44 +115,11 @@ Gurax_DeclareMethod(Reader, Entries)
 Gurax_ImplementMethod(Reader, Entries)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	//ArgPicker args(argument);
+	auto& valueThis = GetValueThis(argument);
+	Reader& reader = valueThis.GetReader();
 	// Function body
-#if 0
-	Signal &sig = env.GetSignal();
-	Object_reader *pThis = Object_reader::GetObjectThis(arg);
-	if (pThis->GetStreamSrc() == nullptr) {
-		sig.SetError(ERR_ValueError, "zip object is not readable");
-		return Value::Nil;
-	}
-	Iterator *pIterator = new Iterator_Entry(Object_reader::Reference(pThis));
-	return ReturnIterator(env, arg, pIterator);
-#endif
-	return Value::nil();
-}
-
-// zip.Reader#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Reader, MethodSkeleton)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Reader, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Iterator> pIterator(new Iterator_Entry(reader.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -185,7 +152,6 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Reader));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Reader, MethodSkeleton));
 	Assign(Gurax_CreateMethod(Reader, Entry));
 	Assign(Gurax_CreateMethod(Reader, Entries));
 	// Assignment of property

@@ -48,13 +48,9 @@ class StatList : public std::vector<Stat*> {
 //------------------------------------------------------------------------------
 // StatOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatOwner : public StatList, public Referable {
+class GURAX_DLLDECLARE StatOwner : public StatList {
 public:
-	// Referable declaration
-	Gurax_DeclareReferable(StatOwner);
-protected:
 	~StatOwner() { Clear(); }
-public:
 	void Clear();
 };
 

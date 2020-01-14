@@ -16,10 +16,10 @@ public:
 	Gurax_DeclareReferable(Reader);
 private:
 	RefPtr<Stream> _pStreamSrc;
-	RefPtr<StatOwner> _pStatOwner;
+	StatOwner _statOwner;
 public:
 	// Constructor
-	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc), _pStatOwner(new StatOwner()) {}
+	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc) {}
 	// Copy constructor/operator
 	Reader(const Reader& src) = delete;
 	Reader& operator=(const Reader& src) = delete;
@@ -29,7 +29,7 @@ public:
 protected:
 	~Reader() = default;
 public:
-	StatOwner& GetStatOwner() { return *_pStatOwner; }
+	StatOwner& GetStatOwner() { return _statOwner; }
 	bool ReadDirectory();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -37,6 +37,24 @@ public:
 	bool IsEqualTo(const Reader& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Reader& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Entry
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Entry : public Iterator {
+private:
+	RefPtr<Reader> _pReader;
+public:
+	Iterator_Entry(Reader* pReader) : _pReader(pReader) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenDetermined;
+	}
+	virtual size_t GetLength() const override { return _pReader->GetStatOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(zip)

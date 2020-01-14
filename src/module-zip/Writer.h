@@ -18,11 +18,11 @@ public:
 private:
 	RefPtr<Stream> _pStreamDst;
 	UInt16 _compressionMethod;
-	RefPtr<StatOwner> _pStatOwner;
+	StatOwner _statOwner;
 public:
 	// Constructor
 	Writer(Stream* pStreamDst, UInt16 compressionMethod) :
-		_pStreamDst(pStreamDst), _compressionMethod(compressionMethod), _pStatOwner(new StatOwner()) {}
+		_pStreamDst(pStreamDst), _compressionMethod(compressionMethod) {}
 	// Copy constructor/operator
 	Writer(const Writer& src) = delete;
 	Writer& operator=(const Writer& src) = delete;
@@ -33,7 +33,7 @@ protected:
 	~Writer() = default;
 public:
 	UInt16 GetCompressionMethod() { return _compressionMethod; }
-	StatOwner& GetStatOwner() { return *_pStatOwner; }
+	StatOwner& GetStatOwner() { return _statOwner; }
 	bool Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod);
 	bool Finish();
 public:
