@@ -816,21 +816,6 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Iterator_Entry
-//-----------------------------------------------------------------------------
-class Iterator_Entry : public Iterator {
-private:
-	AutoPtr<Object_reader> _pObjZipR;
-	CentralFileHeaderList::iterator _ppHdr;
-public:
-	Iterator_Entry(Object_reader* pObjZipR);
-	virtual ~Iterator_Entry();
-	virtual Iterator* GetSource();
-	virtual bool DoNext(Value& value);
-	virtual String ToString() const;
-};
-
-//-----------------------------------------------------------------------------
 // PathMgr_ZIP
 //-----------------------------------------------------------------------------
 class PathMgr_ZIP : public PathMgr {

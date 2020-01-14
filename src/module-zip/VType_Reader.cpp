@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Reader)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `zipReader` instance from the specified stream.");
+		"Creates a `zip.Reader` instance from the specified stream.");
 }
 
 Gurax_ImplementConstructor(Reader)
@@ -66,6 +66,11 @@ Gurax_DeclareMethod(Reader, Entry)
 
 Gurax_ImplementMethod(Reader, Entry)
 {
+	// Target
+	//auto& valueThis = GetValueThis(argument);
+	// Arguments
+	//ArgPicker args(argument);
+	// Function body
 #if 0
 	Signal &sig = env.GetSignal();
 	Object_reader *pThis = Object_reader::GetObjectThis(arg);
@@ -109,6 +114,11 @@ Gurax_DeclareMethod(Reader, Entries)
 
 Gurax_ImplementMethod(Reader, Entries)
 {
+	// Target
+	//auto& valueThis = GetValueThis(argument);
+	// Arguments
+	//ArgPicker args(argument);
+	// Function body
 #if 0
 	Signal &sig = env.GetSignal();
 	Object_reader *pThis = Object_reader::GetObjectThis(arg);

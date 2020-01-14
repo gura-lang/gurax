@@ -16,10 +16,10 @@ public:
 	Gurax_DeclareReferable(Reader);
 private:
 	RefPtr<Stream> _pStreamSrc;
-	StatOwner _statOwner;
+	RefPtr<StatOwner> _pStatOwner;
 public:
 	// Constructor
-	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc) {}
+	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc), _pStatOwner(new StatOwner()) {}
 	// Copy constructor/operator
 	Reader(const Reader& src) = delete;
 	Reader& operator=(const Reader& src) = delete;
@@ -29,6 +29,7 @@ public:
 protected:
 	~Reader() = default;
 public:
+	StatOwner& GetStatOwner() { return *_pStatOwner; }
 	bool ReadDirectory();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
