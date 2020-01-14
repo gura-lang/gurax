@@ -62,7 +62,7 @@ Gurax_DeclareMethod(Writer, Add)
 		"Entry name is decided by the file name associated with the stream\n"
 		"unless it's specified by argument `filename`.\n"
 		"\n"
-		"Argument `compression` specifies the compression method and takes one of the following symbol.\n"
+		"Argument `compression` specifies the compression method and takes one of the following symbols:\n"
 		"\n"
 		"- `` `store``\n"
 		"- `` `deflate``\n"
