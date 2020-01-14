@@ -29,17 +29,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Stat");
 protected:
-	RefPtr<CentralFileHeader> _pHdr;
+	RefPtr<Stat> _pStat;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Stat() = delete;
-	explicit Value_Stat(CentralFileHeader* pHdr, VType& vtype = VTYPE_Stat) :
-		Value_Object(vtype), _pHdr(pHdr) {}
+	explicit Value_Stat(Stat* pStat, VType& vtype = VTYPE_Stat) :
+		Value_Object(vtype), _pStat(pStat) {}
 	// Copy constructor/operator
 	Value_Stat(const Value_Stat& src) :
-		Value_Object(src), _pHdr(src._pHdr->Reference()) {}
+		Value_Object(src), _pStat(src._pStat->Reference()) {}
 	Value_Stat& operator=(const Value_Stat& src) = delete;
 	// Move constructor/operator
 	Value_Stat(Value_Stat&& src) = delete;
@@ -48,32 +48,32 @@ protected:
 	// Destructor
 	~Value_Stat() = default;
 public:
-	CentralFileHeader& GetCentralFileHeader() { return *_pHdr; }
-	const CentralFileHeader& GetCentralFileHeader() const { return *_pHdr; }
+	Stat& GetStat() { return *_pStat; }
+	const Stat& GetStat() const { return *_pStat; }
 public:
-	static CentralFileHeader& GetCentralFileHeader(Value& value) {
-		return dynamic_cast<Value_Stat&>(value).GetCentralFileHeader();
+	static Stat& GetStat(Value& value) {
+		return dynamic_cast<Value_Stat&>(value).GetStat();
 	}
-	static const CentralFileHeader& GetCentralFileHeader(const Value& value) {
-		return dynamic_cast<const Value_Stat&>(value).GetCentralFileHeader();
+	static const Stat& GetStat(const Value& value) {
+		return dynamic_cast<const Value_Stat&>(value).GetStat();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetCentralFileHeader().CalcHash();
+		return GetStat().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetCentralFileHeader().IsEqualTo(Value_Stat::GetCentralFileHeader(*pValue));
+			GetStat().IsEqualTo(Value_Stat::GetStat(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetCentralFileHeader().IsLessThan(Value_Stat::GetCentralFileHeader(*pValue)) :
+			GetStat().IsLessThan(Value_Stat::GetStat(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
 	virtual String ToStringDetail(const StringStyle& ss) const override {
-		return GetCentralFileHeader().ToString(ss);
+		return GetStat().ToString(ss);
 	}
 };
 

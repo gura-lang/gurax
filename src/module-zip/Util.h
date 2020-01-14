@@ -7,7 +7,7 @@
 
 Gurax_BeginModuleScope(zip)
 
-class CentralFileHeader;
+class Stat;
 
 UInt16 SymbolToCompressionMethod(const Symbol* pSymbol);
 UInt16 GetDosTime(const DateTime& dt);
@@ -17,7 +17,7 @@ DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime);
 Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pParent,
 								const char** pPathName, Directory::Type typeWouldBe);
 UInt32 SeekCentralDirectory(Stream& streamSrc);
-Stream* CreateStream(Stream& streamSrc, const CentralFileHeader* pHdr);
+Stream* CreateStream(Stream& streamSrc, const Stat& stat);
 
 bool SkipStream(Stream& stream, size_t bytes);
 bool ReadStream(Stream& stream, void* buff, size_t bytes, size_t offset = 0);

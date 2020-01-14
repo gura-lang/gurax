@@ -16,7 +16,7 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Stat);
 private:
-	
+	CentralFileHeader _centralFileHeader;
 public:
 	// Constructor
 	Stat() {}
@@ -28,6 +28,9 @@ public:
 	Stat& operator=(Stat&& src) noexcept = delete;
 protected:
 	~Stat() = default;
+public:
+	CentralFileHeader& GetCentralFileHeader() { return _centralFileHeader; }
+	const CentralFileHeader& GetCentralFileHeader() const { return _centralFileHeader; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stat& other) const { return this == &other; }

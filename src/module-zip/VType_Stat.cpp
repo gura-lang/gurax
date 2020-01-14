@@ -96,7 +96,7 @@ Gurax_DeclareProperty_R(Stat, fileName)
 
 Gurax_ImplementPropertyGetter(Stat, fileName)
 {
-	CentralFileHeader& hdr = GetValueThis(valueTarget).GetCentralFileHeader();
+	CentralFileHeader& hdr = GetValueThis(valueTarget).GetStat().GetCentralFileHeader();
 	return new Value_String(PathName(hdr.GetFileName()).ExtractFileName());
 }
 
@@ -111,7 +111,7 @@ Gurax_DeclareProperty_R(Stat, size)
 
 Gurax_ImplementPropertyGetter(Stat, size)
 {
-	CentralFileHeader& hdr = GetValueThis(valueTarget).GetCentralFileHeader();
+	CentralFileHeader& hdr = GetValueThis(valueTarget).GetStat().GetCentralFileHeader();
 	return new Value_Number(hdr.GetUncompressedSize());
 }
 
@@ -126,7 +126,7 @@ Gurax_DeclareProperty_R(Stat, sizeCompressed)
 
 Gurax_ImplementPropertyGetter(Stat, sizeCompressed)
 {
-	CentralFileHeader& hdr = GetValueThis(valueTarget).GetCentralFileHeader();
+	CentralFileHeader& hdr = GetValueThis(valueTarget).GetStat().GetCentralFileHeader();
 	return new Value_Number(hdr.GetCompressedSize());
 }
 
@@ -141,7 +141,7 @@ Gurax_DeclareProperty_R(Stat, atime)
 
 Gurax_ImplementPropertyGetter(Stat, atime)
 {
-	CentralFileHeader& hdr = GetValueThis(valueTarget).GetCentralFileHeader();
+	CentralFileHeader& hdr = GetValueThis(valueTarget).GetStat().GetCentralFileHeader();
 	return new Value_DateTime(hdr.MakeLastModDateTime());
 }
 
@@ -156,7 +156,7 @@ Gurax_DeclareProperty_R(Stat, mtime)
 
 Gurax_ImplementPropertyGetter(Stat, mtime)
 {
-	CentralFileHeader& hdr = GetValueThis(valueTarget).GetCentralFileHeader();
+	CentralFileHeader& hdr = GetValueThis(valueTarget).GetStat().GetCentralFileHeader();
 	return new Value_DateTime(hdr.MakeLastModDateTime());
 }
 
@@ -171,7 +171,7 @@ Gurax_DeclareProperty_R(Stat, ctime)
 
 Gurax_ImplementPropertyGetter(Stat, ctime)
 {
-	CentralFileHeader& hdr = GetValueThis(valueTarget).GetCentralFileHeader();
+	CentralFileHeader& hdr = GetValueThis(valueTarget).GetStat().GetCentralFileHeader();
 	return new Value_DateTime(hdr.MakeLastModDateTime());
 }
 

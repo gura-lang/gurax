@@ -244,10 +244,7 @@ public:
 //------------------------------------------------------------------------------
 // F. Central directory structure
 //------------------------------------------------------------------------------
-class CentralFileHeader : public Referable {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(CentralFileHeader);
+class CentralFileHeader {
 public:
 	static const UInt32 Signature = 0x02014b50;
 	struct Fields {
@@ -389,14 +386,6 @@ public:
 		::printf("ExternalFileAttributes %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
 		::printf("RelativeOffsetOfLocalHeader %08x\n", Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader));
 	}
-public:
-	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const CentralFileHeader& other) const { return this == &other; }
-	bool IsEqualTo(const CentralFileHeader& other) const { return IsIdentical(other); }
-	bool IsLessThan(const CentralFileHeader& other) const { return this < &other; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const {
-		return "CentralFileHeader";
-	}
 };
 
 class DigitalSignature {
@@ -534,35 +523,6 @@ public:
 		::printf("OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber %08x\n", Gurax_UnpackUInt32(_fields.OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber));
 		::printf("ZIPFileCommentLength                                              %04x\n", Gurax_UnpackUInt16(_fields.ZIPFileCommentLength));
 	}
-};
-
-//-----------------------------------------------------------------------------
-// Directory_ZIPFile
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
-private:
-	RefPtr<CentralFileHeader> _pHdr;
-public:
-	Directory_ZIPFile(CentralFileHeader* pHdr) :
-		Directory(Directory::Type::Item,
-				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
-	virtual Directory* DoNextChild() override;
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoGetStatValue() override;
-};
-
-//-----------------------------------------------------------------------------
-// Directory_ZIPFolder
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE Directory_ZIPFolder : public Directory_CustomContainer {
-private:
-	RefPtr<CentralFileHeader> _pHdr;
-public:
-	Directory_ZIPFolder(CentralFileHeader* pHdr) :
-		Directory_CustomContainer(Directory::Type::Container,
-								  PathName::SepPlatform, PathName::CaseFlagPlatform), _pHdr(pHdr) {}
-	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoGetStatValue() override;
 };
 
 #if 0
@@ -881,87 +841,6 @@ public:
 };
 
 #endif
-
-//-----------------------------------------------------------------------------
-// Stream_Reader
-//-----------------------------------------------------------------------------
-class Stream_Reader : public Stream {
-protected:
-	RefPtr<Stream> _pStreamSrc;
-	RefPtr<CentralFileHeader> _pHdr;
-	String _name;
-	size_t _bytesUncompressed;
-	size_t _bytesCompressed;
-	UInt32 _crc32Expected;
-	bool _seekedFlag;
-	CRC32 _crc32;
-public:
-	Stream_Reader(Stream* pStreamSrc, CentralFileHeader* pHdr);
-public:
-	size_t CheckCRC32(const void* buff, size_t bytesRead);
-public:
-	virtual bool Initialize() = 0;
-	virtual const char* GetName() const override { return _name.c_str(); }
-	virtual const char* GetIdentifier() const override { return _name.c_str(); }
-	virtual size_t DoWrite(const void* buff, size_t len) override { return 0; }
-	virtual bool DoFlush() override { return false; }
-	virtual bool DoClose() override { return true; }
-	virtual size_t DoGetSize() override { return _bytesUncompressed; }
-};
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_Store
-// Compression method #0: stored (no compression)
-//-----------------------------------------------------------------------------
-class Stream_Reader_Store : public Stream_Reader {
-private:
-	size_t _offsetTop;
-public:
-	Stream_Reader_Store(Stream* pStreamSrc, CentralFileHeader* pHdr);
-	virtual bool Initialize() override;
-	virtual size_t DoRead(void* buff, size_t bytes) override;
-	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
-};
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_Deflate
-// Compression method #8: Deflated
-//-----------------------------------------------------------------------------
-class Stream_Reader_Deflate : public Stream_Reader {
-private:
-	RefPtr<ZLib::Stream_Reader> _pStreamReader;
-public:
-	Stream_Reader_Deflate(Stream* pStreamSrc, CentralFileHeader* pHdr);
-	virtual bool Initialize() override;
-	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
-};
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_BZIP2
-// Compression method #12: BZIP2
-//-----------------------------------------------------------------------------
-class Stream_Reader_BZIP2 : public Stream_Reader {
-private:
-	RefPtr<BZLib::Stream_Reader> _pStreamReader;
-public:
-	Stream_Reader_BZIP2(Stream* pStreamSrc, CentralFileHeader* pHdr);
-	virtual bool Initialize() override;
-	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
-};
-
-//-----------------------------------------------------------------------------
-// Stream_Reader_Deflate64
-// Compression method #9: Enhanced Deflating using Deflate64(tm)
-//-----------------------------------------------------------------------------
-class Stream_Reader_Deflate64 : public Stream_Reader {
-public:
-	Stream_Reader_Deflate64(Stream* pStreamSrc, CentralFileHeader* pHdr);
-	virtual bool Initialize() override;
-	virtual size_t DoRead(void* buff, size_t len) override;
-	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
-};
 
 Gurax_EndModuleScope(zip)
 

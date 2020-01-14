@@ -65,15 +65,15 @@ Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 			ArchiveExtraDataRecord record;
 			if (!record.Read(*pStreamSrc)) return nullptr;
 		} else if (signature == CentralFileHeader::Signature) {
-			RefPtr<CentralFileHeader> pHdr(new CentralFileHeader());
-			if (!pHdr->Read(*pStreamSrc)) return nullptr;
+			RefPtr<Stat> pStat(new Stat());
+			if (!pStat->GetCentralFileHeader().Read(*pStreamSrc)) return nullptr;
 			//pHdr->Print();
 			//::printf("%s\n", pHdr->GetFileName());
-			const char* pathName = pHdr->GetFileName();
+			const char* pathName = pStat->GetCentralFileHeader().GetFileName();
 			if (String::EndsWithPathSep(pathName)) {
-				pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pHdr.release()));
+				pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStat.release()));
 			} else {
-				pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pHdr.release()));
+				pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pStat.release()));
 			}
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
@@ -137,8 +137,9 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
 }
 
-Stream* CreateStream(Stream& streamSrc, const CentralFileHeader& hdr)
+Stream* CreateStream(Stream& streamSrc, const Stat& stat)
 {
+	const CentralFileHeader& hdr = stat.GetCentralFileHeader();
 	RefPtr<Stream_Reader> pStream;
 	long offset = static_cast<long>(hdr.GetRelativeOffsetOfLocalHeader());
 	streamSrc.Seek(offset, Stream::SeekMode::Set);
@@ -159,7 +160,7 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader& hdr)
 	//size_t bytesCompressed = hdr.GetCompressedSize();
 	//UInt32 crc32Expected = hdr.GetCrc32();
 	if (compressionMethod == Method::Store) {
-		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), hdr.Reference()));
+		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), stat.Reference()));
 	} else if (compressionMethod == Method::Shrink) {
 		// unsupported
 	} else if (compressionMethod == Method::Factor1) {
@@ -175,13 +176,13 @@ Stream* CreateStream(Stream& streamSrc, const CentralFileHeader& hdr)
 	} else if (compressionMethod == Method::Factor1) {
 		// unsupported
 	} else if (compressionMethod == Method::Deflate) {
-		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), hdr.Reference()));
+		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), stat.Reference()));
 	} else if (compressionMethod == Method::Deflate64) {
-		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), hdr.Reference()));
+		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), stat.Reference()));
 	} else if (compressionMethod == Method::PKWARE) {
 		// unsupported
 	} else if (compressionMethod == Method::BZIP2) {
-		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), hdr.Reference()));
+		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), stat.Reference()));
 	} else if (compressionMethod == Method::LZMA) {
 		// unsupported
 	} else if (compressionMethod == Method::TERSA) {
