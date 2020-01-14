@@ -32,6 +32,7 @@ public:
 protected:
 	~Writer() = default;
 public:
+	UInt16 GetCompressionMethod() { return _compressionMethod; }
 	bool Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod);
 	bool Finish();
 public:

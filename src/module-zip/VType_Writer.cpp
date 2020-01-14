@@ -80,32 +80,32 @@ Gurax_DeclareMethod(Writer, Add)
 
 Gurax_ImplementMethod(Writer, Add)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	Object_writer *pThis = Object_writer::GetObjectThis(arg);
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Writer& writer = valueThis.GetWriter();
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
 	String fileName;
-	if (arg.Is_string(1)) {
-		fileName = arg.GetString(1);
+	if (args.IsValid()) {
+		fileName = args.PickString();
 	} else {
-		const char *identifier = arg.GetStream(0).GetIdentifier();
-		if (identifier == nullptr) {
-			sig.SetError(ERR_ValueError, "stream doesn't have an identifier");
-			return Value::Nil;
+		const char*identifier = stream.GetIdentifier();
+		if (!identifier) {
+			Error::Issue(ErrorType::ValueError, "stream doesn't have an identifier");
+			return Value::nil();
 		}
-		PathMgr::SplitFileName(identifier, nullptr, &fileName);
+		fileName = PathName(identifier).ExtractFileName();
 	}
-	UInt16 compressionMethod = arg.Is_symbol(2)?
-						SymbolToCompressionMethod(arg.GetSymbol(2)) :
-						pThis->GetCompressionMethod();
-	if (compressionMethod == METHOD_Invalid) {
-		sig.SetError(ERR_IOError, "invalid compression method");
-		return Value::Nil;
+	UInt16 compressionMethod = args.IsValid()?
+		SymbolToCompressionMethod(args.PickSymbol()) : writer.GetCompressionMethod();
+	if (compressionMethod == CompressionMethod::Invalid) {
+		Error::Issue(ErrorType::ValueError, "invalid compression method");
+		return Value::nil();
 	}
-	if (!pThis->Add(env, arg.GetStream(0),
-					fileName.c_str(), compressionMethod)) return Value::Nil;
-	return arg.GetValueThis();
-#endif
-	return Value::nil();
+	// Function body
+	if (!writer.Add(stream, fileName.c_str(), compressionMethod)) return Value::nil();
+	return valueThis.Reference();
 }
 
 // zip.Writer#Close():void
@@ -119,35 +119,11 @@ Gurax_DeclareMethod(Writer, Close)
 
 Gurax_ImplementMethod(Writer, Close)
 {
-#if 0
-	Object_writer *pThis = Object_writer::GetObjectThis(arg);
-	if (!pThis->Finish()) return Value::Nil;
-	return Value::Nil;
-#endif
-	return Value::nil();
-}
-
-// zip.Writer#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Writer, MethodSkeleton)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Writer, MethodSkeleton)
-{
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
+	auto& valueThis = GetValueThis(argument);
+	Writer& writer = valueThis.GetWriter();
+	writer.Finish();
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -180,7 +156,6 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Writer));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Writer, MethodSkeleton));
 	Assign(Gurax_CreateMethod(Writer, Add));
 	Assign(Gurax_CreateMethod(Writer, Close));
 	// Assignment of property
