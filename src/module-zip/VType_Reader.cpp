@@ -42,10 +42,11 @@ Gurax_ImplementConstructor(Reader)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.PickStream();
+	RefPtr<Stream> pStream(args.PickStream().CreateBwdSeekable());
+	if (!pStream) return Value::nil();
 	// Function body
-	RefPtr<Reader> pReader(new Reader(stream.Reference()));
-	if (!pReader->ReadDirectory()) return Value::nil();
+	RefPtr<Reader> pReader(new Reader(pStream.release()));
+	if (!pReader->ReadCentralDirectory()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Reader(pReader.release()));
 }
 

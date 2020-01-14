@@ -30,7 +30,7 @@ protected:
 	~Reader() = default;
 public:
 	StatOwner& GetStatOwner() { return _statOwner; }
-	bool ReadDirectory();
+	bool ReadCentralDirectory();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Reader& other) const { return this == &other; }

@@ -241,6 +241,15 @@ Stream::OpenFlags Stream::ModeToOpenFlags(const char* mode)
 	return openFlags;
 }
 
+Stream* Stream::CreateBwdSeekable()
+{
+	if (IsBwdSeekable()) return Reference();
+	RefPtr<BinaryReferable> pBuff(new BinaryReferable(true));
+	ReadAll(pBuff->GetBinary());
+	if (Error::IsIssued()) return nullptr;
+	return new Stream_Binary(Stream::Flag::Readable, pBuff.release());
+}
+
 void Stream::Dump(const void* buff, size_t bytes, const StringStyle& ss)
 {
 	const int nCols = 16;

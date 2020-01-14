@@ -102,6 +102,7 @@ public:
 	Stream& ReadAll(Binary& buff);
 	Binary ReadAll();
 	static OpenFlags ModeToOpenFlags(const char* mode);
+	Stream* CreateBwdSeekable();
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 public:
 	size_t GetSize() { return DoGetSize(); }

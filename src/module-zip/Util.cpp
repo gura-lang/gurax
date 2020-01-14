@@ -38,64 +38,6 @@ DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime)
 	return new DateTime(year, month, day, secPacked, usecPacked);
 }
 
-Directory* ReadCentralDirectory(Stream& streamSrc, Directory* pDirectoryParent,
-								const char** pPathName, Directory::Type typeWouldBe)
-{
-	RefPtr<Stream> pStreamSrc(streamSrc.Reference());
-	if (!pStreamSrc->IsBwdSeekable()) {
-		RefPtr<BinaryReferable> pBuff(new BinaryReferable(true));
-		pStreamSrc->ReadAll(pBuff->GetBinary());
-		if (Error::IsIssued()) return nullptr;
-		pStreamSrc.reset(new Stream_Binary(Stream::Flag::Readable, pBuff.release()));
-	}
-	RefPtr<Directory_CustomContainer> pDirectory(
-		new Directory_CustomContainer(pDirectoryParent, "", Directory::Type::BoundaryContainer,
-								PathName::SepPlatform, PathName::CaseFlagPlatform));
-	UInt32 offsetCentralDirectory = SeekCentralDirectory(*pStreamSrc);
-	if (Error::IsIssued()) return nullptr;
-	if (!pStreamSrc->Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return nullptr;
-	UInt32 signature;
-	while (ReadStream(*pStreamSrc, &signature)) {
-		//::printf("%08x\n", signature);
-		if (signature == LocalFileHeader::Signature) {
-			LocalFileHeader hdr;
-			if (!hdr.Read(*pStreamSrc)) return nullptr;
-			if (!hdr.SkipFileData(*pStreamSrc)) return nullptr;
-		} else if (signature == ArchiveExtraDataRecord::Signature) {
-			ArchiveExtraDataRecord record;
-			if (!record.Read(*pStreamSrc)) return nullptr;
-		} else if (signature == CentralFileHeader::Signature) {
-			RefPtr<Stat> pStat(new Stat());
-			if (!pStat->GetCentralFileHeader().Read(*pStreamSrc)) return nullptr;
-			//pHdr->Print();
-			//::printf("%s\n", pHdr->GetFileName());
-			const char* pathName = pStat->GetCentralFileHeader().GetFileName();
-			if (String::EndsWithPathSep(pathName)) {
-				pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStat.release()));
-			} else {
-				pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pStat.release()));
-			}
-		} else if (signature == DigitalSignature::Signature) {
-			DigitalSignature signature;
-			if (!signature.Read(*pStreamSrc)) return nullptr;
-		} else if (signature == Zip64EndOfCentralDirectory::Signature) {
-			Zip64EndOfCentralDirectory dir;
-			if (!dir.Read(*pStreamSrc)) return nullptr;
-		} else if (signature == Zip64EndOfCentralDirectoryLocator::Signature) {
-			Zip64EndOfCentralDirectoryLocator loc;
-			if (!loc.Read(*pStreamSrc)) return nullptr;
-		} else if (signature == EndOfCentralDirectoryRecord::Signature) {
-			EndOfCentralDirectoryRecord record;
-			if (!record.Read(*pStreamSrc)) return nullptr;
-			break;
-		} else {
-			Error::Issue(ErrorType::FormatError, "unknown signature %08x", signature);
-			return nullptr;
-		}
-	}
-	return Error::IsIssued()? nullptr : pDirectory.release();
-}
-
 UInt32 SeekCentralDirectory(Stream& streamSrc)
 {
 	size_t bytesZIPFile = streamSrc.GetSize();
@@ -135,6 +77,25 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
 	return Gurax_UnpackUInt32(record.GetFields().
 			OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);
+}
+
+Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
+						   const char** pPathName, Directory::Type typeWouldBe)
+{
+	StatOwner statOwner;
+	if (!statOwner.ReadCentralDirectory(streamSrc)) return nullptr;
+	RefPtr<Directory_CustomContainer> pDirectory(
+		new Directory_CustomContainer(pDirectoryParent, "", Directory::Type::BoundaryContainer,
+									  PathName::SepPlatform, PathName::CaseFlagPlatform));
+	for (Stat* pStat : statOwner) {
+		const char* pathName = pStat->GetCentralFileHeader().GetFileName();
+		if (String::EndsWithPathSep(pathName)) {
+			pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStat->Reference()));
+		} else {
+			pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pStat->Reference()));
+		}
+	}
+	return pDirectory.release();
 }
 
 Stream* CreateStream(Stream& streamSrc, const Stat& stat)

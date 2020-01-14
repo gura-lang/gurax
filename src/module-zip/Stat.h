@@ -52,6 +52,7 @@ class GURAX_DLLDECLARE StatOwner : public StatList {
 public:
 	~StatOwner() { Clear(); }
 	void Clear();
+	bool ReadCentralDirectory(Stream& streamSrc);
 };
 
 Gurax_EndModuleScope(zip)
