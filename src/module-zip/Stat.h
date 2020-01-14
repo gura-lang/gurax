@@ -39,6 +39,21 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// StatList
+//------------------------------------------------------------------------------
+class StatList : public std::vector<Stat*> {
+};
+
+//------------------------------------------------------------------------------
+// StatOwner
+//------------------------------------------------------------------------------
+class StatOwner : public StatList {
+public:
+	~StatOwner() { Clear(); }
+	void Clear();
+};
+
 Gurax_EndModuleScope(zip)
 
 #endif

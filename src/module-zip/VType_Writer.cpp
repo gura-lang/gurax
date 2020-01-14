@@ -27,22 +27,31 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// zip.Writer() {block?}
+// zip.Writer(stream:Stream:w, compression?:Symbol) {block?}
 Gurax_DeclareConstructor(Writer)
 {
 	Declare(VTYPE_Writer, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Writer` instance.");
+		"Creates a `Writer` instance from the speicifed stream.");
 }
 
 Gurax_ImplementConstructor(Writer)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	UInt16 compressionMethod = args.IsValid()?
+		SymbolToCompressionMethod(args.PickSymbol()) : CompressionMethod::Deflate;
+	if (compressionMethod == CompressionMethod::Invalid) {
+		Error::Issue(ErrorType::ValueError, "invalid compression method");
+		return Value::nil();
+	}
 	// Function body
-	RefPtr<Writer> pWriter(new Writer());
+	RefPtr<Writer> pWriter(new Writer(stream.Reference(), compressionMethod));
 	return argument.ReturnValue(processor, new Value_Writer(pWriter.release()));
 }
 

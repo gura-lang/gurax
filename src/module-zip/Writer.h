@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_ZIP_WRITER_H
 #define GURAX_MODULE_ZIP_WRITER_H
 #include <gurax.h>
+#include "Stat.h"
 
 Gurax_BeginModuleScope(zip)
 
@@ -14,9 +15,14 @@ class GURAX_DLLDECLARE Writer : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Writer);
+private:
+	RefPtr<Stream> _pStreamDst;
+	UInt16 _compressionMethod;
+	StatOwner _statOwner;
 public:
 	// Constructor
-	Writer() {}
+	Writer(Stream* pStreamDst, UInt16 compressionMethod) :
+		_pStreamDst(pStreamDst), _compressionMethod(compressionMethod) {}
 	// Copy constructor/operator
 	Writer(const Writer& src) = delete;
 	Writer& operator=(const Writer& src) = delete;
@@ -25,6 +31,9 @@ public:
 	Writer& operator=(Writer&& src) noexcept = delete;
 protected:
 	~Writer() = default;
+public:
+	bool Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod);
+	bool Finish();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Writer& other) const { return this == &other; }

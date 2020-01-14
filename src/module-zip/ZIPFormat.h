@@ -32,9 +32,9 @@ Gurax_DeclareSymbol(wavpack);
 Gurax_DeclareSymbol(ppmd);
 
 //------------------------------------------------------------------------------
-// Method
+// CompressionMethod
 //------------------------------------------------------------------------------
-struct Method {
+struct CompressionMethod {
 	static const UInt16 Invalid		= 0xffff;
 	static const UInt16 Store		= 0;	// The file is stored (no compression)
 	static const UInt16 Shrink		= 1;	// The file is Shrunk
@@ -54,29 +54,29 @@ struct Method {
 	static const UInt16 PPMd		= 99;	// PPMd version I, Rev 1
 };
 
-class SymbolAssoc_Method : public SymbolAssoc<UInt16, Method::Invalid> {
+class SymbolAssoc_CompressionMethod : public SymbolAssoc<UInt16, CompressionMethod::Invalid> {
 public:
-	SymbolAssoc_Method() {
-		Assoc(Gurax_Symbol(store),		Method::Store);
-		Assoc(Gurax_Symbol(shrink),		Method::Shrink);
-		Assoc(Gurax_Symbol(factor1),	Method::Factor1);
-		Assoc(Gurax_Symbol(factor2),	Method::Factor2);
-		Assoc(Gurax_Symbol(factor3),	Method::Factor3);
-		Assoc(Gurax_Symbol(factor4),	Method::Factor4);
-		Assoc(Gurax_Symbol(implode),	Method::Implode);
-		Assoc(Gurax_Symbol(deflate),	Method::Deflate);
-		Assoc(Gurax_Symbol(deflate64),	Method::Deflate64);
-		Assoc(Gurax_Symbol(pkware),		Method::PKWARE);
-		Assoc(Gurax_Symbol(bzip2),		Method::BZIP2);
-		Assoc(Gurax_Symbol(lzma),		Method::LZMA);
-		Assoc(Gurax_Symbol(tersa),		Method::TERSA);
-		Assoc(Gurax_Symbol(lz77),		Method::LZ77);
-		Assoc(Gurax_Symbol(wavpack),	Method::WavPack);
-		Assoc(Gurax_Symbol(ppmd),		Method::PPMd);
+	SymbolAssoc_CompressionMethod() {
+		Assoc(Gurax_Symbol(store),		CompressionMethod::Store);
+		Assoc(Gurax_Symbol(shrink),		CompressionMethod::Shrink);
+		Assoc(Gurax_Symbol(factor1),	CompressionMethod::Factor1);
+		Assoc(Gurax_Symbol(factor2),	CompressionMethod::Factor2);
+		Assoc(Gurax_Symbol(factor3),	CompressionMethod::Factor3);
+		Assoc(Gurax_Symbol(factor4),	CompressionMethod::Factor4);
+		Assoc(Gurax_Symbol(implode),	CompressionMethod::Implode);
+		Assoc(Gurax_Symbol(deflate),	CompressionMethod::Deflate);
+		Assoc(Gurax_Symbol(deflate64),	CompressionMethod::Deflate64);
+		Assoc(Gurax_Symbol(pkware),		CompressionMethod::PKWARE);
+		Assoc(Gurax_Symbol(bzip2),		CompressionMethod::BZIP2);
+		Assoc(Gurax_Symbol(lzma),		CompressionMethod::LZMA);
+		Assoc(Gurax_Symbol(tersa),		CompressionMethod::TERSA);
+		Assoc(Gurax_Symbol(lz77),		CompressionMethod::LZ77);
+		Assoc(Gurax_Symbol(wavpack),	CompressionMethod::WavPack);
+		Assoc(Gurax_Symbol(ppmd),		CompressionMethod::PPMd);
 	}
 	static const SymbolAssoc& GetInstance() {
 		static SymbolAssoc* pSymbolAssoc = nullptr;
-		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Method());
+		return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_CompressionMethod());
 	}
 };
 

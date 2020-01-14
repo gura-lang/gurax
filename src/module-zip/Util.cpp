@@ -6,9 +6,9 @@
 
 Gurax_BeginModuleScope(zip)
 
-UInt16 SymbolToMethod(const Symbol* pSymbol)
+UInt16 SymbolToCompressionMethod(const Symbol* pSymbol)
 {
-	return SymbolAssoc_Method::GetInstance().ToAssociated(pSymbol);
+	return SymbolAssoc_CompressionMethod::GetInstance().ToAssociated(pSymbol);
 }
 
 UInt16 GetDosTime(const DateTime& dt)
@@ -159,39 +159,39 @@ Stream* CreateStream(Stream& streamSrc, const Stat& stat)
 	//size_t bytesUncompressed = hdr.GetUncompressedSize();
 	//size_t bytesCompressed = hdr.GetCompressedSize();
 	//UInt32 crc32Expected = hdr.GetCrc32();
-	if (compressionMethod == Method::Store) {
+	if (compressionMethod == CompressionMethod::Store) {
 		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), stat.Reference()));
-	} else if (compressionMethod == Method::Shrink) {
+	} else if (compressionMethod == CompressionMethod::Shrink) {
 		// unsupported
-	} else if (compressionMethod == Method::Factor1) {
+	} else if (compressionMethod == CompressionMethod::Factor1) {
 		// unsupported
-	} else if (compressionMethod == Method::Factor2) {
+	} else if (compressionMethod == CompressionMethod::Factor2) {
 		// unsupported
-	} else if (compressionMethod == Method::Factor3) {
+	} else if (compressionMethod == CompressionMethod::Factor3) {
 		// unsupported
-	} else if (compressionMethod == Method::Factor4) {
+	} else if (compressionMethod == CompressionMethod::Factor4) {
 		// unsupported
-	} else if (compressionMethod == Method::Implode) {
+	} else if (compressionMethod == CompressionMethod::Implode) {
 		// unsupported
-	} else if (compressionMethod == Method::Factor1) {
+	} else if (compressionMethod == CompressionMethod::Factor1) {
 		// unsupported
-	} else if (compressionMethod == Method::Deflate) {
+	} else if (compressionMethod == CompressionMethod::Deflate) {
 		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), stat.Reference()));
-	} else if (compressionMethod == Method::Deflate64) {
+	} else if (compressionMethod == CompressionMethod::Deflate64) {
 		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), stat.Reference()));
-	} else if (compressionMethod == Method::PKWARE) {
+	} else if (compressionMethod == CompressionMethod::PKWARE) {
 		// unsupported
-	} else if (compressionMethod == Method::BZIP2) {
+	} else if (compressionMethod == CompressionMethod::BZIP2) {
 		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), stat.Reference()));
-	} else if (compressionMethod == Method::LZMA) {
+	} else if (compressionMethod == CompressionMethod::LZMA) {
 		// unsupported
-	} else if (compressionMethod == Method::TERSA) {
+	} else if (compressionMethod == CompressionMethod::TERSA) {
 		// unsupported
-	} else if (compressionMethod == Method::LZ77) {
+	} else if (compressionMethod == CompressionMethod::LZ77) {
 		// unsupported
-	} else if (compressionMethod == Method::WavPack) {
+	} else if (compressionMethod == CompressionMethod::WavPack) {
 		// unsupported
-	} else if (compressionMethod == Method::PPMd) {
+	} else if (compressionMethod == CompressionMethod::PPMd) {
 		// unsupported
 	}
 	if (!pStream) {

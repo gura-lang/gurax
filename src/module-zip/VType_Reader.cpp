@@ -27,22 +27,25 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// zip.Reader() {block?}
+// zip.Reader(stream:Stream:r) {block?}
 Gurax_DeclareConstructor(Reader)
 {
 	Declare(VTYPE_Reader, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Reader` instance.");
+		"Creates a `zipReader` instance from the specified stream.");
 }
 
 Gurax_ImplementConstructor(Reader)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
 	// Function body
-	RefPtr<Reader> pReader(new Reader());
+	RefPtr<Reader> pReader(new Reader(stream.Reference()));
+	if (!pReader->ReadDirectory()) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Reader(pReader.release()));
 }
 

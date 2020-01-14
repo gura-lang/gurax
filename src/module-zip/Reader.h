@@ -14,9 +14,12 @@ class GURAX_DLLDECLARE Reader : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Reader);
+private:
+	RefPtr<Stream> _pStreamSrc;
+	StatOwner _statOwner;
 public:
 	// Constructor
-	Reader() {}
+	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc) {}
 	// Copy constructor/operator
 	Reader(const Reader& src) = delete;
 	Reader& operator=(const Reader& src) = delete;
@@ -25,6 +28,8 @@ public:
 	Reader& operator=(Reader&& src) noexcept = delete;
 protected:
 	~Reader() = default;
+public:
+	bool ReadDirectory();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Reader& other) const { return this == &other; }
