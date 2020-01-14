@@ -49,6 +49,76 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// zip.Reader#Entry(name:String) {block?}
+Gurax_DeclareMethod(Reader, Entry)
+{
+	Declare(VTYPE_Stream, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Seeks entry in the zip file that matches the specified name\n"
+		"and returns a `stream` instance associated with the entry.\n");
+}
+
+Gurax_ImplementMethod(Reader, Entry)
+{
+#if 0
+	Signal &sig = env.GetSignal();
+	Object_reader *pThis = Object_reader::GetObjectThis(arg);
+	Stream *pStreamSrc = pThis->GetStreamSrc();
+	if (pStreamSrc == nullptr) {
+		sig.SetError(ERR_ValueError, "zip object is not readable");
+		return Value::Nil;
+	}
+	AutoPtr<Object_stream> pObjStream;
+	const char *name = arg.GetString(0);
+	foreach (CentralFileHeaderList, ppHdr, pThis->GetHeaderList()) {
+		const CentralFileHeader *pHdr = *ppHdr;
+		const CentralFileHeader::Fields &fields = pHdr->GetFields();
+		if (IsMatchedName(pHdr->GetFileName(), name)) {
+			long offset = Gurax_UnpackInt32(fields.RelativeOffsetOfLocalHeader);
+			Stream *pStream = CreateStream(env, pStreamSrc, pHdr);
+			if (sig.IsSignalled()) return Value::Nil;
+			pObjStream.reset(new Object_stream(env, pStream));
+			break;
+		}
+	}
+	if (pObjStream.IsNull()) {
+		sig.SetError(ERR_NameError, "entry not found");
+		return Value::Nil;
+	}
+	return ReturnValue(env, arg, Value(pObjStream.release()));
+#endif
+	return Value::nil();
+}
+
+// zip.Reader#Entries() {block?}
+Gurax_DeclareMethod(Reader, Entries)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `iterator` instance that returns `stream` instances\n"
+		"associated with each entry in the ZIP file.\n");
+}
+
+Gurax_ImplementMethod(Reader, Entries)
+{
+#if 0
+	Signal &sig = env.GetSignal();
+	Object_reader *pThis = Object_reader::GetObjectThis(arg);
+	if (pThis->GetStreamSrc() == nullptr) {
+		sig.SetError(ERR_ValueError, "zip object is not readable");
+		return Value::Nil;
+	}
+	Iterator *pIterator = new Iterator_Entry(Object_reader::Reference(pThis));
+	return ReturnIterator(env, arg, pIterator);
+#endif
+	return Value::nil();
+}
+
 // zip.Reader#MethodSkeleton(num1:Number, num2:Number)
 Gurax_DeclareMethod(Reader, MethodSkeleton)
 {
@@ -103,6 +173,8 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Reader));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Reader, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Reader, Entry));
+	Assign(Gurax_CreateMethod(Reader, Entries));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Reader, propSkeleton));
 }
