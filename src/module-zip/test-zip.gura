@@ -16,7 +16,8 @@ TestCase('zip.Directory()') {
 TestCase('zip.Reader()') {
 	zip.Reader('test.zip') {|reader|
 		reader.Entries() {|entry|
-			Print(entry.ReadLines())
+			//Print(entry.ReadLines())
+			Println(entry.stat)
 		}
 	}
 	/*
