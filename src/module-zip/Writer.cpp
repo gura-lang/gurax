@@ -10,17 +10,12 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod)
 {
-#if 0
-	Signal &sig = env.GetSignal();
-	if (_pStreamDst.IsNull()) {
-		sig.SetError(ERR_IOError, "invalid accesss to writer");
-		return false;
-	}
 	const int memLevel = 8;
-	CentralFileHeader *pHdr = new CentralFileHeader();
-	_hdrList.push_back(pHdr);
+	Stat* pStat = new Stat();
+	_statOwner.push_back(pStat);
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
 	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
+#if 0
 	DateTime dt;
 	Stream::Attribute attr;
 	if (streamSrc.GetAttribute(attr)) {

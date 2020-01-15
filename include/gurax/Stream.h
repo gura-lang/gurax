@@ -29,7 +29,6 @@ public:
 		virtual bool PutChar(char ch) override { return _stream.PutChar(ch); }
 	};
 	enum class SeekMode { Set, Cur, End };
-	//enum class ErrorType { None, Codec };
 	using Flags = UInt32;
 	struct Flag {
 		static const Flags None			= 0;
@@ -45,6 +44,16 @@ public:
 		static const Flags Read			= (1 << 0);
 		static const Flags Write		= (1 << 1);
 		static const Flags Append		= (1 << 2);
+	};
+	struct Attribute {
+	public:
+		RefPtr<DateTime> pDateTimeA;
+		RefPtr<DateTime> pDateTimeM;
+		RefPtr<DateTime> pDateTimeC;
+		Int32 uid;
+		Int32 gid;
+	public:
+		Attribute() : uid(0), gid(0) {}
 	};
 public:
 	static RefPtr<Stream> Dumb;
