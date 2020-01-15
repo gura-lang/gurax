@@ -5,8 +5,19 @@
 import(util.tester) {*}
 import(zip)
 
-TestCase('Basic test') {
-	d = zip.Open('test.zip')
+/*
+TestCase('zip.Directory()') {
+	d = zip.Directory('test.zip')
 	stats = path.Walk(d):stat:list
 	Printf('%-32s %8d %8d\n', stats:*fileName, stats:*size, stats:*sizeCompressed)
+}
+*/
+
+TestCase('zip.Reader()') {
+	//zip.Reader('test.zip') {|reader|
+	//	Println(reader.Entries())
+	//}
+	zip.Reader('test.zip') {|reader|
+		Print(reader.Entry('foo/dir1/file1-1').ReadLines())
+	}
 }

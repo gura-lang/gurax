@@ -31,6 +31,7 @@ protected:
 public:
 	CentralFileHeader& GetCentralFileHeader() { return _centralFileHeader; }
 	const CentralFileHeader& GetCentralFileHeader() const { return _centralFileHeader; }
+	bool IsFolder() const { return String::EndsWithPathSep(GetCentralFileHeader().GetFileName()); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stat& other) const { return this == &other; }
@@ -43,6 +44,8 @@ public:
 // StatList
 //------------------------------------------------------------------------------
 class StatList : public std::vector<Stat*> {
+public:
+	Stat* FindByName(const char* fileName) const;
 };
 
 //------------------------------------------------------------------------------

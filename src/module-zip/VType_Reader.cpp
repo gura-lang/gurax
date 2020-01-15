@@ -68,38 +68,24 @@ Gurax_DeclareMethod(Reader, Entry)
 Gurax_ImplementMethod(Reader, Entry)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
+	Reader& reader = valueThis.GetReader();
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const char* name = args.PickString();
 	// Function body
-#if 0
-	Signal &sig = env.GetSignal();
-	Object_reader *pThis = Object_reader::GetObjectThis(arg);
-	Stream *pStreamSrc = pThis->GetStreamSrc();
-	if (pStreamSrc == nullptr) {
-		sig.SetError(ERR_ValueError, "zip object is not readable");
-		return Value::Nil;
+	Stat* pStat = reader.GetStatOwner().FindByName(name);
+	if (!pStat) {
+		Error::Issue(ErrorType::PathError, "can't find an entry with the specified name");
+		return Value::nil();
 	}
-	AutoPtr<Object_stream> pObjStream;
-	const char *name = arg.GetString(0);
-	foreach (CentralFileHeaderList, ppHdr, pThis->GetHeaderList()) {
-		const CentralFileHeader *pHdr = *ppHdr;
-		const CentralFileHeader::Fields &fields = pHdr->GetFields();
-		if (IsMatchedName(pHdr->GetFileName(), name)) {
-			long offset = Gurax_UnpackInt32(fields.RelativeOffsetOfLocalHeader);
-			Stream *pStream = CreateStream(env, pStreamSrc, pHdr);
-			if (sig.IsSignalled()) return Value::Nil;
-			pObjStream.reset(new Object_stream(env, pStream));
-			break;
-		}
+	if (pStat->IsFolder()) {
+		Error::Issue(ErrorType::PathError, "the specified entry is a folder");
+		return Value::nil();
 	}
-	if (pObjStream.IsNull()) {
-		sig.SetError(ERR_NameError, "entry not found");
-		return Value::Nil;
-	}
-	return ReturnValue(env, arg, Value(pObjStream.release()));
-#endif
-	return Value::nil();
+	RefPtr<Stream> pStream(CreateStream(reader.GetStreamSrc(), *pStat));
+	if (!pStream) return nullptr;
+	return new Value_Stream(pStream.release());
 }
 
 // zip.Reader#Entries() {block?}

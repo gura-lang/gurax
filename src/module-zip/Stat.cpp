@@ -16,6 +16,14 @@ String Stat::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // StatList
 //------------------------------------------------------------------------------
+Stat* StatList::FindByName(const char* fileName) const
+{
+	PathName pathName(fileName);
+	for (Stat* pStat : *this) {
+		if (pathName.DoesMatch(pStat->GetCentralFileHeader().GetFileName())) return pStat;
+	}
+	return nullptr;
+}
 
 //------------------------------------------------------------------------------
 // StatOwner

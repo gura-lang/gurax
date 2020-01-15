@@ -65,13 +65,13 @@ size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 // Compression method #0: stored (no compression)
 //-----------------------------------------------------------------------------
 Stream_Reader_Store::Stream_Reader_Store(Stream* pStreamSrc, Stat* pStat) :
-	Stream_Reader(pStreamSrc, pStat)
+	Stream_Reader(pStreamSrc, pStat), _offsetTop(pStreamSrc->GetOffset())
 {
 }
 
 bool Stream_Reader_Store::Initialize()
 {
-	return false;
+	return true;
 }
 	
 size_t Stream_Reader_Store::DoRead(void* buff, size_t bytes)

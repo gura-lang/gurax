@@ -29,6 +29,7 @@ public:
 protected:
 	~Reader() = default;
 public:
+	Stream& GetStreamSrc() { return *_pStreamSrc; }
 	StatOwner& GetStatOwner() { return _statOwner; }
 	bool ReadCentralDirectory();
 public:
@@ -45,8 +46,9 @@ public:
 class GURAX_DLLDECLARE Iterator_Entry : public Iterator {
 private:
 	RefPtr<Reader> _pReader;
+	size_t _idx;
 public:
-	Iterator_Entry(Reader* pReader) : _pReader(pReader) {}
+	Iterator_Entry(Reader* pReader) : _pReader(pReader), _idx(0) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {

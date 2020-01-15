@@ -101,7 +101,6 @@ Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 Stream* CreateStream(Stream& streamSrc, const Stat& stat)
 {
 	const CentralFileHeader& hdr = stat.GetCentralFileHeader();
-	RefPtr<Stream_Reader> pStream;
 	long offset = static_cast<long>(hdr.GetRelativeOffsetOfLocalHeader());
 	streamSrc.Seek(offset, Stream::SeekMode::Set);
 	if (Error::IsIssued()) return nullptr;
@@ -120,6 +119,7 @@ Stream* CreateStream(Stream& streamSrc, const Stat& stat)
 	//size_t bytesUncompressed = hdr.GetUncompressedSize();
 	//size_t bytesCompressed = hdr.GetCompressedSize();
 	//UInt32 crc32Expected = hdr.GetCrc32();
+	RefPtr<Stream_Reader> pStream;
 	if (compressionMethod == CompressionMethod::Store) {
 		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), stat.Reference()));
 	} else if (compressionMethod == CompressionMethod::Shrink) {

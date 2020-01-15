@@ -23,6 +23,14 @@ String Reader::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_Entry::DoNextValue()
 {
+	StatOwner& statOwner = _pReader->GetStatOwner();
+	while (_idx < statOwner.size()) {
+		Stat* pStat = statOwner[_idx++];
+		if (pStat->IsFolder()) continue;
+		RefPtr<Stream> pStream(CreateStream(_pReader->GetStreamSrc(), *pStat));
+		if (!pStream) return nullptr;
+		return new Value_Stream(pStream.release());
+	}
 	return nullptr;
 }
 
