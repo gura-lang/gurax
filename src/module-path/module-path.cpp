@@ -501,7 +501,7 @@ Gurax_ImplementFunction(Stat)
 	ArgPicker args(argument);
 	Directory& directory = Value_Directory::GetDirectory(args.PickValue());
 	// Function body
-	RefPtr<Value> pValue(directory.GetStatValue());
+	RefPtr<Value> pValue(directory.CreateStatValue());
 	if (!pValue) return Value::nil();
 	return argument.ReturnValue(processor, pValue.release());
 }

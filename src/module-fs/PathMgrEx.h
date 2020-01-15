@@ -37,7 +37,7 @@ protected:
 protected:
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoGetStatValue() override;
+	virtual Value* DoCreateStatValue() override;
 };
 
 //------------------------------------------------------------------------------

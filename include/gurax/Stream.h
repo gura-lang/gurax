@@ -106,6 +106,7 @@ public:
 	void Dump(const void* buff, size_t bytes, const StringStyle& ss = StringStyle::Empty);
 public:
 	size_t GetSize() { return DoGetSize(); }
+	Value* CreateStatValue() { return DoCreateStatValue(); }
 	bool Close() { return DoClose(); }
 	size_t Read(void* buff, size_t len) { return DoRead(buff, len); }
 	size_t Write(const void* buff, size_t len) { return DoWrite(buff, len); }
@@ -120,6 +121,7 @@ public:
 	virtual const char* GetName() const = 0;
 	virtual const char* GetIdentifier() const = 0;
 	virtual size_t DoGetSize() { return 0; }
+	virtual Value* DoCreateStatValue() { return nullptr; }
 	virtual bool DoClose() = 0;
 	virtual size_t DoRead(void* buff, size_t len) = 0;
 	virtual size_t DoWrite(const void* buff, size_t len) = 0;

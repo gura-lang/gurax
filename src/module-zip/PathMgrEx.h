@@ -20,7 +20,7 @@ public:
 				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStat(pStat) {}
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoGetStatValue() override;
+	virtual Value* DoCreateStatValue() override;
 };
 
 //-----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ public:
 		Directory_CustomContainer(Directory::Type::Container,
 								  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStat(pStat) {}
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
-	virtual Value* DoGetStatValue() override;
+	virtual Value* DoCreateStatValue() override;
 };
 
 //-----------------------------------------------------------------------------

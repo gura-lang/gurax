@@ -18,7 +18,7 @@ Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 	return nullptr;
 }
 
-Value* Directory_ZIPFile::DoGetStatValue()
+Value* Directory_ZIPFile::DoCreateStatValue()
 {
 	return new Value_Stat(_pStat.Reference());
 }
@@ -31,7 +31,7 @@ Stream* Directory_ZIPFolder::DoOpenStream(Stream::OpenFlags openFlags)
 	return nullptr;
 }
 
-Value* Directory_ZIPFolder::DoGetStatValue()
+Value* Directory_ZIPFolder::DoCreateStatValue()
 {
 	return new Value_Stat(_pStat.Reference());
 }

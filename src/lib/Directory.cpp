@@ -57,7 +57,7 @@ int Directory::CountDepth() const
 	return cnt;
 }
 
-Value* Directory::DoGetStatValue()
+Value* Directory::DoCreateStatValue()
 {
 	Error::Issue(ErrorType::PropertyError, "no status value available");
 	return Value::nil();
@@ -226,7 +226,7 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 			}
 			if (_patterns.empty() || matchFlag) {
 				if (_statFlag) {
-					pValueRtn.reset(pDirectoryChild->GetStatValue());
+					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {
 					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
 				}
@@ -319,7 +319,7 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 			} else if ((pDirectoryChild->IsContainer() && _dirFlag) ||
 					   (!pDirectoryChild->IsContainer() && _fileFlag)) {
 				if (_statFlag) {
-					pValueRtn.reset(pDirectoryChild->GetStatValue());
+					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {
 					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
 				}

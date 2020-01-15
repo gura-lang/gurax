@@ -113,7 +113,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 	return new StreamEx(flags, fp, pathName);
 }
 
-Value* DirectoryEx::DoGetStatValue()
+Value* DirectoryEx::DoCreateStatValue()
 {
 	if (!_pStat) {
 		_pStat.reset(Stat::Create(MakeFullPathName(false).c_str()));

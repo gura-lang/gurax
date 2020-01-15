@@ -48,7 +48,7 @@ public:
 	void SetName(String name) { _name = name; }
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
-	Value* GetStatValue() { return DoGetStatValue(); }
+	Value* CreateStatValue() { return DoCreateStatValue(); }
 	const char* GetName() const { return _name.c_str(); }
 	Directory* LockDirectoryParent() const { return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr; }
 	char GetSep() const { return _sep; }
@@ -71,7 +71,7 @@ public:
 protected:
 	virtual Directory* DoNextChild() = 0;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
-	virtual Value* DoGetStatValue();
+	virtual Value* DoCreateStatValue();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Directory& pathMgr) const { return this == &pathMgr; }
