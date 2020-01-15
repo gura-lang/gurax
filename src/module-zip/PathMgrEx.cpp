@@ -60,6 +60,11 @@ size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 	return bytesRead;
 }
 
+Value* Stream_Reader::DoCreateStatValue()
+{
+	return new Value_Stat(_pStat->Reference());
+}
+
 //-----------------------------------------------------------------------------
 // Stream_Reader_Store
 // Compression method #0: stored (no compression)

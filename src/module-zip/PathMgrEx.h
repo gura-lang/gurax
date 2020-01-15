@@ -62,6 +62,7 @@ public:
 	virtual bool DoFlush() override { return false; }
 	virtual bool DoClose() override { return true; }
 	virtual size_t DoGetSize() override { return _bytesUncompressed; }
+	virtual Value* DoCreateStatValue() override;
 };
 
 //-----------------------------------------------------------------------------
