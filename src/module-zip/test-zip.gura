@@ -14,10 +14,14 @@ TestCase('zip.Directory()') {
 */
 
 TestCase('zip.Reader()') {
-	//zip.Reader('test.zip') {|reader|
-	//	Println(reader.Entries())
-	//}
+	zip.Reader('test.zip') {|reader|
+		reader.Entries() {|entry|
+			Print(entry.ReadLines())
+		}
+	}
+	/*
 	zip.Reader('test.zip') {|reader|
 		Print(reader.Entry('foo/dir1/file1-1').ReadLines())
 	}
+	*/
 }
