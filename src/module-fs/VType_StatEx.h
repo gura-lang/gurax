@@ -1,61 +1,58 @@
 //==============================================================================
-// VType_Stat.h
+// VType_StatEx.h
 //==============================================================================
-#ifndef GURAX_MODULE_FS_VTYPE_STAT_H
-#define GURAX_MODULE_FS_VTYPE_STAT_H
+#ifndef GURAX_MODULE_FS_VTYPE_STATEX_H
+#define GURAX_MODULE_FS_VTYPE_STATEX_H
 #include <gurax.h>
-#include "Stat.h"
+#include "PathMgrEx.h"
 
 Gurax_BeginModuleScope(fs)
 
 //------------------------------------------------------------------------------
-// VType_Stat
+// VType_StatEx
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Stat : public VType {
+class GURAX_DLLDECLARE VType_StatEx : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern VType_Stat VTYPE_Stat;
+extern VType_StatEx VTYPE_StatEx;
 
 //------------------------------------------------------------------------------
-// Value_Stat
+// Value_StatEx
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Stat : public Value_Object {
+class GURAX_DLLDECLARE Value_StatEx : public Value_Stat {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Stat);
+	Gurax_DeclareReferable(Value_StatEx);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Stat");
-protected:
-	RefPtr<Stat> _pStat;
+	Gurax_MemoryPoolAllocator("Value_StatEx");
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Stat() = delete;
-	Value_Stat(Stat* pStat, VType& vtype = VTYPE_Stat) :
-		Value_Object(vtype), _pStat(pStat) {}
+	Value_StatEx() = delete;
+	Value_StatEx(StatEx* pStat, VType& vtype = VTYPE_StatEx) :
+		Value_Stat(pStat, vtype) {}
 	// Copy constructor/operator
-	Value_Stat(const Value_Stat& src) :
-		Value_Object(src), _pStat(src._pStat->Reference()) {}
-	Value_Stat& operator=(const Value_Stat& src) = delete;
+	Value_StatEx(const Value_StatEx& src) : Value_Stat(src) {}
+	Value_StatEx& operator=(const Value_StatEx& src) = delete;
 	// Move constructor/operator
-	Value_Stat(Value_Stat&& src) = delete;
-	Value_Stat& operator=(Value_Stat&& src) noexcept = delete;
+	Value_StatEx(Value_StatEx&& src) = delete;
+	Value_StatEx& operator=(Value_StatEx&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Stat() = default;
+	~Value_StatEx() = default;
 public:
-	Stat& GetStat() { return *_pStat; }
-	const Stat& GetStat() const { return *_pStat; }
+	StatEx& GetStatEx() { return dynamic_cast<StatEx&>(GetStat()); }
+	const StatEx& GetStatEx() const { return dynamic_cast<const StatEx&>(GetStat()); }
 public:
-	static Stat& GetStat(Value& value) {
-		return dynamic_cast<Value_Stat&>(value).GetStat();
+	static StatEx& GetStatEx(Value& value) {
+		return dynamic_cast<Value_StatEx&>(value).GetStatEx();
 	}
-	static const Stat& GetStat(const Value& value) {
-		return dynamic_cast<const Value_Stat&>(value).GetStat();
+	static const StatEx& GetStatEx(const Value& value) {
+		return dynamic_cast<const Value_StatEx&>(value).GetStatEx();
 	}
 public:
 	// Virtual functions of Value

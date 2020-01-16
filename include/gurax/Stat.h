@@ -54,7 +54,7 @@ public:
 	Stat(Stat&& src) = delete;
 	Stat& operator=(Stat&& src) noexcept = delete;
 protected:
-	~Stat() = default;
+	virtual ~Stat() = default;
 public:
 	const DateTime& GetDateTimeC() const { return *_pDateTimeC; }
 	const DateTime& GetDateTimeM() const { return *_pDateTimeM; }
@@ -76,7 +76,7 @@ public:
 	bool IsIdentical(const Stat& other) const { return this == &other; }
 	bool IsEqualTo(const Stat& other) const { return IsIdentical(other); }
 	bool IsLessThan(const Stat& other) const { return this < &other; }
-	String ToString(const StringStyle& ss = StringStyle::Empty) const;
+	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 }

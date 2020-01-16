@@ -10,7 +10,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 String Stat::ToString(const StringStyle& ss) const
 {
-	return "Stat";
+	String str;
+	str.Printf("%s:%dbytes", GetPathName(), GetSize());
+	return str;
 }
 
 }

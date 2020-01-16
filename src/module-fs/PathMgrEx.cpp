@@ -17,7 +17,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 {
 	Directory::Type type = typeWouldBe;
 	String pathName = PathName(*pPathName).MakeAbsName();
-	RefPtr<Stat> pStat(Stat::Create(pathName.c_str()));
+	RefPtr<StatEx> pStat(StatEx::Create(pathName.c_str()));
 	if (pStat) {
 		type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
 	} else if (type == Directory::Type::None) {
@@ -116,7 +116,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 Value* DirectoryEx::DoCreateStatValue()
 {
 	if (!_pStat) {
-		_pStat.reset(Stat::Create(MakeFullPathName(false).c_str()));
+		_pStat.reset(StatEx::Create(MakeFullPathName(false).c_str()));
 		if (!_pStat) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");
 			return Value::nil();
@@ -156,5 +156,47 @@ bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 	}
 	return true;
 }
+
+//------------------------------------------------------------------------------
+// StatEx
+//------------------------------------------------------------------------------
+StatEx* StatEx::Create(struct stat& sb, const char* pathName)
+{
+	UInt16 flags = 0;
+	if (S_ISDIR(sb.st_mode)) flags |= Flag::Dir;
+	if (S_ISCHR(sb.st_mode)) flags |= Flag::Chr;
+	if (S_ISBLK(sb.st_mode)) flags |= Flag::Blk;
+	if (S_ISREG(sb.st_mode)) flags |= Flag::Reg;
+	if (S_ISFIFO(sb.st_mode)) flags |= Flag::Fifo;
+	if (S_ISLNK(sb.st_mode)) flags |= Flag::Lnk;
+	if (S_ISSOCK(sb.st_mode)) flags |= Flag::Sock;
+	return new StatEx(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
+					  OAL::CreateDateTime(sb.st_atime),
+					  pathName, flags, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid);
+}
+
+StatEx* StatEx::Create(const char* pathName)
+{
+	struct stat sb;
+	String pathNameN = OAL::ToNativeString(PathName(pathName).MakeAbsName().c_str());
+	if (::stat(pathNameN.c_str(), &sb) < 0) return nullptr;
+	return Create(sb, pathNameN.c_str());
+}
+
+#if defined(GURAX_ON_MSWIN)
+
+StatEx::StatEx(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
+{
+}
+
+StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
+{
+}
+
+StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
+{
+}
+
+#endif
 
 Gurax_EndModuleScope(fs)

@@ -4,7 +4,6 @@
 #ifndef GURAX_MODULE_FS_PATHMGREX_H
 #define GURAX_MODULE_FS_PATHMGREX_H
 #include <gurax.h>
-#include "Stat.h"
 
 Gurax_BeginModuleScope(fs)
 
@@ -67,6 +66,17 @@ public:
 	}
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
+};
+
+//------------------------------------------------------------------------------
+// StatEx
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE StatEx : public Stat {
+public:
+	using Stat::Stat;
+public:
+	static StatEx* Create(struct stat& sb, const char* pathName);
+	static StatEx* Create(const char* pathName);
 };
 
 Gurax_EndModuleScope(fs)

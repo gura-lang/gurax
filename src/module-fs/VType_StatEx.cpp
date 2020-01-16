@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Stat.cpp
+// VType_StatEx.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -44,9 +44,9 @@ Gurax_ImplementConstructor(Stat)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
-	RefPtr<Stat> pStat(Stat::Create(pathName));
+	RefPtr<StatEx> pStat(StatEx::Create(pathName));
 	if (!pStat) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Stat(pStat.release()));
+	return argument.ReturnValue(processor, new Value_StatEx(pStat.release()));
 }
 
 //------------------------------------------------------------------------------
@@ -293,11 +293,11 @@ Gurax_ImplementPropertyGetter(Stat, uid)
 }
 
 //------------------------------------------------------------------------------
-// VType_Stat
+// VType_StatEx
 //------------------------------------------------------------------------------
-VType_Stat VTYPE_Stat("Stat");
+VType_StatEx VTYPE_StatEx("StatEx");
 
-void VType_Stat::DoPrepare(Frame& frameOuter)
+void VType_StatEx::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -323,11 +323,11 @@ void VType_Stat::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Stat
+// Value_StatEx
 //------------------------------------------------------------------------------
-VType& Value_Stat::vtype = VTYPE_Stat;
+VType& Value_StatEx::vtype = VTYPE_StatEx;
 
-String Value_Stat::ToStringDigest(const StringStyle& ss) const
+String Value_StatEx::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
 	_ToStringDigest(str, ss);
@@ -335,7 +335,7 @@ String Value_Stat::ToStringDigest(const StringStyle& ss) const
 	return str;
 }
 
-String Value_Stat::ToStringDetail(const StringStyle& ss) const
+String Value_StatEx::ToStringDetail(const StringStyle& ss) const
 {
 	return ToStringDigest(ss);
 }
