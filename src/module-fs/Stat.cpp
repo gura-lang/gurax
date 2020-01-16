@@ -15,6 +15,31 @@ String Stat::ToString(const StringStyle& ss) const
 	return str;
 }
 
+Stat::Stat(const char* pathName, const struct stat& sb) :
+	_pDateTimeC(OAL::CreateDateTime(sb.st_ctime)),
+	_pDateTimeM(OAL::CreateDateTime(sb.st_mtime)),
+	_pDateTimeA(OAL::CreateDateTime(sb.st_atime)),
+	_pathName(pathName), _flags(0), _mode(0),
+	_bytes(sb.st_size), _uid(sb.st_uid), _gid(sb.st_gid)
+{
+	if (S_ISDIR(sb.st_mode)) _flags |= Flag::Dir;
+	if (S_ISCHR(sb.st_mode)) _flags |= Flag::Chr;
+	if (S_ISBLK(sb.st_mode)) _flags |= Flag::Blk;
+	if (S_ISREG(sb.st_mode)) _flags |= Flag::Reg;
+	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
+	if (S_ISLNK(sb.st_mode)) _flags |= Flag::Lnk;
+	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
+	_mode = (sb.st_mode & 0777);
+}
+
+Stat* Stat::Create(const char* pathName)
+{
+	struct stat sb;
+	String pathNameN = OAL::ToNativeString(PathName(pathName).MakeAbsName().c_str());
+	if (::stat(pathNameN.c_str(), &sb) < 0) return nullptr;
+	return new Stat(pathName, sb);
+}
+
 #if defined(GURAX_ON_MSWIN)
 
 //------------------------------------------------------------------------------
@@ -30,41 +55,6 @@ Stat::Stat(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
 
 Stat::Stat(const char* pathName, const WIN32_FIND_DATA& findData)
 {
-}
-
-Stat* Stat::Create(const char* pathName)
-{
-	return nullptr;
-}
-
-#else
-
-//------------------------------------------------------------------------------
-// Stat (POSIX)
-//------------------------------------------------------------------------------
-Stat::Stat(const char* pathName, const struct stat& stat) :
-	_pathName(pathName), _attr(0), _bytes(stat.st_size),
-	_pDateTimeA(OAL::CreateDateTime(stat.st_atime)),
-	_pDateTimeM(OAL::CreateDateTime(stat.st_mtime)),
-	_pDateTimeC(OAL::CreateDateTime(stat.st_ctime)),
-	_uid(stat.st_uid), _gid(stat.st_gid)
-{
-	if (S_ISDIR(stat.st_mode)) _attr |= Attr::Dir;
-	if (S_ISCHR(stat.st_mode)) _attr |= Attr::Chr;
-	if (S_ISBLK(stat.st_mode)) _attr |= Attr::Blk;
-	if (S_ISREG(stat.st_mode)) _attr |= Attr::Reg;
-	if (S_ISFIFO(stat.st_mode)) _attr |= Attr::Fifo;
-	if (S_ISLNK(stat.st_mode)) _attr |= Attr::Lnk;
-	if (S_ISSOCK(stat.st_mode)) _attr |= Attr::Sock;
-	_attr |= (stat.st_mode & 0777);
-}
-
-Stat* Stat::Create(const char* pathName)
-{
-	struct stat stat;
-	String pathNameN = OAL::ToNativeString(PathName(pathName).MakeAbsName().c_str());
-	if (::stat(pathNameN.c_str(), &stat) != 0) return nullptr;
-	return new Stat(pathName, stat);
 }
 
 #endif

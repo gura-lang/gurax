@@ -130,7 +130,19 @@ Value* DirectoryEx::DoCreateStatValue()
 //------------------------------------------------------------------------------
 size_t StreamEx::DoGetSize()
 {
-	return 0;
+	struct stat sb;
+	if (::fstat(fileno(_fp), &sb) < 0) return 0;
+	return sb.st_size;
+}
+
+Value* StreamEx::DoCreateStatValue()
+{
+	return nullptr;
+}
+
+Stream::Attribute* StreamEx::DoCreateAttribute()
+{
+	return nullptr;
 }
 
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)

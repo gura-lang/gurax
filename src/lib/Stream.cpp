@@ -343,6 +343,19 @@ String Stream::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Stream::Attribute
+//------------------------------------------------------------------------------
+#if 0
+Stream::Attribute::Attribute(const struct stat& sb) :
+	_pDateTimeC(OAL::CreateDateTime(sb.st_ctime)),
+	_pDateTimeM(OAL::CreateDateTime(sb.st_mtime)),
+	_pDateTimeA(OAL::CreateDateTime(sb.st_atime)),
+	_bytes(sb.st_size), _uid(sb.st_uid), _gid(sb.st_gid)
+{
+}
+#endif
+
+//------------------------------------------------------------------------------
 // Iterator_ReadLines
 //------------------------------------------------------------------------------
 Iterator_ReadLines::Iterator_ReadLines(Stream* pStream, bool includeEOLFlag) :

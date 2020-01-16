@@ -45,15 +45,33 @@ public:
 		static const Flags Write		= (1 << 1);
 		static const Flags Append		= (1 << 2);
 	};
-	struct Attribute {
+	class Attribute : public Referable {
 	public:
-		RefPtr<DateTime> pDateTimeA;
-		RefPtr<DateTime> pDateTimeM;
-		RefPtr<DateTime> pDateTimeC;
-		Int32 uid;
-		Int32 gid;
+		// Referable declaration
+		Gurax_DeclareReferable(Attribute);
+	protected:
+		RefPtr<DateTime> _pDateTimeC;
+		RefPtr<DateTime> _pDateTimeM;
+		RefPtr<DateTime> _pDateTimeA;
+		size_t _bytes;
+		long _uid;
+		long _gid;
 	public:
-		Attribute() : uid(0), gid(0) {}
+		Attribute(DateTime* pDateTimeC, DateTime* pDateTimeM, DateTime* pDateTimeA, size_t bytes, long uid, long gid) :
+			_pDateTimeC(pDateTimeC), _pDateTimeM(pDateTimeM), _pDateTimeA(pDateTimeA),
+			_bytes(bytes), _uid(uid), _gid(gid) {}
+		Attribute(DateTime* pDateTime, size_t bytes, Int32 gid, Int32 uid) :
+			_pDateTimeC(pDateTime), _pDateTimeM(pDateTime->Reference()), _pDateTimeA(pDateTime->Reference()),
+			_bytes(bytes), _uid(uid), _gid(gid) {}
+		//Attribute(const struct stat& sb);
+	protected:
+		~Attribute() = default;
+	public:
+		const DateTime& GetDateTimeC() const { return *_pDateTimeC; }
+		const DateTime& GetDateTimeM() const { return *_pDateTimeM; }
+		const DateTime& GetDateTimeA() const { return *_pDateTimeA; }
+		Int32 GetGid() const { return _gid; }
+		Int32 GetUid() const { return _uid; }
 	};
 public:
 	static RefPtr<Stream> Dumb;
@@ -116,6 +134,7 @@ public:
 public:
 	size_t GetSize() { return DoGetSize(); }
 	Value* CreateStatValue() { return DoCreateStatValue(); }
+	Attribute* CreateAttribute() { return DoCreateAttribute(); }
 	bool Close() { return DoClose(); }
 	size_t Read(void* buff, size_t len) { return DoRead(buff, len); }
 	size_t Write(const void* buff, size_t len) { return DoWrite(buff, len); }
@@ -131,6 +150,7 @@ public:
 	virtual const char* GetIdentifier() const = 0;
 	virtual size_t DoGetSize() { return 0; }
 	virtual Value* DoCreateStatValue() { return nullptr; }
+	virtual Attribute* DoCreateAttribute() { return nullptr; }
 	virtual bool DoClose() = 0;
 	virtual size_t DoRead(void* buff, size_t len) = 0;
 	virtual size_t DoWrite(const void* buff, size_t len) = 0;
