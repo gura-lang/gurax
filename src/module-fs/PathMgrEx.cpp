@@ -140,10 +140,12 @@ Value* StreamEx::DoCreateStatValue()
 	return nullptr;
 }
 
-Stream::Attribute* StreamEx::DoCreateAttribute()
+#if 0
+Stat* StreamEx::DoCreateStat()
 {
 	return nullptr;
 }
+#endif
 
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 {

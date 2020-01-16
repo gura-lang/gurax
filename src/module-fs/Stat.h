@@ -57,14 +57,11 @@ protected:
 	~Stat() = default;
 public:
 	static Stat* Create(const char* pathName);
-	const char* GetPathName() const { return _pathName.c_str(); }
-	size_t GetSize() const { return _bytes; }
 	const DateTime& GetDateTimeA() const { return *_pDateTimeA; }
 	const DateTime& GetDateTimeM() const { return *_pDateTimeM; }
 	const DateTime& GetDateTimeC() const { return *_pDateTimeC; }
-	long GetUid() const { return _uid; }
-	long GetGid() const { return _gid; }
-	UInt32 GetMode() const { return _mode; }
+	const char* GetPathName() const { return _pathName.c_str(); }
+	size_t GetSize() const { return _bytes; }
 	bool IsDir() const { return (_flags & Flag::Dir) != 0; }
 	bool IsChr() const { return (_flags & Flag::Chr) != 0; }
 	bool IsBlk() const { return (_flags & Flag::Blk) != 0; }
@@ -72,6 +69,9 @@ public:
 	bool IsFifo() const { return (_flags & Flag::Fifo) != 0; }
 	bool IsLnk() const { return (_flags & Flag::Lnk) != 0; }
 	bool IsSock() const { return (_flags & Flag::Sock) != 0; }
+	UInt32 GetMode() const { return _mode; }
+	long GetUid() const { return _uid; }
+	long GetGid() const { return _gid; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Stat& stat) const { return this == &stat; }
