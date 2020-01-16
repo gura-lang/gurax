@@ -87,6 +87,7 @@ void Basement::PrepareVType()
 	VTYPE_PUnit.Prepare(frame);
 	VTYPE_Quote.Prepare(frame);
 	VTYPE_Random.Prepare(frame);
+	VTYPE_Stat.Prepare(frame);
 	VTYPE_Stream.Prepare(frame);
 	VTYPE_String.Prepare(frame);
 	VTYPE_StringPtr.Prepare(frame);

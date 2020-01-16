@@ -82,6 +82,7 @@ add_library(guraxcore SHARED
 	PUnit.cpp
 	Random.cpp
 	Referable.cpp
+	Stat.cpp
 	Statements.cpp
 	Stream.cpp
 	Streams.cpp
@@ -141,6 +142,7 @@ add_library(guraxcore SHARED
 	VType_PUnit.cpp
 	VType_Quote.cpp
 	VType_Random.cpp
+	VType_Stat.cpp
 	VType_Stream.cpp
 	VType_String.cpp
 	VType_StringPtr.cpp
