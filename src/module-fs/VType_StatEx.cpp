@@ -302,48 +302,12 @@ void VType_StatEx::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// VType settings
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stat));
-	// Assignment of property
-#if 0
-	Assign(Gurax_CreateProperty(Stat, pathName));
-	Assign(Gurax_CreateProperty(Stat, dirName));
-	Assign(Gurax_CreateProperty(Stat, fileName));
-	Assign(Gurax_CreateProperty(Stat, size));
-	Assign(Gurax_CreateProperty(Stat, atime));
-	Assign(Gurax_CreateProperty(Stat, mtime));
-	Assign(Gurax_CreateProperty(Stat, ctime));
-	Assign(Gurax_CreateProperty(Stat, isblk));
-	Assign(Gurax_CreateProperty(Stat, ischr));
-	Assign(Gurax_CreateProperty(Stat, isdir));
-	Assign(Gurax_CreateProperty(Stat, isfifo));
-	Assign(Gurax_CreateProperty(Stat, islnk));
-	Assign(Gurax_CreateProperty(Stat, isreg));
-	Assign(Gurax_CreateProperty(Stat, issock));
-	Assign(Gurax_CreateProperty(Stat, gid));
-	Assign(Gurax_CreateProperty(Stat, uid));
-#endif
+	Declare(VTYPE_Stat, Flag::Immutable, Gurax_CreateConstructor(Stat));
 }
 
 //------------------------------------------------------------------------------
 // Value_StatEx
 //------------------------------------------------------------------------------
 VType& Value_StatEx::vtype = VTYPE_StatEx;
-
-#if 0
-
-String Value_StatEx::ToStringDigest(const StringStyle& ss) const
-{
-	String str;
-	_ToStringDigest(str, ss);
-	str.Printf(":%s>", GetStat().ToString(ss).c_str());
-	return str;
-}
-
-String Value_StatEx::ToStringDetail(const StringStyle& ss) const
-{
-	return ToStringDigest(ss);
-}
-
-#endif
 
 Gurax_EndModuleScope(fs)

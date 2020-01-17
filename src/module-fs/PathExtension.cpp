@@ -135,16 +135,20 @@ size_t StreamEx::DoGetSize()
 	return sb.st_size;
 }
 
-#if 0
 Stat* StreamEx::DoCreateStat()
 {
-	return nullptr;
+	struct stat sb;
+	if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
+	RefPtr<StatEx> pStat(new StatEx(sb, PathName(_pathName).MakeAbsName()));
+	return pStat.release();
 }
-#endif
 
 Value* StreamEx::DoCreateStatValue()
 {
-	return nullptr;
+	struct stat sb;
+	if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
+	RefPtr<StatEx> pStat(new StatEx(sb, PathName(_pathName).MakeAbsName()));
+	return new Value_StatEx(pStat.release());
 }
 
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)

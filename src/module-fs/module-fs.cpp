@@ -364,7 +364,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of VType
-	Assign(VTYPE_Stat);
+	Assign(VTYPE_StatEx);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(ChangeDir));
 	Assign(Gurax_CreateFunction(ChangeMode));
