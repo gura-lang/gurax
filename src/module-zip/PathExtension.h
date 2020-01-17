@@ -29,6 +29,8 @@ public:
 // StatExList
 //-----------------------------------------------------------------------------
 class GURAX_DLLDECLARE StatExList : public std::vector<StatEx*> {
+public:
+	StatEx* FindByName(const char* fileName) const;
 };
 
 //-----------------------------------------------------------------------------
@@ -38,6 +40,7 @@ class GURAX_DLLDECLARE StatExOwner : public StatExList {
 public:
 	~StatExOwner() { Clear(); }
 	void Clear();
+	bool ReadCentralDirectory(Stream& streamSrc);
 };
 
 //-----------------------------------------------------------------------------

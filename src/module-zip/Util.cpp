@@ -82,25 +82,25 @@ UInt32 SeekCentralDirectory(Stream& streamSrc)
 Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 						   const char** pPathName, Directory::Type typeWouldBe)
 {
-	StatOwner statOwner;
-	if (!statOwner.ReadCentralDirectory(streamSrc)) return nullptr;
+	StatExOwner statExOwner;
+	if (!statExOwner.ReadCentralDirectory(streamSrc)) return nullptr;
 	RefPtr<Directory_CustomContainer> pDirectory(
 		new Directory_CustomContainer(pDirectoryParent, "", Directory::Type::BoundaryContainer,
 									  PathName::SepPlatform, PathName::CaseFlagPlatform));
-	for (Stat* pStat : statOwner) {
-		const char* pathName = pStat->GetCentralFileHeader().GetFileName();
+	for (StatEx* pStatEx : statExOwner) {
+		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
 		if (String::EndsWithPathSep(pathName)) {
-			pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStat->Reference()));
+			pDirectory->AddChildInTree(pathName, new Directory_ZIPFolder(pStatEx->Reference()));
 		} else {
-			pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pStat->Reference()));
+			pDirectory->AddChildInTree(pathName, new Directory_ZIPFile(pStatEx->Reference()));
 		}
 	}
 	return pDirectory.release();
 }
 
-Stream* CreateStream(Stream& streamSrc, const Stat& stat)
+Stream* CreateStream(Stream& streamSrc, const StatEx& statEx)
 {
-	const CentralFileHeader& hdr = stat.GetCentralFileHeader();
+	const CentralFileHeader& hdr = statEx.GetCentralFileHeader();
 	long offset = static_cast<long>(hdr.GetRelativeOffsetOfLocalHeader());
 	streamSrc.Seek(offset, Stream::SeekMode::Set);
 	if (Error::IsIssued()) return nullptr;
@@ -121,7 +121,7 @@ Stream* CreateStream(Stream& streamSrc, const Stat& stat)
 	//UInt32 crc32Expected = hdr.GetCrc32();
 	RefPtr<Stream_Reader> pStream;
 	if (compressionMethod == CompressionMethod::Store) {
-		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), stat.Reference()));
+		pStream.reset(new Stream_Reader_Store(streamSrc.Reference(), statEx.Reference()));
 	} else if (compressionMethod == CompressionMethod::Shrink) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::Factor1) {
@@ -137,13 +137,13 @@ Stream* CreateStream(Stream& streamSrc, const Stat& stat)
 	} else if (compressionMethod == CompressionMethod::Factor1) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::Deflate) {
-		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), stat.Reference()));
+		pStream.reset(new Stream_Reader_Deflate(streamSrc.Reference(), statEx.Reference()));
 	} else if (compressionMethod == CompressionMethod::Deflate64) {
-		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), stat.Reference()));
+		pStream.reset(new Stream_Reader_Deflate64(streamSrc.Reference(), statEx.Reference()));
 	} else if (compressionMethod == CompressionMethod::PKWARE) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::BZIP2) {
-		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), stat.Reference()));
+		pStream.reset(new Stream_Reader_BZIP2(streamSrc.Reference(), statEx.Reference()));
 	} else if (compressionMethod == CompressionMethod::LZMA) {
 		// unsupported
 	} else if (compressionMethod == CompressionMethod::TERSA) {

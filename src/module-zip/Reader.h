@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_ZIP_READER_H
 #define GURAX_MODULE_ZIP_READER_H
 #include <gurax.h>
+#include "PathExtension.h"
 
 Gurax_BeginModuleScope(zip)
 
@@ -16,7 +17,7 @@ public:
 	Gurax_DeclareReferable(Reader);
 private:
 	RefPtr<Stream> _pStreamSrc;
-	StatOwner _statOwner;
+	StatExOwner _statExOwner;
 public:
 	// Constructor
 	Reader(Stream* pStreamSrc) : _pStreamSrc(pStreamSrc) {}
@@ -30,7 +31,7 @@ protected:
 	~Reader() = default;
 public:
 	Stream& GetStreamSrc() { return *_pStreamSrc; }
-	StatOwner& GetStatOwner() { return _statOwner; }
+	StatExOwner& GetStatExOwner() { return _statExOwner; }
 	bool ReadCentralDirectory();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -54,7 +55,7 @@ public:
 	virtual Flags GetFlags() const override {
 		return Flag::Finite | Flag::LenDetermined;
 	}
-	virtual size_t GetLength() const override { return _pReader->GetStatOwner().size(); }
+	virtual size_t GetLength() const override { return _pReader->GetStatExOwner().size(); }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

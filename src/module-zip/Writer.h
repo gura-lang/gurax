@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_ZIP_WRITER_H
 #define GURAX_MODULE_ZIP_WRITER_H
 #include <gurax.h>
-#include "Stat.h"
+#include "PathExtension.h"
 
 Gurax_BeginModuleScope(zip)
 
@@ -18,7 +18,7 @@ public:
 private:
 	RefPtr<Stream> _pStreamDst;
 	UInt16 _compressionMethod;
-	StatOwner _statOwner;
+	StatExOwner _statExOwner;
 public:
 	// Constructor
 	Writer(Stream* pStreamDst, UInt16 compressionMethod) :
@@ -33,7 +33,7 @@ protected:
 	~Writer() = default;
 public:
 	UInt16 GetCompressionMethod() { return _compressionMethod; }
-	StatOwner& GetStatOwner() { return _statOwner; }
+	StatExOwner& GetStatExOwner() { return _statExOwner; }
 	bool Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod);
 	bool Finish();
 public:

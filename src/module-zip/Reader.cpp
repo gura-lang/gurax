@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool Reader::ReadCentralDirectory()
 {
-	return _statOwner.ReadCentralDirectory(*_pStreamSrc);
+	return _statExOwner.ReadCentralDirectory(*_pStreamSrc);
 }
 
 String Reader::ToString(const StringStyle& ss) const
@@ -23,11 +23,11 @@ String Reader::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 Value* Iterator_Entry::DoNextValue()
 {
-	StatOwner& statOwner = _pReader->GetStatOwner();
-	while (_idx < statOwner.size()) {
-		Stat* pStat = statOwner[_idx++];
-		if (pStat->IsFolder()) continue;
-		RefPtr<Stream> pStream(CreateStream(_pReader->GetStreamSrc(), *pStat));
+	StatExOwner& statExOwner = _pReader->GetStatExOwner();
+	while (_idx < statExOwner.size()) {
+		StatEx* pStatEx = statExOwner[_idx++];
+		if (pStatEx->IsFolder()) continue;
+		RefPtr<Stream> pStream(CreateStream(_pReader->GetStreamSrc(), *pStatEx));
 		if (!pStream) return nullptr;
 		return new Value_Stream(pStream.release());
 	}

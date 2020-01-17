@@ -50,9 +50,9 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 			ArchiveExtraDataRecord record;
 			if (!record.Read(streamSrc)) return false;
 		} else if (signature == CentralFileHeader::Signature) {
-			RefPtr<StatEx> pStatEx(new StatEx());
-			if (!pStatEx->GetCentralFileHeader().Read(streamSrc)) return false;
-			push_back(pStatEx.release());
+			//RefPtr<StatEx> pStatEx(new StatEx());
+			//if (!pStatEx->GetCentralFileHeader().Read(streamSrc)) return false;
+			//push_back(pStatEx.release());
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
 			if (!signature.Read(streamSrc)) return false;
@@ -89,7 +89,7 @@ Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* Directory_ZIPFile::DoCreateStatValue()
 {
-	return new Value_Stat(_pStat.Reference());
+	return new Value_Stat(_pStatEx.Reference());
 }
 
 //-----------------------------------------------------------------------------
@@ -102,18 +102,18 @@ Stream* Directory_ZIPFolder::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* Directory_ZIPFolder::DoCreateStatValue()
 {
-	return new Value_Stat(_pStat.Reference());
+	return new Value_Stat(_pStatEx.Reference());
 }
 
 //-----------------------------------------------------------------------------
 // Stream_Reader
 //-----------------------------------------------------------------------------
-Stream_Reader::Stream_Reader(Stream* pStreamSrc, Stat* pStat) :
-	Stream(Flag::Readable), _pStreamSrc(pStreamSrc), _pStat(pStat),
-	_name(pStat->GetCentralFileHeader().GetFileName()),
-	_bytesUncompressed(pStat->GetCentralFileHeader().GetUncompressedSize()),
-	_bytesCompressed(pStat->GetCentralFileHeader().GetCompressedSize()),
-	_crc32Expected(pStat->GetCentralFileHeader().GetCrc32()),
+Stream_Reader::Stream_Reader(Stream* pStreamSrc, StatEx* pStatEx) :
+	Stream(Flag::Readable), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx),
+	_name(pStatEx->GetCentralFileHeader().GetFileName()),
+	_bytesUncompressed(pStatEx->GetCentralFileHeader().GetUncompressedSize()),
+	_bytesCompressed(pStatEx->GetCentralFileHeader().GetCompressedSize()),
+	_crc32Expected(pStatEx->GetCentralFileHeader().GetCrc32()),
 	_seekedFlag(false)
 {
 }
@@ -131,15 +131,15 @@ size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 
 Value* Stream_Reader::DoCreateStatValue()
 {
-	return new Value_Stat(_pStat->Reference());
+	return new Value_Stat(_pStatEx->Reference());
 }
 
 //-----------------------------------------------------------------------------
 // Stream_Reader_Store
 // Compression method #0: stored (no compression)
 //-----------------------------------------------------------------------------
-Stream_Reader_Store::Stream_Reader_Store(Stream* pStreamSrc, Stat* pStat) :
-	Stream_Reader(pStreamSrc, pStat), _offsetTop(pStreamSrc->GetOffset())
+Stream_Reader_Store::Stream_Reader_Store(Stream* pStreamSrc, StatEx* pStatEx) :
+	Stream_Reader(pStreamSrc, pStatEx), _offsetTop(pStreamSrc->GetOffset())
 {
 }
 
@@ -165,8 +165,8 @@ bool Stream_Reader_Store::DoSeek(size_t offset, size_t offsetPrev)
 // Stream_Reader_Deflate
 // Compression method #8: Deflated
 //-----------------------------------------------------------------------------
-Stream_Reader_Deflate::Stream_Reader_Deflate(Stream* pStreamSrc, Stat* pStat) :
-	Stream_Reader(pStreamSrc, pStat)
+Stream_Reader_Deflate::Stream_Reader_Deflate(Stream* pStreamSrc, StatEx* pStatEx) :
+	Stream_Reader(pStreamSrc, pStatEx)
 {
 }
 
@@ -192,8 +192,8 @@ bool Stream_Reader_Deflate::DoSeek(size_t offset, size_t offsetPrev)
 // Stream_Reader_BZIP2
 // Compression method #12: BZIP2
 //-----------------------------------------------------------------------------
-Stream_Reader_BZIP2::Stream_Reader_BZIP2(Stream* pStreamSrc, Stat* pStat) :
-	Stream_Reader(pStreamSrc, pStat)
+Stream_Reader_BZIP2::Stream_Reader_BZIP2(Stream* pStreamSrc, StatEx* pStatEx) :
+	Stream_Reader(pStreamSrc, pStatEx)
 {
 }
 
@@ -220,8 +220,8 @@ bool Stream_Reader_BZIP2::DoSeek(size_t offset, size_t offsetPrev)
 // Stream_Reader_Deflate64
 // Compression method #9: Enhanced Deflating using Deflate64(tm)
 //-----------------------------------------------------------------------------
-Stream_Reader_Deflate64::Stream_Reader_Deflate64(Stream* pStreamSrc, Stat* pStat) :
-	Stream_Reader(pStreamSrc, pStat)
+Stream_Reader_Deflate64::Stream_Reader_Deflate64(Stream* pStreamSrc, StatEx* pStatEx) :
+	Stream_Reader(pStreamSrc, pStatEx)
 {
 }
 

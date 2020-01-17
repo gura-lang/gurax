@@ -74,16 +74,16 @@ Gurax_ImplementMethod(Reader, Entry)
 	ArgPicker args(argument);
 	const char* name = args.PickString();
 	// Function body
-	Stat* pStat = reader.GetStatOwner().FindByName(name);
-	if (!pStat) {
+	StatEx* pStatEx = reader.GetStatExOwner().FindByName(name);
+	if (!pStatEx) {
 		Error::Issue(ErrorType::PathError, "can't find an entry with the specified name");
 		return Value::nil();
 	}
-	if (pStat->IsFolder()) {
+	if (pStatEx->IsFolder()) {
 		Error::Issue(ErrorType::PathError, "the specified entry is a folder");
 		return Value::nil();
 	}
-	RefPtr<Stream> pStream(CreateStream(reader.GetStreamSrc(), *pStat));
+	RefPtr<Stream> pStream(CreateStream(reader.GetStreamSrc(), *pStatEx));
 	if (!pStream) return nullptr;
 	return new Value_Stream(pStream.release());
 }
