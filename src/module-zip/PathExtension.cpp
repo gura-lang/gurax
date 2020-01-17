@@ -9,7 +9,12 @@ Gurax_BeginModuleScope(zip)
 // StatEx
 //------------------------------------------------------------------------------
 StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
-	Stat(nullptr, nullptr, nullptr, "", 0, 0, 0, 0, 0)
+	Stat(pCentralFileHeader->MakeLastModDateTime(), pCentralFileHeader->MakeLastModDateTime(),
+		 pCentralFileHeader->MakeLastModDateTime(),
+		 pCentralFileHeader->GetFileName(),
+		 pCentralFileHeader->IsFolder()? Flag::Dir : Flag::Reg,
+		 0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
+	_pCentralFileHeader(pCentralFileHeader)
 {
 }
 
@@ -50,9 +55,9 @@ bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
 			ArchiveExtraDataRecord record;
 			if (!record.Read(streamSrc)) return false;
 		} else if (signature == CentralFileHeader::Signature) {
-			//RefPtr<StatEx> pStatEx(new StatEx());
-			//if (!pStatEx->GetCentralFileHeader().Read(streamSrc)) return false;
-			//push_back(pStatEx.release());
+			std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
+			if (!pCentralFileHeader->Read(streamSrc)) return false;
+			push_back(new StatEx(pCentralFileHeader.release()));
 		} else if (signature == DigitalSignature::Signature) {
 			DigitalSignature signature;
 			if (!signature.Read(streamSrc)) return false;

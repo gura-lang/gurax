@@ -367,6 +367,7 @@ public:
 	UInt32 GetExternalFileAttributes() const {
 		return Gurax_UnpackUInt32(_fields.ExternalFileAttributes);
 	}
+	bool IsFolder() const { return String::EndsWithPathSep(GetFileName()); }
 	void Print() const {
 		::printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
 		::printf("VersionMadeBy          %04x\n", Gurax_UnpackUInt16(_fields.VersionMadeBy));

@@ -22,7 +22,6 @@ public:
 public:
 	CentralFileHeader& GetCentralFileHeader() { return *_pCentralFileHeader; }
 	const CentralFileHeader& GetCentralFileHeader() const { return *_pCentralFileHeader; }
-	bool IsFolder() const { return String::EndsWithPathSep(GetCentralFileHeader().GetFileName()); }
 };
 
 //-----------------------------------------------------------------------------

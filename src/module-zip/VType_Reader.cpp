@@ -79,7 +79,7 @@ Gurax_ImplementMethod(Reader, Entry)
 		Error::Issue(ErrorType::PathError, "can't find an entry with the specified name");
 		return Value::nil();
 	}
-	if (pStatEx->IsFolder()) {
+	if (pStatEx->IsDir()) {
 		Error::Issue(ErrorType::PathError, "the specified entry is a folder");
 		return Value::nil();
 	}
