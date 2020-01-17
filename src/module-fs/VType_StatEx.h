@@ -33,8 +33,7 @@ public:
 public:
 	// Constructor
 	Value_StatEx() = delete;
-	Value_StatEx(StatEx* pStat, VType& vtype = VTYPE_StatEx) :
-		Value_Stat(pStat, vtype) {}
+	Value_StatEx(StatEx* pStat, VType& vtype = VTYPE_StatEx) : Value_Stat(pStat, vtype) {}
 	// Copy constructor/operator
 	Value_StatEx(const Value_StatEx& src) : Value_Stat(src) {}
 	Value_StatEx& operator=(const Value_StatEx& src) = delete;
@@ -58,19 +57,19 @@ public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return GetStat().CalcHash();
+		return GetStatEx().CalcHash();
 	}
 	virtual bool IsEqualTo(const Value* pValue) const override {
 		return IsSameType(pValue) &&
-			GetStat().IsEqualTo(Value_Stat::GetStat(*pValue));
+			GetStatEx().IsEqualTo(Value_StatEx::GetStatEx(*pValue));
 	}
 	virtual bool IsLessThan(const Value* pValue) const override {
 		return IsSameType(pValue)?
-			GetStat().IsLessThan(Value_Stat::GetStat(*pValue)) :
+			GetStatEx().IsLessThan(Value_StatEx::GetStatEx(*pValue)) :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
-	virtual String ToStringDigest(const StringStyle& ss) const override;
-	virtual String ToStringDetail(const StringStyle& ss) const override;
+	//virtual String ToStringDigest(const StringStyle& ss) const override;
+	//virtual String ToStringDetail(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(fs)

@@ -40,13 +40,11 @@ public:
 	Stat(DateTime* pDateTimeC, DateTime* pDateTimeM, DateTime* pDateTimeA,
 		 String pathName, UInt32 flags, UInt16 mode, size_t bytes, long uid, long gid) :
 		_pDateTimeC(pDateTimeC), _pDateTimeM(pDateTimeM), _pDateTimeA(pDateTimeA),
-		_pathName(pathName), _flags(flags), _mode(mode),
-		_bytes(bytes), _uid(uid), _gid(gid) {}
+		_pathName(pathName), _flags(flags), _mode(mode), _bytes(bytes), _uid(uid), _gid(gid) {}
 	Stat(DateTime* pDateTime,
 		 String pathName, UInt32 flags, UInt32 mode, size_t bytes, long uid, long gid) :
 		_pDateTimeC(pDateTime), _pDateTimeM(pDateTime->Reference()), _pDateTimeA(pDateTime->Reference()),
-		_pathName(pathName), _flags(flags), _mode(mode),
-		_bytes(bytes), _uid(uid), _gid(gid) {}
+		_pathName(pathName), _flags(flags), _mode(mode), _bytes(bytes), _uid(uid), _gid(gid) {}
 	// Copy constructor/operator
 	Stat(const Stat& src) = delete;
 	Stat& operator=(const Stat& src) = delete;

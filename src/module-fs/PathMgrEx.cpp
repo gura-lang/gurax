@@ -135,17 +135,17 @@ size_t StreamEx::DoGetSize()
 	return sb.st_size;
 }
 
-Value* StreamEx::DoCreateStatValue()
-{
-	return nullptr;
-}
-
 #if 0
 Stat* StreamEx::DoCreateStat()
 {
 	return nullptr;
 }
 #endif
+
+Value* StreamEx::DoCreateStatValue()
+{
+	return nullptr;
+}
 
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 {
@@ -160,27 +160,27 @@ bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
-StatEx* StatEx::Create(struct stat& sb, const char* pathName)
+StatEx::StatEx(struct stat& sb, String pathName) :
+	Stat(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
+		 OAL::CreateDateTime(sb.st_atime),
+		 pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
 {
-	UInt16 flags = 0;
-	if (S_ISDIR(sb.st_mode)) flags |= Flag::Dir;
-	if (S_ISCHR(sb.st_mode)) flags |= Flag::Chr;
-	if (S_ISBLK(sb.st_mode)) flags |= Flag::Blk;
-	if (S_ISREG(sb.st_mode)) flags |= Flag::Reg;
-	if (S_ISFIFO(sb.st_mode)) flags |= Flag::Fifo;
-	if (S_ISLNK(sb.st_mode)) flags |= Flag::Lnk;
-	if (S_ISSOCK(sb.st_mode)) flags |= Flag::Sock;
-	return new StatEx(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
-					  OAL::CreateDateTime(sb.st_atime),
-					  pathName, flags, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid);
+	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
+	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
+	if (S_ISBLK(sb.st_mode))  _flags |= Flag::Blk;
+	if (S_ISREG(sb.st_mode))  _flags |= Flag::Reg;
+	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
+	if (S_ISLNK(sb.st_mode))  _flags |= Flag::Lnk;
+	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
 }
 
 StatEx* StatEx::Create(const char* pathName)
 {
 	struct stat sb;
-	String pathNameN = OAL::ToNativeString(PathName(pathName).MakeAbsName().c_str());
-	if (::stat(pathNameN.c_str(), &sb) < 0) return nullptr;
-	return Create(sb, pathNameN.c_str());
+	String pathNameAbs = PathName(pathName).MakeAbsName();
+	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
+	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
+	return new StatEx(sb, pathNameAbs);
 }
 
 #if defined(GURAX_ON_MSWIN)

@@ -304,6 +304,7 @@ void VType_StatEx::DoPrepare(Frame& frameOuter)
 	// VType settings
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Stat));
 	// Assignment of property
+#if 0
 	Assign(Gurax_CreateProperty(Stat, pathName));
 	Assign(Gurax_CreateProperty(Stat, dirName));
 	Assign(Gurax_CreateProperty(Stat, fileName));
@@ -320,12 +321,15 @@ void VType_StatEx::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Stat, issock));
 	Assign(Gurax_CreateProperty(Stat, gid));
 	Assign(Gurax_CreateProperty(Stat, uid));
+#endif
 }
 
 //------------------------------------------------------------------------------
 // Value_StatEx
 //------------------------------------------------------------------------------
 VType& Value_StatEx::vtype = VTYPE_StatEx;
+
+#if 0
 
 String Value_StatEx::ToStringDigest(const StringStyle& ss) const
 {
@@ -339,5 +343,7 @@ String Value_StatEx::ToStringDetail(const StringStyle& ss) const
 {
 	return ToStringDigest(ss);
 }
+
+#endif
 
 Gurax_EndModuleScope(fs)

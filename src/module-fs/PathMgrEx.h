@@ -75,7 +75,8 @@ class GURAX_DLLDECLARE StatEx : public Stat {
 public:
 	using Stat::Stat;
 public:
-	static StatEx* Create(struct stat& sb, const char* pathName);
+	StatEx(struct stat& sb, String pathName);
+public:
 	static StatEx* Create(const char* pathName);
 };
 
