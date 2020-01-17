@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_ZIP_VTYPE_STAT_H
 #define GURAX_MODULE_ZIP_VTYPE_STAT_H
 #include <gurax.h>
-#include "Stat.h"
+#include "PathExtension.h"
 
 Gurax_BeginModuleScope(zip)
 

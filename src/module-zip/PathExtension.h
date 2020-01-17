@@ -1,10 +1,10 @@
 //==============================================================================
-// PathMgrEx.h
+// PathExtension.h
 //==============================================================================
-#ifndef GURAX_MODULE_ZIP_PATHMGREX_H
-#define GURAX_MODULE_ZIP_PATHMGREX_H
+#ifndef GURAX_MODULE_ZIP_PATHEXTENSION_H
+#define GURAX_MODULE_ZIP_PATHEXTENSION_H
 #include <gurax.h>
-#include "Stat.h"
+#include "ZIPFormat.h"
 
 Gurax_BeginModuleScope(zip)
 	

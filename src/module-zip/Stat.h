@@ -40,24 +40,6 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
-//------------------------------------------------------------------------------
-// StatList
-//------------------------------------------------------------------------------
-class StatList : public std::vector<Stat*> {
-public:
-	Stat* FindByName(const char* fileName) const;
-};
-
-//------------------------------------------------------------------------------
-// StatOwner
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatOwner : public StatList {
-public:
-	~StatOwner() { Clear(); }
-	void Clear();
-	bool ReadCentralDirectory(Stream& streamSrc);
-};
-
 Gurax_EndModuleScope(zip)
 
 #endif

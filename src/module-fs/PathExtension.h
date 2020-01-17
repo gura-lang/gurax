@@ -19,6 +19,18 @@ protected:
 };
 
 //------------------------------------------------------------------------------
+// StatEx
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE StatEx : public Stat {
+public:
+	using Stat::Stat;
+public:
+	StatEx(struct stat& sb, String pathName);
+public:
+	static StatEx* Create(const char* pathName);
+};
+
+//------------------------------------------------------------------------------
 // DirectoryEx
 //------------------------------------------------------------------------------
 class DirectoryEx : public Directory {
@@ -66,18 +78,6 @@ public:
 	}
 	virtual bool DoFlush() override { return ::fflush(_fp) == 0; }
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
-};
-
-//------------------------------------------------------------------------------
-// StatEx
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatEx : public Stat {
-public:
-	using Stat::Stat;
-public:
-	StatEx(struct stat& sb, String pathName);
-public:
-	static StatEx* Create(const char* pathName);
 };
 
 Gurax_EndModuleScope(fs)

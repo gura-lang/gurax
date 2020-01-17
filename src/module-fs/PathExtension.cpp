@@ -33,6 +33,48 @@ PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, cons
 }
 
 //------------------------------------------------------------------------------
+// StatEx
+//------------------------------------------------------------------------------
+StatEx::StatEx(struct stat& sb, String pathName) :
+	Stat(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
+		 OAL::CreateDateTime(sb.st_atime),
+		 pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
+{
+	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
+	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
+	if (S_ISBLK(sb.st_mode))  _flags |= Flag::Blk;
+	if (S_ISREG(sb.st_mode))  _flags |= Flag::Reg;
+	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
+	if (S_ISLNK(sb.st_mode))  _flags |= Flag::Lnk;
+	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
+}
+
+StatEx* StatEx::Create(const char* pathName)
+{
+	struct stat sb;
+	String pathNameAbs = PathName(pathName).MakeAbsName();
+	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
+	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
+	return new StatEx(sb, pathNameAbs);
+}
+
+#if defined(GURAX_ON_MSWIN)
+
+StatEx::StatEx(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
+{
+}
+
+StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
+{
+}
+
+StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
+{
+}
+
+#endif
+
+//------------------------------------------------------------------------------
 // DirectoryEx
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
@@ -160,47 +202,5 @@ bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)
 	}
 	return true;
 }
-
-//------------------------------------------------------------------------------
-// StatEx
-//------------------------------------------------------------------------------
-StatEx::StatEx(struct stat& sb, String pathName) :
-	Stat(OAL::CreateDateTime(sb.st_ctime), OAL::CreateDateTime(sb.st_mtime),
-		 OAL::CreateDateTime(sb.st_atime),
-		 pathName, 0, sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
-{
-	if (S_ISDIR(sb.st_mode))  _flags |= Flag::Dir;
-	if (S_ISCHR(sb.st_mode))  _flags |= Flag::Chr;
-	if (S_ISBLK(sb.st_mode))  _flags |= Flag::Blk;
-	if (S_ISREG(sb.st_mode))  _flags |= Flag::Reg;
-	if (S_ISFIFO(sb.st_mode)) _flags |= Flag::Fifo;
-	if (S_ISLNK(sb.st_mode))  _flags |= Flag::Lnk;
-	if (S_ISSOCK(sb.st_mode)) _flags |= Flag::Sock;
-}
-
-StatEx* StatEx::Create(const char* pathName)
-{
-	struct stat sb;
-	String pathNameAbs = PathName(pathName).MakeAbsName();
-	String pathNameAbsN = OAL::ToNativeString(pathNameAbs.c_str());
-	if (::stat(pathNameAbsN.c_str(), &sb) < 0) return nullptr;
-	return new StatEx(sb, pathNameAbs);
-}
-
-#if defined(GURAX_ON_MSWIN)
-
-StatEx::StatEx(const char* pathName, const BY_HANDLE_FILE_INFORMATION& attrData)
-{
-}
-
-StatEx::StatEx(const char* pathName, const WIN32_FILE_ATTRIBUTE_DATA& attrData)
-{
-}
-
-StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
-{
-}
-
-#endif
 
 Gurax_EndModuleScope(fs)
