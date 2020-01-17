@@ -1,8 +1,8 @@
 //==============================================================================
-// PathMgrEx.h
+// PathExtension.h
 //==============================================================================
-#ifndef GURAX_MODULE_FS_PATHMGREX_H
-#define GURAX_MODULE_FS_PATHMGREX_H
+#ifndef GURAX_MODULE_FS_PATHEXTENSION_H
+#define GURAX_MODULE_FS_PATHEXTENSION_H
 #include <gurax.h>
 
 Gurax_BeginModuleScope(fs)

@@ -4,7 +4,7 @@
 #ifndef GURAX_MODULE_FS_H
 #define GURAX_MODULE_FS_H
 #include <gurax.h>
-#include "PathMgrEx.h"
+#include "PathExtension.h"
 #include "VType_StatEx.h"
 
 Gurax_BeginModuleHeader(fs)
