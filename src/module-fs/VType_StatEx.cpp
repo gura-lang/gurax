@@ -295,7 +295,7 @@ Gurax_ImplementPropertyGetter(Stat, uid)
 //------------------------------------------------------------------------------
 // VType_StatEx
 //------------------------------------------------------------------------------
-VType_StatEx VTYPE_StatEx("StatEx");
+VType_StatEx VTYPE_StatEx("Stat");
 
 void VType_StatEx::DoPrepare(Frame& frameOuter)
 {

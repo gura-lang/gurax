@@ -27,8 +27,7 @@ void VType::Assign(Function* pFunction)
 void VType::GatherMemberSymbol(SymbolList& symbolList) const
 {
 	GetFrame().GatherSymbol(symbolList);
-	//RefPtr<Frame> pFrameOuter(LockFrameOuter());
-	//if (pFrameOuter) pFrameOuter->GatherSymbol(symbolList);
+	if (_pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList);
 	GetPropHandlerMap().GatherSymbol(symbolList);
 	GetPropHandlerMapOfClass().GatherSymbol(symbolList);
 }
