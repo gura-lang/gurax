@@ -26,7 +26,6 @@ public:
 	using Stat::Stat;
 public:
 	StatEx(struct stat& sb, String pathName);
-public:
 	static StatEx* Create(const char* pathName);
 };
 

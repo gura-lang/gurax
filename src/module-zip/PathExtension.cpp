@@ -5,6 +5,75 @@
 
 Gurax_BeginModuleScope(zip)
 
+//------------------------------------------------------------------------------
+// StatEx
+//------------------------------------------------------------------------------
+StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
+	Stat(nullptr, nullptr, nullptr, "", 0, 0, 0, 0, 0)
+{
+}
+
+//------------------------------------------------------------------------------
+// StatExList
+//------------------------------------------------------------------------------
+StatEx* StatExList::FindByName(const char* fileName) const
+{
+	PathName pathName(fileName);
+	for (StatEx* pStatEx : *this) {
+		if (pathName.DoesMatch(pStatEx->GetCentralFileHeader().GetFileName())) return pStatEx;
+	}
+	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// StatExOwner
+//------------------------------------------------------------------------------
+void StatExOwner::Clear()
+{
+	for (StatEx* pStatEx : *this) StatEx::Delete(pStatEx);
+	clear();
+}
+
+bool StatExOwner::ReadCentralDirectory(Stream& streamSrc)
+{
+	UInt32 offsetCentralDirectory = SeekCentralDirectory(streamSrc);
+	if (Error::IsIssued()) return false;
+	if (!streamSrc.Seek(offsetCentralDirectory, Stream::SeekMode::Set)) return false;
+	UInt32 signature;
+	while (ReadStream(streamSrc, &signature)) {
+		//::printf("%08x\n", signature);
+		if (signature == LocalFileHeader::Signature) {
+			LocalFileHeader hdr;
+			if (!hdr.Read(streamSrc)) return false;
+			if (!hdr.SkipFileData(streamSrc)) return false;
+		} else if (signature == ArchiveExtraDataRecord::Signature) {
+			ArchiveExtraDataRecord record;
+			if (!record.Read(streamSrc)) return false;
+		} else if (signature == CentralFileHeader::Signature) {
+			RefPtr<StatEx> pStatEx(new StatEx());
+			if (!pStatEx->GetCentralFileHeader().Read(streamSrc)) return false;
+			push_back(pStatEx.release());
+		} else if (signature == DigitalSignature::Signature) {
+			DigitalSignature signature;
+			if (!signature.Read(streamSrc)) return false;
+		} else if (signature == Zip64EndOfCentralDirectory::Signature) {
+			Zip64EndOfCentralDirectory dir;
+			if (!dir.Read(streamSrc)) return false;
+		} else if (signature == Zip64EndOfCentralDirectoryLocator::Signature) {
+			Zip64EndOfCentralDirectoryLocator loc;
+			if (!loc.Read(streamSrc)) return false;
+		} else if (signature == EndOfCentralDirectoryRecord::Signature) {
+			EndOfCentralDirectoryRecord record;
+			if (!record.Read(streamSrc)) return false;
+			break;
+		} else {
+			Error::Issue(ErrorType::FormatError, "unknown signature %08x", signature);
+			return false;
+		}
+	}
+	return true;
+}
+
 //-----------------------------------------------------------------------------
 // Directory_ZIPFile
 //-----------------------------------------------------------------------------
