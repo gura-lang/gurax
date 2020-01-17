@@ -43,8 +43,8 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
 	Assign(VTYPE_Reader);
-	Assign(VTYPE_Stat);
 	Assign(VTYPE_Writer);
+	Assign(VTYPE_StatEx);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Directory));
 	return true;

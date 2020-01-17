@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Stat#MethodSkeleton(num1:Number, num2:Number)
-Gurax_DeclareMethod(Stat, MethodSkeleton)
+// zip.StatEx#MethodSkeleton(num1:Number, num2:Number)
+Gurax_DeclareMethod(StatEx, MethodSkeleton)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -38,7 +38,7 @@ Gurax_DeclareMethod(Stat, MethodSkeleton)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Stat, MethodSkeleton)
+Gurax_ImplementMethod(StatEx, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -55,25 +55,25 @@ Gurax_ImplementMethod(Stat, MethodSkeleton)
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Stat
+// VType_StatEx
 //------------------------------------------------------------------------------
-VType_Stat VTYPE_Stat("Stat");
+VType_StatEx VTYPE_StatEx("Stat");
 
-void VType_Stat::DoPrepare(Frame& frameOuter)
+void VType_StatEx::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Stat, MethodSkeleton));
+	Assign(Gurax_CreateMethod(StatEx, MethodSkeleton));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Stat, fileName));
+	//Assign(Gurax_CreateProperty(StatEx, fileName));
 }
 
 //------------------------------------------------------------------------------
-// Value_Stat
+// Value_StatEx
 //------------------------------------------------------------------------------
-VType& Value_Stat::vtype = VTYPE_Stat;
+VType& Value_StatEx::vtype = VTYPE_StatEx;
 
 Gurax_EndModuleScope(zip)

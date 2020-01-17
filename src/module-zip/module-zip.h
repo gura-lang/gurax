@@ -7,8 +7,8 @@
 #include "PathExtension.h"
 #include "Util.h"
 #include "VType_Reader.h"
-#include "VType_Stat.h"
 #include "VType_Writer.h"
+#include "VType_StatEx.h"
 
 Gurax_BeginModuleHeader(zip)
 Gurax_EndModuleHeader(zip)
