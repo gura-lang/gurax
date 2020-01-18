@@ -11,7 +11,6 @@ Gurax_BeginModuleScope(zip)
 bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod)
 {
 	const int memLevel = 8;
-	//_statExOwner.push_back(pStatEx);
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
 	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
 	RefPtr<DateTime> pDateTime;
@@ -116,34 +115,32 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	do {
 		DataDescriptor desc;
 		DataDescriptor::Fields &fields = desc.GetFields();
-		Gurax_PackUInt32(fields.Crc32,			crc32num);
-		Gurax_PackUInt32(fields.CompressedSize,	compressedSize);
+		Gurax_PackUInt32(fields.Crc32,				crc32num);
+		Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
 		Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
 		if (!desc.Write(*_pStreamDst)) return false;
 	} while (0);
 	do {
 		CentralFileHeader::Fields &fields = pCentralFileHeader->GetFields();
-		Gurax_PackUInt32(fields.Crc32,			crc32num);
-		Gurax_PackUInt32(fields.CompressedSize,	compressedSize);
+		Gurax_PackUInt32(fields.Crc32,				crc32num);
+		Gurax_PackUInt32(fields.CompressedSize,		compressedSize);
 		Gurax_PackUInt32(fields.UncompressedSize,	uncompressedSize);
 	} while (0);
+	_statExOwner.push_back(new StatEx(pCentralFileHeader.release()));
 	return true;
 }
 
 bool Writer::Finish()
 {
-#if 0
-	if (_pStreamDst.IsNull()) return true;
-	size_t offset = _pStreamDst->Tell();
-	foreach (CentralFileHeaderList, ppHdr, _hdrList) {
-		CentralFileHeader *pHdr = *ppHdr;
-		if (!pHdr->Write(_sig, *_pStreamDst)) return false;
+	if (!_pStreamDst) return true;
+	size_t offset = _pStreamDst->GetOffset();
+	for (StatEx* pStatEx : _statExOwner) {
+		if (!pStatEx->GetCentralFileHeader().Write(*_pStreamDst)) return false;
 		//pHdr->Print();
 	}
 	UInt32 offsetOfCentralDirectory = static_cast<UInt32>(offset);
-	UInt32 sizeOfTheCentralDirectory =
-							static_cast<UInt32>(_pStreamDst->Tell() - offset);
-	UInt16 nCentralFileHeaders = static_cast<UInt16>(_hdrList.size());
+	UInt32 sizeOfTheCentralDirectory = static_cast<UInt32>(_pStreamDst->GetOffset() - offset);
+	UInt16 nCentralFileHeaders = static_cast<UInt16>(_statExOwner.size());
 	do {
 		EndOfCentralDirectoryRecord rec;
 		EndOfCentralDirectoryRecord::Fields &fields = rec.GetFields();
@@ -155,13 +152,11 @@ bool Writer::Finish()
 		Gurax_PackUInt32(fields.OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber,
 															offsetOfCentralDirectory);
 		Gurax_PackUInt16(fields.ZIPFileCommentLength,								0x0000);
-		if (!rec.Write(_sig, *_pStreamDst)) return false;
+		if (!rec.Write(*_pStreamDst)) return false;
 	} while (0);
 	_pStreamDst->Close();
 	_pStreamDst.reset(nullptr);
-	return !_sig.IsSignalled();
-#endif
-	return false;
+	return !Error::IsIssued();
 }
 
 String Writer::ToString(const StringStyle& ss) const
