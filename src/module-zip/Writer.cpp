@@ -10,13 +10,18 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod)
 {
-	//const int memLevel = 8;
-	//StatEx* pStatEx = nullptr; //new StatEx();
+	const int memLevel = 8;
 	//_statExOwner.push_back(pStatEx);
-	//UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
-	//UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
+	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
+	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
+	RefPtr<DateTime> pDateTime;
+	RefPtr<Stat> pStat(streamSrc.CreateStat());
+	if (pStat) {
+		pDateTime.reset(pStat->GetDateTimeM().Reference());
+	} else {
+		pDateTime.reset();
+	}
 #if 0
-	DateTime dt;
 	Stream::Attribute attr;
 	if (streamSrc.GetExtribute(attr)) {
 		dt = attr.mtime;

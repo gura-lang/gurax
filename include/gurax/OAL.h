@@ -183,6 +183,8 @@ public:
 	static SYSTEMTIME DateTimeToSYSTEMTIME(const DateTime& dt);
 	static FILETIME DateTimeToFILETIME(const DateTime& dt);
 #endif
+	static DateTime* CreateDateTimeCur(bool utcFlag);
+	static int GetSecsOffsetTZ();
 public:
 	static bool CopyDir(const char* dirNameSrc, const char* dirNameDst);
 	static bool CopyDirTree(const char* dirNameSrc, const char* dirNameDst);

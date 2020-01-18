@@ -452,6 +452,19 @@ DateTime* OAL::CreateDateTime(const FILETIME& ft, bool utcFlag)
 	return nullptr;
 }
 
+DateTime* OAL::CreateDateTimeCur(bool utcFlag)
+{
+	SYSTEMTIME st;
+	DateTime dateTime;
+	if (utcFlag) {
+		::GetSystemTime(&st);
+		return CreateDateTime(st, 0);
+	} else {
+		::GetLocalTime(&st);
+		retnrn CreateDateTime(st, GetSecsOffsetTZ());
+	}
+}
+
 SYSTEMTIME OAL::DateTimeToSYSTEMTIME(const DateTime& dt)
 {
 	SYSTEMTIME st;
@@ -473,6 +486,13 @@ FILETIME OAL::DateTimeToFILETIME(const DateTime& dt)
 	::SystemTimeToFileTime(&st, &ftLocal);
 	::LocalFileTimeToFileTime(&ftLocal, &ft);
 	return ft;
+}
+
+int OAL::GetSecsOffsetTZ()
+{
+	TIME_ZONE_INFORMATION tzInfo;
+	if (::GetTimeZoneInformation(&tzInfo) == TIME_ZONE_ID_INVALID) return 0;
+	return -tzInfo.Bias * 60;
 }
 
 String OAL::ConvCodePage(const char* str, UINT codePageSrc, UINT codePageDst)
@@ -893,6 +913,28 @@ DateTime* OAL::CreateDateTime(time_t t, bool utcFlag)
 		secsOffset = 0;
 	}
 	return CreateDateTime(tm, secsOffset);
+}
+
+DateTime* OAL::CreateDateTimeCur(bool utcFlag)
+{
+	time_t t;
+	::time(&t);
+	struct tm tm;
+	if (utcFlag) {
+		gmtime_r(&t, &tm);
+		return CreateDateTime(tm, 0);
+	} else {
+		localtime_r(&t, &tm);
+		return CreateDateTime(tm, GetSecsOffsetTZ());
+	}
+}
+
+int OAL::GetSecsOffsetTZ()
+{
+	struct timeval tv;
+	struct timezone tz;
+	if (::gettimeofday(&tv, &tz) < 0) return 0;
+	return -tz.tz_minuteswest * 60;
 }
 
 String OAL::ReadLink(const char* pathName)
