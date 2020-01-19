@@ -10,6 +10,7 @@ Gurax_BeginModuleScope(zip)
 class StatEx;
 
 UInt16 SymbolToCompressionMethod(const Symbol* pSymbol);
+const Symbol* CompressionMethodToSymbol(UInt16 compressionMethod);
 UInt16 GetDosTime(const DateTime& dt);
 UInt16 GetDosDate(const DateTime& dt);
 DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime);

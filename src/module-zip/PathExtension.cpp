@@ -92,7 +92,7 @@ Stream* Directory_ZIPFile::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* Directory_ZIPFile::DoCreateStatValue()
 {
-	return new Value_Stat(_pStatEx.Reference());
+	return new Value_StatEx(_pStatEx.Reference());
 }
 
 //-----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ Stream* Directory_ZIPFolder::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* Directory_ZIPFolder::DoCreateStatValue()
 {
-	return new Value_Stat(_pStatEx.Reference());
+	return new Value_StatEx(_pStatEx.Reference());
 }
 
 //-----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ size_t Stream_Reader::CheckCRC32(const void* buff, size_t bytesRead)
 
 Value* Stream_Reader::DoCreateStatValue()
 {
-	return new Value_Stat(_pStatEx->Reference());
+	return new Value_StatEx(_pStatEx->Reference());
 }
 
 //-----------------------------------------------------------------------------

@@ -11,6 +11,11 @@ UInt16 SymbolToCompressionMethod(const Symbol* pSymbol)
 	return SymbolAssoc_CompressionMethod::GetInstance().ToAssociated(pSymbol);
 }
 
+const Symbol* CompressionMethodToSymbol(UInt16 compressionMethod)
+{
+	return SymbolAssoc_CompressionMethod::GetInstance().ToSymbol(compressionMethod);
+}
+
 UInt16 GetDosTime(const DateTime& dt)
 {
 	return
