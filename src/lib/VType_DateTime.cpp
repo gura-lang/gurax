@@ -73,6 +73,29 @@ Gurax_ImplementConstructor(DateTime)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of class method
+//------------------------------------------------------------------------------
+// DateTime.Now():[utc] {block?}
+Gurax_DeclareClassMethod(DateTime, Now)
+{
+	Declare(VTYPE_DateTime, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(utc));
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(DateTime, Now)
+{
+	// Arguments
+	bool utcFlag = argument.IsSet(Gurax_Symbol(utc));
+	// Function body
+	RefPtr<DateTime> pDateTime(OAL::CreateDateTimeCur(utcFlag));
+	return argument.ReturnValue(processor, new Value_DateTime(pDateTime.release()));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // DateTime#year
@@ -378,6 +401,25 @@ Gurax_ImplementPropertyGetter(DateTime, unixTime)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of class property
+//------------------------------------------------------------------------------
+// DateTime.tzOffset
+Gurax_DeclareClassProperty_R(DateTime, tzOffset)
+{
+	Declare(VTYPE_TimeDelta, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Time zone offset in seconds.");
+}
+
+Gurax_ImplementPropertyGetter(DateTime, tzOffset)
+{
+	// Function body
+	RefPtr<TimeDelta> pTimeDelta(new TimeDelta(0, OAL::GetSecsOffsetTZ(), 0));
+	return new Value_TimeDelta(pTimeDelta.release());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
 // DateTime + TimeDelta
@@ -468,6 +510,8 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DateTime));
+	// Assignment of class method
+	Assign(Gurax_CreateClassMethod(DateTime, Now));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(DateTime, year));
 	Assign(Gurax_CreateProperty(DateTime, month));
@@ -484,6 +528,8 @@ void VType_DateTime::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(DateTime, yday));
 	Assign(Gurax_CreateProperty(DateTime, utc));
 	Assign(Gurax_CreateProperty(DateTime, unixTime));
+	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(DateTime, tzOffset));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Add, DateTime, TimeDelta);
 	Gurax_AssignOpBinary(Sub, DateTime, TimeDelta);

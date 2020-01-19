@@ -9,9 +9,7 @@ Gurax_BeginModuleScope(zip)
 // StatEx
 //------------------------------------------------------------------------------
 StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :
-	Stat(pCentralFileHeader->MakeLastModDateTime(), pCentralFileHeader->MakeLastModDateTime(),
-		 pCentralFileHeader->MakeLastModDateTime(),
-		 pCentralFileHeader->GetFileName(),
+	Stat(pCentralFileHeader->MakeLastModDateTime(), pCentralFileHeader->GetFileName(),
 		 pCentralFileHeader->IsFolder()? Flag::Dir : Flag::Reg,
 		 0666, pCentralFileHeader->GetUncompressedSize(), 0, 0),
 	_pCentralFileHeader(pCentralFileHeader)

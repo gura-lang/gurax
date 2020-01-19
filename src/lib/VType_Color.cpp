@@ -38,7 +38,7 @@ Gurax_DeclareConstructor(Color)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(ja),
-		"`Color` インスタンスを生成する。");
+		u8"`Color` インスタンスを生成する。");
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates a `Color` instance.");
@@ -64,6 +64,9 @@ Gurax_ImplementConstructor(Color)
 Gurax_DeclareClassMethod(Color, Named)
 {
 	Declare(VTYPE_Palette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
 }
 
 Gurax_ImplementClassMethod(Color, Named)

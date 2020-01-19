@@ -13,13 +13,8 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	const int memLevel = 8;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
 	UInt16 generalPurposeBitFlag = (1 << 3);	// ExistDataDescriptor
-	RefPtr<DateTime> pDateTime;
 	RefPtr<Stat> pStat(streamSrc.CreateStat());
-	if (pStat) {
-		pDateTime.reset(pStat->GetDateTimeM().Reference());
-	} else {
-		pDateTime.reset(OAL::CreateDateTimeCur(false));
-	}
+	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
 	UInt16 lastModFileTime = GetDosTime(*pDateTime);
 	UInt16 lastModFileDate = GetDosDate(*pDateTime);
 	UInt32 compressedSize = 0;
