@@ -363,23 +363,29 @@ public:
 	bool IsFolder() const { return String::EndsWithPathSep(GetFileName()); }
 	void Print(Stream& stream) const {
 		Stream& s = stream;
-		s.Printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
-		s.Printf("VersionMadeBy          %04x\n", Gurax_UnpackUInt16(_fields.VersionMadeBy));
-		s.Printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
-		s.Printf("GeneralPurposeBitFlag  %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
-		s.Printf("CompressionMethod      %04x\n", Gurax_UnpackUInt16(_fields.CompressionMethod));
-		s.Printf("LastModFileTime        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileTime));
-		s.Printf("LastModFileDate        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileDate));
-		s.Printf("Crc32                  %08x\n", Gurax_UnpackUInt32(_fields.Crc32));
-		s.Printf("CompressedSize         %08x\n", Gurax_UnpackUInt32(_fields.CompressedSize));
-		s.Printf("UncompressedSize       %08x\n", Gurax_UnpackUInt32(_fields.UncompressedSize));
-		s.Printf("FileNameLength         %04x\n", Gurax_UnpackUInt16(_fields.FileNameLength));
-		s.Printf("ExtraFieldLength       %04x\n", Gurax_UnpackUInt16(_fields.ExtraFieldLength));
-		s.Printf("FileCommentLength      %04x\n", Gurax_UnpackUInt16(_fields.FileCommentLength));
-		s.Printf("DiskNumberStart        %04x\n", Gurax_UnpackUInt16(_fields.DiskNumberStart));
-		s.Printf("InternalFileAttributes %04x\n", Gurax_UnpackUInt16(_fields.InternalFileAttributes));
-		s.Printf("ExternalFileAttributes %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
+		s.Printf("Signature                   %08x\n", Gurax_UnpackUInt32(_fields.Signature));
+		s.Printf("VersionMadeBy               %04x\n", Gurax_UnpackUInt16(_fields.VersionMadeBy));
+		s.Printf("VersionNeededToExtract      %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
+		s.Printf("GeneralPurposeBitFlag       %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
+		s.Printf("CompressionMethod           %04x\n", Gurax_UnpackUInt16(_fields.CompressionMethod));
+		s.Printf("LastModFileTime             %04x\n", Gurax_UnpackUInt16(_fields.LastModFileTime));
+		s.Printf("LastModFileDate             %04x\n", Gurax_UnpackUInt16(_fields.LastModFileDate));
+		s.Printf("Crc32                       %08x\n", Gurax_UnpackUInt32(_fields.Crc32));
+		s.Printf("CompressedSize              %08x\n", Gurax_UnpackUInt32(_fields.CompressedSize));
+		s.Printf("UncompressedSize            %08x\n", Gurax_UnpackUInt32(_fields.UncompressedSize));
+		s.Printf("FileNameLength              %04x\n", Gurax_UnpackUInt16(_fields.FileNameLength));
+		s.Printf("ExtraFieldLength            %04x\n", Gurax_UnpackUInt16(_fields.ExtraFieldLength));
+		s.Printf("FileCommentLength           %04x\n", Gurax_UnpackUInt16(_fields.FileCommentLength));
+		s.Printf("DiskNumberStart             %04x\n", Gurax_UnpackUInt16(_fields.DiskNumberStart));
+		s.Printf("InternalFileAttributes      %04x\n", Gurax_UnpackUInt16(_fields.InternalFileAttributes));
+		s.Printf("ExternalFileAttributes      %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
 		s.Printf("RelativeOffsetOfLocalHeader %08x\n", Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader));
+		s.Printf("File Name\n");
+		_fileName.Dump(s);
+		s.Printf("External Fields\n");
+		_extraField.Dump(s);
+		s.Printf("File Comment\n");
+		_fileComment.Dump(s);
 	}
 };
 
