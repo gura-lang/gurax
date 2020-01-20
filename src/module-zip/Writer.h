@@ -34,7 +34,7 @@ protected:
 public:
 	UInt16 GetCompressionMethod() { return _compressionMethod; }
 	StatExOwner& GetStatExOwner() { return _statExOwner; }
-	bool Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod);
+	bool Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod);
 	bool Finish();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

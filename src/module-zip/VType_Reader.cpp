@@ -109,24 +109,6 @@ Gurax_ImplementMethod(Reader, Entries)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-// zip.Reader#propSkeleton
-Gurax_DeclareProperty_R(Reader, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Reader, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
-}
-
 //------------------------------------------------------------------------------
 // VType_Reader
 //------------------------------------------------------------------------------
@@ -141,8 +123,6 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Reader, Entry));
 	Assign(Gurax_CreateMethod(Reader, Entries));
-	// Assignment of property
-	Assign(Gurax_CreateProperty(Reader, propSkeleton));
 }
 
 //------------------------------------------------------------------------------

@@ -58,18 +58,16 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// zip.Writer#Add(stream:Stream:r, fileName?:String, compression?:Symbol):map:reduce
+// zip.Writer#Add(fileName:String, stream:Stream:r, compression?:Symbol):map:reduce
 Gurax_DeclareMethod(Writer, Add)
 {
 	Declare(VTYPE_Writer, Flag::Reduce | Flag::Map);
+	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
-	DeclareArg("fileName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Reads data from `stream` and adds it to the zip file.\n"
-		"Entry name is decided by the file name associated with the stream\n"
-		"unless it's specified by argument `filename`.\n"
+		"Reads data from `stream` and adds it to the zip file with the specified file name.\n"
 		"\n"
 		"Argument `compression` specifies the compression method and takes one of the following symbols:\n"
 		"\n"
@@ -85,18 +83,8 @@ Gurax_ImplementMethod(Writer, Add)
 	Writer& writer = valueThis.GetWriter();
 	// Arguments
 	ArgPicker args(argument);
+	const char* fileName = args.PickString();
 	Stream& stream = args.PickStream();
-	String fileName;
-	if (args.IsValid()) {
-		fileName = args.PickString();
-	} else {
-		const char*identifier = stream.GetIdentifier();
-		if (!identifier) {
-			Error::Issue(ErrorType::ValueError, "stream doesn't have an identifier");
-			return Value::nil();
-		}
-		fileName = PathName(identifier).ExtractFileName();
-	}
 	UInt16 compressionMethod = args.IsValid()?
 		SymbolToCompressionMethod(args.PickSymbol()) : writer.GetCompressionMethod();
 	if (compressionMethod == CompressionMethod::Invalid) {
@@ -104,7 +92,7 @@ Gurax_ImplementMethod(Writer, Add)
 		return Value::nil();
 	}
 	// Function body
-	if (!writer.Add(stream, fileName.c_str(), compressionMethod)) return Value::nil();
+	if (!writer.Add(fileName, stream, compressionMethod)) return Value::nil();
 	return valueThis.Reference();
 }
 
@@ -126,24 +114,6 @@ Gurax_ImplementMethod(Writer, Close)
 	return Value::nil();
 }
 
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-// zip.Writer#propSkeleton
-Gurax_DeclareProperty_R(Writer, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(Writer, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
-}
-
 //------------------------------------------------------------------------------
 // VType_Writer
 //------------------------------------------------------------------------------
@@ -158,8 +128,6 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Writer, Add));
 	Assign(Gurax_CreateMethod(Writer, Close));
-	// Assignment of property
-	Assign(Gurax_CreateProperty(Writer, propSkeleton));
 }
 
 //------------------------------------------------------------------------------

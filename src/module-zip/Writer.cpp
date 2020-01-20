@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(zip)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
-bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMethod)
+bool Writer::Add(const char* fileName, Stream& streamSrc, UInt16 compressionMethod)
 {
 	const int memLevel = 8;
 	UInt16 version = (0 << 8) | (2 * 10 + 0);	// MS-DOS, 2.0
@@ -17,6 +17,7 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
 	UInt16 lastModFileTime = GetDosTime(*pDateTime);
 	UInt16 lastModFileDate = GetDosDate(*pDateTime);
+	UInt16 internalFileAttributes = 0;
 	UInt32 externalFileAttributes = (1 << 5);
 	UInt32 relativeOffsetOfLocalHeader = static_cast<UInt32>(_pStreamDst->GetOffset());
 	std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
@@ -35,7 +36,7 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 		Gurax_PackUInt16(fields.ExtraFieldLength,				0x0000);
 		Gurax_PackUInt16(fields.FileCommentLength,				0x0000);
 		Gurax_PackUInt16(fields.DiskNumberStart,				0x0000);
-		Gurax_PackUInt16(fields.InternalFileAttributes,			0x0000);
+		Gurax_PackUInt16(fields.InternalFileAttributes,			internalFileAttributes);
 		Gurax_PackUInt32(fields.ExternalFileAttributes,			externalFileAttributes);
 		Gurax_PackUInt32(fields.RelativeOffsetOfLocalHeader,	relativeOffsetOfLocalHeader);
 		pCentralFileHeader->SetFileName(fileName);
@@ -137,14 +138,14 @@ bool Writer::Finish()
 	do {
 		EndOfCentralDirectoryRecord rec;
 		EndOfCentralDirectoryRecord::Fields &fields = rec.GetFields();
-		Gurax_PackUInt16(fields.NumberOfThisDisk,									0x0000);
-		Gurax_PackUInt16(fields.NumberOfTheDiskWithTheStartOfTheCentralDirectory,	0x0000);
+		Gurax_PackUInt16(fields.NumberOfThisDisk,										0x0000);
+		Gurax_PackUInt16(fields.NumberOfTheDiskWithTheStartOfTheCentralDirectory,		0x0000);
 		Gurax_PackUInt16(fields.TotalNumberOfEntriesInTheCentralDirectoryOnThisDisk,	nCentralFileHeaders);
-		Gurax_PackUInt16(fields.TotalNumberOfEntriesInTheCentralDirectory,			nCentralFileHeaders);
-		Gurax_PackUInt32(fields.SizeOfTheCentralDirectory,							sizeOfTheCentralDirectory);
+		Gurax_PackUInt16(fields.TotalNumberOfEntriesInTheCentralDirectory,				nCentralFileHeaders);
+		Gurax_PackUInt32(fields.SizeOfTheCentralDirectory,								sizeOfTheCentralDirectory);
 		Gurax_PackUInt32(fields.OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber,
-															offsetOfCentralDirectory);
-		Gurax_PackUInt16(fields.ZIPFileCommentLength,								0x0000);
+						 																offsetOfCentralDirectory);
+		Gurax_PackUInt16(fields.ZIPFileCommentLength,									0x0000);
 		if (!rec.Write(*_pStreamDst)) return false;
 	} while (0);
 	_pStreamDst->Close();
