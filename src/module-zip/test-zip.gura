@@ -5,11 +5,22 @@
 import(util.tester) {*}
 import(zip)
 
+TestCase('zip.Reader()') {
+	zip.Reader('test2.zip') {|reader|
+		reader.Entries():all {|entry|
+			Println(entry.stat)
+			entry.stat.PrintCentralFileHeader()
+		}
+	}
+}
+
+/*
 TestCase('zip.Directory()') {
-	d = zip.Directory('test.zip')
+	d = zip.Directory('test2.zip')
 	stats = path.Walk(d):stat:list
 	Printf('%-32s %8d %8d %s\n', stats:*pathName, stats:*size, stats:*compressedSize, stats:*compressionMethod)
 }
+*/
 
 /*
 TestCase('zip.Reader()') {

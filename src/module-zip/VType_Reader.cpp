@@ -88,15 +88,19 @@ Gurax_ImplementMethod(Reader, Entry)
 	return new Value_Stream(pStream.release());
 }
 
-// zip.Reader#Entries() {block?}
+// zip.Reader#Entries():[all] {block?}
 Gurax_DeclareMethod(Reader, Entries)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(all));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Creates an `iterator` instance that returns `stream` instances\n"
-		"associated with each entry in the ZIP file.\n");
+		"associated with each entry in the ZIP file.\n"
+		"\n"
+		"In default, entries that represent directories are skipped.\n"
+		"Specify `:all` attribute to include them.\n");
 }
 
 Gurax_ImplementMethod(Reader, Entries)
@@ -104,8 +108,10 @@ Gurax_ImplementMethod(Reader, Entries)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	Reader& reader = valueThis.GetReader();
+	// Attribute
+	bool skipDirFlag = !argument.IsSet(Gurax_Symbol(all));
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Entry(reader.Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_Entry(reader.Reference(), skipDirFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

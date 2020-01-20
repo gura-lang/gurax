@@ -50,6 +50,7 @@ public:
 	public:
 		virtual bool IsEnd() = 0;
 		virtual Value* FetchInt() = 0;
+		virtual Value* FetchUInt() = 0;
 		virtual Value* FetchSizeT() = 0;
 		virtual Value* FetchDouble() = 0;
 		virtual Value* FetchString() = 0;
@@ -64,6 +65,7 @@ public:
 		}
 		virtual bool IsEnd() override { return _ppValue == _valueList.end(); }
 		virtual Value* FetchInt() override { return (*_ppValue++)->Reference(); }
+		virtual Value* FetchUInt() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchSizeT() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchDouble() override { return (*_ppValue++)->Reference(); }
 		virtual Value* FetchString() override { return (*_ppValue++)->Reference(); }
@@ -81,6 +83,10 @@ public:
 		virtual Value* FetchInt() override {
 			Int num = va_arg(_ap, Int);
 			return new Value_Number(static_cast<Int>(num));
+		}
+		virtual Value* FetchUInt() override {
+			UInt num = va_arg(_ap, UInt);
+			return new Value_Number(static_cast<UInt>(num));
 		}
 		virtual Value* FetchSizeT() override {
 			size_t num = va_arg(_ap, size_t);

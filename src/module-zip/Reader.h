@@ -48,8 +48,10 @@ class GURAX_DLLDECLARE Iterator_Entry : public Iterator {
 private:
 	RefPtr<Reader> _pReader;
 	size_t _idx;
+	bool _skipDirFlag;
 public:
-	Iterator_Entry(Reader* pReader) : _pReader(pReader), _idx(0) {}
+	Iterator_Entry(Reader* pReader, bool skipDirFlag) :
+		_pReader(pReader), _idx(0), _skipDirFlag(skipDirFlag) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {

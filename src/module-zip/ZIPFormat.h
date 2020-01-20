@@ -162,18 +162,19 @@ public:
 		UInt16 dosDate = Gurax_UnpackUInt16(_fields.LastModFileDate);
 		return MakeDateTimeFromDos(dosDate, dosTime);
 	}
-	void Print() const {
-		::printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
-		::printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
-		::printf("GeneralPurposeBitFlag  %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
-		::printf("CompressionMethod      %04x\n", Gurax_UnpackUInt16(_fields.CompressionMethod));
-		::printf("LastModFileTime        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileTime));
-		::printf("LastModFileDate        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileDate));
-		::printf("Crc32                  %08x\n", Gurax_UnpackUInt32(_fields.Crc32));
-		::printf("CompressedSize         %08x\n", Gurax_UnpackUInt32(_fields.CompressedSize));
-		::printf("UncompressedSize       %08x\n", Gurax_UnpackUInt32(_fields.UncompressedSize));
-		::printf("FileNameLength         %04x\n", Gurax_UnpackUInt16(_fields.FileNameLength));
-		::printf("ExtraFieldLength       %04x\n", Gurax_UnpackUInt16(_fields.ExtraFieldLength));
+	void Print(Stream& stream) const {
+		Stream& s = stream;
+		s.Printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
+		s.Printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
+		s.Printf("GeneralPurposeBitFlag  %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
+		s.Printf("CompressionMethod      %04x\n", Gurax_UnpackUInt16(_fields.CompressionMethod));
+		s.Printf("LastModFileTime        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileTime));
+		s.Printf("LastModFileDate        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileDate));
+		s.Printf("Crc32                  %08x\n", Gurax_UnpackUInt32(_fields.Crc32));
+		s.Printf("CompressedSize         %08x\n", Gurax_UnpackUInt32(_fields.CompressedSize));
+		s.Printf("UncompressedSize       %08x\n", Gurax_UnpackUInt32(_fields.UncompressedSize));
+		s.Printf("FileNameLength         %04x\n", Gurax_UnpackUInt16(_fields.FileNameLength));
+		s.Printf("ExtraFieldLength       %04x\n", Gurax_UnpackUInt16(_fields.ExtraFieldLength));
 	}
 };
 
@@ -360,24 +361,25 @@ public:
 		return Gurax_UnpackUInt32(_fields.ExternalFileAttributes);
 	}
 	bool IsFolder() const { return String::EndsWithPathSep(GetFileName()); }
-	void Print() const {
-		::printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
-		::printf("VersionMadeBy          %04x\n", Gurax_UnpackUInt16(_fields.VersionMadeBy));
-		::printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
-		::printf("GeneralPurposeBitFlag  %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
-		::printf("CompressionMethod      %04x\n", Gurax_UnpackUInt16(_fields.CompressionMethod));
-		::printf("LastModFileTime        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileTime));
-		::printf("LastModFileDate        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileDate));
-		::printf("Crc32                  %08x\n", Gurax_UnpackUInt32(_fields.Crc32));
-		::printf("CompressedSize         %08x\n", Gurax_UnpackUInt32(_fields.CompressedSize));
-		::printf("UncompressedSize       %08x\n", Gurax_UnpackUInt32(_fields.UncompressedSize));
-		::printf("FileNameLength         %04x\n", Gurax_UnpackUInt16(_fields.FileNameLength));
-		::printf("ExtraFieldLength       %04x\n", Gurax_UnpackUInt16(_fields.ExtraFieldLength));
-		::printf("FileCommentLength      %04x\n", Gurax_UnpackUInt16(_fields.FileCommentLength));
-		::printf("DiskNumberStart        %04x\n", Gurax_UnpackUInt16(_fields.DiskNumberStart));
-		::printf("InternalFileAttributes %04x\n", Gurax_UnpackUInt16(_fields.InternalFileAttributes));
-		::printf("ExternalFileAttributes %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
-		::printf("RelativeOffsetOfLocalHeader %08x\n", Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader));
+	void Print(Stream& stream) const {
+		Stream& s = stream;
+		s.Printf("Signature              %08x\n", Gurax_UnpackUInt32(_fields.Signature));
+		s.Printf("VersionMadeBy          %04x\n", Gurax_UnpackUInt16(_fields.VersionMadeBy));
+		s.Printf("VersionNeededToExtract %04x\n", Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
+		s.Printf("GeneralPurposeBitFlag  %04x\n", Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
+		s.Printf("CompressionMethod      %04x\n", Gurax_UnpackUInt16(_fields.CompressionMethod));
+		s.Printf("LastModFileTime        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileTime));
+		s.Printf("LastModFileDate        %04x\n", Gurax_UnpackUInt16(_fields.LastModFileDate));
+		s.Printf("Crc32                  %08x\n", Gurax_UnpackUInt32(_fields.Crc32));
+		s.Printf("CompressedSize         %08x\n", Gurax_UnpackUInt32(_fields.CompressedSize));
+		s.Printf("UncompressedSize       %08x\n", Gurax_UnpackUInt32(_fields.UncompressedSize));
+		s.Printf("FileNameLength         %04x\n", Gurax_UnpackUInt16(_fields.FileNameLength));
+		s.Printf("ExtraFieldLength       %04x\n", Gurax_UnpackUInt16(_fields.ExtraFieldLength));
+		s.Printf("FileCommentLength      %04x\n", Gurax_UnpackUInt16(_fields.FileCommentLength));
+		s.Printf("DiskNumberStart        %04x\n", Gurax_UnpackUInt16(_fields.DiskNumberStart));
+		s.Printf("InternalFileAttributes %04x\n", Gurax_UnpackUInt16(_fields.InternalFileAttributes));
+		s.Printf("ExternalFileAttributes %08x\n", Gurax_UnpackUInt32(_fields.ExternalFileAttributes));
+		s.Printf("RelativeOffsetOfLocalHeader %08x\n", Gurax_UnpackUInt32(_fields.RelativeOffsetOfLocalHeader));
 	}
 };
 
@@ -506,15 +508,16 @@ public:
 		if (!WriteStream(stream, _zipFileComment)) return false;
 		return true;
 	}
-	void Print() const {
-		::printf("Signature                                                         %08x\n", Gurax_UnpackUInt32(_fields.Signature));
-		::printf("NumberOfThisDisk                                                  %04x\n", Gurax_UnpackUInt16(_fields.NumberOfThisDisk));
-		::printf("NumberOfTheDiskWithTheStartOfTheCentralDirectory                  %04x\n", Gurax_UnpackUInt16(_fields.NumberOfTheDiskWithTheStartOfTheCentralDirectory));
-		::printf("TotalNumberOfEntriesInTheCentralDirectoryOnThisDisk               %04x\n", Gurax_UnpackUInt16(_fields.TotalNumberOfEntriesInTheCentralDirectoryOnThisDisk));
-		::printf("TotalNumberOfEntriesInTheCentralDirectory                         %04x\n", Gurax_UnpackUInt16(_fields.TotalNumberOfEntriesInTheCentralDirectory));
-		::printf("SizeOfTheCentralDirectory                                         %08x\n", Gurax_UnpackUInt32(_fields.SizeOfTheCentralDirectory));
-		::printf("OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber %08x\n", Gurax_UnpackUInt32(_fields.OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber));
-		::printf("ZIPFileCommentLength                                              %04x\n", Gurax_UnpackUInt16(_fields.ZIPFileCommentLength));
+	void Print(Stream& stream) const {
+		Stream& s = stream;
+		s.Printf("Signature                                                         %08x\n", Gurax_UnpackUInt32(_fields.Signature));
+		s.Printf("NumberOfThisDisk                                                  %04x\n", Gurax_UnpackUInt16(_fields.NumberOfThisDisk));
+		s.Printf("NumberOfTheDiskWithTheStartOfTheCentralDirectory                  %04x\n", Gurax_UnpackUInt16(_fields.NumberOfTheDiskWithTheStartOfTheCentralDirectory));
+		s.Printf("TotalNumberOfEntriesInTheCentralDirectoryOnThisDisk               %04x\n", Gurax_UnpackUInt16(_fields.TotalNumberOfEntriesInTheCentralDirectoryOnThisDisk));
+		s.Printf("TotalNumberOfEntriesInTheCentralDirectory                         %04x\n", Gurax_UnpackUInt16(_fields.TotalNumberOfEntriesInTheCentralDirectory));
+		s.Printf("SizeOfTheCentralDirectory                                         %08x\n", Gurax_UnpackUInt32(_fields.SizeOfTheCentralDirectory));
+		s.Printf("OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber %08x\n", Gurax_UnpackUInt32(_fields.OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber));
+		s.Printf("ZIPFileCommentLength                                              %04x\n", Gurax_UnpackUInt16(_fields.ZIPFileCommentLength));
 	}
 };
 

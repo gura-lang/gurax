@@ -92,19 +92,19 @@ bool Formatter::Format(const char* format, Source&& source)
 				if (!pValue->Format_d(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'u') {
-				RefPtr<Value> pValue(source.FetchInt());
+				RefPtr<Value> pValue(source.FetchUInt());
 				if (!pValue->Format_u(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'b') {
-				RefPtr<Value> pValue(source.FetchInt());
+				RefPtr<Value> pValue(source.FetchUInt());
 				if (!pValue->Format_b(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'o') {
-				RefPtr<Value> pValue(source.FetchInt());
+				RefPtr<Value> pValue(source.FetchUInt());
 				if (!pValue->Format_o(*this, formatterFlags)) return false;
 				stat = Stat::Start;
 			} else if (ch == 'x' || ch == 'X') {
-				RefPtr<Value> pValue(source.FetchInt());
+				RefPtr<Value> pValue(source.FetchUInt());
 				formatterFlags.upperCaseFlag = (ch == 'X');
 				if (!pValue->Format_x(*this, formatterFlags)) return false;
 				stat = Stat::Start;

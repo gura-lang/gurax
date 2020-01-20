@@ -24,6 +24,27 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// zip.Stat#PrintCentralFileHeader():void
+Gurax_DeclareMethod(StatEx, PrintCentralFileHeader)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Prints the field values in the Central File Header.");
+}
+
+Gurax_ImplementMethod(StatEx, PrintCentralFileHeader)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	valueThis.GetStatEx().GetCentralFileHeader().Print(*Stream::COut);
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
@@ -86,6 +107,8 @@ void VType_StatEx::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Stat, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(StatEx, PrintCentralFileHeader));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(StatEx, compressedSize));
 	Assign(Gurax_CreateProperty(StatEx, compressionMethod));
