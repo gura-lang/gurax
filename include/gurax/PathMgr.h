@@ -28,6 +28,7 @@ public:
 protected:
 	virtual ~PathMgr() = default;
 public:
+	static void Assign(PathMgr* pPathMgr);
 	static PathMgr* FindResponsible(const char* pathName);
 	static Directory* OpenDirectory(const char* pathName, Directory::Type typeWouldBe = Directory::Type::None);
 	static Existence CheckExistence(const char* pathName);

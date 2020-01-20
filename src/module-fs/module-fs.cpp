@@ -378,7 +378,7 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateFunction(RemoveDir));
 	Assign(Gurax_CreateFunction(Rename));
 	// Assignment of path manager
-	Basement::Inst.AssignPathMgr(new PathMgrEx());
+	PathMgr::Assign(new PathMgrEx());
 	return true;
 }
 

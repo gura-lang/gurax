@@ -6,6 +6,37 @@
 Gurax_BeginModuleScope(zip)
 
 //------------------------------------------------------------------------------
+// PathMgrEx
+//------------------------------------------------------------------------------
+bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
+{
+	return false;
+}
+
+Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
+{
+#if 0
+	Directory::Type type = typeWouldBe;
+	String pathName = PathName(*pPathName).MakeAbsName();
+	RefPtr<StatEx> pStat(StatEx::Create(pathName.c_str()));
+	if (pStat) {
+		type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
+	} else if (type == Directory::Type::None) {
+		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
+		return nullptr;
+	}
+	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStat.release());
+#endif
+	return nullptr;
+}
+
+PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char* pathName)
+{
+	//return (pDirectoryParent == nullptr && OAL::DoesExist(pathName))? Existence::Exist : Existence::None;
+	return Existence::None;
+}
+
+//------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
 StatEx::StatEx(CentralFileHeader* pCentralFileHeader) :

@@ -8,6 +8,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // PathMgr
 //------------------------------------------------------------------------------
+void PathMgr::Assign(PathMgr* pPathMgr)
+{
+	Basement::Inst.AssignPathMgr(pPathMgr);
+}
+
 PathMgr* PathMgr::FindResponsible(const char* pathName)
 {
 	const PathMgrList& pathMgrList = Basement::Inst.GetPathMgrList();
