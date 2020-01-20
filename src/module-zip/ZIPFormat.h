@@ -304,22 +304,14 @@ public:
 	bool WriteAsLocalFileHeader(Stream& stream) {
 		LocalFileHeader hdr;
 		LocalFileHeader::Fields& fields = hdr.GetFields();
-		Gurax_PackUInt16(fields.VersionNeededToExtract,
-						Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
-		Gurax_PackUInt16(fields.GeneralPurposeBitFlag,
-						Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
-		Gurax_PackUInt16(fields.CompressionMethod,
-						Gurax_UnpackUInt16(_fields.CompressionMethod));
-		Gurax_PackUInt16(fields.LastModFileTime,
-						Gurax_UnpackUInt16(_fields.LastModFileTime));
-		Gurax_PackUInt16(fields.LastModFileDate,
-						Gurax_UnpackUInt16(_fields.LastModFileDate));
-		Gurax_PackUInt32(fields.Crc32,
-						Gurax_UnpackUInt32(_fields.Crc32));
-		Gurax_PackUInt32(fields.CompressedSize,
-						Gurax_UnpackUInt32(_fields.CompressedSize));
-		Gurax_PackUInt32(fields.UncompressedSize,
-						Gurax_UnpackUInt32(_fields.UncompressedSize));
+		Gurax_PackUInt16(fields.VersionNeededToExtract, Gurax_UnpackUInt16(_fields.VersionNeededToExtract));
+		Gurax_PackUInt16(fields.GeneralPurposeBitFlag, Gurax_UnpackUInt16(_fields.GeneralPurposeBitFlag));
+		Gurax_PackUInt16(fields.CompressionMethod, Gurax_UnpackUInt16(_fields.CompressionMethod));
+		Gurax_PackUInt16(fields.LastModFileTime, Gurax_UnpackUInt16(_fields.LastModFileTime));
+		Gurax_PackUInt16(fields.LastModFileDate, Gurax_UnpackUInt16(_fields.LastModFileDate));
+		Gurax_PackUInt32(fields.Crc32, Gurax_UnpackUInt32(_fields.Crc32));
+		Gurax_PackUInt32(fields.CompressedSize, Gurax_UnpackUInt32(_fields.CompressedSize));
+		Gurax_PackUInt32(fields.UncompressedSize, Gurax_UnpackUInt32(_fields.UncompressedSize));
 		UInt16 fileNameLength = static_cast<UInt16>(_fileName.size());
 		Gurax_PackUInt16(fields.FileNameLength, fileNameLength);
 		UInt16 extraFieldLength = static_cast<UInt16>(_extraField.size());

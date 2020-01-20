@@ -17,8 +17,6 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	RefPtr<DateTime> pDateTime(pStat? pStat->GetDateTimeM().Reference() : OAL::CreateDateTimeCur(false));
 	UInt16 lastModFileTime = GetDosTime(*pDateTime);
 	UInt16 lastModFileDate = GetDosDate(*pDateTime);
-	UInt32 compressedSize = 0;
-	UInt32 uncompressedSize = 0;
 	UInt32 externalFileAttributes = (1 << 5);
 	UInt32 relativeOffsetOfLocalHeader = static_cast<UInt32>(_pStreamDst->GetOffset());
 	std::unique_ptr<CentralFileHeader> pCentralFileHeader(new CentralFileHeader());
@@ -31,8 +29,8 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 		Gurax_PackUInt16(fields.LastModFileTime,				lastModFileTime);
 		Gurax_PackUInt16(fields.LastModFileDate,				lastModFileDate);
 		Gurax_PackUInt32(fields.Crc32,							0x00000000);
-		Gurax_PackUInt32(fields.CompressedSize,					compressedSize);
-		Gurax_PackUInt32(fields.UncompressedSize,				uncompressedSize);
+		Gurax_PackUInt32(fields.CompressedSize,					0);
+		Gurax_PackUInt32(fields.UncompressedSize,				0);
 		Gurax_PackUInt16(fields.FileNameLength,					0x0000);
 		Gurax_PackUInt16(fields.ExtraFieldLength,				0x0000);
 		Gurax_PackUInt16(fields.FileCommentLength,				0x0000);
@@ -105,8 +103,8 @@ bool Writer::Add(Stream& streamSrc, const char* fileName, UInt16 compressionMeth
 	pStreamOut->Flush();
 	if (Error::IsIssued()) return false;
 	UInt32 crc32num = crc32.GetResult();
-	compressedSize = static_cast<UInt32>(_pStreamDst->GetOffset() - offsetDst);
-	uncompressedSize = static_cast<UInt32>(streamSrc.GetOffset() - offsetSrc);
+	UInt32 compressedSize = static_cast<UInt32>(_pStreamDst->GetOffset() - offsetDst);
+	UInt32 uncompressedSize = static_cast<UInt32>(streamSrc.GetOffset() - offsetSrc);
 	do {
 		DataDescriptor desc;
 		DataDescriptor::Fields &fields = desc.GetFields();
