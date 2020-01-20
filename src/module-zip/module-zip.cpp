@@ -47,6 +47,8 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_StatEx);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Directory));
+	// Assignment of path manager
+	PathMgr::Assign(new PathMgrEx());
 	return true;
 }
 
