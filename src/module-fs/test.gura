@@ -1,25 +1,16 @@
 #!/usr/bin/env gurax
 
 tmpl = tR'''
-${stat.pathName}
-  dirName = ${stat.dirName}
-  fileName = ${stat.fileName}
-  size = ${stat.size}
-  atime = ${stat.atime.ToString()}
-  mtime = ${stat.mtime.ToString()}
-  ctime = ${stat.ctime.ToString()}
-  ${Format('%d', stat.isblk)}
-${==
-  ${stat.ischr}
-  ${stat.isdir}
-  ${stat.isfifo}
-  ${stat.islnk}
-  ${stat.isreg}
-  ${stat.issock}
-==}$
-  gid = ${stat.gid}, uid = ${stat.uid}
+${st.pathName}
+  dirName = ${st.dirName}
+  fileName = ${st.fileName}
+  size = ${st.size}
+  atime = ${st.atime.ToString()}
+  mtime = ${st.mtime.ToString()}
+  ctime = ${st.ctime.ToString()}
+  ${Format('blk:%d chr:%d dir:%d fifo:%d lnk:%d reg:%d sock:%d',
+           st.isblk, st.ischr, st.isdir, st.isfifo, st.islnk, st.isreg, st.issock)}
+  gid = ${st.gid}, uid = ${st.uid}
 '''
 
-path.Dir():stat {|stat|
-	tmpl.Render()
-}
+path.Dir():stat {|st| tmpl.Render()}
