@@ -63,6 +63,7 @@ public:
 			GetBool_() < dynamic_cast<const Value_Bool*>(pValue)->GetBool_() :
 			GetVType().IsLessThan(pValue->GetVType());
 	}
+	virtual bool Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const override;
 	virtual String ToStringDigest(const StringStyle& ss) const override;
 	virtual String ToStringDetail(const StringStyle& ss) const override;
 	virtual bool GetBool() const override { return GetBool_(); }

@@ -42,6 +42,13 @@ void VType_Bool::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Bool::vtype = VTYPE_Bool;
 
+bool Value_Bool::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
+{
+	char buff[128];
+	return formatter.PutAlignedString(
+		formatterFlags, formatterFlags.FormatNumber_d(static_cast<Int>(GetBool()), buff, sizeof(buff)));
+}
+
 String Value_Bool::ToStringDigest(const StringStyle& ss) const
 {
 	String str;
