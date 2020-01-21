@@ -15,7 +15,7 @@ public:
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) override;
 protected:
 	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) override;
-	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char* pathName) override;
+	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) override;
 };
 
 //------------------------------------------------------------------------------

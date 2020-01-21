@@ -36,13 +36,14 @@ public:
 	Directory* OpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) {
 		return DoOpenDirectory(pDirectoryParent, pPathName, typeWouldBe);
 	}
-	Existence CheckExistence(Directory* pDirectoryParent, const char* pathName) {
-		return DoCheckExistence(pDirectoryParent, pathName);
+	Existence CheckExistence(Directory* pDirectoryParent, const char** pPathName) {
+		return DoCheckExistence(pDirectoryParent, pPathName);
 	}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
 protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) = 0;
-	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char* pathName) = 0;
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName,
+									   Directory::Type typeWouldBe) = 0;
+	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const PathMgr& pathMgr) const { return this == &pathMgr; }

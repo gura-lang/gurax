@@ -27,9 +27,9 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStatEx.release());
 }
 
-PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char* pathName)
+PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
-	return (pDirectoryParent == nullptr && OAL::DoesExist(pathName))? Existence::Exist : Existence::None;
+	return (pDirectoryParent == nullptr && OAL::DoesExist(*pPathName))? Existence::Exist : Existence::None;
 }
 
 //------------------------------------------------------------------------------
