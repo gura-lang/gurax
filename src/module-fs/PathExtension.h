@@ -34,14 +34,14 @@ public:
 //------------------------------------------------------------------------------
 class DirectoryEx : public Directory {
 protected:
-	RefPtr<Stat> _pStat;
+	RefPtr<StatEx> _pStatEx;
 #if defined(GURAX_ON_MSWIN)
 	HANDLE _hFind;
 #else
 	DIR* _pDir;
 #endif
 public:
-	DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat);
+	DirectoryEx(Directory* pDirectoryParent, String name, Type type, StatEx* pStatEx);
 protected:
 	~DirectoryEx();
 protected:

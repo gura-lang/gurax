@@ -15,6 +15,8 @@ static const char* g_docHelp_en = u8R"**(
 
 # Property
 
+Number.format
+
 # Operator
 
 # Cast Operation
@@ -98,6 +100,28 @@ Gurax_ImplementPropertyGetter(Number, real)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(valueThis.GetNumber<Double>());
+}
+
+//------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Number.format:String
+Gurax_DeclareClassProperty_RW(Number, format)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Format string used to convert a number into a string.");
+}
+
+Gurax_ImplementClassPropertyGetter(Number, format)
+{
+	return new Value_String(Basement::Inst.GetFormatForNumber());
+}
+
+Gurax_ImplementClassPropertySetter(Number, format)
+{
+	Basement::Inst.SetFormatForNumber(Value_String::GetString(value));
 }
 
 //------------------------------------------------------------------------------
@@ -394,6 +418,8 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Number, imag));
 	Assign(Gurax_CreateProperty(Number, norm));
 	Assign(Gurax_CreateProperty(Number, real));
+	// Assignment of class property
+	Assign(Gurax_CreateClassProperty(Number, format));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Inv,			Number);
 	Gurax_AssignOpUnary(Neg,			Number);

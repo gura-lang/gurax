@@ -1,0 +1,7 @@
+#!/usr/bin/env gurax
+
+path.Dir():stat {|stat|
+	
+	Printf('%s\n', stat.pathName)
+	Printf('
+}

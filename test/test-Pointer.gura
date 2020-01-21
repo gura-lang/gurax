@@ -18,7 +18,7 @@ TestCase('Property') {
 }
 
 TestCase('Basic test of pack/unpack') {
-	sys.formatForNum = '%.0f'
+	Number.format = '%.0f'
 	f(strPre:String) = {
 		scope {
 			Println('---')
@@ -99,7 +99,7 @@ TestCase('Basic test of pack/unpack') {
 	f('')
 	f('>')
 	f('<')
-	sys.formatForNum = '%g'
+	Number.format = '%g'
 }
 
 TestCase('Pointer#Pack()') {

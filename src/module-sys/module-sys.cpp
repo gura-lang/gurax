@@ -248,25 +248,6 @@ Gurax_ImplementModulePropertyGetter(executable)
 	return new Value_String(OAL::GetPathName_Executable());
 }
 
-// sys.formatForNum:String
-Gurax_DeclareModuleProperty_RW(formatForNum)
-{
-	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string used to convert a number into a string.");
-}
-
-Gurax_ImplementModulePropertyGetter(formatForNum)
-{
-	return new Value_String(Basement::Inst.GetFormatForNum());
-}
-
-Gurax_ImplementModulePropertySetter(formatForNum)
-{
-	Basement::Inst.SetFormatForNum(Value_String::GetString(value));
-}
-
 // sys.path[]:String
 Gurax_DeclareModuleProperty_RW(path)
 {
@@ -397,7 +378,6 @@ Gurax_ModulePrepare()
 	Assign(Gurax_CreateModuleProperty(dirModule));
 	Assign(Gurax_CreateModuleProperty(dirScript));
 	Assign(Gurax_CreateModuleProperty(executable));
-	Assign(Gurax_CreateModuleProperty(formatForNum));
 	Assign(Gurax_CreateModuleProperty(path));
 	Assign(Gurax_CreateModuleProperty(platform));
 	Assign(Gurax_CreateModuleProperty(ps1));

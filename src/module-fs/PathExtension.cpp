@@ -17,14 +17,14 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 {
 	Directory::Type type = typeWouldBe;
 	String pathName = PathName(*pPathName).MakeAbsName();
-	RefPtr<StatEx> pStat(StatEx::Create(pathName.c_str()));
-	if (pStat) {
-		type = pStat->IsDir()? Directory::Type::Container : Directory::Type::Item;
+	RefPtr<StatEx> pStatEx(StatEx::Create(pathName.c_str()));
+	if (pStatEx) {
+		type = pStatEx->IsDir()? Directory::Type::Container : Directory::Type::Item;
 	} else if (type == Directory::Type::None) {
 		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
 		return nullptr;
 	}
-	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStat.release());
+	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStatEx.release());
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char* pathName)
@@ -79,9 +79,9 @@ StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
 
-DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat) :
+DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, StatEx* pStatEx) :
 	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
-	_pStat(pStat), _hFind(INVALID_HANDLE_VALUE)
+	_pStatEx(pStatEx), _hFind(INVALID_HANDLE_VALUE)
 {
 }
 
@@ -97,9 +97,9 @@ Directory* DirectoryEx::DoNextChild()
 
 #else
 
-DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, Stat* pStat) :
+DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, StatEx* pStatEx) :
 	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
-	_pStat(pStat), _pDir(nullptr)
+	_pStatEx(pStatEx), _pDir(nullptr)
 {
 }
 
@@ -157,14 +157,14 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value* DirectoryEx::DoCreateStatValue()
 {
-	if (!_pStat) {
-		_pStat.reset(StatEx::Create(MakeFullPathName(false).c_str()));
-		if (!_pStat) {
+	if (!_pStatEx) {
+		_pStatEx.reset(StatEx::Create(MakeFullPathName(false).c_str()));
+		if (!_pStatEx) {
 			Error::Issue(ErrorType::IOError, "failed to get file status");
 			return Value::nil();
 		}
 	}
-	return new Value_Stat(_pStat->Reference());
+	return new Value_Stat(_pStatEx->Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -181,16 +181,16 @@ Stat* StreamEx::DoCreateStat()
 {
 	struct stat sb;
 	if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
-	RefPtr<StatEx> pStat(new StatEx(sb, PathName(_pathName).MakeAbsName()));
-	return pStat.release();
+	RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
+	return pStatEx.release();
 }
 
 Value* StreamEx::DoCreateStatValue()
 {
 	struct stat sb;
 	if (::fstat(fileno(_fp), &sb) < 0) return nullptr;
-	RefPtr<StatEx> pStat(new StatEx(sb, PathName(_pathName).MakeAbsName()));
-	return new Value_StatEx(pStat.release());
+	RefPtr<StatEx> pStatEx(new StatEx(sb, PathName(_pathName).MakeAbsName()));
+	return new Value_StatEx(pStatEx.release());
 }
 
 bool StreamEx::DoSeek(size_t offset, size_t offsetPrev)

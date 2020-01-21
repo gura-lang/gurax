@@ -33,7 +33,7 @@ public:
 public:
 	// Constructor
 	Value_StatEx() = delete;
-	Value_StatEx(StatEx* pStat, VType& vtype = VTYPE_StatEx) : Value_Stat(pStat, vtype) {}
+	Value_StatEx(StatEx* pStatEx, VType& vtype = VTYPE_StatEx) : Value_Stat(pStatEx, vtype) {}
 	// Copy constructor/operator
 	Value_StatEx(const Value_StatEx& src) : Value_Stat(src) {}
 	Value_StatEx& operator=(const Value_StatEx& src) = delete;
