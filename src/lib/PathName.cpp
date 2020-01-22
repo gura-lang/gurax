@@ -22,29 +22,26 @@ const char PathName::SepPlatform		= SepUNIX;
 const bool PathName::CaseFlagPlatform	= false;
 #endif
 
-String PathName::Regulate() const
+void PathName::SplitIntoFields(String* pDriveLetter, String* pPrefix, StringList& fields) const
 {
 	enum class Stat { Field, Sep } stat = Stat::Field;
-	String prefix;
-	char driveLetter = '\0';
 	const char* p = _pathName;
 	if (String::IsAlpha(*p) && *(p + 1) == ':') {
-		driveLetter = *p;
+		*pDriveLetter += *p;
+		*pDriveLetter += ':';
 		p += 2;
 		if (IsSepEx(*p)) {
-			prefix += GetSep();
+			*pPrefix += GetSep();
 			p++;
 		}
 		while (IsSepEx(*p)) p++;
 	} else {
 		while (IsSepEx(*p)) {
-			prefix += GetSep();
+			*pPrefix += GetSep();
 			p++;
 		}
 	}
-	StringList fields;
 	String field;
-	bool sepTailFlag = false;
 	for ( ; ; p++) {
 		char ch = *p;
 		Gurax_BeginPushbackRegion();
@@ -55,7 +52,7 @@ String PathName::Regulate() const
 					// nothing to do
 				} else if (field == "..") {
 					if (fields.empty()) {
-						if (prefix.empty()) {
+						if (pPrefix->empty()) {
 							fields.push_back(field);
 						}
 					} else if (fields.back() == "..") {
@@ -75,7 +72,7 @@ String PathName::Regulate() const
 		}
 		case Stat::Sep: {
 			if (ch == '\0') {
-				sepTailFlag = true;
+				fields.push_back("");
 			} else if (IsSepEx(ch)) {
 				// nothing to do
 			} else {
@@ -88,18 +85,20 @@ String PathName::Regulate() const
 		Gurax_EndPushbackRegion();
 		if (ch == '\0') break;
 	}
+}
+
+String PathName::Regulate() const
+{
+	String driveLetter;
+	String prefix;
+	StringList fields;
+	SplitIntoFields(&driveLetter, &prefix, fields);
 	String pathName;
-	if (driveLetter != '\0') {
-		pathName += driveLetter;
-		pathName += ':';
-	}
+	pathName += driveLetter;
 	pathName += prefix;
 	for (auto pField = fields.begin(); pField != fields.end(); pField++) {
 		if (pField != fields.begin()) pathName += GetSep();
 		pathName += *pField;
-	}
-	if (sepTailFlag && !pathName.empty() && !IsSepEx(pathName[pathName.size() - 1])) {
-		pathName += GetSep();
 	}
 	return pathName;
 }

@@ -48,6 +48,7 @@ public:
 	char GetSep() const { return _sep; }
 	bool GetCaseFlag() const { return _caseFlag; }
 public:
+	void SplitIntoFields(String* pDriveLetter, String* pPrefix, StringList& fields) const;
 	String Regulate() const;
 	String JoinBefore(const char* pathName) const;
 	String JoinAfter(const char* pathName) const;
