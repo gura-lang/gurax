@@ -15,6 +15,14 @@ bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
 {
+#if 0
+	do {
+		String pathNameAccum;
+		for (const char* p = *pPathName; *p; p++) {
+			
+		}
+	} while (0);
+#endif
 	Directory::Type type = typeWouldBe;
 	String pathName = PathName(*pPathName).MakeAbsName();
 	RefPtr<StatEx> pStatEx(StatEx::Create(pathName.c_str()));
