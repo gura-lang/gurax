@@ -96,9 +96,13 @@ String PathName::Regulate() const
 	String pathName;
 	pathName += driveLetter;
 	pathName += prefix;
-	for (auto pField = fields.begin(); pField != fields.end(); pField++) {
-		if (pField != fields.begin()) pathName += GetSep();
-		pathName += *pField;
+	auto pField = fields.begin();
+	if (pField != fields.end()) {
+		pathName += *pField++;
+		for ( ; pField != fields.end(); pField++) {
+			pathName += GetSep();
+			pathName += *pField;
+		}
 	}
 	return pathName;
 }
