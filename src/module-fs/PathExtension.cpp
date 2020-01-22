@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(fs)
 //------------------------------------------------------------------------------
 bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
 {
-	return pDirectoryParent == nullptr;
+	return !pDirectoryParent;
 }
 
 Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
@@ -29,7 +29,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
 {
-	return (pDirectoryParent == nullptr && OAL::DoesExist(*pPathName))? Existence::Exist : Existence::None;
+	return (!pDirectoryParent && OAL::DoesExist(*pPathName))? Existence::Exist : Existence::None;
 }
 
 //------------------------------------------------------------------------------
