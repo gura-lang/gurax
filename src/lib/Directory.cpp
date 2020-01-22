@@ -138,8 +138,8 @@ bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Dire
 		Directory* pDirectory = directoryOwner.FindByName(field.c_str());
 		if (!pDirectory) {
 			auto pDirectoryNew = new Directory_CustomContainer(
-					pDirectoryParent, field, Type::Container,
-					pDirectoryParent->GetSep(), pDirectoryParent->IsCaseSensitive());
+				field, Type::Container, pDirectoryParent->GetSep(), pDirectoryParent->IsCaseSensitive());
+			pDirectoryNew->SetDirectoryParent(*pDirectoryParent);
 			directoryOwner.push_back(pDirectoryNew);
 			pDirectoryParent = pDirectoryNew;
 		} else if (!pDirectory->IsCustomContainer()) {

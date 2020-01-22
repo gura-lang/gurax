@@ -24,7 +24,7 @@ Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** 
 		Error::Issue(ErrorType::IOError, "failed to get file status of %s", pathName.c_str());
 		return nullptr;
 	}
-	return new DirectoryEx(pDirectoryParent, pathName.c_str(), type, pStatEx.release());
+	return new DirectoryEx(pathName, type, pStatEx.release());
 }
 
 PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
@@ -79,8 +79,8 @@ StatEx::StatEx(const char* pathName, const WIN32_FIND_DATA& findData)
 //------------------------------------------------------------------------------
 #if defined(GURAX_ON_MSWIN)
 
-DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, StatEx* pStatEx) :
-	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
+DirectoryEx::DirectoryEx(String name, Type type, StatEx* pStatEx) :
+	Directory(name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
 	_pStatEx(pStatEx), _hFind(INVALID_HANDLE_VALUE)
 {
 }
@@ -97,8 +97,8 @@ Directory* DirectoryEx::DoNextChild()
 
 #else
 
-DirectoryEx::DirectoryEx(Directory* pDirectoryParent, String name, Type type, StatEx* pStatEx) :
-	Directory(pDirectoryParent, name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
+DirectoryEx::DirectoryEx(String name, Type type, StatEx* pStatEx) :
+	Directory(name, type, PathName::SepPlatform, PathName::CaseFlagPlatform),
 	_pStatEx(pStatEx), _pDir(nullptr)
 {
 }
@@ -127,7 +127,9 @@ Directory* DirectoryEx::DoNextChild()
 		if (::strcmp(pEnt->d_name, ".") != 0 && ::strcmp(pEnt->d_name, "..") != 0) break;
 	}
 	Type type = (pEnt->d_type == DT_DIR)? Type::Container : Type::Item;
-	return new DirectoryEx(Reference(), OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr);
+	RefPtr<Directory> pDirectory(new DirectoryEx(OAL::FromNativeString(pEnt->d_name).c_str(), type, nullptr));
+	pDirectory->SetDirectoryParent(*this);
+	return pDirectory.release();
 }
 
 #endif

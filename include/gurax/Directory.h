@@ -18,7 +18,6 @@ public:
 public:
 	enum class Type { None, Item, Container, BoundaryContainer, RootContainer, };
 protected:
-	RefPtr<WeakPtr> _pwDirectoryParent;
 	String _name;
 	Type _type;
 	char _sep;
@@ -28,9 +27,6 @@ public:
 	Directory(Type type, char sep, bool caseFlag) : _type(type), _sep(sep), _caseFlag(caseFlag) {}
 	Directory(String name, Type type, char sep, bool caseFlag) :
 		_name(name), _type(type), _sep(sep), _caseFlag(caseFlag) {}
-	Directory(Directory* pDirectoryParent, String name, Type type, char sep, bool caseFlag) :
-		_pwDirectoryParent(pDirectoryParent? pDirectoryParent->GetWeakPtr() : nullptr), _name(name),
-		_type(type), _sep(sep), _caseFlag(caseFlag) {}
 	// Copy constructor/operator
 	Directory(const Directory& src) = delete;
 	Directory& operator=(const Directory& src) = delete;
@@ -42,15 +38,11 @@ protected:
 public:
 	static Directory* Open(const char* pathName, Type typeWouldBe = Type::None);
 public:
-	void SetDirectoryParent(Directory& directoryParent) {
-		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());
-	}
 	void SetName(String name) { _name = name; }
 	Directory* NextChild() { return DoNextChild(); }
 	Stream* OpenStream(Stream::OpenFlags openFlags) { return DoOpenStream(openFlags); }
 	Value* CreateStatValue() { return DoCreateStatValue(); }
 	const char* GetName() const { return _name.c_str(); }
-	Directory* LockDirectoryParent() const { return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr; }
 	char GetSep() const { return _sep; }
 	bool IsCaseSensitive() const { return _caseFlag; }
 	bool IsItem() const { return _type == Type::Item; }
@@ -68,6 +60,8 @@ public:
 	String MakeFullPathName(bool addSepFlag, const char* pathNameTrail = nullptr) const;
 	int CountDepth() const;
 	virtual bool IsCustomContainer() const { return false; }
+	virtual void SetDirectoryParent(Directory& directoryParent) = 0;
+	virtual Directory* LockDirectoryParent() const = 0;
 protected:
 	virtual Directory* DoNextChild() = 0;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) = 0;
@@ -131,21 +125,24 @@ class GURAX_DLLDECLARE Directory_CustomContainer : public Directory {
 public:
 	RefPtr<DirectoryOwner> _pDirectoryOwner;
 	size_t _idx;
+	RefPtr<WeakPtr> _pwDirectoryParent;
 public:
 	Directory_CustomContainer(Type type, char sep, bool caseFlag) :
 		Directory(type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
 	Directory_CustomContainer(String name, Type type, char sep, bool caseFlag) :
 		Directory(name, type, sep, caseFlag), _pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
-	Directory_CustomContainer(Directory* pDirectoryParent, String name,
-							  Type type, char sep, bool caseFlag) :
-		Directory(pDirectoryParent, name, type, sep, caseFlag),
-		_pDirectoryOwner(new DirectoryOwner()), _idx(0) {}
 public:
 	DirectoryOwner& GetDirectoryOwner() { return *_pDirectoryOwner; }
 	const DirectoryOwner& GetDirectoryOwner() const { return *_pDirectoryOwner; }
 	void SetDirectoryOwner(DirectoryOwner* pDirectoryOwner) { _pDirectoryOwner.reset(pDirectoryOwner); }
 	bool AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild);
 	virtual bool IsCustomContainer() const override { return true; }
+	virtual void SetDirectoryParent(Directory& directoryParent) override {
+		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());
+	}
+	virtual Directory* LockDirectoryParent() const override {
+		return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr;
+	};
 protected:
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
