@@ -90,8 +90,9 @@ Directory* CreateDirectory(Stream& streamSrc, Directory* pDirectoryParent,
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadCentralDirectory(streamSrc)) return nullptr;
 	RefPtr<Directory_CustomContainer> pDirectory(
-		new Directory_CustomContainer(pDirectoryParent, "", Directory::Type::BoundaryContainer,
+		new Directory_CustomContainer("", Directory::Type::BoundaryContainer,
 									  PathName::SepPlatform, PathName::CaseFlagPlatform));
+	pDirectory->SetDirectoryParent(*pDirectoryParent);
 	for (StatEx* pStatEx : statExOwner) {
 		const char* pathName = pStatEx->GetCentralFileHeader().GetFileName();
 		if (String::EndsWithPathSep(pathName)) {

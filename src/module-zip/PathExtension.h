@@ -59,10 +59,19 @@ public:
 class GURAX_DLLDECLARE Directory_ZIPFile : public Directory {
 private:
 	RefPtr<StatEx> _pStatEx;
+	RefPtr<WeakPtr> _pwDirectoryParent;
 public:
 	Directory_ZIPFile(StatEx* pStatEx) :
 		Directory(Directory::Type::Item,
 				  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStatEx(pStatEx) {}
+public:
+	virtual void SetDirectoryParent(Directory& directoryParent) override {
+		_pwDirectoryParent.reset(directoryParent.GetWeakPtr());
+	}
+	virtual Directory* LockDirectoryParent() const override {
+		return _pwDirectoryParent? _pwDirectoryParent->Lock() : nullptr;
+	};
+protected:
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoCreateStatValue() override;
@@ -78,6 +87,7 @@ public:
 	Directory_ZIPFolder(StatEx* pStatEx) :
 		Directory_CustomContainer(Directory::Type::Container,
 								  PathName::SepPlatform, PathName::CaseFlagPlatform), _pStatEx(pStatEx) {}
+protected:
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value* DoCreateStatValue() override;
 };
