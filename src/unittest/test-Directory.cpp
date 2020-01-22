@@ -30,6 +30,7 @@ Gurax_TesterEntry(Directory)
 	pDirectory->AddChildInTree("dir4/dir4-1", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	pDirectory->AddChildInTree("dir5/dir5-1/dir5-1-1/dir5-1-1-1", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	pDirectory->AddChildInTree("dir6/", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
+	pDirectory->AddChildInTree("dir4", new Directory_CustomContainer(Directory::Type::Container, sep, caseFlag));
 	PrintDirectory(*pDirectory, 0);
 }
 
