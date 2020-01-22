@@ -27,13 +27,12 @@ PUnit_DictElem_                  16
 PUnit_Index_                     24
 PUnit_FeedIndex_                 8
 PUnit_IndexGet_                  8
-PUnit_IndexSet_                  16
-PUnit_PropGet_                   24
-PUnit_PropSet_                   32
-PUnit_Member_Normal_             24
-PUnit_Member_MapAlong_           24
-PUnit_Member_MapToList_          24
-PUnit_Member_MapToIter_          24
+PUnit_IndexSet_                  8
+PUnit_MemberSet_Normal_          24
+PUnit_MemberGet_Normal_          24
+PUnit_MemberGet_MapAlong_        24
+PUnit_MemberGet_MapToList_       24
+PUnit_MemberGet_MapToIter_       24
 PUnit_Argument_                  32
 PUnit_BeginArgSlot_              24
 PUnit_EndArgSlot_                8
@@ -94,7 +93,6 @@ Value_Quote                      40
 Value_Stream                     40
 Value_String                     40
 Value_Symbol                     40
-Value_Template                   40
 Value_TimeDelta                  40
 Value_Undefined                  32
 Value_VType                      40

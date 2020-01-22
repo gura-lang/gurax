@@ -122,51 +122,47 @@ void DirectoryDequeOwner::Clear()
 //------------------------------------------------------------------------------
 bool Directory_CustomContainer::AddChildInTree(const char* pathName, RefPtr<Directory> pDirectoryChild)
 {
-	const char* p = pathName;
-	if (PathName::IsSep(*p)) p++;
-	String field;
+	String driveLetter;
+	String prefix;
+	StringList fields;
+	PathName(pathName).SplitIntoFields(&driveLetter, &prefix, fields);
 	Directory_CustomContainer* pDirectoryParent = this;
-	for ( ; ; p++) {
-		char ch = *p;
-		if (!PathName::IsSep(ch) && ch != '\0') {
-			field += ch;
-			continue;
-		}
+	auto pField = fields.begin();
+	if (pField == fields.end()) {
+		Error::Issue(ErrorType::PathError, "invalid path name");
+		return false;
+	}
+	for ( ; pField + 1 != fields.end() && !(pField + 1)->empty(); pField++) {
+		const String& field = *pField;
 		DirectoryOwner& directoryOwner = pDirectoryParent->GetDirectoryOwner();
-		if (field.empty()) {
-			Error::Issue(ErrorType::PathError, "invalid path name");
-			return false;
-		} else if (ch == '\0' || *(p + 1) == '\0') {
-			pDirectoryChild->SetDirectoryParent(*pDirectoryParent);
-			pDirectoryChild->SetName(field);
-			auto ppDirectoryFound = directoryOwner.FindIteratorByName(field.c_str());
-			if (ppDirectoryFound == directoryOwner.end()) {
-				directoryOwner.push_back(pDirectoryChild.release());
-			} else {
-				if (pDirectoryChild->IsCustomContainer() && (*ppDirectoryFound)->IsCustomContainer()) {
-					dynamic_cast<Directory_CustomContainer&>(*pDirectoryChild).SetDirectoryOwner(
-						dynamic_cast<Directory_CustomContainer*>(*ppDirectoryFound)->GetDirectoryOwner().Reference());
-				}
-				Directory::Delete(*ppDirectoryFound);
-				*ppDirectoryFound = pDirectoryChild.release();
-			}
-			break;
-		}
 		Directory* pDirectory = directoryOwner.FindByName(field.c_str());
 		if (!pDirectory) {
 			auto pDirectoryNew = new Directory_CustomContainer(
-					pDirectoryParent, field.c_str(), Type::Container,
+					pDirectoryParent, field, Type::Container,
 					pDirectoryParent->GetSep(), pDirectoryParent->IsCaseSensitive());
 			directoryOwner.push_back(pDirectory);
-			field.clear();
 			pDirectoryParent = pDirectoryNew;
 		} else if (!pDirectory->IsCustomContainer()) {
 			Error::Issue(ErrorType::PathError, "invalid path name");
 			return false;
 		} else {
-			field.clear();
 			pDirectoryParent = dynamic_cast<Directory_CustomContainer*>(pDirectory);
 		}
+	}
+	const String& field = *pField;
+	DirectoryOwner& directoryOwner = pDirectoryParent->GetDirectoryOwner();
+	pDirectoryChild->SetDirectoryParent(*pDirectoryParent);
+	pDirectoryChild->SetName(field);
+	auto ppDirectoryFound = directoryOwner.FindIteratorByName(field.c_str());
+	if (ppDirectoryFound == directoryOwner.end()) {
+		directoryOwner.push_back(pDirectoryChild.release());
+	} else {
+		if (pDirectoryChild->IsCustomContainer() && (*ppDirectoryFound)->IsCustomContainer()) {
+			dynamic_cast<Directory_CustomContainer&>(*pDirectoryChild).SetDirectoryOwner(
+				dynamic_cast<Directory_CustomContainer*>(*ppDirectoryFound)->GetDirectoryOwner().Reference());
+		}
+		Directory::Delete(*ppDirectoryFound);
+		*ppDirectoryFound = pDirectoryChild.release();
 	}
 	return true;
 }

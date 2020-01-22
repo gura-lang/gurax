@@ -5,6 +5,7 @@ add_executable(unittest
 	test-CommandLine.cpp
 	test-DateTime.cpp
 	test-DeclCallable.cpp
+	test-Directory.cpp
 	test-Error.cpp
 	test-Formatter.cpp
 	test-Function.cpp
