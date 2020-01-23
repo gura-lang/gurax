@@ -65,7 +65,7 @@ Value* Directory::DoCreateStatValue()
 
 String Directory::ToString(const StringStyle& ss) const
 {
-	return "";
+	return GetName();
 }
 
 //------------------------------------------------------------------------------

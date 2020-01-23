@@ -31,6 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareConstructor(Directory)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -50,6 +51,26 @@ Gurax_ImplementConstructor(Directory)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of property
+//------------------------------------------------------------------------------
+// Directory#parent
+Gurax_DeclareProperty_R(Directory, parent)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The parent directory.");
+}
+
+Gurax_ImplementPropertyGetter(Directory, parent)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<Directory> pDirectoryParent(valueThis.GetDirectory().LockDirectoryParent());
+	if (!pDirectoryParent) return Value::nil();
+	return new Value_Directory(pDirectoryParent.release());
+}
+
+//------------------------------------------------------------------------------
 // VType_Directory
 //------------------------------------------------------------------------------
 VType_Directory VTYPE_Directory("Directory");
@@ -60,6 +81,8 @@ void VType_Directory::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Directory));
+	// Assignment of property
+	Assign(Gurax_CreateProperty(Directory, parent));
 }
 
 Value* VType_Directory::DoCastFrom(const Value& value, DeclArg::Flags flags) const
